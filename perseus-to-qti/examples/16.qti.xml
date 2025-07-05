@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="haruka-exam-score"
+    title="Find a missing data point given the mean"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="integer" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>87</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <p>The following table shows each of Haruka's final exam scores last semester.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Final exam</th>
+                    <th style="text-align:center;">Score on a <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math>-point scale</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Astronomy</td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math></td>
+                </tr>
+                <tr>
+                    <td>Biology</td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math></td>
+                </tr>
+                <tr>
+                    <td>Physics</td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math></td>
+                </tr>
+                <tr>
+                    <td>Chemistry</td>
+                    <td style="text-align:center;">?</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <p>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka's final exam score in chemistry.</p>
+        
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/> points
+        </p>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>

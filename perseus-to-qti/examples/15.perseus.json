@@ -1,0 +1,293 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "###The strategy\n\nWe can find the center and radius of a circle by rewriting the given equation in the form of the **standard equation of a circle**. [[☃ explanation 1]]\n\nIn order to do this, we take the following steps.\n\n1. Complete the square for both the $x^2$ and $y^2$ terms. [[☃ explanation 2]]\n\n2. Write the equation in the standard form of the circle.",
+			"replace": false,
+			"widgets": {
+				"explanation 1": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A circle that is centered at point H, K. The radius, r, goes from the center at H, K to the edge of the circle at point X, Y. The radius is the hypotenuse in a right triangle. The base of the triangle is a horizontal dashed line that is labeled X minus H. The height of the triangle is a vertical dashed line that is labeled Y minus K.",
+									"box": [311, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/cfed1de5fce2ce83e5182658316b415cd3651ee9",
+										"width": 311,
+										"height": 320
+									}
+								},
+								"version": { "major": 0, "minor": 0 },
+								"alignment": "block"
+							}
+						},
+						"hidePrompt": "Got it, thanks!",
+						"showPrompt": "What is the standard equation of the circle?",
+						"explanation": "A circle is the collection of all points at a distance $\\goldE{r}$ from a center $(\\blueE{h},\\maroonD{k})$.\n\nWe can use the Pythagorean theorem to write the standard form of the equation to relate the center and radius.\n\n $\\begin{align}\na^2+b^2&=c^2\\\\\\\\\n(x - \\blueE{h})^2 + (y - \\maroonD{k})^2 &= \\goldE {r}^2\n\\end{align}$\n\n\n\n[[☃ image 1]]\n\n"
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
+				},
+				"explanation 2": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "An area model for a square that is split into four parts. The part at the top left is a square with a side length of x. The part at the top right is a vertical rectangle with a length of a over two. The part at the bottom left is a horizontal rectangle with a length of a over two. The part at the bottom right is a square with a question mark in the middle.",
+									"box": [170, 170],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f65d0f5fd2c24ea2b4dcf38eda4f33036073b645",
+										"width": 170,
+										"height": 170
+									}
+								},
+								"version": { "major": 0, "minor": 0 },
+								"alignment": "block"
+							},
+							"video 1": {
+								"id": "video 1",
+								"type": "video",
+								"graded": true,
+								"static": false,
+								"options": { "static": false, "location": "ex1-completing-the-square" },
+								"version": { "major": 0, "minor": 0 },
+								"alignment": "block"
+							}
+						},
+						"hidePrompt": "Got it, thanks!",
+						"showPrompt": "How do we complete the square?",
+						"explanation": "Suppose we have the expression $x^2+ax$ where $a$ is any constant number. Let's visualize a partial square with an area of $x^2+\\dfrac{a}{2}x+\\dfrac{a}{2}x$.\n\n\n\n[[☃ image 1]]\n\nWhat would we need to add to complete the square?\n\n$\\begin{align}x^2+ax&=0\\\\\\\\\nx^2+2\\cdot\\dfrac{a}{2}x\\goldE{+\\left(\\dfrac a2\\right)^2}&=0\\goldE{+\\left(\\dfrac a2\\right)^2}\\\\\\\\\n\\left(x+\\dfrac a2\\right)^2&=\\left(\\dfrac a2\\right)^2\\end{align}$\n\nYou can also watch this video where Sal explains this method at greater length.  \n[[☃ video 1]]"
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "###Completing the squares\n\n$\\begin{align}x^2+y^2+18x+14y+105&=0\\\\\\\\\nx^2+y^2+18x+14y&=-105\\\\\\\\\n(x^2+18x)+(y^2+14y)&=-105\\quad\\text{(rearrange terms)}\\\\\\\\\n(x^2+18x\\redE{+81})+(y^2+14y\\blueE{+49})&=-105\\redE{+81}\\blueE{+49}\\end{align}$\n\nNotice that we must add $\\redE{81}$ and $\\blueE{49}$ on the right side of the equation, since we added them to the left side of the equation.\n\n[[☃ explanation 1]]",
+			"replace": false,
+			"widgets": {
+				"explanation 1": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "An area model for a rectangle with a height of x and a base of x plus eighteen. The rectangle is broken into a perfect square and a rectangle. The perfect square has a side length of x. The new rectangle has a height of x and a base of eighteen. ",
+									"box": [265, 132],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/2567bf507aeb57b43f99581ba961d69ef642a757",
+										"width": 265,
+										"height": 132
+									}
+								},
+								"version": { "major": 0, "minor": 0 },
+								"alignment": "block"
+							},
+							"image 2": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "An area model of the expression x squared plus eighteen x gets rearranged into perfect square. The perfect square has side length of X plus nine. The perfect square is broken into two rows of two rectangles. The top left rectangle is a perfect square with a side length of X. The top right rectangle has a height of X and a base of nine. The bottom left rectangle has a height of nine and a base of x. The bottom right rectangle is missing.",
+									"box": [265, 206],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ea8ae274aa05a78303137fa32adedad73b1004ea",
+										"width": 265,
+										"height": 206
+									}
+								},
+								"version": { "major": 0, "minor": 0 },
+								"alignment": "block"
+							},
+							"image 3": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "An area model for a rectangle with a height of y and a base of y plus fourteen. The rectangle is broken into a perfect square and a rectangle. The perfect square has a side length of y. The new rectangle has a height of y and a base of fourteen. ",
+									"box": [265, 151],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0fb61f3c6e13e840ac22115d5d6eea8028a34872",
+										"width": 265,
+										"height": 151
+									}
+								},
+								"version": { "major": 0, "minor": 0 },
+								"alignment": "block"
+							},
+							"image 4": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "An area model of the expression y squared plus fourteen y gets rearranged into perfect square. The perfect square has side length of Y plus seven. The perfect square is broken into two rows of two rectangles. The top left rectangle is a perfect square with a side length of Y. The top right rectangle has a height of Y and a base of seven. The bottom left rectangle has a height of seven and a base of y. The bottom right rectangle is missing.",
+									"box": [265, 216],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/57af1a00ea0f275c3c2509a1eefa5cbf1d6ad489",
+										"width": 265,
+										"height": 216
+									}
+								},
+								"version": { "major": 0, "minor": 0 },
+								"alignment": "block"
+							}
+						},
+						"hidePrompt": "Got it, thanks!",
+						"showPrompt": "How did we get 81 and 49?",
+						"explanation": "Let's start with the $x$-terms. \n\n[[☃ image 1]]\n\nWe want to rearrange $x^2+18x$ into a perfect square.\n\n\n\n[[☃ image 2]]\n\nTo complete the square for the $x$-terms, we need to add $\\redE{\\left(\\dfrac{18}{2}\\right)^2}=\\redE{81}$ to both sides of the equation, because $(x+9)^2=x^2+18x+\\redE{81}$.\n\nNow let's work with the $y$-terms. \n\n\n\n[[☃ image 3]]\n\nWe want to rearrange $y^2+14y$ into a perfect square.\n\n\n\n[[☃ image 4]]\n\nTo complete the square for the $y$-terms, we need to add $\\blueE{\\left(\\dfrac{14}{2}\\right)^2}=\\blueE{49}$ to both sides of the equation, because $(y+7)^2=y^2+14y+\\blueE{49}$."
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "###Writing the equation in standard form\n\n$\\begin{align}(x^2+18x\\redE{+81})+(y^2+14y\\blueE{+49})&=-105\\redE{+81}\\blueE{+49}\\\\\\\\(x+9)^2+(y+7)^2&=25\\\\\\\\\n(x-(-9))^2+(y-(-7))^2&=5^2\\end{align}$\n\nSince the equation is now in the standard form, we can conclude that this circle is centered at $(-9,-7)$ and has a radius of $5$ units.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "###Summary\n\n- The circle is centered at $(-9,-7)$.\n\n-  The circle has a radius of $5$ units.",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "A certain circle can be represented by the following equation. \n\n$x^2+y^2+18x+14y+105=0$\n\n**What is the center of this circle** ?\n\n$($[[☃ numeric-input 1]] $,$ [[☃ numeric-input 2]]$)$\n\n**What is the radius of this circle** ?\n\n[[☃ numeric-input 3]] units",
+		"widgets": {
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": -9,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			},
+			"numeric-input 2": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": -7,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			},
+			"numeric-input 3": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": 5,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": true, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}

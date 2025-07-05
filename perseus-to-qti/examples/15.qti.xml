@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="circle-equation-center-radius"
+    title="Find the center and radius of a circle from its equation"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE_X" base-type="string" cardinality="single">
+        <qti-correct-response>
+            <qti-value>-9</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    
+    <qti-response-declaration identifier="RESPONSE_Y" base-type="string" cardinality="single">
+        <qti-correct-response>
+            <qti-value>-7</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-response-declaration identifier="RESPONSE_R" base-type="string" cardinality="single">
+        <qti-correct-response>
+            <qti-value>5</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="MAXSCORE">
+        <qti-default-value>
+            <qti-value>1</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <p>A certain circle can be represented by the following equation.</p>
+        <div>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msup><mi>x</mi><mn>2</mn></msup>
+                    <mo>+</mo>
+                    <msup><mi>y</mi><mn>2</mn></msup>
+                    <mo>+</mo>
+                    <mn>18</mn><mi>x</mi>
+                    <mo>+</mo>
+                    <mn>14</mn><mi>y</mi>
+                    <mo>+</mo>
+                    <mn>105</mn>
+                    <mo>=</mo>
+                    <mn>0</mn>
+                </mrow>
+            </math>
+        </div>
+        
+        <p>What is the center of this circle?</p>
+        <p>
+            ( <qti-text-entry-interaction response-identifier="RESPONSE_X" expected-length="2"/> ,
+              <qti-text-entry-interaction response-identifier="RESPONSE_Y" expected-length="2"/> )
+        </p>
+        
+        <p>What is the radius of this circle?</p>
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE_R" expected-length="2"/> units
+        </p>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-if>
+                <qti-and>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_X"/>
+                        <qti-correct identifier="RESPONSE_X"/>
+                    </qti-match>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_Y"/>
+                        <qti-correct identifier="RESPONSE_Y"/>
+                    </qti-match>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_R"/>
+                        <qti-correct identifier="RESPONSE_R"/>
+                    </qti-match>
+                </qti-and>
+            </qti-if>
+            <qti-set-outcome-value identifier="SCORE">
+                <qti-base-value base-type="float">1.0</qti-base-value>
+            </qti-set-outcome-value>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>

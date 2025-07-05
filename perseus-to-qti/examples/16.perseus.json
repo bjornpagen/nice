@@ -1,0 +1,52 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "$\\qquad\\begin{align} \\text{Mean} \\times \\text{Number of final exams} &= \\text{Total  points} \\\\\\\\\n\\\\\\\\ \\end{align}$  \n$\\qquad84 \\times 4 = \\blue{336} $\n",
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "Let's add up the final exam scores that we do know.\n\n$\\qquad 72 + 92 +85 = \\pink{249}$",
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "$\\qquad\\blue{336} - \\pink{249} = 87$ \n\nHaruka scored $87$ points on her final exam in chemistry.",
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "The following table shows each of Haruka's final exam scores last semester. \n\nFinal exam | Score on a $100$-point scale\n- | :-:\nAstronomy | $72$\nBiology |  $85$\nPhysics | $92$\nChemistry| $\\large?$\n\n**If the mean of the data set is $84$ points, find Haruka's final exam score in chemistry.**\n\n$\\qquad$[[☃ numeric-input 1]] points\n\n",
+		"widgets": {
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"options": {
+					"size": "normal",
+					"answers": [
+						{
+							"value": 87,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"coefficient": false
+				},
+				"version": { "major": 0, "minor": 0 }
+			}
+		}
+	},
+	"answerArea": {
+		"type": "multiple",
+		"options": { "images": {}, "content": "", "widgets": {} },
+		"calculator": true,
+		"periodicTable": false
+	},
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
