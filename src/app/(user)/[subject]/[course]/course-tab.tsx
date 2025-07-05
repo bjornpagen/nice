@@ -3,7 +3,7 @@
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import type { Course } from "../page"
+import type { Course } from "./page"
 
 export function CourseTab({ course, units, lessons }: { course: Course; units: number; lessons: number }) {
 	const pathname = usePathname()

@@ -1,5 +1,5 @@
 import { ProficiencyIcon, type proficiencyIconVariants } from "@/components/icons/proficiency"
-import type { Lesson, Quiz, UnitTest } from "../[unit]/page"
+import type { Lesson, Quiz, UnitTest } from "./[unit]/page"
 
 type ProficiencyItem = {
 	id: string

@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { House } from "lucide-react"
 import Link from "next/link"
 import {
@@ -8,6 +7,7 @@ import {
 	BreadcrumbList,
 	BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
+import { capitalize } from "@/lib/utils"
 
 export function CourseHeader({ subject, course }: { subject: string; course: string }) {
 	return (
@@ -25,7 +25,7 @@ export function CourseHeader({ subject, course }: { subject: string; course: str
 					<BreadcrumbItem>
 						<BreadcrumbLink asChild>
 							<Link href={`/${subject}`} className="text-blue-600 hover:text-blue-800">
-								{_.capitalize(subject)}
+								{capitalize(subject)}
 							</Link>
 						</BreadcrumbLink>
 					</BreadcrumbItem>
@@ -33,7 +33,7 @@ export function CourseHeader({ subject, course }: { subject: string; course: str
 					<BreadcrumbItem>
 						<BreadcrumbLink asChild>
 							<Link href={`/${subject}/${course}`} className="text-blue-600 hover:text-blue-800">
-								{_.capitalize(course)}
+								{capitalize(course)}
 							</Link>
 						</BreadcrumbLink>
 					</BreadcrumbItem>

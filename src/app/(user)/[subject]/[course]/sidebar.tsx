@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
-import type { Course, CourseChallenge, Unit } from "../page"
 import { CourseChallenge as CourseChallengeComponent } from "./course-challenge"
 import { CourseTab } from "./course-tab"
+import type { Course, CourseChallenge, Unit } from "./page"
 import { UnitTab } from "./unit-tab"
 
 export function CourseSidebar({

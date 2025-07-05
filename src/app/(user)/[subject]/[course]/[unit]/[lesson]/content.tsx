@@ -1,8 +1,8 @@
 "use client"
 
 import * as React from "react"
-import type { Course, Lesson, Unit } from "../page"
 import { LessonSidebar } from "./lesson-sidebar"
+import type { Course, Lesson, Unit } from "./page"
 
 type PageData = {
 	subject: string

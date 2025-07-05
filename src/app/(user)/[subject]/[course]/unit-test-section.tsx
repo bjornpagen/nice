@@ -1,7 +1,7 @@
-import _ from "lodash"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import type { UnitTest } from "../[unit]/page"
+import { startCase } from "@/lib/utils"
+import type { UnitTest } from "./[unit]/page"
 import { Section } from "./section"
 
 export function UnitTestSection({ unitTest }: { unitTest: UnitTest }) {
@@ -10,7 +10,7 @@ export function UnitTestSection({ unitTest }: { unitTest: UnitTest }) {
 			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
 				<div className="flex flex-col">
 					<Link href={unitTest.path} className="font-bold text-gray-900 mb-2 text-md hover:underline">
-						{_.startCase(unitTest.title)}
+						{startCase(unitTest.title)}
 					</Link>
 
 					<p className="text-gray-600 text-xs">

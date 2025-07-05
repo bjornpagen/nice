@@ -1,8 +1,8 @@
 import { Banner } from "@/components/banner"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
-import { ProfileBanner } from "./_components/profile-banner"
-import { Sidebar } from "./_components/sidebar"
+import { ProfileBanner } from "./profile-banner"
+import { Sidebar } from "./sidebar"
 
 // FIXME: remove this in favor of Clerk auth
 const uid = "aiden.zepp"

@@ -5,7 +5,7 @@ import * as React from "react"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import type { LessonChild, LessonInfo } from "@/lib/khan-academy-api"
-import { Content } from "../../_components/content"
+import { Content } from "../../content"
 
 // 1. Drizzle prepared statements (can be shared or re-defined)
 const getCourseByPathQuery = db

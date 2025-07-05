@@ -2,7 +2,7 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
-import { Content } from "./_components/content"
+import { Content } from "./content"
 
 // 1. Drizzle prepared statements are colocated and explicitly select columns.
 const getAllCoursesQuery = db

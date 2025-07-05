@@ -1,9 +1,9 @@
 import * as logger from "@superbuilders/slog"
-import _ from "lodash"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import type { CourseInfo, LessonInfo, UnitInfo } from "@/lib/khan-academy-api"
+import { upperCase } from "@/lib/utils"
 
 export function LessonNavigation({
 	course,
@@ -44,11 +44,11 @@ export function LessonNavigation({
 			<div className="flex-1 text-center min-w-0 px-2">
 				<div className="text-xs flex items-center justify-center gap-1 min-w-0">
 					<Link className="text-blue-600 hover:underline font-medium text-xs whitespace-nowrap" href={course.path}>
-						COURSE: {_.upperCase(course.title)}
+						COURSE: {upperCase(course.title)}
 					</Link>
 					<span className="text-gray-600 text-xs font-medium flex-shrink-0">{" > "}</span>
 					<Link className="text-blue-600 hover:underline font-medium text-xs whitespace-nowrap" href={unit.path}>
-						{_.upperCase(unit.title)}
+						{upperCase(unit.title)}
 					</Link>
 				</div>
 				<div className="text-md text-gray-600 font-medium truncate">

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import * as React from "react"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
-import { Content } from "./_components/content"
+import { Content } from "./content"
 
 // --- QUERIES ---
 const getCourseBySlugQuery = db

@@ -1,7 +1,7 @@
-import _ from "lodash"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import type { Quiz } from "../[unit]/page"
+import { startCase } from "@/lib/utils"
+import type { Quiz } from "./[unit]/page"
 import { Section } from "./section"
 
 export function QuizSection({ quiz }: { quiz: Quiz }) {
@@ -10,7 +10,7 @@ export function QuizSection({ quiz }: { quiz: Quiz }) {
 			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
 				<div className="flex flex-col">
 					<Link href={quiz.path} className="font-bold text-gray-900 mb-2 text-md hover:underline">
-						{_.startCase(quiz.title)}
+						{startCase(quiz.title)}
 					</Link>
 
 					<p className="text-gray-600 text-xs">Level up on the above skills and collect up to 0 Mastery points!</p>

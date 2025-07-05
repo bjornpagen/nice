@@ -1,10 +1,10 @@
 "use client"
 
-import _ from "lodash"
 import Link from "next/link"
 import { ActivityIcon } from "@/components/icons/activity"
 import { Button } from "@/components/ui/button"
-import type { Exercise, Lesson, Video } from "../[unit]/page"
+import { capitalize } from "@/lib/utils"
+import type { Exercise, Lesson, Video } from "./[unit]/page"
 import { Section } from "./section"
 
 export function LessonSection({
@@ -19,7 +19,7 @@ export function LessonSection({
 	return (
 		<Section>
 			<Link href={lesson.path} className="font-bold text-gray-900 mb-2 text-md hover:underline">
-				{_.capitalize(lesson.title)}
+				{capitalize(lesson.title)}
 			</Link>
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 				<div className="mb-2 mt-4">

@@ -1,4 +1,3 @@
-import _ from "lodash"
 import Link from "next/link"
 import {
 	Breadcrumb,
@@ -8,6 +7,7 @@ import {
 	BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
 import type { CourseInfo, LessonInfo, UnitInfo } from "@/lib/khan-academy-api"
+import { startCase } from "@/lib/utils"
 
 export function LessonBreadcrumbs({
 	subject,
@@ -26,7 +26,7 @@ export function LessonBreadcrumbs({
 				<BreadcrumbItem>
 					<BreadcrumbLink asChild>
 						<Link href={`/${subject}`} className="underline">
-							{_.startCase(subject)}
+							{startCase(subject)}
 						</Link>
 					</BreadcrumbLink>
 				</BreadcrumbItem>

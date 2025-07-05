@@ -1,8 +1,8 @@
 "use client"
 
 import * as React from "react"
-import type { Course, Unit } from "../page"
 import { CourseCard } from "./course-card"
+import type { Course, Unit } from "./page"
 
 export function Content({
 	coursesPromise,
