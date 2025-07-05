@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="perseus-volume-question-v3-mathml"
+    title="Volume of a bowl of soup"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="MAXSCORE">
+        <qti-default-value>
+            <qti-value>1</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <qti-prompt>Which is closer to the volume of a bowl of soup?</qti-prompt>
+        
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1">
+            <qti-simple-choice identifier="A">
+                <div role="math" aria-label="3 cups">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mn>3</mn>
+                        <mtext> cups</mtext>
+                    </math>
+                </div>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <div role="math" aria-label="3 quarts">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mn>3</mn>
+                        <mtext> quarts</mtext>
+                    </math>
+                </div>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+        
+        <div>
+            <img src="https://cdn.kastatic.org/ka-perseus-images/6e97b6fb3b6e4db8bd10c2bad63a40d7ba4b8d05.svg"
+                 alt="A bowl of soup."
+                 width="155"
+                 height="174"/>
+        </div>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>

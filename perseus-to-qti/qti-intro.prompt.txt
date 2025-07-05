@@ -1,0 +1,537 @@
+Abstract
+The 1EdTech Question and Test Interoperability® (QTI®) specification is a technical standard for digital interchange of assessment content (items and tests), assessment usage data and results reporting. Use of QTI 3.0 enables assessment materials to be exchanged digitally among a wide variety of products, such as item/test authoring products, item banks, and test delivery systems.
+
+QTI 3.0 is based on the well established QTI standard that has been used internationally for two decades and 1EdTech Accessible Portable Item Protocol® (APIP®). QTI 3.0 adds support of digital delivery options for a range of common accessibility needs and enables transform-free authoring to delivery workflow. Implementations of QTI 3.0 may require use of related standards, including the 1EdTech Content Packaging 1.0 specification, and the AccessForAll® (AfA) 3.0 specification.
+
+This beginner's guide provides a basic introduction to the standard and how best to begin using it.
+
+1. Introduction
+The Question and Test Interoperability standard was started in 1999 to help organizations exchange assessment content, in particular for digital assessments. While HTML forms can handle some response information, they are limited in the amount of data that can be stored and exchanged, and don't include the more sophisticated kinds of data needed for more advanced assessments.
+
+QTI is now in its third major version, and includes many sophisticated features that can feel overwhelming to people just beginning to use the QTI standard. This guide gives an overview of the important basics of QTI, which are used to exchange QTI content. For detailed information on all the QTI features, see the QTI 3 Best Practices and Implementation Guide [QTI-IMPL-30] and the Information Model documentation [QTI-INFO-30].
+
+While this guide will try to define terms specific to their use in QTI, you might find it handy to refer to the QTI 3 Terms & Definitions document [QTI-TERM-30].
+
+1.1 Conformance Statements
+This document is an informative resource in the Document Set of the 1EdTech Question & Test Interoperability (QTI) v3.0 specification [QTI-OVIEW-30]. As such, it does not include any normative requirements. Occurrences in this document of terms such as MAY, MUST, MUST NOT, SHOULD or RECOMMENDED have no impact on the conformance criteria for implementors of this specification.
+2. The Structure of QTI 3 Content
+Tests are made up of items (questions with response interactions). In QTI, a test must include at least one test "Part," which has at least one test "Section," which has at least one item. A test can have multiple parts, and the test parts can have multiple sections. Sections can have sections inside them, as long as those sections include one or more items. Below are some possible combinations of test structures.
+
+A very simple test:
+
+Figure 1 Illustration of a simple test structure.
+A simple test: a Test contains one Part, which contains one Section, that contains 3 Items.
+Figure 2 Illustration of a test structure organized with multiple sections.
+Test with multiple sections: a Test contains one Part, which contains 2 Sections. The first section has 3 items, the second section has 2 items.
+A test with 2 parts, each part has 2 sections, and one of the sections has 2 "nested" sections:
+
+Figure 3 Illustration of a complex test structure.
+A complex test: Test with 2 Parts. The first Part has 2 sections with items. The second Part has 2 sections where the second section has within it 2 subsections which have items.
+Items are typically made up of a stimulus (or stimuli), questions (prompts) and a response area (interactions). While a simple question might include a short prompt and a single interaction, questions can also include long text passages as the stimulus, and may have several interactions as part of the same question, or include follow-up questions. A more detailed explanation of the structure of a QTI item can be found in Section 3 of this guide.
+
+In order for the assessment content to be useful to test administrators, it needs to contain the correct answers, and how to score all the parts and questions. QTI has a standardized way of including the response and scoring information inside the content files. No other data files are needed to be referenced to administer the test content.
+
+Once test content has been transferred, either from different organizations or different systems within an organization, it will ultimately need to be presented to candidates during an assessment session. The most common method for delivery today is using a web browser, using HTML and accompanying web standards (CSS, Javascript, etc.) as the delivery markup. Some transformation between the QTI XML file and the delivery markup is required, and indeed is necessary to remove the answers from the delivery file.
+
+The past two versions of QTI have added accessibility supports that increase the ability of QTI content to be presented and responded to by a greater number of candidates. Where possible, the W3C methods for adding accessibility information (or content structure) are used. When specific assessment accessibility requirements are needed (often referred to as "accommodations"), QTI has standardized ways of including modifications to the content for those needs. In general, the W3C accessibility needs are used in even the basic exchange of QTI content, and the QTI-specific accessibility supports are used in the more complicated assessment programs.
+
+The primary W3C accessibility methods used for assessment content include:
+
+HTML elements to provide clear hierarchy of content structure
+Keyboard accessibility (navigation and input) for the presentation interface
+A declaration of the principal language used for the content within the file
+Alternative ("alt") text for images
+Captions for videos
+Labels for buttons in the presentation interface
+A subset of WAI-ARIA 1.0, 1.1 and 1.2 (aria-describedby, aria-hidden, aria-label, aria-labelledby, aria-live, role)
+Inline SSML to provide pronunciation and timing for screen readers
+Note that the above list is not exhaustive, and the WAI-ARIA and SSML markup is generally used in more complicated assessment programs.
+
+3. QTI Items
+3.1 What's in an item?
+QTI items are stored in a standardized XML file. That file includes all the required QTI elements, and any optional elements. You don't need to worry about where that item fits within the test structure from within the item file itself.
+
+At its most basic, an item includes a question (a prompt) and a way to respond to the question (an interaction). Often the item will include introductory text, graphics, tables, or other information that the question is based on. This is commonly referred to as the stimulus, though no specific stimulus node exists in a QTI item.
+
+In QTI, the stimulus, the prompt, and the interaction are all included in the qti-item-body. There are several other pieces of information that are also included in a QTI item, always listed in the same sequence within the file. The basic item pieces are shown in the illustration below:
+
+Figure 4 An illustration of the assessment item structure.
+Assessment Item Document Information, Answers (responseDeclaration), Scoring (outcomeDeclaration), Item Body (stimulus, prompt, interaction), Response Processing.
+Below is an example of XML markup in a QTI 3.0 file. It includes all the basic parts shown above, in the same sequence.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+ xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0p1 
+ https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+ identifier="firstexample"
+ title="First Example"
+ time-dependent="false" 
+ xml:lang="en-US">
+ <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+  <qti-correct-response>
+   <qti-value>A</qti-value>
+  </qti-correct-response>
+ </qti-response-declaration>
+ <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+  <qti-default-value>
+   <qti-value>1</qti-value>
+  </qti-default-value>
+ </qti-outcome-declaration>
+ <qti-item-body>
+  <p>Of the following hormones, which is produced by the adrenal glands?</p>
+  <qti-choice-interaction max-choices="1" min-choices="1" response-identifier="RESPONSE">
+   <qti-simple-choice identifier="A">Epinephrine</qti-simple-choice>
+   <qti-simple-choice identifier="B">Glucagon</qti-simple-choice>
+   <qti-simple-choice identifier="C">Insulin</qti-simple-choice>
+   <qti-simple-choice identifier="D">Oxytocin</qti-simple-choice>
+  </qti-choice-interaction>
+ </qti-item-body>
+ <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+</qti-assessment-item>
+Later we'll go through more detail of each of the XML nodes in the above example, but for now, here is the basic breakdown of the markup:
+
+Line 1 let's everyone know this file is an XML file. You have to include this.
+
+Line 2 has the required qti-assessment-item element. All the item content is contained within this node (it closes on line 39). Within that element, Lines 3–6 include the namespace information, which you must put in to declare that the item content intends to follow the QTI 3 standard. Line 7 has the required identifier attribute, and Line 8 includes the required time-dependent attribute, followed by the optional (but highly recommended) lang attribute to declare the principal language of the item content.
+
+Line 11 starts the qti-response-declaration node, which is used to provide the correct answer[s] for the question.
+
+Line 18 includes the qti-outcome-declaration, which lets us know how to give a score based on the response. This example shows a simple single point awarded for answering the question correctly, but for more complex interaction types, it could have different points for partial credit, or negative points for incorrect responses.
+
+On line 23, the qti-item-body node contains the item content that will be presented to the candidate. Here you'll see familiar HTML elements combined with QTI-specific elements (using the qti- prefix).
+
+The interaction within the qti-item-body starts on line 25, using a qti-choice-interaction element – a specific interaction type that expects the candidate to choose the answer[s] from a set of choices. Each of the choices is made within a qti-simple-choice element.
+
+The qti-response-processing element (line 36) shows you how to score the response made by the candidate. In this example, the markup points you to a pre-made scoring template that handles choice interactions.
+
+Below are the more detailed descriptions of each of the QTI nodes.
+
+3.2 Time Dependency
+The time-dependent attribute in the qti-assessment-item node denotes whether the item must be answered within some defined time limit. The attribute must be included. It is a boolean value, and only indicates whether it is time dependent, and does not indicate the amount of time.
+
+Time limits are set for a whole test, a portion of a test, or an individual item. The time is specified in the structure (Test, Part, or Section) that references the object (Part, Section, or Item) that has the time limit.
+
+Use of time limits is optional, and not required for Entry Level conformance. For more information on setting time limits, see the QTI 3.0 Best Practices and Implementation Guide [QTI-IMPL-30].
+
+3.3 Data Model
+The QTI data model has enough complexity to handle simple, single-choice interactions and complex interactions with a set or sets of responses.
+
+After a candidate completes an item, we need to determine if the candidate responded to the interaction correctly. The stored responses from the candidate are "data." In the case of a choice interaction, a single-answer question returns the identifier of the chosen response. A numeric slider interaction returns a number.
+
+Many other interaction types return more complex data for the response. A choice interaction that allows for multiple responses returns a "set" of identifiers (e.g. "identiferA,identifierB,identifierD").
+
+An Order interaction returns an ordered set of identifiers (e.g. "identiferC,identifierA,identifierB"). Some interactions return responses as sets of pairs, an associate interaction, where a response might look like (A, F),(B, D),(E, C).
+
+Use the <qti-response-declaration> element to declare the kind of response the interaction is meant to use. Use the base-type attribute to declare the appropriate data type. Use the cardinality attribute to indicate how many base-type elements to expect and whether the set is ordered.
+
+For a choice interaction, use "identifier" as the base-type, and choose between "single" (one response allowed) and "multiple" (more than one response allowed/required) for the cardinality.
+
+Figure 5 The code from the initial example has a response declaration that looks like this:
+<qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+  <qti-correct-response>
+    <qti-value>A</qti-value>
+  </qti-correct-response>
+ </qti-response-declaration>
+From the above code, we can tell we are looking for a single identifier in the response. The nodes inside the response declaration tell us that the correct answer is "A".
+
+For a simple text entry interaction, use "string" as the base-type , and choose "single" for the cardinality for a one word response (see Section 3 of the BPIG for the more complex "record" base-type).
+
+The full list of possible base-type attribute values:
+
+boolean
+directedPair
+duration
+file
+float
+identifier
+integer
+pair
+point
+string
+uri
+The cardinality attribute gives the number of base-type elements and if the set is ordered. The possible cardinality values include:
+
+multiple
+ordered
+record
+single
+3.4 Response Declarations
+As mentioned previously, the response declaration holds the answer[s] for an interaction in the item. The identifier attribute in the qti-response-declaration element contains the name that binds (connects) the response declaration to an interaction. This is important because there can be multiple interactions in an item (QTI calls these "composite items"), and you want to make sure the proper answers are connected to the right question.
+
+The qti-correct-response node contains, you guessed it, the correct (or optimal) response for the interaction. The response declaration can contain more nuanced answers, mapping responses to partial credit.
+
+3.5 Response Processing
+Response Processing in QTI defines what a system is supposed to do after a candidate has responded to the question (specifically, the interaction(s) in the item).
+
+For the QTI beginner, use the proper predefined response-processing template in your items. This will link the assessment delivery system to standard response processing code used for common interactions. Note you can only use these predefined scoring templates if the item has a single interaction, the response declaration uses "RESPONSE", and the outcome declaration uses the SCORE variable name with a base-type of "float".
+
+The most common templates used are the match_correct and the map_response templates.
+
+The match_correct will check the candidate's response against the correct response, and set the built-in SCORE outcome variable to 1 if correct or 0 if answered incorrectly.
+
+The map_response template will check the candidate's response(s) against the set of mapped responses (as made in the response declaration) to fully correct, partially correct, and fully incorrect responses.
+
+See the specific interaction types later in this guide for which templates to use for response processing.
+
+QTI does allow for more detailed processing of responses (using a response processing scripting language) and complex system behaviors (like feedback for the candidate). See Section 3 of the QTI 3.0 BPIG [QTI-IMPL-30] for more information about QTI response processing.
+
+3.6 Outcome Declarations
+The outcome declaration tells us how to score the response(s) for an interaction. Here you define an internal variable for the tabulation of the outcome of the item. Items that use a numeric value should use the reserved variable name ‘SCORE', which needs to be a  base-type of "float".
+
+Items that have a maximum score (like in a choice interaction that allows for multiple responses), should declare the maximum score by using the "MAXSCORE" variable (base-type of "float"). Note: response processing templates only affect the built-in score– there is no impact on the MAXSCORE.
+
+3.7 Item Body
+For non-interaction content within the ItemBody (element qti-item-body) QTI 3.0 uses a subset of HTML5 tags, the list of which is found in the QTI Information and Binding documentation. The stimulus specific to the item, the prompt (question), and interactions are contained within the item body. This is generally all the content that is presented to the candidate for a test question.
+
+3.7.1 Prompts
+There is a QTI specific element called "qti-prompt" that can be used inside an interaction. It is a way of declaring that portion of the content that is a request for a response from the candidate. No interactions are contained within the qti-prompt node. You are not required to use this element in a QTI item. Content within the qti-prompt element is the same subset of HTML5 elements as allowed in QTI content.
+
+3.7.2 Interactions
+Interactions use QTI-specific elements to represent the parts of content that candidates are meant to provide a response. The candidates "interact" with the content, and a response is recorded and sent out for response processing.
+
+Below we discuss three of the most common interactions used in QTI: choice, extended text, and text entry interactions. For a complete listing and explanation of all the QTI interactions and QTI Shared Vocabulary (a list of common assessment related classes and custom attributes that promote cross-vendor presentation interoperability), see Section 3 of the QTI 3.0 Best Practices and Implementation Guide [QTI-IMPL-30].
+
+3.7.2.1 Choice Interaction
+By far the most common type of interaction for tests are choice interactions. In a choice interaction, the candidate is presented with a number of choices and prompted to choose 1 or more of the choices.
+
+The qti-choice-interaction has an optional attribute called "max-choices". The default value for this attribute is "1". If you don't include this attribute, the candidate would only be allowed to select one of the choices. If you want the candidate to be able to select more than one choice, you must include the max-choices attribute and indicate the number of choices the candidate is allowed. Note that "0" actually indicates an unlimited number of choices, not zero choices.
+
+To connect the interaction to the ResponseDeclaration (element qti-response-declaration), use the "response-identifier" attribute, and use the same value as stated in the associated "identifier" within the response declaration. If you're using a response processing template, the identifier will always be "RESPONSE".
+
+The response processing template you should use for choice is the match correct template (https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct) for right or wrong, or the map responses template (https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/map_response) for correct, partial credit, and wrong responses.
+
+The choices within the interaction are listed as separated "simple choices", using the qti-simple-choice element. Each simple choice must have a unique identifier that distinguishes it from the other choices. That identifier will be used as the response, and therefore used in response processing. For the correct response(s), the identifier(s) will need to match the value(s) used in the correct response(s) in the response declaration.
+
+Inside the qti-simple-choice node, you can author any content using the QTI subset of HTML5 content, including any media references.
+
+Here is an example of a choice interaction that allows the candidate to pick one choice (sometimes called single selection choice).
+
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+ xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 
+ https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+ identifier="beginnersguide007"
+ title="BG true false example "
+ time-dependent="false" 
+ xml:lang="en-US">
+ <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+  <qti-correct-response>
+   <qti-value>true</qti-value>
+  </qti-correct-response>
+ </qti-response-declaration>
+ <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+  <qti-default-value>
+   <qti-value>1</qti-value>
+  </qti-default-value>
+ </qti-outcome-declaration>
+ <qti-item-body>
+  <p>This is a True/False question?</p>
+  <qti-choice-interaction max-choices="1" response-identifier="RESPONSE">
+    <qti-simple-choice identifier="true">True</qti-simple-choice>
+    <qti-simple-choice identifier="false">False</qti-simple-choice>
+  </qti-choice-interaction>
+ </qti-item-body>
+ <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+</qti-assessment-item>
+a choice interaction with two possible choices shown
+And here is an example of a choice interaction that asks the candidate to select multiple simple choices (with a limit of 4 maximum choices). Notice that the response declaration has a cardinality of "multiple" and the correct response requires 3 of the choices to be selected by the candidate.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item 
+ xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 
+ https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+ identifier="beginnersguide008"
+ title="BG Choice example"
+ time-dependent="false" 
+ xml:lang="en-US">
+ <qti-response-declaration base-type="identifier" cardinality="multiple" identifier="RESPONSE">
+  <qti-correct-response>
+   <qti-value>A</qti-value>
+   <qti-value>C</qti-value>
+   <qti-value>D</qti-value>
+  </qti-correct-response>
+ </qti-response-declaration>
+ <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+  <qti-default-value>
+    <qti-value>1</qti-value>
+  </qti-default-value>
+ </qti-outcome-declaration>
+
+ <qti-item-body>
+  <p>QTI 3 is a new version released in 2022.</p> 
+  <qti-choice-interaction max-choices="3" response-identifier="RESPONSE">
+  <qti-prompt>
+   <p>Which of the following features are <strong>new</strong> to QTI 3?</p> 
+   <p>Pick 3 choices.</p></qti-prompt>
+   <qti-simple-choice identifier="A">Shared Vocabulary</qti-simple-choice>
+   <qti-simple-choice identifier="B">Pineapple Flavored</qti-simple-choice>
+   <qti-simple-choice identifier="C">Catalogs for candidate-specific content.</qti-simple-choice>
+   <qti-simple-choice identifier="D">Conformance features definitions</qti-simple-choice>
+   <qti-simple-choice identifier="E">A subset of HTML5 elements</qti-simple-choice>
+  </qti-choice-interaction>
+ </qti-item-body>
+ <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+</qti-assessment-item>
+a choice interaction with five possible choices shown
+3.7.2.2 Extended Text Interaction
+The extended text interaction allows a candidate to supply a text string for a response. A basic example of the markup is shown below.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item 
+ xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 
+ https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+ identifier="beginnersguide009"
+ title="BG Postcard example"
+ time-dependent="false" 
+ xml:lang="en-US">
+ <qti-response-declaration identifier="RESPONSE" base-type="string" cardinality="single" />
+ <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" />
+ <qti-item-body>
+  <p>Read this postcard from your English pen-friend, Sam.</p> 
+   <div>
+    <blockquote class="postcard">
+     <p>Here is a postcard of my town. Please send me<br/>
+       a postcard from your town. What size is your Town?<br/>
+       What is the nicest part of your town?<br/>
+       Where do you go in the evenings?</p>
+     <p>Sam</p>
+    </blockquote>
+   </div>
+   <qti-extended-text-interaction response-identifier="RESPONSE">
+    <qti-prompt>Write Sam a postcard. Answer the questions. Write 23–30 words</qti-prompt>
+   </qti-extended-text-interaction>
+ </qti-item-body>
+</qti-assessment-item>
+Figure 6 A sample item as it might be presented during an assessment.
+Writing a Postcard Illustration
+The cardinality of "single" in the qti-response-processing element means that a single string of text is used in the response, though it may include multiple words or paragraphs within that string.
+
+The example does not include a response processing node, as automated scoring of extended text responses is beyond the scope of the QTI specification.
+
+There are a number of optional attributes that can be used in the extended text interaction which can help describe delivery expectations.
+
+3.7.2.3 Text Entry Interaction
+Another interaction that allows shorter test responses is the TextEntryInteraction, which requires the candidate to construct their own response, typically by typing it in.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item 
+ xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 
+ https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+ identifier="beginnersguide010"
+ title="BG Missing Word example"
+ time-dependent="false" 
+ xml:lang="en-US">
+ <qti-response-declaration identifier="RESPONSE" base-type="string" cardinality="single">
+  <qti-correct-response>
+   <qti-value>York</qti-value>
+  </qti-correct-response>
+  <qti-mapping default-value="0">
+   <qti-map-entry map-key="York" mapped-value="1" case-sensitive="true" />
+   <qti-map-entry map-key="york" mapped-value="0.5" />
+  </qti-mapping>
+ </qti-response-declaration>
+ <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" />
+ <qti-item-body>
+  <p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+  <div>
+   <blockquote>
+    <p>Now is the winter of our discontent<br/>
+      Made glorious summer by this sun of <qti-text-entry-interaction response-identifier="RESPONSE" />;<br/>
+      And all the clouds that lour'd upon our house<br/>
+      In the deep bosom of the ocean buried.</p>
+   </blockquote>
+  </div>
+ </qti-item-body>
+ <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/map_response" />
+</qti-assessment-item>
+Which might look something like this when presented to candidates:
+
+Figure 7 A sample text entry item as it might be presented during an assessment.
+Richard III Take 3
+The scoring for this item could have just matched the correct response (in the response declaration) but actually uses a mapping to enable partial credit for an improperly capitalized city name (spelled without a capital letter, or all caps, or other capitilization error). When mapping strings the mapping, by default, is NOT case sensitively. This example also illustrates the use of the mapping when the response only has single cardinality.
+
+3.8 Accessibility in Items
+You should include at least basic accessibility supports in your QTI content. The item example below shows providing alternate text for an image and supplying captions for the video used as stimulus for this question.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item 
+ xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 
+ https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+ identifier="beginnersguide011"
+ title="BG media example"
+ time-dependent="false" 
+ xml:lang="en-US">
+ <qti-response-declaration identifier="RESPONSE" base-type="string" cardinality="single" />
+ <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" />
+ <qti-item-body>
+  <div><img src="resources/crows.jpg" alt="Picture of crows roosting in a tree" height="215" width="320"/></div>
+  <p>Crows play an important part of the ecosystem in Corvusville, Pennsylvania.</p>
+  <p>Play this short video where a Park Ranger discusses some of the important contributions 
+    that crows make to the local ecosystem.</p>
+  <video width="320" height="240" controls="controls">
+   <source src="resources/crow_movie.mp4" type="video/mp4" />
+   <source src="resources/crow_movie.ogg" type="video/ogg" />
+   <track src="resources/subtitles_en.vtt" kind="subtitles" srclang="en" />
+  Your browser does not support the video tag.
+  </video>
+  <p>Based on what you learned from the Ranger in the video, how do you think some kind of wild animal plays an 
+    important part of your local environment? Use examples to support your ideas. Write at least 50 words 
+    about your animal.</p>
+  <qti-extended-text-interaction response-identifier="RESPONSE" />
+ </qti-item-body>
+</qti-assessment-item>
+The file itself states the language used for the content of the file in the xml:lang attribute in the opening qti-assessment-item element. Providing this language-of-the-page tag can assist screen readers to properly read the content to candidates that use screen readers.
+
+The image uses the alt attribute to give a short description of the picture. All images should have a description provided unless the graphic is purely decorative. If it is decorative, you should still include the alt attribute but leave the value as empty ( alt="" ) – this will indicate to screen readers they should skip the graphic altogether. If you don't include the empty alt tag, a screen reader will indicate that there is an image present, and the candidate may think they are missing important information but a description was not provided.
+
+The video includes a "track" for captions for the video. Modern web browsers automatically provide a method to access the track information when displaying videos. If you're using a more proprietary method of displaying video content, you may need to do some extra programming to make this track information available for candidates.
+
+4. Tests
+4.1 A Test File
+An AssessmentTest XML file contains the XML markup that describes specific test structures. A QTI AssessmentTest must always contain at least one TestPart. Each TestPart must contain at least one AssessmentSection. AssessmentSection(s) contain the references to the assessment item(s) that make up the questions of the test.
+
+Below is a very simple test, containing a single part, with a single section, and 4 items.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 
+https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+identifier="t1-test-entry"
+title="T1 - test entry"
+xml:lang="en-US">
+    <qti-test-part identifier="testPart-1" navigation-mode="nonlinear" 
+   submission-mode="individual">
+        <qti-assessment-section identifier="assessmentSection-1" title="Section 1"
+         visible="true">
+            <qti-assessment-item-ref identifier="t1-test-entry-item1"
+              href="items/choice-single-cardinality.xml"/>
+            <qti-assessment-item-ref identifier="t1-test-entry-item2"
+              href="items/choice-multiple-cardinality.xml"/>
+            <qti-assessment-item-ref identifier="t1-test-entry-item3"
+              href="items/text-entry.xml"/>
+            <qti-assessment-item-ref identifier="t1-test-entry-item4"
+             href="items/extended-text.xml"/>
+        </qti-assessment-section>
+    </qti-test-part>
+</qti-assessment-test>
+4.1.1 Attributes for the qti-assessment-test Element
+There are some required attributes for the qti-assessment-test element. You always include the namespace information within the qti-assessment-test element, which is always the same for QTI 3 Test content (see lines 3, 4, 7, and 8).
+
+The identifier attribute should identify this particular test using a unique name.
+
+The title attribute can be any text that helps describe this particular test. This text is often displayed to the candidate, though displaying the text isn't necessarily a delivery requirement.
+
+This example also includes the language of the test (line 0009), which is not required, but is a recommended practice as it is very useful for accessibility purposes.
+
+Remember, an AssessmentTest must contain at least one TestPart. The example above shows a qti-test-part beginning on line 0010 and ending on line 0023.
+
+4.1.2 Test Parts and Test Part attributes
+At QTI Test MUST contain at least one part (class TestPart). TestParts contain AssessmentSections as well as other optional part information that regulate that particular part. A test can contain as many parts as you need. You generally use additional test parts if there are differences about how the parts are regulated, but many implementers use them as convenient groupings of items and sections.
+
+There are 3 required attributes for the qti-test-part element, including identifier, navigation-mode, and submission-mode.
+
+The " identifier" attribute should identify a particular test part using a unique name.
+
+The attribute " navigation-mode" allows for 2 values: linear, and nonlinear. The "linear" term means that the items within this test part must be responded to in the order listed, and the candidate cannot jump around between items during the assessment session. The "nonlinear" term allows the candidate to respond to the items in any sequence they choose.Items are still presented to the candidate in the sequence listed but the candidate can skip or jump around the items within the test part. This is important if you have multiple sections within a test part, where candidates would be allowed to move between sections of the test. To restrict moving between sections, either use multiple test parts, or use the "linear" navigation-mode.
+
+The attribute " submission-mode" describes how the items within the test part should be submitted for response processing. The 2 possible values are "individual" and "simultaneous", where "individual" indicates the response can be sent as each item is completed, and "simultaneous" means the responses for all the items are sent when the whole part is completed.
+
+4.1.3 Sections
+Sections are listed within test parts. You must put at least one section within a test part, and you can put as many sections within a test part as you need.
+
+The qti-assessment-section element has 3 required attributes, including: identifier, title, and visible.
+
+The identifier attribute should identify this particular section using a unique name.
+
+The title attribute can be any text that helps describe this particular section. This text is often displayed to the candidate, though presenting it to the candidate isn't necessarily a delivery requirement.
+
+The visible attribute must be set to true for the section to be presented to the candidate without conditions. For a deeper understanding of section visibility to candidates, see the QTI Information Model [QTI-INFO-30].
+
+Sections list the items using item references via the qti-assessment-item-ref element. The qti-assessment-item-ref element has 2 required attributes, which are "identifier" and "href". The "identifier" references the identifier within the item file, and the "href" attribute is a URI of the location of the item XML file relative to the test file that is referencing the item.
+
+5. Content Packaging
+QTI is primarily a transfer protocol, created to move assessment content from one place to another. The assessment content is put together in a Content Package, which includes a manifest that lists all the resources inside a package. The assets (resources) of the package, and the manifest are collected together in a .zip file.
+
+A package can include all the parts of a whole test, multiple tests, or any of the pieces of assessment content. Sometimes just items are put into exchangeable packages, which is also known as an "item bank."
+
+5.1 Making a Manifest
+A content package must always include a manifest, which lists all the assets contained within the package. The name of the manifest MUST be " imsmanifest.xml".
+
+Below is a basic manifest that includes 3 items, an image, and the test these items go with (in total 5 resources).
+
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns="http://www.imsglobal.org/xsd/qti/qtiv3p0/imscp_v1p1" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+identifier="level1-T1-test-entry" 
+xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/qtiv3p0/imscp_v1p1 
+https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqtiv3p0_imscpv1p2_v1p0.xsd"> 
+ <metadata> 
+   <schema>QTI Package</schema> 
+   <schemaversion>3.0.0</schemaversion> 
+ </metadata> 
+ <organizations/> 
+ <resources>
+  <resource identifier="t1-test-entry-item1" type="imsqti_item_xmlv3p0" 
+  href="items/choice-single-cardinality.xml"> 
+        <file href="items/choice-single-cardinality.xml"/>
+    <dependency identifierref="image_resource_1"/>
+  </resource>
+  <resource type="webcontent" identifier="image_resource_1" 
+  href="items/images/badger.svg">
+      <file href="items/images/badger.svg">
+  </resource>
+  <resource identifier="t1-test-entry-item2" type="imsqti_item_xmlv3p0" 
+  href="items/choice-multiple-cardinality.xml"> 
+        <file href="items/choice-multiple-cardinality.xml"/>
+  </resource>
+  <resource identifier="t1-test-entry-item3" type="imsqti_item_xmlv3p0" 
+  href="items/text-entry.xml"> 
+        <file href="items/text-entry.xml"/>
+  </resource>
+  <resource identifier="t1-test-entry-item4" type="imsqti_item_xmlv3p0" 
+  href="items/extended-text.xml"> 
+        <file href="items/extended-text.xml"/>
+  </resource>
+  <resource identifier="t1-test-entry" type="imsqti_test_xmlv3p0" href="assessment.xml"> 
+     <file href="assessment.xml"/>
+  </resource>
+ </resources>
+</manifest>
+You must include at least some basic metadata about the manifest, which tells the receiving party that this is a QTI Package, using version 3.0.0 of the specification (lines 7 & 8).
+
+All the locations of the resources are listed relative to the imsmanifest.xml file, which is at the top level of the package (not in a subdirectory).
+
+The resource "t1-test-entry-item1" has an image, which is listed as a "dependency" within the item's resource node. That image is then listed as its own resource. They are connected together by the name of the identifier of the image.
+
+The "type" attribute in the resource element uses one of the enumerated acceptable values, which can be found in the QTI 3 profile of the Content Package v1.1 standard. For quick reference, here is a short list (the full list is in Section 8 of [QTI-BIND-30]) of the most common types:
+
+QTI object	<resource> type value
+Test	imsqti_test_xmlv3p0
+Section	imsqti_section_xmlv3p0
+Item	imsqti_item_xmlv3p0
+Images and media	webcontent
+Shared Stimulus	imsqti_stimulus_xmlv3p0
+CSS 3 stylesheet	css3
+The above package example includes a combination of tests, items, and images and is therefore listed as a "QTI Package" in the <schema> node. If you were to create special packages of just items or images or tests, you should state what kind of package it is in the manifest's <schema> node. Below is the list of acceptable kinds of packages for QTI 3:
+
+"QTI Package"
+"QTI Test Bank"
+"QTI Item Bank"
+"QTI Object Bank"
+"QTI Test"
+"QTI Section"
+"QTI Item"
+A "Bank" indicates it is a collection of just those structures, without the other QTI structures that could be associated with them. For example, an "Item Bank" would include only a collection of items (and their dependent resources) without describing how they fit into a test.

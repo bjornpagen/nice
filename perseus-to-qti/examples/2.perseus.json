@@ -1,0 +1,61 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "A clause has two main parts:\n\n1. The **subject** is the main person or thing in the clause performing an action.\n2. The **predicate** contains the verb and describes the action that the subject is performing. It's the *rest* of the sentence that's *not* the subject.\n\nTypically, clauses start with the subject and finish with the predicate. ",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "Since the bolded part of the sentence tells us *who* is performing the action, it's the **subject**.",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": " **Choose whether the bolded part of the sentence is the subject or the predicate.** \n\n> **Holly** injured her rear on a spiky cactus.\n\n[[☃ radio 1]]\n\n",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"content": "subject",
+							"correct": true
+						},
+						{
+							"content": "predicate",
+							"correct": false
+						}
+					],
+					"randomize": false,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": {
+					"major": 1,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false
+	},
+	"itemDataVersion": {
+		"major": 0,
+		"minor": 1
+	}
+}
