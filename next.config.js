@@ -15,6 +15,10 @@ const config = {
 			{
 				protocol: "https",
 				hostname: "tools.applemediaservices.com"
+			},
+			{
+				protocol: "https",
+				hostname: "ext.same-assets.com"
 			}
 		]
 	}

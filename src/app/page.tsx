@@ -62,6 +62,8 @@ export default function Home() {
 							<Image
 								src="https://ext.same-assets.com/3576345726/219755154.png"
 								alt="Teacher and student illustration"
+								width={500}
+								height={400}
 								className="w-full max-w-lg rounded-lg"
 							/>
 						</div>
@@ -89,6 +91,8 @@ export default function Home() {
 									<Image
 										src="https://ext.same-assets.com/3576345726/3627415455.svg"
 										alt="Google"
+										width={20}
+										height={20}
 										className="mr-3 h-5 w-5"
 									/>
 									Continue with Google
@@ -100,6 +104,8 @@ export default function Home() {
 										<Image
 											src="https://ext.same-assets.com/3576345726/3854438810.svg"
 											alt="Clever"
+											width={16}
+											height={16}
 											className="mr-2 h-4 w-4"
 										/>
 										Clever
@@ -108,6 +114,8 @@ export default function Home() {
 										<Image
 											src="https://ext.same-assets.com/3576345726/74763886.svg"
 											alt="Facebook"
+											width={16}
+											height={16}
 											className="mr-2 h-4 w-4"
 										/>
 										Facebook
@@ -116,6 +124,8 @@ export default function Home() {
 										<Image
 											src="https://ext.same-assets.com/3576345726/3808120640.svg"
 											alt="Apple"
+											width={16}
+											height={16}
 											className="mr-2 h-4 w-4"
 										/>
 										Apple
@@ -124,6 +134,8 @@ export default function Home() {
 										<Image
 											src="https://ext.same-assets.com/3576345726/1521032922.svg"
 											alt="Microsoft"
+											width={16}
+											height={16}
 											className="mr-2 h-4 w-4"
 										/>
 										Microsoft
