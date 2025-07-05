@@ -29,7 +29,7 @@
     <qti-item-body>
         <qti-prompt>Which is closer to the volume of a bowl of soup?</qti-prompt>
         
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1" class="qti-orientation-vertical">
             <qti-simple-choice identifier="A">
                 <div role="math" aria-label="3 cups">
                     <math xmlns="http://www.w3.org/1998/Math/MathML">

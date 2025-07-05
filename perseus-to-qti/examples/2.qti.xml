@@ -30,7 +30,7 @@
         <qti-prompt>Choose whether the bolded part of the sentence is the subject or the predicate.</qti-prompt>
         <blockquote><strong>Holly</strong> injured her rear on a spiky cactus.</blockquote>
         
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
             <qti-simple-choice identifier="A">subject</qti-simple-choice>
             <qti-simple-choice identifier="B">predicate</qti-simple-choice>
         </qti-choice-interaction>
