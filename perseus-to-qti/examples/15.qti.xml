@@ -2,39 +2,33 @@
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="circle-equation-center-radius"
     title="Find the center and radius of a circle from its equation"
     time-dependent="false"
     xml:lang="en-US">
 
-    <qti-response-declaration identifier="RESPONSE_X" base-type="string" cardinality="single">
+    <qti-response-declaration identifier="RESPONSE_X" base-type="integer" cardinality="single">
         <qti-correct-response>
             <qti-value>-9</qti-value>
         </qti-correct-response>
     </qti-response-declaration>
     
-    <qti-response-declaration identifier="RESPONSE_Y" base-type="string" cardinality="single">
+    <qti-response-declaration identifier="RESPONSE_Y" base-type="integer" cardinality="single">
         <qti-correct-response>
             <qti-value>-7</qti-value>
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-response-declaration identifier="RESPONSE_R" base-type="string" cardinality="single">
+    <qti-response-declaration identifier="RESPONSE_R" base-type="integer" cardinality="single">
         <qti-correct-response>
             <qti-value>5</qti-value>
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
         <qti-default-value>
             <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
-    
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="MAXSCORE">
-        <qti-default-value>
-            <qti-value>1</qti-value>
         </qti-default-value>
     </qti-outcome-declaration>
 

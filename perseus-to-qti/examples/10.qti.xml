@@ -2,7 +2,7 @@
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="medieval-revolts-evidence"
     title="Evidence for Medieval Revolts Claim"
     time-dependent="false"
@@ -14,22 +14,16 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
         <qti-default-value>
             <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
-    
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="MAXSCORE">
-        <qti-default-value>
-            <qti-value>1</qti-value>
         </qti-default-value>
     </qti-outcome-declaration>
 
     <qti-item-body>
         <p>Before answering the question, read the following excerpt.</p>
         <blockquote>
-            <p>"In 1381, English peasants had their turn in a rebellion that spread through much of England and then to London, where King Richard II tricked and murdered its leaders. The other rebels were quickly dispersed and hunted down. Similar popular uprisings occurred - and were suppressed - in the Holy Roman Empire, Hungary, Norway, Finland, Sweden, Iberia and the Netherlands. Only one major revolt was successful. (...) Although most of these revolts were  quickly put down, their message was not, it seems, entirely lost on the nobility. The English rebels had explicitly sought to end serfdom, and they had also questioned the social inequalities that were at the heart of aristocratic privilege. (...) These revolts, in other words, put the landed elite on notice, providing them with a good incentive to develop less exploitative methods of manorial management."</p>
+            <p>"In 1381, English peasants had their turn in a rebellion that spread through much of England and then to London, where King Richard II tricked and murdered its leaders. The other rebels were quickly dispersed and hunted down. Similar popular uprisings occurred - and were suppressed - in the Holy Roman Empire, Hungary, Norway, Finland, Sweden, Iberia and the Netherlands. Only one major revolt was successful. (…) Although most of these revolts were  quickly put down, their message was not, it seems, entirely lost on the nobility. The English rebels had explicitly sought to end serfdom, and they had also questioned the social inequalities that were at the heart of aristocratic privilege. (…) These revolts, in other words, put the landed elite on notice, providing them with a good incentive to develop less exploitative methods of manorial management."</p>
             <p><small>From Judith M. Bennett and C. Warren Hollister, <em>Medieval Europe: A Short History</em> (New York: McGraw Hill, 2006), 331-332.</small></p>
         </blockquote>
         

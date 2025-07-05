@@ -14,15 +14,9 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
         <qti-default-value>
             <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
-    
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="MAXSCORE">
-        <qti-default-value>
-            <qti-value>1</qti-value>
         </qti-default-value>
     </qti-outcome-declaration>
 
@@ -44,9 +38,7 @@
         <p>An unknown killer</p>
         <ol start="4">
             <li>In <em>The Case of the Vanishing Frogs</em>, Sandra Markle explains:
-                <blockquote>
-                    <p>Scientists first realized that golden frogs were dying out in 1996. That year biologist Karen Lips went to Panama. She visited the cool, misty, high mountain forest of Fortuna Forest Reserve in Chiriqui Province. […] She heard few frog voices. Worse, when Lips started searching for frogs, most of the ones she found were dead. She collected the bodies and soon had fifty of them. Finding so many dead frogs was surprising. In the damp forest, a dead frog quickly decomposes. Or it’s eaten by other animals, such as wasps. So finding lots of dead frogs meant that the frogs must have died recently.</p>
-                </blockquote>
+                <blockquote><p>Scientists first realized that golden frogs were dying out in 1996. That year biologist Karen Lips went to Panama. She visited the cool, misty, high mountain forest of Fortuna Forest Reserve in Chiriqui Province. […] She heard few frog voices. Worse, when Lips started searching for frogs, most of the ones she found were dead. She collected the bodies and soon had fifty of them. Finding so many dead frogs was surprising. In the damp forest, a dead frog quickly decomposes. Or it’s eaten by other animals, such as wasps. So finding lots of dead frogs meant that the frogs must have died recently.</p></blockquote>
             </li>
             <li>Shocked by her discovery in Fortuna Forest, Lips began investigating possible causes of the frogs’ deaths. She wondered if pollution was affecting the frog population. However, the frogs’ habitat was high in the mountains and so far from any nearby factories that no polluted water flowed there. When she looked into climate change, she found that rainfall and temperature conditions were exactly the same as when the frogs were thriving. So that wasn’t the answer either.</li>
         </ol>
@@ -56,23 +48,19 @@
             <li>Scientists collected many of the healthy frogs in an effort to combat the effects of the rapidly spreading and deadly fungus. In zoos and <abbr title="re·ha·bil·i·ta·tion (ree-huh-bih-luh-TAY-shun): the process of restoring health">rehabilitation</abbr> centers, the frogs were placed in controlled environments where scientists could monitor their health, breed them to increase the overall population, and study potential treatments for <em>Bd</em> infection.</li>
             <li>Unfortunately, scientists haven’t figured out how to <abbr title="erad·i·cate (ih-RAD-i-kate): completely eliminate">eradicate</abbr> <em>Bd</em>. So despite their efforts, they were unable to prevent the <abbr title="ex·tinc·tion (ik-STINGK-shun): complete disappearance">extinction</abbr> of the golden frogs in the wild. However, many golden frogs now reside and thrive in captivity across the world. And there is still hope that with ongoing advancements in science and careful breeding and rehabilitation programs, these frogs may one day return to their natural habitats.</li>
         </ol>
-
         <hr/>
-        
         <p>Text 2: A world without amphibians</p>
         <ol>
             <li>Have you ever wondered what would happen if frogs, toads, and salamanders disappeared from the world? These creatures may be small, but their role in nature is massive—and their decline could have devastating consequences. Without <abbr title="am·phib·i·ans (am-FIB-ee-uhns): group of cold-blooded animals that live both on land and in water">amphibians</abbr>, entire ecosystems could collapse. That’s because amphibians control insect populations, support food chains, maintain healthy <abbr title="a·quat·ic (uh-KWAT-ik): related to water">aquatic</abbr> habitats, and even help prevent the spread of disease. For example, frogs eat large numbers of mosquitoes, which can carry deadly diseases like malaria and dengue fever.</li>
-            <li>Sadly, amphibians are in danger. Over 40% of amphibian species are now at risk of extinction. One of the biggest threats to amphibians is habitat loss due to human activity. Amphibians live in wetlands, ponds, and streams, and the expansion of cities and farms destroys or pollutes these habitats. Take the California tiger salamander. Fewer than 1,000 of these salamanders remain in areas where <abbr title="the uncontrolled spread of cities into surrounding natural areas">urban sprawl</abbr> and agriculture have wiped out much of their habitat.</li>
+            <li>Sadly, amphibians are in danger. Over <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>40</mn><mo>%</mo></math> of amphibian species are now at risk of extinction. One of the biggest threats to amphibians is habitat loss due to human activity. Amphibians live in wetlands, ponds, and streams, and the expansion of cities and farms destroys or pollutes these habitats. Take the California tiger salamander. Fewer than 1,000 of these salamanders remain in areas where <abbr title="the uncontrolled spread of cities into surrounding natural areas">urban sprawl</abbr> and agriculture have wiped out much of their habitat.</li>
             <li>Climate change also plays a major role in the decline of amphibians. Amphibians are particularly sensitive to changes in temperature and moisture because their skin absorbs both water and oxygen. As a result, shifting conditions can easily harm them. In Australia, for example, rising temperatures and long <abbr title="periods without rain">droughts</abbr> have dried up many wetlands, destroying frogs' natural habitats.</li>
             <li>Another major threat to amphibians comes from disease. <em>Batrachochytrium dendrobatidis</em>, a deadly fungus, has wiped out amphibian populations around the world. The fungus attacks their skin, which they need to breathe and absorb moisture. This has led to the extinction of species like the Panamanian golden frog in the wild.</li>
             <li>To protect amphibians and preserve the health of our ecosystems, we must take immediate action. This includes protecting wetlands and natural habitats from development and pollution, combating climate change, and supporting research to fight amphibian diseases. By taking these steps, we can give amphibians a fighting chance.</li>
         </ol>
-
         <div>
             <p><small>Text source: <em>The Case of the Vanishing Golden Frogs: A Scientific Mystery</em> by Sandra Markle, Lerner Publishing Group, ©️ 2012.</small></p>
             <p><small>Image source: “Atelopus zeteki1” provided by Brian Gratwicke is in the public domain.</small></p>
         </div>
-        
         <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
             <qti-prompt>Which inference is best supported by Text 1?</qti-prompt>
             <qti-simple-choice identifier="A">Scientists are hopeful that they will discover a cure to the deadly <em>Bd</em> fungus in the next few years.</qti-simple-choice>

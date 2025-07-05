@@ -14,15 +14,9 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
         <qti-default-value>
             <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
-    
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="MAXSCORE">
-        <qti-default-value>
-            <qti-value>1</qti-value>
         </qti-default-value>
     </qti-outcome-declaration>
 

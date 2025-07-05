@@ -2,19 +2,19 @@
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="eval-fractional-exponents"
     title="Evaluate an expression with negative fractional exponents"
     time-dependent="false"
     xml:lang="en-US">
 
-    <qti-response-declaration base-type="string" cardinality="single" identifier="RESPONSE">
+    <qti-response-declaration base-type="integer" cardinality="single" identifier="RESPONSE">
         <qti-correct-response>
             <qti-value>81</qti-value>
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
         <qti-default-value>
             <qti-value>0</qti-value>
         </qti-default-value>
