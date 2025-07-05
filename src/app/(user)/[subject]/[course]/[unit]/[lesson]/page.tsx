@@ -54,16 +54,22 @@ export default function LessonPage({
 		const lessonResult = await getLessonByPathQuery.execute({ lessonPath })
 
 		const course = courseResult[0]
-		const unit = unitResult[0] as Unit // Cast for mocked children
-		const lesson = lessonResult[0] as Lesson // Cast for mocked children
+		const unitResultData = unitResult[0]
+		const lessonResultData = lessonResult[0]
 
-		if (!course || !unit || !lesson) {
+		if (!course || !unitResultData || !lessonResultData) {
 			notFound()
 		}
 
-		// Mocked data for component props - a real implementation would query this
-		unit.children = []
-		lesson.children = []
+		// Create fully-typed objects including the mocked children property
+		const unit: Unit = {
+			...unitResultData,
+			children: [] // Mocked data for component props
+		}
+		const lesson: Lesson = {
+			...lessonResultData,
+			children: [] // Mocked data for component props
+		}
 
 		return {
 			subject: p.subject,

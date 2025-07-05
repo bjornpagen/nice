@@ -1,3 +1,4 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { and, count, eq, inArray, sql } from "drizzle-orm"
 import { notFound } from "next/navigation"
@@ -242,7 +243,15 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 				const contents = contentsByLessonId[child.id] || { videos: [], articles: [], exercises: [] }
 				return { ...child, ...contents, type: "Lesson" }
 			}
-			return child as Quiz | UnitTest
+			if (child.type === "Quiz") {
+				return { ...child, type: "Quiz" }
+			}
+			if (child.type === "UnitTest") {
+				return { ...child, type: "UnitTest" }
+			}
+			// This branch should be unreachable if the query is correct,
+			// but it provides type safety and runtime verification.
+			throw errors.new(`Unexpected unit child type from database: ${child.type}`)
 		})
 
 		return { params: p, course, allUnits, lessonCount, challenges, unit, unitChildren }

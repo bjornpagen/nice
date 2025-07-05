@@ -52,16 +52,22 @@ export default function ExercisePage({
 		const lessonResult = await getLessonByPathQuery.execute({ lessonPath })
 
 		const course = courseResult[0]
-		const unit = unitResult[0] as Unit
-		const lesson = lessonResult[0] as Lesson
+		const unitResultData = unitResult[0]
+		const lessonResultData = lessonResult[0]
 
-		if (!course || !unit || !lesson) {
+		if (!course || !unitResultData || !lessonResultData) {
 			notFound()
 		}
 
-		// Mocked data for component props
-		unit.children = []
-		lesson.children = []
+		// Create fully-typed objects including the mocked children property
+		const unit: Unit = {
+			...unitResultData,
+			children: []
+		}
+		const lesson: Lesson = {
+			...lessonResultData,
+			children: []
+		}
 
 		return {
 			subject: p.subject,

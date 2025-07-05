@@ -329,16 +329,14 @@ async function main() {
 			const result = await errors.try(db.insert(schema.niceCourses).values(batch).onConflictDoNothing())
 			if (result.error) {
 				logger.error("failed to insert course batch, retrying one-by-one", {
-					error: result.error,
-					cause: (result.error as Error & { cause?: unknown }).cause
+					error: result.error
 				})
 				for (const record of batch) {
 					const singleResult = await errors.try(db.insert(schema.niceCourses).values(record).onConflictDoNothing())
 					if (singleResult.error) {
 						logger.error("failed to insert single course record", {
 							record,
-							error: singleResult.error,
-							cause: (singleResult.error as Error & { cause?: unknown }).cause
+							error: singleResult.error
 						})
 					}
 				}
@@ -369,16 +367,14 @@ async function main() {
 			const result = await errors.try(db.insert(schema.niceUnits).values(batch).onConflictDoNothing())
 			if (result.error) {
 				logger.error("failed to insert unit batch, retrying one-by-one", {
-					error: result.error,
-					cause: (result.error as Error & { cause?: unknown }).cause
+					error: result.error
 				})
 				for (const record of batch) {
 					const singleResult = await errors.try(db.insert(schema.niceUnits).values(record).onConflictDoNothing())
 					if (singleResult.error) {
 						logger.error("failed to insert single unit record", {
 							record,
-							error: singleResult.error,
-							cause: (singleResult.error as Error & { cause?: unknown }).cause
+							error: singleResult.error
 						})
 					}
 				}
@@ -409,16 +405,14 @@ async function main() {
 			const result = await errors.try(db.insert(schema.niceLessons).values(batch).onConflictDoNothing())
 			if (result.error) {
 				logger.error("failed to insert lesson batch, retrying one-by-one", {
-					error: result.error,
-					cause: (result.error as Error & { cause?: unknown }).cause
+					error: result.error
 				})
 				for (const record of batch) {
 					const singleResult = await errors.try(db.insert(schema.niceLessons).values(record).onConflictDoNothing())
 					if (singleResult.error) {
 						logger.error("failed to insert single lesson record", {
 							record,
-							error: singleResult.error,
-							cause: (singleResult.error as Error & { cause?: unknown }).cause
+							error: singleResult.error
 						})
 					}
 				}
@@ -473,16 +467,14 @@ async function main() {
 			const result = await errors.try(db.insert(schema.niceVideos).values(batch).onConflictDoNothing())
 			if (result.error) {
 				logger.error("failed to insert video batch, retrying one-by-one", {
-					error: result.error,
-					cause: (result.error as Error & { cause?: unknown }).cause
+					error: result.error
 				})
 				for (const record of batch) {
 					const singleResult = await errors.try(db.insert(schema.niceVideos).values(record).onConflictDoNothing())
 					if (singleResult.error) {
 						logger.error("failed to insert single video record", {
 							record,
-							error: singleResult.error,
-							cause: (singleResult.error as Error & { cause?: unknown }).cause
+							error: singleResult.error
 						})
 					}
 				}
@@ -513,16 +505,14 @@ async function main() {
 			const result = await errors.try(db.insert(schema.niceArticles).values(batch).onConflictDoNothing())
 			if (result.error) {
 				logger.error("failed to insert article batch, retrying one-by-one", {
-					error: result.error,
-					cause: (result.error as Error & { cause?: unknown }).cause
+					error: result.error
 				})
 				for (const record of batch) {
 					const singleResult = await errors.try(db.insert(schema.niceArticles).values(record).onConflictDoNothing())
 					if (singleResult.error) {
 						logger.error("failed to insert single article record", {
 							record,
-							error: singleResult.error,
-							cause: (singleResult.error as Error & { cause?: unknown }).cause
+							error: singleResult.error
 						})
 					}
 				}
@@ -553,16 +543,14 @@ async function main() {
 			const result = await errors.try(db.insert(schema.niceExercises).values(batch).onConflictDoNothing())
 			if (result.error) {
 				logger.error("failed to insert exercise batch, retrying one-by-one", {
-					error: result.error,
-					cause: (result.error as Error & { cause?: unknown }).cause
+					error: result.error
 				})
 				for (const record of batch) {
 					const singleResult = await errors.try(db.insert(schema.niceExercises).values(record).onConflictDoNothing())
 					if (singleResult.error) {
 						logger.error("failed to insert single exercise record", {
 							record,
-							error: singleResult.error,
-							cause: (singleResult.error as Error & { cause?: unknown }).cause
+							error: singleResult.error
 						})
 					}
 				}
@@ -592,16 +580,14 @@ async function main() {
 			const result = await errors.try(db.insert(schema.niceQuestions).values(batch).onConflictDoNothing())
 			if (result.error) {
 				logger.error("failed to insert question batch, retrying one-by-one", {
-					error: result.error,
-					cause: (result.error as Error & { cause?: unknown }).cause
+					error: result.error
 				})
 				for (const record of batch) {
 					const singleResult = await errors.try(db.insert(schema.niceQuestions).values(record).onConflictDoNothing())
 					if (singleResult.error) {
 						logger.error("failed to insert single question record", {
 							record,
-							error: singleResult.error,
-							cause: (singleResult.error as Error & { cause?: unknown }).cause
+							error: singleResult.error
 						})
 					}
 				}
@@ -632,16 +618,14 @@ async function main() {
 			const result = await errors.try(db.insert(schema.niceAssessments).values(batch).onConflictDoNothing())
 			if (result.error) {
 				logger.error("failed to insert assessment batch, retrying one-by-one", {
-					error: result.error,
-					cause: (result.error as Error & { cause?: unknown }).cause
+					error: result.error
 				})
 				for (const record of batch) {
 					const singleResult = await errors.try(db.insert(schema.niceAssessments).values(record).onConflictDoNothing())
 					if (singleResult.error) {
 						logger.error("failed to insert single assessment record", {
 							record,
-							error: singleResult.error,
-							cause: (singleResult.error as Error & { cause?: unknown }).cause
+							error: singleResult.error
 						})
 					}
 				}
@@ -672,8 +656,7 @@ async function main() {
 			const result = await errors.try(db.insert(schema.niceAssessmentExercises).values(batch).onConflictDoNothing())
 			if (result.error) {
 				logger.error("failed to insert assessment exercise batch, retrying one-by-one", {
-					error: result.error,
-					cause: (result.error as Error & { cause?: unknown }).cause
+					error: result.error
 				})
 				for (const record of batch) {
 					const singleResult = await errors.try(
@@ -682,8 +665,7 @@ async function main() {
 					if (singleResult.error) {
 						logger.error("failed to insert single assessment exercise record", {
 							record,
-							error: singleResult.error,
-							cause: (singleResult.error as Error & { cause?: unknown }).cause
+							error: singleResult.error
 						})
 					}
 				}
