@@ -17,8 +17,8 @@ export default async function UserLayout({ children }: { children: React.ReactNo
 			<ProfileBanner uid={uid} />
 
 			{/* Main Content */}
-			<div className="mx-auto max-w-7xl px-4 py-6 h-screen">
-				<div className="grid grid-cols-12 gap-6 h-full">
+			<div className="mx-auto max-w-7xl px-4 py-6">
+				<div className="grid grid-cols-12 gap-6">
 					<div className="col-span-3">
 						<Sidebar />
 					</div>

@@ -1,5 +1,8 @@
+"use client"
+
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
+import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
@@ -12,6 +15,8 @@ type CourseCardProps = {
 }
 
 export function CourseCard({ course, units, color = "bg-gray-200" }: CourseCardProps) {
+	const [isExpanded, setIsExpanded] = React.useState(false)
+
 	return (
 		<Card className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">
 			<CardHeader className="pb-4">
@@ -21,7 +26,18 @@ export function CourseCard({ course, units, color = "bg-gray-200" }: CourseCardP
 						See all ({units.length})
 					</Link>
 				</CardTitle>
-				<CardDescription className="text-gray-600">{course.description}</CardDescription>
+				<CardDescription className="text-gray-600 relative">
+					<div className={cn("transition-all duration-200", !isExpanded && "line-clamp-3")}>{course.description}</div>
+					{course.description && course.description.length > 150 && (
+						<button
+							type="button"
+							onClick={() => setIsExpanded(!isExpanded)}
+							className="text-blue-600 hover:text-blue-700 text-sm font-medium mt-1 focus:outline-none"
+						>
+							{isExpanded ? "Show less" : "Read more..."}
+						</button>
+					)}
+				</CardDescription>
 			</CardHeader>
 			<CardContent className="pt-0 flex-1">
 				<div className="relative">
@@ -30,24 +46,25 @@ export function CourseCard({ course, units, color = "bg-gray-200" }: CourseCardP
 
 					<div className="space-y-4">
 						{units.slice(0, 5).map((unit: Unit) => (
-							<div key={unit.id} className="flex items-center space-x-3 relative">
+							<div key={unit.id} className="flex items-start space-x-3 relative">
 								{/* circular icon background */}
 								<div
 									className={cn(
-										"w-10 h-10 rounded-full flex items-center justify-center relative z-10 flex-shrink-0",
+										"w-10 h-10 rounded-full flex items-center justify-center relative z-10 flex-shrink-0 mt-0.5",
 										color
 									)}
 								>
-									<BookOpen className="w-6 h-6, text-white" />
+									<BookOpen className="w-6 h-6 text-white" />
 								</div>
 
-								<Button
-									variant="link"
-									className="text-left p-0 h-auto font-medium text-gray-800 hover:text-blue-600 break-words"
-									asChild
-								>
-									<Link href={unit.path}>{unit.title.trim()}</Link>
-								</Button>
+								<div className="flex-1 min-w-0">
+									<Link
+										href={unit.path}
+										className="text-gray-800 hover:text-blue-600 font-medium text-sm block break-words"
+									>
+										{unit.title.trim()}
+									</Link>
+								</div>
 							</div>
 						))}
 					</div>
