@@ -1,0 +1,81 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "To calculate $g(g(x))$, input $g(x)$ into function $g$ as shown below.\n\n$\\qquad g(g(x))=8(g(x))-5$",
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "Since $g(x)=8x-5$, the above equation becomes:\n\n$\\qquad\n\\begin{align}g(g(x))&=8(g(x))-5\\\\\n\\\\\n&=8(8x-5)-5\\\\\n\\\\\n&=64x-40-5\\\\\n\\\\\n&=64x-45\\end{align}$",
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "So $g(g(x))=64x-45$.  ",
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "Let $g(x)=8x-5$. Which of the following is equivalent to $g(g(x))$?\n\n[[☃ radio 1]]\n\n---\n\n[Show calculator](/r/dsat_desmos_calculator)",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"clue": "You may have forgotten to distribute when simplifying your expression.  ",
+							"content": "$64x-10$",
+							"correct": false
+						},
+						{
+							"content": "$64x-45$",
+							"correct": true
+						},
+						{
+							"clue": "You may have tried to square $g(x)$ and done so incorrectly.  Note that the question asks to **compose** the function with itself.  ",
+							"content": "$64x^2+25$",
+							"correct": false
+						},
+						{
+							"clue": "Be sure to compose the functions and not multiply them.  This is $g(x)\\cdot g(x)$.  ",
+							"content": "$64x^2-80x+25$",
+							"correct": false
+						}
+					],
+					"randomize": false,
+					"onePerLine": true,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": {
+					"major": 1,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"type": "multiple",
+		"tTable": false,
+		"zTable": false,
+		"options": {
+			"images": {},
+			"content": "",
+			"widgets": {}
+		},
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false
+	},
+	"itemDataVersion": {
+		"major": 0,
+		"minor": 1
+	}
+}

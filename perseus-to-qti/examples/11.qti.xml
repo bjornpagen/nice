@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="lion-population-decline"
+    title="Reasons for Lion Population Decline"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="multiple" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>B</qti-value>
+            <qti-value>D</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="MAXSCORE">
+        <qti-default-value>
+            <qti-value>1</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <div>
+            <img src="https://cdn.kastatic.org/ka-content-images/dccd756a044187eccb37ab930413be2c4a2ec6b1.png" width="1092" height="1500" alt="A lion"/>
+        </div>
+        <p>In 1950, 400,000 lions <abbr title="roamed (ROHMD): walked around">roamed</abbr> Africa. Today, fewer than 40,000 are left. Why? There are a few reasons. Humans have taken over most of the lands where lions used to live. Hunters kill lions for their fur. And <abbr title="Maa·sai (mah-SY): group of people who live in East Africa">Maasai</abbr> farmers hoping to keep their <abbr title="live·stock (LIVE-stahk): farm animals like cows and sheep">livestock</abbr> safe also hunt lions.</p>
+        <p>When scientist Leela Hazzah moved to Kenya, she spoke to many Maasai, who felt frustrated that they were often left out of local <abbr title="con·ser·va·tion (kon-ser-VAY-shun): protecting nature and animals">conservation</abbr> programs. Those conversations inspired an idea: What if Maasai warriors were hired to protect lions? Soon after, Hazzah created Lion Guardians. The group uses <abbr title="tech·nol·o·gy (tehk-NAW-luh-jee): scientific knowledge and tools">technology</abbr> and Maasai <abbr title="ways to find and follow animals or people in nature">tracking techniques</abbr> to find and protect lions in the area. Today, 40 Lion Guardians protect more than 100 lions from <abbr title="il·le·gal (ih-LEE-gul): against the law">illegal</abbr> hunting.</p>
+        
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="2" min-choices="2">
+            <qti-prompt>Based on the information in the text, what are <em>two</em> reasons why there are so few lions today?</qti-prompt>
+            <qti-simple-choice identifier="A">Hunters illegally kill lions for their teeth and claws.</qti-simple-choice>
+            <qti-simple-choice identifier="B">Farmers hunt lions to protect their animals.</qti-simple-choice>
+            <qti-simple-choice identifier="C">The Lion Guardians use technology and traditional Maasai tracking techniques.</qti-simple-choice>
+            <qti-simple-choice identifier="D">Humans have taken over many areas where lions used to live.</qti-simple-choice>
+            <qti-simple-choice identifier="E">In 1950, about 400,000 lions roamed Africa, but today fewer than 40,000 remain.</qti-simple-choice>
+        </qti-choice-interaction>
+        
+        <div>
+            <p><small>Image source: Image provided by Charl Durand under a Pexels license.</small></p>
+        </div>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="equivalent-fraction-images"
+    title="Identifying Equivalent Fractions with Images"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="multiple" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+            <qti-value>B</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="MAXSCORE">
+        <qti-default-value>
+            <qti-value>1</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <p>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mn>3</mn>
+                    <mn>6</mn>
+                </mfrac>
+            </math> of the following rectangle is shaded.
+        </p>
+        <div>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/ae4196a094624e159449c904c453ccebf6eec26c.svg" width="180" height="88" alt="A rectangle divided into 6 equal parts. The first, third, and fifth parts are shaded."/>
+        </div>
+        
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="0">
+            <qti-prompt>Which of the following rectangles have exactly <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mn>3</mn>
+                    <mn>6</mn>
+                </mfrac>
+            </math> of their area shaded?</qti-prompt>
+            <qti-simple-choice identifier="A">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/36ec6dc03f26fec202a0438872a77fe2a97464ee.svg" alt="A rectangle divided into 8 equal parts. The first, fourth, seventh, and eighth parts are shaded."/>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/91f6d87daed17660129e4c449230a6e9e4a5c954.svg" alt="A rectangle divided into 4 equal parts. The first and third parts are shaded."/>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/6bc9807ffe6914d46ff0bcf6d9d008b81286f4a4.svg" alt="A rectangle divided into 4 equal parts. The first, second, and fourth parts are shaded."/>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>

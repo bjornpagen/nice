@@ -1,0 +1,67 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "$\\begin{align}\n\\dfrac{2\\^{-\\frac{4}{3}}}{54\\^{-\\frac{4}{3}}}&=\\left(\\dfrac{2}{54}\\right)\\^{-\\frac43}\n\\\\\\\\\n&=\\left(\\dfrac{1}{27}\\right)\\^{-\\frac43}\n\\\\\\\\\n&=27^{^{\\scriptsize\\dfrac43}}\n\\end{align}$",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "$\\begin{align}\n\\dfrac{2\\^{-\\frac{4}{3}}}{54\\^{-\\frac{4}{3}}}&=\\left(\\dfrac{2}{54}\\right)\\^{-\\frac43}\n\\\\\\\\\n&=\\left(\\dfrac{1}{27}\\right)\\^{-\\frac43}\n\\\\\\\\\n&=27^{^{\\scriptsize\\dfrac43}}\n\\\\\\\\\n&=\\left(\\sqrt[3]{27}\\right)^4\n\\\\\\\\\n&=3^4\n\\\\\\\\\n&=81\n\\end{align}$",
+			"replace": true,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "In conclusion,\n\n$\\dfrac{2\\^{-\\frac{4}{3}}}{54\\^{-\\frac{4}{3}}}=81$ ",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "**Evaluate.**\n\n$\\dfrac{2\\^{-\\frac{4}{3}}}{54\\^{-\\frac{4}{3}}}=$ [[☃ numeric-input 1]]",
+		"widgets": {
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": 81,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "input answer",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false
+	},
+	"itemDataVersion": {
+		"major": 0,
+		"minor": 1
+	}
+}

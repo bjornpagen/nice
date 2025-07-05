@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="function-composition-g-of-g"
+    title="Function Composition"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>B</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="MAXSCORE">
+        <qti-default-value>
+            <qti-value>1</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <p>Let 
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <mi>g</mi>
+                    <mo stretchy="false">(</mo>
+                    <mi>x</mi>
+                    <mo stretchy="false">)</mo>
+                    <mo>=</mo>
+                    <mn>8</mn>
+                    <mi>x</mi>
+                    <mo>-</mo>
+                    <mn>5</mn>
+                </mrow>
+            </math>.
+        </p>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+            <qti-prompt>Which of the following is equivalent to 
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mi>g</mi>
+                        <mo stretchy="false">(</mo>
+                        <mi>g</mi>
+                        <mo stretchy="false">(</mo>
+                        <mi>x</mi>
+                        <mo stretchy="false">)</mo>
+                        <mo stretchy="false">)</mo>
+                    </mrow>
+                </math>?
+            </qti-prompt>
+            <qti-simple-choice identifier="A">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mn>64</mn>
+                        <mi>x</mi>
+                        <mo>-</mo>
+                        <mn>10</mn>
+                    </mrow>
+                </math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mn>64</mn>
+                        <mi>x</mi>
+                        <mo>-</mo>
+                        <mn>45</mn>
+                    </mrow>
+                </math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mn>64</mn>
+                        <msup>
+                            <mi>x</mi>
+                            <mn>2</mn>
+                        </msup>
+                        <mo>+</mo>
+                        <mn>25</mn>
+                    </mrow>
+                </math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mn>64</mn>
+                        <msup>
+                            <mi>x</mi>
+                            <mn>2</mn>
+                        </msup>
+                        <mo>-</mo>
+                        <mn>80</mn>
+                        <mi>x</mi>
+                        <mo>+</mo>
+                        <mn>25</mn>
+                    </mrow>
+                </math>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>
