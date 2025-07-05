@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="pythagorean-theorem-ab-length"
+    title="Length of Hypotenuse in a Right Triangle"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>B</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <div>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/6d78801643a529e913c995e81124b1f3cad8c282.svg"
+                 width="356"
+                 height="400"
+                 alt="Triangle ABC has right angle C. Side AC has a length of 7, and side BC has a length of 6."/>
+        </div>
+        <p>In the right triangle shown, the length of 
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <mover>
+                        <mrow>
+                            <mi>A</mi>
+                            <mi>C</mi>
+                        </mrow>
+                        <mo>―</mo>
+                    </mover>
+                    <mo>=</mo>
+                    <mn>7</mn>
+                </mrow>
+            </math> and the length of 
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <mover>
+                        <mrow>
+                            <mi>B</mi>
+                            <mi>C</mi>
+                        </mrow>
+                        <mo>―</mo>
+                    </mover>
+                    <mo>=</mo>
+                    <mn>6</mn>
+                </mrow>
+            </math>.
+        </p>
+        
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1">
+            <qti-prompt>What is the length of 
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mover>
+                        <mrow>
+                            <mi>A</mi>
+                            <mi>B</mi>
+                        </mrow>
+                        <mo>―</mo>
+                    </mover>
+                </math> ?
+            </qti-prompt>
+            <qti-simple-choice identifier="A">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <msqrt>
+                        <mn>13</mn>
+                    </msqrt>
+                </math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <msqrt>
+                        <mn>85</mn>
+                    </msqrt>
+                </math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mn>13</mn>
+                </math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mn>85</mn>
+                </math>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>

@@ -1,0 +1,88 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "The expression $\\displaystyle\\lim_{x\\to 0^{-}}h(x)=4$ states that the limit of $h$ as $x$ approaches $0$ from the left is equal to $4$.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/151283769925b807e02eeff8ba96902a286f18ad": {
+					"width": 205,
+					"height": 205
+				},
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/1c206ddb9ac9887737adc5c989d5e93a64c5cbec": {
+					"width": 205,
+					"height": 205
+				},
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/990c181478e9c84d00f75c623c18be4dd457f9ad": {
+					"width": 205,
+					"height": 205
+				}
+			},
+			"content": "![The graph of function h has an arrow pointing rightward along the set to the open circle at (0, 1).](web+graphie://cdn.kastatic.org/ka-perseus-graphie/151283769925b807e02eeff8ba96902a286f18ad)\n\nIn graph A, $\\displaystyle\\lim_{x\\to 0^{-}}h(x)$ seems to be equal to $1$.\n\n![The graph of function h has an arrow pointing along the set, up to the right to the closed circle at (0, 4).](web+graphie://cdn.kastatic.org/ka-perseus-graphie/990c181478e9c84d00f75c623c18be4dd457f9ad)\n\nIn graph B, $\\displaystyle\\lim_{x\\to 0^{-}}h(x)$ seems to be equal to $4$.\n\n![The graph of function h has an arrow pointing along the set, up to the right to the open circle at (0, 4).](web+graphie://cdn.kastatic.org/ka-perseus-graphie/1c206ddb9ac9887737adc5c989d5e93a64c5cbec)\n\nIn graph C, $\\displaystyle\\lim_{x\\to 0^{-}}h(x)$ seems to be equal to $4$ as well.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "In conclusion, these graphs agree with $\\displaystyle\\lim_{x\\to 0^{-}}h(x)=4$.\n\n- Graph B\n- Graph C",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "Consider graphs A, B, and C.\n\n**Which graphs agree with this statement?**\n\n$\\displaystyle\\lim_{x\\to 0^{-}}h(x)=4$\n\n[[☃ radio 1]]",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"content": "![Function h is graphed. The x-axis goes from negative 4 to 4. The graph consists of a set of line segments and a closed circle. The set starts at (negative 4, 0), moves upward to (negative 3, 2), moves downward to (negative 1, 1), moves horizontally to the right through an open circle at (0, 1) to (2, 1), moves upward, then ends at (4, 3). The closed circle is plotted at (0, 4).](web+graphie://cdn.kastatic.org/ka-perseus-graphie/4fbef7f08a2546267b2472df755cf728f80b5c76)"
+						},
+						{
+							"content": "![Function h is graphed. The x-axis goes from negative 4 to 4. The graph consists of a set of line segments and a curve. The set starts at (negative 4, negative 1), moves upward through (negative 3, 2) and then ends at a closed circle at (0, 4). The second curve moves upward away from x = 0 and ends in quadrant 1.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/8ce33965e2b221a40f87dee6b9069a1669397a88)",
+							"correct": true
+						},
+						{
+							"content": "![Function h is graphed. The x-axis goes from negative 4 to 4. The graph consists of a set of line segments and a line segment. The set starts at (negative 4, negative 1), moves horizontally to the right to (negative 1, negative 1), moves upward, and ends at an open circle at (0, 4). The line segment starts at an open circle at (0, 2), moves downward, and ends in quadrant 1.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/853e94073641da82e3d8a751652fd500bd3dd7cd)",
+							"correct": true,
+							"isNoneOfTheAbove": false
+						},
+						{
+							"content": "",
+							"isNoneOfTheAbove": true
+						}
+					],
+					"randomize": false,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": true,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": true
+				},
+				"version": {
+					"major": 1,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false
+	},
+	"itemDataVersion": {
+		"major": 0,
+		"minor": 1
+	}
+}

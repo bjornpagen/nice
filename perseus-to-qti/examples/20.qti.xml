@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="parabola-vertex-coordinates"
+    title="Coordinates of a Parabola's Vertex"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>B</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <div>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/71814476610d1ed8a4e30e69e329b9ba02c0f4c9.svg"
+                 width="305"
+                 height="305"
+                 alt="The equation y=-(x+3)^2+4 is graphed in the xy-plane. The graph is a parabola that opens downward. The graph crosses the x-axis at -5 and -1. The graph crosses the y-axis at -5. The graph changes from increasing to decreasing at the point (-3, 4)."/>
+        </div>
+        <p>The graph of 
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <mi>y</mi>
+                    <mo>=</mo>
+                    <mo>-</mo>
+                    <msup>
+                        <mrow>
+                            <mo stretchy="false">(</mo>
+                            <mi>x</mi>
+                            <mo>+</mo>
+                            <mn>3</mn>
+                            <mo stretchy="false">)</mo>
+                        </mrow>
+                        <mn>2</mn>
+                    </msup>
+                    <mo>+</mo>
+                    <mn>4</mn>
+                </mrow>
+            </math> is shown in the 
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <mi>x</mi>
+                    <mi>y</mi>
+                </mrow>
+            </math>-plane.
+        </p>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+            <qti-prompt>What are the coordinates of the vertex of the parabola?</qti-prompt>
+            <qti-simple-choice identifier="A">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mo stretchy="false">(</mo>
+                        <mo>-</mo>
+                        <mn>5</mn>
+                        <mo>,</mo>
+                        <mn>0</mn>
+                        <mo stretchy="false">)</mo>
+                    </mrow>
+                </math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mo stretchy="false">(</mo>
+                        <mo>-</mo>
+                        <mn>3</mn>
+                        <mo>,</mo>
+                        <mn>4</mn>
+                        <mo stretchy="false">)</mo>
+                    </mrow>
+                </math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mo stretchy="false">(</mo>
+                        <mo>-</mo>
+                        <mn>1</mn>
+                        <mo>,</mo>
+                        <mn>0</mn>
+                        <mo stretchy="false">)</mo>
+                    </mrow>
+                </math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mo stretchy="false">(</mo>
+                        <mn>0</mn>
+                        <mo>,</mo>
+                        <mo>-</mo>
+                        <mn>5</mn>
+                        <mo stretchy="false">)</mo>
+                    </mrow>
+                </math>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>

@@ -1,0 +1,56 @@
+{
+	"hints": [],
+	"question": {
+		"images": {},
+		"content": "*The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years*\n\nYear | GDP (% change) | Unemployment (% of the labor force) \n- | - | -\n2014 | $0\\%$ | $7\\%$\n2015 | $-1\\%$ | $8\\%$\n2016 | $-2\\%$ | $10\\%$\n2017 | $2\\%$ | $6\\%$\n2018 | $4\\%$ | $5\\%$\n2019 | $1\\%$ | $6\\%$\n\n**In which of the years was Libertyville most likely experiencing a trough in its business cycle?**\n\n[[☃ radio 1]]",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"clue": "GDP fell for the two years following 2014, indicating that Libertyville entered the recession phase of its business cycle in 2014. A trough is the turning point at which a recession ends and an expansion begins.",
+							"content": "2014",
+							"correct": false
+						},
+						{
+							"clue": "GDP fell in 2015, indicating that Libertyville was in the recession phase of its business cycle in 2015. However the economy still had further to fall before it started to turn around. A trough is the turning point at which a recession ends and an expansion begins.",
+							"content": "2015",
+							"correct": false
+						},
+						{
+							"clue": "GDP fell in 2016 but increased in 2017, indicating that 2016 was the turning point at which Libertyville's two year recession ended and the economy entered the recovery/expansion phase of its business cycle.",
+							"content": "2016",
+							"correct": true,
+							"isNoneOfTheAbove": false
+						},
+						{
+							"clue": "GDP increased in 2017, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins.",
+							"content": "2017",
+							"correct": false,
+							"isNoneOfTheAbove": false
+						},
+						{
+							"clue": "GDP increased in 2018, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins.",
+							"content": "2018",
+							"correct": false,
+							"isNoneOfTheAbove": false
+						}
+					],
+					"randomize": false,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": { "major": 1, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}

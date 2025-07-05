@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="python-print-output"
+    title="Identifying Correct Python Print Syntax"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <qti-prompt>Which of the programs has the following output?</qti-prompt>
+        <div>
+            <pre><code>Python is fun!</code></pre>
+        </div>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+            <qti-simple-choice identifier="A">
+                <pre><code>print("Python is fun!")</code></pre>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <pre><code>print(Python is fun!)</code></pre>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                <pre><code>print "Python is fun!"</code></pre>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                <pre><code>print("Python is + fun!")</code></pre>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>

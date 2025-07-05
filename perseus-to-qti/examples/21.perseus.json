@@ -1,0 +1,82 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "If a right triangle has  legs of length $a$ and $b$, and hypotenuse of length $c$, then by the Pythagorean Theorem, we have:\n\n$\\qquad a^2 + b^2 = c^2$",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "We want to find $c$; let $a = 6$ and $b = 7$.", "replace": false, "widgets": {} },
+		{
+			"images": {},
+			"content": "Therefore:\n\n$\\qquad  \\begin{align} c^2 &= 6^2 + 7^2 \\\\ c^2 &= 36 + 49 \\\\ c^2 &= 85 \\\\ c &= \\sqrt{85} \\end{align} $\n\nThe radical cannot be simplified.",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "$c=\\sqrt{85}$", "replace": false, "widgets": {} }
+	],
+	"question": {
+		"images": {},
+		"content": "[[☃ image 1]]\n\nIn the right triangle shown, the length of $\\overline{AC} = 7$ and the length of $\\overline{BC} = 6$. What is the length of $\\overline{AB}$ ?\n\n[[☃ radio 1]]\n\n---\n\n[Show calculator](/r/dsat_desmos_calculator)\n",
+		"widgets": {
+			"image 1": {
+				"type": "image",
+				"graded": true,
+				"static": false,
+				"options": {
+					"alt": "Triangle ABC has right angle C. Side AC has a length of 7, and side BC has a length of 6.",
+					"box": [356, 400],
+					"range": [[0, 10], [0, 10]],
+					"title": "",
+					"labels": [],
+					"static": false,
+					"caption": "",
+					"backgroundImage": {
+						"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/6d78801643a529e913c995e81124b1f3cad8c282",
+						"width": 356,
+						"height": 400
+					}
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "block"
+			},
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"clue": "You may have forgotten to square the lengths of the legs.",
+							"content": "$\\sqrt{13}$",
+							"correct": false
+						},
+						{ "content": "$\\sqrt{85}$", "correct": true },
+						{
+							"clue": "You may have forgotten to square the lengths of the legs.",
+							"content": "$13$",
+							"correct": false,
+							"isNoneOfTheAbove": false
+						},
+						{
+							"clue": "You forgot to take the square root.",
+							"content": "$85$",
+							"correct": false,
+							"isNoneOfTheAbove": false
+						}
+					],
+					"randomize": false,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": { "major": 1, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}

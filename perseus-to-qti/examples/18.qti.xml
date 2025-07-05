@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="libertyville-business-cycle"
+    title="Business Cycle Trough Identification"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <p>The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th style="text-align:center;">GDP (% change)</th>
+                    <th style="text-align:center;">Unemployment (% of the labor force)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2014</td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>%</mo></math></td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn><mo>%</mo></math></td>
+                </tr>
+                <tr>
+                    <td>2015</td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math></td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn><mo>%</mo></math></td>
+                </tr>
+                <tr>
+                    <td>2016</td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math></td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>%</mo></math></td>
+                </tr>
+                <tr>
+                    <td>2017</td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>%</mo></math></td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math></td>
+                </tr>
+                <tr>
+                    <td>2018</td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>%</mo></math></td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn><mo>%</mo></math></td>
+                </tr>
+                <tr>
+                    <td>2019</td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>%</mo></math></td>
+                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+            <qti-prompt>In which of the years was Libertyville most likely experiencing a trough in its business cycle?</qti-prompt>
+            <qti-simple-choice identifier="A">2014</qti-simple-choice>
+            <qti-simple-choice identifier="B">2015</qti-simple-choice>
+            <qti-simple-choice identifier="C">2016</qti-simple-choice>
+            <qti-simple-choice identifier="D">2017</qti-simple-choice>
+            <qti-simple-choice identifier="E">2018</qti-simple-choice>
+        </qti-choice-interaction>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>
