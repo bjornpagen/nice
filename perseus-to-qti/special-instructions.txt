@@ -1,1 +1,0 @@
-1. NEVER USE STYLING TAGS LIKE <p> and <strong> inside of the main <qti-prompt>! QTI Prompt should be style free, we've already labelled it semantically.
