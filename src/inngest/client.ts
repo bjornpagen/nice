@@ -11,7 +11,7 @@ const events = {
 }
 
 export const inngest = new Inngest({
-	id: "my-app",
+	id: "nice",
 	schemas: new EventSchemas().fromZod(events),
 	logger
 })

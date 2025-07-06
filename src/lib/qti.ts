@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { env } from "@/env.js"
+import { env } from "@/env"
 
 // --- ZOD SCHEMAS (Existing + New) ---
 
@@ -442,8 +442,7 @@ export class QtiApiClient {
 	async #request<T>(endpoint: string, options: RequestInit, schema: z.ZodType<T>): Promise<T> {
 		await this.#ensureAccessToken()
 
-		// API base URL is hardcoded to the QTI Alpha 1EdTech server
-		const url = `https://qti.alpha-1edtech.com${endpoint}`
+		const url = `https://qti.alpha-1edtech.com/api${endpoint}`
 		const headers = {
 			...options.headers,
 			Authorization: `Bearer ${this.#accessToken}`
