@@ -1,0 +1,187 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "To find shirts per minute, we divide shirts by minutes.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "$\\phantom{=}\\dfrac{~~~ \\dfrac29 \\text{ shirt}~~~}{3\\dfrac35 \\text{ minutes}}$",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "$ =  \\dfrac29 \\div 3\\dfrac35\\qquad$  [[☃ explanation 1]]",
+			"replace": false,
+			"widgets": {
+				"explanation 1": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Hide explanation",
+						"showPrompt": "Explain",
+						"explanation": "We rewrote the complex fraction as a division problem because the fraction bar means \"divided by\"."
+					},
+					"version": {
+						"major": 0,
+						"minor": 0
+					},
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "$ = \\dfrac{2}9 \\div \\dfrac{18}5\\qquad$ [[☃ explanation 1]]",
+			"replace": false,
+			"widgets": {
+				"explanation 1": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Hide explanation",
+						"showPrompt": "Explain",
+						"explanation": "Here's how we converted the mixed number to an improper fraction: \n\n$\\phantom{=}3 \\dfrac{3}5$ \n\n$= \\dfrac{5}{5} + \\dfrac{5}{5} +\\dfrac{5}{5} +\\dfrac{3}{5} $\n\n$ = \\dfrac{18}{5}$"
+					},
+					"version": {
+						"major": 0,
+						"minor": 0
+					},
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "$ = \\dfrac{2}{9} \\cdot \\dfrac5{18}\\qquad$ [[☃ explanation 2]]\n",
+			"replace": false,
+			"widgets": {
+				"explanation 2": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Hide explanation",
+						"showPrompt": "Explain",
+						"explanation": "We changed dividing by $\\dfrac{18}5$ to multiplying by $\\dfrac5{18}$ because dividing by a fraction is the same as multiplying by its reciprocal.\n"
+					},
+					"version": {
+						"major": 0,
+						"minor": 0
+					},
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "$ =\\dfrac{10}{162}\\qquad$  [[☃ explanation 3]]",
+			"replace": false,
+			"widgets": {
+				"explanation 3": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Hide explanation",
+						"showPrompt": "Explain",
+						"explanation": "Here's how we multiplied the fractions:\n\n$\\phantom{=}\\dfrac{2}{9} \\cdot \\dfrac5{18}$\n\n$ =\\dfrac{2 \\cdot 5}{9 \\cdot 18}$\n\n$=\\dfrac{10}{162}$"
+					},
+					"version": {
+						"major": 0,
+						"minor": 0
+					},
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "$ =\\dfrac{5}{81}$ shirt per minute $\\qquad$ [[☃ explanation 4]]",
+			"replace": false,
+			"widgets": {
+				"explanation 4": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Hide explanation",
+						"showPrompt": "Explain",
+						"explanation": "Here's how we simplified the fraction:\n\n$ \\phantom{=}\\dfrac{10}{162}$\n\n$= \\dfrac{5 \\cdot \\cancel{2}}{81 \\cdot \\cancel{2}}$\n\n$ = \\dfrac{5}{81}$"
+					},
+					"version": {
+						"major": 0,
+						"minor": 0
+					},
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "Each minute, Brian irons $\\dfrac{5}{81}$ of his shirt.",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "Brian irons $\\dfrac29$ of his shirt in $3\\dfrac35$ minutes.  Brian irons at a constant rate.\n\n**At this rate, how much of his shirt does he iron each minute?**  \n*Enter an exact answer, without rounding.*\n\n[[☃ numeric-input 1]] of his shirt",
+		"widgets": {
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": 0.06172839506172839,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required",
+							"answerForms": ["proper", "improper"]
+						}
+					],
+					"labelText": "",
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false,
+		"periodicTableWithKey": false,
+		"financialCalculatorTotalAmount": false,
+		"financialCalculatorTimeToPayOff": false,
+		"financialCalculatorMonthlyPayment": false
+	}
+}

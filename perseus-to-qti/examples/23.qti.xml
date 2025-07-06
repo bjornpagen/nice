@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="brian-ironing-rate"
+    title="Rate of Ironing"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="string" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>5/81</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <p>Brian irons 
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mn>2</mn>
+                    <mn>9</mn>
+                </mfrac>
+            </math> of his shirt in 
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mn>3</mn>
+                <mfrac>
+                    <mn>3</mn>
+                    <mn>5</mn>
+                </mfrac>
+            </math> minutes. Brian irons at a constant rate.
+        </p>
+        
+        <qti-prompt>At this rate, how much of his shirt does he iron each minute?</qti-prompt>
+        
+        <p><em>Enter an exact answer, without rounding.</em></p>
+
+        <div>
+            <p>Your answer should be:</p>
+            <ul>
+                <li>a simplified proper fraction, like <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math></li>
+                <li>or a simplified improper fraction, like <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>7</mn><mn>4</mn></mfrac></math></li>
+            </ul>
+        </div>
+
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="5"/> of his shirt
+        </p>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>
