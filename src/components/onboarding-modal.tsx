@@ -4,8 +4,9 @@ import { X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import * as React from "react"
+import * as ReactDOM from "react-dom"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import { cn } from "@/lib/utils"
 
 interface OnboardingStep {
 	title: string
@@ -69,9 +70,24 @@ const onboardingSteps: OnboardingStep[] = [
 	}
 ]
 
-export function OnboardingModal() {
-	const [open, setOpen] = React.useState(true)
+export function OnboardingModal({ show = false, onComplete }: { show?: boolean; onComplete?: () => void }) {
 	const [currentStep, setCurrentStep] = React.useState(0)
+	const [mounted, setMounted] = React.useState(false)
+
+	// Ensure component is mounted before using portal
+	React.useEffect(() => {
+		setMounted(true)
+	}, [])
+
+	// Prevent body scroll when modal is open - must be before any conditional returns
+	React.useEffect(() => {
+		if (show) {
+			document.body.style.overflow = "hidden"
+			return () => {
+				document.body.style.overflow = "unset"
+			}
+		}
+	}, [show])
 
 	const handleNext = () => {
 		if (currentStep < onboardingSteps.length - 1) {
@@ -86,72 +102,113 @@ export function OnboardingModal() {
 	}
 
 	const handleClose = () => {
-		setOpen(false)
+		// Notify parent that onboarding is complete
+		onComplete?.()
 	}
 
 	const step = onboardingSteps[currentStep]
 	const isLastStep = currentStep === onboardingSteps.length - 1
 
-	if (!step) return null
+	if (!show || !step || !mounted) return null
 
-	return (
-		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogContent className="max-w-2xl p-0 overflow-hidden">
-				<div className="relative">
-					{/* Close button */}
-					<button
-						type="button"
-						onClick={handleClose}
-						className="absolute right-4 top-4 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
-					>
-						<X className="h-4 w-4" />
-						<span className="sr-only">Close modal</span>
-					</button>
+	const modalContent = (
+		<div
+			style={{
+				position: "fixed",
+				inset: 0,
+				zIndex: 2147483647, // Maximum z-index value
+				pointerEvents: "all",
+				isolation: "isolate" // Creates a new stacking context
+			}}
+		>
+			{/* Custom overlay - blocks all clicks */}
+			<div
+				className="fixed inset-0 bg-black/50"
+				style={{ pointerEvents: "auto" }}
+				onClick={(e) => {
+					// Prevent any clicks on overlay
+					e.stopPropagation()
+					e.preventDefault()
+				}}
+				role="presentation"
+				aria-hidden="true"
+			/>
 
-					{/* Content */}
-					<div className="p-8 pt-12">
-						<div className="text-center">
-							{/* Image */}
-							{step.image && (
-								<div className="mb-6 flex justify-center">
-									<Image src={step.image} alt={step.title} width={400} height={250} className="rounded-lg" />
+			{/* Modal content */}
+			<div
+				className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
+				style={{ pointerEvents: "auto" }}
+			>
+				<div
+					className={cn("bg-background grid w-[400px] gap-4 rounded-lg border p-0 shadow-lg overflow-hidden")}
+					onClick={(e) => {
+						// Prevent any event bubbling
+						e.stopPropagation()
+					}}
+					role="dialog"
+					aria-modal="true"
+					aria-labelledby="onboarding-title"
+				>
+					<div className="relative">
+						{/* Close button */}
+						<button
+							type="button"
+							onClick={handleClose}
+							className="absolute right-3 top-3 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none bg-white/80 backdrop-blur-sm"
+						>
+							<X className="h-4 w-4" />
+							<span className="sr-only">Close modal</span>
+						</button>
+
+						{/* Content */}
+						<div className="p-0">
+							<div className="text-center">
+								{/* Image */}
+								{step.image && (
+									<div className="w-full">
+										<Image src={step.image} alt={step.title} width={400} height={250} className="w-full h-auto" />
+									</div>
+								)}
+
+								{/* Title and Content */}
+								<div className="p-6">
+									<h2 id="onboarding-title" className="mb-4 text-2xl font-semibold text-gray-900">
+										{step.title}
+									</h2>
+									<div className="mb-6 text-base text-gray-700">{step.content}</div>
 								</div>
-							)}
+							</div>
 
-							{/* Title */}
-							<DialogTitle className="mb-4 text-2xl font-semibold text-gray-900">{step.title}</DialogTitle>
+							{/* Navigation */}
+							<div className="flex items-center justify-between border-t pt-4 px-6 pb-6">
+								<span className="text-sm text-gray-600">
+									Step {currentStep + 1} of {onboardingSteps.length}
+								</span>
 
-							{/* Content */}
-							<div className="mb-8 text-base text-gray-700 max-w-lg mx-auto">{step.content}</div>
-						</div>
+								<div className="flex gap-3">
+									{currentStep > 0 && (
+										<Button variant="outline" onClick={handlePrevious} className="min-w-[100px]">
+											Previous
+										</Button>
+									)}
 
-						{/* Navigation */}
-						<div className="flex items-center justify-between border-t pt-4">
-							<span className="text-sm text-gray-600">
-								Step {currentStep + 1} of {onboardingSteps.length}
-							</span>
-
-							<div className="flex gap-3">
-								{currentStep > 0 && (
-									<Button variant="outline" onClick={handlePrevious} className="min-w-[100px]">
-										Previous
-									</Button>
-								)}
-
-								{!isLastStep ? (
-									<Button onClick={handleNext} className="min-w-[100px] bg-blue-600 hover:bg-blue-700">
-										Next
-									</Button>
-								) : (
-									<Button onClick={handleClose} className="min-w-[100px] bg-blue-600 hover:bg-blue-700">
-										Close
-									</Button>
-								)}
+									{!isLastStep ? (
+										<Button onClick={handleNext} className="min-w-[100px] bg-blue-600 hover:bg-blue-700">
+											Next
+										</Button>
+									) : (
+										<Button onClick={handleClose} className="min-w-[100px] bg-blue-600 hover:bg-blue-700">
+											Close
+										</Button>
+									)}
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</DialogContent>
-		</Dialog>
+			</div>
+		</div>
 	)
+
+	return ReactDOM.createPortal(modalContent, document.body)
 }

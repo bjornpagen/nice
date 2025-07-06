@@ -1,10 +1,13 @@
+import { auth } from "@clerk/nextjs/server"
+import * as errors from "@superbuilders/errors"
+import { count, eq, sql } from "drizzle-orm"
 import * as React from "react"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { Content } from "./content"
 
 // 1. Drizzle prepared statements are colocated and explicitly select columns.
-const getAllCoursesQuery = db
+const getUserCoursesQuery = db
 	.select({
 		id: schema.niceCourses.id,
 		title: schema.niceCourses.title,
@@ -12,7 +15,9 @@ const getAllCoursesQuery = db
 		path: schema.niceCourses.path
 	})
 	.from(schema.niceCourses)
-	.prepare("src_app_user_profile_me_courses_page_get_all_courses")
+	.innerJoin(schema.niceUsersCourses, eq(schema.niceCourses.id, schema.niceUsersCourses.courseId))
+	.where(eq(schema.niceUsersCourses.clerkId, sql.placeholder("clerkId")))
+	.prepare("src_app_user_profile_me_courses_page_get_user_courses")
 
 const getAllUnitsQuery = db
 	.select({
@@ -46,8 +51,15 @@ const getAllCourses = db
 	.from(schema.niceCourses)
 	.prepare("src_app_user_profile_me_courses_page_get_all_courses")
 
+// Query to check if user has any courses
+const getUserCourseCountQuery = db
+	.select({ count: count() })
+	.from(schema.niceUsersCourses)
+	.where(eq(schema.niceUsersCourses.clerkId, sql.placeholder("clerkId")))
+	.prepare("src_app_user_profile_me_courses_page_get_user_course_count")
+
 // 2. Types are derived from the queries and exported for use in child components.
-export type Course = Awaited<ReturnType<typeof getAllCoursesQuery.execute>>[0]
+export type Course = Awaited<ReturnType<typeof getUserCoursesQuery.execute>>[0]
 export type Unit = Awaited<ReturnType<typeof getAllUnitsQuery.execute>>[0]
 
 // Export types for course selector
@@ -56,11 +68,22 @@ export type AllCourse = Awaited<ReturnType<typeof getAllCourses.execute>>[number
 
 // 3. The page component is NOT async. It orchestrates promises.
 export default function CoursesPage() {
-	// 4. Create promises for the data fetches.
-	const coursesPromise = getAllCoursesQuery.execute()
-	const unitsPromise = getAllUnitsQuery.execute()
+	// 4. Get the auth promise and chain other fetches
+	const authPromise = auth()
 
-	// Add promises for course selector data
+	// Chain all data fetches based on the user's clerkId
+	const coursesPromise = authPromise.then(({ userId }) => {
+		if (!userId) throw errors.new("User not authenticated")
+		return getUserCoursesQuery.execute({ clerkId: userId })
+	})
+
+	const userCourseCountPromise = authPromise.then(({ userId }) => {
+		if (!userId) throw errors.new("User not authenticated")
+		return getUserCourseCountQuery.execute({ clerkId: userId }).then((results) => results[0] || { count: 0 })
+	})
+
+	// These don't depend on user auth, so they can be executed immediately
+	const unitsPromise = getAllUnitsQuery.execute()
 	const allSubjectsPromise = getAllSubjects.execute()
 	const allCoursesPromise = getAllCourses.execute()
 
@@ -72,6 +95,7 @@ export default function CoursesPage() {
 				unitsPromise={unitsPromise}
 				allSubjectsPromise={allSubjectsPromise}
 				allCoursesPromise={allCoursesPromise}
+				userCourseCountPromise={userCourseCountPromise}
 			/>
 		</React.Suspense>
 	)

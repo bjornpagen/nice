@@ -24,11 +24,25 @@ interface CourseSelectorProps {
 	onComplete?: (selectedCourseIds: string[]) => void
 	open: boolean
 	onOpenChange: (open: boolean) => void
+	initialSelectedCourseIds?: string[]
 }
 
-export function CourseSelector({ subjects, onComplete, open, onOpenChange }: CourseSelectorProps) {
-	const [selectedCourses, setSelectedCourses] = React.useState<Set<string>>(new Set())
+export function CourseSelector({
+	subjects,
+	onComplete,
+	open,
+	onOpenChange,
+	initialSelectedCourseIds = []
+}: CourseSelectorProps) {
+	const [selectedCourses, setSelectedCourses] = React.useState<Set<string>>(new Set(initialSelectedCourseIds))
 	const [showAllCourses, setShowAllCourses] = React.useState<Record<string, boolean>>({})
+
+	// Reset selected courses when modal opens with new initial selections
+	React.useEffect(() => {
+		if (open) {
+			setSelectedCourses(new Set(initialSelectedCourseIds))
+		}
+	}, [open, initialSelectedCourseIds])
 
 	// Toggle course selection
 	const toggleCourse = (courseId: string) => {
@@ -56,7 +70,11 @@ export function CourseSelector({ subjects, onComplete, open, onOpenChange }: Cou
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="sm:max-w-[840px] w-full p-0 overflow-hidden" showCloseButton={false}>
+			<DialogContent
+				className="sm:max-w-[840px] w-full p-0 overflow-hidden"
+				showCloseButton={false}
+				style={{ zIndex: 50 }}
+			>
 				<div className="relative">
 					{/* X Button */}
 					<button
