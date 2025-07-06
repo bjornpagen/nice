@@ -1,91 +1,17 @@
 "use client"
 
-import { SignIn, SignUp, useSignIn, useUser } from "@clerk/nextjs"
-import * as errors from "@superbuilders/errors"
 import { ChevronDown, ExternalLink, Search } from "lucide-react"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
-import * as React from "react"
+import Link from "next/link"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export default function LoginPage() {
-	const [showCookieModal, setShowCookieModal] = React.useState(true)
-	const [authMode, setAuthMode] = React.useState<"signin" | "signup" | "form">("form")
-	const { user, isLoaded } = useUser()
-	const { signIn } = useSignIn()
-	const router = useRouter()
-
-	// Redirect if user is already authenticated
-	React.useEffect(() => {
-		if (isLoaded && user) {
-			router.push("/profile/me/courses")
-		}
-	}, [isLoaded, user, router])
-
-	// Handle OAuth sign in
-	const handleOAuthSignIn = React.useCallback(
-		async (provider: "oauth_google" | "oauth_facebook" | "oauth_apple" | "oauth_microsoft") => {
-			if (!signIn) return
-
-			const result = await errors.try(
-				signIn.authenticateWithRedirect({
-					strategy: provider,
-					redirectUrl: "/sso-callback",
-					redirectUrlComplete: "/profile/me/courses"
-				})
-			)
-			if (result.error) {
-				// OAuth redirect errors are typically handled by Clerk's UI
-				// Silently handle the error as the user will see Clerk's error messages
-			}
-		},
-		[signIn]
-	)
-
-	// If showing Clerk components, render them in full screen
-	if (authMode === "signin") {
-		return (
-			<div className="min-h-screen bg-white flex items-center justify-center p-4">
-				<div className="w-full max-w-md">
-					<SignIn
-						appearance={{
-							elements: {
-								rootBox: "w-full",
-								card: "shadow-lg border border-gray-200 w-full"
-							}
-						}}
-						afterSignInUrl="/profile/me/courses"
-						afterSignUpUrl="/profile/me/courses"
-						signUpUrl="?mode=signup"
-					/>
-				</div>
-			</div>
-		)
-	}
-
-	if (authMode === "signup") {
-		return (
-			<div className="min-h-screen bg-white flex items-center justify-center p-4">
-				<div className="w-full max-w-md">
-					<SignUp
-						appearance={{
-							elements: {
-								rootBox: "w-full",
-								card: "shadow-lg border border-gray-200 w-full"
-							}
-						}}
-						afterSignInUrl="/profile/me/courses"
-						afterSignUpUrl="/profile/me/courses"
-						signInUrl="?mode=signin"
-					/>
-				</div>
-			</div>
-		)
-	}
+export default function Home() {
+	const [showCookieModal, setShowCookieModal] = useState(true)
 
 	return (
 		<div className="min-h-screen bg-white">
@@ -119,16 +45,10 @@ export default function LoginPage() {
 						<Button variant="ghost" className="text-blue-600 hover:text-blue-700 font-medium">
 							Donate <ExternalLink className="ml-1 h-4 w-4" />
 						</Button>
-						<Button
-							variant="ghost"
-							className="text-gray-700 hover:text-gray-800 font-medium"
-							onClick={() => setAuthMode("signin")}
-						>
+						<Button variant="ghost" className="text-gray-700 hover:text-gray-800 font-medium">
 							Log in
 						</Button>
-						<Button className="bg-blue-600 hover:bg-blue-700 font-medium px-6" onClick={() => setAuthMode("signup")}>
-							Sign up
-						</Button>
+						<Button className="bg-blue-600 hover:bg-blue-700 font-medium px-6">Sign up</Button>
 					</div>
 				</div>
 			</header>
@@ -163,11 +83,10 @@ export default function LoginPage() {
 								<CardTitle className="text-3xl font-semibold text-gray-800">Log in now!</CardTitle>
 							</CardHeader>
 							<CardContent className="space-y-6 px-8 pb-8">
-								{/* Continue with Google - Now properly triggers OAuth */}
+								{/* Continue with Google - Special styling */}
 								<Button
 									variant="outline"
 									className="w-full h-12 text-base font-medium border-gray-300 hover:bg-gray-50"
-									onClick={() => handleOAuthSignIn("oauth_google")}
 								>
 									<Image
 										src="https://ext.same-assets.com/3576345726/3627415455.svg"
@@ -179,13 +98,9 @@ export default function LoginPage() {
 									Continue with Google
 								</Button>
 
-								{/* Other OAuth Buttons - Now properly trigger OAuth */}
+								{/* Other OAuth Buttons */}
 								<div className="grid grid-cols-2 gap-3">
-									<Button
-										variant="outline"
-										className="w-full h-11 border-gray-300 hover:bg-gray-50"
-										onClick={() => setAuthMode("signin")}
-									>
+									<Button variant="outline" className="w-full h-11 border-gray-300 hover:bg-gray-50">
 										<Image
 											src="https://ext.same-assets.com/3576345726/3854438810.svg"
 											alt="Clever"
@@ -195,11 +110,7 @@ export default function LoginPage() {
 										/>
 										Clever
 									</Button>
-									<Button
-										variant="outline"
-										className="w-full h-11 border-gray-300 hover:bg-gray-50"
-										onClick={() => handleOAuthSignIn("oauth_facebook")}
-									>
+									<Button variant="outline" className="w-full h-11 border-gray-300 hover:bg-gray-50">
 										<Image
 											src="https://ext.same-assets.com/3576345726/74763886.svg"
 											alt="Facebook"
@@ -209,11 +120,7 @@ export default function LoginPage() {
 										/>
 										Facebook
 									</Button>
-									<Button
-										variant="outline"
-										className="w-full h-11 border-gray-300 hover:bg-gray-50"
-										onClick={() => handleOAuthSignIn("oauth_apple")}
-									>
+									<Button variant="outline" className="w-full h-11 border-gray-300 hover:bg-gray-50">
 										<Image
 											src="https://ext.same-assets.com/3576345726/3808120640.svg"
 											alt="Apple"
@@ -223,11 +130,7 @@ export default function LoginPage() {
 										/>
 										Apple
 									</Button>
-									<Button
-										variant="outline"
-										className="w-full h-11 border-gray-300 hover:bg-gray-50"
-										onClick={() => handleOAuthSignIn("oauth_microsoft")}
-									>
+									<Button variant="outline" className="w-full h-11 border-gray-300 hover:bg-gray-50">
 										<Image
 											src="https://ext.same-assets.com/3576345726/1521032922.svg"
 											alt="Microsoft"
@@ -248,7 +151,7 @@ export default function LoginPage() {
 									</div>
 								</div>
 
-								{/* Email/Password Form - Now functional */}
+								{/* Email/Password Form */}
 								<div className="space-y-5">
 									<div>
 										<Label htmlFor="email" className="text-sm text-gray-700 font-medium">
@@ -274,21 +177,16 @@ export default function LoginPage() {
 									</div>
 
 									<div className="text-center pt-2">
-										<Button
-											variant="link"
-											className="text-blue-600 hover:text-blue-700 p-0 font-medium"
-											onClick={() => setAuthMode("signin")}
-										>
+										<Button variant="link" className="text-blue-600 hover:text-blue-700 p-0 font-medium">
 											Forgot password?
 										</Button>
 									</div>
 
-									<Button
-										className="w-full h-12 bg-gray-400 hover:bg-gray-500 text-white font-medium text-base"
-										onClick={() => setAuthMode("signin")}
-									>
-										Log in
-									</Button>
+									<Link href="/profile/me/courses">
+										<Button className="w-full h-12 bg-gray-400 hover:bg-gray-500 text-white font-medium text-base">
+											Log in
+										</Button>
+									</Link>
 
 									<p className="text-xs text-gray-500 text-center leading-relaxed">
 										By logging in, you agree to the{" "}
@@ -304,11 +202,7 @@ export default function LoginPage() {
 
 									<p className="text-sm text-center text-gray-600 pt-2">
 										Need a Khan Academy account?{" "}
-										<button
-											type="button"
-											className="text-blue-600 hover:underline font-semibold"
-											onClick={() => setAuthMode("signup")}
-										>
+										<button type="button" className="text-blue-600 hover:underline font-semibold">
 											Sign up today
 										</button>
 									</p>
