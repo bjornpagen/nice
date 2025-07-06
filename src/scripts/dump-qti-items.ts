@@ -3,7 +3,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { QtiApiClient } from "@/lib/qti"
 
-const TOTAL_ITEMS_TO_FETCH = 1000
+const TOTAL_ITEMS_TO_FETCH = 500
 const BATCH_SIZE = 100 // Number of items to fetch per API call
 
 /**
