@@ -154,6 +154,10 @@ const OutcomeDeclarationSchema = z.object({
 const AssessmentItemSchema = z.object({
 	identifier: z.string(),
 	title: z.string(),
+	// WORKAROUND: Added "gap-match" to handle a value returned by the live API
+	// that is not present in its official OpenAPI specification. A bug report
+	// has been filed with the QTI service provider. This is a temporary client-side
+	// mitigation to prevent our SDK from crashing on their invalid responses.
 	type: z.enum([
 		"choice",
 		"text-entry",
@@ -171,7 +175,8 @@ const AssessmentItemSchema = z.object({
 		"slider",
 		"drawing",
 		"media",
-		"upload"
+		"upload",
+		"gap-match" // Add the undocumented type here
 	]),
 	qtiVersion: z.string(),
 	timeDependent: z.boolean(),

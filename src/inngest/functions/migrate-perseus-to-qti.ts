@@ -61,14 +61,19 @@ export const migratePerseusToQti = inngest.createFunction(
 			const client = new QtiApiClient()
 			const qtiId = `nice-question-${question.id}` // Use a namespaced, predictable identifier
 
-			const updateResult = await errors.try(client.updateAssessmentItem({ identifier: qtiId, xml: qtiXml }))
+			// Forcefully replace the identifier in the AI-generated XML with our correct one.
+			// This corrects any AI hallucination where it might copy an ID from an example.
+			const finalXml = qtiXml.replace(/identifier="[^"]*"/, `identifier="${qtiId}"`)
+
+			const updateResult = await errors.try(client.updateAssessmentItem({ identifier: qtiId, xml: finalXml }))
 
 			if (updateResult.error) {
 				// If update fails, check if it's a 404 (not found) and create it.
 				// This makes the step idempotent.
 				if (updateResult.error.message.includes("status 404")) {
 					logger.debug("qti item not found, creating new one", { qtiId })
-					const createResult = await errors.try(client.createAssessmentItem({ xml: qtiXml }))
+					// Use the corrected XML for creation.
+					const createResult = await errors.try(client.createAssessmentItem({ xml: finalXml }))
 					if (createResult.error) {
 						logger.error("failed to create qti item after update failed", {
 							qtiId,
@@ -76,6 +81,7 @@ export const migratePerseusToQti = inngest.createFunction(
 						})
 						throw errors.wrap(createResult.error, "qti create")
 					}
+					// The response from create will now contain the correct identifier.
 					return createResult.data.identifier
 				}
 
@@ -83,6 +89,7 @@ export const migratePerseusToQti = inngest.createFunction(
 				logger.error("failed to update qti item", { qtiId, error: updateResult.error })
 				throw errors.wrap(updateResult.error, "qti update")
 			}
+			// The response from update will also contain the correct identifier.
 			return updateResult.data.identifier
 		})
 
