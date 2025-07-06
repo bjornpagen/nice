@@ -1,0 +1,1 @@
+below is a perseus json. please give me the corresponding qti 3.0 xml, using the above examples to inform the exact xml output. respond with only the corresponding qti 3.0 xml.

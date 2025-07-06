@@ -1,0 +1,65 @@
+{
+	"hints": [],
+	"question": {
+		"images": {
+			"https://cdn.kastatic.org/ka-perseus-images/944ea7b952f01ffd1712043591fe2f0e7f55c77f.png": {
+				"width": 1392,
+				"height": 910
+			}
+		},
+		"content": "Use the graph below to answer the following question.\n\n**Public trust in government**\n![](https://cdn.kastatic.org/ka-perseus-images/944ea7b952f01ffd1712043591fe2f0e7f55c77f.png)\n\n>Source: [Pew Research Center](http://www.people-press.org/2017/05/03/public-trust-in-government-1958-2017/#chart)\n\n**Which of the following accurately describes a trend of public trust in the federal government from 1958 to 2017?**\n\n[[☃ radio 1]]\n\n",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"clue": "Based on the moving average from multiple polls the decline is clearly evident in the graph.",
+							"content": "Public trust has generally declined, rising briefly during periods of economic growth and the 9/11 crisis",
+							"correct": true
+						},
+						{
+							"clue": "The moving average generally shows smaller variations in public trust over time than does the line plotted from individual polls.",
+							"content": "The moving average of trust levels has had greater variations than the trust levels derived from individual polls",
+							"correct": false
+						},
+						{
+							"clue": "The public trust dropped during the Vietnam war era of the Johnson and Nixon administrations as well as during the invasion of Iraq during G.W. Bush’s tenure.",
+							"content": "Public trust has increased during wartime administrations when the nation’s citizens have rallied around the president",
+							"isNoneOfTheAbove": false
+						},
+						{
+							"clue": "There are notable exceptions to this generalization, including the Nixon, Ford, Clinton, and both Bush presidencies.",
+							"content": "Public trust has declined during Democratic presidencies and has risen during Republican administrations",
+							"isNoneOfTheAbove": false
+						}
+					],
+					"randomize": true,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": {
+					"major": 1,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false
+	},
+	"itemDataVersion": {
+		"major": 0,
+		"minor": 1
+	}
+}
