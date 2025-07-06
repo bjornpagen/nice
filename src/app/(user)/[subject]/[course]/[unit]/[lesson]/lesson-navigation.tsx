@@ -1,4 +1,3 @@
-import * as logger from "@superbuilders/slog"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -17,13 +16,13 @@ export function LessonNavigation({
 	const index = unit.children.findIndex(
 		(child): child is LessonInfo => child.type === "Lesson" && child.title === lesson.title
 	)
-	logger.info("lesson navigation", { index, lesson: lesson.title })
+	// logger.info("lesson navigation", { index, lesson: lesson.title })
 
 	const prev = prevLesson(unit, index)
-	logger.info("lesson navigation: prevLesson", { found: prev != null })
+	// logger.info("lesson navigation: prevLesson", { found: prev != null })
 
 	const next = nextLesson(unit, index)
-	logger.info("lesson navigation: nextLesson", { found: next != null })
+	// logger.info("lesson navigation: nextLesson", { found: next != null })
 
 	return (
 		<div className="flex items-center p-5 border-b border-gray-200">
