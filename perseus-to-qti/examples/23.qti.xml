@@ -54,18 +54,6 @@
         </p>
     </qti-item-body>
 
-    <qti-response-processing>
-        <qti-response-condition>
-            <qti-response-if>
-                <qti-equal tolerance-mode="exact">
-                    <qti-variable identifier="RESPONSE"/>
-                    <qti-correct identifier="RESPONSE"/>
-                </qti-equal>
-            </qti-response-if>
-            <qti-set-outcome-value identifier="SCORE">
-                <qti-base-value base-type="float">1.0</qti-base-value>
-            </qti-set-outcome-value>
-        </qti-response-condition>
-    </qti-response-processing>
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
 
 </qti-assessment-item>
