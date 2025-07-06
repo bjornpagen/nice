@@ -42,10 +42,10 @@
         <p><em>Enter an exact answer, without rounding.</em></p>
 
         <div>
-            <p>Your answer should be:</p>
+            <p>Your answer should be a simplified fraction.</p>
             <ul>
-                <li>a simplified proper fraction, like <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math></li>
-                <li>or a simplified improper fraction, like <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>7</mn><mn>4</mn></mfrac></math></li>
+                <li>For example, a proper fraction like <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math></li>
+                <li>Or an improper fraction like <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>7</mn><mn>4</mn></mfrac></math></li>
             </ul>
         </div>
 
@@ -54,6 +54,18 @@
         </p>
     </qti-item-body>
 
-    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-equal tolerance-mode="exact">
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-equal>
+            </qti-response-if>
+            <qti-set-outcome-value identifier="SCORE">
+                <qti-base-value base-type="float">1.0</qti-base-value>
+            </qti-set-outcome-value>
+        </qti-response-condition>
+    </qti-response-processing>
 
 </qti-assessment-item>
