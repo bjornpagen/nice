@@ -1,20 +1,45 @@
+import { auth } from "@clerk/nextjs/server"
+import * as errors from "@superbuilders/errors"
+import { eq, sql } from "drizzle-orm"
 import { Banner } from "@/components/banner"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
+import { db } from "@/db"
+import * as schema from "@/db/schemas"
 import { ProfileBanner } from "./profile-banner"
 import { Sidebar } from "./sidebar"
 
-// FIXME: remove this in favor of Clerk auth
-const uid = "aiden.zepp"
+// Prepared statement to get user's nickname
+const getUserNicknameQuery = db
+	.select({
+		nickname: schema.niceUsers.nickname
+	})
+	.from(schema.niceUsers)
+	.where(eq(schema.niceUsers.clerkId, sql.placeholder("clerkId")))
+	.prepare("src_app_user_profile_layout_get_user_nickname")
 
 export default async function UserLayout({ children }: { children: React.ReactNode }) {
+	// Get the authenticated user
+	const { userId } = await auth()
+
+	if (!userId) {
+		throw errors.new("User not authenticated")
+	}
+
+	// Get the user's nickname from the database
+	const userResult = await getUserNicknameQuery.execute({ clerkId: userId })
+	const user = userResult[0]
+
+	// Use the nickname or fallback to a default if not found
+	const nickname = user?.nickname || "User"
+
 	return (
 		<div className="min-h-screen bg-white font-lato">
-			<Header />
+			<Header nickname={nickname} />
 			<Banner />
 
 			{/* User Profile Banner */}
-			<ProfileBanner uid={uid} />
+			<ProfileBanner uid={nickname} />
 
 			{/* Main Content */}
 			<div className="mx-auto max-w-7xl px-4 py-6">

@@ -2,8 +2,17 @@ import { ChevronDown, Menu, Search, Smile } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { UserDropdown } from "./user-dropdown"
 
-export function Header({ dark = false }: { dark?: boolean }) {
+interface HeaderProps {
+	dark?: boolean
+	nickname?: string
+}
+
+export function Header({ dark = false, nickname }: HeaderProps) {
+	const displayName = nickname || "User"
+	const displayInitial = nickname ? nickname.charAt(0).toUpperCase() : "U"
+
 	return (
 		<header
 			className={`border-b px-2 sm:px-4 py-3 ${dark ? "bg-blue-950 border-blue-800" : "bg-white border-gray-200"}`}
@@ -69,14 +78,7 @@ export function Header({ dark = false }: { dark?: boolean }) {
 					</Button>
 
 					{/* User Dropdown */}
-					<Button
-						variant="ghost"
-						className={`flex items-center space-x-1 p-2 ${dark ? "text-white" : "text-blue-600"}`}
-					>
-						<span className="text-sm font-medium hidden sm:inline">User</span>
-						<span className="text-sm font-medium sm:hidden">U</span>
-						<ChevronDown className="h-4 w-4" />
-					</Button>
+					<UserDropdown displayName={displayName} displayInitial={displayInitial} dark={dark} />
 				</div>
 			</div>
 		</header>
