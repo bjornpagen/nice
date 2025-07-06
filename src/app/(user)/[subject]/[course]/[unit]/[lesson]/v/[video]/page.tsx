@@ -62,7 +62,10 @@ export default function VideoPage({
 
 	// Promise for the video data, passed directly to the video player
 	const videoPromise: Promise<Video> = params.then(async (p) => {
-		const videoPath = `/${p.subject}/${p.course}/${p.unit}/${p.lesson}/v/${p.video}`
+		// Decode URL segments to handle colons in ID-prefixed slugs
+		const decodedUnit = decodeURIComponent(p.unit)
+		const decodedLesson = decodeURIComponent(p.lesson)
+		const videoPath = `/${p.subject}/${p.course}/${decodedUnit}/${decodedLesson}/v/${p.video}`
 		const videoResult = await getVideoByPathQuery.execute({ videoPath })
 		const video = videoResult[0]
 		if (!video) {
@@ -73,9 +76,13 @@ export default function VideoPage({
 
 	// Promise for the page layout data (sidebar, breadcrumbs, etc.)
 	const dataPromise = params.then(async (p) => {
+		// Decode URL segments to handle colons in ID-prefixed slugs
+		const decodedUnit = decodeURIComponent(p.unit)
+		const decodedLesson = decodeURIComponent(p.lesson)
+
 		const coursePath = `/${p.subject}/${p.course}`
-		const unitPath = `${coursePath}/${p.unit}`
-		const lessonPath = `${unitPath}/${p.lesson}`
+		const unitPath = `${coursePath}/${decodedUnit}`
+		const lessonPath = `${unitPath}/${decodedLesson}`
 
 		// Fetch sidebar context data in parallel
 		const [courseResult, unitResult, lessonResult] = await Promise.all([

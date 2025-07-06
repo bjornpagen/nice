@@ -43,9 +43,13 @@ export default function ExercisePage({
 	logger.info("exercise page: received request, initiating data fetches")
 
 	const dataPromise = params.then(async (p) => {
+		// Decode URL segments to handle colons in ID-prefixed slugs
+		const decodedUnit = decodeURIComponent(p.unit)
+		const decodedLesson = decodeURIComponent(p.lesson)
+
 		const coursePath = `/${p.subject}/${p.course}`
-		const unitPath = `${coursePath}/${p.unit}`
-		const lessonPath = `${unitPath}/${p.lesson}`
+		const unitPath = `${coursePath}/${decodedUnit}`
+		const lessonPath = `${unitPath}/${decodedLesson}`
 
 		const courseResult = await getCourseByPathQuery.execute({ coursePath })
 		const unitResult = await getUnitByPathQuery.execute({ unitPath })

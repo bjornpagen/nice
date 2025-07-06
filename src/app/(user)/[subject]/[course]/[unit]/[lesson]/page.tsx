@@ -44,9 +44,13 @@ export default function LessonPage({
 	logger.info("lesson page: received request, initiating data fetches")
 
 	const dataPromise = params.then(async (p) => {
+		// Decode URL segments to handle colons in ID-prefixed slugs
+		const decodedUnit = decodeURIComponent(p.unit)
+		const decodedLesson = decodeURIComponent(p.lesson)
+
 		const coursePath = `/${p.subject}/${p.course}`
-		const unitPath = `${coursePath}/${p.unit}`
-		const lessonPath = `${unitPath}/${p.lesson}`
+		const unitPath = `${coursePath}/${decodedUnit}`
+		const lessonPath = `${unitPath}/${decodedLesson}`
 
 		// In a real scenario, these would fetch children as well
 		const courseResult = await getCourseByPathQuery.execute({ coursePath })
