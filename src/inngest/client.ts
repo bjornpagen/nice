@@ -3,10 +3,18 @@ import { EventSchemas, type GetEvents, Inngest } from "inngest"
 import { z } from "zod"
 
 const events = {
-	"test/hello.world": {
+	"nice/hello.world": {
 		data: z.object({
 			email: z.string().email()
 		})
+	},
+	"nice/qti.migration.requested": {
+		data: z.object({
+			questionId: z.string().min(1)
+		})
+	},
+	"nice/qti.migration.backfill.requested": {
+		data: z.object({})
 	}
 }
 

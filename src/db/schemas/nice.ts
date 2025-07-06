@@ -192,10 +192,12 @@ const questions = schema.table(
 		id: text("id").primaryKey(),
 		exerciseId: text("exercise_id").notNull(),
 		sha: text("sha").notNull().default(""),
-		parsedData: jsonb("parsed_data").notNull()
+		parsedData: jsonb("parsed_data").notNull(),
+		qtiIdentifier: text("qti_identifier").notNull().default("")
 	},
 	(table) => [
 		index("questions_exercise_id_idx").on(table.exerciseId),
+		index("questions_qti_identifier_idx").on(table.qtiIdentifier),
 		foreignKey({
 			name: "questions_exercise_fk",
 			columns: [table.exerciseId],
