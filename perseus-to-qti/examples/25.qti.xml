@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="glass-tank-marbles"
+    title="Glass Tank Volume and Marbles"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE_1" base-type="integer" cardinality="single">
+        <qti-correct-response>
+            <qti-value>35</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    
+    <qti-response-declaration identifier="RESPONSE_2" base-type="integer" cardinality="single">
+        <qti-correct-response>
+            <qti-value>375</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <p>Andrei has a glass tank. First, he wants to put in some marbles, each of which has a volume of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0.04</mn></math> liters. Then, he wants to fill the tank with water until it's completely full. If he uses <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>50</mn></math> marbles, he will have to add <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>33</mn></math> liters of water.</p>
+        
+        <qti-prompt>What is the volume of the tank?</qti-prompt>
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE_1" expected-length="3"/> liters
+        </p>
+        
+        <qti-prompt>Andrei has exactly <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>20</mn></math> liters of water. How many marbles does he need so the tank is full?</qti-prompt>
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE_2" expected-length="4"/> marbles
+        </p>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_1"/>
+                        <qti-correct identifier="RESPONSE_1"/>
+                    </qti-match>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_2"/>
+                        <qti-correct identifier="RESPONSE_2"/>
+                    </qti-match>
+                </qti-and>
+            </qti-response-if>
+            <qti-set-outcome-value identifier="SCORE">
+                <qti-base-value base-type="float">1.0</qti-base-value>
+            </qti-set-outcome-value>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>

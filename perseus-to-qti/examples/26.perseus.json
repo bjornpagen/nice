@@ -1,0 +1,110 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "###Thinking about a mosaic plot\n\nA mosaic plot is like a segmented bar graph where we make the width of each column proportional to the number of individuals in that category.\n\nThat makes the area of each segment proportional to the number of individuals in the corresponding cell of two-way table.\n\nLet's look at each mosaic plot to see which one has proportions that relate to the two-way table.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/b934740e35cda05ab6eaf07f3120887a966a9d4e": {
+					"width": 254,
+					"height": 230
+				}
+			},
+			"content": "###Mosaic plot A\n\nThere are more children than adults, so the column for children should be wider than the column for adults. However, plot A shows more adults than children, so it can't be the right answer.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/b934740e35cda05ab6eaf07f3120887a966a9d4e)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/c8519def61143321d88a3aae91ab30dfd8258d7c": {
+					"width": 254,
+					"height": 230
+				}
+			},
+			"content": "###Mosaic plot B\n\nThere are more children than adults, so the column for children should be wider than the column for adults. However, plot B shows about the same number of adults and children, so it can't be the right answer.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/c8519def61143321d88a3aae91ab30dfd8258d7c)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/0fb02557f2cc04954632bf6c0114ee2cde4162fe": {
+					"width": 254,
+					"height": 230
+				},
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/8ff51038e875261f981407914c2889ce90ea2ca5": {
+					"width": 254,
+					"height": 230
+				}
+			},
+			"content": "###Mosaic plot C\n\nTo correctly create a mosaic plot, first we split the horizontal axis proportionally based on the percentage that each category forms of the total sample. For example, the \"Children\" column should be $60\\%$ of the width of the plot because $72$ out of $120$ customers were children.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/0fb02557f2cc04954632bf6c0114ee2cde4162fe)\n\nThen we split each column proportionally based on the percentage that each vertical category forms of the column total.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/8ff51038e875261f981407914c2889ce90ea2ca5)\n\n(Sometimes, the column totals don't add up to $100\\%$ because of rounding — this is nothing to be concerned about.)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/519d67787d3f1c01ef2389c12ccbcbf83380d48d": {
+					"width": 254,
+					"height": 230
+				}
+			},
+			"content": "So plot C correctly displays the results.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/519d67787d3f1c01ef2389c12ccbcbf83380d48d)",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "Tate works at an ice cream stand. Every customer can choose one of two toppings—sprinkles or chocolate chips. He recorded the age group and the chosen topping for a random sample of $120$ customers. Here are the results:\n\nAge group | Sprinkles | Chocolate chips | Neither | Total\n- | -: | -: | -: | -:\nChildren| $27$ | $38$ | $7$ | $72$\nAdults | $13$ | $22$ | $13$ | $48$\nTotal | $40$ | $60$ | $20$ | $120$\n\n**Which mosaic plot correctly displays these results?**\n\n[[☃ radio 1]]",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"clue": "This mosaic plot shows more adults than children since the \"adults\" column is wider. But the two-way table shows more children than adults, so the \"children\" column should be wider.",
+							"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/b934740e35cda05ab6eaf07f3120887a966a9d4e)",
+							"correct": false
+						},
+						{
+							"clue": "This mosaic plot shows an equal number of adults and children since those columns are equally wide. But the two-way table shows more children than adults, so the \"children\" column should be wider.",
+							"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/c8519def61143321d88a3aae91ab30dfd8258d7c)",
+							"correct": false
+						},
+						{
+							"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/519d67787d3f1c01ef2389c12ccbcbf83380d48d)",
+							"correct": true,
+							"isNoneOfTheAbove": false
+						}
+					],
+					"randomize": false,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": {
+					"major": 1,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": true,
+		"periodicTable": false
+	},
+	"itemDataVersion": {
+		"major": 0,
+		"minor": 1
+	}
+}

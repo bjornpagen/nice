@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<qti-assessment-item
+xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+identifier="mosaic-plot-identification"
+title="Mosaic Plot Identification"
+time-dependent="false"
+xml:lang="en-US">
+
+<qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+    <qti-correct-response>
+        <qti-value>C</qti-value>
+    </qti-correct-response>
+</qti-response-declaration>
+
+<qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
+    <qti-default-value>
+        <qti-value>0</qti-value>
+    </qti-default-value>
+</qti-outcome-declaration>
+
+<qti-item-body>
+    <p>Tate works at an ice cream stand. Every customer can choose one of two toppings—sprinkles or chocolate chips. He recorded the age group and the chosen topping for a random sample of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn></math> customers. Here are the results:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Age group</th>
+                <th style="text-align:right;">Sprinkles</th>
+                <th style="text-align:right;">Chocolate chips</th>
+                <th style="text-align:right;">Neither</th>
+                <th style="text-align:right;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Children</td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>27</mn></math></td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>38</mn></math></td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math></td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math></td>
+            </tr>
+            <tr>
+                <td>Adults</td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn></math></td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math></td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn></math></td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>48</mn></math></td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>40</mn></math></td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn></math></td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>20</mn></math></td>
+                <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn></math></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1">
+        <qti-prompt>Which mosaic plot correctly displays these results?</qti-prompt>
+        <qti-simple-choice identifier="A">
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/b934740e35cda05ab6eaf07f3120887a966a9d4e.svg" alt="A mosaic plot where the column for adults is wider than the column for children."/>
+        </qti-simple-choice>
+        <qti-simple-choice identifier="B">
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/c8519def61143321d88a3aae91ab30dfd8258d7c.svg" alt="A mosaic plot where the columns for adults and children are equally wide."/>
+        </qti-simple-choice>
+        <qti-simple-choice identifier="C">
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/519d67787d3f1c01ef2389c12ccbcbf83380d48d.svg" alt="A mosaic plot where the column for children is wider than the column for adults."/>
+        </qti-simple-choice>
+    </qti-choice-interaction>
+</qti-item-body>
+
+<qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>
