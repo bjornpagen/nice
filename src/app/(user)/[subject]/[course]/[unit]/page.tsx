@@ -130,9 +130,12 @@ export type Course = Awaited<ReturnType<typeof getCourseBySlugQuery.execute>>[0]
 export type Unit = Awaited<ReturnType<typeof getAllUnitsByCourseIdQuery.execute>>[0]
 export type CourseChallenge = Awaited<ReturnType<typeof getCourseChallengesQuery.execute>>[0]
 export type Question = { id: string; sha: string; parsedData: unknown }
-export type Video = NonNullable<typeof schema.niceVideos.$inferSelect>
-export type Article = NonNullable<typeof schema.niceArticles.$inferSelect>
-export type Exercise = NonNullable<typeof schema.niceExercises.$inferSelect> & { questions: Question[] }
+export type Video = NonNullable<typeof schema.niceVideos.$inferSelect> & { ordering: number }
+export type Article = NonNullable<typeof schema.niceArticles.$inferSelect> & { ordering: number }
+export type Exercise = NonNullable<typeof schema.niceExercises.$inferSelect> & {
+	questions: Question[]
+	ordering: number
+}
 
 export type Lesson = {
 	id: string
@@ -256,11 +259,15 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 			if (!lessonContent) continue
 
 			if (row.contentType === "Video" && row.video) {
-				lessonContent.videos.push(row.video)
+				lessonContent.videos.push({ ...row.video, ordering: row.ordering })
 			} else if (row.contentType === "Article" && row.article) {
-				lessonContent.articles.push(row.article)
+				lessonContent.articles.push({ ...row.article, ordering: row.ordering })
 			} else if (row.contentType === "Exercise" && row.exercise) {
-				lessonContent.exercises.push({ ...row.exercise, questions: questionsByExerciseId.get(row.exercise.id) || [] })
+				lessonContent.exercises.push({
+					...row.exercise,
+					questions: questionsByExerciseId.get(row.exercise.id) || [],
+					ordering: row.ordering
+				})
 			}
 		}
 

@@ -4,18 +4,30 @@ import Link from "next/link"
 import { ActivityIcon } from "@/components/icons/activity"
 import { Button } from "@/components/ui/button"
 import { capitalize } from "@/lib/utils"
-import type { Exercise, Lesson, Video } from "./[unit]/page"
+import type { Article, Exercise, Lesson, Video } from "./[unit]/page"
 import { Section } from "./section"
+
+type LearningContent =
+	| { type: "Video"; content: Video; ordering: number }
+	| { type: "Article"; content: Article; ordering: number }
 
 export function LessonSection({
 	lesson,
 	videos,
-	exercises
+	exercises,
+	articles
 }: {
 	lesson: Lesson
 	videos: Video[]
 	exercises: Exercise[]
+	articles: Article[]
 }) {
+	// Create a unified list of learning content (videos and articles) ordered properly
+	const learningContent: LearningContent[] = [
+		...videos.map((video) => ({ type: "Video" as const, content: video, ordering: video.ordering })),
+		...articles.map((article) => ({ type: "Article" as const, content: article, ordering: article.ordering }))
+	].sort((a, b) => a.ordering - b.ordering)
+
 	return (
 		<Section>
 			<Link href={lesson.path} className="font-bold text-gray-900 mb-2 text-md hover:underline">
@@ -25,10 +37,16 @@ export function LessonSection({
 				<div className="mb-2 mt-4">
 					<span className="text-gray-500 text-sm mb-4 block">Learn</span>
 					<div className="space-y-3">
-						{videos.length > 0 ? (
-							videos.map((video) => <LessonVideo key={video.id} video={video} />)
+						{learningContent.length > 0 ? (
+							learningContent.map((item) =>
+								item.type === "Video" ? (
+									<LessonVideo key={`video-${item.content.id}`} video={item.content} />
+								) : (
+									<LessonArticle key={`article-${item.content.id}`} article={item.content} />
+								)
+							)
 						) : (
-							<div className="text-gray-800 text-sm">No videos found</div>
+							<div className="text-gray-800 text-sm">No learning content found</div>
 						)}
 					</div>
 				</div>
@@ -55,6 +73,17 @@ function LessonVideo({ video }: { video: Pick<Video, "title" | "path"> }) {
 			<ActivityIcon variant="video" />
 			<Link href={video.path} className="text-gray-800 text-sm hover:underline">
 				{video.title}
+			</Link>
+		</div>
+	)
+}
+
+function LessonArticle({ article }: { article: Pick<Article, "title" | "path"> }) {
+	return (
+		<div className="bg-white flex items-center gap-2">
+			<ActivityIcon variant="article" />
+			<Link href={article.path} className="text-gray-800 text-sm hover:underline">
+				{article.title}
 			</Link>
 		</div>
 	)

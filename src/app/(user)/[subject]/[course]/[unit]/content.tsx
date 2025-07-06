@@ -53,7 +53,15 @@ export function Content({ hydratedUnitDataPromise }: { hydratedUnitDataPromise: 
 						switch (child.type) {
 							case "Lesson":
 								// Pass the fully hydrated lesson to the component
-								return <LessonSection key={child.id} lesson={child} videos={child.videos} exercises={child.exercises} />
+								return (
+									<LessonSection
+										key={child.id}
+										lesson={child}
+										videos={child.videos}
+										exercises={child.exercises}
+										articles={child.articles}
+									/>
+								)
 							case "Quiz":
 								return <QuizSection key={child.id} quiz={child} />
 							case "UnitTest":
