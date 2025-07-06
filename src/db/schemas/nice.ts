@@ -255,7 +255,7 @@ const users = schema.table(
 	"users",
 	{
 		clerkId: text("clerk_id").primaryKey(),
-		username: text("username").notNull().unique(),
+		username: text("username").unique(),
 		nickname: text("nickname").notNull().default(""),
 		bio: text("bio").notNull().default("")
 	},

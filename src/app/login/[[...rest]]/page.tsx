@@ -1,5 +1,6 @@
 "use client"
 
+import { useSignIn } from "@clerk/nextjs"
 import { ChevronDown, ExternalLink, Search } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -12,6 +13,15 @@ import { Label } from "@/components/ui/label"
 
 export default function Home() {
 	const [showCookieModal, setShowCookieModal] = useState(true)
+	const { signIn } = useSignIn()
+
+	const handleGoogleSignIn = () => {
+		signIn?.authenticateWithRedirect({
+			strategy: "oauth_google",
+			redirectUrl: "/sso-callback",
+			redirectUrlComplete: "/"
+		})
+	}
 
 	return (
 		<div className="min-h-screen bg-white">
@@ -83,10 +93,11 @@ export default function Home() {
 								<CardTitle className="text-3xl font-semibold text-gray-800">Log in now!</CardTitle>
 							</CardHeader>
 							<CardContent className="space-y-6 px-8 pb-8">
-								{/* Continue with Google - Special styling */}
+								{/* Continue with Google - Now with OAuth functionality */}
 								<Button
 									variant="outline"
 									className="w-full h-12 text-base font-medium border-gray-300 hover:bg-gray-50"
+									onClick={handleGoogleSignIn}
 								>
 									<Image
 										src="https://ext.same-assets.com/3576345726/3627415455.svg"
@@ -209,6 +220,15 @@ export default function Home() {
 								</div>
 							</CardContent>
 						</Card>
+
+						<div className="mt-8 text-center">
+							<p className="text-gray-600">
+								Don&apos;t have an account?{" "}
+								<Button variant="link" className="text-blue-600 hover:text-blue-700 p-0 font-medium">
+									Sign up for free!
+								</Button>
+							</p>
+						</div>
 					</div>
 				</div>
 			</main>

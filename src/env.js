@@ -22,7 +22,8 @@ export const env = createEnv({
 		NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
 		RAPIDAPI_YT_API_KEY: z.string().min(1),
 		RAPIDAPI_YT_API_HOST: z.string().min(1),
-		CLERK_SECRET_KEY: z.string().min(1)
+		CLERK_SECRET_KEY: z.string().min(1),
+		CLERK_WEBHOOK_SECRET: z.string().min(1)
 	},
 
 	/**
@@ -32,7 +33,10 @@ export const env = createEnv({
 	 */
 	client: {
 		// NEXT_PUBLIC_CLIENTVAR: z.string(),
-		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1)
+		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+		NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string().optional(),
+		NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL: z.string().optional(),
+		NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL: z.string().optional()
 	},
 
 	/**
@@ -45,7 +49,11 @@ export const env = createEnv({
 		RAPIDAPI_YT_API_KEY: process.env.RAPIDAPI_YT_API_KEY,
 		RAPIDAPI_YT_API_HOST: process.env.RAPIDAPI_YT_API_HOST,
 		CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
-		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+		CLERK_WEBHOOK_SECRET: process.env.CLERK_WEBHOOK_SECRET,
+		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+		NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
+		NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL,
+		NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL
 		// NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 	},
 	/**
