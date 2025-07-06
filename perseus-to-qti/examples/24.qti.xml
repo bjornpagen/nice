@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="continuity-differentiability-piecewise"
+    title="Continuity and Differentiability of a Piecewise Function"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+
+    <qti-item-body>
+        <qti-prompt>Is the function given below continuous/differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>?</qti-prompt>
+        <div>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <mi>f</mi>
+                    <mo stretchy="false">(</mo>
+                    <mi>x</mi>
+                    <mo stretchy="false">)</mo>
+                    <mo>=</mo>
+                    <mrow>
+                        <mo>{</mo>
+                        <mtable>
+                            <mtr>
+                                <mtd columnalign="left">
+                                    <mrow>
+                                        <mo>-</mo>
+                                        <msup>
+                                            <mi>x</mi>
+                                            <mn>2</mn>
+                                        </msup>
+                                        <mo>+</mo>
+                                        <mn>3</mn>
+                                    </mrow>
+                                </mtd>
+                                <mtd columnalign="left">
+                                    <mrow>
+                                        <mo>,</mo>
+                                        <mi>x</mi>
+                                        <mo>≤</mo>
+                                        <mn>2</mn>
+                                    </mrow>
+                                </mtd>
+                            </mtr>
+                            <mtr>
+                                <mtd columnalign="left">
+                                    <mrow>
+                                        <msup>
+                                            <mrow>
+                                                <mo stretchy="false">(</mo>
+                                                <mi>x</mi>
+                                                <mo>-</mo>
+                                                <mn>4</mn>
+                                                <mo stretchy="false">)</mo>
+                                            </mrow>
+                                            <mn>2</mn>
+                                        </msup>
+                                        <mo>-</mo>
+                                        <mn>5</mn>
+                                    </mrow>
+                                </mtd>
+                                <mtd columnalign="left">
+                                    <mrow>
+                                        <mo>,</mo>
+                                        <mi>x</mi>
+                                        <mo>></mo>
+                                        <mn>2</mn>
+                                    </mrow>
+                                </mtd>
+                            </mtr>
+                        </mtable>
+                    </mrow>
+                </mrow>
+            </math>
+        </div>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+            <qti-simple-choice identifier="A">Continuous but not differentiable</qti-simple-choice>
+            <qti-simple-choice identifier="B">Differentiable but not continuous</qti-simple-choice>
+            <qti-simple-choice identifier="C">Both continuous and differentiable</qti-simple-choice>
+            <qti-simple-choice identifier="D">Neither continuous nor differentiable</qti-simple-choice>
+        </qti-choice-interaction>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>

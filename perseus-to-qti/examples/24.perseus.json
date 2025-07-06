@@ -1,0 +1,124 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "### Checking for continuity at $x=2$\n\nFor the function to be continuous at $x=2$, we need the two-sided limit $\\displaystyle\\lim_{x\\to 2}f(x)$ to exist and be equal to $f(2)$.\n\nThis is the same as requiring that the two one-sided limits $\\displaystyle\\lim_{x\\to 2^-}f(x)$ and $\\displaystyle\\lim_{x\\to 2^+}f(x)$ exist and are equal to $f(2)$.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "According to $f$'s definition, $f(2)=-(2)^2+3=-1$.\n\n### $\\displaystyle\\lim_{x\\to 2^-}f(x)$\n\n$-x^2+3$ evaluated at $x=2$ is equal to $-1$. Since $-x^2+3$ is continuous, we can be certain that $\\displaystyle\\lim_{x\\to 2^-}f(x)=-1$.\n\n### $\\displaystyle\\lim_{x\\to 2^+}f(x)$\n\n$(x-4)^2-5$ evaluated at $x=2$ is equal to $-1$. Since $(x-4)^2-5$ is continuous, we can be certain that $\\displaystyle\\lim_{x\\to 2^+}f(x)=-1$.\n\nWe saw that the two one-sided limits exist and are equal to $f(2)$, so the function is continuous at $x=2$.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "### Checking for differentiability at $x=2$\n\nFor the function to be differentiable at $x=2$, we need the two-sided limit $\\displaystyle\\lim_{x\\to 2}\\dfrac{f(x)-f(2)}{x-2}=\\,\\displaystyle\\lim_{x\\to 2}\\dfrac{f(x)-(-1)}{x-2}$ to exist.\n\nThis is the same as requiring that the two one-sided limits $\\displaystyle\\lim_{x\\to 2^-}\\dfrac{f(x)-(-1)}{x-2}$ and $\\displaystyle\\lim_{x\\to 2^+}\\dfrac{f(x)-(-1)}{x-2}$ exist and have the same value.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "- $\\displaystyle\\lim_{x\\to 2^-}\\dfrac{f(x)-(-1)}{x-2}=-4$ [[☃ explanation 1]]\n\n- $\\displaystyle\\lim_{x\\to 2^+}\\dfrac{f(x)-(-1)}{x-2}=-4$  [[☃ explanation 2]]\n\nWe saw that the two one-sided limits exist and are equal, so the function is differentiable at $x=2$.",
+			"replace": false,
+			"widgets": {
+				"explanation 1": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Got it, thanks!",
+						"showPrompt": "Show me how this was found.",
+						"explanation": "$\\begin{align}\n&\\phantom{=}\\displaystyle\\lim_{x\\to 2^-}\\dfrac{f(x)-(-1)}{x-2}\n\\\\\\\\\n&=\\displaystyle\\lim_{x\\to 2^-}\\dfrac{-x^2+3+1}{x-2}\\qquad\\gray{\\text{Since }f(x)=-x^2+3\\text{ for }x\\leq2}\n\\\\\\\\\n&=\\displaystyle\\lim_{x\\to 2^-}\\dfrac{-x^2+4}{x-2}\\\\\\\\\\\\\\\\\n&=\\displaystyle\\lim_{x\\to 2^-}\\dfrac{-1(x+2)(x-2)}{x-2}\n\\\\\\\\\n&=\\displaystyle\\lim_{x\\to 2^-}-1(x+2)\n\\\\\\\\\n&=-4\n\\end{align}$"
+					},
+					"version": {
+						"major": 0,
+						"minor": 0
+					},
+					"alignment": "default"
+				},
+				"explanation 2": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Got it, thanks!",
+						"showPrompt": "Show me how this was found.",
+						"explanation": "$\\begin{align}\n&\\phantom{=}\\displaystyle\\lim_{x\\to 2^+}\\dfrac{f(x)-(-1)}{x-2}\n\\\\\\\\\n&=\\displaystyle\\lim_{x\\to 2^+}\\dfrac{(x-4)^2-5+1}{x-2}\\qquad\\gray{\\text{Since }f(x)=(x-4)^2-5\\text{ for }x>2 }\n\\\\\\\\\n&=\\displaystyle\\lim_{x\\to 2^+}\\dfrac{x^2-8x+12}{x-2}\n\\\\\\\\\n&=\\displaystyle\\lim_{x\\to 2^+}\\dfrac{(x-6)(x-2)}{x-2}\n\\\\\\\\\n&=\\displaystyle\\lim_{x\\to 2^+}x-6\n\\\\\\\\\n&=-4\n\\end{align}$"
+					},
+					"version": {
+						"major": 0,
+						"minor": 0
+					},
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "In conclusion, the function is both continuous and differentiable at $x=2$.",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "**Is the function given below continuous/differentiable at $x=2$?**\n\n$f(x)=\\begin{cases}\n-x^2+3&,&x\\leq2\n\\\\\\\\\n(x-4)^2-5&,&x>2\n\\end{cases}$\n\n[[☃ radio 1]]\n\n",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"content": "Continuous but not differentiable",
+							"correct": false
+						},
+						{
+							"content": "Differentiable but not continuous",
+							"correct": false
+						},
+						{
+							"content": "Both continuous and differentiable ",
+							"correct": true,
+							"isNoneOfTheAbove": false
+						},
+						{
+							"content": "Neither continuous nor differentiable",
+							"correct": false,
+							"isNoneOfTheAbove": false
+						}
+					],
+					"randomize": false,
+					"onePerLine": true,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": {
+					"major": 1,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false
+	},
+	"itemDataVersion": {
+		"major": 0,
+		"minor": 1
+	}
+}
