@@ -17,7 +17,7 @@ export function Content({ hydratedUnitDataPromise }: { hydratedUnitDataPromise: 
 	// Consume the single, consolidated data promise.
 	const { params, course, allUnits, lessonCount, challenges, unit, unitChildren } = React.use(hydratedUnitDataPromise)
 
-	const unitIndex = allUnits.findIndex((u) => u.slug === params.unit)
+	const unitIndex = allUnits.findIndex((u) => u.id === unit.id)
 	if (unitIndex === -1) {
 		return <div>Unit not found.</div>
 	}

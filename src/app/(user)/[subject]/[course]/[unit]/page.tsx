@@ -73,6 +73,21 @@ const getUnitByPathQuery = db
 	.limit(1)
 	.prepare("src_app_user_subject_course_unit_page_get_unit_by_path")
 
+const getUnitBySlugQuery = db
+	.select({
+		id: schema.niceUnits.id,
+		title: schema.niceUnits.title,
+		description: schema.niceUnits.description,
+		slug: schema.niceUnits.slug,
+		path: schema.niceUnits.path
+	})
+	.from(schema.niceUnits)
+	.where(
+		and(eq(schema.niceUnits.slug, sql.placeholder("slug")), eq(schema.niceUnits.courseId, sql.placeholder("courseId")))
+	)
+	.limit(1)
+	.prepare("src_app_user_subject_course_unit_page_get_unit_by_slug")
+
 // NEW: A single query to get all children of a unit, correctly ordered.
 const getUnitChildrenQuery = db
 	.select({
@@ -177,17 +192,28 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 	logger.info("unit page: received request, initiating data fetches")
 
 	const hydratedUnitDataPromise: Promise<HydratedUnitData> = params.then(async (p) => {
-		const path = `/${p.subject}/${p.course}/${p.unit}`
-
-		const [courseResults, unitResults] = await Promise.all([
-			getCourseBySlugQuery.execute({ courseSlug: p.course }),
-			getUnitByPathQuery.execute({ path })
-		])
-
+		// First get the course
+		const courseResults = await getCourseBySlugQuery.execute({ courseSlug: p.course })
 		const course = courseResults[0]
-		const unit = unitResults[0]
 
-		if (!course || !unit) {
+		if (!course) {
+			notFound()
+		}
+
+		// Try to find unit by slug first (handles both normal slugs and ID:slug format)
+		// Note: URL might encode the colon, so we need to decode it
+		const decodedUnitSlug = decodeURIComponent(p.unit)
+		let unitResults = await getUnitBySlugQuery.execute({ slug: decodedUnitSlug, courseId: course.id })
+		let unit = unitResults[0]
+
+		// If not found by slug, try by path (fallback for edge cases)
+		if (!unit) {
+			const decodedPath = `/${p.subject}/${p.course}/${decodedUnitSlug}`
+			unitResults = await getUnitByPathQuery.execute({ path: decodedPath })
+			unit = unitResults[0]
+		}
+
+		if (!unit) {
 			notFound()
 		}
 

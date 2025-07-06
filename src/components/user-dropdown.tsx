@@ -47,7 +47,7 @@ export function UserDropdown({ displayName, displayInitial, dark }: UserDropdown
 				<DropdownMenuSeparator className="my-0" />
 
 				{/* Menu Items */}
-				<DropdownMenuItem className="px-4 py-3 cursor-pointer">
+				<DropdownMenuItem className="px-4 py-3 cursor-pointer" onClick={() => router.push("/profile/me/courses")}>
 					<span className="text-base text-blue-600">Learner home</span>
 				</DropdownMenuItem>
 
