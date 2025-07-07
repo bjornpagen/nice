@@ -41,15 +41,12 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 						<ProficiencyLegend />
 					</div>
 
-					{/* Units Grid */}
-					<div className="grid grid-cols-1 lg:grid-cols-2 items-start mt-4">
+					{/* Units Layout */}
+					<div className="columns-1 lg:columns-2 gap-0 mt-4">
 						{units.map((unit, index) => (
-							<ProficiencyProgressOverview
-								key={unit.id}
-								index={index}
-								unitChildren={unit.children}
-								next={index === 0}
-							/>
+							<div key={unit.id} className="break-inside-avoid border-b border-gray-300">
+								<ProficiencyProgressOverview index={index} unitChildren={unit.children} next={index === 0} />
+							</div>
 						))}
 					</div>
 

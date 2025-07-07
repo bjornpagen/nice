@@ -12,7 +12,7 @@ export function ProficiencyProgressOverview({
 	next?: boolean
 }) {
 	return (
-		<div className="border-t border-b border-gray-300 bg-gray-50 py-3 px-6">
+		<div className="bg-gray-50 py-3 px-6">
 			{next ? (
 				<>
 					<div className="flex items-center gap-4 mb-2">
