@@ -166,7 +166,7 @@
                             <mi>curl</mi>
                             <mo stretchy="false">(</mo>
                             <mi>F</mi>
-                            <mo stretchy="false">)</>
+                            <mo stretchy="false">)</mo>
                             <mo>=</mo>
                             <mo>-</mo>
                             <mrow>
@@ -239,7 +239,7 @@
                             <mi>curl</mi>
                             <mo stretchy="false">(</mo>
                             <mi>F</mi>
-                            <mo stretchy="false">)</>
+                            <mo stretchy="false">)</mo>
                             <mo>=</mo>
                             <mrow>
                                 <mo>(</mo>
