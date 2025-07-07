@@ -42,7 +42,9 @@ export function Content({ dataPromise }: { dataPromise: Promise<HydratedUnitData
 						</div>
 						<ProficiencyLegend />
 						<React.Suspense fallback={<div className="w-full h-4 bg-gray-200 animate-pulse rounded" />}>
-							<ProficiencyProgress unitChildren={unitChildren} />
+							<div className="mt-4">
+								<ProficiencyProgress unitChildren={unitChildren} />
+							</div>
 						</React.Suspense>
 					</div>
 

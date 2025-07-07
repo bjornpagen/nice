@@ -3,6 +3,7 @@
 import { Info } from "lucide-react"
 import * as React from "react"
 import { Footer } from "@/components/footer"
+import { CourseChallenge } from "./course-challenge"
 import { CourseHeader } from "./course-header"
 import type { CourseData } from "./page"
 import { ProficiencyLegend } from "./proficiency-legend"
@@ -40,7 +41,24 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 						<ProficiencyLegend />
 					</div>
 
-					<ProficiencyProgressOverview index={0} unitChildren={units[0]?.children ?? []} next />
+					{/* Units Grid */}
+					<div className="grid grid-cols-1 lg:grid-cols-2 items-start mt-4">
+						{units.map((unit, index) => (
+							<ProficiencyProgressOverview
+								key={unit.id}
+								index={index}
+								unitChildren={unit.children}
+								next={index === 0}
+							/>
+						))}
+					</div>
+
+					{/* Course Challenge */}
+					{challenges.length > 0 && challenges[0] && (
+						<div className="mt-6">
+							<CourseChallenge path={challenges[0].path} />
+						</div>
+					)}
 				</div>
 			</div>
 
