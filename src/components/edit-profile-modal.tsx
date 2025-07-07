@@ -82,7 +82,7 @@ export function EditProfileModal({ open, onOpenChange, initialData }: EditProfil
 							id="username"
 							value={formData.username}
 							onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-							placeholder="ameeralns"
+							placeholder="username"
 							maxLength={50}
 						/>
 						<p className="text-sm text-gray-500">
