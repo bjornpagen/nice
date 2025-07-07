@@ -1,16 +1,18 @@
 import { ProficiencyIcon, type proficiencyIconVariants } from "@/components/icons/proficiency"
-import type { UnitChild } from "./page"
 
 type ProficiencyItem = {
 	id: string
 	variant: keyof typeof proficiencyIconVariants
 }
 
-export function ProficiencyProgress({ unitChildren }: { unitChildren: UnitChild[] }) {
+type MinimalUnitChild = {
+	id: string
+	type: "Lesson" | "Quiz" | "UnitTest"
+}
+
+export function ProficiencyProgress({ unitChildren }: { unitChildren: MinimalUnitChild[] }) {
 	const items: ProficiencyItem[] = unitChildren.flatMap((child): ProficiencyItem[] => {
 		if (child.type === "Lesson") {
-			// For lessons, we'll show one icon per lesson for now
-			// In the future, this could be expanded to show exercises within lessons
 			return [
 				{
 					id: child.id,
@@ -46,7 +48,6 @@ export function ProficiencyProgress({ unitChildren }: { unitChildren: UnitChild[
 
 	return (
 		<div className="flex items-center gap-1 mt-4">
-			<span className="text-xs text-gray-500 mr-2">Progress:</span>
 			{items.map((item) => (
 				<div key={item.id} className="flex items-center gap-1">
 					<ProficiencyIcon variant={item.variant} />
