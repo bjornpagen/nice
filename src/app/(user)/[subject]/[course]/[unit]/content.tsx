@@ -6,12 +6,60 @@ import { Footer } from "@/components/footer"
 import { CourseHeader } from "../course-header"
 import { LessonSection } from "../lesson-section"
 import { ProficiencyLegend } from "../proficiency-legend"
-import { ProficiencyProgress } from "../proficiency-progress"
 import { QuizSection } from "../quiz-section"
 import { Section } from "../section"
 import { CourseSidebar } from "../sidebar"
 import { UnitTestSection } from "../unit-test-section"
 import type { HydratedUnitData } from "./page"
+
+// Unit-specific ProficiencyProgress component
+function UnitProficiencyProgress({ unitChildren }: { unitChildren: HydratedUnitData["unitChildren"] }) {
+	type ProficiencyItem = {
+		id: string
+		variant: "notStarted" | "quiz" | "unitTest"
+	}
+
+	const items: ProficiencyItem[] = unitChildren.flatMap((child): ProficiencyItem[] => {
+		if (child.type === "Lesson") {
+			// For lessons, map over the exercises
+			return child.exercises.map((exercise) => ({
+				id: exercise.id,
+				variant: "notStarted" as const
+			}))
+		}
+
+		if (child.type === "Quiz") {
+			return [
+				{
+					id: child.id,
+					variant: "quiz" as const
+				}
+			]
+		}
+
+		if (child.type === "UnitTest") {
+			return [
+				{
+					id: child.id,
+					variant: "unitTest" as const
+				}
+			]
+		}
+
+		return []
+	})
+
+	return (
+		<div className="flex items-center gap-1 mt-4">
+			<span className="text-xs text-gray-500 mr-2">Progress:</span>
+			{items.map((item) => (
+				<div key={item.id} className="flex items-center gap-1">
+					<div className="w-4 h-4 rounded-full bg-gray-200" />
+				</div>
+			))}
+		</div>
+	)
+}
 
 export function Content({ dataPromise }: { dataPromise: Promise<HydratedUnitData> }) {
 	// Consume the single, consolidated data promise.
@@ -42,7 +90,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<HydratedUnitData
 						</div>
 						<ProficiencyLegend />
 						<React.Suspense fallback={<div className="w-full h-4 bg-gray-200 animate-pulse rounded" />}>
-							<ProficiencyProgress unitChildren={unitChildren} />
+							<UnitProficiencyProgress unitChildren={unitChildren} />
 						</React.Suspense>
 					</div>
 

@@ -1,23 +1,22 @@
 import { ProficiencyIcon, type proficiencyIconVariants } from "@/components/icons/proficiency"
-import type { Lesson, Quiz, UnitTest } from "./[unit]/page"
+import type { UnitChild } from "./page"
 
 type ProficiencyItem = {
 	id: string
 	variant: keyof typeof proficiencyIconVariants
 }
 
-type UnitChild = Lesson | Quiz | UnitTest
-
 export function ProficiencyProgress({ unitChildren }: { unitChildren: UnitChild[] }) {
-	const items: ProficiencyItem[] = unitChildren.flatMap((child) => {
+	const items: ProficiencyItem[] = unitChildren.flatMap((child): ProficiencyItem[] => {
 		if (child.type === "Lesson") {
-			// For lessons, map over the now-hydrated exercises array
-			return child.exercises.map(
-				(exercise): ProficiencyItem => ({
-					id: exercise.id,
+			// For lessons, we'll show one icon per lesson for now
+			// In the future, this could be expanded to show exercises within lessons
+			return [
+				{
+					id: child.id,
 					variant: "notStarted"
-				})
-			)
+				}
+			]
 		}
 
 		if (child.type === "Quiz") {
@@ -41,8 +40,13 @@ export function ProficiencyProgress({ unitChildren }: { unitChildren: UnitChild[
 		return []
 	})
 
+	if (items.length === 0) {
+		return null
+	}
+
 	return (
 		<div className="flex items-center gap-1 mt-4">
+			<span className="text-xs text-gray-500 mr-2">Progress:</span>
 			{items.map((item) => (
 				<div key={item.id} className="flex items-center gap-1">
 					<ProficiencyIcon variant={item.variant} />

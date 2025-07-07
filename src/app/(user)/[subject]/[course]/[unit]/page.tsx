@@ -24,11 +24,13 @@ const getAllUnitsByCourseIdQuery = db
 		id: schema.niceUnits.id,
 		title: schema.niceUnits.title,
 		path: schema.niceUnits.path,
+		ordering: schema.niceUnits.ordering,
 		slug: schema.niceUnits.slug,
 		description: schema.niceUnits.description
 	})
 	.from(schema.niceUnits)
 	.where(eq(schema.niceUnits.courseId, sql.placeholder("courseId")))
+	.orderBy(schema.niceUnits.ordering)
 	.prepare("src_app_user_subject_course_unit_page_get_all_units_by_course_id")
 
 const getLessonCountByCourseIdQuery = db
@@ -65,7 +67,8 @@ const getUnitByPathQuery = db
 		title: schema.niceUnits.title,
 		description: schema.niceUnits.description,
 		slug: schema.niceUnits.slug,
-		path: schema.niceUnits.path
+		path: schema.niceUnits.path,
+		ordering: schema.niceUnits.ordering
 	})
 	.from(schema.niceUnits)
 	.where(eq(schema.niceUnits.path, sql.placeholder("path")))
@@ -78,7 +81,8 @@ const getUnitBySlugQuery = db
 		title: schema.niceUnits.title,
 		description: schema.niceUnits.description,
 		slug: schema.niceUnits.slug,
-		path: schema.niceUnits.path
+		path: schema.niceUnits.path,
+		ordering: schema.niceUnits.ordering
 	})
 	.from(schema.niceUnits)
 	.where(
