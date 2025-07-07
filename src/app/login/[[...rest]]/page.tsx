@@ -1,10 +1,10 @@
 "use client"
 
 import { useSignIn } from "@clerk/nextjs"
-import { ChevronDown, ExternalLink, Search } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import * as React from "react"
+import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 export default function Home() {
-	const [showCookieModal, setShowCookieModal] = useState(true)
+	const [showCookieModal, setShowCookieModal] = React.useState(true)
 	const { signIn } = useSignIn()
 
 	const handleGoogleSignIn = () => {
@@ -25,43 +25,8 @@ export default function Home() {
 
 	return (
 		<div className="flex flex-col min-h-screen bg-white">
-			{/* Header */}
-			<header className="border-b border-gray-200 px-4 py-3 bg-white">
-				<div className="mx-auto flex max-w-7xl items-center justify-between">
-					{/* Left Navigation */}
-					<div className="flex items-center space-x-6">
-						<Button variant="ghost" className="text-blue-600 hover:text-blue-700 font-medium">
-							Explore <ChevronDown className="ml-1 h-4 w-4" />
-						</Button>
-						<div className="relative">
-							<Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-							<Input placeholder="Search" className="w-64 pl-10 focus:ring-blue-500 border-gray-300" />
-						</div>
-					</div>
-
-					{/* Center Logo */}
-					<div className="flex items-center space-x-2">
-						<div className="flex h-8 w-8 items-center justify-center rounded bg-teal-500">
-							<span className="text-lg font-bold text-white">K</span>
-						</div>
-						<span className="text-xl font-medium text-gray-800">Khan Academy</span>
-					</div>
-
-					{/* Right Actions */}
-					<div className="flex items-center space-x-4">
-						<Button variant="ghost" className="text-blue-600 hover:text-blue-700 font-medium">
-							AI for Teachers <ExternalLink className="ml-1 h-4 w-4" />
-						</Button>
-						<Button variant="ghost" className="text-blue-600 hover:text-blue-700 font-medium">
-							Donate <ExternalLink className="ml-1 h-4 w-4" />
-						</Button>
-						<Button variant="ghost" className="text-gray-700 hover:text-gray-800 font-medium">
-							Log in
-						</Button>
-						<Button className="bg-blue-600 hover:bg-blue-700 font-medium px-6">Sign up</Button>
-					</div>
-				</div>
-			</header>
+			{/* Use the standardized Header component */}
+			<Header />
 
 			{/* Main Content */}
 			<main className="flex-1 mx-auto max-w-7xl px-4 py-12">
@@ -150,7 +115,7 @@ export default function Home() {
 									</div>
 
 									<Link href="/profile/me/courses">
-										<Button className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium text-base">
+										<Button className="w-full h-12 bg-gray-400 hover:bg-gray-500 text-white font-medium text-base">
 											Log in
 										</Button>
 									</Link>
@@ -176,6 +141,15 @@ export default function Home() {
 								</div>
 							</CardContent>
 						</Card>
+
+						<div className="mt-8 text-center">
+							<p className="text-gray-600">
+								Don&apos;t have an account?{" "}
+								<Button variant="link" className="text-blue-600 hover:text-blue-700 p-0 font-medium">
+									Sign up for free!
+								</Button>
+							</p>
+						</div>
 					</div>
 				</div>
 			</main>

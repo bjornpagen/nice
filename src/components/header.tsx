@@ -1,3 +1,4 @@
+import { SignedIn, SignedOut } from "@clerk/nextjs"
 import { Menu, Search, Smile } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -74,8 +75,20 @@ export function Header({ dark = false, nickname }: HeaderProps) {
 						<span className="text-sm font-medium">Donate</span>
 					</Button>
 
-					{/* User Dropdown */}
-					<UserDropdown displayName={displayName} displayInitial={displayInitial} dark={dark} />
+					{/* User Dropdown for signed in users */}
+					<SignedIn>
+						<UserDropdown displayName={displayName} displayInitial={displayInitial} dark={dark} />
+					</SignedIn>
+
+					{/* Login/Signup buttons for signed out users */}
+					<SignedOut>
+						<Button asChild variant="link" className={`px-4 ${dark ? "text-white" : "text-blue-600"}`}>
+							<Link href="/login">Log in</Link>
+						</Button>
+						<Button asChild className="bg-blue-600 hover:bg-blue-700 font-medium px-6">
+							<Link href="/login">Sign up</Link>
+						</Button>
+					</SignedOut>
 				</div>
 			</div>
 		</header>
