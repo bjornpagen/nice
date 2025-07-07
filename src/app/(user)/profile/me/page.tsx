@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation"
+
 export default function MePage() {
-	return <div>TODO</div>
+	redirect("/profile/me/courses")
 }

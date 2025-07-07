@@ -22,7 +22,7 @@ const account = [
 	{
 		name: "Profile",
 		href: "me",
-		disabled: false
+		disabled: true
 	},
 	{
 		name: "Teachers",
@@ -48,14 +48,19 @@ export function Sidebar() {
 					<ul className="space-y-1">
 						{stuff.map((item) => (
 							<li key={item.name}>
-								<Button
-									asChild
-									variant="ghost"
-									className={cn(highlight(pathname, item.href), item.disabled && "opacity-50 cursor-not-allowed")}
-									disabled={item.disabled}
-								>
-									<Link href={`/profile/${item.href}`}>{item.name}</Link>
-								</Button>
+								{item.disabled ? (
+									<Button
+										variant="ghost"
+										className={cn(highlight(pathname, item.href), "opacity-50 cursor-not-allowed")}
+										disabled
+									>
+										{item.name}
+									</Button>
+								) : (
+									<Button asChild variant="ghost" className={highlight(pathname, item.href)}>
+										<Link href={`/profile/${item.href}`}>{item.name}</Link>
+									</Button>
+								)}
 							</li>
 						))}
 					</ul>
@@ -65,14 +70,19 @@ export function Sidebar() {
 					<ul className="space-y-1">
 						{account.map((item) => (
 							<li key={item.name}>
-								<Button
-									asChild
-									variant="ghost"
-									className={cn(highlight(pathname, item.href), item.disabled && "opacity-50 cursor-not-allowed")}
-									disabled={item.disabled}
-								>
-									<Link href={`/profile/${item.href}`}>{item.name}</Link>
-								</Button>
+								{item.disabled ? (
+									<Button
+										variant="ghost"
+										className={cn(highlight(pathname, item.href), "opacity-50 cursor-not-allowed")}
+										disabled
+									>
+										{item.name}
+									</Button>
+								) : (
+									<Button asChild variant="ghost" className={highlight(pathname, item.href)}>
+										<Link href={`/profile/${item.href}`}>{item.name}</Link>
+									</Button>
+								)}
 							</li>
 						))}
 					</ul>
