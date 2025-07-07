@@ -8,14 +8,19 @@ const events = {
 			email: z.string().email()
 		})
 	},
-	"nice/qti.migration.requested": {
+	"nice/qti.assessment-item.migration.requested": {
 		data: z.object({
 			questionId: z.string().min(1)
 		})
 	},
-	"nice/qti.migration.exercise.requested": {
+	"nice/qti.assessment-item.migration.exercise.requested": {
 		data: z.object({
 			exerciseId: z.string().min(1)
+		})
+	},
+	"nice/qti.stimulus.migration.requested": {
+		data: z.object({
+			articleId: z.string().min(1)
 		})
 	}
 }

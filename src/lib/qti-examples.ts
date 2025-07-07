@@ -12,48 +12,65 @@ interface ConversionExample {
 }
 
 // Cache for loaded examples to avoid re-reading files on every request
-let cachedExamples: ConversionExample[] | null = null
+let cachedAssessmentItemExamples: ConversionExample[] | null = null
+let cachedStimulusExamples: ConversionExample[] | null = null
 
 /**
  * Loads all Perseus-to-QTI examples from the filesystem.
  * This function is lazy and will cache results after the first load.
  *
+ * @param options An object to specify the conversion type. Defaults to 'assessmentItem'.
  * @returns A promise that resolves to an array of conversion examples.
  */
-export async function loadConversionExamples(): Promise<ConversionExample[]> {
-	// Return cached examples if already loaded
-	if (cachedExamples !== null) {
-		return cachedExamples
+export async function loadConversionExamples(
+	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" }
+): Promise<ConversionExample[]> {
+	const { type } = options
+	const isStimulus = type === "stimulus"
+	const cached = isStimulus ? cachedStimulusExamples : cachedAssessmentItemExamples
+	if (cached !== null) {
+		return cached
 	}
 
-	logger.info("loading perseus-to-qti conversion examples from filesystem")
+	logger.info("loading perseus-to-qti conversion examples from filesystem", { type })
 
-	// Following Vercel docs pattern for file reading
 	const EXAMPLES_DIR = `${process.cwd()}/src/lib/perseus-to-qti/examples`
+	const perseusExt = isStimulus ? ".stimulus.json" : ".perseus.json"
+	const qtiExt = isStimulus ? ".stimulus.xml" : ".qti.xml"
+	const exampleDir = isStimulus ? `${EXAMPLES_DIR}/stimulus` : `${EXAMPLES_DIR}/assessment-items`
 
-	const filesResult = await errors.try(fs.readdir(EXAMPLES_DIR))
+	const filesResult = await errors.try(fs.readdir(exampleDir))
 	if (filesResult.error) {
 		logger.error("failed to read examples directory, cannot load examples", {
 			error: filesResult.error,
-			path: EXAMPLES_DIR
+			path: exampleDir
 		})
-		// Return an empty array to allow the app to function, albeit with lower AI accuracy.
-		cachedExamples = []
-		return cachedExamples
+		const empty: ConversionExample[] = []
+		if (isStimulus) {
+			cachedStimulusExamples = empty
+		} else {
+			cachedAssessmentItemExamples = empty
+		}
+		return empty
 	}
 
-	const perseusFiles = filesResult.data.filter((file) => file.endsWith(".perseus.json"))
+	const perseusFiles = filesResult.data.filter((file) => file.endsWith(perseusExt))
 	if (perseusFiles.length === 0) {
-		logger.warn("no perseus example files found in examples directory", { path: EXAMPLES_DIR })
-		cachedExamples = []
-		return cachedExamples
+		logger.warn("no perseus example files found in examples directory", { path: exampleDir, type })
+		const empty: ConversionExample[] = []
+		if (isStimulus) {
+			cachedStimulusExamples = empty
+		} else {
+			cachedAssessmentItemExamples = empty
+		}
+		return empty
 	}
 
 	const examplePromises = perseusFiles.map(async (perseusFile): Promise<ConversionExample | null> => {
-		const baseName = perseusFile.replace(".perseus.json", "")
-		const qtiFile = `${baseName}.qti.xml`
-		const perseusPath = `${EXAMPLES_DIR}/${perseusFile}`
-		const qtiPath = `${EXAMPLES_DIR}/${qtiFile}`
+		const baseName = perseusFile.replace(perseusExt, "")
+		const qtiFile = `${baseName}${qtiExt}`
+		const perseusPath = `${exampleDir}/${perseusFile}`
+		const qtiPath = `${exampleDir}/${qtiFile}`
 
 		const [perseusContentResult, qtiContentResult] = await Promise.all([
 			errors.try(fs.readFile(perseusPath, "utf-8")),
@@ -96,11 +113,16 @@ export async function loadConversionExamples(): Promise<ConversionExample[]> {
 	const validExamples = allResults.filter((e): e is ConversionExample => e !== null)
 
 	logger.info("successfully loaded qti conversion examples", {
+		type,
 		loaded: validExamples.length,
 		total: perseusFiles.length
 	})
 
 	// Cache the results
-	cachedExamples = validExamples
-	return cachedExamples
+	if (isStimulus) {
+		cachedStimulusExamples = validExamples
+	} else {
+		cachedAssessmentItemExamples = validExamples
+	}
+	return validExamples
 }

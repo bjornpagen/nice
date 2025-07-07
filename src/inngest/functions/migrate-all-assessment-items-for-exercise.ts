@@ -6,9 +6,9 @@ import { inngest } from "@/inngest/client"
 
 const BATCH_SIZE = 100
 
-export const migrateAllQuestionsForExercise = inngest.createFunction(
-	{ id: "migrate-all-questions-for-exercise" },
-	{ event: "nice/qti.migration.exercise.requested" },
+export const migrateAllAssessmentItemsForExercise = inngest.createFunction(
+	{ id: "migrate-all-assessment-items-for-exercise" },
+	{ event: "nice/qti.assessment-item.migration.exercise.requested" },
 	async ({ event, step, logger }) => {
 		const { exerciseId } = event.data
 		logger.info("starting migration for all questions in exercise", { exerciseId })
@@ -35,7 +35,7 @@ export const migrateAllQuestionsForExercise = inngest.createFunction(
 
 		// Step 2: Fan out migration events in batches.
 		const migrationEvents = questionIds.map((questionId) => ({
-			name: "nice/qti.migration.requested" as const,
+			name: "nice/qti.assessment-item.migration.requested" as const,
 			data: { questionId }
 		}))
 

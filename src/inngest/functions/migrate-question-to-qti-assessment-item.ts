@@ -6,12 +6,12 @@ import { inngest } from "@/inngest/client"
 import { generateQtiFromPerseus } from "@/lib/ai"
 import { QtiApiClient } from "@/lib/qti"
 
-export const migratePerseusToQti = inngest.createFunction(
-	{ id: "migrate-perseus-to-qti" },
-	{ event: "nice/qti.migration.requested" },
+export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
+	{ id: "migrate-question-to-qti-assessment-item" },
+	{ event: "nice/qti.assessment-item.migration.requested" },
 	async ({ event, step, logger }) => {
 		const { questionId } = event.data
-		logger.info("starting perseus to qti migration", { questionId })
+		logger.info("starting question to qti assessment item migration", { questionId })
 
 		// Step 1: Fetch question data from our database. This is done outside a step.run
 		// because a failure here is critical and should fail the entire function immediately.
@@ -110,7 +110,7 @@ export const migratePerseusToQti = inngest.createFunction(
 			throw errors.wrap(updateDbResult.error, "db update")
 		}
 
-		logger.info("successfully migrated question to qti", { questionId, qtiIdentifier })
+		logger.info("successfully migrated question to qti assessment item", { questionId, qtiIdentifier })
 		return { status: "success", qtiIdentifier }
 	}
 )

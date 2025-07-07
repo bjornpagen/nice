@@ -1,11 +1,17 @@
 import { serve } from "inngest/next"
 import { inngest } from "@/inngest/client"
 import { helloWorld } from "@/inngest/functions/hello"
-import { migrateAllQuestionsForExercise } from "@/inngest/functions/migrate-all-questions-for-exercise"
-import { migratePerseusToQti } from "@/inngest/functions/migrate-perseus-to-qti"
+import { migrateAllAssessmentItemsForExercise } from "@/inngest/functions/migrate-all-assessment-items-for-exercise"
+import { migrateArticleToQtiStimulus } from "@/inngest/functions/migrate-article-to-qti-stimulus"
+import { migrateQuestionToQtiAssessmentItem } from "@/inngest/functions/migrate-question-to-qti-assessment-item"
 
 // Create an API that serves zero functions
 export const { GET, POST, PUT } = serve({
 	client: inngest,
-	functions: [helloWorld, migrateAllQuestionsForExercise, migratePerseusToQti]
+	functions: [
+		helloWorld,
+		migrateAllAssessmentItemsForExercise,
+		migrateQuestionToQtiAssessmentItem,
+		migrateArticleToQtiStimulus
+	]
 })

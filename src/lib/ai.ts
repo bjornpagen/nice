@@ -54,13 +54,19 @@ async function generateContentWithRetry(request: GenerateContentRequest) {
  * Creates the structured prompt for the AI model to convert Perseus JSON to QTI XML,
  * including a rich set of few-shot examples.
  * @param perseusJsonString The stringified Perseus JSON data for the current conversion task.
+ * @param options An object to specify the conversion type. Defaults to 'assessmentItem'.
  * @returns The system instruction and user content for the AI prompt.
  */
-export async function createQtiConversionPrompt(perseusJsonString: string) {
-	const systemInstruction =
-		"You are an expert XML generator for educational content. Your primary and most critical function is to convert a Perseus JSON object into a single, well-formed QTI 3.0 XML `assessmentItem`. Your output MUST be only the raw XML. The XML MUST be perfect and parseable. The most common and catastrophic failure is an incomplete or malformed closing tag. You are STRICTLY FORBIDDEN from using partial or lazy closing tags like `</_>` or `</>`. Every single XML element, such as `<qti-simple-choice>`, must have a corresponding full closing tag, `</qti-simple-choice>`. This rule is absolute and cannot be violated."
+export async function createQtiConversionPrompt(
+	perseusJsonString: string,
+	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" }
+) {
+	const { type } = options
+	const rootTag = type === "stimulus" ? "qti-stimulus" : "qti-assessment-item"
 
-	const examples = await loadConversionExamples()
+	const systemInstruction = `You are an expert XML generator for educational content. Your primary and most critical function is to convert a Perseus JSON object into a single, well-formed QTI 3.0 XML \`${rootTag}\`. Your output MUST be only the raw XML. The XML MUST be perfect and parseable. The most common and catastrophic failure is an incomplete or malformed closing tag. You are STRICTLY FORBIDDEN from using partial or lazy closing tags like \`</_>\` or \`</>\`. Every single XML element, such as \`<p>\`, must have a corresponding full closing tag, \`</p>\`. This rule is absolute and cannot be violated.`
+
+	const examples = await loadConversionExamples({ type })
 
 	const examplesXml = examples
 		.map(
@@ -97,7 +103,7 @@ Your output will be fed directly into an automated XML parser. If the XML is not
     - ❌ **ABSOLUTELY FORBIDDEN:** \`</_>\`, \`</>\`, \`</qti-simple-cho... \`
 
 2.  **NO TRUNCATED OUTPUT.**
-    Your response must be the complete XML file from start to finish. Do not stop generating mid-tag or mid-file. Ensure the final \`</qti-assessment-item>\` tag is present and correct.
+    Your response must be the complete XML file from start to finish. Do not stop generating mid-tag or mid-file. Ensure the final \`</${rootTag}>\` tag is present and correct.
 
 3.  **MENTAL CHECK.**
     Before you output your final answer, perform a mental check: "Did I close every single tag I opened with its full name? Is the final closing tag present?"
@@ -116,17 +122,21 @@ FINAL REMINDER: The examples demonstrate PERFECT QTI 3.0 XML output. Follow thei
 ${perseusJsonString}
 </perseus_json>
 `
-	return { systemInstruction, userContent }
+	return { systemInstruction, userContent, rootTag }
 }
 
 /**
  * Converts a Perseus JSON object into a QTI 3.0 XML string using the Gemini AI model.
  * @param perseusData The Perseus question data as a JavaScript object.
+ * @param options An object to specify the conversion type. Defaults to 'assessmentItem'.
  * @returns A promise that resolves to the QTI XML string.
  */
-export async function generateQtiFromPerseus(perseusData: unknown): Promise<string> {
+export async function generateQtiFromPerseus(
+	perseusData: unknown,
+	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" }
+): Promise<string> {
 	const perseusJsonString = JSON.stringify(perseusData, null, 2)
-	const { systemInstruction, userContent } = await createQtiConversionPrompt(perseusJsonString)
+	const { systemInstruction, userContent, rootTag } = await createQtiConversionPrompt(perseusJsonString, options)
 
 	const result = await errors.try(
 		generateContentWithRetry({
@@ -147,9 +157,9 @@ export async function generateQtiFromPerseus(perseusData: unknown): Promise<stri
 	}
 
 	// Clean the response to ensure it's only the XML content
-	const xmlMatch = responseText.match(/<qti-assessment-item[\s\S]*?>[\s\S]*?<\/qti-assessment-item>/)
+	const xmlMatch = responseText.match(new RegExp(`<${rootTag}[\\s\\S]*?>[\\s\\S]*?<\\/${rootTag}>`))
 	if (!xmlMatch?.[0]) {
-		logger.error("ai response did not contain valid qti xml", { response: responseText })
+		logger.error("ai response did not contain valid qti xml", { response: responseText, rootTag })
 		throw errors.new("invalid ai xml output")
 	}
 
