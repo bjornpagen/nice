@@ -1,4 +1,3 @@
-import * as logger from "@superbuilders/slog"
 import { eq, sql } from "drizzle-orm"
 import { notFound } from "next/navigation"
 import * as React from "react"
@@ -53,7 +52,7 @@ export default function VideoPage({
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; video: string }>
 }) {
-	logger.info("video page: received request, rendering layout immediately")
+	// logger.info("video page: received request, rendering layout immediately")
 
 	const dataPromise = params.then(fetchLessonData)
 
