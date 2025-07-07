@@ -8,7 +8,7 @@ import { z } from "zod"
 // Validation schema for profile updates
 const updateProfileSchema = z.object({
 	nickname: z.string().min(1, "Nickname is required").max(100, "Nickname too long"),
-	username: z.string().min(1, "Username is required").max(50, "Username too long"),
+	username: z.string().max(50, "Username too long"), // Allow empty string for username
 	bio: z.string().max(500, "Bio too long")
 })
 
@@ -20,7 +20,12 @@ export async function updateUserProfile(data: z.infer<typeof updateProfileSchema
 	}
 
 	// Validate the input data
-	const validatedData = updateProfileSchema.parse(data)
+	const validationResult = updateProfileSchema.safeParse(data)
+	if (!validationResult.success) {
+		throw errors.wrap(validationResult.error, "Input validation failed for profile update")
+	}
+
+	const validatedData = validationResult.data
 
 	// Update the user's public metadata in Clerk
 	const metadata = {
