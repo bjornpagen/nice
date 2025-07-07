@@ -35,8 +35,10 @@ export default async function UserLayout({ children }: { children: React.ReactNo
 
 	return (
 		<div className="min-h-screen bg-white font-lato">
-			<Header nickname={nickname} />
-			<Banner />
+			<div className="sticky top-0 z-50">
+				<Header nickname={nickname} />
+				<Banner />
+			</div>
 
 			{/* User Profile Banner */}
 			<ProfileBanner uid={nickname} />

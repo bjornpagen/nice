@@ -31,8 +31,8 @@ export default async function CourseLayout({ children }: { children: React.React
 		<div className="min-h-screen bg-white">
 			<div className="sticky top-0 z-50">
 				<Header dark nickname={nickname} />
+				<Banner />
 			</div>
-			<Banner />
 			{children}
 		</div>
 	)

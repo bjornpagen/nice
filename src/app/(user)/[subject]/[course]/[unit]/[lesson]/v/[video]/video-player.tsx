@@ -16,7 +16,7 @@ export function VideoPlayer({ videoPromise }: { videoPromise: Promise<Video> }) 
 	const youtubeVideoUrl = `https://www.youtube.com/watch?v=${video.youtubeId}`
 
 	return (
-		<div className="min-h-screen bg-white">
+		<div className="min-h-screen bg-white pb-20">
 			{/* Main Content */}
 			<div className="flex min-h-screen">
 				{/* Main Content Area */}
@@ -285,15 +285,6 @@ export function VideoPlayer({ videoPromise }: { videoPromise: Promise<Video> }) 
 									Video on YouTube
 									<ExternalLink className="ml-1 h-3 w-3" />
 								</Link>
-							</div>
-						</div>
-
-						{/* Footer Navigation */}
-						<div className="border-t border-gray-200 px-6 py-4">
-							<div className="flex justify-end">
-								<Button className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 text-sm font-medium">
-									Up next: Next lesson
-								</Button>
 							</div>
 						</div>
 					</div>

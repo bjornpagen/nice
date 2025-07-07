@@ -22,17 +22,38 @@ const getUnitByPathQuery = db
 	.limit(1)
 	.prepare("src_app_user_subject_course_unit_lesson_page_get_unit_by_path")
 
-// This query is illustrative; a more complex query joining children would be needed for production
 const getLessonByPathQuery = db
-	.select({ title: schema.niceLessons.title, path: schema.niceLessons.path })
+	.select({
+		id: schema.niceLessons.id,
+		title: schema.niceLessons.title,
+		path: schema.niceLessons.path
+	})
 	.from(schema.niceLessons)
 	.where(eq(schema.niceLessons.path, sql.placeholder("lessonPath")))
 	.limit(1)
 	.prepare("src_app_user_subject_course_unit_lesson_page_get_lesson_by_path")
 
+// NEW: Get lesson children content
+const getLessonContentQuery = db
+	.select({
+		contentId: schema.niceLessonContents.contentId,
+		contentType: schema.niceLessonContents.contentType,
+		ordering: schema.niceLessonContents.ordering,
+		video: schema.niceVideos,
+		article: schema.niceArticles,
+		exercise: schema.niceExercises
+	})
+	.from(schema.niceLessonContents)
+	.leftJoin(schema.niceVideos, eq(schema.niceLessonContents.contentId, schema.niceVideos.id))
+	.leftJoin(schema.niceArticles, eq(schema.niceLessonContents.contentId, schema.niceArticles.id))
+	.leftJoin(schema.niceExercises, eq(schema.niceLessonContents.contentId, schema.niceExercises.id))
+	.where(eq(schema.niceLessonContents.lessonId, sql.placeholder("lessonId")))
+	.orderBy(schema.niceLessonContents.ordering)
+	.prepare("src_app_user_subject_course_unit_lesson_page_get_lesson_content")
+
 // 2. Export derived types
 export type Course = Awaited<ReturnType<typeof getCourseByPathQuery.execute>>[0]
-export type Unit = Awaited<ReturnType<typeof getUnitByPathQuery.execute>>[0] & { children: LessonInfo[] } // Mocking children for now
+export type Unit = Awaited<ReturnType<typeof getUnitByPathQuery.execute>>[0] & { children: LessonInfo[] }
 export type Lesson = Awaited<ReturnType<typeof getLessonByPathQuery.execute>>[0] & { children: LessonChild[] }
 
 // 3. The page component is NOT async. It orchestrates promises.
@@ -52,7 +73,7 @@ export default function LessonPage({
 		const unitPath = `${coursePath}/${decodedUnit}`
 		const lessonPath = `${unitPath}/${decodedLesson}`
 
-		// In a real scenario, these would fetch children as well
+		// Fetch basic lesson data
 		const courseResult = await getCourseByPathQuery.execute({ coursePath })
 		const unitResult = await getUnitByPathQuery.execute({ unitPath })
 		const lessonResult = await getLessonByPathQuery.execute({ lessonPath })
@@ -65,14 +86,53 @@ export default function LessonPage({
 			notFound()
 		}
 
-		// Create fully-typed objects including the mocked children property
+		// NEW: Fetch lesson content
+		const lessonContentResult = await getLessonContentQuery.execute({ lessonId: lessonResultData.id })
+
+		// NEW: Build lesson children array
+		const children: LessonChild[] = []
+
+		for (const row of lessonContentResult) {
+			if (row.contentType === "Video" && row.video) {
+				children.push({
+					type: "Video",
+					id: row.video.id,
+					slug: row.video.slug,
+					title: row.video.title,
+					path: row.video.path
+					// Add other video properties as needed
+				})
+			} else if (row.contentType === "Article" && row.article) {
+				children.push({
+					type: "Article",
+					id: row.article.id,
+					slug: row.article.slug,
+					title: row.article.title,
+					description: "", // Articles don't have a description field in the schema
+					path: row.article.path
+					// Add other article properties as needed
+				})
+			} else if (row.contentType === "Exercise" && row.exercise) {
+				children.push({
+					type: "Exercise",
+					id: row.exercise.id,
+					slug: row.exercise.slug,
+					title: row.exercise.title,
+					description: row.exercise.description || "",
+					path: row.exercise.path
+					// Add other exercise properties as needed
+				})
+			}
+		}
+
+		// Create fully-typed objects with actual lesson children
 		const unit: Unit = {
 			...unitResultData,
-			children: [] // Mocked data for component props
+			children: [] // Unit children still mocked for this page
 		}
 		const lesson: Lesson = {
 			...lessonResultData,
-			children: [] // Mocked data for component props
+			children: children // ✅ Now populated with actual data!
 		}
 
 		return {
