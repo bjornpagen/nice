@@ -1,13 +1,10 @@
 "use client"
 
 import Image from "next/image"
-import * as React from "react"
 import { Button } from "@/components/ui/button"
 import type { Article } from "./page"
 
-export function ArticleContent({ articlePromise }: { articlePromise: Promise<Article> }) {
-	const article = React.use(articlePromise)
-
+export function ArticleContent({ article }: { article: Article }) {
 	return (
 		<div className="min-h-screen bg-white pb-20">
 			{/* Article Header */}
@@ -29,6 +26,19 @@ export function ArticleContent({ articlePromise }: { articlePromise: Promise<Art
 							<span className="mr-2">📘</span>
 							Microsoft Teams
 						</Button>
+					</div>
+				</div>
+			</div>
+
+			{/* Article Content */}
+			<div className="p-6">
+				<div className="max-w-4xl mx-auto">
+					<div className="prose prose-lg max-w-none">
+						{/* Article content will be rendered here */}
+						<p className="text-gray-700 leading-relaxed">
+							This is where the article content will be rendered. The Perseus content can be processed and displayed
+							here.
+						</p>
 					</div>
 				</div>
 			</div>

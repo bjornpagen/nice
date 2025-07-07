@@ -4,35 +4,11 @@ import { notFound } from "next/navigation"
 import * as React from "react"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
-import type { LessonChild, LessonInfo } from "@/lib/khan-academy-api"
-import { Content } from "../../content"
+import { LessonLayout } from "../../lesson-layout"
+import { fetchLessonData } from "../../page"
+import { ExerciseContent } from "./exercise-content"
 
-// 1. Drizzle prepared statements (can be shared or re-defined)
-const getCourseByPathQuery = db
-	.select({ title: schema.niceCourses.title, path: schema.niceCourses.path })
-	.from(schema.niceCourses)
-	.where(eq(schema.niceCourses.path, sql.placeholder("coursePath")))
-	.limit(1)
-	.prepare("src_app_user_subject_course_unit_lesson_exercise_page_get_course_by_path")
-
-const getUnitByPathQuery = db
-	.select({ title: schema.niceUnits.title, path: schema.niceUnits.path })
-	.from(schema.niceUnits)
-	.where(eq(schema.niceUnits.path, sql.placeholder("unitPath")))
-	.limit(1)
-	.prepare("src_app_user_subject_course_unit_lesson_exercise_page_get_unit_by_path")
-
-const getLessonByPathQuery = db
-	.select({
-		id: schema.niceLessons.id,
-		title: schema.niceLessons.title,
-		path: schema.niceLessons.path
-	})
-	.from(schema.niceLessons)
-	.where(eq(schema.niceLessons.path, sql.placeholder("lessonPath")))
-	.limit(1)
-	.prepare("src_app_user_subject_course_unit_lesson_exercise_page_get_lesson_by_path")
-
+// Exercise-specific query
 const getExerciseByPathQuery = db
 	.select({
 		id: schema.niceExercises.id,
@@ -43,131 +19,49 @@ const getExerciseByPathQuery = db
 	.from(schema.niceExercises)
 	.where(eq(schema.niceExercises.path, sql.placeholder("exercisePath")))
 	.limit(1)
-	.prepare("src_app_user_subject_course_unit_lesson_exercise_page_get_exercise_by_path")
+	.prepare("exercise_get_by_path")
 
-// NEW: Get lesson children content
-const getLessonContentQuery = db
-	.select({
-		contentId: schema.niceLessonContents.contentId,
-		contentType: schema.niceLessonContents.contentType,
-		ordering: schema.niceLessonContents.ordering,
-		video: schema.niceVideos,
-		article: schema.niceArticles,
-		exercise: schema.niceExercises
-	})
-	.from(schema.niceLessonContents)
-	.leftJoin(schema.niceVideos, eq(schema.niceLessonContents.contentId, schema.niceVideos.id))
-	.leftJoin(schema.niceArticles, eq(schema.niceLessonContents.contentId, schema.niceArticles.id))
-	.leftJoin(schema.niceExercises, eq(schema.niceLessonContents.contentId, schema.niceExercises.id))
-	.where(eq(schema.niceLessonContents.lessonId, sql.placeholder("lessonId")))
-	.orderBy(schema.niceLessonContents.ordering)
-	.prepare("src_app_user_subject_course_unit_lesson_exercise_page_get_lesson_content")
-
-// 2. Export derived types
-export type Course = Awaited<ReturnType<typeof getCourseByPathQuery.execute>>[0]
-export type Unit = Awaited<ReturnType<typeof getUnitByPathQuery.execute>>[0] & { children: LessonInfo[] }
-export type Lesson = Awaited<ReturnType<typeof getLessonByPathQuery.execute>>[0] & { children: LessonChild[] }
 export type Exercise = Awaited<ReturnType<typeof getExerciseByPathQuery.execute>>[0]
 
-// 3. The page component is NOT async. It orchestrates promises.
+// Server component for fetching exercise data
+async function StreamingExerciseContent({
+	params
+}: {
+	params: { subject: string; course: string; unit: string; lesson: string; exercise: string }
+}) {
+	const decodedExercise = decodeURIComponent(params.exercise)
+	const decodedUnit = decodeURIComponent(params.unit)
+	const decodedLesson = decodeURIComponent(params.lesson)
+
+	const coursePath = `/${params.subject}/${params.course}`
+	const unitPath = `${coursePath}/${decodedUnit}`
+	const lessonPath = `${unitPath}/${decodedLesson}`
+	const exercisePath = `${lessonPath}/e/${decodedExercise}`
+
+	const exerciseResult = await getExerciseByPathQuery.execute({ exercisePath })
+	const exercise = exerciseResult[0]
+
+	if (!exercise) {
+		notFound()
+	}
+
+	return <ExerciseContent exercise={exercise} />
+}
+
 export default function ExercisePage({
 	params
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; exercise: string }>
 }) {
-	logger.info("exercise page: received request, initiating data fetches")
+	logger.info("exercise page: received request, rendering layout immediately")
 
-	const dataPromise = params.then(async (p) => {
-		// Decode URL segments to handle colons in ID-prefixed slugs
-		const decodedUnit = decodeURIComponent(p.unit)
-		const decodedLesson = decodeURIComponent(p.lesson)
-		const decodedExercise = decodeURIComponent(p.exercise)
-
-		const coursePath = `/${p.subject}/${p.course}`
-		const unitPath = `${coursePath}/${decodedUnit}`
-		const lessonPath = `${unitPath}/${decodedLesson}`
-		const exercisePath = `${lessonPath}/e/${decodedExercise}`
-
-		const courseResult = await getCourseByPathQuery.execute({ coursePath })
-		const unitResult = await getUnitByPathQuery.execute({ unitPath })
-		const lessonResult = await getLessonByPathQuery.execute({ lessonPath })
-		const exerciseResult = await getExerciseByPathQuery.execute({ exercisePath })
-
-		const course = courseResult[0]
-		const unitResultData = unitResult[0]
-		const lessonResultData = lessonResult[0]
-		const exercise = exerciseResult[0]
-
-		if (!course || !unitResultData || !lessonResultData || !exercise) {
-			notFound()
-		}
-
-		// NEW: Fetch lesson content
-		const lessonContentResult = await getLessonContentQuery.execute({ lessonId: lessonResultData.id })
-
-		// NEW: Build lesson children array
-		const children: LessonChild[] = []
-
-		for (const row of lessonContentResult) {
-			if (row.contentType === "Video" && row.video) {
-				children.push({
-					type: "Video",
-					id: row.video.id,
-					slug: row.video.slug,
-					title: row.video.title,
-					path: row.video.path
-				})
-			} else if (row.contentType === "Article" && row.article) {
-				children.push({
-					type: "Article",
-					id: row.article.id,
-					slug: row.article.slug,
-					title: row.article.title,
-					description: "", // Articles don't have a description field in the schema
-					path: row.article.path
-				})
-			} else if (row.contentType === "Exercise" && row.exercise) {
-				children.push({
-					type: "Exercise",
-					id: row.exercise.id,
-					slug: row.exercise.slug,
-					title: row.exercise.title,
-					description: row.exercise.description || "",
-					path: row.exercise.path
-				})
-			}
-		}
-
-		// Create fully-typed objects with actual lesson children
-		const unit: Unit = {
-			...unitResultData,
-			children: []
-		}
-		const lesson: Lesson = {
-			...lessonResultData,
-			children: children // ✅ Now populated with actual data!
-		}
-
-		return {
-			subject: p.subject,
-			courseData: course,
-			unitData: unit,
-			lessonData: lesson,
-			children: (
-				<div className="p-8">
-					<h1 className="text-2xl font-bold mb-4">{exercise.title}</h1>
-					<p className="text-gray-600 mb-6">{exercise.description}</p>
-					<div className="bg-gray-100 p-4 rounded">
-						<p>Exercise content will be rendered here.</p>
-					</div>
-				</div>
-			)
-		}
-	})
+	const dataPromise = params.then(fetchLessonData)
 
 	return (
-		<React.Suspense fallback={<div>Loading exercise page...</div>}>
-			<Content dataPromise={dataPromise} />
-		</React.Suspense>
+		<LessonLayout dataPromise={dataPromise}>
+			<React.Suspense fallback={<div className="p-8">Loading exercise...</div>}>
+				<StreamingExerciseContent params={React.use(params)} />
+			</React.Suspense>
+		</LessonLayout>
 	)
 }

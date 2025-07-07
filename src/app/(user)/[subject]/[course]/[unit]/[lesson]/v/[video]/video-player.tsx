@@ -7,8 +7,7 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import type { Video } from "./page"
 
-export function VideoPlayer({ videoPromise }: { videoPromise: Promise<Video> }) {
-	const video = React.use(videoPromise)
+export function VideoPlayer({ video }: { video: Video }) {
 	const [activeTab, setActiveTab] = React.useState<"about" | "transcript">("about")
 	const [activeSection, setActiveSection] = React.useState<"questions" | "tips">("tips")
 
