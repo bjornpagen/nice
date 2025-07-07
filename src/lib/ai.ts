@@ -58,7 +58,7 @@ async function generateContentWithRetry(request: GenerateContentRequest) {
  */
 export async function createQtiConversionPrompt(perseusJsonString: string) {
 	const systemInstruction =
-		"You are an expert in educational content standards. Your task is to convert a Perseus JSON object into a valid QTI 3.0 XML `assessmentItem`. You MUST return ONLY the raw XML content, without any extra text, explanations, or markdown formatting. The output MUST be well-formed, valid XML that can be parsed without errors - ensure all tags are properly closed with their FULL tag names (NEVER use </> syntax), attributes are quoted, and special characters are escaped. The examples provided are PERFECT outputs - study them carefully and match their structure, formatting, and patterns exactly."
+		"You are an expert XML generator for educational content. Your primary and most critical function is to convert a Perseus JSON object into a single, well-formed QTI 3.0 XML `assessmentItem`. Your output MUST be only the raw XML. The XML MUST be perfect and parseable. The most common and catastrophic failure is an incomplete or malformed closing tag. You are STRICTLY FORBIDDEN from using partial or lazy closing tags like `</_>` or `</>`. Every single XML element, such as `<qti-simple-choice>`, must have a corresponding full closing tag, `</qti-simple-choice>`. This rule is absolute and cannot be violated."
 
 	const examples = await loadConversionExamples()
 
@@ -83,36 +83,33 @@ ${examplesXml}
 </examples>
 
 <instructions>
-below is a perseus json. please give me the corresponding qti 3.0 xml, using the above examples to inform the exact xml output. respond with only the corresponding qti 3.0 xml.
+Below is a Perseus JSON object. Your task is to provide the corresponding QTI 3.0 XML. Use the PERFECT examples above to inform your output. Respond with ONLY the XML content.
 
-PAY VERY CLOSE ATTENTION TO THE EXAMPLES ABOVE - they are all examples of PERFECT output. Study their structure, formatting, and patterns carefully. Your output should match their quality and style exactly.
+Your output will be fed directly into an automated XML parser. If the XML is not well-formed, the entire system will crash. Pay extreme attention to the rules below.
 
-CRITICAL REQUIREMENTS:
-1. Output MUST be valid, well-formed XML:
-   - All tags must be properly closed with the FULL tag name (e.g., </qti-simple-choice>, NOT </>)
-   - STRICTLY BANNED: Never use lazy closing tags like </> - this is invalid XML and will break parsing
-   - All attributes must be quoted
-   - Special characters (<, >, &, ", ') must be properly escaped as XML entities
-   - The XML must parse without any errors
-2. NEVER place MathML or any complex markup within <qti-correct-response> tags
-3. Correct responses must ALWAYS be simple values that users can actually input:
-   - For multiple choice: use simple identifiers like "A", "B", "C", "D"
-   - For numeric input that requires exact answers: use fractions like "5/81", "1/2", "7/4" (NEVER decimals like "0.0617" or "3.14")
-   - For integer answers: use plain integers like "5", "-9", "42"
-   - For text input: use plain text strings
-4. When Perseus JSON shows answerForms as ["proper", "improper"], the response MUST be a fraction, not a decimal
-5. MathML should only appear in:
-   - Question prompts and content
-   - Answer choice labels (within <qti-simple-choice>)
-   - Feedback messages
-   - But NEVER in the actual correct response values
+---
+### ABSOLUTE XML RULES - NON-NEGOTIABLE ###
 
-Remember: Users must be able to type or select the correct answer - they cannot input MathML markup!
-ABSOLUTELY CRITICAL: The output MUST be parseable XML. Invalid XML will cause the entire conversion to fail.
+1.  **THE MOST IMPORTANT RULE: FULL CLOSING TAGS ONLY.**
+    Every tag you open MUST be closed with its full, complete name. Truncated or lazy tags are strictly forbidden and will cause a catastrophic failure.
 
-XML CLOSING TAG RULE: ALWAYS use full closing tags with the complete element name (e.g., </qti-simple-choice>, </qti-prompt>, </math>). NEVER use the lazy closing syntax </> - this is STRICTLY FORBIDDEN and will break XML validation.
+    - ✅ **CORRECT:** \`</qti-simple-choice>\`, \`</p>\`, \`</math>\`, \`</div>\`
+    - ❌ **ABSOLUTELY FORBIDDEN:** \`</_>\`, \`</>\`, \`</qti-simple-cho... \`
 
-FINAL REMINDER: The examples above demonstrate PERFECT QTI 3.0 XML output. Follow their patterns exactly. Match their formatting, structure, and style precisely.
+2.  **NO TRUNCATED OUTPUT.**
+    Your response must be the complete XML file from start to finish. Do not stop generating mid-tag or mid-file. Ensure the final \`</qti-assessment-item>\` tag is present and correct.
+
+3.  **MENTAL CHECK.**
+    Before you output your final answer, perform a mental check: "Did I close every single tag I opened with its full name? Is the final closing tag present?"
+
+---
+
+### Other Content Rules:
+- NEVER place MathML within <qti-correct-response>. Correct responses must be simple values (e.g., "A", "7/4", "42").
+- When Perseus JSON shows answerForms as ["proper", "improper"], the response MUST be a fraction.
+- Remember: Users must be able to type or select the correct answer - they cannot input MathML markup!
+
+FINAL REMINDER: The examples demonstrate PERFECT QTI 3.0 XML output. Follow their patterns exactly. Your top priority is generating a well-formed XML document with complete closing tags.
 </instructions>
 
 <perseus_json>
