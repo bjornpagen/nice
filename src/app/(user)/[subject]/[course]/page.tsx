@@ -73,7 +73,7 @@ export type CourseData = {
 }
 
 // Shared data fetching function - separated for clarity and reusability
-export async function fetchCourseData(params: { subject: string; course: string }): Promise<CourseData> {
+async function fetchCourseData(params: { subject: string; course: string }): Promise<CourseData> {
 	const path = `/${params.subject}/${params.course}`
 	logger.debug("course page: fetching course by path", { path })
 
