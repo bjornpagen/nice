@@ -7,13 +7,20 @@ import * as React from "react"
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { dialogKeys, useDialogManager } from "@/hooks/use-dialog-manager"
 
 export default function Home() {
-	const [showCookieModal, setShowCookieModal] = React.useState(true)
 	const { signIn } = useSignIn()
+	const { shouldShow, openDialog } = useDialogManager()
+
+	React.useEffect(() => {
+		// On component mount, check if the cookie dialog should be shown.
+		if (shouldShow(dialogKeys.COOKIE_CONSENT)) {
+			openDialog(dialogKeys.COOKIE_CONSENT)
+		}
+	}, [shouldShow, openDialog])
 
 	const handleGoogleSignIn = () => {
 		signIn?.authenticateWithRedirect({
@@ -154,32 +161,7 @@ export default function Home() {
 				</div>
 			</main>
 
-			{/* Cookie Consent Modal */}
-			<Dialog open={showCookieModal} onOpenChange={setShowCookieModal}>
-				<DialogContent className="max-w-md">
-					<DialogHeader>
-						<DialogTitle className="text-lg font-semibold">Use of cookies</DialogTitle>
-					</DialogHeader>
-					<div className="space-y-4">
-						<p className="text-sm text-gray-600 leading-relaxed">
-							Cookies are small files placed on your device that collect information when you use Khan Academy. Strictly
-							necessary cookies are used to make our site work and are required. Other types of cookies are used to
-							improve your experience, to analyze how Khan Academy is used, and to market our service.
-						</p>
-						<div className="flex flex-col space-y-2">
-							<Button onClick={() => setShowCookieModal(false)} className="bg-blue-600 hover:bg-blue-700 font-medium">
-								Accept All Cookies
-							</Button>
-							<Button variant="outline" onClick={() => setShowCookieModal(false)} className="font-medium">
-								Strictly Necessary Only
-							</Button>
-							<Button variant="ghost" onClick={() => setShowCookieModal(false)} className="font-medium">
-								Cookies Settings
-							</Button>
-						</div>
-					</div>
-				</DialogContent>
-			</Dialog>
+			{/* Cookie Consent Modal is now rendered globally by DialogManagerProvider */}
 		</div>
 	)
 }
