@@ -58,7 +58,7 @@ async function generateContentWithRetry(request: GenerateContentRequest) {
  */
 export async function createQtiConversionPrompt(perseusJsonString: string) {
 	const systemInstruction =
-		"You are an expert in educational content standards. Your task is to convert a Perseus JSON object into a valid QTI 3.0 XML `assessmentItem`. You MUST return ONLY the raw XML content, without any extra text, explanations, or markdown formatting. The output MUST be well-formed, valid XML that can be parsed without errors - ensure all tags are properly closed, attributes are quoted, and special characters are escaped. The examples provided are PERFECT outputs - study them carefully and match their structure, formatting, and patterns exactly."
+		"You are an expert in educational content standards. Your task is to convert a Perseus JSON object into a valid QTI 3.0 XML `assessmentItem`. You MUST return ONLY the raw XML content, without any extra text, explanations, or markdown formatting. The output MUST be well-formed, valid XML that can be parsed without errors - ensure all tags are properly closed with their FULL tag names (NEVER use </> syntax), attributes are quoted, and special characters are escaped. The examples provided are PERFECT outputs - study them carefully and match their structure, formatting, and patterns exactly."
 
 	const examples = await loadConversionExamples()
 
@@ -89,7 +89,8 @@ PAY VERY CLOSE ATTENTION TO THE EXAMPLES ABOVE - they are all examples of PERFEC
 
 CRITICAL REQUIREMENTS:
 1. Output MUST be valid, well-formed XML:
-   - All tags must be properly closed
+   - All tags must be properly closed with the FULL tag name (e.g., </qti-simple-choice>, NOT </>)
+   - STRICTLY BANNED: Never use lazy closing tags like </> - this is invalid XML and will break parsing
    - All attributes must be quoted
    - Special characters (<, >, &, ", ') must be properly escaped as XML entities
    - The XML must parse without any errors
@@ -108,6 +109,8 @@ CRITICAL REQUIREMENTS:
 
 Remember: Users must be able to type or select the correct answer - they cannot input MathML markup!
 ABSOLUTELY CRITICAL: The output MUST be parseable XML. Invalid XML will cause the entire conversion to fail.
+
+XML CLOSING TAG RULE: ALWAYS use full closing tags with the complete element name (e.g., </qti-simple-choice>, </qti-prompt>, </math>). NEVER use the lazy closing syntax </> - this is STRICTLY FORBIDDEN and will break XML validation.
 
 FINAL REMINDER: The examples above demonstrate PERFECT QTI 3.0 XML output. Follow their patterns exactly. Match their formatting, structure, and style precisely.
 </instructions>
