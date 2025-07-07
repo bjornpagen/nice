@@ -57,7 +57,7 @@ export function ExploreDropdown({ dark = false }: ExploreDropdownProps) {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent
-				className="w-screen h-[calc(100vh-5rem)] p-0 overflow-y-auto border-none rounded-none shadow-lg"
+				className="w-screen h-[calc(100vh-3rem)] p-0 overflow-y-auto border-none rounded-none shadow-lg"
 				align="start"
 				sideOffset={16}
 				alignOffset={-200}
