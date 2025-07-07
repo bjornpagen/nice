@@ -3,6 +3,8 @@ import { useEffect, useRef } from "react"
 interface QTIRendererProps {
 	identifier: string
 	onResponseChange?: (responseIdentifier: string, response: unknown) => void
+	onMessage?: (event: MessageEvent) => void
+	onRawMessage?: (event: MessageEvent) => void
 	className?: string
 	height?: string | number
 	width?: string | number
@@ -11,6 +13,8 @@ interface QTIRendererProps {
 export function QTIRenderer({
 	identifier,
 	onResponseChange,
+	onMessage,
+	onRawMessage,
 	className = "",
 	height = "600px",
 	width = "100%"
@@ -19,11 +23,22 @@ export function QTIRenderer({
 
 	useEffect(() => {
 		const handleMessage = (event: MessageEvent) => {
+			// Always call raw message handler if provided (no filtering)
+			if (onRawMessage) {
+				onRawMessage(event)
+			}
+
 			// Only process messages from the QTI embed domain
 			if (event.origin !== "https://alpha-powerpath-ui-production.up.railway.app") {
 				return
 			}
 
+			// Call the generic message handler if provided
+			if (onMessage) {
+				onMessage(event)
+			}
+
+			// Keep existing behavior for response changes
 			if (event.data.type === "QTI_RESPONSE_CHANGE") {
 				const { responseIdentifier, response } = event.data
 
@@ -38,7 +53,7 @@ export function QTIRenderer({
 		return () => {
 			window.removeEventListener("message", handleMessage)
 		}
-	}, [onResponseChange])
+	}, [onResponseChange, onMessage, onRawMessage])
 
 	const embedUrl = `https://alpha-powerpath-ui-production.up.railway.app/qti-embed/${identifier}`
 
