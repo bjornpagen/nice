@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-stimulus
-    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
     identifier="three-close-reads-approach"
     title="Three Close Reads Approach"
     xml:lang="en-US">
-    <qti-item-body>
+    <qti-stimulus-body>
         <p><strong>Use the “Three Close Reads” approach as you watch the video below (next in the lineup!). If you want to learn more about this strategy, click <a href="https://whp.oerproject.com/-/media/WHP/PDF/Teacher-Resources/WHP-Introduction-to-Three-Close-Reads-for-Video.ashx">here</a>.</strong></p>
         <h2>First read: preview and skimming for gist</h2>
         <p>Before you watch, you should skim the <a href="https://whp.oerproject.com/-/media/WHP/PDF/Transcripts/Internationalism_Between_the_Wars.ashx">transcript</a> first. The skim should be very quick and give you the gist (general idea) of what the video is about. You should be looking at the title, thumbnails, pictures, and first few seconds of the video for the gist.</p>
@@ -28,5 +28,5 @@
             <li>Can you think of any current examples of internationalism succeeding or failing?</li>
         </ol>
         <p><strong>Now that you know what to look for, it’s time to watch! Remember to return to these questions once you’ve finished watching.</strong></p>
-    </qti-item-body>
+    </qti-stimulus-body>
 </qti-assessment-stimulus>
