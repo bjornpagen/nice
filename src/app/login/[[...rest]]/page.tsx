@@ -109,50 +109,6 @@ export default function Home() {
 									Continue with Google
 								</Button>
 
-								{/* Other OAuth Buttons */}
-								<div className="grid grid-cols-2 gap-3">
-									<Button variant="outline" className="w-full h-11 border-gray-300 hover:bg-gray-50">
-										<Image
-											src="https://ext.same-assets.com/3576345726/3854438810.svg"
-											alt="Clever"
-											width={16}
-											height={16}
-											className="mr-2 h-4 w-4"
-										/>
-										Clever
-									</Button>
-									<Button variant="outline" className="w-full h-11 border-gray-300 hover:bg-gray-50">
-										<Image
-											src="https://ext.same-assets.com/3576345726/74763886.svg"
-											alt="Facebook"
-											width={16}
-											height={16}
-											className="mr-2 h-4 w-4"
-										/>
-										Facebook
-									</Button>
-									<Button variant="outline" className="w-full h-11 border-gray-300 hover:bg-gray-50">
-										<Image
-											src="https://ext.same-assets.com/3576345726/3808120640.svg"
-											alt="Apple"
-											width={16}
-											height={16}
-											className="mr-2 h-4 w-4"
-										/>
-										Apple
-									</Button>
-									<Button variant="outline" className="w-full h-11 border-gray-300 hover:bg-gray-50">
-										<Image
-											src="https://ext.same-assets.com/3576345726/1521032922.svg"
-											alt="Microsoft"
-											width={16}
-											height={16}
-											className="mr-2 h-4 w-4"
-										/>
-										Microsoft
-									</Button>
-								</div>
-
 								<div className="relative my-6">
 									<div className="absolute inset-0 flex items-center">
 										<span className="w-full border-t border-gray-300" />
@@ -194,7 +150,7 @@ export default function Home() {
 									</div>
 
 									<Link href="/profile/me/courses">
-										<Button className="w-full h-12 bg-gray-400 hover:bg-gray-500 text-white font-medium text-base">
+										<Button className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium text-base">
 											Log in
 										</Button>
 									</Link>
@@ -220,15 +176,6 @@ export default function Home() {
 								</div>
 							</CardContent>
 						</Card>
-
-						<div className="mt-8 text-center">
-							<p className="text-gray-600">
-								Don&apos;t have an account?{" "}
-								<Button variant="link" className="text-blue-600 hover:text-blue-700 p-0 font-medium">
-									Sign up for free!
-								</Button>
-							</p>
-						</div>
 					</div>
 				</div>
 			</main>
