@@ -82,6 +82,44 @@ async function getLessonsByUnitIds(unitIds: string[]) {
 		.orderBy(schema.niceLessons.ordering)
 }
 
+// Helper function to get lesson contents (videos, articles, exercises)
+async function getLessonContents(lessonIds: string[]) {
+	if (lessonIds.length === 0) {
+		return []
+	}
+
+	return await db
+		.select({
+			lessonId: schema.niceLessonContents.lessonId,
+			contentId: schema.niceLessonContents.contentId,
+			contentType: schema.niceLessonContents.contentType,
+			ordering: schema.niceLessonContents.ordering
+		})
+		.from(schema.niceLessonContents)
+		.where(inArray(schema.niceLessonContents.lessonId, lessonIds))
+		.orderBy(schema.niceLessonContents.ordering)
+}
+
+// Helper function to get videos by IDs
+async function getVideosByIds(videoIds: string[]) {
+	if (videoIds.length === 0) {
+		return []
+	}
+
+	return await db
+		.select({
+			id: schema.niceVideos.id,
+			title: schema.niceVideos.title,
+			slug: schema.niceVideos.slug,
+			path: schema.niceVideos.path,
+			youtubeId: schema.niceVideos.youtubeId,
+			duration: schema.niceVideos.duration,
+			description: schema.niceVideos.description
+		})
+		.from(schema.niceVideos)
+		.where(inArray(schema.niceVideos.id, videoIds))
+}
+
 // Helper function to get unit assessments (quizzes and unit tests)
 async function getUnitAssessments(unitIds: string[]) {
 	if (unitIds.length === 0) {
@@ -113,6 +151,7 @@ function isUnitAssessment(assessment: UnitAssessment): assessment is UnitAssessm
 export type Course = Awaited<ReturnType<typeof getCourseByPathQuery.execute>>[0]
 export type Unit = Awaited<ReturnType<typeof getUnitsByCourseIdQuery.execute>>[0]
 export type Lesson = Awaited<ReturnType<typeof getLessonsByUnitIds>>[0]
+export type Video = Awaited<ReturnType<typeof getVideosByIds>>[0]
 export type UnitAssessment = Awaited<ReturnType<typeof getUnitAssessments>>[0]
 export type CourseChallenge = Awaited<ReturnType<typeof getCourseChallengesQuery.execute>>[0]
 
@@ -121,6 +160,7 @@ export type UnitChild =
 	| (Lesson & { type: "Lesson" })
 	| (UnitAssessment & { type: "Quiz" })
 	| (UnitAssessment & { type: "UnitTest" })
+	| (Video & { type: "Video"; ordering: number })
 
 export type UnitWithChildren = Unit & {
 	children: UnitChild[]
@@ -161,6 +201,16 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 		getCourseChallengesQuery.execute({ courseId: course.id })
 	])
 
+	// Get lesson contents (videos, articles, exercises)
+	const lessonIds = lessons.map((lesson) => lesson.id)
+	const lessonContents = await getLessonContents(lessonIds)
+
+	// Get videos for all lessons
+	const videoIds = lessonContents
+		.filter((content) => content.contentType === "Video")
+		.map((content) => content.contentId)
+	const videos = await getVideosByIds(videoIds)
+
 	// Combine lessons and assessments into unitChildren for each unit
 	const unitsWithChildren: UnitWithChildren[] = units.map((unit) => {
 		const unitLessons: UnitChild[] = lessons
@@ -175,8 +225,29 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 				type: assessment.type
 			}))
 
+		// Get videos for this unit's lessons
+		const unitLessonIds = lessons.filter((lesson) => lesson.unitId === unit.id).map((lesson) => lesson.id)
+
+		const unitVideos: UnitChild[] = videos
+			.filter((video) => {
+				// Check if this video belongs to any lesson in this unit
+				return lessonContents.some(
+					(content) =>
+						content.contentId === video.id &&
+						content.contentType === "Video" &&
+						unitLessonIds.includes(content.lessonId)
+				)
+			})
+			.map((video) => {
+				// Find the ordering from lesson contents
+				const lessonContent = lessonContents.find(
+					(content) => content.contentId === video.id && content.contentType === "Video"
+				)
+				return { ...video, type: "Video" as const, ordering: lessonContent?.ordering ?? 0 }
+			})
+
 		// Combine and sort by ordering
-		const children = [...unitLessons, ...unitAssessments].sort((a, b) => a.ordering - b.ordering)
+		const children = [...unitLessons, ...unitAssessments, ...unitVideos].sort((a, b) => a.ordering - b.ordering)
 
 		return {
 			...unit,

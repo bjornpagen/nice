@@ -31,7 +31,7 @@ export function ProficiencyProgressOverview({
 						</div>
 					</div>
 					<div className="ml-20">
-						<ProficiencyProgress unitChildren={unitChildren} />
+						<ProficiencyProgress unitChildren={unitChildren.filter((child) => child.type !== "Video")} />
 					</div>
 				</>
 			) : (
@@ -41,7 +41,7 @@ export function ProficiencyProgressOverview({
 							Unit {index + 1}
 						</Link>
 					</h3>
-					<ProficiencyProgress unitChildren={unitChildren} />
+					<ProficiencyProgress unitChildren={unitChildren.filter((child) => child.type !== "Video")} />
 				</div>
 			)}
 		</div>

@@ -9,7 +9,9 @@ import { CourseHeader } from "./course-header"
 import type { CourseData } from "./page"
 import { ProficiencyLegend } from "./proficiency-legend"
 import { ProficiencyProgressOverview } from "./proficiency-progress-overview"
+import { Section } from "./section"
 import { CourseSidebar } from "./sidebar"
+import { UnitOverviewSection } from "./unit-overview-section"
 
 export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 	// Consume the single, consolidated data promise.
@@ -63,12 +65,12 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 						)}
 					</div>
 
-					{/* Khan Academy Kids App Section */}
-					<div className="mt-6 text-center">
+					{/* Nice Academy Kids App Section */}
+					<div className="mt-16 mb-16 text-center">
 						<h2 className="text-xl font-medium text-gray-900 mb-4">Learn with the Nice Academy Kids app</h2>
 						<p className="text-gray-700 text-base mb-6 max-w-2xl mx-auto">
 							Kids ages 2-8 (preschool—2nd grade) can read, play, and learn with fun animal friends in our free
-							interactive mobile app, Khan Academy Kids. We have tools for teachers, too!
+							interactive mobile app, Nice Academy Kids. We have tools for teachers, too!
 						</p>
 						<Button
 							variant="outline"
@@ -77,6 +79,33 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 						>
 							Learn more
 						</Button>
+					</div>
+
+					{/* Units Breakdown Section */}
+					<div className="rounded-sm mt-6">
+						{units.map((unit, index) => (
+							<div key={unit.id} className="break-inside-avoid border-b border-gray-300 mb-2 rounded-sm">
+								<UnitOverviewSection unit={unit} index={index} next={index === 0} />
+							</div>
+						))}
+					</div>
+
+					{/* Course Challenge */}
+					<div className="rounded-sm">
+						{challenges.length > 0 && challenges[0] && (
+							<div className="break-inside-avoid">
+								<Section className="rounded-sm">
+									<h2 className="font-medium text-gray-900 text-base text-lg">Course challenge</h2>
+									<p className="text-gray-600 text-sm">Test your knowledge of the skills in this course.</p>
+									<Button
+										variant="ghost"
+										className="bg-white text-blue-600 text-sm border border-gray-400 px-4 py-2 rounded-sm mt-2 hover:ring-2 hover:ring-blue-500 hover:text-blue-600"
+									>
+										Start Course challenge
+									</Button>
+								</Section>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
