@@ -21,14 +21,32 @@ const getExerciseByPathQuery = db
 	.limit(1)
 	.prepare("exercise_get_by_path")
 
-export type Exercise = Awaited<ReturnType<typeof getExerciseByPathQuery.execute>>[0]
+// NEW: Query to fetch all questions for a given exercise
+const getExerciseQuestionsQuery = db
+	.select({
+		id: schema.niceQuestions.id,
+		qtiIdentifier: schema.niceQuestions.qtiIdentifier
+	})
+	.from(schema.niceQuestions)
+	.where(eq(schema.niceQuestions.exerciseId, sql.placeholder("exerciseId")))
+	.prepare("src_app_user_subject_course_unit_lesson_e_exercise_page_get_exercise_questions")
 
-// Server component for fetching exercise data
-async function StreamingExerciseContent({
-	params
-}: {
-	params: { subject: string; course: string; unit: string; lesson: string; exercise: string }
-}) {
+export type Exercise = Awaited<ReturnType<typeof getExerciseByPathQuery.execute>>[0]
+export type ExerciseQuestion = Awaited<ReturnType<typeof getExerciseQuestionsQuery.execute>>[0]
+
+export type ExerciseData = {
+	exercise: Exercise
+	questions: ExerciseQuestion[]
+}
+
+// NEW: Consolidated data fetching function for the exercise page
+async function fetchExerciseData(params: {
+	subject: string
+	course: string
+	unit: string
+	lesson: string
+	exercise: string
+}): Promise<ExerciseData> {
 	const decodedExercise = decodeURIComponent(params.exercise)
 	const decodedUnit = decodeURIComponent(params.unit)
 	const decodedLesson = decodeURIComponent(params.lesson)
@@ -45,8 +63,13 @@ async function StreamingExerciseContent({
 		notFound()
 	}
 
-	return <ExerciseContent exercise={exercise} />
+	// Fetch questions using the exercise ID
+	const questions = await getExerciseQuestionsQuery.execute({ exerciseId: exercise.id })
+
+	return { exercise, questions }
 }
+
+// REMOVED: StreamingExerciseContent is no longer needed
 
 export default function ExercisePage({
 	params
@@ -56,11 +79,12 @@ export default function ExercisePage({
 	logger.info("exercise page: received request, rendering layout immediately")
 
 	const dataPromise = params.then(fetchLessonData)
+	const exerciseDataPromise = params.then(fetchExerciseData)
 
 	return (
 		<LessonLayout dataPromise={dataPromise}>
 			<React.Suspense fallback={<div className="p-8">Loading exercise...</div>}>
-				<StreamingExerciseContent params={React.use(params)} />
+				<ExerciseContent exerciseDataPromise={exerciseDataPromise} />
 			</React.Suspense>
 		</LessonLayout>
 	)

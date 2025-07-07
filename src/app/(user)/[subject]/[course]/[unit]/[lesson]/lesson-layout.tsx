@@ -39,7 +39,7 @@ export function LessonLayout({
 			/>
 
 			{/* Main content area - this is where streaming happens */}
-			<div className="flex-1 p-6 overflow-y-auto bg-gray-50 min-h-screen pb-20">{children}</div>
+			<div className="flex-1 overflow-y-auto bg-gray-50 min-h-screen">{children}</div>
 
 			{/* Bottom navigation - renders immediately */}
 			<LessonNext lessonChildren={lessonData.children} isCollapsed={isCollapsed} />

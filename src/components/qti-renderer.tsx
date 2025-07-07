@@ -57,14 +57,20 @@ export function QTIRenderer({
 
 	const embedUrl = `https://alpha-powerpath-ui-production.up.railway.app/qti-embed/${identifier}`
 
+	// Use 100% for both dimensions when they are percentage values
+	const iframeStyle: React.CSSProperties = {
+		border: "none",
+		width: width === "100%" ? "100%" : width,
+		height: height === "100%" ? "100%" : height,
+		display: "block"
+	}
+
 	return (
-		<div className={`qti-renderer ${className}`}>
+		<div className={`qti-renderer ${className}`} style={{ height: "100%", width: "100%" }}>
 			<iframe
 				ref={iframeRef}
 				src={embedUrl}
-				width={width}
-				height={height}
-				style={{ border: "none" }}
+				style={iframeStyle}
 				title={`QTI Content - ${identifier}`}
 				allow="fullscreen"
 				sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
