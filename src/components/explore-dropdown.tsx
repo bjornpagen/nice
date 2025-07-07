@@ -59,35 +59,35 @@ export function ExploreDropdown({ dark = false }: ExploreDropdownProps) {
 			<DropdownMenuContent
 				className="w-screen h-[calc(100vh-5rem)] p-0 overflow-y-auto border-none rounded-none shadow-lg"
 				align="start"
-				sideOffset={0}
+				sideOffset={16}
 				alignOffset={-200}
 				style={{
 					minWidth: "100vw",
 					zIndex: 50
 				}}
 			>
-				<div className="p-12 bg-white min-h-full">
+				<div className="p-8 bg-white min-h-full">
 					<div className="max-w-7xl mx-auto">
-						<div className="grid grid-cols-4 gap-12">
+						<div className="columns-4 gap-4 space-y-0">
 							{subjectsWithCourses?.map((subject) => (
-								<div key={subject.slug} className="mb-8">
-									<div className="mb-6">
-										<h3 className="text-lg font-semibold text-gray-900 hover:text-blue-600 cursor-pointer">
+								<div key={subject.slug} className="break-inside-avoid mb-4">
+									<div className="mb-2">
+										<h3 className="text-xs font-semibold text-gray-600 uppercase tracking-wide cursor-pointer">
 											{subject.title}
 										</h3>
 									</div>
-									<div className="space-y-3">
+									<div className="space-y-2">
 										{subject.courses.slice(0, 12).map((course) => (
 											<Link
 												key={course.id}
 												href={course.path}
-												className="block text-sm text-gray-600 hover:text-blue-600"
+												className="block text-sm text-blue-600 hover:text-blue-700 hover:underline"
 											>
 												{course.title}
 											</Link>
 										))}
 										{subject.courses.length > 12 && (
-											<div className="pt-2">
+											<div className="pt-0.5">
 												<span className="text-xs text-gray-500">+{subject.courses.length - 12} more courses</span>
 											</div>
 										)}

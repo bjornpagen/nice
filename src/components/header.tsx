@@ -59,7 +59,8 @@ export function Header({ dark = false, nickname }: HeaderProps) {
 					{/* AI for Teachers (hidden on mobile and small screens) */}
 					<Button
 						variant="link"
-						className={`hidden lg:flex items-center space-x-1 p-2 ${dark ? "text-white" : "text-blue-600"}`}
+						className={`hidden lg:flex items-center space-x-1 p-2 cursor-not-allowed ${dark ? "text-white" : "text-blue-600"}`}
+						disabled
 					>
 						<span className="text-sm font-medium">AI for Teachers</span>
 					</Button>
@@ -67,7 +68,8 @@ export function Header({ dark = false, nickname }: HeaderProps) {
 					{/* Donate button (hidden on mobile) */}
 					<Button
 						variant="link"
-						className={`hidden md:flex items-center space-x-1 p-2 ${dark ? "text-white" : "text-blue-600"}`}
+						className={`hidden md:flex items-center space-x-1 p-2 cursor-not-allowed ${dark ? "text-white" : "text-blue-600"}`}
+						disabled
 					>
 						<span className="text-sm font-medium">Donate</span>
 					</Button>

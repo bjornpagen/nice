@@ -106,7 +106,6 @@ export async function getCoursesGroupedBySubject() {
 	// Group courses by subject based on path pattern
 	type Course = (typeof allCourses)[number]
 	const coursesBySubject = new Map<string, Course[]>()
-	const otherCourses: Course[] = []
 
 	// Initialize map with all subjects
 	for (const subject of allSubjects) {
@@ -121,14 +120,8 @@ export async function getCoursesGroupedBySubject() {
 
 		if (subjectSlug && coursesBySubject.has(subjectSlug)) {
 			coursesBySubject.get(subjectSlug)?.push(course)
-		} else {
-			otherCourses.push(course)
 		}
-	}
-
-	// If there are courses without matching subjects, add "Other" category
-	if (otherCourses.length > 0) {
-		coursesBySubject.set("other", otherCourses)
+		// Note: courses without matching subjects are simply ignored
 	}
 
 	// Convert to array format for easier consumption
@@ -137,7 +130,7 @@ export async function getCoursesGroupedBySubject() {
 			const subject = allSubjects.find((s) => s.slug === slug)
 			return {
 				slug,
-				title: subject?.title || "Other",
+				title: subject?.title || slug,
 				courses: coursesForSubject.sort((a, b) => a.title.localeCompare(b.title))
 			}
 		})
