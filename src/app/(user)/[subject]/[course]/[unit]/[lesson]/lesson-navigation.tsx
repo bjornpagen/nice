@@ -7,11 +7,13 @@ import { upperCase } from "@/lib/utils"
 export function LessonNavigation({
 	course,
 	unit,
-	lesson
+	lesson,
+	setSelectedLessonId
 }: {
 	course: Pick<CourseInfo, "title" | "path">
-	unit: Pick<UnitInfo, "title" | "path" | "children">
+	unit: Pick<UnitInfo, "title" | "path" | "children"> & { ordering: number }
 	lesson: Pick<LessonInfo, "title">
+	setSelectedLessonId: (lessonId: string) => void
 }) {
 	const index = unit.children.findIndex(
 		(child): child is LessonInfo => child.type === "Lesson" && child.title === lesson.title
@@ -24,6 +26,26 @@ export function LessonNavigation({
 	const next = nextLesson(unit, index)
 	// logger.info("lesson navigation: nextLesson", { found: next != null })
 
+	// Truncate course title if it's too long (Khan Academy style)
+	const truncateCourseTitle = (title: string, maxLength = 25) => {
+		if (title.length <= maxLength) return title
+		return `${title.substring(0, maxLength).trim()}...`
+	}
+
+	// Handle navigation to previous lesson
+	const handlePrevLesson = () => {
+		if (prev) {
+			setSelectedLessonId(prev.id)
+		}
+	}
+
+	// Handle navigation to next lesson
+	const handleNextLesson = () => {
+		if (next) {
+			setSelectedLessonId(next.id)
+		}
+	}
+
 	return (
 		<div className="flex items-center p-5 border-b border-gray-200">
 			<div className="flex-shrink-0">
@@ -32,10 +54,8 @@ export function LessonNavigation({
 						<ChevronLeft className="w-5 h-5" />
 					</Button>
 				) : (
-					<Button variant="link" className="pl-1 text-blue-600 w-2 h-2" asChild>
-						<Link href={prev.path}>
-							<ChevronLeft className="w-5 h-5" />
-						</Link>
+					<Button variant="link" className="pl-1 text-blue-600 w-2 h-2" onClick={handlePrevLesson}>
+						<ChevronLeft className="w-5 h-5" />
 					</Button>
 				)}
 			</div>
@@ -43,11 +63,11 @@ export function LessonNavigation({
 			<div className="flex-1 text-center min-w-0 px-2">
 				<div className="text-xs flex items-center justify-center gap-1 min-w-0">
 					<Link className="text-blue-600 hover:underline font-medium text-xs whitespace-nowrap" href={course.path}>
-						COURSE: {upperCase(course.title)}
+						COURSE: {upperCase(truncateCourseTitle(course.title))}
 					</Link>
 					<span className="text-gray-600 text-xs font-medium flex-shrink-0">{" > "}</span>
 					<Link className="text-blue-600 hover:underline font-medium text-xs whitespace-nowrap" href={unit.path}>
-						{upperCase(unit.title)}
+						UNIT {unit.ordering + 1}
 					</Link>
 				</div>
 				<div className="text-md text-gray-600 font-medium truncate">
@@ -61,10 +81,8 @@ export function LessonNavigation({
 						<ChevronRight className="w-5 h-5" />
 					</Button>
 				) : (
-					<Button variant="link" className="pr-1 text-blue-600 w-2 h-2" asChild>
-						<Link href={next.path}>
-							<ChevronRight className="w-5 h-5" />
-						</Link>
+					<Button variant="link" className="pr-1 text-blue-600 w-2 h-2" onClick={handleNextLesson}>
+						<ChevronRight className="w-5 h-5" />
 					</Button>
 				)}
 			</div>
@@ -75,7 +93,7 @@ export function LessonNavigation({
 function prevLesson(
 	unit: Pick<UnitInfo, "children">,
 	index: number
-): Pick<LessonInfo, "path" | "children"> | undefined {
+): Pick<LessonInfo, "id" | "path" | "children"> | undefined {
 	if (index <= 0) {
 		return undefined
 	}
@@ -91,7 +109,7 @@ function prevLesson(
 function nextLesson(
 	unit: Pick<UnitInfo, "children">,
 	index: number
-): Pick<LessonInfo, "path" | "children"> | undefined {
+): Pick<LessonInfo, "id" | "path" | "children"> | undefined {
 	if (index >= unit.children.length - 1) {
 		return undefined
 	}

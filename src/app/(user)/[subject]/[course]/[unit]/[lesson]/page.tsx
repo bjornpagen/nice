@@ -15,7 +15,12 @@ const getCourseByPathQuery = db
 	.prepare("lesson_shared_get_course_by_path")
 
 const getUnitByPathQuery = db
-	.select({ title: schema.niceUnits.title, path: schema.niceUnits.path })
+	.select({
+		id: schema.niceUnits.id,
+		title: schema.niceUnits.title,
+		path: schema.niceUnits.path,
+		ordering: schema.niceUnits.ordering
+	})
 	.from(schema.niceUnits)
 	.where(eq(schema.niceUnits.path, sql.placeholder("unitPath")))
 	.limit(1)
@@ -49,6 +54,17 @@ const getLessonContentQuery = db
 	.orderBy(schema.niceLessonContents.ordering)
 	.prepare("lesson_shared_get_lesson_content")
 
+const getUnitLessonsQuery = db
+	.select({
+		id: schema.niceLessons.id,
+		title: schema.niceLessons.title,
+		path: schema.niceLessons.path
+	})
+	.from(schema.niceLessons)
+	.where(eq(schema.niceLessons.unitId, sql.placeholder("unitId")))
+	.orderBy(schema.niceLessons.ordering)
+	.prepare("lesson_shared_get_unit_lessons")
+
 // Shared data fetching function
 export async function fetchLessonData(params: { subject: string; course: string; unit: string; lesson: string }) {
 	const decodedUnit = decodeURIComponent(params.unit)
@@ -72,47 +88,78 @@ export async function fetchLessonData(params: { subject: string; course: string;
 		notFound()
 	}
 
-	// Fetch lesson content
-	const lessonContentResult = await getLessonContentQuery.execute({ lessonId: lessonResultData.id })
+	// Fetch all lessons for the unit
+	const unitLessonsResult = await getUnitLessonsQuery.execute({ unitId: unitResultData.id })
 
-	// Build lesson children array
-	const children: LessonChild[] = []
-	for (const row of lessonContentResult) {
-		if (row.contentType === "Video" && row.video) {
-			children.push({
-				type: "Video",
-				id: row.video.id,
-				slug: row.video.slug,
-				title: row.video.title,
-				path: row.video.path
-			})
-		} else if (row.contentType === "Article" && row.article) {
-			children.push({
-				type: "Article",
-				id: row.article.id,
-				slug: row.article.slug,
-				title: row.article.title,
-				description: "",
-				path: row.article.path
-			})
-		} else if (row.contentType === "Exercise" && row.exercise) {
-			children.push({
-				type: "Exercise",
-				id: row.exercise.id,
-				slug: row.exercise.slug,
-				title: row.exercise.title,
-				description: row.exercise.description || "",
-				path: row.exercise.path
-			})
+	// Fetch content for ALL lessons in the unit
+	const allLessonContents = await Promise.all(
+		unitLessonsResult.map((lesson) => getLessonContentQuery.execute({ lessonId: lesson.id }))
+	)
+
+	// Build a map of lesson content by lesson ID
+	const lessonContentMap: Record<string, LessonChild[]> = {}
+
+	unitLessonsResult.forEach((lesson, index) => {
+		const lessonContentResult = allLessonContents[index]
+		const children: LessonChild[] = []
+
+		if (!lessonContentResult) {
+			lessonContentMap[lesson.id] = children
+			return
 		}
-	}
 
-	const emptyChildren: LessonInfo[] = []
+		for (const row of lessonContentResult) {
+			if (row.contentType === "Video" && row.video) {
+				children.push({
+					type: "Video",
+					id: row.video.id,
+					slug: row.video.slug,
+					title: row.video.title,
+					path: row.video.path
+				})
+			} else if (row.contentType === "Article" && row.article) {
+				children.push({
+					type: "Article",
+					id: row.article.id,
+					slug: row.article.slug,
+					title: row.article.title,
+					description: "",
+					path: row.article.path
+				})
+			} else if (row.contentType === "Exercise" && row.exercise) {
+				children.push({
+					type: "Exercise",
+					id: row.exercise.id,
+					slug: row.exercise.slug,
+					title: row.exercise.title,
+					description: row.exercise.description || "",
+					path: row.exercise.path
+				})
+			}
+		}
+
+		lessonContentMap[lesson.id] = children
+	})
+
+	// Convert unit lessons to LessonInfo format with their content
+	const unitLessonsWithContent: LessonInfo[] = unitLessonsResult.map((lesson) => ({
+		type: "Lesson",
+		id: lesson.id,
+		slug: lesson.path.split("/").pop() || lesson.id,
+		title: lesson.title,
+		description: "",
+		path: lesson.path,
+		children: lessonContentMap[lesson.id] || []
+	}))
+
 	return {
 		subject: params.subject,
 		courseData: course,
-		unitData: { ...unitResultData, children: emptyChildren },
-		lessonData: { ...lessonResultData, children }
+		unitData: { ...unitResultData, children: unitLessonsWithContent },
+		lessonData: {
+			...lessonResultData,
+			children: lessonContentMap[lessonResultData.id] || []
+		}
 	}
 }
 

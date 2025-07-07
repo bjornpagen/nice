@@ -13,14 +13,16 @@ export function LessonSidebar({
 	unit,
 	lesson,
 	isCollapsed,
-	setIsCollapsed
+	setIsCollapsed,
+	setSelectedLessonId
 }: {
 	subject: string
 	course: Pick<CourseInfo, "title" | "path">
-	unit: Pick<UnitInfo, "title" | "path" | "children">
+	unit: Pick<UnitInfo, "title" | "path" | "children"> & { ordering: number }
 	lesson: Pick<LessonInfo, "title" | "path" | "children">
 	isCollapsed: boolean
 	setIsCollapsed: (collapsed: boolean) => void
+	setSelectedLessonId: (lessonId: string) => void
 }) {
 	const toggleSidebar = () => {
 		setIsCollapsed(!isCollapsed)
@@ -58,7 +60,7 @@ export function LessonSidebar({
 
 						{/* Navigation - fixed */}
 						<div className="bg-white border-x border-gray-200">
-							<LessonNavigation course={course} unit={unit} lesson={lesson} />
+							<LessonNavigation course={course} unit={unit} lesson={lesson} setSelectedLessonId={setSelectedLessonId} />
 						</div>
 					</div>
 

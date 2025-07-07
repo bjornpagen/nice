@@ -15,6 +15,16 @@ export function LessonLayout({
 	const { subject, courseData, unitData, lessonData } = React.use(dataPromise)
 	const [isCollapsed, setIsCollapsed] = React.useState(false)
 
+	// Track which lesson's content is currently displayed in the sidebar
+	const [selectedLessonId, setSelectedLessonId] = React.useState(lessonData.id)
+
+	// Find the selected lesson from unit children
+	const selectedLesson = React.useMemo(() => {
+		const lesson = unitData.children.find((child) => child.id === selectedLessonId)
+		// If not found, default to current lesson
+		return lesson || lessonData
+	}, [unitData.children, selectedLessonId, lessonData])
+
 	return (
 		<div className="flex">
 			{/* Sidebar - renders immediately, no suspense needed */}
@@ -22,9 +32,10 @@ export function LessonLayout({
 				subject={subject}
 				course={courseData}
 				unit={unitData}
-				lesson={lessonData}
+				lesson={selectedLesson}
 				isCollapsed={isCollapsed}
 				setIsCollapsed={setIsCollapsed}
+				setSelectedLessonId={setSelectedLessonId}
 			/>
 
 			{/* Main content area - this is where streaming happens */}
