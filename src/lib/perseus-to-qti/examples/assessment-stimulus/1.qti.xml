@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="three-close-reads-approach"
+    title="Three Close Reads Approach"
+    xml:lang="en-US">
+    <qti-item-body>
+        <p><strong>Use the “Three Close Reads” approach as you watch the video below (next in the lineup!). If you want to learn more about this strategy, click <a href="https://whp.oerproject.com/-/media/WHP/PDF/Teacher-Resources/WHP-Introduction-to-Three-Close-Reads-for-Video.ashx">here</a>.</strong></p>
+        <h2>First read: preview and skimming for gist</h2>
+        <p>Before you watch, you should skim the <a href="https://whp.oerproject.com/-/media/WHP/PDF/Transcripts/Internationalism_Between_the_Wars.ashx">transcript</a> first. The skim should be very quick and give you the gist (general idea) of what the video is about. You should be looking at the title, thumbnails, pictures, and first few seconds of the video for the gist.</p>
+        <h2>Second read: key ideas and understanding content</h2>
+        <p>Now that you’ve skimmed the video transcript and taken a quick peek at the video, you should preview the questions you will be answering. These questions will help you get a better understanding of the concepts and arguments that are presented in the video. Keep in mind that when you watch the video, it is a good idea to write down any vocab you read or hear that is unfamiliar to you.</p>
+        <p>By the end of the second close read, you should be able to answer the following questions:</p>
+        <ol>
+            <li>What was the Kellogg-Briand Pact?</li>
+            <li>What were some attempts at internationalism during the 1920s?</li>
+            <li>What are some examples of internationalism before the twentieth century?</li>
+            <li>According to the video, why did the League of Nations fail?</li>
+            <li>What does this video suggest is the legacy of the Kellogg-Briand Pact?</li>
+        </ol>
+        <h2>Third read: evaluating and corroborating</h2>
+        <p>Finally, here are some questions that will help you focus on why this video matters and how it connects to other content you’ve studied.</p>
+        <p>At the end of the third read, you should be able to respond to these questions:</p>
+        <ol>
+            <li>How does the failure of internationalism challenge or support the networks frame narrative?</li>
+            <li>Can you think of any current examples of internationalism succeeding or failing?</li>
+        </ol>
+        <p><strong>Now that you know what to look for, it’s time to watch! Remember to return to these questions once you’ve finished watching.</strong></p>
+    </qti-item-body>
+</qti-assessment-stimulus>
