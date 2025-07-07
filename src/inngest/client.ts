@@ -13,8 +13,10 @@ const events = {
 			questionId: z.string().min(1)
 		})
 	},
-	"nice/qti.migration.backfill.requested": {
-		data: z.object({})
+	"nice/qti.migration.exercise.requested": {
+		data: z.object({
+			exerciseId: z.string().min(1)
+		})
 	}
 }
 
