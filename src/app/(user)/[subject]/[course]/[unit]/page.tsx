@@ -2,7 +2,6 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { and, count, eq, inArray, sql } from "drizzle-orm"
 import { notFound } from "next/navigation"
-import * as React from "react"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { Content } from "./content"
@@ -190,109 +189,116 @@ async function getQuestionsForExercises(exerciseIds: string[]): Promise<Map<stri
 	return questionsByExerciseId
 }
 
-// --- PAGE COMPONENT (Refactored) ---
-export default function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
-	logger.info("unit page: received request, initiating data fetches")
+// Shared data fetching function - separated for clarity and reusability
+export async function fetchUnitData(params: {
+	subject: string
+	course: string
+	unit: string
+}): Promise<HydratedUnitData> {
+	logger.debug("unit page: fetching unit data", { params })
 
-	const hydratedUnitDataPromise: Promise<HydratedUnitData> = params.then(async (p) => {
-		// First get the course
-		const courseResults = await getCourseBySlugQuery.execute({ courseSlug: p.course })
-		const course = courseResults[0]
+	// First get the course
+	const courseResults = await getCourseBySlugQuery.execute({ courseSlug: params.course })
+	const course = courseResults[0]
 
-		if (!course) {
-			notFound()
+	if (!course) {
+		logger.warn("unit page: course not found", { courseSlug: params.course })
+		notFound()
+	}
+
+	// Try to find unit by slug first (handles both normal slugs and ID:slug format)
+	// Note: URL might encode the colon, so we need to decode it
+	const decodedUnitSlug = decodeURIComponent(params.unit)
+	let unitResults = await getUnitBySlugQuery.execute({ slug: decodedUnitSlug, courseId: course.id })
+	let unit = unitResults[0]
+
+	// If not found by slug, try by path (fallback for edge cases)
+	if (!unit) {
+		const decodedPath = `/${params.subject}/${params.course}/${decodedUnitSlug}`
+		unitResults = await getUnitByPathQuery.execute({ path: decodedPath })
+		unit = unitResults[0]
+	}
+
+	if (!unit) {
+		logger.warn("unit page: unit not found", { unitSlug: decodedUnitSlug, courseId: course.id })
+		notFound()
+	}
+
+	const [allUnits, lessonCountResult, challenges, unitChildrenResult] = await Promise.all([
+		getAllUnitsByCourseIdQuery.execute({ courseId: course.id }),
+		getLessonCountByCourseIdQuery.execute({ courseId: course.id }),
+		getCourseChallengesQuery.execute({ courseId: course.id }),
+		getUnitChildrenQuery.execute({ unitId: unit.id })
+	])
+
+	const lessonCount = lessonCountResult[0]?.count ?? 0
+	const lessonIds = unitChildrenResult.filter((c) => c.type === "Lesson").map((l) => l.id)
+
+	type LessonContentRow = {
+		lessonId: string
+		contentId: string
+		contentType: "Video" | "Article" | "Exercise"
+		ordering: number
+		video: typeof schema.niceVideos.$inferSelect | null
+		article: typeof schema.niceArticles.$inferSelect | null
+		exercise: typeof schema.niceExercises.$inferSelect | null
+	}
+
+	let lessonContents: LessonContentRow[] = []
+	if (lessonIds.length > 0) {
+		lessonContents = await getLessonsContentQuery.where(inArray(schema.niceLessonContents.lessonId, lessonIds))
+	}
+
+	const allExerciseIds = lessonContents.filter((c) => c.contentType === "Exercise").map((c) => c.contentId)
+	const questionsByExerciseId = await getQuestionsForExercises(allExerciseIds)
+
+	const contentsByLessonId: Record<string, { videos: Video[]; articles: Article[]; exercises: Exercise[] }> = {}
+
+	for (const row of lessonContents) {
+		if (!contentsByLessonId[row.lessonId]) {
+			contentsByLessonId[row.lessonId] = { videos: [], articles: [], exercises: [] }
 		}
 
-		// Try to find unit by slug first (handles both normal slugs and ID:slug format)
-		// Note: URL might encode the colon, so we need to decode it
-		const decodedUnitSlug = decodeURIComponent(p.unit)
-		let unitResults = await getUnitBySlugQuery.execute({ slug: decodedUnitSlug, courseId: course.id })
-		let unit = unitResults[0]
+		const lessonContent = contentsByLessonId[row.lessonId]
+		if (!lessonContent) continue
 
-		// If not found by slug, try by path (fallback for edge cases)
-		if (!unit) {
-			const decodedPath = `/${p.subject}/${p.course}/${decodedUnitSlug}`
-			unitResults = await getUnitByPathQuery.execute({ path: decodedPath })
-			unit = unitResults[0]
+		if (row.contentType === "Video" && row.video) {
+			lessonContent.videos.push({ ...row.video, ordering: row.ordering })
+		} else if (row.contentType === "Article" && row.article) {
+			lessonContent.articles.push({ ...row.article, ordering: row.ordering })
+		} else if (row.contentType === "Exercise" && row.exercise) {
+			lessonContent.exercises.push({
+				...row.exercise,
+				questions: questionsByExerciseId.get(row.exercise.id) || [],
+				ordering: row.ordering
+			})
 		}
+	}
 
-		if (!unit) {
-			notFound()
+	const unitChildren: UnitChild[] = unitChildrenResult.map((child) => {
+		if (child.type === "Lesson") {
+			const contents = contentsByLessonId[child.id] || { videos: [], articles: [], exercises: [] }
+			return { ...child, ...contents, type: "Lesson" }
 		}
-
-		const [allUnits, lessonCountResult, challenges, unitChildrenResult] = await Promise.all([
-			getAllUnitsByCourseIdQuery.execute({ courseId: course.id }),
-			getLessonCountByCourseIdQuery.execute({ courseId: course.id }),
-			getCourseChallengesQuery.execute({ courseId: course.id }),
-			getUnitChildrenQuery.execute({ unitId: unit.id })
-		])
-
-		const lessonCount = lessonCountResult[0]?.count ?? 0
-		const lessonIds = unitChildrenResult.filter((c) => c.type === "Lesson").map((l) => l.id)
-
-		type LessonContentRow = {
-			lessonId: string
-			contentId: string
-			contentType: "Video" | "Article" | "Exercise"
-			ordering: number
-			video: typeof schema.niceVideos.$inferSelect | null
-			article: typeof schema.niceArticles.$inferSelect | null
-			exercise: typeof schema.niceExercises.$inferSelect | null
+		if (child.type === "Quiz") {
+			return { ...child, type: "Quiz" }
 		}
-
-		let lessonContents: LessonContentRow[] = []
-		if (lessonIds.length > 0) {
-			lessonContents = await getLessonsContentQuery.where(inArray(schema.niceLessonContents.lessonId, lessonIds))
+		if (child.type === "UnitTest") {
+			return { ...child, type: "UnitTest" }
 		}
-
-		const allExerciseIds = lessonContents.filter((c) => c.contentType === "Exercise").map((c) => c.contentId)
-		const questionsByExerciseId = await getQuestionsForExercises(allExerciseIds)
-
-		const contentsByLessonId: Record<string, { videos: Video[]; articles: Article[]; exercises: Exercise[] }> = {}
-
-		for (const row of lessonContents) {
-			if (!contentsByLessonId[row.lessonId]) {
-				contentsByLessonId[row.lessonId] = { videos: [], articles: [], exercises: [] }
-			}
-
-			const lessonContent = contentsByLessonId[row.lessonId]
-			if (!lessonContent) continue
-
-			if (row.contentType === "Video" && row.video) {
-				lessonContent.videos.push({ ...row.video, ordering: row.ordering })
-			} else if (row.contentType === "Article" && row.article) {
-				lessonContent.articles.push({ ...row.article, ordering: row.ordering })
-			} else if (row.contentType === "Exercise" && row.exercise) {
-				lessonContent.exercises.push({
-					...row.exercise,
-					questions: questionsByExerciseId.get(row.exercise.id) || [],
-					ordering: row.ordering
-				})
-			}
-		}
-
-		const unitChildren: UnitChild[] = unitChildrenResult.map((child) => {
-			if (child.type === "Lesson") {
-				const contents = contentsByLessonId[child.id] || { videos: [], articles: [], exercises: [] }
-				return { ...child, ...contents, type: "Lesson" }
-			}
-			if (child.type === "Quiz") {
-				return { ...child, type: "Quiz" }
-			}
-			if (child.type === "UnitTest") {
-				return { ...child, type: "UnitTest" }
-			}
-			// This branch should be unreachable if the query is correct,
-			// but it provides type safety and runtime verification.
-			throw errors.new(`Unexpected unit child type from database: ${child.type}`)
-		})
-
-		return { params: p, course, allUnits, lessonCount, challenges, unit, unitChildren }
+		// This branch should be unreachable if the query is correct,
+		// but it provides type safety and runtime verification.
+		throw errors.new(`Unexpected unit child type from database: ${child.type}`)
 	})
 
-	return (
-		<React.Suspense fallback={null}>
-			<Content hydratedUnitDataPromise={hydratedUnitDataPromise} />
-		</React.Suspense>
-	)
+	return { params, course, allUnits, lessonCount, challenges, unit, unitChildren }
+}
+
+// Main unit page - renders layout immediately with streaming content
+export default function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
+	logger.info("unit page: received request, rendering layout immediately")
+
+	const dataPromise = params.then(fetchUnitData)
+
+	return <Content dataPromise={dataPromise} />
 }

@@ -1,7 +1,6 @@
 import * as logger from "@superbuilders/slog"
 import { and, eq, inArray, sql } from "drizzle-orm"
 import { notFound } from "next/navigation"
-import * as React from "react"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { Content } from "./content"
@@ -65,51 +64,50 @@ export type Course = Awaited<ReturnType<typeof getCourseByPathQuery.execute>>[0]
 export type Unit = Awaited<ReturnType<typeof getUnitsByCourseIdQuery.execute>>[0]
 export type CourseChallenge = Awaited<ReturnType<typeof getCourseChallengesQuery.execute>>[0]
 
-// 3. The page component is NOT async. It orchestrates promises.
+export type CourseData = {
+	params: { subject: string; course: string }
+	course: Course
+	units: Unit[]
+	lessonCount: number
+	challenges: CourseChallenge[]
+}
+
+// Shared data fetching function - separated for clarity and reusability
+export async function fetchCourseData(params: { subject: string; course: string }): Promise<CourseData> {
+	const path = `/${params.subject}/${params.course}`
+	logger.debug("course page: fetching course by path", { path })
+
+	const courseResult = await getCourseByPathQuery.execute({ path })
+	const course = courseResult[0]
+
+	if (!course) {
+		logger.warn("course page: course not found for path", { path })
+		notFound()
+	}
+
+	// Fetch all related data in parallel
+	const [units, lessonCountResult, challenges] = await Promise.all([
+		getUnitsByCourseIdQuery.execute({ courseId: course.id }),
+		getLessonCountByCourseIdQuery.execute({ courseId: course.id }),
+		getCourseChallengesQuery.execute({ courseId: course.id })
+	])
+
+	const lessonCount = lessonCountResult[0]?.count ?? 0
+
+	return {
+		params,
+		course,
+		units,
+		lessonCount,
+		challenges
+	}
+}
+
+// 3. The page component is NOT async. It orchestrates promises and renders immediately.
 export default function CoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
-	logger.info("course page: received request, initiating db queries")
+	logger.info("course page: received request, rendering layout immediately")
 
-	// 4. Create a promise for the course data, chained from the params promise.
-	//    If the course is not found, this will trigger a 404.
-	const coursePromise: Promise<Course> = params.then(async (p) => {
-		const path = `/${p.subject}/${p.course}`
-		logger.debug("course page: fetching course by path", { path })
-		const courseResult = await getCourseByPathQuery.execute({ path })
-		const course = courseResult[0]
-		if (!course) {
-			logger.warn("course page: course not found for path, redirecting", { path })
-			notFound()
-		}
-		return course
-	})
+	const dataPromise = params.then(fetchCourseData)
 
-	// 5. Chain subsequent data fetches off the coursePromise.
-	const unitsPromise: Promise<Unit[]> = coursePromise.then((course) => {
-		logger.debug("course page: fetching units for course", { courseId: course.id })
-		return getUnitsByCourseIdQuery.execute({ courseId: course.id })
-	})
-
-	const lessonCountPromise: Promise<number> = coursePromise.then(async (course) => {
-		logger.debug("course page: fetching lesson count for course", { courseId: course.id })
-		const result = await getLessonCountByCourseIdQuery.execute({ courseId: course.id })
-		return result[0]?.count ?? 0
-	})
-
-	const challengesPromise: Promise<CourseChallenge[]> = coursePromise.then((course) => {
-		logger.debug("course page: fetching challenges for course", { courseId: course.id })
-		return getCourseChallengesQuery.execute({ courseId: course.id })
-	})
-
-	// 6. Render a Suspense boundary and pass all promises to the client component.
-	return (
-		<React.Suspense fallback={null}>
-			<Content
-				paramsPromise={params}
-				coursePromise={coursePromise}
-				unitsPromise={unitsPromise}
-				lessonCountPromise={lessonCountPromise}
-				challengesPromise={challengesPromise}
-			/>
-		</React.Suspense>
-	)
+	return <Content dataPromise={dataPromise} />
 }
