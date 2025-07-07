@@ -14,28 +14,26 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
-        <qti-default-value>
-            <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
+
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <div>
+        <div id="reference_text">
             <img src="https://cdn.kastatic.org/ka-perseus-graphie/6d78801643a529e913c995e81124b1f3cad8c282.svg"
+                 alt="Triangle ABC has right angle C. Side AC has a length of 7, and side BC has a length of 6."
                  width="356"
-                 height="400"
-                 alt="Triangle ABC has right angle C. Side AC has a length of 7, and side BC has a length of 6."/>
+                 height="400"/>
         </div>
         <p>In the right triangle shown, the length of 
             <math xmlns="http://www.w3.org/1998/Math/MathML">
                 <mrow>
-                    <mover>
+                    <mover accent="true">
                         <mrow>
                             <mi>A</mi>
                             <mi>C</mi>
                         </mrow>
-                        <mo>―</mo>
+                        <mo>&#xaf;</mo>
                     </mover>
                     <mo>=</mo>
                     <mn>7</mn>
@@ -43,12 +41,12 @@
             </math> and the length of 
             <math xmlns="http://www.w3.org/1998/Math/MathML">
                 <mrow>
-                    <mover>
+                    <mover accent="true">
                         <mrow>
                             <mi>B</mi>
                             <mi>C</mi>
                         </mrow>
-                        <mo>―</mo>
+                        <mo>&#xaf;</mo>
                     </mover>
                     <mo>=</mo>
                     <mn>6</mn>
@@ -56,43 +54,46 @@
             </math>.
         </p>
         
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
             <qti-prompt>What is the length of 
                 <math xmlns="http://www.w3.org/1998/Math/MathML">
-                    <mover>
+                    <mover accent="true">
                         <mrow>
                             <mi>A</mi>
                             <mi>B</mi>
                         </mrow>
-                        <mo>―</mo>
+                        <mo>&#xaf;</mo>
                     </mover>
                 </math> ?
             </qti-prompt>
             <qti-simple-choice identifier="A">
-                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                    <msqrt>
-                        <mn>13</mn>
-                    </msqrt>
-                </math>
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><msqrt><mn>13</mn></msqrt></math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">You may have forgotten to square the lengths of the legs.</qti-feedback-inline>
             </qti-simple-choice>
             <qti-simple-choice identifier="B">
-                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                    <msqrt>
-                        <mn>85</mn>
-                    </msqrt>
-                </math>
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><msqrt><mn>85</mn></msqrt></math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">Correct! Using the Pythagorean theorem: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>AB</mi><mn>2</mn></msup><mo>=</mo><msup><mi>AC</mi><mn>2</mn></msup><mo>+</mo><msup><mi>BC</mi><mn>2</mn></msup><mo>=</mo><msup><mn>7</mn><mn>2</mn></msup><mo>+</mo><msup><mn>6</mn><mn>2</mn></msup><mo>=</mo><mn>49</mn><mo>+</mo><mn>36</mn><mo>=</mo><mn>85</mn></math>, so <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>AB</mi><mo>=</mo><msqrt><mn>85</mn></msqrt></math>.</qti-feedback-inline>
             </qti-simple-choice>
             <qti-simple-choice identifier="C">
-                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                    <mn>13</mn>
-                </math>
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn></math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">You might have added the legs directly without squaring them. The Pythagorean theorem requires squaring first: a² + b² = c².</qti-feedback-inline>
             </qti-simple-choice>
             <qti-simple-choice identifier="D">
-                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                    <mn>85</mn>
-                </math>
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">You forgot to take the square root. This is the value of AB², not AB.</qti-feedback-inline>
             </qti-simple-choice>
         </qti-choice-interaction>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> You properly applied the Pythagorean theorem: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>AB</mi><mn>2</mn></msup><mo>=</mo><msup><mn>7</mn><mn>2</mn></msup><mo>+</mo><msup><mn>6</mn><mn>2</mn></msup><mo>=</mo><mn>49</mn><mo>+</mo><mn>36</mn><mo>=</mo><mn>85</mn></math>, so <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>AB</mi><mo>=</mo><msqrt><mn>85</mn></msqrt></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> For a right triangle with legs of length <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn></math>, use the Pythagorean theorem: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>c</mi><mn>2</mn></msup><mo>=</mo><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup></math>. So <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>AB</mi><mn>2</mn></msup><mo>=</mo><msup><mn>7</mn><mn>2</mn></msup><mo>+</mo><msup><mn>6</mn><mn>2</mn></msup><mo>=</mo><mn>49</mn><mo>+</mo><mn>36</mn><mo>=</mo><mn>85</mn></math>. Don't forget to take the square root: <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>AB</mi><mo>=</mo><msqrt><mn>85</mn></msqrt></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
     </qti-item-body>
 
     <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>

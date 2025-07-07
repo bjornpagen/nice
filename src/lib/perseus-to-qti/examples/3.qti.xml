@@ -2,7 +2,7 @@
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="perseus-trade-era3-question"
     title="Trade in Era 3"
     time-dependent="false"
@@ -14,21 +14,41 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
-        <qti-default-value>
-            <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
+
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <qti-prompt>Which statement describes trade in Era 3 (6,000 BCE to 700 CE)?</qti-prompt>
-        
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1" class="qti-orientation-vertical">
-            <qti-simple-choice identifier="A">Societies in Era 3 participated in regional trade networks.</qti-simple-choice>
-            <qti-simple-choice identifier="B">Societies in Era 3 participated in global trade networks.</qti-simple-choice>
-            <qti-simple-choice identifier="C">Societies in Era 3 participated in local trade only.</qti-simple-choice>
-            <qti-simple-choice identifier="D">Societies in Era 3 did not trade.</qti-simple-choice>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+            <qti-prompt>Which statement describes trade in Era 3 (6,000 BCE to 700 CE)?</qti-prompt>
+            <qti-simple-choice identifier="A">
+                Societies in Era 3 participated in regional trade networks.
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">This is correct. Neighboring societies exchanged with one another regionally. Two of the largest trade networks of this era were in Afro-Eurasia and Mesoamerica, but smaller networks existed in almost all areas of the world.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                Societies in Era 3 participated in global trade networks.
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">While you are right that societies did eventually participate in global trade, this phenomenon did not occur until Era 5 in the 1400s.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                Societies in Era 3 participated in local trade only.
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">Trade networks expanded as neighboring societies became more interconnected during Era 3.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                Societies in Era 3 did not trade.
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">Oops! That's not quite right, but smaller trade networks did expand significantly as societies became more interconnected during Era 3.</qti-feedback-inline>
+            </qti-simple-choice>
         </qti-choice-interaction>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> During Era 3 (6,000 BCE to 700 CE), societies participated in regional trade networks. Major networks emerged in Afro-Eurasia and Mesoamerica, connecting neighboring societies but not yet spanning the globe.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Think about the scale of trade during this early era. While trade was expanding beyond purely local exchanges, it had not yet reached a global scale. Regional networks connected neighboring societies, particularly in Afro-Eurasia and Mesoamerica.</p>
+            </qti-content-body>
+        </qti-feedback-block>
     </qti-item-body>
 
     <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>

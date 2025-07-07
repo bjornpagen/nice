@@ -14,23 +14,23 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
-        <qti-default-value>
-            <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
+
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <p>Suppose an economist wants to calculate how responsive the quantity demanded of good 
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                <mi>X</mi>
-            </math> is in response to a change in the price of good 
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                <mi>Y</mi>
-            </math>.
-        </p>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1" class="qti-orientation-vertical">
-            <qti-prompt>Which of the formulas below would be a correct formula to use if we wanted to calculate the cross-price elasticity of demand for good X and good Y?</qti-prompt>
+        <div id="reference_text">
+            <p>Suppose an economist wants to calculate how responsive the quantity demanded of good 
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>X</mi>
+                </math> is in response to a change in the price of good 
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>Y</mi>
+                </math>.
+            </p>
+        </div>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+            <qti-prompt>Which of the formulas below would be a correct formula to use if we wanted to calculate the cross-price elasticity of demand for good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> and good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math>?</qti-prompt>
             <qti-simple-choice identifier="A">
                 <math xmlns="http://www.w3.org/1998/Math/MathML">
                     <mfrac>
@@ -52,6 +52,7 @@
                         </mrow>
                     </mfrac>
                 </math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">This is the formula that would be use to calculate the elasticity of demand for good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> in response to its own price.</qti-feedback-inline>
             </qti-simple-choice>
             <qti-simple-choice identifier="B">
                 <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -80,6 +81,7 @@
                         </mrow>
                     </mfrac>
                 </math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">This says how responsive one quantity is to a change in another quantity, but we want to know how responsive one quantity is to a change in another good's price.</qti-feedback-inline>
             </qti-simple-choice>
             <qti-simple-choice identifier="C">
                 <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -102,6 +104,7 @@
                         </mrow>
                     </mfrac>
                 </math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">This is the formula that would be use to calculate the elasticity of demand for good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math> in response to its own price.</qti-feedback-inline>
             </qti-simple-choice>
             <qti-simple-choice identifier="D">
                 <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -124,6 +127,7 @@
                         </mrow>
                     </mfrac>
                 </math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">This shows how the quantity of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> will respond to a change in the price of good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math>.</qti-feedback-inline>
             </qti-simple-choice>
             <qti-simple-choice identifier="E">
                 <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -146,8 +150,20 @@
                         </mrow>
                     </mfrac>
                 </math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="E">This shows how the quantity of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math> will respond to a change in the price of good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math>, but we want to know how <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> responds to changes in the price of good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math>.</qti-feedback-inline>
             </qti-simple-choice>
         </qti-choice-interaction>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> Cross-price elasticity of demand measures how the quantity demanded of one good (<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math>) responds to changes in the price of another good (<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math>). The formula shows the percentage change in quantity of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> divided by the percentage change in price of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Remember that cross-price elasticity measures how one good's quantity responds to another good's price change. Look for the formula that has the quantity of good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> in the numerator and the price of good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math> in the denominator.</p>
+            </qti-content-body>
+        </qti-feedback-block>
     </qti-item-body>
 
     <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>

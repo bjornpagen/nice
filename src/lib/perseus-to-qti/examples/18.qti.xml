@@ -14,64 +14,88 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
-        <qti-default-value>
-            <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <p>The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Year</th>
-                    <th style="text-align:center;">GDP (% change)</th>
-                    <th style="text-align:center;">Unemployment (% of the labor force)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>2014</td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>%</mo></math></td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn><mo>%</mo></math></td>
-                </tr>
-                <tr>
-                    <td>2015</td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math></td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn><mo>%</mo></math></td>
-                </tr>
-                <tr>
-                    <td>2016</td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math></td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>%</mo></math></td>
-                </tr>
-                <tr>
-                    <td>2017</td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>%</mo></math></td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math></td>
-                </tr>
-                <tr>
-                    <td>2018</td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>%</mo></math></td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn><mo>%</mo></math></td>
-                </tr>
-                <tr>
-                    <td>2019</td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>%</mo></math></td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math></td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+        <p><em>The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</em></p>
+        <div id="reference_text">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>GDP (% change)</th>
+                        <th>Unemployment (% of the labor force)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2014</td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>%</mo></math></td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn><mo>%</mo></math></td>
+                    </tr>
+                    <tr>
+                        <td>2015</td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math></td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn><mo>%</mo></math></td>
+                    </tr>
+                    <tr>
+                        <td>2016</td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math></td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>%</mo></math></td>
+                    </tr>
+                    <tr>
+                        <td>2017</td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>%</mo></math></td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math></td>
+                    </tr>
+                    <tr>
+                        <td>2018</td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>%</mo></math></td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn><mo>%</mo></math></td>
+                    </tr>
+                    <tr>
+                        <td>2019</td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>%</mo></math></td>
+                        <td><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
             <qti-prompt>In which of the years was Libertyville most likely experiencing a trough in its business cycle?</qti-prompt>
-            <qti-simple-choice identifier="A">2014</qti-simple-choice>
-            <qti-simple-choice identifier="B">2015</qti-simple-choice>
-            <qti-simple-choice identifier="C">2016</qti-simple-choice>
-            <qti-simple-choice identifier="D">2017</qti-simple-choice>
-            <qti-simple-choice identifier="E">2018</qti-simple-choice>
+            <qti-simple-choice identifier="A">
+                2014
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">GDP fell for the two years following 2014, indicating that Libertyville entered the recession phase of its business cycle in 2014. A trough is the turning point at which a recession ends and an expansion begins.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                2015
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">GDP fell in 2015, indicating that Libertyville was in the recession phase of its business cycle in 2015. However the economy still had further to fall before it started to turn around. A trough is the turning point at which a recession ends and an expansion begins.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                2016
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">GDP fell in 2016 but increased in 2017, indicating that 2016 was the turning point at which Libertyville's two year recession ended and the economy entered the recovery/expansion phase of its business cycle.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                2017
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">GDP increased in 2017, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="E">
+                2018
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="E">GDP increased in 2018, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins.</qti-feedback-inline>
+            </qti-simple-choice>
         </qti-choice-interaction>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> 2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> A trough occurs at the bottom of a recession, when GDP stops falling and starts growing again. Notice that GDP fell in 2015 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>) and 2016 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>), then rose in 2017 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>+</mo><mn>2</mn><mo>%</mo></math>). This makes 2016 the trough year.</p>
+            </qti-content-body>
+        </qti-feedback-block>
     </qti-item-body>
 
     <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>

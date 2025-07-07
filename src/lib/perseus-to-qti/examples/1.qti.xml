@@ -13,37 +13,44 @@
             <qti-value>A</qti-value>
         </qti-correct-response>
     </qti-response-declaration>
-
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
-        <qti-default-value>
-            <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
+    
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <qti-prompt>Which is closer to the volume of a bowl of soup?</qti-prompt>
-        
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1" class="qti-orientation-vertical">
-            <qti-simple-choice identifier="A">
-                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                    <mn>3</mn>
-                    <mtext> cups</mtext>
-                </math>
-            </qti-simple-choice>
-            <qti-simple-choice identifier="B">
-                <math xmlns="http://www.w3.org/1998/Math/MathML">
-                    <mn>3</mn>
-                    <mtext> quarts</mtext>
-                </math>
-            </qti-simple-choice>
-        </qti-choice-interaction>
-        
-        <div>
+        <div id="reference_text">
             <img src="https://cdn.kastatic.org/ka-perseus-images/6e97b6fb3b6e4db8bd10c2bad63a40d7ba4b8d05.svg"
                  alt="A bowl of soup."
                  width="155"
                  height="174"/>
         </div>
+        
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+            <qti-prompt>Which is closer to the volume of a bowl of soup?</qti-prompt>
+            <qti-simple-choice identifier="A">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mn>3</mn>
+                </math> cups
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">A bowl of soup holds about <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cups. A quart is much larger, about the size of a large shampoo bottle, which is too much for a single bowl of soup.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mn>3</mn>
+                </math> quarts
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">A quart is about the size of a large shampoo bottle. Three quarts would be a very large amount of soup, much more than a single bowl holds.</qti-feedback-inline>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> A typical bowl of soup holds about <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cups. Three quarts would be the volume of a large pot, not a single serving.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Think about the size of common liquid containers. A cup is like a juice box, while a quart is like a large shampoo bottle. A bowl of soup is much closer in volume to <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> juice boxes than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> large shampoo bottles.</p>
+            </qti-content-body>
+        </qti-feedback-block>
     </qti-item-body>
 
     <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>

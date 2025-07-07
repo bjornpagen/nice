@@ -20,14 +20,13 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
-        <qti-default-value>
-            <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
+
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <p>Andrei has a glass tank. First, he wants to put in some marbles, each of which has a volume of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0.04</mn></math> liters. Then, he wants to fill the tank with water until it's completely full. If he uses <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>50</mn></math> marbles, he will have to add <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>33</mn></math> liters of water.</p>
+        <div id="reference_text">
+            <p>Andrei has a glass tank. First, he wants to put in some marbles, each of which has a volume of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0.04</mn></math> liters. Then, he wants to fill the tank with water until it's completely full. If he uses <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>50</mn></math> marbles, he will have to add <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>33</mn></math> liters of water.</p>
+        </div>
         
         <qti-prompt>What is the volume of the tank?</qti-prompt>
         <p>
@@ -38,6 +37,32 @@
         <p>
             <qti-text-entry-interaction response-identifier="RESPONSE_2" expected-length="4"/> marbles
         </p>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Excellent!</strong> You correctly solved this two-part problem.</p>
+                <p>For part 1: Tank volume = Volume of marbles + Volume of water = (<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>50</mn><mo>×</mo><mn>0.04</mn></math>) + <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>33</mn></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> + <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>33</mn></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>35</mn></math> liters</p>
+                <p>For part 2: Volume for marbles = Tank volume - Water volume = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>35</mn><mo>-</mo><mn>20</mn><mo>=</mo><mn>15</mn></math> liters. Number of marbles = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>15</mn><mo>÷</mo><mn>0.04</mn><mo>=</mo><mn>375</mn></math> marbles</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Let's work through this step by step.</p>
+                <p><strong>Part 1: Finding the tank volume</strong></p>
+                <p>When the tank contains marbles and water:</p>
+                <ul>
+                    <li>Volume of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>50</mn></math> marbles = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>50</mn><mo>×</mo><mn>0.04</mn><mo>=</mo><mn>2</mn></math> liters</li>
+                    <li>Volume of water = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>33</mn></math> liters</li>
+                    <li>Tank volume = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>+</mo><mn>33</mn><mo>=</mo><mn>35</mn></math> liters</li>
+                </ul>
+                <p><strong>Part 2: Finding number of marbles with <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>20</mn></math> liters of water</strong></p>
+                <p>We need: Volume of marbles + <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>20</mn></math> liters = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>35</mn></math> liters</p>
+                <ul>
+                    <li>Volume needed for marbles = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>35</mn><mo>-</mo><mn>20</mn><mo>=</mo><mn>15</mn></math> liters</li>
+                    <li>Number of marbles = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>15</mn><mo>÷</mo><mn>0.04</mn><mo>=</mo><mn>375</mn></math> marbles</li>
+                </ul>
+            </qti-content-body>
+        </qti-feedback-block>
     </qti-item-body>
 
     <qti-response-processing>
@@ -51,12 +76,9 @@
                     <qti-match>
                         <qti-variable identifier="RESPONSE_2"/>
                         <qti-correct identifier="RESPONSE_2"/>
-                    </qti-match>
+                                        </qti-match>
                 </qti-and>
             </qti-response-if>
-            <qti-set-outcome-value identifier="SCORE">
-                <qti-base-value base-type="float">1.0</qti-base-value>
-            </qti-set-outcome-value>
         </qti-response-condition>
     </qti-response-processing>
 

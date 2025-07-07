@@ -14,31 +14,43 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
-        <qti-default-value>
-            <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <qti-prompt>Which of the programs has the following output?</qti-prompt>
-        <div>
-            <pre><code>Python is fun!</code></pre>
+        <div id="reference_text">
+            <pre>Python is fun!</pre>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+            <qti-prompt>Which of the programs has the following output?</qti-prompt>
             <qti-simple-choice identifier="A">
-                <pre><code>print("Python is fun!")</code></pre>
+                <pre>print("Python is fun!")</pre>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">print statements require parentheses surrounding whatever they print. Strings require quotation marks to indicate they are strings. Since this program has both of these correctly formatted, it prints, Python is fun!</qti-feedback-inline>
             </qti-simple-choice>
             <qti-simple-choice identifier="B">
-                <pre><code>print(Python is fun!)</code></pre>
+                <pre>print(Python is fun!)</pre>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">Strings require quotation marks to indicate they are strings. Since there are no quotation marks surrounding Python is fun!, running this program results in an error.</qti-feedback-inline>
             </qti-simple-choice>
             <qti-simple-choice identifier="C">
-                <pre><code>print "Python is fun!"</code></pre>
+                <pre>print "Python is fun!"</pre>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">print statements require parentheses surrounding whatever they print. Since there are no parentheses surrounding "Python is fun!", running this code results in an error.</qti-feedback-inline>
             </qti-simple-choice>
             <qti-simple-choice identifier="D">
-                <pre><code>print("Python is + fun!")</code></pre>
+                <pre>print("Python is + fun!")</pre>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">Since the + is within the quotes, the print statement prints it as part of the string. So the program prints, Python is + fun!</qti-feedback-inline>
             </qti-simple-choice>
         </qti-choice-interaction>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> You identified the program with proper Python syntax: parentheses for the print function and quotation marks for the string.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> In Python, the print function requires: (1) parentheses around the content to print, and (2) quotation marks around strings. Only print("Python is fun!") has both correctly.</p>
+            </qti-content-body>
+        </qti-feedback-block>
     </qti-item-body>
 
     <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>

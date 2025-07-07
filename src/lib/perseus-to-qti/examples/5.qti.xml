@@ -14,26 +14,47 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
-        <qti-default-value>
-            <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
+
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <p>This is an excerpt from the Court’s opinion in <em>Bostock v. Clayton County</em> (2020).</p>
-        <div>
+        <p>This is an excerpt from the Court's opinion in <em>Bostock v. Clayton County</em> (2020).</p>
+        <div id="reference_text">
             <blockquote>
-                <p>Ours is a society of written laws. Judges are not free to overlook plain <abbr title="relating to, created by, or regulated by a statue or law">statutory</abbr> commands on the strength of nothing more than suppositions about intentions or guesswork about expectations. In Title VII, Congress adopted broad language making it illegal for an employer to rely on an employee’s sex when deciding to fire that employee.  We do not hesitate to recognize today a necessary consequence of that legislative choice: An employer who fires an individual merely for being gay or transgender defies the law.</p>
+                <p>Ours is a society of written laws. Judges are not free to overlook plain <abbr title="relating to, created by, or regulated by a statue or law">statutory</abbr> commands on the strength of nothing more than suppositions about intentions or guesswork about expectations. In Title VII, Congress adopted broad language making it illegal for an employer to rely on an employee's sex when deciding to fire that employee.  We do not hesitate to recognize today a necessary consequence of that legislative choice: An employer who fires an individual merely for being gay or transgender defies the law.</p>
             </blockquote>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
             <qti-prompt>What method of constitutional interpretation did Justice Gorsuch use in this opinion?</qti-prompt>
-            <qti-simple-choice identifier="A">History</qti-simple-choice>
-            <qti-simple-choice identifier="B">Precedent</qti-simple-choice>
-            <qti-simple-choice identifier="C">Structure</qti-simple-choice>
-            <qti-simple-choice identifier="D">Prudence</qti-simple-choice>
+            <qti-simple-choice identifier="A">
+                History
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">This type of constitutional interpretation would have had Justice Gorsuch looking at the historical context of the law. Instead, he points out how time has changed the interpretation of this law.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                Precedent
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">When a judge uses precedent as a constitutional interpretation method, they take rulings in old cases and apply them to new cases. Justice Gorsuch does not refer to previous decisions in this excerpt of the majority opinion.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                Structure
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">Justice Gorsuch does not mention the structure of the Constitution or any of its provisions to reach this decision.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                Prudence
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">Justice Gorsuch takes into account the real-world consequences of this decision. The Court is broadening the protections included in the Civil Rights Act of 1964.</qti-feedback-inline>
+            </qti-simple-choice>
         </qti-choice-interaction>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> Justice Gorsuch used prudential interpretation, considering the practical consequences of the Court's decision. By extending Title VII protections to LGBTQ+ employees, the Court acknowledged how societal understanding has evolved while applying the law's plain language to modern circumstances.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Look at how Justice Gorsuch focuses on the "necessary consequence" of applying Title VII's language. He's not examining history, precedent, or constitutional structure, but rather considering the practical impact of interpreting the law's "broad language" in today's context.</p>
+            </qti-content-body>
+        </qti-feedback-block>
     </qti-item-body>
 
     <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>

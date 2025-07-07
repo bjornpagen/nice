@@ -14,46 +14,63 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
-        <qti-default-value>
-            <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
+
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
         <p>The following table shows each of Haruka's final exam scores last semester.</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Final exam</th>
-                    <th style="text-align:center;">Score on a <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math>-point scale</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Astronomy</td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math></td>
-                </tr>
-                <tr>
-                    <td>Biology</td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math></td>
-                </tr>
-                <tr>
-                    <td>Physics</td>
-                    <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math></td>
-                </tr>
-                <tr>
-                    <td>Chemistry</td>
-                    <td style="text-align:center;">?</td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="reference_text">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Final exam</th>
+                        <th style="text-align:center;">Score on a <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math>-point scale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Astronomy</td>
+                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td>Biology</td>
+                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td>Physics</td>
+                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td>Chemistry</td>
+                        <td style="text-align:center;">?</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         
-        <p>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka's final exam score in chemistry.</p>
+        <qti-prompt>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka's final exam score in chemistry.</qti-prompt>
         
         <p>
             <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/> points
         </p>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> Haruka scored <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>87</mn></math> points on her chemistry exam.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> To find the missing score, use the formula for mean:</p>
+                <p>Mean = (Sum of all scores) ÷ (Number of scores)</p>
+                <ol>
+                    <li>Calculate the total points: Mean × Number of exams = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn><mo>×</mo><mn>4</mn><mo>=</mo><mn>336</mn></math> points</li>
+                    <li>Add up the known scores: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn><mo>+</mo><mn>85</mn><mo>+</mo><mn>92</mn><mo>=</mo><mn>249</mn></math> points</li>
+                    <li>Find the missing score: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>336</mn><mo>-</mo><mn>249</mn><mo>=</mo><mn>87</mn></math> points</li>
+                </ol>
+                <p>Therefore, Haruka scored <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>87</mn></math> points on her chemistry exam.</p>
+            </qti-content-body>
+        </qti-feedback-block>
     </qti-item-body>
 
     <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>

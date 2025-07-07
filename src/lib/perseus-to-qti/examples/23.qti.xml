@@ -14,28 +14,21 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-    <qti-outcome-declaration base-type="float" cardinality="single" identifier="SCORE" normal-minimum="0.0" normal-maximum="1.0">
-        <qti-default-value>
-            <qti-value>0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <p>Brian irons 
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                <mfrac>
-                    <mn>2</mn>
-                    <mn>9</mn>
-                </mfrac>
-            </math> of his shirt in 
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <p>Brian irons <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mfrac>
+                <mn>2</mn>
+                <mn>9</mn>
+            </mfrac>
+        </math> of his shirt in <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mn>3</mn>
+            <mfrac>
                 <mn>3</mn>
-                <mfrac>
-                    <mn>3</mn>
-                    <mn>5</mn>
-                </mfrac>
-            </math> minutes. Brian irons at a constant rate.
-        </p>
+                <mn>5</mn>
+            </mfrac>
+        </math> minutes. Brian irons at a constant rate.</p>
         
         <qti-prompt>At this rate, how much of his shirt does he iron each minute?</qti-prompt>
         
@@ -52,6 +45,25 @@
         <p>
             <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="5"/> of his shirt
         </p>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> Brian irons <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>5</mn><mn>81</mn></mfrac></math> of his shirt each minute.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> To find the rate per minute:</p>
+                <ol>
+                    <li>Divide shirts by minutes: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>9</mn></mfrac><mo>÷</mo><mrow><mn>3</mn><mfrac><mn>3</mn><mn>5</mn></mfrac></mrow></math></li>
+                    <li>Convert the mixed number: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mfrac><mn>3</mn><mn>5</mn></mfrac><mo>=</mo><mfrac><mn>18</mn><mn>5</mn></mfrac></math></li>
+                    <li>Divide fractions: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>9</mn></mfrac><mo>÷</mo><mfrac><mn>18</mn><mn>5</mn></mfrac><mo>=</mo><mfrac><mn>2</mn><mn>9</mn></mfrac><mo>×</mo><mfrac><mn>5</mn><mn>18</mn></mfrac></math></li>
+                    <li>Multiply: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mn>2</mn><mo>×</mo><mn>5</mn></mrow><mrow><mn>9</mn><mo>×</mo><mn>18</mn></mrow></mfrac><mo>=</mo><mfrac><mn>10</mn><mn>162</mn></mfrac></math></li>
+                    <li>Simplify: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>10</mn><mn>162</mn></mfrac><mo>=</mo><mfrac><mn>5</mn><mn>81</mn></mfrac></math></li>
+                </ol>
+                <p>The answer is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>5</mn><mn>81</mn></mfrac></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
     </qti-item-body>
 
     <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
