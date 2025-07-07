@@ -20,9 +20,9 @@ export function CourseCard({ course, units, color = "bg-gray-200" }: CourseCardP
 	return (
 		<Card className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">
 			<CardHeader className="pb-4">
-				<CardTitle className="flex items-center justify-between mb-0">
-					<h2 className="text-lg font-bold text-gray-800">{course.title}</h2>
-					<Link href={course.path} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+				<CardTitle className="flex items-start justify-between mb-0 gap-3">
+					<h2 className="text-lg font-bold text-gray-800 flex-1 min-w-0">{course.title}</h2>
+					<Link href={course.path} className="text-blue-600 hover:text-blue-700 text-sm font-medium flex-shrink-0">
 						See all ({units.length})
 					</Link>
 				</CardTitle>
@@ -46,11 +46,11 @@ export function CourseCard({ course, units, color = "bg-gray-200" }: CourseCardP
 
 					<div className="space-y-4">
 						{units.slice(0, 5).map((unit: Unit) => (
-							<div key={unit.id} className="flex items-start space-x-3 relative">
+							<div key={unit.id} className="flex items-center space-x-3 relative">
 								{/* circular icon background */}
 								<div
 									className={cn(
-										"w-10 h-10 rounded-full flex items-center justify-center relative z-10 flex-shrink-0 mt-0.5",
+										"w-10 h-10 rounded-full flex items-center justify-center relative z-10 flex-shrink-0",
 										color
 									)}
 								>
