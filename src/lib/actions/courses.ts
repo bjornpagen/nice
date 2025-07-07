@@ -7,6 +7,25 @@ import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 
+// Database queries for fetching subjects and courses
+const getAllSubjects = db
+	.select({
+		slug: schema.niceSubjects.slug,
+		title: schema.niceSubjects.title
+	})
+	.from(schema.niceSubjects)
+	.prepare("src_lib_actions_courses_get_all_subjects")
+
+const getAllCourses = db
+	.select({
+		id: schema.niceCourses.id,
+		slug: schema.niceCourses.slug,
+		title: schema.niceCourses.title,
+		path: schema.niceCourses.path
+	})
+	.from(schema.niceCourses)
+	.prepare("src_lib_actions_courses_get_all_courses")
+
 export async function saveUserCourses(courseIds: string[]) {
 	const authResult = await errors.try(auth())
 	if (authResult.error) {
@@ -66,4 +85,63 @@ export async function saveUserCourses(courseIds: string[]) {
 	logger.info("successfully updated user courses", { userId, courseIds, count: courseIds.length })
 
 	return transactionResult.data
+}
+
+export async function getCoursesGroupedBySubject() {
+	const allSubjectsResult = await errors.try(getAllSubjects.execute())
+	if (allSubjectsResult.error) {
+		logger.error("failed to fetch subjects", { error: allSubjectsResult.error })
+		throw errors.wrap(allSubjectsResult.error, "subjects fetch")
+	}
+
+	const allCoursesResult = await errors.try(getAllCourses.execute())
+	if (allCoursesResult.error) {
+		logger.error("failed to fetch courses", { error: allCoursesResult.error })
+		throw errors.wrap(allCoursesResult.error, "courses fetch")
+	}
+
+	const allSubjects = allSubjectsResult.data
+	const allCourses = allCoursesResult.data
+
+	// Group courses by subject based on path pattern
+	type Course = (typeof allCourses)[number]
+	const coursesBySubject = new Map<string, Course[]>()
+	const otherCourses: Course[] = []
+
+	// Initialize map with all subjects
+	for (const subject of allSubjects) {
+		coursesBySubject.set(subject.slug, [])
+	}
+
+	// Group courses
+	for (const course of allCourses) {
+		// Extract subject from course path (e.g., /math/arithmetic -> math)
+		const pathParts = course.path.split("/")
+		const subjectSlug = pathParts[1] // First part after leading /
+
+		if (subjectSlug && coursesBySubject.has(subjectSlug)) {
+			coursesBySubject.get(subjectSlug)?.push(course)
+		} else {
+			otherCourses.push(course)
+		}
+	}
+
+	// If there are courses without matching subjects, add "Other" category
+	if (otherCourses.length > 0) {
+		coursesBySubject.set("other", otherCourses)
+	}
+
+	// Convert to array format for easier consumption
+	const subjectsWithCourses = Array.from(coursesBySubject.entries())
+		.map(([slug, coursesForSubject]) => {
+			const subject = allSubjects.find((s) => s.slug === slug)
+			return {
+				slug,
+				title: subject?.title || "Other",
+				courses: coursesForSubject.sort((a, b) => a.title.localeCompare(b.title))
+			}
+		})
+		.filter((s) => s.courses.length > 0) // Only include subjects with courses
+
+	return subjectsWithCourses
 }

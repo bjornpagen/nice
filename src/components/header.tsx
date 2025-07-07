@@ -1,7 +1,8 @@
-import { ChevronDown, Menu, Search, Smile } from "lucide-react"
+import { Menu, Search, Smile } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { ExploreDropdown } from "./explore-dropdown"
 import { UserDropdown } from "./user-dropdown"
 
 interface HeaderProps {
@@ -26,13 +27,7 @@ export function Header({ dark = false, nickname }: HeaderProps) {
 					</Button>
 
 					{/* Explore button (hidden on mobile) */}
-					<Button
-						variant="ghost"
-						className={`hidden lg:flex items-center space-x-1 p-2 ${dark ? "text-white" : "text-blue-600"}`}
-					>
-						<span className="text-sm font-medium">Explore</span>
-						<ChevronDown className="h-4 w-4" />
-					</Button>
+					<ExploreDropdown dark={dark} />
 
 					{/* Search - strictly constrained width */}
 					<div className="relative w-24 sm:w-32 md:w-40">
