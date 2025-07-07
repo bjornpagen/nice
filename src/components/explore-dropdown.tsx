@@ -56,34 +56,45 @@ export function ExploreDropdown({ dark = false }: ExploreDropdownProps) {
 					<ChevronDown className="h-4 w-4" />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-[800px] p-0 max-h-[500px] overflow-y-auto">
-				<div className="p-6 bg-white">
-					<div className="grid grid-cols-3 gap-8">
-						{subjectsWithCourses?.map((subject) => (
-							<div key={subject.slug} className="mb-6">
-								<div className="mb-4">
-									<h3 className="text-base font-semibold text-gray-900 hover:text-blue-600 cursor-pointer">
-										{subject.title}
-									</h3>
+			<DropdownMenuContent
+				className="w-screen h-[calc(100vh-5rem)] p-0 overflow-y-auto border-none rounded-none shadow-lg"
+				align="start"
+				sideOffset={0}
+				alignOffset={-200}
+				style={{
+					minWidth: "100vw",
+					zIndex: 50
+				}}
+			>
+				<div className="p-12 bg-white min-h-full">
+					<div className="max-w-7xl mx-auto">
+						<div className="grid grid-cols-4 gap-12">
+							{subjectsWithCourses?.map((subject) => (
+								<div key={subject.slug} className="mb-8">
+									<div className="mb-6">
+										<h3 className="text-lg font-semibold text-gray-900 hover:text-blue-600 cursor-pointer">
+											{subject.title}
+										</h3>
+									</div>
+									<div className="space-y-3">
+										{subject.courses.slice(0, 12).map((course) => (
+											<Link
+												key={course.id}
+												href={course.path}
+												className="block text-sm text-gray-600 hover:text-blue-600"
+											>
+												{course.title}
+											</Link>
+										))}
+										{subject.courses.length > 12 && (
+											<div className="pt-2">
+												<span className="text-xs text-gray-500">+{subject.courses.length - 12} more courses</span>
+											</div>
+										)}
+									</div>
 								</div>
-								<div className="space-y-2">
-									{subject.courses.slice(0, 8).map((course) => (
-										<Link
-											key={course.id}
-											href={course.path}
-											className="block text-sm text-gray-600 hover:text-blue-600"
-										>
-											{course.title}
-										</Link>
-									))}
-									{subject.courses.length > 8 && (
-										<div className="pt-1">
-											<span className="text-xs text-gray-500">+{subject.courses.length - 8} more courses</span>
-										</div>
-									)}
-								</div>
-							</div>
-						))}
+							))}
+						</div>
 					</div>
 				</div>
 			</DropdownMenuContent>
