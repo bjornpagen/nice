@@ -1,41 +1,29 @@
-import { auth } from "@clerk/nextjs/server"
+import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
-import { eq, sql } from "drizzle-orm"
+import { z } from "zod"
 import { Banner } from "@/components/banner"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
-import { db } from "@/db"
-import * as schema from "@/db/schemas"
 import { ProfileBanner } from "./profile-banner"
 import { Sidebar } from "./sidebar"
 
-// Prepared statement to get user's profile data
-const getUserProfileQuery = db
-	.select({
-		nickname: schema.niceUsers.nickname,
-		username: schema.niceUsers.username,
-		bio: schema.niceUsers.bio
-	})
-	.from(schema.niceUsers)
-	.where(eq(schema.niceUsers.clerkId, sql.placeholder("clerkId")))
-	.prepare("src_app_user_profile_layout_get_user_profile")
+// Schema to safely parse Clerk's public metadata
+const UserPublicMetadataSchema = z.object({
+	nickname: z.string().optional().default("User"),
+	username: z.string().optional().default(""),
+	bio: z.string().optional().default("")
+})
 
 export default async function UserLayout({ children }: { children: React.ReactNode }) {
 	// Get the authenticated user
-	const { userId } = await auth()
+	const user = await currentUser()
 
-	if (!userId) {
+	if (!user) {
 		throw errors.new("User not authenticated")
 	}
 
-	// Get the user's profile data from the database
-	const userResult = await getUserProfileQuery.execute({ clerkId: userId })
-	const user = userResult[0]
-
-	// Use the nickname, username, and bio or fallback to defaults if not found
-	const nickname = user?.nickname || "User"
-	const username = user?.username || ""
-	const bio = user?.bio || ""
+	// Safely parse public metadata from Clerk
+	const { nickname, username, bio } = UserPublicMetadataSchema.parse(user.publicMetadata)
 
 	return (
 		<div className="flex flex-col h-screen bg-white font-lato">

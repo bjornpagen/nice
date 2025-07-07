@@ -1,9 +1,8 @@
+import { clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { headers } from "next/headers"
 import { Webhook } from "svix"
-import { db } from "@/db"
-import { niceUsers } from "@/db/schemas"
 import { env } from "@/env.js"
 
 export async function POST(req: Request) {
@@ -128,33 +127,31 @@ export async function POST(req: Request) {
 		// Extract nickname from email (part before @)
 		const nickname = emailAddress.split("@")[0] || ""
 
-		logger.debug("creating user record", {
-			clerkId,
-			email: emailAddress,
-			nickname
-		})
-
-		// Insert user into database with username as null
-		const insertResult = await errors.try(
-			db.insert(niceUsers).values({
-				clerkId,
-				username: null,
-				nickname,
+		const metadata = {
+			publicMetadata: {
+				nickname: nickname,
+				username: "",
 				bio: ""
-			})
-		)
+			}
+		}
 
-		if (insertResult.error) {
-			logger.error("failed to create user record", {
-				error: insertResult.error,
+		logger.debug("setting initial clerk user metadata", { clerkId, nickname })
+
+		// Set initial user metadata in Clerk
+		const clerk = await clerkClient()
+		const setResult = await errors.try(clerk.users.updateUserMetadata(clerkId, metadata))
+
+		if (setResult.error) {
+			logger.error("failed to set initial user metadata in clerk", {
+				error: setResult.error,
 				clerkId
 			})
-			return new Response("Error occurred -- database insert failed", {
+			return new Response("Error occurred -- clerk metadata update failed", {
 				status: 500
 			})
 		}
 
-		logger.info("user created successfully", { clerkId, nickname })
+		logger.info("user metadata initialized successfully", { clerkId, nickname })
 	} else {
 		logger.debug("ignoring webhook event", { eventType })
 	}

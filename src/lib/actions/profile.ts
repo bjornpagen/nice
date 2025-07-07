@@ -1,12 +1,9 @@
 "use server"
 
-import { auth } from "@clerk/nextjs/server"
+import { auth, clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
-import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
-import { db } from "@/db"
-import * as schema from "@/db/schemas"
 
 // Validation schema for profile updates
 const updateProfileSchema = z.object({
@@ -25,15 +22,17 @@ export async function updateUserProfile(data: z.infer<typeof updateProfileSchema
 	// Validate the input data
 	const validatedData = updateProfileSchema.parse(data)
 
-	// Update the user profile in the database
-	await db
-		.update(schema.niceUsers)
-		.set({
+	// Update the user's public metadata in Clerk
+	const metadata = {
+		publicMetadata: {
 			nickname: validatedData.nickname,
 			username: validatedData.username,
 			bio: validatedData.bio
-		})
-		.where(eq(schema.niceUsers.clerkId, userId))
+		}
+	}
+
+	const clerk = await clerkClient()
+	await clerk.users.updateUserMetadata(userId, metadata)
 
 	// Revalidate the profile page to show updated data
 	revalidatePath("/profile")

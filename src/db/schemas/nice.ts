@@ -253,18 +253,6 @@ export { assessmentExercises as niceAssessmentExercises }
 
 // --- User Tables ---
 
-const users = schema.table(
-	"users",
-	{
-		clerkId: text("clerk_id").primaryKey(),
-		username: text("username").unique(),
-		nickname: text("nickname").notNull().default(""),
-		bio: text("bio").notNull().default("")
-	},
-	(table) => [uniqueIndex("users_username_idx").on(table.username), index("users_clerk_id_idx").on(table.clerkId)]
-)
-export { users as niceUsers }
-
 const usersCourses = schema.table(
 	"users_courses",
 	{
@@ -276,11 +264,6 @@ const usersCourses = schema.table(
 		primaryKey({ columns: [table.clerkId, table.courseId] }),
 		index("uc_clerk_id_idx").on(table.clerkId),
 		index("uc_course_id_idx").on(table.courseId),
-		foreignKey({
-			name: "uc_user_fk",
-			columns: [table.clerkId],
-			foreignColumns: [users.clerkId]
-		}).onDelete("cascade"),
 		foreignKey({
 			name: "uc_course_fk",
 			columns: [table.courseId],
@@ -302,15 +285,7 @@ const userContentProgress = schema.table(
 		lastAttemptedAt: timestamp("last_attempted_at", { withTimezone: true }),
 		timeSpentSec: integer("time_spent_sec").notNull().default(0)
 	},
-	(table) => [
-		primaryKey({ columns: [table.clerkId, table.contentId] }),
-		index("ucp_clerk_id_idx").on(table.clerkId),
-		foreignKey({
-			name: "ucp_user_fk",
-			columns: [table.clerkId],
-			foreignColumns: [users.clerkId]
-		}).onDelete("cascade")
-	]
+	(table) => [primaryKey({ columns: [table.clerkId, table.contentId] }), index("ucp_clerk_id_idx").on(table.clerkId)]
 )
 export { userContentProgress as niceUserContentProgress }
 
@@ -327,11 +302,6 @@ const userExerciseAttempts = schema.table(
 	(table) => [
 		index("uea_clerk_id_idx").on(table.clerkId),
 		index("uea_exercise_id_idx").on(table.exerciseId),
-		foreignKey({
-			name: "uea_user_fk",
-			columns: [table.clerkId],
-			foreignColumns: [users.clerkId]
-		}).onDelete("cascade"),
 		foreignKey({
 			name: "uea_exercise_fk",
 			columns: [table.exerciseId],
