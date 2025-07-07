@@ -190,11 +190,7 @@ async function getQuestionsForExercises(exerciseIds: string[]): Promise<Map<stri
 }
 
 // Shared data fetching function - separated for clarity and reusability
-export async function fetchUnitData(params: {
-	subject: string
-	course: string
-	unit: string
-}): Promise<HydratedUnitData> {
+async function fetchUnitData(params: { subject: string; course: string; unit: string }): Promise<HydratedUnitData> {
 	logger.debug("unit page: fetching unit data", { params })
 
 	// First get the course
