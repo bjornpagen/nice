@@ -9,14 +9,16 @@ import * as schema from "@/db/schemas"
 import { ProfileBanner } from "./profile-banner"
 import { Sidebar } from "./sidebar"
 
-// Prepared statement to get user's nickname
-const getUserNicknameQuery = db
+// Prepared statement to get user's profile data
+const getUserProfileQuery = db
 	.select({
-		nickname: schema.niceUsers.nickname
+		nickname: schema.niceUsers.nickname,
+		username: schema.niceUsers.username,
+		bio: schema.niceUsers.bio
 	})
 	.from(schema.niceUsers)
 	.where(eq(schema.niceUsers.clerkId, sql.placeholder("clerkId")))
-	.prepare("src_app_user_profile_layout_get_user_nickname")
+	.prepare("src_app_user_profile_layout_get_user_profile")
 
 export default async function UserLayout({ children }: { children: React.ReactNode }) {
 	// Get the authenticated user
@@ -26,12 +28,14 @@ export default async function UserLayout({ children }: { children: React.ReactNo
 		throw errors.new("User not authenticated")
 	}
 
-	// Get the user's nickname from the database
-	const userResult = await getUserNicknameQuery.execute({ clerkId: userId })
+	// Get the user's profile data from the database
+	const userResult = await getUserProfileQuery.execute({ clerkId: userId })
 	const user = userResult[0]
 
-	// Use the nickname or fallback to a default if not found
+	// Use the nickname, username, and bio or fallback to defaults if not found
 	const nickname = user?.nickname || "User"
+	const username = user?.username || ""
+	const bio = user?.bio || ""
 
 	return (
 		<div className="flex flex-col h-screen bg-white font-lato">
@@ -42,7 +46,7 @@ export default async function UserLayout({ children }: { children: React.ReactNo
 
 			{/* User Profile Banner */}
 			<div className="flex-shrink-0">
-				<ProfileBanner uid={nickname} />
+				<ProfileBanner uid={nickname} username={username} bio={bio} />
 			</div>
 
 			{/* Main Content Area now scrolls internally */}
