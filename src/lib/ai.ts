@@ -58,7 +58,7 @@ async function generateContentWithRetry(request: GenerateContentRequest) {
  */
 export async function createQtiConversionPrompt(perseusJsonString: string) {
 	const systemInstruction =
-		"You are an expert in educational content standards. Your task is to convert a Perseus JSON object into a valid QTI 3.0 XML `assessmentItem`. You MUST return ONLY the raw XML content, without any extra text, explanations, or markdown formatting. You must strictly follow the provided examples to inform your output."
+		"You are an expert in educational content standards. Your task is to convert a Perseus JSON object into a valid QTI 3.0 XML `assessmentItem`. You MUST return ONLY the raw XML content, without any extra text, explanations, or markdown formatting. The output MUST be well-formed, valid XML that can be parsed without errors - ensure all tags are properly closed, attributes are quoted, and special characters are escaped. The examples provided are PERFECT outputs - study them carefully and match their structure, formatting, and patterns exactly."
 
 	const examples = await loadConversionExamples()
 
@@ -78,23 +78,43 @@ ${example.qti}
 		.join("\n")
 
 	const userContent = `
-<task>
-Convert the provided Perseus JSON object into a valid QTI 3.0 XML string. The output must be a single, well-formed XML document for a \`qti-assessment-item\`. Do not include any text outside the XML tags. Use the provided examples to ensure the output is perfectly formatted.
-</task>
-
 <examples>
 ${examplesXml}
 </examples>
 
-<perseus_json_to_convert>
-${perseusJsonString}
-</perseus_json_to_convert>
+<instructions>
+below is a perseus json. please give me the corresponding qti 3.0 xml, using the above examples to inform the exact xml output. respond with only the corresponding qti 3.0 xml.
 
-<output_format_xml>
-<qti-assessment-item>
-  <!-- Your generated QTI XML content goes here -->
-</qti-assessment-item>
-</output_format_xml>
+PAY VERY CLOSE ATTENTION TO THE EXAMPLES ABOVE - they are all examples of PERFECT output. Study their structure, formatting, and patterns carefully. Your output should match their quality and style exactly.
+
+CRITICAL REQUIREMENTS:
+1. Output MUST be valid, well-formed XML:
+   - All tags must be properly closed
+   - All attributes must be quoted
+   - Special characters (<, >, &, ", ') must be properly escaped as XML entities
+   - The XML must parse without any errors
+2. NEVER place MathML or any complex markup within <qti-correct-response> tags
+3. Correct responses must ALWAYS be simple values that users can actually input:
+   - For multiple choice: use simple identifiers like "A", "B", "C", "D"
+   - For numeric input that requires exact answers: use fractions like "5/81", "1/2", "7/4" (NEVER decimals like "0.0617" or "3.14")
+   - For integer answers: use plain integers like "5", "-9", "42"
+   - For text input: use plain text strings
+4. When Perseus JSON shows answerForms as ["proper", "improper"], the response MUST be a fraction, not a decimal
+5. MathML should only appear in:
+   - Question prompts and content
+   - Answer choice labels (within <qti-simple-choice>)
+   - Feedback messages
+   - But NEVER in the actual correct response values
+
+Remember: Users must be able to type or select the correct answer - they cannot input MathML markup!
+ABSOLUTELY CRITICAL: The output MUST be parseable XML. Invalid XML will cause the entire conversion to fail.
+
+FINAL REMINDER: The examples above demonstrate PERFECT QTI 3.0 XML output. Follow their patterns exactly. Match their formatting, structure, and style precisely.
+</instructions>
+
+<perseus_json>
+${perseusJsonString}
+</perseus_json>
 `
 	return { systemInstruction, userContent }
 }

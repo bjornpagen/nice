@@ -1,0 +1,84 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "Assume we have a continuously differentiable three-dimensional vector field $F(x, y, z)$, an oriented piecewise-smooth surface $S$, and a piecewise-smooth, simple, closed boundary curve $C$ oriented positively with respect to $S$. Then Stokes' theorem states that we have the equality below:\n\n$\\displaystyle \\oint_C F \\cdot dr = \\iint_S \\text{curl}(F) \\cdot dS$\n\nIf $C$ is negatively oriented, the line integral is equal to the negative of the double integral.\n\n[[☃ explanation 1]]",
+			"replace": false,
+			"widgets": {
+				"explanation 1": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {
+							"video 1": {
+								"type": "video",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"location": "https://www.khanacademy.org/math/multivariable-calculus/greens-theorem-and-stokes-theorem/stokes-theorem-articles/a/stokes-theorem?modal=1"
+								},
+								"version": { "major": 0, "minor": 0 },
+								"alignment": "block"
+							}
+						},
+						"hidePrompt": "Hide explanation",
+						"showPrompt": "What does any of that mean?",
+						"explanation": "Here's [an article](/a/stokes-theorem) that interprets Stokes' theorem and talks about why it makes sense."
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "When we use Stokes' theorem to translate from surface integrals to line integrals, we know $\\text{curl}(F)$ and we want to find $F$. In general, this inverse curl operation is difficult and sometimes impossible to perform, but in this case we only have one value to find. Specifically:\n\n$F(x, y, z) = (2y) \\hat{\\imath} + (2z^2) \\hat{\\jmath} + ( ??? ) \\hat{k}$\n\nBecause $C$ is negatively oriented, we want $\\text{curl}(F)$ to equal the negative of what's inside the double integral. Therefore, our task is to find what $z$-component gives $F$ the special property:\n\n$\\text{curl}(F) = (-4z) \\hat{\\imath} + (\\cos(z) - x) \\hat{\\jmath} - 2 \\hat{k}$",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "Let's give a name to the $z$-component of $F$, say $P$. The only constraint we have on $P$ is that it must make $F$ have the correct curl.\n\n$\\begin{align}\n\\text{curl}(F) &= \\det \\begin{pmatrix}\n\\hat{\\imath} & \\hat{\\jmath} & \\hat{k} \\\\ \\\\\n\\dfrac{\\partial}{\\partial x} & \\dfrac{\\partial}{\\partial y} & \\dfrac{\\partial}{\\partial z} \\\\ \\\\\n2y & 2z^2 & P\n\\end{pmatrix} \\\\ \\\\\n&= \\left( \\dfrac{\\partial P}{\\partial y} - 4z \\right) \\hat{\\imath} \\\\ \\\\\n&+ \\left( -\\dfrac{\\partial P}{\\partial x} \\right) \\hat{\\jmath} \\\\ \\\\\n&+ \\left( -2 \\right) \\hat{k}\n\\end{align}$\n\nMatching terms, our original constraint now becomes two specific requirements:\n\n$\\begin{align}\n\\dfrac{\\partial P}{\\partial y}  &= 0 \\\\ \\\\\n-\\dfrac{\\partial P}{\\partial x} &= \\cos(z) - x\n\\end{align}$\n\nOne solution is $P = \\dfrac{x^2}{2} - x\\cos(z)$. There are infinitely many functions purely of $z$ that we could add on to this solution, but the problem asks us to leave out extraneous functions of $z$.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "Therefore, we can simplify the surface integral into the line integral below:\n\n$\\displaystyle \\oint_C \\left( (2y) \\hat{\\imath} + (2z^2) \\hat{\\jmath} + \\left(\\dfrac{x^2}{2} - x\\cos(z) \\right) \\hat{k} \\right) \\cdot dr$",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "Assume that $S$ is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve $C$ oriented *negatively* with respect to the orientation of $S$.\n\n$\\displaystyle \\iint_S \\left[ 4z \\hat{\\imath} + (x - \\cos(z)) \\hat{\\jmath} + 2 \\hat{k} \\right] \\cdot dS$\n\n**Use Stokes' theorem to rewrite the surface integral as a line integral.**  \n*Leave out extraneous functions of $z$ and constant coefficients.*\n\n$\\displaystyle \\oint_C ((2y) \\hat{\\imath} + (2z^2) \\hat{\\jmath} + $ [[☃ expression 1]] $ \\hat{k} ) \\cdot dr$",
+		"widgets": {
+			"expression 1": {
+				"type": "expression",
+				"graded": true,
+				"static": false,
+				"options": {
+					"times": false,
+					"functions": ["f", "g", "h"],
+					"buttonSets": ["basic", "trig", "prealgebra"],
+					"answerForms": [
+						{
+							"key": "0",
+							"form": false,
+							"value": "\\frac{x^2}{2}-x\\cos(z)",
+							"simplify": false,
+							"considered": "correct"
+						}
+					]
+				},
+				"version": { "major": 1, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}

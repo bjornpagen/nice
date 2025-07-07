@@ -7,7 +7,7 @@ import { generateQtiFromPerseus } from "@/lib/ai"
 import { QtiApiClient } from "@/lib/qti"
 
 export const migratePerseusToQti = inngest.createFunction(
-	{ id: "migrate-perseus-to-qti", retries: 3 },
+	{ id: "migrate-perseus-to-qti" },
 	{ event: "nice/qti.migration.requested" },
 	async ({ event, step, logger }) => {
 		const { questionId } = event.data
