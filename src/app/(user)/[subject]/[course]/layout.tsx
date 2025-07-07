@@ -28,12 +28,12 @@ export default async function CourseLayout({ children }: { children: React.React
 	}
 
 	return (
-		<div className="min-h-screen bg-white">
-			<div className="sticky top-0 z-50">
+		<div className="flex flex-col h-screen bg-white">
+			<div className="flex-shrink-0 z-50">
 				<Header dark nickname={nickname} />
 				<Banner />
 			</div>
-			{children}
+			<div className="flex-1 overflow-hidden">{children}</div>
 		</div>
 	)
 }

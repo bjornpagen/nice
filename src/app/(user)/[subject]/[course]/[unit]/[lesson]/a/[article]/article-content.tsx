@@ -6,7 +6,7 @@ import type { Article } from "./page"
 
 export function ArticleContent({ article }: { article: Article }) {
 	return (
-		<div className="min-h-screen bg-white pb-20">
+		<div className="bg-white pb-20">
 			{/* Article Header */}
 			<div className="bg-white p-6 border-b border-gray-200">
 				<div className="text-center">

@@ -26,7 +26,7 @@ export function LessonLayout({
 	}, [unitData.children, selectedLessonId, lessonData])
 
 	return (
-		<div className="flex">
+		<div className="flex h-full">
 			{/* Sidebar - renders immediately, no suspense needed */}
 			<LessonSidebar
 				subject={subject}
@@ -39,7 +39,7 @@ export function LessonLayout({
 			/>
 
 			{/* Main content area - this is where streaming happens */}
-			<div className="flex-1 overflow-y-auto bg-gray-50 min-h-screen">{children}</div>
+			<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 
 			{/* Bottom navigation - renders immediately */}
 			<LessonNext lessonChildren={lessonData.children} isCollapsed={isCollapsed} />

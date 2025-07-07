@@ -29,23 +29,17 @@ export function LessonSidebar({
 	}
 
 	return (
-		<div className="relative flex-shrink-0">
+		<div className="relative flex-shrink-0 h-full">
 			{/* Collapsed sidebar - thin strip */}
 			{isCollapsed && (
-				<div
-					className="w-8 hidden lg:flex bg-gray-50 border-r border-gray-200 flex-col sticky top-20 z-40 self-start"
-					style={{ height: "calc(100vh - 80px)" }}
-				>
+				<div className="w-8 hidden lg:flex bg-gray-50 border-r border-gray-200 flex-col h-full">
 					{/* Empty collapsed sidebar */}
 				</div>
 			)}
 
 			{/* Expanded sidebar - full width */}
 			{!isCollapsed && (
-				<div
-					className="w-112 hidden lg:flex bg-gray-50 border-r border-gray-200 flex-col sticky top-20 z-40 self-start"
-					style={{ height: "calc(100vh - 80px)" }}
-				>
+				<div className="w-112 hidden lg:flex bg-gray-50 border-r border-gray-200 flex-col h-full">
 					{/* Fixed header section */}
 					<div className="flex-shrink-0 p-5 pb-0">
 						{/* Course header */}

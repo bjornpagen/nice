@@ -24,9 +24,9 @@ export function Content({ dataPromise }: { dataPromise: Promise<HydratedUnitData
 
 	return (
 		<React.Fragment>
-			<div className="flex">
-				<div className="sticky top-0 h-screen overflow-y-auto">
-					<React.Suspense fallback={<div className="w-80 bg-gray-100 animate-pulse h-screen" />}>
+			<div className="flex h-full">
+				<div className="h-full">
+					<React.Suspense fallback={<div className="w-80 bg-gray-100 animate-pulse h-full" />}>
 						<CourseSidebar course={course} units={allUnits} lessonCount={lessonCount} challenges={challenges} />
 					</React.Suspense>
 				</div>

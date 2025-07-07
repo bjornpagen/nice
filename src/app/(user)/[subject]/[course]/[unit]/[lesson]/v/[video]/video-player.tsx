@@ -15,9 +15,9 @@ export function VideoPlayer({ video }: { video: Video }) {
 	const youtubeVideoUrl = `https://www.youtube.com/watch?v=${video.youtubeId}`
 
 	return (
-		<div className="min-h-screen bg-white pb-20">
+		<div className="bg-white pb-20">
 			{/* Main Content */}
-			<div className="flex min-h-screen">
+			<div className="flex h-full">
 				{/* Main Content Area */}
 				<div className="flex-1 flex flex-col">
 					{/* Content Header */}

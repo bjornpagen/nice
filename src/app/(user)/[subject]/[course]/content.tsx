@@ -16,10 +16,10 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 	return (
 		<React.Fragment>
 			{/* Main Layout Container */}
-			<div className="flex">
+			<div className="flex h-full">
 				{/* Sidebar */}
-				<div className="sticky top-0 h-screen overflow-y-auto">
-					<React.Suspense fallback={<div className="w-80 bg-gray-100 animate-pulse h-screen" />}>
+				<div className="h-full">
+					<React.Suspense fallback={<div className="w-80 bg-gray-100 animate-pulse h-full" />}>
 						<CourseSidebar course={course} units={units} lessonCount={lessonCount} challenges={challenges} />
 					</React.Suspense>
 				</div>

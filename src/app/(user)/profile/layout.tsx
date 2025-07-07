@@ -34,28 +34,31 @@ export default async function UserLayout({ children }: { children: React.ReactNo
 	const nickname = user?.nickname || "User"
 
 	return (
-		<div className="min-h-screen bg-white font-lato">
-			<div className="sticky top-0 z-50">
+		<div className="flex flex-col h-screen bg-white font-lato">
+			<div className="flex-shrink-0 z-50">
 				<Header nickname={nickname} />
 				<Banner />
 			</div>
 
 			{/* User Profile Banner */}
-			<ProfileBanner uid={nickname} />
-
-			{/* Main Content */}
-			<div className="mx-auto max-w-7xl px-4 py-6">
-				<div className="grid grid-cols-12 gap-6">
-					<div className="col-span-3">
-						<Sidebar />
-					</div>
-
-					{/* Main Content Area */}
-					<div className="col-span-9">{children}</div>
-				</div>
+			<div className="flex-shrink-0">
+				<ProfileBanner uid={nickname} />
 			</div>
 
-			<Footer />
+			{/* Main Content Area now scrolls internally */}
+			<div className="flex-1 overflow-y-auto">
+				<div className="mx-auto max-w-7xl px-4 py-6">
+					<div className="grid grid-cols-12 gap-6">
+						<div className="col-span-3">
+							<Sidebar />
+						</div>
+
+						{/* Main Content Area */}
+						<div className="col-span-9">{children}</div>
+					</div>
+				</div>
+				<Footer />
+			</div>
 		</div>
 	)
 }

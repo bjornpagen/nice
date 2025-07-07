@@ -27,7 +27,7 @@ function QuestionStepper({ questions }: { questions: ExerciseQuestion[] }) {
 	}
 
 	return (
-		<div className="flex flex-col h-screen bg-white pt-6">
+		<div className="flex flex-col h-full bg-white pt-6">
 			<div className="flex-1 overflow-hidden">
 				<QTIRenderer
 					identifier={currentQuestion.qtiIdentifier}
@@ -65,7 +65,7 @@ export function ExerciseContent({ exerciseDataPromise }: { exerciseDataPromise: 
 	}
 
 	return (
-		<div className="flex flex-col h-screen">
+		<div className="flex flex-col h-full">
 			{/* Exercise Header */}
 			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0">
 				<h1 className="text-2xl font-bold text-gray-900">{exercise.title}</h1>
