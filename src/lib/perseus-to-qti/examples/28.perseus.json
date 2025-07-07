@@ -1,0 +1,73 @@
+{
+	"hints": [
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/7d63663f52d73f96d377bd6ae86dcd35076b0e35": {
+					"width": 225,
+					"height": 225
+				},
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/d281adcd16d06c20b66d62318b5843dddbf430c9": {
+					"width": 225,
+					"height": 225
+				}
+			},
+			"content": "For any function $f$, there are two common interpretations for $f'(c)$, each with a corresponding interpretation for the estimate of $f'(c)$.\n\n| $f'(c)$ is... | An estimate of $f'(c)$ is...\n:- | :- | :-\n**Numeric interpretation** | ...the *instantaneous* rate of change of $f$ at $x=c$ | ...the *average* rate of change of $f$ over an interval whose endpoints are close to $x=c$\n**Graphical interpretation** | ...the slope of the line *tangent* to the graph of $f$ at $x=c$ ![Function f is graphed. The positive x-axis includes value c. The graph is a curve. The curve starts in quadrant 2, moves downward to a point in quadrant 1, moves upward through a point at x = c, and ends in quadrant 1. A tangent line starts in quadrant 4, moves upward, touches the curve at the point at x = c, and ends in quadrant 1.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/7d63663f52d73f96d377bd6ae86dcd35076b0e35) | ...the slope of a line *secant* to the graph of $f$ whose endpoints are close to $x=c$ ![Function f is graphed. The positive x-axis includes value c. The graph is a curve. The curve starts in quadrant 2, moves downward through a point left of x = c, moves upward through a point right of x = c, and ends in quadrant 1. A secant line starts in quadrant 3, moves upward, intersects the curve at the 2 points, and ends in quadrant 1. The secant line appears to have a similar slope to the tangent in the previous image, although they are not exacty the same.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/d281adcd16d06c20b66d62318b5843dddbf430c9)\n\nEither interpretation (numeric or graphical) leads to the same estimate of $f'(c)$.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "The best interval we can use (the interval whose points are given that's closest to $x=-4$) is the interval between $x=-6$ and $x=-3$. Let's find the average rate of change between those points.\n\n$\\begin{align}\nh'(-4)&\\approx\\dfrac{h(-3)-h(-6)}{-3-(-6)}\n\\\\\\\\\n&=\\dfrac{-20-(-36)}{3}\n\\\\\\\\\n&\\approx5.33\n\\end{align}$",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "In conclusion, the best estimate for $h'(-4)$ is $5.33$.",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "This table gives select values of the differentiable function $h$.\n\n$x$ | $-9$ | $-8$ | $-6$ | $-3$ | $-2$ | $-1$\n:- | :-: | :-: | :-: | :-: | :-: | :-:\n$h(x)$ | $-30$ | $-29$ | $-36$ | $-20$ | $-35$ | $-47$\n\n**What is the best estimate for $h'(-4)$ we can make based on this table?**\n\n[[☃ radio 1]]",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"clue": "Were you trying to pick a value between $-36$ and $-20$? This can be an estimate for $h(-4)$, but we are looking for $h'(-4)$.",
+							"content": "$-28$",
+							"correct": false
+						},
+						{
+							"clue": "Were you trying to find $\\dfrac{h(-1)-h(-3)}{-1-(-3)}$? This is the average rate of change, or the slope of a secant line, of $h$ over the interval $[-3,-1]$. We should pick an interval that includes $x=-4$.",
+							"content": "$-13.5$",
+							"correct": false
+						},
+						{
+							"clue": "Were you trying to find $\\dfrac{h(-1)-h(-9)}{-1-(-9)}$? This is the average rate of change, or the slope of a secant line, of $h$ over the entire interval $[-9,-1]$. We can pick a closer interval to estimate $h'$ specifically at $x=-4$.",
+							"content": "$-2.125$",
+							"correct": false,
+							"isNoneOfTheAbove": false
+						},
+						{ "content": "$5.33$", "correct": true, "isNoneOfTheAbove": false }
+					],
+					"randomize": true,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": { "major": 1, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": true, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
