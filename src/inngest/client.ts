@@ -18,7 +18,7 @@ const events = {
 			exerciseId: z.string().min(1)
 		})
 	},
-	"nice/qti.stimulus.migration.requested": {
+	"nice/qti.assessment-stimulus.migration.requested": {
 		data: z.object({
 			articleId: z.string().min(1)
 		})

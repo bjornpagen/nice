@@ -6,12 +6,12 @@ import { inngest } from "@/inngest/client"
 import { generateQtiFromPerseus } from "@/lib/ai"
 import { QtiApiClient } from "@/lib/qti"
 
-export const migrateArticleToQtiStimulus = inngest.createFunction(
-	{ id: "migrate-article-to-qti-stimulus" },
-	{ event: "nice/qti.stimulus.migration.requested" },
+export const migrateArticleToQtiAssessmentStimulus = inngest.createFunction(
+	{ id: "migrate-article-to-qti-assessment-stimulus" },
+	{ event: "nice/qti.assessment-stimulus.migration.requested" },
 	async ({ event, step, logger }) => {
 		const { articleId } = event.data
-		logger.info("starting perseus article to qti stimulus migration", { articleId })
+		logger.info("starting perseus article to qti assessment stimulus migration", { articleId })
 
 		// Step 1: Fetch article data from our database.
 		const articleResult = await errors.try(
@@ -41,17 +41,17 @@ export const migrateArticleToQtiStimulus = inngest.createFunction(
 		}
 
 		// Step 2: Convert Perseus JSON to QTI Stimulus XML via AI.
-		const qtiStimulusXml = await step.run("generate-qti-stimulus-from-perseus", async () => {
+		const qtiStimulusXml = await step.run("generate-qti-assessment-stimulus-from-perseus", async () => {
 			const generationResult = await errors.try(generateQtiFromPerseus(article.perseusContent, { type: "stimulus" }))
 			if (generationResult.error) {
-				logger.error("ai conversion to stimulus failed", { articleId, error: generationResult.error })
-				throw errors.wrap(generationResult.error, "ai stimulus conversion")
+				logger.error("ai conversion to assessment stimulus failed", { articleId, error: generationResult.error })
+				throw errors.wrap(generationResult.error, "ai assessment stimulus conversion")
 			}
 			return generationResult.data
 		})
 
 		// Step 3: Upsert the QTI stimulus to the Timeback service. This is idempotent.
-		const stimulusIdentifier = await step.run("upsert-qti-stimulus", async () => {
+		const stimulusIdentifier = await step.run("upsert-qti-assessment-stimulus", async () => {
 			const client = new QtiApiClient()
 			// Use a namespaced, predictable identifier for idempotency.
 			const qtiId = `nice-article-${article.id}`
@@ -66,24 +66,24 @@ export const migrateArticleToQtiStimulus = inngest.createFunction(
 
 			if (updateResult.error) {
 				if (updateResult.error.message.includes("status 404")) {
-					logger.debug("qti stimulus not found, creating new one", { qtiId })
+					logger.debug("qti assessment stimulus not found, creating new one", { qtiId })
 					const createResult = await errors.try(client.createStimulus(upsertPayload))
 					if (createResult.error) {
-						logger.error("failed to create qti stimulus after update failed", {
+						logger.error("failed to create qti assessment stimulus after update failed", {
 							qtiId,
 							error: createResult.error
 						})
-						throw errors.wrap(createResult.error, "qti stimulus create")
+						throw errors.wrap(createResult.error, "qti assessment stimulus create")
 					}
 					return createResult.data.identifier
 				}
-				logger.error("failed to update qti stimulus", { qtiId, error: updateResult.error })
-				throw errors.wrap(updateResult.error, "qti stimulus update")
+				logger.error("failed to update qti assessment stimulus", { qtiId, error: updateResult.error })
+				throw errors.wrap(updateResult.error, "qti assessment stimulus update")
 			}
 			return updateResult.data.identifier
 		})
 
-		logger.info("successfully migrated article to qti stimulus", { articleId, stimulusIdentifier })
+		logger.info("successfully migrated article to qti assessment stimulus", { articleId, stimulusIdentifier })
 		return { status: "success", stimulusIdentifier }
 	}
 )

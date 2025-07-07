@@ -37,7 +37,7 @@ export async function loadConversionExamples(
 	const EXAMPLES_DIR = `${process.cwd()}/src/lib/perseus-to-qti/examples`
 	const perseusExt = isStimulus ? ".stimulus.json" : ".perseus.json"
 	const qtiExt = isStimulus ? ".stimulus.xml" : ".qti.xml"
-	const exampleDir = isStimulus ? `${EXAMPLES_DIR}/stimulus` : `${EXAMPLES_DIR}/assessment-items`
+	const exampleDir = isStimulus ? `${EXAMPLES_DIR}/assessment-stimulus` : `${EXAMPLES_DIR}/assessment-items`
 
 	const filesResult = await errors.try(fs.readdir(exampleDir))
 	if (filesResult.error) {

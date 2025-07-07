@@ -62,7 +62,7 @@ export async function createQtiConversionPrompt(
 	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" }
 ) {
 	const { type } = options
-	const rootTag = type === "stimulus" ? "qti-stimulus" : "qti-assessment-item"
+	const rootTag = type === "stimulus" ? "qti-assessment-stimulus" : "qti-assessment-item"
 
 	const systemInstruction = `You are an expert XML generator for educational content. Your primary and most critical function is to convert a Perseus JSON object into a single, well-formed QTI 3.0 XML \`${rootTag}\`. Your output MUST be only the raw XML. The XML MUST be perfect and parseable. The most common and catastrophic failure is an incomplete or malformed closing tag. You are STRICTLY FORBIDDEN from using partial or lazy closing tags like \`</_>\` or \`</>\`. Every single XML element, such as \`<p>\`, must have a corresponding full closing tag, \`</p>\`. This rule is absolute and cannot be violated.`
 
