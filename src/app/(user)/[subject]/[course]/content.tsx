@@ -42,20 +42,25 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 					</div>
 
 					{/* Units Layout */}
-					<div className="columns-1 lg:columns-2 gap-0 mt-4">
+					<div className="columns-1 lg:columns-2 gap-6 mt-4">
 						{units.map((unit, index) => (
 							<div key={unit.id} className="break-inside-avoid border-b border-gray-300">
-								<ProficiencyProgressOverview index={index} unitChildren={unit.children} next={index === 0} />
+								<ProficiencyProgressOverview
+									index={index}
+									unitChildren={unit.children}
+									path={unit.path}
+									next={index === 0}
+								/>
 							</div>
 						))}
-					</div>
 
-					{/* Course Challenge */}
-					{challenges.length > 0 && challenges[0] && (
-						<div className="mt-6">
-							<CourseChallenge path={challenges[0].path} />
-						</div>
-					)}
+						{/* Course Challenge */}
+						{challenges.length > 0 && challenges[0] && (
+							<div className="break-inside-avoid">
+								<CourseChallenge path={challenges[0].path} />
+							</div>
+						)}
+					</div>
 				</div>
 			</div>
 
