@@ -1,14 +1,23 @@
 import { type GenerateContentRequest, GoogleGenerativeAI } from "@google/generative-ai"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import OpenAI from "openai"
+import { zodResponseFormat } from "openai/helpers/zod"
+import { z } from "zod"
 import { env } from "@/env"
 import { loadConversionExamples } from "./qti-examples"
 
 const GEMINI_MODEL = "gemini-2.5-pro"
+const OPENAI_FIXER_MODEL = "o4-mini-high"
 const MAX_RETRIES = 5
 const INITIAL_BACKOFF_MS = 1000
 
-const ai = new GoogleGenerativeAI(env.GEMINI_API_KEY)
+const gemini = new GoogleGenerativeAI(env.GEMINI_API_KEY)
+const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
+
+const QtiCorrectionSchema = z.object({
+	corrected_xml: z.string().describe("The single, complete, and perfectly-formed QTI 3.0 XML string.")
+})
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -20,7 +29,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 async function generateContentWithRetry(request: GenerateContentRequest) {
 	let lastError: unknown
 	for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-		const result = await errors.try(ai.getGenerativeModel({ model: GEMINI_MODEL }).generateContent(request))
+		const result = await errors.try(gemini.getGenerativeModel({ model: GEMINI_MODEL }).generateContent(request))
 
 		if (result.error) {
 			lastError = result.error
@@ -169,4 +178,77 @@ export async function generateQtiFromPerseus(
 	}
 
 	return xmlMatch[0]
+}
+
+/**
+ * Attempts to fix invalid QTI XML using a more powerful AI model.
+ * @param {object} input - The input object.
+ * @param {string} input.invalidXml - The malformed XML string.
+ * @param {string} input.errorMessage - The error message from the QTI API.
+ * @param {'qti-assessment-item' | 'qti-assessment-stimulus'} input.rootTag - The expected root tag.
+ * @returns {Promise<string>} A promise that resolves to the corrected QTI XML string.
+ */
+export async function fixInvalidQtiXml(input: {
+	invalidXml: string
+	errorMessage: string
+	rootTag: "qti-assessment-item" | "qti-assessment-stimulus"
+}): Promise<string> {
+	const { invalidXml, errorMessage, rootTag } = input
+	logger.debug("attempting to fix invalid qti xml", { rootTag, error: errorMessage })
+
+	const userPrompt = `You are an expert XML developer specializing in the QTI 3.0 standard. You have been given a piece of XML that was rejected by an API, along with the API's error message. Your task is to analyze the XML and the error, fix the XML so that it is perfectly well-formed and valid according to the QTI 3.0 standard, and return the corrected XML.
+
+# CONTEXT
+<invalid_xml>
+${invalidXml}
+</invalid_xml>
+
+<api_error_message>
+${errorMessage}
+</api_error_message>
+
+# INSTRUCTIONS & RULES
+1.  **Primary Goal: Fix the XML.** Your only job is to produce a valid, well-formed QTI 3.0 XML document.
+2.  **Analyze the Error:** Use the <api_error_message> to diagnose the problem. Common issues include unclosed tags, incorrect attributes, or invalid structure.
+3.  **Correct, Don't Invent:** Base your correction on the original <invalid_xml>. Do not add new content or change the meaning. The goal is to make the existing content valid.
+4.  **THE MOST IMPORTANT RULE: FULL CLOSING TAGS ONLY.** Every tag you open MUST be closed with its full, complete name. Truncated or lazy tags like \`</_>\` are strictly forbidden. For example, \`<p>\` must be closed with \`</p>\`.
+5.  **NO TRUNCATED OUTPUT.** Your response must be the complete XML file from start to finish, beginning with \`<?xml ...?>\` and ending with the final \`</${rootTag}>\` tag.
+6.  **Return ONLY XML:** Your final output must be a single JSON object containing only the corrected XML string, as per the specified schema.
+
+# FINAL OUTPUT
+Return a single JSON object with the final corrected XML.
+`
+
+	const response = await errors.try(
+		openai.chat.completions.create({
+			model: OPENAI_FIXER_MODEL,
+			messages: [{ role: "user", content: userPrompt }],
+			response_format: zodResponseFormat(QtiCorrectionSchema, "qti_corrector")
+		})
+	)
+	if (response.error) {
+		logger.error("failed to fix qti xml", { error: response.error })
+		throw errors.wrap(response.error, "qti xml correction")
+	}
+
+	const messageContent = response.data.choices[0]?.message.content
+	if (!messageContent) {
+		logger.error("qti xml correction returned no content")
+		throw errors.new("qti xml correction returned no content")
+	}
+
+	const parsedResult = errors.trySync(() => JSON.parse(messageContent))
+	if (parsedResult.error) {
+		logger.error("failed to parse qti correction response", { error: parsedResult.error })
+		throw errors.wrap(parsedResult.error, "parsing qti correction response")
+	}
+
+	const validationResult = QtiCorrectionSchema.safeParse(parsedResult.data)
+	if (!validationResult.success) {
+		logger.error("qti correction response validation failed", { error: validationResult.error })
+		throw errors.wrap(validationResult.error, "qti correction response validation")
+	}
+
+	logger.info("successfully corrected qti xml", { rootTag })
+	return validationResult.data.corrected_xml
 }

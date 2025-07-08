@@ -1,10 +1,28 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
 import { db } from "@/db"
-import { niceQuestions } from "@/db/schemas"
+import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { generateQtiFromPerseus } from "@/lib/ai"
+import { fixInvalidQtiXml, generateQtiFromPerseus } from "@/lib/ai"
 import { QtiApiClient } from "@/lib/qti"
+
+// Helper function to encapsulate the idempotent upsert logic.
+async function upsertItem(client: QtiApiClient, identifier: string, xml: string): Promise<string> {
+	const updateResult = await errors.try(client.updateAssessmentItem({ identifier, xml }))
+	if (updateResult.error) {
+		// If update fails because the item doesn't exist, create it.
+		if (updateResult.error.message.includes("status 404")) {
+			const createResult = await errors.try(client.createAssessmentItem({ xml }))
+			if (createResult.error) {
+				throw errors.wrap(createResult.error, "qti create after update 404")
+			}
+			return createResult.data.identifier
+		}
+		// For other errors (like validation errors), re-throw to be handled.
+		throw errors.wrap(updateResult.error, "qti update")
+	}
+	return updateResult.data.identifier
+}
 
 export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
 	{ id: "migrate-question-to-qti-assessment-item" },
@@ -13,16 +31,17 @@ export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
 		const { questionId } = event.data
 		logger.info("starting question to qti assessment item migration", { questionId })
 
-		// Step 1: Fetch question data from our database. This is done outside a step.run
-		// because a failure here is critical and should fail the entire function immediately.
+		// Step 1: Fetch question data and its parent exercise's title from our database.
 		const questionResult = await errors.try(
 			db
 				.select({
 					id: niceQuestions.id,
 					parsedData: niceQuestions.parsedData,
-					qtiIdentifier: niceQuestions.qtiIdentifier
+					qtiIdentifier: niceQuestions.qtiIdentifier,
+					exerciseTitle: niceExercises.title
 				})
 				.from(niceQuestions)
+				.innerJoin(niceExercises, eq(niceQuestions.exerciseId, niceExercises.id))
 				.where(eq(niceQuestions.id, questionId))
 				.limit(1)
 		)
@@ -40,77 +59,102 @@ export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
 			logger.warn("question has no perseus data, aborting", { questionId })
 			return { status: "aborted", reason: "no_perseus_data" }
 		}
-		// Idempotency Check: Do not re-process if already migrated.
 		if (question.qtiIdentifier && question.qtiIdentifier !== "") {
 			logger.info("question already migrated, skipping", { questionId, qtiIdentifier: question.qtiIdentifier })
 			return { status: "skipped", qtiIdentifier: question.qtiIdentifier }
 		}
 
-		// Step 2: Convert Perseus JSON to QTI XML via AI.
+		// Step 2: Convert Perseus JSON to QTI XML via Gemini AI.
 		const qtiXml = await step.run("generate-qti-from-perseus", async () => {
 			const generationResult = await errors.try(generateQtiFromPerseus(question.parsedData))
 			if (generationResult.error) {
 				logger.error("ai conversion failed", { questionId, error: generationResult.error })
-				throw errors.wrap(generationResult.error, "ai conversion") // Inngest will retry this step
+				throw errors.wrap(generationResult.error, "ai conversion")
 			}
 			return generationResult.data
 		})
 
-		// Step 3: Upsert the QTI item to the Timeback service. This is idempotent.
-		const qtiIdentifier = await step.run("upsert-qti-assessment-item", async () => {
+		// Step 3: Attempt to upsert the generated QTI to the service.
+		const upsertResult = await step.run("attempt-initial-upsert", async () => {
 			const client = new QtiApiClient()
-			const qtiId = `nice-question-${question.id}` // Use a namespaced, predictable identifier
+			const qtiId = `nice-question-${question.id}`
+			const safeTitle = question.exerciseTitle.replace(/"/g, "&quot;")
 
-			// Forcefully replace the identifier in the AI-generated XML with our correct one.
-			// This corrects any AI hallucination where it might copy an ID from an example.
-			const finalXml = qtiXml.replace(/identifier="[^"]*"/, `identifier="${qtiId}"`)
+			// Forcefully replace identifier and title in the AI-generated XML.
+			const xmlWithId = qtiXml.replace(/identifier="[^"]*"/, `identifier="${qtiId}"`)
+			const finalXml = xmlWithId.replace(/title="[^"]*"/, `title="${safeTitle}"`)
 
-			const updateResult = await errors.try(client.updateAssessmentItem({ identifier: qtiId, xml: finalXml }))
+			const result = await errors.try(upsertItem(client, qtiId, finalXml))
 
-			if (updateResult.error) {
-				// If update fails, check if it's a 404 (not found) and create it.
-				// This makes the step idempotent.
-				if (updateResult.error.message.includes("status 404")) {
-					logger.debug("qti item not found, creating new one", { qtiId })
-					// Use the corrected XML for creation.
-					const createResult = await errors.try(client.createAssessmentItem({ xml: finalXml }))
-					if (createResult.error) {
-						logger.error("failed to create qti item after update failed", {
-							qtiId,
-							error: createResult.error
-						})
-						throw errors.wrap(createResult.error, "qti create")
-					}
-					// The response from create will now contain the correct identifier.
-					return createResult.data.identifier
+			if (result.error) {
+				logger.warn("initial qti upsert failed, will attempt correction", { qtiId, error: result.error })
+				return {
+					success: false as const,
+					qtiId: qtiId,
+					error: result.error.message,
+					invalidXml: finalXml
 				}
-
-				// For any other error, re-throw to let Inngest handle retries.
-				logger.error("failed to update qti item", { qtiId, error: updateResult.error })
-				throw errors.wrap(updateResult.error, "qti update")
 			}
-			// The response from update will also contain the correct identifier.
-			return updateResult.data.identifier
+
+			return { success: true as const, identifier: result.data, qtiId }
 		})
 
-		// Step 4: Update our local database with the new QTI identifier.
-		// DB operations must be outside of step.run()
+		let finalIdentifier: string
+
+		if (upsertResult.success) {
+			finalIdentifier = upsertResult.identifier
+		} else {
+			// Step 4 (Conditional): Fix the XML using the new AI model.
+			const correctedXml = await step.run("fix-invalid-qti-xml", async () => {
+				const { qtiId, error: errorMessage, invalidXml } = upsertResult
+				const fixResult = await errors.try(
+					fixInvalidQtiXml({
+						invalidXml,
+						errorMessage,
+						rootTag: "qti-assessment-item"
+					})
+				)
+
+				if (fixResult.error) {
+					logger.error("failed to fix invalid qti xml", { qtiId, error: fixResult.error })
+					throw errors.wrap(fixResult.error, "ai xml correction")
+				}
+				return fixResult.data
+			})
+
+			// Step 5 (Conditional): Retry the upsert with the corrected XML.
+			finalIdentifier = await step.run("retry-upsert-with-corrected-xml", async () => {
+				const client = new QtiApiClient()
+				const { qtiId } = upsertResult
+				const safeTitle = question.exerciseTitle.replace(/"/g, "&quot;")
+
+				// Forcefully replace identifier and title in the corrected XML.
+				const correctedWithId = correctedXml.replace(/identifier="[^"]*"/, `identifier="${qtiId}"`)
+				const finalCorrectedXml = correctedWithId.replace(/title="[^"]*"/, `title="${safeTitle}"`)
+
+				const secondUpsertResult = await errors.try(upsertItem(client, qtiId, finalCorrectedXml))
+				if (secondUpsertResult.error) {
+					logger.error("upsert failed even after ai correction", { qtiId, error: secondUpsertResult.error })
+					throw errors.wrap(secondUpsertResult.error, "second qti upsert attempt")
+				}
+				return secondUpsertResult.data
+			})
+		}
+
+		// Final Step: Update our local database with the QTI identifier.
 		const updateDbResult = await errors.try(
-			db.update(niceQuestions).set({ qtiIdentifier }).where(eq(niceQuestions.id, questionId))
+			db.update(niceQuestions).set({ qtiIdentifier: finalIdentifier }).where(eq(niceQuestions.id, questionId))
 		)
 		if (updateDbResult.error) {
 			logger.error("failed to update question with qti identifier", {
 				questionId,
-				qtiIdentifier,
+				qtiIdentifier: finalIdentifier,
 				error: updateDbResult.error
 			})
-			// This is a critical failure. We might need a compensating action or manual alert.
-			// For now, we throw, which will cause Inngest to retry the entire function.
-			// Because the previous steps are idempotent, this is safe.
 			throw errors.wrap(updateDbResult.error, "db update")
 		}
 
-		logger.info("successfully migrated question to qti assessment item", { questionId, qtiIdentifier })
-		return { status: "success", qtiIdentifier }
+		logger.info("successfully migrated question to qti assessment item", { questionId, qtiIdentifier: finalIdentifier })
+		return { status: "success", qtiIdentifier: finalIdentifier }
 	}
 )
