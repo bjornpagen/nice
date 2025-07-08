@@ -167,9 +167,14 @@ const articles = schema.table(
 		title: text("title").notNull(),
 		slug: text("slug").notNull(),
 		path: text("path").notNull().unique(),
-		perseusContent: jsonb("perseus_content").notNull()
+		perseusContent: jsonb("perseus_content").notNull(),
+		qtiIdentifier: text("qti_identifier").notNull().default("")
 	},
-	(table) => [index("articles_path_idx").on(table.path), index("articles_title_idx").on(table.title)]
+	(table) => [
+		index("articles_path_idx").on(table.path),
+		index("articles_title_idx").on(table.title),
+		index("articles_qti_identifier_idx").on(table.qtiIdentifier)
+	]
 )
 export { articles as niceArticles }
 

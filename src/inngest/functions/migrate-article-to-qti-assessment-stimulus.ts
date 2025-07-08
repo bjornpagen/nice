@@ -19,7 +19,8 @@ export const migrateArticleToQtiAssessmentStimulus = inngest.createFunction(
 				.select({
 					id: niceArticles.id,
 					title: niceArticles.title,
-					perseusContent: niceArticles.perseusContent
+					perseusContent: niceArticles.perseusContent,
+					qtiIdentifier: niceArticles.qtiIdentifier
 				})
 				.from(niceArticles)
 				.where(eq(niceArticles.id, articleId))
@@ -38,6 +39,11 @@ export const migrateArticleToQtiAssessmentStimulus = inngest.createFunction(
 		if (!article.perseusContent) {
 			logger.warn("article has no perseus data, aborting", { articleId })
 			return { status: "aborted", reason: "no_perseus_data" }
+		}
+		// Idempotency Check: Do not re-process if already migrated.
+		if (article.qtiIdentifier && article.qtiIdentifier !== "") {
+			logger.info("article already migrated, skipping", { articleId, qtiIdentifier: article.qtiIdentifier })
+			return { status: "skipped", qtiIdentifier: article.qtiIdentifier }
 		}
 
 		// Step 2: Convert Perseus JSON to QTI Stimulus XML via AI.
@@ -82,6 +88,22 @@ export const migrateArticleToQtiAssessmentStimulus = inngest.createFunction(
 			}
 			return updateResult.data.identifier
 		})
+
+		// Step 4: Update our local database with the new QTI stimulus identifier.
+		const updateDbResult = await errors.try(
+			db.update(niceArticles).set({ qtiIdentifier: stimulusIdentifier }).where(eq(niceArticles.id, articleId))
+		)
+
+		if (updateDbResult.error) {
+			logger.error("failed to update article with qti stimulus identifier", {
+				articleId,
+				stimulusIdentifier,
+				error: updateDbResult.error
+			})
+			// This is a critical failure. Throwing will cause Inngest to retry the entire function.
+			// Because the previous steps are idempotent, this is safe.
+			throw errors.wrap(updateDbResult.error, "db update")
+		}
 
 		logger.info("successfully migrated article to qti assessment stimulus", { articleId, stimulusIdentifier })
 		return { status: "success", stimulusIdentifier }
