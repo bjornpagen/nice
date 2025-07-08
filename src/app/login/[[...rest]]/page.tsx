@@ -30,6 +30,14 @@ export default function Home() {
 		})
 	}
 
+	const handleTimeBackSignIn = () => {
+		signIn?.authenticateWithRedirect({
+			strategy: "oauth_custom_timeback",
+			redirectUrl: "/sso-callback",
+			redirectUrlComplete: "/"
+		})
+	}
+
 	return (
 		<div className="flex flex-col min-h-screen bg-white">
 			{/* Use the standardized Header component */}
@@ -79,6 +87,15 @@ export default function Home() {
 										className="mr-3 h-5 w-5"
 									/>
 									Continue with Google
+								</Button>
+
+								{/* Continue with TimeBack - New SSO button */}
+								<Button
+									variant="outline"
+									className="w-full h-12 text-base font-medium border-gray-300 hover:bg-gray-50"
+									onClick={handleTimeBackSignIn}
+								>
+									Continue with TimeBack™
 								</Button>
 
 								<div className="relative my-6">

@@ -226,7 +226,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 								type: "qti",
 								subType: "qti-stimulus",
 								language: "en-US",
-								url: `https://qti.alpha-1edtech.com/api/stimuli/${content.id}`
+								url: `https://qti.alpha-1edtech.com/api/stimuli/nice-academy-${content.id}`
 							}
 						} else if (lc.contentType === "Video") {
 							// Videos need proper URL
@@ -244,7 +244,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 								subType: "qti-test",
 								questionType: "custom",
 								language: "en-US",
-								url: `https://qti.alpha-1edtech.com/api/assessment-tests/${content.id}`
+								url: `https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-${content.id}`
 							}
 						}
 
@@ -252,7 +252,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 							sourcedId: content.path,
 							status: "active",
 							title: content.title,
-							vendorResourceId: content.id,
+							vendorResourceId: `nice-academy-${content.id}`,
 							vendorId: "alpha-nice",
 							applicationId: "nice",
 							roles: ["primary"],
@@ -281,7 +281,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 					sourcedId: assessment.path,
 					status: "active",
 					title: assessment.title,
-					vendorResourceId: assessment.id,
+					vendorResourceId: `nice-academy-${assessment.id}`,
 					vendorId: "alpha-nice",
 					applicationId: "nice",
 					roles: ["primary"],
@@ -291,7 +291,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 						subType: "qti-test",
 						questionType: "custom",
 						language: "en-US",
-						url: `https://qti.alpha-1edtech.com/api/assessment-tests/${assessment.id}`,
+						url: `https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-${assessment.id}`,
 						description: assessment.description,
 						lessonType: assessment.type.toLowerCase()
 					}
