@@ -19,9 +19,9 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 	const { params, course, units, lessonCount, challenges } = React.use(dataPromise)
 
 	return (
-		<div className="h-full overflow-y-auto">
+		<div className="h-full overflow-y-auto overflow-x-hidden max-w-full">
 			{/* Main Layout Container */}
-			<div className="flex">
+			<div className="flex max-w-full">
 				{/* Sidebar */}
 				<div className="flex-shrink-0 w-96">
 					<div className="sticky top-0 w-96 max-h-screen overflow-y-auto">
@@ -32,7 +32,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 				</div>
 
 				{/* Main Content Area */}
-				<div className="flex-1 p-6 bg-gray-50">
+				<div className="flex-1 p-6 bg-gray-50 min-w-0">
 					<CourseHeader subject={params.subject} course={params.course} />
 
 					{/* Course Header */}
@@ -48,7 +48,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 					</div>
 
 					{/* Units Layout */}
-					<div className="columns-1 lg:columns-2 gap-6 mt-4">
+					<div className="columns-1 xl:columns-2 gap-6 mt-4">
 						{units.map((unit, index) => (
 							<div key={unit.id} className="break-inside-avoid border-b border-gray-300">
 								<ProficiencyProgressOverview

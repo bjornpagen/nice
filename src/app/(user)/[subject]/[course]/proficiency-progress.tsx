@@ -41,9 +41,9 @@ export function ProficiencyProgress({ unitChildren }: { unitChildren: UnitChild[
 	}
 
 	return (
-		<div className="flex items-center gap-1">
+		<div className="flex items-center gap-1 flex-wrap max-w-full overflow-hidden">
 			{items.map((item) => (
-				<div key={item.id} className="flex items-center gap-1">
+				<div key={item.id} className="flex items-center gap-1 flex-shrink-0">
 					<ProficiencyIcon variant={item.variant} />
 				</div>
 			))}
