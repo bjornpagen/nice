@@ -7,7 +7,7 @@ import { z } from "zod"
 import { env } from "@/env"
 import { loadConversionExamples } from "./qti-examples"
 
-const GEMINI_MODEL = "gemini-2.5-pro"
+const GEMINI_MODEL = "gemini-2.5-flash"
 const OPENAI_FIXER_MODEL = "o4-mini-high"
 const MAX_RETRIES = 5
 const INITIAL_BACKOFF_MS = 1000
