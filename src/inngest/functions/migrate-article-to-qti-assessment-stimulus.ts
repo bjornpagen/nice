@@ -1,14 +1,10 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
-import { XMLBuilder, XMLParser } from "fast-xml-parser"
 import { db } from "@/db"
 import { niceArticles } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { fixInvalidQtiXml, generateQtiFromPerseus } from "@/lib/ai"
-import { ErrQtiNotFound, ErrQtiUnprocessable, QtiApiClient } from "@/lib/qti"
-
-const xmlParser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" })
-const xmlBuilder = new XMLBuilder({ ignoreAttributes: false, format: true, suppressBooleanAttributes: false })
+import { ErrQtiInternalServerError, ErrQtiNotFound, ErrQtiUnprocessable, QtiApiClient } from "@/lib/qti"
 
 // Helper function to encapsulate the idempotent upsert logic for stimuli.
 async function upsertStimulus(
@@ -18,14 +14,17 @@ async function upsertStimulus(
 	content: string
 ): Promise<string> {
 	const safeTitle = title.replace(/"/g, "&quot;")
-	const parsedXml = xmlParser.parse(content)
-	const rootKey = Object.keys(parsedXml)[1]
-	if (rootKey) {
-		parsedXml[rootKey].identifier = identifier
-		parsedXml[rootKey].title = safeTitle
-	}
-	const finalXml = xmlBuilder.build(parsedXml)
-	const payload = { identifier, title, content: finalXml }
+
+	// This regex finds the <qti-assessment-stimulus> tag and allows us to modify its attributes.
+	const finalXml = content.replace(/<qti-assessment-stimulus([^>]*?)>/, (_match: string, group1: string) => {
+		// Replace the identifier attribute.
+		let updatedAttrs = group1.replace(/identifier="[^"]*"/, `identifier="${identifier}"`)
+		// Replace the title attribute.
+		updatedAttrs = updatedAttrs.replace(/title="[^"]*"/, `title="${safeTitle}"`)
+		return `<qti-assessment-stimulus${updatedAttrs}>`
+	})
+
+	const payload = { identifier, title: safeTitle, content: finalXml }
 
 	const updateResult = await errors.try(client.updateStimulus(identifier, payload))
 	if (updateResult.error) {
@@ -98,7 +97,7 @@ export const migrateArticleToQtiAssessmentStimulus = inngest.createFunction(
 			const result = await errors.try(upsertStimulus(client, qtiId, article.title, qtiStimulusXml))
 
 			if (result.error) {
-				if (errors.is(result.error, ErrQtiUnprocessable)) {
+				if (errors.is(result.error, ErrQtiUnprocessable) || errors.is(result.error, ErrQtiInternalServerError)) {
 					logger.warn("initial qti stimulus upsert failed, will attempt correction", { qtiId, error: result.error })
 					return {
 						success: false as const,

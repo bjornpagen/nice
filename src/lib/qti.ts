@@ -7,6 +7,7 @@ import { env } from "@/env"
 export const ErrQtiNotFound = errors.new("qti resource not found")
 export const ErrQtiUnprocessable = errors.new("qti request unprocessable/invalid")
 export const ErrQtiConflict = errors.new("qti resource conflict")
+export const ErrQtiInternalServerError = errors.new("qti internal server error")
 
 // --- ZOD SCHEMAS (Existing + New) ---
 
@@ -475,6 +476,9 @@ export class QtiApiClient {
 			}
 			if (response.status === 422) {
 				throw errors.wrap(ErrQtiUnprocessable, `qti api error: status 422 on ${endpoint}: ${errorBody}`)
+			}
+			if (response.status === 500) {
+				throw errors.wrap(ErrQtiInternalServerError, `qti api error: status 500 on ${endpoint}: ${errorBody}`)
 			}
 			if (response.status === 409) {
 				throw errors.wrap(ErrQtiConflict, `qti api error: status 409 on ${endpoint}`)

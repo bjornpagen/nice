@@ -1,26 +1,25 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
-import { XMLBuilder, XMLParser } from "fast-xml-parser"
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { fixInvalidQtiXml, generateQtiFromPerseus } from "@/lib/ai"
-import { ErrQtiNotFound, ErrQtiUnprocessable, QtiApiClient } from "@/lib/qti"
-
-const xmlParser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" })
-const xmlBuilder = new XMLBuilder({ ignoreAttributes: false, format: true, suppressBooleanAttributes: false })
+import { ErrQtiInternalServerError, ErrQtiNotFound, ErrQtiUnprocessable, QtiApiClient } from "@/lib/qti"
 
 // Helper function to encapsulate the idempotent upsert logic.
 async function upsertItem(client: QtiApiClient, identifier: string, title: string, xml: string): Promise<string> {
-	// Use a proper XML parser to safely override attributes
+	// Use a robust regex to replace attributes on the root tag, avoiding a full parse/rebuild cycle
+	// that was corrupting namespace declarations. This is safer and more reliable.
 	const safeTitle = title.replace(/"/g, "&quot;")
-	const parsedXml = xmlParser.parse(xml)
-	const rootKey = Object.keys(parsedXml)[1] // Assumes second key is the root element
-	if (rootKey) {
-		parsedXml[rootKey].identifier = identifier
-		parsedXml[rootKey].title = safeTitle
-	}
-	const finalXml = xmlBuilder.build(parsedXml)
+
+	// This regex finds the <qti-assessment-item> tag and allows us to modify its attributes.
+	const finalXml = xml.replace(/<qti-assessment-item([^>]*?)>/, (_match: string, group1: string) => {
+		// Replace the identifier attribute.
+		let updatedAttrs = group1.replace(/identifier="[^"]*"/, `identifier="${identifier}"`)
+		// Replace the title attribute.
+		updatedAttrs = updatedAttrs.replace(/title="[^"]*"/, `title="${safeTitle}"`)
+		return `<qti-assessment-item${updatedAttrs}>`
+	})
 
 	const updateResult = await errors.try(client.updateAssessmentItem({ identifier, xml: finalXml }))
 	if (updateResult.error) {
@@ -97,7 +96,7 @@ export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
 
 			if (result.error) {
 				// Use errors.is to check if the failure is a validation error
-				if (errors.is(result.error, ErrQtiUnprocessable)) {
+				if (errors.is(result.error, ErrQtiUnprocessable) || errors.is(result.error, ErrQtiInternalServerError)) {
 					logger.warn("initial qti upsert failed validation, will attempt correction", { qtiId, error: result.error })
 					return {
 						success: false as const,
