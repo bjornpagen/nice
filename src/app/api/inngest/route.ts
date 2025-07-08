@@ -7,15 +7,15 @@ import { helloWorld } from "@/inngest/functions/hello"
 import { migrateArticleToQtiAssessmentStimulus } from "@/inngest/functions/migrate-article-to-qti-assessment-stimulus"
 import { migrateQuestionToQtiAssessmentItem } from "@/inngest/functions/migrate-question-to-qti-assessment-item"
 
-// Create an API that serves all active functions
+// Create and export the Inngest HTTP handler
 export const { GET, POST, PUT } = serve({
 	client: inngest,
 	functions: [
 		helloWorld,
-		migrateQuestionToQtiAssessmentItem,
-		migrateArticleToQtiAssessmentStimulus,
-		generateOnerosterForCourse,
 		generateAllAssessmentItemsForCourse,
-		generateAllAssessmentStimuliForCourse
+		generateAllAssessmentStimuliForCourse,
+		generateOnerosterForCourse,
+		migrateArticleToQtiAssessmentStimulus,
+		migrateQuestionToQtiAssessmentItem
 	]
 })

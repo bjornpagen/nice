@@ -155,7 +155,10 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 			: Promise.resolve([])
 	])
 
-	const contentMap = new Map<string, { id: string; path: string; title: string; type: string; description?: string }>([
+	const contentMap = new Map<
+		string,
+		{ id: string; path: string; title: string; slug: string; type: string; description?: string }
+	>([
 		...videos.map((v) => [v.id, { ...v, type: "Video" }] as const),
 		...articles.map((a) => [a.id, { ...a, type: "Article" }] as const),
 		...exercises.map((e) => [e.id, { ...e, type: "Exercise" }] as const)
@@ -169,14 +172,18 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 
 	const onerosterPayload: OneRosterPayload = {
 		course: {
-			sourcedId: course.path,
+			sourcedId: `nice:${course.slug}`,
 			status: "active",
 			title: course.title,
 			subjects: [subjectTitle],
 			courseCode: course.slug,
 			org: { sourcedId: ORG_SOURCED_ID, type: "org" },
 			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "academicSession" },
-			metadata: { description: course.description }
+			metadata: {
+				description: course.description,
+				path: course.path,
+				khanId: course.id
+			}
 		},
 		courseComponents: [],
 		resources: [],
@@ -187,24 +194,32 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 
 	for (const unit of units.sort((a, b) => a.ordering - b.ordering)) {
 		onerosterPayload.courseComponents.push({
-			sourcedId: unit.path,
+			sourcedId: `nice:${unit.slug}`,
 			status: "active",
 			title: unit.title,
-			course: { sourcedId: course.path, type: "course" },
+			course: { sourcedId: `nice:${course.slug}`, type: "course" },
 			sortOrder: unit.ordering,
-			metadata: { description: unit.description }
+			metadata: {
+				description: unit.description,
+				path: unit.path,
+				khanId: unit.id
+			}
 		})
 
 		const unitLessons = lessons.filter((l) => l.unitId === unit.id).sort((a, b) => a.ordering - b.ordering)
 		for (const lesson of unitLessons) {
 			onerosterPayload.courseComponents.push({
-				sourcedId: lesson.path,
+				sourcedId: `nice:${lesson.slug}`,
 				status: "active",
 				title: lesson.title,
-				course: { sourcedId: course.path, type: "course" },
-				parent: { sourcedId: unit.path, type: "courseComponent" },
+				course: { sourcedId: `nice:${course.slug}`, type: "course" },
+				parent: { sourcedId: `nice:${unit.slug}`, type: "courseComponent" },
 				sortOrder: lesson.ordering,
-				metadata: { description: lesson.description }
+				metadata: {
+					description: lesson.description,
+					path: lesson.path,
+					khanId: lesson.id
+				}
 			})
 
 			const lessonContentLinks = lessonContents
@@ -213,10 +228,13 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 			for (const lc of lessonContentLinks) {
 				const content = contentMap.get(lc.contentId)
 				if (content) {
-					if (!resourceSet.has(content.path)) {
+					const contentSourcedId = `nice:${content.slug}`
+					if (!resourceSet.has(contentSourcedId)) {
 						// Construct metadata based on content type
 						let metadata: Record<string, unknown> = {
-							description: content.description || ""
+							description: content.description || "",
+							path: content.path,
+							khanId: content.id
 						}
 
 						if (lc.contentType === "Article") {
@@ -249,7 +267,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 						}
 
 						onerosterPayload.resources.push({
-							sourcedId: content.path,
+							sourcedId: contentSourcedId,
 							status: "active",
 							title: content.title,
 							vendorResourceId: `nice-academy-${content.id}`,
@@ -259,15 +277,15 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 							importance: "primary",
 							metadata
 						})
-						resourceSet.add(content.path)
+						resourceSet.add(contentSourcedId)
 					}
 
 					onerosterPayload.componentResources.push({
-						sourcedId: `ccr:${lesson.path}:${content.path}`,
+						sourcedId: `ccr:${lesson.slug}:${content.slug}`,
 						status: "active",
 						title: content.title,
-						courseComponent: { sourcedId: lesson.path, type: "courseComponent" },
-						resource: { sourcedId: content.path, type: "resource" },
+						courseComponent: { sourcedId: `nice:${lesson.slug}`, type: "courseComponent" },
+						resource: { sourcedId: contentSourcedId, type: "resource" },
 						sortOrder: lc.ordering
 					})
 				}
@@ -276,9 +294,10 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 
 		const unitAssessments = assessments.filter((a) => a.parentId === unit.id).sort((a, b) => a.ordering - b.ordering)
 		for (const assessment of unitAssessments) {
-			if (!resourceSet.has(assessment.path)) {
+			const assessmentSourcedId = `nice:${assessment.slug}`
+			if (!resourceSet.has(assessmentSourcedId)) {
 				onerosterPayload.resources.push({
-					sourcedId: assessment.path,
+					sourcedId: assessmentSourcedId,
 					status: "active",
 					title: assessment.title,
 					vendorResourceId: `nice-academy-${assessment.id}`,
@@ -293,18 +312,20 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 						language: "en-US",
 						url: `https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-${assessment.id}`,
 						description: assessment.description,
-						lessonType: assessment.type.toLowerCase()
+						lessonType: assessment.type.toLowerCase(),
+						path: assessment.path,
+						khanId: assessment.id
 					}
 				})
-				resourceSet.add(assessment.path)
+				resourceSet.add(assessmentSourcedId)
 			}
 
 			onerosterPayload.componentResources.push({
-				sourcedId: `ccr:${unit.path}:${assessment.path}`,
+				sourcedId: `ccr:${unit.slug}:${assessment.slug}`,
 				status: "active",
 				title: assessment.title,
-				courseComponent: { sourcedId: unit.path, type: "courseComponent" },
-				resource: { sourcedId: assessment.path, type: "resource" },
+				courseComponent: { sourcedId: `nice:${unit.slug}`, type: "courseComponent" },
+				resource: { sourcedId: assessmentSourcedId, type: "resource" },
 				sortOrder: assessment.ordering
 			})
 		}

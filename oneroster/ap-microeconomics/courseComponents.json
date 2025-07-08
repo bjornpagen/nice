@@ -1,721 +1,809 @@
 [
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": "Learn how different types of economies make decisions about what to produce and how to distribute resources. We'll introduce key concepts like opportunity costs, trade-offs, and production possibilities. We'll also dive into why specialization and exchange are so important, and how property rights and incentives help keep free markets functioning. "
+			"description": "Learn how different types of economies make decisions about what to produce and how to distribute resources. We'll introduce key concepts like opportunity costs, trade-offs, and production possibilities. We'll also dive into why specialization and exchange are so important, and how property rights and incentives help keep free markets functioning. ",
+			"khanId": "xa204bd566d459933",
+			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts"
 		},
 		"sortOrder": 0,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts",
+		"sourcedId": "nice:basic-economic-concepts",
 		"status": "active",
 		"title": "Basic Economic Concepts"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x9ce7fd28aff7b767",
+			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/ap-economics-introduction"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts",
+			"sourcedId": "nice:basic-economic-concepts",
 			"type": "courseComponent"
 		},
 		"sortOrder": 0,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/ap-economics-introduction",
+		"sourcedId": "nice:ap-economics-introduction",
 		"status": "active",
 		"title": "Scarcity"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x28b23aa0658a791b",
+			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/resource-allocation-and-economic-systems"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts",
+			"sourcedId": "nice:basic-economic-concepts",
 			"type": "courseComponent"
 		},
 		"sortOrder": 1,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/resource-allocation-and-economic-systems",
+		"sourcedId": "nice:resource-allocation-and-economic-systems",
 		"status": "active",
 		"title": "Resource Allocation and Economic Systems"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xb7550a7f7ea60140",
+			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/production-possibilities-curve-ppc"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts",
+			"sourcedId": "nice:basic-economic-concepts",
 			"type": "courseComponent"
 		},
 		"sortOrder": 3,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/production-possibilities-curve-ppc",
+		"sourcedId": "nice:production-possibilities-curve-ppc",
 		"status": "active",
 		"title": "Production possibilities curve (PPC)"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x94858949100c340d",
+			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/comparative-advantage-and-trade"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts",
+			"sourcedId": "nice:basic-economic-concepts",
 			"type": "courseComponent"
 		},
 		"sortOrder": 4,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/comparative-advantage-and-trade",
+		"sourcedId": "nice:comparative-advantage-and-trade",
 		"status": "active",
 		"title": "Comparative advantage and trade"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x79d3a71c28e458df",
+			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/cost-benefit-analysis"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts",
+			"sourcedId": "nice:basic-economic-concepts",
 			"type": "courseComponent"
 		},
 		"sortOrder": 6,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/cost-benefit-analysis",
+		"sourcedId": "nice:cost-benefit-analysis",
 		"status": "active",
 		"title": "Cost-benefit analysis"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x5da3e0f567b365fd",
+			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/16"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts",
+			"sourcedId": "nice:basic-economic-concepts",
 			"type": "courseComponent"
 		},
 		"sortOrder": 7,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/16",
+		"sourcedId": "nice:16",
 		"status": "active",
 		"title": "Marginal analysis and consumer choice"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": "What are product markets? In this unit, you'll find out by focusing on the supply and demand model. How do changes in supply and demand create changes in market equilibrium? Power up your economics toolkit with the concepts of elasticity, surplus, and the impact of government policies."
+			"description": "What are product markets? In this unit, you'll find out by focusing on the supply and demand model. How do changes in supply and demand create changes in market equilibrium? Power up your economics toolkit with the concepts of elasticity, surplus, and the impact of government policies.",
+			"khanId": "xbe64d9dfe8579203",
+			"path": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd"
 		},
 		"sortOrder": 1,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd",
+		"sourcedId": "nice:unit-2-supply-and-demnd",
 		"status": "active",
 		"title": "Supply and Demand"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xd7a10d9ec48fa863",
+			"path": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/micro-demand"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd",
+			"sourcedId": "nice:unit-2-supply-and-demnd",
 			"type": "courseComponent"
 		},
 		"sortOrder": 0,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/micro-demand",
+		"sourcedId": "nice:micro-demand",
 		"status": "active",
 		"title": "Demand"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xe379e48a50c85c72",
+			"path": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/22"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd",
+			"sourcedId": "nice:unit-2-supply-and-demnd",
 			"type": "courseComponent"
 		},
 		"sortOrder": 1,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/22",
+		"sourcedId": "nice:22",
 		"status": "active",
 		"title": "Supply"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xe19c5f3eec693caf",
+			"path": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/23"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd",
+			"sourcedId": "nice:unit-2-supply-and-demnd",
 			"type": "courseComponent"
 		},
 		"sortOrder": 3,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/23",
+		"sourcedId": "nice:23",
 		"status": "active",
 		"title": "Price elasticity of demand"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x70f31955663a55e7",
+			"path": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/24"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd",
+			"sourcedId": "nice:unit-2-supply-and-demnd",
 			"type": "courseComponent"
 		},
 		"sortOrder": 4,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/24",
+		"sourcedId": "nice:24",
 		"status": "active",
 		"title": "Price elasticity of supply"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xe654c5ead94c973a",
+			"path": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/25"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd",
+			"sourcedId": "nice:unit-2-supply-and-demnd",
 			"type": "courseComponent"
 		},
 		"sortOrder": 5,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/25",
+		"sourcedId": "nice:25",
 		"status": "active",
 		"title": "Other elasticities"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x37db529b1e677a84",
+			"path": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/26"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd",
+			"sourcedId": "nice:unit-2-supply-and-demnd",
 			"type": "courseComponent"
 		},
 		"sortOrder": 7,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/26",
+		"sourcedId": "nice:26",
 		"status": "active",
 		"title": "Market equilibrium and consumer and producer surplus"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x85d21ae0a544a53f",
+			"path": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/27"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd",
+			"sourcedId": "nice:unit-2-supply-and-demnd",
 			"type": "courseComponent"
 		},
 		"sortOrder": 8,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/27",
+		"sourcedId": "nice:27",
 		"status": "active",
 		"title": "Disequilibrium and changes in equilibrium"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x632137aa66c5829f",
+			"path": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/28"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd",
+			"sourcedId": "nice:unit-2-supply-and-demnd",
 			"type": "courseComponent"
 		},
 		"sortOrder": 10,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/28",
+		"sourcedId": "nice:28",
 		"status": "active",
 		"title": "The effects of government interventions in markets"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x23b7953baa790376",
+			"path": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/29-international-trade-and-public-policy"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd",
+			"sourcedId": "nice:unit-2-supply-and-demnd",
 			"type": "courseComponent"
 		},
 		"sortOrder": 11,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/29-international-trade-and-public-policy",
+		"sourcedId": "nice:29-international-trade-and-public-policy",
 		"status": "active",
 		"title": "International trade and public policy"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": "In economics, a \"perfect\" market is a theoretical market in which there are many buyers and sellers, and where no one has an advantage over others. In this unit, you'll learn how perfect markets can be used to model relationships between productivity and costs and competition between firms. "
+			"description": "In economics, a \"perfect\" market is a theoretical market in which there are many buyers and sellers, and where no one has an advantage over others. In this unit, you'll learn how perfect markets can be used to model relationships between productivity and costs and competition between firms. ",
+			"khanId": "xa99ad0413d4cfba1",
+			"path": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary"
 		},
 		"sortOrder": 2,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary",
+		"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary",
 		"status": "active",
 		"title": "Production, cost, and the perfect competition model"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x3819a5d510083254",
+			"path": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/the-production-function"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary",
+			"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary",
 			"type": "courseComponent"
 		},
 		"sortOrder": 0,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/the-production-function",
+		"sourcedId": "nice:the-production-function",
 		"status": "active",
 		"title": "The production function"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xf90c857e3dc7797b",
+			"path": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/short-run-production-costs"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary",
+			"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary",
 			"type": "courseComponent"
 		},
 		"sortOrder": 1,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/short-run-production-costs",
+		"sourcedId": "nice:short-run-production-costs",
 		"status": "active",
 		"title": "Short-run production costs"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xbf55c0be515bf2f3",
+			"path": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/33-long-run-p"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary",
+			"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary",
 			"type": "courseComponent"
 		},
 		"sortOrder": 2,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/33-long-run-p",
+		"sourcedId": "nice:33-long-run-p",
 		"status": "active",
 		"title": "Long-run production costs"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x4c768ef5f181c56e",
+			"path": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/types-of-profit"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary",
+			"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary",
 			"type": "courseComponent"
 		},
 		"sortOrder": 4,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/types-of-profit",
+		"sourcedId": "nice:types-of-profit",
 		"status": "active",
 		"title": "Types of profit"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x62bfa3bda2fb5e67",
+			"path": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/profit-maximization"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary",
+			"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary",
 			"type": "courseComponent"
 		},
 		"sortOrder": 5,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/profit-maximization",
+		"sourcedId": "nice:profit-maximization",
 		"status": "active",
 		"title": "Profit maximization"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x21026bea416d9f88",
+			"path": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/36"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary",
+			"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary",
 			"type": "courseComponent"
 		},
 		"sortOrder": 7,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/36",
+		"sourcedId": "nice:36",
 		"status": "active",
 		"title": "Firms’ Short-run Decisions to Produce and Long-Run Decisions to Enter or Exit a Market"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x267bbd36224d45c5",
+			"path": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/ap-perfect-competition"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary",
+			"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary",
 			"type": "courseComponent"
 		},
 		"sortOrder": 8,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/ap-perfect-competition",
+		"sourcedId": "nice:ap-perfect-competition",
 		"status": "active",
 		"title": "Perfect competition"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": "In real life, markets are almost never perfect! Explore how firms behave in imperfectly competitive markets such monopolies and oligopolies, and how tools like game theory can predict firm behavior in imperfect markets."
+			"description": "In real life, markets are almost never perfect! Explore how firms behave in imperfectly competitive markets such monopolies and oligopolies, and how tools like game theory can predict firm behavior in imperfect markets.",
+			"khanId": "xd5cef5bcdcc958e4",
+			"path": "/economics-finance-domain/ap-microeconomics/imperfect-competition"
 		},
 		"sortOrder": 3,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition",
+		"sourcedId": "nice:imperfect-competition",
 		"status": "active",
 		"title": "Imperfect competition"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xfb3c7fb283288494",
+			"path": "/economics-finance-domain/ap-microeconomics/imperfect-competition/introduction-to-imperfect-competition"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition",
+			"sourcedId": "nice:imperfect-competition",
 			"type": "courseComponent"
 		},
 		"sortOrder": 0,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/introduction-to-imperfect-competition",
+		"sourcedId": "nice:introduction-to-imperfect-competition",
 		"status": "active",
 		"title": "Introduction to imperfect competition"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x359452772254f6dc",
+			"path": "/economics-finance-domain/ap-microeconomics/imperfect-competition/ap-monopolies-tutorial"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition",
+			"sourcedId": "nice:imperfect-competition",
 			"type": "courseComponent"
 		},
 		"sortOrder": 1,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/ap-monopolies-tutorial",
+		"sourcedId": "nice:ap-monopolies-tutorial",
 		"status": "active",
 		"title": "Monopoly"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xdfe4f0292073e9ec",
+			"path": "/economics-finance-domain/ap-microeconomics/imperfect-competition/ap-price-discrimination-tutorial"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition",
+			"sourcedId": "nice:imperfect-competition",
 			"type": "courseComponent"
 		},
 		"sortOrder": 2,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/ap-price-discrimination-tutorial",
+		"sourcedId": "nice:ap-price-discrimination-tutorial",
 		"status": "active",
 		"title": "Price discrimination"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x696f6e243fe0b60a",
+			"path": "/economics-finance-domain/ap-microeconomics/imperfect-competition/monopolistic-competition"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition",
+			"sourcedId": "nice:imperfect-competition",
 			"type": "courseComponent"
 		},
 		"sortOrder": 4,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/monopolistic-competition",
+		"sourcedId": "nice:monopolistic-competition",
 		"status": "active",
 		"title": "Monopolistic competition"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xc2d78ae101ca4404",
+			"path": "/economics-finance-domain/ap-microeconomics/imperfect-competition/oligopoly-and-game-theory"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition",
+			"sourcedId": "nice:imperfect-competition",
 			"type": "courseComponent"
 		},
 		"sortOrder": 5,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/oligopoly-and-game-theory",
+		"sourcedId": "nice:oligopoly-and-game-theory",
 		"status": "active",
 		"title": "Oligopoly and game theory"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": "How many employees should I hire? What are some of the causes of income inequality? Exploring how supply and demand affect prices in factor markets - the markets for things like labor and capital - will give you tools to address these kinds of questions. "
+			"description": "How many employees should I hire? What are some of the causes of income inequality? Exploring how supply and demand affect prices in factor markets - the markets for things like labor and capital - will give you tools to address these kinds of questions. ",
+			"khanId": "xf1185ef5c31cfeb3",
+			"path": "/economics-finance-domain/ap-microeconomics/factor-markets"
 		},
 		"sortOrder": 4,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets",
+		"sourcedId": "nice:factor-markets",
 		"status": "active",
 		"title": "Factor markets"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xfaffec2ee0b12471",
+			"path": "/economics-finance-domain/ap-microeconomics/factor-markets/introduction-to-factor-markets"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets",
+			"sourcedId": "nice:factor-markets",
 			"type": "courseComponent"
 		},
 		"sortOrder": 0,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/introduction-to-factor-markets",
+		"sourcedId": "nice:introduction-to-factor-markets",
 		"status": "active",
 		"title": "Introduction to factor markets"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "xa62d01167902c0c5",
+			"path": "/economics-finance-domain/ap-microeconomics/factor-markets/ap-labor-marginal-product-rev"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets",
+			"sourcedId": "nice:factor-markets",
 			"type": "courseComponent"
 		},
 		"sortOrder": 1,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/ap-labor-marginal-product-rev",
+		"sourcedId": "nice:ap-labor-marginal-product-rev",
 		"status": "active",
 		"title": "Changes in factor demand and supply"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x46f0f45cc5810b3d",
+			"path": "/economics-finance-domain/ap-microeconomics/factor-markets/profit-maximizing-behavior-in-perfectly-competitive-factor-markets"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets",
+			"sourcedId": "nice:factor-markets",
 			"type": "courseComponent"
 		},
 		"sortOrder": 3,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/profit-maximizing-behavior-in-perfectly-competitive-factor-markets",
+		"sourcedId": "nice:profit-maximizing-behavior-in-perfectly-competitive-factor-markets",
 		"status": "active",
 		"title": "Profit-maximizing behavior in perfectly competitive factor markets"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x949286a312c794dc",
+			"path": "/economics-finance-domain/ap-microeconomics/factor-markets/monopsonistic-markets"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets",
+			"sourcedId": "nice:factor-markets",
 			"type": "courseComponent"
 		},
 		"sortOrder": 4,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/monopsonistic-markets",
+		"sourcedId": "nice:monopsonistic-markets",
 		"status": "active",
 		"title": "Monopsonistic markets"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": "What are some of the ways that government policies impact markets? Explore how government regulation seeks to efficiently allocate resources and to prevent market failures from occurring, and learn how we can study the effectiveness of government policies such as subsidies, taxes, quality control, and public provision of goods and services."
+			"description": "What are some of the ways that government policies impact markets? Explore how government regulation seeks to efficiently allocate resources and to prevent market failures from occurring, and learn how we can study the effectiveness of government policies such as subsidies, taxes, quality control, and public provision of goods and services.",
+			"khanId": "xb2699e525562de13",
+			"path": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus"
 		},
 		"sortOrder": 5,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus",
+		"sourcedId": "nice:ap-consumer-producer-surplus",
 		"status": "active",
 		"title": "Market failure and the role of government"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x534c40bf8e7d1cff",
+			"path": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/socially-efficient-and-inefficient-market-outcomes"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus",
+			"sourcedId": "nice:ap-consumer-producer-surplus",
 			"type": "courseComponent"
 		},
 		"sortOrder": 0,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/socially-efficient-and-inefficient-market-outcomes",
+		"sourcedId": "nice:socially-efficient-and-inefficient-market-outcomes",
 		"status": "active",
 		"title": "Socially efficient and inefficient market outcomes"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x09decc48d947f9ec",
+			"path": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/externalities"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus",
+			"sourcedId": "nice:ap-consumer-producer-surplus",
 			"type": "courseComponent"
 		},
 		"sortOrder": 1,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/externalities",
+		"sourcedId": "nice:externalities",
 		"status": "active",
 		"title": "Externalities"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x427341fc207bb31b",
+			"path": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/public-and-private-goods"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus",
+			"sourcedId": "nice:ap-consumer-producer-surplus",
 			"type": "courseComponent"
 		},
 		"sortOrder": 2,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/public-and-private-goods",
+		"sourcedId": "nice:public-and-private-goods",
 		"status": "active",
 		"title": "Public and private goods"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x5651e9dc0400142b",
+			"path": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/the-effects-of-government-intervention-in-different-market-structures"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus",
+			"sourcedId": "nice:ap-consumer-producer-surplus",
 			"type": "courseComponent"
 		},
 		"sortOrder": 4,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/the-effects-of-government-intervention-in-different-market-structures",
+		"sourcedId": "nice:the-effects-of-government-intervention-in-different-market-structures",
 		"status": "active",
 		"title": "The effects of government intervention in different market structures"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x79ea06938278a9e9",
+			"path": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/inequality"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus",
+			"sourcedId": "nice:ap-consumer-producer-surplus",
 			"type": "courseComponent"
 		},
 		"sortOrder": 5,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/inequality",
+		"sourcedId": "nice:inequality",
 		"status": "active",
 		"title": "Inequality"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": "Dig into the world of AP®︎ Microeconomics and find out how our free course material aligns with the standards set by the College Board."
+			"description": "Dig into the world of AP®︎ Microeconomics and find out how our free course material aligns with the standards set by the College Board.",
+			"khanId": "x7182cc1437270741",
+			"path": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings"
 		},
 		"sortOrder": 6,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings",
+		"sourcedId": "nice:ap-microeconomics-standards-mappings",
 		"status": "active",
 		"title": "AP®︎ Microeconomics Standards mappings"
 	},
 	{
 		"course": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics",
+			"sourcedId": "nice:ap-microeconomics",
 			"type": "course"
 		},
 		"metadata": {
-			"description": ""
+			"description": "",
+			"khanId": "x3d26059c4f3b85eb",
+			"path": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings/see-how-our-course-content-aligns-with-ap-microeconomics-standards"
 		},
 		"parent": {
-			"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings",
+			"sourcedId": "nice:ap-microeconomics-standards-mappings",
 			"type": "courseComponent"
 		},
 		"sortOrder": 0,
-		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings/see-how-our-course-content-aligns-with-ap-microeconomics-standards",
+		"sourcedId": "nice:see-how-our-course-content-aligns-with-ap-microeconomics-standards",
 		"status": "active",
 		"title": "See how our course content aligns with AP®︎ Microeconomics standards"
 	}
