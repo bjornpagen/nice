@@ -2,7 +2,7 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
-import { generateOnerosterPayloadForCourse } from "@/lib/oneroster"
+import { generateOnerosterPayloadForCourse } from "@/lib/course-oneroster/oneroster"
 
 export const generateOnerosterForCourse = inngest.createFunction(
 	{

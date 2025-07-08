@@ -29,7 +29,8 @@ export const env = createEnv({
 		TIMEBACK_TOKEN_URL: z.string().min(1),
 		TIMEBACK_QTI_SERVER_URL: z.string().min(1),
 		GEMINI_API_KEY: z.string().min(1),
-		OPENAI_API_KEY: z.string().min(1)
+		OPENAI_API_KEY: z.string().min(1),
+		TIMEBACK_ONEROSTER_SERVER_URL: z.string().min(1)
 	},
 
 	/**
@@ -65,7 +66,8 @@ export const env = createEnv({
 		TIMEBACK_TOKEN_URL: process.env.TIMEBACK_TOKEN_URL,
 		TIMEBACK_QTI_SERVER_URL: process.env.TIMEBACK_QTI_SERVER_URL,
 		GEMINI_API_KEY: process.env.GEMINI_API_KEY,
-		OPENAI_API_KEY: process.env.OPENAI_API_KEY
+		OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+		TIMEBACK_ONEROSTER_SERVER_URL: process.env.TIMEBACK_ONEROSTER_SERVER_URL
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
