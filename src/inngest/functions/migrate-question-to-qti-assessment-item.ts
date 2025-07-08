@@ -38,7 +38,16 @@ async function upsertItem(client: QtiApiClient, identifier: string, title: strin
 }
 
 export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
-	{ id: "migrate-question-to-qti-assessment-item" },
+	{
+		id: "migrate-question-to-qti-assessment-item",
+		concurrency: {
+			// Limit to 10 concurrent executions for this function.
+			// The key ensures this function shares its concurrency limit with
+			// the 'migrate-article-to-qti-assessment-stimulus' function.
+			limit: 10,
+			key: "gemini-api"
+		}
+	},
 	{ event: "nice/qti.assessment-item.migration.requested" },
 	async ({ event, step, logger }) => {
 		const { questionId } = event.data

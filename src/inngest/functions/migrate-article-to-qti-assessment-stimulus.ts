@@ -41,7 +41,16 @@ async function upsertStimulus(
 }
 
 export const migrateArticleToQtiAssessmentStimulus = inngest.createFunction(
-	{ id: "migrate-article-to-qti-assessment-stimulus" },
+	{
+		id: "migrate-article-to-qti-assessment-stimulus",
+		concurrency: {
+			// Limit to 10 concurrent executions for this function.
+			// The key ensures this function shares its concurrency limit with
+			// the 'migrate-question-to-qti-assessment-item' function.
+			limit: 10,
+			key: "gemini-api"
+		}
+	},
 	{ event: "nice/qti.assessment-stimulus.migration.requested" },
 	async ({ event, step, logger }) => {
 		const { articleId } = event.data
