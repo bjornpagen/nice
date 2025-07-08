@@ -25,12 +25,14 @@ export function Content({ dataPromise }: { dataPromise: Promise<HydratedUnitData
 	return (
 		<div className="h-full overflow-y-auto">
 			<div className="flex">
-				<div className="flex-shrink-0">
-					<React.Suspense fallback={<div className="w-80 bg-gray-100 animate-pulse h-full" />}>
-						<CourseSidebar course={course} units={allUnits} lessonCount={lessonCount} challenges={challenges} />
-					</React.Suspense>
+				<div className="flex-shrink-0 w-96">
+					<div className="sticky top-0 w-96 max-h-screen overflow-y-auto">
+						<React.Suspense fallback={<div className="w-80 bg-gray-100 animate-pulse h-full" />}>
+							<CourseSidebar course={course} units={allUnits} lessonCount={lessonCount} challenges={challenges} />
+						</React.Suspense>
+					</div>
 				</div>
-				<div className="flex-1 p-6 bg-gray-50">
+				<div className="flex-1 p-6 bg-gray-50 ml-0">
 					<CourseHeader subject={params.subject} course={params.course} />
 					<div className="mb-6">
 						<h1 className="text-3xl font-bold text-gray-800 mb-2">

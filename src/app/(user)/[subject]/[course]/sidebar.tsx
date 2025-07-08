@@ -16,8 +16,8 @@ export function CourseSidebar({
 	challenges: CourseChallenge[]
 }) {
 	return (
-		<div className="hidden md:block lg:block w-96 bg-white border-r border-gray-200 h-full flex flex-col">
-			<div className="px-6 pb-6 flex-1 overflow-y-auto">
+		<div className="hidden md:block lg:block w-96 bg-white border-r border-gray-200 flex flex-col h-full">
+			<div className="px-6 pb-6 flex-1 overflow-hidden">
 				<ScrollArea className="h-full">
 					<div className="mt-4">
 						<CourseTab course={course} units={units.length} lessons={lessonCount} />

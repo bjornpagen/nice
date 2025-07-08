@@ -23,10 +23,12 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 			{/* Main Layout Container */}
 			<div className="flex">
 				{/* Sidebar */}
-				<div className="flex-shrink-0">
-					<React.Suspense>
-						<CourseSidebar course={course} units={units} lessonCount={lessonCount} challenges={challenges} />
-					</React.Suspense>
+				<div className="flex-shrink-0 w-96">
+					<div className="sticky top-0 w-96 max-h-screen overflow-y-auto">
+						<React.Suspense>
+							<CourseSidebar course={course} units={units} lessonCount={lessonCount} challenges={challenges} />
+						</React.Suspense>
+					</div>
 				</div>
 
 				{/* Main Content Area */}
