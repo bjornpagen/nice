@@ -6,9 +6,10 @@ import { zodResponseFormat } from "openai/helpers/zod"
 import { z } from "zod"
 import { env } from "@/env"
 import { loadConversionExamples } from "./qti-examples"
+import { VALID_QTI_TAGS } from "./qti-tags"
 
 const GEMINI_MODEL = "gemini-2.5-flash"
-const OPENAI_FIXER_MODEL = "o4-mini-high"
+const OPENAI_FIXER_MODEL = "o4-mini-2025-04-16"
 const MAX_RETRIES = 5
 const INITIAL_BACKOFF_MS = 1000
 
@@ -123,6 +124,12 @@ Your output will be fed directly into an automated XML parser. If the XML is not
     - ✅ **CORRECT:** \`&lt;mo&gt;&lt;/mo&gt;\`, \`title="AT&amp;T"\`
     - ❌ **FORBIDDEN:** \`<mo>\`, \`title="AT&T"\`
 
+5.  **WRAP ALL CHOICE TEXT IN <p> TAGS.**
+    Raw text is NOT allowed as a direct child of \`<qti-simple-choice>\`. All text content must be wrapped in a paragraph tag.
+
+    - ✅ **CORRECT:** \`<qti-simple-choice identifier="A"><p>This is the choice text.</p></qti-simple-choice>\`
+    - ❌ **FORBIDDEN:** \`<qti-simple-choice identifier="A">This is the choice text.</qti-simple-choice>\`
+
 ---
 
 ### Other Content Rules:
@@ -214,13 +221,18 @@ ${invalidXml}
 ${errorMessage}
 </api_error_message>
 
+# VALID QTI TAGS
+The only valid QTI tags for this application are:
+[${VALID_QTI_TAGS.join(", ")}]
+
 # INSTRUCTIONS & RULES
 1.  **Primary Goal: Fix the XML.** Your only job is to produce a valid, well-formed QTI 3.0 XML document.
 2.  **Analyze the Error:** Use the <api_error_message> to diagnose the problem. Common issues include unclosed tags, incorrect attributes, or invalid structure.
-3.  **Correct, Don't Invent:** Base your correction on the original <invalid_xml>. Do not add new content or change the meaning. The goal is to make the existing content valid.
-4.  **THE MOST IMPORTANT RULE: FULL CLOSING TAGS ONLY.** Every tag you open MUST be closed with its full, complete name. Truncated or lazy tags like \`</_>\` are strictly forbidden. For example, \`<p>\` must be closed with \`</p>\`.
-5.  **NO TRUNCATED OUTPUT.** Your response must be the complete XML file from start to finish, beginning with \`<?xml ...?>\` and ending with the final \`</${rootTag}>\` tag.
-6.  **Return ONLY XML:** Your final output must be a single JSON object containing only the corrected XML string, as per the specified schema.
+3.  **Enforce Correct Tag Names:** The generated XML MUST only use tags from the provided valid tag list. You will often see tags like \`assessmentItem\` or \`choiceInteraction\`; these are incorrect and MUST be corrected to \`qti-assessment-item\` and \`qti-choice-interaction\`, respectively. The \`qti-\` prefix is mandatory for all QTI elements.
+4.  **Remove Hallucinated Tags:** The invalid XML might contain hallucinated, non-standard tags like \`<contentBody>\`. These tags must be completely removed, but their inner content (e.g., the \`<p>\` tags within them) must be preserved and correctly placed within the parent element.
+5.  **THE MOST IMPORTANT RULE: FULL CLOSING TAGS ONLY.** Every tag you open MUST be closed with its full, complete name. Truncated or lazy tags like \`</_>\` are strictly forbidden. For example, \`<p>\` must be closed with \`</p>\`.
+6.  **NO TRUNCATED OUTPUT.** Your response must be the complete XML file from start to finish, beginning with \`<?xml ...?>\` and ending with the final \`</${rootTag}>\` tag.
+7.  **Return ONLY XML:** Your final output must be a single JSON object containing only the corrected XML string, as per the specified schema.
 
 # FINAL OUTPUT
 Return a single JSON object with the final corrected XML.

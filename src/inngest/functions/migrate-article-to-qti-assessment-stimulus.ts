@@ -113,10 +113,13 @@ export const migrateArticleToQtiAssessmentStimulus = inngest.createFunction(
 					return {
 						success: false as const,
 						qtiId: qtiId,
-						error: result.error.message,
+						// ✅ CORRECT: Serialize the full error chain to a string.
+						error: result.error.toString(),
 						invalidXml: qtiStimulusXml
 					}
 				}
+				// This error will be caught by Inngest and retried, which is correct
+				// for transient network issues or other unexpected errors.
 				throw result.error
 			}
 			return { success: true as const, identifier: result.data, qtiId }

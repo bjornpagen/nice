@@ -110,7 +110,8 @@ export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
 					return {
 						success: false as const,
 						qtiId,
-						error: result.error.message,
+						// ✅ CORRECT: Serialize the full error chain to a string.
+						error: result.error.toString(),
 						invalidXml: qtiXml // Pass original XML to the fixer
 					}
 				}
