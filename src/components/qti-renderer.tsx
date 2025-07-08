@@ -1,5 +1,21 @@
 import { useEffect, useRef } from "react"
 
+// Configuration for QTI embed environments
+const QTI_ENVIRONMENTS = {
+	staging: {
+		origin: "https://timeback-staging.alpha-1edtech.com",
+		embedUrl: "https://timeback-staging.alpha-1edtech.com/qti-embed"
+	},
+	production: {
+		origin: "https://alpha-powerpath-ui-production.up.railway.app",
+		embedUrl: "https://alpha-powerpath-ui-production.up.railway.app/qti-embed"
+	}
+} as const
+
+// Toggle this to switch between environments
+const USE_STAGING = true // Set to false to use production
+const CURRENT_ENV = USE_STAGING ? QTI_ENVIRONMENTS.staging : QTI_ENVIRONMENTS.production
+
 interface QTIRendererProps {
 	identifier: string
 	onResponseChange?: (responseIdentifier: string, response: unknown) => void
@@ -29,7 +45,7 @@ export function QTIRenderer({
 			}
 
 			// Only process messages from the QTI embed domain
-			if (event.origin !== "https://alpha-powerpath-ui-production.up.railway.app") {
+			if (event.origin !== CURRENT_ENV.origin) {
 				return
 			}
 
@@ -55,7 +71,7 @@ export function QTIRenderer({
 		}
 	}, [onResponseChange, onMessage, onRawMessage])
 
-	const embedUrl = `https://alpha-powerpath-ui-production.up.railway.app/qti-embed/${identifier}`
+	const embedUrl = `${CURRENT_ENV.embedUrl}/${identifier}`
 
 	// Use 100% for both dimensions when they are percentage values
 	const iframeStyle: React.CSSProperties = {
