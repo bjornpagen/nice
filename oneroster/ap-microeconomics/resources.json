@@ -7,14 +7,14 @@
 			"language": "en-US",
 			"subType": "qti-stimulus",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/stimuli/x75fea13d9da53d2a"
+			"url": "https://qti.alpha-1edtech.com/api/stimuli/nice-academy-x75fea13d9da53d2a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/ap-economics-introduction/a/scarcity-article",
 		"status": "active",
 		"title": "Scarcity",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x75fea13d9da53d2a"
+		"vendorResourceId": "nice-academy-x75fea13d9da53d2a"
 	},
 	{
 		"applicationId": "nice",
@@ -29,7 +29,7 @@
 		"status": "active",
 		"title": "Introduction to economics",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "878129397"
+		"vendorResourceId": "nice-academy-878129397"
 	},
 	{
 		"applicationId": "nice",
@@ -44,7 +44,7 @@
 		"status": "active",
 		"title": "Scarcity",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xf973c2aa0da54adb"
+		"vendorResourceId": "nice-academy-xf973c2aa0da54adb"
 	},
 	{
 		"applicationId": "nice",
@@ -59,7 +59,7 @@
 		"status": "active",
 		"title": "Four factors of production",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x12080596ecd8a167"
+		"vendorResourceId": "nice-academy-x12080596ecd8a167"
 	},
 	{
 		"applicationId": "nice",
@@ -74,7 +74,7 @@
 		"status": "active",
 		"title": "Scarcity and rivalry",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xabfe67dff597c478"
+		"vendorResourceId": "nice-academy-xabfe67dff597c478"
 	},
 	{
 		"applicationId": "nice",
@@ -89,7 +89,7 @@
 		"status": "active",
 		"title": "Economic models",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x75c3b5683f2c4221"
+		"vendorResourceId": "nice-academy-x75c3b5683f2c4221"
 	},
 	{
 		"applicationId": "nice",
@@ -104,7 +104,7 @@
 		"status": "active",
 		"title": "Normative and positive statements",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xc592f4be639386b0"
+		"vendorResourceId": "nice-academy-xc592f4be639386b0"
 	},
 	{
 		"applicationId": "nice",
@@ -115,14 +115,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x5a0b1c16f81ff951"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x5a0b1c16f81ff951"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/economics-introduction/e/scarcity",
 		"status": "active",
 		"title": "Scarcity",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x5a0b1c16f81ff951"
+		"vendorResourceId": "nice-academy-x5a0b1c16f81ff951"
 	},
 	{
 		"applicationId": "nice",
@@ -137,7 +137,7 @@
 		"status": "active",
 		"title": "Property rights in a market system ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x2d27ebf226852552"
+		"vendorResourceId": "nice-academy-x2d27ebf226852552"
 	},
 	{
 		"applicationId": "nice",
@@ -148,14 +148,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc2974d05bccb6bdd"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc2974d05bccb6bdd"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/economic-systems/e/resource-allocation-and-economic-systems",
 		"status": "active",
 		"title": "Resource allocation and economic systems",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xc2974d05bccb6bdd"
+		"vendorResourceId": "nice-academy-xc2974d05bccb6bdd"
 	},
 	{
 		"applicationId": "nice",
@@ -170,7 +170,7 @@
 		"status": "active",
 		"title": "Production possibilities curve",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "469721687"
+		"vendorResourceId": "nice-academy-469721687"
 	},
 	{
 		"applicationId": "nice",
@@ -185,7 +185,7 @@
 		"status": "active",
 		"title": "Opportunity cost",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "469721684"
+		"vendorResourceId": "nice-academy-469721684"
 	},
 	{
 		"applicationId": "nice",
@@ -200,7 +200,7 @@
 		"status": "active",
 		"title": "Increasing opportunity cost",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "469721688"
+		"vendorResourceId": "nice-academy-469721688"
 	},
 	{
 		"applicationId": "nice",
@@ -215,7 +215,7 @@
 		"status": "active",
 		"title": "PPCs for increasing, decreasing and constant opportunity cost",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x6230b3a423aa77fe"
+		"vendorResourceId": "nice-academy-x6230b3a423aa77fe"
 	},
 	{
 		"applicationId": "nice",
@@ -230,7 +230,7 @@
 		"status": "active",
 		"title": "Production Possibilities Curve as a model of a country's economy",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xdd319ebe9ee1077a"
+		"vendorResourceId": "nice-academy-xdd319ebe9ee1077a"
 	},
 	{
 		"applicationId": "nice",
@@ -241,14 +241,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x57b7b05f2cfaf2af"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x57b7b05f2cfaf2af"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/production-possibilities/e/production-possibilities-curve--ppc-",
 		"status": "active",
 		"title": "Interpreting graphs of the production possibilities curve (PPC)",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x57b7b05f2cfaf2af"
+		"vendorResourceId": "nice-academy-x57b7b05f2cfaf2af"
 	},
 	{
 		"applicationId": "nice",
@@ -259,14 +259,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xdb22f222af2c13fd"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xdb22f222af2c13fd"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/production-possibilities/e/calculating-opportunity-costs-from-a-production-possibilities-curve--ppc-",
 		"status": "active",
 		"title": "Calculating opportunity costs from a production possibilities curve (PPC)",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xdb22f222af2c13fd"
+		"vendorResourceId": "nice-academy-xdb22f222af2c13fd"
 	},
 	{
 		"applicationId": "nice",
@@ -281,7 +281,7 @@
 		"status": "active",
 		"title": "Comparative advantage, specialization, and gains from trade",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "471262130"
+		"vendorResourceId": "nice-academy-471262130"
 	},
 	{
 		"applicationId": "nice",
@@ -296,7 +296,7 @@
 		"status": "active",
 		"title": "Comparative advantage and absolute advantage",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "471262129"
+		"vendorResourceId": "nice-academy-471262129"
 	},
 	{
 		"applicationId": "nice",
@@ -311,7 +311,7 @@
 		"status": "active",
 		"title": "Opportunity cost and comparative advantage using an output table",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xab3721948a773b32"
+		"vendorResourceId": "nice-academy-xab3721948a773b32"
 	},
 	{
 		"applicationId": "nice",
@@ -322,14 +322,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x1e215fba45b3b32d"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x1e215fba45b3b32d"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/comparative-advantage-and-the-gains-from-trade/e/comparative-advantage-and-absolute-advantage",
 		"status": "active",
 		"title": "Comparative advantage and absolute advantage",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x1e215fba45b3b32d"
+		"vendorResourceId": "nice-academy-x1e215fba45b3b32d"
 	},
 	{
 		"applicationId": "nice",
@@ -344,7 +344,7 @@
 		"status": "active",
 		"title": "Terms of trade and the gains from trade",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x529d4cd510b537f0"
+		"vendorResourceId": "nice-academy-x529d4cd510b537f0"
 	},
 	{
 		"applicationId": "nice",
@@ -359,7 +359,7 @@
 		"status": "active",
 		"title": "Input approach to determining comparative advantage ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x4c3bddb44e1477f3"
+		"vendorResourceId": "nice-academy-x4c3bddb44e1477f3"
 	},
 	{
 		"applicationId": "nice",
@@ -374,7 +374,7 @@
 		"status": "active",
 		"title": "When there aren't gains from trade ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x6c4e23da6d759cd4"
+		"vendorResourceId": "nice-academy-x6c4e23da6d759cd4"
 	},
 	{
 		"applicationId": "nice",
@@ -389,7 +389,7 @@
 		"status": "active",
 		"title": "Comparative advantage worked example",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x7e45aa6966cce6b1"
+		"vendorResourceId": "nice-academy-x7e45aa6966cce6b1"
 	},
 	{
 		"applicationId": "nice",
@@ -400,14 +400,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x3e0858aea90d6fe3"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x3e0858aea90d6fe3"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/comparative-advantage-and-the-gains-from-trade/e/trade",
 		"status": "active",
 		"title": "The terms of trade",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x3e0858aea90d6fe3"
+		"vendorResourceId": "nice-academy-x3e0858aea90d6fe3"
 	},
 	{
 		"applicationId": "nice",
@@ -422,7 +422,7 @@
 		"status": "active",
 		"title": "Optimal Decision-making and opportunity costs",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x939ade91ad43de95"
+		"vendorResourceId": "nice-academy-x939ade91ad43de95"
 	},
 	{
 		"applicationId": "nice",
@@ -437,7 +437,7 @@
 		"status": "active",
 		"title": "Accounting profit vs  economic profit ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x33d97f1a2be8b713"
+		"vendorResourceId": "nice-academy-x33d97f1a2be8b713"
 	},
 	{
 		"applicationId": "nice",
@@ -452,7 +452,7 @@
 		"status": "active",
 		"title": "Introduction to utility",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x465be0528665dde6"
+		"vendorResourceId": "nice-academy-x465be0528665dde6"
 	},
 	{
 		"applicationId": "nice",
@@ -463,14 +463,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x020d3080d7b9551d"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x020d3080d7b9551d"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/cost-benefit-analysis/e/cost-benefit-analysis",
 		"status": "active",
 		"title": "Cost-benefit analysis",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x020d3080d7b9551d"
+		"vendorResourceId": "nice-academy-x020d3080d7b9551d"
 	},
 	{
 		"applicationId": "nice",
@@ -485,7 +485,7 @@
 		"status": "active",
 		"title": "Marginal utility and total utility",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "505817315"
+		"vendorResourceId": "nice-academy-505817315"
 	},
 	{
 		"applicationId": "nice",
@@ -500,7 +500,7 @@
 		"status": "active",
 		"title": "Visualizing marginal utility MU and total utility TU functions",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x2d7fa94c4955de56"
+		"vendorResourceId": "nice-academy-x2d7fa94c4955de56"
 	},
 	{
 		"applicationId": "nice",
@@ -511,14 +511,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x3d5d99875f643fad"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x3d5d99875f643fad"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/marginal-utility-tutorial/e/total-utility-and-marginal-utility",
 		"status": "active",
 		"title": "Total Utility and Marginal Utility",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x3d5d99875f643fad"
+		"vendorResourceId": "nice-academy-x3d5d99875f643fad"
 	},
 	{
 		"applicationId": "nice",
@@ -533,7 +533,7 @@
 		"status": "active",
 		"title": "Utility maximization: equalizing marginal utility per dollar ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "505817316"
+		"vendorResourceId": "nice-academy-505817316"
 	},
 	{
 		"applicationId": "nice",
@@ -548,7 +548,7 @@
 		"status": "active",
 		"title": "Marginal utility free response example",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xf81a262775786f42"
+		"vendorResourceId": "nice-academy-xf81a262775786f42"
 	},
 	{
 		"applicationId": "nice",
@@ -563,7 +563,7 @@
 		"status": "active",
 		"title": "Marginal benefit AP free response question",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xab3c08a99dc60da6"
+		"vendorResourceId": "nice-academy-xab3c08a99dc60da6"
 	},
 	{
 		"applicationId": "nice",
@@ -574,14 +574,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc63b15303be767d8"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc63b15303be767d8"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/utility-maximization-using-marg/e/utility-maximization",
 		"status": "active",
 		"title": "Utility Maximization",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xc63b15303be767d8"
+		"vendorResourceId": "nice-academy-xc63b15303be767d8"
 	},
 	{
 		"applicationId": "nice",
@@ -593,14 +593,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xe54c8d49aa0f4a4a"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xe54c8d49aa0f4a4a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/quiz/basic-economic-concepts-quiz-1",
 		"status": "active",
 		"title": "Basic Economic Concepts: Quiz 1",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xe54c8d49aa0f4a4a"
+		"vendorResourceId": "nice-academy-xe54c8d49aa0f4a4a"
 	},
 	{
 		"applicationId": "nice",
@@ -612,14 +612,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x8d4bb81b05e60077"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x8d4bb81b05e60077"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/quiz/basic-economic-concepts-quiz-2",
 		"status": "active",
 		"title": "Basic Economic Concepts: Quiz 2",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x8d4bb81b05e60077"
+		"vendorResourceId": "nice-academy-x8d4bb81b05e60077"
 	},
 	{
 		"applicationId": "nice",
@@ -631,14 +631,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x08aea700d2e6ed58"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x08aea700d2e6ed58"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/quiz/basic-economic-concepts-quiz-3",
 		"status": "active",
 		"title": "Basic Economic Concepts: Quiz 3",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x08aea700d2e6ed58"
+		"vendorResourceId": "nice-academy-x08aea700d2e6ed58"
 	},
 	{
 		"applicationId": "nice",
@@ -650,14 +650,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xdd8358f773fedb52"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xdd8358f773fedb52"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/test/basic-economic-concepts-unit-test",
 		"status": "active",
 		"title": "Basic Economic Concepts: Unit test",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xdd8358f773fedb52"
+		"vendorResourceId": "nice-academy-xdd8358f773fedb52"
 	},
 	{
 		"applicationId": "nice",
@@ -672,7 +672,7 @@
 		"status": "active",
 		"title": "Markets and property rights",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x553f8aa4a4e04106"
+		"vendorResourceId": "nice-academy-x553f8aa4a4e04106"
 	},
 	{
 		"applicationId": "nice",
@@ -687,7 +687,7 @@
 		"status": "active",
 		"title": "Law of demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "471262127"
+		"vendorResourceId": "nice-academy-471262127"
 	},
 	{
 		"applicationId": "nice",
@@ -702,7 +702,7 @@
 		"status": "active",
 		"title": "Deriving demand curve from tweaking marginal utility per dollar",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "505808557"
+		"vendorResourceId": "nice-academy-505808557"
 	},
 	{
 		"applicationId": "nice",
@@ -717,7 +717,7 @@
 		"status": "active",
 		"title": "Market demand as the sum of individual demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xabbed34b0992fd28"
+		"vendorResourceId": "nice-academy-xabbed34b0992fd28"
 	},
 	{
 		"applicationId": "nice",
@@ -732,7 +732,7 @@
 		"status": "active",
 		"title": "Substitution and income effects and the law of demand ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x25dff0722996be25"
+		"vendorResourceId": "nice-academy-x25dff0722996be25"
 	},
 	{
 		"applicationId": "nice",
@@ -743,14 +743,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xa86df414ff00ad3a"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xa86df414ff00ad3a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/micro-demand/e/markets--property-rights--and-the-law-of-demand",
 		"status": "active",
 		"title": "Markets, property rights, and the law of demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xa86df414ff00ad3a"
+		"vendorResourceId": "nice-academy-xa86df414ff00ad3a"
 	},
 	{
 		"applicationId": "nice",
@@ -765,7 +765,7 @@
 		"status": "active",
 		"title": "Price of related products and demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "471258160"
+		"vendorResourceId": "nice-academy-471258160"
 	},
 	{
 		"applicationId": "nice",
@@ -780,7 +780,7 @@
 		"status": "active",
 		"title": "Change in expected future prices and demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "1266634647"
+		"vendorResourceId": "nice-academy-1266634647"
 	},
 	{
 		"applicationId": "nice",
@@ -795,7 +795,7 @@
 		"status": "active",
 		"title": "Changes in income, population, or preferences",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "471262128"
+		"vendorResourceId": "nice-academy-471262128"
 	},
 	{
 		"applicationId": "nice",
@@ -810,7 +810,7 @@
 		"status": "active",
 		"title": "Normal and inferior goods",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "471262131"
+		"vendorResourceId": "nice-academy-471262131"
 	},
 	{
 		"applicationId": "nice",
@@ -825,7 +825,7 @@
 		"status": "active",
 		"title": "Inferior goods clarification",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "476379114"
+		"vendorResourceId": "nice-academy-476379114"
 	},
 	{
 		"applicationId": "nice",
@@ -840,7 +840,7 @@
 		"status": "active",
 		"title": "Change in demand versus change in quantity demanded ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x4c84a74cf27acbfd"
+		"vendorResourceId": "nice-academy-x4c84a74cf27acbfd"
 	},
 	{
 		"applicationId": "nice",
@@ -851,14 +851,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x743caddd488a1751"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x743caddd488a1751"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/micro-demand/e/demand-and-the-determinants-of-demand",
 		"status": "active",
 		"title": "Demand and the determinants of demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x743caddd488a1751"
+		"vendorResourceId": "nice-academy-x743caddd488a1751"
 	},
 	{
 		"applicationId": "nice",
@@ -873,7 +873,7 @@
 		"status": "active",
 		"title": "Law of supply",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "476379112"
+		"vendorResourceId": "nice-academy-476379112"
 	},
 	{
 		"applicationId": "nice",
@@ -888,7 +888,7 @@
 		"status": "active",
 		"title": "Change in supply versus change in quantity supplied",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x25f3cb342b01f812"
+		"vendorResourceId": "nice-academy-x25f3cb342b01f812"
 	},
 	{
 		"applicationId": "nice",
@@ -899,14 +899,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x40cef8e0c00e5e70"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x40cef8e0c00e5e70"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/supply-demand-equilibrium/supply-curve-tutorial/e/supply-and-the-determinants-of-supply",
 		"status": "active",
 		"title": "Supply and the law of supply",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x40cef8e0c00e5e70"
+		"vendorResourceId": "nice-academy-x40cef8e0c00e5e70"
 	},
 	{
 		"applicationId": "nice",
@@ -921,7 +921,7 @@
 		"status": "active",
 		"title": "Factors affecting supply",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "476379111"
+		"vendorResourceId": "nice-academy-476379111"
 	},
 	{
 		"applicationId": "nice",
@@ -932,14 +932,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xcb93612e85abe5f7"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xcb93612e85abe5f7"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/22/e/changes-in-the-determinants-of-supply",
 		"status": "active",
 		"title": "Changes in the determinants of supply",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xcb93612e85abe5f7"
+		"vendorResourceId": "nice-academy-xcb93612e85abe5f7"
 	},
 	{
 		"applicationId": "nice",
@@ -954,7 +954,7 @@
 		"status": "active",
 		"title": "Introduction to price elasticity of demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x00350a2da52f2646"
+		"vendorResourceId": "nice-academy-x00350a2da52f2646"
 	},
 	{
 		"applicationId": "nice",
@@ -969,7 +969,7 @@
 		"status": "active",
 		"title": "Determinants of price elasticity of demand ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x4564ec1756b032eb"
+		"vendorResourceId": "nice-academy-x4564ec1756b032eb"
 	},
 	{
 		"applicationId": "nice",
@@ -984,7 +984,7 @@
 		"status": "active",
 		"title": "Determinants of elasticity example ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x80b9d9e046eb647b"
+		"vendorResourceId": "nice-academy-x80b9d9e046eb647b"
 	},
 	{
 		"applicationId": "nice",
@@ -995,14 +995,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x8862bdd561e4b717"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x8862bdd561e4b717"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/e/price-elasticity-of-demand",
 		"status": "active",
 		"title": "Price Elasticity of Demand and its Determinants ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x8862bdd561e4b717"
+		"vendorResourceId": "nice-academy-x8862bdd561e4b717"
 	},
 	{
 		"applicationId": "nice",
@@ -1017,7 +1017,7 @@
 		"status": "active",
 		"title": "Perfect inelasticity and perfect elasticity of demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "478016838"
+		"vendorResourceId": "nice-academy-478016838"
 	},
 	{
 		"applicationId": "nice",
@@ -1032,7 +1032,7 @@
 		"status": "active",
 		"title": "Constant unit elasticity",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "480683235"
+		"vendorResourceId": "nice-academy-480683235"
 	},
 	{
 		"applicationId": "nice",
@@ -1047,7 +1047,7 @@
 		"status": "active",
 		"title": "Total revenue and elasticity",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "480690086"
+		"vendorResourceId": "nice-academy-480690086"
 	},
 	{
 		"applicationId": "nice",
@@ -1062,7 +1062,7 @@
 		"status": "active",
 		"title": "More on total revenue and elasticity",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "480687060"
+		"vendorResourceId": "nice-academy-480687060"
 	},
 	{
 		"applicationId": "nice",
@@ -1073,14 +1073,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xe74dacf669dd5b6b"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xe74dacf669dd5b6b"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/e/interpreting-price-elasticity-of-demand",
 		"status": "active",
 		"title": "Determinants of price elasticity and the total revenue rule",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xe74dacf669dd5b6b"
+		"vendorResourceId": "nice-academy-xe74dacf669dd5b6b"
 	},
 	{
 		"applicationId": "nice",
@@ -1095,7 +1095,7 @@
 		"status": "active",
 		"title": "Introduction to price elasticity of supply ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x1ed69c3148e6c767"
+		"vendorResourceId": "nice-academy-x1ed69c3148e6c767"
 	},
 	{
 		"applicationId": "nice",
@@ -1110,7 +1110,7 @@
 		"status": "active",
 		"title": "Price elasticity of supply determinants",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x27d78be10d1445dc"
+		"vendorResourceId": "nice-academy-x27d78be10d1445dc"
 	},
 	{
 		"applicationId": "nice",
@@ -1121,14 +1121,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x7b3deaf606349738"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x7b3deaf606349738"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-of-supply/e/price-elasticity-of-supply",
 		"status": "active",
 		"title": "Price Elasticity of Supply and its Determinants",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x7b3deaf606349738"
+		"vendorResourceId": "nice-academy-x7b3deaf606349738"
 	},
 	{
 		"applicationId": "nice",
@@ -1143,7 +1143,7 @@
 		"status": "active",
 		"title": "Income elasticity of demand ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xb0a01122caa8758a"
+		"vendorResourceId": "nice-academy-xb0a01122caa8758a"
 	},
 	{
 		"applicationId": "nice",
@@ -1154,14 +1154,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x5a6948061fd3a453"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x5a6948061fd3a453"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/income-elasticity-of-demand/e/cross-and-income-elasticity-of-demand",
 		"status": "active",
 		"title": "Income Elasticity of Demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x5a6948061fd3a453"
+		"vendorResourceId": "nice-academy-x5a6948061fd3a453"
 	},
 	{
 		"applicationId": "nice",
@@ -1176,7 +1176,7 @@
 		"status": "active",
 		"title": "Cross-price elasticity of demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "480687059"
+		"vendorResourceId": "nice-academy-480687059"
 	},
 	{
 		"applicationId": "nice",
@@ -1187,14 +1187,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xbf85810554f72a24"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xbf85810554f72a24"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/income-elasticity-of-demand/e/cross-price-elastiticy-of-demand",
 		"status": "active",
 		"title": "Cross-Price Elasticity of Demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xbf85810554f72a24"
+		"vendorResourceId": "nice-academy-xbf85810554f72a24"
 	},
 	{
 		"applicationId": "nice",
@@ -1209,7 +1209,7 @@
 		"status": "active",
 		"title": "Market equilibrium",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "476379115"
+		"vendorResourceId": "nice-academy-476379115"
 	},
 	{
 		"applicationId": "nice",
@@ -1220,14 +1220,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x0f3b0ade232f5f54"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x0f3b0ade232f5f54"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/26/e/market-equilibrium-and-price-controls",
 		"status": "active",
 		"title": "Market equilibrium",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x0f3b0ade232f5f54"
+		"vendorResourceId": "nice-academy-x0f3b0ade232f5f54"
 	},
 	{
 		"applicationId": "nice",
@@ -1242,7 +1242,7 @@
 		"status": "active",
 		"title": "Demand curve as marginal benefit curve",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "482857607"
+		"vendorResourceId": "nice-academy-482857607"
 	},
 	{
 		"applicationId": "nice",
@@ -1257,7 +1257,7 @@
 		"status": "active",
 		"title": "Consumer surplus introduction",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "482869244"
+		"vendorResourceId": "nice-academy-482869244"
 	},
 	{
 		"applicationId": "nice",
@@ -1272,7 +1272,7 @@
 		"status": "active",
 		"title": "Total consumer surplus as area",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "491075659"
+		"vendorResourceId": "nice-academy-491075659"
 	},
 	{
 		"applicationId": "nice",
@@ -1287,7 +1287,7 @@
 		"status": "active",
 		"title": "Producer surplus",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "491082769"
+		"vendorResourceId": "nice-academy-491082769"
 	},
 	{
 		"applicationId": "nice",
@@ -1302,7 +1302,7 @@
 		"status": "active",
 		"title": "Equilibrium, allocative efficiency and total surplus",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x1a95d088ef16baa0"
+		"vendorResourceId": "nice-academy-x1a95d088ef16baa0"
 	},
 	{
 		"applicationId": "nice",
@@ -1313,14 +1313,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x0d16b4e1edc54e7e"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x0d16b4e1edc54e7e"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/e/consumer-and-producer-surplus",
 		"status": "active",
 		"title": "Consumer and Producer Surplus and Allocative Efficiency",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x0d16b4e1edc54e7e"
+		"vendorResourceId": "nice-academy-x0d16b4e1edc54e7e"
 	},
 	{
 		"applicationId": "nice",
@@ -1335,7 +1335,7 @@
 		"status": "active",
 		"title": "Changes in market equilibrium",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "476379113"
+		"vendorResourceId": "nice-academy-476379113"
 	},
 	{
 		"applicationId": "nice",
@@ -1346,14 +1346,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x6c3cb64e17bd6362"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x6c3cb64e17bd6362"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/supply-demand-equilibrium/market-equilibrium-tutorial/e/changes-in-equilibrium",
 		"status": "active",
 		"title": "Changes in equilibrium",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x6c3cb64e17bd6362"
+		"vendorResourceId": "nice-academy-x6c3cb64e17bd6362"
 	},
 	{
 		"applicationId": "nice",
@@ -1368,7 +1368,7 @@
 		"status": "active",
 		"title": "Rent control and deadweight loss",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xf9b67f8e"
+		"vendorResourceId": "nice-academy-xf9b67f8e"
 	},
 	{
 		"applicationId": "nice",
@@ -1383,7 +1383,7 @@
 		"status": "active",
 		"title": "Minimum wage and price floors",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "493579772"
+		"vendorResourceId": "nice-academy-493579772"
 	},
 	{
 		"applicationId": "nice",
@@ -1394,14 +1394,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x260dc8087d5d6b29"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x260dc8087d5d6b29"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/e/price-and-quantity-controls",
 		"status": "active",
 		"title": "Price and quantity controls",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x260dc8087d5d6b29"
+		"vendorResourceId": "nice-academy-x260dc8087d5d6b29"
 	},
 	{
 		"applicationId": "nice",
@@ -1416,7 +1416,7 @@
 		"status": "active",
 		"title": "How price controls reallocate surplus",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x1d63389ac92d8cd2"
+		"vendorResourceId": "nice-academy-x1d63389ac92d8cd2"
 	},
 	{
 		"applicationId": "nice",
@@ -1427,14 +1427,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x6c7240b2620e7841"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x6c7240b2620e7841"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/e/the-effect-of-government-interventions-on-surplus",
 		"status": "active",
 		"title": "The effect of government interventions on surplus",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x6c7240b2620e7841"
+		"vendorResourceId": "nice-academy-x6c7240b2620e7841"
 	},
 	{
 		"applicationId": "nice",
@@ -1449,7 +1449,7 @@
 		"status": "active",
 		"title": "Taxation and dead weight loss",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "498143705"
+		"vendorResourceId": "nice-academy-498143705"
 	},
 	{
 		"applicationId": "nice",
@@ -1464,7 +1464,7 @@
 		"status": "active",
 		"title": "Example breaking down tax incidence",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x98f24461f13340e4"
+		"vendorResourceId": "nice-academy-x98f24461f13340e4"
 	},
 	{
 		"applicationId": "nice",
@@ -1479,7 +1479,7 @@
 		"status": "active",
 		"title": "Taxes and perfectly inelastic demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "499815367"
+		"vendorResourceId": "nice-academy-499815367"
 	},
 	{
 		"applicationId": "nice",
@@ -1494,7 +1494,7 @@
 		"status": "active",
 		"title": "Taxes and perfectly elastic demand",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "499850170"
+		"vendorResourceId": "nice-academy-499850170"
 	},
 	{
 		"applicationId": "nice",
@@ -1505,14 +1505,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc8db4bdf69504995"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc8db4bdf69504995"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/e/tax-incidence-and-deadweight-loss-exercise",
 		"status": "active",
 		"title": "Tax Incidence and Deadweight Loss",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xc8db4bdf69504995"
+		"vendorResourceId": "nice-academy-xc8db4bdf69504995"
 	},
 	{
 		"applicationId": "nice",
@@ -1527,7 +1527,7 @@
 		"status": "active",
 		"title": "Changing equilibria from trade ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xa45f92128e2a22a5"
+		"vendorResourceId": "nice-academy-xa45f92128e2a22a5"
 	},
 	{
 		"applicationId": "nice",
@@ -1542,7 +1542,7 @@
 		"status": "active",
 		"title": "Trade and tariffs",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xe12e6cf05b985cbc"
+		"vendorResourceId": "nice-academy-xe12e6cf05b985cbc"
 	},
 	{
 		"applicationId": "nice",
@@ -1557,7 +1557,7 @@
 		"status": "active",
 		"title": "Sample free response question (FRQ) on tariffs and trade",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x78b2bbd577db87ee"
+		"vendorResourceId": "nice-academy-x78b2bbd577db87ee"
 	},
 	{
 		"applicationId": "nice",
@@ -1568,14 +1568,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x85e25624a66eab1c"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x85e25624a66eab1c"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/international-trade/e/international-trade-and-public-policy",
 		"status": "active",
 		"title": "International trade and public policy",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x85e25624a66eab1c"
+		"vendorResourceId": "nice-academy-x85e25624a66eab1c"
 	},
 	{
 		"applicationId": "nice",
@@ -1587,14 +1587,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x38d7ba94f5f5a995"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x38d7ba94f5f5a995"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/quiz/unit-2-supply-and-demnd-quiz-1",
 		"status": "active",
 		"title": "Supply and Demand: Quiz 1",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x38d7ba94f5f5a995"
+		"vendorResourceId": "nice-academy-x38d7ba94f5f5a995"
 	},
 	{
 		"applicationId": "nice",
@@ -1606,14 +1606,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xf89079df28a06b9b"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xf89079df28a06b9b"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/quiz/unit-2-supply-and-demnd-quiz-2",
 		"status": "active",
 		"title": "Supply and Demand: Quiz 2",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xf89079df28a06b9b"
+		"vendorResourceId": "nice-academy-xf89079df28a06b9b"
 	},
 	{
 		"applicationId": "nice",
@@ -1625,14 +1625,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x8bc22dd52b9742aa"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x8bc22dd52b9742aa"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/quiz/unit-2-supply-and-demnd-quiz-3",
 		"status": "active",
 		"title": "Supply and Demand: Quiz 3",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x8bc22dd52b9742aa"
+		"vendorResourceId": "nice-academy-x8bc22dd52b9742aa"
 	},
 	{
 		"applicationId": "nice",
@@ -1644,14 +1644,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x4dfbf4e60a0459e7"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x4dfbf4e60a0459e7"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/quiz/unit-2-supply-and-demnd-quiz-4",
 		"status": "active",
 		"title": "Supply and Demand: Quiz 4",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x4dfbf4e60a0459e7"
+		"vendorResourceId": "nice-academy-x4dfbf4e60a0459e7"
 	},
 	{
 		"applicationId": "nice",
@@ -1663,14 +1663,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xd13b6acd12b758f4"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xd13b6acd12b758f4"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/test/unit-2-supply-and-demnd-unit-test",
 		"status": "active",
 		"title": "Supply and Demand: Unit test",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xd13b6acd12b758f4"
+		"vendorResourceId": "nice-academy-xd13b6acd12b758f4"
 	},
 	{
 		"applicationId": "nice",
@@ -1685,7 +1685,7 @@
 		"status": "active",
 		"title": "Introduction to production functions ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x555f17bc0979fbe5"
+		"vendorResourceId": "nice-academy-x555f17bc0979fbe5"
 	},
 	{
 		"applicationId": "nice",
@@ -1700,7 +1700,7 @@
 		"status": "active",
 		"title": "Total product, marginal product, and average product",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xbbaf806a06971fee"
+		"vendorResourceId": "nice-academy-xbbaf806a06971fee"
 	},
 	{
 		"applicationId": "nice",
@@ -1711,14 +1711,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x1c2f73d9923da561"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x1c2f73d9923da561"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/introduction-to-production-and-costs/e/3-1-the-production-function",
 		"status": "active",
 		"title": "The production function",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x1c2f73d9923da561"
+		"vendorResourceId": "nice-academy-x1c2f73d9923da561"
 	},
 	{
 		"applicationId": "nice",
@@ -1733,7 +1733,7 @@
 		"status": "active",
 		"title": "Fixed, variable, and marginal cost",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "514726534"
+		"vendorResourceId": "nice-academy-514726534"
 	},
 	{
 		"applicationId": "nice",
@@ -1748,7 +1748,7 @@
 		"status": "active",
 		"title": "Marginal cost, average variable cost, and average total cost",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x6ca03b1fd4b4d533"
+		"vendorResourceId": "nice-academy-x6ca03b1fd4b4d533"
 	},
 	{
 		"applicationId": "nice",
@@ -1763,7 +1763,7 @@
 		"status": "active",
 		"title": "Graphs of MC, AVC and ATC",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x1f6fd431403ed956"
+		"vendorResourceId": "nice-academy-x1f6fd431403ed956"
 	},
 	{
 		"applicationId": "nice",
@@ -1778,7 +1778,7 @@
 		"status": "active",
 		"title": "Marginal revenue and marginal cost",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "521284923"
+		"vendorResourceId": "nice-academy-521284923"
 	},
 	{
 		"applicationId": "nice",
@@ -1789,14 +1789,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xa1fc04277b03ab64"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xa1fc04277b03ab64"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/e/short-run-production-costs--foundational-concepts",
 		"status": "active",
 		"title": "Short-run production costs: foundational concepts",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xa1fc04277b03ab64"
+		"vendorResourceId": "nice-academy-xa1fc04277b03ab64"
 	},
 	{
 		"applicationId": "nice",
@@ -1811,7 +1811,7 @@
 		"status": "active",
 		"title": "Marginal revenue below average total cost",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "521326286"
+		"vendorResourceId": "nice-academy-521326286"
 	},
 	{
 		"applicationId": "nice",
@@ -1826,7 +1826,7 @@
 		"status": "active",
 		"title": "How costs change when fixed and variable costs change",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x31c330c31d4c550b"
+		"vendorResourceId": "nice-academy-x31c330c31d4c550b"
 	},
 	{
 		"applicationId": "nice",
@@ -1841,7 +1841,7 @@
 		"status": "active",
 		"title": "Graphical impact of cost changes on marginal and average costs",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xc882420c3bb6bc75"
+		"vendorResourceId": "nice-academy-xc882420c3bb6bc75"
 	},
 	{
 		"applicationId": "nice",
@@ -1852,14 +1852,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xec8da3d7b8155558"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xec8da3d7b8155558"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/e/short-run-production-costs",
 		"status": "active",
 		"title": "Short-run production costs",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xec8da3d7b8155558"
+		"vendorResourceId": "nice-academy-xec8da3d7b8155558"
 	},
 	{
 		"applicationId": "nice",
@@ -1874,7 +1874,7 @@
 		"status": "active",
 		"title": "Long-run average total cost curve",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x5f3bf955fd4b7010"
+		"vendorResourceId": "nice-academy-x5f3bf955fd4b7010"
 	},
 	{
 		"applicationId": "nice",
@@ -1889,7 +1889,7 @@
 		"status": "active",
 		"title": "Economies and diseconomies of scale",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x1177755c16814d07"
+		"vendorResourceId": "nice-academy-x1177755c16814d07"
 	},
 	{
 		"applicationId": "nice",
@@ -1904,7 +1904,7 @@
 		"status": "active",
 		"title": "Minimum efficient scale and market concentration ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xa2504c516da7d3ac"
+		"vendorResourceId": "nice-academy-xa2504c516da7d3ac"
 	},
 	{
 		"applicationId": "nice",
@@ -1915,14 +1915,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x92cc03337015577b"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x92cc03337015577b"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/long-run-production-costs/e/long-run-production-costs",
 		"status": "active",
 		"title": "Long-run production costs",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x92cc03337015577b"
+		"vendorResourceId": "nice-academy-x92cc03337015577b"
 	},
 	{
 		"applicationId": "nice",
@@ -1937,7 +1937,7 @@
 		"status": "active",
 		"title": "Economic profit vs accounting profit",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "510581042"
+		"vendorResourceId": "nice-academy-510581042"
 	},
 	{
 		"applicationId": "nice",
@@ -1948,14 +1948,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x069b0d634674c065"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x069b0d634674c065"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/economic-profit-tutorial/e/types-of-profit",
 		"status": "active",
 		"title": "Types of profit",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x069b0d634674c065"
+		"vendorResourceId": "nice-academy-x069b0d634674c065"
 	},
 	{
 		"applicationId": "nice",
@@ -1970,7 +1970,7 @@
 		"status": "active",
 		"title": "Profit maximization",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xe2c4edd5e8838b77"
+		"vendorResourceId": "nice-academy-xe2c4edd5e8838b77"
 	},
 	{
 		"applicationId": "nice",
@@ -1985,7 +1985,7 @@
 		"status": "active",
 		"title": "Profit maximization worked example",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x07cc66051297f9a4"
+		"vendorResourceId": "nice-academy-x07cc66051297f9a4"
 	},
 	{
 		"applicationId": "nice",
@@ -1996,14 +1996,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xed779d4efb0eeb12"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xed779d4efb0eeb12"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/micro-profit-maximization/e/profit-maximization",
 		"status": "active",
 		"title": "Profit maximization",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xed779d4efb0eeb12"
+		"vendorResourceId": "nice-academy-xed779d4efb0eeb12"
 	},
 	{
 		"applicationId": "nice",
@@ -2018,7 +2018,7 @@
 		"status": "active",
 		"title": "Shutting down or exiting industry based on price",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x976d05741579e7bc"
+		"vendorResourceId": "nice-academy-x976d05741579e7bc"
 	},
 	{
 		"applicationId": "nice",
@@ -2029,14 +2029,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x7fe4f9a142a34fd8"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x7fe4f9a142a34fd8"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/firm-entry-exit-and-the-shut-down-rule/e/firms-short-run-decisions-to-produce-and-long-run-decisions-to-enter-or-exit-a-market",
 		"status": "active",
 		"title": "Firms’ Short-Run Decisions to Produce and Long-Run Decisions to Enter or Exit a Market",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x7fe4f9a142a34fd8"
+		"vendorResourceId": "nice-academy-x7fe4f9a142a34fd8"
 	},
 	{
 		"applicationId": "nice",
@@ -2051,7 +2051,7 @@
 		"status": "active",
 		"title": "Introduction to perfect competition",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xe81019f5be6d68d0"
+		"vendorResourceId": "nice-academy-xe81019f5be6d68d0"
 	},
 	{
 		"applicationId": "nice",
@@ -2066,7 +2066,7 @@
 		"status": "active",
 		"title": "Economic profit for firms in perfectly competitive markets ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x53c6b9bd0c26909d"
+		"vendorResourceId": "nice-academy-x53c6b9bd0c26909d"
 	},
 	{
 		"applicationId": "nice",
@@ -2077,14 +2077,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x27adad2ba295ffe8"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x27adad2ba295ffe8"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/e/3-7-a-perfect-competition-foundations",
 		"status": "active",
 		"title": "Perfect competition foundational concepts",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x27adad2ba295ffe8"
+		"vendorResourceId": "nice-academy-x27adad2ba295ffe8"
 	},
 	{
 		"applicationId": "nice",
@@ -2099,7 +2099,7 @@
 		"status": "active",
 		"title": "Long-run economic profit for perfectly competitive firms",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x1bacdd972ddd9f00"
+		"vendorResourceId": "nice-academy-x1bacdd972ddd9f00"
 	},
 	{
 		"applicationId": "nice",
@@ -2114,7 +2114,7 @@
 		"status": "active",
 		"title": "Long-run supply curve in constant cost perfectly competitive markets",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x55a48b209f58f5fd"
+		"vendorResourceId": "nice-academy-x55a48b209f58f5fd"
 	},
 	{
 		"applicationId": "nice",
@@ -2129,7 +2129,7 @@
 		"status": "active",
 		"title": "Long run supply when industry costs aren't constant",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x4ab543e8b92e5239"
+		"vendorResourceId": "nice-academy-x4ab543e8b92e5239"
 	},
 	{
 		"applicationId": "nice",
@@ -2144,7 +2144,7 @@
 		"status": "active",
 		"title": "Free response question (FRQ) on perfect competition ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x2f737eeeea7e2063"
+		"vendorResourceId": "nice-academy-x2f737eeeea7e2063"
 	},
 	{
 		"applicationId": "nice",
@@ -2155,14 +2155,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x9f8f203e5f74b373"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x9f8f203e5f74b373"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/e/perfect-competition-in-the-short-run-and-long-run",
 		"status": "active",
 		"title": "Perfect competition in the short run and long run",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x9f8f203e5f74b373"
+		"vendorResourceId": "nice-academy-x9f8f203e5f74b373"
 	},
 	{
 		"applicationId": "nice",
@@ -2173,14 +2173,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x76d4868885868eb1"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x76d4868885868eb1"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/e/increasing--decreasing--and-constant-cost-industries",
 		"status": "active",
 		"title": "Increasing, decreasing, and constant cost industries",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x76d4868885868eb1"
+		"vendorResourceId": "nice-academy-x76d4868885868eb1"
 	},
 	{
 		"applicationId": "nice",
@@ -2191,14 +2191,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc1b45a44a6bdbf70"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc1b45a44a6bdbf70"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/e/efficiency-and-perfect-competition",
 		"status": "active",
 		"title": "Efficiency and perfect competition",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xc1b45a44a6bdbf70"
+		"vendorResourceId": "nice-academy-xc1b45a44a6bdbf70"
 	},
 	{
 		"applicationId": "nice",
@@ -2210,14 +2210,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x7d4f95ae62277c2a"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x7d4f95ae62277c2a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/quiz/production-cost-and-the-perfect-competition-model-temporary-quiz-1",
 		"status": "active",
 		"title": "Production, cost, and the perfect competition model: Quiz 1",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x7d4f95ae62277c2a"
+		"vendorResourceId": "nice-academy-x7d4f95ae62277c2a"
 	},
 	{
 		"applicationId": "nice",
@@ -2229,14 +2229,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x79fce6915961439a"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x79fce6915961439a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/quiz/production-cost-and-the-perfect-competition-model-temporary-quiz-2",
 		"status": "active",
 		"title": "Production, cost, and the perfect competition model: Quiz 2",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x79fce6915961439a"
+		"vendorResourceId": "nice-academy-x79fce6915961439a"
 	},
 	{
 		"applicationId": "nice",
@@ -2248,14 +2248,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xd0505e04bdbb4033"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xd0505e04bdbb4033"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/quiz/production-cost-and-the-perfect-competition-model-temporary-quiz-3",
 		"status": "active",
 		"title": "Production, cost, and the perfect competition model: Quiz 3",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xd0505e04bdbb4033"
+		"vendorResourceId": "nice-academy-xd0505e04bdbb4033"
 	},
 	{
 		"applicationId": "nice",
@@ -2267,14 +2267,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x21995b652e95ec26"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x21995b652e95ec26"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/test/production-cost-and-the-perfect-competition-model-temporary-unit-test",
 		"status": "active",
 		"title": "Production, cost, and the perfect competition model: Unit test",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x21995b652e95ec26"
+		"vendorResourceId": "nice-academy-x21995b652e95ec26"
 	},
 	{
 		"applicationId": "nice",
@@ -2289,7 +2289,7 @@
 		"status": "active",
 		"title": "Perfect and imperfect competition",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xf94655b94c517646"
+		"vendorResourceId": "nice-academy-xf94655b94c517646"
 	},
 	{
 		"applicationId": "nice",
@@ -2304,7 +2304,7 @@
 		"status": "active",
 		"title": "Types of competition and marginal revenue",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xab9b036f4b9068b3"
+		"vendorResourceId": "nice-academy-xab9b036f4b9068b3"
 	},
 	{
 		"applicationId": "nice",
@@ -2319,7 +2319,7 @@
 		"status": "active",
 		"title": "Marginal revenue and marginal cost in imperfect competition",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xac2fab2aaf7b9e3b"
+		"vendorResourceId": "nice-academy-xac2fab2aaf7b9e3b"
 	},
 	{
 		"applicationId": "nice",
@@ -2330,14 +2330,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x37c6a48689252557"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x37c6a48689252557"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/e/imperfect-competition",
 		"status": "active",
 		"title": "Imperfect competition",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x37c6a48689252557"
+		"vendorResourceId": "nice-academy-x37c6a48689252557"
 	},
 	{
 		"applicationId": "nice",
@@ -2352,7 +2352,7 @@
 		"status": "active",
 		"title": "Monopolies vs. perfect competition",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x4e0c82eb7170c835"
+		"vendorResourceId": "nice-academy-x4e0c82eb7170c835"
 	},
 	{
 		"applicationId": "nice",
@@ -2367,7 +2367,7 @@
 		"status": "active",
 		"title": "Economic profit for a monopoly",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x5c3b2642a305d783"
+		"vendorResourceId": "nice-academy-x5c3b2642a305d783"
 	},
 	{
 		"applicationId": "nice",
@@ -2382,7 +2382,7 @@
 		"status": "active",
 		"title": "Monopolist optimizing price: Total revenue",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "526475273"
+		"vendorResourceId": "nice-academy-526475273"
 	},
 	{
 		"applicationId": "nice",
@@ -2397,7 +2397,7 @@
 		"status": "active",
 		"title": "Monopolist optimizing price: Marginal revenue",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "526475275"
+		"vendorResourceId": "nice-academy-526475275"
 	},
 	{
 		"applicationId": "nice",
@@ -2412,7 +2412,7 @@
 		"status": "active",
 		"title": "Monopolist optimizing price: Dead weight loss",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "526475274"
+		"vendorResourceId": "nice-academy-526475274"
 	},
 	{
 		"applicationId": "nice",
@@ -2427,7 +2427,7 @@
 		"status": "active",
 		"title": "Review of revenue and cost graphs for a monopoly",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "1266250654"
+		"vendorResourceId": "nice-academy-1266250654"
 	},
 	{
 		"applicationId": "nice",
@@ -2438,14 +2438,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xbdb2a8702cf57d12"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xbdb2a8702cf57d12"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/e/monopoly",
 		"status": "active",
 		"title": "Monopoly",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xbdb2a8702cf57d12"
+		"vendorResourceId": "nice-academy-xbdb2a8702cf57d12"
 	},
 	{
 		"applicationId": "nice",
@@ -2456,14 +2456,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x65ae73ec43123c9f"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x65ae73ec43123c9f"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/e/natural-monopoly",
 		"status": "active",
 		"title": "Efficiency and monopolies",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x65ae73ec43123c9f"
+		"vendorResourceId": "nice-academy-x65ae73ec43123c9f"
 	},
 	{
 		"applicationId": "nice",
@@ -2478,7 +2478,7 @@
 		"status": "active",
 		"title": "Price discrimination",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "541028301"
+		"vendorResourceId": "nice-academy-541028301"
 	},
 	{
 		"applicationId": "nice",
@@ -2493,7 +2493,7 @@
 		"status": "active",
 		"title": "Monopoly price discrimination",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xfad012585889e441"
+		"vendorResourceId": "nice-academy-xfad012585889e441"
 	},
 	{
 		"applicationId": "nice",
@@ -2504,14 +2504,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xe475c9abc3402be8"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xe475c9abc3402be8"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/price-discrimination/e/price-discrimination",
 		"status": "active",
 		"title": "Price discrimination",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xe475c9abc3402be8"
+		"vendorResourceId": "nice-academy-xe475c9abc3402be8"
 	},
 	{
 		"applicationId": "nice",
@@ -2526,7 +2526,7 @@
 		"status": "active",
 		"title": "Oligopolies and monopolistic competition",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "529106152"
+		"vendorResourceId": "nice-academy-529106152"
 	},
 	{
 		"applicationId": "nice",
@@ -2541,7 +2541,7 @@
 		"status": "active",
 		"title": "Monopolistic competition and economic profit",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "541028299"
+		"vendorResourceId": "nice-academy-541028299"
 	},
 	{
 		"applicationId": "nice",
@@ -2556,7 +2556,7 @@
 		"status": "active",
 		"title": "Long run economic profit for monopolistic competition",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xde6fad9fc7f121db"
+		"vendorResourceId": "nice-academy-xde6fad9fc7f121db"
 	},
 	{
 		"applicationId": "nice",
@@ -2567,14 +2567,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x80879fba7732b4a4"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x80879fba7732b4a4"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolistic-competition-oligop/e/monopolistic-competition",
 		"status": "active",
 		"title": "Monopolistic competition",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x80879fba7732b4a4"
+		"vendorResourceId": "nice-academy-x80879fba7732b4a4"
 	},
 	{
 		"applicationId": "nice",
@@ -2589,7 +2589,7 @@
 		"status": "active",
 		"title": "Oligopolies, duopolies, collusion, and cartels",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "531245092"
+		"vendorResourceId": "nice-academy-531245092"
 	},
 	{
 		"applicationId": "nice",
@@ -2604,7 +2604,7 @@
 		"status": "active",
 		"title": "Prisoners' dilemma and Nash equilibrium",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "531245090"
+		"vendorResourceId": "nice-academy-531245090"
 	},
 	{
 		"applicationId": "nice",
@@ -2619,7 +2619,7 @@
 		"status": "active",
 		"title": "More on Nash equilibrium",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "531245089"
+		"vendorResourceId": "nice-academy-531245089"
 	},
 	{
 		"applicationId": "nice",
@@ -2634,7 +2634,7 @@
 		"status": "active",
 		"title": "Why parties to cartels cheat",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "541028297"
+		"vendorResourceId": "nice-academy-541028297"
 	},
 	{
 		"applicationId": "nice",
@@ -2649,7 +2649,7 @@
 		"status": "active",
 		"title": "Game theory of cheating firms",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "541022390"
+		"vendorResourceId": "nice-academy-541022390"
 	},
 	{
 		"applicationId": "nice",
@@ -2664,7 +2664,7 @@
 		"status": "active",
 		"title": "Game theory worked example from AP Microeconomics",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xf46e91cf0a13a9d2"
+		"vendorResourceId": "nice-academy-xf46e91cf0a13a9d2"
 	},
 	{
 		"applicationId": "nice",
@@ -2675,14 +2675,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xd91c859f8291d0f3"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xd91c859f8291d0f3"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/oligopoly-and-game-theory/e/oligopoly-and-game-theory--foundational-concepts",
 		"status": "active",
 		"title": "Oligopoly and game theory: foundational concepts",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xd91c859f8291d0f3"
+		"vendorResourceId": "nice-academy-xd91c859f8291d0f3"
 	},
 	{
 		"applicationId": "nice",
@@ -2693,14 +2693,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xb151f9cc9f21884c"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xb151f9cc9f21884c"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/e/game-theory",
 		"status": "active",
 		"title": "Game Theory",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xb151f9cc9f21884c"
+		"vendorResourceId": "nice-academy-xb151f9cc9f21884c"
 	},
 	{
 		"applicationId": "nice",
@@ -2712,14 +2712,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xddc502002b811849"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xddc502002b811849"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/quiz/imperfect-competition-quiz-1",
 		"status": "active",
 		"title": "Imperfect competition: Quiz 1",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xddc502002b811849"
+		"vendorResourceId": "nice-academy-xddc502002b811849"
 	},
 	{
 		"applicationId": "nice",
@@ -2731,14 +2731,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc3a5e0e4e52f8d3c"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc3a5e0e4e52f8d3c"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/quiz/imperfect-competition-quiz-2",
 		"status": "active",
 		"title": "Imperfect competition: Quiz 2",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xc3a5e0e4e52f8d3c"
+		"vendorResourceId": "nice-academy-xc3a5e0e4e52f8d3c"
 	},
 	{
 		"applicationId": "nice",
@@ -2750,14 +2750,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x5e94fa9849d2a758"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x5e94fa9849d2a758"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/test/imperfect-competition-unit-test",
 		"status": "active",
 		"title": "Imperfect competition: Unit test",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x5e94fa9849d2a758"
+		"vendorResourceId": "nice-academy-x5e94fa9849d2a758"
 	},
 	{
 		"applicationId": "nice",
@@ -2772,7 +2772,7 @@
 		"status": "active",
 		"title": "A firm's marginal product revenue curve",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "544764167"
+		"vendorResourceId": "nice-academy-544764167"
 	},
 	{
 		"applicationId": "nice",
@@ -2787,7 +2787,7 @@
 		"status": "active",
 		"title": "How many people to hire given the MPR curve",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "544732566"
+		"vendorResourceId": "nice-academy-544732566"
 	},
 	{
 		"applicationId": "nice",
@@ -2802,7 +2802,7 @@
 		"status": "active",
 		"title": "Introduction to labor markets",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x6fc915d7f93b9585"
+		"vendorResourceId": "nice-academy-x6fc915d7f93b9585"
 	},
 	{
 		"applicationId": "nice",
@@ -2813,14 +2813,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x60ac2260039da558"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x60ac2260039da558"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/micro-introduction-to-factor-markets/e/introduction-to-factor-markets",
 		"status": "active",
 		"title": "Introduction to Factor Markets",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x60ac2260039da558"
+		"vendorResourceId": "nice-academy-x60ac2260039da558"
 	},
 	{
 		"applicationId": "nice",
@@ -2835,7 +2835,7 @@
 		"status": "active",
 		"title": "Adding demand curves",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "544749484"
+		"vendorResourceId": "nice-academy-544749484"
 	},
 	{
 		"applicationId": "nice",
@@ -2850,7 +2850,7 @@
 		"status": "active",
 		"title": "Changes in labor supply",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x45318ad63036e4a2"
+		"vendorResourceId": "nice-academy-x45318ad63036e4a2"
 	},
 	{
 		"applicationId": "nice",
@@ -2865,7 +2865,7 @@
 		"status": "active",
 		"title": "Shifts in the demand for labor",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x247b97f1369f914a"
+		"vendorResourceId": "nice-academy-x247b97f1369f914a"
 	},
 	{
 		"applicationId": "nice",
@@ -2876,14 +2876,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x0ebdfc2a2b279a2e"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x0ebdfc2a2b279a2e"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/labor-marginal-product-rev/e/changes-in-factor-demand-and-supply",
 		"status": "active",
 		"title": "Changes in factor demand and supply",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x0ebdfc2a2b279a2e"
+		"vendorResourceId": "nice-academy-x0ebdfc2a2b279a2e"
 	},
 	{
 		"applicationId": "nice",
@@ -2898,7 +2898,7 @@
 		"status": "active",
 		"title": "Cost minimizing choice of inputs ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x70ecae66cf867e9a"
+		"vendorResourceId": "nice-academy-x70ecae66cf867e9a"
 	},
 	{
 		"applicationId": "nice",
@@ -2913,7 +2913,7 @@
 		"status": "active",
 		"title": "Factor markets worked example ",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x3dc3414d55370683"
+		"vendorResourceId": "nice-academy-x3dc3414d55370683"
 	},
 	{
 		"applicationId": "nice",
@@ -2924,14 +2924,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xb1b3bb89f3142c06"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xb1b3bb89f3142c06"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/optimal-firm-behavior-in-perfectly-competitive-factor-markets/e/profit-maximizing-behavior-in-perfectly-competitive-factor-markets",
 		"status": "active",
 		"title": "Profit-maximizing behavior in perfectly competitive factor markets",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xb1b3bb89f3142c06"
+		"vendorResourceId": "nice-academy-xb1b3bb89f3142c06"
 	},
 	{
 		"applicationId": "nice",
@@ -2946,7 +2946,7 @@
 		"status": "active",
 		"title": "A monopsonistic market for labor",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x9a687593e30d820c"
+		"vendorResourceId": "nice-academy-x9a687593e30d820c"
 	},
 	{
 		"applicationId": "nice",
@@ -2961,7 +2961,7 @@
 		"status": "active",
 		"title": "Monopsony employers and minimum wages",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xd7cf229eff5df1e0"
+		"vendorResourceId": "nice-academy-xd7cf229eff5df1e0"
 	},
 	{
 		"applicationId": "nice",
@@ -2972,14 +2972,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x9e70b6aa0381301f"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x9e70b6aa0381301f"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/monopsonistic-markets/e/monopsony--foundational-concepts",
 		"status": "active",
 		"title": "Monopsony: Foundational concepts",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x9e70b6aa0381301f"
+		"vendorResourceId": "nice-academy-x9e70b6aa0381301f"
 	},
 	{
 		"applicationId": "nice",
@@ -2990,14 +2990,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xe75b60af23b54dd1"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xe75b60af23b54dd1"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/choosing-inputs-when-factor-markets-are-monopsonistically-competitive/e/monopsonistic-markets",
 		"status": "active",
 		"title": "Monopsonistic Markets",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xe75b60af23b54dd1"
+		"vendorResourceId": "nice-academy-xe75b60af23b54dd1"
 	},
 	{
 		"applicationId": "nice",
@@ -3009,14 +3009,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xdedccae6fc0c7c10"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xdedccae6fc0c7c10"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/quiz/factor-markets-quiz-1",
 		"status": "active",
 		"title": "Factor markets: Quiz 1",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xdedccae6fc0c7c10"
+		"vendorResourceId": "nice-academy-xdedccae6fc0c7c10"
 	},
 	{
 		"applicationId": "nice",
@@ -3028,14 +3028,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xcfc5526372590d9f"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xcfc5526372590d9f"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/quiz/factor-markets-quiz-2",
 		"status": "active",
 		"title": "Factor markets: Quiz 2",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xcfc5526372590d9f"
+		"vendorResourceId": "nice-academy-xcfc5526372590d9f"
 	},
 	{
 		"applicationId": "nice",
@@ -3047,14 +3047,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x96203287d39f7c49"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x96203287d39f7c49"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/test/factor-markets-unit-test",
 		"status": "active",
 		"title": "Factor markets: Unit test",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x96203287d39f7c49"
+		"vendorResourceId": "nice-academy-x96203287d39f7c49"
 	},
 	{
 		"applicationId": "nice",
@@ -3069,7 +3069,7 @@
 		"status": "active",
 		"title": "Socially efficient and inefficient outcomes",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xa4b05c840bd83737"
+		"vendorResourceId": "nice-academy-xa4b05c840bd83737"
 	},
 	{
 		"applicationId": "nice",
@@ -3080,14 +3080,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x528f704bd99fe0da"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x528f704bd99fe0da"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/socially-efficient-and-inefficient-market-outcomes/e/socially-efficient-and-inefficient-market-outcomes",
 		"status": "active",
 		"title": "Socially efficient and inefficient market outcomes",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x528f704bd99fe0da"
+		"vendorResourceId": "nice-academy-x528f704bd99fe0da"
 	},
 	{
 		"applicationId": "nice",
@@ -3102,7 +3102,7 @@
 		"status": "active",
 		"title": "Negative externalities",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "541028298"
+		"vendorResourceId": "nice-academy-541028298"
 	},
 	{
 		"applicationId": "nice",
@@ -3117,7 +3117,7 @@
 		"status": "active",
 		"title": "Positive externalities",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "541022388"
+		"vendorResourceId": "nice-academy-541022388"
 	},
 	{
 		"applicationId": "nice",
@@ -3128,14 +3128,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x0d128cde2487a0b0"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x0d128cde2487a0b0"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/externalities/e/externalities--foundational-concepts",
 		"status": "active",
 		"title": "Externalities: Foundational concepts",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x0d128cde2487a0b0"
+		"vendorResourceId": "nice-academy-x0d128cde2487a0b0"
 	},
 	{
 		"applicationId": "nice",
@@ -3146,14 +3146,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xaae45354baa2d42a"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xaae45354baa2d42a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/externalities/e/externalities",
 		"status": "active",
 		"title": "Externalities",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xaae45354baa2d42a"
+		"vendorResourceId": "nice-academy-xaae45354baa2d42a"
 	},
 	{
 		"applicationId": "nice",
@@ -3168,7 +3168,7 @@
 		"status": "active",
 		"title": "Tragedy of the commons",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "541028296"
+		"vendorResourceId": "nice-academy-541028296"
 	},
 	{
 		"applicationId": "nice",
@@ -3183,7 +3183,7 @@
 		"status": "active",
 		"title": "Rival and excludable goods",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xa030cc4699e2f5da"
+		"vendorResourceId": "nice-academy-xa030cc4699e2f5da"
 	},
 	{
 		"applicationId": "nice",
@@ -3194,14 +3194,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc41e9d2d150e46f6"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc41e9d2d150e46f6"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/microeconomics/market-failure-and-the-role-of-government/externalities-topic/e/public-and-private-goods",
 		"status": "active",
 		"title": "Public and private goods",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xc41e9d2d150e46f6"
+		"vendorResourceId": "nice-academy-xc41e9d2d150e46f6"
 	},
 	{
 		"applicationId": "nice",
@@ -3216,7 +3216,7 @@
 		"status": "active",
 		"title": "Taxes for factoring in negative externalities",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "541028300"
+		"vendorResourceId": "nice-academy-541028300"
 	},
 	{
 		"applicationId": "nice",
@@ -3227,14 +3227,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x3478efd11e6b1399"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x3478efd11e6b1399"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/the-effects-of-government-intervention-in-different-market-structures/e/the-effects-of-government-intervention-in-different-market-structures",
 		"status": "active",
 		"title": "The effects of government intervention in different market structures",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x3478efd11e6b1399"
+		"vendorResourceId": "nice-academy-x3478efd11e6b1399"
 	},
 	{
 		"applicationId": "nice",
@@ -3249,7 +3249,7 @@
 		"status": "active",
 		"title": "Gini Coefficient and Lorenz Curve",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xbd7275323e083a06"
+		"vendorResourceId": "nice-academy-xbd7275323e083a06"
 	},
 	{
 		"applicationId": "nice",
@@ -3260,14 +3260,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x360c0c935c167c61"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x360c0c935c167c61"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/inequality/e/inequality",
 		"status": "active",
 		"title": "Inequality",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x360c0c935c167c61"
+		"vendorResourceId": "nice-academy-x360c0c935c167c61"
 	},
 	{
 		"applicationId": "nice",
@@ -3279,14 +3279,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x47ca91f623a92a70"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x47ca91f623a92a70"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/quiz/ap-consumer-producer-surplus-quiz-1",
 		"status": "active",
 		"title": "Market failure and the role of government: Quiz 1",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x47ca91f623a92a70"
+		"vendorResourceId": "nice-academy-x47ca91f623a92a70"
 	},
 	{
 		"applicationId": "nice",
@@ -3298,14 +3298,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xedb013183240152d"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xedb013183240152d"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/quiz/ap-consumer-producer-surplus-quiz-2",
 		"status": "active",
 		"title": "Market failure and the role of government: Quiz 2",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xedb013183240152d"
+		"vendorResourceId": "nice-academy-xedb013183240152d"
 	},
 	{
 		"applicationId": "nice",
@@ -3317,14 +3317,14 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xf5e39c152614e760"
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xf5e39c152614e760"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/test/ap-consumer-producer-surplus-unit-test",
 		"status": "active",
 		"title": "Market failure and the role of government: Unit test",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xf5e39c152614e760"
+		"vendorResourceId": "nice-academy-xf5e39c152614e760"
 	},
 	{
 		"applicationId": "nice",
@@ -3334,14 +3334,14 @@
 			"language": "en-US",
 			"subType": "qti-stimulus",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/stimuli/xad289de48260c00f"
+			"url": "https://qti.alpha-1edtech.com/api/stimuli/nice-academy-xad289de48260c00f"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings/see-how-our-course-content-aligns-with-ap-microeconomics-standards/a/ap-microeconomics-content-aligned-to-standards",
 		"status": "active",
 		"title": "AP®︎ Microeconomics content aligned to standards",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "xad289de48260c00f"
+		"vendorResourceId": "nice-academy-xad289de48260c00f"
 	},
 	{
 		"applicationId": "nice",
@@ -3351,13 +3351,13 @@
 			"language": "en-US",
 			"subType": "qti-stimulus",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/stimuli/x415aff0ea8290410"
+			"url": "https://qti.alpha-1edtech.com/api/stimuli/nice-academy-x415aff0ea8290410"
 		},
 		"roles": ["primary"],
 		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings/see-how-our-course-content-aligns-with-ap-microeconomics-standards/a/ap-microeconomics-standards-aligned-to-course-content",
 		"status": "active",
 		"title": "AP®︎ Microeconomics standards aligned to course content",
 		"vendorId": "alpha-nice",
-		"vendorResourceId": "x415aff0ea8290410"
+		"vendorResourceId": "nice-academy-x415aff0ea8290410"
 	}
 ]
