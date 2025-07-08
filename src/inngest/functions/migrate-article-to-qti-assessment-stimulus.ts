@@ -1,10 +1,14 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
+import { XMLBuilder, XMLParser } from "fast-xml-parser"
 import { db } from "@/db"
 import { niceArticles } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { fixInvalidQtiXml, generateQtiFromPerseus } from "@/lib/ai"
-import { QtiApiClient } from "@/lib/qti"
+import { ErrQtiNotFound, ErrQtiUnprocessable, QtiApiClient } from "@/lib/qti"
+
+const xmlParser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" })
+const xmlBuilder = new XMLBuilder({ ignoreAttributes: false, format: true, suppressBooleanAttributes: false })
 
 // Helper function to encapsulate the idempotent upsert logic for stimuli.
 async function upsertStimulus(
@@ -13,26 +17,26 @@ async function upsertStimulus(
 	title: string,
 	content: string
 ): Promise<string> {
-	// Escape quotes for XML attribute safety
 	const safeTitle = title.replace(/"/g, "&quot;")
-
-	// Forcefully replace identifier and title in the AI-generated XML with our correct ones from the DB.
-	const finalXml = content
-		.replace(/identifier="[^"]*"/, `identifier="${identifier}"`)
-		.replace(/title="[^"]*"/, `title="${safeTitle}"`)
-
+	const parsedXml = xmlParser.parse(content)
+	const rootKey = Object.keys(parsedXml)[1]
+	if (rootKey) {
+		parsedXml[rootKey].identifier = identifier
+		parsedXml[rootKey].title = safeTitle
+	}
+	const finalXml = xmlBuilder.build(parsedXml)
 	const payload = { identifier, title, content: finalXml }
 
 	const updateResult = await errors.try(client.updateStimulus(identifier, payload))
 	if (updateResult.error) {
-		if (updateResult.error.message.includes("status 404")) {
+		if (errors.is(updateResult.error, ErrQtiNotFound)) {
 			const createResult = await errors.try(client.createStimulus(payload))
 			if (createResult.error) {
 				throw errors.wrap(createResult.error, "qti stimulus create after update 404")
 			}
 			return createResult.data.identifier
 		}
-		throw errors.wrap(updateResult.error, "qti stimulus update")
+		throw updateResult.error
 	}
 	return updateResult.data.identifier
 }
@@ -94,13 +98,16 @@ export const migrateArticleToQtiAssessmentStimulus = inngest.createFunction(
 			const result = await errors.try(upsertStimulus(client, qtiId, article.title, qtiStimulusXml))
 
 			if (result.error) {
-				logger.warn("initial qti stimulus upsert failed, will attempt correction", { qtiId, error: result.error })
-				return {
-					success: false as const,
-					qtiId: qtiId,
-					error: result.error.message,
-					invalidXml: qtiStimulusXml
+				if (errors.is(result.error, ErrQtiUnprocessable)) {
+					logger.warn("initial qti stimulus upsert failed, will attempt correction", { qtiId, error: result.error })
+					return {
+						success: false as const,
+						qtiId: qtiId,
+						error: result.error.message,
+						invalidXml: qtiStimulusXml
+					}
 				}
+				throw result.error
 			}
 			return { success: true as const, identifier: result.data, qtiId }
 		})

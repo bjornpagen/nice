@@ -1,25 +1,39 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
+import { XMLBuilder, XMLParser } from "fast-xml-parser"
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { fixInvalidQtiXml, generateQtiFromPerseus } from "@/lib/ai"
-import { QtiApiClient } from "@/lib/qti"
+import { ErrQtiNotFound, ErrQtiUnprocessable, QtiApiClient } from "@/lib/qti"
+
+const xmlParser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" })
+const xmlBuilder = new XMLBuilder({ ignoreAttributes: false, format: true, suppressBooleanAttributes: false })
 
 // Helper function to encapsulate the idempotent upsert logic.
-async function upsertItem(client: QtiApiClient, identifier: string, xml: string): Promise<string> {
-	const updateResult = await errors.try(client.updateAssessmentItem({ identifier, xml }))
+async function upsertItem(client: QtiApiClient, identifier: string, title: string, xml: string): Promise<string> {
+	// Use a proper XML parser to safely override attributes
+	const safeTitle = title.replace(/"/g, "&quot;")
+	const parsedXml = xmlParser.parse(xml)
+	const rootKey = Object.keys(parsedXml)[1] // Assumes second key is the root element
+	if (rootKey) {
+		parsedXml[rootKey].identifier = identifier
+		parsedXml[rootKey].title = safeTitle
+	}
+	const finalXml = xmlBuilder.build(parsedXml)
+
+	const updateResult = await errors.try(client.updateAssessmentItem({ identifier, xml: finalXml }))
 	if (updateResult.error) {
-		// If update fails because the item doesn't exist, create it.
-		if (updateResult.error.message.includes("status 404")) {
-			const createResult = await errors.try(client.createAssessmentItem({ xml }))
+		// Use errors.is for type-safe error checking
+		if (errors.is(updateResult.error, ErrQtiNotFound)) {
+			const createResult = await errors.try(client.createAssessmentItem({ xml: finalXml }))
 			if (createResult.error) {
 				throw errors.wrap(createResult.error, "qti create after update 404")
 			}
 			return createResult.data.identifier
 		}
-		// For other errors (like validation errors), re-throw to be handled.
-		throw errors.wrap(updateResult.error, "qti update")
+		// For other errors, re-throw to be handled by the caller.
+		throw updateResult.error
 	}
 	return updateResult.data.identifier
 }
@@ -78,22 +92,22 @@ export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
 		const upsertResult = await step.run("attempt-initial-upsert", async () => {
 			const client = new QtiApiClient()
 			const qtiId = `nice-question-${question.id}`
-			const safeTitle = question.exerciseTitle.replace(/"/g, "&quot;")
 
-			// Forcefully replace identifier and title in the AI-generated XML.
-			const xmlWithId = qtiXml.replace(/identifier="[^"]*"/, `identifier="${qtiId}"`)
-			const finalXml = xmlWithId.replace(/title="[^"]*"/, `title="${safeTitle}"`)
-
-			const result = await errors.try(upsertItem(client, qtiId, finalXml))
+			const result = await errors.try(upsertItem(client, qtiId, question.exerciseTitle, qtiXml))
 
 			if (result.error) {
-				logger.warn("initial qti upsert failed, will attempt correction", { qtiId, error: result.error })
-				return {
-					success: false as const,
-					qtiId: qtiId,
-					error: result.error.message,
-					invalidXml: finalXml
+				// Use errors.is to check if the failure is a validation error
+				if (errors.is(result.error, ErrQtiUnprocessable)) {
+					logger.warn("initial qti upsert failed validation, will attempt correction", { qtiId, error: result.error })
+					return {
+						success: false as const,
+						qtiId,
+						error: result.error.message,
+						invalidXml: qtiXml // Pass original XML to the fixer
+					}
 				}
+				// For other errors, fail the step to trigger Inngest retries.
+				throw result.error
 			}
 
 			return { success: true as const, identifier: result.data, qtiId }
@@ -126,13 +140,8 @@ export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
 			finalIdentifier = await step.run("retry-upsert-with-corrected-xml", async () => {
 				const client = new QtiApiClient()
 				const { qtiId } = upsertResult
-				const safeTitle = question.exerciseTitle.replace(/"/g, "&quot;")
 
-				// Forcefully replace identifier and title in the corrected XML.
-				const correctedWithId = correctedXml.replace(/identifier="[^"]*"/, `identifier="${qtiId}"`)
-				const finalCorrectedXml = correctedWithId.replace(/title="[^"]*"/, `title="${safeTitle}"`)
-
-				const secondUpsertResult = await errors.try(upsertItem(client, qtiId, finalCorrectedXml))
+				const secondUpsertResult = await errors.try(upsertItem(client, qtiId, question.exerciseTitle, correctedXml))
 				if (secondUpsertResult.error) {
 					logger.error("upsert failed even after ai correction", { qtiId, error: secondUpsertResult.error })
 					throw errors.wrap(secondUpsertResult.error, "second qti upsert attempt")

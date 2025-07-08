@@ -3,6 +3,11 @@ import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { env } from "@/env"
 
+// --- NEW: EXPORTED QTI API ERRORS ---
+export const ErrQtiNotFound = errors.new("qti resource not found")
+export const ErrQtiUnprocessable = errors.new("qti request unprocessable/invalid")
+export const ErrQtiConflict = errors.new("qti resource conflict")
+
 // --- ZOD SCHEMAS (Existing + New) ---
 
 // --- Base & Auth Schemas (Existing) ---
@@ -463,6 +468,18 @@ export class QtiApiClient {
 		if (!response.ok) {
 			const errorBody = await response.text()
 			logger.error("qti api returned non-ok status", { status: response.status, body: errorBody, endpoint })
+
+			// NEW: Throw specific, exported errors based on status code
+			if (response.status === 404) {
+				throw errors.wrap(ErrQtiNotFound, `qti api error: status 404 on ${endpoint}`)
+			}
+			if (response.status === 422) {
+				throw errors.wrap(ErrQtiUnprocessable, `qti api error: status 422 on ${endpoint}: ${errorBody}`)
+			}
+			if (response.status === 409) {
+				throw errors.wrap(ErrQtiConflict, `qti api error: status 409 on ${endpoint}`)
+			}
+
 			throw errors.new(`qti api error: status ${response.status} on ${endpoint}`)
 		}
 
