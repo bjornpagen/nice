@@ -13,17 +13,22 @@ const events = {
 			questionId: z.string().min(1)
 		})
 	},
-	"nice/qti.assessment-item.migration.exercise.requested": {
-		data: z.object({
-			exerciseId: z.string().min(1)
-		})
-	},
 	"nice/qti.assessment-stimulus.migration.requested": {
 		data: z.object({
 			articleId: z.string().min(1)
 		})
 	},
 	"nice/course.oneroster.generate": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
+	"nice/course.assessment-items.generate": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
+	"nice/course.assessment-stimuli.generate": {
 		data: z.object({
 			courseId: z.string().min(1)
 		})
