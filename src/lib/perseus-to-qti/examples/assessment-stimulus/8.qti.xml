@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="tangent-line-to-circle-problems"
+    title="Tangent Line to a Circle Problems"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <h2>Problem 1</h2>
+        <div>
+            <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>A</mi><mi>C</mi></mrow><mo>↔</mo></mover></math> is tangent to circle <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi></math> at point <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math>.</p>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/6e04271b45f73dd8279f3e68734ffefcdec34f3f.svg" alt="A circle centered around point O. Segment O C is a radius of the circle. Point A lies outside the circle, and line A C is a line that could potentially be tangent to circle O. A line segment connects point A to point O and intersects the circle at point B. Line segment A O, line segment O C, and line A C create the triangle A O C. Side A O is broken into two line segments, A B and B O. Segment A B is two units. Segment A C is four units." width="300" height="267"/>
+            <p><strong>What is the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>O</mi><mi>C</mi></mrow><mo>¯</mo></mover></math>?</strong></p>
+            <p>___ units</p>
+        </div>
+        <div>
+            <h4>Solution</h4>
+            <p>Because <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>A</mi><mi>C</mi></mrow><mo>↔</mo></mover></math> is tangent to the circle at point <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math>, the radius going to point <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> is perpendicular to the tangent line. This means that the measure of <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>∠</mo><mi>A</mi><mi>C</mi><mi>O</mi></math> is <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>90</mn><mo>∘</mo></msup></math>.</p>
+            <p>We can use the Pythagorean theorem to solve for the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>O</mi><mi>C</mi></mrow><mo>¯</mo></mover></math>.</p>
+            <p>We will need to know the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>O</mi><mi>A</mi></mrow><mo>¯</mo></mover></math>.</p>
+            <p>We know that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi><mi>B</mi><mo>=</mo><mn>2</mn></math>. <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>B</mi><mi>O</mi><mo>=</mo><mi>O</mi><mi>C</mi></math> because it is a radius of the circle.</p>
+            <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mi>A</mi><mo>=</mo><mi>A</mi><mi>B</mi><mo>+</mo><mi>B</mi><mi>O</mi></math></p>
+            <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mi>A</mi><mo>=</mo><mn>2</mn><mo>+</mo><mi>O</mi><mi>C</mi></math></p>
+            <p>Now that we have an expression for the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi><mi>O</mi></math>, we can solve for <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mi>C</mi></math>.</p>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <mtable columnalign="right center left">
+                <mtr>
+                  <mtd><msup><mrow><mi>A</mi><mi>C</mi></mrow><mn>2</mn></msup><mo>+</mo><msup><mrow><mi>O</mi><mi>C</mi></mrow><mn>2</mn></msup></mtd>
+                  <mtd><mo>=</mo></mtd>
+                  <mtd><msup><mrow><mi>O</mi><mi>A</mi></mrow><mn>2</mn></msup></mtd>
+                </mtr>
+                <mtr>
+                  <mtd><msup><mn>4</mn><mn>2</mn></msup><mo>+</mo><msup><mrow><mi>O</mi><mi>C</mi></mrow><mn>2</mn></msup></mtd>
+                  <mtd><mo>=</mo></mtd>
+                  <mtd><mo>(</mo><mi>O</mi><mi>C</mi><mo>+</mo><mn>2</mn><msup><mo>)</mo><mn>2</mn></msup></mtd>
+                </mtr>
+                <mtr>
+                  <mtd><mn>16</mn><mo>+</mo><msup><mrow><mi>O</mi><mi>C</mi></mrow><mn>2</mn></msup></mtd>
+                  <mtd><mo>=</mo></mtd>
+                  <mtd><msup><mrow><mi>O</mi><mi>C</mi></mrow><mn>2</mn></msup><mo>+</mo><mn>4</mn><mi>O</mi><mi>C</mi><mo>+</mo><mn>4</mn></mtd>
+                </mtr>
+                <mtr>
+                  <mtd><mn>12</mn></mtd>
+                  <mtd><mo>=</mo></mtd>
+                  <mtd><mn>4</mn><mi>O</mi><mi>C</mi></mtd>
+                </mtr>
+                <mtr>
+                  <mtd><mn>3</mn></mtd>
+                  <mtd><mo>=</mo></mtd>
+                  <mtd><mi>O</mi><mi>C</mi></mtd>
+                </mtr>
+              </mtable>
+            </math>
+            <p><strong>The length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>O</mi><mi>C</mi></mrow><mo>¯</mo></mover></math> is 3 units.</strong></p>
+        </div>
+        <hr/>
+        <h2>Problem 2</h2>
+        <div>
+            <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>A</mi><mi>C</mi></mrow><mo>↔</mo></mover></math> is tangent to circle <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi></math> at point <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math>.</p>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/4500438d6b2c2c0762f8cc158be35764b8cf3740.svg" alt="A circle centered around point O. Segment O C is a radius of the circle. Point A lies outside the circle, and line A C is a line that could potentially be tangent to circle O. A line segment connects point A to point O and intersects the circle at point B. Line segment A O, line segment O C, and line A C create the triangle A O C. Side A O is broken into two line segments, A B and B O. Segment A B is eighteen units. Segment A C is thirty units." width="300" height="213"/>
+            <p><strong>What is the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>O</mi><mi>C</mi></mrow><mo>¯</mo></mover></math>?</strong></p>
+            <p>___ units</p>
+        </div>
+        <div>
+            <h4>Solution</h4>
+            <p>Because <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>A</mi><mi>C</mi></mrow><mo>↔</mo></mover></math> is tangent to the circle at point <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math>, the radius going to point <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> is perpendicular to the tangent line. This means that the measure of <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>∠</mo><mi>A</mi><mi>C</mi><mi>O</mi></math> is <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>90</mn><mo>∘</mo></msup></math>.</p>
+            <p>We can use the Pythagorean theorem to solve for the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>O</mi><mi>C</mi></mrow><mo>¯</mo></mover></math>.</p>
+            <p>We will need to know the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>O</mi><mi>A</mi></mrow><mo>¯</mo></mover></math>.</p>
+            <p>We know that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi><mi>B</mi><mo>=</mo><mn>18</mn></math>. <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>B</mi><mi>O</mi><mo>=</mo><mi>O</mi><mi>C</mi></math> because it is a radius of the circle.</p>
+            <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mi>A</mi><mo>=</mo><mi>A</mi><mi>B</mi><mo>+</mo><mi>B</mi><mi>O</mi></math></p>
+            <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mi>A</mi><mo>=</mo><mn>18</mn><mo>+</mo><mi>O</mi><mi>C</mi></math></p>
+            <p>Now that we have an expression for the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi><mi>O</mi></math>, we can solve for <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>O</mi><mi>C</mi></math>.</p>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <mtable columnalign="right center left">
+                <mtr>
+                  <mtd><msup><mrow><mi>A</mi><mi>C</mi></mrow><mn>2</mn></msup><mo>+</mo><msup><mrow><mi>O</mi><mi>C</mi></mrow><mn>2</mn></msup></mtd>
+                  <mtd><mo>=</mo></mtd>
+                  <mtd><msup><mrow><mi>O</mi><mi>A</mi></mrow><mn>2</mn></msup></mtd>
+                </mtr>
+                <mtr>
+                  <mtd><msup><mn>30</mn><mn>2</mn></msup><mo>+</mo><msup><mrow><mi>O</mi><mi>C</mi></mrow><mn>2</mn></msup></mtd>
+                  <mtd><mo>=</mo></mtd>
+                  <mtd><mo>(</mo><mi>O</mi><mi>C</mi><mo>+</mo><mn>18</mn><msup><mo>)</mo><mn>2</mn></msup></mtd>
+                </mtr>
+                <mtr>
+                  <mtd><mn>900</mn><mo>+</mo><msup><mrow><mi>O</mi><mi>C</mi></mrow><mn>2</mn></msup></mtd>
+                  <mtd><mo>=</mo></mtd>
+                  <mtd><msup><mrow><mi>O</mi><mi>C</mi></mrow><mn>2</mn></msup><mo>+</mo><mn>36</mn><mi>O</mi><mi>C</mi><mo>+</mo><mn>324</mn></mtd>
+                </mtr>
+                <mtr>
+                  <mtd><mn>576</mn></mtd>
+                  <mtd><mo>=</mo></mtd>
+                  <mtd><mn>36</mn><mi>O</mi><mi>C</mi></mtd>
+                </mtr>
+                <mtr>
+                  <mtd><mn>16</mn></mtd>
+                  <mtd><mo>=</mo></mtd>
+                  <mtd><mi>O</mi><mi>C</mi></mtd>
+                </mtr>
+              </mtable>
+            </math>
+            <p><strong>The length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mrow><mi>O</mi><mi>C</mi></mrow><mo>¯</mo></mover></math> is 16 units.</strong></p>
+        </div>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>

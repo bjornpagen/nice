@@ -1,0 +1,383 @@
+[
+	{
+		"images": {},
+		"content": "##Example: College grades\n\nA small private college was curious about what levels of students were getting straight A grades. College officials collected data on the straight A status from the most recent semester for all of their undergraduate and graduate students. The data is shown in the two-way table below:\n\n | Undergraduate | Graduate | Total\n-: | -: | -: | -:\nStraight A's | $240$ | $60$ | $300$\nNot | $3{,}760$ | $440$ | $4{,}200$\nTotal | $4{,}000$ | $500$ | $4{,}500$",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "[[☃ graded-group 1]]  \n\n[[☃ graded-group 2]]  ",
+		"widgets": {
+			"graded-group 1": {
+				"type": "graded-group",
+				"graded": true,
+				"static": false,
+				"options": {
+					"hint": {
+						"images": {},
+						"content": "A conditional distribution turns each count in the table into a percent of individuals who fit a specific value of one of the variables.\n\nA marginal distribution shows the totals (in counts or percents) for all the values of just one of the variables.\n\nThe highlighted distribution shows the totals for how many students there were in each level (undergraduate and graduate).\n\n**This is the marginal distribution of student level.**",
+						"widgets": {}
+					},
+					"title": "Problem 1",
+					"images": {},
+					"content": "A distribution in the data is highlighted below.\n\n**What type of distribution is this?**\n\n | Undergraduate | Graduate | Total\n-: | -: | -: | -:\nStraight A's | $240$ | $60$ | $300$\nNot | $3{,}760$ | $440$ | $4{,}200$\nTotal | $\\large{\\greenD{4{,}000}}$ | $\\large{\\greenD{500}}$ | $\\large{\\greenD{4{,}500}}$\n\n[[☃ radio 1]]",
+					"widgets": {
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "This is the conditional distribution of  straight A  status for each level of student.",
+										"correct": false
+									},
+									{
+										"content": "This is the conditional distribution of student level for each straight A status.",
+										"correct": false
+									},
+									{
+										"content": "This is the marginal distribution of student level.",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "This is the marginal distribution of straight A status.",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			},
+			"graded-group 2": {
+				"type": "graded-group",
+				"graded": true,
+				"static": false,
+				"options": {
+					"hint": {
+						"images": {},
+						"content": "The highlighted marginal distribution shows that there are $4{,}000$ total undergraduate students compared to $500$ total graduate students.\n\n**There are far more undergraduate students than graduate students.**",
+						"widgets": {}
+					},
+					"title": "problem 2",
+					"images": {},
+					"content": "**What conclusion can we draw from the highlighted distribution?**\n\n[[☃ radio 1]]",
+					"widgets": {
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "There are far more students with straight A's than there are without straight A's.",
+										"correct": false
+									},
+									{
+										"content": "There are far more students without straight A's than there are with straight A's. ",
+										"correct": false
+									},
+									{
+										"content": "There are far more undergraduate students than graduate students.",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "There are far more graduate students than undergraduate students.",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	{
+		"images": {},
+		"content": "[[☃ graded-group 3]]  \n\n[[☃ graded-group 4]]  ",
+		"widgets": {
+			"graded-group 3": {
+				"type": "graded-group",
+				"graded": true,
+				"static": false,
+				"options": {
+					"hint": {
+						"images": {},
+						"content": "A conditional distribution shows the distribution of one variable in percentages for a specific value of the other variable.\n\nWe need $2$ conditional distributions:  \n\n* the distribution of straight A status for undergraduate students only\n* the distribution of straight A status for graduate students only\n\nLooking at undergraduate students first, we want to see what percent had straight A's and what percent did not.\n\n | Undergraduate | Graduate | Total\n- | :-: | :-: | :-:\nStraight A's | $\\dfrac{240}{\\greenD{4{,}000}}=6\\%$ | $60$ | $300$\nNot | $\\dfrac{3{,}760}{\\greenD{4{,}000}}=94\\%$ | $440$ | $4200$\nTotal | $\\dfrac{\\greenD{4{,}000}}{\\greenD{4{,}000}}=100\\%$ | $500$ | $4{,}500$\n\nUse a similar strategy for graduate students.\n\n | Undergraduate | Graduate | Total\n- | :-: | :-: | :-:\nStraight A's | $\\dfrac{240}{\\greenD{4{,}000}}=6\\%$ | $\\dfrac{60}{\\greenD{500}}=12\\%$ | $300$\nNot | $\\dfrac{3{,}760}{\\greenD{4{,}000}}=94\\%$ | $\\dfrac{440}{\\greenD{500}}=88\\%$ | $4200$\nTotal | $\\dfrac{\\greenD{4{,}000}}{\\greenD{4{,}000}}=100\\%$ | $\\dfrac{\\greenD{500}}{\\greenD{500}}=100\\%$ | $4{,}500$\n\n**The answer:**\n\n | Undergraduate | Graduate\n- | :-: | :-: | :-:\nStraight A's | $6\\%$ | $12\\%$\nNot | $94\\%$ | $88\\%$",
+						"widgets": {}
+					},
+					"title": "problem 3",
+					"images": {},
+					"content": "Officials at the college are curious if one level of student was more likely to get straight A's than the other.\n\n**Calculate the conditional distribution of straight A status for each level of student.**  \n\n | Undergraduate | Graduate | Total\n-: | -: | -: | -:\nStraight A's | $240$ | $60$ | $300$\nNot | $3{,}760$ | $440$ | $4{,}200$\nTotal | $4{,}000$ | $500$ | $4{,}500$\n\n | Undergraduate | Graduate\n- | :-: | :-: \nStraight A's | [[☃ numeric-input 1]] $\\%$ | [[☃ numeric-input 2]] $\\%$ \nNot | [[☃ numeric-input 3]] $\\%$ | [[☃ numeric-input 4]] $\\%$",
+					"widgets": {
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 6,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 12,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 3": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 94,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 4": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 88,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			},
+			"graded-group 4": {
+				"type": "graded-group",
+				"graded": true,
+				"static": false,
+				"options": {
+					"hint": {
+						"images": {},
+						"content": "These conditional distributions show that $6\\%$ of undergraduate students had straight A's compared to $12\\%$ of graduate students.\n\n**Graduate students were more likely to have straight A's than undergraduate students.**\n\nNote: The third choice is wrong because there are $300$ total students with straight A's, and a majority of them $\\left(240/360\\approx67\\%\\right)$ were undergraduate students. This doesn't mean that undergraduate students are more likely to have straight A's though. There were a lot more undergraduate students than graduate students in general, so a lot of the straight A's students are undergraduates. However, a low percentage of undergraduate students had straight A's.",
+						"widgets": {}
+					},
+					"title": "problem 4",
+					"images": {},
+					"content": "**Based on these conditional distributions, what can we say about the association between student level and straight A status?**\n\n[[☃ radio 1]]",
+					"widgets": {
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Undergraduate students were more likely to have straight A's than graduate students.",
+										"correct": false
+									},
+									{
+										"content": "Graduate students were more likely to have straight A's than undergraduate students.",
+										"correct": true
+									},
+									{
+										"content": "Straight A students were more likely to be graduate students than undergraduate students.",
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	{
+		"images": {},
+		"content": "[[☃ graded-group 1]]",
+		"widgets": {
+			"graded-group 1": {
+				"type": "graded-group",
+				"graded": true,
+				"static": false,
+				"options": {
+					"hint": {
+						"images": {},
+						"content": "Graduate students were more likely to have straight A's than undergraduate students.\n\n**Yes, there is an association between the level of student and whether or not the student has straight A's.**",
+						"widgets": {}
+					},
+					"title": "Problem 5",
+					"images": {},
+					"content": "**For this college, is there an association between the level of student and whether or not the student has straight A's?**\n\n[[☃ radio 1]]",
+					"widgets": {
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Yes",
+										"correct": true
+									},
+									{
+										"content": "No",
+										"correct": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	}
+]

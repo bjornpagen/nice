@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="trig-derivatives-proof-stimulus"
+    title="Proof of Trigonometric Derivatives"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <p>The trigonometric functions <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>sin</mi><mo>(</mo><mi>x</mi><mo>)</mo></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>cos</mi><mo>(</mo><mi>x</mi><mo>)</mo></math> play a significant role in calculus. These are their derivatives:</p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mtable>
+                <mtr>
+                    <mtd>
+                        <mfrac>
+                            <mi>d</mi>
+                            <mrow>
+                                <mi>d</mi>
+                                <mi>x</mi>
+                            </mrow>
+                        </mfrac>
+                        <mo>[</mo>
+                        <mi>sin</mi>
+                        <mo>(</mo>
+                        <mi>x</mi>
+                        <mo>)</mo>
+                        <mo>]</mo>
+                        <mo>=</mo>
+                        <mi>cos</mi>
+                        <mo>(</mo>
+                        <mi>x</mi>
+                        <mo>)</mo>
+                    </mtd>
+                </mtr>
+                <mtr>
+                    <mtd>
+                        <mfrac>
+                            <mi>d</mi>
+                            <mrow>
+                                <mi>d</mi>
+                                <mi>x</mi>
+                            </mrow>
+                        </mfrac>
+                        <mo>[</mo>
+                        <mi>cos</mi>
+                        <mo>(</mo>
+                        <mi>x</mi>
+                        <mo>)</mo>
+                        <mo>]</mo>
+                        <mo>=</mo>
+                        <mo>-</mo>
+                        <mi>sin</mi>
+                        <mo>(</mo>
+                        <mi>x</mi>
+                        <mo>)</mo>
+                    </mtd>
+                </mtr>
+            </mtable>
+        </math>
+        <p>The AP Calculus course doesn't require knowing the proofs of these derivatives, but we believe that as long as a proof is accessible, there's always something to learn from it. In general, it's always good to require some kind of proof or justification for the theorems you learn.</p>
+        
+        <h2>First, we would like to find two tricky limits that are used in our proof.</h2>
+        
+        <h3>1. <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <munder>
+                    <mo>lim</mo>
+                    <mrow>
+                        <mi>x</mi>
+                        <mo>→</mo>
+                        <mn>0</mn>
+                    </mrow>
+                </munder>
+                <mfrac>
+                    <mrow>
+                        <mi>sin</mi>
+                        <mo>(</mo>
+                        <mi>x</mi>
+                        <mo>)</mo>
+                    </mrow>
+                    <mi>x</mi>
+                </mfrac>
+                <mo>=</mo>
+                <mn>1</mn>
+            </math>
+        </h3>
+        <p>A video explains the proof for this limit.</p>
+        
+        <h3>2. <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <munder>
+                    <mo>lim</mo>
+                    <mrow>
+                        <mi>x</mi>
+                        <mo>→</mo>
+                        <mn>0</mn>
+                    </mrow>
+                </munder>
+                <mfrac>
+                    <mrow>
+                        <mn>1</mn>
+                        <mo>-</mo>
+                        <mi>cos</mi>
+                        <mo>(</mo>
+                        <mi>x</mi>
+                        <mo>)</mo>
+                    </mrow>
+                    <mi>x</mi>
+                </mfrac>
+                <mo>=</mo>
+                <mn>0</mn>
+            </math>
+        </h3>
+        <p>A video explains the proof for this limit.</p>
+
+        <h2>Now we are ready to prove that the derivative of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>sin</mi><mo>(</mo><mi>x</mi><mo>)</mo></math> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>cos</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>.</h2>
+        <p>A video provides a proof for the derivative of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>sin</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>.</p>
+        
+        <h2>Finally, we can use the fact that the derivative of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>sin</mi><mo>(</mo><mi>x</mi><mo>)</mo></math> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>cos</mi><mo>(</mo><mi>x</mi><mo>)</mo></math> to show that the derivative of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>cos</mi><mo>(</mo><mi>x</mi><mo>)</mo></math> is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mi>sin</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>.</h2>
+        <p>A video provides a proof for the derivative of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>cos</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>.</p>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="article-1-section-1-stimulus"
+    title="Article I, Section 1: Vesting Clause"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <p><em>Note: The following is an excerpt from the National Constitution Center Interactive Constitution’s Common Interpretation Essay on the Article I, Section 1. <a href="https://constitutioncenter.org/the-constitution/articles/article-i/clauses/749">Visit the Center’s website to read the full essay.</a></em></p>
+        <p>Article I, Section 1 provides: “All legislative Powers herein granted shall be vested in a Congress of the United States, which shall consist of a Senate and a House of Representatives.” The Constitution first vests all federal legislative powers in a representative bicameral Congress. Central to the social compact, this lawmaking institution forms the foundation of the federal government and allows the people’s representatives to act together for the common good. Article I, Section I establishes several fundamental features of the Congress.</p>
+        <ol>
+            <li>
+                <p><strong><em>Bicameralism</em></strong>. The Framers of the Constitution of 1789 created a powerful national legislature to represent both the People and the States. Yet they also feared its awesome power and therefore determined to limit that power in order to protect individual liberty. The Vesting Clause embodies two strategies for limiting Congress’s power. One strategy was to condition legislation upon the agreement of two differently constituted Chambers. See <a href="http://avalon.law.yale.edu/18th_century/fed51.asp"><em>The Federalist</em> No. 51</a> (James Madison). With smaller districts and short terms, the House of Representatives was expected to be responsive to We the People. But hasty popular measures could be ameliorated or killed in the Senate, whose members served for longer terms and were selected by the state legislatures until enactment of the <a href="https://constitutioncenter.org/interactive-constitution/amendments/amendment-xvii">Seventeenth Amendment</a>.</p>
+            </li>
+            <li>
+                <p><strong><em>Limited and Enumerated Powers</em></strong>. As a more explicit limitation, the Constitution vests Congress only with those legislative powers that are “herein granted.” Unlike state legislatures that enjoy plenary authority, Congress has authority only over the subject matter specified in the Constitution, particularly in Article I, Section 8. Early Presidents and Congresses took seriously the limited jurisdiction of the federal government. They assumed no federal power to fund internal improvements, for example. They also debated what powers might be implied by the grant of the enumerated powers.</p>
+                <p>A significant early debate concerned whether Congress could create a Bank of the United States. James Madison and Thomas Jefferson argued against such a power, but President Washington ultimately supported Alexander Hamilton’s plan for the Bank, even though the Framers had rejected bank incorporation as an enumerated power. The Supreme Court upheld the constitutionality of the Bank and recognized that the enumerated powers included some implied ones in <a href="https://www.oyez.org/cases/1789-1850/17us316"><em>McCulloch v. Maryland</em></a> (1819).</p>
+                <p>The New Deal Court expanded upon <em>McCulloch</em>’s interpretation of Congress’s enumerated powers: the Commerce Clause of Article I, Section 8, Clause 3 grew into a capacious source of congressional authority to regulate the economy, and the Necessary and Proper Clause at the end of Section 8 was interpreted to expand Congress’s authority yet further in <a href="https://www.oyez.org/cases/1940-1955/317us111"><em>Wickard v. Filburn</em></a> (1942). The Court has afforded significant deference to Congress’s judgment about how far to press its enumerated powers.</p>
+                <p>Despite the expansive interpretation of the commerce power, the principle of a Congress vested only with limited and enumerated powers endures. In <a href="https://www.oyez.org/cases/1994/93-1260"><em>United States v. Lopez</em></a> (1995), the Court invalidated a federal law making it a crime to possess a firearm close to a public school. Not only did Congress fail to connect the statute to an enumerated power, but the power asserted (regulation of commerce) was not considered the kind of economic regulation the Court had previously sanctioned. Lopez reaffirmed some outer boundary to the federal regulatory power. . . .</p>
+            </li>
+        </ol>
+        <p><a href="https://constitutioncenter.org/the-constitution/articles/article-i/clauses/749">Read the common interpretation and matters of debate essays on the National Constitution Center website.</a></p>
+        <div>
+            <h3>Notes and Attributions</h3>
+            <p>This article was written by William N. Eskridge, Jr. and Neomi Rao for the National Constitution Center.</p>
+            <p>This work is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons CC BY NC 4.0 License</a></p>
+        </div>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>

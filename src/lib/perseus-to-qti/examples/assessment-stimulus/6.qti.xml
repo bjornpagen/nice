@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="how-to-choose-a-bank-stimulus"
+    title="How to choose where to bank"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <h2>How to choose where to bank</h2>
+        <p>So, you've just started a new job and your employer is asking where to send your paycheck. If you've already got a bank account, ask yourself if it's the best one for you. And if you don't have one yet, no stress – it's a good time to think about what you want from a bank. Each bank offers unique benefits, and the right choice can help your money increase and make handling your finances easier. So, let’s see what kind of banks might fit your lifestyle and needs.</p>
+        
+        <h2>Commercial banks: Big-name banks</h2>
+        <p>First up are the big-name banks you find everywhere. They offer lots of different services from checking accounts to credit cards, loans, and investments. You can have an account for daily spending and another to save money. They can also lend you money for things like a car. But, sometimes they charge more in fees, and the money you save with them doesn't grow as much because the interest rates are low.</p>
+        <div>
+            <p><strong>What are some examples?</strong></p>
+            <p>Examples of big banks are: Chase, Bank of America, Wells Fargo, Citibank, and others.</p>
+        </div>
+        <p><strong>Pros:</strong> Lots of branches and ATMs, full range of banking services.</p>
+        <p><strong>Cons:</strong> Might have higher fees, lower interest rates on savings.</p>
+        
+        <h2>Traditional banks: your corner bank</h2>
+        <p>When we say traditional banks, we're talking about banks with actual buildings you can walk into to do your banking stuff. Sure, most big commercial banks are traditional banks too because they have buildings all over the place. But there are also smaller, local banks in your neighborhood. These smaller banks might not have all the different services you get with the big commercial banks, but they're good at giving you that personal touch and knowing you by name.</p>
+        <p><strong>Pros:</strong> Real buildings where you can get help face-to-face, friendly and local atmosphere.</p>
+        <p><strong>Cons:</strong> Might not have as many types of services or as many buildings around town as the big banks do.</p>
+        <figure>
+            <img src="https://cdn.kastatic.org/ka-content-images/a2f3ac8323deabcdcf69c266b7747baa2b53c9fa.svg" alt="a person talking to another person at a desk" width="300" height="250"/>
+            <figcaption>Traditional banks have buildings where you can walk in and talk to bankers in person. They're there to help you deposit your paycheck, withdraw cash, and more.</figcaption>
+        </figure>
+        
+        <h2>Credit unions: Banking with a personal touch</h2>
+        <p>Credit unions are different because they're like clubs where the members are in charge, not some big company. They share profits with members by offering better rates on savings and lower fees on services. To become part of a credit union like the local Teachers' Credit Union, you might need to be a teacher or have a teacher in your family. But sometimes, just living in the area is all you need to join. If you get in, it can feel more friendly than a regular bank.</p>
+        <p><strong>Pros:</strong> Better interest rates, lower fees, more personal customer service.</p>
+        <p><strong>Cons:</strong> Limited membership and fewer branches can be less convenient.</p>
+        <figure>
+            <img src="https://cdn.kastatic.org/ka-content-images/943362b50b83b0727a05b54ddff23964fe485132.jpg" alt="An exterior view of the &quot;OneNevada Credit Union&quot; building. The building features a beige facade with a large, colorful logo at the center depicting the shape of the state of Nevada in blue and red. Below the logo, &quot;OneNevada Credit Union&quot; is written in bold, red letters. In front of the building, there's a well-maintained garden with blooming roses and shrubs. The sky above is clear, and the overall ambiance is sunny and welcoming." width="320" height="239"/>
+            <figcaption>To bank with OneNevada credit union you must live or go to school in Clark, Nye, or Washoe county in Nevada. Source: <em>One Nevada, Copyrighted free use, via <a href="https://commons.wikimedia.org/wiki/File:One_Nevada_Credit_Union.jpg">Wikimedia Commons</a></em></figcaption>
+        </figure>
+        
+        <h2>Online banks: Banking in your pajamas</h2>
+        <p>Online banks are exactly that—online. You won't walk into a branch; you'll do it all on your computer or phone. Banks like Ally or Simple don’t have the costs of running branches, so they often charge less in fees and give you more money back when you save with them. If you're good with doing things on the internet and don’t need to talk face-to-face, these could be great.</p>
+        <p><strong>Pros:</strong> Higher interest rates on savings, lower fees, convenience of online access.</p>
+        <p><strong>Cons:</strong> No in-person service, dealing with technology issues can be tricky for some, limited or no ATMs available.</p>
+        
+        <h2>Your best banking choice</h2>
+        <p>Now, how do you decide? If you like having a bank you can walk into and don't mind paying a little more for it, choose a big bank. If you like a place where people know you and you can save on fees, a credit union is a good pick. Or, if you’re comfortable with banking on your computer or phone and want to save a bit more, try an online bank.</p>
+        <p>Choosing where to bank is about finding a good fit for your life. Think about what's most important to you, and your choice will help you take good care of your money.</p>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>

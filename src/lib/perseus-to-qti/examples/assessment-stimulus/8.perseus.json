@@ -1,0 +1,186 @@
+[
+	{
+		"images": {},
+		"content": "##Problem 1\n\n[[☃ graded-group 1]]\n\n[[☃ explanation 1]]",
+		"widgets": {
+			"explanation 1": {
+				"type": "explanation",
+				"graded": true,
+				"static": false,
+				"options": {
+					"static": false,
+					"widgets": {},
+					"hidePrompt": "Hide solution",
+					"showPrompt": "I need help! Please show me the solution.",
+					"explanation": "Because $\\overleftrightarrow{AC}$ is tangent to the circle at point $C$, the radius going to point $C$ is perpendicular to the tangent line.  This means that the measure of $\\angle ACO$ is $90^\\circ$.\n\nWe can use the Pythagorean theorem to solve for the length of $\\overline {OC}$.\n\nWe will need to know the length of $\\overline{OA}$.\n\nWe know that $\\blue{AB = 2}$.  $\\purple{BO} = \\pink{OC}$ because it is a radius of the circle.  \n\n>$OA= \\blue{AB} + \\purple{BO}$  \n>$OA= \\blue{2} + \\pink{OC}$  \n\nNow that we have an expression for the length of $AO$, we can solve for $OC$.\n\n>$\\begin{align}\n\\green{AC}^2 + \\pink{OC}^2 &= OA^2 \\\\\n\\green{4}^2 + \\pink{OC}^2 &= (\\pink{OC}+\\blue{2})^2 \\\\\n16 + \\pink{OC}^2 &= \\pink{OC}^2+4\\pink{OC}+4 \\\\\n12 &= 4\\pink{OC} \\\\\n3 &= \\pink{OC}\n\\end{align}$\n\n**The length of $\\overline{OC}$ is $3$ units.**"
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			},
+			"graded-group 1": {
+				"type": "graded-group",
+				"graded": true,
+				"static": false,
+				"options": {
+					"title": "",
+					"images": {},
+					"content": "$\\overleftrightarrow{AC}$ is tangent to circle $O$ at point $C$. \n\n[[☃ image 1]]\n\n**What is the length of $\\overline{OC}$?**  \n\n[[☃ numeric-input 1]] units",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A circle centered around point O. Segment O C is a radius of the circle. Point A lies outside the circle, and line A C is a line that could potentially be tangent to circle O. A line segment connects point A to point O and intersects the circle at point B. Line segment A O, line segment O C, and line A C create the triangle A O C. Side A O is broken into two line segments, A B and B O. Segment A B is two units. Segment A C is four units.",
+								"box": [300, 267],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/6e04271b45f73dd8279f3e68734ffefcdec34f3f",
+									"width": 300,
+									"height": 267
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 3,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	{
+		"images": {},
+		"content": "##Problem 2\n\n[[☃ graded-group 2]]\n\n[[☃ explanation 2]]",
+		"widgets": {
+			"explanation 2": {
+				"type": "explanation",
+				"graded": true,
+				"static": false,
+				"options": {
+					"static": false,
+					"widgets": {},
+					"hidePrompt": "Hide solution",
+					"showPrompt": "I need help! Please show me the solution.",
+					"explanation": "Because $\\overleftrightarrow{AC}$ is tangent to the circle at point $C$, the radius going to point $C$ is perpendicular to the tangent line.  This means that the measure of $\\angle ACO$ is $90^\\circ$.\n\nWe can use the Pythagorean theorem to solve for the length of $\\overline {OC}$.\n\nWe will need to know the length of $\\overline{OA}$.\n\nWe know that $\\blue{AB = 18}$.  $\\purple{BO} = \\pink{OC}$ because it is a radius of the circle.  \n\n>$OA= \\blue{AB} + \\purple{BO}$  \n>$OA= \\blue{18} + \\pink{OC}$  \n\nNow that we have an expression for the length of $AO$, we can solve for $OC$.\n\n>$\\begin{align}\n\\green{AC}^2 + \\pink{OC}^2 &= OA^2 \\\\\n\\green{30}^2 + \\pink{OC}^2 &= (\\pink{OC}+\\blue{18})^2 \\\\\n900 + \\pink{OC}^2 &= \\pink{OC}^2+36\\pink{OC}+324 \\\\\n576 &= 36\\pink{OC} \\\\\n16 &= \\pink{OC}\n\\end{align}$\n\n**The length of $\\overline{OC}$ is $16$ units.**"
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			},
+			"graded-group 2": {
+				"type": "graded-group",
+				"graded": true,
+				"static": false,
+				"options": {
+					"title": "",
+					"images": {},
+					"content": "$\\overleftrightarrow{AC}$ is tangent to circle $O$ at point $C$. \n\n[[☃ image 1]]\n\n**What is the length of $\\overline{OC}$?**  \n\n[[☃ numeric-input 1]] units",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A circle centered around point O. Segment O C is a radius of the circle. Point A lies outside the circle, and line A C is a line that could potentially be tangent to circle O. A line segment connects point A to point O and intersects the circle at point B. Line segment A O, line segment O C, and line A C create the triangle A O C. Side A O is broken into two line segments, A B and B O. Segment A B is eighteen units. Segment A C is thirty units.",
+								"box": [300, 213],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/4500438d6b2c2c0762f8cc158be35764b8cf3740",
+									"width": 300,
+									"height": 213
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 16,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	}
+]

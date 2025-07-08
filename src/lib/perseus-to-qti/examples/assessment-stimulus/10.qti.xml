@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="college-grades-analysis-stimulus"
+    title="College Grades Analysis"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <h2>Example: College grades</h2>
+        <p>A small private college was curious about what levels of students were getting straight A grades. College officials collected data on the straight A status from the most recent semester for all of their undergraduate and graduate students. The data is shown in the two-way table below:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align:right;"></th>
+                    <th style="text-align:right;">Undergraduate</th>
+                    <th style="text-align:right;">Graduate</th>
+                    <th style="text-align:right;">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align:right;">Straight A's</td>
+                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>240</mn></math></td>
+                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn></math></td>
+                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>300</mn></math></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;">Not</td>
+                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3,760</mn></math></td>
+                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>440</mn></math></td>
+                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,200</mn></math></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;">Total</td>
+                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,000</mn></math></td>
+                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>500</mn></math></td>
+                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,500</mn></math></td>
+                </tr>
+            </tbody>
+        </table>
+        <hr/>
+        
+        <h2>Problem 1</h2>
+        <div>
+            <p>A distribution in the data is highlighted below.</p>
+            <p><strong>What type of distribution is this?</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align:right;"></th>
+                        <th style="text-align:right;">Undergraduate</th>
+                        <th style="text-align:right;">Graduate</th>
+                        <th style="text-align:right;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:right;">Straight A's</td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>240</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>300</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">Not</td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3,760</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>440</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,200</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">Total</td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,000</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>500</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,500</mn></math></td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul>
+                <li>This is the conditional distribution of straight A status for each level of student.</li>
+                <li>This is the conditional distribution of student level for each straight A status.</li>
+                <li>This is the marginal distribution of student level.</li>
+                <li>This is the marginal distribution of straight A status.</li>
+            </ul>
+        </div>
+
+        <h2>Problem 2</h2>
+        <div>
+            <p><strong>What conclusion can we draw from the highlighted distribution?</strong></p>
+            <ul>
+                <li>There are far more students with straight A's than there are without straight A's.</li>
+                <li>There are far more students without straight A's than there are with straight A's.</li>
+                <li>There are far more undergraduate students than graduate students.</li>
+                <li>There are far more graduate students than undergraduate students.</li>
+            </ul>
+        </div>
+        <hr/>
+        
+        <h2>Problem 3</h2>
+        <div>
+            <p>Officials at the college are curious if one level of student was more likely to get straight A's than the other.</p>
+            <p><strong>Calculate the conditional distribution of straight A status for each level of student.</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align:right;"></th>
+                        <th style="text-align:right;">Undergraduate</th>
+                        <th style="text-align:right;">Graduate</th>
+                        <th style="text-align:right;">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:right;">Straight A's</td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>240</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>300</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">Not</td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3,760</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>440</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,200</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">Total</td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,000</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>500</mn></math></td>
+                        <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,500</mn></math></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align:right;"></th>
+                        <th style="text-align:center;">Undergraduate</th>
+                        <th style="text-align:center;">Graduate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:right;">Straight A's</td>
+                        <td style="text-align:center;">6%</td>
+                        <td style="text-align:center;">12%</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:right;">Not</td>
+                        <td style="text-align:center;">94%</td>
+                        <td style="text-align:center;">88%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Problem 4</h2>
+        <div>
+            <p><strong>Based on these conditional distributions, what can we say about the association between student level and straight A status?</strong></p>
+            <ul>
+                <li>Undergraduate students were more likely to have straight A's than graduate students.</li>
+                <li>Graduate students were more likely to have straight A's than undergraduate students.</li>
+                <li>Straight A students were more likely to be graduate students than undergraduate students.</li>
+            </ul>
+        </div>
+        <hr/>
+        
+        <h2>Problem 5</h2>
+        <div>
+            <p><strong>For this college, is there an association between the level of student and whether or not the student has straight A's?</strong></p>
+            <ul>
+                <li>Yes</li>
+                <li>No</li>
+            </ul>
+        </div>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>

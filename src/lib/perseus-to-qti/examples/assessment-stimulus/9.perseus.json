@@ -1,0 +1,63 @@
+[
+	{
+		"images": {},
+		"content": "The trigonometric functions $\\sin(x)$ and $\\cos(x)$ play a significant role in calculus. These are their derivatives:\n\n$\\begin{align}\n\\dfrac{d}{dx}[\\sin(x)]&=\\cos(x)\n\\\\\\\\\n\\dfrac{d}{dx}[\\cos(x)]&=-\\sin(x)\n\\end{align}$\n\nThe AP Calculus course doesn't require knowing the proofs of these derivatives, but we believe that as long as a proof is accessible, there's always something to learn from it. In general, it's always good to require some kind of proof or justification for the theorems you learn.",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "## First, we would like to find two tricky limits that are used in our proof.\n\n###1. $\\displaystyle\\lim_{x\\to 0}\\dfrac{\\sin(x)}{x}=1$\n\n[[☃ video 1]]",
+		"widgets": {
+			"video 1": {
+				"type": "video",
+				"graded": true,
+				"static": false,
+				"options": { "static": false, "location": "sinx-over-x-as-x-approaches-0" },
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "block"
+			}
+		}
+	},
+	{
+		"images": {},
+		"content": "###2. $\\displaystyle\\lim_{x\\to 0}\\dfrac{1-\\cos(x)}{x}=0$\n\n[[☃ video 1]]",
+		"widgets": {
+			"video 1": {
+				"type": "video",
+				"graded": true,
+				"static": false,
+				"options": { "static": false, "location": "1-cosx-over-x-as-x-approaches-0" },
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "block"
+			}
+		}
+	},
+	{
+		"images": {},
+		"content": "## Now we are ready to prove that the derivative of $\\sin(x)$ is $\\cos(x)$.\n\n[[☃ video 2]]",
+		"widgets": {
+			"video 2": {
+				"type": "video",
+				"graded": true,
+				"static": false,
+				"options": { "static": false, "location": "derivative-of-sin-x" },
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "block"
+			}
+		}
+	},
+	{
+		"images": {},
+		"content": "## Finally, we can use the fact that the derivative of $\\sin(x)$ is $\\cos(x)$ to show that the derivative of $\\cos(x)$ is $-\\sin(x)$.\n\n[[☃ video 3]]",
+		"widgets": {
+			"video 3": {
+				"type": "video",
+				"graded": true,
+				"static": false,
+				"options": { "static": false, "location": "derivative-of-cos-x" },
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "block"
+			}
+		}
+	}
+]

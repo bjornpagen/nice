@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="logic-if-statements-review"
+    title="Logic and If Statements Review"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <p><em>This is a review of what we covered in this tutorial on logic and if statements.</em></p>
+        <p>We often want to be able to &quot;conditionally&quot; do things in our programs – we want to be able to say &quot;if this thing is true, then do X but if this other thing is true, then do Y.&quot; It&apos;s like when we wake up in the morning – &quot;if it&apos;s raining outside, then I take an umbrella, but if it&apos;s sunny, I wear sunglasses.&quot; We can do things conditionally in our programs using <strong><em>if statements</em></strong> and <strong><em>if/else statements</em></strong> combined with <strong><em>conditional expressions</em></strong>.</p>
+
+        <p>An <strong><em>if statement</em></strong> tells the program to execute a block of code, if a condition is true. In the code below, we output a message only if <code>x</code> is greater than 0:</p>
+        <pre>var x = 5;
+
+if (x &gt; 0) {
+  text(&apos;x is a positive number!&apos;, 200, 200);
+}</pre>
+
+        <p>Since x is 5, which is greater than 0, we would see the message on the canvas. If we changed x to –1, we wouldn&apos;t see the message show up at all, since x wouldn&apos;t be greater than 0.</p>
+
+        <p>The <code>x &gt; 0</code> is what we call a <strong><em>conditional expression</em></strong> – which means it&apos;s an expression that evaluates to either <code>true</code> or <code>false</code>. When a value is either <code>true</code> or <code>false</code>, we call it a <strong><em>boolean</em></strong> value (as opposed to a number or a string). For example, we could just display the conditional expression:</p>
+        <pre>text(x &gt; 0, 200, 200); // Displays &quot;true&quot;</pre>
+
+        <p>We could also store it into a variable and then display it:</p>
+        <pre>var isPositive = x &gt; 0;
+text(isPositive, 200, 200);</pre>
+
+        <p>We would then say that <code>isPositive</code> is storing a boolean value, because it&apos;s either <code>true</code> or <code>false</code>, depending on what we set x to.</p>
+
+        <p>We have many ways of creating conditional expressions that will evaluate to <code>true</code> or <code>false</code>, because we have many comparison operators. Here are the most popular:</p>
+        <p>Assuming the following variable, here are the most common comparison operators and expressions that would be true with them:</p>
+        <pre>var myAge = 28;</pre>
+        <table>
+            <thead>
+                <tr>
+                    <th>Operator</th>
+                    <th>Meaning</th>
+                    <th>True expressions</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>===</code></td>
+                    <td>Strict equality</td>
+                    <td><code>myAge === 28</code></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><code>!==</code></td>
+                    <td>Strict inequality</td>
+                    <td><code>myAge !== 29</code></td>
+                    <td><code>28 !== 29</code></td>
+                </tr>
+                <tr>
+                    <td><code>&gt;</code></td>
+                    <td>Greater than</td>
+                    <td><code>myAge &gt; 25</code></td>
+                    <td><code>28 &gt; 25</code></td>
+                </tr>
+                <tr>
+                    <td><code>&gt;=</code></td>
+                    <td>Greater than or equal</td>
+                    <td><code>myAge &gt;= 28</code></td>
+                    <td><code>28 &gt;= 28</code></td>
+                </tr>
+                <tr>
+                    <td><code>&lt;</code></td>
+                    <td>Less than</td>
+                    <td><code>myAge &lt; 30</code></td>
+                    <td><code>28 &lt; 30</code></td>
+                </tr>
+                <tr>
+                    <td><code>&lt;=</code></td>
+                    <td>Less than or equal</td>
+                    <td><code>myAge &lt;= 28</code></td>
+                    <td><code>28 &lt;= 28</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>It is a very common mistake to confuse the assignment operator (<code>=</code>) with the equality operator (<code>===</code>), because they both use equal signs, but they are quite different. The assignment operator will actually change the value of the variable, whereas the equality operator will just read the value of the variable and see if it&apos;s equal to something. For example:</p>
+        <pre>var x = 2 + 2; // Sets it equal to 4
+
+if (x === 4) { // Asks the question, &quot;does this equal 4?&quot;
+   text(&quot;yep, 2 + 2 = 4!&quot;, 200, 200);
+}</pre>
+
+        <p>We sometimes want to combine multiple comparisons together in a conditional expression, and that&apos;s why we have <strong><em>logical operators</em></strong>. These operators let us say things like &quot;if both X and Y are true&quot; or &quot;if either X or Y are true&quot; in our programs.</p>
+        <p>If we want to require that two conditions are both true, we can use the <code>&amp;&amp;</code> operator (&quot;and&quot;):</p>
+        <pre>var degreesOutside = 70;
+var numberOfClouds = 50;
+if (degreesOutside &gt; 70 &amp;&amp; numberOfClouds &lt; 5) {
+  text(&quot;Wear sun screen!&quot;, 200, 200);
+}</pre>
+
+        <p>We often use that in our programs here for checking that a user&apos;s mouse position is inside a rectangle (to mimic a button), in which case we need multiple <code>&amp;&amp;</code> operators:</p>
+        <pre>rect(100, 50, 100, 100); 
+
+mousePressed = function() {
+    if (mouseX &gt; 100 &amp;&amp; mouseX &lt; 200 &amp;&amp; mouseY &gt; 50 &amp;&amp; mouseY &lt; 150) {
+      text(&quot;You pressed it!&quot;, 80, 75);
+    }
+};</pre>
+
+        <p>If we only care that at least one condition is true, then we can use the <code>||</code> operator (&quot;or&quot;):</p>
+        <pre>var degreesOutside = 70;
+var numberOfClouds = 50;
+if (degreesOutside &gt; 70 || numberOfClouds &lt; 5) {
+  text(&quot;Wear sun screen if it&apos;s hot outside or there aren&apos;t many clouds!&quot;, 200, 200);
+}</pre>
+
+        <p>We can use both <code>&amp;&amp;</code> and <code>||</code> in the same expression, if we have some very complex condition to check. Just use parentheses to group expressions, so that the program isn&apos;t confused about what order to evaluate them:</p>
+        <pre>var myAge = 28;
+if ((myAge &gt;= 0 &amp;&amp; myAge &lt; 3) || myAge &gt; 90) {
+  println(&apos;You&apos;re not quite in your peak.&apos;);
+}</pre>
+
+        <p>Now let&apos;s return to <strong><em>if statements</em></strong>. We often want to execute some block of code in the case that the if condition wasn&apos;t true – in that case, we add an <strong><em>else statement</em></strong>.</p>
+        <pre>var age = 28;
+if (age &gt;= 16) {
+  println(&apos;Yay, you can drive!&apos;);
+} else {
+  println(&apos;Sorry, but you have &apos; + (16 - age) + &apos; years until you can drive.&apos;);
+}</pre>
+
+        <p>Sometimes we want to check multiple conditions, and do different things based on each, in which case we can use <code>else if</code>:</p>
+        <pre>var age = 20;
+if (age &gt;= 35) {
+  println(&quot;You can vote AND hold any place in government!&quot;);
+} else if (age &gt;= 30) {
+  println(&quot;You can vote AND run for the Senate!&quot;);
+} else if (age &gt;= 18) {
+  println(&quot;You can vote!&quot;);
+} else {
+  println(&quot;You have no voice in government!&quot;);
+}</pre>
+
+        <p>You can keep checking conditions as much as you want – just make sure that each of your conditions is actually reachable. Test your code by changing variables until you make it inside each of the blocks of code, so that you know it all works.</p>
+        <p>As you can hopefully now see, conditionals are an important part of programming and let us create much more powerful and flexible programs.</p>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>

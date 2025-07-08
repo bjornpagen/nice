@@ -1,0 +1,157 @@
+[
+	{
+		"images": {},
+		"content": "_This is a review of what we covered in this tutorial on logic and if statements._",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "We often want to be able to \"conditionally\" do things in our programs - we want to be able to say \"if this thing is true, then do X but if this other thing is true, then do Y.\" It's like when we wake up in the morning - \"if it's raining outside, then I take an umbrella, but if it's sunny, I wear sunglasses.\" We can do things conditionally in our programs using **_if statements_** and **_if/else statements_** combined with **_conditional expressions_**.",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "An **_if statement_** tells the program to execute a block of code, if a condition is true. In the code below, we output a message only if `x` is greater than 0:",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\nvar x = 5;\n\nif (x > 0) {\n  text('x is a positive number!', 200, 200);\n}\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "Since x is 5, which is greater than 0, we would see the message on the canvas. If we changed x to -1, we wouldn't see the message show up at all, since x wouldn't be greater than 0.",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "The `x > 0` is what we call a **_conditional expression_** - which means it's an expression that evaluates to either `true` or `false`. When a value is either `true` or `false`, we call it a **_boolean_** value (as opposed to a number or a string). For example, we could just display the conditional expression:",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\ntext(x > 0, 200, 200); // Displays \"true\"\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "We could also store it into a variable and then display it:",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\nvar isPositive = x > 0;\ntext(isPositive, 200, 200);\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "We would then say that `isPositive` is storing a boolean value, because it's either `true` or `false`, depending on what we set x to.",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "We have many ways of creating conditional expressions that will evaluate to `true` or `false`, because we have many comparison operators. Here are the most popular:",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "Assuming the following variable, here are the most common comparison operators and expressions that would be true with them:",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\nvar myAge = 28;\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "| Operator | Meaning | True expressions | |\n| --- | --- | --- |--- |\n| === | Strict equality | `myAge === 28` |  |\n| !== | Strict inequality | `myAge !== 29` |`28 !== 29` |\n| > | Greater than | `myAge > 25` | `28 > 25` |\n| >= | Greater than or equal | `myAge >= 28` | `28 >= 28` |\n| < | Less than | `myAge < 30` | `28 < 30` |\n| <= | Less than or equal | `myAge <= 28` | `28 <= 28` |",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "It is a very common mistake to confuse the assignment operator (`=`) with the equality operator (`===`), because they both use equal signs, but they are quite different. The assignment operator will actually change the value of the variable, whereas the equality operator will just read the value of the variable and see if it's equal to something. For example:",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\nvar x = 2 + 2; // Sets it equal to 4\n\nif (x === 4) { // Asks the question, \"does this equal 4?\"\n   text(\"yep, 2 + 2 = 4!\", 200, 200);\n}\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "We sometimes want to combine multiple comparisons together in a conditional expression, and that's why we have **_logical operators_**. These operators let us say things like \"if both X and Y are true\" or \"if either X or Y are true\" in our programs.",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "If we want to require that two conditions are both true, we can use the `&&` operator (\"and\"):",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\nvar degreesOutside = 70;\nvar numberOfClouds = 50;\nif (degreesOutside > 70 && numberOfClouds < 5) {\n  text(\"Wear sun screen!\", 200, 200);\n}\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "We often use that in our programs here for checking that a user's mouse position is inside a rectangle (to mimic a button), in which case we need multiple `&&` operators:",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\nrect(100, 50, 100, 100); \n\nmousePressed = function() {\n    if (mouseX > 100 && mouseX < 200 && mouseY > 50 && mouseY < 150) {\n      text(\"You pressed it!\", 80, 75);\n    }\n};\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "If we only care that at least one condition is true, then we can use the `||` operator (\"or\"):",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\nvar degreesOutside = 70;\nvar numberOfClouds = 50;\nif (degreesOutside > 70 || numberOfClouds < 5) {\n  text(\"Wear sun screen if it's hot outside or there aren't many clouds!\", 200, 200);\n}\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "We can use both `&&` and `||` in the same expression, if we have some very complex condition to check. Just use parentheses to group expressions, so that the program isn't confused about what order to evaluate them:",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\nvar myAge = 28;\nif ((myAge >= 0 && myAge < 3) || myAge > 90) {\n  println('You\\'re not quite in your peak.');\n}\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "Now let's return to **_if statements_**. We often want to execute some block of code in the case that the if condition wasn't true - in that case, we add an **_else statement_**.",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\nvar age = 28;\nif (age >= 16) {\n  println('Yay, you can drive!');\n} else {\n  println('Sorry, but you have ' + (16 - age) + ' years until you can drive.');\n}\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "Sometimes we want to check multiple conditions, and do different things based on each, in which case we can use `else if`:",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "```\nvar age = 20;\nif (age >= 35) {\n  println('You can vote AND hold any place in government!');\n} else if (age >= 30) {\n  println('You can vote AND run for the Senate!');\n} else if (age >= 18) {\n  println('You can vote!');\n} else {\n  println('You have no voice in government!');\n}\n```",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "You can keep checking conditions as much as you want - just make sure that each of your conditions is actually reachable. Test your code by changing variables until you make it inside each of the blocks of code, so that you know it all works.",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "As you can hopefully now see, conditionals are an important part of programming and let us create much more powerful and flexible programs.",
+		"widgets": {}
+	}
+]
