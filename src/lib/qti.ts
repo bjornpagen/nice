@@ -397,12 +397,12 @@ export class QtiApiClient {
 
 		const tokenBody = new URLSearchParams({
 			grant_type: "client_credentials",
-			client_id: env.TIMEBACK_PRODUCTION_CLIENT_ID,
-			client_secret: env.TIMEBACK_PRODUCTION_CLIENT_SECRET
+			client_id: env.TIMEBACK_CLIENT_ID,
+			client_secret: env.TIMEBACK_CLIENT_SECRET
 		})
 
 		const result = await errors.try(
-			fetch(env.TIMEBACK_PRODUCTION_TOKEN_URL, {
+			fetch(env.TIMEBACK_TOKEN_URL, {
 				method: "POST",
 				headers: { "Content-Type": "application/x-www-form-urlencoded" },
 				body: tokenBody
@@ -447,7 +447,7 @@ export class QtiApiClient {
 	async #request<T>(endpoint: string, options: RequestInit, schema: z.ZodType<T>): Promise<T> {
 		await this.#ensureAccessToken()
 
-		const url = `https://qti.alpha-1edtech.com/api${endpoint}`
+		const url = `${env.TIMEBACK_QTI_SERVER_URL}${endpoint}`
 		const headers = {
 			...options.headers,
 			Authorization: `Bearer ${this.#accessToken}`
