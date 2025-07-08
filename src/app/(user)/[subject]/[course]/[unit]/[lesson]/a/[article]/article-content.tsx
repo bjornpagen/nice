@@ -12,7 +12,11 @@ export function ArticleContent({ article }: { article: Article }) {
 				<div className="text-center">
 					<h1 className="text-2xl font-bold text-gray-800 mb-4">{article.title}</h1>
 					<div className="flex justify-center space-x-4">
-						<Button variant="outline" className="text-green-600 border-green-600 hover:bg-green-50 text-sm">
+						<Button
+							variant="outline"
+							className="text-green-600 border-green-600 hover:bg-green-50 text-sm cursor-not-allowed"
+							disabled
+						>
 							<Image
 								src="https://cdn.kastatic.org/images/google_classroom_color.png"
 								alt=""
@@ -22,7 +26,11 @@ export function ArticleContent({ article }: { article: Article }) {
 							/>
 							Google Classroom
 						</Button>
-						<Button variant="outline" className="text-purple-600 border-purple-600 hover:bg-purple-50 text-sm">
+						<Button
+							variant="outline"
+							className="text-purple-600 border-purple-600 hover:bg-purple-50 text-sm cursor-not-allowed"
+							disabled
+						>
 							<span className="mr-2">📘</span>
 							Microsoft Teams
 						</Button>
