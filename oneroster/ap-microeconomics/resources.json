@@ -1,0 +1,3363 @@
+[
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "",
+			"language": "en-US",
+			"subType": "qti-stimulus",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/stimuli/x75fea13d9da53d2a"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/ap-economics-introduction/a/scarcity-article",
+		"status": "active",
+		"title": "Scarcity",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x75fea13d9da53d2a"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, we introduce the field of economics using quotes from the person that many consider to be the \"father\" of economics: Adam Smith. Topics include the definition of economics, microeconomics, and macroeconomics as a field and the role of assumptions in economic decisionmaking.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=8JYP_wU1JTU"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/introduction-to-the-economic-way-of-thinking-macro/v/introduction-to-economics",
+		"status": "active",
+		"title": "Introduction to economics",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "878129397"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn about the concept of scarcity, a crucial concept in the field of economics. Examine various examples of scarce resources (e.g. caviar, labor, housing) as well as free resources (e.g. air, water in certain contexts) as you learn how economics is a study of how to allocate scarce resources.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=iy-fhpbTH9E"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/introduction-to-the-economic-way-of-thinking-macro/v/scarcity",
+		"status": "active",
+		"title": "Scarcity",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xf973c2aa0da54adb"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "This transcript discusses the four factors of production: land, labor, capital, and entrepreneurship. Land refers to natural resources, while labor is the work that goes into production. Capital is the tools and buildings used to produce things, and entrepreneurship is the know-how of putting it all together. The transcript also discusses the distinction between capital goods and consumption goods.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=-IvwoqPh1_I"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/introduction-to-the-economic-way-of-thinking-macro/v/four-factors-of-production",
+		"status": "active",
+		"title": "Four factors of production",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x12080596ecd8a167"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "This video discusses two closely related ideas in economics: scarcity and rivalry.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=uVA1-m8SVvA"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/economics-introduction/v/scarcity-and-rivalry-basic-economic-concepts-apr-microeconomics-khan-academy",
+		"status": "active",
+		"title": "Scarcity and rivalry",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xabfe67dff597c478"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Economic models are a way of taking complicated ideas and events and breaking them down into their most important characteristics. We use models in economics so that we can focus our attention on a few things instead of getting bogged down a lot of details. In this video, learn more about the role that models play in economics, and the importance of the assumptions that underlie those models.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=7n_Hf_UsW7I"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/introduction-to-the-economic-way-of-thinking-macro/v/economic-models",
+		"status": "active",
+		"title": "Economic models",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x75c3b5683f2c4221"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "What is the difference between normative and positive statements in the context of economics or philosophy? Normative statements are based on opinions or ethics—what someone believes should be. Positive statements, on the other hand, are testable, even if they may not necessarily be true.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=YtX6SGw7E3c"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/introduction-to-the-economic-way-of-thinking-macro/v/normative-and-positive-statements",
+		"status": "active",
+		"title": "Normative and positive statements",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xc592f4be639386b0"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the role of scarcity in microeconomics, and other basic economic concepts, in this exercise",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x5a0b1c16f81ff951"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/economics-introduction/e/scarcity",
+		"status": "active",
+		"title": "Scarcity",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x5a0b1c16f81ff951"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Market systems only function well when property rights are well defined. Take a deeper dive into the role of property rights in a market system in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=AJy7pWK0W8g"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/economic-systems/v/property-rights-in-a-market-system",
+		"status": "active",
+		"title": "Property rights in a market system ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x2d27ebf226852552"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about economic systems in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc2974d05bccb6bdd"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/economic-systems/e/resource-allocation-and-economic-systems",
+		"status": "active",
+		"title": "Resource allocation and economic systems",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xc2974d05bccb6bdd"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The production possibilities curve (PPC) is a graph that shows all of the different combinations of output that can be produced given current resources and technology. Sometimes called the production possibilities frontier (PPF), the PPC illustrates scarcity and tradeoffs. We can model tradeoffs and scarcity using the example of a hunter-gatherer who can split their time between two activities.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=_7VHfuWV-Qg"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/production-possibilities-curve-scarcity-choice-and-opportunity-cost-macro/v/production-possibilities-frontier",
+		"status": "active",
+		"title": "Production possibilities curve",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "469721687"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Opportunity cost is the trade-off that one makes when deciding between two options. The example of choosing between catching rabbits and gathering berries illustrates how opportunity cost works. The related concept of marginal cost is the cost of producing one extra unit of something.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=pkEiHZAtoro"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/production-possibilities-curve-scarcity-choice-and-opportunity-cost-macro/v/opportunity-cost",
+		"status": "active",
+		"title": "Opportunity cost",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "469721684"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The concept of opportunity cost in economics can change depending on the scenario. For example, there might be a trade-off between hunting for rabbits or gathering berries. As one pursues more rabbits, the opportunity cost (in terms of berries given up) increases. This phenomenon is illustrated graphically with a bow-shaped curve.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=00fgAG6VrRQ"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/production-possibilities-curve-scarcity-choice-and-opportunity-cost-macro/v/increasing-opportunity-cost",
+		"status": "active",
+		"title": "Increasing opportunity cost",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "469721688"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "We explore three different production possibility curves for the rabbits and berries example. Each curve has a different shape, which represents different opportunity costs. The bowed out (concave) curve represents an increasing opportunity cost, the bowed in (convex) curve represents a decreasing opportunity cost, and the straight line curve represents a constant opportunity cost.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=-aVZtzD44vI"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/production-possibilities-curve-scarcity-choice-and-opportunity-cost-macro/v/ppcs-for-increasing-decreasing-and-constant-opportunity-cost",
+		"status": "active",
+		"title": "PPCs for increasing, decreasing and constant opportunity cost",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x6230b3a423aa77fe"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, Sal explains how the production possibilities curve model can be used to illustrate changes in a country's actual and potential level of output. Concepts covered include efficiency, inefficiency, economic growth and contraction, and recession. When an economy is in a recession, it is operating inside the PPC. When it is at full employment, it operates on the PPC. ",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=9zZY6RfN6iA"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/production-possibilities-curve-scarcity-choice-and-opportunity-cost-macro/v/production-possibilities-curve",
+		"status": "active",
+		"title": "Production Possibilities Curve as a model of a country's economy",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xdd319ebe9ee1077a"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the production possibilities curve (PPC) in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x57b7b05f2cfaf2af"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/production-possibilities/e/production-possibilities-curve--ppc-",
+		"status": "active",
+		"title": "Interpreting graphs of the production possibilities curve (PPC)",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x57b7b05f2cfaf2af"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this exercise, practice using data from a production possibilities curve to calculate opportunity costs.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xdb22f222af2c13fd"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/production-possibilities/e/calculating-opportunity-costs-from-a-production-possibilities-curve--ppc-",
+		"status": "active",
+		"title": "Calculating opportunity costs from a production possibilities curve (PPC)",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xdb22f222af2c13fd"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Explore the concept of comparative advantage with two fictional dinnerware producers, Charlie and Patty. Charlie has a comparative advantage in producing cups, while Patty has a comparative advantage in producing plates. By specializing in these areas and then trading with each other, both producers are able to get outcomes that they wouldn't have been able to achieve on their own.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=xx9xNJlPOJo"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/comparative-advantage-specialization-and-gains-from-trade",
+		"status": "active",
+		"title": "Comparative advantage, specialization, and gains from trade",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "471262130"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn about the difference between \"comparative advantage\" and \"absolute advantage\" in economics. See how two producers can benefit from specializing in different products and trading with each other - even if one producer has an absolute advantage in both products. This is because they have different comparative advantages, or opportunity costs, for producing each product.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=xN3UV5FsBkU"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/comparative-advantage-and-absolute-advantage",
+		"status": "active",
+		"title": "Comparative advantage and absolute advantage",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "471262129"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, we use the PPCs for two different countries that each produce two goods in order to create an output table based on the data in the graph. We then use the output table to determine the opportunity costs of producing each good. Finally, we determine which country has a comparative advantage in each good.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=K8p0F92gVUM"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/opportunity-cost-and-comparative-advantage-macroeconomics-khan-academy",
+		"status": "active",
+		"title": "Opportunity cost and comparative advantage using an output table",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xab3721948a773b32"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about comparative advantage and absolute advantage in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x1e215fba45b3b32d"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/comparative-advantage-and-the-gains-from-trade/e/comparative-advantage-and-absolute-advantage",
+		"status": "active",
+		"title": "Comparative advantage and absolute advantage",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x1e215fba45b3b32d"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, we explore how we can use opportunity costs to determine who has comparative advantage in producing a good. By specializing in the production of a good that a country has comparative advantage in, and trading for the other good, both countries have the potential to benefit from the exchange. We can also figure out a trading price (also known as the \"terms of trade\") which would make both countries willing to trade.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=C-xLUS5JGIM"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/terms-of-trade-and-the-gains-from-trade-macroeconomics-khan-academy",
+		"status": "active",
+		"title": "Terms of trade and the gains from trade",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x529d4cd510b537f0"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, we take a slightly different approach to determining comparative advantage because we are given data in a slightly different way. Rather than knowing how much of two goods can be produced in a day, we know how much of a resources (in this case labor) is needed to produce one unit of a good.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=Uqf5c6Xcjr4"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/input-approach-to-determining-comparative-advantage-macroeconomics-khan-academy",
+		"status": "active",
+		"title": "Input approach to determining comparative advantage ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x4c3bddb44e1477f3"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In a previous lesson we learned that there is the potential for two countries to gain from trade. But it is also possible that there might not be the potential to gain from trade. In this video, we explore the circumstance that would lead to there being no gains from trade.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=TeAzW_tY6m4"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/when-there-arent-gains-from-trade-macroeconomics-khan-academy",
+		"status": "active",
+		"title": "When there aren't gains from trade ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x6c4e23da6d759cd4"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video we work through an example of a question like you might see on an AP microeconomics or AP Macroeconomics exam determining who has comparative advantage in producing a good using data from a table. Topics include how to calculate opportunity costs and determine who has comparative advantage based on opportunity cost. ",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=jHp4fnrEA6w"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/comparative-advantage-worked-example",
+		"status": "active",
+		"title": "Comparative advantage worked example",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x7e45aa6966cce6b1"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about trade in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x3e0858aea90d6fe3"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/comparative-advantage-and-the-gains-from-trade/e/trade",
+		"status": "active",
+		"title": "The terms of trade",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x3e0858aea90d6fe3"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "A rational agent considers all costs, including explicit and implicit costs, when deciding whether or not to undertake an action. In this video, learn about how opportunity costs represent the cost of the next best alternative.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=5-03899n678"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/cost-benefit-analysis/v/opportunity-costs",
+		"status": "active",
+		"title": "Optimal Decision-making and opportunity costs",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x939ade91ad43de95"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "A rational agent considers both accounting profit and economic profit. In this video, see an example highlighting the difference between accounting profit and economic profit from a business and a discussion of explicit and implicit costs of operating a business.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=kQRFfAlj9CE"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/cost-benefit-analysis/v/accounting-profit-vs-economic-profit",
+		"status": "active",
+		"title": "Accounting profit vs  economic profit ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x33d97f1a2be8b713"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The concept of \"utility\" in economics essentially measures the usefulness or value of something. Economists attempt to quantify utility in various ways. Here, Sal Khan uses the example of scoops of ice cream to illustrate concepts like total utility and marginal utility. He also touches on how marginal utility tends to decrease as you accumulate more of a given thing.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=UnX8RPB5vFM"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/cost-benefit-analysis/v/introduction-to-utility",
+		"status": "active",
+		"title": "Introduction to utility",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x465be0528665dde6"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about total utility, marginal utility, total revenue, and costs in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x020d3080d7b9551d"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/cost-benefit-analysis/e/cost-benefit-analysis",
+		"status": "active",
+		"title": "Cost-benefit analysis",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x020d3080d7b9551d"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "When allocating a budget, we can use the concepts of marginal utility and marginal benefit to help us decide where our money is best spent. In general, we should allocate our budget towards items that will provide us with the highest marginal utility or marginal benefit. This way, we will be maximizing the satisfaction or value we receive from our budget.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=Kf9KhwryQNE"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/marginal-utility-tutorial/v/marginal-utility",
+		"status": "active",
+		"title": "Marginal utility and total utility",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "505817315"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "This video shows how we can visualize marginal utility (MU) and total utility (TU) functions graphically. ",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=JlS5K1AxjT4"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/marginal-utility-tutorial/v/visualizing-marginal-utility-mu-and-total-utility-tu-functions",
+		"status": "active",
+		"title": "Visualizing marginal utility MU and total utility TU functions",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x2d7fa94c4955de56"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about total utility, marginal utility, and the law of diminishing marginal utility in this exercise. ",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x3d5d99875f643fad"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/marginal-utility-tutorial/e/total-utility-and-marginal-utility",
+		"status": "active",
+		"title": "Total Utility and Marginal Utility",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x3d5d99875f643fad"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "How should you allocate money between two different products or services in order to maximize utility, or \"bang for your buck?\" Marginal utility refers to the utility gained from an incremental purchase, in order to make rational decisions. In many cases, the goal is to reach a point where the marginal utility per price of the two products is equal.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=KbW6OiuRa1Y"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/marginal-utility-tutorial/v/equalizing-marginal-utility-per-dollar-spent",
+		"status": "active",
+		"title": "Utility maximization: equalizing marginal utility per dollar ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "505817316"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, walk through the solution to a question on the 2012 AP Microeconomics exam applying the concepts of marginal utility and utility maximization.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=CxAXc9vL2rI"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/utility-maximization-using-marg/v/marginal-utllity-free-response-example",
+		"status": "active",
+		"title": "Marginal utility free response example",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xf81a262775786f42"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, walk through the solution to one of the questions on the free response section of the 2016 AP Microeconomics exam.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=fP6X2TzQdjA"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/16/v/marginal-benefit-ap-free-response-question",
+		"status": "active",
+		"title": "Marginal benefit AP free response question",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xab3c08a99dc60da6"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice applying the utility maximization rule in this exercise. ",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc63b15303be767d8"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/utility-maximization-using-marg/e/utility-maximization",
+		"status": "active",
+		"title": "Utility Maximization",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xc63b15303be767d8"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xe54c8d49aa0f4a4a"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/quiz/basic-economic-concepts-quiz-1",
+		"status": "active",
+		"title": "Basic Economic Concepts: Quiz 1",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xe54c8d49aa0f4a4a"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x8d4bb81b05e60077"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/quiz/basic-economic-concepts-quiz-2",
+		"status": "active",
+		"title": "Basic Economic Concepts: Quiz 2",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x8d4bb81b05e60077"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x08aea700d2e6ed58"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/quiz/basic-economic-concepts-quiz-3",
+		"status": "active",
+		"title": "Basic Economic Concepts: Quiz 3",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x08aea700d2e6ed58"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Test your understanding of {unit name}.",
+			"language": "en-US",
+			"lessonType": "unittest",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xdd8358f773fedb52"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/test/basic-economic-concepts-unit-test",
+		"status": "active",
+		"title": "Basic Economic Concepts: Unit test",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xdd8358f773fedb52"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In order for markets to function effectively, property rights must be clear. In this video, we explore the idea of property rights, and why they matter in markets and how they affect individual incentives. We describe some of the conditions that are necessary for a properly and efficiently operating market to exist, including how exclusivity, enforceability, and transferability of property rights are essential for a properly functioning market.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=PEG9OQCo2Ls"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/economic-systems/v/markets-and-property-rights",
+		"status": "active",
+		"title": "Markets and property rights",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x553f8aa4a4e04106"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The law of demand states that when the price of a product goes up, the quantity demanded will go down – and vice versa. It's an intuitive concept that tends to hold true in most situations (though there are exceptions). The law of demand is a foundational principle in microeconomics, helping us understand how buyers and sellers interact in the marketplace.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=ShzPtU7IOXs"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/law-of-demand",
+		"status": "active",
+		"title": "Law of demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "471262127"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Where does a buyer's demand curve come from? A rational buyer wants to get as much \"bang per buck\" from their consumption as possible. In economics, that's called marginal utility per dollar spent. When the price of a good decreases, the \"bang per buck\" on that good increases, which incentivizes consuming more of it. In this video, we derive the individual's demand curve for a good by tweaking the marginal utility per dollar spent.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=4-_-wQc3EGE"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/marginal-utility-tutorial/v/deriving-demand-curve-from-tweaking-marginal-utility-per-dollar",
+		"status": "active",
+		"title": "Deriving demand curve from tweaking marginal utility per dollar",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "505808557"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The market demand for a good describes the quantity demanded at every given price for the entire market. Remember that the entire market is made up of individual buyers with their own demand curves. This means that the market demand is the sum of all of the individual buyer's demand curve.  In this video, you can visualize why this is true.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=dGjPguqHBXE"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/supply-demand-equilibrium/demand-curve-tutorial/v/market-demand-as-the-sum-of-individual-demand",
+		"status": "active",
+		"title": "Market demand as the sum of individual demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xabbed34b0992fd28"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn about the Law of Demand, which shows that as prices decrease, quantity demanded increases. Explore three reasons for this: substitution effect (buying cheaper alternatives), income effect (extra money to spend), and decreasing marginal utility (less value from additional units), and see how each creates a downward-sloping demand curve.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=xGL5mbOvTmQ"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/supply-demand-equilibrium/demand-curve-tutorial/v/substitution-and-income-effects-and-the-law-of-demand",
+		"status": "active",
+		"title": "Substitution and income effects and the law of demand ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x25dff0722996be25"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned so far in this lesson. Topics include the role of property rights in markets, the income effect, and the substitution effect.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xa86df414ff00ad3a"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/micro-demand/e/markets--property-rights--and-the-law-of-demand",
+		"status": "active",
+		"title": "Markets, property rights, and the law of demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xa86df414ff00ad3a"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Changes in the prices of related products (either substitutes or complements) can affect the demand curve for a particular product.The example of an ebook illustrates how the demand curve can shift to the left or right depending on whether the prices of related products go up or down.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=-oClpRv7msg"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/price-of-related-products-and-demand",
+		"status": "active",
+		"title": "Price of related products and demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "471258160"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "This transcript discusses how changes in expectations of future prices can affect demand. If people expect prices to go up, they're more likely to buy now, shifting the demand curve to the right. If they expect prices to go down, they're likely to hold off on buying, shifting the demand curve to the left.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=7siSvYs84fg"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/change-in-expected-future-prices-and-demand",
+		"status": "active",
+		"title": "Change in expected future prices and demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "1266634647"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, we explore how changes in a few factors affect the demand curve. Changes in income, population, and consumer preferences cause the entire demand curve to shift. ",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=do1HDIdfQkU"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/changes-in-income-population-or-preferences",
+		"status": "active",
+		"title": "Changes in income, population, or preferences",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "471262128"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "We examine the concept of demand curves for two different products: a laptop and a cheap car. We see how changes in income can affect demand, with the laptop being a \"normal good\" (demand increases as income increases) and the cheap car being an \"inferior good\" (demand decreases as income increases).",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=wYuAwm-5-Bk"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/normal-and-inferior-goods",
+		"status": "active",
+		"title": "Normal and inferior goods",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "471262131"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The concepts of normal goods and inferior goods can be tricky, and the definitions can be somewhat subjective as well. In this video, we take a deeper look at these kinds of goods.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=TAhRoJB34nw"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/supply-demand-equilibrium/demand-curve-tutorial/v/inferior-goods-clarification",
+		"status": "active",
+		"title": "Inferior goods clarification",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "476379114"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In economics, \"demand\" refers to the entire curve that illustrates the relationship between price and quantity. \"Quantity demanded\" refers to a specific point on that curve, where a certain price is associated with a certain quantity. So, while demand encompasses the whole curve, quantity demanded is just one snapshot within it.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=iC9hkhbIimA"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/change-in-demand-versus-change-in-quantity-demanded-microeconomics-khan-academy",
+		"status": "active",
+		"title": "Change in demand versus change in quantity demanded ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x4c84a74cf27acbfd"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about demand, quantity demanded, the determinants of demand in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x743caddd488a1751"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/micro-demand/e/demand-and-the-determinants-of-demand",
+		"status": "active",
+		"title": "Demand and the determinants of demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x743caddd488a1751"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video we explore the law of supply which states that quantity supplied increases as price increases. We use a supply schedule to describe the quantities a seller is willing to sell at different prices, and then translate the supply schedule into a supply curve that illustrates the law of supply.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=3xCzhdVtdMI"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/supply/v/law-of-supply",
+		"status": "active",
+		"title": "Law of supply",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "476379112"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "A change in supply refers to a shift in the entire supply curve, which can happen due to factors such as changes in production costs or taxes. A change in quantity supplied, on the other hand, refers to movement along the curve due to changes in price. Explore several examples to illustrate these concepts.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=NrlF8mMHfLE"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/supply/v/change-in-supply-versus-change-in-quantity-supplied",
+		"status": "active",
+		"title": "Change in supply versus change in quantity supplied",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x25f3cb342b01f812"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about supply and the law of supply in this exercise. ",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x40cef8e0c00e5e70"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/supply-demand-equilibrium/supply-curve-tutorial/e/supply-and-the-determinants-of-supply",
+		"status": "active",
+		"title": "Supply and the law of supply",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x40cef8e0c00e5e70"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Price changes the quantity supplied, but what might cause supply to increase even if price hasn't changed? In this video, we explore the determinants of supply: those factors that cause an entire supply curve to shift.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=0isM0GF-rMI"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/supply/v/factors-affecting-supply",
+		"status": "active",
+		"title": "Factors affecting supply",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "476379111"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about changes in the supply curve when a determinant of supply changes in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xcb93612e85abe5f7"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/22/e/changes-in-the-determinants-of-supply",
+		"status": "active",
+		"title": "Changes in the determinants of supply",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xcb93612e85abe5f7"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn about the price elasticity of demand, a concept measuring how sensitive quantity is to price changes. Elasticity is calculated as percent change in quantity divided by percent change in price. Elastic situations have elasticity greater than 1, while inelastic situations have elasticity less than 1. Elasticity varies along a demand curve, and different calculation methods exist.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=FBWJYH8DZ1g"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/introduction-to-price-elasticity-of-demand-ap-microeconomics-khan-academy",
+		"status": "active",
+		"title": "Introduction to price elasticity of demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x00350a2da52f2646"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "There are several factors that affect how elastic (or inelastic) the price elasticity of demand is, such as the availability of substitutes, the timeframe, the share of income, whether a good is a luxury vs. a necessity, and how narrowly the market is defined. We explore each of these in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=KEhy6SwW__I"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/determinants-of-price-elasticity-of-demand-ap-microeconomics-khan-academy",
+		"status": "active",
+		"title": "Determinants of price elasticity of demand ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x4564ec1756b032eb"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Walk through the logic of determining what kind of good has the most elastic demand in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=H4CkAid4_J4"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/determinants-of-elasticity-example",
+		"status": "active",
+		"title": "Determinants of elasticity example ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x80b9d9e046eb647b"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about calculating and interpreting price elasticity of demand, as well as the determinants of price elasticity of demand, in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x8862bdd561e4b717"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/e/price-elasticity-of-demand",
+		"status": "active",
+		"title": "Price Elasticity of Demand and its Determinants ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x8862bdd561e4b717"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Perfect inelasticity refers to a situation in which the quantity demanded does not change at all, regardless of the price. Perfect elasticity refers to a situation in which the quantity demanded is extremely sensitive to changes in price, with even a small change in price leading to a large change in quantity demanded.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=6udRtn5jSWk"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/perfect-inelasticity-and-perfect-elasticity-of-demand",
+		"status": "active",
+		"title": "Perfect inelasticity and perfect elasticity of demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "478016838"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "An interesting case of price elasticity of demand is a demand curve with a constant unit elasticity. Explore what such a demand curve would look like in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=m7qXvQvWlY4"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/constant-unit-elasticity",
+		"status": "active",
+		"title": "Constant unit elasticity",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "480683235"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "One of the most practical applications of price elasticity of demand is its relationship to total revenue. A seller who knows the price elasticity of demand for their good can make better decisions about what happens if they raise or lower the price of their good. Explore the relationship between total revenue and elasticity in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=Udltkvm9HLc"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/total-revenue-and-elasticity",
+		"status": "active",
+		"title": "Total revenue and elasticity",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "480690086"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, take a deeper dive into the total revenue rule and the relationship between total revenue and elasticity.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=KgrLUQYgIJE"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/more-on-total-revenue-and-elasticity",
+		"status": "active",
+		"title": "More on total revenue and elasticity",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "480687060"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about the relationship between price elasticity of demand and total revenue in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xe74dacf669dd5b6b"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/e/interpreting-price-elasticity-of-demand",
+		"status": "active",
+		"title": "Determinants of price elasticity and the total revenue rule",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xe74dacf669dd5b6b"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The price elasticity of supply is a measure of how sensitive the quantity supplied of a good is to changes in price. It is calculated as the percentage change in quantity supplied divided by the percentage change in price. If the elasticity is greater than one, supply is considered \"elastic,\" while if it is less than one, supply is \"inelastic.\"",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=wi1x3sYHU6I"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-of-supply/v/introduction-to-price-elasticity-of-supply-ap-microeconomics",
+		"status": "active",
+		"title": "Introduction to price elasticity of supply ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x1ed69c3148e6c767"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Explore what makes supply more or less elastic in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=kBUC6iPijtw"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-of-supply/v/price-elasticity-of-supply-determinants",
+		"status": "active",
+		"title": "Price elasticity of supply determinants",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x27d78be10d1445dc"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice wha you've learned about price elasticity of supply and the determinants of price elasticity of supply in this exercise. ",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x7b3deaf606349738"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-of-supply/e/price-elasticity-of-supply",
+		"status": "active",
+		"title": "Price Elasticity of Supply and its Determinants",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x7b3deaf606349738"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn about income elasticity of demand, which measures how sensitive quantity demanded is to changes in income. Compare normal goods, where demand increases with income, to inferior goods, where demand decreases as income rises. Finally, you'll learn that elasticity isn't limited to price, as other factors can affect supply and demand.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=RDcf5L6o0mI"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/income-elasticity-of-demand/v/income-elasticity-of-demand",
+		"status": "active",
+		"title": "Income elasticity of demand ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xb0a01122caa8758a"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about income elasticity of demand in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x5a6948061fd3a453"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/income-elasticity-of-demand/e/cross-and-income-elasticity-of-demand",
+		"status": "active",
+		"title": "Income Elasticity of Demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x5a6948061fd3a453"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Cross elasticity of demand refers to the way that changes in the price of one good can affect the quantity demanded of another good. This relationship can vary depending on whether the two goods are substitutes, complements, or unrelated to each other.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=Ngv0Be9NxAw"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/income-elasticity-of-demand/v/cross-elasticity-of-demand",
+		"status": "active",
+		"title": "Cross-price elasticity of demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "480687059"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about cross-price elasticity of demand in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xbf85810554f72a24"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/elasticity-tutorial/income-elasticity-of-demand/e/cross-price-elastiticy-of-demand",
+		"status": "active",
+		"title": "Cross-Price Elasticity of Demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xbf85810554f72a24"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Explore the dynamics of supply and demand in through an example of an apple market. By graphing the demand and supply curves, you'll learn how different prices impact the quantity supplied and demanded. You'll also learn how shortages and surpluses arise, how they are resolved through price adjustments, and how the market converges on an equilibrium price and quantity.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=PEMkfgrifDw"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/market-equilibrium-disequilibrium-and-changes-in-equilibrium/v/market-equilibrium",
+		"status": "active",
+		"title": "Market equilibrium",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "476379115"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about finding equilibrium price and quantity both intuitively and graphically in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x0f3b0ade232f5f54"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/26/e/market-equilibrium-and-price-controls",
+		"status": "active",
+		"title": "Market equilibrium",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x0f3b0ade232f5f54"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "To get a better intuition about how much a consumer values a good in a market, we think of demand as a marginal benefit curve. In this video we look at the demand curve from a marginal benefit framework.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=KrkbbRxdDZ8"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/v/demand-curve-as-marginal-benefit-curve",
+		"status": "active",
+		"title": "Demand curve as marginal benefit curve",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "482857607"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Explore the concept of consumer surplus in economics using a car sales example. See how the demand curve can be viewed as a marginal benefit curve, and how consumer surplus is the total excess of marginal benefit above the price paid. The video highlights that sellers may sell items below their potential value.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=_6kwhF6hoqQ"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/v/consumer-surplus-introduction",
+		"status": "active",
+		"title": "Consumer surplus introduction",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "482869244"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Consumer surplus is calculated by finding the difference between the amount a consumer is willing to pay for a product and the actual price they pay. To find the total consumer surplus, you sum up these differences for all units sold. In some cases this can be simplified to finding the area between the demand curve and the price line.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=RBUBIRtn0xQ"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/v/total-consumer-surplus-as-area",
+		"status": "active",
+		"title": "Total consumer surplus as area",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "491075659"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Producer surplus is the difference between the price a producer gets and its marginal cost. Explore the concepts of supply and demand, opportunity cost, and producer surplus in the context of a berry farm, learning how changes in quantity produced affects the price needed to incentivize producers, and how producers benefit when the market price is higher than their opportunity cost.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=-V-Y5klejSg"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/v/producer-surplus",
+		"status": "active",
+		"title": "Producer surplus",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "491082769"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Total surplus is maximized in a market at equilibrium. In this video, we talk about why this is and the math behind this assertion. ",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=E_EmGO1XuHM"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/v/equilibrium-allocative-efficiency-and-total-surplus",
+		"status": "active",
+		"title": "Equilibrium, allocative efficiency and total surplus",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x1a95d088ef16baa0"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about consumer and producer surplus in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x0d16b4e1edc54e7e"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/e/consumer-and-producer-surplus",
+		"status": "active",
+		"title": "Consumer and Producer Surplus and Allocative Efficiency",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x0d16b4e1edc54e7e"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "When supply or demand change, the price and quantity in the market changes. See how a change in demand or supply affects price and quantity in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=NgPqyM3I_8o"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/market-equilibrium-disequilibrium-and-changes-in-equilibrium/v/changes-in-market-equilibrium",
+		"status": "active",
+		"title": "Changes in market equilibrium",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "476379113"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "This exercise practices finding a new equilibrium price and quantity when supply changes, demand changes, or both supply and demand are changing simultaneously.`",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x6c3cb64e17bd6362"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/supply-demand-equilibrium/market-equilibrium-tutorial/e/changes-in-equilibrium",
+		"status": "active",
+		"title": "Changes in equilibrium",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x6c3cb64e17bd6362"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Price controls have the potential to reduce total surplus. In this video we step through some details on how one kind of regulation, a price ceiling, can reduce economic efficiency. A real world example of a price ceiling is rent control, which some cities have experimented with as a way to control rising housing costs.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=8U8egQjcPaI"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/rent-control-dead-weight-cost",
+		"status": "active",
+		"title": "Rent control and deadweight loss",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xf9b67f8e"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Another type of price control is a price floor, which is a minimum legal price. A real world example of a price floor is a minimum wage. In this video we explore how a minimum wage might affect a perfectly competitive labor market.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=j0c2vmFGbtk"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/minimum-wage-and-price-floors",
+		"status": "active",
+		"title": "Minimum wage and price floors",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "493579772"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the effects of price and quantity controls, such as price ceilings and price floors, in a market in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x260dc8087d5d6b29"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/e/price-and-quantity-controls",
+		"status": "active",
+		"title": "Price and quantity controls",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x260dc8087d5d6b29"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Price controls reallocate surplus between buyers and sellers. In this video we explore how that happens with a price ceiling or a price floor.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=-T8lzuTwdbI"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/how-price-controls-reallocate-surplus",
+		"status": "active",
+		"title": "How price controls reallocate surplus",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x1d63389ac92d8cd2"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the impact of prrice controls and quotas on consumer surplus, producer surplus, total surplus, and deadweight loss in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x6c7240b2620e7841"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/e/the-effect-of-government-interventions-on-surplus",
+		"status": "active",
+		"title": "The effect of government interventions on surplus",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x6c7240b2620e7841"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "When a tax is imposed in a market this is another example of government intervention. In this video, we explore the effect of imposing a tax on the price and quantity in a market.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=NuLlNAdrom4"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/taxation-and-dead-weight-loss",
+		"status": "active",
+		"title": "Taxation and dead weight loss",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "498143705"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Tax incidence is a description of how the burden of a tax falls in a market. In this video we break down how to identify consumer surplus, producer surplus, tax revenue and tax incidence, and dead weight loss after a tax.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=1-8O5AHIb6s"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/example-breaking-down-tax-incidence",
+		"status": "active",
+		"title": "Example breaking down tax incidence",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x98f24461f13340e4"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The burden of a tax falls most heavily on someone who can't adjust to a price change. That means buyers bear a bigger burden when demand is more inelastic, and sellers bear a bigger burden when supply is more inelastic. ",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=lsn16U5DWD4"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/taxes-and-perfectly-inelastic-demand",
+		"status": "active",
+		"title": "Taxes and perfectly inelastic demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "499815367"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "An interesting case of taxes and tax incidence is when one of the curves is perfectly elastic. Explore what happens when demand is perfectly elastic in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=z1yJPpGC3-o"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/taxes-and-perfectly-elastic-demand",
+		"status": "active",
+		"title": "Taxes and perfectly elastic demand",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "499850170"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about tax incidence and deadweight loss when a tax is placed on a market in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc8db4bdf69504995"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/e/tax-incidence-and-deadweight-loss-exercise",
+		"status": "active",
+		"title": "Tax Incidence and Deadweight Loss",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xc8db4bdf69504995"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Autarky describes a situation when countries are completely closed to trade. In this video, we explore what happens to the domestic price of a good, consumer surplus, and producer surplus, when an autarkic country opens to trade.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=7adFZOA7Qfg"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/international-trade/v/changing-equilibria-from-trade",
+		"status": "active",
+		"title": "Changing equilibria from trade ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xa45f92128e2a22a5"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "When governments impose restrictions on international trade, this affects the domestic price of the good and reduces total surplus. One such imposition is a tariff (a tax on imported or exported goods and services). See how a tariff impacts price, consumer surplus, producer surplus, tax revenue, and deadweight loss in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=3pSysspeCxY"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/international-trade/v/trade-and-tariffs",
+		"status": "active",
+		"title": "Trade and tariffs",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xe12e6cf05b985cbc"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, walk through the solution to a question on the effect of tariffs from the 2012 AP(R) Microeconomics exam.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=Qq5-909rWgw"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/international-trade/v/tariff-and-imports-worked-example",
+		"status": "active",
+		"title": "Sample free response question (FRQ) on tariffs and trade",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x78b2bbd577db87ee"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the impact of trade, tariffs, and quotas on consumer and producer surplus in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x85e25624a66eab1c"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/consumer-producer-surplus/international-trade/e/international-trade-and-public-policy",
+		"status": "active",
+		"title": "International trade and public policy",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x85e25624a66eab1c"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x38d7ba94f5f5a995"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/quiz/unit-2-supply-and-demnd-quiz-1",
+		"status": "active",
+		"title": "Supply and Demand: Quiz 1",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x38d7ba94f5f5a995"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xf89079df28a06b9b"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/quiz/unit-2-supply-and-demnd-quiz-2",
+		"status": "active",
+		"title": "Supply and Demand: Quiz 2",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xf89079df28a06b9b"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x8bc22dd52b9742aa"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/quiz/unit-2-supply-and-demnd-quiz-3",
+		"status": "active",
+		"title": "Supply and Demand: Quiz 3",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x8bc22dd52b9742aa"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x4dfbf4e60a0459e7"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/quiz/unit-2-supply-and-demnd-quiz-4",
+		"status": "active",
+		"title": "Supply and Demand: Quiz 4",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x4dfbf4e60a0459e7"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Test your understanding of {unit name}.",
+			"language": "en-US",
+			"lessonType": "unittest",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xd13b6acd12b758f4"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/unit-2-supply-and-demnd/test/unit-2-supply-and-demnd-unit-test",
+		"status": "active",
+		"title": "Supply and Demand: Unit test",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xd13b6acd12b758f4"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Production functions describe how output is determined by various inputs. The short run is defined as the period of time in which at least one input is fixed. Anything longer than that is considered the long run.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=4kFLOoA5l4s"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/introduction-to-production-and-costs/v/introduction-to-production-functions",
+		"status": "active",
+		"title": "Introduction to production functions ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x555f17bc0979fbe5"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The short-run production function describes the relationship between output and inputs when at least one input is fixed, such as out output varies based on the amount of labor used. We can use this production function to find the total product of labor, the marginal product of labor, and the average product of labor.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=8fm9FjDV0iA"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/introduction-to-production-and-costs/v/total-product-marginal-product-and-average-product",
+		"status": "active",
+		"title": "Total product, marginal product, and average product",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xbbaf806a06971fee"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the production function in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x1c2f73d9923da561"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/introduction-to-production-and-costs/e/3-1-the-production-function",
+		"status": "active",
+		"title": "The production function",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x1c2f73d9923da561"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Explore how to think about average fixed, variable, and marginal costs, and how to calculate them, using a firm's production function and costs in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=bBQVaRnHqLs"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/fixed-variable-and-marginal-cost",
+		"status": "active",
+		"title": "Fixed, variable, and marginal cost",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "514726534"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video we calculate the costs of producing a good, including fixed costs, variable costs, marginal cost, average variable cost, average fixed cost, and average total cost.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=mW6Cwpfb5CI"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/marginal-cost-average-variable-cost-and-average-total-cost",
+		"status": "active",
+		"title": "Marginal cost, average variable cost, and average total cost",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x6ca03b1fd4b4d533"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Explore the relationship between marginal cost, average variable cost, average total cost, and average fixed cost curves in economics. See how to graph these curves and highlights their intersections, which represent minimum points for average costs. Understanding these concepts helps businesses make better decisions about production and resource allocation.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=vh7SjS-t1wA"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/graphs-of-mc-avc-and-atc",
+		"status": "active",
+		"title": "Graphs of MC, AVC and ATC",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x1f6fd431403ed956"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn about rational production quantity using an orange juice example. The market price is 50 cents per gallon, and we want to maximize profit. We find the point where marginal revenue equals marginal cost, which is 9,000 gallons. At this quantity, we make 2 cents profit per gallon, totaling $180 profit.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=xGkE0oHyNhk"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/marginal-revenue-and-marginal-cost",
+		"status": "active",
+		"title": "Marginal revenue and marginal cost",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "521284923"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the difference between marginal cost, average variable cost, and fixed costs in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xa1fc04277b03ab64"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/e/short-run-production-costs--foundational-concepts",
+		"status": "active",
+		"title": "Short-run production costs: foundational concepts",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xa1fc04277b03ab64"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "People sometimes assume that a firm that isn't earning a profit should immediately shut down. In this video, we explore why that might not actually be a very good idea, and why it might be rational to produce at a loss.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=ni0TL4pXG5w"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/marginal-revenue-below-average-total-cost",
+		"status": "active",
+		"title": "Marginal revenue below average total cost",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "521326286"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "This video expands on previous videos to explore how changes in production technology, changes in fixed costs, and changes in variable costs affect the marginal product of labor, marginal costs, average variable costs, average fixed costs, and average total cost.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=dbedc5rrwhQ"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/how-costs-change-when-fixed-and-variable-costs-change",
+		"status": "active",
+		"title": "How costs change when fixed and variable costs change",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x31c330c31d4c550b"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Changes in fixed costs will affect average fixed cost and average total cost, while changes in variable costs will impact average variable cost, marginal cost, and average total cost. Essentially, any change in costs can alter the financial calculations a business has to make in order to determine the most efficient way to produce and sell its products or services.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=A1_PT1aHVLY"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/graphical-impact-of-cost-changes-on-marginal-and-average-costs",
+		"status": "active",
+		"title": "Graphical impact of cost changes on marginal and average costs",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xc882420c3bb6bc75"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about short-run production costs in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xec8da3d7b8155558"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/e/short-run-production-costs",
+		"status": "active",
+		"title": "Short-run production costs",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xec8da3d7b8155558"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video we explore the long run average total cost curve and how average costs vary when all inputs can be adjusted.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=aKpnaKROoYA"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/long-run-production-costs/v/long-run-average-total-cost-curve",
+		"status": "active",
+		"title": "Long-run average total cost curve",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x5f3bf955fd4b7010"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Economies of scale exist when long run average total cost decreases as output increases, diseconomies of scale occur when long run average total cost increases as output increases, and constant returns to scale occur when costs do not change as output increases.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=4bJs6bKjPPA"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/long-run-production-costs/v/economies-and-diseconomies-of-scale",
+		"status": "active",
+		"title": "Economies and diseconomies of scale",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x1177755c16814d07"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Minimum efficient scale (MES) is the quantity at which a firm’s long run average total cost curve stops falling, and the size of a firm’s MES relative to the size of the market has a strong influence on market structure— large MES is associated with more concentrated markets.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=lqAKI6remoQ"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/long-run-production-costs/v/minimum-efficient-scale-and-market-concentration-ap-microeconomics-khan-academy",
+		"status": "active",
+		"title": "Minimum efficient scale and market concentration ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xa2504c516da7d3ac"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about long-run production costs and the relationship between the long-run average total cost curve and economies of scale, diseconomies of scale, and minimum efficient scale in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x92cc03337015577b"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/long-run-production-costs/e/long-run-production-costs",
+		"status": "active",
+		"title": "Long-run production costs",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x92cc03337015577b"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Accounting profit is what many people tend to think of when they think profit, but an economist would say that you leave something very important out when you do so: opportunity costs. In this video, explore the difference between a firm's accounting and economic profit",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=06j_zPdPWOY"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/economic-profit-tutorial/v/economic-profit-vs-accounting-profit",
+		"status": "active",
+		"title": "Economic profit vs accounting profit",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "510581042"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about economic and accounting profit in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x069b0d634674c065"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/economic-profit-tutorial/e/types-of-profit",
+		"status": "active",
+		"title": "Types of profit",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x069b0d634674c065"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn how firms maximize profit by producing a quantity where marginal cost equals marginal revenue. In a competitive market, firms are price-takers, and marginal revenue is constant. Rational firms will produce more if marginal revenue is higher than marginal cost. Profit is maximized when the area of the rectangle formed by average total cost and marginal revenue is largest.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=SON0BtLMUHw"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/micro-profit-maximization/v/profit-maximization",
+		"status": "active",
+		"title": "Profit maximization",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xe2c4edd5e8838b77"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Work through a free response question about profit maximization in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=WUJwZYTfroI"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/micro-profit-maximization/v/profit-maximization-worked-example",
+		"status": "active",
+		"title": "Profit maximization worked example",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x07cc66051297f9a4"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about profit maximization and how to apply the profit maximization rule in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xed779d4efb0eeb12"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/micro-profit-maximization/e/profit-maximization",
+		"status": "active",
+		"title": "Profit maximization",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xed779d4efb0eeb12"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "A firm shut's down temporarily when it can't cover its variable cost, but it exits the industry for good when it's economic profits are negative. In this video, learn more about how to use a graph of cost curves to determine when a firm shuts down, enters an industry, or exits an industry.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=aPiZloqtlnc"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/firm-entry-exit-and-the-shut-down-rule/v/shutting-down-or-exiting-industry-based-on-price",
+		"status": "active",
+		"title": "Shutting down or exiting industry based on price",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x976d05741579e7bc"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this exercise, practice what you've learned about the difference between entry and exit and the shut-down rule.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x7fe4f9a142a34fd8"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/firm-entry-exit-and-the-shut-down-rule/e/firms-short-run-decisions-to-produce-and-long-run-decisions-to-enter-or-exit-a-market",
+		"status": "active",
+		"title": "Firms’ Short-Run Decisions to Produce and Long-Run Decisions to Enter or Exit a Market",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x7fe4f9a142a34fd8"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Perfect competition is a theoretical market structure in which there are many buyers and sellers, identical products (also called homogeneous products), perfect information, and no barriers to entry.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=B_49lQxwMaM"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/v/perfect-competition-microeconomics",
+		"status": "active",
+		"title": "Introduction to perfect competition",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xe81019f5be6d68d0"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "An important skill in microeconomics is the ability to find a firm's profit. Learn more about how to use a graph to identify the profit-maximizing quantity for a firm in a perfectly competitive market, and identify the area that represents the firm's profit or loss.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=JWuWzloEH40"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/v/economic-profit-for-firms-in-perfectly-competitive-markets",
+		"status": "active",
+		"title": "Economic profit for firms in perfectly competitive markets ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x53c6b9bd0c26909d"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the foundational ideas behind perfectly competitive markets, including the characteristics of a perfectly competitive market, profit-maximization, and graphs of perfectly competitive firms.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x27adad2ba295ffe8"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/e/3-7-a-perfect-competition-foundations",
+		"status": "active",
+		"title": "Perfect competition foundational concepts",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x27adad2ba295ffe8"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "A firm in a perfectly competitive market might be able to earn economic profit in the short run, but not in the long run. Learn about the process that brings a firm to normal economic profits in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=Xx5-O8kDMvU"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/firm-entry-exit-and-the-shut-down-rule/v/long-run-economic-profit-for-perfectly-competitive-firms",
+		"status": "active",
+		"title": "Long-run economic profit for perfectly competitive firms",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x1bacdd972ddd9f00"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "A constant cost industry is an industry where each firm's costs aren't impacted by the entry or exit of new firms. Learn about the difference between the short run market supply curve and the long run market supply curve for perfectly competitive firms in constant cost industries in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=Hzw6_vUPvgg"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/v/long-run-supply-curve-in-constant-cost-perfectly-competitive-markets",
+		"status": "active",
+		"title": "Long-run supply curve in constant cost perfectly competitive markets",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x55a48b209f58f5fd"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In some industries, the number of firms in the market has an impact on the costs that firms face. For example, when firms have to compete with each other over resources, firms' costs increase as more firms enter the market. But in other industries, more firms actually lower costs for firms. Learn about the implications of each of these situations on the long-run supply curve in an industry.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=sN-bhe6UfRs"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/firm-entry-exit-and-the-shut-down-rule/v/long-run-supply-when-industry-costs-are-increasing-or-decreasing",
+		"status": "active",
+		"title": "Long run supply when industry costs aren't constant",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x4ab543e8b92e5239"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Walk through the solution to a free response question (FRQ) like the ones you may see on an AP Microeconomics exam. Topics include why price equals marginal revenue (P=MR) for a perfectly competitive firm, how to draw side-by-side market and firm graphs, and how to find several points of interest in the firm graph.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=BmxuzqDEBpM"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/firm-economic-profit/firm-entry-exit-and-the-shut-down-rule/v/frq-microecononomics-on-perfect-competition",
+		"status": "active",
+		"title": "Free response question (FRQ) on perfect competition ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x2f737eeeea7e2063"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about perfect competition in the short run and the long run, including the firm's shut down rule and entering and exiting an industry.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x9f8f203e5f74b373"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/e/perfect-competition-in-the-short-run-and-long-run",
+		"status": "active",
+		"title": "Perfect competition in the short run and long run",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x9f8f203e5f74b373"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the effect of economies of scale on cost and prices in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x76d4868885868eb1"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/e/increasing--decreasing--and-constant-cost-industries",
+		"status": "active",
+		"title": "Increasing, decreasing, and constant cost industries",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x76d4868885868eb1"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about productive efficiency and allocative efficiency in perfect competition in the short run and the long run.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc1b45a44a6bdbf70"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/e/efficiency-and-perfect-competition",
+		"status": "active",
+		"title": "Efficiency and perfect competition",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xc1b45a44a6bdbf70"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x7d4f95ae62277c2a"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/quiz/production-cost-and-the-perfect-competition-model-temporary-quiz-1",
+		"status": "active",
+		"title": "Production, cost, and the perfect competition model: Quiz 1",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x7d4f95ae62277c2a"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x79fce6915961439a"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/quiz/production-cost-and-the-perfect-competition-model-temporary-quiz-2",
+		"status": "active",
+		"title": "Production, cost, and the perfect competition model: Quiz 2",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x79fce6915961439a"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xd0505e04bdbb4033"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/quiz/production-cost-and-the-perfect-competition-model-temporary-quiz-3",
+		"status": "active",
+		"title": "Production, cost, and the perfect competition model: Quiz 3",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xd0505e04bdbb4033"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Test your understanding of {unit name}.",
+			"language": "en-US",
+			"lessonType": "unittest",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x21995b652e95ec26"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/production-cost-and-the-perfect-competition-model-temporary/test/production-cost-and-the-perfect-competition-model-temporary-unit-test",
+		"status": "active",
+		"title": "Production, cost, and the perfect competition model: Unit test",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x21995b652e95ec26"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The most common forms of competition you learn about in microeconomics are perfect competition, monopolies, oligopoly, monopsony, and monopolistic competition. In this video we briefly describe the key features of each.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=FZBc1wM8a8M"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/perfect-and-imperfect-competition",
+		"status": "active",
+		"title": "Perfect and imperfect competition",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xf94655b94c517646"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In imperfect competition, firms have some control over the price they charge, so the individual firm's demand curve is not horizontal. Learn how that fact also changes the marginal revenue curve in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=Jj4hQK-GuXo"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/types-of-competition-and-marginal-revenue",
+		"status": "active",
+		"title": "Types of competition and marginal revenue",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xab9b036f4b9068b3"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "This video discusses the differences in a graph of marginal cost and marginal revenue for an imperfectly competitive firm compared to a perfectly competitive firm.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=A-uVHlqEiyE"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/marginal-revenue-and-marginal-cost-in-imperfect-competition",
+		"status": "active",
+		"title": "Marginal revenue and marginal cost in imperfect competition",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xac2fab2aaf7b9e3b"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the difference between perfect competition and different forms of imperfect competition in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x37c6a48689252557"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/e/imperfect-competition",
+		"status": "active",
+		"title": "Imperfect competition",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x37c6a48689252557"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn about the key differences between the two extremes of competition: monopolies and perfect competition.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=PgDrR2wj_Jc"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/monopolies-vs-perfect-competition",
+		"status": "active",
+		"title": "Monopolies vs. perfect competition",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x4e0c82eb7170c835"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn about the economic profit of a monopoly firm. See how the marginal revenue curve differs from the demand curve in imperfect competition, leading to a markup and dead weight loss. The economic profit is determined by comparing the market price to the average total cost at a certain quantity. Monopolies can maintain economic profit due to high barriers to entry.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=PEFEnss--mU"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/economic-profit-for-a-monopoly",
+		"status": "active",
+		"title": "Economic profit for a monopoly",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x5c3b2642a305d783"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video we explore how a monopolist decides on the best quantity to produce and the price to charge for that quantity. ",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=cczABrLd_uA"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/monopolist-optimizing-price-part-1-total-revenue",
+		"status": "active",
+		"title": "Monopolist optimizing price: Total revenue",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "526475273"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn about marginal revenue for a monopolist. We find the slope of the total revenue curve to determine marginal revenue at different quantities, and discover that the marginal revenue curve is a downward-sloping line with twice the slope of the demand curve. This helps us understand how monopolists can optimize their profit by comparing marginal revenue to marginal costs.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=s1UQQELPyrc"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/monopolist-optimizing-price-part-2-marginal-revenue",
+		"status": "active",
+		"title": "Monopolist optimizing price: Marginal revenue",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "526475275"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The marginal revenue curve for a monopoly differs from that of a perfectly competitive market. A monopolist maximizes profit by producing the quantity at which marginal revenue and marginal cost intersect. This results in a dead weight loss for society, as well as a redistribution of value from consumers to the monopolist.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=daxL1ZLrUzg"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/monopolist-optimizing-price-part-3-dead-weight-loss-avi",
+		"status": "active",
+		"title": "Monopolist optimizing price: Dead weight loss",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "526475274"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, we review the key features, behavior, and consequences of a monopoly.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=A_lV-XArVeE"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/review-of-revenue-and-cost-graphs-for-a-monopoly-1",
+		"status": "active",
+		"title": "Review of revenue and cost graphs for a monopoly",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "1266250654"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the sources of monopolies and how a monopolist makes quantity and pricing decisions in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xbdb2a8702cf57d12"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/e/monopoly",
+		"status": "active",
+		"title": "Monopoly",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xbdb2a8702cf57d12"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about natural monopolies in this exercise, including what makes a monopoly a natural monopoly, government regulation, and efficiency.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x65ae73ec43123c9f"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/e/natural-monopoly",
+		"status": "active",
+		"title": "Efficiency and monopolies",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x65ae73ec43123c9f"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Explore an example of a wine producer who practices price discrimination by selling the same wine with different labels at different prices. This strategy allows the producer to capture more consumer surplus and increase their economic profit. The producer is a monopolistic competitor, as their wine is differentiated, and they have a monopoly in their specific wine market.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=z0wg9ZPyL38"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/price-discrimination/v/first-degree-price-discrimination",
+		"status": "active",
+		"title": "Price discrimination",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "541028301"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Price discrimination is charging each consumer their entire willingness to pay. What if a monopolist can charge each buyer their entire willingness to pay? Learn about the effect of perfect price discrimination on output and deadweight loss in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=gcq9KFpEuLc"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/price-discrimination/v/monopoly-price-discrimination",
+		"status": "active",
+		"title": "Monopoly price discrimination",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xfad012585889e441"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about price discrimination, including first degree (a.k.a, perfect price discrimination) in this exercise",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xe475c9abc3402be8"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/price-discrimination/e/price-discrimination",
+		"status": "active",
+		"title": "Price discrimination",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xe475c9abc3402be8"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "What are the differences between monopolies and perfect competition? An oligopoly refers to a market with only a few sellers. Monopolistic competition refers to situations where there are many sellers, but the products are highly differentiated. There are several important nuances to explore between these types of markets.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=PzDthFTzEa0"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolistic-competition-oligop/v/oligopolies-and-monopolisitc-competition",
+		"status": "active",
+		"title": "Oligopolies and monopolistic competition",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "529106152"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video we explore why it is hard for a monopolistic competitor to make economic profit in the long run.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=RUVsEovktGU"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolistic-competition-oligop/v/monopolistic-competition-and-economic-profit",
+		"status": "active",
+		"title": "Monopolistic competition and economic profit",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "541028299"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, we compare and contrast the long run outcomes for monopolistic competition, monopolies, and perfect competition.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=QRN2QKHe-tM"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolistic-competition-oligop/v/long-term-economic-profit-for-monopolistic-competition",
+		"status": "active",
+		"title": "Long run economic profit for monopolistic competition",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xde6fad9fc7f121db"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about monopolistic competition in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x80879fba7732b4a4"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolistic-competition-oligop/e/monopolistic-competition",
+		"status": "active",
+		"title": "Monopolistic competition",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x80879fba7732b4a4"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "When does an oligopoly act more like a perfectly competitive firm, and when does it act more like a monopolist? Find out in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=N0L00FZnhtg"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/v/oligopolies-duopolies-collusion-and-cartels",
+		"status": "active",
+		"title": "Oligopolies, duopolies, collusion, and cartels",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "531245092"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The \"prisoner's dilemma\" is a concept that describes a situation in which two people have competing incentives that lead them to choose a suboptimal outcome. In the classic example, two prisoners can each choose to confess or not to a crime, and their decisions will determine the length of their sentences. The best outcome for both is to stay silent, but the possibility that the other will confess leads them both to incriminate themselves.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=UkXI-zPcDIM"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/v/prisoners-dilemma-and-nash-equilibrium",
+		"status": "active",
+		"title": "Prisoners' dilemma and Nash equilibrium",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "531245090"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video we expand our analysis of the prisoners' dilemma to better understand the concept and definition of a Nash Equilibrium.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=ewu_7Dmj_18"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/v/more-on-nash-equilibrium",
+		"status": "active",
+		"title": "More on Nash equilibrium",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "531245089"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, we explore a conflict that duopolists (and other oligopolies) face: there is a tension between cooperating and forming a cartel or cheating on that cartel once it is formed. ",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=S6TvRDwgQag"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/v/why-parties-to-cartels-cheat",
+		"status": "active",
+		"title": "Why parties to cartels cheat",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "541028297"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "We deepen our understanding of a Nash Equilibrium by exploring Pareto optimality and more on Nash Equilibrium.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=XTMbRDRaviM"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/v/game-theory-of-cheating-firms",
+		"status": "active",
+		"title": "Game theory of cheating firms",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "541022390"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Work through a free response question (FRQ) for AP Microeconomics that uses game theory.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=KPZ40sEoLRs"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/oligopoly-and-game-theory/v/game-theory-worked-example-from-a-p-microeconomics",
+		"status": "active",
+		"title": "Game theory worked example from AP Microeconomics",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xf46e91cf0a13a9d2"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about oligopolies and the basics of game theory, such as dominant strategies and Nash equilibrium, in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xd91c859f8291d0f3"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/oligopoly-and-game-theory/e/oligopoly-and-game-theory--foundational-concepts",
+		"status": "active",
+		"title": "Oligopoly and game theory: foundational concepts",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xd91c859f8291d0f3"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about finding Nash equilibrium, dominant strategies, and cartel outcomes in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xb151f9cc9f21884c"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/e/game-theory",
+		"status": "active",
+		"title": "Game Theory",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xb151f9cc9f21884c"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xddc502002b811849"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/quiz/imperfect-competition-quiz-1",
+		"status": "active",
+		"title": "Imperfect competition: Quiz 1",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xddc502002b811849"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc3a5e0e4e52f8d3c"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/quiz/imperfect-competition-quiz-2",
+		"status": "active",
+		"title": "Imperfect competition: Quiz 2",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xc3a5e0e4e52f8d3c"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Test your understanding of {unit name}.",
+			"language": "en-US",
+			"lessonType": "unittest",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x5e94fa9849d2a758"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/imperfect-competition/test/imperfect-competition-unit-test",
+		"status": "active",
+		"title": "Imperfect competition: Unit test",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x5e94fa9849d2a758"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Every time a firm hires more labor, they get more output which means more revenue. In this video we begin thinking about how much incremental benefit a firm gets from hiring one more person.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=cwClnv9Y1Y0"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/micro-introduction-to-factor-markets/v/a-firm-s-marginal-product-revenue-curve",
+		"status": "active",
+		"title": "A firm's marginal product revenue curve",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "544764167"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Given that hiring more workers gives more revenue, but also has additional cost, what is the optimal amount of labor to hire? We begin thinking about this as well as briefly discuss another type of competition: monopsony labor markets. ",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=p8PSIpMkEvA"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/micro-introduction-to-factor-markets/v/how-many-people-to-hire-given-the-mpr-curve",
+		"status": "active",
+		"title": "How many people to hire given the MPR curve",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "544732566"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Just like goods and services, the factors of production are exchanged in markets. This video focuses on such market -- the market for labor. The supply of labor is based on people's willingness to tradeoff labor for leisure. The demand for labor is based on labor's marginal revenue product.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=Cm69zTuUzMI"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/micro-introduction-to-factor-markets/v/introduction-to-labor-markets",
+		"status": "active",
+		"title": "Introduction to labor markets",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x6fc915d7f93b9585"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the supply of labor, the demand for labor, and the marginal revenue product of labor in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x60ac2260039da558"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/micro-introduction-to-factor-markets/e/introduction-to-factor-markets",
+		"status": "active",
+		"title": "Introduction to Factor Markets",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x60ac2260039da558"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video we explore how to derive the demand for a factor of production based on how productive that factor is and how much additional revenue that factor brings in.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=gHs3zuRek7o"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/labor-marginal-product-rev/v/adding-demand-curves",
+		"status": "active",
+		"title": "Adding demand curves",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "544749484"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Changes in the supply of labor have an effect on the wage rate. The supply of labor shifts when there are changes in the population, changes in preferences and social norms, and changes in wage rates and opportunities in other markets. Learn how to show the effects of changes in labor supply on wage rates in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=16c66XCdSBo"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/labor-marginal-product-rev/v/changes-in-labor-supply",
+		"status": "active",
+		"title": "Changes in labor supply",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x45318ad63036e4a2"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Changes in the demand for labor affect wage rates. Learn why labor demand changes, and the effect of changes in the demand for labor on labor markets.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=CuTNp-6FI0k"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/labor-marginal-product-rev/v/shifts-in-demand-for-labor",
+		"status": "active",
+		"title": "Shifts in the demand for labor",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x247b97f1369f914a"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about how changes in the supply of labor and the demand for labor affect wages and employment.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x0ebdfc2a2b279a2e"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/labor-marginal-product-rev/e/changes-in-factor-demand-and-supply",
+		"status": "active",
+		"title": "Changes in factor demand and supply",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x0ebdfc2a2b279a2e"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn about how firms determine the optimal combination of capital and labor in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=NSCqNsAiHOM"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/optimal-firm-behavior-in-perfectly-competitive-factor-markets/v/cost-minimizing-choice-of-inputs",
+		"status": "active",
+		"title": "Cost minimizing choice of inputs ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x70ecae66cf867e9a"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "In this video, learn how to apply the analysis of factor markets to a sample problem.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=jiycJ9M2L1o"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/optimal-firm-behavior-in-perfectly-competitive-factor-markets/v/factor-markets-worked-example-microeconomics-khan-academy",
+		"status": "active",
+		"title": "Factor markets worked example ",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x3dc3414d55370683"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about the way firms choose the optimal use of inputs.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xb1b3bb89f3142c06"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/optimal-firm-behavior-in-perfectly-competitive-factor-markets/e/profit-maximizing-behavior-in-perfectly-competitive-factor-markets",
+		"status": "active",
+		"title": "Profit-maximizing behavior in perfectly competitive factor markets",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xb1b3bb89f3142c06"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "When there is a single buyer of labor this type of market is called a monopsonistic labor market. Learn how this changes the analysis of labor markets and why marginal factor cost is higher than the supply of labor in such markets.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=vAaW15vwKUU"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/choosing-inputs-when-factor-markets-are-monopsonistically-competitive/v/a-monopsonistic-market-for-labor",
+		"status": "active",
+		"title": "A monopsonistic market for labor",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x9a687593e30d820c"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "We've learned in previous lessons that a price control decreases quantity and efficiency, but is that always the case? Learn about the surprising effect of a minimum wage on a monopsonistic labor market in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=FIiVE-mzmqY"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/choosing-inputs-when-factor-markets-are-monopsonistically-competitive/v/monopsony-employers-and-minimum-wages",
+		"status": "active",
+		"title": "Monopsony employers and minimum wages",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xd7cf229eff5df1e0"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about the foundational concepts about monopsony markets in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x9e70b6aa0381301f"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/monopsonistic-markets/e/monopsony--foundational-concepts",
+		"status": "active",
+		"title": "Monopsony: Foundational concepts",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x9e70b6aa0381301f"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "A monopsony exists when there is a single buyer of a a good, service, or factor of production. Practice what you have learned about how monopsony power affects how much of a factor is hired, the payment for that factor, and the impact on efficiency.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xe75b60af23b54dd1"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/micro-factor-markets/choosing-inputs-when-factor-markets-are-monopsonistically-competitive/e/monopsonistic-markets",
+		"status": "active",
+		"title": "Monopsonistic Markets",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xe75b60af23b54dd1"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xdedccae6fc0c7c10"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/quiz/factor-markets-quiz-1",
+		"status": "active",
+		"title": "Factor markets: Quiz 1",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xdedccae6fc0c7c10"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xcfc5526372590d9f"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/quiz/factor-markets-quiz-2",
+		"status": "active",
+		"title": "Factor markets: Quiz 2",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xcfc5526372590d9f"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Test your understanding of {unit name}.",
+			"language": "en-US",
+			"lessonType": "unittest",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x96203287d39f7c49"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/factor-markets/test/factor-markets-unit-test",
+		"status": "active",
+		"title": "Factor markets: Unit test",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x96203287d39f7c49"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "If all costs and benefits are captured by the supply and demand curves, then the market outcome is a quantity where marginal social costs equals marginal social benefit. But what if they don't? In this video, see how markets might produce an inefficient quantity.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=iB-r7Kl3vok"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/socially-efficient-and-inefficient-market-outcomes/v/socially-efficient-and-inefficient-outcomes",
+		"status": "active",
+		"title": "Socially efficient and inefficient outcomes",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xa4b05c840bd83737"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about marginal social cost and marginal social benefit in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x528f704bd99fe0da"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/socially-efficient-and-inefficient-market-outcomes/e/socially-efficient-and-inefficient-market-outcomes",
+		"status": "active",
+		"title": "Socially efficient and inefficient market outcomes",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x528f704bd99fe0da"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Explore the concept of negative externalities through the example of a market for plastic bags and its associated external costs, such as litter and environmental damage, that reduce the overall benefit to society. See how taking these costs into account would lead to a lower equilibrium quantity in order to maximize total benefit.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=nBw6KvU51BE"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/market-failure-and-the-role-of-government/externalities-micro/v/negative-externalities",
+		"status": "active",
+		"title": "Negative externalities",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "541028298"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Explore the concept of positive externalities through a hypothetical market for a certain type of tree. You'll see how the increasing the quantity of trees impacts marginal cost curve for supply, as the price increases with each additional tree. You'll also see how positive externalities can capture benefits of consumption that are not present in a demand curve.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=TSTLLFJbaA4"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/market-failure-and-the-role-of-government/externalities-micro/v/positive-externalities",
+		"status": "active",
+		"title": "Positive externalities",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "541022388"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you have learned about identifying externalities and using graphs to identify both market equilibrium and socially optimal outcomes in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x0d128cde2487a0b0"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/externalities/e/externalities--foundational-concepts",
+		"status": "active",
+		"title": "Externalities: Foundational concepts",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x0d128cde2487a0b0"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about positive externalities and negative externalities in this exercise.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xaae45354baa2d42a"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/externalities/e/externalities",
+		"status": "active",
+		"title": "Externalities",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xaae45354baa2d42a"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "The \"Tragedy of the Commons\" occurs when individuals overuse a shared resource for personal gain, leading to depletion. In the video, overfishing in a public pond illustrates this concept. A solution is implementing a permitting system to limit resource use and ensure sustainability. This idea applies to various shared resources like grazing land and campgrounds.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=0b2Tl0x-niw"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/science/ap-college-environmental-science/x0b0e430a38ebd23f:land-and-water-use/x0b0e430a38ebd23f:intro-to-land-and-water-use/v/tragedy-of-the-commons",
+		"status": "active",
+		"title": "Tragedy of the commons",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "541028296"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn the difference between rivalry and excludability, and how these characteristics determine whether a good is a private good, public good, artificially scarce good, or common resource.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=pJU028t-7mg"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/market-failure-and-the-role-of-government/externalities-topic/v/rival-and-excludable-goods",
+		"status": "active",
+		"title": "Rival and excludable goods",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xa030cc4699e2f5da"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about public and private goods in this exercise. Topics include the definitions of excludability and rivalry, and how to identify public goods, private goods, artificially scarce goods, and common resources based on excludability and rivalry.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xc41e9d2d150e46f6"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/market-failure-and-the-role-of-government/externalities-topic/e/public-and-private-goods",
+		"status": "active",
+		"title": "Public and private goods",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xc41e9d2d150e46f6"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "How to factor in negative externalities through taxation",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=UYShebe44Xs"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/microeconomics/market-failure-and-the-role-of-government/externalities-micro/v/taxes-for-factoring-in-negative-externalities",
+		"status": "active",
+		"title": "Taxes for factoring in negative externalities",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "541028300"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about options available to regulate markets where the socially optimal quantity is not produced.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x3478efd11e6b1399"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/the-effects-of-government-intervention-in-different-market-structures/e/the-effects-of-government-intervention-in-different-market-structures",
+		"status": "active",
+		"title": "The effects of government intervention in different market structures",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x3478efd11e6b1399"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Learn how the Gini coefficient can be used to interpret income inequality in this video.",
+			"type": "video",
+			"url": "https://www.youtube.com/watch?v=y8y-gaNbe4U"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/inequality/v/gini-coefficient-and-lorenz-curve",
+		"status": "active",
+		"title": "Gini Coefficient and Lorenz Curve",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xbd7275323e083a06"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Practice what you've learned about he sources of income inequality, using the Gini coefficient as a measure of income inequality, and interpreting the Gini coefficient.",
+			"language": "en-US",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x360c0c935c167c61"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/inequality/e/inequality",
+		"status": "active",
+		"title": "Inequality",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x360c0c935c167c61"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/x47ca91f623a92a70"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/quiz/ap-consumer-producer-surplus-quiz-1",
+		"status": "active",
+		"title": "Market failure and the role of government: Quiz 1",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x47ca91f623a92a70"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Review the following recommended lessons to help you learn: {list of lessons covered by quiz}",
+			"language": "en-US",
+			"lessonType": "quiz",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xedb013183240152d"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/quiz/ap-consumer-producer-surplus-quiz-2",
+		"status": "active",
+		"title": "Market failure and the role of government: Quiz 2",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xedb013183240152d"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "Test your understanding of {unit name}.",
+			"language": "en-US",
+			"lessonType": "unittest",
+			"questionType": "custom",
+			"subType": "qti-test",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/xf5e39c152614e760"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/test/ap-consumer-producer-surplus-unit-test",
+		"status": "active",
+		"title": "Market failure and the role of government: Unit test",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xf5e39c152614e760"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "",
+			"language": "en-US",
+			"subType": "qti-stimulus",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/stimuli/xad289de48260c00f"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings/see-how-our-course-content-aligns-with-ap-microeconomics-standards/a/ap-microeconomics-content-aligned-to-standards",
+		"status": "active",
+		"title": "AP®︎ Microeconomics content aligned to standards",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "xad289de48260c00f"
+	},
+	{
+		"applicationId": "nice",
+		"importance": "primary",
+		"metadata": {
+			"description": "",
+			"language": "en-US",
+			"subType": "qti-stimulus",
+			"type": "qti",
+			"url": "https://qti.alpha-1edtech.com/api/stimuli/x415aff0ea8290410"
+		},
+		"roles": ["primary"],
+		"sourcedId": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings/see-how-our-course-content-aligns-with-ap-microeconomics-standards/a/ap-microeconomics-standards-aligned-to-course-content",
+		"status": "active",
+		"title": "AP®︎ Microeconomics standards aligned to course content",
+		"vendorId": "alpha-nice",
+		"vendorResourceId": "x415aff0ea8290410"
+	}
+]

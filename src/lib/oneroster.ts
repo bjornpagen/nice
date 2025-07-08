@@ -1,0 +1,315 @@
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+import { and, eq, inArray, sql } from "drizzle-orm"
+import { db } from "@/db"
+import * as schema from "@/db/schemas"
+
+// --- ONE ROSTER TYPE DEFINITIONS ---
+// These interfaces define the structure of the final JSON payload.
+
+interface OneRosterGUIDRef {
+	sourcedId: string
+	type: "course" | "academicSession" | "org" | "courseComponent" | "resource"
+}
+
+interface OneRosterCourse {
+	sourcedId: string
+	status: "active"
+	title: string
+	subjects: string[]
+	courseCode?: string
+	org: OneRosterGUIDRef
+	academicSession: OneRosterGUIDRef
+	metadata?: Record<string, unknown>
+}
+
+interface OneRosterCourseComponent {
+	sourcedId: string
+	status: "active"
+	title: string
+	course: OneRosterGUIDRef
+	parent?: OneRosterGUIDRef
+	sortOrder: number
+	metadata?: Record<string, unknown>
+}
+
+interface OneRosterResource {
+	sourcedId: string
+	status: "active"
+	title: string
+	vendorResourceId: string
+	vendorId: string
+	applicationId: string
+	roles: string[]
+	importance: "primary" | "secondary"
+	metadata: Record<string, unknown>
+}
+
+interface OneRosterCourseComponentResource {
+	sourcedId: string
+	status: "active"
+	title: string
+	courseComponent: OneRosterGUIDRef
+	resource: OneRosterGUIDRef
+	sortOrder: number
+}
+
+export interface OneRosterPayload {
+	course: OneRosterCourse
+	courseComponents: OneRosterCourseComponent[]
+	resources: OneRosterResource[]
+	componentResources: OneRosterCourseComponentResource[]
+}
+
+// --- CONSTANTS ---
+const ORG_SOURCED_ID = "nice-academy"
+const ACADEMIC_SESSION_SOURCED_ID = "nice-academy-perpetual-year"
+
+// --- DATABASE QUERIES (PREPARED STATEMENTS) ---
+const getCourseByIdQuery = db
+	.select({
+		id: schema.niceCourses.id,
+		slug: schema.niceCourses.slug,
+		title: schema.niceCourses.title,
+		path: schema.niceCourses.path,
+		description: schema.niceCourses.description
+	})
+	.from(schema.niceCourses)
+	.where(eq(schema.niceCourses.id, sql.placeholder("courseId")))
+	.limit(1)
+	.prepare("src_lib_oneroster_get_course_by_id")
+
+const getAllSubjectsQuery = db
+	.select({
+		slug: schema.niceSubjects.slug,
+		title: schema.niceSubjects.title
+	})
+	.from(schema.niceSubjects)
+	.prepare("src_lib_oneroster_get_all_subjects")
+
+/**
+ * Generates a complete OneRoster JSON payload for a single course.
+ *
+ * @param courseId The unique ID of the course from the 'courses' table.
+ * @returns A promise that resolves to the fully structured OneRosterPayload.
+ * @throws An error if the course is not found or if a database query fails.
+ */
+export async function generateOnerosterPayloadForCourse(courseId: string): Promise<OneRosterPayload> {
+	logger.info("starting oneroster payload generation", { courseId })
+
+	// 1. Fetch the root course and all subjects in parallel.
+	const [courseResult, subjectsResult] = await Promise.all([
+		errors.try(getCourseByIdQuery.execute({ courseId })),
+		errors.try(getAllSubjectsQuery.execute())
+	])
+
+	if (courseResult.error) {
+		logger.error("failed to fetch course", { courseId, error: courseResult.error })
+		throw errors.wrap(courseResult.error, "database query for course")
+	}
+	const course = courseResult.data[0]
+	if (!course) {
+		throw errors.new(`course not found for id: ${courseId}`)
+	}
+
+	if (subjectsResult.error) {
+		logger.error("failed to fetch subjects", { error: subjectsResult.error })
+		throw errors.wrap(subjectsResult.error, "database query for subjects")
+	}
+	const subjectsMap = new Map(subjectsResult.data.map((s) => [s.slug, s.title]))
+
+	// 2. Fetch all descendant data for the course.
+	const units = await db.query.niceUnits.findMany({ where: eq(schema.niceUnits.courseId, course.id) })
+	const unitIds = units.map((u) => u.id)
+
+	const lessons = unitIds.length
+		? await db.query.niceLessons.findMany({ where: inArray(schema.niceLessons.unitId, unitIds) })
+		: []
+	const lessonIds = lessons.map((l) => l.id)
+
+	const assessments = unitIds.length
+		? await db.query.niceAssessments.findMany({
+				where: and(inArray(schema.niceAssessments.parentId, unitIds), eq(schema.niceAssessments.parentType, "Unit"))
+			})
+		: []
+
+	const lessonContents = lessonIds.length
+		? await db.query.niceLessonContents.findMany({ where: inArray(schema.niceLessonContents.lessonId, lessonIds) })
+		: []
+
+	const contentIds = {
+		Video: lessonContents.filter((lc) => lc.contentType === "Video").map((lc) => lc.contentId),
+		Article: lessonContents.filter((lc) => lc.contentType === "Article").map((lc) => lc.contentId),
+		Exercise: lessonContents.filter((lc) => lc.contentType === "Exercise").map((lc) => lc.contentId)
+	}
+
+	const [videos, articles, exercises] = await Promise.all([
+		contentIds.Video.length
+			? db.query.niceVideos.findMany({ where: inArray(schema.niceVideos.id, contentIds.Video) })
+			: Promise.resolve([]),
+		contentIds.Article.length
+			? db.query.niceArticles.findMany({ where: inArray(schema.niceArticles.id, contentIds.Article) })
+			: Promise.resolve([]),
+		contentIds.Exercise.length
+			? db.query.niceExercises.findMany({ where: inArray(schema.niceExercises.id, contentIds.Exercise) })
+			: Promise.resolve([])
+	])
+
+	const contentMap = new Map<string, { id: string; path: string; title: string; type: string; description?: string }>([
+		...videos.map((v) => [v.id, { ...v, type: "Video" }] as const),
+		...articles.map((a) => [a.id, { ...a, type: "Article" }] as const),
+		...exercises.map((e) => [e.id, { ...e, type: "Exercise" }] as const)
+	])
+
+	// 3. Transform the data into the OneRoster structure.
+	logger.debug("transforming database entities to oneroster objects", { courseId })
+
+	const subjectSlug = course.path.split("/")[1] || ""
+	const subjectTitle = subjectsMap.get(subjectSlug) || "General"
+
+	const onerosterPayload: OneRosterPayload = {
+		course: {
+			sourcedId: course.path,
+			status: "active",
+			title: course.title,
+			subjects: [subjectTitle],
+			courseCode: course.slug,
+			org: { sourcedId: ORG_SOURCED_ID, type: "org" },
+			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "academicSession" },
+			metadata: { description: course.description }
+		},
+		courseComponents: [],
+		resources: [],
+		componentResources: []
+	}
+
+	const resourceSet = new Set<string>()
+
+	for (const unit of units.sort((a, b) => a.ordering - b.ordering)) {
+		onerosterPayload.courseComponents.push({
+			sourcedId: unit.path,
+			status: "active",
+			title: unit.title,
+			course: { sourcedId: course.path, type: "course" },
+			sortOrder: unit.ordering,
+			metadata: { description: unit.description }
+		})
+
+		const unitLessons = lessons.filter((l) => l.unitId === unit.id).sort((a, b) => a.ordering - b.ordering)
+		for (const lesson of unitLessons) {
+			onerosterPayload.courseComponents.push({
+				sourcedId: lesson.path,
+				status: "active",
+				title: lesson.title,
+				course: { sourcedId: course.path, type: "course" },
+				parent: { sourcedId: unit.path, type: "courseComponent" },
+				sortOrder: lesson.ordering,
+				metadata: { description: lesson.description }
+			})
+
+			const lessonContentLinks = lessonContents
+				.filter((lc) => lc.lessonId === lesson.id)
+				.sort((a, b) => a.ordering - b.ordering)
+			for (const lc of lessonContentLinks) {
+				const content = contentMap.get(lc.contentId)
+				if (content) {
+					if (!resourceSet.has(content.path)) {
+						// Construct metadata based on content type
+						let metadata: Record<string, unknown> = {
+							description: content.description || ""
+						}
+
+						if (lc.contentType === "Article") {
+							// Articles should be QTI Stimulus
+							metadata = {
+								...metadata,
+								type: "qti",
+								subType: "qti-stimulus",
+								language: "en-US",
+								url: `https://qti.alpha-1edtech.com/api/stimuli/${content.id}`
+							}
+						} else if (lc.contentType === "Video") {
+							// Videos need proper URL
+							const videoData = videos.find((v) => v.id === content.id)
+							metadata = {
+								...metadata,
+								type: "video",
+								url: `https://www.youtube.com/watch?v=${videoData?.youtubeId}`
+							}
+						} else if (lc.contentType === "Exercise") {
+							// Exercises might need QTI test URLs
+							metadata = {
+								...metadata,
+								type: "qti",
+								subType: "qti-test",
+								questionType: "custom",
+								language: "en-US",
+								url: `https://qti.alpha-1edtech.com/api/assessment-tests/${content.id}`
+							}
+						}
+
+						onerosterPayload.resources.push({
+							sourcedId: content.path,
+							status: "active",
+							title: content.title,
+							vendorResourceId: content.id,
+							vendorId: "alpha-nice",
+							applicationId: "nice",
+							roles: ["primary"],
+							importance: "primary",
+							metadata
+						})
+						resourceSet.add(content.path)
+					}
+
+					onerosterPayload.componentResources.push({
+						sourcedId: `ccr:${lesson.path}:${content.path}`,
+						status: "active",
+						title: content.title,
+						courseComponent: { sourcedId: lesson.path, type: "courseComponent" },
+						resource: { sourcedId: content.path, type: "resource" },
+						sortOrder: lc.ordering
+					})
+				}
+			}
+		}
+
+		const unitAssessments = assessments.filter((a) => a.parentId === unit.id).sort((a, b) => a.ordering - b.ordering)
+		for (const assessment of unitAssessments) {
+			if (!resourceSet.has(assessment.path)) {
+				onerosterPayload.resources.push({
+					sourcedId: assessment.path,
+					status: "active",
+					title: assessment.title,
+					vendorResourceId: assessment.id,
+					vendorId: "alpha-nice",
+					applicationId: "nice",
+					roles: ["primary"],
+					importance: "primary",
+					metadata: {
+						type: "qti",
+						subType: "qti-test",
+						questionType: "custom",
+						language: "en-US",
+						url: `https://qti.alpha-1edtech.com/api/assessment-tests/${assessment.id}`,
+						description: assessment.description,
+						lessonType: assessment.type.toLowerCase()
+					}
+				})
+				resourceSet.add(assessment.path)
+			}
+
+			onerosterPayload.componentResources.push({
+				sourcedId: `ccr:${unit.path}:${assessment.path}`,
+				status: "active",
+				title: assessment.title,
+				courseComponent: { sourcedId: unit.path, type: "courseComponent" },
+				resource: { sourcedId: assessment.path, type: "resource" },
+				sortOrder: assessment.ordering
+			})
+		}
+	}
+
+	logger.info("oneroster payload generation complete", { courseId })
+	return onerosterPayload
+}

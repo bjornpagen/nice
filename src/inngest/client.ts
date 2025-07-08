@@ -22,6 +22,11 @@ const events = {
 		data: z.object({
 			articleId: z.string().min(1)
 		})
+	},
+	"nice/course.oneroster.generate": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
 	}
 }
 

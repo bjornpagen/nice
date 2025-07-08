@@ -1,5 +1,6 @@
 import { serve } from "inngest/next"
 import { inngest } from "@/inngest/client"
+import { generateOnerosterForCourse } from "@/inngest/functions/generate-oneroster-for-course"
 import { helloWorld } from "@/inngest/functions/hello"
 import { migrateAllAssessmentItemsForExercise } from "@/inngest/functions/migrate-all-assessment-items-for-exercise"
 import { migrateArticleToQtiAssessmentStimulus } from "@/inngest/functions/migrate-article-to-qti-assessment-stimulus"
@@ -12,6 +13,7 @@ export const { GET, POST, PUT } = serve({
 		helloWorld,
 		migrateAllAssessmentItemsForExercise,
 		migrateQuestionToQtiAssessmentItem,
-		migrateArticleToQtiAssessmentStimulus
+		migrateArticleToQtiAssessmentStimulus,
+		generateOnerosterForCourse
 	]
 })
