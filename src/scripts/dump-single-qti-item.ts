@@ -3,6 +3,8 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { QtiApiClient } from "@/lib/qti"
 
+logger.setDefaultLogLevel(logger.DEBUG)
+
 /**
  * Script to fetch and dump a single QTI item by its identifier.
  * Usage: bun run src/scripts/dump-single-qti-item.ts <identifier>

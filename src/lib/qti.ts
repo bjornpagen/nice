@@ -381,6 +381,15 @@ export type ReorderSectionItemsInput = z.infer<typeof ReorderSectionItemsInputSc
 export class QtiApiClient {
 	#accessToken: string | null = null
 
+	constructor() {
+		logger.debug("qti client: initializing with environment configuration", {
+			clientId: env.TIMEBACK_CLIENT_ID,
+			tokenUrl: env.TIMEBACK_TOKEN_URL,
+			qtiServerUrl: env.TIMEBACK_QTI_SERVER_URL,
+			hasClientSecret: !!env.TIMEBACK_CLIENT_SECRET
+		})
+	}
+
 	/**
 	 * Ensures we have a valid access token, fetching one if needed.
 	 * @private
