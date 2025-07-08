@@ -88,7 +88,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<HydratedUnitData
 								case "Quiz":
 									return <QuizSection key={child.id} quiz={child} />
 								case "UnitTest":
-									return <UnitTestSection key={child.id} unitTest={child} />
+									return <UnitTestSection key={child.id} test={child} />
 								default:
 									return null
 							}
