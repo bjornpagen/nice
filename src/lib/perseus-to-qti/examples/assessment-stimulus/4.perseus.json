@@ -1,0 +1,463 @@
+[
+	{
+		"images": {
+			"web+graphie://cdn.kastatic.org/ka-perseus-graphie/e9d280595a5ecd66b0175fe699dd348171e80a28": {
+				"width": 230,
+				"height": 230
+			},
+			"web+graphie://cdn.kastatic.org/ka-perseus-graphie/fcddf7ccbf2c50271a58be6610587cfe7d2739cf": {
+				"width": 230,
+				"height": 230
+			}
+		},
+		"content": "## What is concavity?\n\nConcavity relates to the rate of change of a function's derivative. A function $f$ is **concave up** (or upwards) where the derivative $f'$ is increasing. This is equivalent to the derivative of $f'$, which is $f''$, being positive. Similarly, $f$ is **concave down** (or downwards) where the derivative $f'$ is decreasing (or equivalently, $f''$ is negative).\n\nGraphically, a graph that's concave up has a cup shape, $\\cup$, and a graph that's concave down has a cap shape, $\\cap$.\n\n![A function is graphed. The x-axis goes from negative 5 to 5. The graph is a cup-shaped curve, or concave up. The curve starts at (negative 4, 9), moves downward with decreasing steepness to (0, 1), then moves upward with increasing steepness to (4, 9).](web+graphie://cdn.kastatic.org/ka-perseus-graphie/e9d280595a5ecd66b0175fe699dd348171e80a28) ![A function is graphed. The x-axis goes from negative 5 to 5. The graph is a cap-shaped curve, or concave down. The curve starts at (negative 4, negative 9), moves upward with decreasing steepness to (0, negative 1), then moves downward with increasing steepness to (4, negative 9).\n](web+graphie://cdn.kastatic.org/ka-perseus-graphie/fcddf7ccbf2c50271a58be6610587cfe7d2739cf)\n\n*Want to learn more about concavity and differential calculus? Check out [this video](/v/concavity-concave-upwards-and-concave-downwards-intervals).*",
+		"widgets": {}
+	},
+	{
+		"images": {},
+		"content": "## Practice set 1: Analyzing concavity graphically\n\n[[☃ graded-group-set 1]]\n\n*Want to try more problems like this? Check out [this exercise](/e/recognizing_concavity).*",
+		"widgets": {
+			"graded-group-set 1": {
+				"type": "graded-group-set",
+				"graded": true,
+				"static": false,
+				"options": {
+					"gradedGroups": [
+						{
+							"hint": {
+								"images": {
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/1423ac842506af6991b8e635c34a9d36faf33368": {
+										"width": 50,
+										"height": 50
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/21151ab2ab463c98a17bfe43a3e121d83248e5c0": {
+										"width": 425,
+										"height": 425
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/422cf5924dbecfc98054d87696663b0145ce07e6": {
+										"width": 50,
+										"height": 50
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/4d64d76d6423a90abf605dfe2b856e7327f92a0c": {
+										"width": 100,
+										"height": 100
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/842593fcfd6a52a51cd66950f88ff7cd344d7af3": {
+										"width": 50,
+										"height": 50
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/88e8d1ff71cbe909ea256814c06e1ff2df39bd5e": {
+										"width": 100,
+										"height": 100
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/f9425dbee4d4f73f6188a62f88f637018843d7c8": {
+										"width": 100,
+										"height": 100
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/fad1dc95cd761b6e7f4c581c7093841fcf16029a": {
+										"width": 100,
+										"height": 100
+									}
+								},
+								"content": "$f'(x)>0$ means $f$ is **increasing**.\n\n$f'(x)<0$ means$f$ is **decreasing**.\n\n$f''(x)>0$ means the slope of $f$ is increasing ($f$ is **concave up**).\n\n$f''(x)<0$ means the slope of $f$ is decreasing ($f$ is **concave down**).\n\n| | $f'(x)>0$ | $f'(x)<0$\n:- | :- | :-: | :-:\n| | $f$ is **increasing** | $f$ is **decreasing**\n$f''(x)>0$ | $f$ is **concave up** |  ![A curve moves upward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/fad1dc95cd761b6e7f4c581c7093841fcf16029a) | ![A curve moves downward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/88e8d1ff71cbe909ea256814c06e1ff2df39bd5e)\n$f''(x)<0$ | $f$ is **concave down** | ![A curve moves upward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/f9425dbee4d4f73f6188a62f88f637018843d7c8) | ![A curve moves downward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/4d64d76d6423a90abf605dfe2b856e7327f92a0c)\n\nWe are asked to find an interval where $f'(x)>0$ and $f''(x)>0$, so we need an interval where the graph of $f$ has this general shape:\n\n ![A curve moves upward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/fad1dc95cd761b6e7f4c581c7093841fcf16029a)\n\nVisually, this is where $f'(x)>0$ and $f''(x)>0$.\n\n![The graph of function f has a portion of the curve highlighted. The portion moves upward concave up, from about (negative 1, negative 17) to about (0.5, 17).](web+graphie://cdn.kastatic.org/ka-perseus-graphie/21151ab2ab463c98a17bfe43a3e121d83248e5c0)\n\nNow we can check each option:\n\nInterval | Shape | Is $f'(x)>0$ and $f''(x)>0$?\n:-: | :-: | :-:\n$-3.5<x<-2.5$ | ![A curve moves downward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/1423ac842506af6991b8e635c34a9d36faf33368) | $\\redD{\\text{No}}$. $f''(x)>0$ but $f'(x)<0$.\n$-1<x<0$ | ![A curve moves upward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/842593fcfd6a52a51cd66950f88ff7cd344d7af3) | $\\greenD{\\text{Yes!}}$\n$1.5<x<2.5$ | ![A curve moves upward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/422cf5924dbecfc98054d87696663b0145ce07e6) | $\\redD{\\text{No}}$. $f'(x)>0$ but $f''(x)<0$.",
+								"widgets": {}
+							},
+							"title": "Problem 1.1",
+							"images": {
+								"web+graphie://cdn.kastatic.org/ka-perseus-graphie/c4bd16ce55f9709badd9a460ebc17c2c87aa66ba": {
+									"width": 425,
+									"height": 425
+								}
+							},
+							"content": "**Select all the intervals where $f'(x)>0$ and $f''(x)>0$.**\n\n![Function f is graphed. The x-axis goes from negative 5 to 5. The graph is an M-shaped curve. The curve starts in quadrant 3, moves upward concave down to about (negative 3.5, 30), moves downward concave down to about (negative 2.5, 5), continues downward concave up to about (negative 1, negative 20), moves upward concave up to about (1, 45), continues upward concave down to about (2.4, 90), moves downward concave down, and ends in quadrant 4.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/c4bd16ce55f9709badd9a460ebc17c2c87aa66ba)\n\n[[☃ radio 1]]",
+							"widgets": {
+								"radio 1": {
+									"type": "radio",
+									"graded": true,
+									"static": false,
+									"options": {
+										"choices": [
+											{
+												"content": "$-3.5<x<-2.5$",
+												"correct": false
+											},
+											{
+												"content": "$-1<x<0$",
+												"correct": true
+											},
+											{
+												"content": "$1.5<x<2.5$",
+												"correct": false,
+												"isNoneOfTheAbove": false
+											},
+											{
+												"content": "",
+												"isNoneOfTheAbove": true
+											}
+										],
+										"randomize": false,
+										"onePerLine": true,
+										"displayCount": null,
+										"multipleSelect": true,
+										"deselectEnabled": false,
+										"hasNoneOfTheAbove": true
+									},
+									"version": {
+										"major": 1,
+										"minor": 0
+									},
+									"alignment": "default"
+								}
+							},
+							"widgetEnabled": true,
+							"immutableWidgets": false
+						},
+						{
+							"hint": {
+								"images": {
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/08e8b7e5ce7d160e69c506cebdd2552cb4f57715": {
+										"width": 50,
+										"height": 50
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/422cf5924dbecfc98054d87696663b0145ce07e6": {
+										"width": 50,
+										"height": 50
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/4d64d76d6423a90abf605dfe2b856e7327f92a0c": {
+										"width": 100,
+										"height": 100
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/842593fcfd6a52a51cd66950f88ff7cd344d7af3": {
+										"width": 50,
+										"height": 50
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/88e8d1ff71cbe909ea256814c06e1ff2df39bd5e": {
+										"width": 100,
+										"height": 100
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/e24de70ae612cae71a70a5afac6de4a24896af83": {
+										"width": 425,
+										"height": 425
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/f9425dbee4d4f73f6188a62f88f637018843d7c8": {
+										"width": 100,
+										"height": 100
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/fad1dc95cd761b6e7f4c581c7093841fcf16029a": {
+										"width": 100,
+										"height": 100
+									}
+								},
+								"content": "$h'(x)>0$ means $h$ is **increasing**.\n\n$h'(x)<0$ means $h$ is **decreasing**.\n\n$h''(x)>0$ means the slope of $h$ is increasing ($h$ is **concave up**).\n\n$h''(x)<0$ means the slope of $h$ is decreasing ($h$ is **concave down**).\n\n| | $h'(x)>0$ | $h'(x)<0$\n:- | :- | :-: | :-:\n| | $h$ is **increasing** | $h$ is **decreasing**\n$h''(x)>0$ | $h$ is **concave up** |  ![A curve moves upward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/fad1dc95cd761b6e7f4c581c7093841fcf16029a) | ![A curve moves downward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/88e8d1ff71cbe909ea256814c06e1ff2df39bd5e)\n$h''(x)<0$ | $h$ is **concave down** | ![A curve moves upward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/f9425dbee4d4f73f6188a62f88f637018843d7c8) | ![A curve moves downward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/4d64d76d6423a90abf605dfe2b856e7327f92a0c)\n\nWe are asked to find an interval where $h'(x)<0$ and $h''(x)<0$, so we need an interval where the graph of $h$ has this general shape:\n\n ![A curve moves downward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/4d64d76d6423a90abf605dfe2b856e7327f92a0c)\n\nVisually, this is where $h'(x)<0$ and $h''(x)<0$.\n\n![The graph of function h has a portion of the curve highlighted. The portion of the curve moves downward concave down, to the right of about (0.5, 10).](web+graphie://cdn.kastatic.org/ka-perseus-graphie/e24de70ae612cae71a70a5afac6de4a24896af83)\n\nNow we can check each option:\n\nInterval | Shape | Is $h'(x)<0$ and $h''(x)<0$?\n:-: | :-: | :-:\n$-4.5<x<-3$  | ![A curve moves upward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/842593fcfd6a52a51cd66950f88ff7cd344d7af3) | $\\redD{\\text{No}}$. $h'(x)>0$ and $h''(x)>0$.\n$-1.5<x<0$ | ![A curve moves upward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/422cf5924dbecfc98054d87696663b0145ce07e6) | $\\redD{\\text{No}}$. $h''(x)<0$ but $h'(x)>0$.\n$1<x<3$ | ![A curve moves downward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/08e8b7e5ce7d160e69c506cebdd2552cb4f57715) | $\\greenD{\\text{Yes!}}$",
+								"widgets": {}
+							},
+							"title": "Problem 1.2",
+							"images": {
+								"web+graphie://cdn.kastatic.org/ka-perseus-graphie/2ea811591f936a9a4b18b861cb983f693ffac2f0": {
+									"width": 425,
+									"height": 425
+								}
+							},
+							"content": "**Select all the intervals where $h'(x)<0$ and $h''(x)<0$.**\n\n![Function h is graphed. The x-axis goes from negative 5 to 5. The graph consists of a curve. The curve starts at about (negative 5, negative 40), moves downward concave up to about (negative 4.3, negative 43), moves upward concave up to about (negative 2, negative 16), continues upward concave down to about (0.5, 10), moves downward concave down, and ends in quadrant 4.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/2ea811591f936a9a4b18b861cb983f693ffac2f0)\n\n[[☃ radio 1]]",
+							"widgets": {
+								"radio 1": {
+									"type": "radio",
+									"graded": true,
+									"static": false,
+									"options": {
+										"choices": [
+											{
+												"content": "$-4.5<x<-3$",
+												"correct": false
+											},
+											{
+												"content": "$-1.5<x<0$",
+												"correct": false
+											},
+											{
+												"content": "$1<x<3$",
+												"correct": true,
+												"isNoneOfTheAbove": false
+											},
+											{
+												"content": "",
+												"isNoneOfTheAbove": true
+											}
+										],
+										"randomize": false,
+										"onePerLine": true,
+										"displayCount": null,
+										"multipleSelect": true,
+										"deselectEnabled": false,
+										"hasNoneOfTheAbove": true
+									},
+									"version": {
+										"major": 1,
+										"minor": 0
+									},
+									"alignment": "default"
+								}
+							},
+							"widgetEnabled": true,
+							"immutableWidgets": false
+						},
+						{
+							"hint": {
+								"images": {
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/422cf5924dbecfc98054d87696663b0145ce07e6": {
+										"width": 50,
+										"height": 50
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/4d64d76d6423a90abf605dfe2b856e7327f92a0c": {
+										"width": 100,
+										"height": 100
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/56e17a2e36201496d6708d55174078a0fa7cca05": {
+										"width": 425,
+										"height": 425
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/88e8d1ff71cbe909ea256814c06e1ff2df39bd5e": {
+										"width": 100,
+										"height": 100
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/f9425dbee4d4f73f6188a62f88f637018843d7c8": {
+										"width": 100,
+										"height": 100
+									},
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/fad1dc95cd761b6e7f4c581c7093841fcf16029a": {
+										"width": 100,
+										"height": 100
+									}
+								},
+								"content": "$g'(x)>0$ means $g$ is **increasing**.\n\n$g'(x)<0$ means $g$ is **decreasing**.\n\n$g''(x)>0$ means the slope of $g$ is increasing ($g$ is **concave up**).\n\n$g''(x)<0$ means the slope of $g$ is decreasing ($g$ is **concave down**).\n\n| | $g'(x)>0$ | $g'(x)<0$\n:- | :- | :-: | :-:\n| | $g$ is **increasing** | $g$ is **decreasing**\n$g''(x)>0$ | $g$ is **concave up** |  ![A curve moves upward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/fad1dc95cd761b6e7f4c581c7093841fcf16029a) | ![A curve moves downward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/88e8d1ff71cbe909ea256814c06e1ff2df39bd5e)\n$g''(x)<0$ | $g$ is **concave down** | ![A curve moves upward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/f9425dbee4d4f73f6188a62f88f637018843d7c8) | ![A curve moves downward with increasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/4d64d76d6423a90abf605dfe2b856e7327f92a0c)\n\nWe are asked to find an interval where $g'(x)>0$ and $g''(x)<0$, so we need an interval where the graph of $g$ has this general shape:\n\n ![A curve moves upward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/f9425dbee4d4f73f6188a62f88f637018843d7c8)\n\nVisually, this is where $g'(x)>0$ and $g''(x)<0$.\n\n![The graph of function g has 3 portions of the curve highlighted. The 3 portions each move upward concave down. The portions are between (negative 4, 0) and (negative 3, 2), between (0, 0) and (1, 2), and between (4, 0) and (5, 2).](web+graphie://cdn.kastatic.org/ka-perseus-graphie/56e17a2e36201496d6708d55174078a0fa7cca05)\n\nNow we can check each option:\n\nInterval | Shape | Is $g'(x)>0$ and $g''(x)<0$?\n:-: | :-: | :-:\n$-4<x<-3$ | ![A curve moves upward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/422cf5924dbecfc98054d87696663b0145ce07e6) | $\\greenD{\\text{Yes!}}$\n$0<x<1$ | ![A curve moves upward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/422cf5924dbecfc98054d87696663b0145ce07e6) | $\\greenD{\\text{Yes!}}$\n$4<x<4.5$ | ![A curve moves upward with decreasing steepness.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/422cf5924dbecfc98054d87696663b0145ce07e6) | $\\greenD{\\text{Yes!}}$",
+								"widgets": {}
+							},
+							"title": "Problem 1.3",
+							"images": {
+								"web+graphie://cdn.kastatic.org/ka-perseus-graphie/692bb1b2541d4c31253e56ecd65ec46a16f35ef8": {
+									"width": 425,
+									"height": 425
+								}
+							},
+							"content": "**Select all the intervals where $g'(x)>0$ and $g''(x)<0$.**\n\n![Function g is graphed. The x-axis goes from negative 5 to 5. The graph is a waving curve. The curve starts at (negative 5, negative 2), moves upward concave up to (negative 4, 0), continues upward concave down to (negative 3, 2), moves downward concave down to (negative 2, 0), continues downward concave up to (negative 1, negative 2), moves upward concave up to (0, 0), continues upward concave down to (1, 2), moves downward concave down to (2, 0), continues downward concave up to (3, negative 2), moves upward concave up to (4, 0), continues upward concave down, and ends at (5, 2).](web+graphie://cdn.kastatic.org/ka-perseus-graphie/692bb1b2541d4c31253e56ecd65ec46a16f35ef8)\n\n[[☃ radio 1]]",
+							"widgets": {
+								"radio 1": {
+									"type": "radio",
+									"graded": true,
+									"static": false,
+									"options": {
+										"choices": [
+											{
+												"content": "$-4<x<-3$",
+												"correct": true
+											},
+											{
+												"content": "$0<x<1$",
+												"correct": true
+											},
+											{
+												"content": "$4<x<4.5$",
+												"correct": true,
+												"isNoneOfTheAbove": false
+											},
+											{
+												"content": "",
+												"isNoneOfTheAbove": true
+											}
+										],
+										"randomize": false,
+										"onePerLine": true,
+										"displayCount": null,
+										"multipleSelect": true,
+										"deselectEnabled": false,
+										"hasNoneOfTheAbove": true
+									},
+									"version": {
+										"major": 1,
+										"minor": 0
+									},
+									"alignment": "default"
+								}
+							},
+							"widgetEnabled": true,
+							"immutableWidgets": false
+						}
+					]
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	},
+	{
+		"images": {},
+		"content": "## Practice set 2: Analyzing concavity algebraically\n\n[[☃ graded-group-set 2]]\n\n*Want to try more problems like this? Check out [this exercise](/e/analyze-concavity-algebraic).*",
+		"widgets": {
+			"graded-group-set 2": {
+				"type": "graded-group-set",
+				"graded": true,
+				"static": false,
+				"options": {
+					"gradedGroups": [
+						{
+							"hint": {
+								"images": {
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/9dc3b2cfe20d490cb10b3979728722f29c549aa2": {
+										"width": 460,
+										"height": 80
+									}
+								},
+								"content": "The second derivative of $f$ is $f''(x)=12(3x-2)(x-2)$. [[☃ explanation 1]]\n\n- $f''(x)=0$ for $x=\\dfrac{2}{3},2$.\n\n- Since $f''$ is a polynomial, it's defined for all real numbers.\n\nTherefore, our critical points are $x=\\dfrac{2}{3}$ and $x=2$.\n\nOur critical points divide the number line into three intervals:\n\n![number line](web+graphie://cdn.kastatic.org/ka-perseus-graphie/9dc3b2cfe20d490cb10b3979728722f29c549aa2)\n\nLet's evaluate $f''$ at each interval to see if it's positive or negative on that interval.\n\nInterval | $x$-value | $f''(x)$ | Verdict\n:-: | :-: | :-: | :-:\n$x<\\dfrac{2}{3}$ | $x=0$ | $f''(0)=48>0$ | $f$ is concave up $\\cup$\n$\\dfrac{2}{3}<x<2$ | $x=1$ | $f''(1)=-12<0$ | $f$ is concave down $\\cap$\n$x>2$ | $x=3$ | $f''(3)=84>0$ | $f$ is concave up $\\cup$\n\n**In conclusion, the graph of $f$ is concave down over the interval $\\dfrac{2}{3}<x<2$ only.**",
+								"widgets": {
+									"explanation 1": {
+										"type": "explanation",
+										"graded": true,
+										"static": false,
+										"options": {
+											"static": false,
+											"widgets": {},
+											"hidePrompt": "Got it, thanks!",
+											"showPrompt": "Show entire calculation.",
+											"explanation": "First, we differentiate $f$ to find $f'$:\n\n$\\begin{align}\n&\\phantom{=}f'(x)\n\\\\\\\\\n&=\\dfrac{d}{dx}(3x^4-16x^3+24x^2+48)\n\\\\\\\\\n&=3\\dfrac{d}{dx}(x^4)-16\\dfrac{d}{dx}(x^3)+24\\dfrac{d}{dx}(x^2)+\\dfrac{d}{dx}(48)\n\\\\\\\\\n&=3(4x^3)-16(3x^2)+24(2x)+(0)\n\\\\\\\\\n&=12x^3-48x^2+48x\n\\end{align}$\n\nNow we can differentiate $f'$ to find $f''$:\n\n$\\begin{align}\n&\\phantom{=}f''(x)\n\\\\\\\\\n&=\\dfrac{d}{dx}(12x^3-48x^2+48x)\n\\\\\\\\\n&=12\\dfrac{d}{dx}(x^3)-48\\dfrac{d}{dx}(x^2)+48\\dfrac{d}{dx}(x)\n\\\\\\\\\n&=12(3x^2)-48(2x)+48(1)\n\\\\\\\\\n&=36x^2-96x+48\n\\\\\\\\\n&=12(3x^2-8x+4)\n\\\\\\\\\n&=12(3x-2)(x-2)\n\\end{align}$"
+										},
+										"version": {
+											"major": 0,
+											"minor": 0
+										},
+										"alignment": "default"
+									}
+								}
+							},
+							"title": "Problem 2.1",
+							"images": {},
+							"content": "$f(x)=3x^4-16x^3+24x^2+48$\n\n**On which intervals is the graph of $f$ concave down?**\n\n[[☃ radio 1]]",
+							"widgets": {
+								"radio 1": {
+									"type": "radio",
+									"graded": true,
+									"static": false,
+									"options": {
+										"choices": [
+											{
+												"content": "$x>0$ only",
+												"correct": false
+											},
+											{
+												"content": "$\\dfrac{2}{3}<x<2$ only",
+												"correct": true
+											},
+											{
+												"content": "$x<\\dfrac{2}{3}$ and $x>2$",
+												"correct": false,
+												"isNoneOfTheAbove": false
+											},
+											{
+												"content": "$x<-2$ and $x>-\\dfrac{2}{3}$",
+												"correct": false,
+												"isNoneOfTheAbove": false
+											}
+										],
+										"randomize": false,
+										"onePerLine": true,
+										"displayCount": null,
+										"multipleSelect": false,
+										"deselectEnabled": false,
+										"hasNoneOfTheAbove": false
+									},
+									"version": {
+										"major": 1,
+										"minor": 0
+									},
+									"alignment": "default"
+								}
+							},
+							"widgetEnabled": true,
+							"immutableWidgets": false
+						},
+						{
+							"hint": {
+								"images": {
+									"web+graphie://cdn.kastatic.org/ka-perseus-graphie/ca3a37949809b7b748dfb6c0429dd4b1afcb5526": {
+										"width": 460,
+										"height": 80
+									}
+								},
+								"content": "The second derivative of $g$ is $g''(x)=\\dfrac{6}{(x+2)^3}$. [[☃ explanation 1]]\n\n- $g''$ is never equal to $0$.\n\n- $g''$ is undefined for $x=-2$.\n\nTherefore, our only critical point is $x=-2$.\n\nOur critical point divides the domain of $g$ (which is all numbers except for $-2$) into two intervals:\n\n![number line](web+graphie://cdn.kastatic.org/ka-perseus-graphie/ca3a37949809b7b748dfb6c0429dd4b1afcb5526)\n\nLet's evaluate $g''$ at each interval to see if it's positive or negative on that interval.\n\nInterval | $x$-value | $g''(x)$ | Verdict\n:-: | :-: | :-: | :-:\n$(-\\infty,-2)$ | $x=-3$ | $g''(-3)=-6<0$ | $g$ is concave down $\\cap$\n$(-2,\\infty)$ | $x=-1$ | $g''(-1)=6>0$ | $g$ is concave up $\\cup$\n\n**In conclusion, the graph of $g$ is concave up over the interval $(-2,\\infty)$ only.**",
+								"widgets": {
+									"explanation 1": {
+										"type": "explanation",
+										"graded": true,
+										"static": false,
+										"options": {
+											"static": false,
+											"widgets": {},
+											"hidePrompt": "Got it, thanks!",
+											"showPrompt": "Show entire calculation.",
+											"explanation": "First, we differentiate $g$ to find $g'$:\n\n$\\begin{align}\n&\\phantom{=}g'(x)\n\\\\\\\\\n&=\\dfrac{d}{dx}\\left(\\dfrac{3}{x+2}\\right)\n\\\\\\\\\n&=3\\dfrac{d}{dx}[(x+2)^{-1}]\n\\\\\\\\\n&=3[-(x+2)^{-2}]\n\\\\\\\\\n&=-3(x+2)^{-2}\n\\end{align}$\n\nNow we can differentiate $g'$ to find $g''$:\n\n$\\begin{align}\n&\\phantom{=}g''(x)\n\\\\\\\\\n&=\\dfrac{d}{dx}[-3(x+2)^{-2}]\n\\\\\\\\\n&=-3[-2(x+2)^{-3}]\n\\\\\\\\\n&=\\dfrac{6}{(x+2)^3}\n\\end{align}$"
+										},
+										"version": {
+											"major": 0,
+											"minor": 0
+										},
+										"alignment": "default"
+									}
+								}
+							},
+							"title": "Problem 2.2",
+							"images": {},
+							"content": "$g(x)=\\dfrac{3}{x+2}$\n\n**On which intervals is the graph of $g$ concave up?**\n\n[[☃ radio 1]]",
+							"widgets": {
+								"radio 1": {
+									"type": "radio",
+									"graded": true,
+									"static": false,
+									"options": {
+										"choices": [
+											{
+												"content": "$(-2,\\infty)$ only",
+												"correct": true
+											},
+											{
+												"content": "$(2,\\infty)$ only",
+												"correct": false
+											},
+											{
+												"content": "$(-\\infty,-2)$ only",
+												"isNoneOfTheAbove": false
+											},
+											{
+												"content": "$(0,\\infty)$ only",
+												"isNoneOfTheAbove": false
+											}
+										],
+										"randomize": false,
+										"onePerLine": true,
+										"displayCount": null,
+										"multipleSelect": false,
+										"deselectEnabled": false,
+										"hasNoneOfTheAbove": false
+									},
+									"version": {
+										"major": 1,
+										"minor": 0
+									},
+									"alignment": "default"
+								}
+							},
+							"widgetEnabled": true,
+							"immutableWidgets": false
+						}
+					]
+				},
+				"version": {
+					"major": 0,
+					"minor": 0
+				},
+				"alignment": "default"
+			}
+		}
+	}
+]

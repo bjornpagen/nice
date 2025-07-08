@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="analyzing-concavity"
+    title="Analyzing Concavity"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <h2>What is concavity?</h2>
+        <p>Concavity relates to the rate of change of a function's derivative. A function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi></math> is <strong>concave up</strong> (or upwards) where the derivative <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>f</mi><mo>′</mo></msup></math> is increasing. This is equivalent to the derivative of <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>f</mi><mo>′</mo></msup></math>, which is <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>f</mi><mo>″</mo></msup></math>, being positive. Similarly, <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi></math> is <strong>concave down</strong> (or downwards) where the derivative <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>f</mi><mo>′</mo></msup></math> is decreasing (or equivalently, <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>f</mi><mo>″</mo></msup></math> is negative).</p>
+        <p>Graphically, a graph that's concave up has a cup shape, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>∪</mo></math>, and a graph that's concave down has a cap shape, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>∩</mo></math>.</p>
+        <div>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/e9d280595a5ecd66b0175fe699dd348171e80a28.svg" alt="A function is graphed. The x-axis goes from negative 5 to 5. The graph is a cup-shaped curve, or concave up. The curve starts at (negative 4, 9), moves downward with decreasing steepness to (0, 1), then moves upward with increasing steepness to (4, 9)." width="230" height="230"/>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/fcddf7ccbf2c50271a58be6610587cfe7d2739cf.svg" alt="A function is graphed. The x-axis goes from negative 5 to 5. The graph is a cap-shaped curve, or concave down. The curve starts at (negative 4, negative 9), moves upward with decreasing steepness to (0, negative 1), then moves downward with increasing steepness to (4, negative 9)." width="230" height="230"/>
+        </div>
+        <p><em>Want to learn more about concavity and differential calculus? Check out <a href="/v/concavity-concave-upwards-and-concave-downwards-intervals">this video</a>.</em></p>
+        
+        <h2>Practice set 1: Analyzing concavity graphically</h2>
+        
+        <div class="problem-set">
+            <h3>Problem 1.1</h3>
+            <p><strong>Select all the intervals where <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>f</mi><mo>′</mo></msup><mo>(</mo><mi>x</mi><mo>)</mo><mo>&gt;</mo><mn>0</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>f</mi><mo>″</mo></msup><mo>(</mo><mi>x</mi><mo>)</mo><mo>&gt;</mo><mn>0</mn></math>.</strong></p>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/c4bd16ce55f9709badd9a460ebc17c2c87aa66ba.svg" alt="Function f is graphed. The x-axis goes from negative 5 to 5. The graph is an M-shaped curve. The curve starts in quadrant 3, moves upward concave down to about (negative 3.5, 30), moves downward concave down to about (negative 2.5, 5), continues downward concave up to about (negative 1, negative 20), moves upward concave up to about (1, 45), continues upward concave down to about (2.4, 90), moves downward concave down, and ends in quadrant 4." width="425" height="425"/>
+            <ul>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>3.5</mn><mo>&lt;</mo><mi>x</mi><mo>&lt;</mo><mo>-</mo><mn>2.5</mn></math></li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>&lt;</mo><mi>x</mi><mo>&lt;</mo><mn>0</mn></math></li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1.5</mn><mo>&lt;</mo><mi>x</mi><mo>&lt;</mo><mn>2.5</mn></math></li>
+                <li>None of the above</li>
+            </ul>
+
+            <h3>Problem 1.2</h3>
+            <p><strong>Select all the intervals where <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>′</mo></msup><mo>(</mo><mi>x</mi><mo>)</mo><mo>&lt;</mo><mn>0</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>″</mo></msup><mo>(</mo><mi>x</mi><mo>)</mo><mo>&lt;</mo><mn>0</mn></math>.</strong></p>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/2ea811591f936a9a4b18b861cb983f693ffac2f0.svg" alt="Function h is graphed. The x-axis goes from negative 5 to 5. The graph consists of a curve. The curve starts at about (negative 5, negative 40), moves downward concave up to about (negative 4.3, negative 43), moves upward concave up to about (negative 2, negative 16), continues upward concave down to about (0.5, 10), moves downward concave down, and ends in quadrant 4." width="425" height="425"/>
+            <ul>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4.5</mn><mo>&lt;</mo><mi>x</mi><mo>&lt;</mo><mo>-</mo><mn>3</mn></math></li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.5</mn><mo>&lt;</mo><mi>x</mi><mo>&lt;</mo><mn>0</mn></math></li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>&lt;</mo><mi>x</mi><mo>&lt;</mo><mn>3</mn></math></li>
+                <li>None of the above</li>
+            </ul>
+
+            <h3>Problem 1.3</h3>
+            <p><strong>Select all the intervals where <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>g</mi><mo>′</mo></msup><mo>(</mo><mi>x</mi><mo>)</mo><mo>&gt;</mo><mn>0</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>g</mi><mo>″</mo></msup><mo>(</mo><mi>x</mi><mo>)</mo><mo>&lt;</mo><mn>0</mn></math>.</strong></p>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/692bb1b2541d4c31253e56ecd65ec46a16f35ef8.svg" alt="Function g is graphed. The x-axis goes from negative 5 to 5. The graph is a waving curve. The curve starts at (negative 5, negative 2), moves upward concave up to (negative 4, 0), continues upward concave down to (negative 3, 2), moves downward concave down to (negative 2, 0), continues downward concave up to (negative 1, negative 2), moves upward concave up to (0, 0), continues upward concave down to (1, 2), moves downward concave down to (2, 0), continues downward concave up to (3, negative 2), moves upward concave up to (4, 0), continues upward concave down, and ends at (5, 2)." width="425" height="425"/>
+            <ul>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn><mo>&lt;</mo><mi>x</mi><mo>&lt;</mo><mo>-</mo><mn>3</mn></math></li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>&lt;</mo><mi>x</mi><mo>&lt;</mo><mn>1</mn></math></li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>&lt;</mo><mi>x</mi><mo>&lt;</mo><mn>4.5</mn></math></li>
+                <li>None of the above</li>
+            </ul>
+        </div>
+        <p><em>Want to try more problems like this? Check out <a href="/e/recognizing_concavity">this exercise</a>.</em></p>
+
+        <h2>Practice set 2: Analyzing concavity algebraically</h2>
+        <div class="problem-set">
+            <h3>Problem 2.1</h3>
+            <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mn>3</mn><msup><mi>x</mi><mn>4</mn></msup><mo>-</mo><mn>16</mn><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>24</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>48</mn></math></p>
+            <p><strong>On which intervals is the graph of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi></math> concave down?</strong></p>
+            <ul>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math> only</li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>3</mn></mfrac><mo>&lt;</mo><mi>x</mi><mo>&lt;</mo><mn>2</mn></math> only</li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&lt;</mo><mfrac><mn>2</mn><mn>3</mn></mfrac></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>2</mn></math></li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&lt;</mo><mo>-</mo><mn>2</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mo>-</mo><mfrac><mn>2</mn><mn>3</mn></mfrac></math></li>
+            </ul>
+
+            <h3>Problem 2.2</h3>
+            <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mn>3</mn><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow></mfrac></math></p>
+            <p><strong>On which intervals is the graph of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi></math> concave up?</strong></p>
+            <ul>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mo>-</mo><mn>2</mn><mo>,</mo><mo>∞</mo><mo>)</mo></math> only</li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mn>2</mn><mo>,</mo><mo>∞</mo><mo>)</mo></math> only</li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mo>-</mo><mo>∞</mo><mo>,</mo><mo>-</mo><mn>2</mn><mo>)</mo></math> only</li>
+                <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mn>0</mn><mo>,</mo><mo>∞</mo><mo>)</mo></math> only</li>
+            </ul>
+        </div>
+        <p><em>Want to try more problems like this? Check out <a href="/e/analyze-concavity-algebraic">this exercise</a>.</em></p>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>

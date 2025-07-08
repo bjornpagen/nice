@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="shifts-in-aggregate-supply"
+    title="Shifts in Aggregate Supply"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <h2>Key points</h2>
+        <ul>
+            <li>The <strong>aggregate demand/aggregate supply model</strong> is a model that shows what determines total supply or total demand for the economy and how total demand and total supply interact at the macroeconomic level.</li>
+            <li>Movements of either the aggregate supply or aggregate demand curve in an AD/AS diagram will result in a different equilibrium output and price level.</li>
+            <li>The aggregate supply curve shifts to the right as productivity increases or the price of key inputs falls, making a combination of lower inflation, higher output, and lower unemployment possible.</li>
+            <li>The aggregate supply curve shifts to the left as the price of key inputs rises, making a combination of lower output, higher unemployment, and higher inflation possible.</li>
+            <li>When an economy experiences stagnant growth and high inflation at the same time it is referred to as <strong>stagflation</strong>.</li>
+        </ul>
+        <h2>Introduction</h2>
+        <p>If either the aggregate supply or aggregate demand curve shifts in the aggregate demand/aggregate supply—AD/AS—model, the original equilibrium in the AD/AS diagram will shift to a new equilibrium.</p>
+        <p>If the aggregate supply—also referred to as the short-run aggregate supply or SRAS—curve shifts to the right, then a greater quantity of real GDP is produced at every price level. If the aggregate supply curve shifts to the left, then a lower quantity of real GDP is produced at every price level. In this article, we'll discuss two of the most important factors that can lead to shifts in the SRAS curve—productivity growth and input prices.</p>
+        <h2>How productivity growth shifts the AS curve</h2>
+        <p>In the long run, the most important factor shifting the SRAS curve is <em>productivity growth</em>. Productivity—in economic terms—is how much output can be produced with a given quantity of labor. One measure of this is output per worker, or <strong>GDP per capita</strong>.</p>
+        <p>Over time, productivity grows so that the same quantity of labor can produce more output. Historically, the real growth in GDP per capita in an advanced economy like the United States has averaged about 2% to 3% per year, but productivity growth has been faster during certain extended periods.</p>
+        <p>A higher level of productivity shifts the SRAS curve to the right because with improved productivity, firms can produce a greater quantity of output at every price level.</p>
+        <p>The two AD/AS diagrams below show shifts in productivity over two time periods. We'll start by looking at the first period—analyzed in Diagram A—where productivity increases, shifting the SRAS curve to the right from <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>SRAS0</mtext></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>SRAS1</mtext></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>SRAS2</mtext></math>, reflecting the rise in potential GDP in this economy. The equilibrium shifts from <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>E0</mtext></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>E1</mtext></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>E2</mtext></math>.</p>
+        <figure>
+            <img src="https://cdn.kastatic.org/ka-perseus-images/bde60259f83e0b8de6a6ed24fe716c18cdecc9fb.jpg" alt="Two graphs show how aggregate supply can shift and how these shifts affect points of equilibrium. The graph on the left shows how productivity increases will shift aggregate supply to the right. The graph on the right shows how higher prices for key inputs will shift aggregate supply to the left." width="780" height="432"/>
+            <figcaption>Image credit: <em>Figure 1</em> in "<a href="http://cnx.org/contents/QGHIMgmO@10.235:V-eAAZmT@11/Shifts-in-Aggregate-Supply">Shifts in Aggregate Supply</a>" by OpenStaxCollege, <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></figcaption>
+        </figure>
+        <p>A shift in the SRAS curve to the right results in a greater real GDP and downward pressure on the price level if aggregate demand remains unchanged. However, if this shift in SRAS results from gains in productivity growth, which are typically measured in terms of a few percentage points per year, the effect will be relatively small over a few months or even a couple of years.</p>
+        <p>We'll take a look at Diagram B, which deals with increases in input prices, in the next section.</p>
+        <h2>How changes in input prices shift the AS curve</h2>
+        <p>Higher prices for inputs that are widely used across the entire economy—for example, wages and energy products—can have a macroeconomic impact on aggregate supply.</p>
+        <p>Increases in the price of such inputs cause the SRAS curve to shift to the left, which means that at each given price level for outputs, a higher price for inputs will discourage production because it will reduce the possibilities for earning profits. Diagram B, on the right above, shows the aggregate supply curve shifting to the left, from <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>SRAS0</mtext></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>SRAS1</mtext></math>, which causes the equilibrium to move from <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>E0</mtext></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>E1</mtext></math>.</p>
+        <p>This movement from the original equilibrium of <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>E0</mtext></math> to the new equilibrium of <math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>E1</mtext></math> brings a nasty set of effects: reduced GDP or recession, higher unemployment because the economy is now further away from potential GDP, and an inflationary higher price level as well. Take, for example, the US economic recessions in 1974–1975, 1980–1982, 1990–91, 2001, and 2007–2009—each was preceded or accompanied by a rise in the key input of oil prices. In the 1970s, this pattern of a shift to the left in SRAS leading to a stagnant economy with high unemployment and inflation was nicknamed <em>stagflation</em>.</p>
+        <p>On the other hand, a decline in the price of a key input like oil will shift the SRAS curve to the right, providing an incentive for more to be produced at every given price level for outputs. From 1985 to 1986, for example, the average price of crude oil fell by almost half, from $24 a barrel to $12 a barrel. Similarly, from 1997 to 1998, the price of a barrel of crude oil dropped from $17 per barrel to $11 per barrel. In both cases, the plummeting price of oil led to a situation like that presented in Diagram A, on the left above, where the shift of the SRAS curve to the right allowed the economy to expand, unemployment to fall, and inflation to decline.</p>
+        <p>Along with energy prices, two other key inputs that may shift the SRAS curve are the cost of labor, or wages, and the cost of imported goods that are used as inputs for other products. In these cases as well, the lesson is that lower prices for inputs cause SRAS to shift to the right, while higher prices cause it to shift back to the left.</p>
+        <h2>Other supply shocks</h2>
+        <p>The aggregate supply curve can also shift due to shocks to input goods or labor. For example, an unexpected early freeze could destroy a large number of agricultural crops—a shock that would shift the SRAS curve to the left since there would be fewer agricultural products available at any given price.</p>
+        <p>Similarly, shocks to the labor market can affect aggregate supply. An extreme example would be an overseas war that requires a large number of workers to cease their ordinary production in order to go fight for their country. In this case, aggregate supply would shift to the left because there would be fewer workers available to produce goods at any given price.</p>
+        <h2>Summary</h2>
+        <ul>
+            <li>The <em>aggregate demand/aggregate supply model</em> is a model that shows what determines total supply or total demand for the economy and how total demand and total supply interact at the macroeconomic level.</li>
+            <li>Movements of either the aggregate supply or aggregate demand curve in an AD/AS diagram will result in a different equilibrium output and price level.</li>
+            <li>The aggregate supply curve shifts to the right as productivity increases or the price of key inputs falls, making a combination of lower inflation, higher output, and lower unemployment possible.</li>
+            <li>The aggregate supply curve shifts to the left as the price of key inputs rises, making a combination of lower output, higher unemployment, and higher inflation possible.</li>
+            <li>When an economy experiences stagnant growth and high inflation at the same time it is referred to as <em>stagflation</em>.</li>
+        </ul>
+        <h2>Self-check questions</h2>
+        <p>Suppose the US Congress passes significant immigration reform that makes it easier for foreigners to come to the United States to work. Use the AD/AS model to explain how this would affect the equilibrium level of GDP and the price level.</p>
+        <div>
+            <p><strong>Solution:</strong> Immigration reform, as described, should increase the labor supply, shifting SRAS to the right, leading to a higher equilibrium GDP and a lower price level.</p>
+        </div>
+        <p>Suppose concerns about the size of the federal budget deficit lead the US Congress to cut all funding for research and development for 10 years. Assuming this has an impact on technology growth, what does the AD/AS model predict would be the likely effect on equilibrium GDP and the price level?</p>
+        <div>
+            <p><strong>Solution:</strong> Given the assumptions made in the question, the cuts in research and development funding should reduce productivity growth. The model would show this as a leftward shift in the SRAS curve, leading to a lower equilibrium GDP and a higher price level.</p>
+        </div>
+        <h2>Review questions</h2>
+        <ul>
+            <li>Name some factors that could cause the SRAS curve to shift, and explain whether they would shift SRAS to the right or to the left.</li>
+            <li>Will the shift of SRAS to the right tend to make the equilibrium quantity and price level higher or lower? What about a shift of SRAS to the left?</li>
+            <li>What is stagflation?</li>
+        </ul>
+        <h2>Critical thinking questions</h2>
+        <ul>
+            <li>Imagine that economists expect the labor market to tighten, causing workers' wages to increase. Assuming this is the only development in the labor market, how would it affect the SRAS curve? What if it were also accompanied by an increase in worker productivity?</li>
+            <li>If new government regulations require firms to use a cleaner technology that is also less efficient than what was previously used, what would the effect be on output, the price level, and employment based on the AD/AS diagram?</li>
+            <li>During the spring of 2016, the Midwestern United States, which has a large agricultural base, experienced above-average rainfall. Using the AD/AS diagram, what is the effect on output, price level, and employment?</li>
+            <li>Hydraulic fracturing—fracking—has the potential to significantly increase the amount of natural gas produced in the United States. If a large percentage of factories and utility companies use natural gas, what will happen to output, the price level, and employment as fracking becomes more widely used?</li>
+            <li>Some politicians have suggested tying the minimum wage to the consumer price index. Using the AD/AS diagram, determine what effects this policy would most likely have on output, the price level, and employment.</li>
+        </ul>
+        <hr/>
+        <div>
+            <h3>Attribution</h3>
+            <p>This article is a modified derivative of "<a href="http://legacy.cnx.org/content/m57410/latest/">Shifts in Aggregate Supply</a>" by OpenStaxCollege, <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+            <p>The modified article is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license.</p>
+        </div>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>

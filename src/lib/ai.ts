@@ -108,6 +108,11 @@ Your output will be fed directly into an automated XML parser. If the XML is not
 3.  **MENTAL CHECK.**
     Before you output your final answer, perform a mental check: "Did I close every single tag I opened with its full name? Is the final closing tag present?"
 
+4.  **ESCAPE ALL XML-RESERVED CHARACTERS.**
+    In text nodes and attribute values, you must never emit raw \`<\`, \`>\`, \`&\`, \`'\` or \`"\` – always replace them with \`&lt;\`, \`&gt;\`, \`&amp;\`, \`&apos;\` and \`&quot;\` respectively.
+    - ✅ **CORRECT:** \`&lt;mo&gt;&lt;/mo&gt;\`, \`title="AT&amp;T"\`
+    - ❌ **FORBIDDEN:** \`<mo>\`, \`title="AT&T"\`
+
 ---
 
 ### Other Content Rules:
