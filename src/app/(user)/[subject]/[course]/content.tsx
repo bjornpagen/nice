@@ -1,6 +1,7 @@
 "use client"
 
 import { Info } from "lucide-react"
+import Link from "next/link"
 import * as React from "react"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -18,18 +19,18 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 	const { params, course, units, lessonCount, challenges } = React.use(dataPromise)
 
 	return (
-		<React.Fragment>
+		<div className="h-full overflow-y-auto">
 			{/* Main Layout Container */}
-			<div className="flex h-full">
+			<div className="flex">
 				{/* Sidebar */}
-				<div className="h-full">
+				<div className="flex-shrink-0">
 					<React.Suspense>
 						<CourseSidebar course={course} units={units} lessonCount={lessonCount} challenges={challenges} />
 					</React.Suspense>
 				</div>
 
 				{/* Main Content Area */}
-				<div className="flex-1 p-6 overflow-y-auto bg-gray-50">
+				<div className="flex-1 p-6 bg-gray-50">
 					<CourseHeader subject={params.subject} course={params.course} />
 
 					{/* Course Header */}
@@ -100,8 +101,9 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 									<Button
 										variant="ghost"
 										className="bg-white text-blue-600 text-sm border border-gray-400 px-4 py-2 rounded-sm mt-2 hover:ring-2 hover:ring-blue-500 hover:text-blue-600"
+										asChild
 									>
-										Start Course challenge
+										<Link href={challenges[0].path}>Start Course challenge</Link>
 									</Button>
 								</Section>
 							</div>
@@ -111,6 +113,6 @@ export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
 			</div>
 
 			<Footer />
-		</React.Fragment>
+		</div>
 	)
 }

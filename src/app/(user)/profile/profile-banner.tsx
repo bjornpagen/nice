@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import * as React from "react"
 import { EditProfileModal } from "@/components/edit-profile-modal"
 import { Button } from "@/components/ui/button"
@@ -22,7 +23,12 @@ export function ProfileBanner({ uid, username, bio }: { uid: string; username: s
 					<div className="flex items-center justify-between">
 						<div className="flex items-center space-x-4">
 							<div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center overflow-hidden">
-								<span className="text-2xl">🦊</span>
+								<Image
+									src="https://cdn.kastatic.org/images/avatars/svg/blobby-green.svg"
+									alt="Profile Picture"
+									width={64}
+									height={64}
+								/>
 							</div>
 							<div>
 								<h2 className="text-2xl font-bold text-gray-900 mb-1">{uid}</h2>
