@@ -12,8 +12,7 @@ ignore_patterns:
   - "package.json"
   - "public/**"
   - "src/components/ui/**"
-  - "data/**"
-  - "src/data/**"
+  - "src/lib/perseus-to-qti/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"
