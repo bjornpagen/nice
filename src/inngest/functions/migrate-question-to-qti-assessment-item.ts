@@ -79,7 +79,7 @@ export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
 
 		// Step 2: Convert Perseus JSON to QTI XML via Gemini AI.
 		const qtiXml = await step.run("generate-qti-from-perseus", async () => {
-			const generationResult = await errors.try(generateQtiFromPerseus(question.parsedData))
+			const generationResult = await errors.try(generateQtiFromPerseus(logger, question.parsedData))
 			if (generationResult.error) {
 				logger.error("ai conversion failed", { questionId, error: generationResult.error })
 				throw errors.wrap(generationResult.error, "ai conversion")
@@ -121,7 +121,7 @@ export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
 			const correctedXml = await step.run("fix-invalid-qti-xml", async () => {
 				const { qtiId, error: errorMessage, invalidXml } = upsertResult
 				const fixResult = await errors.try(
-					fixInvalidQtiXml({
+					fixInvalidQtiXml(logger, {
 						invalidXml,
 						errorMessage,
 						rootTag: "qti-assessment-item"

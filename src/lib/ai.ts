@@ -1,6 +1,6 @@
 import { type GenerateContentRequest, GoogleGenerativeAI } from "@google/generative-ai"
 import * as errors from "@superbuilders/errors"
-import * as logger from "@superbuilders/slog"
+import type * as logger from "@superbuilders/slog"
 import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
 import { z } from "zod"
@@ -23,10 +23,11 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 /**
  * Generates content using the Gemini API with a retry mechanism for rate limiting.
+ * @param logger The logger instance.
  * @param request The generation request object.
  * @returns The generated content response.
  */
-async function generateContentWithRetry(request: GenerateContentRequest) {
+async function generateContentWithRetry(logger: logger.Logger, request: GenerateContentRequest) {
 	let lastError: unknown
 	for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
 		const result = await errors.try(gemini.getGenerativeModel({ model: GEMINI_MODEL }).generateContent(request))
@@ -141,11 +142,13 @@ ${perseusJsonString}
 
 /**
  * Converts a Perseus JSON object into a QTI 3.0 XML string using the Gemini AI model.
+ * @param logger The logger instance.
  * @param perseusData The Perseus question data as a JavaScript object.
  * @param options An object to specify the conversion type. Defaults to 'assessmentItem'.
  * @returns A promise that resolves to the QTI XML string.
  */
 export async function generateQtiFromPerseus(
+	logger: logger.Logger,
 	perseusData: unknown,
 	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" }
 ): Promise<string> {
@@ -153,7 +156,7 @@ export async function generateQtiFromPerseus(
 	const { systemInstruction, userContent, rootTag } = await createQtiConversionPrompt(perseusJsonString, options)
 
 	const result = await errors.try(
-		generateContentWithRetry({
+		generateContentWithRetry(logger, {
 			contents: [{ role: "user", parts: [{ text: userContent }] }],
 			systemInstruction: { role: "system", parts: [{ text: systemInstruction }] }
 		})
@@ -182,17 +185,21 @@ export async function generateQtiFromPerseus(
 
 /**
  * Attempts to fix invalid QTI XML using a more powerful AI model.
+ * @param {logger.Logger} logger - The logger instance.
  * @param {object} input - The input object.
  * @param {string} input.invalidXml - The malformed XML string.
  * @param {string} input.errorMessage - The error message from the QTI API.
  * @param {'qti-assessment-item' | 'qti-assessment-stimulus'} input.rootTag - The expected root tag.
  * @returns {Promise<string>} A promise that resolves to the corrected QTI XML string.
  */
-export async function fixInvalidQtiXml(input: {
-	invalidXml: string
-	errorMessage: string
-	rootTag: "qti-assessment-item" | "qti-assessment-stimulus"
-}): Promise<string> {
+export async function fixInvalidQtiXml(
+	logger: logger.Logger,
+	input: {
+		invalidXml: string
+		errorMessage: string
+		rootTag: "qti-assessment-item" | "qti-assessment-stimulus"
+	}
+): Promise<string> {
 	const { invalidXml, errorMessage, rootTag } = input
 	logger.debug("attempting to fix invalid qti xml", { rootTag, error: errorMessage })
 
