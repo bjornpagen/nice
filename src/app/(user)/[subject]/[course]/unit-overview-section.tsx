@@ -12,8 +12,8 @@ export function UnitOverviewSection({
 	index: number
 	next: boolean
 }) {
-	// Get only videos from the unit children
-	const videos = unit.children.filter((child) => child.type === "Video")
+	// Extract videos from lessons within the unit
+	const videos = unit.children.filter((child) => child.type === "Lesson").flatMap((lesson) => lesson.videos)
 
 	return (
 		<div

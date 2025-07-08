@@ -61,6 +61,24 @@ const getCourseChallengesQuery = db
 	)
 	.prepare("src_app_user_subject_course_page_get_course_challenges")
 
+// NEW: Query to get all lesson contents with exercises (similar to unit page)
+const getLessonsContentQuery = db
+	.select({
+		lessonId: schema.niceLessonContents.lessonId,
+		contentId: schema.niceLessonContents.contentId,
+		contentType: schema.niceLessonContents.contentType,
+		ordering: schema.niceLessonContents.ordering,
+		video: schema.niceVideos,
+		article: schema.niceArticles,
+		exercise: schema.niceExercises
+	})
+	.from(schema.niceLessonContents)
+	.leftJoin(schema.niceVideos, eq(schema.niceLessonContents.contentId, schema.niceVideos.id))
+	.leftJoin(schema.niceArticles, eq(schema.niceLessonContents.contentId, schema.niceArticles.id))
+	.leftJoin(schema.niceExercises, eq(schema.niceLessonContents.contentId, schema.niceExercises.id))
+	.orderBy(schema.niceLessonContents.lessonId, schema.niceLessonContents.ordering)
+// Note: We'll add the WHERE clause dynamically when executing
+
 // Helper function to get lessons by unit IDs (dynamic query since inArray doesn't work with prepared statements)
 async function getLessonsByUnitIds(unitIds: string[]) {
 	if (unitIds.length === 0) {
@@ -82,42 +100,33 @@ async function getLessonsByUnitIds(unitIds: string[]) {
 		.orderBy(schema.niceLessons.ordering)
 }
 
-// Helper function to get lesson contents (videos, articles, exercises)
-async function getLessonContents(lessonIds: string[]) {
-	if (lessonIds.length === 0) {
-		return []
+// NEW: Helper function to get questions for exercises (from unit page)
+async function getQuestionsForExercises(exerciseIds: string[]): Promise<Map<string, Question[]>> {
+	if (exerciseIds.length === 0) return new Map()
+
+	const questions = await db
+		.select({
+			id: schema.niceQuestions.id,
+			exerciseId: schema.niceQuestions.exerciseId,
+			sha: schema.niceQuestions.sha,
+			parsedData: schema.niceQuestions.parsedData
+		})
+		.from(schema.niceQuestions)
+		.where(inArray(schema.niceQuestions.exerciseId, exerciseIds))
+
+	const questionsByExerciseId = new Map<string, Question[]>()
+	for (const q of questions) {
+		if (!questionsByExerciseId.has(q.exerciseId)) {
+			questionsByExerciseId.set(q.exerciseId, [])
+		}
+		questionsByExerciseId.get(q.exerciseId)?.push({
+			id: q.id,
+			sha: q.sha,
+			parsedData: q.parsedData
+		})
 	}
 
-	return await db
-		.select({
-			lessonId: schema.niceLessonContents.lessonId,
-			contentId: schema.niceLessonContents.contentId,
-			contentType: schema.niceLessonContents.contentType,
-			ordering: schema.niceLessonContents.ordering
-		})
-		.from(schema.niceLessonContents)
-		.where(inArray(schema.niceLessonContents.lessonId, lessonIds))
-		.orderBy(schema.niceLessonContents.ordering)
-}
-
-// Helper function to get videos by IDs
-async function getVideosByIds(videoIds: string[]) {
-	if (videoIds.length === 0) {
-		return []
-	}
-
-	return await db
-		.select({
-			id: schema.niceVideos.id,
-			title: schema.niceVideos.title,
-			slug: schema.niceVideos.slug,
-			path: schema.niceVideos.path,
-			youtubeId: schema.niceVideos.youtubeId,
-			duration: schema.niceVideos.duration,
-			description: schema.niceVideos.description
-		})
-		.from(schema.niceVideos)
-		.where(inArray(schema.niceVideos.id, videoIds))
+	return questionsByExerciseId
 }
 
 // Helper function to get unit assessments (quizzes and unit tests)
@@ -151,16 +160,23 @@ function isUnitAssessment(assessment: UnitAssessment): assessment is UnitAssessm
 export type Course = Awaited<ReturnType<typeof getCourseByPathQuery.execute>>[0]
 export type Unit = Awaited<ReturnType<typeof getUnitsByCourseIdQuery.execute>>[0]
 export type Lesson = Awaited<ReturnType<typeof getLessonsByUnitIds>>[0]
-export type Video = Awaited<ReturnType<typeof getVideosByIds>>[0]
 export type UnitAssessment = Awaited<ReturnType<typeof getUnitAssessments>>[0]
 export type CourseChallenge = Awaited<ReturnType<typeof getCourseChallengesQuery.execute>>[0]
 
-// Combined unit child types (similar to unit page)
+// NEW: Exercise-related types (from unit page)
+export type Question = { id: string; sha: string; parsedData: unknown }
+export type Video = NonNullable<typeof schema.niceVideos.$inferSelect> & { ordering: number }
+export type Article = NonNullable<typeof schema.niceArticles.$inferSelect> & { ordering: number }
+export type Exercise = NonNullable<typeof schema.niceExercises.$inferSelect> & {
+	questions: Question[]
+	ordering: number
+}
+
+// UPDATED: Combined unit child types with exercises
 export type UnitChild =
-	| (Lesson & { type: "Lesson" })
+	| (Lesson & { type: "Lesson"; videos: Video[]; exercises: Exercise[]; articles: Article[] })
 	| (UnitAssessment & { type: "Quiz" })
 	| (UnitAssessment & { type: "UnitTest" })
-	| (Video & { type: "Video"; ordering: number })
 
 export type UnitWithChildren = Unit & {
 	children: UnitChild[]
@@ -201,21 +217,60 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 		getCourseChallengesQuery.execute({ courseId: course.id })
 	])
 
-	// Get lesson contents (videos, articles, exercises)
+	// NEW: Get lesson contents with exercises (similar to unit page)
 	const lessonIds = lessons.map((lesson) => lesson.id)
-	const lessonContents = await getLessonContents(lessonIds)
 
-	// Get videos for all lessons
-	const videoIds = lessonContents
-		.filter((content) => content.contentType === "Video")
-		.map((content) => content.contentId)
-	const videos = await getVideosByIds(videoIds)
+	type LessonContentRow = {
+		lessonId: string
+		contentId: string
+		contentType: "Video" | "Article" | "Exercise"
+		ordering: number
+		video: typeof schema.niceVideos.$inferSelect | null
+		article: typeof schema.niceArticles.$inferSelect | null
+		exercise: typeof schema.niceExercises.$inferSelect | null
+	}
 
-	// Combine lessons and assessments into unitChildren for each unit
+	let lessonContents: LessonContentRow[] = []
+	if (lessonIds.length > 0) {
+		lessonContents = await getLessonsContentQuery.where(inArray(schema.niceLessonContents.lessonId, lessonIds))
+	}
+
+	// NEW: Get questions for exercises
+	const allExerciseIds = lessonContents.filter((c) => c.contentType === "Exercise").map((c) => c.contentId)
+	const questionsByExerciseId = await getQuestionsForExercises(allExerciseIds)
+
+	// NEW: Build content by lesson ID
+	const contentsByLessonId: Record<string, { videos: Video[]; articles: Article[]; exercises: Exercise[] }> = {}
+
+	for (const row of lessonContents) {
+		if (!contentsByLessonId[row.lessonId]) {
+			contentsByLessonId[row.lessonId] = { videos: [], articles: [], exercises: [] }
+		}
+
+		const lessonContent = contentsByLessonId[row.lessonId]
+		if (!lessonContent) continue
+
+		if (row.contentType === "Video" && row.video) {
+			lessonContent.videos.push({ ...row.video, ordering: row.ordering })
+		} else if (row.contentType === "Article" && row.article) {
+			lessonContent.articles.push({ ...row.article, ordering: row.ordering })
+		} else if (row.contentType === "Exercise" && row.exercise) {
+			lessonContent.exercises.push({
+				...row.exercise,
+				questions: questionsByExerciseId.get(row.exercise.id) || [],
+				ordering: row.ordering
+			})
+		}
+	}
+
+	// UPDATED: Combine lessons and assessments into unitChildren for each unit with exercises
 	const unitsWithChildren: UnitWithChildren[] = units.map((unit) => {
 		const unitLessons: UnitChild[] = lessons
 			.filter((lesson) => lesson.unitId === unit.id)
-			.map((lesson) => ({ ...lesson, type: "Lesson" as const }))
+			.map((lesson) => {
+				const contents = contentsByLessonId[lesson.id] || { videos: [], articles: [], exercises: [] }
+				return { ...lesson, ...contents, type: "Lesson" as const }
+			})
 
 		const unitAssessments: UnitChild[] = assessments
 			.filter((assessment) => assessment.parentId === unit.id)
@@ -225,29 +280,8 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 				type: assessment.type
 			}))
 
-		// Get videos for this unit's lessons
-		const unitLessonIds = lessons.filter((lesson) => lesson.unitId === unit.id).map((lesson) => lesson.id)
-
-		const unitVideos: UnitChild[] = videos
-			.filter((video) => {
-				// Check if this video belongs to any lesson in this unit
-				return lessonContents.some(
-					(content) =>
-						content.contentId === video.id &&
-						content.contentType === "Video" &&
-						unitLessonIds.includes(content.lessonId)
-				)
-			})
-			.map((video) => {
-				// Find the ordering from lesson contents
-				const lessonContent = lessonContents.find(
-					(content) => content.contentId === video.id && content.contentType === "Video"
-				)
-				return { ...video, type: "Video" as const, ordering: lessonContent?.ordering ?? 0 }
-			})
-
 		// Combine and sort by ordering
-		const children = [...unitLessons, ...unitAssessments, ...unitVideos].sort((a, b) => a.ordering - b.ordering)
+		const children = [...unitLessons, ...unitAssessments].sort((a, b) => a.ordering - b.ordering)
 
 		return {
 			...unit,
