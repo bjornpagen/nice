@@ -1,0 +1,56 @@
+{
+	"hints": [],
+	"question": {
+		"images": {},
+		"content": "**Which graph correctly shows producer surplus shaded in when a market is in equilibrium?**\n\n[[☃ radio 1]]\n\n",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"clue": "Producer surplus is the area above the supply curve and below the price paid for the quantity exchanged. When this market is in equilibrium, the price of the good is $\\$6$ and the quantity is $4,000$.\n",
+							"content": "![A graph represents a market model's relationship between price (P) and quantity (Q), where Q is measured in thousands. The graph's vertical axis (Y-axis) indicates price, ranging from 0 to 14, while the horizontal axis (X-axis) indicates quantity, ranging from 0 to 14. Two lines are displayed: one line labeled \"D\" representing demand, and one line labeled \"S\" representing supply. Line D passes through (0, 14) and (6, 2). Line S passes through (0, 2) and (9, 11). The lines intersect at (4, 6). Dashed lines connect (0, 6) to (4, 6), and (4, 0) to (4, 6). The triangular area between (0, 6), (0, 2), and (4, 6) is shaded.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/0ef9e54eed3b9d9546206ce534a6db5a836432f7)\n",
+							"correct": true
+						},
+						{
+							"clue": "This shows the consumer surplus at equilibrium, not the producer surplus at equilibrium.\n",
+							"content": "![A graph represents a market model's relationship between price (P) and quantity (Q), where Q is measured in thousands. The graph's vertical axis (Y-axis) indicates price, ranging from 0 to 14, while the horizontal axis (X-axis) indicates quantity, ranging from 0 to 14. Two lines are displayed: one line labeled \"D\" representing demand, and one line labeled \"S\" representing supply. Line D passes through (0, 14) and (6, 2). Line S passes through (0, 2) and (9, 11). The lines intersect at (4, 6). Dashed lines connect (0, 6) to (4, 6), and (4, 0) to (4, 6). The triangular area between (0, 6), (0, 14), and (4, 6) is shaded.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/c7f3ff61b51cced74514e053e43d101aad4567f5)\n",
+							"correct": false
+						},
+						{
+							"clue": "This graph shows the deadweight loss that would exist in this market if, for some reason, only $2,000$ units are exchanged instead of the equilibrium quantity of $4,000$ units.\n\n",
+							"content": "![A graph represents a market model's relationship between price (P) and quantity (Q), where Q is measured in thousands. The graph's vertical axis (Y-axis) indicates price, ranging from 0 to 14, while the horizontal axis (X-axis) indicates quantity, ranging from 0 to 14. Two lines are displayed: one line labeled \"D\" representing demand, and one line labeled \"S\" representing supply. Line D passes through (0, 14) and (6, 2). Line S passes through (0, 2) and (9, 11). The lines intersect at (4, 6). Dashed lines connect (0, 6) to (4, 6), and (4, 0) to (4, 6). The triangular area between (2, 4), (2, 10), and (4, 6) is shaded.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/157a5142609a800e72829d50fd40f469fe88b018)\n",
+							"correct": false,
+							"isNoneOfTheAbove": false
+						},
+						{
+							"clue": "This graph shows total surplus shaded in when this market is in equilibrium, not producer surplus.\n",
+							"content": "![A graph represents a market model's relationship between price (P) and quantity (Q), where Q is measured in thousands. The graph's vertical axis (Y-axis) indicates price, ranging from 0 to 14, while the horizontal axis (X-axis) indicates quantity, ranging from 0 to 14. Two lines are displayed: one line labeled \"D\" representing demand, and one line labeled \"S\" representing supply. Line D passes through (0, 14) and (6, 2). Line S passes through (0, 2) and (9, 11). The lines intersect at (4, 6). Dashed lines connect (0, 6) to (4, 6), and (4, 0) to (4, 6). The triangular area between (0, 14), (0, 2), and (4, 6) is shaded.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/3dcb9da832028c8df83db00563460485c4de9b43)\n",
+							"correct": false,
+							"isNoneOfTheAbove": false
+						},
+						{
+							"clue": "This graph shows an arbitrary area shaded in. Producer surplus is the area above the supply curve and below the price the good is sold at for the quantity exchanged in the market. \n",
+							"content": "![A graph represents a market model's relationship between price (P) and quantity (Q), where Q is measured in thousands. The graph's vertical axis (Y-axis) indicates price, ranging from 0 to 14, while the horizontal axis (X-axis) indicates quantity, ranging from 0 to 14. Two lines are displayed: one line labeled \"D\" representing demand, and one line labeled \"S\" representing supply. Line D passes through (0, 14) and (6, 2). Line S passes through (0, 2) and (9, 11). The lines intersect at (4, 6). Dashed lines connect (0, 6) to (4, 6), and (4, 0) to (4, 6). The triangular area between (0, 14), (0, 2), and (4, 6) is shaded. Another triangular area between (5, 4), (5, 7), and (4, 6) is shaded.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/167e97602da54d22aab120b66c0c99be4be6a9b1)\n",
+							"correct": false,
+							"isNoneOfTheAbove": false
+						}
+					],
+					"randomize": true,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": { "major": 1, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}

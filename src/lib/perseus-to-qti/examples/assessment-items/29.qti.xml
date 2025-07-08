@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="producer-surplus-equilibrium-graph"
+    title="Producer Surplus in Equilibrium"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+            <qti-prompt>Which graph correctly shows producer surplus shaded in when a market is in equilibrium?</qti-prompt>
+            <qti-simple-choice identifier="A">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/0ef9e54eed3b9d9546206ce534a6db5a836432f7.svg"
+                     alt="A graph represents a market model's relationship between price (P) and quantity (Q), where Q is measured in thousands. The graph's vertical axis (Y-axis) indicates price, ranging from 0 to 14, while the horizontal axis (X-axis) indicates quantity, ranging from 0 to 14. Two lines are displayed: one line labeled &quot;D&quot; representing demand, and one line labeled &quot;S&quot; representing supply. Line D passes through (0, 14) and (6, 2). Line S passes through (0, 2) and (9, 11). The lines intersect at (4, 6). Dashed lines connect (0, 6) to (4, 6), and (4, 0) to (4, 6). The triangular area between (0, 6), (0, 2), and (4, 6) is shaded."
+                     width="400" height="400"/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">Producer surplus is the area above the supply curve and below the price paid for the quantity exchanged. When this market is in equilibrium, the price of the good is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>$</mo><mn>6</mn></math> and the quantity is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,000</mn></math>.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/c7f3ff61b51cced74514e053e43d101aad4567f5.svg"
+                     alt="A graph represents a market model's relationship between price (P) and quantity (Q), where Q is measured in thousands. The graph's vertical axis (Y-axis) indicates price, ranging from 0 to 14, while the horizontal axis (X-axis) indicates quantity, ranging from 0 to 14. Two lines are displayed: one line labeled &quot;D&quot; representing demand, and one line labeled &quot;S&quot; representing supply. Line D passes through (0, 14) and (6, 2). Line S passes through (0, 2) and (9, 11). The lines intersect at (4, 6). Dashed lines connect (0, 6) to (4, 6), and (4, 0) to (4, 6). The triangular area between (0, 6), (0, 14), and (4, 6) is shaded."
+                     width="400" height="400"/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">This shows the consumer surplus at equilibrium, not the producer surplus at equilibrium.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/157a5142609a800e72829d50fd40f469fe88b018.svg"
+                     alt="A graph represents a market model's relationship between price (P) and quantity (Q), where Q is measured in thousands. The graph's vertical axis (Y-axis) indicates price, ranging from 0 to 14, while the horizontal axis (X-axis) indicates quantity, ranging from 0 to 14. Two lines are displayed: one line labeled &quot;D&quot; representing demand, and one line labeled &quot;S&quot; representing supply. Line D passes through (0, 14) and (6, 2). Line S passes through (0, 2) and (9, 11). The lines intersect at (4, 6). Dashed lines connect (0, 6) to (4, 6), and (4, 0) to (4, 6). The triangular area between (2, 4), (2, 10), and (4, 6) is shaded."
+                     width="400" height="400"/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">This graph shows the deadweight loss that would exist in this market if, for some reason, only <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2,000</mn></math> units are exchanged instead of the equilibrium quantity of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4,000</mn></math> units.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/3dcb9da832028c8df83db00563460485c4de9b43.svg"
+                     alt="A graph represents a market model's relationship between price (P) and quantity (Q), where Q is measured in thousands. The graph's vertical axis (Y-axis) indicates price, ranging from 0 to 14, while the horizontal axis (X-axis) indicates quantity, ranging from 0 to 14. Two lines are displayed: one line labeled &quot;D&quot; representing demand, and one line labeled &quot;S&quot; representing supply. Line D passes through (0, 14) and (6, 2). Line S passes through (0, 2) and (9, 11). The lines intersect at (4, 6). Dashed lines connect (0, 6) to (4, 6), and (4, 0) to (4, 6). The triangular area between (0, 14), (0, 2), and (4, 6) is shaded."
+                     width="400" height="400"/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">This graph shows total surplus shaded in when this market is in equilibrium, not producer surplus.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="E">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/167e97602da54d22aab120b66c0c99be4be6a9b1.svg"
+                     alt="A graph represents a market model's relationship between price (P) and quantity (Q), where Q is measured in thousands. The graph's vertical axis (Y-axis) indicates price, ranging from 0 to 14, while the horizontal axis (X-axis) indicates quantity, ranging from 0 to 14. Two lines are displayed: one line labeled &quot;D&quot; representing demand, and one line labeled &quot;S&quot; representing supply. Line D passes through (0, 14) and (6, 2). Line S passes through (0, 2) and (9, 11). The lines intersect at (4, 6). Dashed lines connect (0, 6) to (4, 6), and (4, 0) to (4, 6). The triangular area between (0, 14), (0, 2), and (4, 6) is shaded. Another triangular area between (5, 4), (5, 7), and (4, 6) is shaded."
+                     width="400" height="400"/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="E">This graph shows an arbitrary area shaded in. Producer surplus is the area above the supply curve and below the price the good is sold at for the quantity exchanged in the market.</qti-feedback-inline>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> Producer surplus is the area above the supply curve and below the equilibrium price, from the y-axis out to the equilibrium quantity.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Remember that producer surplus is the area representing the difference between what producers are willing to accept for a good and what they actually receive. On a graph, this is the area above the supply curve and below the market price, up to the quantity sold.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>
