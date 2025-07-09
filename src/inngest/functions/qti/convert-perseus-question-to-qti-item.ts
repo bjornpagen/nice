@@ -94,7 +94,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			clientId: env.TIMEBACK_CLIENT_ID,
 			clientSecret: env.TIMEBACK_CLIENT_SECRET
 		})
-		const tempIdentifier = `nice-question-${question.id}`
+		const tempIdentifier = `nice-tmp:${question.id}`
 
 		// Step 3: Validate XML by creating and immediately deleting it from the QTI API
 		const validatedXml = await step.run("validate-and-delete-from-qti-api", async () => {

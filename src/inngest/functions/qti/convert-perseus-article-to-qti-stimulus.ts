@@ -97,7 +97,7 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 			clientId: env.TIMEBACK_CLIENT_ID,
 			clientSecret: env.TIMEBACK_CLIENT_SECRET
 		})
-		const tempIdentifier = `nice-stimulus-${article.id}`
+		const tempIdentifier = `nice-tmp:${article.id}`
 
 		// Step 3: Validate XML by creating and immediately deleting it from the QTI API
 		const validatedXml = await step.run("validate-and-delete-from-qti-api", async () => {
