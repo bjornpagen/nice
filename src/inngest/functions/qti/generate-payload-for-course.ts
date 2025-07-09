@@ -164,6 +164,7 @@ export const generatePayloadForCourse = inngest.createFunction(
 									identifier: "main-section",
 									title: "Main Section",
 									visible: true,
+									sequence: 1,
 									"qti-assessment-item-ref": validQtiIdentifiers.map((id) => ({ identifier: id }))
 								}
 							]
