@@ -111,7 +111,7 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 				clientId: env.TIMEBACK_CLIENT_ID,
 				clientSecret: env.TIMEBACK_CLIENT_SECRET
 			})
-			const qtiId = `nice-academy-${article.id}`
+			const qtiId = `nice:${article.id}`
 
 			const result = await errors.try(upsertStimulus(client, qtiId, article.title, qtiXml))
 

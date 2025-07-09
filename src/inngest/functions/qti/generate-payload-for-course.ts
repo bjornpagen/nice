@@ -151,7 +151,7 @@ export const generatePayloadForCourse = inngest.createFunction(
 					continue
 				}
 
-				const identifier = `nice-academy-${testable.id}`
+				const identifier = `nice:${testable.id}`
 				payloads.push({
 					identifier,
 					title: testable.title,

@@ -199,7 +199,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 		},
 		// ADDED: class object generation
 		class: {
-			sourcedId: `class-nice:${course.slug}`,
+			sourcedId: `nice:${course.slug}-class`,
 			title: course.title,
 			classType: "scheduled",
 			course: { sourcedId: `nice:${course.slug}`, type: "course" },
@@ -266,7 +266,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 								subType: "qti-stimulus",
 								version: "3.0",
 								language: "en-US",
-								url: `${env.TIMEBACK_QTI_SERVER_URL}/stimuli/nice-academy-${content.id}`
+								url: `${env.TIMEBACK_QTI_SERVER_URL}/stimuli/nice:${content.id}`
 							}
 						} else if (lc.contentType === "Video") {
 							// Videos need proper URL
@@ -286,7 +286,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 								version: "3.0",
 								questionType: "custom",
 								language: "en-US",
-								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice-academy-${content.id}`
+								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice:${content.id}`
 							}
 						}
 
@@ -335,7 +335,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 						version: "3.0",
 						questionType: "custom",
 						language: "en-US",
-						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice-academy-${assessment.id}`,
+						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice:${assessment.id}`,
 						description: assessment.description,
 						lessonType: assessment.type.toLowerCase(),
 						path: assessment.path,

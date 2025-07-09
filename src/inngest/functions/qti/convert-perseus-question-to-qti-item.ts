@@ -106,7 +106,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 				clientId: env.TIMEBACK_CLIENT_ID,
 				clientSecret: env.TIMEBACK_CLIENT_SECRET
 			})
-			const qtiId = `nice-question-${question.id}`
+			const qtiId = `nice:${question.id}`
 
 			const result = await errors.try(upsertItem(client, qtiId, question.exerciseTitle, qtiXml))
 
