@@ -233,7 +233,7 @@ export type SearchItemsInput = z.infer<typeof SearchItemsInputSchema>
  */
 const AssessmentItemRefSchema = z.object({
 	identifier: z.string(),
-	href: z.string().optional(),
+	href: z.string(),
 	sequence: z.number().optional()
 })
 export type AssessmentItemRef = z.infer<typeof AssessmentItemRefSchema>
