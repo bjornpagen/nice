@@ -44,7 +44,6 @@ const getTestByUnitAndSlugQuery = db
 const getTestQuestionsQuery = db
 	.select({
 		id: schema.niceQuestions.id,
-		qtiIdentifier: schema.niceQuestions.qtiIdentifier,
 		exerciseId: schema.niceQuestions.exerciseId
 	})
 	.from(schema.niceQuestions)
@@ -56,7 +55,7 @@ const getTestQuestionsQuery = db
 	.prepare("src_app_user_subject_course_unit_lesson_test_test_page_get_test_questions")
 
 export type Test = Awaited<ReturnType<typeof getTestByUnitAndSlugQuery.execute>>[0]
-export type TestQuestion = Awaited<ReturnType<typeof getTestQuestionsQuery.execute>>[0]
+export type TestQuestion = Awaited<ReturnType<typeof getTestQuestionsQuery.execute>>[0] & { qtiIdentifier: string }
 
 export type TestData = {
 	test: Test
@@ -99,7 +98,13 @@ async function fetchTestData(params: {
 	}
 
 	// Fetch questions using the test ID
-	const questions = await getTestQuestionsQuery.execute({ assessmentId: test.id })
+	const questionsFromDb = await getTestQuestionsQuery.execute({ assessmentId: test.id })
+
+	// Add fake qtiIdentifier to each question
+	const questions = questionsFromDb.map((q) => ({
+		...q,
+		qtiIdentifier: `FAKE_QTI_${q.id}`
+	}))
 
 	return { test, questions }
 }

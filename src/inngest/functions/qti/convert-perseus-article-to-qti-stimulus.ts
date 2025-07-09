@@ -34,12 +34,12 @@ async function upsertStimulus(
 			if (createResult.error) {
 				throw errors.wrap(createResult.error, "qti create after update 404")
 			}
-			return createResult.data.identifier
+			return content
 		}
 		// For other errors, re-throw to be handled by the caller.
 		throw updateResult.error
 	}
-	return updateResult.data.identifier
+	return content
 }
 
 export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
@@ -57,16 +57,15 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 	{ event: "qti/stimulus.migrate" },
 	async ({ event, step, logger }) => {
 		const { articleId } = event.data
-		logger.info("starting article to qti stimulus migration", { articleId })
+		logger.info("starting article to qti stimulus validation", { articleId })
 
-		// Step 1: Fetch article data from our database.
+		// Step 1: Fetch article data from DB (Read-only)
 		const articleResult = await errors.try(
 			db
 				.select({
 					id: niceArticles.id,
 					title: niceArticles.title,
-					perseusContent: niceArticles.perseusContent,
-					qtiIdentifier: niceArticles.qtiIdentifier
+					perseusContent: niceArticles.perseusContent
 				})
 				.from(niceArticles)
 				.where(eq(niceArticles.id, articleId))
@@ -76,124 +75,86 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 			logger.error("failed to fetch article from db", { articleId, error: articleResult.error })
 			throw errors.wrap(articleResult.error, "db query")
 		}
-
 		const article = articleResult.data[0]
-		if (!article) {
-			logger.warn("article not found, aborting migration", { articleId })
-			return { status: "aborted", reason: "not_found" }
-		}
-		if (!article.perseusContent) {
-			logger.warn("article has no perseus data, aborting", { articleId })
-			return { status: "aborted", reason: "no_perseus_data" }
-		}
-		if (article.qtiIdentifier && article.qtiIdentifier !== "") {
-			logger.info("article already migrated, skipping", { articleId, qtiIdentifier: article.qtiIdentifier })
-			return { status: "skipped", qtiIdentifier: article.qtiIdentifier }
+		if (!article || !article.perseusContent) {
+			logger.warn("article not found or has no perseus content", { articleId })
+			return { status: "aborted", reason: "not_found_or_no_data" }
 		}
 
-		// Step 2: Convert Perseus JSON to QTI XML via Gemini AI.
+		// Step 2: Convert Perseus JSON to QTI XML via AI
 		const qtiXml = await step.run("generate-qti-stimulus-from-perseus", async () => {
-			const generationResult = await errors.try(
-				generateQtiFromPerseus(logger, article.perseusContent, { type: "stimulus" })
-			)
-			if (generationResult.error) {
-				logger.error("ai conversion failed", { articleId, error: generationResult.error })
-				throw errors.wrap(generationResult.error, "ai conversion")
-			}
-			return generationResult.data
-		})
-
-		// Step 3: Attempt to upsert the generated QTI to the service.
-		const upsertResult = await step.run("attempt-initial-upsert", async () => {
-			const client = new QtiApiClient({
-				serverUrl: env.TIMEBACK_QTI_SERVER_URL,
-				tokenUrl: env.TIMEBACK_TOKEN_URL,
-				clientId: env.TIMEBACK_CLIENT_ID,
-				clientSecret: env.TIMEBACK_CLIENT_SECRET
-			})
-			const qtiId = `nice:${article.id}`
-
-			const result = await errors.try(upsertStimulus(client, qtiId, article.title, qtiXml))
-
+			const result = await errors.try(generateQtiFromPerseus(logger, article.perseusContent, { type: "stimulus" }))
 			if (result.error) {
-				// Use errors.is to check if the failure is a validation error
-				if (errors.is(result.error, ErrQtiUnprocessable) || errors.is(result.error, ErrQtiInternalServerError)) {
-					logger.warn("initial qti upsert failed validation, will attempt correction", {
-						qtiId,
-						error: result.error,
-						xml: qtiXml
-					})
-					return {
-						success: false as const,
-						qtiId,
-						// ✅ CORRECT: Serialize the full error chain to a string.
-						error: result.error.toString(),
-						invalidXml: qtiXml // Pass original XML to the fixer
-					}
-				}
-				// For other errors, fail the step to trigger Inngest retries.
-				throw result.error
+				logger.error("failed to generate qti stimulus from perseus", { articleId, error: result.error })
+				throw errors.wrap(result.error, "ai conversion")
 			}
-
-			return { success: true as const, identifier: result.data, qtiId }
+			return result.data
 		})
 
-		let finalIdentifier: string
+		const client = new QtiApiClient({
+			serverUrl: env.TIMEBACK_QTI_SERVER_URL,
+			tokenUrl: env.TIMEBACK_TOKEN_URL,
+			clientId: env.TIMEBACK_CLIENT_ID,
+			clientSecret: env.TIMEBACK_CLIENT_SECRET
+		})
+		const tempIdentifier = `nice-stimulus-${article.id}`
 
-		if (upsertResult.success) {
-			finalIdentifier = upsertResult.identifier
-		} else {
-			// Step 4 (Conditional): Fix the XML using the new AI model.
-			const correctedXml = await step.run("fix-invalid-qti-xml", async () => {
-				const { qtiId, error: errorMessage, invalidXml } = upsertResult
-				const fixResult = await errors.try(
-					fixInvalidQtiXml(logger, {
-						invalidXml,
-						errorMessage,
-						rootTag: "qti-assessment-stimulus"
+		// Step 3: Validate XML by creating and immediately deleting it from the QTI API
+		const validatedXml = await step.run("validate-and-delete-from-qti-api", async () => {
+			let finalXml = qtiXml
+			const upsertResult = await errors.try(upsertStimulus(client, tempIdentifier, article.title, qtiXml))
+
+			if (upsertResult.error) {
+				if (
+					errors.is(upsertResult.error, ErrQtiUnprocessable) ||
+					errors.is(upsertResult.error, ErrQtiInternalServerError)
+				) {
+					logger.warn("initial upsert failed, attempting correction", {
+						qtiId: tempIdentifier,
+						error: upsertResult.error
 					})
-				)
 
-				if (fixResult.error) {
-					logger.error("failed to fix invalid qti xml", { qtiId, error: fixResult.error })
-					throw errors.wrap(fixResult.error, "ai xml correction")
+					const fixResult = await errors.try(
+						fixInvalidQtiXml(logger, {
+							invalidXml: qtiXml,
+							errorMessage: upsertResult.error.toString(),
+							rootTag: "qti-assessment-stimulus"
+						})
+					)
+					if (fixResult.error) {
+						logger.error("failed to fix invalid qti xml", { qtiId: tempIdentifier, error: fixResult.error })
+						throw errors.wrap(fixResult.error, "ai xml correction")
+					}
+					finalXml = fixResult.data
+
+					const secondResult = await errors.try(upsertStimulus(client, tempIdentifier, article.title, finalXml))
+					if (secondResult.error) {
+						logger.error("second qti upsert attempt failed", { qtiId: tempIdentifier, error: secondResult.error })
+						throw errors.wrap(secondResult.error, "second qti upsert")
+					}
+					finalXml = secondResult.data
+				} else {
+					logger.error("qti upsert failed with unexpected error", { qtiId: tempIdentifier, error: upsertResult.error })
+					throw upsertResult.error
 				}
-				return fixResult.data
-			})
+			} else {
+				finalXml = upsertResult.data
+			}
 
-			// Step 5 (Conditional): Retry the upsert with the corrected XML.
-			finalIdentifier = await step.run("retry-upsert-with-corrected-xml", async () => {
-				const client = new QtiApiClient({
-					serverUrl: env.TIMEBACK_QTI_SERVER_URL,
-					tokenUrl: env.TIMEBACK_TOKEN_URL,
-					clientId: env.TIMEBACK_CLIENT_ID,
-					clientSecret: env.TIMEBACK_CLIENT_SECRET
+			// On success, immediately delete the temporary stimulus
+			const deleteResult = await errors.try(client.deleteStimulus(tempIdentifier))
+			if (deleteResult.error) {
+				logger.error("failed to delete validated stimulus from QTI API, but continuing", {
+					identifier: tempIdentifier,
+					error: deleteResult.error
 				})
-				const { qtiId } = upsertResult
+			}
 
-				const secondUpsertResult = await errors.try(upsertStimulus(client, qtiId, article.title, correctedXml))
-				if (secondUpsertResult.error) {
-					logger.error("upsert failed even after ai correction", { qtiId, error: secondUpsertResult.error })
-					throw errors.wrap(secondUpsertResult.error, "second qti upsert attempt")
-				}
-				return secondUpsertResult.data
-			})
-		}
+			return finalXml
+		})
 
-		// Final Step: Update our local database with the QTI identifier.
-		const updateDbResult = await errors.try(
-			db.update(niceArticles).set({ qtiIdentifier: finalIdentifier }).where(eq(niceArticles.id, articleId))
-		)
-		if (updateDbResult.error) {
-			logger.error("failed to update article with qti identifier", {
-				articleId,
-				qtiIdentifier: finalIdentifier,
-				error: updateDbResult.error
-			})
-			throw errors.wrap(updateDbResult.error, "db update")
-		}
-
-		logger.info("successfully migrated article to qti stimulus", { articleId, qtiIdentifier: finalIdentifier })
-		return { status: "success", qtiIdentifier: finalIdentifier }
+		logger.info("successfully validated qti stimulus", { articleId, identifier: tempIdentifier })
+		// Return the validated data to the orchestrator. DO NOT WRITE TO DB.
+		return { status: "success", articleId: article.id, qtiXml: validatedXml, title: article.title }
 	}
 )

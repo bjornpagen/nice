@@ -42,17 +42,12 @@ export const generatePayloadForCourse = inngest.createFunction(
 
 		// Step 2: Write the payload to separate files in a course directory
 		const outputDir = await step.run("write-to-files", async () => {
-			// Create the oneroster directory if it doesn't exist
-			const onerosterDir = path.join(process.cwd(), "oneroster")
-			const ensureDirResult = await errors.try(fs.mkdir(onerosterDir, { recursive: true }))
-			if (ensureDirResult.error) {
-				logger.error("failed to create oneroster directory", { error: ensureDirResult.error })
-				throw errors.wrap(ensureDirResult.error, "directory creation")
-			}
+			// MODIFIED: Use the top-level data/ directory
+			const dataDir = path.join(process.cwd(), "data")
 
-			// Generate safe directory name using course slug or sanitized title
 			const safeDirName = payload.course.courseCode || payload.course.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")
-			const courseDir = path.join(onerosterDir, safeDirName)
+			// MODIFIED: Create a nested directory structure `data/[course-slug]/oneroster/`
+			const courseDir = path.join(dataDir, safeDirName, "oneroster")
 
 			// Create the course directory
 			const createCourseDirResult = await errors.try(fs.mkdir(courseDir, { recursive: true }))

@@ -24,15 +24,16 @@ const getExerciseByPathQuery = db
 // NEW: Query to fetch all questions for a given exercise
 const getExerciseQuestionsQuery = db
 	.select({
-		id: schema.niceQuestions.id,
-		qtiIdentifier: schema.niceQuestions.qtiIdentifier
+		id: schema.niceQuestions.id
 	})
 	.from(schema.niceQuestions)
 	.where(eq(schema.niceQuestions.exerciseId, sql.placeholder("exerciseId")))
 	.prepare("src_app_user_subject_course_unit_lesson_e_exercise_page_get_exercise_questions")
 
 export type Exercise = Awaited<ReturnType<typeof getExerciseByPathQuery.execute>>[0]
-export type ExerciseQuestion = Awaited<ReturnType<typeof getExerciseQuestionsQuery.execute>>[0]
+export type ExerciseQuestion = Awaited<ReturnType<typeof getExerciseQuestionsQuery.execute>>[0] & {
+	qtiIdentifier: string
+}
 
 export type ExerciseData = {
 	exercise: Exercise
@@ -64,7 +65,13 @@ async function fetchExerciseData(params: {
 	}
 
 	// Fetch questions using the exercise ID
-	const questions = await getExerciseQuestionsQuery.execute({ exerciseId: exercise.id })
+	const questionsFromDb = await getExerciseQuestionsQuery.execute({ exerciseId: exercise.id })
+
+	// Add fake qtiIdentifier to each question
+	const questions = questionsFromDb.map((q) => ({
+		...q,
+		qtiIdentifier: `FAKE_QTI_${q.id}`
+	}))
 
 	return { exercise, questions }
 }

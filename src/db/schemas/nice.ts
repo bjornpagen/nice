@@ -167,14 +167,9 @@ const articles = schema.table(
 		title: text("title").notNull(),
 		slug: text("slug").notNull(),
 		path: text("path").notNull().unique(),
-		perseusContent: jsonb("perseus_content").notNull(),
-		qtiIdentifier: text("qti_identifier").notNull().default("")
+		perseusContent: jsonb("perseus_content").notNull()
 	},
-	(table) => [
-		index("articles_path_idx").on(table.path),
-		index("articles_title_idx").on(table.title),
-		index("articles_qti_identifier_idx").on(table.qtiIdentifier)
-	]
+	(table) => [index("articles_path_idx").on(table.path), index("articles_title_idx").on(table.title)]
 )
 export { articles as niceArticles }
 
@@ -197,12 +192,10 @@ const questions = schema.table(
 		id: text("id").primaryKey(),
 		exerciseId: text("exercise_id").notNull(),
 		sha: text("sha").notNull().default(""),
-		parsedData: jsonb("parsed_data").notNull(),
-		qtiIdentifier: text("qti_identifier").notNull().default("")
+		parsedData: jsonb("parsed_data").notNull()
 	},
 	(table) => [
 		index("questions_exercise_id_idx").on(table.exerciseId),
-		index("questions_qti_identifier_idx").on(table.qtiIdentifier),
 		foreignKey({
 			name: "questions_exercise_fk",
 			columns: [table.exerciseId],

@@ -1,11 +1,12 @@
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
+import { and, eq, inArray } from "drizzle-orm"
+import { db } from "@/db"
+import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { generatePayloadForCourse } from "./qti/generate-payload-for-course"
-import { ingestAssessmentItems } from "./qti/ingest-assessment-items"
-import { ingestAssessmentStimuli } from "./qti/ingest-assessment-stimuli"
-import { ingestAssessmentTests } from "./qti/ingest-assessment-tests"
+import { convertPerseusArticleToQtiStimulus } from "./qti/convert-perseus-article-to-qti-stimulus"
+import { convertPerseusQuestionToQtiItem } from "./qti/convert-perseus-question-to-qti-item"
 
 export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	{
@@ -15,85 +16,188 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	{ event: "qti/course.ingest" },
 	async ({ event, step, logger }) => {
 		const { courseId } = event.data
-		logger.info("starting qti server ingestion workflow", { courseId })
+		logger.info("starting qti generation and dump workflow", { courseId })
 
-		// Step 1: Generate the full QTI payload for the course.
-		const generationResult = await step.invoke("generate-qti-payload", {
-			function: generatePayloadForCourse,
-			data: { courseId }
+		// Step 1: Fetch all question IDs before the step.run
+		const units = await db.query.niceUnits.findMany({
+			where: eq(schema.niceUnits.courseId, courseId),
+			columns: { id: true }
 		})
-
-		const outputDir = generationResult.outputDir
-		if (!generationResult.status || generationResult.status !== "success" || !outputDir) {
-			throw errors.new("failed to generate qti payload")
+		if (units.length === 0) {
+			logger.info("no units found for course", { courseId })
+			return { message: "No units found for course", courseId }
 		}
-		logger.info("successfully generated qti payload", { courseId, outputDir })
+		const unitIds = units.map((u) => u.id)
 
-		// Step 2: Read the generated files to get the data.
-		const payload = await step.run("read-qti-payload-files", async () => {
-			const readFile = async (filename: string): Promise<unknown[]> => {
-				const filePath = path.join(outputDir, filename)
-				const readResult = await errors.try(fs.readFile(filePath, "utf-8"))
-				if (readResult.error) {
-					logger.warn("could not read payload file, assuming empty", { file: filename, error: readResult.error })
-					return [] // Return empty array if file doesn't exist or is invalid
-				}
-				const parseResult = await errors.try(JSON.parse(readResult.data))
-				if (parseResult.error) {
-					logger.warn("could not parse payload file, assuming empty", { file: filename, error: parseResult.error })
-					return [] // Return empty array if file is invalid JSON
-				}
-				// Return the parsed data - the Inngest functions will validate the types
-				return Array.isArray(parseResult.data) ? parseResult.data : []
+		const lessons = await db.query.niceLessons.findMany({
+			where: inArray(schema.niceLessons.unitId, unitIds),
+			columns: { id: true }
+		})
+		if (lessons.length === 0) {
+			logger.info("no lessons found for course", { courseId })
+			return { message: "No lessons found for course", courseId }
+		}
+		const lessonIds = lessons.map((l) => l.id)
+
+		// Fetch all exercise IDs from lessons
+		const lessonContents = await db.query.niceLessonContents.findMany({
+			where: and(
+				inArray(schema.niceLessonContents.lessonId, lessonIds),
+				eq(schema.niceLessonContents.contentType, "Exercise")
+			),
+			columns: { contentId: true }
+		})
+		const exerciseIds = lessonContents.map((lc) => lc.contentId)
+
+		// Fetch questions for all exercises
+		const questions =
+			exerciseIds.length > 0
+				? await db.query.niceQuestions.findMany({
+						where: inArray(schema.niceQuestions.exerciseId, exerciseIds),
+						columns: { id: true }
+					})
+				: []
+		const allQuestionIds = questions.map((q) => q.id)
+
+		// Fetch all article IDs
+		const articlesResult = await db
+			.select({ id: schema.niceArticles.id })
+			.from(schema.niceArticles)
+			.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
+			.where(
+				and(
+					inArray(schema.niceLessonContents.lessonId, lessonIds),
+					eq(schema.niceLessonContents.contentType, "Article")
+				)
+			)
+		const allArticleIds = articlesResult.map((a) => a.id)
+
+		// Step 2: Invoke all migrations in parallel
+		const itemMigrationInvocations = allQuestionIds.map((questionId) =>
+			step.invoke(`migrate-item-${questionId}`, {
+				function: convertPerseusQuestionToQtiItem,
+				data: { questionId }
+			})
+		)
+		const stimulusMigrationInvocations = allArticleIds.map((articleId) =>
+			step.invoke(`migrate-stimulus-${articleId}`, {
+				function: convertPerseusArticleToQtiStimulus,
+				data: { articleId }
+			})
+		)
+
+		const [itemResults, stimulusResults] = await Promise.all([
+			Promise.all(itemMigrationInvocations),
+			Promise.all(stimulusMigrationInvocations)
+		])
+
+		// Step 3: Fetch assessment data for building tests
+		const assessmentsWithExercises = await db
+			.select({
+				assessmentId: schema.niceAssessments.id,
+				assessmentTitle: schema.niceAssessments.title,
+				assessmentType: schema.niceAssessments.type,
+				exerciseId: schema.niceAssessmentExercises.exerciseId,
+				questionId: schema.niceQuestions.id
+			})
+			.from(schema.niceAssessments)
+			.innerJoin(
+				schema.niceAssessmentExercises,
+				eq(schema.niceAssessments.id, schema.niceAssessmentExercises.assessmentId)
+			)
+			.innerJoin(schema.niceQuestions, eq(schema.niceAssessmentExercises.exerciseId, schema.niceQuestions.exerciseId))
+			.where(inArray(schema.niceAssessments.parentId, unitIds))
+
+		// Group questions by assessment
+		const assessmentMap = new Map<
+			string,
+			{
+				title: string
+				type: string
+				questionIds: string[]
+			}
+		>()
+
+		for (const row of assessmentsWithExercises) {
+			if (!assessmentMap.has(row.assessmentId)) {
+				assessmentMap.set(row.assessmentId, {
+					title: row.assessmentTitle,
+					type: row.assessmentType,
+					questionIds: []
+				})
+			}
+			assessmentMap.get(row.assessmentId)?.questionIds.push(row.questionId)
+		}
+
+		// Step 4: Assemble the JSON payloads from the invocation results
+		const { assessmentItems, assessmentStimuli, assessmentTests } = await step.run(
+			"assemble-json-payloads",
+			async () => {
+				// Filter successful results and type them properly
+				const successfulItems = itemResults.filter(
+					(r): r is { status: "success"; questionId: string; qtiXml: string } => r.status === "success"
+				)
+				const successfulStimuli = stimulusResults.filter(
+					(r): r is { status: "success"; articleId: string; qtiXml: string; title: string } => r.status === "success"
+				)
+
+				const items = successfulItems.map((r) => ({
+					identifier: `nice-question-${r.questionId}`,
+					xml: r.qtiXml
+				}))
+
+				const stimuli = successfulStimuli.map((r) => ({
+					identifier: `nice-stimulus-${r.articleId}`,
+					title: r.title,
+					content: r.qtiXml
+				}))
+
+				// Build assessment tests from the pre-fetched data
+				const tests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => ({
+					identifier: `nice-test-${assessmentId}`,
+					title: data.title,
+					type: data.type,
+					items: data.questionIds.map((qId) => `nice-question-${qId}`)
+				}))
+
+				return { assessmentItems: items, assessmentStimuli: stimuli, assessmentTests: tests }
+			}
+		)
+
+		// Step 5: Write the final JSON files to the data/ directory
+		const outputDir = await step.run("write-json-dump", async () => {
+			const course = await db.query.niceCourses.findFirst({
+				where: eq(schema.niceCourses.id, courseId)
+			})
+			if (!course) {
+				logger.error("course not found for final dump", { courseId })
+				throw errors.new("course not found for final dump")
 			}
 
-			const [assessmentStimuli, assessmentItems, assessmentTests] = await Promise.all([
-				readFile("assessmentStimuli.json"),
-				readFile("assessmentItems.json"),
-				readFile("assessmentTests.json")
-			])
+			const courseDir = path.join(process.cwd(), "data", course.slug, "qti")
+			await fs.mkdir(courseDir, { recursive: true })
 
-			return { assessmentStimuli, assessmentItems, assessmentTests }
+			await fs.writeFile(path.join(courseDir, "assessmentItems.json"), JSON.stringify(assessmentItems, null, 2))
+			await fs.writeFile(path.join(courseDir, "assessmentStimuli.json"), JSON.stringify(assessmentStimuli, null, 2))
+			await fs.writeFile(path.join(courseDir, "assessmentTests.json"), JSON.stringify(assessmentTests, null, 2))
+
+			return courseDir
 		})
 
-		// Step 3: Ingest stimuli first (as items might depend on them).
-		if (payload.assessmentStimuli.length > 0) {
-			await step.invoke("invoke-ingest-stimuli", {
-				function: ingestAssessmentStimuli,
-				data: { stimuli: payload.assessmentStimuli }
-			})
-			logger.info("completed assessment stimuli ingestion", { courseId, count: payload.assessmentStimuli.length })
-		} else {
-			logger.info("no assessment stimuli to ingest", { courseId })
-		}
-
-		// Step 4: Ingest items next (as tests depend on them).
-		if (payload.assessmentItems.length > 0) {
-			await step.invoke("invoke-ingest-items", {
-				function: ingestAssessmentItems,
-				data: { items: payload.assessmentItems }
-			})
-			logger.info("completed assessment items ingestion", { courseId, count: payload.assessmentItems.length })
-		} else {
-			logger.info("no assessment items to ingest", { courseId })
-		}
-
-		// Step 5: Ingest tests last.
-		if (payload.assessmentTests.length > 0) {
-			await step.invoke("invoke-ingest-tests", {
-				function: ingestAssessmentTests,
-				data: { tests: payload.assessmentTests }
-			})
-			logger.info("completed assessment tests ingestion", { courseId, count: payload.assessmentTests.length })
-		} else {
-			logger.info("no assessment tests to ingest", { courseId })
-		}
-
-		logger.info("all qti ingestion steps have completed successfully", { courseId })
-		return {
-			message: "QTI Server ingestion workflow completed successfully.",
+		logger.info("completed QTI JSON dump workflow successfully", {
 			courseId,
-			stats: generationResult.stats
+			outputDir,
+			stats: {
+				items: assessmentItems.length,
+				stimuli: assessmentStimuli.length,
+				tests: assessmentTests.length
+			}
+		})
+
+		return {
+			message: "QTI JSON dump workflow completed successfully.",
+			courseId,
+			outputDir
 		}
 	}
 )

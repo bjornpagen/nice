@@ -14,7 +14,6 @@ import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate
 // Import QTI workers
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
-import { generatePayloadForCourse as generateQtiPayloadForCourse } from "@/inngest/functions/qti/generate-payload-for-course"
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
@@ -39,7 +38,6 @@ export const { GET, POST, PUT } = serve({
 		// QTI Functions
 		convertPerseusArticleToQtiStimulus,
 		convertPerseusQuestionToQtiItem,
-		generateQtiPayloadForCourse,
 		ingestAssessmentItems,
 		ingestAssessmentStimuli,
 		ingestAssessmentTests,
