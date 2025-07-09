@@ -1,7 +1,7 @@
 {
 	"academicSession": {
 		"sourcedId": "nice-academy-term",
-		"type": "schoolYear"
+		"type": "term"
 	},
 	"courseCode": "ap-microeconomics",
 	"metadata": {

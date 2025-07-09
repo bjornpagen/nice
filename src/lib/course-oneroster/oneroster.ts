@@ -3,6 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { and, eq, inArray, sql } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
+import { env } from "@/env"
 
 // --- ONE ROSTER TYPE DEFINITIONS ---
 // These interfaces define the structure of the final JSON payload.
@@ -264,7 +265,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 								type: "qti",
 								subType: "qti-stimulus",
 								language: "en-US",
-								url: `https://qti.alpha-1edtech.com/api/stimuli/nice-academy-${content.id}`
+								url: `${env.TIMEBACK_QTI_SERVER_URL}/stimuli/nice-academy-${content.id}`
 							}
 						} else if (lc.contentType === "Video") {
 							// Videos need proper URL
@@ -283,7 +284,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 								subType: "qti-test",
 								questionType: "custom",
 								language: "en-US",
-								url: `https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-${content.id}`
+								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice-academy-${content.id}`
 							}
 						}
 
@@ -331,7 +332,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 						subType: "qti-test",
 						questionType: "custom",
 						language: "en-US",
-						url: `https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-${assessment.id}`,
+						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice-academy-${assessment.id}`,
 						description: assessment.description,
 						lessonType: assessment.type.toLowerCase(),
 						path: assessment.path,

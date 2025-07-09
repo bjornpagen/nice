@@ -9,7 +9,7 @@
 			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/ap-economics-introduction/a/scarcity-article",
 			"subType": "qti-stimulus",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/stimuli/nice-academy-x75fea13d9da53d2a"
+			"url": "https://qti-staging.alpha-1edtech.com/api/stimuli/nice-academy-x75fea13d9da53d2a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:scarcity-article",
@@ -155,7 +155,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc2974d05bccb6bdd"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xc2974d05bccb6bdd"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:resource-allocation-and-economic-systems",
@@ -265,7 +265,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x57b7b05f2cfaf2af"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x57b7b05f2cfaf2af"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:production-possibilities-curve--ppc-",
@@ -285,7 +285,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xdb22f222af2c13fd"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xdb22f222af2c13fd"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:calculating-opportunity-costs-from-a-production-possibilities-curve--ppc-",
@@ -431,7 +431,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x3e0858aea90d6fe3"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x3e0858aea90d6fe3"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:trade",
@@ -505,7 +505,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x020d3080d7b9551d"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x020d3080d7b9551d"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:cost-benefit-analysis",
@@ -561,7 +561,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x3d5d99875f643fad"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x3d5d99875f643fad"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:total-utility-and-marginal-utility",
@@ -635,7 +635,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc63b15303be767d8"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xc63b15303be767d8"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:utility-maximization",
@@ -656,7 +656,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xe54c8d49aa0f4a4a"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xe54c8d49aa0f4a4a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:basic-economic-concepts-quiz-1",
@@ -677,7 +677,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x8d4bb81b05e60077"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x8d4bb81b05e60077"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:basic-economic-concepts-quiz-2",
@@ -698,7 +698,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x08aea700d2e6ed58"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x08aea700d2e6ed58"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:basic-economic-concepts-quiz-3",
@@ -719,7 +719,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xdd8358f773fedb52"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xdd8358f773fedb52"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:basic-economic-concepts-unit-test",
@@ -829,7 +829,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xa86df414ff00ad3a"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xa86df414ff00ad3a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:markets--property-rights--and-the-law-of-demand",
@@ -957,7 +957,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x743caddd488a1751"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x743caddd488a1751"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:demand-and-the-determinants-of-demand",
@@ -1013,7 +1013,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x40cef8e0c00e5e70"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x40cef8e0c00e5e70"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:supply-and-the-determinants-of-supply",
@@ -1051,7 +1051,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xcb93612e85abe5f7"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xcb93612e85abe5f7"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:changes-in-the-determinants-of-supply",
@@ -1125,7 +1125,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x8862bdd561e4b717"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x8862bdd561e4b717"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:price-elasticity-of-demand",
@@ -1217,7 +1217,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xe74dacf669dd5b6b"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xe74dacf669dd5b6b"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:interpreting-price-elasticity-of-demand",
@@ -1273,7 +1273,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x7b3deaf606349738"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x7b3deaf606349738"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:price-elasticity-of-supply",
@@ -1311,7 +1311,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x5a6948061fd3a453"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x5a6948061fd3a453"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:cross-and-income-elasticity-of-demand",
@@ -1349,7 +1349,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xbf85810554f72a24"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xbf85810554f72a24"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:cross-price-elastiticy-of-demand",
@@ -1387,7 +1387,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x0f3b0ade232f5f54"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x0f3b0ade232f5f54"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:market-equilibrium-and-price-controls",
@@ -1497,7 +1497,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x0d16b4e1edc54e7e"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x0d16b4e1edc54e7e"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:consumer-and-producer-surplus",
@@ -1535,7 +1535,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x6c3cb64e17bd6362"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x6c3cb64e17bd6362"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:changes-in-equilibrium",
@@ -1591,7 +1591,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x260dc8087d5d6b29"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x260dc8087d5d6b29"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:price-and-quantity-controls",
@@ -1629,7 +1629,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x6c7240b2620e7841"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x6c7240b2620e7841"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:the-effect-of-government-interventions-on-surplus",
@@ -1721,7 +1721,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc8db4bdf69504995"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xc8db4bdf69504995"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:tax-incidence-and-deadweight-loss-exercise",
@@ -1795,7 +1795,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x85e25624a66eab1c"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x85e25624a66eab1c"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:international-trade-and-public-policy",
@@ -1816,7 +1816,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x38d7ba94f5f5a995"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x38d7ba94f5f5a995"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:unit-2-supply-and-demnd-quiz-1",
@@ -1837,7 +1837,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xf89079df28a06b9b"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xf89079df28a06b9b"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:unit-2-supply-and-demnd-quiz-2",
@@ -1858,7 +1858,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x8bc22dd52b9742aa"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x8bc22dd52b9742aa"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:unit-2-supply-and-demnd-quiz-3",
@@ -1879,7 +1879,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x4dfbf4e60a0459e7"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x4dfbf4e60a0459e7"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:unit-2-supply-and-demnd-quiz-4",
@@ -1900,7 +1900,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xd13b6acd12b758f4"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xd13b6acd12b758f4"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:unit-2-supply-and-demnd-unit-test",
@@ -1956,7 +1956,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x1c2f73d9923da561"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x1c2f73d9923da561"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:3-1-the-production-function",
@@ -2048,7 +2048,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xa1fc04277b03ab64"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xa1fc04277b03ab64"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:short-run-production-costs--foundational-concepts",
@@ -2122,7 +2122,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xec8da3d7b8155558"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xec8da3d7b8155558"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:short-run-production-costs",
@@ -2196,7 +2196,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x92cc03337015577b"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x92cc03337015577b"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:long-run-production-costs",
@@ -2234,7 +2234,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x069b0d634674c065"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x069b0d634674c065"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:types-of-profit",
@@ -2308,7 +2308,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x7fe4f9a142a34fd8"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x7fe4f9a142a34fd8"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:firms-short-run-decisions-to-produce-and-long-run-decisions-to-enter-or-exit-a-market",
@@ -2364,7 +2364,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x27adad2ba295ffe8"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x27adad2ba295ffe8"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:3-7-a-perfect-competition-foundations",
@@ -2456,7 +2456,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x9f8f203e5f74b373"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x9f8f203e5f74b373"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:perfect-competition-in-the-short-run-and-long-run",
@@ -2476,7 +2476,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x76d4868885868eb1"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x76d4868885868eb1"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:increasing--decreasing--and-constant-cost-industries",
@@ -2496,7 +2496,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc1b45a44a6bdbf70"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xc1b45a44a6bdbf70"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:efficiency-and-perfect-competition",
@@ -2517,7 +2517,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x7d4f95ae62277c2a"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x7d4f95ae62277c2a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary-quiz-1",
@@ -2538,7 +2538,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x79fce6915961439a"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x79fce6915961439a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary-quiz-2",
@@ -2559,7 +2559,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xd0505e04bdbb4033"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xd0505e04bdbb4033"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary-quiz-3",
@@ -2580,7 +2580,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x21995b652e95ec26"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x21995b652e95ec26"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:production-cost-and-the-perfect-competition-model-temporary-unit-test",
@@ -2654,7 +2654,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x37c6a48689252557"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x37c6a48689252557"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:imperfect-competition",
@@ -2782,7 +2782,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xbdb2a8702cf57d12"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xbdb2a8702cf57d12"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:monopoly",
@@ -2802,7 +2802,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x65ae73ec43123c9f"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x65ae73ec43123c9f"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:natural-monopoly",
@@ -2858,7 +2858,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xe475c9abc3402be8"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xe475c9abc3402be8"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:price-discrimination",
@@ -2932,7 +2932,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x80879fba7732b4a4"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x80879fba7732b4a4"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:monopolistic-competition",
@@ -3060,7 +3060,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xd91c859f8291d0f3"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xd91c859f8291d0f3"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:oligopoly-and-game-theory--foundational-concepts",
@@ -3080,7 +3080,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xb151f9cc9f21884c"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xb151f9cc9f21884c"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:game-theory",
@@ -3101,7 +3101,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xddc502002b811849"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xddc502002b811849"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:imperfect-competition-quiz-1",
@@ -3122,7 +3122,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc3a5e0e4e52f8d3c"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xc3a5e0e4e52f8d3c"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:imperfect-competition-quiz-2",
@@ -3143,7 +3143,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x5e94fa9849d2a758"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x5e94fa9849d2a758"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:imperfect-competition-unit-test",
@@ -3217,7 +3217,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x60ac2260039da558"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x60ac2260039da558"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:introduction-to-factor-markets",
@@ -3291,7 +3291,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x0ebdfc2a2b279a2e"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x0ebdfc2a2b279a2e"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:changes-in-factor-demand-and-supply",
@@ -3347,7 +3347,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xb1b3bb89f3142c06"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xb1b3bb89f3142c06"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:profit-maximizing-behavior-in-perfectly-competitive-factor-markets",
@@ -3403,7 +3403,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x9e70b6aa0381301f"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x9e70b6aa0381301f"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:monopsony--foundational-concepts",
@@ -3423,7 +3423,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xe75b60af23b54dd1"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xe75b60af23b54dd1"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:monopsonistic-markets",
@@ -3444,7 +3444,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xdedccae6fc0c7c10"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xdedccae6fc0c7c10"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:factor-markets-quiz-1",
@@ -3465,7 +3465,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xcfc5526372590d9f"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xcfc5526372590d9f"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:factor-markets-quiz-2",
@@ -3486,7 +3486,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x96203287d39f7c49"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x96203287d39f7c49"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:factor-markets-unit-test",
@@ -3524,7 +3524,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x528f704bd99fe0da"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x528f704bd99fe0da"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:socially-efficient-and-inefficient-market-outcomes",
@@ -3580,7 +3580,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x0d128cde2487a0b0"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x0d128cde2487a0b0"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:externalities--foundational-concepts",
@@ -3600,7 +3600,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xaae45354baa2d42a"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xaae45354baa2d42a"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:externalities",
@@ -3656,7 +3656,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xc41e9d2d150e46f6"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xc41e9d2d150e46f6"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:public-and-private-goods",
@@ -3694,7 +3694,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x3478efd11e6b1399"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x3478efd11e6b1399"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:the-effects-of-government-intervention-in-different-market-structures",
@@ -3732,7 +3732,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x360c0c935c167c61"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x360c0c935c167c61"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:inequality",
@@ -3753,7 +3753,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-x47ca91f623a92a70"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-x47ca91f623a92a70"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:ap-consumer-producer-surplus-quiz-1",
@@ -3774,7 +3774,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xedb013183240152d"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xedb013183240152d"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:ap-consumer-producer-surplus-quiz-2",
@@ -3795,7 +3795,7 @@
 			"questionType": "custom",
 			"subType": "qti-test",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/assessment-tests/nice-academy-xf5e39c152614e760"
+			"url": "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice-academy-xf5e39c152614e760"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:ap-consumer-producer-surplus-unit-test",
@@ -3814,7 +3814,7 @@
 			"path": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings/see-how-our-course-content-aligns-with-ap-microeconomics-standards/a/ap-microeconomics-content-aligned-to-standards",
 			"subType": "qti-stimulus",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/stimuli/nice-academy-xad289de48260c00f"
+			"url": "https://qti-staging.alpha-1edtech.com/api/stimuli/nice-academy-xad289de48260c00f"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:ap-microeconomics-content-aligned-to-standards",
@@ -3833,7 +3833,7 @@
 			"path": "/economics-finance-domain/ap-microeconomics/ap-microeconomics-standards-mappings/see-how-our-course-content-aligns-with-ap-microeconomics-standards/a/ap-microeconomics-standards-aligned-to-course-content",
 			"subType": "qti-stimulus",
 			"type": "qti",
-			"url": "https://qti.alpha-1edtech.com/api/stimuli/nice-academy-x415aff0ea8290410"
+			"url": "https://qti-staging.alpha-1edtech.com/api/stimuli/nice-academy-x415aff0ea8290410"
 		},
 		"roles": ["primary"],
 		"sourcedId": "nice:ap-microeconomics-standards-aligned-to-course-content",
