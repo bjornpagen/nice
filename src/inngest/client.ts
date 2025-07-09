@@ -68,11 +68,11 @@ const events = {
 				courseCode: z.string().optional().nullable(),
 				org: z.object({
 					sourcedId: z.string(),
-					type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
+					type: z.enum(["course", "academicSession", "org", "courseComponent", "resource", "schoolYear"])
 				}),
 				academicSession: z.object({
 					sourcedId: z.string(),
-					type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
+					type: z.enum(["course", "academicSession", "org", "courseComponent", "resource", "schoolYear"])
 				}),
 				subjects: z.array(z.string()).optional().nullable(),
 				metadata: z.record(z.any()).optional()
@@ -123,6 +123,79 @@ const events = {
 					sortOrder: z.number()
 				})
 			)
+		})
+	},
+	// ADDED: New event for ingesting a single class
+	"oneroster/class.ingest": {
+		data: z.object({
+			class: z.object({
+				sourcedId: z.string(),
+				title: z.string(),
+				classType: z.enum(["homeroom", "scheduled"]),
+				course: z.object({
+					sourcedId: z.string(),
+					type: z.enum([
+						"course",
+						"academicSession",
+						"org",
+						"courseComponent",
+						"resource",
+						"class",
+						"user",
+						"term",
+						"schoolYear"
+					])
+				}),
+				// The API spec uses 'org' for the school reference in the POST body
+				school: z
+					.object({
+						sourcedId: z.string(),
+						type: z.enum([
+							"course",
+							"academicSession",
+							"org",
+							"courseComponent",
+							"resource",
+							"class",
+							"user",
+							"term",
+							"schoolYear"
+						])
+					})
+					.optional(), // Make optional as it's passed as 'org'
+				org: z
+					.object({
+						sourcedId: z.string(),
+						type: z.enum([
+							"course",
+							"academicSession",
+							"org",
+							"courseComponent",
+							"resource",
+							"class",
+							"user",
+							"term",
+							"schoolYear"
+						])
+					})
+					.optional(), // 'org' is used for the school
+				terms: z.array(
+					z.object({
+						sourcedId: z.string(),
+						type: z.enum([
+							"course",
+							"academicSession",
+							"org",
+							"courseComponent",
+							"resource",
+							"class",
+							"user",
+							"term",
+							"schoolYear"
+						])
+					})
+				)
+			})
 		})
 	}
 }

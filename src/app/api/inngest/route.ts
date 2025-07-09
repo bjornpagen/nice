@@ -7,6 +7,7 @@ import { ingestCourseToOneroster } from "@/inngest/functions/ingest-course-to-on
 import { migrateArticleToQtiAssessmentStimulus } from "@/inngest/functions/migrate-article-to-qti-assessment-stimulus"
 import { migrateQuestionToQtiAssessmentItem } from "@/inngest/functions/migrate-question-to-qti-assessment-item"
 import { generateOnerosterForCourse } from "@/inngest/functions/oneroster-courses/generate-oneroster-for-course"
+import { ingestClass } from "@/inngest/functions/oneroster-courses/ingest-class"
 import { ingestComponentResources } from "@/inngest/functions/oneroster-courses/ingest-component-resources"
 import { ingestCourse } from "@/inngest/functions/oneroster-courses/ingest-course"
 import { ingestCourseComponents } from "@/inngest/functions/oneroster-courses/ingest-course-components"
@@ -27,6 +28,7 @@ export const { GET, POST, PUT } = serve({
 		ingestResources,
 		ingestCourse,
 		ingestCourseComponents,
-		ingestComponentResources
+		ingestComponentResources,
+		ingestClass
 	]
 })

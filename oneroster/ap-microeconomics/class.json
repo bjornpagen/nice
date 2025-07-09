@@ -1,0 +1,19 @@
+{
+	"classType": "scheduled",
+	"course": {
+		"sourcedId": "nice:ap-microeconomics",
+		"type": "course"
+	},
+	"school": {
+		"sourcedId": "nice-academy",
+		"type": "org"
+	},
+	"sourcedId": "class-nice:ap-microeconomics",
+	"terms": [
+		{
+			"sourcedId": "nice-academy-term",
+			"type": "term"
+		}
+	],
+	"title": "AP®︎/College Microeconomics"
+}

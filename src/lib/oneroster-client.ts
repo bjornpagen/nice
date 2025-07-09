@@ -12,13 +12,25 @@ const OneRosterTokenResponseSchema = z.object({
 // For reading (GET responses) - type is optional
 const GUIDRefReadSchema = z.object({
 	sourcedId: z.string(),
-	type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"]).optional()
+	type: z
+		.enum(["course", "academicSession", "org", "courseComponent", "resource", "class", "user", "term", "schoolYear"])
+		.optional()
 })
 
 // For writing (POST/PUT requests) - type is required
 const GUIDRefWriteSchema = z.object({
 	sourcedId: z.string(),
-	type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
+	type: z.enum([
+		"course",
+		"academicSession",
+		"org",
+		"courseComponent",
+		"resource",
+		"class",
+		"user",
+		"term",
+		"schoolYear"
+	])
 })
 
 const OneRosterResourceSchema = z.object({
@@ -121,6 +133,58 @@ const CreateCourseComponentInputSchema = OneRosterCourseComponentWriteSchema.omi
 const CreateComponentResourceInputSchema = OneRosterComponentResourceWriteSchema.omit({ sourcedId: true }).extend({
 	sourcedId: z.string().optional()
 })
+
+// --- NEW: Add Schemas for Class and Enrollment ---
+const OneRosterClassReadSchema = z.object({
+	sourcedId: z.string(),
+	status: z.string(),
+	title: z.string(),
+	classCode: z.string().optional().nullable(),
+	classType: z.enum(["homeroom", "scheduled"]),
+	location: z.string().optional().nullable(),
+	grades: z.array(z.string()).optional(),
+	subjects: z.array(z.string()).optional(),
+	course: GUIDRefReadSchema,
+	school: GUIDRefReadSchema,
+	terms: z.array(GUIDRefReadSchema)
+})
+export type OneRosterClass = z.infer<typeof OneRosterClassReadSchema>
+
+const OneRosterClassWriteSchema = z.object({
+	sourcedId: z.string(),
+	title: z.string(),
+	classType: z.enum(["homeroom", "scheduled"]),
+	course: GUIDRefWriteSchema,
+	// The API spec uses 'org' for the school reference in the POST body
+	school: GUIDRefWriteSchema.optional(), // Make optional as it's passed as 'org'
+	org: GUIDRefWriteSchema.optional(), // 'org' is used for the school
+	terms: z.array(GUIDRefWriteSchema)
+})
+
+const OneRosterEnrollmentReadSchema = z.object({
+	sourcedId: z.string(),
+	status: z.string(),
+	role: z.enum(["administrator", "proctor", "student", "teacher"]),
+	primary: z.boolean().optional(),
+	beginDate: z.string().nullable().optional(),
+	endDate: z.string().nullable().optional(),
+	user: GUIDRefReadSchema,
+	class: GUIDRefReadSchema
+})
+
+const OneRosterEnrollmentWriteSchema = z.object({
+	sourcedId: z.string(),
+	role: z.enum(["administrator", "proctor", "student", "teacher"]),
+	user: GUIDRefWriteSchema,
+	class: GUIDRefWriteSchema
+})
+export type OneRosterEnrollment = z.infer<typeof OneRosterEnrollmentWriteSchema>
+
+const GetClassResponseSchema = z.object({ class: OneRosterClassReadSchema.optional() })
+const GetEnrollmentResponseSchema = z.object({ enrollment: OneRosterEnrollmentReadSchema.optional() })
+
+const CreateClassInputSchema = OneRosterClassWriteSchema
+const CreateEnrollmentInputSchema = OneRosterEnrollmentWriteSchema
 
 // --- NEW: Custom Error for API Failures ---
 export const ErrOneRosterAPI = errors.new("oneroster api error")
@@ -270,7 +334,7 @@ export class OneRosterApiClient {
 	}
 
 	async #_createEntity<T extends z.ZodType, U, R>(
-		entityName: "resource" | "course" | "courseComponent" | "componentResource",
+		entityName: "resource" | "course" | "courseComponent" | "componentResource" | "class" | "enrollment",
 		endpoint: string,
 		input: U,
 		inputSchema: T,
@@ -426,6 +490,89 @@ export class OneRosterApiClient {
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ componentResource: validationResult.data })
+			},
+			z.unknown()
+		)
+	}
+
+	public async getClass(sourcedId: string) {
+		const result = await this.#request(
+			`/ims/oneroster/rostering/v1p2/classes/${sourcedId}`,
+			{ method: "GET" },
+			GetClassResponseSchema,
+			{ swallow404: true }
+		)
+		return result?.class
+	}
+
+	public async createClass(classData: z.infer<typeof CreateClassInputSchema>) {
+		const validationResult = CreateClassInputSchema.safeParse(classData)
+		if (!validationResult.success) {
+			logger.error("invalid input for createClass", { error: validationResult.error, input: classData })
+			throw errors.wrap(validationResult.error, "invalid input for createClass")
+		}
+
+		// The API spec uses `org` for the school reference. We'll map `school` to `org` if provided.
+		const payload = { ...validationResult.data }
+		if (payload.school) {
+			payload.org = payload.school
+			delete payload.school
+		}
+
+		return this.#request(
+			"/ims/oneroster/rostering/v1p2/classes/",
+			{
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ class: payload })
+			},
+			z.unknown() // Success response structure not critical for this operation
+		)
+	}
+
+	public async getEnrollment(sourcedId: string) {
+		const result = await this.#request(
+			`/ims/oneroster/rostering/v1p2/enrollments/${sourcedId}`,
+			{ method: "GET" },
+			GetEnrollmentResponseSchema,
+			{ swallow404: true }
+		)
+		return result?.enrollment
+	}
+
+	public async createEnrollment(enrollmentData: z.infer<typeof CreateEnrollmentInputSchema>) {
+		const validationResult = CreateEnrollmentInputSchema.safeParse(enrollmentData)
+		if (!validationResult.success) {
+			logger.error("invalid input for createEnrollment", { error: validationResult.error, input: enrollmentData })
+			throw errors.wrap(validationResult.error, "invalid input for createEnrollment")
+		}
+
+		return this.#request(
+			"/ims/oneroster/rostering/v1p2/enrollments/",
+			{
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ enrollment: validationResult.data })
+			},
+			z.unknown()
+		)
+	}
+
+	public async updateEnrollment(
+		sourcedId: string,
+		enrollment: z.infer<typeof OneRosterEnrollmentWriteSchema>
+	): Promise<unknown> {
+		const validationResult = OneRosterEnrollmentWriteSchema.safeParse(enrollment)
+		if (!validationResult.success) {
+			throw errors.wrap(validationResult.error, "invalid input for updateEnrollment")
+		}
+
+		return this.#request(
+			`/ims/oneroster/rostering/v1p2/enrollments/${sourcedId}`,
+			{
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ enrollment: validationResult.data })
 			},
 			z.unknown()
 		)

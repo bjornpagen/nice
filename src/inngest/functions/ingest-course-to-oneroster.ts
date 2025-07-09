@@ -3,6 +3,7 @@ import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { generateOnerosterForCourse } from "./oneroster-courses/generate-oneroster-for-course"
+import { ingestClass } from "./oneroster-courses/ingest-class"
 import { ingestComponentResources } from "./oneroster-courses/ingest-component-resources"
 import { ingestCourse } from "./oneroster-courses/ingest-course"
 import { ingestCourseComponents } from "./oneroster-courses/ingest-course-components"
@@ -38,11 +39,12 @@ export const ingestCourseToOneroster = inngest.createFunction(
 			}
 
 			const course = await readFile("course.json")
+			const classData = await readFile("class.json")
 			const courseComponents = await readFile("courseComponents.json")
 			const resources = await readFile("resources.json")
 			const componentResources = await readFile("componentResources.json")
 
-			return { course, courseComponents, resources, componentResources }
+			return { course, class: classData, courseComponents, resources, componentResources }
 		})
 
 		// --- NEW SEQUENTIAL INGESTION LOGIC ---
@@ -92,6 +94,14 @@ export const ingestCourseToOneroster = inngest.createFunction(
 				count: payload.componentResources.length
 			})
 		}
+
+		// ADDED: Step 6: FINAL step. Ingest the class object for the course.
+		// This runs only after the course itself has been ingested.
+		await step.invoke("invoke-ingest-class", {
+			function: ingestClass,
+			data: { class: payload.class }
+		})
+		logger.info("completed class ingestion", { courseId, classSourcedId: payload.class.sourcedId })
 
 		logger.info("all oneroster ingestion steps have completed successfully", { courseId })
 

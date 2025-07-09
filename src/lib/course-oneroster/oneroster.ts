@@ -9,7 +9,7 @@ import * as schema from "@/db/schemas"
 
 interface OneRosterGUIDRef {
 	sourcedId: string
-	type: "course" | "academicSession" | "org" | "courseComponent" | "resource"
+	type: "course" | "academicSession" | "org" | "courseComponent" | "resource" | "term" | "schoolYear"
 }
 
 interface OneRosterCourse {
@@ -54,8 +54,19 @@ interface OneRosterCourseComponentResource {
 	sortOrder: number
 }
 
+interface OneRosterClass {
+	sourcedId: string
+	title: string
+	classType: "scheduled"
+	course: OneRosterGUIDRef
+	school: OneRosterGUIDRef
+	terms: OneRosterGUIDRef[]
+}
+
 export interface OneRosterPayload {
 	course: OneRosterCourse
+	// ADDED: class property to the payload
+	class: OneRosterClass
 	courseComponents: OneRosterCourseComponent[]
 	resources: OneRosterResource[]
 	componentResources: OneRosterCourseComponentResource[]
@@ -63,7 +74,7 @@ export interface OneRosterPayload {
 
 // --- CONSTANTS ---
 const ORG_SOURCED_ID = "nice-academy"
-const ACADEMIC_SESSION_SOURCED_ID = "nice-academy-perpetual-year"
+const ACADEMIC_SESSION_SOURCED_ID = "nice-academy-term"
 
 // --- DATABASE QUERIES (PREPARED STATEMENTS) ---
 const getCourseByIdQuery = db
@@ -178,12 +189,21 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 			subjects: [subjectTitle],
 			courseCode: course.slug,
 			org: { sourcedId: ORG_SOURCED_ID, type: "org" },
-			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "academicSession" },
+			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" },
 			metadata: {
 				description: course.description,
 				path: course.path,
 				khanId: course.id
 			}
+		},
+		// ADDED: class object generation
+		class: {
+			sourcedId: `class-nice:${course.slug}`,
+			title: course.title,
+			classType: "scheduled",
+			course: { sourcedId: `nice:${course.slug}`, type: "course" },
+			school: { sourcedId: ORG_SOURCED_ID, type: "org" },
+			terms: [{ sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" }]
 		},
 		courseComponents: [],
 		resources: [],

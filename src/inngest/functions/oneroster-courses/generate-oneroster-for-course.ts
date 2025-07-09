@@ -67,6 +67,7 @@ export const generateOnerosterForCourse = inngest.createFunction(
 			// Write each section to its own file
 			const files = [
 				{ name: "course.json", data: payload.course },
+				{ name: "class.json", data: payload.class },
 				{ name: "courseComponents.json", data: payload.courseComponents },
 				{ name: "resources.json", data: payload.resources },
 				{ name: "componentResources.json", data: payload.componentResources }
@@ -101,6 +102,7 @@ export const generateOnerosterForCourse = inngest.createFunction(
 			outputDirectory: outputDir,
 			files: {
 				course: path.join(outputDir, "course.json"),
+				class: path.join(outputDir, "class.json"),
 				courseComponents: path.join(outputDir, "courseComponents.json"),
 				resources: path.join(outputDir, "resources.json"),
 				componentResources: path.join(outputDir, "componentResources.json")
