@@ -1,7 +1,7 @@
 import * as logger from "@superbuilders/slog"
 import type React from "react"
-import { type Course, CourseSidebar } from "@/components/course/sidebar/course-sidebar"
 import { Footer } from "@/components/footer"
+import { type Course, CourseSidebar } from "@/components/overview/course/sidebar/course-sidebar"
 
 export default async function CourseLayout({
 	children,
@@ -23,7 +23,7 @@ export default async function CourseLayout({
 					<CourseSidebar coursePromise={coursePromise} />
 				</nav>
 
-				<main id="course-layout-main" className="flex-1 bg-gray-50">
+				<main id="course-layout-main" className="flex-1 bg-gray-50 px-8 py-4">
 					{children}
 				</main>
 			</div>
