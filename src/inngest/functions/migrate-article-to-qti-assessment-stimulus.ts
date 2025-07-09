@@ -109,7 +109,11 @@ export const migrateArticleToQtiAssessmentStimulus = inngest.createFunction(
 
 			if (result.error) {
 				if (errors.is(result.error, ErrQtiUnprocessable) || errors.is(result.error, ErrQtiInternalServerError)) {
-					logger.warn("initial qti stimulus upsert failed, will attempt correction", { qtiId, error: result.error })
+					logger.warn("initial qti stimulus upsert failed, will attempt correction", {
+						qtiId,
+						error: result.error,
+						xml: qtiStimulusXml
+					})
 					return {
 						success: false as const,
 						qtiId: qtiId,

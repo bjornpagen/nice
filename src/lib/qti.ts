@@ -653,9 +653,16 @@ export class QtiApiClient {
 			throw errors.wrap(validation.error, "updateAssessmentItem input validation")
 		}
 		const { identifier, xml } = validation.data
+
+		// The API requires a JSON payload specifying the format is "xml", similar to create
+		const payload = {
+			format: "xml",
+			xml: xml
+		}
+
 		return this.#request(
 			`/assessment-items/${identifier}`,
-			{ method: "PUT", headers: { "Content-Type": "application/xml" }, body: xml },
+			{ method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) },
 			AssessmentItemSchema
 		)
 	}

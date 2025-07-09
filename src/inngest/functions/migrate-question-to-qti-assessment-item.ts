@@ -106,7 +106,11 @@ export const migrateQuestionToQtiAssessmentItem = inngest.createFunction(
 			if (result.error) {
 				// Use errors.is to check if the failure is a validation error
 				if (errors.is(result.error, ErrQtiUnprocessable) || errors.is(result.error, ErrQtiInternalServerError)) {
-					logger.warn("initial qti upsert failed validation, will attempt correction", { qtiId, error: result.error })
+					logger.warn("initial qti upsert failed validation, will attempt correction", {
+						qtiId,
+						error: result.error,
+						xml: qtiXml
+					})
 					return {
 						success: false as const,
 						qtiId,

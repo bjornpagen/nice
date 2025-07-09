@@ -35,8 +35,9 @@ export async function loadConversionExamples(
 	logger.info("loading perseus-to-qti conversion examples from filesystem", { type })
 
 	const EXAMPLES_DIR = `${process.cwd()}/src/lib/perseus-to-qti/examples`
-	const perseusExt = isStimulus ? ".stimulus.json" : ".perseus.json"
-	const qtiExt = isStimulus ? ".stimulus.xml" : ".qti.xml"
+	// Both "assessmentItem" and "stimulus" examples use the same extensions
+	const perseusExt = ".perseus.json"
+	const qtiExt = ".qti.xml"
 	const exampleDir = isStimulus ? `${EXAMPLES_DIR}/assessment-stimulus` : `${EXAMPLES_DIR}/assessment-items`
 
 	const filesResult = await errors.try(fs.readdir(exampleDir))
