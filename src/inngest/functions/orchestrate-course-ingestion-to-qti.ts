@@ -8,6 +8,9 @@ import { inngest } from "@/inngest/client"
 import { convertPerseusArticleToQtiStimulus } from "./qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToQtiItem } from "./qti/convert-perseus-question-to-qti-item"
 
+// Maximum size limit for Perseus content in bytes (using character count as proxy)
+const MAX_PERSEUS_CONTENT_SIZE_BYTES = 100000
+
 export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	{
 		id: "orchestrate-course-ingestion-to-qti",
@@ -72,6 +75,34 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			)
 		const allArticleIds = articlesResult.map((a) => a.id)
 
+		// Fetch articles with their content to check size (outside of step.run)
+		const articlesWithContent =
+			allArticleIds.length > 0
+				? await db.query.niceArticles.findMany({
+						where: inArray(schema.niceArticles.id, allArticleIds),
+						columns: { id: true, perseusContent: true }
+					})
+				: []
+
+		// Filter out articles that are too large (pure computation, no db operations)
+		const filteredArticleIds = await step.run("filter-oversized-articles", async () => {
+			return articlesWithContent
+				.filter((article) => {
+					if (!article.perseusContent) return false
+					const size = JSON.stringify(article.perseusContent).length
+					if (size > MAX_PERSEUS_CONTENT_SIZE_BYTES) {
+						logger.warn("skipping oversized article", {
+							articleId: article.id,
+							size,
+							maxSize: MAX_PERSEUS_CONTENT_SIZE_BYTES
+						})
+						return false
+					}
+					return true
+				})
+				.map((article) => article.id)
+		})
+
 		// Step 2: Invoke all migrations in parallel
 		const itemMigrationInvocations = allQuestionIds.map((questionId) =>
 			step.invoke(`migrate-item-${questionId}`, {
@@ -79,7 +110,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				data: { questionId }
 			})
 		)
-		const stimulusMigrationInvocations = allArticleIds.map((articleId) =>
+		const stimulusMigrationInvocations = filteredArticleIds.map((articleId) =>
 			step.invoke(`migrate-stimulus-${articleId}`, {
 				function: convertPerseusArticleToQtiStimulus,
 				data: { articleId }
@@ -165,15 +196,16 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		)
 
 		// Step 5: Write the final JSON files to the data/ directory
-		const outputDir = await step.run("write-json-dump", async () => {
-			const course = await db.query.niceCourses.findFirst({
-				where: eq(schema.niceCourses.id, courseId)
-			})
-			if (!course) {
-				logger.error("course not found for final dump", { courseId })
-				throw errors.new("course not found for final dump")
-			}
+		// First fetch the course data outside of step.run
+		const course = await db.query.niceCourses.findFirst({
+			where: eq(schema.niceCourses.id, courseId)
+		})
+		if (!course) {
+			logger.error("course not found for final dump", { courseId })
+			throw errors.new("course not found for final dump")
+		}
 
+		const outputDir = await step.run("write-json-dump", async () => {
 			const courseDir = path.join(process.cwd(), "data", course.slug, "qti")
 			await fs.mkdir(courseDir, { recursive: true })
 
