@@ -3,42 +3,20 @@
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import { ContentHeader } from "@/components/overview/content-header"
+import type { Course, CourseResource } from "@/components/overview/types"
 import { Button } from "@/components/ui/button"
 import { CourseContentBreadcrumbs } from "./course-content-breadcrumbs"
 import { CourseContentChallenge } from "./course-content-challenge"
 import { CourseContentUnitOverviewItem } from "./course-content-unit-overview-item"
 import { CourseContentUnitProficiencyItem } from "./course-content-unit-proficiency-item"
 
-export type Lesson = {
-	slug: string
-	path: string
-	type: "exercise" | "quiz" | "unit-test"
-	title: string
-}
-
-export type Unit = {
-	slug: string
-	path: string
-	title: string
-	lessons: Lesson[]
-}
-
-export type Challenge = {
-	path: string
-}
-
-export type Course = {
-	path: string
-	title: string
-	units: Unit[]
-	challenge: Challenge
-}
-
 export function CourseContent({ coursePromise }: { coursePromise: Promise<Course> }) {
 	const course = React.use(coursePromise)
 	if (course.path === "") {
 		throw errors.new("course data is invalid")
 	}
+
+	const challenge: CourseResource | undefined = course.resources.find((resource) => resource.type === "CourseChallenge")
 
 	return (
 		<div id="course-content">
@@ -57,7 +35,7 @@ export function CourseContent({ coursePromise }: { coursePromise: Promise<Course
 						className="break-inside-avoid border-b border-gray-300 px-6 py-3 mb-2"
 					/>
 				))}
-				<CourseContentChallenge challenge={course.challenge} />
+				{challenge && <CourseContentChallenge challenge={challenge} />}
 			</div>
 
 			<div id="course-content-app-section" className="mt-16 mb-16 text-center">

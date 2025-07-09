@@ -2,10 +2,18 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import type { Unit } from "@/components/overview/types"
 import { cn } from "@/lib/utils"
-import type { Unit } from "./course-sidebar"
 
-export function CourseSidebarUnitItem({ index, unit, className }: { index: number; unit: Unit; className?: string }) {
+export function CourseSidebarUnitItem({
+	index,
+	unit,
+	className
+}: {
+	index: number
+	unit: Omit<Unit, "description">
+	className?: string
+}) {
 	const pathname = usePathname()
 
 	let outerClassName = ""
@@ -21,7 +29,7 @@ export function CourseSidebarUnitItem({ index, unit, className }: { index: numbe
 			className={cn("px-4 py-3 hover:bg-blue-100 hover:shadow-sm transition-all", outerClassName, className)}
 		>
 			<Link href={unit.path} className="w-full">
-				<h3 className="text-[10px] font-medium text-gray-500 uppercase">UNIT {index + 1}</h3>
+				<h3 className="text-[10px] font-medium text-gray-500 uppercase">Unit {index + 1}</h3>
 				<p className={cn(innerClassName, "capitalize")}>{unit.title}</p>
 			</Link>
 		</div>

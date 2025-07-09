@@ -1,27 +1,141 @@
-import * as logger from "@superbuilders/slog"
-import * as React from "react"
-import { CourseContent } from "@/components/overview/course/content/course-content"
-import type { Course } from "@/components/overview/types"
+/**
+ * Prettify is a utility type that properly formats the LSP definition of a type.
+ */
+export type Prettify<T> = {
+	[K in keyof T]: T[K]
+} & {}
 
-export default async function CoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
-	const { subject, course } = await params
-	logger.debug("initializing course page", { subject, course })
+/**
+ * ArticleLessonResource is a type that represents an article lesson resource.
+ */
+export type ArticleLessonResource = Prettify<{
+	type: "Article"
+	data: {
+		id: string
+	}
+}>
 
-	const coursePromise = getCourseData(subject, course)
-	logger.debug("course data retrieved", { subject, course })
+/**
+ * ExerciseLessonResource is a type that represents an exercise lesson resource.
+ */
+export type ExerciseLessonResource = Prettify<{
+	type: "Exercise"
+	data: {
+		id: string
+	}
+}>
 
-	return (
-		<div id="course-page">
-			<React.Suspense>
-				<CourseContent coursePromise={coursePromise} />
-			</React.Suspense>
-		</div>
-	)
-}
+/**
+ * VideoLessonResource is a type that represents a video lesson resource.
+ */
+export type VideoLessonResource = Prettify<{
+	type: "Video"
+	data: {
+		id: string
+	}
+}>
 
-async function getCourseData(subject: string, course: string): Promise<Course> {
-	logger.debug("retrieving course data", { subject, course })
+/**
+ * LessonResource is a type that represents a lesson resource.
+ */
+export type LessonResource = Prettify<
+	{
+		slug: string
+		path: string
+		title: string
+	} & (ArticleLessonResource | ExerciseLessonResource | VideoLessonResource)
+>
 
+/**
+ * Lesson is a type that represents a lesson.
+ */
+export type Lesson = Prettify<{
+	slug: string
+	path: string
+	title: string
+	resources: LessonResource[]
+}>
+
+/**
+ * QuizUnitResource is a type that represents a quiz unit resource.
+ */
+export type QuizUnitResource = Prettify<{
+	type: "Quiz"
+	data: {
+		id: string
+	}
+}>
+
+/**
+ * UnitTestUnitResource is a type that represents a unit test unit resource.
+ */
+export type UnitTestUnitResource = Prettify<{
+	type: "UnitTest"
+	data: {
+		id: string
+	}
+}>
+
+/**
+ * UnitResource is a type that represents a unit resource.
+ */
+export type UnitResource = Prettify<
+	{
+		slug: string
+		path: string
+		title: string
+	} & (QuizUnitResource | UnitTestUnitResource)
+>
+
+/**
+ * Unit is a type that represents a unit.
+ */
+export type Unit = Prettify<{
+	slug: string
+	path: string
+	title: string
+	description: string
+	lessons: Lesson[]
+	resources: UnitResource[]
+}>
+
+/**
+ * CourseChallengeResource is a type that represents a course challenge resource.
+ */
+export type CourseChallengeResource = Prettify<{
+	type: "CourseChallenge"
+	data: {
+		id: string
+	}
+}>
+
+/**
+ * CourseResource is a type that represents a course resource.
+ */
+export type CourseResource = Prettify<
+	{
+		slug: string
+		path: string
+		title: string
+	} & CourseChallengeResource
+>
+
+/**
+ * Course is a type that represents a course.
+ */
+export type Course = Prettify<{
+	slug: string
+	path: string
+	title: string
+	description: string
+	units: Unit[]
+	resources: CourseResource[]
+}>
+
+/**
+ * Temporary data blob.
+ */
+export function getCourseBlob(subject: string, course: string): Course {
 	return {
 		slug: course,
 		path: `/v2/${subject}/${course}`,

@@ -1,52 +1,65 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import _ from "lodash"
 import Link from "next/link"
 import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
+import type { LessonResource, Unit, UnitResource } from "@/components/overview/types"
 import { cn } from "@/lib/utils"
-import type { Lesson } from "./unit-content"
 
-export function UnitContentProficiencyItems({ lessons, className }: { lessons: Lesson[]; className?: string }) {
-	logger.debug("initializing unit proficiency items", { lessons: lessons.length })
+export function UnitContentProficiencyItems({ unit, className }: { unit: Unit; className?: string }) {
+	logger.debug("initializing unit proficiency items", {
+		lessons: unit.lessons.length,
+		resources: unit.resources.length
+	})
+
+	const exercises = _.filter(
+		_.flatMap(unit.lessons, (lesson) => lesson.resources),
+		(resource) => resource.type === "Exercise"
+	)
+	logger.debug("exercises", { exercises: exercises.length })
+
+	const resources: Array<LessonResource | UnitResource> = [...exercises, ...unit.resources]
+	logger.debug("resources", { resources: resources.length })
 
 	return (
 		<div id="unit-content-proficiency-item" className={cn("flex items-center gap-1", className)}>
-			{lessons.map((lesson) => (
-				<LessonProficiencyIcon key={lesson.slug} lesson={lesson} />
+			{resources.map((resource) => (
+				<ResourceProficiencyIcon key={resource.slug} resource={resource} />
 			))}
 		</div>
 	)
 }
 
-function LessonProficiencyIcon({ lesson }: { lesson: Lesson }) {
-	switch (lesson.type) {
-		case "exercise":
+function ResourceProficiencyIcon({ resource }: { resource: LessonResource | UnitResource }) {
+	switch (resource.type) {
+		case "Exercise":
 			return (
-				<Link href={lesson.path} className="inline-flex items-center">
+				<Link href={resource.path} className="inline-flex items-center">
 					<ProficiencyIcon variant="not-started">
-						<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {lesson.title}</h2>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {resource.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this exercise.</p>
 					</ProficiencyIcon>
 				</Link>
 			)
-		case "quiz":
+		case "Quiz":
 			return (
-				<Link href={lesson.path} className="inline-flex items-center">
+				<Link href={resource.path} className="inline-flex items-center">
 					<ProficiencyIcon variant="quiz">
-						<h2 className="text-md font-bold text-gray-800 capitalize">Quiz: {lesson.title}</h2>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Quiz: {resource.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this quiz.</p>
 					</ProficiencyIcon>
 				</Link>
 			)
-		case "unit-test":
+		case "UnitTest":
 			return (
-				<Link href={lesson.path} className="inline-flex items-center">
+				<Link href={resource.path} className="inline-flex items-center">
 					<ProficiencyIcon variant="unit-test">
-						<h2 className="text-md font-bold text-gray-800 capitalize">Unit Test: {lesson.title}</h2>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Unit Test: {resource.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this unit test.</p>
 					</ProficiencyIcon>
 				</Link>
 			)
 		default:
-			throw errors.new(`invalid lesson type: ${lesson.type}`)
+			throw errors.new(`invalid resource type: ${resource.type}`)
 	}
 }

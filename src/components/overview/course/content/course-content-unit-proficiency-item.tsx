@@ -1,11 +1,10 @@
-import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import { Sparkles } from "lucide-react"
 import Link from "next/link"
 import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
+import type { LessonResource, Unit, UnitResource } from "@/components/overview/types"
 import { cn } from "@/lib/utils"
-import type { Lesson, Unit } from "./course-content"
 
 export function CourseContentUnitProficiencyItem({
 	index,
@@ -25,6 +24,15 @@ export function CourseContentUnitProficiencyItem({
 		active
 	})
 
+	const exercises = _.filter(
+		_.flatMap(unit.lessons, (lesson) => lesson.resources),
+		(resource) => resource.type === "Exercise"
+	)
+	logger.debug("exercises", { exercises: exercises.length })
+
+	const resources: Array<LessonResource | UnitResource> = [...exercises, ...unit.resources]
+	logger.debug("resources", { resources: resources.length })
+
 	return (
 		<div className={cn(className, active ? "bg-blue-100" : "bg-gray-50")}>
 			<div className={cn("flex items-center gap-4", active && "mb-2")}>
@@ -41,16 +49,16 @@ export function CourseContentUnitProficiencyItem({
 				)}
 				{!active && (
 					<div className="flex items-center gap-2">
-						{unit.lessons.map((lesson) => (
-							<LessonProficiencyIcon key={lesson.slug} lesson={lesson} active={false} />
+						{resources.map((resource) => (
+							<ResourceProficiencyIcon key={resource.slug} resource={resource} active={false} />
 						))}
 					</div>
 				)}
 			</div>
 			{active && (
 				<div className="ml-20 flex items-center gap-2">
-					{unit.lessons.map((lesson, i) => (
-						<LessonProficiencyIcon key={lesson.slug} lesson={lesson} active={i === 0} />
+					{resources.map((resource, i) => (
+						<ResourceProficiencyIcon key={resource.slug} resource={resource} active={i === 0} />
 					))}
 				</div>
 			)}
@@ -58,36 +66,42 @@ export function CourseContentUnitProficiencyItem({
 	)
 }
 
-function LessonProficiencyIcon({ lesson, active = false }: { lesson: Lesson; active?: boolean }) {
-	switch (lesson.type) {
-		case "exercise":
+function ResourceProficiencyIcon({
+	resource,
+	active = false
+}: {
+	resource: LessonResource | UnitResource
+	active?: boolean
+}) {
+	switch (resource.type) {
+		case "Exercise":
 			return (
-				<Link href={lesson.path} className="inline-flex items-center">
+				<Link href={resource.path} className="inline-flex items-center">
 					<ProficiencyIcon variant="not-started" active={active}>
-						<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {lesson.title}</h2>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {resource.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this exercise.</p>
 					</ProficiencyIcon>
 				</Link>
 			)
-		case "quiz":
+		case "Quiz":
 			return (
-				<Link href={lesson.path} className="inline-flex items-center">
+				<Link href={resource.path} className="inline-flex items-center">
 					<ProficiencyIcon variant="quiz" active={active}>
-						<h2 className="text-md font-bold text-gray-800 capitalize">Quiz: {lesson.title}</h2>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Quiz: {resource.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this quiz.</p>
 					</ProficiencyIcon>
 				</Link>
 			)
-		case "unit-test":
+		case "UnitTest":
 			return (
-				<Link href={lesson.path} className="inline-flex items-center">
+				<Link href={resource.path} className="inline-flex items-center">
 					<ProficiencyIcon variant="unit-test" active={active}>
-						<h2 className="text-md font-bold text-gray-800 capitalize">Unit Test: {lesson.title}</h2>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Unit Test: {resource.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this unit test.</p>
 					</ProficiencyIcon>
 				</Link>
 			)
 		default:
-			throw errors.new(`invalid lesson type: ${lesson.type}`)
+			return null
 	}
 }

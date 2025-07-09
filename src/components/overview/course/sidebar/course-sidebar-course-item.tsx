@@ -5,9 +5,9 @@ import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import type { Course } from "./course-sidebar"
+import type { CourseSidebarData } from "./course-sidebar"
 
-export function CourseSidebarCourseItem({ course, className }: { course: Course; className?: string }) {
+export function CourseSidebarCourseItem({ course, className }: { course: CourseSidebarData; className?: string }) {
 	const pathname = usePathname()
 
 	let outerClassName = ""
@@ -30,8 +30,8 @@ export function CourseSidebarCourseItem({ course, className }: { course: Course;
 				</div>
 				<div>
 					<h1 className="text-sm font-bold text-gray-800 capitalize">{course.title}</h1>
-					<p className="text-xs text-gray-500 mt-1">
-						{course.units.length} UNITS • {_.sumBy(course.units, "lessons")} LESSONS
+					<p className="text-xs text-gray-500 mt-1 uppercase">
+						{course.units.length} Units • {_.sumBy(course.units, (unit) => unit.lessons.length)} Lessons
 					</p>
 				</div>
 			</Link>

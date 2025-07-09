@@ -2,9 +2,9 @@ import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import { BookOpen, Info } from "lucide-react"
 import Link from "next/link"
+import type { Unit } from "@/components/overview/types"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import type { Unit } from "./course-content"
 
 export function CourseContentUnitOverviewItem({
 	index,
@@ -24,7 +24,10 @@ export function CourseContentUnitOverviewItem({
 		active
 	})
 
-	const nonexercises = _.filter(unit.lessons, (lesson) => lesson.type !== "exercise")
+	const nonexercises = _.filter(
+		_.flatMap(unit.lessons, (lesson) => lesson.resources),
+		(resource) => resource.type !== "Exercise"
+	)
 	logger.debug("nonexercises", { nonexercises: nonexercises.length })
 
 	return (

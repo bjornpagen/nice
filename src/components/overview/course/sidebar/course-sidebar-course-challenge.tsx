@@ -2,10 +2,16 @@
 
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
+import type { CourseResource } from "@/components/overview/types"
 import { cn } from "@/lib/utils"
-import type { Challenge } from "./course-sidebar"
 
-export function CourseSidebarCourseChallenge({ challenge, className }: { challenge: Challenge; className?: string }) {
+export function CourseSidebarCourseChallenge({
+	challenge,
+	className
+}: {
+	challenge: CourseResource
+	className?: string
+}) {
 	return (
 		<div className={cn("p-3 rounded-xs border border-gray-200 shadow-sm", className)}>
 			<div className="flex items-center space-x-2 mb-2">

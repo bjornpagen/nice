@@ -3,10 +3,10 @@ import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import { Home } from "lucide-react"
 import Link from "next/link"
+import type { Unit } from "@/components/overview/types"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb"
-import type { Unit } from "./unit-content"
 
-export function UnitContentBreadcrumbs({ unit, className }: { unit: Unit; className?: string }) {
+export function UnitContentBreadcrumbs({ unit, className }: { unit: Omit<Unit, "description">; className?: string }) {
 	logger.debug("initializing unit breadcrumbs", { unit: _.omit(unit, "lessons") })
 
 	const parts = unit.path.split("/")
