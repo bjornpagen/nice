@@ -257,7 +257,9 @@ export async function generateQtiFromPerseus(
 
 	if (!xmlMatch?.[0]) {
 		logger.error("ai response did not contain valid qti xml", {
-			response: responseText.substring(0, 500), // Log first 500 chars for debugging
+			response: responseText.substring(0, 100),
+			responseEnd: responseText.substring(responseText.length - 100),
+			entireResponse: responseText,
 			rootTag
 		})
 		throw errors.new("invalid ai xml output")
@@ -358,7 +360,7 @@ Return a single JSON object with the final corrected XML.
 	if (parsedResult.error) {
 		logger.error("failed to parse qti correction response", {
 			error: parsedResult.error,
-			rawContent: messageContent.substring(0, 100), // First 100 chars for debugging
+			rawContent: messageContent.substring(0, 100),
 			rawContentEnd: messageContent.substring(messageContent.length - 100)
 		})
 		throw errors.wrap(parsedResult.error, "parsing qti correction response")
