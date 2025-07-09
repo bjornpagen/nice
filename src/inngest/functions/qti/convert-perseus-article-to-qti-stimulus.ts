@@ -154,7 +154,18 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 		})
 
 		logger.info("successfully validated qti stimulus", { articleId, identifier: tempIdentifier })
-		// Return the validated data to the orchestrator. DO NOT WRITE TO DB.
-		return { status: "success", articleId: article.id, qtiXml: validatedXml, title: article.title }
+
+		// NEW Step 4: Write the validated XML to the database.
+		const updateResult = await errors.try(
+			db.update(niceArticles).set({ xml: validatedXml }).where(eq(niceArticles.id, articleId))
+		)
+
+		if (updateResult.error) {
+			logger.error("failed to update article with qti xml", { articleId, error: updateResult.error })
+			throw errors.wrap(updateResult.error, "db update")
+		}
+
+		logger.info("successfully stored qti xml in database", { articleId })
+		return { status: "success", articleId: article.id }
 	}
 )

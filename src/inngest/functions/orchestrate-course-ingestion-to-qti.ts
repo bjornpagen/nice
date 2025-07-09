@@ -103,7 +103,8 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				.map((article) => article.id)
 		})
 
-		// Step 2: Invoke all migrations in parallel
+		// Step 2: Invoke all migrations in parallel and wait for them to complete.
+		// We no longer need to capture the return values.
 		const itemMigrationInvocations = allQuestionIds.map((questionId) =>
 			step.invoke(`migrate-item-${questionId}`, {
 				function: convertPerseusQuestionToQtiItem,
@@ -117,10 +118,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			})
 		)
 
-		const [itemResults, stimulusResults] = await Promise.all([
-			Promise.all(itemMigrationInvocations),
-			Promise.all(stimulusMigrationInvocations)
-		])
+		await Promise.all([...itemMigrationInvocations, ...stimulusMigrationInvocations])
 
 		// Step 3: Fetch assessment data for building tests
 		const assessmentsWithExercises = await db
@@ -160,28 +158,41 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			assessmentMap.get(row.assessmentId)?.questionIds.push(row.questionId)
 		}
 
-		// Step 4: Assemble the JSON payloads from the invocation results
+		// Step 4: Fetch validated XML directly from the database.
+		const itemXmlResults =
+			allQuestionIds.length > 0
+				? await db
+						.select({ id: schema.niceQuestions.id, xml: schema.niceQuestions.xml })
+						.from(schema.niceQuestions)
+						.where(inArray(schema.niceQuestions.id, allQuestionIds))
+				: []
+
+		const stimulusXmlResults =
+			filteredArticleIds.length > 0
+				? await db
+						.select({ id: schema.niceArticles.id, xml: schema.niceArticles.xml, title: schema.niceArticles.title })
+						.from(schema.niceArticles)
+						.where(inArray(schema.niceArticles.id, filteredArticleIds))
+				: []
+
+		// Assemble the JSON payloads
 		const { assessmentItems, assessmentStimuli, assessmentTests } = await step.run(
 			"assemble-json-payloads",
 			async () => {
-				// Filter successful results and type them properly
-				const successfulItems = itemResults.filter(
-					(r): r is { status: "success"; questionId: string; qtiXml: string } => r.status === "success"
-				)
-				const successfulStimuli = stimulusResults.filter(
-					(r): r is { status: "success"; articleId: string; qtiXml: string; title: string } => r.status === "success"
-				)
+				const items = itemXmlResults
+					.filter((r) => r.xml)
+					.map((r) => ({
+						identifier: `nice-question-${r.id}`,
+						xml: r.xml
+					}))
 
-				const items = successfulItems.map((r) => ({
-					identifier: `nice-question-${r.questionId}`,
-					xml: r.qtiXml
-				}))
-
-				const stimuli = successfulStimuli.map((r) => ({
-					identifier: `nice-stimulus-${r.articleId}`,
-					title: r.title,
-					content: r.qtiXml
-				}))
+				const stimuli = stimulusXmlResults
+					.filter((r) => r.xml)
+					.map((r) => ({
+						identifier: `nice-stimulus-${r.id}`,
+						title: r.title,
+						content: r.xml
+					}))
 
 				// Build assessment tests from the pre-fetched data
 				const tests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => ({

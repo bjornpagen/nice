@@ -167,7 +167,8 @@ const articles = schema.table(
 		title: text("title").notNull(),
 		slug: text("slug").notNull(),
 		path: text("path").notNull().unique(),
-		perseusContent: jsonb("perseus_content").notNull()
+		perseusContent: jsonb("perseus_content").notNull(),
+		xml: text("xml")
 	},
 	(table) => [index("articles_path_idx").on(table.path), index("articles_title_idx").on(table.title)]
 )
@@ -192,7 +193,8 @@ const questions = schema.table(
 		id: text("id").primaryKey(),
 		exerciseId: text("exercise_id").notNull(),
 		sha: text("sha").notNull().default(""),
-		parsedData: jsonb("parsed_data").notNull()
+		parsedData: jsonb("parsed_data").notNull(),
+		xml: text("xml")
 	},
 	(table) => [
 		index("questions_exercise_id_idx").on(table.exerciseId),

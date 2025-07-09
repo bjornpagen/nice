@@ -151,7 +151,18 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		})
 
 		logger.info("successfully validated qti item", { questionId, identifier: tempIdentifier })
-		// Return the validated data to the orchestrator. DO NOT WRITE TO DB.
-		return { status: "success", questionId: question.id, qtiXml: validatedXml }
+
+		// NEW Step 4: Write the validated XML to the database.
+		const updateResult = await errors.try(
+			db.update(niceQuestions).set({ xml: validatedXml }).where(eq(niceQuestions.id, questionId))
+		)
+
+		if (updateResult.error) {
+			logger.error("failed to update question with qti xml", { questionId, error: updateResult.error })
+			throw errors.wrap(updateResult.error, "db update")
+		}
+
+		logger.info("successfully stored qti xml in database", { questionId })
+		return { status: "success", questionId: question.id }
 	}
 )
