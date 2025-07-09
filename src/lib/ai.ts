@@ -29,13 +29,30 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
  * @returns The generated content response.
  */
 async function generateContentWithRetry(logger: logger.Logger, request: GenerateContentRequest) {
+	logger.debug("starting gemini content generation", {
+		model: GEMINI_MODEL,
+		maxRetries: MAX_RETRIES,
+		initialBackoff: INITIAL_BACKOFF_MS
+	})
+
 	let lastError: unknown
 	for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+		logger.debug("attempting gemini api call", {
+			attempt: attempt + 1,
+			maxAttempts: MAX_RETRIES
+		})
+
 		const result = await errors.try(gemini.getGenerativeModel({ model: GEMINI_MODEL }).generateContent(request))
 
 		if (result.error) {
 			lastError = result.error
 			const isRateLimitError = lastError instanceof Error && lastError.message.includes("429")
+
+			logger.debug("gemini api call failed", {
+				attempt: attempt + 1,
+				isRateLimitError,
+				errorMessage: lastError instanceof Error ? lastError.message : "unknown error"
+			})
 
 			if (!isRateLimitError) {
 				logger.error("gemini api call failed with non-retriable error", { error: lastError })
@@ -47,10 +64,16 @@ async function generateContentWithRetry(logger: logger.Logger, request: Generate
 				attempt: attempt + 1,
 				delay: `${Math.round(delay / 1000)}s`
 			})
+
+			logger.debug("sleeping before retry", { delayMs: delay })
 			await sleep(delay)
 			continue
 		}
 
+		logger.debug("gemini api call successful", {
+			attempt: attempt + 1,
+			responseLength: result.data.response?.text()?.length || 0
+		})
 		return result.data
 	}
 
@@ -64,20 +87,33 @@ async function generateContentWithRetry(logger: logger.Logger, request: Generate
 /**
  * Creates the structured prompt for the AI model to convert Perseus JSON to QTI XML,
  * including a rich set of few-shot examples.
+ * @param logger The logger instance.
  * @param perseusJsonString The stringified Perseus JSON data for the current conversion task.
  * @param options An object to specify the conversion type. Defaults to 'assessmentItem'.
  * @returns The system instruction and user content for the AI prompt.
  */
 export async function createQtiConversionPrompt(
+	logger: logger.Logger,
 	perseusJsonString: string,
 	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" }
 ) {
 	const { type } = options
 	const rootTag = type === "stimulus" ? "qti-assessment-stimulus" : "qti-assessment-item"
 
+	logger.debug("creating qti conversion prompt", {
+		type,
+		rootTag,
+		perseusDataLength: perseusJsonString.length
+	})
+
 	const systemInstruction = `You are an expert XML generator for educational content. Your primary and most critical function is to convert a Perseus JSON object into a single, well-formed QTI 3.0 XML \`${rootTag}\`. Your output MUST be only the raw XML. The XML MUST be perfect and parseable. The most common and catastrophic failure is an incomplete or malformed closing tag. You are STRICTLY FORBIDDEN from using partial or lazy closing tags like \`</_>\` or \`</>\`. Every single XML element, such as \`<p>\`, must have a corresponding full closing tag, \`</p>\`. This rule is absolute and cannot be violated.`
 
+	logger.debug("loading conversion examples", { type })
 	const examples = await loadConversionExamples({ type })
+	logger.debug("loaded conversion examples", {
+		exampleCount: examples.length,
+		exampleNames: examples.map((e) => e.name)
+	})
 
 	const examplesXml = examples
 		.map(
@@ -124,12 +160,6 @@ Your output will be fed directly into an automated XML parser. If the XML is not
     - ✅ **CORRECT:** \`&lt;mo&gt;&lt;/mo&gt;\`, \`title="AT&amp;T"\`
     - ❌ **FORBIDDEN:** \`<mo>\`, \`title="AT&T"\`
 
-5.  **WRAP ALL CHOICE TEXT IN <p> TAGS.**
-    Raw text is NOT allowed as a direct child of \`<qti-simple-choice>\`. All text content must be wrapped in a paragraph tag.
-
-    - ✅ **CORRECT:** \`<qti-simple-choice identifier="A"><p>This is the choice text.</p></qti-simple-choice>\`
-    - ❌ **FORBIDDEN:** \`<qti-simple-choice identifier="A">This is the choice text.</qti-simple-choice>\`
-
 ---
 
 ### Other Content Rules:
@@ -144,6 +174,13 @@ FINAL REMINDER: The examples demonstrate PERFECT QTI 3.0 XML output. Follow thei
 ${perseusJsonString}
 </perseus_json>
 `
+
+	logger.debug("prompt created", {
+		systemInstructionLength: systemInstruction.length,
+		userContentLength: userContent.length,
+		totalPromptLength: systemInstruction.length + userContent.length
+	})
+
 	return { systemInstruction, userContent, rootTag }
 }
 
@@ -159,8 +196,18 @@ export async function generateQtiFromPerseus(
 	perseusData: unknown,
 	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" }
 ): Promise<string> {
+	logger.debug("starting qti generation from perseus", { type: options.type })
+
 	const perseusJsonString = JSON.stringify(perseusData, null, 2)
-	const { systemInstruction, userContent, rootTag } = await createQtiConversionPrompt(perseusJsonString, options)
+	logger.debug("stringified perseus data", { jsonLength: perseusJsonString.length })
+
+	const { systemInstruction, userContent, rootTag } = await createQtiConversionPrompt(
+		logger,
+		perseusJsonString,
+		options
+	)
+
+	logger.debug("calling gemini for qti generation", { rootTag })
 
 	const result = await errors.try(
 		generateContentWithRetry(logger, {
@@ -174,18 +221,52 @@ export async function generateQtiFromPerseus(
 	}
 
 	const response = result.data
-	const responseText = response.response.text()
+	let responseText = response.response.text()
+
+	logger.debug("received gemini response", {
+		responseLength: responseText?.length || 0,
+		hasResponse: !!responseText
+	})
+
 	if (!responseText) {
 		logger.warn("gemini returned an empty response for qti conversion")
 		throw errors.new("empty ai response")
 	}
 
-	// Clean the response to ensure it's only the XML content
-	const xmlMatch = responseText.match(new RegExp(`<${rootTag}[\\s\\S]*?>[\\s\\S]*?<\\/${rootTag}>`))
+	// Defensively clean the response to remove markdown fences and trim whitespace.
+	const originalLength = responseText.length
+	responseText = responseText.replace(/```xml\n?|```/g, "").trim()
+
+	logger.debug("cleaned response text", {
+		originalLength,
+		cleanedLength: responseText.length,
+		removedChars: originalLength - responseText.length
+	})
+
+	// Find the XML content, which may or may not start with an <?xml ...?> declaration.
+	// This regex is flexible enough to handle both cases.
+	logger.debug("searching for xml content", { rootTag })
+
+	const xmlMatch = responseText.match(new RegExp(`(<\?xml[\\s\\S]*?\\?>)?\\s*<${rootTag}[\\s\\S]*?<\\/${rootTag}>`))
+
+	logger.debug("xml match result", {
+		foundMatch: !!xmlMatch?.[0],
+		matchLength: xmlMatch?.[0]?.length || 0,
+		hasXmlDeclaration: !!xmlMatch?.[0]?.startsWith("<?xml")
+	})
+
 	if (!xmlMatch?.[0]) {
-		logger.error("ai response did not contain valid qti xml", { response: responseText, rootTag })
+		logger.error("ai response did not contain valid qti xml", {
+			response: responseText.substring(0, 500), // Log first 500 chars for debugging
+			rootTag
+		})
 		throw errors.new("invalid ai xml output")
 	}
+
+	logger.debug("successfully extracted qti xml", {
+		xmlLength: xmlMatch[0].length,
+		rootTag
+	})
 
 	return xmlMatch[0]
 }
@@ -208,7 +289,11 @@ export async function fixInvalidQtiXml(
 	}
 ): Promise<string> {
 	const { invalidXml, errorMessage, rootTag } = input
-	logger.debug("attempting to fix invalid qti xml", { rootTag, error: errorMessage })
+	logger.debug("attempting to fix invalid qti xml", {
+		rootTag,
+		error: errorMessage,
+		invalidXmlLength: invalidXml.length
+	})
 
 	const userPrompt = `You are an expert XML developer specializing in the QTI 3.0 standard. You have been given a piece of XML that was rejected by an API, along with the API's error message. Your task is to analyze the XML and the error, fix the XML so that it is perfectly well-formed and valid according to the QTI 3.0 standard, and return the corrected XML.
 
@@ -238,6 +323,12 @@ The only valid QTI tags for this application are:
 Return a single JSON object with the final corrected XML.
 `
 
+	logger.debug("calling openai for xml correction", {
+		model: OPENAI_FIXER_MODEL,
+		promptLength: userPrompt.length,
+		validTagCount: VALID_QTI_TAGS.length
+	})
+
 	const response = await errors.try(
 		openai.chat.completions.create({
 			model: OPENAI_FIXER_MODEL,
@@ -250,24 +341,50 @@ Return a single JSON object with the final corrected XML.
 		throw errors.wrap(response.error, "qti xml correction")
 	}
 
+	logger.debug("received openai response", {
+		choiceCount: response.data.choices.length,
+		finishReason: response.data.choices[0]?.finish_reason
+	})
+
 	const messageContent = response.data.choices[0]?.message.content
 	if (!messageContent) {
 		logger.error("qti xml correction returned no content")
 		throw errors.new("qti xml correction returned no content")
 	}
 
+	logger.debug("parsing correction response", { contentLength: messageContent.length })
+
 	const parsedResult = errors.trySync(() => JSON.parse(messageContent))
 	if (parsedResult.error) {
-		logger.error("failed to parse qti correction response", { error: parsedResult.error })
+		logger.error("failed to parse qti correction response", {
+			error: parsedResult.error,
+			rawContent: messageContent.substring(0, 100), // First 100 chars for debugging
+			rawContentEnd: messageContent.substring(messageContent.length - 100)
+		})
 		throw errors.wrap(parsedResult.error, "parsing qti correction response")
 	}
 
+	logger.debug("validating correction response against schema")
+
 	const validationResult = QtiCorrectionSchema.safeParse(parsedResult.data)
 	if (!validationResult.success) {
-		logger.error("qti correction response validation failed", { error: validationResult.error })
+		logger.error("qti correction response validation failed", {
+			error: validationResult.error,
+			parsedData: parsedResult.data
+		})
 		throw errors.wrap(validationResult.error, "qti correction response validation")
 	}
 
-	logger.info("successfully corrected qti xml", { rootTag })
+	logger.info("successfully corrected qti xml", {
+		rootTag,
+		correctedXmlLength: validationResult.data.corrected_xml.length
+	})
+
+	logger.debug("correction complete", {
+		originalLength: invalidXml.length,
+		correctedLength: validationResult.data.corrected_xml.length,
+		lengthDiff: validationResult.data.corrected_xml.length - invalidXml.length
+	})
+
 	return validationResult.data.corrected_xml
 }
