@@ -1,6 +1,6 @@
 import * as logger from "@superbuilders/slog"
 import type React from "react"
-import { type Course, CourseSidebar } from "@/components/course/course-sidebar"
+import { type Course, CourseSidebar } from "@/components/course/sidebar/course-sidebar"
 import { Footer } from "@/components/footer"
 
 export default async function CourseLayout({
