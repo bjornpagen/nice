@@ -6,7 +6,7 @@ import Link from "next/link"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { getCoursesGroupedBySubject } from "@/lib/actions/courses"
+import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
 
 interface ExploreDropdownProps {
 	dark?: boolean
@@ -14,13 +14,13 @@ interface ExploreDropdownProps {
 
 export function ExploreDropdown({ dark = false }: ExploreDropdownProps) {
 	const [subjectsWithCourses, setSubjectsWithCourses] = React.useState<Awaited<
-		ReturnType<typeof getCoursesGroupedBySubject>
+		ReturnType<typeof getOneRosterCoursesForExplore>
 	> | null>(null)
 	const [isLoading, setIsLoading] = React.useState(true)
 
 	React.useEffect(() => {
 		const fetchData = async () => {
-			const result = await errors.try(getCoursesGroupedBySubject())
+			const result = await errors.try(getOneRosterCoursesForExplore())
 			if (result.error) {
 				// Failed to fetch courses, will show empty state
 			} else {
