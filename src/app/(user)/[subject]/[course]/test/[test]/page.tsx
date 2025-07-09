@@ -66,6 +66,27 @@ export type CourseData = {
 	subject: string
 	course: { title: string; path: string }
 	test: CourseTest
+	unit: { title: string; path: string; ordering: number; children: LessonInfo[] }
+	lesson: { title: string; path: string; children: LessonChild[] }
+}
+
+export type LessonInfo = {
+	type: "Lesson"
+	id: string
+	slug: string
+	title: string
+	description: string
+	path: string
+	children: LessonChild[]
+}
+
+export type LessonChild = {
+	type: "Video" | "Article" | "Exercise"
+	id: string
+	slug: string
+	title: string
+	description: string
+	path: string
 }
 
 // Consolidated data fetching function for the test page
@@ -98,6 +119,47 @@ async function fetchTestData(params: { subject: string; course: string; test: st
 	return { test, questions }
 }
 
+// Additional queries for course data
+const getUnitsInCourseQuery = db
+	.select({
+		id: schema.niceUnits.id,
+		title: schema.niceUnits.title,
+		path: schema.niceUnits.path,
+		ordering: schema.niceUnits.ordering
+	})
+	.from(schema.niceUnits)
+	.where(eq(schema.niceUnits.courseId, sql.placeholder("courseId")))
+	.orderBy(schema.niceUnits.ordering)
+	.prepare("src_app_user_subject_course_test_test_page_get_units_in_course")
+
+const getLessonsInUnitQuery = db
+	.select({
+		id: schema.niceLessons.id,
+		title: schema.niceLessons.title,
+		path: schema.niceLessons.path
+	})
+	.from(schema.niceLessons)
+	.where(eq(schema.niceLessons.unitId, sql.placeholder("unitId")))
+	.orderBy(schema.niceLessons.ordering)
+	.prepare("src_app_user_subject_course_test_test_page_get_lessons_in_unit")
+
+const getLessonContentQuery = db
+	.select({
+		contentId: schema.niceLessonContents.contentId,
+		contentType: schema.niceLessonContents.contentType,
+		ordering: schema.niceLessonContents.ordering,
+		video: schema.niceVideos,
+		article: schema.niceArticles,
+		exercise: schema.niceExercises
+	})
+	.from(schema.niceLessonContents)
+	.leftJoin(schema.niceVideos, eq(schema.niceLessonContents.contentId, schema.niceVideos.id))
+	.leftJoin(schema.niceArticles, eq(schema.niceLessonContents.contentId, schema.niceArticles.id))
+	.leftJoin(schema.niceExercises, eq(schema.niceLessonContents.contentId, schema.niceExercises.id))
+	.where(eq(schema.niceLessonContents.lessonId, sql.placeholder("lessonId")))
+	.orderBy(schema.niceLessonContents.ordering)
+	.prepare("src_app_user_subject_course_test_test_page_get_lesson_content")
+
 // Course data fetching function for the layout
 async function fetchCourseData(params: { subject: string; course: string; test: string }): Promise<CourseData> {
 	const decodedTest = decodeURIComponent(params.test)
@@ -122,10 +184,132 @@ async function fetchCourseData(params: { subject: string; course: string; test: 
 		notFound()
 	}
 
+	// Get all units in the course
+	const unitsResult = await getUnitsInCourseQuery.execute({ courseId: course.id })
+
+	if (unitsResult.length === 0) {
+		notFound()
+	}
+
+	// Get the last unit
+	const lastUnit = unitsResult[unitsResult.length - 1]
+	if (!lastUnit) {
+		notFound()
+	}
+
+	// Get all lessons in the last unit
+	const lessonsResult = await getLessonsInUnitQuery.execute({ unitId: lastUnit.id })
+
+	if (lessonsResult.length === 0) {
+		notFound()
+	}
+
+	// Get the last lesson
+	const lastLesson = lessonsResult[lessonsResult.length - 1]
+	if (!lastLesson) {
+		notFound()
+	}
+
+	// Get content for the last lesson
+	const lessonContentResult = await getLessonContentQuery.execute({ lessonId: lastLesson.id })
+
+	// Build lesson children
+	const lessonChildren: LessonChild[] = []
+	for (const row of lessonContentResult) {
+		if (row.contentType === "Video" && row.video) {
+			lessonChildren.push({
+				type: "Video",
+				id: row.video.id,
+				slug: row.video.slug,
+				title: row.video.title,
+				description: row.video.description || "",
+				path: row.video.path
+			})
+		} else if (row.contentType === "Article" && row.article) {
+			lessonChildren.push({
+				type: "Article",
+				id: row.article.id,
+				slug: row.article.slug,
+				title: row.article.title,
+				description: "",
+				path: row.article.path
+			})
+		} else if (row.contentType === "Exercise" && row.exercise) {
+			lessonChildren.push({
+				type: "Exercise",
+				id: row.exercise.id,
+				slug: row.exercise.slug,
+				title: row.exercise.title,
+				description: row.exercise.description || "",
+				path: row.exercise.path
+			})
+		}
+	}
+
+	// Build all lessons for the unit
+	const allLessonsWithContent = await Promise.all(
+		lessonsResult.map(async (lesson) => {
+			const lessonContentResult = await getLessonContentQuery.execute({ lessonId: lesson.id })
+			const children: LessonChild[] = []
+
+			for (const row of lessonContentResult) {
+				if (row.contentType === "Video" && row.video) {
+					children.push({
+						type: "Video",
+						id: row.video.id,
+						slug: row.video.slug,
+						title: row.video.title,
+						description: row.video.description || "",
+						path: row.video.path
+					})
+				} else if (row.contentType === "Article" && row.article) {
+					children.push({
+						type: "Article",
+						id: row.article.id,
+						slug: row.article.slug,
+						title: row.article.title,
+						description: "",
+						path: row.article.path
+					})
+				} else if (row.contentType === "Exercise" && row.exercise) {
+					children.push({
+						type: "Exercise",
+						id: row.exercise.id,
+						slug: row.exercise.slug,
+						title: row.exercise.title,
+						description: row.exercise.description || "",
+						path: row.exercise.path
+					})
+				}
+			}
+
+			return {
+				type: "Lesson" as const,
+				id: lesson.id,
+				slug: lesson.path.split("/").pop() || lesson.id,
+				title: lesson.title,
+				description: "",
+				path: lesson.path,
+				children
+			}
+		})
+	)
+
 	return {
 		subject: params.subject,
 		course: { title: course.title, path: course.path },
-		test
+		test,
+		unit: {
+			title: lastUnit.title,
+			path: lastUnit.path,
+			ordering: lastUnit.ordering,
+			children: allLessonsWithContent
+		},
+		lesson: {
+			title: lastLesson.title,
+			path: lastLesson.path,
+			children: lessonChildren
+		}
 	}
 }
 

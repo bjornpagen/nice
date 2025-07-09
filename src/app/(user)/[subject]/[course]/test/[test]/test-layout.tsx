@@ -14,20 +14,6 @@ export function TestLayout({
 	const courseData = React.use(courseDataPromise)
 	const [isCollapsed, setIsCollapsed] = React.useState(false)
 
-	// Create mock unit and lesson data for the sidebar
-	const mockUnit = {
-		title: "Course Challenge",
-		path: courseData.course.path,
-		ordering: 0,
-		children: []
-	}
-
-	const mockLesson = {
-		title: courseData.test.title,
-		path: `${courseData.course.path}/test/${courseData.test.slug}`,
-		children: []
-	}
-
 	// No-op function since we don't have multiple lessons in a test
 	const setSelectedLessonId = React.useCallback(() => {}, [])
 
@@ -37,8 +23,8 @@ export function TestLayout({
 			<LessonSidebar
 				subject={courseData.subject}
 				course={courseData.course}
-				unit={mockUnit}
-				lesson={mockLesson}
+				unit={courseData.unit}
+				lesson={courseData.lesson}
 				isCollapsed={isCollapsed}
 				setIsCollapsed={setIsCollapsed}
 				setSelectedLessonId={setSelectedLessonId}
