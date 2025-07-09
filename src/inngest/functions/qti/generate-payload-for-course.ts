@@ -4,6 +4,7 @@ import * as errors from "@superbuilders/errors"
 import { and, eq, inArray, isNotNull, ne } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
+import { env } from "@/env"
 import { inngest } from "@/inngest/client"
 import type { CreateAssessmentTestInput } from "@/lib/qti"
 
@@ -167,7 +168,7 @@ export const generatePayloadForCourse = inngest.createFunction(
 									sequence: 1,
 									"qti-assessment-item-ref": validQtiIdentifiers.map((id) => ({
 										identifier: id,
-										href: `/assessment-items/${id}`
+										href: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-items/${id}`
 									}))
 								}
 							]
