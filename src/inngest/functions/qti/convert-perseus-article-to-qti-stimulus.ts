@@ -47,10 +47,10 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 		id: "convert-perseus-article-to-qti-stimulus",
 		name: "Convert Perseus Article to QTI Stimulus",
 		concurrency: {
-			// Limit to 10 concurrent executions for this function.
+			// Limit to 20 concurrent executions for this function.
 			// The key ensures this function shares its concurrency limit with
 			// the 'convert-perseus-question-to-qti-item' function.
-			limit: 10,
+			limit: 20,
 			key: "gemini-api"
 		}
 	},
