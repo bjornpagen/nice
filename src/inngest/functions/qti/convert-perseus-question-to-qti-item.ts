@@ -43,10 +43,10 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		id: "convert-perseus-question-to-qti-item",
 		name: "Convert Perseus Question to QTI Item",
 		concurrency: {
-			// Limit to 20 concurrent executions for this function.
+			// Limit to 10 concurrent executions for this function.
 			// The key ensures this function shares its concurrency limit with
 			// the 'convert-perseus-article-to-qti-stimulus' function.
-			limit: 20,
+			limit: 10,
 			key: "gemini-api"
 		}
 	},
