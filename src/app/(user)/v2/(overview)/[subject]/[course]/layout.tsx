@@ -1,5 +1,3 @@
-"use server"
-
 import * as logger from "@superbuilders/slog"
 import type React from "react"
 import { type Course, CourseSidebar } from "@/components/course/course-sidebar"
@@ -14,8 +12,8 @@ export default async function CourseLayout({
 	const { subject, course } = await params
 	logger.debug("initializing course layout", { subject, course })
 
-	logger.debug("retrieving course data", { subject, course })
 	const coursePromise = getCourseData(subject, course)
+	logger.debug("course data retrieved", { subject, course })
 
 	return (
 		<div id="course-layout" className="flex flex-col lg:flex-row">
@@ -31,6 +29,8 @@ export default async function CourseLayout({
 }
 
 async function getCourseData(subject: string, course: string): Promise<Course> {
+	logger.debug("retrieving course data", { subject, course })
+
 	return {
 		slug: course,
 		path: `/v2/${subject}/${course}`,
@@ -48,6 +48,9 @@ async function getCourseData(subject: string, course: string): Promise<Course> {
 				title: "Unit 2 Title",
 				lessons: 5
 			}
-		]
+		],
+		challenge: {
+			path: `/v2/${subject}/${course}/challenge`
+		}
 	}
 }
