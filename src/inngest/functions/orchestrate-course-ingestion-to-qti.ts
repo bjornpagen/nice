@@ -1,15 +1,10 @@
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
-import { and, eq, inArray } from "drizzle-orm"
+import { and, eq, inArray, isNotNull } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { convertPerseusArticleToQtiStimulus } from "./qti/convert-perseus-article-to-qti-stimulus"
-import { convertPerseusQuestionToQtiItem } from "./qti/convert-perseus-question-to-qti-item"
-
-// Maximum size limit for Perseus content in bytes (using character count as proxy)
-const MAX_PERSEUS_CONTENT_SIZE_BYTES = 100000
 
 export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	{
@@ -19,9 +14,9 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	{ event: "qti/course.ingest" },
 	async ({ event, step, logger }) => {
 		const { courseId } = event.data
-		logger.info("starting qti generation and dump workflow", { courseId })
+		logger.info("starting qti json dump workflow from database", { courseId })
 
-		// Step 1: Fetch all question IDs before the step.run
+		// Step 1: Fetch all course structure and content IDs from the database.
 		const units = await db.query.niceUnits.findMany({
 			where: eq(schema.niceUnits.courseId, courseId),
 			columns: { id: true }
@@ -32,101 +27,34 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		}
 		const unitIds = units.map((u) => u.id)
 
-		const lessons = await db.query.niceLessons.findMany({
-			where: inArray(schema.niceLessons.unitId, unitIds),
-			columns: { id: true }
-		})
-		if (lessons.length === 0) {
-			logger.info("no lessons found for course", { courseId })
-			return { message: "No lessons found for course", courseId }
-		}
-		const lessonIds = lessons.map((l) => l.id)
+		const allQuestions = await db
+			.select({
+				id: schema.niceQuestions.id,
+				xml: schema.niceQuestions.xml
+			})
+			.from(schema.niceQuestions)
+			.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+			.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+			.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+			.where(and(inArray(schema.niceLessons.unitId, unitIds), isNotNull(schema.niceQuestions.xml)))
 
-		// Fetch all exercise IDs from lessons
-		const lessonContents = await db.query.niceLessonContents.findMany({
-			where: and(
-				inArray(schema.niceLessonContents.lessonId, lessonIds),
-				eq(schema.niceLessonContents.contentType, "Exercise")
-			),
-			columns: { contentId: true }
-		})
-		const exerciseIds = lessonContents.map((lc) => lc.contentId)
-
-		// Fetch questions for all exercises
-		const questions =
-			exerciseIds.length > 0
-				? await db.query.niceQuestions.findMany({
-						where: inArray(schema.niceQuestions.exerciseId, exerciseIds),
-						columns: { id: true }
-					})
-				: []
-		const allQuestionIds = questions.map((q) => q.id)
-
-		// Fetch all article IDs
-		const articlesResult = await db
-			.select({ id: schema.niceArticles.id })
+		const allArticles = await db
+			.select({
+				id: schema.niceArticles.id,
+				xml: schema.niceArticles.xml,
+				title: schema.niceArticles.title
+			})
 			.from(schema.niceArticles)
 			.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
-			.where(
-				and(
-					inArray(schema.niceLessonContents.lessonId, lessonIds),
-					eq(schema.niceLessonContents.contentType, "Article")
-				)
-			)
-		const allArticleIds = articlesResult.map((a) => a.id)
+			.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+			.where(and(inArray(schema.niceLessons.unitId, unitIds), isNotNull(schema.niceArticles.xml)))
 
-		// Fetch articles with their content to check size (outside of step.run)
-		const articlesWithContent =
-			allArticleIds.length > 0
-				? await db.query.niceArticles.findMany({
-						where: inArray(schema.niceArticles.id, allArticleIds),
-						columns: { id: true, perseusContent: true }
-					})
-				: []
-
-		// Filter out articles that are too large (pure computation, no db operations)
-		const filteredArticleIds = await step.run("filter-oversized-articles", async () => {
-			return articlesWithContent
-				.filter((article) => {
-					if (!article.perseusContent) return false
-					const size = JSON.stringify(article.perseusContent).length
-					if (size > MAX_PERSEUS_CONTENT_SIZE_BYTES) {
-						logger.warn("skipping oversized article", {
-							articleId: article.id,
-							size,
-							maxSize: MAX_PERSEUS_CONTENT_SIZE_BYTES
-						})
-						return false
-					}
-					return true
-				})
-				.map((article) => article.id)
-		})
-
-		// Step 2: Invoke all migrations in parallel and wait for them to complete.
-		// We no longer need to capture the return values.
-		const itemMigrationInvocations = allQuestionIds.map((questionId) =>
-			step.invoke(`migrate-item-${questionId}`, {
-				function: convertPerseusQuestionToQtiItem,
-				data: { questionId }
-			})
-		)
-		const stimulusMigrationInvocations = filteredArticleIds.map((articleId) =>
-			step.invoke(`migrate-stimulus-${articleId}`, {
-				function: convertPerseusArticleToQtiStimulus,
-				data: { articleId }
-			})
-		)
-
-		await Promise.all([...itemMigrationInvocations, ...stimulusMigrationInvocations])
-
-		// Step 3: Fetch assessment data for building tests
+		// Step 2: Fetch assessment data for building tests.
 		const assessmentsWithExercises = await db
 			.select({
 				assessmentId: schema.niceAssessments.id,
 				assessmentTitle: schema.niceAssessments.title,
 				assessmentType: schema.niceAssessments.type,
-				exerciseId: schema.niceAssessmentExercises.exerciseId,
 				questionId: schema.niceQuestions.id
 			})
 			.from(schema.niceAssessments)
@@ -158,56 +86,33 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			assessmentMap.get(row.assessmentId)?.questionIds.push(row.questionId)
 		}
 
-		// Step 4: Fetch validated XML directly from the database.
-		const itemXmlResults =
-			allQuestionIds.length > 0
-				? await db
-						.select({ id: schema.niceQuestions.id, xml: schema.niceQuestions.xml })
-						.from(schema.niceQuestions)
-						.where(inArray(schema.niceQuestions.id, allQuestionIds))
-				: []
-
-		const stimulusXmlResults =
-			filteredArticleIds.length > 0
-				? await db
-						.select({ id: schema.niceArticles.id, xml: schema.niceArticles.xml, title: schema.niceArticles.title })
-						.from(schema.niceArticles)
-						.where(inArray(schema.niceArticles.id, filteredArticleIds))
-				: []
-
-		// Assemble the JSON payloads
+		// Step 3: Assemble the JSON payloads from the fetched data.
 		const { assessmentItems, assessmentStimuli, assessmentTests } = await step.run(
-			"assemble-json-payloads",
+			"assemble-json-payloads-from-db",
 			async () => {
-				const items = itemXmlResults
-					.filter((r) => r.xml)
-					.map((r) => ({
-						identifier: `nice-question-${r.id}`,
-						xml: r.xml
-					}))
+				const items = allQuestions.map((q) => ({
+					identifier: `nice:${q.id}`,
+					xml: q.xml
+				}))
 
-				const stimuli = stimulusXmlResults
-					.filter((r) => r.xml)
-					.map((r) => ({
-						identifier: `nice-stimulus-${r.id}`,
-						title: r.title,
-						content: r.xml
-					}))
+				const stimuli = allArticles.map((a) => ({
+					identifier: `nice:${a.id}`,
+					title: a.title,
+					content: a.xml
+				}))
 
-				// Build assessment tests from the pre-fetched data
 				const tests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => ({
-					identifier: `nice-test-${assessmentId}`,
+					identifier: `nice:${assessmentId}`,
 					title: data.title,
 					type: data.type,
-					items: data.questionIds.map((qId) => `nice-question-${qId}`)
+					items: data.questionIds.map((qId) => `nice:${qId}`)
 				}))
 
 				return { assessmentItems: items, assessmentStimuli: stimuli, assessmentTests: tests }
 			}
 		)
 
-		// Step 5: Write the final JSON files to the data/ directory
-		// First fetch the course data outside of step.run
+		// Step 4: Write the final JSON files to the data/ directory.
 		const course = await db.query.niceCourses.findFirst({
 			where: eq(schema.niceCourses.id, courseId)
 		})

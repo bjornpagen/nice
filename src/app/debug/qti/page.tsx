@@ -79,7 +79,7 @@ export default function DebugQTIPage() {
 				<h1 className="text-3xl font-bold">QTI Renderer Debug</h1>
 				<p className="text-gray-600 mt-2">
 					Testing QTI content rendering with the demo identifier:{" "}
-					<code className="bg-gray-100 px-2 py-1 rounded">nice-question-x00020ee4f0de8b58</code>
+					<code className="bg-gray-100 px-2 py-1 rounded">nice:x00020ee4f0de8b58</code>
 				</p>
 			</div>
 
@@ -88,7 +88,7 @@ export default function DebugQTIPage() {
 					<h2 className="text-xl font-semibold">QTI Content</h2>
 					<div className="border rounded-lg overflow-hidden">
 						<QTIRenderer
-							identifier="nice-question-x00020ee4f0de8b58"
+							identifier="nice:x00020ee4f0de8b58"
 							onResponseChange={handleResponseChange}
 							onMessage={handleMessage}
 							onRawMessage={handleRawMessage}
@@ -201,7 +201,7 @@ export default function DebugQTIPage() {
 					<div>
 						<strong>Embed URL:</strong>
 						<code className="bg-gray-100 px-2 py-1 rounded ml-2">
-							https://alpha-powerpath-ui-production.up.railway.app/qti-embed/nice-question-x00020ee4f0de8b58
+							https://alpha-powerpath-ui-production.up.railway.app/qti-embed/nice:x00020ee4f0de8b58
 						</code>
 					</div>
 					<div>

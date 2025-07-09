@@ -25,6 +25,11 @@ const events = {
 			articleId: z.string().min(1)
 		})
 	},
+	"qti/course.generate-all-xml": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
 	"qti/course.migrate-all-items": {
 		data: z.object({
 			courseId: z.string().min(1)

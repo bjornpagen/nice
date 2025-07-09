@@ -67,10 +67,10 @@ async function fetchExerciseData(params: {
 	// Fetch questions using the exercise ID
 	const questionsFromDb = await getExerciseQuestionsQuery.execute({ exerciseId: exercise.id })
 
-	// Add fake qtiIdentifier to each question
+	// Add qtiIdentifier to each question using the new format
 	const questions = questionsFromDb.map((q) => ({
 		...q,
-		qtiIdentifier: `FAKE_QTI_${q.id}`
+		qtiIdentifier: `nice:${q.id}`
 	}))
 
 	return { exercise, questions }

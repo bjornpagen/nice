@@ -100,10 +100,10 @@ async function fetchQuizData(params: {
 	// Fetch questions using the quiz ID
 	const questionsFromDb = await getQuizQuestionsQuery.execute({ assessmentId: quiz.id })
 
-	// Add fake qtiIdentifier to each question
+	// Add qtiIdentifier to each question using the new format
 	const questions = questionsFromDb.map((q) => ({
 		...q,
-		qtiIdentifier: `FAKE_QTI_${q.id}`
+		qtiIdentifier: `nice:${q.id}`
 	}))
 
 	return { quiz, questions }

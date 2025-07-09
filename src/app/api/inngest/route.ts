@@ -11,6 +11,7 @@ import { ingestResources } from "@/inngest/functions/oneroster/ingest-resources"
 // Import orchestrators
 import { orchestrateCourseIngestionToOneroster } from "@/inngest/functions/orchestrate-course-ingestion-to-oneroster"
 import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
+import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
 // Import QTI workers
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
@@ -28,6 +29,7 @@ export const { GET, POST, PUT } = serve({
 		// Orchestrators
 		orchestrateCourseIngestionToOneroster,
 		orchestrateCourseIngestionToQti,
+		orchestrateCourseXmlGeneration,
 		// OneRoster Functions
 		generateOnerosterPayloadForCourse,
 		ingestClass,
