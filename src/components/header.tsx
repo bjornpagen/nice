@@ -3,21 +3,29 @@ import { Menu, Search, Smile } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 import { ExploreDropdown } from "./explore-dropdown"
 import { UserDropdown } from "./user-dropdown"
 
-interface HeaderProps {
+export function Header({
+	dark = false,
+	nickname,
+	className
+}: {
 	dark?: boolean
 	nickname?: string
-}
-
-export function Header({ dark = false, nickname }: HeaderProps) {
+	className?: string
+}) {
 	const displayName = nickname || "User"
 	const displayInitial = nickname ? nickname.charAt(0).toUpperCase() : "U"
 
 	return (
 		<header
-			className={`border-b px-2 sm:px-4 py-3 ${dark ? "bg-blue-950 border-blue-800" : "bg-white border-gray-200"}`}
+			className={cn(
+				"border-b px-2 sm:px-4 py-3",
+				dark ? "bg-blue-950 border-blue-800" : "bg-white border-gray-200",
+				className
+			)}
 		>
 			<div className="mx-auto max-w-5xl relative flex items-center">
 				{/* Left Section */}
