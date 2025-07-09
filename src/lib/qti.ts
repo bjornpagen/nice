@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { env } from "@/env"
+import type { env } from "@/env"
 
 // --- NEW: EXPORTED QTI API ERRORS ---
 export const ErrQtiNotFound = errors.new("qti resource not found")
@@ -374,20 +374,25 @@ const ReorderSectionItemsInputSchema = z.object({
 })
 export type ReorderSectionItemsInput = z.infer<typeof ReorderSectionItemsInputSchema>
 
+// --- NEW: API CLIENT CONFIG TYPE ---
+type QtiApiClientConfig = {
+	serverUrl: (typeof env)["TIMEBACK_QTI_SERVER_URL"]
+	tokenUrl: (typeof env)["TIMEBACK_TOKEN_URL"]
+	clientId: (typeof env)["TIMEBACK_CLIENT_ID"]
+	clientSecret: (typeof env)["TIMEBACK_CLIENT_SECRET"]
+}
+
 /**
  * Client for interacting with the QTI API.
  * Manages OAuth2 authentication and provides methods for all assessment item operations.
  */
 export class QtiApiClient {
 	#accessToken: string | null = null
+	#config: QtiApiClientConfig
 
-	constructor() {
-		logger.debug("qti client: initializing with environment configuration", {
-			clientId: env.TIMEBACK_CLIENT_ID,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			qtiServerUrl: env.TIMEBACK_QTI_SERVER_URL,
-			hasClientSecret: !!env.TIMEBACK_CLIENT_SECRET
-		})
+	constructor(config: QtiApiClientConfig) {
+		this.#config = config
+		logger.debug("qti client: initializing with provided configuration")
 	}
 
 	/**
@@ -412,12 +417,12 @@ export class QtiApiClient {
 
 		const tokenBody = new URLSearchParams({
 			grant_type: "client_credentials",
-			client_id: env.TIMEBACK_CLIENT_ID,
-			client_secret: env.TIMEBACK_CLIENT_SECRET
+			client_id: this.#config.clientId,
+			client_secret: this.#config.clientSecret
 		})
 
 		const result = await errors.try(
-			fetch(env.TIMEBACK_TOKEN_URL, {
+			fetch(this.#config.tokenUrl, {
 				method: "POST",
 				headers: { "Content-Type": "application/x-www-form-urlencoded" },
 				body: tokenBody
@@ -462,7 +467,7 @@ export class QtiApiClient {
 	async #request<T>(endpoint: string, options: RequestInit, schema: z.ZodType<T>): Promise<T> {
 		await this.#ensureAccessToken()
 
-		const url = `${env.TIMEBACK_QTI_SERVER_URL}${endpoint}`
+		const url = `${this.#config.serverUrl}${endpoint}`
 		const headers = {
 			...options.headers,
 			Authorization: `Bearer ${this.#accessToken}`
@@ -498,21 +503,19 @@ export class QtiApiClient {
 
 		// Handle 204 No Content for DELETE requests
 		if (response.status === 204) {
-			// For DELETE requests, we return an empty object that will pass validation
-			// The schema for DELETE should be z.null() or similar
 			return schema.parse(null)
 		}
 
 		const jsonResult = await errors.try(response.json())
 		if (jsonResult.error) {
 			logger.error("qti api: failed to parse json response", { error: jsonResult.error, endpoint })
-			throw errors.wrap(jsonResult.error, `qti api response parsing for ${endpoint}`)
+			throw errors.wrap(jsonResult.error, "qti api response parsing")
 		}
 
 		const validation = schema.safeParse(jsonResult.data)
 		if (!validation.success) {
 			logger.error("qti api: invalid response schema", { error: validation.error, endpoint })
-			throw errors.wrap(validation.error, `qti api response validation for ${endpoint}`)
+			throw errors.wrap(validation.error, "qti api response validation")
 		}
 
 		return validation.data

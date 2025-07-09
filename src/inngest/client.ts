@@ -14,38 +14,34 @@ const events = {
 			email: z.string().email()
 		})
 	},
-	"nice/qti.assessment-item.migration.requested": {
+	// QTI Migration Events
+	"qti/item.migrate": {
 		data: z.object({
 			questionId: z.string().min(1)
 		})
 	},
-	"nice/qti.assessment-stimulus.migration.requested": {
+	"qti/stimulus.migrate": {
 		data: z.object({
 			articleId: z.string().min(1)
 		})
 	},
-	"nice/course.oneroster.generate": {
+	"qti/course.migrate-all-items": {
 		data: z.object({
 			courseId: z.string().min(1)
 		})
 	},
-	"nice/course.assessment-items.generate": {
+	"qti/course.migrate-all-stimuli": {
 		data: z.object({
 			courseId: z.string().min(1)
 		})
 	},
-	"nice/course.assessment-stimuli.generate": {
-		data: z.object({
-			courseId: z.string().min(1)
-		})
-	},
+	// QTI Ingestion Events
 	"qti/course.payload.generate": {
 		data: z.object({
 			courseId: z.string().min(1)
 		})
 	},
-	// Add new events for the QTI ingestion workflow
-	"qti/course.ingest.requested": {
+	"qti/course.ingest": {
 		data: z.object({
 			courseId: z.string().min(1)
 		})
@@ -68,8 +64,13 @@ const events = {
 			tests: z.array(z.custom<CreateAssessmentTestInput>())
 		})
 	},
-	// Add new events for the OneRoster ingestion workflow
-	"oneroster/course.ingest.requested": {
+	// OneRoster Events
+	"oneroster/course.payload.generate": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
+	"oneroster/course.ingest": {
 		data: z.object({
 			courseId: z.string().min(1)
 		})
@@ -93,7 +94,7 @@ const events = {
 			)
 		})
 	},
-	"oneroster/course.ingest": {
+	"oneroster/course.upsert": {
 		data: z.object({
 			// Define a schema for the course object
 			course: z.object({
@@ -160,7 +161,6 @@ const events = {
 			)
 		})
 	},
-	// ADDED: New event for ingesting a single class
 	"oneroster/class.ingest": {
 		data: z.object({
 			class: z.object({

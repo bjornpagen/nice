@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import { env } from "@/env"
 import { inngest } from "@/inngest/client"
 import { OneRosterApiClient } from "@/lib/oneroster-client"
 
@@ -13,7 +14,12 @@ export const ingestResources = inngest.createFunction(
 		}
 
 		logger.info("ingesting or updating resources", { count: resources.length })
-		const client = new OneRosterApiClient()
+		const client = new OneRosterApiClient({
+			serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
+			tokenUrl: env.TIMEBACK_TOKEN_URL,
+			clientId: env.TIMEBACK_CLIENT_ID,
+			clientSecret: env.TIMEBACK_CLIENT_SECRET
+		})
 
 		// Optional: Add delay between requests (in milliseconds)
 		const DELAY_BETWEEN_REQUESTS = 100 // Adjust as needed

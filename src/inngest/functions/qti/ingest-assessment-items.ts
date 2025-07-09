@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import { env } from "@/env"
 import { inngest } from "@/inngest/client"
 import { ErrQtiNotFound, QtiApiClient } from "@/lib/qti"
 
@@ -13,7 +14,12 @@ export const ingestAssessmentItems = inngest.createFunction(
 		}
 
 		logger.info("ingesting assessment items", { count: items.length })
-		const client = new QtiApiClient()
+		const client = new QtiApiClient({
+			serverUrl: env.TIMEBACK_QTI_SERVER_URL,
+			tokenUrl: env.TIMEBACK_TOKEN_URL,
+			clientId: env.TIMEBACK_CLIENT_ID,
+			clientSecret: env.TIMEBACK_CLIENT_SECRET
+		})
 
 		const results = []
 		for (const item of items) {

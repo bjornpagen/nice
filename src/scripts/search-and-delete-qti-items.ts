@@ -2,6 +2,7 @@
 import * as readline from "node:readline/promises"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { env } from "@/env"
 import type { AssessmentItem } from "@/lib/qti"
 import { QtiApiClient } from "@/lib/qti"
 
@@ -79,7 +80,12 @@ async function main() {
 		process.exit(1)
 	}
 
-	const client = new QtiApiClient()
+	const client = new QtiApiClient({
+		serverUrl: env.TIMEBACK_QTI_SERVER_URL,
+		tokenUrl: env.TIMEBACK_TOKEN_URL,
+		clientId: env.TIMEBACK_CLIENT_ID,
+		clientSecret: env.TIMEBACK_CLIENT_SECRET
+	})
 
 	logger.info("searching for assessment items with prefix", { prefix: searchPrefix })
 	const itemsToProcess = await fetchAllMatchingItems(client, searchPrefix)

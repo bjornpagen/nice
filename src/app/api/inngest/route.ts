@@ -1,46 +1,49 @@
 import { serve } from "inngest/next"
 import { inngest } from "@/inngest/client"
-import { generateAllAssessmentItemsForCourse } from "@/inngest/functions/generate-all-assessment-items-for-course"
-import { generateAllAssessmentStimuliForCourse } from "@/inngest/functions/generate-all-assessment-stimuli-for-course"
 import { helloWorld } from "@/inngest/functions/hello"
-import { ingestCourseToOneroster } from "@/inngest/functions/ingest-course-to-oneroster"
-import { ingestCourseToQtiServer } from "@/inngest/functions/ingest-course-to-qti-server"
-import { migrateArticleToQtiAssessmentStimulus } from "@/inngest/functions/migrate-article-to-qti-assessment-stimulus"
-import { migrateQuestionToQtiAssessmentItem } from "@/inngest/functions/migrate-question-to-qti-assessment-item"
-import { generateOnerosterForCourse } from "@/inngest/functions/oneroster-courses/generate-oneroster-for-course"
-import { ingestClass } from "@/inngest/functions/oneroster-courses/ingest-class"
-import { ingestComponentResources } from "@/inngest/functions/oneroster-courses/ingest-component-resources"
-import { ingestCourse } from "@/inngest/functions/oneroster-courses/ingest-course"
-import { ingestCourseComponents } from "@/inngest/functions/oneroster-courses/ingest-course-components"
-import { ingestResources } from "@/inngest/functions/oneroster-courses/ingest-resources"
-import { generateQtiPayloadForCourse } from "@/inngest/functions/qti-payloads/generate-qti-payload-for-course"
-import { ingestAssessmentItems } from "@/inngest/functions/qti-payloads/ingest-assessment-items"
-import { ingestAssessmentStimuli } from "@/inngest/functions/qti-payloads/ingest-assessment-stimuli"
-import { ingestAssessmentTests } from "@/inngest/functions/qti-payloads/ingest-assessment-tests"
+// Import OneRoster workers
+import { generatePayloadForCourse as generateOnerosterPayloadForCourse } from "@/inngest/functions/oneroster/generate-payload-for-course"
+import { ingestClass } from "@/inngest/functions/oneroster/ingest-class"
+import { ingestComponentResources } from "@/inngest/functions/oneroster/ingest-component-resources"
+import { ingestCourse } from "@/inngest/functions/oneroster/ingest-course"
+import { ingestCourseComponents } from "@/inngest/functions/oneroster/ingest-course-components"
+import { ingestResources } from "@/inngest/functions/oneroster/ingest-resources"
+// Import orchestrators
+import { orchestrateCourseIngestionToOneroster } from "@/inngest/functions/orchestrate-course-ingestion-to-oneroster"
+import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
+// Import QTI workers
+import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
+import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
+import { generatePayloadForCourse as generateQtiPayloadForCourse } from "@/inngest/functions/qti/generate-payload-for-course"
+import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
+import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
+import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
+import { requestAllItemMigrationsForCourse } from "@/inngest/functions/qti/request-all-item-migrations-for-course"
+import { requestAllStimulusMigrationsForCourse } from "@/inngest/functions/qti/request-all-stimulus-migrations-for-course"
 
 // Create and export the Inngest HTTP handler
 export const { GET, POST, PUT } = serve({
 	client: inngest,
 	functions: [
 		helloWorld,
-		generateAllAssessmentItemsForCourse,
-		generateAllAssessmentStimuliForCourse,
-		generateOnerosterForCourse,
-		migrateArticleToQtiAssessmentStimulus,
-		migrateQuestionToQtiAssessmentItem,
-		// Add new OneRoster functions
-		ingestCourseToOneroster,
-		ingestResources,
+		// Orchestrators
+		orchestrateCourseIngestionToOneroster,
+		orchestrateCourseIngestionToQti,
+		// OneRoster Functions
+		generateOnerosterPayloadForCourse,
+		ingestClass,
+		ingestComponentResources,
 		ingestCourse,
 		ingestCourseComponents,
-		ingestComponentResources,
-		ingestClass,
-		// Add new QTI payload function
+		ingestResources,
+		// QTI Functions
+		convertPerseusArticleToQtiStimulus,
+		convertPerseusQuestionToQtiItem,
 		generateQtiPayloadForCourse,
-		// Add new QTI ingestion workflow functions
-		ingestCourseToQtiServer,
 		ingestAssessmentItems,
 		ingestAssessmentStimuli,
-		ingestAssessmentTests
+		ingestAssessmentTests,
+		requestAllItemMigrationsForCourse,
+		requestAllStimulusMigrationsForCourse
 	]
 })

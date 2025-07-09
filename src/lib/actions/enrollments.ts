@@ -7,7 +7,8 @@ import { eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
-import { OneRosterApiClient } from "../oneroster-client"
+import { env } from "@/env"
+import { OneRosterApiClient } from "@/lib/oneroster-client"
 
 const getCourseForEnrollmentQuery = db
 	.select({
@@ -49,7 +50,12 @@ export async function enrollUserInCourse(courseId: string) {
 		throw errors.new(`course not found for id: ${courseId}`)
 	}
 
-	const client = new OneRosterApiClient()
+	const client = new OneRosterApiClient({
+		serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
+		tokenUrl: env.TIMEBACK_TOKEN_URL,
+		clientId: env.TIMEBACK_CLIENT_ID,
+		clientSecret: env.TIMEBACK_CLIENT_SECRET
+	})
 	const classSourcedId = `class-nice:${course.slug}`
 	const oneRosterCourseSourcedId = `nice:${course.slug}`
 

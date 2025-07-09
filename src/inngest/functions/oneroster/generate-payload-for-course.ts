@@ -4,12 +4,12 @@ import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { generateOnerosterPayloadForCourse } from "@/lib/course-oneroster/oneroster"
 
-export const generateOnerosterForCourse = inngest.createFunction(
+export const generatePayloadForCourse = inngest.createFunction(
 	{
-		id: "generate-oneroster-for-course",
-		name: "Generate OneRoster JSON for Course"
+		id: "generate-oneroster-payload-for-course",
+		name: "Generate OneRoster Payload for Course"
 	},
-	{ event: "nice/course.oneroster.generate" },
+	{ event: "oneroster/course.payload.generate" },
 	async ({ event, step, logger }) => {
 		const { courseId } = event.data
 

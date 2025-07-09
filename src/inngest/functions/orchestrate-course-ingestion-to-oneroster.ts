@@ -2,26 +2,26 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
-import { generateOnerosterForCourse } from "./oneroster-courses/generate-oneroster-for-course"
-import { ingestClass } from "./oneroster-courses/ingest-class"
-import { ingestComponentResources } from "./oneroster-courses/ingest-component-resources"
-import { ingestCourse } from "./oneroster-courses/ingest-course"
-import { ingestCourseComponents } from "./oneroster-courses/ingest-course-components"
-import { ingestResources } from "./oneroster-courses/ingest-resources"
+import { generatePayloadForCourse } from "./oneroster/generate-payload-for-course"
+import { ingestClass } from "./oneroster/ingest-class"
+import { ingestComponentResources } from "./oneroster/ingest-component-resources"
+import { ingestCourse } from "./oneroster/ingest-course"
+import { ingestCourseComponents } from "./oneroster/ingest-course-components"
+import { ingestResources } from "./oneroster/ingest-resources"
 
-export const ingestCourseToOneroster = inngest.createFunction(
+export const orchestrateCourseIngestionToOneroster = inngest.createFunction(
 	{
-		id: "ingest-course-to-oneroster",
-		name: "Ingest Course to OneRoster"
+		id: "orchestrate-course-ingestion-to-oneroster",
+		name: "Orchestrate Course Ingestion to OneRoster"
 	},
-	{ event: "oneroster/course.ingest.requested" },
+	{ event: "oneroster/course.ingest" },
 	async ({ event, step, logger }) => {
 		const { courseId } = event.data
 		logger.info("starting oneroster ingestion workflow", { courseId })
 
 		// Step 1: Generate the full OneRoster payload for the course. This remains the same.
 		const generationResult = await step.invoke("generate-oneroster-payload", {
-			function: generateOnerosterForCourse,
+			function: generatePayloadForCourse,
 			data: { courseId }
 		})
 

@@ -18,10 +18,10 @@ type AssessmentTestPayload = CreateAssessmentTestInput & {
 	}
 }
 
-export const generateQtiPayloadForCourse = inngest.createFunction(
+export const generatePayloadForCourse = inngest.createFunction(
 	{
 		id: "generate-qti-payload-for-course",
-		name: "Generate QTI JSON Payload for Course"
+		name: "Generate QTI Payload for Course"
 	},
 	{ event: "qti/course.payload.generate" },
 	async ({ event, step, logger }) => {

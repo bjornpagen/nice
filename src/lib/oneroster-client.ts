@@ -1,12 +1,20 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { env } from "@/env"
+import type { env } from "@/env"
 
 // --- Zod Schemas for API Payloads ---
 const OneRosterTokenResponseSchema = z.object({
 	access_token: z.string().min(1)
 })
+
+// --- NEW: API CLIENT CONFIG TYPE ---
+type OneRosterApiClientConfig = {
+	serverUrl: (typeof env)["TIMEBACK_ONEROSTER_SERVER_URL"]
+	tokenUrl: (typeof env)["TIMEBACK_TOKEN_URL"]
+	clientId: (typeof env)["TIMEBACK_CLIENT_ID"]
+	clientSecret: (typeof env)["TIMEBACK_CLIENT_SECRET"]
+}
 
 // --- NEW: Strict Schemas for OneRoster Entities ---
 // For reading (GET responses) - type is optional
@@ -192,13 +200,11 @@ export const ErrOneRosterAPI = errors.new("oneroster api error")
 export class OneRosterApiClient {
 	#accessToken: string | null = null
 	#tokenPromise: Promise<string> | null = null
+	#config: OneRosterApiClientConfig
 
-	constructor() {
-		logger.debug("OneRosterApiClient: initializing", {
-			serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID
-		})
+	constructor(config: OneRosterApiClientConfig) {
+		this.#config = config
+		logger.debug("OneRosterApiClient: initializing with provided configuration")
 	}
 
 	async #ensureAccessToken(): Promise<void> {
@@ -226,12 +232,12 @@ export class OneRosterApiClient {
 		logger.debug("OneRosterApiClient: fetching new access token")
 		const params = new URLSearchParams({
 			grant_type: "client_credentials",
-			client_id: env.TIMEBACK_CLIENT_ID,
-			client_secret: env.TIMEBACK_CLIENT_SECRET
+			client_id: this.#config.clientId,
+			client_secret: this.#config.clientSecret
 		})
 
 		const result = await errors.try(
-			fetch(env.TIMEBACK_TOKEN_URL, {
+			fetch(this.#config.tokenUrl, {
 				method: "POST",
 				headers: { "Content-Type": "application/x-www-form-urlencoded" },
 				body: params
@@ -271,7 +277,7 @@ export class OneRosterApiClient {
 		requestOptions?: { swallow404?: boolean }
 	): Promise<T | null> {
 		await this.#ensureAccessToken()
-		const url = `${env.TIMEBACK_ONEROSTER_SERVER_URL}${endpoint}`
+		const url = `${this.#config.serverUrl}${endpoint}`
 		const headers = {
 			...options.headers,
 			Authorization: `Bearer ${this.#accessToken}`

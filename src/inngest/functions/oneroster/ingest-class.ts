@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import { env } from "@/env"
 import { inngest } from "@/inngest/client"
 import { OneRosterApiClient } from "@/lib/oneroster-client"
 
@@ -34,7 +35,12 @@ export const ingestClass = inngest.createFunction(
 			termsCount: classData.terms?.length || 0
 		})
 
-		const client = new OneRosterApiClient()
+		const client = new OneRosterApiClient({
+			serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
+			tokenUrl: env.TIMEBACK_TOKEN_URL,
+			clientId: env.TIMEBACK_CLIENT_ID,
+			clientSecret: env.TIMEBACK_CLIENT_SECRET
+		})
 
 		// Replace colon with dash in step ID to make it valid
 		const stepId = `ingest-class-${classData.sourcedId.replace(/:/g, "-")}`

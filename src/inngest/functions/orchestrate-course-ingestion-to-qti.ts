@@ -2,24 +2,24 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
-import { generateQtiPayloadForCourse } from "./qti-payloads/generate-qti-payload-for-course"
-import { ingestAssessmentItems } from "./qti-payloads/ingest-assessment-items"
-import { ingestAssessmentStimuli } from "./qti-payloads/ingest-assessment-stimuli"
-import { ingestAssessmentTests } from "./qti-payloads/ingest-assessment-tests"
+import { generatePayloadForCourse } from "./qti/generate-payload-for-course"
+import { ingestAssessmentItems } from "./qti/ingest-assessment-items"
+import { ingestAssessmentStimuli } from "./qti/ingest-assessment-stimuli"
+import { ingestAssessmentTests } from "./qti/ingest-assessment-tests"
 
-export const ingestCourseToQtiServer = inngest.createFunction(
+export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	{
-		id: "ingest-course-to-qti-server",
-		name: "Ingest Course to QTI Server"
+		id: "orchestrate-course-ingestion-to-qti",
+		name: "Orchestrate Course Ingestion to QTI"
 	},
-	{ event: "qti/course.ingest.requested" },
+	{ event: "qti/course.ingest" },
 	async ({ event, step, logger }) => {
 		const { courseId } = event.data
 		logger.info("starting qti server ingestion workflow", { courseId })
 
 		// Step 1: Generate the full QTI payload for the course.
 		const generationResult = await step.invoke("generate-qti-payload", {
-			function: generateQtiPayloadForCourse,
+			function: generatePayloadForCourse,
 			data: { courseId }
 		})
 

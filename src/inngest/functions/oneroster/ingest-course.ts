@@ -1,15 +1,21 @@
 import * as errors from "@superbuilders/errors"
+import { env } from "@/env"
 import { inngest } from "@/inngest/client"
 import { OneRosterApiClient } from "@/lib/oneroster-client"
 
 export const ingestCourse = inngest.createFunction(
 	{ id: "ingest-course", name: "Ingest OneRoster Course" },
-	{ event: "oneroster/course.ingest" },
+	{ event: "oneroster/course.upsert" },
 	async ({ event, step, logger }) => {
 		const { course } = event.data
 		logger.info("ingesting course", { sourcedId: course.sourcedId, title: course.title })
 
-		const client = new OneRosterApiClient()
+		const client = new OneRosterApiClient({
+			serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
+			tokenUrl: env.TIMEBACK_TOKEN_URL,
+			clientId: env.TIMEBACK_CLIENT_ID,
+			clientSecret: env.TIMEBACK_CLIENT_SECRET
+		})
 
 		await step.run(`ingest-course-${course.sourcedId}`, async () => {
 			const existingCourse = await errors.try(client.getCourse(course.sourcedId))
