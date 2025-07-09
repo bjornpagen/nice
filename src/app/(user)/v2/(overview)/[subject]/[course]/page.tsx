@@ -107,7 +107,60 @@ async function getCourseData(subject: string, course: string): Promise<Course> {
 						title: "Lesson 8"
 					}
 				]
+			},
+			{
+				slug: "unit-3",
+				path: "/v2/math/algebra/unit-3",
+				title: "Unit 3",
+				lessons: [
+					{
+						slug: "lesson-1",
+						path: "/v2/math/algebra/unit-3/lesson-1",
+						type: "exercise",
+						title: "Lesson 1"
+					},
+					{
+						slug: "lesson-2",
+						path: "/v2/math/algebra/unit-3/lesson-2",
+						type: "quiz",
+						title: "Lesson 2"
+					}
+				]
+			},
+			{
+				slug: "unit-4",
+				path: "/v2/math/algebra/unit-4",
+				title: "Unit 4",
+				lessons: [
+					{
+						slug: "lesson-1",
+						path: "/v2/math/algebra/unit-4/lesson-1",
+						type: "exercise",
+						title: "Lesson 1"
+					},
+					{
+						slug: "lesson-2",
+						path: "/v2/math/algebra/unit-4/lesson-2",
+						type: "quiz",
+						title: "Lesson 2"
+					},
+					{
+						slug: "lesson-3",
+						path: "/v2/math/algebra/unit-4/lesson-3",
+						type: "exercise",
+						title: "Lesson 3"
+					},
+					{
+						slug: "lesson-4",
+						path: "/v2/math/algebra/unit-4/lesson-4",
+						type: "unit-test",
+						title: "Lesson 4"
+					}
+				]
 			}
-		]
+		],
+		challenge: {
+			path: "/v2/math/algebra/challenge"
+		}
 	}
 }

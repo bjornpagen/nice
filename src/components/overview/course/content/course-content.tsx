@@ -4,6 +4,7 @@ import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import { ContentHeader } from "@/components/overview/content-header"
 import { CourseContentBreadcrumbs } from "./course-content-breadcrumbs"
+import { CourseContentChallenge } from "./course-content-challenge"
 import { CourseContentUnitItem } from "./course-content-unit-item"
 
 export type Lesson = {
@@ -20,10 +21,15 @@ export type Unit = {
 	lessons: Lesson[]
 }
 
+export type Challenge = {
+	path: string
+}
+
 export type Course = {
 	path: string
 	title: string
 	units: Unit[]
+	challenge: Challenge
 }
 
 export function CourseContent({ coursePromise }: { coursePromise: Promise<Course> }) {
@@ -38,7 +44,7 @@ export function CourseContent({ coursePromise }: { coursePromise: Promise<Course
 				<CourseContentBreadcrumbs course={course} className="mb-4" />
 				<ContentHeader title={course.title} points={0} className="mb-4" />
 			</div>
-			<div id="course-content-units" className="columns-1 sm:columns-2 gap-6 mt-4">
+			<div id="course-content-overview" className="columns-1 sm:columns-2 gap-6 mt-4">
 				{course.units.map((unit, index) => (
 					<CourseContentUnitItem
 						key={index}
@@ -48,8 +54,8 @@ export function CourseContent({ coursePromise }: { coursePromise: Promise<Course
 						className="break-inside-avoid border-b border-gray-300 px-6 py-3 mb-2"
 					/>
 				))}
+				<CourseContentChallenge challenge={course.challenge} />
 			</div>
-			<div id="course-content-challenge">{/* TODO: Add challenge content here */}</div>
 		</div>
 	)
 }
