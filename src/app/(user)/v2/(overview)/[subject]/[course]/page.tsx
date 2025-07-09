@@ -1,4 +1,5 @@
 import * as logger from "@superbuilders/slog"
+import * as React from "react"
 import { type Course, CourseContent } from "@/components/overview/course/content/course-content"
 
 export default async function CoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
@@ -10,7 +11,9 @@ export default async function CoursePage({ params }: { params: Promise<{ subject
 
 	return (
 		<div id="course-page">
-			<CourseContent coursePromise={coursePromise} />
+			<React.Suspense>
+				<CourseContent coursePromise={coursePromise} />
+			</React.Suspense>
 		</div>
 	)
 }

@@ -1,5 +1,5 @@
 import * as logger from "@superbuilders/slog"
-import type React from "react"
+import * as React from "react"
 import { Footer } from "@/components/footer"
 import { type Course, CourseSidebar } from "@/components/overview/course/sidebar/course-sidebar"
 
@@ -20,7 +20,9 @@ export default async function CourseLayout({
 		<div id="course-layout">
 			<div className="flex flex-row">
 				<nav id="course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-screen">
-					<CourseSidebar coursePromise={coursePromise} />
+					<React.Suspense>
+						<CourseSidebar coursePromise={coursePromise} />
+					</React.Suspense>
 				</nav>
 
 				<main id="course-layout-main" className="flex-1 bg-gray-50 px-8 py-4 w-screen">
