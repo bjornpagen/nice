@@ -136,10 +136,12 @@ export default function TestPage({ params }: { params: Promise<{ subject: string
 	const testDataPromise = params.then(fetchTestData)
 
 	return (
-		<TestLayout courseDataPromise={courseDataPromise}>
-			<React.Suspense fallback={<div className="p-8">Loading test...</div>}>
-				<TestContent testDataPromise={testDataPromise} />
-			</React.Suspense>
-		</TestLayout>
+		<div className="h-screen overflow-hidden">
+			<TestLayout courseDataPromise={courseDataPromise}>
+				<React.Suspense fallback={<div className="p-8">Loading test...</div>}>
+					<TestContent testDataPromise={testDataPromise} />
+				</React.Suspense>
+			</TestLayout>
+		</div>
 	)
 }
