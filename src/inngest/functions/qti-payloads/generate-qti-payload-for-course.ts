@@ -1,11 +1,22 @@
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
-import { and, eq, inArray, isNotNull } from "drizzle-orm"
+import { and, eq, inArray, isNotNull, ne } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import type { CreateAssessmentTestInput } from "@/lib/qti"
+
+// Define our own type that includes metadata for the JSON output
+type AssessmentTestPayload = CreateAssessmentTestInput & {
+	metadata: {
+		khanId: string
+		slug: string
+		path: string
+		assessmentType: string
+		description: string
+	}
+}
 
 export const generateQtiPayloadForCourse = inngest.createFunction(
 	{
@@ -17,8 +28,7 @@ export const generateQtiPayloadForCourse = inngest.createFunction(
 		const { courseId } = event.data
 		logger.info("starting qti payload generation", { courseId })
 
-		// Step 1: Fetch all required course data within a single database transaction.
-		// This operation is performed outside a `step.run` as per our rules.
+		// Step 1: Fetch all required course data in a single, non-step operation.
 		const courseDataResult = await errors.try(
 			db.transaction(async (tx) => {
 				const course = await tx.query.niceCourses.findFirst({ where: eq(schema.niceCourses.id, courseId) })
@@ -29,7 +39,7 @@ export const generateQtiPayloadForCourse = inngest.createFunction(
 				const units = await tx.query.niceUnits.findMany({ where: eq(schema.niceUnits.courseId, course.id) })
 				const unitIds = units.map((u) => u.id)
 				if (unitIds.length === 0) {
-					return { course, exercises: [], assessments: [], questions: [] }
+					return { course, exercises: [], assessments: [], questions: [], assessmentExercises: [] }
 				}
 
 				const assessments = await tx.query.niceAssessments.findMany({
@@ -50,6 +60,7 @@ export const generateQtiPayloadForCourse = inngest.createFunction(
 				const exerciseIdsFromLessons = lessonContents
 					.filter((lc) => lc.contentType === "Exercise")
 					.map((lc) => lc.contentId)
+
 				const exerciseIdsFromAssessments =
 					assessmentIds.length > 0
 						? (
@@ -69,19 +80,29 @@ export const generateQtiPayloadForCourse = inngest.createFunction(
 						? tx.query.niceQuestions.findMany({
 								where: and(
 									inArray(schema.niceQuestions.exerciseId, allExerciseIds),
-									isNotNull(schema.niceQuestions.qtiIdentifier)
+									isNotNull(schema.niceQuestions.qtiIdentifier),
+									ne(schema.niceQuestions.qtiIdentifier, "")
 								),
 								columns: { id: true, exerciseId: true, qtiIdentifier: true }
 							})
 						: []
 				])
 
-				return { course, exercises, assessments, questions }
+				// Pre-fetch assessment exercises for use in the step function
+				const assessmentExercises =
+					assessmentIds.length > 0
+						? await tx.query.niceAssessmentExercises.findMany({
+								where: inArray(schema.niceAssessmentExercises.assessmentId, assessmentIds)
+							})
+						: []
+
+				return { course, exercises, assessments, questions, assessmentExercises }
 			})
 		)
+
 		if (courseDataResult.error) {
 			logger.error("failed to fetch course data", { courseId, error: courseDataResult.error })
-			throw errors.wrap(courseDataResult.error, "database transaction failed")
+			throw errors.wrap(courseDataResult.error, "database transaction")
 		}
 
 		const courseData = courseDataResult.data
@@ -90,14 +111,15 @@ export const generateQtiPayloadForCourse = inngest.createFunction(
 			throw errors.new(`course not found for id: ${courseId}`)
 		}
 
+		const { course, exercises, assessments, questions, assessmentExercises } = courseData
+
 		// Step 2: Generate Assessment Test Payloads. This is a pure data transformation step.
 		const testsPayloads = await step.run("generate-tests-payloads", async () => {
-			const payloads: CreateAssessmentTestInput[] = []
-			const allTestableEntities = [...courseData.exercises, ...courseData.assessments]
+			const payloads: AssessmentTestPayload[] = []
+			const allTestableEntities = [...exercises, ...assessments]
 			const questionsByExerciseId = new Map<string, { id: string; qtiIdentifier: string }[]>()
 
-			// Group questions by exercise ID for efficient lookup
-			for (const q of courseData.questions) {
+			for (const q of questions) {
 				if (!questionsByExerciseId.has(q.exerciseId)) {
 					questionsByExerciseId.set(q.exerciseId, [])
 				}
@@ -106,24 +128,27 @@ export const generateQtiPayloadForCourse = inngest.createFunction(
 
 			for (const testable of allTestableEntities) {
 				let questionIdentifiersForTest: string[] = []
+				const isAssessment = "type" in testable && testable.type
 
-				if ("type" in testable && testable.type) {
-					// Is an Assessment
-					const exerciseIds = (
-						await db.query.niceAssessmentExercises.findMany({
-							where: eq(schema.niceAssessmentExercises.assessmentId, testable.id)
-						})
-					).map((e) => e.exerciseId)
-					questionIdentifiersForTest = exerciseIds
+				if (isAssessment) {
+					const relatedExerciseIds = assessmentExercises
+						.filter((ae) => ae.assessmentId === testable.id)
+						.map((ae) => ae.exerciseId)
+					questionIdentifiersForTest = relatedExerciseIds
 						.flatMap((exId) => questionsByExerciseId.get(exId) || [])
 						.map((q) => q.qtiIdentifier)
 				} else {
-					// Is an Exercise
 					questionIdentifiersForTest = (questionsByExerciseId.get(testable.id) || []).map((q) => q.qtiIdentifier)
 				}
 
-				const validQtiIdentifiers = questionIdentifiersForTest.filter((id) => id && id.trim() !== "")
-				if (validQtiIdentifiers.length === 0) continue
+				const validQtiIdentifiers = questionIdentifiersForTest.filter((id) => id)
+				if (validQtiIdentifiers.length === 0) {
+					logger.debug("skipping testable with no migrated questions", {
+						testableId: testable.id,
+						title: testable.title
+					})
+					continue
+				}
 
 				const identifier = `nice-academy-${testable.id}`
 				payloads.push({
@@ -143,7 +168,14 @@ export const generateQtiPayloadForCourse = inngest.createFunction(
 								}
 							]
 						}
-					]
+					],
+					metadata: {
+						khanId: testable.id,
+						slug: testable.slug,
+						path: testable.path,
+						assessmentType: isAssessment ? String(testable.type) : "Exercise",
+						description: testable.description
+					}
 				})
 			}
 			return payloads
@@ -152,7 +184,7 @@ export const generateQtiPayloadForCourse = inngest.createFunction(
 		// Step 3: Write all payloads to files.
 		const outputDir = await step.run("write-payloads-to-files", async () => {
 			const baseDir = path.join(process.cwd(), "qti-payloads")
-			const courseDir = path.join(baseDir, courseData.course.slug)
+			const courseDir = path.join(baseDir, course.slug)
 			await fs.mkdir(courseDir, { recursive: true })
 
 			const filesToWrite = [
