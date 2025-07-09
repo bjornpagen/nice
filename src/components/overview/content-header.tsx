@@ -13,7 +13,7 @@ export function ContentHeader({ title, points, className }: { title: string; poi
 				<Info className="w-4 h-4 bg-gray-200 rounded-full cursor-not-allowed" />
 			</div>
 
-			<ProficiencyIconLegend className="p-4 space-x-4" label />
+			<ProficiencyIconLegend className="p-4 flex-wrap gap-4" label />
 		</div>
 	)
 }

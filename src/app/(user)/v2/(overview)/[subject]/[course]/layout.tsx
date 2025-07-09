@@ -23,7 +23,7 @@ export default async function CourseLayout({
 					<CourseSidebar coursePromise={coursePromise} />
 				</nav>
 
-				<main id="course-layout-main" className="flex-1 bg-gray-50 px-8 py-4">
+				<main id="course-layout-main" className="flex-1 bg-gray-50 px-8 py-4 w-screen">
 					{children}
 				</main>
 			</div>

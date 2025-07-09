@@ -1,3 +1,4 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import { Sparkles } from "lucide-react"
@@ -6,7 +7,7 @@ import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
 import { cn } from "@/lib/utils"
 import type { Lesson, Unit } from "./course-content"
 
-export function CourseContentUnitItem({
+export function CourseContentUnitProficiencyItem({
 	index,
 	unit,
 	className,
@@ -17,7 +18,7 @@ export function CourseContentUnitItem({
 	className?: string
 	active?: boolean
 }) {
-	logger.debug("initializing course content unit item", {
+	logger.debug("initializing course content unit proficiency item", {
 		unit: _.omit(unit, "lessons"),
 		lessons: unit.lessons.length,
 		index,
@@ -86,5 +87,7 @@ function LessonProficiencyIcon({ lesson, active = false }: { lesson: Lesson; act
 					</ProficiencyIcon>
 				</Link>
 			)
+		default:
+			throw errors.new(`invalid lesson type: ${lesson.type}`)
 	}
 }

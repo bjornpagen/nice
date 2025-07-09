@@ -25,136 +25,136 @@ async function getCourseData(subject: string, course: string): Promise<Course> {
 			{
 				slug: "unit-1",
 				path: "/v2/math/algebra/unit-1",
-				title: "Unit 1",
+				title: "Unit 1 Algebraic Expressions",
 				lessons: [
 					{
 						slug: "lesson-1",
 						path: "/v2/math/algebra/unit-1/lesson-1",
 						type: "exercise",
-						title: "Lesson 1"
+						title: "Exercise Lesson 1"
 					},
 					{
 						slug: "lesson-2",
 						path: "/v2/math/algebra/unit-1/lesson-2",
 						type: "quiz",
-						title: "Lesson 2"
+						title: "Quiz Lesson 2"
 					},
 					{
 						slug: "lesson-3",
 						path: "/v2/math/algebra/unit-1/lesson-3",
 						type: "exercise",
-						title: "Lesson 3"
+						title: "Exercise Lesson 3"
 					},
 					{
 						slug: "lesson-4",
 						path: "/v2/math/algebra/unit-1/lesson-4",
 						type: "unit-test",
-						title: "Lesson 4"
+						title: "Unit Test Lesson 4"
 					}
 				]
 			},
 			{
 				slug: "unit-2",
 				path: "/v2/math/algebra/unit-2",
-				title: "Unit 2",
+				title: "Unit 2 Algebraic Expressions",
 				lessons: [
 					{
 						slug: "lesson-1",
 						path: "/v2/math/algebra/unit-2/lesson-1",
 						type: "exercise",
-						title: "Lesson 1"
+						title: "Exercise Lesson 1"
 					},
 					{
 						slug: "lesson-2",
 						path: "/v2/math/algebra/unit-2/lesson-2",
 						type: "quiz",
-						title: "Lesson 2"
+						title: "Quiz Lesson 2"
 					},
 					{
 						slug: "lesson-3",
 						path: "/v2/math/algebra/unit-2/lesson-3",
 						type: "exercise",
-						title: "Lesson 3"
+						title: "Exercise Lesson 3"
 					},
 					{
 						slug: "lesson-4",
 						path: "/v2/math/algebra/unit-2/lesson-4",
 						type: "quiz",
-						title: "Lesson 4"
+						title: "Quiz Lesson 4"
 					},
 					{
 						slug: "lesson-5",
 						path: "/v2/math/algebra/unit-2/lesson-5",
 						type: "exercise",
-						title: "Lesson 5"
+						title: "Exercise Lesson 5"
 					},
 					{
 						slug: "lesson-6",
 						path: "/v2/math/algebra/unit-2/lesson-6",
 						type: "exercise",
-						title: "Lesson 6"
+						title: "Exercise Lesson 6"
 					},
 					{
 						slug: "lesson-7",
 						path: "/v2/math/algebra/unit-2/lesson-7",
 						type: "exercise",
-						title: "Lesson 7"
+						title: "Exercise Lesson 7"
 					},
 					{
 						slug: "lesson-8",
 						path: "/v2/math/algebra/unit-2/lesson-8",
 						type: "unit-test",
-						title: "Lesson 8"
+						title: "Unit Test Lesson 8"
 					}
 				]
 			},
 			{
 				slug: "unit-3",
 				path: "/v2/math/algebra/unit-3",
-				title: "Unit 3",
+				title: "Unit 3 Algebraic Expressions",
 				lessons: [
 					{
 						slug: "lesson-1",
 						path: "/v2/math/algebra/unit-3/lesson-1",
 						type: "exercise",
-						title: "Lesson 1"
+						title: "Exercise Lesson 1"
 					},
 					{
 						slug: "lesson-2",
 						path: "/v2/math/algebra/unit-3/lesson-2",
 						type: "quiz",
-						title: "Lesson 2"
+						title: "Quiz Lesson 2"
 					}
 				]
 			},
 			{
 				slug: "unit-4",
 				path: "/v2/math/algebra/unit-4",
-				title: "Unit 4",
+				title: "Unit 4 Algebraic Expressions",
 				lessons: [
 					{
 						slug: "lesson-1",
 						path: "/v2/math/algebra/unit-4/lesson-1",
 						type: "exercise",
-						title: "Lesson 1"
+						title: "Exercise Lesson 1"
 					},
 					{
 						slug: "lesson-2",
 						path: "/v2/math/algebra/unit-4/lesson-2",
 						type: "quiz",
-						title: "Lesson 2"
+						title: "Quiz Lesson 2"
 					},
 					{
 						slug: "lesson-3",
 						path: "/v2/math/algebra/unit-4/lesson-3",
 						type: "exercise",
-						title: "Lesson 3"
+						title: "Exercise Lesson 3"
 					},
 					{
 						slug: "lesson-4",
 						path: "/v2/math/algebra/unit-4/lesson-4",
 						type: "unit-test",
-						title: "Lesson 4"
+						title: "Unit Test Lesson 4"
 					}
 				]
 			}
