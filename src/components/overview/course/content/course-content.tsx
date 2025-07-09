@@ -40,7 +40,13 @@ export function CourseContent({ coursePromise }: { coursePromise: Promise<Course
 			</div>
 			<div id="course-content-units">
 				{course.units.map((unit, index) => (
-					<CourseContentUnitItem key={index} unit={unit} active={index === 0} />
+					<CourseContentUnitItem
+						key={index}
+						index={index}
+						unit={unit}
+						active={index === 0}
+						className="px-6 py-3 mb-2"
+					/>
 				))}
 			</div>
 		</div>
