@@ -63,25 +63,28 @@ function LessonProficiencyIcon({ lesson, active = false }: { lesson: Lesson; act
 			return (
 				<Link href={lesson.path} className="inline-flex items-center">
 					<ProficiencyIcon variant="not-started" active={active}>
-						<span className="text-xs font-medium text-gray-500 capitalize">Exercise: {lesson.title}</span>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {lesson.title}</h2>
+						<p className="text-sm text-gray-500">Preview is not available for this exercise.</p>
 					</ProficiencyIcon>
 				</Link>
 			)
 		case "quiz":
 			return (
-				<ProficiencyIcon variant="quiz" active={active}>
-					<Link href={lesson.path} className="inline-flex items-center text-xs font-medium text-gray-500 capitalize">
-						Quiz: {lesson.title}
-					</Link>
-				</ProficiencyIcon>
+				<Link href={lesson.path} className="inline-flex items-center">
+					<ProficiencyIcon variant="quiz" active={active}>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Quiz: {lesson.title}</h2>
+						<p className="text-sm text-gray-500">Preview is not available for this quiz.</p>
+					</ProficiencyIcon>
+				</Link>
 			)
 		case "unit-test":
 			return (
-				<ProficiencyIcon variant="unit-test" active={active}>
-					<Link href={lesson.path} className="inline-flex items-center text-xs font-medium text-gray-500 capitalize">
-						Unit Test: {lesson.title}
-					</Link>
-				</ProficiencyIcon>
+				<Link href={lesson.path} className="inline-flex items-center">
+					<ProficiencyIcon variant="unit-test" active={active}>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Unit Test: {lesson.title}</h2>
+						<p className="text-sm text-gray-500">Preview is not available for this unit test.</p>
+					</ProficiencyIcon>
+				</Link>
 			)
 	}
 }

@@ -38,17 +38,18 @@ export function CourseContent({ coursePromise }: { coursePromise: Promise<Course
 				<CourseContentBreadcrumbs course={course} className="mb-4" />
 				<ContentHeader title={course.title} points={0} className="mb-4" />
 			</div>
-			<div id="course-content-units">
+			<div id="course-content-units" className="columns-1 sm:columns-2 gap-6 mt-4">
 				{course.units.map((unit, index) => (
 					<CourseContentUnitItem
 						key={index}
 						index={index}
 						unit={unit}
 						active={index === 0}
-						className="px-6 py-3 mb-2"
+						className="break-inside-avoid border-b border-gray-300 px-6 py-3 mb-2"
 					/>
 				))}
 			</div>
+			<div id="course-content-challenge">{/* TODO: Add challenge content here */}</div>
 		</div>
 	)
 }
