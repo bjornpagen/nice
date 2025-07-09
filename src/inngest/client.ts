@@ -1,6 +1,12 @@
 import * as logger from "@superbuilders/slog"
 import { EventSchemas, type GetEvents, Inngest } from "inngest"
 import { z } from "zod"
+import type { CreateAssessmentTestInput, CreateStimulusInput } from "@/lib/qti"
+
+// Helper schema for the XML-based item input
+const CreateItemInputSchema = z.object({
+	xml: z.string().min(1)
+})
 
 const events = {
 	"nice/hello.world": {
@@ -36,6 +42,30 @@ const events = {
 	"qti/course.payload.generate": {
 		data: z.object({
 			courseId: z.string().min(1)
+		})
+	},
+	// Add new events for the QTI ingestion workflow
+	"qti/course.ingest.requested": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
+	"qti/assessment-items.ingest": {
+		data: z.object({
+			items: z.array(CreateItemInputSchema)
+		})
+	},
+	"qti/assessment-stimuli.ingest": {
+		// Note: The schema for CreateStimulusInput is complex, so we cast it.
+		// This is acceptable as the data originates from our trusted generator function.
+		data: z.object({
+			stimuli: z.array(z.custom<CreateStimulusInput>())
+		})
+	},
+	"qti/assessment-tests.ingest": {
+		// Note: The schema for CreateAssessmentTestInput is complex, so we cast it.
+		data: z.object({
+			tests: z.array(z.custom<CreateAssessmentTestInput>())
 		})
 	},
 	// Add new events for the OneRoster ingestion workflow

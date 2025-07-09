@@ -4,6 +4,7 @@ import { generateAllAssessmentItemsForCourse } from "@/inngest/functions/generat
 import { generateAllAssessmentStimuliForCourse } from "@/inngest/functions/generate-all-assessment-stimuli-for-course"
 import { helloWorld } from "@/inngest/functions/hello"
 import { ingestCourseToOneroster } from "@/inngest/functions/ingest-course-to-oneroster"
+import { ingestCourseToQtiServer } from "@/inngest/functions/ingest-course-to-qti-server"
 import { migrateArticleToQtiAssessmentStimulus } from "@/inngest/functions/migrate-article-to-qti-assessment-stimulus"
 import { migrateQuestionToQtiAssessmentItem } from "@/inngest/functions/migrate-question-to-qti-assessment-item"
 import { generateOnerosterForCourse } from "@/inngest/functions/oneroster-courses/generate-oneroster-for-course"
@@ -13,6 +14,9 @@ import { ingestCourse } from "@/inngest/functions/oneroster-courses/ingest-cours
 import { ingestCourseComponents } from "@/inngest/functions/oneroster-courses/ingest-course-components"
 import { ingestResources } from "@/inngest/functions/oneroster-courses/ingest-resources"
 import { generateQtiPayloadForCourse } from "@/inngest/functions/qti-payloads/generate-qti-payload-for-course"
+import { ingestAssessmentItems } from "@/inngest/functions/qti-payloads/ingest-assessment-items"
+import { ingestAssessmentStimuli } from "@/inngest/functions/qti-payloads/ingest-assessment-stimuli"
+import { ingestAssessmentTests } from "@/inngest/functions/qti-payloads/ingest-assessment-tests"
 
 // Create and export the Inngest HTTP handler
 export const { GET, POST, PUT } = serve({
@@ -32,6 +36,11 @@ export const { GET, POST, PUT } = serve({
 		ingestComponentResources,
 		ingestClass,
 		// Add new QTI payload function
-		generateQtiPayloadForCourse
+		generateQtiPayloadForCourse,
+		// Add new QTI ingestion workflow functions
+		ingestCourseToQtiServer,
+		ingestAssessmentItems,
+		ingestAssessmentStimuli,
+		ingestAssessmentTests
 	]
 })
