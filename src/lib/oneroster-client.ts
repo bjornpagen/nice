@@ -197,6 +197,14 @@ const CreateEnrollmentInputSchema = OneRosterEnrollmentWriteSchema
 // --- NEW: Custom Error for API Failures ---
 export const ErrOneRosterAPI = errors.new("oneroster api error")
 
+// Export the read schemas that will be used by server actions
+export type OneRosterCourseReadSchema = z.infer<typeof OneRosterCourseReadSchema>
+export type OneRosterClassReadSchema = z.infer<typeof OneRosterClassReadSchema>
+
+// Add these new schemas for paginated list responses
+const GetAllCoursesResponseSchema = z.object({ courses: z.array(OneRosterCourseReadSchema) })
+const GetAllClassesResponseSchema = z.object({ classes: z.array(OneRosterClassReadSchema) })
+
 export class OneRosterApiClient {
 	#accessToken: string | null = null
 	#tokenPromise: Promise<string> | null = null
@@ -582,5 +590,75 @@ export class OneRosterApiClient {
 			},
 			z.unknown()
 		)
+	}
+
+	/**
+	 * Fetches all courses from the OneRoster API, handling pagination.
+	 * @returns A promise that resolves to an array of all courses.
+	 */
+	public async getAllCourses(): Promise<OneRosterCourseReadSchema[]> {
+		logger.info("OneRosterApiClient: fetching all courses")
+		const allCourses: OneRosterCourseReadSchema[] = []
+		let offset = 0
+		const limit = 100 // Max limit per OneRoster spec
+
+		while (true) {
+			const endpoint = `/ims/oneroster/rostering/v1p2/courses?limit=${limit}&offset=${offset}`
+			const response = await this.#request(endpoint, { method: "GET" }, GetAllCoursesResponseSchema)
+
+			if (!response || response.courses.length === 0) {
+				break // Exit loop if no more courses are returned
+			}
+
+			allCourses.push(...response.courses)
+			offset += response.courses.length
+
+			if (response.courses.length < limit) {
+				break // Exit if the last page was not full
+			}
+		}
+
+		logger.info("OneRosterApiClient: successfully fetched all courses", { count: allCourses.length })
+		return allCourses
+	}
+
+	/**
+	 * Fetches all classes for a specific school (organization) from the OneRoster API,
+	 * handling pagination.
+	 * @param schoolSourcedId The sourcedId of the school/org.
+	 * @returns A promise that resolves to an array of classes for that school.
+	 */
+	public async getClassesForSchool(schoolSourcedId: string): Promise<OneRosterClassReadSchema[]> {
+		logger.info("OneRosterApiClient: fetching all classes for school", { schoolSourcedId })
+		const allClasses: OneRosterClassReadSchema[] = []
+		let offset = 0
+		const limit = 100
+
+		if (!schoolSourcedId) {
+			throw errors.new("schoolSourcedId cannot be empty")
+		}
+
+		while (true) {
+			// Use the specific endpoint for fetching classes by school/org
+			const endpoint = `/ims/oneroster/rostering/v1p2/schools/${schoolSourcedId}/classes?limit=${limit}&offset=${offset}`
+			const response = await this.#request(endpoint, { method: "GET" }, GetAllClassesResponseSchema)
+
+			if (!response || response.classes.length === 0) {
+				break
+			}
+
+			allClasses.push(...response.classes)
+			offset += response.classes.length
+
+			if (response.classes.length < limit) {
+				break
+			}
+		}
+
+		logger.info("OneRosterApiClient: successfully fetched all classes for school", {
+			schoolSourcedId,
+			count: allClasses.length
+		})
+		return allClasses
 	}
 }

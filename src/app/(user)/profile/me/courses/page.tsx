@@ -4,6 +4,8 @@ import { count, eq, sql } from "drizzle-orm"
 import * as React from "react"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
+// Import the new server action
+import { getOneRosterClassesForSelector } from "@/lib/actions/courses"
 import { Content } from "./content"
 
 // 1. Drizzle prepared statements are colocated and explicitly select columns.
@@ -32,25 +34,6 @@ const getAllUnitsQuery = db
 	.from(schema.niceUnits)
 	.prepare("src_app_user_profile_me_courses_page_get_all_units")
 
-// Add these prepared statements for course selector data
-const getAllSubjects = db
-	.select({
-		slug: schema.niceSubjects.slug,
-		title: schema.niceSubjects.title
-	})
-	.from(schema.niceSubjects)
-	.prepare("src_app_user_profile_me_courses_page_get_all_subjects")
-
-const getAllCourses = db
-	.select({
-		id: schema.niceCourses.id,
-		slug: schema.niceCourses.slug,
-		title: schema.niceCourses.title,
-		path: schema.niceCourses.path
-	})
-	.from(schema.niceCourses)
-	.prepare("src_app_user_profile_me_courses_page_get_all_courses")
-
 // Query to check if user has any courses
 const getUserCourseCountQuery = db
 	.select({ count: count() })
@@ -62,9 +45,9 @@ const getUserCourseCountQuery = db
 export type Course = Awaited<ReturnType<typeof getUserCoursesQuery.execute>>[0]
 export type Unit = Awaited<ReturnType<typeof getAllUnitsQuery.execute>>[0]
 
-// Export types for course selector
-export type AllSubject = Awaited<ReturnType<typeof getAllSubjects.execute>>[number]
-export type AllCourse = Awaited<ReturnType<typeof getAllCourses.execute>>[number]
+// Define types based on the new action's return value
+export type AllSubject = Awaited<ReturnType<typeof getOneRosterClassesForSelector>>[number]
+export type AllCourse = AllSubject["courses"][number]
 
 // 3. The page component is NOT async. It orchestrates promises.
 export default function CoursesPage() {
@@ -82,10 +65,11 @@ export default function CoursesPage() {
 		return getUserCourseCountQuery.execute({ clerkId: userId }).then((results) => results[0] || { count: 0 })
 	})
 
-	// These don't depend on user auth, so they can be executed immediately
+	// Unit data is still from the local database
 	const unitsPromise = getAllUnitsQuery.execute()
-	const allSubjectsPromise = getAllSubjects.execute()
-	const allCoursesPromise = getAllCourses.execute()
+
+	// ✅ Call the new, cached server action for OneRoster data
+	const allSubjectsAndCoursesPromise = getOneRosterClassesForSelector()
 
 	// 5. Render a Suspense boundary and pass all promises to the client component.
 	return (
@@ -93,8 +77,7 @@ export default function CoursesPage() {
 			<Content
 				coursesPromise={coursesPromise}
 				unitsPromise={unitsPromise}
-				allSubjectsPromise={allSubjectsPromise}
-				allCoursesPromise={allCoursesPromise}
+				allSubjectsPromise={allSubjectsAndCoursesPromise}
 				userCourseCountPromise={userCourseCountPromise}
 			/>
 		</React.Suspense>

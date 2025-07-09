@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { dialogKeys, useDialogManager } from "@/hooks/use-dialog-manager"
 import { saveUserCourses } from "@/lib/actions/courses"
 import { CourseCard } from "./course-card"
-import type { AllCourse, AllSubject, Course, Unit } from "./page"
+import type { AllSubject, Course, Unit } from "./page"
 
 // Loading skeleton for course cards
 function CourseCardSkeleton() {
@@ -64,14 +64,12 @@ function CourseGrid({
 export function Content({
 	coursesPromise,
 	unitsPromise,
-	allSubjectsPromise,
-	allCoursesPromise,
+	allSubjectsPromise, // This prop now receives the promise from getOneRosterClassesForSelector
 	userCourseCountPromise
 }: {
 	coursesPromise: Promise<Course[]>
 	unitsPromise: Promise<Unit[]>
 	allSubjectsPromise: Promise<AllSubject[]>
-	allCoursesPromise: Promise<AllCourse[]>
 	userCourseCountPromise: Promise<{ count: number }>
 }) {
 	// Use the centralized dialog manager
@@ -79,8 +77,7 @@ export function Content({
 
 	// Use the promises for modal logic
 	const userCourseCount = React.use(userCourseCountPromise)
-	const allSubjects = React.use(allSubjectsPromise)
-	const allCourses = React.use(allCoursesPromise)
+	const subjectsWithCourses = React.use(allSubjectsPromise) // Data is now pre-formatted
 	const courses = React.use(coursesPromise)
 
 	// Check if user has no courses - show onboarding modal for new users
@@ -92,49 +89,8 @@ export function Content({
 		}
 	}, [isNewUser, shouldShow, openDialog])
 
-	// Process course selector data
-	const subjectsWithCourses = React.useMemo(() => {
-		// Group courses by subject based on path pattern
-		const coursesBySubject = new Map<string, AllCourse[]>()
-		const otherCourses: AllCourse[] = []
-
-		// Initialize map with all subjects
-		for (const subject of allSubjects) {
-			coursesBySubject.set(subject.slug, [])
-		}
-
-		// Group courses
-		for (const course of allCourses) {
-			// Extract subject from course path (e.g., /math/arithmetic -> math)
-			const pathParts = course.path.split("/")
-			const subjectSlug = pathParts[1] // First part after leading /
-
-			if (subjectSlug && coursesBySubject.has(subjectSlug)) {
-				coursesBySubject.get(subjectSlug)?.push(course)
-			} else {
-				otherCourses.push(course)
-			}
-		}
-
-		// If there are courses without matching subjects, add "Other" category
-		if (otherCourses.length > 0) {
-			coursesBySubject.set("other", otherCourses)
-		}
-
-		// Convert to array format for easier consumption
-		const subjectsWithCourses = Array.from(coursesBySubject.entries())
-			.map(([slug, coursesForSubject]) => {
-				const subject = allSubjects.find((s) => s.slug === slug)
-				return {
-					slug,
-					title: subject?.title || "Other",
-					courses: coursesForSubject.sort((a, b) => a.title.localeCompare(b.title))
-				}
-			})
-			.filter((s) => s.courses.length > 0) // Only include subjects with courses
-
-		return subjectsWithCourses
-	}, [allSubjects, allCourses])
+	// The complex useMemo hook for grouping courses by subject is no longer needed.
+	// The data comes pre-formatted from the server action.
 
 	const handleEditCourses = () => {
 		openDialog(dialogKeys.COURSE_SELECTOR)
