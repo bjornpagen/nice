@@ -13,7 +13,7 @@ export const ingestComponentResources = inngest.createFunction(
 			return { status: "skipped", reason: "no_component_resources" }
 		}
 
-		logger.info("ingesting component resources", { count: componentResources.length })
+		logger.info("ingesting component resources in parallel", { count: componentResources.length })
 		const client = new OneRosterApiClient({
 			serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
 			tokenUrl: env.TIMEBACK_TOKEN_URL,
@@ -21,13 +21,9 @@ export const ingestComponentResources = inngest.createFunction(
 			clientSecret: env.TIMEBACK_CLIENT_SECRET
 		})
 
-		// Optional: Add delay between requests (in milliseconds)
-		const DELAY_BETWEEN_REQUESTS = 100 // Adjust as needed
-
-		// Process component resources sequentially to avoid rate limiting
-		const results = []
-		for (const [index, cr] of componentResources.entries()) {
-			const result = await step.run(`ingest-cr-${cr.sourcedId}`, async () => {
+		// Process all component resources in parallel
+		const stepPromises = componentResources.map((cr) =>
+			step.run(`ingest-cr-${cr.sourcedId}`, async () => {
 				const existingCrResult = await errors.try(client.getComponentResource(cr.sourcedId))
 				if (existingCrResult.error) {
 					logger.error("failed to check for existing component resource", {
@@ -58,14 +54,10 @@ export const ingestComponentResources = inngest.createFunction(
 				logger.debug("successfully ingested component resource", { sourcedId: cr.sourcedId })
 				return { sourcedId: cr.sourcedId, success: true, status: "created" }
 			})
+		)
 
-			results.push(result)
-
-			// Add delay between requests (except after the last one)
-			if (index < componentResources.length - 1 && DELAY_BETWEEN_REQUESTS > 0) {
-				await step.sleep(`delay-after-${cr.sourcedId}`, DELAY_BETWEEN_REQUESTS)
-			}
-		}
+		// Wait for all component resources to be processed
+		const results = await Promise.all(stepPromises)
 
 		const failedCount = results.filter((r) => !r.success).length
 		const createdCount = results.filter((r) => r.status === "created").length

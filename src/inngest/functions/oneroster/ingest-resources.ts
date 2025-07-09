@@ -13,7 +13,7 @@ export const ingestResources = inngest.createFunction(
 			return { status: "skipped", reason: "no_resources" }
 		}
 
-		logger.info("ingesting or updating resources", { count: resources.length })
+		logger.info("ingesting or updating resources in parallel", { count: resources.length })
 		const client = new OneRosterApiClient({
 			serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
 			tokenUrl: env.TIMEBACK_TOKEN_URL,
@@ -21,13 +21,9 @@ export const ingestResources = inngest.createFunction(
 			clientSecret: env.TIMEBACK_CLIENT_SECRET
 		})
 
-		// Optional: Add delay between requests (in milliseconds)
-		const DELAY_BETWEEN_REQUESTS = 100 // Adjust as needed
-
-		// Process resources sequentially to avoid rate limiting
-		const results = []
-		for (const [index, resource] of resources.entries()) {
-			const result = await step.run(`ingest-resource-${resource.sourcedId}`, async () => {
+		// Process all resources in parallel
+		const stepPromises = resources.map((resource) =>
+			step.run(`ingest-resource-${resource.sourcedId}`, async () => {
 				const existingResourceResult = await errors.try(client.getResource(resource.sourcedId))
 				if (existingResourceResult.error) {
 					logger.error("failed to check for existing resource", {
@@ -69,23 +65,10 @@ export const ingestResources = inngest.createFunction(
 				logger.debug("successfully ingested resource", { sourcedId: resource.sourcedId })
 				return { sourcedId: resource.sourcedId, success: true, status: "created" }
 			})
+		)
 
-			results.push(result)
-
-			// Add delay between requests (except after the last one)
-			if (index < resources.length - 1 && DELAY_BETWEEN_REQUESTS > 0) {
-				await step.sleep(`delay-after-${resource.sourcedId}`, DELAY_BETWEEN_REQUESTS)
-			}
-
-			// Log progress every 10 resources
-			if ((index + 1) % 10 === 0) {
-				logger.info("ingestion progress", {
-					processed: index + 1,
-					total: resources.length,
-					percentage: Math.round(((index + 1) / resources.length) * 100)
-				})
-			}
-		}
+		// Wait for all resources to be processed
+		const results = await Promise.all(stepPromises)
 
 		const failedCount = results.filter((r) => !r.success).length
 		const createdCount = results.filter((r) => r.status === "created").length
