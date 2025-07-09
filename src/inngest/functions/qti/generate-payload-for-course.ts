@@ -168,7 +168,7 @@ export const generatePayloadForCourse = inngest.createFunction(
 									sequence: 1,
 									"qti-assessment-item-ref": validQtiIdentifiers.map((id) => ({
 										identifier: id,
-										href: `https://${env.TIMEBACK_QTI_SERVER_URL}/assessment-items/${id}`
+										href: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-items/${id}`
 									}))
 								}
 							]

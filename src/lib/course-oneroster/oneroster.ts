@@ -266,7 +266,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 								subType: "qti-stimulus",
 								version: "3.0",
 								language: "en-US",
-								url: `https://${env.TIMEBACK_QTI_SERVER_URL}/stimuli/nice-academy-${content.id}`
+								url: `${env.TIMEBACK_QTI_SERVER_URL}/stimuli/nice-academy-${content.id}`
 							}
 						} else if (lc.contentType === "Video") {
 							// Videos need proper URL
@@ -286,7 +286,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 								version: "3.0",
 								questionType: "custom",
 								language: "en-US",
-								url: `https://${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice-academy-${content.id}`
+								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice-academy-${content.id}`
 							}
 						}
 
@@ -335,7 +335,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 						version: "3.0",
 						questionType: "custom",
 						language: "en-US",
-						url: `https://${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice-academy-${assessment.id}`,
+						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice-academy-${assessment.id}`,
 						description: assessment.description,
 						lessonType: assessment.type.toLowerCase(),
 						path: assessment.path,
