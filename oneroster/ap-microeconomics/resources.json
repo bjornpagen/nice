@@ -23,6 +23,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, we introduce the field of economics using quotes from the person that many consider to be the \"father\" of economics: Adam Smith. Topics include the definition of economics, microeconomics, and macroeconomics as a field and the role of assumptions in economic decisionmaking.",
+			"format": "youtube",
 			"khanId": "878129397",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/introduction-to-the-economic-way-of-thinking-macro/v/introduction-to-economics",
 			"type": "video",
@@ -40,6 +41,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn about the concept of scarcity, a crucial concept in the field of economics. Examine various examples of scarce resources (e.g. caviar, labor, housing) as well as free resources (e.g. air, water in certain contexts) as you learn how economics is a study of how to allocate scarce resources.",
+			"format": "youtube",
 			"khanId": "xf973c2aa0da54adb",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/introduction-to-the-economic-way-of-thinking-macro/v/scarcity",
 			"type": "video",
@@ -57,6 +59,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "This transcript discusses the four factors of production: land, labor, capital, and entrepreneurship. Land refers to natural resources, while labor is the work that goes into production. Capital is the tools and buildings used to produce things, and entrepreneurship is the know-how of putting it all together. The transcript also discusses the distinction between capital goods and consumption goods.",
+			"format": "youtube",
 			"khanId": "x12080596ecd8a167",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/introduction-to-the-economic-way-of-thinking-macro/v/four-factors-of-production",
 			"type": "video",
@@ -74,6 +77,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "This video discusses two closely related ideas in economics: scarcity and rivalry.",
+			"format": "youtube",
 			"khanId": "xabfe67dff597c478",
 			"path": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/economics-introduction/v/scarcity-and-rivalry-basic-economic-concepts-apr-microeconomics-khan-academy",
 			"type": "video",
@@ -91,6 +95,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Economic models are a way of taking complicated ideas and events and breaking them down into their most important characteristics. We use models in economics so that we can focus our attention on a few things instead of getting bogged down a lot of details. In this video, learn more about the role that models play in economics, and the importance of the assumptions that underlie those models.",
+			"format": "youtube",
 			"khanId": "x75c3b5683f2c4221",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/introduction-to-the-economic-way-of-thinking-macro/v/economic-models",
 			"type": "video",
@@ -108,6 +113,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "What is the difference between normative and positive statements in the context of economics or philosophy? Normative statements are based on opinions or ethics—what someone believes should be. Positive statements, on the other hand, are testable, even if they may not necessarily be true.",
+			"format": "youtube",
 			"khanId": "xc592f4be639386b0",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/introduction-to-the-economic-way-of-thinking-macro/v/normative-and-positive-statements",
 			"type": "video",
@@ -125,6 +131,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Market systems only function well when property rights are well defined. Take a deeper dive into the role of property rights in a market system in this video.",
+			"format": "youtube",
 			"khanId": "x2d27ebf226852552",
 			"path": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/economic-systems/v/property-rights-in-a-market-system",
 			"type": "video",
@@ -162,6 +169,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The production possibilities curve (PPC) is a graph that shows all of the different combinations of output that can be produced given current resources and technology. Sometimes called the production possibilities frontier (PPF), the PPC illustrates scarcity and tradeoffs. We can model tradeoffs and scarcity using the example of a hunter-gatherer who can split their time between two activities.",
+			"format": "youtube",
 			"khanId": "469721687",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/production-possibilities-curve-scarcity-choice-and-opportunity-cost-macro/v/production-possibilities-frontier",
 			"type": "video",
@@ -179,6 +187,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Opportunity cost is the trade-off that one makes when deciding between two options. The example of choosing between catching rabbits and gathering berries illustrates how opportunity cost works. The related concept of marginal cost is the cost of producing one extra unit of something.",
+			"format": "youtube",
 			"khanId": "469721684",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/production-possibilities-curve-scarcity-choice-and-opportunity-cost-macro/v/opportunity-cost",
 			"type": "video",
@@ -196,6 +205,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The concept of opportunity cost in economics can change depending on the scenario. For example, there might be a trade-off between hunting for rabbits or gathering berries. As one pursues more rabbits, the opportunity cost (in terms of berries given up) increases. This phenomenon is illustrated graphically with a bow-shaped curve.",
+			"format": "youtube",
 			"khanId": "469721688",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/production-possibilities-curve-scarcity-choice-and-opportunity-cost-macro/v/increasing-opportunity-cost",
 			"type": "video",
@@ -213,6 +223,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "We explore three different production possibility curves for the rabbits and berries example. Each curve has a different shape, which represents different opportunity costs. The bowed out (concave) curve represents an increasing opportunity cost, the bowed in (convex) curve represents a decreasing opportunity cost, and the straight line curve represents a constant opportunity cost.",
+			"format": "youtube",
 			"khanId": "x6230b3a423aa77fe",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/production-possibilities-curve-scarcity-choice-and-opportunity-cost-macro/v/ppcs-for-increasing-decreasing-and-constant-opportunity-cost",
 			"type": "video",
@@ -230,6 +241,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, Sal explains how the production possibilities curve model can be used to illustrate changes in a country's actual and potential level of output. Concepts covered include efficiency, inefficiency, economic growth and contraction, and recession. When an economy is in a recession, it is operating inside the PPC. When it is at full employment, it operates on the PPC. ",
+			"format": "youtube",
 			"khanId": "xdd319ebe9ee1077a",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/production-possibilities-curve-scarcity-choice-and-opportunity-cost-macro/v/production-possibilities-curve",
 			"type": "video",
@@ -287,6 +299,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Explore the concept of comparative advantage with two fictional dinnerware producers, Charlie and Patty. Charlie has a comparative advantage in producing cups, while Patty has a comparative advantage in producing plates. By specializing in these areas and then trading with each other, both producers are able to get outcomes that they wouldn't have been able to achieve on their own.",
+			"format": "youtube",
 			"khanId": "471262130",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/comparative-advantage-specialization-and-gains-from-trade",
 			"type": "video",
@@ -304,6 +317,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn about the difference between \"comparative advantage\" and \"absolute advantage\" in economics. See how two producers can benefit from specializing in different products and trading with each other - even if one producer has an absolute advantage in both products. This is because they have different comparative advantages, or opportunity costs, for producing each product.",
+			"format": "youtube",
 			"khanId": "471262129",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/comparative-advantage-and-absolute-advantage",
 			"type": "video",
@@ -321,6 +335,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, we use the PPCs for two different countries that each produce two goods in order to create an output table based on the data in the graph. We then use the output table to determine the opportunity costs of producing each good. Finally, we determine which country has a comparative advantage in each good.",
+			"format": "youtube",
 			"khanId": "xab3721948a773b32",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/opportunity-cost-and-comparative-advantage-macroeconomics-khan-academy",
 			"type": "video",
@@ -338,6 +353,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, we explore how we can use opportunity costs to determine who has comparative advantage in producing a good. By specializing in the production of a good that a country has comparative advantage in, and trading for the other good, both countries have the potential to benefit from the exchange. We can also figure out a trading price (also known as the \"terms of trade\") which would make both countries willing to trade.",
+			"format": "youtube",
 			"khanId": "x529d4cd510b537f0",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/terms-of-trade-and-the-gains-from-trade-macroeconomics-khan-academy",
 			"type": "video",
@@ -355,6 +371,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, we take a slightly different approach to determining comparative advantage because we are given data in a slightly different way. Rather than knowing how much of two goods can be produced in a day, we know how much of a resources (in this case labor) is needed to produce one unit of a good.",
+			"format": "youtube",
 			"khanId": "x4c3bddb44e1477f3",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/input-approach-to-determining-comparative-advantage-macroeconomics-khan-academy",
 			"type": "video",
@@ -372,6 +389,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In a previous lesson we learned that there is the potential for two countries to gain from trade. But it is also possible that there might not be the potential to gain from trade. In this video, we explore the circumstance that would lead to there being no gains from trade.",
+			"format": "youtube",
 			"khanId": "x6c4e23da6d759cd4",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/when-there-arent-gains-from-trade-macroeconomics-khan-academy",
 			"type": "video",
@@ -389,6 +407,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video we work through an example of a question like you might see on an AP microeconomics or AP Macroeconomics exam determining who has comparative advantage in producing a good using data from a table. Topics include how to calculate opportunity costs and determine who has comparative advantage based on opportunity cost. ",
+			"format": "youtube",
 			"khanId": "x7e45aa6966cce6b1",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/scarcity-and-growth/v/comparative-advantage-worked-example",
 			"type": "video",
@@ -426,6 +445,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "A rational agent considers all costs, including explicit and implicit costs, when deciding whether or not to undertake an action. In this video, learn about how opportunity costs represent the cost of the next best alternative.",
+			"format": "youtube",
 			"khanId": "x939ade91ad43de95",
 			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/cost-benefit-analysis/v/opportunity-costs",
 			"type": "video",
@@ -443,6 +463,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "A rational agent considers both accounting profit and economic profit. In this video, see an example highlighting the difference between accounting profit and economic profit from a business and a discussion of explicit and implicit costs of operating a business.",
+			"format": "youtube",
 			"khanId": "x33d97f1a2be8b713",
 			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/cost-benefit-analysis/v/accounting-profit-vs-economic-profit",
 			"type": "video",
@@ -460,6 +481,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The concept of \"utility\" in economics essentially measures the usefulness or value of something. Economists attempt to quantify utility in various ways. Here, Sal Khan uses the example of scoops of ice cream to illustrate concepts like total utility and marginal utility. He also touches on how marginal utility tends to decrease as you accumulate more of a given thing.",
+			"format": "youtube",
 			"khanId": "x465be0528665dde6",
 			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/cost-benefit-analysis/v/introduction-to-utility",
 			"type": "video",
@@ -497,6 +519,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "When allocating a budget, we can use the concepts of marginal utility and marginal benefit to help us decide where our money is best spent. In general, we should allocate our budget towards items that will provide us with the highest marginal utility or marginal benefit. This way, we will be maximizing the satisfaction or value we receive from our budget.",
+			"format": "youtube",
 			"khanId": "505817315",
 			"path": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/marginal-utility-tutorial/v/marginal-utility",
 			"type": "video",
@@ -514,6 +537,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "This video shows how we can visualize marginal utility (MU) and total utility (TU) functions graphically. ",
+			"format": "youtube",
 			"khanId": "x2d7fa94c4955de56",
 			"path": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/marginal-utility-tutorial/v/visualizing-marginal-utility-mu-and-total-utility-tu-functions",
 			"type": "video",
@@ -551,6 +575,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "How should you allocate money between two different products or services in order to maximize utility, or \"bang for your buck?\" Marginal utility refers to the utility gained from an incremental purchase, in order to make rational decisions. In many cases, the goal is to reach a point where the marginal utility per price of the two products is equal.",
+			"format": "youtube",
 			"khanId": "505817316",
 			"path": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/marginal-utility-tutorial/v/equalizing-marginal-utility-per-dollar-spent",
 			"type": "video",
@@ -568,6 +593,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, walk through the solution to a question on the 2012 AP Microeconomics exam applying the concepts of marginal utility and utility maximization.",
+			"format": "youtube",
 			"khanId": "xf81a262775786f42",
 			"path": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/utility-maximization-using-marg/v/marginal-utllity-free-response-example",
 			"type": "video",
@@ -585,6 +611,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, walk through the solution to one of the questions on the free response section of the 2016 AP Microeconomics exam.",
+			"format": "youtube",
 			"khanId": "xab3c08a99dc60da6",
 			"path": "/economics-finance-domain/ap-microeconomics/basic-economic-concepts/16/v/marginal-benefit-ap-free-response-question",
 			"type": "video",
@@ -706,6 +733,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In order for markets to function effectively, property rights must be clear. In this video, we explore the idea of property rights, and why they matter in markets and how they affect individual incentives. We describe some of the conditions that are necessary for a properly and efficiently operating market to exist, including how exclusivity, enforceability, and transferability of property rights are essential for a properly functioning market.",
+			"format": "youtube",
 			"khanId": "x553f8aa4a4e04106",
 			"path": "/economics-finance-domain/microeconomics/basic-economic-concepts-gen-micro/economic-systems/v/markets-and-property-rights",
 			"type": "video",
@@ -723,6 +751,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The law of demand states that when the price of a product goes up, the quantity demanded will go down – and vice versa. It's an intuitive concept that tends to hold true in most situations (though there are exceptions). The law of demand is a foundational principle in microeconomics, helping us understand how buyers and sellers interact in the marketplace.",
+			"format": "youtube",
 			"khanId": "471262127",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/law-of-demand",
 			"type": "video",
@@ -740,6 +769,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Where does a buyer's demand curve come from? A rational buyer wants to get as much \"bang per buck\" from their consumption as possible. In economics, that's called marginal utility per dollar spent. When the price of a good decreases, the \"bang per buck\" on that good increases, which incentivizes consuming more of it. In this video, we derive the individual's demand curve for a good by tweaking the marginal utility per dollar spent.",
+			"format": "youtube",
 			"khanId": "505808557",
 			"path": "/economics-finance-domain/microeconomics/choices-opp-cost-tutorial/marginal-utility-tutorial/v/deriving-demand-curve-from-tweaking-marginal-utility-per-dollar",
 			"type": "video",
@@ -757,6 +787,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The market demand for a good describes the quantity demanded at every given price for the entire market. Remember that the entire market is made up of individual buyers with their own demand curves. This means that the market demand is the sum of all of the individual buyer's demand curve.  In this video, you can visualize why this is true.",
+			"format": "youtube",
 			"khanId": "xabbed34b0992fd28",
 			"path": "/economics-finance-domain/microeconomics/supply-demand-equilibrium/demand-curve-tutorial/v/market-demand-as-the-sum-of-individual-demand",
 			"type": "video",
@@ -774,6 +805,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn about the Law of Demand, which shows that as prices decrease, quantity demanded increases. Explore three reasons for this: substitution effect (buying cheaper alternatives), income effect (extra money to spend), and decreasing marginal utility (less value from additional units), and see how each creates a downward-sloping demand curve.",
+			"format": "youtube",
 			"khanId": "x25dff0722996be25",
 			"path": "/economics-finance-domain/microeconomics/supply-demand-equilibrium/demand-curve-tutorial/v/substitution-and-income-effects-and-the-law-of-demand",
 			"type": "video",
@@ -811,6 +843,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Changes in the prices of related products (either substitutes or complements) can affect the demand curve for a particular product.The example of an ebook illustrates how the demand curve can shift to the left or right depending on whether the prices of related products go up or down.",
+			"format": "youtube",
 			"khanId": "471258160",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/price-of-related-products-and-demand",
 			"type": "video",
@@ -828,6 +861,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "This transcript discusses how changes in expectations of future prices can affect demand. If people expect prices to go up, they're more likely to buy now, shifting the demand curve to the right. If they expect prices to go down, they're likely to hold off on buying, shifting the demand curve to the left.",
+			"format": "youtube",
 			"khanId": "1266634647",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/change-in-expected-future-prices-and-demand",
 			"type": "video",
@@ -845,6 +879,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, we explore how changes in a few factors affect the demand curve. Changes in income, population, and consumer preferences cause the entire demand curve to shift. ",
+			"format": "youtube",
 			"khanId": "471262128",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/changes-in-income-population-or-preferences",
 			"type": "video",
@@ -862,6 +897,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "We examine the concept of demand curves for two different products: a laptop and a cheap car. We see how changes in income can affect demand, with the laptop being a \"normal good\" (demand increases as income increases) and the cheap car being an \"inferior good\" (demand decreases as income increases).",
+			"format": "youtube",
 			"khanId": "471262131",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/normal-and-inferior-goods",
 			"type": "video",
@@ -879,6 +915,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The concepts of normal goods and inferior goods can be tricky, and the definitions can be somewhat subjective as well. In this video, we take a deeper look at these kinds of goods.",
+			"format": "youtube",
 			"khanId": "476379114",
 			"path": "/economics-finance-domain/microeconomics/supply-demand-equilibrium/demand-curve-tutorial/v/inferior-goods-clarification",
 			"type": "video",
@@ -896,6 +933,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In economics, \"demand\" refers to the entire curve that illustrates the relationship between price and quantity. \"Quantity demanded\" refers to a specific point on that curve, where a certain price is associated with a certain quantity. So, while demand encompasses the whole curve, quantity demanded is just one snapshot within it.",
+			"format": "youtube",
 			"khanId": "x4c84a74cf27acbfd",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/demand/v/change-in-demand-versus-change-in-quantity-demanded-microeconomics-khan-academy",
 			"type": "video",
@@ -933,6 +971,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video we explore the law of supply which states that quantity supplied increases as price increases. We use a supply schedule to describe the quantities a seller is willing to sell at different prices, and then translate the supply schedule into a supply curve that illustrates the law of supply.",
+			"format": "youtube",
 			"khanId": "476379112",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/supply/v/law-of-supply",
 			"type": "video",
@@ -950,6 +989,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "A change in supply refers to a shift in the entire supply curve, which can happen due to factors such as changes in production costs or taxes. A change in quantity supplied, on the other hand, refers to movement along the curve due to changes in price. Explore several examples to illustrate these concepts.",
+			"format": "youtube",
 			"khanId": "x25f3cb342b01f812",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/supply/v/change-in-supply-versus-change-in-quantity-supplied",
 			"type": "video",
@@ -987,6 +1027,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Price changes the quantity supplied, but what might cause supply to increase even if price hasn't changed? In this video, we explore the determinants of supply: those factors that cause an entire supply curve to shift.",
+			"format": "youtube",
 			"khanId": "476379111",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/supply/v/factors-affecting-supply",
 			"type": "video",
@@ -1024,6 +1065,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn about the price elasticity of demand, a concept measuring how sensitive quantity is to price changes. Elasticity is calculated as percent change in quantity divided by percent change in price. Elastic situations have elasticity greater than 1, while inelastic situations have elasticity less than 1. Elasticity varies along a demand curve, and different calculation methods exist.",
+			"format": "youtube",
 			"khanId": "x00350a2da52f2646",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/introduction-to-price-elasticity-of-demand-ap-microeconomics-khan-academy",
 			"type": "video",
@@ -1041,6 +1083,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "There are several factors that affect how elastic (or inelastic) the price elasticity of demand is, such as the availability of substitutes, the timeframe, the share of income, whether a good is a luxury vs. a necessity, and how narrowly the market is defined. We explore each of these in this video.",
+			"format": "youtube",
 			"khanId": "x4564ec1756b032eb",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/determinants-of-price-elasticity-of-demand-ap-microeconomics-khan-academy",
 			"type": "video",
@@ -1058,6 +1101,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Walk through the logic of determining what kind of good has the most elastic demand in this video.",
+			"format": "youtube",
 			"khanId": "x80b9d9e046eb647b",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/determinants-of-elasticity-example",
 			"type": "video",
@@ -1095,6 +1139,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Perfect inelasticity refers to a situation in which the quantity demanded does not change at all, regardless of the price. Perfect elasticity refers to a situation in which the quantity demanded is extremely sensitive to changes in price, with even a small change in price leading to a large change in quantity demanded.",
+			"format": "youtube",
 			"khanId": "478016838",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/perfect-inelasticity-and-perfect-elasticity-of-demand",
 			"type": "video",
@@ -1112,6 +1157,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "An interesting case of price elasticity of demand is a demand curve with a constant unit elasticity. Explore what such a demand curve would look like in this video.",
+			"format": "youtube",
 			"khanId": "480683235",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/constant-unit-elasticity",
 			"type": "video",
@@ -1129,6 +1175,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "One of the most practical applications of price elasticity of demand is its relationship to total revenue. A seller who knows the price elasticity of demand for their good can make better decisions about what happens if they raise or lower the price of their good. Explore the relationship between total revenue and elasticity in this video.",
+			"format": "youtube",
 			"khanId": "480690086",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/total-revenue-and-elasticity",
 			"type": "video",
@@ -1146,6 +1193,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, take a deeper dive into the total revenue rule and the relationship between total revenue and elasticity.",
+			"format": "youtube",
 			"khanId": "480687060",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-tutorial/v/more-on-total-revenue-and-elasticity",
 			"type": "video",
@@ -1183,6 +1231,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The price elasticity of supply is a measure of how sensitive the quantity supplied of a good is to changes in price. It is calculated as the percentage change in quantity supplied divided by the percentage change in price. If the elasticity is greater than one, supply is considered \"elastic,\" while if it is less than one, supply is \"inelastic.\"",
+			"format": "youtube",
 			"khanId": "x1ed69c3148e6c767",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-of-supply/v/introduction-to-price-elasticity-of-supply-ap-microeconomics",
 			"type": "video",
@@ -1200,6 +1249,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Explore what makes supply more or less elastic in this video.",
+			"format": "youtube",
 			"khanId": "x27d78be10d1445dc",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/price-elasticity-of-supply/v/price-elasticity-of-supply-determinants",
 			"type": "video",
@@ -1237,6 +1287,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn about income elasticity of demand, which measures how sensitive quantity demanded is to changes in income. Compare normal goods, where demand increases with income, to inferior goods, where demand decreases as income rises. Finally, you'll learn that elasticity isn't limited to price, as other factors can affect supply and demand.",
+			"format": "youtube",
 			"khanId": "xb0a01122caa8758a",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/income-elasticity-of-demand/v/income-elasticity-of-demand",
 			"type": "video",
@@ -1274,6 +1325,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Cross elasticity of demand refers to the way that changes in the price of one good can affect the quantity demanded of another good. This relationship can vary depending on whether the two goods are substitutes, complements, or unrelated to each other.",
+			"format": "youtube",
 			"khanId": "480687059",
 			"path": "/economics-finance-domain/microeconomics/elasticity-tutorial/income-elasticity-of-demand/v/cross-elasticity-of-demand",
 			"type": "video",
@@ -1311,6 +1363,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Explore the dynamics of supply and demand in through an example of an apple market. By graphing the demand and supply curves, you'll learn how different prices impact the quantity supplied and demanded. You'll also learn how shortages and surpluses arise, how they are resolved through price adjustments, and how the market converges on an equilibrium price and quantity.",
+			"format": "youtube",
 			"khanId": "476379115",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/market-equilibrium-disequilibrium-and-changes-in-equilibrium/v/market-equilibrium",
 			"type": "video",
@@ -1348,6 +1401,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "To get a better intuition about how much a consumer values a good in a market, we think of demand as a marginal benefit curve. In this video we look at the demand curve from a marginal benefit framework.",
+			"format": "youtube",
 			"khanId": "482857607",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/v/demand-curve-as-marginal-benefit-curve",
 			"type": "video",
@@ -1365,6 +1419,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Explore the concept of consumer surplus in economics using a car sales example. See how the demand curve can be viewed as a marginal benefit curve, and how consumer surplus is the total excess of marginal benefit above the price paid. The video highlights that sellers may sell items below their potential value.",
+			"format": "youtube",
 			"khanId": "482869244",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/v/consumer-surplus-introduction",
 			"type": "video",
@@ -1382,6 +1437,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Consumer surplus is calculated by finding the difference between the amount a consumer is willing to pay for a product and the actual price they pay. To find the total consumer surplus, you sum up these differences for all units sold. In some cases this can be simplified to finding the area between the demand curve and the price line.",
+			"format": "youtube",
 			"khanId": "491075659",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/v/total-consumer-surplus-as-area",
 			"type": "video",
@@ -1399,6 +1455,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Producer surplus is the difference between the price a producer gets and its marginal cost. Explore the concepts of supply and demand, opportunity cost, and producer surplus in the context of a berry farm, learning how changes in quantity produced affects the price needed to incentivize producers, and how producers benefit when the market price is higher than their opportunity cost.",
+			"format": "youtube",
 			"khanId": "491082769",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/v/producer-surplus",
 			"type": "video",
@@ -1416,6 +1473,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Total surplus is maximized in a market at equilibrium. In this video, we talk about why this is and the math behind this assertion. ",
+			"format": "youtube",
 			"khanId": "x1a95d088ef16baa0",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/consumer-producer-surplus-tut/v/equilibrium-allocative-efficiency-and-total-surplus",
 			"type": "video",
@@ -1453,6 +1511,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "When supply or demand change, the price and quantity in the market changes. See how a change in demand or supply affects price and quantity in this video.",
+			"format": "youtube",
 			"khanId": "476379113",
 			"path": "/economics-finance-domain/ap-macroeconomics/basic-economics-concepts-macro/market-equilibrium-disequilibrium-and-changes-in-equilibrium/v/changes-in-market-equilibrium",
 			"type": "video",
@@ -1490,6 +1549,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Price controls have the potential to reduce total surplus. In this video we step through some details on how one kind of regulation, a price ceiling, can reduce economic efficiency. A real world example of a price ceiling is rent control, which some cities have experimented with as a way to control rising housing costs.",
+			"format": "youtube",
 			"khanId": "xf9b67f8e",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/rent-control-dead-weight-cost",
 			"type": "video",
@@ -1507,6 +1567,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Another type of price control is a price floor, which is a minimum legal price. A real world example of a price floor is a minimum wage. In this video we explore how a minimum wage might affect a perfectly competitive labor market.",
+			"format": "youtube",
 			"khanId": "493579772",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/minimum-wage-and-price-floors",
 			"type": "video",
@@ -1544,6 +1605,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Price controls reallocate surplus between buyers and sellers. In this video we explore how that happens with a price ceiling or a price floor.",
+			"format": "youtube",
 			"khanId": "x1d63389ac92d8cd2",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/how-price-controls-reallocate-surplus",
 			"type": "video",
@@ -1581,6 +1643,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "When a tax is imposed in a market this is another example of government intervention. In this video, we explore the effect of imposing a tax on the price and quantity in a market.",
+			"format": "youtube",
 			"khanId": "498143705",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/taxation-and-dead-weight-loss",
 			"type": "video",
@@ -1598,6 +1661,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Tax incidence is a description of how the burden of a tax falls in a market. In this video we break down how to identify consumer surplus, producer surplus, tax revenue and tax incidence, and dead weight loss after a tax.",
+			"format": "youtube",
 			"khanId": "x98f24461f13340e4",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/example-breaking-down-tax-incidence",
 			"type": "video",
@@ -1615,6 +1679,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The burden of a tax falls most heavily on someone who can't adjust to a price change. That means buyers bear a bigger burden when demand is more inelastic, and sellers bear a bigger burden when supply is more inelastic. ",
+			"format": "youtube",
 			"khanId": "499815367",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/taxes-and-perfectly-inelastic-demand",
 			"type": "video",
@@ -1632,6 +1697,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "An interesting case of taxes and tax incidence is when one of the curves is perfectly elastic. Explore what happens when demand is perfectly elastic in this video.",
+			"format": "youtube",
 			"khanId": "499850170",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/deadweight-loss-tutorial/v/taxes-and-perfectly-elastic-demand",
 			"type": "video",
@@ -1669,6 +1735,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Autarky describes a situation when countries are completely closed to trade. In this video, we explore what happens to the domestic price of a good, consumer surplus, and producer surplus, when an autarkic country opens to trade.",
+			"format": "youtube",
 			"khanId": "xa45f92128e2a22a5",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/international-trade/v/changing-equilibria-from-trade",
 			"type": "video",
@@ -1686,6 +1753,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "When governments impose restrictions on international trade, this affects the domestic price of the good and reduces total surplus. One such imposition is a tariff (a tax on imported or exported goods and services). See how a tariff impacts price, consumer surplus, producer surplus, tax revenue, and deadweight loss in this video.",
+			"format": "youtube",
 			"khanId": "xe12e6cf05b985cbc",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/international-trade/v/trade-and-tariffs",
 			"type": "video",
@@ -1703,6 +1771,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, walk through the solution to a question on the effect of tariffs from the 2012 AP(R) Microeconomics exam.",
+			"format": "youtube",
 			"khanId": "x78b2bbd577db87ee",
 			"path": "/economics-finance-domain/microeconomics/consumer-producer-surplus/international-trade/v/tariff-and-imports-worked-example",
 			"type": "video",
@@ -1845,6 +1914,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Production functions describe how output is determined by various inputs. The short run is defined as the period of time in which at least one input is fixed. Anything longer than that is considered the long run.",
+			"format": "youtube",
 			"khanId": "x555f17bc0979fbe5",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/introduction-to-production-and-costs/v/introduction-to-production-functions",
 			"type": "video",
@@ -1862,6 +1932,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The short-run production function describes the relationship between output and inputs when at least one input is fixed, such as out output varies based on the amount of labor used. We can use this production function to find the total product of labor, the marginal product of labor, and the average product of labor.",
+			"format": "youtube",
 			"khanId": "xbbaf806a06971fee",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/introduction-to-production-and-costs/v/total-product-marginal-product-and-average-product",
 			"type": "video",
@@ -1899,6 +1970,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Explore how to think about average fixed, variable, and marginal costs, and how to calculate them, using a firm's production function and costs in this video.",
+			"format": "youtube",
 			"khanId": "514726534",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/fixed-variable-and-marginal-cost",
 			"type": "video",
@@ -1916,6 +1988,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video we calculate the costs of producing a good, including fixed costs, variable costs, marginal cost, average variable cost, average fixed cost, and average total cost.",
+			"format": "youtube",
 			"khanId": "x6ca03b1fd4b4d533",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/marginal-cost-average-variable-cost-and-average-total-cost",
 			"type": "video",
@@ -1933,6 +2006,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Explore the relationship between marginal cost, average variable cost, average total cost, and average fixed cost curves in economics. See how to graph these curves and highlights their intersections, which represent minimum points for average costs. Understanding these concepts helps businesses make better decisions about production and resource allocation.",
+			"format": "youtube",
 			"khanId": "x1f6fd431403ed956",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/graphs-of-mc-avc-and-atc",
 			"type": "video",
@@ -1950,6 +2024,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn about rational production quantity using an orange juice example. The market price is 50 cents per gallon, and we want to maximize profit. We find the point where marginal revenue equals marginal cost, which is 9,000 gallons. At this quantity, we make 2 cents profit per gallon, totaling $180 profit.",
+			"format": "youtube",
 			"khanId": "521284923",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/marginal-revenue-and-marginal-cost",
 			"type": "video",
@@ -1987,6 +2062,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "People sometimes assume that a firm that isn't earning a profit should immediately shut down. In this video, we explore why that might not actually be a very good idea, and why it might be rational to produce at a loss.",
+			"format": "youtube",
 			"khanId": "521326286",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/marginal-revenue-below-average-total-cost",
 			"type": "video",
@@ -2004,6 +2080,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "This video expands on previous videos to explore how changes in production technology, changes in fixed costs, and changes in variable costs affect the marginal product of labor, marginal costs, average variable costs, average fixed costs, and average total cost.",
+			"format": "youtube",
 			"khanId": "x31c330c31d4c550b",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/how-costs-change-when-fixed-and-variable-costs-change",
 			"type": "video",
@@ -2021,6 +2098,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Changes in fixed costs will affect average fixed cost and average total cost, while changes in variable costs will impact average variable cost, marginal cost, and average total cost. Essentially, any change in costs can alter the financial calculations a business has to make in order to determine the most efficient way to produce and sell its products or services.",
+			"format": "youtube",
 			"khanId": "xc882420c3bb6bc75",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/average-costs-margin-rev/v/graphical-impact-of-cost-changes-on-marginal-and-average-costs",
 			"type": "video",
@@ -2058,6 +2136,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video we explore the long run average total cost curve and how average costs vary when all inputs can be adjusted.",
+			"format": "youtube",
 			"khanId": "x5f3bf955fd4b7010",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/long-run-production-costs/v/long-run-average-total-cost-curve",
 			"type": "video",
@@ -2075,6 +2154,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Economies of scale exist when long run average total cost decreases as output increases, diseconomies of scale occur when long run average total cost increases as output increases, and constant returns to scale occur when costs do not change as output increases.",
+			"format": "youtube",
 			"khanId": "x1177755c16814d07",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/long-run-production-costs/v/economies-and-diseconomies-of-scale",
 			"type": "video",
@@ -2092,6 +2172,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Minimum efficient scale (MES) is the quantity at which a firm’s long run average total cost curve stops falling, and the size of a firm’s MES relative to the size of the market has a strong influence on market structure— large MES is associated with more concentrated markets.",
+			"format": "youtube",
 			"khanId": "xa2504c516da7d3ac",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/long-run-production-costs/v/minimum-efficient-scale-and-market-concentration-ap-microeconomics-khan-academy",
 			"type": "video",
@@ -2129,6 +2210,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Accounting profit is what many people tend to think of when they think profit, but an economist would say that you leave something very important out when you do so: opportunity costs. In this video, explore the difference between a firm's accounting and economic profit",
+			"format": "youtube",
 			"khanId": "510581042",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/economic-profit-tutorial/v/economic-profit-vs-accounting-profit",
 			"type": "video",
@@ -2166,6 +2248,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn how firms maximize profit by producing a quantity where marginal cost equals marginal revenue. In a competitive market, firms are price-takers, and marginal revenue is constant. Rational firms will produce more if marginal revenue is higher than marginal cost. Profit is maximized when the area of the rectangle formed by average total cost and marginal revenue is largest.",
+			"format": "youtube",
 			"khanId": "xe2c4edd5e8838b77",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/micro-profit-maximization/v/profit-maximization",
 			"type": "video",
@@ -2183,6 +2266,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Work through a free response question about profit maximization in this video.",
+			"format": "youtube",
 			"khanId": "x07cc66051297f9a4",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/micro-profit-maximization/v/profit-maximization-worked-example",
 			"type": "video",
@@ -2200,6 +2284,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "A firm shut's down temporarily when it can't cover its variable cost, but it exits the industry for good when it's economic profits are negative. In this video, learn more about how to use a graph of cost curves to determine when a firm shuts down, enters an industry, or exits an industry.",
+			"format": "youtube",
 			"khanId": "x976d05741579e7bc",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/firm-entry-exit-and-the-shut-down-rule/v/shutting-down-or-exiting-industry-based-on-price",
 			"type": "video",
@@ -2237,6 +2322,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Perfect competition is a theoretical market structure in which there are many buyers and sellers, identical products (also called homogeneous products), perfect information, and no barriers to entry.",
+			"format": "youtube",
 			"khanId": "xe81019f5be6d68d0",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/v/perfect-competition-microeconomics",
 			"type": "video",
@@ -2254,6 +2340,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "An important skill in microeconomics is the ability to find a firm's profit. Learn more about how to use a graph to identify the profit-maximizing quantity for a firm in a perfectly competitive market, and identify the area that represents the firm's profit or loss.",
+			"format": "youtube",
 			"khanId": "x53c6b9bd0c26909d",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/v/economic-profit-for-firms-in-perfectly-competitive-markets",
 			"type": "video",
@@ -2291,6 +2378,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "A firm in a perfectly competitive market might be able to earn economic profit in the short run, but not in the long run. Learn about the process that brings a firm to normal economic profits in this video.",
+			"format": "youtube",
 			"khanId": "x1bacdd972ddd9f00",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/firm-entry-exit-and-the-shut-down-rule/v/long-run-economic-profit-for-perfectly-competitive-firms",
 			"type": "video",
@@ -2308,6 +2396,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "A constant cost industry is an industry where each firm's costs aren't impacted by the entry or exit of new firms. Learn about the difference between the short run market supply curve and the long run market supply curve for perfectly competitive firms in constant cost industries in this video.",
+			"format": "youtube",
 			"khanId": "x55a48b209f58f5fd",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/perfect-competition/v/long-run-supply-curve-in-constant-cost-perfectly-competitive-markets",
 			"type": "video",
@@ -2325,6 +2414,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In some industries, the number of firms in the market has an impact on the costs that firms face. For example, when firms have to compete with each other over resources, firms' costs increase as more firms enter the market. But in other industries, more firms actually lower costs for firms. Learn about the implications of each of these situations on the long-run supply curve in an industry.",
+			"format": "youtube",
 			"khanId": "x4ab543e8b92e5239",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/firm-entry-exit-and-the-shut-down-rule/v/long-run-supply-when-industry-costs-are-increasing-or-decreasing",
 			"type": "video",
@@ -2342,6 +2432,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Walk through the solution to a free response question (FRQ) like the ones you may see on an AP Microeconomics exam. Topics include why price equals marginal revenue (P=MR) for a perfectly competitive firm, how to draw side-by-side market and firm graphs, and how to find several points of interest in the firm graph.",
+			"format": "youtube",
 			"khanId": "x2f737eeeea7e2063",
 			"path": "/economics-finance-domain/microeconomics/firm-economic-profit/firm-entry-exit-and-the-shut-down-rule/v/frq-microecononomics-on-perfect-competition",
 			"type": "video",
@@ -2503,6 +2594,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The most common forms of competition you learn about in microeconomics are perfect competition, monopolies, oligopoly, monopsony, and monopolistic competition. In this video we briefly describe the key features of each.",
+			"format": "youtube",
 			"khanId": "xf94655b94c517646",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/perfect-and-imperfect-competition",
 			"type": "video",
@@ -2520,6 +2612,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In imperfect competition, firms have some control over the price they charge, so the individual firm's demand curve is not horizontal. Learn how that fact also changes the marginal revenue curve in this video.",
+			"format": "youtube",
 			"khanId": "xab9b036f4b9068b3",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/types-of-competition-and-marginal-revenue",
 			"type": "video",
@@ -2537,6 +2630,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "This video discusses the differences in a graph of marginal cost and marginal revenue for an imperfectly competitive firm compared to a perfectly competitive firm.",
+			"format": "youtube",
 			"khanId": "xac2fab2aaf7b9e3b",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/marginal-revenue-and-marginal-cost-in-imperfect-competition",
 			"type": "video",
@@ -2574,6 +2668,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn about the key differences between the two extremes of competition: monopolies and perfect competition.",
+			"format": "youtube",
 			"khanId": "x4e0c82eb7170c835",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/monopolies-vs-perfect-competition",
 			"type": "video",
@@ -2591,6 +2686,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn about the economic profit of a monopoly firm. See how the marginal revenue curve differs from the demand curve in imperfect competition, leading to a markup and dead weight loss. The economic profit is determined by comparing the market price to the average total cost at a certain quantity. Monopolies can maintain economic profit due to high barriers to entry.",
+			"format": "youtube",
 			"khanId": "x5c3b2642a305d783",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/economic-profit-for-a-monopoly",
 			"type": "video",
@@ -2608,6 +2704,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video we explore how a monopolist decides on the best quantity to produce and the price to charge for that quantity. ",
+			"format": "youtube",
 			"khanId": "526475273",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/monopolist-optimizing-price-part-1-total-revenue",
 			"type": "video",
@@ -2625,6 +2722,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn about marginal revenue for a monopolist. We find the slope of the total revenue curve to determine marginal revenue at different quantities, and discover that the marginal revenue curve is a downward-sloping line with twice the slope of the demand curve. This helps us understand how monopolists can optimize their profit by comparing marginal revenue to marginal costs.",
+			"format": "youtube",
 			"khanId": "526475275",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/monopolist-optimizing-price-part-2-marginal-revenue",
 			"type": "video",
@@ -2642,6 +2740,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The marginal revenue curve for a monopoly differs from that of a perfectly competitive market. A monopolist maximizes profit by producing the quantity at which marginal revenue and marginal cost intersect. This results in a dead weight loss for society, as well as a redistribution of value from consumers to the monopolist.",
+			"format": "youtube",
 			"khanId": "526475274",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/monopolist-optimizing-price-part-3-dead-weight-loss-avi",
 			"type": "video",
@@ -2659,6 +2758,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, we review the key features, behavior, and consequences of a monopoly.",
+			"format": "youtube",
 			"khanId": "1266250654",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolies-tutorial/v/review-of-revenue-and-cost-graphs-for-a-monopoly-1",
 			"type": "video",
@@ -2716,6 +2816,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Explore an example of a wine producer who practices price discrimination by selling the same wine with different labels at different prices. This strategy allows the producer to capture more consumer surplus and increase their economic profit. The producer is a monopolistic competitor, as their wine is differentiated, and they have a monopoly in their specific wine market.",
+			"format": "youtube",
 			"khanId": "541028301",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/price-discrimination/v/first-degree-price-discrimination",
 			"type": "video",
@@ -2733,6 +2834,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Price discrimination is charging each consumer their entire willingness to pay. What if a monopolist can charge each buyer their entire willingness to pay? Learn about the effect of perfect price discrimination on output and deadweight loss in this video.",
+			"format": "youtube",
 			"khanId": "xfad012585889e441",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/price-discrimination/v/monopoly-price-discrimination",
 			"type": "video",
@@ -2770,6 +2872,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "What are the differences between monopolies and perfect competition? An oligopoly refers to a market with only a few sellers. Monopolistic competition refers to situations where there are many sellers, but the products are highly differentiated. There are several important nuances to explore between these types of markets.",
+			"format": "youtube",
 			"khanId": "529106152",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolistic-competition-oligop/v/oligopolies-and-monopolisitc-competition",
 			"type": "video",
@@ -2787,6 +2890,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video we explore why it is hard for a monopolistic competitor to make economic profit in the long run.",
+			"format": "youtube",
 			"khanId": "541028299",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolistic-competition-oligop/v/monopolistic-competition-and-economic-profit",
 			"type": "video",
@@ -2804,6 +2908,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, we compare and contrast the long run outcomes for monopolistic competition, monopolies, and perfect competition.",
+			"format": "youtube",
 			"khanId": "xde6fad9fc7f121db",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/monopolistic-competition-oligop/v/long-term-economic-profit-for-monopolistic-competition",
 			"type": "video",
@@ -2841,6 +2946,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "When does an oligopoly act more like a perfectly competitive firm, and when does it act more like a monopolist? Find out in this video.",
+			"format": "youtube",
 			"khanId": "531245092",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/v/oligopolies-duopolies-collusion-and-cartels",
 			"type": "video",
@@ -2858,6 +2964,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The \"prisoner's dilemma\" is a concept that describes a situation in which two people have competing incentives that lead them to choose a suboptimal outcome. In the classic example, two prisoners can each choose to confess or not to a crime, and their decisions will determine the length of their sentences. The best outcome for both is to stay silent, but the possibility that the other will confess leads them both to incriminate themselves.",
+			"format": "youtube",
 			"khanId": "531245090",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/v/prisoners-dilemma-and-nash-equilibrium",
 			"type": "video",
@@ -2875,6 +2982,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video we expand our analysis of the prisoners' dilemma to better understand the concept and definition of a Nash Equilibrium.",
+			"format": "youtube",
 			"khanId": "531245089",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/v/more-on-nash-equilibrium",
 			"type": "video",
@@ -2892,6 +3000,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, we explore a conflict that duopolists (and other oligopolies) face: there is a tension between cooperating and forming a cartel or cheating on that cartel once it is formed. ",
+			"format": "youtube",
 			"khanId": "541028297",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/v/why-parties-to-cartels-cheat",
 			"type": "video",
@@ -2909,6 +3018,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "We deepen our understanding of a Nash Equilibrium by exploring Pareto optimality and more on Nash Equilibrium.",
+			"format": "youtube",
 			"khanId": "541022390",
 			"path": "/economics-finance-domain/microeconomics/perfect-competition-topic/game-theory/v/game-theory-of-cheating-firms",
 			"type": "video",
@@ -2926,6 +3036,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Work through a free response question (FRQ) for AP Microeconomics that uses game theory.",
+			"format": "youtube",
 			"khanId": "xf46e91cf0a13a9d2",
 			"path": "/economics-finance-domain/ap-microeconomics/imperfect-competition/oligopoly-and-game-theory/v/game-theory-worked-example-from-a-p-microeconomics",
 			"type": "video",
@@ -3046,6 +3157,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Every time a firm hires more labor, they get more output which means more revenue. In this video we begin thinking about how much incremental benefit a firm gets from hiring one more person.",
+			"format": "youtube",
 			"khanId": "544764167",
 			"path": "/economics-finance-domain/microeconomics/micro-factor-markets/micro-introduction-to-factor-markets/v/a-firm-s-marginal-product-revenue-curve",
 			"type": "video",
@@ -3063,6 +3175,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Given that hiring more workers gives more revenue, but also has additional cost, what is the optimal amount of labor to hire? We begin thinking about this as well as briefly discuss another type of competition: monopsony labor markets. ",
+			"format": "youtube",
 			"khanId": "544732566",
 			"path": "/economics-finance-domain/microeconomics/micro-factor-markets/micro-introduction-to-factor-markets/v/how-many-people-to-hire-given-the-mpr-curve",
 			"type": "video",
@@ -3080,6 +3193,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Just like goods and services, the factors of production are exchanged in markets. This video focuses on such market -- the market for labor. The supply of labor is based on people's willingness to tradeoff labor for leisure. The demand for labor is based on labor's marginal revenue product.",
+			"format": "youtube",
 			"khanId": "x6fc915d7f93b9585",
 			"path": "/economics-finance-domain/microeconomics/micro-factor-markets/micro-introduction-to-factor-markets/v/introduction-to-labor-markets",
 			"type": "video",
@@ -3117,6 +3231,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video we explore how to derive the demand for a factor of production based on how productive that factor is and how much additional revenue that factor brings in.",
+			"format": "youtube",
 			"khanId": "544749484",
 			"path": "/economics-finance-domain/microeconomics/micro-factor-markets/labor-marginal-product-rev/v/adding-demand-curves",
 			"type": "video",
@@ -3134,6 +3249,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Changes in the supply of labor have an effect on the wage rate. The supply of labor shifts when there are changes in the population, changes in preferences and social norms, and changes in wage rates and opportunities in other markets. Learn how to show the effects of changes in labor supply on wage rates in this video.",
+			"format": "youtube",
 			"khanId": "x45318ad63036e4a2",
 			"path": "/economics-finance-domain/microeconomics/micro-factor-markets/labor-marginal-product-rev/v/changes-in-labor-supply",
 			"type": "video",
@@ -3151,6 +3267,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Changes in the demand for labor affect wage rates. Learn why labor demand changes, and the effect of changes in the demand for labor on labor markets.",
+			"format": "youtube",
 			"khanId": "x247b97f1369f914a",
 			"path": "/economics-finance-domain/microeconomics/micro-factor-markets/labor-marginal-product-rev/v/shifts-in-demand-for-labor",
 			"type": "video",
@@ -3188,6 +3305,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn about how firms determine the optimal combination of capital and labor in this video.",
+			"format": "youtube",
 			"khanId": "x70ecae66cf867e9a",
 			"path": "/economics-finance-domain/microeconomics/micro-factor-markets/optimal-firm-behavior-in-perfectly-competitive-factor-markets/v/cost-minimizing-choice-of-inputs",
 			"type": "video",
@@ -3205,6 +3323,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "In this video, learn how to apply the analysis of factor markets to a sample problem.",
+			"format": "youtube",
 			"khanId": "x3dc3414d55370683",
 			"path": "/economics-finance-domain/microeconomics/micro-factor-markets/optimal-firm-behavior-in-perfectly-competitive-factor-markets/v/factor-markets-worked-example-microeconomics-khan-academy",
 			"type": "video",
@@ -3242,6 +3361,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "When there is a single buyer of labor this type of market is called a monopsonistic labor market. Learn how this changes the analysis of labor markets and why marginal factor cost is higher than the supply of labor in such markets.",
+			"format": "youtube",
 			"khanId": "x9a687593e30d820c",
 			"path": "/economics-finance-domain/microeconomics/micro-factor-markets/choosing-inputs-when-factor-markets-are-monopsonistically-competitive/v/a-monopsonistic-market-for-labor",
 			"type": "video",
@@ -3259,6 +3379,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "We've learned in previous lessons that a price control decreases quantity and efficiency, but is that always the case? Learn about the surprising effect of a minimum wage on a monopsonistic labor market in this video.",
+			"format": "youtube",
 			"khanId": "xd7cf229eff5df1e0",
 			"path": "/economics-finance-domain/microeconomics/micro-factor-markets/choosing-inputs-when-factor-markets-are-monopsonistically-competitive/v/monopsony-employers-and-minimum-wages",
 			"type": "video",
@@ -3379,6 +3500,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "If all costs and benefits are captured by the supply and demand curves, then the market outcome is a quantity where marginal social costs equals marginal social benefit. But what if they don't? In this video, see how markets might produce an inefficient quantity.",
+			"format": "youtube",
 			"khanId": "xa4b05c840bd83737",
 			"path": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/socially-efficient-and-inefficient-market-outcomes/v/socially-efficient-and-inefficient-outcomes",
 			"type": "video",
@@ -3416,6 +3538,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Explore the concept of negative externalities through the example of a market for plastic bags and its associated external costs, such as litter and environmental damage, that reduce the overall benefit to society. See how taking these costs into account would lead to a lower equilibrium quantity in order to maximize total benefit.",
+			"format": "youtube",
 			"khanId": "541028298",
 			"path": "/economics-finance-domain/microeconomics/market-failure-and-the-role-of-government/externalities-micro/v/negative-externalities",
 			"type": "video",
@@ -3433,6 +3556,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Explore the concept of positive externalities through a hypothetical market for a certain type of tree. You'll see how the increasing the quantity of trees impacts marginal cost curve for supply, as the price increases with each additional tree. You'll also see how positive externalities can capture benefits of consumption that are not present in a demand curve.",
+			"format": "youtube",
 			"khanId": "541022388",
 			"path": "/economics-finance-domain/microeconomics/market-failure-and-the-role-of-government/externalities-micro/v/positive-externalities",
 			"type": "video",
@@ -3490,6 +3614,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "The \"Tragedy of the Commons\" occurs when individuals overuse a shared resource for personal gain, leading to depletion. In the video, overfishing in a public pond illustrates this concept. A solution is implementing a permitting system to limit resource use and ensure sustainability. This idea applies to various shared resources like grazing land and campgrounds.",
+			"format": "youtube",
 			"khanId": "541028296",
 			"path": "/science/ap-college-environmental-science/x0b0e430a38ebd23f:land-and-water-use/x0b0e430a38ebd23f:intro-to-land-and-water-use/v/tragedy-of-the-commons",
 			"type": "video",
@@ -3507,6 +3632,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn the difference between rivalry and excludability, and how these characteristics determine whether a good is a private good, public good, artificially scarce good, or common resource.",
+			"format": "youtube",
 			"khanId": "xa030cc4699e2f5da",
 			"path": "/economics-finance-domain/microeconomics/market-failure-and-the-role-of-government/externalities-topic/v/rival-and-excludable-goods",
 			"type": "video",
@@ -3544,6 +3670,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "How to factor in negative externalities through taxation",
+			"format": "youtube",
 			"khanId": "541028300",
 			"path": "/economics-finance-domain/microeconomics/market-failure-and-the-role-of-government/externalities-micro/v/taxes-for-factoring-in-negative-externalities",
 			"type": "video",
@@ -3581,6 +3708,7 @@
 		"importance": "primary",
 		"metadata": {
 			"description": "Learn how the Gini coefficient can be used to interpret income inequality in this video.",
+			"format": "youtube",
 			"khanId": "xbd7275323e083a06",
 			"path": "/economics-finance-domain/ap-microeconomics/ap-consumer-producer-surplus/inequality/v/gini-coefficient-and-lorenz-curve",
 			"type": "video",

@@ -252,6 +252,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 							metadata = {
 								...metadata,
 								type: "video",
+								format: "youtube",
 								url: `https://www.youtube.com/watch?v=${videoData?.youtubeId}`
 							}
 						} else if (lc.contentType === "Exercise") {

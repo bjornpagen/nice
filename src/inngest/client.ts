@@ -32,6 +32,98 @@ const events = {
 		data: z.object({
 			courseId: z.string().min(1)
 		})
+	},
+	// Add new events for the OneRoster ingestion workflow
+	"oneroster/course.ingest.requested": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
+	"oneroster/resources.ingest": {
+		data: z.object({
+			// Define a schema for the resource objects based on the OpenAPI spec
+			resources: z.array(
+				z.object({
+					sourcedId: z.string(),
+					status: z.string(),
+					title: z.string(),
+					format: z.string(), // ✅ ADDED: This field is required by the API
+					vendorResourceId: z.string(),
+					vendorId: z.string().nullable(),
+					applicationId: z.string().nullable(),
+					roles: z.array(z.string()).optional(),
+					importance: z.string().optional(),
+					metadata: z.record(z.any()).optional()
+				})
+			)
+		})
+	},
+	"oneroster/course.ingest": {
+		data: z.object({
+			// Define a schema for the course object
+			course: z.object({
+				sourcedId: z.string(),
+				status: z.string(),
+				title: z.string(),
+				courseCode: z.string().optional().nullable(),
+				org: z.object({
+					sourcedId: z.string(),
+					type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
+				}),
+				academicSession: z.object({
+					sourcedId: z.string(),
+					type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
+				}),
+				subjects: z.array(z.string()).optional().nullable(),
+				metadata: z.record(z.any()).optional()
+			})
+		})
+	},
+	"oneroster/course-components.ingest": {
+		data: z.object({
+			// Define a schema for course components
+			components: z.array(
+				z.object({
+					sourcedId: z.string(),
+					status: z.string(),
+					title: z.string(),
+					course: z.object({
+						sourcedId: z.string(),
+						type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
+					}),
+					parent: z
+						.object({
+							sourcedId: z.string(),
+							type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
+						})
+						.optional()
+						.nullable(),
+					sortOrder: z.number(),
+					metadata: z.record(z.any()).optional()
+				})
+			)
+		})
+	},
+	"oneroster/component-resources.ingest": {
+		data: z.object({
+			// Define a schema for component resources
+			componentResources: z.array(
+				z.object({
+					sourcedId: z.string(),
+					status: z.string(),
+					title: z.string(),
+					courseComponent: z.object({
+						sourcedId: z.string(),
+						type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
+					}),
+					resource: z.object({
+						sourcedId: z.string(),
+						type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
+					}),
+					sortOrder: z.number()
+				})
+			)
+		})
 	}
 }
 
