@@ -205,6 +205,42 @@ export type OneRosterClassReadSchema = z.infer<typeof OneRosterClassReadSchema>
 const GetAllCoursesResponseSchema = z.object({ courses: z.array(OneRosterCourseReadSchema) })
 const GetAllClassesResponseSchema = z.object({ classes: z.array(OneRosterClassReadSchema) })
 
+// --- NEW: Schemas for User ---
+const OneRosterUserRoleSchema = z.object({
+	roleType: z.string(),
+	role: z.string(),
+	org: GUIDRefReadSchema,
+	userProfile: z.string().optional(),
+	beginDate: z.string().nullable().optional(),
+	endDate: z.string().nullable().optional()
+})
+
+const OneRosterUserReadSchema = z.object({
+	sourcedId: z.string(),
+	status: z.string(),
+	dateLastModified: z.string().datetime().optional(),
+	username: z.string().nullable().optional(),
+	userIds: z.array(z.object({ type: z.string(), identifier: z.string() })).optional(),
+	enabledUser: z.boolean(),
+	givenName: z.string(),
+	familyName: z.string(),
+	middleName: z.string().nullable().optional(),
+	role: z.string().optional(), // Top-level role, if present
+	roles: z.array(OneRosterUserRoleSchema),
+	agents: z.array(GUIDRefReadSchema).optional(),
+	orgs: z.array(GUIDRefReadSchema).optional(),
+	primaryOrg: GUIDRefReadSchema.optional().nullable(),
+	email: z.string().nullable().optional(),
+	sms: z.string().nullable().optional(),
+	phone: z.string().nullable().optional(),
+	grades: z.array(z.string()).optional()
+})
+export type OneRosterUser = z.infer<typeof OneRosterUserReadSchema>
+
+const GetAllUsersResponseSchema = z.object({
+	users: z.array(OneRosterUserReadSchema)
+})
+
 export class OneRosterApiClient {
 	#accessToken: string | null = null
 	#tokenPromise: Promise<string> | null = null
@@ -660,5 +696,41 @@ export class OneRosterApiClient {
 			count: allClasses.length
 		})
 		return allClasses
+	}
+
+	/**
+	 * Fetches users from the OneRoster API by their email address.
+	 * @param email The email address to search for.
+	 * @returns A promise that resolves to the first matching user object, or null if not found.
+	 */
+	public async getUsersByEmail(email: string): Promise<OneRosterUser | null> {
+		logger.info("OneRosterApiClient: fetching user by email", { email })
+
+		if (!email) {
+			throw errors.new("email cannot be empty")
+		}
+
+		// The filter parameter needs to be properly URL-encoded.
+		const filter = `email='${email}'`
+		const endpoint = `/ims/oneroster/rostering/v1p2/users?filter=${encodeURIComponent(filter)}&limit=1`
+
+		const response = await this.#request(endpoint, { method: "GET" }, GetAllUsersResponseSchema)
+
+		if (!response || response.users.length === 0) {
+			logger.info("OneRosterApiClient: no user found for email", { email })
+			return null
+		}
+
+		const user = response.users[0]
+		if (!user) {
+			logger.info("OneRosterApiClient: no user found for email", { email })
+			return null
+		}
+
+		logger.info("OneRosterApiClient: successfully fetched user by email", {
+			email,
+			sourcedId: user.sourcedId
+		})
+		return user
 	}
 }

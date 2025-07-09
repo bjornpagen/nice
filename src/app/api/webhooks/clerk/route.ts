@@ -4,6 +4,7 @@ import * as logger from "@superbuilders/slog"
 import { headers } from "next/headers"
 import { Webhook } from "svix"
 import { env } from "@/env.js"
+import { OneRosterApiClient } from "@/lib/oneroster-client"
 
 export async function POST(req: Request) {
 	logger.info("clerk webhook received")
@@ -86,6 +87,7 @@ export async function POST(req: Request) {
 		const clerkId = "id" in eventData ? eventData.id : null
 		const emailAddresses = "email_addresses" in eventData ? eventData.email_addresses : null
 		const primaryEmailId = "primary_email_address_id" in eventData ? eventData.primary_email_address_id : null
+		const externalAccounts = "external_accounts" in eventData ? eventData.external_accounts : []
 
 		if (typeof clerkId !== "string") {
 			logger.error("invalid clerk id in webhook", { clerkId })
@@ -127,12 +129,57 @@ export async function POST(req: Request) {
 		// Extract nickname from email (part before @)
 		const nickname = emailAddress.split("@")[0] || ""
 
-		const metadata = {
-			publicMetadata: {
-				nickname: nickname,
-				username: "",
-				bio: ""
+		const publicMetadata: Record<string, unknown> = {
+			nickname: nickname,
+			username: "",
+			bio: ""
+		}
+
+		// Check if the user signed up via Timeback SSO
+		const isTimebackUser =
+			Array.isArray(externalAccounts) &&
+			externalAccounts.some(
+				(account: unknown) =>
+					account &&
+					typeof account === "object" &&
+					"provider" in account &&
+					account.provider === "oauth_custom_timeback"
+			)
+
+		if (isTimebackUser) {
+			logger.info("user identified as timeback sso user, attempting to fetch sourceid", {
+				userId: clerkId,
+				emailAddress
+			})
+
+			const onerosterClient = new OneRosterApiClient({
+				serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
+				tokenUrl: env.TIMEBACK_TOKEN_URL,
+				clientId: env.TIMEBACK_CLIENT_ID,
+				clientSecret: env.TIMEBACK_CLIENT_SECRET
+			})
+
+			// This operation is optional and should not block the user creation flow.
+			const onerosterUserResult = await errors.try(onerosterClient.getUsersByEmail(emailAddress))
+			if (onerosterUserResult.error) {
+				logger.warn("failed to get user from oneroster, proceeding without sourceid", {
+					userId: clerkId,
+					error: onerosterUserResult.error
+				})
+			} else if (onerosterUserResult.data) {
+				const onerosterUser = onerosterUserResult.data
+				publicMetadata.sourceId = onerosterUser.sourcedId
+				logger.info("successfully fetched sourceid from oneroster", {
+					userId: clerkId,
+					sourceId: onerosterUser.sourcedId
+				})
+			} else {
+				logger.warn("no user found in oneroster for the given email", { userId: clerkId, emailAddress })
 			}
+		}
+
+		const metadata = {
+			publicMetadata: publicMetadata
 		}
 
 		logger.debug("setting initial clerk user metadata", { clerkId, nickname })
