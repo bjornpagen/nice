@@ -1,7 +1,7 @@
 "use server"
 
 import * as logger from "@superbuilders/slog"
-import React from "react"
+import type React from "react"
 import { type Course, CourseSidebar } from "@/components/course/course-sidebar"
 
 export default async function CourseLayout({
@@ -9,18 +9,19 @@ export default async function CourseLayout({
 	params
 }: {
 	children: React.ReactNode
-	params: Promise<{ subject: string; course: string; unit?: string }>
+	params: Promise<{ subject: string; course: string }>
 }) {
-	const { subject, course, unit } = await params
-	logger.info("initializing course layout", { subject, course, unit })
+	const { subject, course } = await params
+	logger.debug("initializing course layout", { subject, course })
 
-	const courseData = await getCourseData(subject, course)
+	logger.debug("retrieving course data", { subject, course })
+	const coursePromise = getCourseData(subject, course)
 
 	return (
-		<div id="course-layout" className="flex">
-			<React.Suspense>
-				<CourseSidebar course={courseData} slug={unit != null ? unit : course} className="flex-none w-1/6" />
-			</React.Suspense>
+		<div id="course-layout" className="flex flex-col lg:flex-row">
+			<nav id="course-layout-sidebar" className="flex-none w-full lg:w-64 xl:w-80">
+				<CourseSidebar coursePromise={coursePromise} />
+			</nav>
 
 			<main id="course-layout-main" className="flex-1">
 				{children}

@@ -1,22 +1,20 @@
-"use server"
+"use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import type { Unit } from "./course-sidebar"
 
-export async function CourseSidebarUnitItem({
-	index,
-	unit,
-	active = false
-}: {
-	index: number
-	unit: Unit
-	active?: boolean
-}) {
-	let outerClassName = "px-4 py-3 hover:bg-blue-100 hover:shadow-sm transition-all border-t border-b border-gray-100"
+export function CourseSidebarUnitItem({ index, unit }: { index: number; unit: Unit }) {
+	const pathname = usePathname()
+
+	// Remove top border from first unit item to prevent double border with course item.
+	const borderClasses = index === 0 ? "border-b border-gray-100" : "border-t border-b border-gray-100"
+
+	let outerClassName = `px-4 py-3 hover:bg-blue-100 hover:shadow-sm transition-all ${borderClasses}`
 	let innerClassName = "text-sm text-gray-800"
-	if (active) {
-		outerClassName = "bg-blue-100 border border-blue-200 border-l-4 border-l-blue-600 px-4 py-3 shadow-sm"
+	if (pathname === unit.path) {
+		outerClassName = `bg-blue-100 border border-blue-200 border-l-4 border-l-blue-600 px-4 py-3 shadow-sm ${index === 0 ? "border-t-blue-200" : ""}`
 		innerClassName = "text-sm font-medium text-blue-800"
 	}
 

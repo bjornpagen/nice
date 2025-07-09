@@ -1,8 +1,7 @@
-"use server"
+"use client"
 
 import * as errors from "@superbuilders/errors"
-import * as logger from "@superbuilders/slog"
-import _ from "lodash"
+import * as React from "react"
 import { CourseSidebarCourseItem } from "./course-sidebar-course-item"
 import { CourseSidebarUnitItem } from "./course-sidebar-unit-item"
 
@@ -25,25 +24,22 @@ export type Course = {
 }
 
 export async function CourseSidebar({
-	course,
-	slug,
+	coursePromise,
 	className
 }: {
-	course: Course
-	slug?: string
+	coursePromise: Promise<Course>
 	className?: string
 }) {
-	logger.info("initializing course sidebar", { course: _.omit(course, "units") })
-
+	const course = React.use(coursePromise)
 	if (course.slug === "" || course.path === "" || course.title === "") {
-		throw errors.new("course is invalid")
+		throw errors.new("course data is invalid")
 	}
 
 	return (
 		<div id="course-sidebar" className={className}>
-			<CourseSidebarCourseItem course={course} active={slug === course.slug} />
+			<CourseSidebarCourseItem course={course} />
 			{course.units.map((unit, index) => (
-				<CourseSidebarUnitItem key={index} index={index} unit={unit} active={unit.slug === slug} />
+				<CourseSidebarUnitItem key={index} index={index} unit={unit} />
 			))}
 		</div>
 	)
