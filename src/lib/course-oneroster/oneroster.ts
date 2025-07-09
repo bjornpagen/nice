@@ -199,7 +199,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 		},
 		// ADDED: class object generation
 		class: {
-			sourcedId: `nice:${course.slug}-class`,
+			sourcedId: `nice:${course.slug}`,
 			title: course.title,
 			classType: "scheduled",
 			course: { sourcedId: `nice:${course.slug}`, type: "course" },
