@@ -33,6 +33,11 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
+	"qti/course.payload.generate": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
 	// Add new events for the OneRoster ingestion workflow
 	"oneroster/course.ingest.requested": {
 		data: z.object({

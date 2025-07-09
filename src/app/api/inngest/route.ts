@@ -12,6 +12,7 @@ import { ingestComponentResources } from "@/inngest/functions/oneroster-courses/
 import { ingestCourse } from "@/inngest/functions/oneroster-courses/ingest-course"
 import { ingestCourseComponents } from "@/inngest/functions/oneroster-courses/ingest-course-components"
 import { ingestResources } from "@/inngest/functions/oneroster-courses/ingest-resources"
+import { generateQtiPayloadForCourse } from "@/inngest/functions/qti-payloads/generate-qti-payload-for-course"
 
 // Create and export the Inngest HTTP handler
 export const { GET, POST, PUT } = serve({
@@ -29,6 +30,8 @@ export const { GET, POST, PUT } = serve({
 		ingestCourse,
 		ingestCourseComponents,
 		ingestComponentResources,
-		ingestClass
+		ingestClass,
+		// Add new QTI payload function
+		generateQtiPayloadForCourse
 	]
 })
