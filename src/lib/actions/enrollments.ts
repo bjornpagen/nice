@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { env } from "@/env"
-import { OneRosterApiClient } from "@/lib/oneroster"
+import { OneRosterApiClient } from "@/lib/oneroster-client"
 
 const getCourseForEnrollmentQuery = db
 	.select({

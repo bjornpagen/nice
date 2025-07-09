@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { env } from "@/env"
 import { inngest } from "@/inngest/client"
-import { OneRosterApiClient } from "@/lib/oneroster"
+import { OneRosterApiClient } from "@/lib/oneroster-client"
 
 export const ingestComponentResources = inngest.createFunction(
 	{ id: "ingest-component-resources", name: "Ingest OneRoster Component Resources" },
