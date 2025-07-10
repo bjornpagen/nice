@@ -5,7 +5,7 @@ import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { Footer } from "@/components/footer"
-import { CourseSidebar, type CourseSidebarData } from "@/components/overview/course/sidebar/course-sidebar"
+import { CourseSidebar, type CourseSidebarData } from "@/components/practice/course/sidebar/course-sidebar"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { getCourseBlob } from "@/lib/v2/types"
 

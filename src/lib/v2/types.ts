@@ -163,7 +163,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 						resources: [
 							{
 								slug: "exercise-1",
-								path: `/v2/${subject}/${course}/unit-1/lesson-1/exercise-1`,
+								path: `/v2/${subject}/${course}/unit-1/lesson-1/e/exercise-1`,
 								title: "Exercise 1 Title",
 								type: "Exercise",
 								data: {
@@ -173,7 +173,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 							},
 							{
 								slug: "video-1",
-								path: `/v2/${subject}/${course}/unit-1/lesson-1/video-1`,
+								path: `/v2/${subject}/${course}/unit-1/lesson-1/v/video-1`,
 								title: "Video 1 Title",
 								type: "Video",
 								data: {
@@ -189,7 +189,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 						resources: [
 							{
 								slug: "exercise-2",
-								path: `/v2/${subject}/${course}/unit-1/lesson-2/exercise-2`,
+								path: `/v2/${subject}/${course}/unit-1/lesson-2/e/exercise-2`,
 								title: "Exercise 2 Title",
 								type: "Exercise",
 								data: {
@@ -203,7 +203,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: [
 					{
 						slug: "quiz-1",
-						path: `/v2/${subject}/${course}/unit-1/lesson-2/quiz-1`,
+						path: `/v2/${subject}/${course}/unit-1/quiz/quiz-1`,
 						title: "Quiz 1 Title",
 						type: "Quiz",
 						data: {
@@ -212,7 +212,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 					},
 					{
 						slug: "unit-test-1",
-						path: `/v2/${subject}/${course}/unit-1/lesson-2/unit-test-1`,
+						path: `/v2/${subject}/${course}/unit-1/test/unit-test-1`,
 						title: "Unit Test 1 Title",
 						type: "UnitTest",
 						data: {
@@ -234,7 +234,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 						resources: [
 							{
 								slug: "exercise-3",
-								path: `/v2/${subject}/${course}/unit-1/lesson-3/exercise-3`,
+								path: `/v2/${subject}/${course}/unit-1/lesson-3/e/exercise-3`,
 								title: "Exercise 3 Title",
 								type: "Exercise",
 								data: {
@@ -244,7 +244,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 							},
 							{
 								slug: "exercise-4",
-								path: `/v2/${subject}/${course}/unit-1/lesson-3/exercise-4`,
+								path: `/v2/${subject}/${course}/unit-1/lesson-3/e/exercise-4`,
 								title: "Exercise 4 Title",
 								type: "Exercise",
 								data: {
@@ -271,7 +271,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 						resources: [
 							{
 								slug: "article-1",
-								path: `/v2/${subject}/${course}/unit-1/lesson-4/article-1`,
+								path: `/v2/${subject}/${course}/unit-1/lesson-4/a/article-1`,
 								title: "Article 1 Title",
 								type: "Article",
 								data: {
@@ -284,7 +284,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: [
 					{
 						slug: "quiz-2",
-						path: `/v2/${subject}/${course}/unit-1/lesson-4/quiz-2`,
+						path: `/v2/${subject}/${course}/unit-1/quiz/quiz-2`,
 						title: "Quiz 2 Title",
 						type: "Quiz",
 						data: {

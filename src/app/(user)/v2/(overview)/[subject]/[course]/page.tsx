@@ -5,8 +5,8 @@ import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { CourseContent } from "@/components/overview/course/content/course-content"
-import { type Course, getCourseBlob } from "@/components/overview/types"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { type Course, getCourseBlob } from "@/lib/v2/types"
 
 export default async function CoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
 	const coursePromise = params
