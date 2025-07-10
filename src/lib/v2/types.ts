@@ -1,3 +1,5 @@
+import { z } from "zod"
+
 /**
  * Prettify is a utility type that properly formats the LSP definition of a type.
  */
@@ -5,165 +7,265 @@ export type Prettify<T> = {
 	[K in keyof T]: T[K]
 } & {}
 
+const BaseResourceSchema = z.object({
+	slug: z.string(),
+	path: z.string(),
+	title: z.string()
+})
+
 /**
  * QuestionResourceData is a type that represents a lesson resource data.
  */
-export type QuestionExerciseData = Prettify<{
-	sourceId: string
-}>
+export const QuestionExerciseDataSchema = z.object({
+	sourceId: z.string()
+})
+export type QuestionExerciseData = z.infer<typeof QuestionExerciseDataSchema>
+
+/**
+ * LessonResourceType is a type that represents a lesson resource type.
+ */
+export const LessonResourceTypeSchema = z.enum(["Article", "Exercise", "Video"])
+export type LessonResourceType = z.infer<typeof LessonResourceTypeSchema>
 
 /**
  * ArticleLessonResource is a type that represents an article lesson resource.
  */
-export type ArticleLessonResource = Prettify<{
-	type: "Article"
-	data: {
-		sourceId: string
-	}
-}>
+export const ArticleLessonResourceSchema = z.object({
+	type: z.literal(LessonResourceTypeSchema.enum.Article),
+	data: z.object({
+		sourceId: z.string()
+	})
+})
+export type ArticleLessonResource = z.infer<typeof ArticleLessonResourceSchema>
 
 /**
  * ExerciseLessonResource is a type that represents an exercise lesson resource.
  */
-export type ExerciseLessonResource = Prettify<{
-	type: "Exercise"
-	data: {
-		sourceId: string
-		questions: QuestionExerciseData[]
-	}
-}>
+export const ExerciseLessonResourceSchema = z.object({
+	type: z.literal(LessonResourceTypeSchema.enum.Exercise),
+	data: z.object({
+		sourceId: z.string(),
+		questions: z.array(QuestionExerciseDataSchema)
+	})
+})
+export type ExerciseLessonResource = z.infer<typeof ExerciseLessonResourceSchema>
 
 /**
  * VideoLessonResource is a type that represents a video lesson resource.
  */
-export type VideoLessonResource = Prettify<{
-	type: "Video"
-	data: {
-		sourceId: string
-	}
-}>
+export const VideoLessonResourceSchema = z.object({
+	type: z.literal(LessonResourceTypeSchema.enum.Video),
+	data: z.object({
+		sourceId: z.string()
+	})
+})
+export type VideoLessonResource = z.infer<typeof VideoLessonResourceSchema>
 
 /**
  * LessonResource is a type that represents a lesson resource.
  */
-export type LessonResource = Prettify<
-	{
-		slug: string
-		path: string
-		title: string
-	} & (ArticleLessonResource | ExerciseLessonResource | VideoLessonResource)
->
+export const LessonResourceSchema = z
+	.discriminatedUnion("type", [
+		BaseResourceSchema.extend({
+			type: z.literal(LessonResourceTypeSchema.enum.Article),
+			data: ArticleLessonResourceSchema.shape.data
+		}),
+		BaseResourceSchema.extend({
+			type: z.literal(LessonResourceTypeSchema.enum.Exercise),
+			data: ExerciseLessonResourceSchema.shape.data
+		}),
+		BaseResourceSchema.extend({
+			type: z.literal(LessonResourceTypeSchema.enum.Video),
+			data: VideoLessonResourceSchema.shape.data
+		})
+	])
+	.refine(
+		(data) => {
+			switch (data.type) {
+				case "Article":
+					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+\/[^/]+\/a\/[^/]+$/.test(data.path)
+				case "Exercise":
+					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+\/[^/]+\/e\/[^/]+$/.test(data.path)
+				case "Video":
+					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+\/[^/]+\/v\/[^/]+$/.test(data.path)
+				default:
+					return false
+			}
+		},
+		{
+			message:
+				"path must match resource type pattern: articles=/[subject]/[course]/[unit]/[lesson]/a/[article], exercises=/[subject]/[course]/[unit]/[lesson]/e/[exercise], videos=/[subject]/[course]/[unit]/[lesson]/v/[video]",
+			path: ["path"]
+		}
+	)
+export type LessonResource = z.infer<typeof LessonResourceSchema>
 
 /**
  * Lesson is a type that represents a lesson.
  */
-export type Lesson = Prettify<{
-	slug: string
-	path: string
-	title: string
-	resources: LessonResource[]
-}>
+export const LessonSchema = z.object({
+	slug: z.string(),
+	path: z.string(),
+	title: z.string(),
+	resources: z.array(LessonResourceSchema)
+})
+export type Lesson = z.infer<typeof LessonSchema>
+
+/**
+ * UnitResourceType is a type that represents a unit resource type.
+ */
+export const UnitResourceTypeSchema = z.enum(["Quiz", "UnitTest"])
+export type UnitResourceType = z.infer<typeof UnitResourceTypeSchema>
 
 /**
  * QuizUnitResource is a type that represents a quiz unit resource.
  */
-export type QuizUnitResource = Prettify<{
-	type: "Quiz"
-	data: {
-		sourceId: string
-	}
-}>
+export const QuizUnitResourceSchema = z.object({
+	type: z.literal(UnitResourceTypeSchema.enum.Quiz),
+	data: z.object({
+		sourceId: z.string()
+	})
+})
+export type QuizUnitResource = z.infer<typeof QuizUnitResourceSchema>
 
 /**
  * UnitTestUnitResource is a type that represents a unit test unit resource.
  */
-export type UnitTestUnitResource = Prettify<{
-	type: "UnitTest"
-	data: {
-		sourceId: string
-	}
-}>
+export const UnitTestUnitResourceSchema = z.object({
+	type: z.literal(UnitResourceTypeSchema.enum.UnitTest),
+	data: z.object({
+		sourceId: z.string()
+	})
+})
+export type UnitTestUnitResource = z.infer<typeof UnitTestUnitResourceSchema>
 
 /**
  * UnitResource is a type that represents a unit resource.
  */
-export type UnitResource = Prettify<
-	{
-		slug: string
-		path: string
-		title: string
-	} & (QuizUnitResource | UnitTestUnitResource)
->
+export const UnitResourceSchema = z
+	.discriminatedUnion("type", [
+		BaseResourceSchema.extend({
+			type: z.literal(UnitResourceTypeSchema.enum.Quiz),
+			data: QuizUnitResourceSchema.shape.data
+		}),
+		BaseResourceSchema.extend({
+			type: z.literal(UnitResourceTypeSchema.enum.UnitTest),
+			data: UnitTestUnitResourceSchema.shape.data
+		})
+	])
+	.refine(
+		(data) => {
+			switch (data.type) {
+				case "Quiz":
+					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+\/quiz\/[^/]+$/.test(data.path)
+				case "UnitTest":
+					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+\/test\/[^/]+$/.test(data.path)
+				default:
+					return false
+			}
+		},
+		{
+			message:
+				"path must match resource type pattern: quizzes=/[subject]/[course]/[unit]/quiz/[quiz], unit-tests=/[subject]/[course]/[unit]/test/[test]",
+			path: ["path"]
+		}
+	)
+export type UnitResource = z.infer<typeof UnitResourceSchema>
 
 /**
  * Unit is a type that represents a unit.
  */
-export type Unit = Prettify<{
-	slug: string
-	path: string
-	title: string
-	description: string
-	lessons: Lesson[]
-	resources: UnitResource[]
-}>
+export const UnitSchema = z.object({
+	slug: z.string(),
+	path: z.string(),
+	title: z.string(),
+	description: z.string(),
+	lessons: z.array(LessonSchema),
+	resources: z.array(UnitResourceSchema)
+})
+export type Unit = z.infer<typeof UnitSchema>
+
+/**
+ * CourseResourceType is a type that represents a course resource type.
+ */
+export const CourseResourceTypeSchema = z.enum(["CourseChallenge"])
+export type CourseResourceType = z.infer<typeof CourseResourceTypeSchema>
 
 /**
  * CourseChallengeResource is a type that represents a course challenge resource.
  */
-export type CourseChallengeResource = Prettify<{
-	type: "CourseChallenge"
-	data: {
-		sourceId: string
-	}
-}>
+export const CourseChallengeResourceSchema = z.object({
+	type: z.literal(CourseResourceTypeSchema.enum.CourseChallenge),
+	data: z.object({
+		sourceId: z.string()
+	})
+})
+export type CourseChallengeResource = z.infer<typeof CourseChallengeResourceSchema>
 
 /**
  * CourseResource is a type that represents a course resource.
  */
-export type CourseResource = Prettify<
-	{
-		slug: string
-		path: string
-		title: string
-	} & CourseChallengeResource
->
+export const CourseResourceSchema = z
+	.discriminatedUnion("type", [
+		BaseResourceSchema.extend({
+			type: z.literal(CourseResourceTypeSchema.enum.CourseChallenge),
+			data: CourseChallengeResourceSchema.shape.data
+		})
+	])
+	.refine(
+		(data) => {
+			switch (data.type) {
+				case "CourseChallenge":
+					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+$/.test(data.path)
+				default:
+					return false
+			}
+		},
+		{
+			message: "path must match resource type pattern: challenges=/[subject]/[course]/[challenge]",
+			path: ["path"]
+		}
+	)
+export type CourseResource = z.infer<typeof CourseResourceSchema>
 
 /**
  * Course is a type that represents a course.
  */
-export type Course = Prettify<{
-	slug: string
-	path: string
-	title: string
-	description: string
-	units: Unit[]
-	resources: CourseResource[]
-}>
+export const CourseSchema = z.object({
+	slug: z.string(),
+	path: z.string(),
+	title: z.string(),
+	description: z.string(),
+	units: z.array(UnitSchema),
+	resources: z.array(CourseResourceSchema)
+})
+export type Course = z.infer<typeof CourseSchema>
 
 /**
  * Temporary data blob.
  */
 export function getCourseBlob(subject: string, course: string): Course {
+	const base = `/v2/${subject}/${course}`
 	return {
 		slug: course,
-		path: `/v2/${subject}/${course}`,
+		path: base,
 		title: course,
 		description: "Course Description",
 		units: [
 			{
 				slug: "unit-1",
-				path: `/v2/${subject}/${course}/unit-1`,
+				path: `${base}/unit-1`,
 				title: "Unit 1 Title",
 				description: "Unit 1 Description",
 				lessons: [
 					{
 						slug: "lesson-1",
-						path: `/v2/${subject}/${course}/unit-1/lesson-1`,
+						path: `${base}/unit-1/lesson-1`,
 						title: "Lesson 1 Title",
 						resources: [
 							{
 								slug: "exercise-1",
-								path: `/v2/${subject}/${course}/unit-1/lesson-1/e/exercise-1`,
+								path: `${base}/unit-1/lesson-1/e/exercise-1`,
 								title: "Exercise 1 Title",
 								type: "Exercise",
 								data: {
@@ -173,7 +275,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 							},
 							{
 								slug: "video-1",
-								path: `/v2/${subject}/${course}/unit-1/lesson-1/v/video-1`,
+								path: `${base}/unit-1/lesson-1/v/video-1`,
 								title: "Video 1 Title",
 								type: "Video",
 								data: {
@@ -184,12 +286,12 @@ export function getCourseBlob(subject: string, course: string): Course {
 					},
 					{
 						slug: "lesson-2",
-						path: `/v2/${subject}/${course}/unit-1/lesson-2`,
+						path: `${base}/unit-1/lesson-2`,
 						title: "Lesson 2 Title",
 						resources: [
 							{
 								slug: "exercise-2",
-								path: `/v2/${subject}/${course}/unit-1/lesson-2/e/exercise-2`,
+								path: `${base}/unit-1/lesson-2/e/exercise-2`,
 								title: "Exercise 2 Title",
 								type: "Exercise",
 								data: {
@@ -203,7 +305,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: [
 					{
 						slug: "quiz-1",
-						path: `/v2/${subject}/${course}/unit-1/quiz/quiz-1`,
+						path: `${base}/unit-1/quiz/quiz-1`,
 						title: "Quiz 1 Title",
 						type: "Quiz",
 						data: {
@@ -212,7 +314,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 					},
 					{
 						slug: "unit-test-1",
-						path: `/v2/${subject}/${course}/unit-1/test/unit-test-1`,
+						path: `${base}/unit-1/test/unit-test-1`,
 						title: "Unit Test 1 Title",
 						type: "UnitTest",
 						data: {
@@ -223,18 +325,18 @@ export function getCourseBlob(subject: string, course: string): Course {
 			},
 			{
 				slug: "unit-2",
-				path: `/v2/${subject}/${course}/unit-2`,
+				path: `${base}/unit-2`,
 				title: "Unit 2 Title",
 				description: "Unit 2 Description",
 				lessons: [
 					{
 						slug: "lesson-3",
-						path: `/v2/${subject}/${course}/unit-1/lesson-3`,
+						path: `${base}/unit-2/lesson-3`,
 						title: "Lesson 3 Title",
 						resources: [
 							{
 								slug: "exercise-3",
-								path: `/v2/${subject}/${course}/unit-1/lesson-3/e/exercise-3`,
+								path: `${base}/unit-2/lesson-3/e/exercise-3`,
 								title: "Exercise 3 Title",
 								type: "Exercise",
 								data: {
@@ -244,7 +346,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 							},
 							{
 								slug: "exercise-4",
-								path: `/v2/${subject}/${course}/unit-1/lesson-3/e/exercise-4`,
+								path: `${base}/unit-2/lesson-3/e/exercise-4`,
 								title: "Exercise 4 Title",
 								type: "Exercise",
 								data: {
@@ -266,12 +368,12 @@ export function getCourseBlob(subject: string, course: string): Course {
 					},
 					{
 						slug: "lesson-4",
-						path: `/v2/${subject}/${course}/unit-1/lesson-4`,
+						path: `${base}/unit-2/lesson-4`,
 						title: "Lesson 4 Title",
 						resources: [
 							{
 								slug: "article-1",
-								path: `/v2/${subject}/${course}/unit-1/lesson-4/a/article-1`,
+								path: `${base}/unit-2/lesson-4/a/article-1`,
 								title: "Article 1 Title",
 								type: "Article",
 								data: {
@@ -284,7 +386,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: [
 					{
 						slug: "quiz-2",
-						path: `/v2/${subject}/${course}/unit-1/quiz/quiz-2`,
+						path: `${base}/unit-2/quiz/quiz-2`,
 						title: "Quiz 2 Title",
 						type: "Quiz",
 						data: {
@@ -295,7 +397,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			},
 			{
 				slug: "unit-3",
-				path: `/v2/${subject}/${course}/unit-3`,
+				path: `${base}/unit-3`,
 				title: "Unit 3 Title",
 				description: "Unit 3 Description",
 				lessons: [],
@@ -303,7 +405,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			},
 			{
 				slug: "unit-4",
-				path: `/v2/${subject}/${course}/unit-4`,
+				path: `${base}/unit-4`,
 				title: "Unit 4 Title",
 				description: "Unit 4 Description",
 				lessons: [],
@@ -311,7 +413,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			},
 			{
 				slug: "unit-5",
-				path: `/v2/${subject}/${course}/unit-5`,
+				path: `${base}/unit-5`,
 				title: "Unit 5 Title",
 				description: "Unit 5 Description",
 				lessons: [],
@@ -319,7 +421,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			},
 			{
 				slug: "unit-6",
-				path: `/v2/${subject}/${course}/unit-6`,
+				path: `${base}/unit-6`,
 				title: "Unit 6 Title",
 				description: "Unit 6 Description",
 				lessons: [],
@@ -327,7 +429,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			},
 			{
 				slug: "unit-7",
-				path: `/v2/${subject}/${course}/unit-7`,
+				path: `${base}/unit-7`,
 				title: "Unit 7 Title",
 				description: "Unit 7 Description",
 				lessons: [],
@@ -335,7 +437,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			},
 			{
 				slug: "unit-8",
-				path: `/v2/${subject}/${course}/unit-8`,
+				path: `${base}/unit-8`,
 				title: "Unit 8 Title",
 				description: "Unit 8 Description",
 				lessons: [],
@@ -343,7 +445,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			},
 			{
 				slug: "unit-9",
-				path: `/v2/${subject}/${course}/unit-9`,
+				path: `${base}/unit-9`,
 				title: "Unit 9 Title",
 				description: "Unit 9 Description",
 				lessons: [],
@@ -351,7 +453,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			},
 			{
 				slug: "unit-10",
-				path: `/v2/${subject}/${course}/unit-10`,
+				path: `${base}/unit-10`,
 				title: "Unit 10 Title",
 				description: "Unit 10 Description",
 				lessons: [],
@@ -361,7 +463,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 		resources: [
 			{
 				slug: "challenge",
-				path: `/v2/${subject}/${course}/challenge`,
+				path: `${base}/challenge`,
 				title: "Course Challenge",
 				type: "CourseChallenge",
 				data: {

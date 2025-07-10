@@ -7,7 +7,11 @@ import { UnitContent, type UnitContentData } from "@/components/overview/unit/co
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { getCourseBlob } from "@/lib/v2/types"
 
-export default function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
+export default function OverviewUnitPage({
+	params
+}: {
+	params: Promise<{ subject: string; course: string; unit: string }>
+}) {
 	// Chain the promise properly to handle the error case
 	const unitPromise = params.then(({ subject, course, unit }) => {
 		logger.debug("initializing unit page", { subject, course, unit })
@@ -15,8 +19,8 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 	})
 
 	return (
-		<div id="unit-page">
-			<ErrorBoundary fallback={<UnitPageErrorFallback />}>
+		<div id="overview-unit-page">
+			<ErrorBoundary fallback={<OverviewUnitPageErrorFallback />}>
 				<React.Suspense>
 					<UnitContent unitPromise={unitPromise} />
 				</React.Suspense>
@@ -25,7 +29,7 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 	)
 }
 
-function UnitPageErrorFallback({ className }: { className?: string }) {
+function OverviewUnitPageErrorFallback({ className }: { className?: string }) {
 	return (
 		<Alert variant="destructive" className={className}>
 			<AlertCircleIcon />

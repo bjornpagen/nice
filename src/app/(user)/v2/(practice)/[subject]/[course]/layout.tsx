@@ -9,7 +9,7 @@ import { CourseSidebar, type CourseSidebarData } from "@/components/practice/cou
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { getCourseBlob } from "@/lib/v2/types"
 
-export default async function CourseLayout({
+export default async function PracticeCourseLayout({
 	children,
 	params
 }: {
@@ -27,29 +27,29 @@ export default async function CourseLayout({
 		})
 
 	return (
-		<div id="course-layout">
+		<div id="practice-course-layout">
 			<div className="flex flex-row">
-				<nav id="course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-screen">
-					<ErrorBoundary fallback={<CourseLayoutErrorFallback />}>
+				<nav id="practice-course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-screen">
+					<ErrorBoundary fallback={<PracticeCourseLayoutErrorFallback />}>
 						<React.Suspense>
 							<CourseSidebar coursePromise={coursePromise} />
 						</React.Suspense>
 					</ErrorBoundary>
 				</nav>
 
-				<main id="course-layout-main" className="flex-1 bg-gray-50 px-8 py-4 w-screen">
+				<main id="practice-course-layout-main" className="flex-1 bg-gray-50 px-8 py-4 w-screen">
 					{children}
 				</main>
 			</div>
 
-			<div id="course-layout-footer flex-none">
+			<div id="practice-course-layout-footer flex-none">
 				<Footer />
 			</div>
 		</div>
 	)
 }
 
-function CourseLayoutErrorFallback({ className }: { className?: string }) {
+function PracticeCourseLayoutErrorFallback({ className }: { className?: string }) {
 	return (
 		<Alert variant="destructive" className={className}>
 			<AlertCircleIcon />
@@ -70,8 +70,9 @@ function getCourseSidebarData(subject: string, course: string): CourseSidebarDat
 	const units = _.map(blob.units, (unit) => _.pick(unit, ["slug", "path", "title", "lessons", "resources"]))
 	logger.debug("retrieving course data: units", { units: units.length })
 
-	const data = { ..._.pick(blob, ["slug", "path", "title", "resources"]), units }
+	const data = { ..._.pick(blob, ["slug", "path", "title"]), units }
 	logger.debug("retrieving course data: data", { keys: _.keys(data), units: data.units.length })
 
-	return data
+	throw errors.new("todo")
+	// return data
 }

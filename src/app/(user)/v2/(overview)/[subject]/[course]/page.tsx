@@ -8,7 +8,7 @@ import { CourseContent } from "@/components/overview/course/content/course-conte
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { type Course, getCourseBlob } from "@/lib/v2/types"
 
-export default async function CoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
+export default async function OverviewCoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
 	const coursePromise = params
 		.then(({ subject, course }) => {
 			logger.debug("initializing course page", { subject, course })
@@ -20,8 +20,8 @@ export default async function CoursePage({ params }: { params: Promise<{ subject
 		})
 
 	return (
-		<div id="course-page">
-			<ErrorBoundary fallback={<CoursePageErrorFallback />}>
+		<div id="overview-course-page">
+			<ErrorBoundary fallback={<OverviewCoursePageErrorFallback />}>
 				<React.Suspense>
 					<CourseContent coursePromise={coursePromise} />
 				</React.Suspense>
@@ -30,7 +30,7 @@ export default async function CoursePage({ params }: { params: Promise<{ subject
 	)
 }
 
-function CoursePageErrorFallback({ className }: { className?: string }) {
+function OverviewCoursePageErrorFallback({ className }: { className?: string }) {
 	return (
 		<Alert variant="destructive" className={className}>
 			<AlertCircleIcon />

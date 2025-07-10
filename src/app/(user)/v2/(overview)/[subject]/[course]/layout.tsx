@@ -9,7 +9,7 @@ import { CourseSidebar, type CourseSidebarData } from "@/components/overview/cou
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { getCourseBlob } from "@/lib/v2/types"
 
-export default async function CourseLayout({
+export default async function OverviewCourseLayout({
 	children,
 	params
 }: {
@@ -27,29 +27,29 @@ export default async function CourseLayout({
 		})
 
 	return (
-		<div id="course-layout">
+		<div id="overview-course-layout">
 			<div className="flex flex-row">
-				<nav id="course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-screen">
-					<ErrorBoundary fallback={<CourseLayoutErrorFallback />}>
+				<nav id="overview-course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-screen">
+					<ErrorBoundary fallback={<OverviewCourseLayoutErrorFallback />}>
 						<React.Suspense>
 							<CourseSidebar coursePromise={coursePromise} />
 						</React.Suspense>
 					</ErrorBoundary>
 				</nav>
 
-				<main id="course-layout-main" className="flex-1 bg-gray-50 px-8 py-4 w-screen">
+				<main id="overview-course-layout-main" className="flex-1 bg-gray-50 px-8 py-4 w-screen">
 					{children}
 				</main>
 			</div>
 
-			<div id="course-layout-footer flex-none">
+			<div id="overview-course-layout-footer flex-none">
 				<Footer />
 			</div>
 		</div>
 	)
 }
 
-function CourseLayoutErrorFallback({ className }: { className?: string }) {
+function OverviewCourseLayoutErrorFallback({ className }: { className?: string }) {
 	return (
 		<Alert variant="destructive" className={className}>
 			<AlertCircleIcon />
