@@ -4,8 +4,8 @@ import { notFound } from "next/navigation"
 import * as React from "react"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
+import { fetchLessonData } from "../../lesson-data"
 import { LessonLayout } from "../../lesson-layout"
-import { fetchLessonData } from "../../page"
 import { QuizContent } from "./quiz-content"
 
 // Query to get the unit from lesson path (quizzes belong to units, not lessons)

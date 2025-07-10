@@ -1,9 +1,9 @@
 "use client"
 
 import * as React from "react"
+import type { LessonData } from "./lesson-data"
 import { LessonNext } from "./lesson-next"
 import { LessonSidebar } from "./lesson-sidebar"
-import type { LessonData } from "./page"
 
 export function LessonLayout({
 	dataPromise,
