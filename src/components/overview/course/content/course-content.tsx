@@ -51,7 +51,7 @@ export function CourseContent({ coursePromise }: { coursePromise: Promise<Course
 				<ContentHeader title={course.title} points={0} className="mb-4" />
 			</div>
 
-			<div id="course-content-unit-proficiency-items" className="columns-2 sm:columns-1 gap-6 mt-4">
+			<div id="course-content-unit-proficiency-items" className="sm:columns-1 md:columns-2 lg:columns-2 gap-6 mt-4">
 				{course.units.map((unit, index) => (
 					<CourseContentUnitProficiencyItem
 						key={index}
