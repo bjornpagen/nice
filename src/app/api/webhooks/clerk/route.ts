@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto"
 import { clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
@@ -69,8 +70,6 @@ export async function POST(req: Request) {
 		})
 	}
 
-	logger.debug("webhook verified successfully", { eventType })
-
 	// Handle user.created events
 	if (eventType === "user.created") {
 		// Safe access to data property
@@ -83,15 +82,18 @@ export async function POST(req: Request) {
 			})
 		}
 
-		// Safe access to user data properties
-		const clerkId = "id" in eventData ? eventData.id : null
+		// MODIFIED: Extract first_name and last_name from the webhook payload
+		const clerkId = "id" in eventData && typeof eventData.id === "string" ? eventData.id : null
 		const emailAddresses = "email_addresses" in eventData ? eventData.email_addresses : null
 		const primaryEmailId = "primary_email_address_id" in eventData ? eventData.primary_email_address_id : null
 		const externalAccounts = "external_accounts" in eventData ? eventData.external_accounts : []
+		const firstName =
+			"first_name" in eventData && typeof eventData.first_name === "string" ? eventData.first_name : null
+		const lastName = "last_name" in eventData && typeof eventData.last_name === "string" ? eventData.last_name : null
 
-		if (typeof clerkId !== "string") {
-			logger.error("invalid clerk id in webhook", { clerkId })
-			return new Response("Error occurred -- invalid clerk id", {
+		if (!clerkId) {
+			logger.error("invalid user data in webhook - missing clerk id")
+			return new Response("Error occurred -- invalid user data", {
 				status: 400
 			})
 		}
@@ -167,7 +169,45 @@ export async function POST(req: Request) {
 					sourceId: onerosterUser.sourcedId
 				})
 			} else {
-				logger.warn("no user found in oneroster for the given email", { userId: clerkId, emailAddress })
+				// MODIFIED: Create a new user in OneRoster if one is not found
+				logger.info("user not found in oneroster, creating a new one", { userId: clerkId, emailAddress })
+				const newSourcedId = randomUUID()
+
+				// Use fallback values for names if they're not provided
+				const givenName = firstName || nickname || "User"
+				const familyName = lastName || emailAddress.split("@")[1]?.split(".")[0] || "Unknown"
+
+				const newUserPayload = {
+					sourcedId: newSourcedId,
+					status: "active" as const,
+					enabledUser: true,
+					givenName: givenName,
+					familyName: familyName,
+					email: emailAddress,
+					roles: [
+						{
+							roleType: "primary" as const,
+							role: "student" as const, // Default role to 'student'
+							org: {
+								sourcedId: "nice-academy" // Use the static org sourcedId
+							}
+						}
+					]
+				}
+
+				const createUserResult = await errors.try(oneroster.createUser(newUserPayload))
+				if (createUserResult.error) {
+					logger.warn("failed to create new user in oneroster, proceeding without sourceid", {
+						userId: clerkId,
+						error: createUserResult.error
+					})
+				} else {
+					publicMetadata.sourceId = newSourcedId
+					logger.info("successfully created new user in oneroster and assigned sourceid", {
+						userId: clerkId,
+						sourceId: newSourcedId
+					})
+				}
 			}
 		}
 
@@ -175,10 +215,20 @@ export async function POST(req: Request) {
 			publicMetadata: publicMetadata
 		}
 
-		logger.debug("setting initial clerk user metadata", { clerkId, nickname })
-
 		// Set initial user metadata in Clerk
 		const clerk = await clerkClient()
+
+		// First check if the user still exists (webhook might be stale)
+		const userCheckResult = await errors.try(clerk.users.getUser(clerkId))
+		if (userCheckResult.error) {
+			logger.warn("user not found in clerk, likely deleted - skipping metadata update", {
+				clerkId,
+				error: userCheckResult.error
+			})
+			// Return success to prevent webhook retries for deleted users
+			return new Response("", { status: 200 })
+		}
+
 		const setResult = await errors.try(clerk.users.updateUserMetadata(clerkId, metadata))
 
 		if (setResult.error) {
@@ -192,8 +242,6 @@ export async function POST(req: Request) {
 		}
 
 		logger.info("user metadata initialized successfully", { clerkId, nickname })
-	} else {
-		logger.debug("ignoring webhook event", { eventType })
 	}
 
 	return new Response("", { status: 200 })

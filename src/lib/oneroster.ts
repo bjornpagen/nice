@@ -169,30 +169,9 @@ const OneRosterClassWriteSchema = z.object({
 	terms: z.array(GUIDRefWriteSchema)
 })
 
-const OneRosterEnrollmentReadSchema = z.object({
-	sourcedId: z.string(),
-	status: z.string(),
-	role: z.enum(["administrator", "proctor", "student", "teacher"]),
-	primary: z.boolean().optional(),
-	beginDate: z.string().nullable().optional(),
-	endDate: z.string().nullable().optional(),
-	user: GUIDRefReadSchema,
-	class: GUIDRefReadSchema
-})
-
-const OneRosterEnrollmentWriteSchema = z.object({
-	sourcedId: z.string(),
-	role: z.enum(["administrator", "proctor", "student", "teacher"]),
-	user: GUIDRefWriteSchema,
-	class: GUIDRefWriteSchema
-})
-export type OneRosterEnrollment = z.infer<typeof OneRosterEnrollmentWriteSchema>
-
 const GetClassResponseSchema = z.object({ class: OneRosterClassReadSchema.optional() })
-const GetEnrollmentResponseSchema = z.object({ enrollment: OneRosterEnrollmentReadSchema.optional() })
 
 const CreateClassInputSchema = OneRosterClassWriteSchema
-const CreateEnrollmentInputSchema = OneRosterEnrollmentWriteSchema
 
 // --- NEW: Custom Error for API Failures ---
 export const ErrOneRosterAPI = errors.new("oneroster api error")
@@ -228,7 +207,7 @@ const OneRosterUserReadSchema = z.object({
 	dateLastModified: z.string().datetime().optional(),
 	username: z.string().nullable().optional(),
 	userIds: z.array(z.object({ type: z.string(), identifier: z.string() })).optional(),
-	enabledUser: z.boolean(),
+	enabledUser: z.union([z.boolean(), z.string()]),
 	givenName: z.string(),
 	familyName: z.string(),
 	middleName: z.string().nullable().optional(),
@@ -247,6 +226,28 @@ export type OneRosterUser = z.infer<typeof OneRosterUserReadSchema>
 const GetAllUsersResponseSchema = z.object({
 	users: z.array(OneRosterUserReadSchema)
 })
+
+// ADDED: A new schema for writing user data, enforcing required fields for creation.
+const OneRosterUserWriteSchema = z.object({
+	sourcedId: z.string(),
+	status: z.enum(["active", "tobedeleted"]).default("active"),
+	enabledUser: z.boolean(),
+	givenName: z.string(),
+	familyName: z.string(),
+	email: z.string().email().nullable().optional(),
+	roles: z
+		.array(
+			z.object({
+				roleType: z.enum(["primary", "secondary"]),
+				role: z.enum(["administrator", "aide", "guardian", "parent", "proctor", "relative", "student", "teacher"]),
+				org: z.object({
+					sourcedId: z.string()
+				})
+			})
+		)
+		.min(1)
+})
+export type OneRosterUserWrite = z.infer<typeof OneRosterUserWriteSchema>
 
 export class OneRosterApiClient {
 	#accessToken: string | null = null
@@ -391,7 +392,7 @@ export class OneRosterApiClient {
 	}
 
 	async #_createEntity<T extends z.ZodType, U, R>(
-		entityName: "resource" | "course" | "courseComponent" | "componentResource" | "class" | "enrollment",
+		entityName: "resource" | "course" | "courseComponent" | "componentResource" | "class" | "enrollment" | "user",
 		endpoint: string,
 		input: U,
 		inputSchema: T,
@@ -599,51 +600,20 @@ export class OneRosterApiClient {
 		)
 	}
 
-	public async getEnrollment(sourcedId: string) {
-		const result = await this.#request(
-			`/ims/oneroster/rostering/v1p2/enrollments/${sourcedId}`,
-			{ method: "GET" },
-			GetEnrollmentResponseSchema,
-			{ swallow404: true }
-		)
-		return result?.enrollment
-	}
-
-	public async createEnrollment(enrollmentData: z.infer<typeof CreateEnrollmentInputSchema>) {
-		const validationResult = CreateEnrollmentInputSchema.safeParse(enrollmentData)
+	// ADDED: New method to create a user in OneRoster.
+	public async createUser(userData: z.infer<typeof OneRosterUserWriteSchema>) {
+		const validationResult = OneRosterUserWriteSchema.safeParse(userData)
 		if (!validationResult.success) {
-			logger.error("invalid input for createEnrollment", { error: validationResult.error, input: enrollmentData })
-			throw errors.wrap(validationResult.error, "invalid input for createEnrollment")
+			logger.error("invalid input for createUser", { error: validationResult.error, input: userData })
+			throw errors.wrap(validationResult.error, "invalid input for createUser")
 		}
 
-		return this.#request(
-			"/ims/oneroster/rostering/v1p2/enrollments/",
-			{
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ enrollment: validationResult.data })
-			},
-			z.unknown()
-		)
-	}
-
-	public async updateEnrollment(
-		sourcedId: string,
-		enrollment: z.infer<typeof OneRosterEnrollmentWriteSchema>
-	): Promise<unknown> {
-		const validationResult = OneRosterEnrollmentWriteSchema.safeParse(enrollment)
-		if (!validationResult.success) {
-			throw errors.wrap(validationResult.error, "invalid input for updateEnrollment")
-		}
-
-		return this.#request(
-			`/ims/oneroster/rostering/v1p2/enrollments/${sourcedId}`,
-			{
-				method: "PUT",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ enrollment: validationResult.data })
-			},
-			z.unknown()
+		return this.#_createEntity(
+			"user",
+			"/ims/oneroster/rostering/v1p2/users/",
+			validationResult.data,
+			OneRosterUserWriteSchema,
+			z.unknown() // Response schema is not critical here
 		)
 	}
 
