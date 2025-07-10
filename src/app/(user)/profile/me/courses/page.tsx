@@ -37,14 +37,6 @@ export type AllCourse = {
 
 const ONEROSTER_ORG_ID = "nice-academy"
 
-// Helper function to extract slug from sourcedId (e.g., "nice:some-slug:exercise" -> "some-slug")
-function extractSlugFromSourcedId(sourcedId: string): string {
-	let slug = sourcedId.startsWith("nice:") ? sourcedId.substring(5) : sourcedId
-	// Remove colon-based type suffix (e.g., ":exercise", ":video", ":article")
-	slug = slug.replace(/:(exercise|video|article)$/, "")
-	return slug
-}
-
 // Helper function to extract metadata value
 function getMetadataValue(metadata: Record<string, unknown> | undefined, key: string): string | undefined {
 	if (!metadata) return undefined
@@ -112,9 +104,18 @@ async function getUserEnrolledClasses(userId: string): Promise<Course[]> {
 			const courseSourcedId = oneRosterClass.course.sourcedId
 			const course = coursesMap.get(courseSourcedId)
 
-			// Extract subject and course slug for proper path generation
-			const subject = course?.subjects?.[0] || "unknown"
-			const courseSlug = extractSlugFromSourcedId(courseSourcedId)
+			// Extract subject and course slug from metadata
+			if (!course || !course.subjects || course.subjects.length === 0) {
+				logger.error("course missing subjects", { courseId: course?.sourcedId })
+				throw errors.new(`course ${course?.sourcedId} missing subjects`)
+			}
+			const subject = course.subjects[0]
+			const courseSlug = getMetadataValue(course?.metadata, "khanSlug")
+			if (!courseSlug) {
+				logger.error("course missing required khanSlug", { courseId: courseSourcedId })
+				throw errors.new(`course ${courseSourcedId} missing required khanSlug`)
+			}
+
 			const courseDescription = getMetadataValue(course?.metadata, "description")
 			const coursePath = getMetadataValue(course?.metadata, "path")
 
@@ -130,19 +131,26 @@ async function getUserEnrolledClasses(userId: string): Promise<Course[]> {
 				})
 			} else {
 				// Map course components to Unit structure with paths from OneRoster metadata
-				units = courseComponentsResult.data.map((component, index) => {
-					const unitSlug = extractSlugFromSourcedId(component.sourcedId)
-					// Prioritize OneRoster metadata path, fallback to generated path only if needed
+				units = courseComponentsResult.data.map((component) => {
+					const unitSlug = getMetadataValue(component.metadata, "khanSlug")
+					if (!unitSlug) {
+						logger.error("unit missing required khanSlug", { unitId: component.sourcedId })
+						throw errors.new(`unit ${component.sourcedId} missing required khanSlug`)
+					}
+
+					// Use OneRoster metadata path or require it
 					const metadataPath = getMetadataValue(component.metadata, "path")
-					const fallbackPath = `/${subject}/${courseSlug}/${unitSlug}`
+					if (!metadataPath) {
+						logger.error("unit missing required path", { unitId: component.sourcedId })
+						throw errors.new(`unit ${component.sourcedId} missing required path`)
+					}
 
 					return {
 						id: component.sourcedId,
 						title: component.title,
-						// Use OneRoster metadata path first, fallback to generated path
-						path: metadataPath || fallbackPath,
+						path: metadataPath,
 						courseId: courseSourcedId,
-						ordering: component.sortOrder || index,
+						ordering: component.sortOrder,
 						description: component.metadata?.description ? String(component.metadata.description) : "",
 						slug: unitSlug
 					}
@@ -192,20 +200,25 @@ async function getClassesForSelector(): Promise<AllSubject[]> {
 		const course = coursesMap.get(oneRosterClass.course.sourcedId)
 		if (!course || !course.subjects || course.subjects.length === 0) continue
 
-		// Extract subject and course slug for proper path generation
-		const subject = course.subjects[0]
-		const courseSlug = extractSlugFromSourcedId(oneRosterClass.course.sourcedId)
+		// Extract course slug from metadata
+		const courseSlug = getMetadataValue(course?.metadata, "khanSlug")
+		if (!courseSlug) {
+			logger.error("course missing required khanSlug", { courseId: oneRosterClass.course.sourcedId })
+			throw errors.new(`course ${oneRosterClass.course.sourcedId} missing required khanSlug`)
+		}
 
-		// Prioritize OneRoster course metadata path, fallback to generated path
+		// Use OneRoster course metadata path
 		const metadataPath = getMetadataValue(course.metadata, "path")
-		const fallbackPath = `/${subject}/${courseSlug}`
-		const coursePath = metadataPath || fallbackPath
+		if (!metadataPath) {
+			logger.error("course missing required path", { courseId: oneRosterClass.course.sourcedId })
+			throw errors.new(`course ${oneRosterClass.course.sourcedId} missing required path`)
+		}
 
 		const courseForSelector: AllCourse = {
 			id: oneRosterClass.sourcedId, // Use class sourcedId as the unique ID
 			slug: courseSlug,
 			title: oneRosterClass.title,
-			path: coursePath
+			path: metadataPath
 		}
 
 		for (const subject of course.subjects) {

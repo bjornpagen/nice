@@ -1,5 +1,6 @@
 "use client"
 
+import * as errors from "@superbuilders/errors"
 import { useState } from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 
@@ -29,10 +30,16 @@ export default function DebugQTIPage() {
 
 	// Handle all message events
 	const handleMessage = (event: MessageEvent) => {
+		if (!event.data) {
+			throw errors.new("MessageEvent missing data")
+		}
+		if (!event.data.type) {
+			throw errors.new("MessageEvent data missing type field")
+		}
 		setEvents((prev) => [
 			...prev,
 			{
-				type: event.data.type || "UNKNOWN",
+				type: event.data.type,
 				data: event.data,
 				timestamp: new Date().toISOString()
 			}

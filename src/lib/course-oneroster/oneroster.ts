@@ -179,8 +179,26 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 	// 3. Transform the data into the OneRoster structure.
 	logger.debug("transforming database entities to oneroster objects", { courseId })
 
-	const subjectSlug = course.path.split("/")[1] || ""
-	const subjectTitle = subjectsMap.get(subjectSlug) || "General"
+	const pathParts = course.path.split("/")
+	if (pathParts.length < 2 || !pathParts[1]) {
+		logger.error("CRITICAL: Invalid course path structure", {
+			courseId,
+			path: course.path,
+			pathParts
+		})
+		throw errors.new("course path: invalid structure - missing subject slug")
+	}
+	const subjectSlug = pathParts[1]
+
+	const subjectTitle = subjectsMap.get(subjectSlug)
+	if (!subjectTitle) {
+		logger.error("CRITICAL: Subject not found for slug", {
+			courseId,
+			subjectSlug,
+			availableSubjects: Array.from(subjectsMap.keys())
+		})
+		throw errors.new("subject mapping: subject title not found for slug")
+	}
 
 	const onerosterPayload: OneRosterPayload = {
 		course: {
@@ -262,7 +280,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 							khanId: content.id,
 							khanSlug: content.slug,
 							khanTitle: content.title,
-							khanDescription: content.description || "",
+							khanDescription: content.description,
 							path: content.path
 						}
 

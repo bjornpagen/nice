@@ -1,5 +1,6 @@
 "use client"
 
+import * as errors from "@superbuilders/errors"
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
@@ -11,18 +12,23 @@ import type { Course, Unit } from "./page"
 type CourseCardProps = {
 	course: Course
 	units: Unit[]
-	color?: string
+	color: string
 }
 
-export function CourseCard({ course, units, color = "bg-gray-200" }: CourseCardProps) {
+export function CourseCard({ course, units, color }: CourseCardProps) {
 	const [isExpanded, setIsExpanded] = React.useState(false)
 
-	// Use the OneRoster course metadata path first, fallback to generated path
-	const coursePath =
-		course.coursePath ||
-		(course.subject && course.courseSlug
-			? `/${course.subject}/${course.courseSlug}`
-			: `/courses/${course.course.sourcedId}`)
+	// Validate required course path data
+	let coursePath: string
+	if (course.coursePath) {
+		coursePath = course.coursePath
+	} else if (course.subject && course.courseSlug) {
+		coursePath = `/${course.subject}/${course.courseSlug}`
+	} else if (course.course?.sourcedId) {
+		coursePath = `/courses/${course.course.sourcedId}`
+	} else {
+		throw errors.new("course path: required data missing")
+	}
 
 	// Helper function to extract metadata value
 	const getMetadataValue = (metadata: Record<string, unknown> | undefined, key: string): string | undefined => {
@@ -31,12 +37,18 @@ export function CourseCard({ course, units, color = "bg-gray-200" }: CourseCardP
 		return typeof value === "string" ? value : undefined
 	}
 
-	// Use description or khanDescription from metadata, with fallback
-	const courseDescription =
-		getMetadataValue(course.metadata, "description") ||
-		getMetadataValue(course.metadata, "khanDescription") ||
-		course.courseDescription ||
-		`${course.title} - ${course.classType} class`
+	// Get course description - may be undefined
+	let courseDescription: string | undefined
+	const descriptionFromMetadata = getMetadataValue(course.metadata, "description")
+	const khanDescriptionFromMetadata = getMetadataValue(course.metadata, "khanDescription")
+
+	if (descriptionFromMetadata) {
+		courseDescription = descriptionFromMetadata
+	} else if (khanDescriptionFromMetadata) {
+		courseDescription = khanDescriptionFromMetadata
+	} else if (course.courseDescription) {
+		courseDescription = course.courseDescription
+	}
 
 	return (
 		<Card className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">
@@ -48,15 +60,23 @@ export function CourseCard({ course, units, color = "bg-gray-200" }: CourseCardP
 					</Link>
 				</CardTitle>
 				<CardDescription className="text-gray-600 relative">
-					<div className={cn("transition-all duration-200", !isExpanded && "line-clamp-3")}>{courseDescription}</div>
-					{courseDescription && courseDescription.length > 150 && (
-						<button
-							type="button"
-							onClick={() => setIsExpanded(!isExpanded)}
-							className="text-blue-600 hover:text-blue-700 text-sm font-medium mt-1 focus:outline-none"
-						>
-							{isExpanded ? "Show less" : "Read more..."}
-						</button>
+					{courseDescription ? (
+						<>
+							<div className={cn("transition-all duration-200", !isExpanded && "line-clamp-3")}>
+								{courseDescription}
+							</div>
+							{courseDescription.length > 150 && (
+								<button
+									type="button"
+									onClick={() => setIsExpanded(!isExpanded)}
+									className="text-blue-600 hover:text-blue-700 text-sm font-medium mt-1 focus:outline-none"
+								>
+									{isExpanded ? "Show less" : "Read more..."}
+								</button>
+							)}
+						</>
+					) : (
+						<div className="text-gray-500 italic">No description available</div>
 					)}
 				</CardDescription>
 			</CardHeader>

@@ -7,7 +7,12 @@ import type { OneRosterResource } from "@/lib/oneroster"
 
 // Helper function to extract slug from sourcedId
 function extractSlug(sourcedId: string): string {
-	return sourcedId.split(":")[1] || sourcedId
+	const parts = sourcedId.split(":")
+	if (parts.length < 2 || !parts[1]) {
+		logger.error("CRITICAL: Invalid sourcedId format", { sourcedId })
+		throw errors.new("sourcedId: invalid format")
+	}
+	return parts[1]
 }
 
 // Shared data fetching function
@@ -114,11 +119,19 @@ export async function fetchLessonData(params: { subject: string; course: string;
 					contentPath = `/${params.subject}/${params.course}/${unitSlug}/${lessonSlug}/e/${resourceSlug}`
 				}
 
+				// Validate required fields
+				if (!resource.title) {
+					logger.error("CRITICAL: Resource missing title", { resourceId: resource.sourcedId })
+					throw errors.new("resource: title is required")
+				}
+
+				const description = typeof resource.metadata?.description === "string" ? resource.metadata.description : ""
+
 				const child: LessonChild & { sortOrder: number } = {
 					id: resource.sourcedId,
 					slug: resourceSlug,
 					title: resource.title,
-					description: typeof resource.metadata?.description === "string" ? resource.metadata.description : "",
+					description: description,
 					path: contentPath,
 					type: contentType,
 					sortOrder: cr.sortOrder
@@ -140,37 +153,105 @@ export async function fetchLessonData(params: { subject: string; course: string;
 
 	// 6. Assemble the final data structure
 	const unitLessonsWithContent: LessonInfo[] = unitLessonsResult.data
-		.map((lesson) => ({
-			type: "Lesson" as const,
-			id: lesson.sourcedId,
-			slug: extractSlug(lesson.sourcedId),
-			title: lesson.title,
-			description: typeof lesson.metadata?.description === "string" ? lesson.metadata.description : "",
-			path: typeof lesson.metadata?.path === "string" ? lesson.metadata.path : "",
-			children: finalLessonContentMap.get(lesson.sourcedId) || []
-		}))
+		.map((lesson) => {
+			// Validate required fields
+			if (!lesson.title) {
+				logger.error("CRITICAL: Lesson missing title", { lessonId: lesson.sourcedId })
+				throw errors.new("lesson: title is required")
+			}
+
+			const description = typeof lesson.metadata?.description === "string" ? lesson.metadata.description : ""
+			const path = typeof lesson.metadata?.path === "string" ? lesson.metadata.path : ""
+
+			// Validate path if it exists
+			if (path && !path.startsWith("/")) {
+				logger.error("CRITICAL: Invalid lesson path format", { lessonId: lesson.sourcedId, path })
+				throw errors.new("lesson: invalid path format")
+			}
+
+			const children = finalLessonContentMap.get(lesson.sourcedId)
+
+			// Lessons may have no content - this is a valid state
+			let lessonChildren: LessonChild[]
+			if (children === undefined) {
+				lessonChildren = []
+				logger.debug("lesson has no content", { lessonId: lesson.sourcedId })
+			} else {
+				lessonChildren = children
+			}
+
+			return {
+				type: "Lesson" as const,
+				id: lesson.sourcedId,
+				slug: extractSlug(lesson.sourcedId),
+				title: lesson.title,
+				description: description,
+				path: path,
+				children: lessonChildren
+			}
+		})
 		.sort((a, b) => {
 			// Sort by OneRoster sortOrder
-			const aSort = unitLessonsResult.data.find((l) => l.sourcedId === a.id)?.sortOrder ?? 0
-			const bSort = unitLessonsResult.data.find((l) => l.sourcedId === b.id)?.sortOrder ?? 0
+			const aLesson = unitLessonsResult.data.find((l) => l.sourcedId === a.id)
+			const bLesson = unitLessonsResult.data.find((l) => l.sourcedId === b.id)
+
+			if (!aLesson || !bLesson) {
+				logger.error("CRITICAL: Lesson not found for sorting", { aId: a.id, bId: b.id })
+				throw errors.new("lesson sorting: data inconsistency")
+			}
+
+			const aSort = aLesson.sortOrder
+			const bSort = bLesson.sortOrder
 			return aSort - bSort
 		})
 
+	// Validate required course fields
+	if (!course.title) {
+		logger.error("CRITICAL: Course missing title", { courseId: course.sourcedId })
+		throw errors.new("course: title is required")
+	}
+	const coursePath = typeof course.metadata?.path === "string" ? course.metadata.path : ""
+
+	// Validate required unit fields
+	if (!unit.title) {
+		logger.error("CRITICAL: Unit missing title", { unitId: unit.sourcedId })
+		throw errors.new("unit: title is required")
+	}
+	const unitPath = typeof unit.metadata?.path === "string" ? unit.metadata.path : ""
+
+	// Validate required lesson fields
+	if (!currentLesson.title) {
+		logger.error("CRITICAL: Current lesson missing title", { lessonId: currentLesson.sourcedId })
+		throw errors.new("current lesson: title is required")
+	}
+	const currentLessonPath = typeof currentLesson.metadata?.path === "string" ? currentLesson.metadata.path : ""
+
+	const currentLessonChildrenMap = finalLessonContentMap.get(currentLesson.sourcedId)
+
+	// Current lesson may have no content - this is a valid state
+	let currentLessonChildren: LessonChild[]
+	if (currentLessonChildrenMap === undefined) {
+		currentLessonChildren = []
+		logger.debug("current lesson has no content", { lessonId: currentLesson.sourcedId })
+	} else {
+		currentLessonChildren = currentLessonChildrenMap
+	}
+
 	return {
 		subject: params.subject,
-		courseData: { title: course.title, path: typeof course.metadata?.path === "string" ? course.metadata.path : "" },
+		courseData: { title: course.title, path: coursePath },
 		unitData: {
 			id: unit.sourcedId,
 			title: unit.title,
-			path: typeof unit.metadata?.path === "string" ? unit.metadata.path : "",
+			path: unitPath,
 			sortOrder: unit.sortOrder,
 			children: unitLessonsWithContent
 		},
 		lessonData: {
 			id: currentLesson.sourcedId,
 			title: currentLesson.title,
-			path: typeof currentLesson.metadata?.path === "string" ? currentLesson.metadata.path : "",
-			children: finalLessonContentMap.get(currentLesson.sourcedId) || []
+			path: currentLessonPath,
+			children: currentLessonChildren
 		}
 	}
 }

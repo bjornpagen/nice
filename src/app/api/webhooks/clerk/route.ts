@@ -129,7 +129,18 @@ export async function POST(req: Request) {
 		}
 
 		// Extract nickname from email (part before @)
-		const nickname = emailAddress.split("@")[0] || ""
+		const emailParts = emailAddress.split("@")
+		if (emailParts.length !== 2 || !emailParts[0]) {
+			logger.error("CRITICAL: Invalid email format for nickname extraction", {
+				clerkId,
+				emailAddress,
+				emailPartsLength: emailParts.length
+			})
+			return new Response("Error occurred -- invalid email format for nickname", {
+				status: 400
+			})
+		}
+		const nickname = emailParts[0]
 
 		const publicMetadata: Record<string, unknown> = {
 			nickname: nickname,
@@ -173,40 +184,66 @@ export async function POST(req: Request) {
 				logger.info("user not found in oneroster, creating a new one", { userId: clerkId, emailAddress })
 				const newSourcedId = randomUUID()
 
-				// Use fallback values for names if they're not provided
-				const givenName = firstName || nickname || "User"
-				const familyName = lastName || emailAddress.split("@")[1]?.split(".")[0] || "Unknown"
-
-				const newUserPayload = {
-					sourcedId: newSourcedId,
-					status: "active" as const,
-					enabledUser: true,
-					givenName: givenName,
-					familyName: familyName,
-					email: emailAddress,
-					roles: [
-						{
-							roleType: "primary" as const,
-							role: "student" as const, // Default role to 'student'
-							org: {
-								sourcedId: "nice-academy" // Use the static org sourcedId
-							}
-						}
-					]
-				}
-
-				const createUserResult = await errors.try(oneroster.createUser(newUserPayload))
-				if (createUserResult.error) {
-					logger.warn("failed to create new user in oneroster, proceeding without sourceid", {
+				// Validate required name fields
+				if (!firstName && !nickname) {
+					logger.error("CRITICAL: Cannot create OneRoster user without name information", {
 						userId: clerkId,
-						error: createUserResult.error
+						hasFirstName: Boolean(firstName),
+						hasNickname: Boolean(nickname)
+					})
+					// In this case, we'll proceed without creating a OneRoster user
+					// since this is a secondary operation
+					logger.warn("proceeding without oneroster user creation due to missing name data", {
+						userId: clerkId
 					})
 				} else {
-					publicMetadata.sourceId = newSourcedId
-					logger.info("successfully created new user in oneroster and assigned sourceid", {
-						userId: clerkId,
-						sourceId: newSourcedId
-					})
+					const givenName = firstName || nickname
+					const familyNameFromEmail = emailAddress.split("@")[1]?.split(".")[0]
+					const familyName = lastName || familyNameFromEmail
+
+					if (!familyName) {
+						logger.error("CRITICAL: Cannot determine family name for OneRoster user", {
+							userId: clerkId,
+							hasLastName: Boolean(lastName),
+							emailDomain: emailAddress.split("@")[1]
+						})
+						// Proceed without creating OneRoster user
+						logger.warn("proceeding without oneroster user creation due to missing family name", {
+							userId: clerkId
+						})
+					} else {
+						const newUserPayload = {
+							sourcedId: newSourcedId,
+							status: "active" as const,
+							enabledUser: true,
+							givenName: givenName,
+							familyName: familyName,
+							email: emailAddress,
+							roles: [
+								{
+									roleType: "primary" as const,
+									role: "student" as const, // Default role to 'student'
+									org: {
+										sourcedId: "nice-academy" // Use the static org sourcedId
+									}
+								}
+							]
+						}
+
+						const createUserResult = await errors.try(oneroster.createUser(newUserPayload))
+						if (createUserResult.error) {
+							logger.warn("failed to create new user in oneroster, proceeding without sourceid", {
+								userId: clerkId,
+								error: createUserResult.error
+							})
+						} else {
+							publicMetadata.sourceId = newSourcedId
+							logger.info("successfully created new user in oneroster and assigned sourceid", {
+								userId: clerkId,
+								sourceId: newSourcedId
+							})
+						}
+					}
 				}
 			}
 		}

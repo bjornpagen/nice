@@ -25,10 +25,25 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 			}
 
 			const titleMatch = stimulus.xml.match(/title="([^"]+)"/)
-			const title = titleMatch?.[1] ?? "Untitled Stimulus"
+			const title = titleMatch?.[1]
+			if (!title) {
+				logger.error("CRITICAL: Could not extract title from stimulus XML", {
+					identifier,
+					xml: stimulus.xml.substring(0, 300)
+				})
+				throw errors.new("stimulus parsing: title extraction failed")
+			}
 
 			const contentMatch = stimulus.xml.match(/<qti-stimulus-body>([\s\S]*?)<\/qti-stimulus-body>/)
-			const content = contentMatch?.[1]?.trim() ?? ""
+			const content = contentMatch?.[1]?.trim()
+			if (!content) {
+				logger.error("CRITICAL: Could not extract content from stimulus XML", {
+					identifier,
+					title,
+					xml: stimulus.xml.substring(0, 500)
+				})
+				throw errors.new("stimulus parsing: content extraction failed")
+			}
 
 			const payload = { identifier, title, content, metadata: stimulus.metadata }
 

@@ -1,3 +1,4 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { and, eq, sql } from "drizzle-orm"
 import { notFound } from "next/navigation"
@@ -222,12 +223,16 @@ async function fetchCourseData(params: { subject: string; course: string; test: 
 	const lessonChildren: LessonChild[] = []
 	for (const row of lessonContentResult) {
 		if (row.contentType === "Video" && row.video) {
+			if (!row.video.description) {
+				logger.error("video missing required description", { videoId: row.video.id })
+				throw errors.new(`video ${row.video.id} missing required description`)
+			}
 			lessonChildren.push({
 				type: "Video",
 				id: row.video.id,
 				slug: row.video.slug,
 				title: row.video.title,
-				description: row.video.description || "",
+				description: row.video.description,
 				path: row.video.path
 			})
 		} else if (row.contentType === "Article" && row.article) {
@@ -245,7 +250,7 @@ async function fetchCourseData(params: { subject: string; course: string; test: 
 				id: row.exercise.id,
 				slug: row.exercise.slug,
 				title: row.exercise.title,
-				description: row.exercise.description || "",
+				description: row.exercise.description, // nullable in DB
 				path: row.exercise.path
 			})
 		}
@@ -259,12 +264,16 @@ async function fetchCourseData(params: { subject: string; course: string; test: 
 
 			for (const row of lessonContentResult) {
 				if (row.contentType === "Video" && row.video) {
+					if (!row.video.description) {
+						logger.error("video missing required description", { videoId: row.video.id })
+						throw errors.new(`video ${row.video.id} missing required description`)
+					}
 					children.push({
 						type: "Video",
 						id: row.video.id,
 						slug: row.video.slug,
 						title: row.video.title,
-						description: row.video.description || "",
+						description: row.video.description,
 						path: row.video.path
 					})
 				} else if (row.contentType === "Article" && row.article) {
@@ -273,7 +282,7 @@ async function fetchCourseData(params: { subject: string; course: string; test: 
 						id: row.article.id,
 						slug: row.article.slug,
 						title: row.article.title,
-						description: "",
+						description: "", // Articles don't have descriptions in DB schema
 						path: row.article.path
 					})
 				} else if (row.contentType === "Exercise" && row.exercise) {
@@ -282,16 +291,23 @@ async function fetchCourseData(params: { subject: string; course: string; test: 
 						id: row.exercise.id,
 						slug: row.exercise.slug,
 						title: row.exercise.title,
-						description: row.exercise.description || "",
+						description: row.exercise.description, // nullable in DB
 						path: row.exercise.path
 					})
 				}
 			}
 
+			const pathParts = lesson.path.split("/")
+			const lessonSlug = pathParts[pathParts.length - 1]
+			if (!lessonSlug) {
+				logger.error("lesson path invalid - cannot extract slug", { lessonId: lesson.id, path: lesson.path })
+				throw errors.new(`lesson ${lesson.id} has invalid path ${lesson.path}`)
+			}
+
 			return {
 				type: "Lesson" as const,
 				id: lesson.id,
-				slug: lesson.path.split("/").pop() || lesson.id,
+				slug: lessonSlug,
 				title: lesson.title,
 				description: "",
 				path: lesson.path,

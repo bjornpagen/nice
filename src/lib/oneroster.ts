@@ -943,7 +943,15 @@ export class OneRosterApiClient {
 		// Filtering by enrollment status must be done client-side.
 		const endpoint = `/ims/oneroster/rostering/v1p2/users/${userSourcedId}/classes`
 		const response = await this.#request(endpoint, { method: "GET" }, GetAllClassesResponseSchema)
-		const classes = response?.classes ?? []
+		if (!response || !response.classes) {
+			logger.error("CRITICAL: Invalid API response for getClassesForUser", {
+				userSourcedId,
+				hasResponse: Boolean(response),
+				responseData: response
+			})
+			throw errors.new("classes api response: invalid structure")
+		}
+		const classes = response.classes
 		logger.info("OneRosterApiClient: successfully fetched classes for user", {
 			userSourcedId,
 			count: classes.length,
@@ -998,7 +1006,15 @@ export class OneRosterApiClient {
 		const endpoint = `/ims/oneroster/rostering/v1p2/enrollments?filter=${encodeURIComponent(filter)}&limit=3000`
 		logger.debug("OneRosterApiClient: getEnrollmentsForUser endpoint", { endpoint })
 		const response = await this.#request(endpoint, { method: "GET" }, GetAllEnrollmentsResponseSchema)
-		const enrollments = response?.enrollments ?? []
+		if (!response || !response.enrollments) {
+			logger.error("CRITICAL: Invalid API response for getEnrollmentsForUser", {
+				userSourcedId,
+				hasResponse: Boolean(response),
+				responseData: response
+			})
+			throw errors.new("enrollments api response: invalid structure")
+		}
+		const enrollments = response.enrollments
 		logger.info("OneRosterApiClient: successfully fetched enrollments for user", {
 			userSourcedId,
 			count: enrollments.length,

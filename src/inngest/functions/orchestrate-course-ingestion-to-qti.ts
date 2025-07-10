@@ -224,7 +224,18 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 
 				const explicitTests = Array.from(assessmentMap.entries())
 					.map(([assessmentId, data]) => {
-						const questionIds = data.exerciseIds.flatMap((exerciseId) => questionsByExerciseId.get(exerciseId) || [])
+						const questionIds = data.exerciseIds.flatMap((exerciseId) => {
+							const questions = questionsByExerciseId.get(exerciseId)
+							if (!questions) {
+								logger.warn("No questions found for exercise in assessment", {
+									assessmentId,
+									exerciseId,
+									assessmentTitle: data.title
+								})
+								return []
+							}
+							return questions
+						})
 						if (questionIds.length === 0) return null
 						return buildTestObject(assessmentId, data.title, questionIds, {
 							khanId: assessmentId,
@@ -239,8 +250,14 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 
 				const exerciseTests = allExercises
 					.map((exercise) => {
-						const questionIds = questionsByExerciseId.get(exercise.id) || []
-						if (questionIds.length === 0) return null
+						const questionIds = questionsByExerciseId.get(exercise.id)
+						if (!questionIds || questionIds.length === 0) {
+							logger.debug("No questions found for exercise", {
+								exerciseId: exercise.id,
+								exerciseTitle: exercise.title
+							})
+							return null
+						}
 						return buildTestObject(exercise.id, exercise.title, questionIds, {
 							khanId: exercise.id,
 							khanSlug: exercise.slug,

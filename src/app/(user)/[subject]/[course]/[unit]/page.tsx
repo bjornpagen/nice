@@ -1,3 +1,4 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { oneroster } from "@/lib/clients"
@@ -135,7 +136,7 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	const oneRosterCourse = courses[0]
 
 	if (!oneRosterCourse) {
-		logger.warn("unit page: course not found by slug", { slug: params.course })
+		logger.error("unit page: course not found by slug", { slug: params.course })
 		notFound()
 	}
 
@@ -149,25 +150,43 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	)
 
 	if (!oneRosterUnit) {
-		logger.warn("unit page: unit not found by slug", { unitSlug: decodedUnitSlug, courseId: courseSourcedId })
+		logger.error("unit page: unit not found by slug", { unitSlug: decodedUnitSlug, courseId: courseSourcedId })
 		notFound()
 	}
 
 	const unitSourcedId = oneRosterUnit.sourcedId
 
+	const coursePath = getMetadataValue(oneRosterCourse.metadata, "path")
+	if (!coursePath) {
+		logger.error("course missing required path", { courseId: oneRosterCourse.sourcedId })
+		throw errors.new(`course ${oneRosterCourse.sourcedId} missing required path`)
+	}
+
 	const course: Course = {
 		id: oneRosterCourse.sourcedId,
 		title: oneRosterCourse.title,
-		path: getMetadataValue(oneRosterCourse.metadata, "path") || `/${params.subject}/${params.course}`,
+		path: coursePath,
 		description: getMetadataValue(oneRosterCourse.metadata, "description")
+	}
+
+	const unitPath = getMetadataValue(oneRosterUnit.metadata, "path")
+	if (!unitPath) {
+		logger.error("unit missing required path", { unitId: oneRosterUnit.sourcedId })
+		throw errors.new(`unit ${oneRosterUnit.sourcedId} missing required path`)
+	}
+
+	const unitSlug = getMetadataValue(oneRosterUnit.metadata, "khanSlug")
+	if (!unitSlug) {
+		logger.error("unit missing required khanSlug", { unitId: oneRosterUnit.sourcedId })
+		throw errors.new(`unit ${oneRosterUnit.sourcedId} missing required khanSlug`)
 	}
 
 	const unit: Unit = {
 		id: oneRosterUnit.sourcedId,
 		title: oneRosterUnit.title,
-		path: getMetadataValue(oneRosterUnit.metadata, "path") || `/${params.subject}/${params.course}/${decodedUnitSlug}`,
+		path: unitPath,
 		ordering: oneRosterUnit.sortOrder,
-		slug: getMetadataValue(oneRosterUnit.metadata, "khanSlug") || decodedUnitSlug,
+		slug: unitSlug,
 		description: getMetadataValue(oneRosterUnit.metadata, "description")
 	}
 
@@ -178,14 +197,20 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 
 		const unitSlug = getMetadataValue(component.metadata, "khanSlug")
 		if (!unitSlug) {
-			logger.warn("unit missing khanSlug", { unitId: component.sourcedId })
-			continue
+			logger.error("unit missing required khanSlug", { unitId: component.sourcedId })
+			throw errors.new(`unit ${component.sourcedId} missing required khanSlug`)
+		}
+
+		const unitNavPath = getMetadataValue(component.metadata, "path")
+		if (!unitNavPath) {
+			logger.error("unit missing required path", { unitId: component.sourcedId })
+			throw errors.new(`unit ${component.sourcedId} missing required path`)
 		}
 
 		allUnits.push({
 			id: component.sourcedId,
 			title: component.title,
-			path: getMetadataValue(component.metadata, "path") || `/${params.subject}/${params.course}/${unitSlug}`,
+			path: unitNavPath,
 			ordering: component.sortOrder,
 			slug: unitSlug,
 			description: getMetadataValue(component.metadata, "description")
@@ -245,17 +270,21 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 				const resourceSlug = getMetadataValue(resource.metadata, "khanSlug")
 
 				if (!resourceSlug) {
-					logger.warn("assessment resource missing khanSlug", { resourceId: resource.sourcedId })
-					continue
+					logger.error("assessment resource missing required khanSlug", { resourceId: resource.sourcedId })
+					throw errors.new(`assessment resource ${resource.sourcedId} missing required khanSlug`)
+				}
+
+				const assessmentPath = getMetadataValue(resource.metadata, "path")
+				if (!assessmentPath) {
+					logger.error("assessment missing required path", { assessmentId: resource.sourcedId })
+					throw errors.new(`assessment ${resource.sourcedId} missing required path`)
 				}
 
 				if (assessmentType === "Quiz") {
 					unitAssessments.push({
 						id: resource.sourcedId,
 						title: resource.title,
-						path:
-							getMetadataValue(resource.metadata, "path") ||
-							`/${params.subject}/${params.course}/${decodedUnitSlug}/quiz/${resourceSlug}`,
+						path: assessmentPath,
 						ordering: cr.sortOrder,
 						type: "Quiz",
 						parentId: unitSourcedId,
@@ -266,9 +295,7 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 					unitAssessments.push({
 						id: resource.sourcedId,
 						title: resource.title,
-						path:
-							getMetadataValue(resource.metadata, "path") ||
-							`/${params.subject}/${params.course}/${decodedUnitSlug}/test/${resourceSlug}`,
+						path: assessmentPath,
 						ordering: cr.sortOrder,
 						type: "UnitTest",
 						parentId: unitSourcedId,
@@ -301,11 +328,15 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	for (const child of unitChildren) {
 		const childSlug = getMetadataValue(child.metadata, "khanSlug")
 		if (!childSlug) {
-			logger.warn("lesson missing khanSlug", { lessonId: child.sourcedId })
-			continue
+			logger.error("lesson missing required khanSlug", { lessonId: child.sourcedId })
+			throw errors.new(`lesson ${child.sourcedId} missing required khanSlug`)
 		}
 
-		const lessonResources = resourcesByComponentId.get(child.sourcedId) || []
+		let lessonResources = resourcesByComponentId.get(child.sourcedId)
+		if (!lessonResources) {
+			lessonResources = []
+			resourcesByComponentId.set(child.sourcedId, lessonResources)
+		}
 
 		const videos: Video[] = []
 		const articles: Article[] = []
@@ -319,55 +350,93 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 			const resourceSlug = getMetadataValue(resource.metadata, "khanSlug")
 
 			if (!resourceSlug) {
-				logger.warn("resource missing khanSlug", { resourceId: resource.sourcedId })
-				continue
+				logger.error("resource missing required khanSlug", { resourceId: resource.sourcedId })
+				throw errors.new(`resource ${resource.sourcedId} missing required khanSlug`)
 			}
 
 			// Find the componentResource to get the sortOrder
 			const componentResource = childComponentResources.find(
 				(cr) => cr.courseComponent.sourcedId === child.sourcedId && cr.resource.sourcedId === resource.sourcedId
 			)
-			const ordering = componentResource?.sortOrder || 0
+			if (!componentResource) {
+				logger.error("component resource not found", { lessonId: child.sourcedId, resourceId: resource.sourcedId })
+				throw errors.new(`component resource not found for lesson ${child.sourcedId} resource ${resource.sourcedId}`)
+			}
+			const ordering = componentResource.sortOrder
 
 			if (resourceType === "video") {
-				const youtubeUrl = getMetadataValue(resource.metadata, "url") || ""
+				const youtubeUrl = getMetadataValue(resource.metadata, "url")
+				if (!youtubeUrl) {
+					logger.error("video missing required url", { videoId: resource.sourcedId })
+					throw errors.new(`video ${resource.sourcedId} missing required url`)
+				}
+
 				const youtubeMatch = youtubeUrl.match(/[?&]v=([^&]+)/)
-				const youtubeId = youtubeMatch ? youtubeMatch[1] : ""
+				if (!youtubeMatch || !youtubeMatch[1]) {
+					logger.error("video has invalid youtube url", { videoId: resource.sourcedId, url: youtubeUrl })
+					throw errors.new(`video ${resource.sourcedId} has invalid youtube url`)
+				}
+				const youtubeId = youtubeMatch[1]
+
+				const videoPath = getMetadataValue(resource.metadata, "path")
+				if (!videoPath) {
+					logger.error("video missing required path", { videoId: resource.sourcedId })
+					throw errors.new(`video ${resource.sourcedId} missing required path`)
+				}
+
+				const videoDescription = getMetadataValue(resource.metadata, "description")
+				if (!videoDescription) {
+					logger.error("video missing required description", { videoId: resource.sourcedId })
+					throw errors.new(`video ${resource.sourcedId} missing required description`)
+				}
 
 				videos.push({
 					id: resource.sourcedId,
 					title: resource.title,
-					path:
-						getMetadataValue(resource.metadata, "path") ||
-						`/${params.subject}/${params.course}/${decodedUnitSlug}/${childSlug}/v/${resourceSlug}`,
+					path: videoPath,
 					slug: resourceSlug,
-					description: getMetadataValue(resource.metadata, "description") || "",
-					youtubeId: youtubeId || "",
+					description: videoDescription,
+					youtubeId: youtubeId,
 					duration: getMetadataNumber(resource.metadata, "duration"),
 					ordering
 				})
 			} else if (resourceType === "qti" && subType === "qti-stimulus") {
 				// This is an article
+				const articlePath = getMetadataValue(resource.metadata, "path")
+				if (!articlePath) {
+					logger.error("article missing required path", { articleId: resource.sourcedId })
+					throw errors.new(`article ${resource.sourcedId} missing required path`)
+				}
+
+				const articleDescription = getMetadataValue(resource.metadata, "description")
+				if (!articleDescription) {
+					logger.error("article missing required description", { articleId: resource.sourcedId })
+					throw errors.new(`article ${resource.sourcedId} missing required description`)
+				}
+
 				articles.push({
 					id: resource.sourcedId,
 					title: resource.title,
-					path:
-						getMetadataValue(resource.metadata, "path") ||
-						`/${params.subject}/${params.course}/${decodedUnitSlug}/${childSlug}/a/${resourceSlug}`,
+					path: articlePath,
 					slug: resourceSlug,
-					description: getMetadataValue(resource.metadata, "description") || "",
+					description: articleDescription,
 					perseusContent: null, // Will be fetched from QTI server
 					ordering
 				})
 			} else if (resourceType === "qti" && subType === "qti-test" && !lessonType) {
 				// This is an exercise (test without lessonType means it's an exercise)
 				logger.debug("including exercise with new format", { sourcedId: resource.sourcedId })
+
+				const exercisePath = getMetadataValue(resource.metadata, "path")
+				if (!exercisePath) {
+					logger.error("exercise missing required path", { exerciseId: resource.sourcedId })
+					throw errors.new(`exercise ${resource.sourcedId} missing required path`)
+				}
+
 				exercises.push({
 					id: resource.sourcedId,
 					title: resource.title,
-					path:
-						getMetadataValue(resource.metadata, "path") ||
-						`/${params.subject}/${params.course}/${decodedUnitSlug}/${childSlug}/e/${resourceSlug}`,
+					path: exercisePath,
 					slug: resourceSlug,
 					description: getMetadataValue(resource.metadata, "description"),
 					questions: [], // Will be fetched from QTI server
@@ -381,12 +450,16 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 		articles.sort((a, b) => a.ordering - b.ordering)
 		exercises.sort((a, b) => a.ordering - b.ordering)
 
+		const lessonPath = getMetadataValue(child.metadata, "path")
+		if (!lessonPath) {
+			logger.error("lesson missing required path", { lessonId: child.sourcedId })
+			throw errors.new(`lesson ${child.sourcedId} missing required path`)
+		}
+
 		processedLessons.push({
 			id: child.sourcedId,
 			title: child.title,
-			path:
-				getMetadataValue(child.metadata, "path") ||
-				`/${params.subject}/${params.course}/${decodedUnitSlug}/${childSlug}`,
+			path: lessonPath,
 			ordering: child.sortOrder,
 			type: "Lesson",
 			videos,

@@ -45,7 +45,15 @@ export const generatePayloadForCourse = inngest.createFunction(
 			// MODIFIED: Use the top-level data/ directory
 			const dataDir = path.join(process.cwd(), "data")
 
-			const safeDirName = payload.course.courseCode || payload.course.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+			if (!payload.course.courseCode) {
+				logger.error("CRITICAL: Course code is missing", {
+					courseId,
+					courseTitle: payload.course.title,
+					courseData: payload.course
+				})
+				throw errors.new("course code required for directory creation")
+			}
+			const safeDirName = payload.course.courseCode
 			// MODIFIED: Create a nested directory structure `data/[course-slug]/oneroster/`
 			const courseDir = path.join(dataDir, safeDirName, "oneroster")
 

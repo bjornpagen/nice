@@ -16,8 +16,10 @@ export function Header({
 	nickname?: string
 	className?: string
 }) {
-	const displayName = nickname || "User"
-	const displayInitial = nickname ? nickname.charAt(0).toUpperCase() : "U"
+	// If nickname is not provided, we should not render the user dropdown at all
+	// This indicates a critical issue with user data
+	const displayName = nickname
+	const displayInitial = nickname ? nickname.charAt(0).toUpperCase() : undefined
 
 	return (
 		<header
@@ -85,7 +87,12 @@ export function Header({
 
 					{/* User Dropdown for signed in users */}
 					<SignedIn>
-						<UserDropdown displayName={displayName} displayInitial={displayInitial} dark={dark} />
+						{displayName && displayInitial ? (
+							<UserDropdown displayName={displayName} displayInitial={displayInitial} dark={dark} />
+						) : (
+							// If we don't have user data, show an error state
+							<div className={`text-sm ${dark ? "text-red-400" : "text-red-600"}`}>User data unavailable</div>
+						)}
 					</SignedIn>
 
 					{/* Login/Signup buttons for signed out users */}

@@ -72,7 +72,7 @@ async function generateContentWithRetry(logger: logger.Logger, request: Generate
 
 		logger.debug("gemini api call successful", {
 			attempt: attempt + 1,
-			responseLength: result.data.response?.text()?.length || 0
+			responseLength: result.data.response?.text()?.length
 		})
 		return result.data
 	}
@@ -224,7 +224,7 @@ export async function generateQtiFromPerseus(
 	const responseText = response.response.text()
 
 	logger.debug("received gemini response", {
-		responseLength: responseText?.length || 0,
+		responseLength: responseText?.length,
 		hasResponse: !!responseText
 	})
 
@@ -249,7 +249,7 @@ export async function generateQtiFromPerseus(
 
 	logger.debug("robust xml extraction result", {
 		foundMatch: !!xmlMatch?.[0],
-		matchLength: xmlMatch?.[0]?.length || 0,
+		matchLength: xmlMatch?.[0]?.length,
 		hasXmlDeclaration: !!xmlMatch?.[1]
 	})
 
