@@ -1,32 +1,170 @@
-import { auth } from "@clerk/nextjs/server"
+import { auth, currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { count, eq, inArray, sql } from "drizzle-orm"
-import * as React from "react"
-import { db } from "@/db"
-import * as schema from "@/db/schemas"
 import { oneroster } from "@/lib/clients"
+import type { OneRosterClassReadSchemaType } from "@/lib/oneroster"
 import { Content } from "./content"
 
-// OneRoster configuration
-const ONEROSTER_ORG_ID = "nice-academy"
-
-// Type definitions for OneRoster course selector
-type CourseForSelector = {
-	id: string // This MUST be our internal nice.courses.id
+// Define types based on OneRoster data
+export type Course = OneRosterClassReadSchemaType & {
+	units: Unit[]
+	subject?: string
+	courseSlug?: string
+	courseDescription?: string
+	coursePath?: string
+} // A "Course" is now a OneRoster "Class"
+export type Unit = {
+	id: string
+	title: string
+	path: string
+	courseId: string
+	ordering: number
+	description: string | null
+	slug: string
+}
+export type AllSubject = {
+	slug: string
+	title: string
+	courses: AllCourse[]
+}
+export type AllCourse = {
+	id: string // This will now be the class's sourcedId
 	slug: string
 	title: string
 	path: string
 }
 
-type SubjectWithCourses = {
-	slug: string
-	title: string
-	courses: CourseForSelector[]
+const ONEROSTER_ORG_ID = "nice-academy"
+
+// Helper function to extract slug from sourcedId (e.g., "nice:some-slug:exercise" -> "some-slug")
+function extractSlugFromSourcedId(sourcedId: string): string {
+	let slug = sourcedId.startsWith("nice:") ? sourcedId.substring(5) : sourcedId
+	// Remove colon-based type suffix (e.g., ":exercise", ":video", ":article")
+	slug = slug.replace(/:(exercise|video|article)$/, "")
+	return slug
 }
 
-// Moved from courses.ts - OneRoster data fetching function
-async function getOneRosterClassesForSelector(): Promise<SubjectWithCourses[]> {
+// Helper function to extract metadata value
+function getMetadataValue(metadata: Record<string, unknown> | undefined, key: string): string | undefined {
+	if (!metadata) return undefined
+	const value = metadata[key]
+	return typeof value === "string" ? value : undefined
+}
+
+// New data fetching function for enrolled classes
+async function getUserEnrolledClasses(userId: string): Promise<Course[]> {
+	const user = await currentUser()
+	if (!user) {
+		throw errors.new("user not authenticated")
+	}
+	const sourceId = typeof user.publicMetadata.sourceId === "string" ? user.publicMetadata.sourceId : undefined
+	if (!sourceId) {
+		logger.warn("user missing sourceId, cannot fetch enrolled classes", { userId })
+		return []
+	}
+
+	// Get user's current active enrollments to filter classes
+	const [classesResult, enrollmentsResult, allCoursesResult] = await Promise.all([
+		errors.try(oneroster.getClassesForUser(sourceId)),
+		errors.try(oneroster.getEnrollmentsForUser(sourceId)),
+		errors.try(oneroster.getAllCourses())
+	])
+
+	if (classesResult.error) {
+		logger.error("failed to fetch classes for user", { sourceId, error: classesResult.error })
+		return []
+	}
+	if (enrollmentsResult.error) {
+		logger.error("failed to fetch enrollments for user", { sourceId, error: enrollmentsResult.error })
+		return []
+	}
+	if (allCoursesResult.error) {
+		logger.error("failed to fetch all courses", { error: allCoursesResult.error })
+		return []
+	}
+
+	const allClasses = classesResult.data
+	const activeEnrollments = enrollmentsResult.data
+	const allCourses = allCoursesResult.data
+
+	// Create a set of class IDs that have active enrollments
+	const activeClassIds = new Set(activeEnrollments.map((e) => e.class.sourcedId))
+
+	// Filter classes to only those with active enrollments
+	const classes = allClasses.filter((cls) => activeClassIds.has(cls.sourcedId))
+
+	logger.info("filtered user classes by active enrollments", {
+		sourceId,
+		totalClasses: allClasses.length,
+		activeEnrollments: activeEnrollments.length,
+		filteredClasses: classes.length,
+		activeClassIds: Array.from(activeClassIds),
+		classIds: classes.map((c) => c.sourcedId)
+	})
+
+	// Get all courses to extract subject information
+	const coursesMap = new Map(allCourses.map((c) => [c.sourcedId, c]))
+
+	// Fetch course components (units) for each class
+	const coursesWithUnits = await Promise.all(
+		classes.map(async (oneRosterClass) => {
+			const courseSourcedId = oneRosterClass.course.sourcedId
+			const course = coursesMap.get(courseSourcedId)
+
+			// Extract subject and course slug for proper path generation
+			const subject = course?.subjects?.[0] || "unknown"
+			const courseSlug = extractSlugFromSourcedId(courseSourcedId)
+			const courseDescription = getMetadataValue(course?.metadata, "description")
+			const coursePath = getMetadataValue(course?.metadata, "path")
+
+			// Fetch course components for this course (these will be our units)
+			const courseComponentsResult = await errors.try(oneroster.getCourseComponentsForCourse(courseSourcedId))
+
+			let units: Unit[] = []
+			if (courseComponentsResult.error) {
+				logger.warn("failed to fetch course components for class", {
+					classId: oneRosterClass.sourcedId,
+					courseId: courseSourcedId,
+					error: courseComponentsResult.error
+				})
+			} else {
+				// Map course components to Unit structure with paths from OneRoster metadata
+				units = courseComponentsResult.data.map((component, index) => {
+					const unitSlug = extractSlugFromSourcedId(component.sourcedId)
+					// Prioritize OneRoster metadata path, fallback to generated path only if needed
+					const metadataPath = getMetadataValue(component.metadata, "path")
+					const fallbackPath = `/${subject}/${courseSlug}/${unitSlug}`
+
+					return {
+						id: component.sourcedId,
+						title: component.title,
+						// Use OneRoster metadata path first, fallback to generated path
+						path: metadataPath || fallbackPath,
+						courseId: courseSourcedId,
+						ordering: component.sortOrder || index,
+						description: component.metadata?.description ? String(component.metadata.description) : "",
+						slug: unitSlug
+					}
+				})
+			}
+
+			return {
+				...oneRosterClass,
+				units,
+				// Add subject and courseSlug for use in course card
+				subject,
+				courseSlug,
+				courseDescription,
+				coursePath
+			}
+		})
+	)
+
+	return coursesWithUnits
+}
+
+// New data fetching function for the course selector
+async function getClassesForSelector(): Promise<AllSubject[]> {
 	logger.info("fetching course selector data from oneroster api", { orgId: ONEROSTER_ORG_ID })
 
 	const [classesResult, coursesResult] = await Promise.all([
@@ -36,70 +174,36 @@ async function getOneRosterClassesForSelector(): Promise<SubjectWithCourses[]> {
 
 	if (classesResult.error) {
 		logger.error("failed to fetch classes from oneroster", { error: classesResult.error })
-		throw errors.wrap(classesResult.error, "oneroster class fetch")
+		return []
 	}
 	if (coursesResult.error) {
 		logger.error("failed to fetch courses from oneroster", { error: coursesResult.error })
-		throw errors.wrap(coursesResult.error, "oneroster course fetch")
+		return []
 	}
 
 	const allClasses = classesResult.data
 	const allCourses = coursesResult.data
 	const coursesMap = new Map(allCourses.map((c) => [c.sourcedId, c]))
-	const coursesBySubject = new Map<string, CourseForSelector[]>()
-	const relevantCourseSlugs = new Set<string>()
-
-	for (const oneRosterClass of allClasses) {
-		const course = coursesMap.get(oneRosterClass.course.sourcedId)
-		if (course) {
-			const courseSlug = course.sourcedId.replace(/^nice:/, "")
-			if (courseSlug) {
-				relevantCourseSlugs.add(courseSlug)
-			}
-		}
-	}
-
-	if (relevantCourseSlugs.size === 0) return []
-
-	// We still need to get the internal IDs from the database for the save functionality
-	const niceCoursesResult = await errors.try(
-		db
-			.select({ id: schema.niceCourses.id, slug: schema.niceCourses.slug })
-			.from(schema.niceCourses)
-			.where(inArray(schema.niceCourses.slug, Array.from(relevantCourseSlugs)))
-	)
-
-	if (niceCoursesResult.error) {
-		logger.error("failed to map oneroster slugs to internal db ids", { error: niceCoursesResult.error })
-		throw errors.wrap(niceCoursesResult.error, "db course slug mapping")
-	}
-	const niceCoursesMap = new Map(niceCoursesResult.data.map((c) => [c.slug, c.id]))
+	const coursesBySubject = new Map<string, AllCourse[]>()
 
 	for (const oneRosterClass of allClasses) {
 		const course = coursesMap.get(oneRosterClass.course.sourcedId)
 		if (!course || !course.subjects || course.subjects.length === 0) continue
 
-		const courseSlug = course.sourcedId.replace(/^nice:/, "")
-		const niceCourseId = niceCoursesMap.get(courseSlug)
-		if (!niceCourseId) continue
+		// Extract subject and course slug for proper path generation
+		const subject = course.subjects[0]
+		const courseSlug = extractSlugFromSourcedId(oneRosterClass.course.sourcedId)
 
-		// Get path from OneRoster metadata instead of database
-		// metadata is Record<string, unknown> | undefined, so we need to safely access it
-		const pathFromMetadata =
-			course.metadata && typeof course.metadata === "object" && "path" in course.metadata
-				? String(course.metadata.path)
-				: undefined
+		// Prioritize OneRoster course metadata path, fallback to generated path
+		const metadataPath = getMetadataValue(course.metadata, "path")
+		const fallbackPath = `/${subject}/${courseSlug}`
+		const coursePath = metadataPath || fallbackPath
 
-		if (!pathFromMetadata) {
-			logger.debug("course missing metadata path", { courseSlug, sourcedId: course.sourcedId })
-			continue
-		}
-
-		const courseForSelector: CourseForSelector = {
-			id: niceCourseId,
+		const courseForSelector: AllCourse = {
+			id: oneRosterClass.sourcedId, // Use class sourcedId as the unique ID
 			slug: courseSlug,
-			title: course.title,
-			path: pathFromMetadata // Using path from OneRoster metadata
+			title: oneRosterClass.title,
+			path: coursePath
 		}
 
 		for (const subject of course.subjects) {
@@ -122,78 +226,15 @@ async function getOneRosterClassesForSelector(): Promise<SubjectWithCourses[]> {
 		.sort((a, b) => a.title.localeCompare(b.title))
 }
 
-// 1. Drizzle prepared statements are colocated and explicitly select columns.
-const getUserCoursesQuery = db
-	.select({
-		id: schema.niceCourses.id,
-		title: schema.niceCourses.title,
-		description: schema.niceCourses.description,
-		path: schema.niceCourses.path
-	})
-	.from(schema.niceCourses)
-	.innerJoin(schema.niceUsersCourses, eq(schema.niceCourses.id, schema.niceUsersCourses.courseId))
-	.where(eq(schema.niceUsersCourses.clerkId, sql.placeholder("clerkId")))
-	.prepare("src_app_user_profile_me_courses_page_get_user_courses")
-
-const getAllUnitsQuery = db
-	.select({
-		id: schema.niceUnits.id,
-		courseId: schema.niceUnits.courseId,
-		title: schema.niceUnits.title,
-		path: schema.niceUnits.path,
-		slug: schema.niceUnits.slug,
-		description: schema.niceUnits.description,
-		ordering: schema.niceUnits.ordering
-	})
-	.from(schema.niceUnits)
-	.prepare("src_app_user_profile_me_courses_page_get_all_units")
-
-// Query to check if user has any courses
-const getUserCourseCountQuery = db
-	.select({ count: count() })
-	.from(schema.niceUsersCourses)
-	.where(eq(schema.niceUsersCourses.clerkId, sql.placeholder("clerkId")))
-	.prepare("src_app_user_profile_me_courses_page_get_user_course_count")
-
-// 2. Types are derived from the queries and exported for use in child components.
-export type Course = Awaited<ReturnType<typeof getUserCoursesQuery.execute>>[0]
-export type Unit = Awaited<ReturnType<typeof getAllUnitsQuery.execute>>[0]
-
-// Define types based on the new action's return value
-export type AllSubject = Awaited<ReturnType<typeof getOneRosterClassesForSelector>>[number]
-export type AllCourse = AllSubject["courses"][number]
-
-// 3. The page component is NOT async. It orchestrates promises.
 export default function CoursesPage() {
-	// 4. Get the auth promise and chain other fetches
 	const authPromise = auth()
 
-	// Chain all data fetches based on the user's clerkId
 	const coursesPromise = authPromise.then(({ userId }) => {
 		if (!userId) throw errors.new("User not authenticated")
-		return getUserCoursesQuery.execute({ clerkId: userId })
+		return getUserEnrolledClasses(userId)
 	})
 
-	const userCourseCountPromise = authPromise.then(({ userId }) => {
-		if (!userId) throw errors.new("User not authenticated")
-		return getUserCourseCountQuery.execute({ clerkId: userId }).then((results) => results[0] || { count: 0 })
-	})
+	const allSubjectsAndCoursesPromise = getClassesForSelector()
 
-	// Unit data is still from the local database
-	const unitsPromise = getAllUnitsQuery.execute()
-
-	// ✅ Call the OneRoster function directly since this is a server component
-	const allSubjectsAndCoursesPromise = getOneRosterClassesForSelector()
-
-	// 5. Render a Suspense boundary and pass all promises to the client component.
-	return (
-		<React.Suspense fallback={<div>Loading courses...</div>}>
-			<Content
-				coursesPromise={coursesPromise}
-				unitsPromise={unitsPromise}
-				allSubjectsPromise={allSubjectsAndCoursesPromise}
-				userCourseCountPromise={userCourseCountPromise}
-			/>
-		</React.Suspense>
-	)
+	return <Content coursesPromise={coursesPromise} allSubjectsPromise={allSubjectsAndCoursesPromise} />
 }

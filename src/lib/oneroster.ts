@@ -176,9 +176,9 @@ const CreateClassInputSchema = OneRosterClassWriteSchema
 // --- NEW: Custom Error for API Failures ---
 export const ErrOneRosterAPI = errors.new("oneroster api error")
 
-// Export the read schemas that will be used by server actions
-export type OneRosterCourseReadSchema = z.infer<typeof OneRosterCourseReadSchema>
-export type OneRosterClassReadSchema = z.infer<typeof OneRosterClassReadSchema>
+// Export the read schema types that will be used by server actions
+export type OneRosterCourseReadSchemaType = z.infer<typeof OneRosterCourseReadSchema>
+export type OneRosterClassReadSchemaType = z.infer<typeof OneRosterClassReadSchema>
 
 // Add these new schemas for paginated list responses
 const GetAllCoursesResponseSchema = z.object({ courses: z.array(OneRosterCourseReadSchema) })
@@ -248,6 +248,30 @@ const OneRosterUserWriteSchema = z.object({
 		.min(1)
 })
 export type OneRosterUserWrite = z.infer<typeof OneRosterUserWriteSchema>
+
+// --- Schemas for Enrollment ---
+const OneRosterEnrollmentSchema = z.object({
+	sourcedId: z.string(),
+	status: z.string(),
+	dateLastModified: z.string().datetime(),
+	role: z.string(),
+	primary: z.boolean().optional(),
+	user: GUIDRefReadSchema,
+	class: GUIDRefReadSchema
+})
+export type OneRosterEnrollment = z.infer<typeof OneRosterEnrollmentSchema>
+
+const GetAllEnrollmentsResponseSchema = z.object({
+	enrollments: z.array(OneRosterEnrollmentSchema)
+})
+
+const CreateEnrollmentInputSchema = z.object({
+	role: z.enum(["student", "teacher", "proctor", "administrator"]),
+	user: GUIDRefWriteSchema,
+	class: GUIDRefWriteSchema,
+	primary: z.boolean().optional()
+})
+export type CreateEnrollmentInput = z.infer<typeof CreateEnrollmentInputSchema>
 
 export class OneRosterApiClient {
 	#accessToken: string | null = null
@@ -621,9 +645,9 @@ export class OneRosterApiClient {
 	 * Fetches all courses from the OneRoster API, handling pagination.
 	 * @returns A promise that resolves to an array of all courses.
 	 */
-	public async getAllCourses(): Promise<OneRosterCourseReadSchema[]> {
+	public async getAllCourses(): Promise<OneRosterCourseReadSchemaType[]> {
 		logger.info("OneRosterApiClient: fetching all courses")
-		const allCourses: OneRosterCourseReadSchema[] = []
+		const allCourses: OneRosterCourseReadSchemaType[] = []
 		let offset = 0
 		const limit = 3000 // Max limit per OneRoster spec
 
@@ -653,9 +677,9 @@ export class OneRosterApiClient {
 	 * @param schoolSourcedId The sourcedId of the school/org.
 	 * @returns A promise that resolves to an array of classes for that school.
 	 */
-	public async getClassesForSchool(schoolSourcedId: string): Promise<OneRosterClassReadSchema[]> {
+	public async getClassesForSchool(schoolSourcedId: string): Promise<OneRosterClassReadSchemaType[]> {
 		logger.info("OneRosterApiClient: fetching all classes for school", { schoolSourcedId })
-		const allClasses: OneRosterClassReadSchema[] = []
+		const allClasses: OneRosterClassReadSchemaType[] = []
 		let offset = 0
 		const limit = 3000
 
@@ -900,5 +924,124 @@ export class OneRosterApiClient {
 			filter
 		})
 		return allComponentResources
+	}
+
+	/**
+	 * Fetches all classes a specific user is enrolled in.
+	 * @param userSourcedId The sourcedId of the user.
+	 * @returns A promise that resolves to an array of classes.
+	 */
+	public async getClassesForUser(userSourcedId: string): Promise<OneRosterClassReadSchemaType[]> {
+		logger.info("OneRosterApiClient: fetching classes for user", { userSourcedId })
+		// Note: The /users/{id}/classes endpoint doesn't support status filtering,
+		// so this returns all classes the user has ever been enrolled in.
+		// Filtering by enrollment status must be done client-side.
+		const endpoint = `/ims/oneroster/rostering/v1p2/users/${userSourcedId}/classes`
+		const response = await this.#request(endpoint, { method: "GET" }, GetAllClassesResponseSchema)
+		const classes = response?.classes ?? []
+		logger.info("OneRosterApiClient: successfully fetched classes for user", {
+			userSourcedId,
+			count: classes.length,
+			classIds: classes.map((c) => c.sourcedId)
+		})
+		return classes
+	}
+
+	/**
+	 * Fetches course components for a specific course, filtered to only get parent components (units).
+	 * @param courseSourcedId The sourcedId of the course.
+	 * @returns A promise that resolves to an array of parent course components (units).
+	 */
+	public async getCourseComponentsForCourse(
+		courseSourcedId: string
+	): Promise<z.infer<typeof OneRosterCourseComponentReadSchema>[]> {
+		logger.info("OneRosterApiClient: fetching course components for course", { courseSourcedId })
+
+		if (!courseSourcedId) {
+			throw errors.new("courseSourcedId cannot be empty")
+		}
+
+		// First try to get all components for this course with proper OneRoster filter syntax
+		const filter = `course.sourcedId='${courseSourcedId}'`
+		const allComponents = await this.getCourseComponents(filter)
+
+		// Filter client-side to get only parent components (units) - no nested lessons
+		const parentComponents = allComponents.filter((component) => !component.parent || !component.parent.sourcedId)
+
+		// Sort by sortOrder to maintain proper unit ordering
+		const sortedComponents = parentComponents.sort((a, b) => a.sortOrder - b.sortOrder)
+
+		logger.info("OneRosterApiClient: successfully fetched course components for course", {
+			courseSourcedId,
+			total: allComponents.length,
+			parentComponents: sortedComponents.length
+		})
+
+		return sortedComponents
+	}
+
+	/**
+	 * Fetches all enrollments for a specific user.
+	 * @param userSourcedId The sourcedId of the user.
+	 * @returns A promise that resolves to an array of enrollments.
+	 */
+	public async getEnrollmentsForUser(userSourcedId: string): Promise<OneRosterEnrollment[]> {
+		logger.info("OneRosterApiClient: fetching enrollments for user", { userSourcedId })
+		// ✅ MODIFIED: Added status='active' to the filter to ensure enrollment sync logic only
+		// considers active enrollments, preventing issues with soft-deleted records.
+		const filter = `user.sourcedId='${userSourcedId}' AND status='active'`
+		const endpoint = `/ims/oneroster/rostering/v1p2/enrollments?filter=${encodeURIComponent(filter)}&limit=3000`
+		logger.debug("OneRosterApiClient: getEnrollmentsForUser endpoint", { endpoint })
+		const response = await this.#request(endpoint, { method: "GET" }, GetAllEnrollmentsResponseSchema)
+		const enrollments = response?.enrollments ?? []
+		logger.info("OneRosterApiClient: successfully fetched enrollments for user", {
+			userSourcedId,
+			count: enrollments.length,
+			enrollmentClassIds: enrollments.map((e) => e.class.sourcedId),
+			enrollmentStatuses: enrollments.map((e) => e.status)
+		})
+		return enrollments
+	}
+
+	/**
+	 * Creates a new enrollment.
+	 * @param enrollmentData The data for the new enrollment.
+	 * @returns A promise that resolves to the API response.
+	 */
+	public async createEnrollment(enrollmentData: CreateEnrollmentInput): Promise<unknown> {
+		logger.info("OneRosterApiClient: creating enrollment", {
+			userSourcedId: enrollmentData.user.sourcedId,
+			classSourcedId: enrollmentData.class.sourcedId
+		})
+		const validationResult = CreateEnrollmentInputSchema.safeParse(enrollmentData)
+		if (!validationResult.success) {
+			logger.error("invalid input for createEnrollment", { error: validationResult.error, input: enrollmentData })
+			throw errors.wrap(validationResult.error, "invalid input for createEnrollment")
+		}
+
+		return this.#_createEntity(
+			"enrollment",
+			"/ims/oneroster/rostering/v1p2/enrollments/",
+			validationResult.data,
+			CreateEnrollmentInputSchema,
+			z.unknown()
+		)
+	}
+
+	/**
+	 * Deletes an enrollment by its sourcedId.
+	 * @param enrollmentSourcedId The sourcedId of the enrollment to delete.
+	 * @returns A promise that resolves when the deletion is complete.
+	 */
+	public async deleteEnrollment(enrollmentSourcedId: string): Promise<void> {
+		logger.info("OneRosterApiClient: deleting enrollment", { enrollmentSourcedId })
+		if (!enrollmentSourcedId) {
+			throw errors.new("enrollmentSourcedId cannot be empty")
+		}
+		await this.#request(
+			`/ims/oneroster/rostering/v1p2/enrollments/${enrollmentSourcedId}`,
+			{ method: "DELETE" },
+			z.null()
+		)
 	}
 }

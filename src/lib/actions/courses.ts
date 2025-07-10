@@ -1,72 +1,85 @@
 "use server"
 
-import { auth } from "@clerk/nextjs/server"
+import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { eq } from "drizzle-orm"
-import { db } from "@/db"
-import * as schema from "@/db/schemas"
 import { oneroster } from "@/lib/clients"
 
-export async function saveUserCourses(courseIds: string[]) {
-	const authResult = await errors.try(auth())
-	if (authResult.error) {
-		logger.error("authentication failed", { error: authResult.error })
-		throw errors.wrap(authResult.error, "authentication")
-	}
-
-	const { userId } = authResult.data
-	if (!userId) {
+export async function saveUserCourses(selectedClassIds: string[]) {
+	const user = await currentUser()
+	if (!user) {
 		throw errors.new("user not authenticated")
 	}
 
-	logger.info("saving user courses", { userId, courseIds, count: courseIds.length })
-
-	// Start a transaction to ensure both operations succeed or fail together
-	const transactionResult = await errors.try(
-		db.transaction(async (tx) => {
-			// First, delete all existing courses for this user
-			const deleteResult = await errors.try(
-				tx.delete(schema.niceUsersCourses).where(eq(schema.niceUsersCourses.clerkId, userId))
-			)
-
-			if (deleteResult.error) {
-				logger.error("failed to delete existing user courses", { error: deleteResult.error, userId })
-				throw errors.wrap(deleteResult.error, "course deletion")
-			}
-
-			// If no courses selected, we're done (user removed all courses)
-			if (courseIds.length === 0) {
-				logger.info("user removed all courses", { userId })
-				return { success: true, count: 0 }
-			}
-
-			// Prepare the data for insertion
-			const userCoursesToInsert = courseIds.map((courseId) => ({
-				clerkId: userId,
-				courseId
-			}))
-
-			// Insert the new set of courses
-			const insertResult = await errors.try(tx.insert(schema.niceUsersCourses).values(userCoursesToInsert))
-
-			if (insertResult.error) {
-				logger.error("failed to insert user courses", { error: insertResult.error, userId, courseIds })
-				throw errors.wrap(insertResult.error, "course insertion")
-			}
-
-			return { success: true, count: courseIds.length }
-		})
-	)
-
-	if (transactionResult.error) {
-		logger.error("transaction failed", { error: transactionResult.error, userId })
-		throw errors.wrap(transactionResult.error, "course update transaction")
+	const sourceId = typeof user.publicMetadata.sourceId === "string" ? user.publicMetadata.sourceId : undefined
+	if (!sourceId) {
+		throw errors.new("user does not have a sourceId in clerk metadata")
 	}
 
-	logger.info("successfully updated user courses", { userId, courseIds, count: courseIds.length })
+	logger.info("syncing user enrollments", { userId: user.id, sourceId, selectedClassIds })
 
-	return transactionResult.data
+	// Get current enrollments for the user
+	const currentEnrollmentsResult = await errors.try(oneroster.getEnrollmentsForUser(sourceId))
+	if (currentEnrollmentsResult.error) {
+		logger.error("failed to fetch current enrollments", { sourceId, error: currentEnrollmentsResult.error })
+		throw errors.wrap(currentEnrollmentsResult.error, "get current enrollments")
+	}
+	const currentEnrollments = currentEnrollmentsResult.data
+
+	const currentClassIds = new Set(currentEnrollments.map((e) => e.class.sourcedId))
+	const newClassIds = new Set(selectedClassIds)
+
+	// Determine what to add and what to remove
+	const classesToAdd = selectedClassIds.filter((id) => !currentClassIds.has(id))
+	const enrollmentsToRemove = currentEnrollments.filter((e) => !newClassIds.has(e.class.sourcedId))
+
+	logger.debug("enrollment diff calculated", {
+		toAdd: classesToAdd.length,
+		toRemove: enrollmentsToRemove.length
+	})
+
+	const promises: Promise<unknown>[] = []
+
+	// Create new enrollments
+	for (const classId of classesToAdd) {
+		promises.push(
+			oneroster.createEnrollment({
+				role: "student",
+				user: { sourcedId: sourceId, type: "user" },
+				class: { sourcedId: classId, type: "class" }
+			})
+		)
+	}
+
+	// Delete old enrollments
+	for (const enrollment of enrollmentsToRemove) {
+		promises.push(oneroster.deleteEnrollment(enrollment.sourcedId))
+	}
+
+	const results = await Promise.allSettled(promises)
+	let hasErrors = false
+	results.forEach((result, index) => {
+		if (result.status === "rejected") {
+			hasErrors = true
+			const operation =
+				index < classesToAdd.length
+					? `create enrollment for class ${classesToAdd[index]}`
+					: `delete enrollment ${enrollmentsToRemove[index - classesToAdd.length]?.sourcedId}`
+			logger.error("failed enrollment operation", { operation, error: result.reason })
+		}
+	})
+
+	if (hasErrors) {
+		throw errors.new("one or more enrollment operations failed during sync")
+	}
+
+	logger.info("successfully synced user enrollments", {
+		userId: user.id,
+		sourceId,
+		added: classesToAdd.length,
+		removed: enrollmentsToRemove.length
+	})
+	return { success: true }
 }
 
 // Type definitions for OneRoster explore dropdown (no DB dependency)

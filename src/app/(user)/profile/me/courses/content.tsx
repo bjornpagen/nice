@@ -8,112 +8,153 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { dialogKeys, useDialogManager } from "@/hooks/use-dialog-manager"
 import { saveUserCourses } from "@/lib/actions/courses"
 import { CourseCard } from "./course-card"
-import type { AllSubject, Course, Unit } from "./page"
+import type { AllSubject, Course } from "./page"
 
-// Loading skeleton for course cards
+// Enhanced loading skeleton for course cards
 function CourseCardSkeleton() {
 	return (
-		<div className="rounded-lg border p-4 space-y-3">
-			<Skeleton className="h-6 w-3/4" />
-			<Skeleton className="h-4 w-full" />
-			<Skeleton className="h-4 w-5/6" />
-			<div className="space-y-2 mt-4">
-				<Skeleton className="h-3 w-full" />
-				<Skeleton className="h-3 w-full" />
-				<Skeleton className="h-3 w-4/5" />
+		<div className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full space-y-4">
+			{/* Header skeleton */}
+			<div className="flex items-start justify-between">
+				<Skeleton className="h-6 w-3/4" />
+				<Skeleton className="h-4 w-16" />
+			</div>
+
+			{/* Description skeleton */}
+			<div className="space-y-2">
+				<Skeleton className="h-4 w-full" />
+				<Skeleton className="h-4 w-5/6" />
+				<Skeleton className="h-4 w-4/6" />
+			</div>
+
+			{/* Units skeleton */}
+			<div className="flex-1 space-y-3 relative">
+				<div className="absolute left-5 top-0 bottom-0 w-0.5 bg-gray-200" />
+				{[...Array(3)].map((_, i) => (
+					<div key={i} className="flex items-center space-x-3">
+						<Skeleton className="w-10 h-10 rounded-full flex-shrink-0" />
+						<Skeleton className="h-4 w-2/3" />
+					</div>
+				))}
+			</div>
+
+			{/* Button skeleton */}
+			<div className="flex justify-end">
+				<Skeleton className="h-9 w-16" />
 			</div>
 		</div>
 	)
 }
 
-// Component to handle course display with its own Suspense
-function CourseGrid({
-	coursesPromise,
-	unitsPromise
-}: {
-	coursesPromise: Promise<Course[]>
-	unitsPromise: Promise<Unit[]>
-}) {
+// Course grid with its own suspense boundary
+function CourseGrid({ coursesPromise }: { coursesPromise: Promise<Course[]> }) {
 	const courses = React.use(coursesPromise)
-	const units = React.use(unitsPromise)
 
-	const unitsByCourseId = React.useMemo(() => {
-		const map = new Map<string, Unit[]>()
-		for (const unit of units) {
-			if (!map.has(unit.courseId)) {
-				map.set(unit.courseId, [])
-			}
-			map.get(unit.courseId)?.push(unit)
-		}
-		// Sort units by their ordering
-		for (const unitList of map.values()) {
-			unitList.sort((a, b) => a.ordering - b.ordering)
-		}
-		return map
-	}, [units])
+	if (courses.length === 0) {
+		return (
+			<div className="text-center py-12">
+				<div className="text-gray-500 text-lg mb-4">No courses enrolled yet</div>
+				<div className="text-gray-400 text-sm">Click "Edit Courses" to get started!</div>
+			</div>
+		)
+	}
 
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
 			{courses.map((course) => (
-				<CourseCard key={course.id} course={course} units={unitsByCourseId.get(course.id) || []} />
+				<CourseCard key={course.sourcedId} course={course} units={course.units} />
 			))}
 		</div>
 	)
 }
 
-export function Content({
+// Course selector with lazy loading
+function LazyCourseSelectorContent({
+	allSubjectsPromise,
 	coursesPromise,
-	unitsPromise,
-	allSubjectsPromise, // This prop now receives the promise from getOneRosterClassesForSelector
-	userCourseCountPromise
+	isOpen,
+	onOpenChange,
+	onComplete
 }: {
-	coursesPromise: Promise<Course[]>
-	unitsPromise: Promise<Unit[]>
 	allSubjectsPromise: Promise<AllSubject[]>
-	userCourseCountPromise: Promise<{ count: number }>
+	coursesPromise: Promise<Course[]>
+	isOpen: boolean
+	onOpenChange: (open: boolean) => void
+	onComplete: (selectedIds: string[]) => Promise<void>
 }) {
-	// Use the centralized dialog manager
-	const { openDialog, shouldShow, closeDialog, activeDialog } = useDialogManager()
+	// Only resolve promises when modal is actually opened
+	if (!isOpen) {
+		return (
+			<CourseSelector
+				subjects={[]}
+				open={false}
+				onOpenChange={onOpenChange}
+				onComplete={onComplete}
+				initialSelectedCourseIds={[]}
+			/>
+		)
+	}
 
-	// Use the promises for modal logic
-	const userCourseCount = React.use(userCourseCountPromise)
-	const subjectsWithCourses = React.use(allSubjectsPromise) // Data is now pre-formatted
+	const subjectsWithCourses = React.use(allSubjectsPromise)
 	const courses = React.use(coursesPromise)
 
-	// Check if user has no courses - show onboarding modal for new users
-	const isNewUser = userCourseCount.count === 0
+	return (
+		<CourseSelector
+			subjects={subjectsWithCourses}
+			open={isOpen}
+			onOpenChange={onOpenChange}
+			onComplete={onComplete}
+			initialSelectedCourseIds={courses.map((course) => course.sourcedId)}
+		/>
+	)
+}
 
+export function Content({
+	coursesPromise,
+	allSubjectsPromise
+}: {
+	coursesPromise: Promise<Course[]>
+	allSubjectsPromise: Promise<AllSubject[]>
+}) {
+	const { openDialog, shouldShow, closeDialog, activeDialog } = useDialogManager()
+
+	// Handle onboarding for new users (will be resolved by the CourseGrid suspense)
 	React.useEffect(() => {
-		if (isNewUser && shouldShow(dialogKeys.USER_ONBOARDING)) {
-			openDialog(dialogKeys.USER_ONBOARDING)
-		}
-	}, [isNewUser, shouldShow, openDialog])
+		// This will trigger when CourseGrid resolves and shows 0 courses
+		const checkNewUser = async () => {
+			const result = await errors.try(coursesPromise)
+			if (result.error) {
+				// Handle error silently - CourseGrid will show the error
+				return
+			}
 
-	// The complex useMemo hook for grouping courses by subject is no longer needed.
-	// The data comes pre-formatted from the server action.
+			const courses = result.data
+			if (courses.length === 0 && shouldShow(dialogKeys.USER_ONBOARDING)) {
+				openDialog(dialogKeys.USER_ONBOARDING)
+			}
+		}
+		checkNewUser()
+	}, [coursesPromise, shouldShow, openDialog])
 
 	const handleEditCourses = () => {
 		openDialog(dialogKeys.COURSE_SELECTOR)
 	}
 
-	const handleCourseSelection = async (selectedCourseIds: string[]) => {
-		const result = await errors.try(saveUserCourses(selectedCourseIds))
+	const handleCourseSelection = async (selectedClassIds: string[]) => {
+		const result = await errors.try(saveUserCourses(selectedClassIds))
 
 		if (result.error) {
 			// TODO: Show error toast/notification to user
 			throw result.error
 		}
 
-		// Close the course selector via the dialog manager
 		closeDialog()
-
-		// Refresh the page to show the newly selected courses
 		window.location.reload()
 	}
 
 	return (
 		<>
-			{/* Header with My courses title and Edit Courses button - Always visible */}
+			{/* Header renders immediately - no waiting for data */}
 			<div className="flex items-center justify-between mb-6">
 				<h1 className="text-2xl font-bold text-gray-800">My courses</h1>
 				<Button
@@ -125,34 +166,35 @@ export function Content({
 				</Button>
 			</div>
 
-			{/* Course grid with its own Suspense boundary */}
+			{/* Course grid with its own suspense boundary and nice skeleton */}
 			<React.Suspense
 				fallback={
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-						<CourseCardSkeleton />
-						<CourseCardSkeleton />
-						<CourseCardSkeleton />
-						<CourseCardSkeleton />
+						{[...Array(4)].map((_, i) => (
+							<CourseCardSkeleton key={i} />
+						))}
 					</div>
 				}
 			>
-				<CourseGrid coursesPromise={coursesPromise} unitsPromise={unitsPromise} />
+				<CourseGrid coursesPromise={coursesPromise} />
 			</React.Suspense>
 
-			{/* Course Selector Modal - now controlled by the global provider */}
-			<CourseSelector
-				subjects={subjectsWithCourses}
-				open={activeDialog === dialogKeys.COURSE_SELECTOR}
-				onOpenChange={(newOpen) => {
-					if (!newOpen) {
-						closeDialog()
-					} else {
-						openDialog(dialogKeys.COURSE_SELECTOR)
-					}
-				}}
-				onComplete={handleCourseSelection}
-				initialSelectedCourseIds={courses.map((course) => course.id)}
-			/>
+			{/* Course selector with lazy loading - only loads data when opened */}
+			<React.Suspense fallback={null}>
+				<LazyCourseSelectorContent
+					allSubjectsPromise={allSubjectsPromise}
+					coursesPromise={coursesPromise}
+					isOpen={activeDialog === dialogKeys.COURSE_SELECTOR}
+					onOpenChange={(newOpen) => {
+						if (!newOpen) {
+							closeDialog()
+						} else {
+							openDialog(dialogKeys.COURSE_SELECTOR)
+						}
+					}}
+					onComplete={handleCourseSelection}
+				/>
+			</React.Suspense>
 		</>
 	)
 }
