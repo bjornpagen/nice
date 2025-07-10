@@ -1,5 +1,5 @@
 import { ProficiencyIcon, type proficiencyIconVariants } from "@/components/icons/proficiency"
-import type { UnitChild } from "./[unit]/page"
+import type { UnitChild } from "./page"
 
 type ProficiencyItem = {
 	id: string

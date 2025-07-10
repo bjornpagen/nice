@@ -205,6 +205,13 @@ export type OneRosterClassReadSchema = z.infer<typeof OneRosterClassReadSchema>
 const GetAllCoursesResponseSchema = z.object({ courses: z.array(OneRosterCourseReadSchema) })
 const GetAllClassesResponseSchema = z.object({ classes: z.array(OneRosterClassReadSchema) })
 
+// NEW: Response schemas for batch fetching methods
+const GetCourseComponentsResponseSchema = z.object({ courseComponents: z.array(OneRosterCourseComponentReadSchema) })
+const GetResourcesResponseSchema = z.object({ resources: z.array(OneRosterResourceSchema) })
+const GetComponentResourcesResponseSchema = z.object({
+	componentResources: z.array(OneRosterComponentResourceReadSchema)
+})
+
 // --- NEW: Schemas for User ---
 const OneRosterUserRoleSchema = z.object({
 	roleType: z.string(),
@@ -443,6 +450,18 @@ export class OneRosterApiClient {
 			},
 			z.unknown()
 		)
+	}
+
+	public async deleteResource(sourcedId: string): Promise<void> {
+		logger.info("OneRosterApiClient: deleting resource", { sourcedId })
+
+		if (!sourcedId) {
+			throw errors.new("sourcedId cannot be empty")
+		}
+
+		await this.#request(`/ims/oneroster/resources/v1p2/resources/${sourcedId}`, { method: "DELETE" }, z.unknown())
+
+		logger.info("OneRosterApiClient: successfully deleted resource", { sourcedId })
 	}
 
 	public async getCourse(sourcedId: string) {
@@ -732,5 +751,170 @@ export class OneRosterApiClient {
 			sourcedId: user.sourcedId
 		})
 		return user
+	}
+
+	/**
+	 * Fetches course components with optional filtering.
+	 * @param filter The filter query string (e.g., "course.sourcedId='courseid'")
+	 * @returns A promise that resolves to an array of course components.
+	 */
+	public async getCourseComponents(filter?: string): Promise<z.infer<typeof OneRosterCourseComponentReadSchema>[]> {
+		logger.info("OneRosterApiClient: fetching course components", { filter })
+		const allComponents: z.infer<typeof OneRosterCourseComponentReadSchema>[] = []
+		let offset = 0
+		const limit = 100
+
+		while (true) {
+			let endpoint = `/ims/oneroster/rostering/v1p2/courses/components?limit=${limit}&offset=${offset}`
+			if (filter) {
+				endpoint += `&filter=${encodeURIComponent(filter)}`
+			}
+
+			const response = await this.#request(endpoint, { method: "GET" }, GetCourseComponentsResponseSchema)
+
+			if (!response || response.courseComponents.length === 0) {
+				break
+			}
+
+			allComponents.push(...response.courseComponents)
+			offset += response.courseComponents.length
+
+			if (response.courseComponents.length < limit) {
+				break
+			}
+		}
+
+		logger.info("OneRosterApiClient: successfully fetched course components", {
+			filter,
+			count: allComponents.length
+		})
+		return allComponents
+	}
+
+	/**
+	 * Fetches all resources for a specific course.
+	 * @param courseSourcedId The sourcedId of the course.
+	 * @returns A promise that resolves to an array of resources.
+	 */
+	public async getResourcesForCourse(courseSourcedId: string): Promise<OneRosterResource[]> {
+		logger.info("OneRosterApiClient: fetching resources for course", { courseSourcedId })
+
+		if (!courseSourcedId) {
+			throw errors.new("courseSourcedId cannot be empty")
+		}
+
+		const allResources: OneRosterResource[] = []
+		let offset = 0
+		const limit = 100
+
+		while (true) {
+			// ✅ CORRECT: Path updated to match the OpenAPI spec - added /resources before /courses
+			const endpoint = `/ims/oneroster/resources/v1p2/resources/courses/${courseSourcedId}/resources?limit=${limit}&offset=${offset}`
+			const response = await this.#request(endpoint, { method: "GET" }, GetResourcesResponseSchema)
+
+			if (!response || response.resources.length === 0) {
+				break
+			}
+
+			allResources.push(...response.resources)
+			offset += response.resources.length
+
+			if (response.resources.length < limit) {
+				break
+			}
+		}
+
+		logger.info("OneRosterApiClient: successfully fetched resources for course", {
+			courseSourcedId,
+			count: allResources.length
+		})
+		return allResources
+	}
+
+	/**
+	 * Fetches ALL resources in the system, handling pagination.
+	 * This is necessary because the API does not support filtering resources by course.
+	 * @returns A promise that resolves to an array of all resources.
+	 */
+	public async getAllResources(): Promise<OneRosterResource[]> {
+		logger.info("OneRosterApiClient: fetching ALL resources")
+		const allResources: OneRosterResource[] = []
+		let offset = 0
+		const limit = 100
+
+		while (true) {
+			const endpoint = `/ims/oneroster/resources/v1p2/resources?limit=${limit}&offset=${offset}`
+			const response = await this.#request(endpoint, { method: "GET" }, GetResourcesResponseSchema)
+
+			// Handle both null response and empty array
+			if (!response || !response.resources || response.resources.length === 0) {
+				logger.info("OneRosterApiClient: no more resources to fetch", { offset })
+				break
+			}
+
+			// Parse and validate each resource
+			const parsedResources = response.resources.map((resource) => {
+				const parsed = OneRosterResourceSchema.parse(resource)
+				return parsed
+			})
+
+			allResources.push(...parsedResources)
+			logger.info("OneRosterApiClient: fetched batch of resources", {
+				batch: parsedResources.length,
+				total: allResources.length,
+				offset
+			})
+
+			// Check if we've fetched all resources (response has fewer items than limit)
+			if (response.resources.length < limit) {
+				logger.info("OneRosterApiClient: reached last page of resources", {
+					lastBatchSize: response.resources.length,
+					total: allResources.length
+				})
+				break
+			}
+
+			// Move to next page
+			offset += response.resources.length
+		}
+
+		logger.info("OneRosterApiClient: finished fetching all resources", {
+			total: allResources.length
+		})
+
+		return allResources
+	}
+
+	/**
+	 * Fetches ALL component-resource relationships in the system, handling pagination.
+	 * This is necessary because the API does not support filtering this endpoint by course or component.
+	 * @returns A promise that resolves to an array of all component-resource relationships.
+	 */
+	public async getAllComponentResources(): Promise<z.infer<typeof OneRosterComponentResourceReadSchema>[]> {
+		logger.info("OneRosterApiClient: fetching ALL component resources")
+		const allComponentResources: z.infer<typeof OneRosterComponentResourceReadSchema>[] = []
+		let offset = 0
+		const limit = 100
+
+		while (true) {
+			const endpoint = `/ims/oneroster/rostering/v1p2/courses/component-resources?limit=${limit}&offset=${offset}`
+			const response = await this.#request(endpoint, { method: "GET" }, GetComponentResourcesResponseSchema)
+
+			if (!response || response.componentResources.length === 0) {
+				break
+			}
+
+			allComponentResources.push(...response.componentResources)
+			offset += response.componentResources.length
+
+			if (response.componentResources.length < limit) {
+				break // Last page
+			}
+		}
+
+		logger.info("OneRosterApiClient: successfully fetched all component resources", {
+			count: allComponentResources.length
+		})
+		return allComponentResources
 	}
 }

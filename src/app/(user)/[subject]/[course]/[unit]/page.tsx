@@ -1,141 +1,65 @@
-import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { and, count, eq, inArray, sql } from "drizzle-orm"
 import { notFound } from "next/navigation"
-import { db } from "@/db"
-import * as schema from "@/db/schemas"
+import { env } from "@/env"
+import { OneRosterApiClient } from "@/lib/oneroster-client"
 import { Content } from "./content"
 
-// --- QUERIES ---
-const getCourseBySlugQuery = db
-	.select({
-		id: schema.niceCourses.id,
-		title: schema.niceCourses.title,
-		path: schema.niceCourses.path,
-		description: schema.niceCourses.description
-	})
-	.from(schema.niceCourses)
-	.where(eq(schema.niceCourses.slug, sql.placeholder("courseSlug")))
-	.limit(1)
-	.prepare("src_app_user_subject_course_unit_page_get_course_by_slug")
+// --- REMOVED ALL DRIZZLE QUERIES ---
 
-const getAllUnitsByCourseIdQuery = db
-	.select({
-		id: schema.niceUnits.id,
-		title: schema.niceUnits.title,
-		path: schema.niceUnits.path,
-		ordering: schema.niceUnits.ordering,
-		slug: schema.niceUnits.slug,
-		description: schema.niceUnits.description
-	})
-	.from(schema.niceUnits)
-	.where(eq(schema.niceUnits.courseId, sql.placeholder("courseId")))
-	.orderBy(schema.niceUnits.ordering)
-	.prepare("src_app_user_subject_course_unit_page_get_all_units_by_course_id")
+// --- NEW: OneRoster-based types ---
+export type Course = {
+	id: string
+	title: string
+	path: string
+	description?: string
+}
 
-const getLessonCountByCourseIdQuery = db
-	.select({ count: count() })
-	.from(schema.niceLessons)
-	.where(
-		inArray(
-			schema.niceLessons.unitId,
-			db
-				.select({ id: schema.niceUnits.id })
-				.from(schema.niceUnits)
-				.where(eq(schema.niceUnits.courseId, sql.placeholder("courseId")))
-		)
-	)
-	.prepare("src_app_user_subject_course_unit_page_get_lesson_count_by_course_id")
+export type Unit = {
+	id: string
+	title: string
+	path: string
+	ordering: number
+	slug?: string
+	description?: string
+}
 
-const getCourseChallengesQuery = db
-	.select({
-		id: schema.niceAssessments.id,
-		path: schema.niceAssessments.path
-	})
-	.from(schema.niceAssessments)
-	.where(
-		and(
-			eq(schema.niceAssessments.parentId, sql.placeholder("courseId")),
-			eq(schema.niceAssessments.parentType, "Course")
-		)
-	)
-	.prepare("src_app_user_subject_course_unit_page_get_course_challenges")
+export type CourseChallenge = {
+	id: string
+	path: string
+}
 
-const getUnitByPathQuery = db
-	.select({
-		id: schema.niceUnits.id,
-		title: schema.niceUnits.title,
-		description: schema.niceUnits.description,
-		slug: schema.niceUnits.slug,
-		path: schema.niceUnits.path,
-		ordering: schema.niceUnits.ordering
-	})
-	.from(schema.niceUnits)
-	.where(eq(schema.niceUnits.path, sql.placeholder("path")))
-	.limit(1)
-	.prepare("src_app_user_subject_course_unit_page_get_unit_by_path")
-
-const getUnitBySlugQuery = db
-	.select({
-		id: schema.niceUnits.id,
-		title: schema.niceUnits.title,
-		description: schema.niceUnits.description,
-		slug: schema.niceUnits.slug,
-		path: schema.niceUnits.path,
-		ordering: schema.niceUnits.ordering
-	})
-	.from(schema.niceUnits)
-	.where(
-		and(eq(schema.niceUnits.slug, sql.placeholder("slug")), eq(schema.niceUnits.courseId, sql.placeholder("courseId")))
-	)
-	.limit(1)
-	.prepare("src_app_user_subject_course_unit_page_get_unit_by_slug")
-
-// NEW: A single query to get all children of a unit, correctly ordered.
-const getUnitChildrenQuery = db
-	.select({
-		id: sql<string>`id`,
-		title: sql<string>`title`,
-		path: sql<string>`path`,
-		type: sql<string>`type`,
-		ordering: sql<number>`ordering`
-	})
-	.from(
-		sql`(
-			SELECT id, title, path, 'Lesson'::text as type, ordering FROM ${schema.niceLessons} WHERE unit_id = ${sql.placeholder("unitId")}
-			UNION ALL
-			SELECT id, title, path, type::text as type, ordering FROM ${schema.niceAssessments} WHERE parent_id = ${sql.placeholder("unitId")} AND parent_type = 'Unit'
-		) as children`
-	)
-	.orderBy(sql`ordering`)
-	.prepare("src_app_user_subject_course_unit_page_get_unit_children")
-
-// NEW: A single query to get all contents for all lessons in a unit.
-const getLessonsContentQuery = db
-	.select({
-		lessonId: schema.niceLessonContents.lessonId,
-		contentId: schema.niceLessonContents.contentId,
-		contentType: schema.niceLessonContents.contentType,
-		ordering: schema.niceLessonContents.ordering,
-		video: schema.niceVideos,
-		article: schema.niceArticles,
-		exercise: schema.niceExercises
-	})
-	.from(schema.niceLessonContents)
-	.leftJoin(schema.niceVideos, eq(schema.niceLessonContents.contentId, schema.niceVideos.id))
-	.leftJoin(schema.niceArticles, eq(schema.niceLessonContents.contentId, schema.niceArticles.id))
-	.leftJoin(schema.niceExercises, eq(schema.niceLessonContents.contentId, schema.niceExercises.id))
-	.orderBy(schema.niceLessonContents.lessonId, schema.niceLessonContents.ordering)
-// Note: We'll add the WHERE clause dynamically when executing
-
-// --- TYPES ---
-export type Course = Awaited<ReturnType<typeof getCourseBySlugQuery.execute>>[0]
-export type Unit = Awaited<ReturnType<typeof getAllUnitsByCourseIdQuery.execute>>[0]
-export type CourseChallenge = Awaited<ReturnType<typeof getCourseChallengesQuery.execute>>[0]
 export type Question = { id: string; sha: string; parsedData: unknown }
-export type Video = NonNullable<typeof schema.niceVideos.$inferSelect> & { ordering: number }
-export type Article = NonNullable<typeof schema.niceArticles.$inferSelect> & { ordering: number }
-export type Exercise = NonNullable<typeof schema.niceExercises.$inferSelect> & {
+
+// Video type must match what Drizzle was providing
+export type Video = {
+	id: string
+	title: string
+	path: string
+	slug: string
+	description: string
+	youtubeId: string
+	duration: number
+	ordering: number
+}
+
+// Article type must match what Drizzle was providing
+export type Article = {
+	id: string
+	title: string
+	path: string
+	slug: string
+	description: string
+	perseusContent: unknown
+	ordering: number
+}
+
+// Exercise type must match what Drizzle was providing
+export type Exercise = {
+	id: string
+	title: string
+	path: string
+	slug: string
+	description?: string
 	questions: Question[]
 	ordering: number
 }
@@ -149,9 +73,33 @@ export type Lesson = {
 	videos: Video[]
 	exercises: Exercise[]
 	articles: Article[]
+	unitId: string
+	slug?: string
+	description?: string
 }
-export type Quiz = { id: string; title: string; path: string; ordering: number; type: "Quiz" }
-export type UnitTest = { id: string; title: string; path: string; ordering: number; type: "UnitTest" }
+
+export type Quiz = {
+	id: string
+	title: string
+	path: string
+	ordering: number
+	type: "Quiz"
+	parentId: string
+	slug?: string
+	description?: string
+}
+
+export type UnitTest = {
+	id: string
+	title: string
+	path: string
+	ordering: number
+	type: "UnitTest"
+	parentId: string
+	slug?: string
+	description?: string
+}
+
 export type UnitChild = Lesson | Quiz | UnitTest
 
 export type HydratedUnitData = {
@@ -164,134 +112,332 @@ export type HydratedUnitData = {
 	unitChildren: UnitChild[]
 }
 
-// NEW HELPER (optional but good practice)
-async function getQuestionsForExercises(exerciseIds: string[]): Promise<Map<string, Question[]>> {
-	if (exerciseIds.length === 0) return new Map()
-
-	const questions = await db
-		.select({
-			id: schema.niceQuestions.id,
-			exerciseId: schema.niceQuestions.exerciseId,
-			sha: schema.niceQuestions.sha,
-			parsedData: schema.niceQuestions.parsedData
-		})
-		.from(schema.niceQuestions)
-		.where(inArray(schema.niceQuestions.exerciseId, exerciseIds))
-
-	const questionsByExerciseId = new Map<string, Question[]>()
-	for (const q of questions) {
-		if (!questionsByExerciseId.has(q.exerciseId)) {
-			questionsByExerciseId.set(q.exerciseId, [])
-		}
-		questionsByExerciseId.get(q.exerciseId)?.push({
-			id: q.id,
-			sha: q.sha,
-			parsedData: q.parsedData
-		})
+// Helper function to extract slug from sourcedId (e.g., "nice:algebra-basics" -> "algebra-basics")
+function extractSlugFromSourcedId(sourcedId: string): string {
+	let slug = sourcedId.startsWith("nice:") ? sourcedId.substring(5) : sourcedId
+	// Remove "-exercise" suffix if present (for exercise resources)
+	if (slug.endsWith("-exercise")) {
+		slug = slug.substring(0, slug.length - 9)
 	}
-
-	return questionsByExerciseId
+	return slug
 }
 
-// Shared data fetching function - separated for clarity and reusability
+// Helper function to extract metadata value
+function getMetadataValue(metadata: Record<string, unknown> | undefined, key: string): string | undefined {
+	if (!metadata) return undefined
+	const value = metadata[key]
+	return typeof value === "string" ? value : undefined
+}
+
+// Helper function to parse number from metadata
+function getMetadataNumber(metadata: Record<string, unknown> | undefined, key: string): number {
+	if (!metadata) return 0
+	const value = metadata[key]
+	return typeof value === "number" ? value : 0
+}
+
+// Shared data fetching function using OneRoster API
 async function fetchUnitData(params: { subject: string; course: string; unit: string }): Promise<HydratedUnitData> {
 	logger.debug("unit page: fetching unit data", { params })
 
-	// First get the course
-	const courseResults = await getCourseBySlugQuery.execute({ courseSlug: params.course })
-	const course = courseResults[0]
-
-	if (!course) {
-		logger.warn("unit page: course not found", { courseSlug: params.course })
-		notFound()
-	}
-
-	// Try to find unit by slug first (handles both normal slugs and ID:slug format)
-	// Note: URL might encode the colon, so we need to decode it
-	const decodedUnitSlug = decodeURIComponent(params.unit)
-	let unitResults = await getUnitBySlugQuery.execute({ slug: decodedUnitSlug, courseId: course.id })
-	let unit = unitResults[0]
-
-	// If not found by slug, try by path (fallback for edge cases)
-	if (!unit) {
-		const decodedPath = `/${params.subject}/${params.course}/${decodedUnitSlug}`
-		unitResults = await getUnitByPathQuery.execute({ path: decodedPath })
-		unit = unitResults[0]
-	}
-
-	if (!unit) {
-		logger.warn("unit page: unit not found", { unitSlug: decodedUnitSlug, courseId: course.id })
-		notFound()
-	}
-
-	const [allUnits, lessonCountResult, challenges, unitChildrenResult] = await Promise.all([
-		getAllUnitsByCourseIdQuery.execute({ courseId: course.id }),
-		getLessonCountByCourseIdQuery.execute({ courseId: course.id }),
-		getCourseChallengesQuery.execute({ courseId: course.id }),
-		getUnitChildrenQuery.execute({ unitId: unit.id })
-	])
-
-	const lessonCount = lessonCountResult[0]?.count ?? 0
-	const lessonIds = unitChildrenResult.filter((c) => c.type === "Lesson").map((l) => l.id)
-
-	type LessonContentRow = {
-		lessonId: string
-		contentId: string
-		contentType: "Video" | "Article" | "Exercise"
-		ordering: number
-		video: typeof schema.niceVideos.$inferSelect | null
-		article: typeof schema.niceArticles.$inferSelect | null
-		exercise: typeof schema.niceExercises.$inferSelect | null
-	}
-
-	let lessonContents: LessonContentRow[] = []
-	if (lessonIds.length > 0) {
-		lessonContents = await getLessonsContentQuery.where(inArray(schema.niceLessonContents.lessonId, lessonIds))
-	}
-
-	const allExerciseIds = lessonContents.filter((c) => c.contentType === "Exercise").map((c) => c.contentId)
-	const questionsByExerciseId = await getQuestionsForExercises(allExerciseIds)
-
-	const contentsByLessonId: Record<string, { videos: Video[]; articles: Article[]; exercises: Exercise[] }> = {}
-
-	for (const row of lessonContents) {
-		if (!contentsByLessonId[row.lessonId]) {
-			contentsByLessonId[row.lessonId] = { videos: [], articles: [], exercises: [] }
-		}
-
-		const lessonContent = contentsByLessonId[row.lessonId]
-		if (!lessonContent) continue
-
-		if (row.contentType === "Video" && row.video) {
-			lessonContent.videos.push({ ...row.video, ordering: row.ordering })
-		} else if (row.contentType === "Article" && row.article) {
-			lessonContent.articles.push({ ...row.article, ordering: row.ordering })
-		} else if (row.contentType === "Exercise" && row.exercise) {
-			lessonContent.exercises.push({
-				...row.exercise,
-				questions: questionsByExerciseId.get(row.exercise.id) || [],
-				ordering: row.ordering
-			})
-		}
-	}
-
-	const unitChildren: UnitChild[] = unitChildrenResult.map((child) => {
-		if (child.type === "Lesson") {
-			const contents = contentsByLessonId[child.id] || { videos: [], articles: [], exercises: [] }
-			return { ...child, ...contents, type: "Lesson" }
-		}
-		if (child.type === "Quiz") {
-			return { ...child, type: "Quiz" }
-		}
-		if (child.type === "UnitTest") {
-			return { ...child, type: "UnitTest" }
-		}
-		// This branch should be unreachable if the query is correct,
-		// but it provides type safety and runtime verification.
-		throw errors.new(`Unexpected unit child type from database: ${child.type}`)
+	const client = new OneRosterApiClient({
+		serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
+		tokenUrl: env.TIMEBACK_TOKEN_URL,
+		clientId: env.TIMEBACK_CLIENT_ID,
+		clientSecret: env.TIMEBACK_CLIENT_SECRET
 	})
 
-	return { params, course, allUnits, lessonCount, challenges, unit, unitChildren }
+	const courseSourcedId = `nice:${params.course}`
+	const decodedUnitSlug = decodeURIComponent(params.unit)
+	const unitSourcedId = `nice:${decodedUnitSlug}`
+
+	// Fetch course
+	const oneRosterCourse = await client.getCourse(courseSourcedId)
+	if (!oneRosterCourse) {
+		logger.warn("unit page: course not found in OneRoster", { courseSourcedId })
+		notFound()
+	}
+
+	const course: Course = {
+		id: oneRosterCourse.sourcedId,
+		title: oneRosterCourse.title,
+		path: getMetadataValue(oneRosterCourse.metadata, "path") || `/${params.subject}/${params.course}`,
+		description: getMetadataValue(oneRosterCourse.metadata, "description")
+	}
+
+	// Fetch the specific unit
+	const oneRosterUnit = await client.getCourseComponent(unitSourcedId)
+	if (!oneRosterUnit) {
+		logger.warn("unit page: unit not found in OneRoster", { unitSourcedId })
+		notFound()
+	}
+
+	const unit: Unit = {
+		id: oneRosterUnit.sourcedId,
+		title: oneRosterUnit.title,
+		path: getMetadataValue(oneRosterUnit.metadata, "path") || `/${params.subject}/${params.course}/${decodedUnitSlug}`,
+		ordering: oneRosterUnit.sortOrder,
+		slug: extractSlugFromSourcedId(oneRosterUnit.sourcedId),
+		description: getMetadataValue(oneRosterUnit.metadata, "description")
+	}
+
+	// Fetch all units for the course (for navigation)
+	const allComponents = await client.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
+	const allUnits: Unit[] = allComponents
+		.filter((component) => !component.parent) // Filter for units (no parent) in memory
+		.map((component) => ({
+			id: component.sourcedId,
+			title: component.title,
+			path:
+				getMetadataValue(component.metadata, "path") ||
+				`/${params.subject}/${params.course}/${extractSlugFromSourcedId(component.sourcedId)}`,
+			ordering: component.sortOrder,
+			slug: extractSlugFromSourcedId(component.sourcedId),
+			description: getMetadataValue(component.metadata, "description")
+		}))
+		.sort((a, b) => a.ordering - b.ordering)
+
+	// Fetch children of this unit (lessons and assessments)
+	const unitChildren = await client.getCourseComponents(`parent.sourcedId='${unitSourcedId}'`)
+
+	// Fetch ALL resources and filter in memory
+	const allResourcesInSystem = await client.getAllResources()
+
+	// Fetch ALL component resources and filter in memory for this unit and its children
+	const allComponentResources = await client.getAllComponentResources()
+
+	// Get resources for this unit specifically (assessments)
+	const unitComponentResources = allComponentResources.filter((cr) => cr.courseComponent.sourcedId === unitSourcedId)
+
+	// Get resources for unit's children (lessons)
+	const childIds = new Set(unitChildren.map((c) => c.sourcedId))
+	const childComponentResources = allComponentResources.filter((cr) => childIds.has(cr.courseComponent.sourcedId))
+
+	// Get unique resource IDs from ALL component resources for the course (not just this unit)
+	// This is needed because resources might be shared across units
+	const allCourseComponents = await client.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
+	const courseComponentIdSet = new Set(allCourseComponents.map((c) => c.sourcedId))
+	const courseComponentResources = allComponentResources.filter((cr) =>
+		courseComponentIdSet.has(cr.courseComponent.sourcedId)
+	)
+
+	const resourceIdsInCourse = new Set(courseComponentResources.map((cr) => cr.resource.sourcedId))
+
+	// Filter resources to only those referenced by this course's component resources
+	const allResources = allResourcesInSystem.filter((resource) => resourceIdsInCourse.has(resource.sourcedId))
+
+	logger.info("unit page: filtered resources", {
+		totalResourcesInSystem: allResourcesInSystem.length,
+		totalComponentResources: allComponentResources.length,
+		unitComponentResources: unitComponentResources.length,
+		childComponentResources: childComponentResources.length,
+		relevantResources: allResources.length,
+		unitSourcedId
+	})
+
+	// First, get assessments that are linked directly to the unit
+	const unitAssessments: (Quiz | UnitTest)[] = []
+	for (const cr of unitComponentResources) {
+		const resource = allResources.find((r) => r.sourcedId === cr.resource.sourcedId)
+		if (resource) {
+			const resourceType = getMetadataValue(resource.metadata, "type")
+			const subType = getMetadataValue(resource.metadata, "subType")
+			const lessonType = getMetadataValue(resource.metadata, "lessonType")
+
+			if (resourceType === "qti" && subType === "qti-test" && lessonType) {
+				const assessmentType = lessonType === "unittest" ? "UnitTest" : "Quiz"
+				const resourceSlug = extractSlugFromSourcedId(resource.sourcedId)
+
+				if (assessmentType === "Quiz") {
+					unitAssessments.push({
+						id: resource.sourcedId,
+						title: resource.title,
+						path:
+							getMetadataValue(resource.metadata, "path") ||
+							`/${params.subject}/${params.course}/${decodedUnitSlug}/quiz/${resourceSlug}`,
+						ordering: cr.sortOrder,
+						type: "Quiz",
+						parentId: unitSourcedId,
+						slug: resourceSlug,
+						description: getMetadataValue(resource.metadata, "description")
+					})
+				} else {
+					unitAssessments.push({
+						id: resource.sourcedId,
+						title: resource.title,
+						path:
+							getMetadataValue(resource.metadata, "path") ||
+							`/${params.subject}/${params.course}/${decodedUnitSlug}/test/${resourceSlug}`,
+						ordering: cr.sortOrder,
+						type: "UnitTest",
+						parentId: unitSourcedId,
+						slug: resourceSlug,
+						description: getMetadataValue(resource.metadata, "description")
+					})
+				}
+			}
+		}
+	}
+
+	// Group resources by component ID for lessons
+	const resourcesByComponentId = new Map<string, typeof allResources>()
+	for (const cr of childComponentResources) {
+		const componentId = cr.courseComponent.sourcedId
+		const resourceId = cr.resource.sourcedId
+		const resource = allResources.find((r) => r.sourcedId === resourceId)
+
+		if (resource) {
+			if (!resourcesByComponentId.has(componentId)) {
+				resourcesByComponentId.set(componentId, [])
+			}
+			resourcesByComponentId.get(componentId)?.push(resource)
+		}
+	}
+
+	// Process unit children (lessons only now, since assessments are handled separately)
+	const processedLessons: Lesson[] = []
+
+	for (const child of unitChildren) {
+		const childSlug = extractSlugFromSourcedId(child.sourcedId)
+		const lessonResources = resourcesByComponentId.get(child.sourcedId) || []
+
+		const videos: Video[] = []
+		const articles: Article[] = []
+		const exercises: Exercise[] = []
+
+		// Categorize resources by type
+		for (const resource of lessonResources) {
+			const resourceType = getMetadataValue(resource.metadata, "type")
+			const subType = getMetadataValue(resource.metadata, "subType")
+			const lessonType = getMetadataValue(resource.metadata, "lessonType")
+			const resourceSlug = extractSlugFromSourcedId(resource.sourcedId)
+
+			// Find the componentResource to get the sortOrder
+			const componentResource = childComponentResources.find(
+				(cr) => cr.courseComponent.sourcedId === child.sourcedId && cr.resource.sourcedId === resource.sourcedId
+			)
+			const ordering = componentResource?.sortOrder || 0
+
+			if (resourceType === "video") {
+				const youtubeUrl = getMetadataValue(resource.metadata, "url") || ""
+				const youtubeMatch = youtubeUrl.match(/[?&]v=([^&]+)/)
+				const youtubeId = youtubeMatch ? youtubeMatch[1] : ""
+
+				videos.push({
+					id: resource.sourcedId,
+					title: resource.title,
+					path:
+						getMetadataValue(resource.metadata, "path") ||
+						`/${params.subject}/${params.course}/${decodedUnitSlug}/${childSlug}/v/${resourceSlug}`,
+					slug: resourceSlug,
+					description: getMetadataValue(resource.metadata, "description") || "",
+					youtubeId: youtubeId || "",
+					duration: getMetadataNumber(resource.metadata, "duration"),
+					ordering
+				})
+			} else if (resourceType === "qti" && subType === "qti-stimulus") {
+				// This is an article
+				articles.push({
+					id: resource.sourcedId,
+					title: resource.title,
+					path:
+						getMetadataValue(resource.metadata, "path") ||
+						`/${params.subject}/${params.course}/${decodedUnitSlug}/${childSlug}/a/${resourceSlug}`,
+					slug: resourceSlug,
+					description: getMetadataValue(resource.metadata, "description") || "",
+					perseusContent: null, // Will be fetched from QTI server
+					ordering
+				})
+			} else if (resourceType === "qti" && subType === "qti-test" && !lessonType) {
+				// This is an exercise (test without lessonType means it's an exercise)
+				// Only include exercises whose sourcedId ends with "-exercise"
+				if (resource.sourcedId.endsWith("-exercise")) {
+					logger.debug("including exercise with new format", { sourcedId: resource.sourcedId })
+					exercises.push({
+						id: resource.sourcedId,
+						title: resource.title,
+						path:
+							getMetadataValue(resource.metadata, "path") ||
+							`/${params.subject}/${params.course}/${decodedUnitSlug}/${childSlug}/e/${resourceSlug}`,
+						slug: resourceSlug,
+						description: getMetadataValue(resource.metadata, "description"),
+						questions: [], // Will be fetched from QTI server
+						ordering
+					})
+				} else {
+					logger.debug("excluding exercise with old format", { sourcedId: resource.sourcedId })
+				}
+			}
+		}
+
+		// Sort content by ordering
+		videos.sort((a, b) => a.ordering - b.ordering)
+		articles.sort((a, b) => a.ordering - b.ordering)
+		exercises.sort((a, b) => a.ordering - b.ordering)
+
+		processedLessons.push({
+			id: child.sourcedId,
+			title: child.title,
+			path:
+				getMetadataValue(child.metadata, "path") ||
+				`/${params.subject}/${params.course}/${decodedUnitSlug}/${childSlug}`,
+			ordering: child.sortOrder,
+			type: "Lesson",
+			videos,
+			articles,
+			exercises,
+			unitId: unitSourcedId,
+			slug: childSlug,
+			description: getMetadataValue(child.metadata, "description")
+		})
+	}
+
+	// Combine lessons and assessments, then sort by ordering
+	const processedUnitChildren: UnitChild[] = [...processedLessons, ...unitAssessments].sort(
+		(a, b) => a.ordering - b.ordering
+	)
+
+	// Count total lessons across all units
+	const allComponentsForLessonCount = await client.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
+	const allLessons = allComponentsForLessonCount.filter((c) => c.parent !== null)
+
+	// To count lessons, we need to check which components are NOT assessments
+	// We already have all component resources, so filter for course components
+	const allCourseComponentIds = new Set(allLessons.map((c) => c.sourcedId))
+	const allCourseComponentResources = allComponentResources.filter((cr) =>
+		allCourseComponentIds.has(cr.courseComponent.sourcedId)
+	)
+
+	const allAssessmentComponentIds = new Set<string>()
+
+	for (const cr of allCourseComponentResources) {
+		const resource = allResources.find((r) => r.sourcedId === cr.resource.sourcedId)
+		if (resource) {
+			const resourceType = getMetadataValue(resource.metadata, "type")
+			const subType = getMetadataValue(resource.metadata, "subType")
+			const lessonType = getMetadataValue(resource.metadata, "lessonType")
+
+			if (resourceType === "qti" && subType === "qti-test" && lessonType) {
+				allAssessmentComponentIds.add(cr.courseComponent.sourcedId)
+			}
+		}
+	}
+
+	// Count components that are not assessments
+	const lessonCount = allLessons.filter((c) => !allAssessmentComponentIds.has(c.sourcedId)).length
+
+	// Get course challenges - for now return empty array
+	const challenges: CourseChallenge[] = []
+
+	return {
+		params,
+		course,
+		allUnits,
+		lessonCount,
+		challenges,
+		unit,
+		unitChildren: processedUnitChildren
+	}
 }
 
 // Main unit page - renders layout immediately with streaming content
