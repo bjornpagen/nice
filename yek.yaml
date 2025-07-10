@@ -13,7 +13,6 @@ ignore_patterns:
   - "public/**"
   - "src/components/ui/**"
   - "src/lib/perseus-to-qti/**"
-  - "oneroster/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"
