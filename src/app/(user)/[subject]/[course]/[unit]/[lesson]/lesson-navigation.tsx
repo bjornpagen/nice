@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import type { CourseInfo, LessonInfo, UnitInfo } from "@/lib/khan-academy-api"
 import { upperCase } from "@/lib/utils"
@@ -11,10 +12,12 @@ export function LessonNavigation({
 	setSelectedLessonId
 }: {
 	course: Pick<CourseInfo, "title" | "path">
-	unit: Pick<UnitInfo, "title" | "path" | "children"> & { ordering: number }
+	unit: Pick<UnitInfo, "title" | "path" | "children"> & { sortOrder: number }
 	lesson: Pick<LessonInfo, "title">
 	setSelectedLessonId: (lessonId: string) => void
 }) {
+	const pathname = usePathname()
+
 	const index = unit.children.findIndex(
 		(child): child is LessonInfo => child.type === "Lesson" && child.title === lesson.title
 	)
@@ -31,6 +34,12 @@ export function LessonNavigation({
 		if (title.length <= maxLength) return title
 		return `${title.substring(0, maxLength).trim()}...`
 	}
+
+	// Construct unit path from current pathname
+	// Current path: /economics/microeconomics/basic-economic-concepts/scarcity/v/scarcity-video
+	// Unit path should be: /economics/microeconomics/basic-economic-concepts
+	const pathSegments = pathname.split("/").filter(Boolean)
+	const unitPagePath = pathSegments.length >= 3 ? `/${pathSegments.slice(0, 3).join("/")}` : unit.path
 
 	// Handle navigation to previous lesson
 	const handlePrevLesson = () => {
@@ -66,8 +75,8 @@ export function LessonNavigation({
 						COURSE: {upperCase(truncateCourseTitle(course.title))}
 					</Link>
 					<span className="text-gray-600 text-xs font-medium flex-shrink-0">{" > "}</span>
-					<Link className="text-blue-600 hover:underline font-medium text-xs whitespace-nowrap" href={unit.path}>
-						UNIT {unit.ordering + 1}
+					<Link className="text-blue-600 hover:underline font-medium text-xs whitespace-nowrap" href={unitPagePath}>
+						UNIT {unit.sortOrder + 1}
 					</Link>
 				</div>
 				<div className="text-md text-gray-600 font-medium truncate">

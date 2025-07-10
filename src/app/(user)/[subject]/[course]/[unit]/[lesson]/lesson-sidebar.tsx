@@ -18,7 +18,7 @@ export function LessonSidebar({
 }: {
 	subject: string
 	course: Pick<CourseInfo, "title" | "path">
-	unit: Pick<UnitInfo, "title" | "path" | "children"> & { ordering: number }
+	unit: Pick<UnitInfo, "title" | "path" | "children"> & { sortOrder: number }
 	lesson: Pick<LessonInfo, "title" | "path" | "children">
 	isCollapsed: boolean
 	setIsCollapsed: (collapsed: boolean) => void

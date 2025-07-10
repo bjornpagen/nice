@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import type { Article } from "./page"
 
@@ -38,16 +39,10 @@ export function ArticleContent({ article }: { article: Article }) {
 				</div>
 			</div>
 
-			{/* Article Content */}
+			{/* Article Content - Render through QTI */}
 			<div className="p-6">
 				<div className="max-w-4xl mx-auto">
-					<div className="prose prose-lg max-w-none">
-						{/* Article content will be rendered here */}
-						<p className="text-gray-700 leading-relaxed">
-							This is where the article content will be rendered. The Perseus content can be processed and displayed
-							here.
-						</p>
-					</div>
+					<QTIRenderer identifier={article.identifier} height="auto" width="100%" className="w-full" />
 				</div>
 			</div>
 		</div>

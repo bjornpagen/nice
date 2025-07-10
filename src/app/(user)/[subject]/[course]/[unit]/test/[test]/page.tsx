@@ -1,46 +1,7 @@
-import { and, eq, sql } from "drizzle-orm"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { redirect } from "next/navigation"
-import { db } from "@/db"
-import * as schema from "@/db/schemas"
-
-// Query to verify test exists in this unit
-const getTestInUnitQuery = db
-	.select({
-		id: schema.niceAssessments.id,
-		title: schema.niceAssessments.title,
-		slug: schema.niceAssessments.slug
-	})
-	.from(schema.niceAssessments)
-	.where(
-		and(
-			eq(schema.niceAssessments.parentId, sql.placeholder("unitId")),
-			eq(schema.niceAssessments.slug, sql.placeholder("testSlug")),
-			eq(schema.niceAssessments.type, "UnitTest")
-		)
-	)
-	.limit(1)
-	.prepare("src_app_user_subject_course_unit_test_test_page_get_test_in_unit")
-
-// Query to get unit ID by path
-const getUnitByPathQuery = db
-	.select({
-		id: schema.niceUnits.id
-	})
-	.from(schema.niceUnits)
-	.where(eq(schema.niceUnits.path, sql.placeholder("unitPath")))
-	.limit(1)
-	.prepare("src_app_user_subject_course_unit_test_test_page_get_unit_by_path")
-
-// Query to get the first lesson in the unit (for redirect)
-const getFirstLessonInUnitQuery = db
-	.select({
-		slug: schema.niceLessons.slug
-	})
-	.from(schema.niceLessons)
-	.where(eq(schema.niceLessons.unitId, sql.placeholder("unitId")))
-	.orderBy(schema.niceLessons.ordering)
-	.limit(1)
-	.prepare("src_app_user_subject_course_unit_test_test_page_get_first_lesson_in_unit")
+import { oneroster } from "@/lib/clients"
 
 export default async function TestRedirectPage({
 	params
@@ -51,40 +12,34 @@ export default async function TestRedirectPage({
 	const decodedTest = decodeURIComponent(resolvedParams.test)
 	const decodedUnit = decodeURIComponent(resolvedParams.unit)
 
-	const coursePath = `/${resolvedParams.subject}/${resolvedParams.course}`
-	const unitPath = `${coursePath}/${decodedUnit}`
+	const unitSourcedId = `nice:${decodedUnit}`
 
-	// Get the unit ID
-	const unitResult = await getUnitByPathQuery.execute({ unitPath })
-	const unit = unitResult[0]
+	// Get child components (lessons) of the unit
+	const lessonsResult = await errors.try(oneroster.getCourseComponents(`parent.sourcedId='${unitSourcedId}'`))
 
-	if (!unit) {
-		// Unit doesn't exist, this will 404
-		return <div>Unit not found</div>
+	if (lessonsResult.error) {
+		logger.error("failed to get lessons for unit", { unitSourcedId, error: lessonsResult.error })
+		// Fallback or error page
+		return <div>Could not find lessons for this unit.</div>
 	}
 
-	// Verify the test exists in this unit
-	const testResult = await getTestInUnitQuery.execute({
-		unitId: unit.id,
-		testSlug: decodedTest
-	})
-	const test = testResult[0]
-
-	if (!test) {
-		// Test doesn't exist in this unit, this will 404
-		return <div>Test not found</div>
-	}
-
-	// Get the first lesson in this unit for the redirect
-	const lessonResult = await getFirstLessonInUnitQuery.execute({ unitId: unit.id })
-	const lesson = lessonResult[0]
-
-	if (!lesson) {
+	const lessons = lessonsResult.data
+	if (lessons.length === 0) {
 		// No lessons in unit - this shouldn't happen but handle gracefully
-		return <div>No lessons found in unit</div>
+		logger.warn("no lessons found in unit for redirect", { unitSourcedId })
+		return <div>No lessons found in unit.</div>
 	}
+
+	// Sort by ordering and get the first lesson's slug
+	lessons.sort((a, b) => a.sortOrder - b.sortOrder)
+	const firstLesson = lessons[0]
+	if (!firstLesson) {
+		logger.warn("could not determine first lesson", { unitSourcedId })
+		return <div>Could not determine the first lesson.</div>
+	}
+	const firstLessonSlug = firstLesson.sourcedId.split(":")[1] || firstLesson.sourcedId
 
 	// Redirect to the canonical 4-slug URL
-	const canonicalUrl = `/${resolvedParams.subject}/${resolvedParams.course}/${decodedUnit}/${lesson.slug}/test/${decodedTest}`
+	const canonicalUrl = `/${resolvedParams.subject}/${resolvedParams.course}/${decodedUnit}/${firstLessonSlug}/test/${decodedTest}`
 	redirect(canonicalUrl)
 }

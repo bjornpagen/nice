@@ -1,26 +1,23 @@
-import { eq, sql } from "drizzle-orm"
 import { notFound } from "next/navigation"
 import * as React from "react"
-import { db } from "@/db"
-import * as schema from "@/db/schemas"
+import { oneroster } from "@/lib/clients"
 import { fetchLessonData } from "../../lesson-data"
 import { LessonLayout } from "../../lesson-layout"
 import { VideoPlayer } from "./video-player"
 
-// Video-specific query
-const getVideoByPathQuery = db
-	.select({
-		id: schema.niceVideos.id,
-		title: schema.niceVideos.title,
-		description: schema.niceVideos.description,
-		youtubeId: schema.niceVideos.youtubeId
-	})
-	.from(schema.niceVideos)
-	.where(eq(schema.niceVideos.path, sql.placeholder("videoPath")))
-	.limit(1)
-	.prepare("video_get_by_path")
+// Define the shape of the video data from OneRoster
+export type Video = {
+	id: string
+	title: string
+	description: string
+	youtubeId: string
+}
 
-export type Video = Awaited<ReturnType<typeof getVideoByPathQuery.execute>>[0]
+// Helper function to extract YouTube ID from URL
+function extractYouTubeId(url: string): string | null {
+	const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/)
+	return match?.[1] || null
+}
 
 // Server component for fetching video data
 async function StreamingVideoContent({
@@ -28,20 +25,26 @@ async function StreamingVideoContent({
 }: {
 	params: { subject: string; course: string; unit: string; lesson: string; video: string }
 }) {
-	const decodedVideo = decodeURIComponent(params.video)
-	const decodedUnit = decodeURIComponent(params.unit)
-	const decodedLesson = decodeURIComponent(params.lesson)
+	const videoSourcedId = `nice:${params.video}`
 
-	const coursePath = `/${params.subject}/${params.course}`
-	const unitPath = `${coursePath}/${decodedUnit}`
-	const lessonPath = `${unitPath}/${decodedLesson}`
-	const videoPath = `${lessonPath}/v/${decodedVideo}`
+	// Fetch the resource from OneRoster
+	const resource = await oneroster.getResource(videoSourcedId)
 
-	const videoResult = await getVideoByPathQuery.execute({ videoPath })
-	const video = videoResult[0]
-
-	if (!video) {
+	if (!resource || !resource.metadata?.url || typeof resource.metadata.url !== "string") {
 		notFound()
+	}
+
+	// Extract YouTube ID from the URL
+	const youtubeId = extractYouTubeId(resource.metadata.url)
+	if (!youtubeId) {
+		notFound()
+	}
+
+	const video: Video = {
+		id: resource.sourcedId,
+		title: resource.title,
+		description: typeof resource.metadata?.description === "string" ? resource.metadata.description : "",
+		youtubeId
 	}
 
 	return <VideoPlayer video={video} />
@@ -52,8 +55,6 @@ export default function VideoPage({
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; video: string }>
 }) {
-	// logger.info("video page: received request, rendering layout immediately")
-
 	const dataPromise = params.then(fetchLessonData)
 
 	return (

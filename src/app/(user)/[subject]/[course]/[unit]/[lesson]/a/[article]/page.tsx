@@ -1,50 +1,46 @@
 import * as logger from "@superbuilders/slog"
-import { eq, sql } from "drizzle-orm"
 import { notFound } from "next/navigation"
 import * as React from "react"
-import { db } from "@/db"
-import * as schema from "@/db/schemas"
+import { oneroster } from "@/lib/clients"
 import { fetchLessonData } from "../../lesson-data"
 import { LessonLayout } from "../../lesson-layout"
 import { ArticleContent } from "./article-content"
 
-// Article-specific query
-const getArticleByPathQuery = db
-	.select({
-		id: schema.niceArticles.id,
-		title: schema.niceArticles.title,
-		slug: schema.niceArticles.slug,
-		perseusContent: schema.niceArticles.perseusContent
-	})
-	.from(schema.niceArticles)
-	.where(eq(schema.niceArticles.path, sql.placeholder("articlePath")))
-	.limit(1)
-	.prepare("article_get_by_path")
+// The Article type now contains the identifier for QTI rendering
+export type Article = {
+	id: string
+	title: string
+	identifier: string // QTI stimulus identifier
+}
 
-export type Article = Awaited<ReturnType<typeof getArticleByPathQuery.execute>>[0]
+// New data fetching function for the article page
+async function fetchArticleData(params: { article: string }): Promise<Article> {
+	const articleSourcedId = `nice:${params.article}`
 
-// Server component for fetching article data
+	// Get the OneRoster resource to extract the Khan Academy ID
+	const resource = await oneroster.getResource(articleSourcedId)
+
+	if (!resource || !resource.metadata?.khanId) {
+		notFound()
+	}
+
+	// Construct the QTI stimulus identifier using the Khan Academy ID
+	const qtiIdentifier = `nice:${resource.metadata.khanId}`
+
+	return {
+		id: resource.sourcedId,
+		title: resource.title,
+		identifier: qtiIdentifier
+	}
+}
+
+// Server component for streaming the article content
 async function StreamingArticleContent({
 	params
 }: {
 	params: { subject: string; course: string; unit: string; lesson: string; article: string }
 }) {
-	const decodedArticle = decodeURIComponent(params.article)
-	const decodedUnit = decodeURIComponent(params.unit)
-	const decodedLesson = decodeURIComponent(params.lesson)
-
-	const coursePath = `/${params.subject}/${params.course}`
-	const unitPath = `${coursePath}/${decodedUnit}`
-	const lessonPath = `${unitPath}/${decodedLesson}`
-	const articlePath = `${lessonPath}/a/${decodedArticle}`
-
-	const articleResult = await getArticleByPathQuery.execute({ articlePath })
-	const article = articleResult[0]
-
-	if (!article) {
-		notFound()
-	}
-
+	const article = await fetchArticleData(params)
 	return <ArticleContent article={article} />
 }
 

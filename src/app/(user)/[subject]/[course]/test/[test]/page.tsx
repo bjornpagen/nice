@@ -65,7 +65,7 @@ export type CourseData = {
 	subject: string
 	course: { title: string; path: string }
 	test: CourseTest
-	unit: { title: string; path: string; ordering: number; children: LessonInfo[] }
+	unit: { title: string; path: string; sortOrder: number; children: LessonInfo[] }
 	lesson: { title: string; path: string; children: LessonChild[] }
 }
 
@@ -307,7 +307,7 @@ async function fetchCourseData(params: { subject: string; course: string; test: 
 		unit: {
 			title: lastUnit.title,
 			path: lastUnit.path,
-			ordering: lastUnit.ordering,
+			sortOrder: lastUnit.ordering,
 			children: allLessonsWithContent
 		},
 		lesson: {
