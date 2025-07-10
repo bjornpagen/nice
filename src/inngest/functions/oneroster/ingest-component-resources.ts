@@ -1,30 +1,25 @@
 import * as errors from "@superbuilders/errors"
-import { env } from "@/env"
 import { inngest } from "@/inngest/client"
-import { OneRosterApiClient } from "@/lib/oneroster-client"
+import { oneroster } from "@/lib/clients"
 
 export const ingestComponentResources = inngest.createFunction(
 	{ id: "ingest-component-resources", name: "Ingest OneRoster Component Resources" },
 	{ event: "oneroster/component-resources.ingest" },
 	async ({ event, step, logger }) => {
 		const { componentResources } = event.data
+		logger.info("starting component resource ingestion", { count: componentResources.length })
+
 		if (componentResources.length === 0) {
 			logger.info("no component resources to ingest, skipping")
 			return { status: "skipped", reason: "no_component_resources" }
 		}
 
 		logger.info("ingesting component resources in parallel", { count: componentResources.length })
-		const client = new OneRosterApiClient({
-			serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID,
-			clientSecret: env.TIMEBACK_CLIENT_SECRET
-		})
 
 		// Process all component resources in parallel
 		const stepPromises = componentResources.map((cr) =>
 			step.run(`ingest-cr-${cr.sourcedId}`, async () => {
-				const existingCrResult = await errors.try(client.getComponentResource(cr.sourcedId))
+				const existingCrResult = await errors.try(oneroster.getComponentResource(cr.sourcedId))
 				if (existingCrResult.error) {
 					logger.error("failed to check for existing component resource", {
 						sourcedId: cr.sourcedId,
@@ -35,7 +30,7 @@ export const ingestComponentResources = inngest.createFunction(
 
 				if (existingCrResult.data) {
 					logger.info("component resource already exists, updating", { sourcedId: cr.sourcedId })
-					const updateResult = await errors.try(client.updateComponentResource(cr.sourcedId, cr))
+					const updateResult = await errors.try(oneroster.updateComponentResource(cr.sourcedId, cr))
 					if (updateResult.error) {
 						logger.error("failed to update component resource", {
 							sourcedId: cr.sourcedId,
@@ -46,7 +41,7 @@ export const ingestComponentResources = inngest.createFunction(
 					logger.debug("successfully updated component resource", { sourcedId: cr.sourcedId })
 					return { sourcedId: cr.sourcedId, success: true, status: "updated" }
 				}
-				const createResult = await errors.try(client.createComponentResource(cr))
+				const createResult = await errors.try(oneroster.createComponentResource(cr))
 				if (createResult.error) {
 					logger.error("failed to ingest component resource", { sourcedId: cr.sourcedId, error: createResult.error })
 					throw createResult.error

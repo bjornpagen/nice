@@ -2,9 +2,8 @@
 import * as readline from "node:readline/promises"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { env } from "@/env"
+import { qti } from "@/lib/clients"
 import type { AssessmentItem } from "@/lib/qti"
-import { QtiApiClient } from "@/lib/qti"
 
 const BATCH_SIZE = 100
 const CONFIRMATION_PHRASE = "YES, I AM ABSOLUTELY SURE"
@@ -12,11 +11,10 @@ const CONFIRMATION_PHRASE = "YES, I AM ABSOLUTELY SURE"
 /**
  * Fetches all assessment items matching a given prefix query.
  * Handles pagination automatically.
- * @param client The QtiApiClient instance.
  * @param query The prefix to search for.
  * @returns An array of matching assessment items.
  */
-async function fetchAllMatchingItems(client: QtiApiClient, query: string): Promise<AssessmentItem[]> {
+async function fetchAllMatchingItems(query: string): Promise<AssessmentItem[]> {
 	const allItems: AssessmentItem[] = []
 	let page = 1
 	let hasMore = true
@@ -30,7 +28,7 @@ async function fetchAllMatchingItems(client: QtiApiClient, query: string): Promi
 		logger.info("fetching page", { page })
 
 		const searchResult = await errors.try(
-			client.searchAssessmentItems({
+			qti.searchAssessmentItems({
 				limit: BATCH_SIZE,
 				page,
 				query,
@@ -80,15 +78,8 @@ async function main() {
 		process.exit(1)
 	}
 
-	const client = new QtiApiClient({
-		serverUrl: env.TIMEBACK_QTI_SERVER_URL,
-		tokenUrl: env.TIMEBACK_TOKEN_URL,
-		clientId: env.TIMEBACK_CLIENT_ID,
-		clientSecret: env.TIMEBACK_CLIENT_SECRET
-	})
-
 	logger.info("searching for assessment items with prefix", { prefix: searchPrefix })
-	const itemsToProcess = await fetchAllMatchingItems(client, searchPrefix)
+	const itemsToProcess = await fetchAllMatchingItems(searchPrefix)
 
 	if (itemsToProcess.length === 0) {
 		logger.info("no assessment items found matching the prefix", { prefix: searchPrefix })
@@ -131,7 +122,7 @@ async function main() {
 
 	let deletedCount = 0
 	for (const item of itemsToProcess) {
-		const deleteResult = await errors.try(client.deleteAssessmentItem(item.identifier))
+		const deleteResult = await errors.try(qti.deleteAssessmentItem(item.identifier))
 		if (deleteResult.error) {
 			logger.error("failed to delete item", { identifier: item.identifier, error: deleteResult.error })
 		} else {

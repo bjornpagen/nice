@@ -1,7 +1,6 @@
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { env } from "@/env"
-import { OneRosterApiClient } from "@/lib/oneroster-client"
+import { oneroster } from "@/lib/clients"
 import { Content } from "./content"
 
 // --- REMOVED ALL DRIZZLE QUERIES ---
@@ -138,19 +137,12 @@ function getMetadataNumber(metadata: Record<string, unknown> | undefined, key: s
 async function fetchUnitData(params: { subject: string; course: string; unit: string }): Promise<HydratedUnitData> {
 	logger.debug("unit page: fetching unit data", { params })
 
-	const client = new OneRosterApiClient({
-		serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-		tokenUrl: env.TIMEBACK_TOKEN_URL,
-		clientId: env.TIMEBACK_CLIENT_ID,
-		clientSecret: env.TIMEBACK_CLIENT_SECRET
-	})
-
 	const courseSourcedId = `nice:${params.course}`
 	const decodedUnitSlug = decodeURIComponent(params.unit)
 	const unitSourcedId = `nice:${decodedUnitSlug}`
 
 	// Fetch course
-	const oneRosterCourse = await client.getCourse(courseSourcedId)
+	const oneRosterCourse = await oneroster.getCourse(courseSourcedId)
 	if (!oneRosterCourse) {
 		logger.warn("unit page: course not found in OneRoster", { courseSourcedId })
 		notFound()
@@ -164,7 +156,7 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	}
 
 	// Fetch the specific unit
-	const oneRosterUnit = await client.getCourseComponent(unitSourcedId)
+	const oneRosterUnit = await oneroster.getCourseComponent(unitSourcedId)
 	if (!oneRosterUnit) {
 		logger.warn("unit page: unit not found in OneRoster", { unitSourcedId })
 		notFound()
@@ -180,7 +172,7 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	}
 
 	// Fetch all units for the course (for navigation)
-	const allComponents = await client.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
+	const allComponents = await oneroster.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
 	const allUnits: Unit[] = allComponents
 		.filter((component) => !component.parent) // Filter for units (no parent) in memory
 		.map((component) => ({
@@ -196,13 +188,13 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 		.sort((a, b) => a.ordering - b.ordering)
 
 	// Fetch children of this unit (lessons and assessments)
-	const unitChildren = await client.getCourseComponents(`parent.sourcedId='${unitSourcedId}'`)
+	const unitChildren = await oneroster.getCourseComponents(`parent.sourcedId='${unitSourcedId}'`)
 
 	// Fetch ALL resources and filter in memory
-	const allResourcesInSystem = await client.getAllResources("sourcedId~'nice:'")
+	const allResourcesInSystem = await oneroster.getAllResources("sourcedId~'nice:'")
 
 	// Fetch ALL component resources and filter in memory for this unit and its children
-	const allComponentResources = await client.getAllComponentResources("sourcedId~'nice:'")
+	const allComponentResources = await oneroster.getAllComponentResources("sourcedId~'nice:'")
 
 	// Get resources for this unit specifically (assessments)
 	const unitComponentResources = allComponentResources.filter((cr) => cr.courseComponent.sourcedId === unitSourcedId)
@@ -213,7 +205,7 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 
 	// Get unique resource IDs from ALL component resources for the course (not just this unit)
 	// This is needed because resources might be shared across units
-	const allCourseComponents = await client.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
+	const allCourseComponents = await oneroster.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
 	const courseComponentIdSet = new Set(allCourseComponents.map((c) => c.sourcedId))
 	const courseComponentResources = allComponentResources.filter((cr) =>
 		courseComponentIdSet.has(cr.courseComponent.sourcedId)
@@ -391,7 +383,7 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	)
 
 	// Count total lessons across all units
-	const allComponentsForLessonCount = await client.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
+	const allComponentsForLessonCount = await oneroster.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
 	const allLessons = allComponentsForLessonCount.filter((c) => c.parent !== null)
 
 	// To count lessons, we need to check which components are NOT assessments

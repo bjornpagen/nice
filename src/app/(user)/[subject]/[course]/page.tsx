@@ -1,7 +1,6 @@
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { env } from "@/env"
-import { OneRosterApiClient } from "@/lib/oneroster-client"
+import { oneroster } from "@/lib/clients"
 import { Content } from "./content"
 
 // --- REMOVED ALL DRIZZLE QUERIES ---
@@ -120,18 +119,11 @@ function getMetadataNumber(metadata: Record<string, unknown> | undefined, key: s
 
 // Shared data fetching function using OneRoster API
 async function fetchCourseData(params: { subject: string; course: string }): Promise<CourseData> {
-	const client = new OneRosterApiClient({
-		serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-		tokenUrl: env.TIMEBACK_TOKEN_URL,
-		clientId: env.TIMEBACK_CLIENT_ID,
-		clientSecret: env.TIMEBACK_CLIENT_SECRET
-	})
-
 	const courseSourcedId = `nice:${params.course}`
 	logger.debug("course page: fetching course from OneRoster", { courseSourcedId })
 
 	// Fetch course
-	const oneRosterCourse = await client.getCourse(courseSourcedId)
+	const oneRosterCourse = await oneroster.getCourse(courseSourcedId)
 	if (!oneRosterCourse) {
 		logger.warn("course page: course not found in OneRoster", { courseSourcedId })
 		notFound()
@@ -145,7 +137,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 	}
 
 	// Fetch all course components (units and lessons)
-	const allComponents = await client.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
+	const allComponents = await oneroster.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
 
 	// Separate units (no parent) and lessons (have parent)
 	const units: Unit[] = []
@@ -186,10 +178,10 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 	units.sort((a, b) => a.ordering - b.ordering)
 
 	// Fetch ALL resources and filter in memory
-	const allResourcesInSystem = await client.getAllResources("sourcedId~'nice:'")
+	const allResourcesInSystem = await oneroster.getAllResources("sourcedId~'nice:'")
 
 	// Fetch ALL component resources and filter in memory
-	const allComponentResources = await client.getAllComponentResources("sourcedId~'nice:'")
+	const allComponentResources = await oneroster.getAllComponentResources("sourcedId~'nice:'")
 	const courseComponentIds = new Set(allComponents.map((c) => c.sourcedId))
 
 	const componentResources = allComponentResources.filter((cr) => courseComponentIds.has(cr.courseComponent.sourcedId))

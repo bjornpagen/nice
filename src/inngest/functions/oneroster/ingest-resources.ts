@@ -1,30 +1,25 @@
 import * as errors from "@superbuilders/errors"
-import { env } from "@/env"
 import { inngest } from "@/inngest/client"
-import { OneRosterApiClient } from "@/lib/oneroster-client"
+import { oneroster } from "@/lib/clients"
 
 export const ingestResources = inngest.createFunction(
 	{ id: "ingest-resources", name: "Ingest OneRoster Resources" },
 	{ event: "oneroster/resources.ingest" },
 	async ({ event, step, logger }) => {
 		const { resources } = event.data
+		logger.info("starting resource ingestion", { count: resources.length })
+
 		if (resources.length === 0) {
 			logger.info("no resources to ingest, skipping")
 			return { status: "skipped", reason: "no_resources" }
 		}
 
 		logger.info("ingesting or updating resources in parallel", { count: resources.length })
-		const client = new OneRosterApiClient({
-			serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID,
-			clientSecret: env.TIMEBACK_CLIENT_SECRET
-		})
 
 		// Process all resources in parallel
 		const stepPromises = resources.map((resource) =>
 			step.run(`ingest-resource-${resource.sourcedId}`, async () => {
-				const existingResourceResult = await errors.try(client.getResource(resource.sourcedId))
+				const existingResourceResult = await errors.try(oneroster.getResource(resource.sourcedId))
 				if (existingResourceResult.error) {
 					logger.error("failed to check for existing resource", {
 						sourcedId: resource.sourcedId,
@@ -38,7 +33,7 @@ export const ingestResources = inngest.createFunction(
 					logger.info("resource exists, attempting update", { sourcedId: resource.sourcedId })
 					// Remove sourcedId from the payload as it's passed separately
 					const { sourcedId: _sourcedId, ...resourceWithoutId } = resource
-					const updateResult = await errors.try(client.updateResource(resource.sourcedId, resourceWithoutId))
+					const updateResult = await errors.try(oneroster.updateResource(resource.sourcedId, resourceWithoutId))
 					if (updateResult.error) {
 						logger.error("failed to update resource", {
 							sourcedId: resource.sourcedId,
@@ -54,7 +49,7 @@ export const ingestResources = inngest.createFunction(
 				logger.info("resource does not exist, attempting creation", { sourcedId: resource.sourcedId })
 				// Keep the full resource payload INCLUDING sourcedId (as proven by curl test)
 				logger.debug("resource payload for creation", { resource })
-				const createResult = await errors.try(client.createResource(resource))
+				const createResult = await errors.try(oneroster.createResource(resource))
 				if (createResult.error) {
 					logger.error("failed to ingest resource", {
 						sourcedId: resource.sourcedId,

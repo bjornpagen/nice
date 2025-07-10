@@ -4,7 +4,7 @@ import * as logger from "@superbuilders/slog"
 import { headers } from "next/headers"
 import { Webhook } from "svix"
 import { env } from "@/env.js"
-import { OneRosterApiClient } from "@/lib/oneroster-client"
+import { oneroster } from "@/lib/clients"
 
 export async function POST(req: Request) {
 	logger.info("clerk webhook received")
@@ -152,15 +152,8 @@ export async function POST(req: Request) {
 				emailAddress
 			})
 
-			const onerosterClient = new OneRosterApiClient({
-				serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-				tokenUrl: env.TIMEBACK_TOKEN_URL,
-				clientId: env.TIMEBACK_CLIENT_ID,
-				clientSecret: env.TIMEBACK_CLIENT_SECRET
-			})
-
 			// This operation is optional and should not block the user creation flow.
-			const onerosterUserResult = await errors.try(onerosterClient.getUsersByEmail(emailAddress))
+			const onerosterUserResult = await errors.try(oneroster.getUsersByEmail(emailAddress))
 			if (onerosterUserResult.error) {
 				logger.warn("failed to get user from oneroster, proceeding without sourceid", {
 					userId: clerkId,

@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
-import { env } from "@/env"
 import { inngest } from "@/inngest/client"
-import { ErrQtiNotFound, QtiApiClient } from "@/lib/qti"
+import { qti } from "@/lib/clients"
+import { ErrQtiNotFound } from "@/lib/qti"
 
 export const ingestAssessmentItems = inngest.createFunction(
 	{ id: "ingest-assessment-items", name: "Ingest QTI Assessment Items" },
@@ -14,12 +14,6 @@ export const ingestAssessmentItems = inngest.createFunction(
 		}
 
 		logger.info("ingesting assessment items", { count: items.length })
-		const client = new QtiApiClient({
-			serverUrl: env.TIMEBACK_QTI_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID,
-			clientSecret: env.TIMEBACK_CLIENT_SECRET
-		})
 
 		const results = []
 		for (const item of items) {
@@ -35,13 +29,13 @@ export const ingestAssessmentItems = inngest.createFunction(
 
 			// Execute upsert logic directly without step.run wrapper
 			const updateResult = await errors.try(
-				client.updateAssessmentItem({ identifier, xml: item.xml, metadata: item.metadata })
+				qti.updateAssessmentItem({ identifier, xml: item.xml, metadata: item.metadata })
 			)
 
 			if (updateResult.error) {
 				if (errors.is(updateResult.error, ErrQtiNotFound)) {
 					logger.info("item not found, creating new one", { identifier })
-					const createResult = await errors.try(client.createAssessmentItem({ xml: item.xml, metadata: item.metadata }))
+					const createResult = await errors.try(qti.createAssessmentItem({ xml: item.xml, metadata: item.metadata }))
 					if (createResult.error) {
 						logger.error("failed to create item after 404 on update", { identifier, error: createResult.error })
 						throw createResult.error

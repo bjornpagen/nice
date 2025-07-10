@@ -1,7 +1,6 @@
 import * as errors from "@superbuilders/errors"
-import { env } from "@/env"
 import { inngest } from "@/inngest/client"
-import { OneRosterApiClient } from "@/lib/oneroster-client"
+import { oneroster } from "@/lib/clients"
 
 export const ingestClass = inngest.createFunction(
 	{ id: "ingest-class", name: "Ingest OneRoster Class" },
@@ -35,20 +34,13 @@ export const ingestClass = inngest.createFunction(
 			termsCount: classData.terms?.length || 0
 		})
 
-		const client = new OneRosterApiClient({
-			serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID,
-			clientSecret: env.TIMEBACK_CLIENT_SECRET
-		})
-
 		// Replace colon with dash in step ID to make it valid
 		const stepId = `ingest-class-${classData.sourcedId.replace(/:/g, "-")}`
 		const stepResult = await step.run(stepId, async () => {
 			logger.debug("checking for existing class", { sourcedId: classData.sourcedId })
 
 			// Wrap getClass in errors.try to handle any exceptions
-			const existingClassResult = await errors.try(client.getClass(classData.sourcedId))
+			const existingClassResult = await errors.try(oneroster.getClass(classData.sourcedId))
 			if (existingClassResult.error) {
 				logger.error("failed to check for existing class", {
 					sourcedId: classData.sourcedId,
@@ -83,7 +75,7 @@ export const ingestClass = inngest.createFunction(
 
 			logger.debug("class creation payload", { classData: cleanClassData })
 
-			const result = await errors.try(client.createClass(cleanClassData))
+			const result = await errors.try(oneroster.createClass(cleanClassData))
 			if (result.error) {
 				logger.error("failed to create class via API", {
 					sourcedId: classData.sourcedId,
@@ -100,7 +92,7 @@ export const ingestClass = inngest.createFunction(
 
 			// Verify the class was actually created by fetching it
 			logger.debug("verifying class creation", { sourcedId: classData.sourcedId })
-			const verificationResult = await errors.try(client.getClass(classData.sourcedId))
+			const verificationResult = await errors.try(oneroster.getClass(classData.sourcedId))
 			if (verificationResult.error) {
 				logger.error("failed to verify class creation", {
 					sourcedId: classData.sourcedId,

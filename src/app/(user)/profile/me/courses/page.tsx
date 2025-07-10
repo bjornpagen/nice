@@ -5,8 +5,7 @@ import { count, eq, inArray, sql } from "drizzle-orm"
 import * as React from "react"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
-import { env } from "@/env"
-import { OneRosterApiClient } from "@/lib/oneroster-client"
+import { oneroster } from "@/lib/clients"
 import { Content } from "./content"
 
 // OneRoster configuration
@@ -30,16 +29,9 @@ type SubjectWithCourses = {
 async function getOneRosterClassesForSelector(): Promise<SubjectWithCourses[]> {
 	logger.info("fetching course selector data from oneroster api", { orgId: ONEROSTER_ORG_ID })
 
-	const client = new OneRosterApiClient({
-		serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-		tokenUrl: env.TIMEBACK_TOKEN_URL,
-		clientId: env.TIMEBACK_CLIENT_ID,
-		clientSecret: env.TIMEBACK_CLIENT_SECRET
-	})
-
 	const [classesResult, coursesResult] = await Promise.all([
-		errors.try(client.getClassesForSchool(ONEROSTER_ORG_ID)),
-		errors.try(client.getAllCourses())
+		errors.try(oneroster.getClassesForSchool(ONEROSTER_ORG_ID)),
+		errors.try(oneroster.getAllCourses())
 	])
 
 	if (classesResult.error) {

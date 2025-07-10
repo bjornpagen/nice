@@ -2,13 +2,13 @@ import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
-import { env } from "@/env"
 import { inngest } from "@/inngest/client"
 import { fixInvalidQtiXml, generateQtiFromPerseus } from "@/lib/ai"
-import { ErrQtiInternalServerError, ErrQtiNotFound, ErrQtiUnprocessable, QtiApiClient } from "@/lib/qti"
+import { qti } from "@/lib/clients"
+import { ErrQtiInternalServerError, ErrQtiNotFound, ErrQtiUnprocessable } from "@/lib/qti"
 
 // Helper function to encapsulate the idempotent upsert logic.
-async function upsertItem(client: QtiApiClient, identifier: string, title: string, xml: string): Promise<string> {
+async function upsertItem(identifier: string, title: string, xml: string): Promise<string> {
 	// Use a robust regex to replace attributes on the root tag, avoiding a full parse/rebuild cycle
 	// that was corrupting namespace declarations. This is safer and more reliable.
 	const safeTitle = title.replace(/"/g, "&quot;")
@@ -22,11 +22,11 @@ async function upsertItem(client: QtiApiClient, identifier: string, title: strin
 		return `<qti-assessment-item${updatedAttrs}>`
 	})
 
-	const updateResult = await errors.try(client.updateAssessmentItem({ identifier, xml: finalXml }))
+	const updateResult = await errors.try(qti.updateAssessmentItem({ identifier, xml: finalXml }))
 	if (updateResult.error) {
 		// Use errors.is for type-safe error checking
 		if (errors.is(updateResult.error, ErrQtiNotFound)) {
-			const createResult = await errors.try(client.createAssessmentItem({ xml: finalXml }))
+			const createResult = await errors.try(qti.createAssessmentItem({ xml: finalXml }))
 			if (createResult.error) {
 				throw errors.wrap(createResult.error, "qti create after update 404")
 			}
@@ -87,18 +87,12 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			return result.data
 		})
 
-		const client = new QtiApiClient({
-			serverUrl: env.TIMEBACK_QTI_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID,
-			clientSecret: env.TIMEBACK_CLIENT_SECRET
-		})
 		const tempIdentifier = `nice-tmp:${question.id}`
 
 		// Step 3: Validate XML by creating and immediately deleting it from the QTI API
 		const validatedXml = await step.run("validate-and-delete-from-qti-api", async () => {
 			let finalXml = qtiXml
-			const upsertResult = await errors.try(upsertItem(client, tempIdentifier, question.exerciseTitle, qtiXml))
+			const upsertResult = await errors.try(upsertItem(tempIdentifier, question.exerciseTitle, qtiXml))
 
 			if (upsertResult.error) {
 				if (
@@ -123,7 +117,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 					}
 					finalXml = fixResult.data
 
-					const secondResult = await errors.try(upsertItem(client, tempIdentifier, question.exerciseTitle, finalXml))
+					const secondResult = await errors.try(upsertItem(tempIdentifier, question.exerciseTitle, finalXml))
 					if (secondResult.error) {
 						logger.error("second qti upsert attempt failed", { qtiId: tempIdentifier, error: secondResult.error })
 						throw errors.wrap(secondResult.error, "second qti upsert")
@@ -138,7 +132,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			}
 
 			// On success, immediately delete the temporary item
-			const deleteResult = await errors.try(client.deleteAssessmentItem(tempIdentifier))
+			const deleteResult = await errors.try(qti.deleteAssessmentItem(tempIdentifier))
 			if (deleteResult.error) {
 				logger.error("failed to delete validated item from QTI API, but continuing", {
 					identifier: tempIdentifier,

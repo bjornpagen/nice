@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
-import { env } from "@/env"
 import { inngest } from "@/inngest/client"
-import { ErrQtiNotFound, QtiApiClient } from "@/lib/qti"
+import { qti } from "@/lib/clients"
+import { ErrQtiNotFound } from "@/lib/qti"
 
 export const ingestAssessmentTests = inngest.createFunction(
 	{ id: "ingest-assessment-tests", name: "Ingest QTI Assessment Tests" },
@@ -14,22 +14,16 @@ export const ingestAssessmentTests = inngest.createFunction(
 		}
 
 		logger.info("ingesting assessment tests", { count: tests.length })
-		const client = new QtiApiClient({
-			serverUrl: env.TIMEBACK_QTI_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID,
-			clientSecret: env.TIMEBACK_CLIENT_SECRET
-		})
 
 		const results = []
 		for (const test of tests) {
 			const { identifier } = test
-			const updateResult = await errors.try(client.updateAssessmentTest(identifier, test))
+			const updateResult = await errors.try(qti.updateAssessmentTest(identifier, test))
 
 			if (updateResult.error) {
 				if (errors.is(updateResult.error, ErrQtiNotFound)) {
 					logger.info("test not found, creating new one", { identifier })
-					const createResult = await errors.try(client.createAssessmentTest(test))
+					const createResult = await errors.try(qti.createAssessmentTest(test))
 					if (createResult.error) {
 						logger.error("failed to create test after 404 on update", { identifier, error: createResult.error })
 						throw createResult.error

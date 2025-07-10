@@ -655,7 +655,7 @@ export class OneRosterApiClient {
 		logger.info("OneRosterApiClient: fetching all courses")
 		const allCourses: OneRosterCourseReadSchema[] = []
 		let offset = 0
-		const limit = 100 // Max limit per OneRoster spec
+		const limit = 3000 // Max limit per OneRoster spec
 
 		while (true) {
 			const endpoint = `/ims/oneroster/rostering/v1p2/courses?limit=${limit}&offset=${offset}`
@@ -687,7 +687,7 @@ export class OneRosterApiClient {
 		logger.info("OneRosterApiClient: fetching all classes for school", { schoolSourcedId })
 		const allClasses: OneRosterClassReadSchema[] = []
 		let offset = 0
-		const limit = 100
+		const limit = 3000
 
 		if (!schoolSourcedId) {
 			throw errors.new("schoolSourcedId cannot be empty")
@@ -762,7 +762,7 @@ export class OneRosterApiClient {
 		logger.info("OneRosterApiClient: fetching course components", { filter })
 		const allComponents: z.infer<typeof OneRosterCourseComponentReadSchema>[] = []
 		let offset = 0
-		const limit = 100
+		const limit = 3000
 
 		while (true) {
 			let endpoint = `/ims/oneroster/rostering/v1p2/courses/components?limit=${limit}&offset=${offset}`
@@ -805,7 +805,7 @@ export class OneRosterApiClient {
 
 		const allResources: OneRosterResource[] = []
 		let offset = 0
-		const limit = 100
+		const limit = 3000
 
 		while (true) {
 			// ✅ CORRECT: Path updated to match the OpenAPI spec - added /resources before /courses
@@ -841,7 +841,7 @@ export class OneRosterApiClient {
 		logger.info("OneRosterApiClient: fetching ALL resources", { filter })
 		const allResources: OneRosterResource[] = []
 		let offset = 0
-		const limit = 100
+		const limit = 3000
 
 		while (true) {
 			let endpoint = `/ims/oneroster/resources/v1p2/resources?limit=${limit}&offset=${offset}`
@@ -903,7 +903,7 @@ export class OneRosterApiClient {
 		logger.info("OneRosterApiClient: fetching ALL component resources", { filter })
 		const allComponentResources: z.infer<typeof OneRosterComponentResourceReadSchema>[] = []
 		let offset = 0
-		const limit = 100
+		const limit = 3000
 
 		while (true) {
 			let endpoint = `/ims/oneroster/rostering/v1p2/courses/component-resources?limit=${limit}&offset=${offset}`

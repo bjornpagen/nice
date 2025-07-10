@@ -2,20 +2,15 @@ import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import { niceArticles } from "@/db/schemas"
-import { env } from "@/env"
 import { inngest } from "@/inngest/client"
 import { fixInvalidQtiXml, generateQtiFromPerseus } from "@/lib/ai"
-import { ErrQtiInternalServerError, ErrQtiNotFound, ErrQtiUnprocessable, QtiApiClient } from "@/lib/qti"
+import { qti } from "@/lib/clients"
+import { ErrQtiInternalServerError, ErrQtiNotFound, ErrQtiUnprocessable } from "@/lib/qti"
 
 // Helper function to encapsulate the idempotent upsert logic.
-async function upsertStimulus(
-	client: QtiApiClient,
-	identifier: string,
-	title: string,
-	content: string
-): Promise<string> {
+async function upsertStimulus(identifier: string, title: string, content: string): Promise<string> {
 	const updateResult = await errors.try(
-		client.updateStimulus(identifier, {
+		qti.updateStimulus(identifier, {
 			identifier,
 			title,
 			content
@@ -25,7 +20,7 @@ async function upsertStimulus(
 		// Use errors.is for type-safe error checking
 		if (errors.is(updateResult.error, ErrQtiNotFound)) {
 			const createResult = await errors.try(
-				client.createStimulus({
+				qti.createStimulus({
 					identifier,
 					title,
 					content
@@ -90,18 +85,12 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 			return result.data
 		})
 
-		const client = new QtiApiClient({
-			serverUrl: env.TIMEBACK_QTI_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID,
-			clientSecret: env.TIMEBACK_CLIENT_SECRET
-		})
 		const tempIdentifier = `nice-tmp:${article.id}`
 
 		// Step 3: Validate XML by creating and immediately deleting it from the QTI API
 		const validatedXml = await step.run("validate-and-delete-from-qti-api", async () => {
 			let finalXml = qtiXml
-			const upsertResult = await errors.try(upsertStimulus(client, tempIdentifier, article.title, qtiXml))
+			const upsertResult = await errors.try(upsertStimulus(tempIdentifier, article.title, qtiXml))
 
 			if (upsertResult.error) {
 				if (
@@ -126,7 +115,7 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 					}
 					finalXml = fixResult.data
 
-					const secondResult = await errors.try(upsertStimulus(client, tempIdentifier, article.title, finalXml))
+					const secondResult = await errors.try(upsertStimulus(tempIdentifier, article.title, finalXml))
 					if (secondResult.error) {
 						logger.error("second qti upsert attempt failed", { qtiId: tempIdentifier, error: secondResult.error })
 						throw errors.wrap(secondResult.error, "second qti upsert")
@@ -141,7 +130,7 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 			}
 
 			// On success, immediately delete the temporary stimulus
-			const deleteResult = await errors.try(client.deleteStimulus(tempIdentifier))
+			const deleteResult = await errors.try(qti.deleteStimulus(tempIdentifier))
 			if (deleteResult.error) {
 				logger.error("failed to delete validated stimulus from QTI API, but continuing", {
 					identifier: tempIdentifier,

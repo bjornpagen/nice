@@ -6,8 +6,7 @@ import * as logger from "@superbuilders/slog"
 import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
-import { env } from "@/env"
-import { OneRosterApiClient } from "@/lib/oneroster-client"
+import { oneroster } from "@/lib/clients"
 
 export async function saveUserCourses(courseIds: string[]) {
 	const authResult = await errors.try(auth())
@@ -88,16 +87,9 @@ type SubjectWithCoursesForExplore = {
 export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCoursesForExplore[]> {
 	logger.info("fetching explore dropdown data from oneroster api", { orgId: ONEROSTER_ORG_ID })
 
-	const client = new OneRosterApiClient({
-		serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-		tokenUrl: env.TIMEBACK_TOKEN_URL,
-		clientId: env.TIMEBACK_CLIENT_ID,
-		clientSecret: env.TIMEBACK_CLIENT_SECRET
-	})
-
 	const [classesResult, coursesResult] = await Promise.all([
-		errors.try(client.getClassesForSchool(ONEROSTER_ORG_ID)),
-		errors.try(client.getAllCourses())
+		errors.try(oneroster.getClassesForSchool(ONEROSTER_ORG_ID)),
+		errors.try(oneroster.getAllCourses())
 	])
 
 	if (classesResult.error) {

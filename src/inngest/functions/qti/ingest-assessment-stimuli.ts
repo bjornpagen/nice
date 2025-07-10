@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
-import { env } from "@/env"
 import { inngest } from "@/inngest/client"
-import { ErrQtiNotFound, QtiApiClient } from "@/lib/qti"
+import { qti } from "@/lib/clients"
+import { ErrQtiNotFound } from "@/lib/qti"
 
 export const ingestAssessmentStimuli = inngest.createFunction(
 	{ id: "ingest-assessment-stimuli", name: "Ingest QTI Assessment Stimuli" },
@@ -14,12 +14,6 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 		}
 
 		logger.info("ingesting assessment stimuli", { count: stimuli.length })
-		const client = new QtiApiClient({
-			serverUrl: env.TIMEBACK_QTI_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID,
-			clientSecret: env.TIMEBACK_CLIENT_SECRET
-		})
 
 		const results = []
 		for (const stimulus of stimuli) {
@@ -38,12 +32,12 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 
 			const payload = { identifier, title, content, metadata: stimulus.metadata }
 
-			const updateResult = await errors.try(client.updateStimulus(identifier, payload))
+			const updateResult = await errors.try(qti.updateStimulus(identifier, payload))
 
 			if (updateResult.error) {
 				if (errors.is(updateResult.error, ErrQtiNotFound)) {
 					logger.info("stimulus not found, creating new one", { identifier })
-					const createResult = await errors.try(client.createStimulus(payload))
+					const createResult = await errors.try(qti.createStimulus(payload))
 					if (createResult.error) {
 						logger.error("failed to create stimulus after 404 on update", { identifier, error: createResult.error })
 						throw createResult.error

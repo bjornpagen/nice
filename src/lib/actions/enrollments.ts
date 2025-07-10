@@ -7,8 +7,7 @@ import { eq, sql } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
-import { env } from "@/env"
-import { OneRosterApiClient } from "@/lib/oneroster-client"
+import { oneroster } from "@/lib/clients"
 
 const getCourseForEnrollmentQuery = db
 	.select({
@@ -50,22 +49,16 @@ export async function enrollUserInCourse(courseId: string) {
 		throw errors.new(`course not found for id: ${courseId}`)
 	}
 
-	const client = new OneRosterApiClient({
-		serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-		tokenUrl: env.TIMEBACK_TOKEN_URL,
-		clientId: env.TIMEBACK_CLIENT_ID,
-		clientSecret: env.TIMEBACK_CLIENT_SECRET
-	})
 	const classSourcedId = `class-nice:${course.slug}`
 	const oneRosterCourseSourcedId = `nice:${course.slug}`
 
 	// 3. Idempotently find or create the OneRoster Class
-	let existingClass = await client.getClass(classSourcedId)
+	let existingClass = await oneroster.getClass(classSourcedId)
 
 	if (!existingClass) {
 		logger.info("class not found, creating new one", { classSourcedId })
 		const createResult = await errors.try(
-			client.createClass({
+			oneroster.createClass({
 				sourcedId: classSourcedId,
 				title: course.title,
 				classType: "scheduled", // Required by spec
@@ -79,7 +72,7 @@ export async function enrollUserInCourse(courseId: string) {
 			throw errors.wrap(createResult.error, "class creation")
 		}
 
-		existingClass = await client.getClass(classSourcedId)
+		existingClass = await oneroster.getClass(classSourcedId)
 		if (!existingClass) {
 			throw errors.new("failed to create or retrieve class after creation attempt")
 		}
@@ -89,14 +82,14 @@ export async function enrollUserInCourse(courseId: string) {
 
 	// 4. Create the enrollment
 	const enrollmentSourcedId = `enrollment-${userId}-${classSourcedId}`
-	const existingEnrollment = await client.getEnrollment(enrollmentSourcedId)
+	const existingEnrollment = await oneroster.getEnrollment(enrollmentSourcedId)
 	if (existingEnrollment) {
 		logger.warn("user is already enrolled in this class", { userId, classSourcedId })
 		return // Gracefully exit if already enrolled
 	}
 
 	const enrollmentResult = await errors.try(
-		client.createEnrollment({
+		oneroster.createEnrollment({
 			sourcedId: enrollmentSourcedId,
 			role: "student",
 			user: { sourcedId: userId, type: "user" },

@@ -1,26 +1,20 @@
 import * as errors from "@superbuilders/errors"
-import { env } from "@/env"
 import { inngest } from "@/inngest/client"
-import { OneRosterApiClient } from "@/lib/oneroster-client"
+import { oneroster } from "@/lib/clients"
 
 export const ingestCourseComponents = inngest.createFunction(
 	{ id: "ingest-course-components", name: "Ingest OneRoster Course Components" },
 	{ event: "oneroster/course-components.ingest" },
 	async ({ event, logger }) => {
 		const { components } = event.data
+		logger.info("starting course component ingestion", { count: components.length })
+
 		if (components.length === 0) {
 			logger.info("no course components to ingest, skipping")
 			return { status: "skipped", reason: "no_components" }
 		}
 
 		logger.info("ingesting course components hierarchically", { count: components.length })
-
-		const client = new OneRosterApiClient({
-			serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
-			tokenUrl: env.TIMEBACK_TOKEN_URL,
-			clientId: env.TIMEBACK_CLIENT_ID,
-			clientSecret: env.TIMEBACK_CLIENT_SECRET
-		})
 
 		type ComponentType = (typeof components)[0]
 		const componentsByParent = new Map<string, ComponentType[]>()
@@ -47,7 +41,7 @@ export const ingestCourseComponents = inngest.createFunction(
 			const nextLevelComponents: ComponentType[] = []
 
 			for (const component of componentsToIngest) {
-				const existingComponentResult = await errors.try(client.getCourseComponent(component.sourcedId))
+				const existingComponentResult = await errors.try(oneroster.getCourseComponent(component.sourcedId))
 				if (existingComponentResult.error) {
 					logger.error("failed to check for existing component", {
 						sourcedId: component.sourcedId,
@@ -58,7 +52,7 @@ export const ingestCourseComponents = inngest.createFunction(
 
 				if (existingComponentResult.data) {
 					logger.info("component already exists, updating", { sourcedId: component.sourcedId })
-					const updateResult = await errors.try(client.updateCourseComponent(component.sourcedId, component))
+					const updateResult = await errors.try(oneroster.updateCourseComponent(component.sourcedId, component))
 					if (updateResult.error) {
 						logger.error("failed to update component", {
 							sourcedId: component.sourcedId,
@@ -67,7 +61,7 @@ export const ingestCourseComponents = inngest.createFunction(
 						throw updateResult.error
 					}
 				} else {
-					const result = await errors.try(client.createCourseComponent(component))
+					const result = await errors.try(oneroster.createCourseComponent(component))
 					if (result.error) {
 						logger.error("failed to ingest component", { sourcedId: component.sourcedId, error: result.error })
 						throw result.error
