@@ -7,6 +7,29 @@ import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import type { CreateAssessmentTestInput } from "@/lib/qti"
 
+/**
+ * Replaces the identifier and title attributes on the root tag of a given XML string.
+ * @param xml The original XML string.
+ * @param rootTag The name of the root tag (e.g., "qti-assessment-item").
+ * @param newIdentifier The new identifier to set.
+ * @param newTitle The new title to set.
+ * @returns The XML string with updated attributes.
+ */
+function replaceRootAttributes(xml: string, rootTag: string, newIdentifier: string, newTitle: string): string {
+	// A robust regex to find the root tag and capture its attributes.
+	const rootTagRegex = new RegExp(`<(${rootTag})([^>]*?)>`)
+
+	// Escape the title to be safely used in an XML attribute.
+	const safeTitle = newTitle.replace(/"/g, "&quot;")
+
+	return xml.replace(rootTagRegex, (_match, tagName, existingAttrs) => {
+		// Replace attributes within the captured group.
+		let updatedAttrs = existingAttrs.replace(/identifier="[^"]*"/, `identifier="${newIdentifier}"`)
+		updatedAttrs = updatedAttrs.replace(/title="[^"]*"/, `title="${safeTitle}"`)
+		return `<${tagName}${updatedAttrs}>`
+	})
+}
+
 export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	{
 		id: "orchestrate-course-ingestion-to-qti",
@@ -34,7 +57,8 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				.select({
 					id: schema.niceQuestions.id,
 					xml: schema.niceQuestions.xml,
-					exerciseId: schema.niceQuestions.exerciseId
+					exerciseId: schema.niceQuestions.exerciseId,
+					exerciseTitle: schema.niceExercises.title
 				})
 				.from(schema.niceQuestions)
 				.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
@@ -110,18 +134,18 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				const items = allQuestions
 					.filter((q) => q.xml !== null)
 					.map((q) => {
-						const permanentIdentifier = `nice:${q.id}`
 						if (!q.xml) throw errors.new(`XML is null for question ${q.id}`)
-						const finalXml = q.xml.replace(/identifier="nice-tmp:[^"]*"/, `identifier="${permanentIdentifier}"`)
+						// Use the robust helper function.
+						const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice:${q.id}`, q.exerciseTitle)
 						return { xml: finalXml }
 					})
 
 				const stimuli = allArticles
 					.filter((a) => a.xml !== null)
 					.map((a) => {
-						const permanentIdentifier = `nice:${a.id}`
 						if (!a.xml) throw errors.new(`XML is null for article ${a.id}`)
-						const finalXml = a.xml.replace(/identifier="nice-tmp:[^"]*"/, `identifier="${permanentIdentifier}"`)
+						// Use the robust helper function.
+						const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice:${a.id}`, a.title)
 						return { xml: finalXml }
 					})
 
