@@ -834,16 +834,21 @@ export class OneRosterApiClient {
 	/**
 	 * Fetches ALL resources in the system, handling pagination.
 	 * This is necessary because the API does not support filtering resources by course.
+	 * @param filter Optional filter query string (e.g., "sourcedId~'nice:'")
 	 * @returns A promise that resolves to an array of all resources.
 	 */
-	public async getAllResources(): Promise<OneRosterResource[]> {
-		logger.info("OneRosterApiClient: fetching ALL resources")
+	public async getAllResources(filter?: string): Promise<OneRosterResource[]> {
+		logger.info("OneRosterApiClient: fetching ALL resources", { filter })
 		const allResources: OneRosterResource[] = []
 		let offset = 0
 		const limit = 100
 
 		while (true) {
-			const endpoint = `/ims/oneroster/resources/v1p2/resources?limit=${limit}&offset=${offset}`
+			let endpoint = `/ims/oneroster/resources/v1p2/resources?limit=${limit}&offset=${offset}`
+			if (filter) {
+				endpoint += `&filter=${encodeURIComponent(filter)}`
+			}
+
 			const response = await this.#request(endpoint, { method: "GET" }, GetResourcesResponseSchema)
 
 			// Handle both null response and empty array
@@ -879,7 +884,8 @@ export class OneRosterApiClient {
 		}
 
 		logger.info("OneRosterApiClient: finished fetching all resources", {
-			total: allResources.length
+			total: allResources.length,
+			filter
 		})
 
 		return allResources
@@ -888,16 +894,23 @@ export class OneRosterApiClient {
 	/**
 	 * Fetches ALL component-resource relationships in the system, handling pagination.
 	 * This is necessary because the API does not support filtering this endpoint by course or component.
+	 * @param filter Optional filter query string (e.g., "sourcedId~'ccr:'")
 	 * @returns A promise that resolves to an array of all component-resource relationships.
 	 */
-	public async getAllComponentResources(): Promise<z.infer<typeof OneRosterComponentResourceReadSchema>[]> {
-		logger.info("OneRosterApiClient: fetching ALL component resources")
+	public async getAllComponentResources(
+		filter?: string
+	): Promise<z.infer<typeof OneRosterComponentResourceReadSchema>[]> {
+		logger.info("OneRosterApiClient: fetching ALL component resources", { filter })
 		const allComponentResources: z.infer<typeof OneRosterComponentResourceReadSchema>[] = []
 		let offset = 0
 		const limit = 100
 
 		while (true) {
-			const endpoint = `/ims/oneroster/rostering/v1p2/courses/component-resources?limit=${limit}&offset=${offset}`
+			let endpoint = `/ims/oneroster/rostering/v1p2/courses/component-resources?limit=${limit}&offset=${offset}`
+			if (filter) {
+				endpoint += `&filter=${encodeURIComponent(filter)}`
+			}
+
 			const response = await this.#request(endpoint, { method: "GET" }, GetComponentResourcesResponseSchema)
 
 			if (!response || response.componentResources.length === 0) {
@@ -913,7 +926,8 @@ export class OneRosterApiClient {
 		}
 
 		logger.info("OneRosterApiClient: successfully fetched all component resources", {
-			count: allComponentResources.length
+			count: allComponentResources.length,
+			filter
 		})
 		return allComponentResources
 	}

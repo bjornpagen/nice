@@ -188,10 +188,10 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 	units.sort((a, b) => a.ordering - b.ordering)
 
 	// Fetch ALL resources and filter in memory
-	const allResourcesInSystem = await client.getAllResources()
+	const allResourcesInSystem = await client.getAllResources("sourcedId~'nice:'")
 
 	// Fetch ALL component resources and filter in memory
-	const allComponentResources = await client.getAllComponentResources()
+	const allComponentResources = await client.getAllComponentResources("sourcedId~'ccr:'")
 	const courseComponentIds = new Set(allComponents.map((c) => c.sourcedId))
 
 	const componentResources = allComponentResources.filter((cr) => courseComponentIds.has(cr.courseComponent.sourcedId))
