@@ -202,7 +202,7 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	const allResourcesInSystem = await client.getAllResources("sourcedId~'nice:'")
 
 	// Fetch ALL component resources and filter in memory for this unit and its children
-	const allComponentResources = await client.getAllComponentResources("sourcedId~'ccr:'")
+	const allComponentResources = await client.getAllComponentResources("sourcedId~'nice:'")
 
 	// Get resources for this unit specifically (assessments)
 	const unitComponentResources = allComponentResources.filter((cr) => cr.courseComponent.sourcedId === unitSourcedId)

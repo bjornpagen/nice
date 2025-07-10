@@ -894,7 +894,7 @@ export class OneRosterApiClient {
 	/**
 	 * Fetches ALL component-resource relationships in the system, handling pagination.
 	 * This is necessary because the API does not support filtering this endpoint by course or component.
-	 * @param filter Optional filter query string (e.g., "sourcedId~'ccr:'")
+	 * @param filter Optional filter query string (e.g., "sourcedId~'nice:'")
 	 * @returns A promise that resolves to an array of all component-resource relationships.
 	 */
 	public async getAllComponentResources(

@@ -189,7 +189,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 	const allResourcesInSystem = await client.getAllResources("sourcedId~'nice:'")
 
 	// Fetch ALL component resources and filter in memory
-	const allComponentResources = await client.getAllComponentResources("sourcedId~'ccr:'")
+	const allComponentResources = await client.getAllComponentResources("sourcedId~'nice:'")
 	const courseComponentIds = new Set(allComponents.map((c) => c.sourcedId))
 
 	const componentResources = allComponentResources.filter((cr) => courseComponentIds.has(cr.courseComponent.sourcedId))
