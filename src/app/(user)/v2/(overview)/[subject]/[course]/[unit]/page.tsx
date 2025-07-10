@@ -44,5 +44,13 @@ function getUnitData(subject: string, course: string, unit: string): UnitContent
 		return undefined
 	}
 
-	return unitData
+	const lessons = _.map(unitData.lessons, (lesson) => ({ ...lesson, type: "Lesson" as const }))
+	if (lessons.length === 0) {
+		logger.debug("no lessons found for unit", { subject, course, unit })
+	}
+
+	return {
+		...unitData,
+		lessons
+	}
 }

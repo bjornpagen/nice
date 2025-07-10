@@ -209,6 +209,15 @@ export function getCourseBlob(subject: string, course: string): Course {
 						data: {
 							sourceId: "3"
 						}
+					},
+					{
+						slug: "unit-test-1",
+						path: `/v2/${subject}/${course}/unit-1/lesson-2/unit-test-1`,
+						title: "Unit Test 1 Title",
+						type: "UnitTest",
+						data: {
+							sourceId: "4"
+						}
 					}
 				]
 			},

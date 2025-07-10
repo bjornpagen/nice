@@ -24,14 +24,11 @@ export function CourseContentUnitProficiencyItem({
 		active
 	})
 
-	const exercises = _.filter(
-		_.flatMap(unit.lessons, (lesson) => lesson.resources),
-		(resource) => resource.type === "Exercise"
-	)
-	logger.debug("exercises", { exercises: exercises.length })
-
-	const resources = [...exercises, ...unit.resources]
-	logger.debug("resources", { resources: resources.length })
+	const materials = [
+		...unit.lessons.flatMap((lesson) => lesson.resources).filter((resource) => resource.type === "Exercise"),
+		...unit.resources
+	]
+	logger.debug("materials", { materials: materials.length })
 
 	return (
 		<div className={cn(className, active ? "bg-blue-100" : "bg-gray-50")}>
@@ -49,16 +46,16 @@ export function CourseContentUnitProficiencyItem({
 				)}
 				{!active && (
 					<div className="flex items-center gap-2">
-						{resources.map((resource) => (
-							<ResourceProficiencyIcon key={resource.slug} resource={resource} active={false} />
+						{materials.map((material) => (
+							<MaterialProficiencyIcon key={material.slug} material={material} active={false} />
 						))}
 					</div>
 				)}
 			</div>
 			{active && (
 				<div className="ml-20 flex items-center gap-2">
-					{resources.map((resource, i) => (
-						<ResourceProficiencyIcon key={resource.slug} resource={resource} active={i === 0} />
+					{materials.map((material, i) => (
+						<MaterialProficiencyIcon key={material.slug} material={material} active={i === 0} />
 					))}
 				</div>
 			)}
@@ -66,39 +63,39 @@ export function CourseContentUnitProficiencyItem({
 	)
 }
 
-function ResourceProficiencyIcon({
-	resource,
+function MaterialProficiencyIcon({
+	material,
 	active = false
 }: {
-	resource:
+	material:
 		| CourseContentData["units"][number]["lessons"][number]["resources"][number]
 		| CourseContentData["units"][number]["resources"][number]
 	active?: boolean
 }) {
-	switch (resource.type) {
+	switch (material.type) {
 		case "Exercise":
 			return (
-				<Link href={resource.path} className="inline-flex items-center">
+				<Link href={material.path} className="inline-flex items-center">
 					<ProficiencyIcon variant="not-started" active={active} side="bottom">
-						<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {resource.title}</h2>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {material.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this exercise.</p>
 					</ProficiencyIcon>
 				</Link>
 			)
 		case "Quiz":
 			return (
-				<Link href={resource.path} className="inline-flex items-center">
+				<Link href={material.path} className="inline-flex items-center">
 					<ProficiencyIcon variant="quiz" active={active}>
-						<h2 className="text-md font-bold text-gray-800 capitalize">Quiz: {resource.title}</h2>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Quiz: {material.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this quiz.</p>
 					</ProficiencyIcon>
 				</Link>
 			)
 		case "UnitTest":
 			return (
-				<Link href={resource.path} className="inline-flex items-center">
+				<Link href={material.path} className="inline-flex items-center">
 					<ProficiencyIcon variant="unit-test" active={active}>
-						<h2 className="text-md font-bold text-gray-800 capitalize">Unit Test: {resource.title}</h2>
+						<h2 className="text-md font-bold text-gray-800 capitalize">Unit Test: {material.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this unit test.</p>
 					</ProficiencyIcon>
 				</Link>
