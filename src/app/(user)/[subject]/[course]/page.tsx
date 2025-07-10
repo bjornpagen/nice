@@ -371,6 +371,9 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 	}
 }
 
+// Force this page to be dynamic to avoid external API calls during build time
+export const dynamic = "force-dynamic"
+
 // The page component is NOT async. It orchestrates promises and renders immediately.
 export default function CoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
 	logger.info("course page: received request, rendering layout immediately")
