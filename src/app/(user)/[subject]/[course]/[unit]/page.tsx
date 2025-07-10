@@ -425,9 +425,6 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	}
 }
 
-// Force this page to be dynamic to avoid external API calls during build time
-export const dynamic = "force-dynamic"
-
 // Main unit page - renders layout immediately with streaming content
 export default function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
 	logger.info("unit page: received request, rendering layout immediately")

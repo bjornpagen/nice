@@ -163,9 +163,6 @@ export type Unit = Awaited<ReturnType<typeof getAllUnitsQuery.execute>>[0]
 export type AllSubject = Awaited<ReturnType<typeof getOneRosterClassesForSelector>>[number]
 export type AllCourse = AllSubject["courses"][number]
 
-// Force this page to be dynamic to avoid external API calls during build time
-export const dynamic = "force-dynamic"
-
 // 3. The page component is NOT async. It orchestrates promises.
 export default function CoursesPage() {
 	// 4. Get the auth promise and chain other fetches
