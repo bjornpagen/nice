@@ -1,28 +1,29 @@
 "use client"
 
-import * as errors from "@superbuilders/errors"
+import { notFound } from "next/navigation"
 import * as React from "react"
 import { ContentHeader } from "@/components/overview/content-header"
 import type { Lesson, LessonResource, Prettify, Unit, UnitResource } from "@/components/overview/types"
 import { UnitContentBreadcrumbs } from "./unit-content-breadcrumbs"
-import { UnitContentLessonOverview } from "./unit-content-lesson-overview"
+import { UnitContentLessonSection } from "./unit-content-lesson-section"
 import { UnitContentProficiencyItems } from "./unit-content-proficiency-items"
+import { UnitContentSection } from "./unit-content-section"
 
 export type UnitContentData = Prettify<
-	Pick<Unit, "path" | "title"> & {
+	Pick<Unit, "path" | "title" | "description"> & {
 		lessons: Array<
 			Pick<Lesson, "slug" | "path" | "title"> & {
-				resources: Array<Pick<LessonResource, "slug" | "path" | "title" | "type">>
+				resources: Array<LessonResource>
 			}
 		>
 		resources: Array<Pick<UnitResource, "slug" | "path" | "title" | "type">>
 	}
 >
 
-export function UnitContent({ unitPromise }: { unitPromise: Promise<UnitContentData> }) {
+export function UnitContent({ unitPromise }: { unitPromise: Promise<UnitContentData | undefined> }) {
 	const unit = React.use(unitPromise)
-	if (unit.path === "") {
-		throw errors.new("unit data is invalid")
+	if (unit == null) {
+		notFound()
 	}
 
 	return (
@@ -34,11 +35,19 @@ export function UnitContent({ unitPromise }: { unitPromise: Promise<UnitContentD
 				<UnitContentProficiencyItems unit={unit} className="mb-4" />
 			</div>
 
-			<div className="border-b border-gray-200 mb-3" />
+			{/* Separator */}
+			<div className="border-b border-gray-400 mb-3" />
+
+			<div id="unit-content-about-section">
+				<UnitContentSection>
+					<h2 className="text-lg font-medium mb-2">About this unit</h2>
+					<p className="text-sm text-gray-500">{unit.description}</p>
+				</UnitContentSection>
+			</div>
 
 			<div id="unit-content-lessons">
 				{unit.lessons.map((lesson, index) => (
-					<UnitContentLessonOverview key={index} lesson={lesson} />
+					<UnitContentLessonSection key={index} index={index} lesson={lesson} />
 				))}
 			</div>
 		</div>

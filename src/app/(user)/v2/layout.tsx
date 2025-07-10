@@ -1,11 +1,10 @@
 import { SignedIn } from "@clerk/nextjs"
 import { Banner } from "@/components/banner"
-import { Header } from "@/components/header"
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<div id="main-layout">
-			<Header dark className="fixed w-full z-50" />
+			{/* <Header dark className="fixed w-full z-50" /> */}
 
 			<div id="main-layout-content" className="pt-16">
 				<SignedIn>

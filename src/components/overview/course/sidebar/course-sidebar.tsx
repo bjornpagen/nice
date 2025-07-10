@@ -1,6 +1,6 @@
 "use client"
 
-import * as errors from "@superbuilders/errors"
+import { notFound } from "next/navigation"
 import * as React from "react"
 import type { Course, CourseResource, Lesson, Prettify, Unit } from "@/components/overview/types"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -24,12 +24,12 @@ export function CourseSidebar({
 	coursePromise,
 	className
 }: {
-	coursePromise: Promise<CourseSidebarData>
+	coursePromise: Promise<CourseSidebarData | undefined>
 	className?: string
 }) {
 	const course = React.use(coursePromise)
-	if (course.slug === "" || course.path === "" || course.title === "") {
-		throw errors.new("course data is invalid")
+	if (course == null) {
+		notFound()
 	}
 
 	const challenge: CourseSidebarData["resources"][number] | undefined = course.resources.find(

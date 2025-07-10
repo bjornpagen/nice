@@ -1,5 +1,5 @@
-import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import _ from "lodash"
 import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
@@ -35,12 +35,13 @@ function UnitPageErrorFallback({ className }: { className?: string }) {
 	)
 }
 
-function getUnitData(subject: string, course: string, unit: string): UnitContentData {
+function getUnitData(subject: string, course: string, unit: string): UnitContentData | undefined {
 	logger.debug("retrieving unit data", { subject, course, unit })
 
-	const unitData = getCourseBlob(subject, course).units.find((u) => u.slug === unit)
-	if (!unitData) {
-		throw errors.new(`unit not found: ${unit}`)
+	const unitData = _.find(getCourseBlob(subject, course).units, (u) => u.slug === unit)
+	if (unitData == null) {
+		logger.error("unit not found", { subject, course, unit })
+		return undefined
 	}
 
 	return unitData

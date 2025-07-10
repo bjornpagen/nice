@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import _ from "lodash"
 import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
@@ -39,8 +40,14 @@ function CoursePageErrorFallback({ className }: { className?: string }) {
 	)
 }
 
-function getCourseData(subject: string, course: string): Course {
+function getCourseData(subject: string, course: string): Course | undefined {
 	logger.debug("retrieving course data", { subject, course })
 
-	return getCourseBlob(subject, course)
+	const blob = getCourseBlob(subject, course)
+	logger.debug("retrieving course data: blob", { keys: _.keys(blob) })
+
+	const data = { ..._.pick(blob, ["slug", "path", "title", "description", "resources"]), units: blob.units }
+	logger.debug("retrieving course data: data", { keys: _.keys(data), units: data.units.length })
+
+	return data
 }

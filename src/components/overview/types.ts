@@ -6,12 +6,19 @@ export type Prettify<T> = {
 } & {}
 
 /**
+ * QuestionResourceData is a type that represents a lesson resource data.
+ */
+export type QuestionExerciseData = Prettify<{
+	sourceId: string
+}>
+
+/**
  * ArticleLessonResource is a type that represents an article lesson resource.
  */
 export type ArticleLessonResource = Prettify<{
 	type: "Article"
 	data: {
-		id: string
+		sourceId: string
 	}
 }>
 
@@ -21,7 +28,8 @@ export type ArticleLessonResource = Prettify<{
 export type ExerciseLessonResource = Prettify<{
 	type: "Exercise"
 	data: {
-		id: string
+		sourceId: string
+		questions: QuestionExerciseData[]
 	}
 }>
 
@@ -31,7 +39,7 @@ export type ExerciseLessonResource = Prettify<{
 export type VideoLessonResource = Prettify<{
 	type: "Video"
 	data: {
-		id: string
+		sourceId: string
 	}
 }>
 
@@ -62,7 +70,7 @@ export type Lesson = Prettify<{
 export type QuizUnitResource = Prettify<{
 	type: "Quiz"
 	data: {
-		id: string
+		sourceId: string
 	}
 }>
 
@@ -72,7 +80,7 @@ export type QuizUnitResource = Prettify<{
 export type UnitTestUnitResource = Prettify<{
 	type: "UnitTest"
 	data: {
-		id: string
+		sourceId: string
 	}
 }>
 
@@ -105,7 +113,7 @@ export type Unit = Prettify<{
 export type CourseChallengeResource = Prettify<{
 	type: "CourseChallenge"
 	data: {
-		id: string
+		sourceId: string
 	}
 }>
 
@@ -159,7 +167,17 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Exercise 1 Title",
 								type: "Exercise",
 								data: {
-									id: "1"
+									sourceId: "1",
+									questions: []
+								}
+							},
+							{
+								slug: "video-1",
+								path: `/v2/${subject}/${course}/unit-1/lesson-1/video-1`,
+								title: "Video 1 Title",
+								type: "Video",
+								data: {
+									sourceId: "1"
 								}
 							}
 						]
@@ -175,7 +193,8 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Exercise 2 Title",
 								type: "Exercise",
 								data: {
-									id: "2"
+									sourceId: "2",
+									questions: []
 								}
 							}
 						]
@@ -188,7 +207,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 						title: "Quiz 1 Title",
 						type: "Quiz",
 						data: {
-							id: "3"
+							sourceId: "3"
 						}
 					}
 				]
@@ -210,7 +229,28 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Exercise 3 Title",
 								type: "Exercise",
 								data: {
-									id: "3"
+									sourceId: "3",
+									questions: []
+								}
+							},
+							{
+								slug: "exercise-4",
+								path: `/v2/${subject}/${course}/unit-1/lesson-3/exercise-4`,
+								title: "Exercise 4 Title",
+								type: "Exercise",
+								data: {
+									sourceId: "4",
+									questions: [
+										{
+											sourceId: "1"
+										},
+										{
+											sourceId: "2"
+										},
+										{
+											sourceId: "3"
+										}
+									]
 								}
 							}
 						]
@@ -226,7 +266,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Article 1 Title",
 								type: "Article",
 								data: {
-									id: "4"
+									sourceId: "4"
 								}
 							}
 						]
@@ -239,7 +279,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 						title: "Quiz 2 Title",
 						type: "Quiz",
 						data: {
-							id: "4"
+							sourceId: "4"
 						}
 					}
 				]
@@ -316,7 +356,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				title: "Course Challenge",
 				type: "CourseChallenge",
 				data: {
-					id: "1"
+					sourceId: "1"
 				}
 			}
 		]

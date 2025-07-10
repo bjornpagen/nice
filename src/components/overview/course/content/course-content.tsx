@@ -1,6 +1,6 @@
 "use client"
 
-import * as errors from "@superbuilders/errors"
+import { notFound } from "next/navigation"
 import * as React from "react"
 import { ContentHeader } from "@/components/overview/content-header"
 import type {
@@ -34,10 +34,10 @@ export type CourseContentData = Prettify<
 	}
 >
 
-export function CourseContent({ coursePromise }: { coursePromise: Promise<CourseContentData> }) {
+export function CourseContent({ coursePromise }: { coursePromise: Promise<CourseContentData | undefined> }) {
 	const course = React.use(coursePromise)
-	if (course.path === "") {
-		throw errors.new("course data is invalid")
+	if (course == null) {
+		notFound()
 	}
 
 	const challenge: CourseContentData["resources"][number] | undefined = course.resources.find(

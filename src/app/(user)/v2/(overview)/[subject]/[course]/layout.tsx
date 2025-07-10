@@ -61,7 +61,7 @@ function CourseLayoutErrorFallback({ className }: { className?: string }) {
 	)
 }
 
-function getCourseSidebarData(subject: string, course: string): CourseSidebarData {
+function getCourseSidebarData(subject: string, course: string): CourseSidebarData | undefined {
 	logger.debug("retrieving course data", { subject, course })
 
 	const blob = getCourseBlob(subject, course)
