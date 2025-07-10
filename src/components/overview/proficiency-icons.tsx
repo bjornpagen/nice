@@ -56,7 +56,7 @@ const variants = {
 		},
 		bg: {
 			color: "bg-white",
-			border: "border-1 border-gray-500",
+			border: "border-1 border-gray-500 hover:ring-2 hover:ring-offset-0 hover:ring-gray-400",
 			fill: 0
 		}
 	},
