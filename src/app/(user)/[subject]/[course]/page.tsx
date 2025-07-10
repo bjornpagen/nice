@@ -96,13 +96,11 @@ export type CourseData = {
 	challenges: CourseChallenge[]
 }
 
-// Helper function to extract slug from sourcedId (e.g., "nice:algebra-basics" -> "algebra-basics")
+// Helper function to extract slug from sourcedId (e.g., "nice:some-slug:exercise" -> "some-slug")
 function extractSlugFromSourcedId(sourcedId: string): string {
 	let slug = sourcedId.startsWith("nice:") ? sourcedId.substring(5) : sourcedId
-	// Remove "-exercise" suffix if present (for exercise resources)
-	if (slug.endsWith("-exercise")) {
-		slug = slug.substring(0, slug.length - 9)
-	}
+	// Remove colon-based type suffix (e.g., ":exercise", ":video", ":article")
+	slug = slug.replace(/:(exercise|video|article)$/, "")
 	return slug
 }
 
@@ -317,23 +315,18 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 					})
 				} else if (resourceType === "qti" && subType === "qti-test" && !lessonType) {
 					// This is an exercise (test without lessonType means it's an exercise)
-					// Only include exercises whose sourcedId ends with "-exercise"
-					if (resource.sourcedId.endsWith("-exercise")) {
-						logger.debug("including exercise with new format", { sourcedId: resource.sourcedId })
-						exercises.push({
-							id: resource.sourcedId,
-							title: resource.title,
-							path:
-								getMetadataValue(resource.metadata, "path") ||
-								`/${params.subject}/${params.course}/${extractSlugFromSourcedId(lesson.unitId)}/${lesson.slug}/e/${resourceSlug}`,
-							slug: resourceSlug,
-							description: getMetadataValue(resource.metadata, "description"),
-							questions: [], // Will be fetched from QTI server
-							ordering
-						})
-					} else {
-						logger.debug("excluding exercise with old format", { sourcedId: resource.sourcedId })
-					}
+					logger.debug("including exercise with new format", { sourcedId: resource.sourcedId })
+					exercises.push({
+						id: resource.sourcedId,
+						title: resource.title,
+						path:
+							getMetadataValue(resource.metadata, "path") ||
+							`/${params.subject}/${params.course}/${extractSlugFromSourcedId(lesson.unitId)}/${lesson.slug}/e/${resourceSlug}`,
+						slug: resourceSlug,
+						description: getMetadataValue(resource.metadata, "description"),
+						questions: [], // Will be fetched from QTI server
+						ordering
+					})
 				}
 			}
 

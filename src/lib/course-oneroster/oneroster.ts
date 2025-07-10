@@ -249,8 +249,8 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 			for (const lc of lessonContentLinks) {
 				const content = contentMap.get(lc.contentId)
 				if (content) {
-					const contentSourcedId =
-						lc.contentType === "Exercise" ? `nice:${content.slug}-exercise` : `nice:${content.slug}`
+					const resourceType = lc.contentType.toLowerCase()
+					const contentSourcedId = `nice:${content.slug}:${resourceType}`
 					if (!resourceSet.has(contentSourcedId)) {
 						// Construct metadata based on content type
 						let metadata: Record<string, unknown> = {
@@ -305,10 +305,8 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 						resourceSet.add(contentSourcedId)
 					}
 
-					const componentResourceSlug = lc.contentType === "Exercise" ? `${content.slug}-exercise` : content.slug
-
 					onerosterPayload.componentResources.push({
-						sourcedId: `ccr:${lesson.slug}:${componentResourceSlug}`,
+						sourcedId: `nice:${lesson.slug}:${content.slug}`,
 						status: "active",
 						title: content.title,
 						courseComponent: { sourcedId: `nice:${lesson.slug}`, type: "courseComponent" },
@@ -349,7 +347,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 			}
 
 			onerosterPayload.componentResources.push({
-				sourcedId: `ccr:${unit.slug}:${assessment.slug}`,
+				sourcedId: `nice:${unit.slug}:${assessment.slug}`,
 				status: "active",
 				title: assessment.title,
 				courseComponent: { sourcedId: `nice:${unit.slug}`, type: "courseComponent" },
