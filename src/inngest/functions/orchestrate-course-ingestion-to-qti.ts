@@ -5,6 +5,7 @@ import { and, eq, inArray, isNotNull } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
+import type { CreateAssessmentTestInput } from "@/lib/qti"
 
 export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	{
@@ -27,86 +28,159 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		}
 		const unitIds = units.map((u) => u.id)
 
-		const allQuestions = await db
-			.select({
-				id: schema.niceQuestions.id,
-				xml: schema.niceQuestions.xml
-			})
-			.from(schema.niceQuestions)
-			.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
-			.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
-			.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-			.where(and(inArray(schema.niceLessons.unitId, unitIds), isNotNull(schema.niceQuestions.xml)))
+		// Fetch all content entities in parallel for efficiency.
+		const [allQuestions, allArticles, allAssessments, allExercises] = await Promise.all([
+			db
+				.select({
+					id: schema.niceQuestions.id,
+					xml: schema.niceQuestions.xml,
+					exerciseId: schema.niceQuestions.exerciseId
+				})
+				.from(schema.niceQuestions)
+				.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+				.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+				.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+				.where(and(inArray(schema.niceLessons.unitId, unitIds), isNotNull(schema.niceQuestions.xml))),
 
-		const allArticles = await db
-			.select({
-				id: schema.niceArticles.id,
-				xml: schema.niceArticles.xml,
-				title: schema.niceArticles.title
-			})
-			.from(schema.niceArticles)
-			.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
-			.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-			.where(and(inArray(schema.niceLessons.unitId, unitIds), isNotNull(schema.niceArticles.xml)))
+			db
+				.select({
+					id: schema.niceArticles.id,
+					xml: schema.niceArticles.xml,
+					title: schema.niceArticles.title
+				})
+				.from(schema.niceArticles)
+				.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
+				.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+				.where(and(inArray(schema.niceLessons.unitId, unitIds), isNotNull(schema.niceArticles.xml))),
 
-		// Step 2: Fetch assessment data for building tests.
-		const assessmentsWithExercises = await db
-			.select({
-				assessmentId: schema.niceAssessments.id,
-				assessmentTitle: schema.niceAssessments.title,
-				assessmentType: schema.niceAssessments.type,
-				questionId: schema.niceQuestions.id
-			})
-			.from(schema.niceAssessments)
-			.innerJoin(
-				schema.niceAssessmentExercises,
-				eq(schema.niceAssessments.id, schema.niceAssessmentExercises.assessmentId)
-			)
-			.innerJoin(schema.niceQuestions, eq(schema.niceAssessmentExercises.exerciseId, schema.niceQuestions.exerciseId))
-			.where(inArray(schema.niceAssessments.parentId, unitIds))
+			// Fetch assessments with their associated exercises
+			db
+				.select({
+					assessmentId: schema.niceAssessments.id,
+					assessmentTitle: schema.niceAssessments.title,
+					assessmentType: schema.niceAssessments.type,
+					exerciseId: schema.niceAssessmentExercises.exerciseId
+				})
+				.from(schema.niceAssessments)
+				.innerJoin(
+					schema.niceAssessmentExercises,
+					eq(schema.niceAssessments.id, schema.niceAssessmentExercises.assessmentId)
+				)
+				.where(inArray(schema.niceAssessments.parentId, unitIds)),
 
-		// Group questions by assessment
-		const assessmentMap = new Map<
-			string,
-			{
-				title: string
-				type: string
-				questionIds: string[]
+			db.query.niceExercises.findMany({
+				where: inArray(
+					schema.niceExercises.id,
+					db
+						.selectDistinct({ id: schema.niceLessonContents.contentId })
+						.from(schema.niceLessonContents)
+						.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+						.where(
+							and(eq(schema.niceLessonContents.contentType, "Exercise"), inArray(schema.niceLessons.unitId, unitIds))
+						)
+				)
+			})
+		])
+
+		// Group questions by exerciseId for efficient lookup.
+		const questionsByExerciseId = new Map<string, string[]>()
+		for (const q of allQuestions) {
+			if (!questionsByExerciseId.has(q.exerciseId)) {
+				questionsByExerciseId.set(q.exerciseId, [])
 			}
-		>()
+			questionsByExerciseId.get(q.exerciseId)?.push(q.id)
+		}
 
-		for (const row of assessmentsWithExercises) {
+		// Group assessments and their exercises
+		const assessmentMap = new Map<string, { title: string; type: string; exerciseIds: string[] }>()
+		for (const row of allAssessments) {
 			if (!assessmentMap.has(row.assessmentId)) {
 				assessmentMap.set(row.assessmentId, {
 					title: row.assessmentTitle,
 					type: row.assessmentType,
-					questionIds: []
+					exerciseIds: []
 				})
 			}
-			assessmentMap.get(row.assessmentId)?.questionIds.push(row.questionId)
+			assessmentMap.get(row.assessmentId)?.exerciseIds.push(row.exerciseId)
 		}
 
 		// Step 3: Assemble the JSON payloads from the fetched data.
 		const { assessmentItems, assessmentStimuli, assessmentTests } = await step.run(
 			"assemble-json-payloads-from-db",
 			async () => {
-				const items = allQuestions.map((q) => ({
-					identifier: `nice:${q.id}`,
-					xml: q.xml
-				}))
+				// Create payloads for assessmentItems and assessmentStimuli (this part is correct).
+				const items = allQuestions
+					.filter((q) => q.xml !== null)
+					.map((q) => ({
+						identifier: `nice:${q.id}`,
+						xml: q.xml
+					}))
+				const stimuli = allArticles
+					.filter((a) => a.xml !== null)
+					.map((a) => ({
+						identifier: `nice:${a.id}`,
+						title: a.title,
+						content: a.xml
+					}))
 
-				const stimuli = allArticles.map((a) => ({
-					identifier: `nice:${a.id}`,
-					title: a.title,
-					content: a.xml
-				}))
+				// ✅ REFACTORED: Build fully compliant test objects.
+				const buildTestObject = (id: string, title: string, itemIds: string[]): CreateAssessmentTestInput => {
+					return {
+						identifier: `nice:${id}`,
+						title: title,
+						"qti-outcome-declaration": [
+							{
+								identifier: "SCORE",
+								cardinality: "single",
+								baseType: "float"
+							},
+							{
+								identifier: "MAX_SCORE",
+								cardinality: "single",
+								baseType: "float"
+							}
+						],
+						"qti-test-part": [
+							{
+								identifier: "PART_1",
+								navigationMode: "nonlinear",
+								submissionMode: "individual",
+								"qti-assessment-section": [
+									{
+										identifier: "SECTION_1",
+										title: "Main Section",
+										visible: true,
+										"qti-assessment-item-ref": itemIds.map((itemId) => ({
+											identifier: `nice:${itemId}`,
+											href: `/assessment-items/nice:${itemId}`
+										}))
+									}
+								]
+							}
+						]
+					}
+				}
 
-				const tests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => ({
-					identifier: `nice:${assessmentId}`,
-					title: data.title,
-					type: data.type,
-					items: data.questionIds.map((qId) => `nice:${qId}`)
-				}))
+				// Create payloads for explicit assessments (Quiz, UnitTest).
+				const explicitTests = Array.from(assessmentMap.entries())
+					.map(([assessmentId, data]) => {
+						const questionIds = data.exerciseIds.flatMap((exerciseId) => questionsByExerciseId.get(exerciseId) || [])
+						if (questionIds.length === 0) return null
+						return buildTestObject(assessmentId, data.title, questionIds)
+					})
+					.filter((test): test is CreateAssessmentTestInput => test !== null)
+
+				// Create payloads for individual exercises (as "PracticeTest").
+				const exerciseTests = allExercises
+					.map((exercise) => {
+						const questionIds = questionsByExerciseId.get(exercise.id) || []
+						if (questionIds.length === 0) return null
+						return buildTestObject(exercise.id, exercise.title, questionIds)
+					})
+					.filter((test): test is CreateAssessmentTestInput => test !== null)
+
+				// Combine all tests into a single list.
+				const tests = [...explicitTests, ...exerciseTests]
 
 				return { assessmentItems: items, assessmentStimuli: stimuli, assessmentTests: tests }
 			}

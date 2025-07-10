@@ -2,9 +2,7 @@ import * as errors from "@superbuilders/errors"
 import { and, eq, inArray, isNull } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
-import { inngest } from "@/inngest/client"
-import { convertPerseusArticleToQtiStimulus } from "./qti/convert-perseus-article-to-qti-stimulus"
-import { convertPerseusQuestionToQtiItem } from "./qti/convert-perseus-question-to-qti-item"
+import { type Events, inngest } from "@/inngest/client"
 
 export const orchestrateCourseXmlGeneration = inngest.createFunction(
 	{
@@ -51,38 +49,43 @@ export const orchestrateCourseXmlGeneration = inngest.createFunction(
 			questions: questionsToGenerate.length
 		})
 
-		// Step 3: Create invocation promises for each piece of content.
-		const articleInvocations = articlesToGenerate.map((article) =>
-			step.invoke(`generate-article-xml-${article.id}`, {
-				function: convertPerseusArticleToQtiStimulus,
-				data: { articleId: article.id }
+		// Step 3: Create event payloads instead of invocation promises.
+		const articleEvents: Events["qti/stimulus.migrate"][] = articlesToGenerate.map((article) => ({
+			name: "qti/stimulus.migrate",
+			data: { articleId: article.id }
+		}))
+
+		const questionEvents: Events["qti/item.migrate"][] = questionsToGenerate.map((question) => ({
+			name: "qti/item.migrate",
+			data: { questionId: question.id }
+		}))
+
+		const allEvents = [...articleEvents, ...questionEvents]
+
+		if (allEvents.length > 0) {
+			// Step 4: Send all events in a single, non-blocking step.
+			await step.run("send-generation-events", async () => {
+				// We chunk the send call to avoid hitting Inngest's payload size limits.
+				const BATCH_SIZE = 500
+				for (let i = 0; i < allEvents.length; i += BATCH_SIZE) {
+					const batch = allEvents.slice(i, i + BATCH_SIZE)
+					await inngest.send(batch)
+					logger.debug("sent event batch", {
+						batchNumber: i / BATCH_SIZE + 1,
+						size: batch.length
+					})
+				}
 			})
-		)
+		}
 
-		const questionInvocations = questionsToGenerate.map((question) =>
-			step.invoke(`generate-question-xml-${question.id}`, {
-				function: convertPerseusQuestionToQtiItem,
-				data: { questionId: question.id }
-			})
-		)
-
-		// Step 4: Await all generation tasks to complete.
-		await step.run("await-all-xml-generation", async () => {
-			const allInvocations = [...articleInvocations, ...questionInvocations]
-			if (allInvocations.length > 0) {
-				await Promise.all(allInvocations)
-			}
-			return { generatedCount: allInvocations.length }
-		})
-
-		logger.info("completed qti xml generation for course", {
+		logger.info("successfully dispatched all qti xml generation events for course", {
 			courseId,
-			articlesGenerated: articleInvocations.length,
-			questionsGenerated: questionInvocations.length
+			articlesDispatched: articleEvents.length,
+			questionsDispatched: questionEvents.length
 		})
 
 		return {
-			message: `Successfully generated QTI XML for ${articleInvocations.length} articles and ${questionInvocations.length} questions.`,
+			message: `Successfully dispatched ${articleEvents.length} article and ${questionEvents.length} question generation events.`,
 			courseId
 		}
 	}

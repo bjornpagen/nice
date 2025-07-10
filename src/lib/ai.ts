@@ -221,7 +221,7 @@ export async function generateQtiFromPerseus(
 	}
 
 	const response = result.data
-	let responseText = response.response.text()
+	const responseText = response.response.text()
 
 	logger.debug("received gemini response", {
 		responseLength: responseText?.length || 0,
@@ -233,44 +233,44 @@ export async function generateQtiFromPerseus(
 		throw errors.new("empty ai response")
 	}
 
-	// Defensively clean the response to remove markdown fences and trim whitespace.
-	const originalLength = responseText.length
-	responseText = responseText.replace(/```xml\n?|```/g, "").trim()
+	// NEW ROBUST EXTRACTION:
+	// This single regex replaces the previous brittle cleaning and matching steps.
+	// It robustly finds the first complete XML block, ignoring any surrounding text,
+	// markdown, or quotes from the AI.
+	//
+	// - `(<\?xml[^>]*\?>)?`   : Group 1, optional. Matches the XML declaration. `[^>]*` is a safe way to match attributes.
+	// - `\s*`                 : Matches optional whitespace between the declaration and the root tag.
+	// - `<(${rootTag})`       : Matches the opening of the root tag and captures the tag name (e.g., "qti-assessment-item") in Group 2.
+	// - `[^>]*>`              : Matches the rest of the opening tag's attributes.
+	// - `[\s\S]*?`            : Non-greedily matches all characters, including newlines, for the tag's content.
+	// - `<\/\\2>`             : Matches the closing tag by using a backreference (`\2`) to the captured root tag name, ensuring a correct and complete closing tag.
+	const extractionRegex = new RegExp(`(<\\?xml[^>]*\\?>)?\\s*<(${rootTag})[^>]*>[\\s\\S]*?<\\/\\2>`)
+	const xmlMatch = responseText.match(extractionRegex)
 
-	logger.debug("cleaned response text", {
-		originalLength,
-		cleanedLength: responseText.length,
-		removedChars: originalLength - responseText.length
-	})
-
-	// Find the XML content, which may or may not start with an <?xml ...?> declaration.
-	// This regex is flexible enough to handle both cases.
-	logger.debug("searching for xml content", { rootTag })
-
-	const xmlMatch = responseText.match(new RegExp(`(<\?xml[\\s\\S]*?\\?>)?\\s*<${rootTag}[\\s\\S]*?<\\/${rootTag}>`))
-
-	logger.debug("xml match result", {
+	logger.debug("robust xml extraction result", {
 		foundMatch: !!xmlMatch?.[0],
 		matchLength: xmlMatch?.[0]?.length || 0,
-		hasXmlDeclaration: !!xmlMatch?.[0]?.startsWith("<?xml")
+		hasXmlDeclaration: !!xmlMatch?.[1]
 	})
 
-	if (!xmlMatch?.[0]) {
-		logger.error("ai response did not contain valid qti xml", {
-			response: responseText.substring(0, 100),
-			responseEnd: responseText.substring(responseText.length - 100),
+	if (!xmlMatch || !xmlMatch[0]) {
+		logger.error("robust extraction failed: ai response did not contain valid qti xml", {
+			response: responseText.substring(0, 200),
+			responseEnd: responseText.substring(responseText.length - 200),
 			entireResponse: responseText,
 			rootTag
 		})
-		throw errors.new("invalid ai xml output")
+		throw errors.new("invalid ai xml output: robust extraction failed")
 	}
 
+	const extractedXml = xmlMatch[0].trim()
+
 	logger.debug("successfully extracted qti xml", {
-		xmlLength: xmlMatch[0].length,
+		xmlLength: extractedXml.length,
 		rootTag
 	})
 
-	return xmlMatch[0]
+	return extractedXml
 }
 
 /**
