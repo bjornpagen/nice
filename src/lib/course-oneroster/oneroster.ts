@@ -184,7 +184,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 
 	const onerosterPayload: OneRosterPayload = {
 		course: {
-			sourcedId: `nice:${course.slug}`,
+			sourcedId: `nice:${course.id}`,
 			status: "active",
 			title: course.title,
 			subjects: [subjectTitle],
@@ -196,15 +196,15 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 				khanSlug: course.slug,
 				khanTitle: course.title,
 				khanDescription: course.description,
-				khanPath: course.path
+				path: course.path
 			}
 		},
 		// ADDED: class object generation
 		class: {
-			sourcedId: `nice:${course.slug}`,
+			sourcedId: `nice:${course.id}`,
 			title: course.title,
 			classType: "scheduled",
-			course: { sourcedId: `nice:${course.slug}`, type: "course" },
+			course: { sourcedId: `nice:${course.id}`, type: "course" },
 			school: { sourcedId: ORG_SOURCED_ID, type: "org" },
 			terms: [{ sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" }]
 		},
@@ -217,35 +217,35 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 
 	for (const unit of units.sort((a, b) => a.ordering - b.ordering)) {
 		onerosterPayload.courseComponents.push({
-			sourcedId: `nice:${unit.slug}`,
+			sourcedId: `nice:${unit.id}`,
 			status: "active",
 			title: unit.title,
-			course: { sourcedId: `nice:${course.slug}`, type: "course" },
+			course: { sourcedId: `nice:${course.id}`, type: "course" },
 			sortOrder: unit.ordering,
 			metadata: {
 				khanId: unit.id,
 				khanSlug: unit.slug,
 				khanTitle: unit.title,
 				khanDescription: unit.description,
-				khanPath: unit.path
+				path: unit.path
 			}
 		})
 
 		const unitLessons = lessons.filter((l) => l.unitId === unit.id).sort((a, b) => a.ordering - b.ordering)
 		for (const lesson of unitLessons) {
 			onerosterPayload.courseComponents.push({
-				sourcedId: `nice:${lesson.slug}`,
+				sourcedId: `nice:${lesson.id}`,
 				status: "active",
 				title: lesson.title,
-				course: { sourcedId: `nice:${course.slug}`, type: "course" },
-				parent: { sourcedId: `nice:${unit.slug}`, type: "courseComponent" },
+				course: { sourcedId: `nice:${course.id}`, type: "course" },
+				parent: { sourcedId: `nice:${unit.id}`, type: "courseComponent" },
 				sortOrder: lesson.ordering,
 				metadata: {
 					khanId: lesson.id,
 					khanSlug: lesson.slug,
 					khanTitle: lesson.title,
 					khanDescription: lesson.description,
-					khanPath: lesson.path
+					path: lesson.path
 				}
 			})
 
@@ -255,8 +255,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 			for (const lc of lessonContentLinks) {
 				const content = contentMap.get(lc.contentId)
 				if (content) {
-					const resourceType = lc.contentType.toLowerCase()
-					const contentSourcedId = `nice:${content.slug}:${resourceType}`
+					const contentSourcedId = `nice:${content.id}`
 					if (!resourceSet.has(contentSourcedId)) {
 						// Construct metadata based on content type
 						let metadata: Record<string, unknown> = {
@@ -264,7 +263,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 							khanSlug: content.slug,
 							khanTitle: content.title,
 							khanDescription: content.description || "",
-							khanPath: content.path
+							path: content.path
 						}
 
 						if (lc.contentType === "Article") {
@@ -314,10 +313,10 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 					}
 
 					onerosterPayload.componentResources.push({
-						sourcedId: `nice:${lesson.slug}:${content.slug}`,
+						sourcedId: `nice:${lesson.id}:${content.id}`,
 						status: "active",
 						title: content.title,
-						courseComponent: { sourcedId: `nice:${lesson.slug}`, type: "courseComponent" },
+						courseComponent: { sourcedId: `nice:${lesson.id}`, type: "courseComponent" },
 						resource: { sourcedId: contentSourcedId, type: "resource" },
 						sortOrder: lc.ordering
 					})
@@ -327,7 +326,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 
 		const unitAssessments = assessments.filter((a) => a.parentId === unit.id).sort((a, b) => a.ordering - b.ordering)
 		for (const assessment of unitAssessments) {
-			const assessmentSourcedId = `nice:${assessment.slug}`
+			const assessmentSourcedId = `nice:${assessment.id}`
 			if (!resourceSet.has(assessmentSourcedId)) {
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
@@ -350,7 +349,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 						khanSlug: assessment.slug,
 						khanTitle: assessment.title,
 						khanDescription: assessment.description,
-						khanPath: assessment.path,
+						path: assessment.path,
 						khanLessonType: assessment.type.toLowerCase()
 					}
 				})
@@ -358,10 +357,10 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 			}
 
 			onerosterPayload.componentResources.push({
-				sourcedId: `nice:${unit.slug}:${assessment.slug}`,
+				sourcedId: `nice:${unit.id}:${assessment.id}`,
 				status: "active",
 				title: assessment.title,
-				courseComponent: { sourcedId: `nice:${unit.slug}`, type: "courseComponent" },
+				courseComponent: { sourcedId: `nice:${unit.id}`, type: "courseComponent" },
 				resource: { sourcedId: assessmentSourcedId, type: "resource" },
 				sortOrder: assessment.ordering
 			})
