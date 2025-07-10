@@ -45,7 +45,7 @@ function ResourceProficiencyIcon({
 		case "Exercise":
 			return (
 				<Link href={resource.path} className="inline-flex items-center">
-					<ProficiencyIcon variant="not-started">
+					<ProficiencyIcon variant="not-started" side="bottom">
 						<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {resource.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this exercise.</p>
 					</ProficiencyIcon>
