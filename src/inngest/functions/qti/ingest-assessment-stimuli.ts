@@ -36,7 +36,7 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 			const contentMatch = stimulus.xml.match(/<qti-stimulus-body>([\s\S]*?)<\/qti-stimulus-body>/)
 			const content = contentMatch?.[1]?.trim() ?? ""
 
-			const payload = { identifier, title, content }
+			const payload = { identifier, title, content, metadata: stimulus.metadata }
 
 			const updateResult = await errors.try(client.updateStimulus(identifier, payload))
 

@@ -34,12 +34,14 @@ export const ingestAssessmentItems = inngest.createFunction(
 			}
 
 			// Execute upsert logic directly without step.run wrapper
-			const updateResult = await errors.try(client.updateAssessmentItem({ identifier, xml: item.xml }))
+			const updateResult = await errors.try(
+				client.updateAssessmentItem({ identifier, xml: item.xml, metadata: item.metadata })
+			)
 
 			if (updateResult.error) {
 				if (errors.is(updateResult.error, ErrQtiNotFound)) {
 					logger.info("item not found, creating new one", { identifier })
-					const createResult = await errors.try(client.createAssessmentItem({ xml: item.xml }))
+					const createResult = await errors.try(client.createAssessmentItem({ xml: item.xml, metadata: item.metadata }))
 					if (createResult.error) {
 						logger.error("failed to create item after 404 on update", { identifier, error: createResult.error })
 						throw createResult.error

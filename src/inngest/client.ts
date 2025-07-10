@@ -5,7 +5,8 @@ import type { CreateAssessmentTestInput } from "@/lib/qti"
 
 // Helper schema for the XML-based item input
 const CreateItemInputSchema = z.object({
-	xml: z.string().min(1)
+	xml: z.string().min(1),
+	metadata: z.record(z.any()).optional()
 })
 
 const events = {

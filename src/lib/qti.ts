@@ -207,13 +207,15 @@ const SearchResponseSchema = z.object({
 export type SearchAssessmentItemsResponse = z.infer<typeof SearchResponseSchema>
 
 const CreateItemInputSchema = z.object({
-	xml: z.string().min(1, { message: "XML content cannot be empty" })
+	xml: z.string().min(1, { message: "XML content cannot be empty" }),
+	metadata: z.record(z.any()).optional()
 })
 export type CreateItemInput = z.infer<typeof CreateItemInputSchema>
 
 const UpdateItemInputSchema = z.object({
 	identifier: z.string().min(1),
-	xml: z.string().min(1)
+	xml: z.string().min(1),
+	metadata: z.record(z.any()).optional()
 })
 export type UpdateItemInput = z.infer<typeof UpdateItemInputSchema>
 
@@ -291,7 +293,8 @@ const CreateAssessmentTestInputSchema = z.object({
 	identifier: z.string(),
 	title: z.string(),
 	"qti-test-part": z.array(TestPartSchema),
-	"qti-outcome-declaration": z.array(OutcomeDeclarationSchema).optional()
+	"qti-outcome-declaration": z.array(OutcomeDeclarationSchema).optional(),
+	metadata: z.record(z.any()).optional()
 })
 export type CreateAssessmentTestInput = z.infer<typeof CreateAssessmentTestInputSchema>
 
@@ -626,7 +629,8 @@ export class QtiApiClient {
 		// The API requires a JSON payload specifying the format is "xml".
 		const payload = {
 			format: "xml",
-			xml: validation.data.xml
+			xml: validation.data.xml,
+			metadata: validation.data.metadata
 		}
 
 		return this.#request<AssessmentItem>(
@@ -655,12 +659,13 @@ export class QtiApiClient {
 			logger.error("qti client: invalid input for updateAssessmentItem", { error: validation.error })
 			throw errors.wrap(validation.error, "updateAssessmentItem input validation")
 		}
-		const { identifier, xml } = validation.data
+		const { identifier, xml, metadata } = validation.data
 
 		// The API requires a JSON payload specifying the format is "xml", similar to create
 		const payload = {
 			format: "xml",
-			xml: xml
+			xml: xml,
+			metadata: metadata
 		}
 
 		return this.#request(

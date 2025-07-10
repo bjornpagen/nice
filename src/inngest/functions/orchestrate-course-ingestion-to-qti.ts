@@ -58,7 +58,9 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					id: schema.niceQuestions.id,
 					xml: schema.niceQuestions.xml,
 					exerciseId: schema.niceQuestions.exerciseId,
-					exerciseTitle: schema.niceExercises.title
+					exerciseTitle: schema.niceExercises.title,
+					exercisePath: schema.niceExercises.path,
+					exerciseSlug: schema.niceExercises.slug
 				})
 				.from(schema.niceQuestions)
 				.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
@@ -70,7 +72,9 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				.select({
 					id: schema.niceArticles.id,
 					xml: schema.niceArticles.xml,
-					title: schema.niceArticles.title
+					title: schema.niceArticles.title,
+					path: schema.niceArticles.path,
+					slug: schema.niceArticles.slug
 				})
 				.from(schema.niceArticles)
 				.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
@@ -82,6 +86,9 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					assessmentId: schema.niceAssessments.id,
 					assessmentTitle: schema.niceAssessments.title,
 					assessmentType: schema.niceAssessments.type,
+					assessmentPath: schema.niceAssessments.path,
+					assessmentSlug: schema.niceAssessments.slug,
+					assessmentDescription: schema.niceAssessments.description,
 					exerciseId: schema.niceAssessmentExercises.exerciseId
 				})
 				.from(schema.niceAssessments)
@@ -115,12 +122,18 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		}
 
 		// Group assessments and their exercises
-		const assessmentMap = new Map<string, { title: string; type: string; exerciseIds: string[] }>()
+		const assessmentMap = new Map<
+			string,
+			{ title: string; type: string; path: string; slug: string; description: string | null; exerciseIds: string[] }
+		>()
 		for (const row of allAssessments) {
 			if (!assessmentMap.has(row.assessmentId)) {
 				assessmentMap.set(row.assessmentId, {
 					title: row.assessmentTitle,
 					type: row.assessmentType,
+					path: row.assessmentPath,
+					slug: row.assessmentSlug,
+					description: row.assessmentDescription,
 					exerciseIds: []
 				})
 			}
@@ -137,7 +150,15 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 						if (!q.xml) throw errors.new(`XML is null for question ${q.id}`)
 						// Use the robust helper function.
 						const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice:${q.id}`, q.exerciseTitle)
-						return { xml: finalXml }
+						return {
+							xml: finalXml,
+							metadata: {
+								khanId: q.id,
+								exerciseId: q.exerciseId,
+								exercisePath: q.exercisePath,
+								exerciseSlug: q.exerciseSlug
+							}
+						}
 					})
 
 				const stimuli = allArticles
@@ -146,12 +167,25 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 						if (!a.xml) throw errors.new(`XML is null for article ${a.id}`)
 						// Use the robust helper function.
 						const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice:${a.id}`, a.title)
-						return { xml: finalXml }
+						return {
+							xml: finalXml,
+							metadata: {
+								khanId: a.id,
+								path: a.path,
+								slug: a.slug
+							}
+						}
 					})
 
-				const buildTestObject = (id: string, title: string, itemIds: string[]): CreateAssessmentTestInput => ({
+				const buildTestObject = (
+					id: string,
+					title: string,
+					itemIds: string[],
+					metadata: Record<string, unknown>
+				): CreateAssessmentTestInput => ({
 					identifier: `nice:${id}`,
 					title: title,
+					metadata,
 					"qti-outcome-declaration": [
 						{
 							identifier: "SCORE",
@@ -190,7 +224,13 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					.map(([assessmentId, data]) => {
 						const questionIds = data.exerciseIds.flatMap((exerciseId) => questionsByExerciseId.get(exerciseId) || [])
 						if (questionIds.length === 0) return null
-						return buildTestObject(assessmentId, data.title, questionIds)
+						return buildTestObject(assessmentId, data.title, questionIds, {
+							khanId: assessmentId,
+							path: data.path,
+							slug: data.slug,
+							description: data.description,
+							assessmentType: data.type
+						})
 					})
 					.filter((test): test is CreateAssessmentTestInput => test !== null)
 
@@ -198,7 +238,13 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					.map((exercise) => {
 						const questionIds = questionsByExerciseId.get(exercise.id) || []
 						if (questionIds.length === 0) return null
-						return buildTestObject(exercise.id, exercise.title, questionIds)
+						return buildTestObject(exercise.id, exercise.title, questionIds, {
+							khanId: exercise.id,
+							path: exercise.path,
+							slug: exercise.slug,
+							description: exercise.description,
+							assessmentType: "Exercise"
+						})
 					})
 					.filter((test): test is CreateAssessmentTestInput => test !== null)
 
