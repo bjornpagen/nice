@@ -2,14 +2,14 @@
 
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
-import type { CourseResource } from "@/components/overview/types"
 import { cn } from "@/lib/utils"
+import type { CourseSidebarData } from "./course-sidebar"
 
 export function CourseSidebarCourseChallenge({
 	challenge,
 	className
 }: {
-	challenge: CourseResource
+	challenge: Pick<CourseSidebarData["resources"][number], "path">
 	className?: string
 }) {
 	return (

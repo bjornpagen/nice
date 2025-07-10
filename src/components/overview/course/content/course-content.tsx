@@ -3,20 +3,46 @@
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import { ContentHeader } from "@/components/overview/content-header"
-import type { Course, CourseResource } from "@/components/overview/types"
+import type {
+	Course,
+	CourseResource,
+	Lesson,
+	LessonResource,
+	Prettify,
+	Unit,
+	UnitResource
+} from "@/components/overview/types"
 import { Button } from "@/components/ui/button"
 import { CourseContentBreadcrumbs } from "./course-content-breadcrumbs"
 import { CourseContentChallenge } from "./course-content-challenge"
 import { CourseContentUnitOverviewItem } from "./course-content-unit-overview-item"
 import { CourseContentUnitProficiencyItem } from "./course-content-unit-proficiency-item"
 
-export function CourseContent({ coursePromise }: { coursePromise: Promise<Course> }) {
+export type CourseContentData = Prettify<
+	Pick<Course, "path" | "title"> & {
+		units: Array<
+			Pick<Unit, "path" | "title"> & {
+				lessons: Array<
+					Pick<Lesson, "slug" | "path" | "title"> & {
+						resources: Array<Pick<LessonResource, "slug" | "path" | "title" | "type">>
+					}
+				>
+				resources: Array<Pick<UnitResource, "slug" | "path" | "title" | "type">>
+			}
+		>
+		resources: Array<Pick<CourseResource, "type" | "path">>
+	}
+>
+
+export function CourseContent({ coursePromise }: { coursePromise: Promise<CourseContentData> }) {
 	const course = React.use(coursePromise)
 	if (course.path === "") {
 		throw errors.new("course data is invalid")
 	}
 
-	const challenge: CourseResource | undefined = course.resources.find((resource) => resource.type === "CourseChallenge")
+	const challenge: CourseContentData["resources"][number] | undefined = course.resources.find(
+		(resource) => resource.type === "CourseChallenge"
+	)
 
 	return (
 		<div id="course-content">

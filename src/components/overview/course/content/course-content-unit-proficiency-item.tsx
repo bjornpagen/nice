@@ -3,8 +3,8 @@ import _ from "lodash"
 import { Sparkles } from "lucide-react"
 import Link from "next/link"
 import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
-import type { LessonResource, Unit, UnitResource } from "@/components/overview/types"
 import { cn } from "@/lib/utils"
+import type { CourseContentData } from "./course-content"
 
 export function CourseContentUnitProficiencyItem({
 	index,
@@ -13,7 +13,7 @@ export function CourseContentUnitProficiencyItem({
 	active = false
 }: {
 	index: number
-	unit: Unit
+	unit: CourseContentData["units"][number]
 	className?: string
 	active?: boolean
 }) {
@@ -30,7 +30,7 @@ export function CourseContentUnitProficiencyItem({
 	)
 	logger.debug("exercises", { exercises: exercises.length })
 
-	const resources: Array<LessonResource | UnitResource> = [...exercises, ...unit.resources]
+	const resources = [...exercises, ...unit.resources]
 	logger.debug("resources", { resources: resources.length })
 
 	return (
@@ -70,14 +70,16 @@ function ResourceProficiencyIcon({
 	resource,
 	active = false
 }: {
-	resource: LessonResource | UnitResource
+	resource:
+		| CourseContentData["units"][number]["lessons"][number]["resources"][number]
+		| CourseContentData["units"][number]["resources"][number]
 	active?: boolean
 }) {
 	switch (resource.type) {
 		case "Exercise":
 			return (
 				<Link href={resource.path} className="inline-flex items-center">
-					<ProficiencyIcon variant="not-started" active={active}>
+					<ProficiencyIcon variant="not-started" active={active} side="bottom">
 						<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {resource.title}</h2>
 						<p className="text-sm text-gray-500">Preview is not available for this exercise.</p>
 					</ProficiencyIcon>

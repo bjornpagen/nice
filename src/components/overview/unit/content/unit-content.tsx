@@ -3,42 +3,23 @@
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import { ContentHeader } from "@/components/overview/content-header"
-import type { Unit } from "@/components/overview/types"
+import type { Lesson, LessonResource, Prettify, Unit, UnitResource } from "@/components/overview/types"
 import { UnitContentBreadcrumbs } from "./unit-content-breadcrumbs"
 import { UnitContentLessonOverview } from "./unit-content-lesson-overview"
 import { UnitContentProficiencyItems } from "./unit-content-proficiency-items"
 
-// export type LessonResource = {
-// 	slug: string
-// 	path: string
-// 	type: "Article" | "Exercise" | "Video"
-// 	title: string
-// }
+export type UnitContentData = Prettify<
+	Pick<Unit, "path" | "title"> & {
+		lessons: Array<
+			Pick<Lesson, "slug" | "path" | "title"> & {
+				resources: Array<Pick<LessonResource, "slug" | "path" | "title" | "type">>
+			}
+		>
+		resources: Array<Pick<UnitResource, "slug" | "path" | "title" | "type">>
+	}
+>
 
-// export type Lesson = {
-// 	slug: string
-// 	path: string
-// 	title: string
-// 	resources: LessonResource[]
-// }
-
-// export type UnitResource = {
-// 	slug: string
-// 	path: string
-// 	type: "Quiz" | "UnitTest"
-// 	title: string
-// }
-
-// export type Unit = {
-// 	slug: string
-// 	path: string
-// 	title: string
-// 	description: string
-// 	lessons: Lesson[]
-// 	resources: UnitResource[]
-// }
-
-export function UnitContent({ unitPromise }: { unitPromise: Promise<Unit> }) {
+export function UnitContent({ unitPromise }: { unitPromise: Promise<UnitContentData> }) {
 	const unit = React.use(unitPromise)
 	if (unit.path === "") {
 		throw errors.new("unit data is invalid")

@@ -3,10 +3,16 @@ import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import Link from "next/link"
 import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
-import type { LessonResource, Unit, UnitResource } from "@/components/overview/types"
 import { cn } from "@/lib/utils"
+import type { UnitContentData } from "./unit-content"
 
-export function UnitContentProficiencyItems({ unit, className }: { unit: Unit; className?: string }) {
+export function UnitContentProficiencyItems({
+	unit,
+	className
+}: {
+	unit: Pick<UnitContentData, "lessons" | "resources">
+	className?: string
+}) {
 	logger.debug("initializing unit proficiency items", {
 		lessons: unit.lessons.length,
 		resources: unit.resources.length
@@ -18,7 +24,7 @@ export function UnitContentProficiencyItems({ unit, className }: { unit: Unit; c
 	)
 	logger.debug("exercises", { exercises: exercises.length })
 
-	const resources: Array<LessonResource | UnitResource> = [...exercises, ...unit.resources]
+	const resources = [...exercises, ...unit.resources]
 	logger.debug("resources", { resources: resources.length })
 
 	return (
@@ -30,7 +36,11 @@ export function UnitContentProficiencyItems({ unit, className }: { unit: Unit; c
 	)
 }
 
-function ResourceProficiencyIcon({ resource }: { resource: LessonResource | UnitResource }) {
+function ResourceProficiencyIcon({
+	resource
+}: {
+	resource: UnitContentData["lessons"][number]["resources"][number] | UnitContentData["resources"][number]
+}) {
 	switch (resource.type) {
 		case "Exercise":
 			return (

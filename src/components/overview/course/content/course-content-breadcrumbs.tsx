@@ -3,11 +3,17 @@ import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import { Home } from "lucide-react"
 import Link from "next/link"
-import type { Course } from "@/components/overview/types"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb"
+import type { CourseContentData } from "./course-content"
 
-export function CourseContentBreadcrumbs({ course, className }: { course: Course; className?: string }) {
-	logger.debug("initializing course breadcrumbs", { course: _.omit(course, "units"), units: course.units.length })
+export function CourseContentBreadcrumbs({
+	course,
+	className
+}: {
+	course: Pick<CourseContentData, "path">
+	className?: string
+}) {
+	logger.debug("initializing course breadcrumbs", { course: _.omit(course, "units") })
 
 	const parts = course.path.split("/")
 	if (parts.length < 2) {

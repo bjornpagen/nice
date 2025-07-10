@@ -1,7 +1,11 @@
 import * as logger from "@superbuilders/slog"
-import type { Lesson } from "@/components/overview/types"
+import type { UnitContentData } from "./unit-content"
 
-export function UnitContentLessonOverview({ lesson }: { lesson: Omit<Lesson, "resources"> }) {
+export function UnitContentLessonOverview({
+	lesson
+}: {
+	lesson: Pick<UnitContentData["lessons"][number], "slug" | "path" | "title">
+}) {
 	logger.debug("initializing unit content lesson overview", { lesson })
 
 	return (

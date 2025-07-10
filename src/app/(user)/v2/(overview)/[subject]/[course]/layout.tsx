@@ -1,4 +1,5 @@
 import * as logger from "@superbuilders/slog"
+import _ from "lodash"
 import * as React from "react"
 import { Footer } from "@/components/footer"
 import { CourseSidebar, type CourseSidebarData } from "@/components/overview/course/sidebar/course-sidebar"
@@ -41,5 +42,14 @@ export default async function CourseLayout({
 async function getCourseSidebarData(subject: string, course: string): Promise<CourseSidebarData> {
 	logger.debug("retrieving course data", { subject, course })
 
-	return getCourseBlob(subject, course)
+	const blob = getCourseBlob(subject, course)
+	logger.debug("retrieving course data: blob", { keys: _.keys(blob) })
+
+	const units = _.map(blob.units, (unit) => _.pick(unit, ["slug", "path", "title", "lessons", "resources"]))
+	logger.debug("retrieving course data: units", { units: units.length })
+
+	const data = { ..._.pick(blob, ["slug", "path", "title", "resources"]), units }
+	logger.debug("retrieving course data: data", { keys: _.keys(data), units: data.units.length })
+
+	return data
 }

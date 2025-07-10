@@ -7,7 +7,13 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import type { CourseSidebarData } from "./course-sidebar"
 
-export function CourseSidebarCourseItem({ course, className }: { course: CourseSidebarData; className?: string }) {
+export function CourseSidebarCourseItem({
+	course,
+	className
+}: {
+	course: Pick<CourseSidebarData, "path" | "title" | "units">
+	className?: string
+}) {
 	const pathname = usePathname()
 
 	let outerClassName = ""

@@ -1,9 +1,15 @@
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
-import type { CourseResource } from "@/components/overview/types"
 import { cn } from "@/lib/utils"
+import type { CourseContentData } from "./course-content"
 
-export function CourseContentChallenge({ challenge, className }: { challenge: CourseResource; className?: string }) {
+export function CourseContentChallenge({
+	challenge,
+	className
+}: {
+	challenge: CourseContentData["resources"][number]
+	className?: string
+}) {
 	return (
 		<div
 			id="course-content-challenge"

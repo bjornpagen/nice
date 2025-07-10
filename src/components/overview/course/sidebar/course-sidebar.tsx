@@ -2,18 +2,23 @@
 
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
-import type { Course, CourseResource, Prettify, Unit } from "@/components/overview/types"
+import type { Course, CourseResource, Lesson, Prettify, Unit } from "@/components/overview/types"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import { CourseSidebarCourseChallenge } from "./course-sidebar-course-challenge"
 import { CourseSidebarCourseItem } from "./course-sidebar-course-item"
 import { CourseSidebarUnitItem } from "./course-sidebar-unit-item"
 
-export type CourseSidebarData = Prettify<{
-	[CourseKey in keyof Omit<Course, "description">]: Course[CourseKey] extends Unit[]
-		? Pick<Unit, "slug" | "path" | "title" | "lessons" | "resources">[]
-		: Course[CourseKey]
-}>
+export type CourseSidebarData = Prettify<
+	Pick<Course, "slug" | "path" | "title"> & {
+		units: Array<
+			Pick<Unit, "path" | "title"> & {
+				lessons: readonly Pick<Lesson, "slug">[]
+			}
+		>
+		resources: Array<Pick<CourseResource, "type" | "path">>
+	}
+>
 
 export function CourseSidebar({
 	coursePromise,
@@ -27,7 +32,9 @@ export function CourseSidebar({
 		throw errors.new("course data is invalid")
 	}
 
-	const challenge: CourseResource | undefined = course.resources.find((resource) => resource.type === "CourseChallenge")
+	const challenge: CourseSidebarData["resources"][number] | undefined = course.resources.find(
+		(resource) => resource.type === "CourseChallenge"
+	)
 
 	return (
 		<div id="course-sidebar" className={cn("bg-white border-r border-gray-200 flex flex-col h-full", className)}>

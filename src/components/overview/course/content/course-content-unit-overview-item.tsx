@@ -2,9 +2,9 @@ import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import { BookOpen, Info } from "lucide-react"
 import Link from "next/link"
-import type { Unit } from "@/components/overview/types"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import type { CourseContentData } from "./course-content"
 
 export function CourseContentUnitOverviewItem({
 	index,
@@ -13,7 +13,7 @@ export function CourseContentUnitOverviewItem({
 	active = false
 }: {
 	index: number
-	unit: Unit
+	unit: CourseContentData["units"][number]
 	className?: string
 	active?: boolean
 }) {
