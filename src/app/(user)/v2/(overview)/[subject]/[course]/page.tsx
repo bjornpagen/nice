@@ -1,210 +1,46 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
+import { ErrorBoundary } from "react-error-boundary"
 import { CourseContent } from "@/components/overview/course/content/course-content"
-import type { Course } from "@/components/overview/types"
+import { type Course, getCourseBlob } from "@/components/overview/types"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export default async function CoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
-	const { subject, course } = await params
-	logger.debug("initializing course page", { subject, course })
-
-	const coursePromise = getCourseData(subject, course)
-	logger.debug("course data retrieved", { subject, course })
+	const coursePromise = params
+		.then(({ subject, course }) => {
+			logger.debug("initializing course page", { subject, course })
+			return getCourseData(subject, course)
+		})
+		.catch((error) => {
+			logger.error("error retrieving course data", { error })
+			throw errors.wrap(error, "error retrieving course data")
+		})
 
 	return (
 		<div id="course-page">
-			<React.Suspense>
-				<CourseContent coursePromise={coursePromise} />
-			</React.Suspense>
+			<ErrorBoundary fallback={<CoursePageErrorFallback />}>
+				<React.Suspense>
+					<CourseContent coursePromise={coursePromise} />
+				</React.Suspense>
+			</ErrorBoundary>
 		</div>
 	)
 }
 
-async function getCourseData(subject: string, course: string): Promise<Course> {
+function CoursePageErrorFallback({ className }: { className?: string }) {
+	return (
+		<Alert variant="destructive" className={className}>
+			<AlertCircleIcon />
+			<AlertTitle>Unable to retrieve course page content.</AlertTitle>
+			<AlertDescription>Please try again later.</AlertDescription>
+		</Alert>
+	)
+}
+
+function getCourseData(subject: string, course: string): Course {
 	logger.debug("retrieving course data", { subject, course })
 
-	return {
-		slug: course,
-		path: `/v2/${subject}/${course}`,
-		title: course,
-		description: "Course Description",
-		units: [
-			{
-				slug: "unit-1",
-				path: `/v2/${subject}/${course}/unit-1`,
-				title: "Unit 1 Title",
-				description: "Unit 1 Description",
-				lessons: [
-					{
-						slug: "lesson-1",
-						path: `/v2/${subject}/${course}/unit-1/lesson-1`,
-						title: "Lesson 1 Title",
-						resources: [
-							{
-								slug: "exercise-1",
-								path: `/v2/${subject}/${course}/unit-1/lesson-1/exercise-1`,
-								title: "Exercise 1 Title",
-								type: "Exercise",
-								data: {
-									id: "1"
-								}
-							}
-						]
-					},
-					{
-						slug: "lesson-2",
-						path: `/v2/${subject}/${course}/unit-1/lesson-2`,
-						title: "Lesson 2 Title",
-						resources: [
-							{
-								slug: "exercise-2",
-								path: `/v2/${subject}/${course}/unit-1/lesson-2/exercise-2`,
-								title: "Exercise 2 Title",
-								type: "Exercise",
-								data: {
-									id: "2"
-								}
-							}
-						]
-					}
-				],
-				resources: [
-					{
-						slug: "quiz-1",
-						path: `/v2/${subject}/${course}/unit-1/lesson-2/quiz-1`,
-						title: "Quiz 1 Title",
-						type: "Quiz",
-						data: {
-							id: "3"
-						}
-					}
-				]
-			},
-			{
-				slug: "unit-2",
-				path: `/v2/${subject}/${course}/unit-2`,
-				title: "Unit 2 Title",
-				description: "Unit 2 Description",
-				lessons: [
-					{
-						slug: "lesson-3",
-						path: `/v2/${subject}/${course}/unit-1/lesson-3`,
-						title: "Lesson 3 Title",
-						resources: [
-							{
-								slug: "exercise-3",
-								path: `/v2/${subject}/${course}/unit-1/lesson-3/exercise-3`,
-								title: "Exercise 3 Title",
-								type: "Exercise",
-								data: {
-									id: "3"
-								}
-							}
-						]
-					},
-					{
-						slug: "lesson-4",
-						path: `/v2/${subject}/${course}/unit-1/lesson-4`,
-						title: "Lesson 4 Title",
-						resources: [
-							{
-								slug: "article-1",
-								path: `/v2/${subject}/${course}/unit-1/lesson-4/article-1`,
-								title: "Article 1 Title",
-								type: "Article",
-								data: {
-									id: "4"
-								}
-							}
-						]
-					}
-				],
-				resources: [
-					{
-						slug: "quiz-2",
-						path: `/v2/${subject}/${course}/unit-1/lesson-4/quiz-2`,
-						title: "Quiz 2 Title",
-						type: "Quiz",
-						data: {
-							id: "4"
-						}
-					}
-				]
-			},
-			{
-				slug: "unit-3",
-				path: `/v2/${subject}/${course}/unit-3`,
-				title: "Unit 3 Title",
-				description: "Unit 3 Description",
-				lessons: [],
-				resources: []
-			},
-			{
-				slug: "unit-4",
-				path: `/v2/${subject}/${course}/unit-4`,
-				title: "Unit 4 Title",
-				description: "Unit 4 Description",
-				lessons: [],
-				resources: []
-			},
-			{
-				slug: "unit-5",
-				path: `/v2/${subject}/${course}/unit-5`,
-				title: "Unit 5 Title",
-				description: "Unit 5 Description",
-				lessons: [],
-				resources: []
-			},
-			{
-				slug: "unit-6",
-				path: `/v2/${subject}/${course}/unit-6`,
-				title: "Unit 6 Title",
-				description: "Unit 6 Description",
-				lessons: [],
-				resources: []
-			},
-			{
-				slug: "unit-7",
-				path: `/v2/${subject}/${course}/unit-7`,
-				title: "Unit 7 Title",
-				description: "Unit 7 Description",
-				lessons: [],
-				resources: []
-			},
-			{
-				slug: "unit-8",
-				path: `/v2/${subject}/${course}/unit-8`,
-				title: "Unit 8 Title",
-				description: "Unit 8 Description",
-				lessons: [],
-				resources: []
-			},
-			{
-				slug: "unit-9",
-				path: `/v2/${subject}/${course}/unit-9`,
-				title: "Unit 9 Title",
-				description: "Unit 9 Description",
-				lessons: [],
-				resources: []
-			},
-			{
-				slug: "unit-10",
-				path: `/v2/${subject}/${course}/unit-10`,
-				title: "Unit 10 Title",
-				description: "Unit 10 Description",
-				lessons: [],
-				resources: []
-			}
-		],
-		resources: [
-			{
-				slug: "challenge",
-				path: `/v2/${subject}/${course}/challenge`,
-				title: "Course Challenge",
-				type: "CourseChallenge",
-				data: {
-					id: "1"
-				}
-			}
-		]
-	}
+	return getCourseBlob(subject, course)
 }
