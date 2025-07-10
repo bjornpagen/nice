@@ -6,7 +6,7 @@ import { ErrQtiNotFound, QtiApiClient } from "@/lib/qti"
 export const ingestAssessmentStimuli = inngest.createFunction(
 	{ id: "ingest-assessment-stimuli", name: "Ingest QTI Assessment Stimuli" },
 	{ event: "qti/assessment-stimuli.ingest" },
-	async ({ event, step, logger }) => {
+	async ({ event, logger }) => {
 		const { stimuli } = event.data
 		if (stimuli.length === 0) {
 			logger.info("no assessment stimuli to ingest, skipping")
@@ -23,27 +23,40 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 
 		const results = []
 		for (const stimulus of stimuli) {
-			const { identifier } = stimulus
-			const result = await step.run(`upsert-stimulus-${identifier}`, async () => {
-				const updateResult = await errors.try(client.updateStimulus(identifier, stimulus))
+			const idMatch = stimulus.xml.match(/identifier="([^"]+)"/)
+			const identifier = idMatch?.[1] ?? null
+			if (!identifier) {
+				logger.error("could not extract identifier from stimulus XML", { xml: stimulus.xml.substring(0, 150) })
+				continue
+			}
 
-				if (updateResult.error) {
-					if (errors.is(updateResult.error, ErrQtiNotFound)) {
-						logger.info("stimulus not found, creating new one", { identifier })
-						const createResult = await errors.try(client.createStimulus(stimulus))
-						if (createResult.error) {
-							logger.error("failed to create stimulus after 404 on update", { identifier, error: createResult.error })
-							throw createResult.error
-						}
-						return { identifier, success: true, status: "created" }
+			const titleMatch = stimulus.xml.match(/title="([^"]+)"/)
+			const title = titleMatch?.[1] ?? "Untitled Stimulus"
+
+			const contentMatch = stimulus.xml.match(/<qti-stimulus-body>([\s\S]*?)<\/qti-stimulus-body>/)
+			const content = contentMatch?.[1]?.trim() ?? ""
+
+			const payload = { identifier, title, content }
+
+			const updateResult = await errors.try(client.updateStimulus(identifier, payload))
+
+			if (updateResult.error) {
+				if (errors.is(updateResult.error, ErrQtiNotFound)) {
+					logger.info("stimulus not found, creating new one", { identifier })
+					const createResult = await errors.try(client.createStimulus(payload))
+					if (createResult.error) {
+						logger.error("failed to create stimulus after 404 on update", { identifier, error: createResult.error })
+						throw createResult.error
 					}
+					results.push({ identifier, success: true, status: "created" })
+				} else {
 					logger.error("failed to update stimulus", { identifier, error: updateResult.error })
 					throw updateResult.error
 				}
+			} else {
 				logger.info("successfully updated stimulus", { identifier })
-				return { identifier, success: true, status: "updated" }
-			})
-			results.push(result)
+				results.push({ identifier, success: true, status: "updated" })
+			}
 		}
 
 		const failedCount = results.filter((r) => !r.success).length

@@ -247,7 +247,7 @@ const AssessmentSectionSchema = z.object({
 	visible: z.boolean(),
 	required: z.boolean().optional(),
 	fixed: z.boolean().optional(),
-	sequence: z.number().optional(),
+	sequence: z.number(),
 	"qti-assessment-item-ref": z.array(AssessmentItemRefSchema).optional()
 })
 export type AssessmentSection = z.infer<typeof AssessmentSectionSchema>

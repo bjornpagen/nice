@@ -1,7 +1,7 @@
 import * as logger from "@superbuilders/slog"
 import { EventSchemas, type GetEvents, Inngest } from "inngest"
 import { z } from "zod"
-import type { CreateAssessmentTestInput, CreateStimulusInput } from "@/lib/qti"
+import type { CreateAssessmentTestInput } from "@/lib/qti"
 
 // Helper schema for the XML-based item input
 const CreateItemInputSchema = z.object({
@@ -51,16 +51,21 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
+	// ✅ ADDED: New event to trigger the upload of all generated QTI files.
+	"qti/course.upload": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
 	"qti/assessment-items.ingest": {
 		data: z.object({
 			items: z.array(CreateItemInputSchema)
 		})
 	},
 	"qti/assessment-stimuli.ingest": {
-		// Note: The schema for CreateStimulusInput is complex, so we cast it.
-		// This is acceptable as the data originates from our trusted generator function.
+		// ✅ REFACTORED: Changed schema to expect an array of objects with only an 'xml' key.
 		data: z.object({
-			stimuli: z.array(z.custom<CreateStimulusInput>())
+			stimuli: z.array(CreateItemInputSchema)
 		})
 	},
 	"qti/assessment-tests.ingest": {

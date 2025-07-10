@@ -6,7 +6,7 @@ import { ErrQtiNotFound, QtiApiClient } from "@/lib/qti"
 export const ingestAssessmentItems = inngest.createFunction(
 	{ id: "ingest-assessment-items", name: "Ingest QTI Assessment Items" },
 	{ event: "qti/assessment-items.ingest" },
-	async ({ event, step, logger }) => {
+	async ({ event, logger }) => {
 		const { items } = event.data
 		if (items.length === 0) {
 			logger.info("no assessment items to ingest, skipping")
@@ -33,26 +33,26 @@ export const ingestAssessmentItems = inngest.createFunction(
 				continue
 			}
 
-			const result = await step.run(`upsert-item-${identifier}`, async () => {
-				const updateResult = await errors.try(client.updateAssessmentItem({ identifier, xml: item.xml }))
+			// Execute upsert logic directly without step.run wrapper
+			const updateResult = await errors.try(client.updateAssessmentItem({ identifier, xml: item.xml }))
 
-				if (updateResult.error) {
-					if (errors.is(updateResult.error, ErrQtiNotFound)) {
-						logger.info("item not found, creating new one", { identifier })
-						const createResult = await errors.try(client.createAssessmentItem({ xml: item.xml }))
-						if (createResult.error) {
-							logger.error("failed to create item after 404 on update", { identifier, error: createResult.error })
-							throw createResult.error
-						}
-						return { identifier, success: true, status: "created" }
+			if (updateResult.error) {
+				if (errors.is(updateResult.error, ErrQtiNotFound)) {
+					logger.info("item not found, creating new one", { identifier })
+					const createResult = await errors.try(client.createAssessmentItem({ xml: item.xml }))
+					if (createResult.error) {
+						logger.error("failed to create item after 404 on update", { identifier, error: createResult.error })
+						throw createResult.error
 					}
+					results.push({ identifier, success: true, status: "created" })
+				} else {
 					logger.error("failed to update item", { identifier, error: updateResult.error })
 					throw updateResult.error
 				}
+			} else {
 				logger.info("successfully updated item", { identifier })
-				return { identifier, success: true, status: "updated" }
-			})
-			results.push(result)
+				results.push({ identifier, success: true, status: "updated" })
+			}
 		}
 
 		const failedCount = results.filter((r) => !r.success).length

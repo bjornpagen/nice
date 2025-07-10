@@ -53,7 +53,6 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
 				.where(and(inArray(schema.niceLessons.unitId, unitIds), isNotNull(schema.niceArticles.xml))),
 
-			// Fetch assessments with their associated exercises
 			db
 				.select({
 					assessmentId: schema.niceAssessments.id,
@@ -108,60 +107,61 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		const { assessmentItems, assessmentStimuli, assessmentTests } = await step.run(
 			"assemble-json-payloads-from-db",
 			async () => {
-				// Create payloads for assessmentItems and assessmentStimuli (this part is correct).
 				const items = allQuestions
 					.filter((q) => q.xml !== null)
-					.map((q) => ({
-						identifier: `nice:${q.id}`,
-						xml: q.xml
-					}))
+					.map((q) => {
+						const permanentIdentifier = `nice:${q.id}`
+						if (!q.xml) throw errors.new(`XML is null for question ${q.id}`)
+						const finalXml = q.xml.replace(/identifier="nice-tmp:[^"]*"/, `identifier="${permanentIdentifier}"`)
+						return { xml: finalXml }
+					})
+
 				const stimuli = allArticles
 					.filter((a) => a.xml !== null)
-					.map((a) => ({
-						identifier: `nice:${a.id}`,
-						title: a.title,
-						content: a.xml
-					}))
+					.map((a) => {
+						const permanentIdentifier = `nice:${a.id}`
+						if (!a.xml) throw errors.new(`XML is null for article ${a.id}`)
+						const finalXml = a.xml.replace(/identifier="nice-tmp:[^"]*"/, `identifier="${permanentIdentifier}"`)
+						return { xml: finalXml }
+					})
 
-				// ✅ REFACTORED: Build fully compliant test objects.
-				const buildTestObject = (id: string, title: string, itemIds: string[]): CreateAssessmentTestInput => {
-					return {
-						identifier: `nice:${id}`,
-						title: title,
-						"qti-outcome-declaration": [
-							{
-								identifier: "SCORE",
-								cardinality: "single",
-								baseType: "float"
-							},
-							{
-								identifier: "MAX_SCORE",
-								cardinality: "single",
-								baseType: "float"
-							}
-						],
-						"qti-test-part": [
-							{
-								identifier: "PART_1",
-								navigationMode: "nonlinear",
-								submissionMode: "individual",
-								"qti-assessment-section": [
-									{
-										identifier: "SECTION_1",
-										title: "Main Section",
-										visible: true,
-										"qti-assessment-item-ref": itemIds.map((itemId) => ({
-											identifier: `nice:${itemId}`,
-											href: `/assessment-items/nice:${itemId}`
-										}))
-									}
-								]
-							}
-						]
-					}
-				}
+				const buildTestObject = (id: string, title: string, itemIds: string[]): CreateAssessmentTestInput => ({
+					identifier: `nice:${id}`,
+					title: title,
+					"qti-outcome-declaration": [
+						{
+							identifier: "SCORE",
+							cardinality: "single",
+							baseType: "float"
+						},
+						{
+							identifier: "MAX_SCORE",
+							cardinality: "single",
+							baseType: "float"
+						}
+					],
+					"qti-test-part": [
+						{
+							identifier: "PART_1",
+							navigationMode: "nonlinear",
+							submissionMode: "individual",
+							"qti-assessment-section": [
+								{
+									identifier: "SECTION_1",
+									title: "Main Section",
+									visible: true,
+									sequence: 1,
+									"qti-assessment-item-ref": itemIds.map((itemId, index) => ({
+										identifier: `nice:${itemId}`,
+										href: `/assessment-items/nice:${itemId}`,
+										sequence: index + 1
+									}))
+								}
+							]
+						}
+					]
+				})
 
-				// Create payloads for explicit assessments (Quiz, UnitTest).
 				const explicitTests = Array.from(assessmentMap.entries())
 					.map(([assessmentId, data]) => {
 						const questionIds = data.exerciseIds.flatMap((exerciseId) => questionsByExerciseId.get(exerciseId) || [])
@@ -170,7 +170,6 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					})
 					.filter((test): test is CreateAssessmentTestInput => test !== null)
 
-				// Create payloads for individual exercises (as "PracticeTest").
 				const exerciseTests = allExercises
 					.map((exercise) => {
 						const questionIds = questionsByExerciseId.get(exercise.id) || []
@@ -179,7 +178,6 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					})
 					.filter((test): test is CreateAssessmentTestInput => test !== null)
 
-				// Combine all tests into a single list.
 				const tests = [...explicitTests, ...exerciseTests]
 
 				return { assessmentItems: items, assessmentStimuli: stimuli, assessmentTests: tests }
