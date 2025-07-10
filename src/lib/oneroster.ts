@@ -643,16 +643,21 @@ export class OneRosterApiClient {
 
 	/**
 	 * Fetches all courses from the OneRoster API, handling pagination.
+	 * @param filter Optional filter query string (e.g., "metadata.khanSlug='some-slug'")
 	 * @returns A promise that resolves to an array of all courses.
 	 */
-	public async getAllCourses(): Promise<OneRosterCourseReadSchemaType[]> {
-		logger.info("OneRosterApiClient: fetching all courses")
+	public async getAllCourses(filter?: string): Promise<OneRosterCourseReadSchemaType[]> {
+		logger.info("OneRosterApiClient: fetching all courses", { filter })
 		const allCourses: OneRosterCourseReadSchemaType[] = []
 		let offset = 0
 		const limit = 3000 // Max limit per OneRoster spec
 
 		while (true) {
-			const endpoint = `/ims/oneroster/rostering/v1p2/courses?limit=${limit}&offset=${offset}`
+			let endpoint = `/ims/oneroster/rostering/v1p2/courses?limit=${limit}&offset=${offset}`
+			if (filter) {
+				endpoint += `&filter=${encodeURIComponent(filter)}`
+			}
+
 			const response = await this.#request(endpoint, { method: "GET" }, GetAllCoursesResponseSchema)
 
 			if (!response || response.courses.length === 0) {
@@ -667,7 +672,7 @@ export class OneRosterApiClient {
 			}
 		}
 
-		logger.info("OneRosterApiClient: successfully fetched all courses", { count: allCourses.length })
+		logger.info("OneRosterApiClient: successfully fetched all courses", { count: allCourses.length, filter })
 		return allCourses
 	}
 

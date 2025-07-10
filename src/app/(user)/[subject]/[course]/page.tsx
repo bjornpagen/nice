@@ -18,6 +18,7 @@ export type Unit = {
 	title: string
 	path: string // Made required
 	ordering: number
+	metadata?: Record<string, unknown>
 }
 
 export type Lesson = {
@@ -95,14 +96,6 @@ export type CourseData = {
 	challenges: CourseChallenge[]
 }
 
-// Helper function to extract slug from sourcedId (e.g., "nice:some-slug:exercise" -> "some-slug")
-function extractSlugFromSourcedId(sourcedId: string): string {
-	let slug = sourcedId.startsWith("nice:") ? sourcedId.substring(5) : sourcedId
-	// Remove colon-based type suffix (e.g., ":exercise", ":video", ":article")
-	slug = slug.replace(/:(exercise|video|article)$/, "")
-	return slug
-}
-
 // Helper function to extract metadata value
 function getMetadataValue(metadata: Record<string, unknown> | undefined, key: string): string | undefined {
 	if (!metadata) return undefined
@@ -119,15 +112,21 @@ function getMetadataNumber(metadata: Record<string, unknown> | undefined, key: s
 
 // Shared data fetching function using OneRoster API
 async function fetchCourseData(params: { subject: string; course: string }): Promise<CourseData> {
-	const courseSourcedId = `nice:${params.course}`
-	logger.debug("course page: fetching course from OneRoster", { courseSourcedId })
+	// First, find the course by its khanSlug since the URL param is a slug, not a Khan ID
+	logger.debug("course page: looking up course by slug", { slug: params.course })
 
-	// Fetch course
-	const oneRosterCourse = await oneroster.getCourse(courseSourcedId)
+	// Fetch courses filtered by khanSlug for efficiency
+	const filter = `metadata.khanSlug='${params.course}'`
+	const allCourses = await oneroster.getAllCourses(filter)
+	const oneRosterCourse = allCourses[0] // Should only be one match
+
 	if (!oneRosterCourse) {
-		logger.warn("course page: course not found in OneRoster", { courseSourcedId })
+		logger.warn("course page: course not found by slug", { slug: params.course })
 		notFound()
 	}
+
+	const courseSourcedId = oneRosterCourse.sourcedId
+	logger.debug("course page: found course", { courseSourcedId, slug: params.course })
 
 	const course: Course = {
 		id: oneRosterCourse.sourcedId,
@@ -144,7 +143,12 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 	const lessonsByUnitId = new Map<string, Lesson[]>()
 
 	for (const component of allComponents) {
-		const componentSlug = extractSlugFromSourcedId(component.sourcedId)
+		// Use khanSlug from metadata
+		const componentSlug = getMetadataValue(component.metadata, "khanSlug")
+		if (!componentSlug) {
+			logger.warn("component missing khanSlug", { componentId: component.sourcedId })
+			continue
+		}
 
 		if (!component.parent) {
 			// This is a unit
@@ -152,7 +156,8 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 				id: component.sourcedId,
 				title: component.title,
 				path: getMetadataValue(component.metadata, "path") || `/${params.subject}/${params.course}/${componentSlug}`,
-				ordering: component.sortOrder
+				ordering: component.sortOrder,
+				metadata: component.metadata
 			})
 		} else {
 			// This is a lesson or assessment - we'll determine type later when we process resources
@@ -160,6 +165,16 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 			if (!lessonsByUnitId.has(parentId)) {
 				lessonsByUnitId.set(parentId, [])
 			}
+
+			// For path generation, we need the parent's slug too
+			const parentComponent = allComponents.find((c) => c.sourcedId === parentId)
+			const parentSlug = parentComponent ? getMetadataValue(parentComponent.metadata, "khanSlug") : undefined
+
+			if (!parentSlug) {
+				logger.warn("parent component missing khanSlug", { parentId, childId: component.sourcedId })
+				continue
+			}
+
 			lessonsByUnitId.get(parentId)?.push({
 				id: component.sourcedId,
 				unitId: parentId,
@@ -168,7 +183,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 				description: getMetadataValue(component.metadata, "description"),
 				path:
 					getMetadataValue(component.metadata, "path") ||
-					`/${params.subject}/${params.course}/${extractSlugFromSourcedId(parentId)}/${componentSlug}`,
+					`/${params.subject}/${params.course}/${parentSlug}/${componentSlug}`,
 				ordering: component.sortOrder
 			})
 		}
@@ -232,12 +247,22 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 
 			if (resourceType === "qti" && subType === "qti-test" && lessonType) {
 				const assessmentType = lessonType === "unittest" ? "UnitTest" : "Quiz"
-				const resourceSlug = extractSlugFromSourcedId(resource.sourcedId)
+				const resourceSlug = getMetadataValue(resource.metadata, "khanSlug")
+				if (!resourceSlug) {
+					logger.warn("assessment resource missing khanSlug", { resourceId: resource.sourcedId })
+					continue
+				}
 
 				// Find the component resource to get sortOrder
 				const componentResource = componentResources.find(
 					(cr) => cr.courseComponent.sourcedId === unit.id && cr.resource.sourcedId === resource.sourcedId
 				)
+
+				const unitSlug = getMetadataValue(unit.metadata, "khanSlug")
+				if (!unitSlug) {
+					logger.warn("unit missing khanSlug", { unitId: unit.id })
+					continue
+				}
 
 				unitAssessments.push({
 					id: resource.sourcedId,
@@ -247,7 +272,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 					slug: resourceSlug,
 					path:
 						getMetadataValue(resource.metadata, "path") ||
-						`/${params.subject}/${params.course}/${extractSlugFromSourcedId(unit.id)}/${assessmentType.toLowerCase()}/${resourceSlug}`,
+						`/${params.subject}/${params.course}/${unitSlug}/${assessmentType.toLowerCase()}/${resourceSlug}`,
 					ordering: componentResource?.sortOrder || 0,
 					description: getMetadataValue(resource.metadata, "description")
 				})
@@ -267,7 +292,18 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 				const resourceType = getMetadataValue(resource.metadata, "type")
 				const subType = getMetadataValue(resource.metadata, "subType")
 				const lessonType = getMetadataValue(resource.metadata, "lessonType")
-				const resourceSlug = extractSlugFromSourcedId(resource.sourcedId)
+				const resourceSlug = getMetadataValue(resource.metadata, "khanSlug")
+
+				if (!resourceSlug) {
+					logger.warn("resource missing khanSlug", { resourceId: resource.sourcedId })
+					continue
+				}
+
+				const unitSlug = getMetadataValue(unit.metadata, "khanSlug")
+				if (!unitSlug) {
+					logger.warn("unit missing khanSlug for resource", { unitId: unit.id, resourceId: resource.sourcedId })
+					continue
+				}
 
 				// Find the componentResource to get the sortOrder
 				const componentResource = componentResources.find(
@@ -285,7 +321,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 						title: resource.title,
 						path:
 							getMetadataValue(resource.metadata, "path") ||
-							`/${params.subject}/${params.course}/${extractSlugFromSourcedId(lesson.unitId)}/${lesson.slug}/v/${resourceSlug}`,
+							`/${params.subject}/${params.course}/${unitSlug}/${lesson.slug}/v/${resourceSlug}`,
 						slug: resourceSlug,
 						description: getMetadataValue(resource.metadata, "description") || "",
 						youtubeId: youtubeId || "",
@@ -299,7 +335,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 						title: resource.title,
 						path:
 							getMetadataValue(resource.metadata, "path") ||
-							`/${params.subject}/${params.course}/${extractSlugFromSourcedId(lesson.unitId)}/${lesson.slug}/a/${resourceSlug}`,
+							`/${params.subject}/${params.course}/${unitSlug}/${lesson.slug}/a/${resourceSlug}`,
 						slug: resourceSlug,
 						description: getMetadataValue(resource.metadata, "description") || "",
 						perseusContent: null, // Will be fetched from QTI server
@@ -313,7 +349,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 						title: resource.title,
 						path:
 							getMetadataValue(resource.metadata, "path") ||
-							`/${params.subject}/${params.course}/${extractSlugFromSourcedId(lesson.unitId)}/${lesson.slug}/e/${resourceSlug}`,
+							`/${params.subject}/${params.course}/${unitSlug}/${lesson.slug}/e/${resourceSlug}`,
 						slug: resourceSlug,
 						description: getMetadataValue(resource.metadata, "description"),
 						questions: [], // Will be fetched from QTI server

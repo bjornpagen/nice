@@ -111,14 +111,6 @@ export type HydratedUnitData = {
 	unitChildren: UnitChild[]
 }
 
-// Helper function to extract slug from sourcedId (e.g., "nice:some-slug:exercise" -> "some-slug")
-function extractSlugFromSourcedId(sourcedId: string): string {
-	let slug = sourcedId.startsWith("nice:") ? sourcedId.substring(5) : sourcedId
-	// Remove colon-based type suffix (e.g., ":exercise", ":video", ":article")
-	slug = slug.replace(/:(exercise|video|article)$/, "")
-	return slug
-}
-
 // Helper function to extract metadata value
 function getMetadataValue(metadata: Record<string, unknown> | undefined, key: string): string | undefined {
 	if (!metadata) return undefined
@@ -137,16 +129,31 @@ function getMetadataNumber(metadata: Record<string, unknown> | undefined, key: s
 async function fetchUnitData(params: { subject: string; course: string; unit: string }): Promise<HydratedUnitData> {
 	logger.debug("unit page: fetching unit data", { params })
 
-	const courseSourcedId = `nice:${params.course}`
-	const decodedUnitSlug = decodeURIComponent(params.unit)
-	const unitSourcedId = `nice:${decodedUnitSlug}`
+	// First, find the course by its khanSlug
+	const courseFilter = `metadata.khanSlug='${params.course}'`
+	const courses = await oneroster.getAllCourses(courseFilter)
+	const oneRosterCourse = courses[0]
 
-	// Fetch course
-	const oneRosterCourse = await oneroster.getCourse(courseSourcedId)
 	if (!oneRosterCourse) {
-		logger.warn("unit page: course not found in OneRoster", { courseSourcedId })
+		logger.warn("unit page: course not found by slug", { slug: params.course })
 		notFound()
 	}
+
+	const courseSourcedId = oneRosterCourse.sourcedId
+	const decodedUnitSlug = decodeURIComponent(params.unit)
+
+	// Fetch all components for this course to find the unit by its khanSlug
+	const allComponents = await oneroster.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
+	const oneRosterUnit = allComponents.find(
+		(c) => !c.parent && getMetadataValue(c.metadata, "khanSlug") === decodedUnitSlug
+	)
+
+	if (!oneRosterUnit) {
+		logger.warn("unit page: unit not found by slug", { unitSlug: decodedUnitSlug, courseId: courseSourcedId })
+		notFound()
+	}
+
+	const unitSourcedId = oneRosterUnit.sourcedId
 
 	const course: Course = {
 		id: oneRosterCourse.sourcedId,
@@ -155,37 +162,36 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 		description: getMetadataValue(oneRosterCourse.metadata, "description")
 	}
 
-	// Fetch the specific unit
-	const oneRosterUnit = await oneroster.getCourseComponent(unitSourcedId)
-	if (!oneRosterUnit) {
-		logger.warn("unit page: unit not found in OneRoster", { unitSourcedId })
-		notFound()
-	}
-
 	const unit: Unit = {
 		id: oneRosterUnit.sourcedId,
 		title: oneRosterUnit.title,
 		path: getMetadataValue(oneRosterUnit.metadata, "path") || `/${params.subject}/${params.course}/${decodedUnitSlug}`,
 		ordering: oneRosterUnit.sortOrder,
-		slug: extractSlugFromSourcedId(oneRosterUnit.sourcedId),
+		slug: getMetadataValue(oneRosterUnit.metadata, "khanSlug") || decodedUnitSlug,
 		description: getMetadataValue(oneRosterUnit.metadata, "description")
 	}
 
-	// Fetch all units for the course (for navigation)
-	const allComponents = await oneroster.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
-	const allUnits: Unit[] = allComponents
-		.filter((component) => !component.parent) // Filter for units (no parent) in memory
-		.map((component) => ({
+	// Get all units for navigation
+	const allUnits: Unit[] = []
+	for (const component of allComponents) {
+		if (component.parent) continue // Skip non-units
+
+		const unitSlug = getMetadataValue(component.metadata, "khanSlug")
+		if (!unitSlug) {
+			logger.warn("unit missing khanSlug", { unitId: component.sourcedId })
+			continue
+		}
+
+		allUnits.push({
 			id: component.sourcedId,
 			title: component.title,
-			path:
-				getMetadataValue(component.metadata, "path") ||
-				`/${params.subject}/${params.course}/${extractSlugFromSourcedId(component.sourcedId)}`,
+			path: getMetadataValue(component.metadata, "path") || `/${params.subject}/${params.course}/${unitSlug}`,
 			ordering: component.sortOrder,
-			slug: extractSlugFromSourcedId(component.sourcedId),
+			slug: unitSlug,
 			description: getMetadataValue(component.metadata, "description")
-		}))
-		.sort((a, b) => a.ordering - b.ordering)
+		})
+	}
+	allUnits.sort((a, b) => a.ordering - b.ordering)
 
 	// Fetch children of this unit (lessons and assessments)
 	const unitChildren = await oneroster.getCourseComponents(`parent.sourcedId='${unitSourcedId}'`)
@@ -236,7 +242,12 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 
 			if (resourceType === "qti" && subType === "qti-test" && lessonType) {
 				const assessmentType = lessonType === "unittest" ? "UnitTest" : "Quiz"
-				const resourceSlug = extractSlugFromSourcedId(resource.sourcedId)
+				const resourceSlug = getMetadataValue(resource.metadata, "khanSlug")
+
+				if (!resourceSlug) {
+					logger.warn("assessment resource missing khanSlug", { resourceId: resource.sourcedId })
+					continue
+				}
 
 				if (assessmentType === "Quiz") {
 					unitAssessments.push({
@@ -288,7 +299,12 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	const processedLessons: Lesson[] = []
 
 	for (const child of unitChildren) {
-		const childSlug = extractSlugFromSourcedId(child.sourcedId)
+		const childSlug = getMetadataValue(child.metadata, "khanSlug")
+		if (!childSlug) {
+			logger.warn("lesson missing khanSlug", { lessonId: child.sourcedId })
+			continue
+		}
+
 		const lessonResources = resourcesByComponentId.get(child.sourcedId) || []
 
 		const videos: Video[] = []
@@ -300,7 +316,12 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 			const resourceType = getMetadataValue(resource.metadata, "type")
 			const subType = getMetadataValue(resource.metadata, "subType")
 			const lessonType = getMetadataValue(resource.metadata, "lessonType")
-			const resourceSlug = extractSlugFromSourcedId(resource.sourcedId)
+			const resourceSlug = getMetadataValue(resource.metadata, "khanSlug")
+
+			if (!resourceSlug) {
+				logger.warn("resource missing khanSlug", { resourceId: resource.sourcedId })
+				continue
+			}
 
 			// Find the componentResource to get the sortOrder
 			const componentResource = childComponentResources.find(
