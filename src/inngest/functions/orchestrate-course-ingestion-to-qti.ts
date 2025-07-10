@@ -154,9 +154,10 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 							xml: finalXml,
 							metadata: {
 								khanId: q.id,
-								exerciseId: q.exerciseId,
-								exercisePath: q.exercisePath,
-								exerciseSlug: q.exerciseSlug
+								khanExerciseId: q.exerciseId,
+								khanExerciseSlug: q.exerciseSlug,
+								khanExercisePath: q.exercisePath,
+								khanExerciseTitle: q.exerciseTitle
 							}
 						}
 					})
@@ -171,8 +172,9 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 							xml: finalXml,
 							metadata: {
 								khanId: a.id,
-								path: a.path,
-								slug: a.slug
+								khanSlug: a.slug,
+								khanPath: a.path,
+								khanTitle: a.title
 							}
 						}
 					})
@@ -226,10 +228,11 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 						if (questionIds.length === 0) return null
 						return buildTestObject(assessmentId, data.title, questionIds, {
 							khanId: assessmentId,
-							path: data.path,
-							slug: data.slug,
-							description: data.description,
-							assessmentType: data.type
+							khanSlug: data.slug,
+							khanPath: data.path,
+							khanTitle: data.title,
+							khanDescription: data.description,
+							khanAssessmentType: data.type
 						})
 					})
 					.filter((test): test is CreateAssessmentTestInput => test !== null)
@@ -240,10 +243,11 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 						if (questionIds.length === 0) return null
 						return buildTestObject(exercise.id, exercise.title, questionIds, {
 							khanId: exercise.id,
-							path: exercise.path,
-							slug: exercise.slug,
-							description: exercise.description,
-							assessmentType: "Exercise"
+							khanSlug: exercise.slug,
+							khanPath: exercise.path,
+							khanTitle: exercise.title,
+							khanDescription: exercise.description,
+							khanAssessmentType: "Exercise"
 						})
 					})
 					.filter((test): test is CreateAssessmentTestInput => test !== null)

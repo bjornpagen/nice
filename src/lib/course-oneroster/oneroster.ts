@@ -192,9 +192,11 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 			org: { sourcedId: ORG_SOURCED_ID, type: "org" },
 			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" },
 			metadata: {
-				description: course.description,
-				path: course.path,
-				khanId: course.id
+				khanId: course.id,
+				khanSlug: course.slug,
+				khanTitle: course.title,
+				khanDescription: course.description,
+				khanPath: course.path
 			}
 		},
 		// ADDED: class object generation
@@ -221,9 +223,11 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 			course: { sourcedId: `nice:${course.slug}`, type: "course" },
 			sortOrder: unit.ordering,
 			metadata: {
-				description: unit.description,
-				path: unit.path,
-				khanId: unit.id
+				khanId: unit.id,
+				khanSlug: unit.slug,
+				khanTitle: unit.title,
+				khanDescription: unit.description,
+				khanPath: unit.path
 			}
 		})
 
@@ -237,9 +241,11 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 				parent: { sourcedId: `nice:${unit.slug}`, type: "courseComponent" },
 				sortOrder: lesson.ordering,
 				metadata: {
-					description: lesson.description,
-					path: lesson.path,
-					khanId: lesson.id
+					khanId: lesson.id,
+					khanSlug: lesson.slug,
+					khanTitle: lesson.title,
+					khanDescription: lesson.description,
+					khanPath: lesson.path
 				}
 			})
 
@@ -254,9 +260,11 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 					if (!resourceSet.has(contentSourcedId)) {
 						// Construct metadata based on content type
 						let metadata: Record<string, unknown> = {
-							description: content.description || "",
-							path: content.path,
-							khanId: content.id
+							khanId: content.id,
+							khanSlug: content.slug,
+							khanTitle: content.title,
+							khanDescription: content.description || "",
+							khanPath: content.path
 						}
 
 						if (lc.contentType === "Article") {
@@ -337,10 +345,13 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 						questionType: "custom",
 						language: "en-US",
 						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice:${assessment.id}`,
-						description: assessment.description,
-						lessonType: assessment.type.toLowerCase(),
-						path: assessment.path,
-						khanId: assessment.id
+						// Khan-specific data
+						khanId: assessment.id,
+						khanSlug: assessment.slug,
+						khanTitle: assessment.title,
+						khanDescription: assessment.description,
+						khanPath: assessment.path,
+						khanLessonType: assessment.type.toLowerCase()
 					}
 				})
 				resourceSet.add(assessmentSourcedId)
