@@ -25,8 +25,18 @@ export const ingestClass = inngest.createFunction(
 			throw errors.new("invalid event data: missing class data or sourcedId")
 		}
 
+		// CRITICAL: Validate status field exists - NO FALLBACKS
+		if (!classData.status) {
+			logger.error("CRITICAL: Class status missing", {
+				sourcedId: classData.sourcedId,
+				classData
+			})
+			throw errors.new("class status: required field missing")
+		}
+
 		logger.info("starting class ingestion", {
 			sourcedId: classData.sourcedId,
+			status: classData.status,
 			title: classData.title,
 			classType: classData.classType,
 			courseSourcedId: classData.course?.sourcedId,
@@ -65,6 +75,7 @@ export const ingestClass = inngest.createFunction(
 			// Clean the class data to remove any Inngest metadata
 			const cleanClassData = {
 				sourcedId: classData.sourcedId,
+				status: classData.status,
 				title: classData.title,
 				classType: classData.classType,
 				course: classData.course,

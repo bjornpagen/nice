@@ -57,6 +57,7 @@ interface OneRosterCourseComponentResource {
 
 interface OneRosterClass {
 	sourcedId: string
+	status: "active"
 	title: string
 	classType: "scheduled"
 	course: OneRosterGUIDRef
@@ -220,6 +221,7 @@ export async function generateOnerosterPayloadForCourse(courseId: string): Promi
 		// ADDED: class object generation
 		class: {
 			sourcedId: `nice:${course.id}`,
+			status: "active",
 			title: course.title,
 			classType: "scheduled",
 			course: { sourcedId: `nice:${course.id}`, type: "course" },

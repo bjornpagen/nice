@@ -176,6 +176,7 @@ const events = {
 		data: z.object({
 			class: z.object({
 				sourcedId: z.string(),
+				status: z.string(),
 				title: z.string(),
 				classType: z.enum(["homeroom", "scheduled"]),
 				course: z.object({

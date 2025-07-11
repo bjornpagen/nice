@@ -484,7 +484,7 @@ export class Client {
 		const response = fetchResult.data
 		if (!response.ok) {
 			const errorBody = await response.text()
-			logger.error("qti api returned non-ok status", { status: response.status, body: errorBody, endpoint })
+			logger.error("qti api returned non-ok status", { q: response.status, body: errorBody, endpoint })
 
 			// NEW: Throw specific, exported errors based on status code
 			if (response.status === 404) {

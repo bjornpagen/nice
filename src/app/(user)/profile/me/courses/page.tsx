@@ -63,7 +63,7 @@ async function getUserEnrolledClasses(userId: string): Promise<Course[]> {
 	const [classesResult, enrollmentsResult, allCoursesResult] = await Promise.all([
 		errors.try(oneroster.getClassesForUser(sourceId)),
 		errors.try(oneroster.getEnrollmentsForUser(sourceId)),
-		errors.try(oneroster.getAllCourses({ filter: prefixFilter }))
+		errors.try(oneroster.getAllCourses({ filter: `${prefixFilter} AND status='active'` }))
 	])
 
 	if (classesResult.error) {
@@ -86,8 +86,8 @@ async function getUserEnrolledClasses(userId: string): Promise<Course[]> {
 	// Create a set of class IDs that have active enrollments
 	const activeClassIds = new Set(activeEnrollments.map((e) => e.class.sourcedId))
 
-	// Filter classes to only those with active enrollments
-	const classes = allClasses.filter((cls) => activeClassIds.has(cls.sourcedId))
+	// Filter classes to only those with active enrollments and active status
+	const classes = allClasses.filter((cls) => activeClassIds.has(cls.sourcedId) && cls.status === "active")
 
 	logger.info("filtered user classes by active enrollments", {
 		sourceId,
@@ -183,7 +183,7 @@ async function getClassesForSelector(): Promise<AllSubject[]> {
 
 	const [classesResult, coursesResult] = await Promise.all([
 		errors.try(oneroster.getClassesForSchool(ONEROSTER_ORG_ID)),
-		errors.try(oneroster.getAllCourses({ filter: prefixFilter }))
+		errors.try(oneroster.getAllCourses({ filter: `${prefixFilter} AND status='active'` }))
 	])
 
 	if (classesResult.error) {
@@ -195,7 +195,7 @@ async function getClassesForSelector(): Promise<AllSubject[]> {
 		return []
 	}
 
-	const allClasses = classesResult.data
+	const allClasses = classesResult.data.filter((cls) => cls.status === "active")
 	const allCourses = coursesResult.data
 	const coursesMap = new Map(allCourses.map((c) => [c.sourcedId, c]))
 	const coursesBySubject = new Map<string, AllCourse[]>()

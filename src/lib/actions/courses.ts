@@ -45,6 +45,7 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 	for (const classId of classesToAdd) {
 		promises.push(
 			oneroster.createEnrollment({
+				status: "active",
 				role: "student",
 				user: { sourcedId: sourceId, type: "user" },
 				class: { sourcedId: classId, type: "class" }
@@ -104,7 +105,7 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 
 	const [classesResult, coursesResult] = await Promise.all([
 		errors.try(oneroster.getClassesForSchool(ONEROSTER_ORG_ID)),
-		errors.try(oneroster.getAllCourses({ filter: prefixFilter }))
+		errors.try(oneroster.getAllCourses({ filter: `${prefixFilter} AND status='active'` }))
 	])
 
 	if (classesResult.error) {
@@ -116,7 +117,7 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 		throw errors.wrap(coursesResult.error, "oneroster course fetch")
 	}
 
-	const allClasses = classesResult.data
+	const allClasses = classesResult.data.filter((c) => c.status === "active")
 	const allCourses = coursesResult.data
 	const coursesMap = new Map(allCourses.map((c) => [c.sourcedId, c]))
 	const coursesBySubject = new Map<string, CourseForExplore[]>()

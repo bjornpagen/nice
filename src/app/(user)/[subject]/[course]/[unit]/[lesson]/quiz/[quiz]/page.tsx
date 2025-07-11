@@ -24,7 +24,7 @@ export type QuizData = {
 async function fetchQuizData(params: { quiz: string }): Promise<QuizData> {
 	// ✅ NEW: Look up resource by slug with namespace filter
 	const prefixFilter = createPrefixFilter("nice:")
-	const filter = `${prefixFilter} AND metadata.khanSlug='${params.quiz}' AND metadata.type='qti'`
+	const filter = `${prefixFilter} AND metadata.khanSlug='${params.quiz}' AND metadata.type='qti' AND status='active'`
 	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
 	if (resourceResult.error) {
 		logger.error("failed to fetch quiz resource by slug", { error: resourceResult.error, slug: params.quiz })

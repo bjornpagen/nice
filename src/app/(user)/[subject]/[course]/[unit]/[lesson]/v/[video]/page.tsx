@@ -33,7 +33,7 @@ function extractYouTubeId(url: string): string | null {
 async function fetchVideoData(params: { video: string }): Promise<Video> {
 	// ✅ NEW: Look up resource by slug with namespace filter
 	const prefixFilter = createPrefixFilter("nice:")
-	const filter = `${prefixFilter} AND metadata.khanSlug='${params.video}' AND metadata.type='video'`
+	const filter = `${prefixFilter} AND metadata.khanSlug='${params.video}' AND metadata.type='video' AND status='active'`
 	const resourceResultFromAPI = await errors.try(oneroster.getAllResources({ filter }))
 	if (resourceResultFromAPI.error) {
 		logger.error("failed to fetch video resource by slug", { error: resourceResultFromAPI.error, slug: params.video })

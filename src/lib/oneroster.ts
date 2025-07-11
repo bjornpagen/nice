@@ -176,6 +176,7 @@ export type Class = z.infer<typeof ClassReadSchema>
 
 const ClassWriteSchema = z.object({
 	sourcedId: z.string(),
+	status: z.string(),
 	title: z.string(),
 	classType: z.enum(["homeroom", "scheduled"]),
 	course: GUIDRefWriteSchema,
@@ -282,6 +283,7 @@ const GetAllEnrollmentsResponseSchema = z.object({
 })
 
 const CreateEnrollmentInputSchema = z.object({
+	status: z.enum(["active", "tobedeleted", "inactive"]).default("active"),
 	role: z.enum(["student", "teacher", "proctor", "administrator"]),
 	user: GUIDRefWriteSchema,
 	class: GUIDRefWriteSchema,
@@ -1114,5 +1116,57 @@ export class Client {
 		)
 
 		logger.info("oneroster: successfully deleted course component", { sourcedId })
+	}
+
+	async deleteCourse(sourcedId: string): Promise<void> {
+		logger.info("oneroster: deleting course", { sourcedId })
+
+		if (!sourcedId) {
+			throw errors.new("sourcedId cannot be empty")
+		}
+
+		await this.#request(`/ims/oneroster/rostering/v1p2/courses/${sourcedId}`, { method: "DELETE" }, z.unknown())
+
+		logger.info("oneroster: successfully deleted course", { sourcedId })
+	}
+
+	async deleteClass(sourcedId: string): Promise<void> {
+		logger.info("oneroster: deleting class", { sourcedId })
+
+		if (!sourcedId) {
+			throw errors.new("sourcedId cannot be empty")
+		}
+
+		await this.#request(`/ims/oneroster/rostering/v1p2/classes/${sourcedId}`, { method: "DELETE" }, z.unknown())
+
+		logger.info("oneroster: successfully deleted class", { sourcedId })
+	}
+
+	async deleteComponentResource(sourcedId: string): Promise<void> {
+		logger.info("oneroster: deleting component resource", { sourcedId })
+
+		if (!sourcedId) {
+			throw errors.new("sourcedId cannot be empty")
+		}
+
+		await this.#request(
+			`/ims/oneroster/rostering/v1p2/courses/component-resources/${sourcedId}`,
+			{ method: "DELETE" },
+			z.unknown()
+		)
+
+		logger.info("oneroster: successfully deleted component resource", { sourcedId })
+	}
+
+	async deleteUser(sourcedId: string): Promise<void> {
+		logger.info("oneroster: deleting user", { sourcedId })
+
+		if (!sourcedId) {
+			throw errors.new("sourcedId cannot be empty")
+		}
+
+		await this.#request(`/ims/oneroster/rostering/v1p2/users/${sourcedId}`, { method: "DELETE" }, z.unknown())
+
+		logger.info("oneroster: successfully deleted user", { sourcedId })
 	}
 }

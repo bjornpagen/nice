@@ -121,7 +121,7 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	const prefixFilter = createPrefixFilter("nice:")
 
 	// First, find the course by its khanSlug
-	const courseFilter = `${prefixFilter} AND metadata.khanSlug='${params.course}'`
+	const courseFilter = `${prefixFilter} AND metadata.khanSlug='${params.course}' AND status='active'`
 	const coursesResult = await errors.try(oneroster.getAllCourses({ filter: courseFilter }))
 	if (coursesResult.error) {
 		logger.error("failed to fetch courses", { error: coursesResult.error, filter: courseFilter })
@@ -140,7 +140,9 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 
 	// Fetch all components for this course to find the unit by its khanSlug
 	const allComponentsResult = await errors.try(
-		oneroster.getCourseComponents({ filter: `${prefixFilter} AND course.sourcedId='${courseSourcedId}'` })
+		oneroster.getCourseComponents({
+			filter: `${prefixFilter} AND course.sourcedId='${courseSourcedId}' AND status='active'`
+		})
 	)
 	if (allComponentsResult.error) {
 		logger.error("failed to fetch course components", { error: allComponentsResult.error, courseSourcedId })
@@ -239,7 +241,9 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 
 	// Fetch children of this unit (lessons and assessments)
 	const unitChildrenResult = await errors.try(
-		oneroster.getCourseComponents({ filter: `${prefixFilter} AND parent.sourcedId='${unitSourcedId}'` })
+		oneroster.getCourseComponents({
+			filter: `${prefixFilter} AND parent.sourcedId='${unitSourcedId}' AND status='active'`
+		})
 	)
 	if (unitChildrenResult.error) {
 		logger.error("failed to fetch unit children", { error: unitChildrenResult.error, unitSourcedId })
@@ -248,7 +252,9 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	const unitChildren = unitChildrenResult.data
 
 	// Fetch ALL resources and filter in memory
-	const allResourcesInSystemResult = await errors.try(oneroster.getAllResources({ filter: prefixFilter }))
+	const allResourcesInSystemResult = await errors.try(
+		oneroster.getAllResources({ filter: `${prefixFilter} AND status='active'` })
+	)
 	if (allResourcesInSystemResult.error) {
 		logger.error("failed to fetch all resources", { error: allResourcesInSystemResult.error })
 		throw errors.wrap(allResourcesInSystemResult.error, "fetch all resources")
@@ -256,7 +262,9 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	const allResourcesInSystem = allResourcesInSystemResult.data
 
 	// Fetch ALL component resources and filter in memory for this unit and its children
-	const allComponentResourcesResult = await errors.try(oneroster.getAllComponentResources({ filter: prefixFilter }))
+	const allComponentResourcesResult = await errors.try(
+		oneroster.getAllComponentResources({ filter: `${prefixFilter} AND status='active'` })
+	)
 	if (allComponentResourcesResult.error) {
 		logger.error("failed to fetch all component resources", { error: allComponentResourcesResult.error })
 		throw errors.wrap(allComponentResourcesResult.error, "fetch all component resources")
@@ -273,7 +281,9 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	// Get unique resource IDs from ALL component resources for the course (not just this unit)
 	// This is needed because resources might be shared across units
 	const allCourseComponentsResult = await errors.try(
-		oneroster.getCourseComponents({ filter: `${prefixFilter} AND course.sourcedId='${courseSourcedId}'` })
+		oneroster.getCourseComponents({
+			filter: `${prefixFilter} AND course.sourcedId='${courseSourcedId}' AND status='active'`
+		})
 	)
 	if (allCourseComponentsResult.error) {
 		logger.error("failed to fetch all course components", { error: allCourseComponentsResult.error, courseSourcedId })
@@ -491,7 +501,9 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 
 	// Count total lessons across all units
 	const allComponentsForLessonCountResult = await errors.try(
-		oneroster.getCourseComponents({ filter: `${prefixFilter} AND course.sourcedId='${courseSourcedId}'` })
+		oneroster.getCourseComponents({
+			filter: `${prefixFilter} AND course.sourcedId='${courseSourcedId}' AND status='active'`
+		})
 	)
 	if (allComponentsForLessonCountResult.error) {
 		logger.error("failed to fetch all components for lesson count", {

@@ -15,7 +15,7 @@ export default async function TestRedirectPage({
 	const prefixFilter = createPrefixFilter("nice:")
 
 	// Look up the unit by its slug to get its sourcedId
-	const filter = `${prefixFilter} AND metadata.khanSlug='${decodedUnit}'`
+	const filter = `${prefixFilter} AND metadata.khanSlug='${decodedUnit}' AND status='active'`
 	const unitResult = await errors.try(oneroster.getCourseComponents({ filter }))
 	if (unitResult.error) {
 		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: decodedUnit })
@@ -29,7 +29,9 @@ export default async function TestRedirectPage({
 
 	// Fetch all lessons for this unit to find test sibling
 	const lessonsResult = await errors.try(
-		oneroster.getCourseComponents({ filter: `${prefixFilter} AND parent.sourcedId='${unitSourcedId}'` })
+		oneroster.getCourseComponents({
+			filter: `${prefixFilter} AND parent.sourcedId='${unitSourcedId}' AND status='active'`
+		})
 	)
 
 	if (lessonsResult.error) {

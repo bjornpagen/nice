@@ -12,7 +12,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 
 	// ✅ NEW: Waterfall lookup with namespace filter
 	const courseResult = await errors.try(
-		oneroster.getAllCourses({ filter: `${prefixFilter} AND metadata.khanSlug='${params.course}'` })
+		oneroster.getAllCourses({ filter: `${prefixFilter} AND metadata.khanSlug='${params.course}' AND status='active'` })
 	)
 	if (courseResult.error) {
 		logger.error("failed to fetch course by slug", { error: courseResult.error, slug: params.course })
@@ -25,7 +25,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 
 	const unitResult = await errors.try(
 		oneroster.getCourseComponents({
-			filter: `${prefixFilter} AND course.sourcedId='${course.sourcedId}' AND metadata.khanSlug='${params.unit}'`
+			filter: `${prefixFilter} AND course.sourcedId='${course.sourcedId}' AND metadata.khanSlug='${params.unit}' AND status='active'`
 		})
 	)
 	if (unitResult.error) {
@@ -39,7 +39,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 
 	const lessonResult = await errors.try(
 		oneroster.getCourseComponents({
-			filter: `${prefixFilter} AND parent.sourcedId='${unit.sourcedId}' AND metadata.khanSlug='${params.lesson}'`
+			filter: `${prefixFilter} AND parent.sourcedId='${unit.sourcedId}' AND metadata.khanSlug='${params.lesson}' AND status='active'`
 		})
 	)
 	if (lessonResult.error) {
@@ -53,7 +53,9 @@ export async function fetchLessonData(params: { subject: string; course: string;
 
 	// 2. Fetch all lessons for the current unit to build the sidebar
 	const unitLessonsResult = await errors.try(
-		oneroster.getCourseComponents({ filter: `${prefixFilter} AND parent.sourcedId='${unit.sourcedId}'` })
+		oneroster.getCourseComponents({
+			filter: `${prefixFilter} AND parent.sourcedId='${unit.sourcedId}' AND status='active'`
+		})
 	)
 	if (unitLessonsResult.error) {
 		logger.error("failed to fetch unit lessons", { error: unitLessonsResult.error, unitSourcedId: unit.sourcedId })
@@ -61,7 +63,9 @@ export async function fetchLessonData(params: { subject: string; course: string;
 	}
 
 	// 3. Fetch ALL component resources and filter in memory (since specific filters are not supported)
-	const allComponentResourcesResult = await errors.try(oneroster.getAllComponentResources({ filter: prefixFilter }))
+	const allComponentResourcesResult = await errors.try(
+		oneroster.getAllComponentResources({ filter: `${prefixFilter} AND status='active'` })
+	)
 	if (allComponentResourcesResult.error) {
 		logger.error("failed to fetch component resources", { error: allComponentResourcesResult.error })
 		throw errors.wrap(allComponentResourcesResult.error, "failed to fetch component resources")
@@ -85,16 +89,31 @@ export async function fetchLessonData(params: { subject: string; course: string;
 		const resourcePromises = resourceIds.map(async (resourceId) => {
 			const result = await errors.try(oneroster.getResource(resourceId))
 			if (result.error) {
-				logger.warn("failed to fetch resource", { resourceId, error: result.error })
-				return null
+				logger.error("CRITICAL: Failed to fetch resource", { resourceId, error: result.error })
+				throw errors.wrap(result.error, "resource fetch failed")
 			}
-			return result.data
+
+			const resource = result.data
+			if (!resource) {
+				logger.error("CRITICAL: Resource data is undefined", { resourceId })
+				throw errors.new("resource data undefined")
+			}
+
+			// Only include active resources - filter out inactive ones
+			if (resource.status === "active") {
+				return resource
+			}
+			logger.info("filtering out inactive resource", { resourceId, status: resource.status })
+			return undefined
 		})
 		const resourceResults = await Promise.all(resourcePromises)
-		allResourcesData = resourceResults.filter((r): r is Resource => r !== null)
+		// Filter out undefined values (inactive resources)
+		allResourcesData = resourceResults.filter((r): r is Resource => r !== undefined)
 	} else {
 		// For larger numbers, try a simple filter approach
-		const allResourcesResult = await errors.try(oneroster.getAllResources({ filter: prefixFilter }))
+		const allResourcesResult = await errors.try(
+			oneroster.getAllResources({ filter: `${prefixFilter} AND status='active'` })
+		)
 		if (allResourcesResult.error) {
 			logger.error("failed to fetch resources", { error: allResourcesResult.error })
 			throw errors.wrap(allResourcesResult.error, "failed to fetch resources")
