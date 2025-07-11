@@ -1,7 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import type { env } from "@/env"
 
 // --- NEW: EXPORTED QTI API ERRORS ---
 export const ErrQtiNotFound = errors.new("qti resource not found")
@@ -377,23 +376,23 @@ const ReorderSectionItemsInputSchema = z.object({
 })
 export type ReorderSectionItemsInput = z.infer<typeof ReorderSectionItemsInputSchema>
 
-// --- NEW: API CLIENT CONFIG TYPE ---
-type QtiApiClientConfig = {
-	serverUrl: (typeof env)["TIMEBACK_QTI_SERVER_URL"]
-	tokenUrl: (typeof env)["TIMEBACK_TOKEN_URL"]
-	clientId: (typeof env)["TIMEBACK_CLIENT_ID"]
-	clientSecret: (typeof env)["TIMEBACK_CLIENT_SECRET"]
+// --- API CLIENT CONFIG TYPE ---
+type ApiClientConfig = {
+	serverUrl: string
+	tokenUrl: string
+	clientId: string
+	clientSecret: string
 }
 
 /**
  * Client for interacting with the QTI API.
  * Manages OAuth2 authentication and provides methods for all assessment item operations.
  */
-export class QtiApiClient {
+export class Client {
 	#accessToken: string | null = null
-	#config: QtiApiClientConfig
+	#config: ApiClientConfig
 
-	constructor(config: QtiApiClientConfig) {
+	constructor(config: ApiClientConfig) {
 		this.#config = config
 		logger.debug("qti client: initializing with provided configuration")
 	}
@@ -524,6 +523,74 @@ export class QtiApiClient {
 		return validation.data
 	}
 
+	/**
+	 * Generic helper method to create entities with consistent validation and request handling
+	 */
+	async #createEntity<T extends z.ZodType, U, R>(
+		entityName: "stimulus" | "assessmentItem" | "assessmentTest" | "testPart" | "section",
+		endpoint: string,
+		input: U,
+		inputSchema: T,
+		responseSchema: z.ZodType<R>,
+		transformPayload?: (validatedData: z.infer<T>) => unknown
+	): Promise<R> {
+		const validationResult = inputSchema.safeParse(input)
+		if (!validationResult.success) {
+			logger.error("qti client: invalid input for creating entity", {
+				entityName,
+				error: validationResult.error,
+				input
+			})
+			throw errors.wrap(validationResult.error, `invalid input for ${entityName}`)
+		}
+
+		const payload = transformPayload ? transformPayload(validationResult.data) : { [entityName]: validationResult.data }
+
+		return this.#request(
+			endpoint,
+			{
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload)
+			},
+			responseSchema
+		)
+	}
+
+	/**
+	 * Generic helper method to update entities with consistent validation and request handling
+	 */
+	async #updateEntity<T extends z.ZodType, U, R>(
+		entityName: string,
+		endpoint: string,
+		input: U,
+		inputSchema: T,
+		responseSchema: z.ZodType<R>,
+		transformPayload?: (validatedData: z.infer<T>) => unknown
+	): Promise<R> {
+		const validationResult = inputSchema.safeParse(input)
+		if (!validationResult.success) {
+			logger.error("qti client: invalid input for updating entity", {
+				entityName,
+				error: validationResult.error,
+				input
+			})
+			throw errors.wrap(validationResult.error, `invalid input for ${entityName}`)
+		}
+
+		const payload = transformPayload ? transformPayload(validationResult.data) : { [entityName]: validationResult.data }
+
+		return this.#request(
+			endpoint,
+			{
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload)
+			},
+			responseSchema
+		)
+	}
+
 	// --- Stimulus Management Methods (New) ---
 
 	/**
@@ -531,21 +598,15 @@ export class QtiApiClient {
 	 * @param {CreateStimulusInput} input - The stimulus data to create.
 	 * @returns {Promise<Stimulus>} The created stimulus object.
 	 */
-	public async createStimulus(input: CreateStimulusInput): Promise<Stimulus> {
+	async createStimulus(input: CreateStimulusInput): Promise<Stimulus> {
 		logger.info("qti client: creating stimulus", { identifier: input.identifier })
-		const validation = CreateStimulusInputSchema.safeParse(input)
-		if (!validation.success) {
-			logger.error("qti client: invalid input for createStimulus", { error: validation.error })
-			throw errors.wrap(validation.error, "createStimulus input validation")
-		}
-		return this.#request<Stimulus>(
+		return this.#createEntity(
+			"stimulus",
 			"/stimuli",
-			{
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(validation.data)
-			},
-			StimulusSchema
+			input,
+			CreateStimulusInputSchema,
+			StimulusSchema,
+			(data) => data // No transformation needed, send data directly
 		)
 	}
 
@@ -554,7 +615,7 @@ export class QtiApiClient {
 	 * @param {string} identifier - The unique identifier of the stimulus.
 	 * @returns {Promise<Stimulus>} The stimulus object.
 	 */
-	public async getStimulus(identifier: string): Promise<Stimulus> {
+	async getStimulus(identifier: string): Promise<Stimulus> {
 		logger.info("qti client: getting stimulus", { identifier })
 		if (!identifier) {
 			throw errors.new("qti client: identifier is required for getStimulus")
@@ -568,7 +629,7 @@ export class QtiApiClient {
 	 * @param {UpdateStimulusInput} input - The new stimulus data.
 	 * @returns {Promise<Stimulus>} The updated stimulus object.
 	 */
-	public async updateStimulus(identifier: string, input: UpdateStimulusInput): Promise<Stimulus> {
+	async updateStimulus(identifier: string, input: UpdateStimulusInput): Promise<Stimulus> {
 		logger.info("qti client: updating stimulus", { identifier })
 		const validation = CreateStimulusInputSchema.safeParse(input)
 		if (!validation.success) {
@@ -587,7 +648,7 @@ export class QtiApiClient {
 	 * @param {string} identifier - The identifier of the stimulus to delete.
 	 * @returns {Promise<void>}
 	 */
-	public async deleteStimulus(identifier: string): Promise<void> {
+	async deleteStimulus(identifier: string): Promise<void> {
 		logger.info("qti client: deleting stimulus", { identifier })
 		if (!identifier) {
 			throw errors.new("qti client: identifier is required for deleteStimulus")
@@ -600,7 +661,7 @@ export class QtiApiClient {
 	 * @param {SearchStimuliInput} input - The search, pagination, and sorting parameters.
 	 * @returns {Promise<SearchStimuliResponse>} A paginated list of stimuli.
 	 */
-	public async searchStimuli(input: SearchStimuliInput): Promise<SearchStimuliResponse> {
+	async searchStimuli(input: SearchStimuliInput): Promise<SearchStimuliResponse> {
 		logger.info("qti client: searching stimuli", { input })
 		const validation = SearchStimuliInputSchema.safeParse(input)
 		if (!validation.success) {
@@ -618,33 +679,23 @@ export class QtiApiClient {
 	}
 
 	// --- Assessment Item Management Methods (Existing) ---
-	public async createAssessmentItem(input: CreateItemInput): Promise<AssessmentItem> {
+	async createAssessmentItem(input: CreateItemInput): Promise<AssessmentItem> {
 		logger.info("qti client: creating assessment item")
-		const validation = CreateItemInputSchema.safeParse(input)
-		if (!validation.success) {
-			logger.error("qti client: invalid input for createAssessmentItem", { error: validation.error })
-			throw errors.wrap(validation.error, "createAssessmentItem input validation")
-		}
-
-		// The API requires a JSON payload specifying the format is "xml".
-		const payload = {
-			format: "xml",
-			xml: validation.data.xml,
-			metadata: validation.data.metadata
-		}
-
-		return this.#request<AssessmentItem>(
+		return this.#createEntity(
+			"assessmentItem",
 			"/assessment-items",
-			{
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(payload)
-			},
-			AssessmentItemSchema
+			input,
+			CreateItemInputSchema,
+			AssessmentItemSchema,
+			(data) => ({
+				format: "xml",
+				xml: data.xml,
+				metadata: data.metadata
+			})
 		)
 	}
 
-	public async getAssessmentItem(identifier: string): Promise<AssessmentItem> {
+	async getAssessmentItem(identifier: string): Promise<AssessmentItem> {
 		logger.info("qti client: getting assessment item", { identifier })
 		if (!identifier) {
 			throw errors.new("qti client: identifier is required for getAssessmentItem")
@@ -652,7 +703,7 @@ export class QtiApiClient {
 		return this.#request(`/assessment-items/${identifier}`, { method: "GET" }, AssessmentItemSchema)
 	}
 
-	public async updateAssessmentItem(input: UpdateItemInput): Promise<AssessmentItem> {
+	async updateAssessmentItem(input: UpdateItemInput): Promise<AssessmentItem> {
 		logger.info("qti client: updating assessment item", { identifier: input.identifier })
 		const validation = UpdateItemInputSchema.safeParse(input)
 		if (!validation.success) {
@@ -675,7 +726,7 @@ export class QtiApiClient {
 		)
 	}
 
-	public async deleteAssessmentItem(identifier: string): Promise<void> {
+	async deleteAssessmentItem(identifier: string): Promise<void> {
 		logger.info("qti client: deleting assessment item", { identifier })
 		if (!identifier) {
 			throw errors.new("qti client: identifier is required for deleteAssessmentItem")
@@ -684,7 +735,7 @@ export class QtiApiClient {
 		await this.#request(`/assessment-items/${identifier}`, { method: "DELETE" }, z.null())
 	}
 
-	public async searchAssessmentItems(input: SearchItemsInput): Promise<SearchAssessmentItemsResponse> {
+	async searchAssessmentItems(input: SearchItemsInput): Promise<SearchAssessmentItemsResponse> {
 		logger.info("qti client: searching assessment items", { input })
 		const validation = SearchItemsInputSchema.safeParse(input)
 		if (!validation.success) {
@@ -710,21 +761,15 @@ export class QtiApiClient {
 	 * @param {CreateAssessmentTestInput} input - The test data, including parts and sections.
 	 * @returns {Promise<AssessmentTest>} The created assessment test object.
 	 */
-	public async createAssessmentTest(input: CreateAssessmentTestInput): Promise<AssessmentTest> {
+	async createAssessmentTest(input: CreateAssessmentTestInput): Promise<AssessmentTest> {
 		logger.info("qti client: creating assessment test", { identifier: input.identifier })
-		const validation = CreateAssessmentTestInputSchema.safeParse(input)
-		if (!validation.success) {
-			logger.error("qti client: invalid input for createAssessmentTest", { error: validation.error })
-			throw errors.wrap(validation.error, "createAssessmentTest input validation")
-		}
-		return this.#request<AssessmentTest>(
+		return this.#createEntity(
+			"assessmentTest",
 			"/assessment-tests",
-			{
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(validation.data)
-			},
-			AssessmentTestSchema
+			input,
+			CreateAssessmentTestInputSchema,
+			AssessmentTestSchema,
+			(data) => data // No transformation needed
 		)
 	}
 
@@ -733,7 +778,7 @@ export class QtiApiClient {
 	 * @param {string} identifier - The unique identifier of the test.
 	 * @returns {Promise<AssessmentTest>} The assessment test object.
 	 */
-	public async getAssessmentTest(identifier: string): Promise<AssessmentTest> {
+	async getAssessmentTest(identifier: string): Promise<AssessmentTest> {
 		logger.info("qti client: getting assessment test", { identifier })
 		if (!identifier) {
 			throw errors.new("qti client: identifier is required for getAssessmentTest")
@@ -747,7 +792,7 @@ export class QtiApiClient {
 	 * @param {UpdateAssessmentTestInput} input - The new test data.
 	 * @returns {Promise<AssessmentTest>} The updated assessment test object.
 	 */
-	public async updateAssessmentTest(identifier: string, input: UpdateAssessmentTestInput): Promise<AssessmentTest> {
+	async updateAssessmentTest(identifier: string, input: UpdateAssessmentTestInput): Promise<AssessmentTest> {
 		logger.info("qti client: updating assessment test", { identifier })
 		const validation = CreateAssessmentTestInputSchema.safeParse(input)
 		if (!validation.success) {
@@ -770,7 +815,7 @@ export class QtiApiClient {
 	 * @param {string} identifier - The identifier of the test to delete.
 	 * @returns {Promise<void>}
 	 */
-	public async deleteAssessmentTest(identifier: string): Promise<void> {
+	async deleteAssessmentTest(identifier: string): Promise<void> {
 		logger.info("qti client: deleting assessment test", { identifier })
 		if (!identifier) {
 			throw errors.new("qti client: identifier is required for deleteAssessmentTest")
@@ -783,7 +828,7 @@ export class QtiApiClient {
 	 * @param {SearchAssessmentTestsInput} input - The search, pagination, and sorting parameters.
 	 * @returns {Promise<SearchAssessmentTestsResponse>} A paginated list of tests.
 	 */
-	public async searchAssessmentTests(input: SearchAssessmentTestsInput): Promise<SearchAssessmentTestsResponse> {
+	async searchAssessmentTests(input: SearchAssessmentTestsInput): Promise<SearchAssessmentTestsResponse> {
 		logger.info("qti client: searching assessment tests", { input })
 		const validation = SearchAssessmentTestsInputSchema.safeParse(input)
 		if (!validation.success) {
@@ -805,7 +850,7 @@ export class QtiApiClient {
 	 * @param {string} identifier - The identifier of the assessment test.
 	 * @returns {Promise<TestQuestionsResponse>} An object containing all questions and their context.
 	 */
-	public async getAllQuestionsForTest(identifier: string): Promise<TestQuestionsResponse> {
+	async getAllQuestionsForTest(identifier: string): Promise<TestQuestionsResponse> {
 		logger.info("qti client: getting all questions for test", { identifier })
 		if (!identifier) {
 			throw errors.new("qti client: identifier is required for getAllQuestionsForTest")
@@ -820,7 +865,7 @@ export class QtiApiClient {
 	 * @param {UpdateAssessmentTestMetadataInput} input - The new metadata.
 	 * @returns {Promise<AssessmentTest>} The updated assessment test object.
 	 */
-	public async updateAssessmentTestMetadata(
+	async updateAssessmentTestMetadata(
 		identifier: string,
 		input: UpdateAssessmentTestMetadataInput
 	): Promise<AssessmentTest> {
@@ -845,7 +890,7 @@ export class QtiApiClient {
 	 * @param {CreateTestPartInput} input - The test part data.
 	 * @returns {Promise<TestPart>} The created test part object.
 	 */
-	public async createTestPart(assessmentTestIdentifier: string, input: CreateTestPartInput): Promise<TestPart> {
+	async createTestPart(assessmentTestIdentifier: string, input: CreateTestPartInput): Promise<TestPart> {
 		logger.info("qti client: creating test part", { assessmentTestIdentifier, partIdentifier: input.identifier })
 		const validation = TestPartSchema.safeParse(input)
 		if (!validation.success) {
@@ -865,7 +910,7 @@ export class QtiApiClient {
 	 * @param {string} testPartIdentifier - The identifier of the test part.
 	 * @returns {Promise<TestPart>} The test part object.
 	 */
-	public async getTestPart(assessmentTestIdentifier: string, testPartIdentifier: string): Promise<TestPart> {
+	async getTestPart(assessmentTestIdentifier: string, testPartIdentifier: string): Promise<TestPart> {
 		logger.info("qti client: getting test part", { assessmentTestIdentifier, testPartIdentifier })
 		if (!assessmentTestIdentifier || !testPartIdentifier) {
 			throw errors.new("qti client: both assessmentTestIdentifier and testPartIdentifier are required for getTestPart")
@@ -881,7 +926,7 @@ export class QtiApiClient {
 	 * @param {CreateTestPartInput} input - The new test part data.
 	 * @returns {Promise<TestPart>} The updated test part object.
 	 */
-	public async updateTestPart(
+	async updateTestPart(
 		assessmentTestIdentifier: string,
 		testPartIdentifier: string,
 		input: CreateTestPartInput
@@ -905,7 +950,7 @@ export class QtiApiClient {
 	 * @param {string} testPartIdentifier - The identifier of the test part to delete.
 	 * @returns {Promise<void>}
 	 */
-	public async deleteTestPart(assessmentTestIdentifier: string, testPartIdentifier: string): Promise<void> {
+	async deleteTestPart(assessmentTestIdentifier: string, testPartIdentifier: string): Promise<void> {
 		logger.info("qti client: deleting test part", { assessmentTestIdentifier, testPartIdentifier })
 		if (!assessmentTestIdentifier || !testPartIdentifier) {
 			throw errors.new(
@@ -925,7 +970,7 @@ export class QtiApiClient {
 	 * @param {CreateSectionInput} input - The section data.
 	 * @returns {Promise<AssessmentSection>} The created section object.
 	 */
-	public async createSection(
+	async createSection(
 		assessmentTestIdentifier: string,
 		testPartIdentifier: string,
 		input: CreateSectionInput
@@ -950,7 +995,7 @@ export class QtiApiClient {
 	 * @param {string} sectionIdentifier - The identifier of the section.
 	 * @returns {Promise<AssessmentSection>} The section object.
 	 */
-	public async getSection(
+	async getSection(
 		assessmentTestIdentifier: string,
 		testPartIdentifier: string,
 		sectionIdentifier: string
@@ -971,7 +1016,7 @@ export class QtiApiClient {
 	 * @param {CreateSectionInput} input - The new section data.
 	 * @returns {Promise<AssessmentSection>} The updated section object.
 	 */
-	public async updateSection(
+	async updateSection(
 		assessmentTestIdentifier: string,
 		testPartIdentifier: string,
 		sectionIdentifier: string,
@@ -997,7 +1042,7 @@ export class QtiApiClient {
 	 * @param {string} sectionIdentifier - The identifier of the section to delete.
 	 * @returns {Promise<void>}
 	 */
-	public async deleteSection(
+	async deleteSection(
 		assessmentTestIdentifier: string,
 		testPartIdentifier: string,
 		sectionIdentifier: string
@@ -1019,7 +1064,7 @@ export class QtiApiClient {
 	 * @param {AddItemToSectionInput} input - The item reference to add.
 	 * @returns {Promise<AssessmentSection>} The updated section object.
 	 */
-	public async addAssessmentItemToSection(
+	async addAssessmentItemToSection(
 		params: { assessmentTestIdentifier: string; testPartIdentifier: string; sectionIdentifier: string },
 		input: AddItemToSectionInput
 	): Promise<AssessmentSection> {
@@ -1046,7 +1091,7 @@ export class QtiApiClient {
 	 * @param {string} params.itemIdentifier
 	 * @returns {Promise<void>}
 	 */
-	public async removeAssessmentItemFromSection(params: {
+	async removeAssessmentItemFromSection(params: {
 		assessmentTestIdentifier: string
 		testPartIdentifier: string
 		sectionIdentifier: string
@@ -1067,7 +1112,7 @@ export class QtiApiClient {
 	 * @param {ReorderSectionItemsInput} input - An array of item identifiers in the new order.
 	 * @returns {Promise<AssessmentSection>} The updated section object.
 	 */
-	public async reorderSectionItems(
+	async reorderSectionItems(
 		params: { assessmentTestIdentifier: string; testPartIdentifier: string; sectionIdentifier: string },
 		input: ReorderSectionItemsInput
 	): Promise<AssessmentSection> {

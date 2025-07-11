@@ -431,7 +431,7 @@ export class Client {
 		return validation.data
 	}
 
-	async #_createEntity<T extends z.ZodType, U, R>(
+	async #createEntity<T extends z.ZodType, U, R>(
 		entityName: "resource" | "course" | "courseComponent" | "componentResource" | "class" | "enrollment" | "user",
 		endpoint: string,
 		input: U,
@@ -455,7 +455,7 @@ export class Client {
 		)
 	}
 
-	public async getResource(sourcedId: string) {
+	async getResource(sourcedId: string) {
 		const result = await this.#request(
 			`/ims/oneroster/resources/v1p2/resources/${sourcedId}`,
 			{ method: "GET" },
@@ -465,8 +465,8 @@ export class Client {
 		return result?.resource
 	}
 
-	public async createResource(resource: z.infer<typeof CreateResourceInputSchema>) {
-		return this.#_createEntity(
+	async createResource(resource: z.infer<typeof CreateResourceInputSchema>) {
+		return this.#createEntity(
 			"resource",
 			"/ims/oneroster/resources/v1p2/resources/",
 			resource,
@@ -475,7 +475,7 @@ export class Client {
 		)
 	}
 
-	public async updateResource(sourcedId: string, resource: z.infer<typeof CreateResourceInputSchema>) {
+	async updateResource(sourcedId: string, resource: z.infer<typeof CreateResourceInputSchema>) {
 		// Note: The input for update is the same shape as create.
 		const validationResult = CreateResourceInputSchema.safeParse(resource)
 		if (!validationResult.success) {
@@ -493,7 +493,7 @@ export class Client {
 		)
 	}
 
-	public async deleteResource(sourcedId: string): Promise<void> {
+	async deleteResource(sourcedId: string): Promise<void> {
 		logger.info("oneroster: deleting resource", { sourcedId })
 
 		if (!sourcedId) {
@@ -505,7 +505,7 @@ export class Client {
 		logger.info("oneroster: successfully deleted resource", { sourcedId })
 	}
 
-	public async getCourse(sourcedId: string) {
+	async getCourse(sourcedId: string) {
 		const result = await this.#request(
 			`/ims/oneroster/rostering/v1p2/courses/${sourcedId}`,
 			{ method: "GET" },
@@ -515,8 +515,8 @@ export class Client {
 		return result?.course
 	}
 
-	public async createCourse(course: z.infer<typeof CreateCourseInputSchema>) {
-		return this.#_createEntity(
+	async createCourse(course: z.infer<typeof CreateCourseInputSchema>) {
+		return this.#createEntity(
 			"course",
 			"/ims/oneroster/rostering/v1p2/courses/",
 			course,
@@ -525,7 +525,7 @@ export class Client {
 		)
 	}
 
-	public async getCourseComponent(sourcedId: string) {
+	async getCourseComponent(sourcedId: string) {
 		const result = await this.#request(
 			`/ims/oneroster/rostering/v1p2/courses/components/${sourcedId}`,
 			{ method: "GET" },
@@ -535,7 +535,7 @@ export class Client {
 		return result?.courseComponent
 	}
 
-	public async updateCourseComponent(
+	async updateCourseComponent(
 		sourcedId: string,
 		courseComponent: z.infer<typeof CourseComponentWriteSchema>
 	): Promise<unknown> {
@@ -555,8 +555,8 @@ export class Client {
 		)
 	}
 
-	public async createCourseComponent(courseComponent: z.infer<typeof CreateCourseComponentInputSchema>) {
-		return this.#_createEntity(
+	async createCourseComponent(courseComponent: z.infer<typeof CreateCourseComponentInputSchema>) {
+		return this.#createEntity(
 			"courseComponent",
 			"/ims/oneroster/rostering/v1p2/courses/components",
 			courseComponent,
@@ -565,7 +565,7 @@ export class Client {
 		)
 	}
 
-	public async getComponentResource(sourcedId: string) {
+	async getComponentResource(sourcedId: string) {
 		const result = await this.#request(
 			`/ims/oneroster/rostering/v1p2/courses/component-resources/${sourcedId}`,
 			{ method: "GET" },
@@ -575,8 +575,8 @@ export class Client {
 		return result?.componentResource
 	}
 
-	public async createComponentResource(componentResource: z.infer<typeof CreateComponentResourceInputSchema>) {
-		return this.#_createEntity(
+	async createComponentResource(componentResource: z.infer<typeof CreateComponentResourceInputSchema>) {
+		return this.#createEntity(
 			"componentResource",
 			"/ims/oneroster/rostering/v1p2/courses/component-resources",
 			componentResource,
@@ -585,7 +585,7 @@ export class Client {
 		)
 	}
 
-	public async updateComponentResource(
+	async updateComponentResource(
 		sourcedId: string,
 		componentResource: z.infer<typeof ComponentResourceWriteSchema>
 	): Promise<unknown> {
@@ -605,7 +605,7 @@ export class Client {
 		)
 	}
 
-	public async getClass(sourcedId: string) {
+	async getClass(sourcedId: string) {
 		const result = await this.#request(
 			`/ims/oneroster/rostering/v1p2/classes/${sourcedId}`,
 			{ method: "GET" },
@@ -615,7 +615,7 @@ export class Client {
 		return result?.class
 	}
 
-	public async createClass(classData: z.infer<typeof CreateClassInputSchema>) {
+	async createClass(classData: z.infer<typeof CreateClassInputSchema>) {
 		const validationResult = CreateClassInputSchema.safeParse(classData)
 		if (!validationResult.success) {
 			logger.error("invalid input for createClass", { error: validationResult.error, input: classData })
@@ -641,14 +641,14 @@ export class Client {
 	}
 
 	// ADDED: New method to create a user in OneRoster.
-	public async createUser(userData: z.infer<typeof UserWriteSchema>) {
+	async createUser(userData: z.infer<typeof UserWriteSchema>) {
 		const validationResult = UserWriteSchema.safeParse(userData)
 		if (!validationResult.success) {
 			logger.error("invalid input for createUser", { error: validationResult.error, input: userData })
 			throw errors.wrap(validationResult.error, "invalid input for createUser")
 		}
 
-		return this.#_createEntity(
+		return this.#createEntity(
 			"user",
 			"/ims/oneroster/rostering/v1p2/users/",
 			validationResult.data,
@@ -714,7 +714,7 @@ export class Client {
 	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of all courses.
 	 */
-	public async getAllCourses(options?: QueryOptions): Promise<CourseReadSchemaType[]> {
+	async getAllCourses(options?: QueryOptions): Promise<CourseReadSchemaType[]> {
 		logger.info("oneroster: fetching all courses", options)
 
 		const courses = await this.#fetchPaginatedCollection<
@@ -738,7 +738,7 @@ export class Client {
 	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of classes for that school.
 	 */
-	public async getClassesForSchool(schoolSourcedId: string, options?: QueryOptions): Promise<ClassReadSchemaType[]> {
+	async getClassesForSchool(schoolSourcedId: string, options?: QueryOptions): Promise<ClassReadSchemaType[]> {
 		logger.info("oneroster: fetching all classes for school", { schoolSourcedId, ...options })
 
 		if (!schoolSourcedId) {
@@ -768,7 +768,7 @@ export class Client {
 	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of all users.
 	 */
-	public async getAllUsers(options?: QueryOptions): Promise<User[]> {
+	async getAllUsers(options?: QueryOptions): Promise<User[]> {
 		logger.info("oneroster: fetching all users", options)
 
 		const users = await this.#fetchPaginatedCollection<z.infer<typeof GetAllUsersResponseSchema>, User>({
@@ -788,7 +788,7 @@ export class Client {
 	 * @param email The email address to search for.
 	 * @returns A promise that resolves to the first matching user object, or null if not found.
 	 */
-	public async getUsersByEmail(email: string): Promise<User | null> {
+	async getUsersByEmail(email: string): Promise<User | null> {
 		logger.info("oneroster: fetching user by email", { email })
 
 		if (!email) {
@@ -823,7 +823,7 @@ export class Client {
 	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of course components.
 	 */
-	public async getCourseComponents(options?: QueryOptions): Promise<z.infer<typeof CourseComponentReadSchema>[]> {
+	async getCourseComponents(options?: QueryOptions): Promise<z.infer<typeof CourseComponentReadSchema>[]> {
 		logger.info("oneroster: fetching course components", options)
 
 		const components = await this.#fetchPaginatedCollection<
@@ -849,7 +849,7 @@ export class Client {
 	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of resources.
 	 */
-	public async getResourcesForCourse(courseSourcedId: string, options?: QueryOptions): Promise<Resource[]> {
+	async getResourcesForCourse(courseSourcedId: string, options?: QueryOptions): Promise<Resource[]> {
 		logger.info("oneroster: fetching resources for course", { courseSourcedId, ...options })
 
 		if (!courseSourcedId) {
@@ -877,7 +877,7 @@ export class Client {
 	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of all resources.
 	 */
-	public async getAllResources(options?: QueryOptions): Promise<Resource[]> {
+	async getAllResources(options?: QueryOptions): Promise<Resource[]> {
 		logger.info("oneroster: fetching ALL resources", options)
 
 		const resources = await this.#fetchPaginatedCollection<z.infer<typeof GetResourcesResponseSchema>, Resource>({
@@ -901,9 +901,7 @@ export class Client {
 	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of all component-resource relationships.
 	 */
-	public async getAllComponentResources(
-		options?: QueryOptions
-	): Promise<z.infer<typeof ComponentResourceReadSchema>[]> {
+	async getAllComponentResources(options?: QueryOptions): Promise<z.infer<typeof ComponentResourceReadSchema>[]> {
 		logger.info("oneroster: fetching ALL component resources", options)
 
 		const componentResources = await this.#fetchPaginatedCollection<
@@ -931,7 +929,7 @@ export class Client {
 	 * @param options Query options for sorting and filtering
 	 * @returns A promise that resolves to an array of classes.
 	 */
-	public async getClassesForUser(userSourcedId: string, options?: QueryOptions): Promise<ClassReadSchemaType[]> {
+	async getClassesForUser(userSourcedId: string, options?: QueryOptions): Promise<ClassReadSchemaType[]> {
 		logger.info("oneroster: fetching classes for user", { userSourcedId, ...options })
 
 		let endpoint = `/ims/oneroster/rostering/v1p2/users/${userSourcedId}/classes`
@@ -977,7 +975,7 @@ export class Client {
 	 * @param options Additional query options including filter, sort and orderBy
 	 * @returns A promise that resolves to an array of parent course components (units).
 	 */
-	public async getCourseComponentsForCourse(
+	async getCourseComponentsForCourse(
 		courseSourcedId: string,
 		options?: QueryOptions
 	): Promise<z.infer<typeof CourseComponentReadSchema>[]> {
@@ -1014,7 +1012,7 @@ export class Client {
 	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of enrollments.
 	 */
-	public async getAllEnrollments(options?: QueryOptions): Promise<Enrollment[]> {
+	async getAllEnrollments(options?: QueryOptions): Promise<Enrollment[]> {
 		logger.info("oneroster: fetching all enrollments", options)
 
 		const enrollments = await this.#fetchPaginatedCollection<
@@ -1041,7 +1039,7 @@ export class Client {
 	 * @param options Additional query options including filter, sort and orderBy
 	 * @returns A promise that resolves to an array of enrollments.
 	 */
-	public async getEnrollmentsForUser(userSourcedId: string, options?: QueryOptions): Promise<Enrollment[]> {
+	async getEnrollmentsForUser(userSourcedId: string, options?: QueryOptions): Promise<Enrollment[]> {
 		logger.info("oneroster: fetching enrollments for user", { userSourcedId, ...options })
 
 		// Merge the user filter with any additional filter
@@ -1065,7 +1063,7 @@ export class Client {
 	 * @param enrollmentData The data for the new enrollment.
 	 * @returns A promise that resolves to the API response.
 	 */
-	public async createEnrollment(enrollmentData: CreateEnrollmentInput): Promise<unknown> {
+	async createEnrollment(enrollmentData: CreateEnrollmentInput): Promise<unknown> {
 		logger.info("oneroster: creating enrollment", {
 			userSourcedId: enrollmentData.user.sourcedId,
 			classSourcedId: enrollmentData.class.sourcedId
@@ -1076,7 +1074,7 @@ export class Client {
 			throw errors.wrap(validationResult.error, "invalid input for createEnrollment")
 		}
 
-		return this.#_createEntity(
+		return this.#createEntity(
 			"enrollment",
 			"/ims/oneroster/rostering/v1p2/enrollments/",
 			validationResult.data,
@@ -1090,7 +1088,7 @@ export class Client {
 	 * @param enrollmentSourcedId The sourcedId of the enrollment to delete.
 	 * @returns A promise that resolves when the deletion is complete.
 	 */
-	public async deleteEnrollment(enrollmentSourcedId: string): Promise<void> {
+	async deleteEnrollment(enrollmentSourcedId: string): Promise<void> {
 		logger.info("oneroster: deleting enrollment", { enrollmentSourcedId })
 		if (!enrollmentSourcedId) {
 			throw errors.new("enrollmentSourcedId cannot be empty")
@@ -1102,7 +1100,7 @@ export class Client {
 		)
 	}
 
-	public async deleteCourseComponent(sourcedId: string): Promise<void> {
+	async deleteCourseComponent(sourcedId: string): Promise<void> {
 		logger.info("oneroster: deleting course component", { sourcedId })
 
 		if (!sourcedId) {

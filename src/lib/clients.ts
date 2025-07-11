@@ -1,6 +1,6 @@
 import { env } from "@/env"
-import { Client } from "./oneroster"
-import { QtiApiClient } from "./qti"
+import * as onerosterInternal from "./oneroster"
+import * as qtiInternal from "./qti"
 
 /**
  * A singleton instance of the OneRosterApiClient.
@@ -8,7 +8,7 @@ import { QtiApiClient } from "./qti"
  * for all OneRoster API interactions to ensure consistent configuration and
  * efficient token management.
  */
-export const oneroster = new Client({
+export const oneroster = new onerosterInternal.Client({
 	serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
 	tokenUrl: env.TIMEBACK_TOKEN_URL,
 	clientId: env.TIMEBACK_CLIENT_ID,
@@ -21,7 +21,7 @@ export const oneroster = new Client({
  * for all QTI API interactions to ensure consistent configuration and
  * efficient token management.
  */
-export const qti = new QtiApiClient({
+export const qti = new qtiInternal.Client({
 	serverUrl: env.TIMEBACK_QTI_SERVER_URL,
 	tokenUrl: env.TIMEBACK_TOKEN_URL,
 	clientId: env.TIMEBACK_CLIENT_ID,
