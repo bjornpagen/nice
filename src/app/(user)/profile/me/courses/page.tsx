@@ -12,6 +12,7 @@ export type Course = OneRosterClassReadSchemaType & {
 	courseSlug?: string
 	courseDescription?: string
 	coursePath?: string
+	metadata?: Record<string, unknown>
 } // A "Course" is now a OneRoster "Class"
 export type Unit = {
 	id: string
@@ -155,7 +156,8 @@ async function getUserEnrolledClasses(userId: string): Promise<Course[]> {
 				subject,
 				courseSlug,
 				courseDescription,
-				coursePath
+				coursePath,
+				metadata: course?.metadata
 			}
 		})
 	)

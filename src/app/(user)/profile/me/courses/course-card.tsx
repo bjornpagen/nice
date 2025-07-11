@@ -24,8 +24,19 @@ export function CourseCard({ course, units, color = "bg-gray-200" }: CourseCardP
 			? `/${course.subject}/${course.courseSlug}`
 			: `/courses/${course.course.sourcedId}`)
 
-	// Use the actual course description from OneRoster metadata, with fallback
-	const courseDescription = course.courseDescription || `${course.title} - ${course.classType} class`
+	// Helper function to extract metadata value
+	const getMetadataValue = (metadata: Record<string, unknown> | undefined, key: string): string | undefined => {
+		if (!metadata) return undefined
+		const value = metadata[key]
+		return typeof value === "string" ? value : undefined
+	}
+
+	// Use description or khanDescription from metadata, with fallback
+	const courseDescription =
+		getMetadataValue(course.metadata, "description") ||
+		getMetadataValue(course.metadata, "khanDescription") ||
+		course.courseDescription ||
+		`${course.title} - ${course.classType} class`
 
 	return (
 		<Card className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">
