@@ -4,6 +4,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { oneroster } from "@/lib/clients"
+import { createPrefixFilter } from "@/lib/filter"
 
 export async function saveUserCourses(selectedClassIds: string[]) {
 	const user = await currentUser()
@@ -99,10 +100,11 @@ type SubjectWithCoursesForExplore = {
 
 export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCoursesForExplore[]> {
 	logger.info("fetching explore dropdown data from oneroster api", { orgId: ONEROSTER_ORG_ID })
+	const prefixFilter = createPrefixFilter("nice:")
 
 	const [classesResult, coursesResult] = await Promise.all([
 		errors.try(oneroster.getClassesForSchool(ONEROSTER_ORG_ID)),
-		errors.try(oneroster.getAllCourses({ filter: "sourcedId~'nice:'" }))
+		errors.try(oneroster.getAllCourses({ filter: prefixFilter }))
 	])
 
 	if (classesResult.error) {

@@ -2,6 +2,7 @@ import { auth, currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { oneroster } from "@/lib/clients"
+import { createPrefixFilter } from "@/lib/filter"
 import type { ClassReadSchemaType } from "@/lib/oneroster"
 import { Content } from "./content"
 
@@ -56,11 +57,13 @@ async function getUserEnrolledClasses(userId: string): Promise<Course[]> {
 		return []
 	}
 
+	const prefixFilter = createPrefixFilter("nice:")
+
 	// Get user's current active enrollments to filter classes
 	const [classesResult, enrollmentsResult, allCoursesResult] = await Promise.all([
 		errors.try(oneroster.getClassesForUser(sourceId)),
 		errors.try(oneroster.getEnrollmentsForUser(sourceId)),
-		errors.try(oneroster.getAllCourses({ filter: "sourcedId~'nice:'" }))
+		errors.try(oneroster.getAllCourses({ filter: prefixFilter }))
 	])
 
 	if (classesResult.error) {
@@ -176,10 +179,11 @@ async function getUserEnrolledClasses(userId: string): Promise<Course[]> {
 // New data fetching function for the course selector
 async function getClassesForSelector(): Promise<AllSubject[]> {
 	logger.info("fetching course selector data from oneroster api", { orgId: ONEROSTER_ORG_ID })
+	const prefixFilter = createPrefixFilter("nice:")
 
 	const [classesResult, coursesResult] = await Promise.all([
 		errors.try(oneroster.getClassesForSchool(ONEROSTER_ORG_ID)),
-		errors.try(oneroster.getAllCourses({ filter: "sourcedId~'nice:'" }))
+		errors.try(oneroster.getAllCourses({ filter: prefixFilter }))
 	])
 
 	if (classesResult.error) {

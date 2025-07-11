@@ -1101,4 +1101,20 @@ export class Client {
 			z.null()
 		)
 	}
+
+	public async deleteCourseComponent(sourcedId: string): Promise<void> {
+		logger.info("oneroster: deleting course component", { sourcedId })
+
+		if (!sourcedId) {
+			throw errors.new("sourcedId cannot be empty")
+		}
+
+		await this.#request(
+			`/ims/oneroster/rostering/v1p2/courses/components/${sourcedId}`,
+			{ method: "DELETE" },
+			z.unknown()
+		)
+
+		logger.info("oneroster: successfully deleted course component", { sourcedId })
+	}
 }

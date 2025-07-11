@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { redirect } from "next/navigation"
 import { oneroster } from "@/lib/clients"
+import { createPrefixFilter } from "@/lib/filter"
 
 export default async function TestRedirectPage({
 	params
@@ -11,9 +12,10 @@ export default async function TestRedirectPage({
 	const resolvedParams = await params
 	const decodedTest = decodeURIComponent(resolvedParams.test)
 	const decodedUnit = decodeURIComponent(resolvedParams.unit)
+	const prefixFilter = createPrefixFilter("nice:")
 
 	// Look up the unit by its slug to get its sourcedId
-	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${decodedUnit}'`
+	const filter = `${prefixFilter} AND metadata.khanSlug='${decodedUnit}'`
 	const unitResult = await errors.try(oneroster.getCourseComponents({ filter }))
 	if (unitResult.error) {
 		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: decodedUnit })
@@ -27,7 +29,7 @@ export default async function TestRedirectPage({
 
 	// Fetch all lessons for this unit to find test sibling
 	const lessonsResult = await errors.try(
-		oneroster.getCourseComponents({ filter: `sourcedId~'nice:' AND parent.sourcedId='${unitSourcedId}'` })
+		oneroster.getCourseComponents({ filter: `${prefixFilter} AND parent.sourcedId='${unitSourcedId}'` })
 	)
 
 	if (lessonsResult.error) {

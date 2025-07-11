@@ -5,6 +5,7 @@ import * as React from "react"
 import { fetchLessonData } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/lesson-data"
 import { LessonLayout } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/lesson-layout"
 import { oneroster } from "@/lib/clients"
+import { createPrefixFilter } from "@/lib/filter"
 import { Content } from "./content"
 
 // The Article type now contains the identifier for QTI rendering
@@ -17,7 +18,8 @@ export type Article = {
 // New data fetching function for the article page
 async function fetchArticleData(params: { article: string }): Promise<Article> {
 	// ✅ NEW: Look up resource by slug with namespace filter
-	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${params.article}' AND metadata.type='qti'`
+	const prefixFilter = createPrefixFilter("nice:")
+	const filter = `${prefixFilter} AND metadata.khanSlug='${params.article}' AND metadata.type='qti'`
 	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
 	if (resourceResult.error) {
 		logger.error("failed to fetch article resource by slug", { error: resourceResult.error, slug: params.article })
