@@ -1,5 +1,7 @@
-import { currentUser } from "@clerk/nextjs/server"
-import * as errors from "@superbuilders/errors"
+"use client"
+
+import { useUser } from "@clerk/nextjs"
+import type * as React from "react"
 import { z } from "zod"
 import { Banner } from "@/components/banner"
 import { Footer } from "@/components/footer"
@@ -14,16 +16,20 @@ const UserPublicMetadataSchema = z.object({
 	bio: z.string().optional().default("")
 })
 
-export default async function UserLayout({ children }: { children: React.ReactNode }) {
-	// Get the authenticated user
-	const user = await currentUser()
+function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
+	const { user } = useUser()
 
 	if (!user) {
-		throw errors.new("User not authenticated")
+		return null // Or a loading/error state
 	}
 
-	// Safely parse public metadata from Clerk
-	const { nickname, username, bio } = UserPublicMetadataSchema.parse(user.publicMetadata)
+	const validationResult = UserPublicMetadataSchema.safeParse(user.publicMetadata)
+	if (!validationResult.success) {
+		// Handle validation error, e.g., log it and use defaults
+		return null
+	}
+
+	const { nickname, username, bio } = validationResult.data
 
 	return (
 		<div className="flex flex-col h-screen bg-white font-lato">
@@ -53,4 +59,8 @@ export default async function UserLayout({ children }: { children: React.ReactNo
 			</div>
 		</div>
 	)
+}
+
+export default function UserLayout({ children }: { children: React.ReactNode }) {
+	return <ProfileLayoutContent>{children}</ProfileLayoutContent>
 }

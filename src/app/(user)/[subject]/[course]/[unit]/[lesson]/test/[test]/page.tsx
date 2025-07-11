@@ -1,14 +1,18 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import * as React from "react"
-import { qti } from "@/lib/clients"
+import { fetchLessonData } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/lesson-data"
+import { LessonLayout } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/lesson-layout"
+import { oneroster, qti } from "@/lib/clients"
 import type { TestQuestionsResponse } from "@/lib/qti"
-import { fetchLessonData } from "../../lesson-data"
-import { LessonLayout } from "../../lesson-layout"
 import { TestContent } from "./test-content"
 
 // Types are now derived from the QTI API response
-export type Test = TestQuestionsResponse
+export type Test = TestQuestionsResponse & {
+	description: string
+}
+
 export type TestQuestion = TestQuestionsResponse["questions"][number]["question"] & {
 	qtiIdentifier: string
 }
@@ -20,23 +24,38 @@ export type TestData = {
 
 // Consolidated data fetching function for the test page
 async function fetchTestData(params: { test: string }): Promise<TestData> {
-	const testSourcedId = `nice:${params.test}`
-
-	const fullTestData = await qti.getAllQuestionsForTest(testSourcedId)
-
-	if (!fullTestData) {
+	// ✅ NEW: Look up resource by slug with namespace filter
+	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${params.test}' AND metadata.type='qti' AND metadata.subType='qti-test'`
+	const resourceResult = await errors.try(oneroster.getAllResources(filter))
+	if (resourceResult.error) {
+		logger.error("failed to fetch test resource by slug", { error: resourceResult.error, slug: params.test })
+		throw errors.wrap(resourceResult.error, "failed to fetch test resource by slug")
+	}
+	const resource = resourceResult.data[0]
+	if (!resource) {
 		notFound()
 	}
+	const testSourcedId = resource.sourcedId
 
-	const questions = fullTestData.questions.map((q) => ({
+	logger.info("fetchTestData: fetching QTI test details", { testSourcedId })
+
+	const qtiTestData = await qti.getAllQuestionsForTest(testSourcedId)
+
+	logger.info("fetchTestData: test data retrieved", {
+		testSourcedId,
+		title: qtiTestData.title,
+		questionCount: qtiTestData.totalQuestions
+	})
+
+	const questions = qtiTestData.questions.map((q) => ({
 		...q.question,
 		qtiIdentifier: q.question.identifier // Use the identifier directly from QTI
 	}))
 
 	return {
 		test: {
-			title: fullTestData.title,
-			totalQuestions: fullTestData.totalQuestions,
+			title: qtiTestData.title,
+			totalQuestions: qtiTestData.totalQuestions,
 			description: "" // QTI tests don't have descriptions, use empty string
 		},
 		questions

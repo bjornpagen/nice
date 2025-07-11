@@ -5,49 +5,62 @@ import { oneroster } from "@/lib/clients"
 import type { LessonChild, LessonInfo } from "@/lib/khan-academy-api"
 import type { OneRosterResource } from "@/lib/oneroster"
 
-// Helper function to extract slug from sourcedId
-function extractSlug(sourcedId: string): string {
-	const parts = sourcedId.split(":")
-	if (parts.length < 2 || !parts[1]) {
-		logger.error("CRITICAL: Invalid sourcedId format", { sourcedId })
-		throw errors.new("sourcedId: invalid format")
-	}
-	return parts[1]
-}
-
 // Shared data fetching function
 export async function fetchLessonData(params: { subject: string; course: string; unit: string; lesson: string }) {
-	const courseSourcedId = `nice:${params.course}`
-	const unitSourcedId = `nice:${params.unit}`
-	const lessonSourcedId = `nice:${params.lesson}`
-
-	// 1. Fetch course, unit, and lesson components in parallel
-	const [courseResult, unitResult, lessonResult] = await Promise.all([
-		errors.try(oneroster.getCourse(courseSourcedId)),
-		errors.try(oneroster.getCourseComponent(unitSourcedId)),
-		errors.try(oneroster.getCourseComponent(lessonSourcedId))
-	])
-
-	if (courseResult.error || unitResult.error || lessonResult.error) {
-		throw errors.new("Failed to fetch core components from OneRoster.")
+	// ✅ NEW: Waterfall lookup with namespace filter
+	const courseResult = await errors.try(
+		oneroster.getAllCourses(`sourcedId~'nice:' AND metadata.khanSlug='${params.course}'`)
+	)
+	if (courseResult.error) {
+		logger.error("failed to fetch course by slug", { error: courseResult.error, slug: params.course })
+		throw errors.wrap(courseResult.error, "failed to fetch course by slug")
 	}
-	if (!courseResult.data || !unitResult.data || !lessonResult.data) {
+	const course = courseResult.data[0]
+	if (!course) {
 		notFound()
 	}
 
-	const course = courseResult.data
-	const unit = unitResult.data
-	const currentLesson = lessonResult.data
+	const unitResult = await errors.try(
+		oneroster.getCourseComponents(
+			`sourcedId~'nice:' AND course.sourcedId='${course.sourcedId}' AND metadata.khanSlug='${params.unit}'`
+		)
+	)
+	if (unitResult.error) {
+		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: params.unit })
+		throw errors.wrap(unitResult.error, "failed to fetch unit by slug")
+	}
+	const unit = unitResult.data[0]
+	if (!unit) {
+		notFound()
+	}
+
+	const lessonResult = await errors.try(
+		oneroster.getCourseComponents(
+			`sourcedId~'nice:' AND parent.sourcedId='${unit.sourcedId}' AND metadata.khanSlug='${params.lesson}'`
+		)
+	)
+	if (lessonResult.error) {
+		logger.error("failed to fetch lesson by slug", { error: lessonResult.error, slug: params.lesson })
+		throw errors.wrap(lessonResult.error, "failed to fetch lesson by slug")
+	}
+	const currentLesson = lessonResult.data[0]
+	if (!currentLesson) {
+		notFound()
+	}
 
 	// 2. Fetch all lessons for the current unit to build the sidebar
-	const unitLessonsResult = await errors.try(oneroster.getCourseComponents(`parent.sourcedId='${unit.sourcedId}'`))
+	const unitLessonsResult = await errors.try(
+		oneroster.getCourseComponents(`sourcedId~'nice:' AND parent.sourcedId='${unit.sourcedId}'`)
+	)
 	if (unitLessonsResult.error) {
+		logger.error("failed to fetch unit lessons", { error: unitLessonsResult.error, unitSourcedId: unit.sourcedId })
 		throw errors.wrap(unitLessonsResult.error, "failed to fetch unit lessons")
 	}
 
 	// 3. Fetch ALL component resources and filter in memory (since specific filters are not supported)
 	const allComponentResourcesResult = await errors.try(oneroster.getAllComponentResources("sourcedId~'nice:'"))
 	if (allComponentResourcesResult.error) {
+		logger.error("failed to fetch component resources", { error: allComponentResourcesResult.error })
 		throw errors.wrap(allComponentResourcesResult.error, "failed to fetch component resources")
 	}
 
@@ -80,6 +93,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 		// For larger numbers, try a simple filter approach
 		const allResourcesResult = await errors.try(oneroster.getAllResources(`sourcedId~'nice:'`))
 		if (allResourcesResult.error) {
+			logger.error("failed to fetch resources", { error: allResourcesResult.error })
 			throw errors.wrap(allResourcesResult.error, "failed to fetch resources")
 		}
 		// Filter client-side to only get the resources we need
@@ -90,6 +104,14 @@ export async function fetchLessonData(params: { subject: string; course: string;
 
 	// 5. Build a map of lesson content with temporary sortOrder for sorting
 	const lessonContentMap = new Map<string, Array<LessonChild & { sortOrder: number }>>()
+	// Map to store lesson slugs for path construction
+	const lessonSlugMap = new Map<string, string>()
+	for (const lesson of unitLessonsResult.data) {
+		if (typeof lesson.metadata?.khanSlug === "string") {
+			lessonSlugMap.set(lesson.sourcedId, lesson.metadata.khanSlug)
+		}
+	}
+
 	for (const cr of allComponentResources) {
 		const resource = resourcesMap.get(cr.resource.sourcedId)
 		if (resource) {
@@ -104,9 +126,20 @@ export async function fetchLessonData(params: { subject: string; course: string;
 			}
 
 			if (contentType) {
-				const resourceSlug = extractSlug(resource.sourcedId)
-				const lessonSlug = extractSlug(cr.courseComponent.sourcedId)
-				const unitSlug = extractSlug(unit.sourcedId)
+				// ✅ NEW: Use slugs from metadata/params, not from sourcedId
+				const resourceSlug = typeof resource.metadata?.khanSlug === "string" ? resource.metadata.khanSlug : null
+				if (!resourceSlug) {
+					logger.error("CRITICAL: Resource missing khanSlug", { resourceId: resource.sourcedId })
+					throw errors.new("resource: khanSlug is required")
+				}
+
+				const lessonSlug = lessonSlugMap.get(cr.courseComponent.sourcedId)
+				if (!lessonSlug) {
+					logger.error("CRITICAL: Lesson missing khanSlug", { lessonId: cr.courseComponent.sourcedId })
+					throw errors.new("lesson: khanSlug is required for path construction")
+				}
+
+				const unitSlug = params.unit
 
 				// Construct the correct path based on content type and current URL structure
 				let contentPath: string
@@ -180,10 +213,16 @@ export async function fetchLessonData(params: { subject: string; course: string;
 				lessonChildren = children
 			}
 
+			const lessonSlug = typeof lesson.metadata?.khanSlug === "string" ? lesson.metadata.khanSlug : null
+			if (!lessonSlug) {
+				logger.error("CRITICAL: Lesson missing khanSlug", { lessonId: lesson.sourcedId })
+				throw errors.new("lesson: khanSlug is required")
+			}
+
 			return {
 				type: "Lesson" as const,
 				id: lesson.sourcedId,
-				slug: extractSlug(lesson.sourcedId),
+				slug: lessonSlug,
 				title: lesson.title,
 				description: description,
 				path: path,

@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { oneroster } from "@/lib/clients"
+import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/oneroster-metadata"
 import { Content } from "./content"
 
 // --- REMOVED ALL DRIZZLE QUERIES ---
@@ -112,27 +113,18 @@ export type HydratedUnitData = {
 	unitChildren: UnitChild[]
 }
 
-// Helper function to extract metadata value
-function getMetadataValue(metadata: Record<string, unknown> | undefined, key: string): string | undefined {
-	if (!metadata) return undefined
-	const value = metadata[key]
-	return typeof value === "string" ? value : undefined
-}
-
-// Helper function to parse number from metadata
-function getMetadataNumber(metadata: Record<string, unknown> | undefined, key: string): number {
-	if (!metadata) return 0
-	const value = metadata[key]
-	return typeof value === "number" ? value : 0
-}
-
 // Shared data fetching function using OneRoster API
 async function fetchUnitData(params: { subject: string; course: string; unit: string }): Promise<HydratedUnitData> {
 	logger.debug("unit page: fetching unit data", { params })
 
 	// First, find the course by its khanSlug
-	const courseFilter = `metadata.khanSlug='${params.course}'`
-	const courses = await oneroster.getAllCourses(courseFilter)
+	const courseFilter = `sourcedId~'nice:' AND metadata.khanSlug='${params.course}'`
+	const coursesResult = await errors.try(oneroster.getAllCourses(courseFilter))
+	if (coursesResult.error) {
+		logger.error("failed to fetch courses", { error: coursesResult.error, filter: courseFilter })
+		throw errors.wrap(coursesResult.error, "fetch courses")
+	}
+	const courses = coursesResult.data
 	const oneRosterCourse = courses[0]
 
 	if (!oneRosterCourse) {
@@ -144,10 +136,31 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	const decodedUnitSlug = decodeURIComponent(params.unit)
 
 	// Fetch all components for this course to find the unit by its khanSlug
-	const allComponents = await oneroster.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
-	const oneRosterUnit = allComponents.find(
-		(c) => !c.parent && getMetadataValue(c.metadata, "khanSlug") === decodedUnitSlug
+	const allComponentsResult = await errors.try(
+		oneroster.getCourseComponents(`sourcedId~'nice:' AND course.sourcedId='${courseSourcedId}'`)
 	)
+	if (allComponentsResult.error) {
+		logger.error("failed to fetch course components", { error: allComponentsResult.error, courseSourcedId })
+		throw errors.wrap(allComponentsResult.error, "fetch course components")
+	}
+	const allComponents = allComponentsResult.data
+	let oneRosterUnit = null
+	for (const c of allComponents) {
+		if (c.parent) continue // Skip non-units
+
+		const componentMetadataResult = ComponentMetadataSchema.safeParse(c.metadata)
+		if (!componentMetadataResult.success) {
+			logger.warn("skipping component with invalid metadata", {
+				componentId: c.sourcedId,
+				error: componentMetadataResult.error
+			})
+			continue
+		}
+		if (componentMetadataResult.data.khanSlug === decodedUnitSlug) {
+			oneRosterUnit = c
+			break
+		}
+	}
 
 	if (!oneRosterUnit) {
 		logger.error("unit page: unit not found by slug", { unitSlug: decodedUnitSlug, courseId: courseSourcedId })
@@ -156,38 +169,42 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 
 	const unitSourcedId = oneRosterUnit.sourcedId
 
-	const coursePath = getMetadataValue(oneRosterCourse.metadata, "path")
-	if (!coursePath) {
-		logger.error("course missing required path", { courseId: oneRosterCourse.sourcedId })
-		throw errors.new(`course ${oneRosterCourse.sourcedId} missing required path`)
+	// ✅ NEW: Validate course metadata with Zod
+	const courseMetadataResult = CourseMetadataSchema.safeParse(oneRosterCourse.metadata)
+	if (!courseMetadataResult.success) {
+		logger.error("failed to parse course metadata", {
+			courseId: oneRosterCourse.sourcedId,
+			error: courseMetadataResult.error
+		})
+		throw errors.wrap(courseMetadataResult.error, "invalid course metadata")
 	}
+	const courseMetadata = courseMetadataResult.data
 
 	const course: Course = {
 		id: oneRosterCourse.sourcedId,
 		title: oneRosterCourse.title,
-		path: coursePath,
-		description: getMetadataValue(oneRosterCourse.metadata, "description")
+		path: courseMetadata.path,
+		description: courseMetadata.description
 	}
 
-	const unitPath = getMetadataValue(oneRosterUnit.metadata, "path")
-	if (!unitPath) {
-		logger.error("unit missing required path", { unitId: oneRosterUnit.sourcedId })
-		throw errors.new(`unit ${oneRosterUnit.sourcedId} missing required path`)
+	// ✅ NEW: Validate unit metadata with Zod
+	const unitMetadataResult = ComponentMetadataSchema.safeParse(oneRosterUnit.metadata)
+	if (!unitMetadataResult.success) {
+		logger.error("failed to parse unit metadata", {
+			unitId: oneRosterUnit.sourcedId,
+			error: unitMetadataResult.error
+		})
+		throw errors.wrap(unitMetadataResult.error, "invalid unit metadata")
 	}
-
-	const unitSlug = getMetadataValue(oneRosterUnit.metadata, "khanSlug")
-	if (!unitSlug) {
-		logger.error("unit missing required khanSlug", { unitId: oneRosterUnit.sourcedId })
-		throw errors.new(`unit ${oneRosterUnit.sourcedId} missing required khanSlug`)
-	}
+	const unitMetadata = unitMetadataResult.data
 
 	const unit: Unit = {
 		id: oneRosterUnit.sourcedId,
 		title: oneRosterUnit.title,
-		path: unitPath,
+		path: unitMetadata.path,
 		ordering: oneRosterUnit.sortOrder,
-		slug: unitSlug,
-		description: getMetadataValue(oneRosterUnit.metadata, "description")
+		slug: unitMetadata.khanSlug,
+		description: unitMetadata.description
 	}
 
 	// Get all units for navigation
@@ -195,37 +212,53 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	for (const component of allComponents) {
 		if (component.parent) continue // Skip non-units
 
-		const unitSlug = getMetadataValue(component.metadata, "khanSlug")
-		if (!unitSlug) {
-			logger.error("unit missing required khanSlug", { unitId: component.sourcedId })
-			throw errors.new(`unit ${component.sourcedId} missing required khanSlug`)
+		// ✅ NEW: Validate component metadata with Zod
+		const componentMetadataResult = ComponentMetadataSchema.safeParse(component.metadata)
+		if (!componentMetadataResult.success) {
+			logger.error("failed to parse component metadata", {
+				componentId: component.sourcedId,
+				error: componentMetadataResult.error
+			})
+			throw errors.wrap(componentMetadataResult.error, "invalid component metadata")
 		}
-
-		const unitNavPath = getMetadataValue(component.metadata, "path")
-		if (!unitNavPath) {
-			logger.error("unit missing required path", { unitId: component.sourcedId })
-			throw errors.new(`unit ${component.sourcedId} missing required path`)
-		}
+		const componentMetadata = componentMetadataResult.data
 
 		allUnits.push({
 			id: component.sourcedId,
 			title: component.title,
-			path: unitNavPath,
+			path: componentMetadata.path,
 			ordering: component.sortOrder,
-			slug: unitSlug,
-			description: getMetadataValue(component.metadata, "description")
+			slug: componentMetadata.khanSlug,
+			description: componentMetadata.description
 		})
 	}
 	allUnits.sort((a, b) => a.ordering - b.ordering)
 
 	// Fetch children of this unit (lessons and assessments)
-	const unitChildren = await oneroster.getCourseComponents(`parent.sourcedId='${unitSourcedId}'`)
+	const unitChildrenResult = await errors.try(
+		oneroster.getCourseComponents(`sourcedId~'nice:' AND parent.sourcedId='${unitSourcedId}'`)
+	)
+	if (unitChildrenResult.error) {
+		logger.error("failed to fetch unit children", { error: unitChildrenResult.error, unitSourcedId })
+		throw errors.wrap(unitChildrenResult.error, "fetch unit children")
+	}
+	const unitChildren = unitChildrenResult.data
 
 	// Fetch ALL resources and filter in memory
-	const allResourcesInSystem = await oneroster.getAllResources("sourcedId~'nice:'")
+	const allResourcesInSystemResult = await errors.try(oneroster.getAllResources("sourcedId~'nice:'"))
+	if (allResourcesInSystemResult.error) {
+		logger.error("failed to fetch all resources", { error: allResourcesInSystemResult.error })
+		throw errors.wrap(allResourcesInSystemResult.error, "fetch all resources")
+	}
+	const allResourcesInSystem = allResourcesInSystemResult.data
 
 	// Fetch ALL component resources and filter in memory for this unit and its children
-	const allComponentResources = await oneroster.getAllComponentResources("sourcedId~'nice:'")
+	const allComponentResourcesResult = await errors.try(oneroster.getAllComponentResources("sourcedId~'nice:'"))
+	if (allComponentResourcesResult.error) {
+		logger.error("failed to fetch all component resources", { error: allComponentResourcesResult.error })
+		throw errors.wrap(allComponentResourcesResult.error, "fetch all component resources")
+	}
+	const allComponentResources = allComponentResourcesResult.data
 
 	// Get resources for this unit specifically (assessments)
 	const unitComponentResources = allComponentResources.filter((cr) => cr.courseComponent.sourcedId === unitSourcedId)
@@ -236,7 +269,14 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 
 	// Get unique resource IDs from ALL component resources for the course (not just this unit)
 	// This is needed because resources might be shared across units
-	const allCourseComponents = await oneroster.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
+	const allCourseComponentsResult = await errors.try(
+		oneroster.getCourseComponents(`sourcedId~'nice:' AND course.sourcedId='${courseSourcedId}'`)
+	)
+	if (allCourseComponentsResult.error) {
+		logger.error("failed to fetch all course components", { error: allCourseComponentsResult.error, courseSourcedId })
+		throw errors.wrap(allCourseComponentsResult.error, "fetch all course components")
+	}
+	const allCourseComponents = allCourseComponentsResult.data
 	const courseComponentIdSet = new Set(allCourseComponents.map((c) => c.sourcedId))
 	const courseComponentResources = allComponentResources.filter((cr) =>
 		courseComponentIdSet.has(cr.courseComponent.sourcedId)
@@ -261,46 +301,41 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	for (const cr of unitComponentResources) {
 		const resource = allResources.find((r) => r.sourcedId === cr.resource.sourcedId)
 		if (resource) {
-			const resourceType = getMetadataValue(resource.metadata, "type")
-			const subType = getMetadataValue(resource.metadata, "subType")
-			const lessonType = getMetadataValue(resource.metadata, "lessonType")
+			// ✅ NEW: Validate resource metadata with Zod
+			const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+			if (!resourceMetadataResult.success) {
+				logger.warn("skipping resource with invalid metadata", {
+					resourceId: resource.sourcedId,
+					error: resourceMetadataResult.error
+				})
+				continue
+			}
+			const resourceMetadata = resourceMetadataResult.data
 
-			if (resourceType === "qti" && subType === "qti-test" && lessonType) {
-				const assessmentType = lessonType === "unittest" ? "UnitTest" : "Quiz"
-				const resourceSlug = getMetadataValue(resource.metadata, "khanSlug")
-
-				if (!resourceSlug) {
-					logger.error("assessment resource missing required khanSlug", { resourceId: resource.sourcedId })
-					throw errors.new(`assessment resource ${resource.sourcedId} missing required khanSlug`)
-				}
-
-				const assessmentPath = getMetadataValue(resource.metadata, "path")
-				if (!assessmentPath) {
-					logger.error("assessment missing required path", { assessmentId: resource.sourcedId })
-					throw errors.new(`assessment ${resource.sourcedId} missing required path`)
-				}
+			if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-test" && resourceMetadata.lessonType) {
+				const assessmentType = resourceMetadata.lessonType === "unittest" ? "UnitTest" : "Quiz"
 
 				if (assessmentType === "Quiz") {
 					unitAssessments.push({
 						id: resource.sourcedId,
 						title: resource.title,
-						path: assessmentPath,
+						path: resourceMetadata.path,
 						ordering: cr.sortOrder,
 						type: "Quiz",
 						parentId: unitSourcedId,
-						slug: resourceSlug,
-						description: getMetadataValue(resource.metadata, "description")
+						slug: resourceMetadata.khanSlug,
+						description: resourceMetadata.description
 					})
 				} else {
 					unitAssessments.push({
 						id: resource.sourcedId,
 						title: resource.title,
-						path: assessmentPath,
+						path: resourceMetadata.path,
 						ordering: cr.sortOrder,
 						type: "UnitTest",
 						parentId: unitSourcedId,
-						slug: resourceSlug,
-						description: getMetadataValue(resource.metadata, "description")
+						slug: resourceMetadata.khanSlug,
+						description: resourceMetadata.description
 					})
 				}
 			}
@@ -326,11 +361,17 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	const processedLessons: Lesson[] = []
 
 	for (const child of unitChildren) {
-		const childSlug = getMetadataValue(child.metadata, "khanSlug")
-		if (!childSlug) {
-			logger.error("lesson missing required khanSlug", { lessonId: child.sourcedId })
-			throw errors.new(`lesson ${child.sourcedId} missing required khanSlug`)
+		// ✅ NEW: Validate child component metadata with Zod
+		const childMetadataResult = ComponentMetadataSchema.safeParse(child.metadata)
+		if (!childMetadataResult.success) {
+			logger.error("failed to parse child component metadata", {
+				componentId: child.sourcedId,
+				error: childMetadataResult.error
+			})
+			throw errors.wrap(childMetadataResult.error, "invalid child component metadata")
 		}
+		const childMetadata = childMetadataResult.data
+		const childSlug = childMetadata.khanSlug
 
 		let lessonResources = resourcesByComponentId.get(child.sourcedId)
 		if (!lessonResources) {
@@ -344,15 +385,16 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 
 		// Categorize resources by type
 		for (const resource of lessonResources) {
-			const resourceType = getMetadataValue(resource.metadata, "type")
-			const subType = getMetadataValue(resource.metadata, "subType")
-			const lessonType = getMetadataValue(resource.metadata, "lessonType")
-			const resourceSlug = getMetadataValue(resource.metadata, "khanSlug")
-
-			if (!resourceSlug) {
-				logger.error("resource missing required khanSlug", { resourceId: resource.sourcedId })
-				throw errors.new(`resource ${resource.sourcedId} missing required khanSlug`)
+			// ✅ NEW: Validate resource metadata with Zod
+			const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+			if (!resourceMetadataResult.success) {
+				logger.warn("skipping resource with invalid metadata", {
+					resourceId: resource.sourcedId,
+					error: resourceMetadataResult.error
+				})
+				continue
 			}
+			const resourceMetadata = resourceMetadataResult.data
 
 			// Find the componentResource to get the sortOrder
 			const componentResource = childComponentResources.find(
@@ -364,8 +406,8 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 			}
 			const ordering = componentResource.sortOrder
 
-			if (resourceType === "video") {
-				const youtubeUrl = getMetadataValue(resource.metadata, "url")
+			if (resourceMetadata.type === "video") {
+				const youtubeUrl = resourceMetadata.url
 				if (!youtubeUrl) {
 					logger.error("video missing required url", { videoId: resource.sourcedId })
 					throw errors.new(`video ${resource.sourcedId} missing required url`)
@@ -378,67 +420,41 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 				}
 				const youtubeId = youtubeMatch[1]
 
-				const videoPath = getMetadataValue(resource.metadata, "path")
-				if (!videoPath) {
-					logger.error("video missing required path", { videoId: resource.sourcedId })
-					throw errors.new(`video ${resource.sourcedId} missing required path`)
-				}
-
-				const videoDescription = getMetadataValue(resource.metadata, "description")
-				if (!videoDescription) {
-					logger.error("video missing required description", { videoId: resource.sourcedId })
-					throw errors.new(`video ${resource.sourcedId} missing required description`)
-				}
-
 				videos.push({
 					id: resource.sourcedId,
 					title: resource.title,
-					path: videoPath,
-					slug: resourceSlug,
-					description: videoDescription,
+					path: resourceMetadata.path,
+					slug: resourceMetadata.khanSlug,
+					description: resourceMetadata.description,
 					youtubeId: youtubeId,
-					duration: getMetadataNumber(resource.metadata, "duration"),
+					duration: resourceMetadata.duration || 0,
 					ordering
 				})
-			} else if (resourceType === "qti" && subType === "qti-stimulus") {
+			} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
 				// This is an article
-				const articlePath = getMetadataValue(resource.metadata, "path")
-				if (!articlePath) {
-					logger.error("article missing required path", { articleId: resource.sourcedId })
-					throw errors.new(`article ${resource.sourcedId} missing required path`)
-				}
-
-				const articleDescription = getMetadataValue(resource.metadata, "description")
-				if (!articleDescription) {
-					logger.error("article missing required description", { articleId: resource.sourcedId })
-					throw errors.new(`article ${resource.sourcedId} missing required description`)
-				}
-
 				articles.push({
 					id: resource.sourcedId,
 					title: resource.title,
-					path: articlePath,
-					slug: resourceSlug,
-					description: articleDescription,
+					path: resourceMetadata.path,
+					slug: resourceMetadata.khanSlug,
+					description: resourceMetadata.description,
 					perseusContent: null, // Will be fetched from QTI server
 					ordering
 				})
-			} else if (resourceType === "qti" && subType === "qti-test" && !lessonType) {
+			} else if (
+				resourceMetadata.type === "qti" &&
+				resourceMetadata.subType === "qti-test" &&
+				!resourceMetadata.lessonType
+			) {
 				// This is an exercise (test without lessonType means it's an exercise)
 				logger.debug("including exercise with new format", { sourcedId: resource.sourcedId })
-
-				const exercisePath = getMetadataValue(resource.metadata, "path")
-				if (!exercisePath) {
-					logger.error("exercise missing required path", { exerciseId: resource.sourcedId })
-					throw errors.new(`exercise ${resource.sourcedId} missing required path`)
-				}
 
 				exercises.push({
 					id: resource.sourcedId,
 					title: resource.title,
-					path: exercisePath,
-					slug: resourceSlug,
-					description: getMetadataValue(resource.metadata, "description"),
+					path: resourceMetadata.path,
+					slug: resourceMetadata.khanSlug,
+					description: resourceMetadata.description,
 					questions: [], // Will be fetched from QTI server
 					ordering
 				})
@@ -450,16 +466,10 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 		articles.sort((a, b) => a.ordering - b.ordering)
 		exercises.sort((a, b) => a.ordering - b.ordering)
 
-		const lessonPath = getMetadataValue(child.metadata, "path")
-		if (!lessonPath) {
-			logger.error("lesson missing required path", { lessonId: child.sourcedId })
-			throw errors.new(`lesson ${child.sourcedId} missing required path`)
-		}
-
 		processedLessons.push({
 			id: child.sourcedId,
 			title: child.title,
-			path: lessonPath,
+			path: childMetadata.path,
 			ordering: child.sortOrder,
 			type: "Lesson",
 			videos,
@@ -467,7 +477,7 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 			exercises,
 			unitId: unitSourcedId,
 			slug: childSlug,
-			description: getMetadataValue(child.metadata, "description")
+			description: childMetadata.description
 		})
 	}
 
@@ -477,7 +487,17 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	)
 
 	// Count total lessons across all units
-	const allComponentsForLessonCount = await oneroster.getCourseComponents(`course.sourcedId='${courseSourcedId}'`)
+	const allComponentsForLessonCountResult = await errors.try(
+		oneroster.getCourseComponents(`sourcedId~'nice:' AND course.sourcedId='${courseSourcedId}'`)
+	)
+	if (allComponentsForLessonCountResult.error) {
+		logger.error("failed to fetch all components for lesson count", {
+			error: allComponentsForLessonCountResult.error,
+			courseSourcedId
+		})
+		throw errors.wrap(allComponentsForLessonCountResult.error, "fetch all components for lesson count")
+	}
+	const allComponentsForLessonCount = allComponentsForLessonCountResult.data
 	const allLessons = allComponentsForLessonCount.filter((c) => c.parent !== null)
 
 	// To count lessons, we need to check which components are NOT assessments
@@ -492,11 +512,14 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 	for (const cr of allCourseComponentResources) {
 		const resource = allResources.find((r) => r.sourcedId === cr.resource.sourcedId)
 		if (resource) {
-			const resourceType = getMetadataValue(resource.metadata, "type")
-			const subType = getMetadataValue(resource.metadata, "subType")
-			const lessonType = getMetadataValue(resource.metadata, "lessonType")
+			// ✅ NEW: Validate resource metadata with Zod
+			const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+			if (!resourceMetadataResult.success) {
+				continue // Skip invalid resources silently in counting
+			}
+			const resourceMetadata = resourceMetadataResult.data
 
-			if (resourceType === "qti" && subType === "qti-test" && lessonType) {
+			if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-test" && resourceMetadata.lessonType) {
 				allAssessmentComponentIds.add(cr.courseComponent.sourcedId)
 			}
 		}

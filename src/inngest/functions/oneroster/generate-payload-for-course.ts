@@ -20,27 +20,22 @@ export const generatePayloadForCourse = inngest.createFunction(
 
 		logger.info("starting oneroster generation", { courseId })
 
-		// Step 1: Generate the OneRoster payload
-		const payload = await step.run("generate-payload", async () => {
-			logger.info("generating oneroster payload", { courseId })
+		// Step 1: Generate the OneRoster payload (DB-heavy operation) BEFORE the step.
+		const payloadResult = await errors.try(generateOnerosterPayloadForCourse(courseId))
+		if (payloadResult.error) {
+			logger.error("failed to generate oneroster payload", { courseId, error: payloadResult.error })
+			throw errors.wrap(payloadResult.error, "oneroster generation")
+		}
+		const payload = payloadResult.data
 
-			const result = await errors.try(generateOnerosterPayloadForCourse(courseId))
-			if (result.error) {
-				logger.error("failed to generate oneroster payload", { courseId, error: result.error })
-				throw errors.wrap(result.error, "oneroster generation")
-			}
-
-			logger.info("oneroster payload generated successfully", {
-				courseId,
-				courseTitle: result.data.course.title,
-				componentCount: result.data.courseComponents.length,
-				resourceCount: result.data.resources.length
-			})
-
-			return result.data
+		logger.info("oneroster payload generated successfully", {
+			courseId,
+			courseTitle: payload.course.title,
+			componentCount: payload.courseComponents.length,
+			resourceCount: payload.resources.length
 		})
 
-		// Step 2: Write the payload to separate files in a course directory
+		// Step 2: Use step.run ONLY for the fallible I/O operation.
 		const outputDir = await step.run("write-to-files", async () => {
 			// MODIFIED: Use the top-level data/ directory
 			const dataDir = path.join(process.cwd(), "data")

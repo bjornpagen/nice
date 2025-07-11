@@ -60,7 +60,7 @@ async function getUserEnrolledClasses(userId: string): Promise<Course[]> {
 	const [classesResult, enrollmentsResult, allCoursesResult] = await Promise.all([
 		errors.try(oneroster.getClassesForUser(sourceId)),
 		errors.try(oneroster.getEnrollmentsForUser(sourceId)),
-		errors.try(oneroster.getAllCourses())
+		errors.try(oneroster.getAllCourses("sourcedId~'nice:'"))
 	])
 
 	if (classesResult.error) {
@@ -179,7 +179,7 @@ async function getClassesForSelector(): Promise<AllSubject[]> {
 
 	const [classesResult, coursesResult] = await Promise.all([
 		errors.try(oneroster.getClassesForSchool(ONEROSTER_ORG_ID)),
-		errors.try(oneroster.getAllCourses())
+		errors.try(oneroster.getAllCourses("sourcedId~'nice:'"))
 	])
 
 	if (classesResult.error) {

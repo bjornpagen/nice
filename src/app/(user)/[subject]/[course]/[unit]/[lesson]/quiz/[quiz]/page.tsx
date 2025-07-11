@@ -1,7 +1,8 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import * as React from "react"
-import { qti } from "@/lib/clients"
+import { oneroster, qti } from "@/lib/clients"
 import type { TestQuestionsResponse } from "@/lib/qti"
 import { fetchLessonData } from "../../lesson-data"
 import { LessonLayout } from "../../lesson-layout"
@@ -20,7 +21,18 @@ export type QuizData = {
 
 // Consolidated data fetching function for the quiz page
 async function fetchQuizData(params: { quiz: string }): Promise<QuizData> {
-	const quizSourcedId = `nice:${params.quiz}`
+	// ✅ NEW: Look up resource by slug with namespace filter
+	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${params.quiz}' AND metadata.type='qti' AND metadata.subType='qti-test'`
+	const resourceResult = await errors.try(oneroster.getAllResources(filter))
+	if (resourceResult.error) {
+		logger.error("failed to fetch quiz resource by slug", { error: resourceResult.error, slug: params.quiz })
+		throw errors.wrap(resourceResult.error, "failed to fetch quiz resource by slug")
+	}
+	const resource = resourceResult.data[0]
+	if (!resource) {
+		notFound()
+	}
+	const quizSourcedId = resource.sourcedId
 
 	const fullQuizData = await qti.getAllQuestionsForTest(quizSourcedId)
 

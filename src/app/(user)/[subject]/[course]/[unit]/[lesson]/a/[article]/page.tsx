@@ -1,10 +1,11 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import * as React from "react"
+import { fetchLessonData } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/lesson-data"
+import { LessonLayout } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/lesson-layout"
 import { oneroster } from "@/lib/clients"
-import { fetchLessonData } from "../../lesson-data"
-import { LessonLayout } from "../../lesson-layout"
-import { ArticleContent } from "./article-content"
+import { Content } from "./content"
 
 // The Article type now contains the identifier for QTI rendering
 export type Article = {
@@ -15,10 +16,14 @@ export type Article = {
 
 // New data fetching function for the article page
 async function fetchArticleData(params: { article: string }): Promise<Article> {
-	const articleSourcedId = `nice:${params.article}`
-
-	// Get the OneRoster resource to extract the Khan Academy ID
-	const resource = await oneroster.getResource(articleSourcedId)
+	// ✅ NEW: Look up resource by slug with namespace filter
+	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${params.article}' AND metadata.type='qti'`
+	const resourceResult = await errors.try(oneroster.getAllResources(filter))
+	if (resourceResult.error) {
+		logger.error("failed to fetch article resource by slug", { error: resourceResult.error, slug: params.article })
+		throw errors.wrap(resourceResult.error, "failed to fetch article resource by slug")
+	}
+	const resource = resourceResult.data[0]
 
 	if (!resource || !resource.metadata?.khanId) {
 		notFound()
@@ -34,16 +39,6 @@ async function fetchArticleData(params: { article: string }): Promise<Article> {
 	}
 }
 
-// Server component for streaming the article content
-async function StreamingArticleContent({
-	params
-}: {
-	params: { subject: string; course: string; unit: string; lesson: string; article: string }
-}) {
-	const article = await fetchArticleData(params)
-	return <ArticleContent article={article} />
-}
-
 export default function ArticlePage({
 	params
 }: {
@@ -52,11 +47,12 @@ export default function ArticlePage({
 	logger.info("article page: received request, rendering layout immediately")
 
 	const dataPromise = params.then(fetchLessonData)
+	const articlePromise = params.then(fetchArticleData)
 
 	return (
 		<LessonLayout dataPromise={dataPromise}>
 			<React.Suspense fallback={<div className="p-8">Loading article...</div>}>
-				<StreamingArticleContent params={React.use(params)} />
+				<Content articlePromise={articlePromise} />
 			</React.Suspense>
 		</LessonLayout>
 	)

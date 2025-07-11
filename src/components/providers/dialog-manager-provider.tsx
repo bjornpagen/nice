@@ -1,5 +1,6 @@
 "use client"
 
+import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import { CookieConsentDialog } from "@/components/dialogs/cookie-consent-dialog"
 import { OnboardingModal } from "@/components/onboarding-modal"
@@ -20,16 +21,18 @@ export function DialogManagerProvider({ children }: { children: React.ReactNode 
 		if (!isMounted) return []
 		const seen = window.localStorage.getItem(SEEN_DIALOGS_STORAGE_KEY)
 		if (!seen) return []
-		try {
-			const parsed = JSON.parse(seen)
-			if (Array.isArray(parsed)) {
-				// Validate that all items are valid dialog keys
-				const validKeys = Object.keys(dialogKeys)
-				return parsed.filter((key): key is DialogKey => validKeys.includes(key))
-			}
-		} catch {
-			// If parsing fails, return empty array
+
+		const parseResult = errors.trySync(() => JSON.parse(seen))
+		if (parseResult.error) {
+			return [] // If parsing fails, return empty array
 		}
+		const parsed = parseResult.data
+
+		if (Array.isArray(parsed)) {
+			const validKeys = Object.keys(dialogKeys)
+			return parsed.filter((key): key is DialogKey => validKeys.includes(key))
+		}
+
 		return []
 	}, [isMounted])
 

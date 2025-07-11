@@ -12,10 +12,19 @@ export default async function TestRedirectPage({
 	const decodedTest = decodeURIComponent(resolvedParams.test)
 	const decodedUnit = decodeURIComponent(resolvedParams.unit)
 
-	const unitSourcedId = `nice:${decodedUnit}`
+	// ✅ NEW: Look up unit by slug with namespace filter
+	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${decodedUnit}'`
+	const unitResult = await errors.try(oneroster.getCourseComponents(filter))
+	if (unitResult.error || !unitResult.data[0]) {
+		logger.error("failed to get unit for redirect", { unitSlug: decodedUnit, error: unitResult.error })
+		return <div>Could not find the unit.</div>
+	}
+	const unitSourcedId = unitResult.data[0].sourcedId
 
-	// Get child components (lessons) of the unit
-	const lessonsResult = await errors.try(oneroster.getCourseComponents(`parent.sourcedId='${unitSourcedId}'`))
+	// Get child components (lessons) of the unit, including namespace filter
+	const lessonsResult = await errors.try(
+		oneroster.getCourseComponents(`sourcedId~'nice:' AND parent.sourcedId='${unitSourcedId}'`)
+	)
 
 	if (lessonsResult.error) {
 		logger.error("failed to get lessons for unit", { unitSourcedId, error: lessonsResult.error })
@@ -37,7 +46,13 @@ export default async function TestRedirectPage({
 		logger.warn("could not determine first lesson", { unitSourcedId })
 		return <div>Could not determine the first lesson.</div>
 	}
-	const firstLessonSlug = firstLesson.sourcedId.split(":")[1] || firstLesson.sourcedId
+
+	// ✅ NEW: Use lesson's khanSlug metadata instead of extracting from sourcedId
+	const firstLessonSlug = typeof firstLesson.metadata?.khanSlug === "string" ? firstLesson.metadata.khanSlug : null
+	if (!firstLessonSlug) {
+		logger.error("first lesson missing khanSlug", { lessonId: firstLesson.sourcedId })
+		return <div>Could not determine the lesson path.</div>
+	}
 
 	// Redirect to the canonical 4-slug URL
 	const canonicalUrl = `/${resolvedParams.subject}/${resolvedParams.course}/${decodedUnit}/${firstLessonSlug}/test/${decodedTest}`

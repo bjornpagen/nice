@@ -1,11 +1,14 @@
 "use client"
 
 import Image from "next/image"
+import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import type { Article } from "./page"
 
-export function ArticleContent({ article }: { article: Article }) {
+export function Content({ articlePromise }: { articlePromise: Promise<Article> }) {
+	const article = React.use(articlePromise)
+
 	return (
 		<div className="bg-white pb-20">
 			{/* Article Header */}

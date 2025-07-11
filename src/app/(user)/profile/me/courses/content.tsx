@@ -50,6 +50,18 @@ function CourseCardSkeleton() {
 function CourseGrid({ coursesPromise }: { coursesPromise: Promise<Course[]> }) {
 	const courses = React.use(coursesPromise)
 
+	// Define colors for course cards
+	const colors = [
+		"bg-blue-500",
+		"bg-green-500",
+		"bg-purple-500",
+		"bg-orange-500",
+		"bg-pink-500",
+		"bg-teal-500",
+		"bg-indigo-500",
+		"bg-red-500"
+	] as const
+
 	if (courses.length === 0) {
 		return (
 			<div className="text-center py-12">
@@ -61,9 +73,13 @@ function CourseGrid({ coursesPromise }: { coursesPromise: Promise<Course[]> }) {
 
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-			{courses.map((course) => (
-				<CourseCard key={course.sourcedId} course={course} units={course.units} />
-			))}
+			{courses.map((course, index) => {
+				const color = colors[index % colors.length]
+				if (!color) {
+					throw errors.new("color calculation failed, this should be unreachable")
+				}
+				return <CourseCard key={course.sourcedId} course={course} units={course.units} color={color} />
+			})}
 		</div>
 	)
 }
