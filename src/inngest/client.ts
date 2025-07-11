@@ -6,7 +6,7 @@ import type { CreateAssessmentTestInput } from "@/lib/qti"
 // Helper schema for the XML-based item input
 const CreateItemInputSchema = z.object({
 	xml: z.string().min(1),
-	metadata: z.record(z.any()).optional()
+	metadata: z.record(z.string(), z.any()).optional()
 })
 
 const events = {
@@ -100,7 +100,7 @@ const events = {
 					applicationId: z.string().nullable(),
 					roles: z.array(z.string()).optional(),
 					importance: z.string().optional(),
-					metadata: z.record(z.any()).optional()
+					metadata: z.record(z.string(), z.any()).optional()
 				})
 			)
 		})
@@ -122,7 +122,7 @@ const events = {
 					type: z.enum(["course", "academicSession", "org", "courseComponent", "resource", "schoolYear"])
 				}),
 				subjects: z.array(z.string()).optional().nullable(),
-				metadata: z.record(z.any()).optional()
+				metadata: z.record(z.string(), z.any()).optional()
 			})
 		})
 	},
@@ -146,7 +146,7 @@ const events = {
 						.optional()
 						.nullable(),
 					sortOrder: z.number(),
-					metadata: z.record(z.any()).optional()
+					metadata: z.record(z.string(), z.any()).optional()
 				})
 			)
 		})

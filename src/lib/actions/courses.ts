@@ -102,7 +102,7 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 
 	const [classesResult, coursesResult] = await Promise.all([
 		errors.try(oneroster.getClassesForSchool(ONEROSTER_ORG_ID)),
-		errors.try(oneroster.getAllCourses("sourcedId~'nice:'"))
+		errors.try(oneroster.getAllCourses({ filter: "sourcedId~'nice:'" }))
 	])
 
 	if (classesResult.error) {

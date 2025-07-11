@@ -106,7 +106,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 	// Fetch courses filtered by khanSlug for efficiency
 	//const filter = `metadata.khanSlug='${params.course}'`
 	const filter = `sourcedId='nice:x2832fbb7463fe65a'`
-	const allCoursesResult = await errors.try(oneroster.getAllCourses(filter))
+	const allCoursesResult = await errors.try(oneroster.getAllCourses({ filter }))
 	if (allCoursesResult.error) {
 		logger.error("failed to fetch courses", { error: allCoursesResult.error, filter })
 		throw errors.wrap(allCoursesResult.error, "fetch courses")
@@ -143,7 +143,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 
 	// Fetch all course components (units and lessons)
 	const allComponentsResult = await errors.try(
-		oneroster.getCourseComponents(`sourcedId~'nice:' AND course.sourcedId='${courseSourcedId}'`)
+		oneroster.getCourseComponents({ filter: `sourcedId~'nice:' AND course.sourcedId='${courseSourcedId}'` })
 	)
 	if (allComponentsResult.error) {
 		logger.error("failed to fetch course components", { error: allComponentsResult.error, courseSourcedId })
@@ -217,7 +217,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 	units.sort((a, b) => a.ordering - b.ordering)
 
 	// Fetch ALL resources and filter in memory
-	const allResourcesInSystemResult = await errors.try(oneroster.getAllResources("sourcedId~'nice:'"))
+	const allResourcesInSystemResult = await errors.try(oneroster.getAllResources({ filter: "sourcedId~'nice:'" }))
 	if (allResourcesInSystemResult.error) {
 		logger.error("failed to fetch all resources", { error: allResourcesInSystemResult.error })
 		throw errors.wrap(allResourcesInSystemResult.error, "fetch all resources")
@@ -225,7 +225,9 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 	const allResourcesInSystem = allResourcesInSystemResult.data
 
 	// Fetch ALL component resources and filter in memory
-	const allComponentResourcesResult = await errors.try(oneroster.getAllComponentResources("sourcedId~'nice:'"))
+	const allComponentResourcesResult = await errors.try(
+		oneroster.getAllComponentResources({ filter: "sourcedId~'nice:'" })
+	)
 	if (allComponentResourcesResult.error) {
 		logger.error("failed to fetch all component resources", { error: allComponentResourcesResult.error })
 		throw errors.wrap(allComponentResourcesResult.error, "fetch all component resources")

@@ -32,7 +32,7 @@ async function fetchExerciseData(params: { exercise: string }): Promise<Exercise
 
 	// ✅ NEW: Look up resource by slug with namespace filter
 	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${params.exercise}' AND metadata.type='qti'`
-	const resourceResult = await errors.try(oneroster.getAllResources(filter))
+	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
 	if (resourceResult.error) {
 		logger.error("failed to fetch exercise resource by slug", { error: resourceResult.error, slug: params.exercise })
 		throw errors.wrap(resourceResult.error, "failed to fetch exercise resource by slug")

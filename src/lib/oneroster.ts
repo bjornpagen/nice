@@ -1,22 +1,38 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import type { env } from "@/env"
+
+// --- Constants ---
+const PAGINATION_LIMIT = 3000 // Max limit per OneRoster spec
 
 // --- Zod Schemas for API Payloads ---
-const OneRosterTokenResponseSchema = z.object({
+const TokenResponseSchema = z.object({
 	access_token: z.string().min(1)
 })
 
-// --- NEW: API CLIENT CONFIG TYPE ---
-type OneRosterApiClientConfig = {
-	serverUrl: (typeof env)["TIMEBACK_ONEROSTER_SERVER_URL"]
-	tokenUrl: (typeof env)["TIMEBACK_TOKEN_URL"]
-	clientId: (typeof env)["TIMEBACK_CLIENT_ID"]
-	clientSecret: (typeof env)["TIMEBACK_CLIENT_SECRET"]
+// --- API CLIENT CONFIG TYPE ---
+type ApiClientConfig = {
+	serverUrl: string
+	tokenUrl: string
+	clientId: string
+	clientSecret: string
 }
 
-// --- NEW: Strict Schemas for OneRoster Entities ---
+// --- Query Options Type for Collection Methods ---
+type QueryOptions = {
+	filter?: string
+	sort?: string
+	orderBy?: "asc" | "desc"
+}
+
+// --- Paginated Response Type ---
+type PaginatedFetchOptions<T> = QueryOptions & {
+	endpoint: string
+	responseKey: keyof T
+	schema: z.ZodType<T>
+}
+
+// --- Strict Schemas for OneRoster Entities ---
 // For reading (GET responses) - type is optional
 const GUIDRefReadSchema = z.object({
 	sourcedId: z.string(),
@@ -41,7 +57,7 @@ const GUIDRefWriteSchema = z.object({
 	])
 })
 
-const OneRosterResourceSchema = z.object({
+const ResourceSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	title: z.string(),
@@ -51,12 +67,12 @@ const OneRosterResourceSchema = z.object({
 	applicationId: z.string().nullable().optional(),
 	roles: z.array(z.string()).optional(),
 	importance: z.string().optional(),
-	metadata: z.record(z.unknown()).optional()
+	metadata: z.record(z.string(), z.unknown()).optional()
 })
-export type OneRosterResource = z.infer<typeof OneRosterResourceSchema>
+export type Resource = z.infer<typeof ResourceSchema>
 
 // Read schemas (for GET responses)
-const OneRosterCourseReadSchema = z.object({
+const CourseReadSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	title: z.string(),
@@ -64,20 +80,20 @@ const OneRosterCourseReadSchema = z.object({
 	org: GUIDRefReadSchema,
 	academicSession: GUIDRefReadSchema.optional(), // Also make this optional for reads
 	subjects: z.array(z.string()).optional().nullable(),
-	metadata: z.record(z.unknown()).optional()
+	metadata: z.record(z.string(), z.unknown()).optional()
 })
 
-const OneRosterCourseComponentReadSchema = z.object({
+const CourseComponentReadSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	title: z.string(),
 	course: GUIDRefReadSchema,
 	parent: GUIDRefReadSchema.optional().nullable(),
 	sortOrder: z.number(),
-	metadata: z.record(z.unknown()).optional()
+	metadata: z.record(z.string(), z.unknown()).optional()
 })
 
-const OneRosterComponentResourceReadSchema = z.object({
+const ComponentResourceReadSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	title: z.string(),
@@ -87,7 +103,7 @@ const OneRosterComponentResourceReadSchema = z.object({
 })
 
 // Write schemas (for POST/PUT requests)
-const OneRosterCourseWriteSchema = z.object({
+const CourseWriteSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	title: z.string(),
@@ -95,22 +111,22 @@ const OneRosterCourseWriteSchema = z.object({
 	org: GUIDRefWriteSchema,
 	academicSession: GUIDRefWriteSchema,
 	subjects: z.array(z.string()).optional().nullable(),
-	metadata: z.record(z.unknown()).optional()
+	metadata: z.record(z.string(), z.unknown()).optional()
 })
-export type OneRosterCourse = z.infer<typeof OneRosterCourseWriteSchema>
+export type Course = z.infer<typeof CourseWriteSchema>
 
-const OneRosterCourseComponentWriteSchema = z.object({
+const CourseComponentWriteSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	title: z.string(),
 	course: GUIDRefWriteSchema,
 	parent: GUIDRefWriteSchema.optional().nullable(),
 	sortOrder: z.number(),
-	metadata: z.record(z.unknown()).optional()
+	metadata: z.record(z.string(), z.unknown()).optional()
 })
-export type OneRosterCourseComponent = z.infer<typeof OneRosterCourseComponentWriteSchema>
+export type CourseComponent = z.infer<typeof CourseComponentWriteSchema>
 
-const OneRosterComponentResourceWriteSchema = z.object({
+const ComponentResourceWriteSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	title: z.string(),
@@ -118,32 +134,32 @@ const OneRosterComponentResourceWriteSchema = z.object({
 	resource: GUIDRefWriteSchema,
 	sortOrder: z.number()
 })
-export type OneRosterComponentResource = z.infer<typeof OneRosterComponentResourceWriteSchema>
+export type ComponentResource = z.infer<typeof ComponentResourceWriteSchema>
 
 // --- NEW: Schemas for API responses ---
-const GetResourceResponseSchema = z.object({ resource: OneRosterResourceSchema.optional() })
-const GetCourseResponseSchema = z.object({ course: OneRosterCourseReadSchema.optional() })
-const GetCourseComponentResponseSchema = z.object({ courseComponent: OneRosterCourseComponentReadSchema.optional() })
+const GetResourceResponseSchema = z.object({ resource: ResourceSchema.optional() })
+const GetCourseResponseSchema = z.object({ course: CourseReadSchema.optional() })
+const GetCourseComponentResponseSchema = z.object({ courseComponent: CourseComponentReadSchema.optional() })
 const GetComponentResourceResponseSchema = z.object({
-	componentResource: OneRosterComponentResourceReadSchema.optional()
+	componentResource: ComponentResourceReadSchema.optional()
 })
 
 // NEW: Schemas for create/update method inputs
-const CreateResourceInputSchema = OneRosterResourceSchema.omit({ sourcedId: true }).extend({
+const CreateResourceInputSchema = ResourceSchema.omit({ sourcedId: true }).extend({
 	sourcedId: z.string().optional()
 })
-const CreateCourseInputSchema = OneRosterCourseWriteSchema.omit({ sourcedId: true }).extend({
+const CreateCourseInputSchema = CourseWriteSchema.omit({ sourcedId: true }).extend({
 	sourcedId: z.string().optional()
 })
-const CreateCourseComponentInputSchema = OneRosterCourseComponentWriteSchema.omit({ sourcedId: true }).extend({
+const CreateCourseComponentInputSchema = CourseComponentWriteSchema.omit({ sourcedId: true }).extend({
 	sourcedId: z.string().optional()
 })
-const CreateComponentResourceInputSchema = OneRosterComponentResourceWriteSchema.omit({ sourcedId: true }).extend({
+const CreateComponentResourceInputSchema = ComponentResourceWriteSchema.omit({ sourcedId: true }).extend({
 	sourcedId: z.string().optional()
 })
 
 // --- NEW: Add Schemas for Class and Enrollment ---
-const OneRosterClassReadSchema = z.object({
+const ClassReadSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	title: z.string(),
@@ -156,9 +172,9 @@ const OneRosterClassReadSchema = z.object({
 	school: GUIDRefReadSchema,
 	terms: z.array(GUIDRefReadSchema)
 })
-export type OneRosterClass = z.infer<typeof OneRosterClassReadSchema>
+export type Class = z.infer<typeof ClassReadSchema>
 
-const OneRosterClassWriteSchema = z.object({
+const ClassWriteSchema = z.object({
 	sourcedId: z.string(),
 	title: z.string(),
 	classType: z.enum(["homeroom", "scheduled"]),
@@ -169,30 +185,30 @@ const OneRosterClassWriteSchema = z.object({
 	terms: z.array(GUIDRefWriteSchema)
 })
 
-const GetClassResponseSchema = z.object({ class: OneRosterClassReadSchema.optional() })
+const GetClassResponseSchema = z.object({ class: ClassReadSchema.optional() })
 
-const CreateClassInputSchema = OneRosterClassWriteSchema
+const CreateClassInputSchema = ClassWriteSchema
 
 // --- NEW: Custom Error for API Failures ---
 export const ErrOneRosterAPI = errors.new("oneroster api error")
 
 // Export the read schema types that will be used by server actions
-export type OneRosterCourseReadSchemaType = z.infer<typeof OneRosterCourseReadSchema>
-export type OneRosterClassReadSchemaType = z.infer<typeof OneRosterClassReadSchema>
+export type CourseReadSchemaType = z.infer<typeof CourseReadSchema>
+export type ClassReadSchemaType = z.infer<typeof ClassReadSchema>
 
 // Add these new schemas for paginated list responses
-const GetAllCoursesResponseSchema = z.object({ courses: z.array(OneRosterCourseReadSchema) })
-const GetAllClassesResponseSchema = z.object({ classes: z.array(OneRosterClassReadSchema) })
+const GetAllCoursesResponseSchema = z.object({ courses: z.array(CourseReadSchema) })
+const GetAllClassesResponseSchema = z.object({ classes: z.array(ClassReadSchema) })
 
 // NEW: Response schemas for batch fetching methods
-const GetCourseComponentsResponseSchema = z.object({ courseComponents: z.array(OneRosterCourseComponentReadSchema) })
-const GetResourcesResponseSchema = z.object({ resources: z.array(OneRosterResourceSchema) })
+const GetCourseComponentsResponseSchema = z.object({ courseComponents: z.array(CourseComponentReadSchema) })
+const GetResourcesResponseSchema = z.object({ resources: z.array(ResourceSchema) })
 const GetComponentResourcesResponseSchema = z.object({
-	componentResources: z.array(OneRosterComponentResourceReadSchema)
+	componentResources: z.array(ComponentResourceReadSchema)
 })
 
 // --- NEW: Schemas for User ---
-const OneRosterUserRoleSchema = z.object({
+const UserRoleSchema = z.object({
 	roleType: z.string(),
 	role: z.string(),
 	org: GUIDRefReadSchema,
@@ -201,7 +217,7 @@ const OneRosterUserRoleSchema = z.object({
 	endDate: z.string().nullable().optional()
 })
 
-const OneRosterUserReadSchema = z.object({
+const UserReadSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	dateLastModified: z.string().datetime().optional(),
@@ -212,7 +228,7 @@ const OneRosterUserReadSchema = z.object({
 	familyName: z.string(),
 	middleName: z.string().nullable().optional(),
 	role: z.string().optional(), // Top-level role, if present
-	roles: z.array(OneRosterUserRoleSchema),
+	roles: z.array(UserRoleSchema),
 	agents: z.array(GUIDRefReadSchema).optional(),
 	orgs: z.array(GUIDRefReadSchema).optional(),
 	primaryOrg: GUIDRefReadSchema.optional().nullable(),
@@ -221,14 +237,14 @@ const OneRosterUserReadSchema = z.object({
 	phone: z.string().nullable().optional(),
 	grades: z.array(z.string()).optional()
 })
-export type OneRosterUser = z.infer<typeof OneRosterUserReadSchema>
+export type User = z.infer<typeof UserReadSchema>
 
 const GetAllUsersResponseSchema = z.object({
-	users: z.array(OneRosterUserReadSchema)
+	users: z.array(UserReadSchema)
 })
 
 // ADDED: A new schema for writing user data, enforcing required fields for creation.
-const OneRosterUserWriteSchema = z.object({
+const UserWriteSchema = z.object({
 	sourcedId: z.string(),
 	status: z.enum(["active", "tobedeleted"]).default("active"),
 	enabledUser: z.boolean(),
@@ -247,10 +263,10 @@ const OneRosterUserWriteSchema = z.object({
 		)
 		.min(1)
 })
-export type OneRosterUserWrite = z.infer<typeof OneRosterUserWriteSchema>
+export type UserWrite = z.infer<typeof UserWriteSchema>
 
 // --- Schemas for Enrollment ---
-const OneRosterEnrollmentSchema = z.object({
+const EnrollmentSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	dateLastModified: z.string().datetime(),
@@ -259,10 +275,10 @@ const OneRosterEnrollmentSchema = z.object({
 	user: GUIDRefReadSchema,
 	class: GUIDRefReadSchema
 })
-export type OneRosterEnrollment = z.infer<typeof OneRosterEnrollmentSchema>
+export type Enrollment = z.infer<typeof EnrollmentSchema>
 
 const GetAllEnrollmentsResponseSchema = z.object({
-	enrollments: z.array(OneRosterEnrollmentSchema)
+	enrollments: z.array(EnrollmentSchema)
 })
 
 const CreateEnrollmentInputSchema = z.object({
@@ -273,14 +289,14 @@ const CreateEnrollmentInputSchema = z.object({
 })
 export type CreateEnrollmentInput = z.infer<typeof CreateEnrollmentInputSchema>
 
-export class OneRosterApiClient {
+export class Client {
 	#accessToken: string | null = null
 	#tokenPromise: Promise<string> | null = null
-	#config: OneRosterApiClientConfig
+	#config: ApiClientConfig
 
-	constructor(config: OneRosterApiClientConfig) {
+	constructor(config: ApiClientConfig) {
 		this.#config = config
-		logger.debug("OneRosterApiClient: initializing with provided configuration")
+		logger.debug("oneroster: initializing client")
 	}
 
 	async #ensureAccessToken(): Promise<void> {
@@ -305,7 +321,7 @@ export class OneRosterApiClient {
 	}
 
 	async #getAccessToken(): Promise<string> {
-		logger.debug("OneRosterApiClient: fetching new access token")
+		logger.debug("oneroster: fetching new access token")
 		const params = new URLSearchParams({
 			grant_type: "client_credentials",
 			client_id: this.#config.clientId,
@@ -336,13 +352,13 @@ export class OneRosterApiClient {
 			throw errors.wrap(jsonResult.error, "oneroster token response parsing")
 		}
 
-		const validation = OneRosterTokenResponseSchema.safeParse(jsonResult.data)
+		const validation = TokenResponseSchema.safeParse(jsonResult.data)
 		if (!validation.success) {
 			logger.error("oneroster auth: invalid token response schema", { error: validation.error })
 			throw errors.wrap(validation.error, "oneroster token response validation")
 		}
 
-		logger.info("OneRosterApiClient: access token acquired")
+		logger.info("oneroster: access token acquired")
 		return validation.data.access_token
 	}
 
@@ -478,7 +494,7 @@ export class OneRosterApiClient {
 	}
 
 	public async deleteResource(sourcedId: string): Promise<void> {
-		logger.info("OneRosterApiClient: deleting resource", { sourcedId })
+		logger.info("oneroster: deleting resource", { sourcedId })
 
 		if (!sourcedId) {
 			throw errors.new("sourcedId cannot be empty")
@@ -486,7 +502,7 @@ export class OneRosterApiClient {
 
 		await this.#request(`/ims/oneroster/resources/v1p2/resources/${sourcedId}`, { method: "DELETE" }, z.unknown())
 
-		logger.info("OneRosterApiClient: successfully deleted resource", { sourcedId })
+		logger.info("oneroster: successfully deleted resource", { sourcedId })
 	}
 
 	public async getCourse(sourcedId: string) {
@@ -521,9 +537,9 @@ export class OneRosterApiClient {
 
 	public async updateCourseComponent(
 		sourcedId: string,
-		courseComponent: z.infer<typeof OneRosterCourseComponentWriteSchema>
+		courseComponent: z.infer<typeof CourseComponentWriteSchema>
 	): Promise<unknown> {
-		const validationResult = OneRosterCourseComponentWriteSchema.safeParse(courseComponent)
+		const validationResult = CourseComponentWriteSchema.safeParse(courseComponent)
 		if (!validationResult.success) {
 			throw errors.wrap(validationResult.error, "invalid input for updateCourseComponent")
 		}
@@ -571,9 +587,9 @@ export class OneRosterApiClient {
 
 	public async updateComponentResource(
 		sourcedId: string,
-		componentResource: z.infer<typeof OneRosterComponentResourceWriteSchema>
+		componentResource: z.infer<typeof ComponentResourceWriteSchema>
 	): Promise<unknown> {
-		const validationResult = OneRosterComponentResourceWriteSchema.safeParse(componentResource)
+		const validationResult = ComponentResourceWriteSchema.safeParse(componentResource)
 		if (!validationResult.success) {
 			throw errors.wrap(validationResult.error, "invalid input for updateComponentResource")
 		}
@@ -625,8 +641,8 @@ export class OneRosterApiClient {
 	}
 
 	// ADDED: New method to create a user in OneRoster.
-	public async createUser(userData: z.infer<typeof OneRosterUserWriteSchema>) {
-		const validationResult = OneRosterUserWriteSchema.safeParse(userData)
+	public async createUser(userData: z.infer<typeof UserWriteSchema>) {
+		const validationResult = UserWriteSchema.safeParse(userData)
 		if (!validationResult.success) {
 			logger.error("invalid input for createUser", { error: validationResult.error, input: userData })
 			throw errors.wrap(validationResult.error, "invalid input for createUser")
@@ -636,116 +652,166 @@ export class OneRosterApiClient {
 			"user",
 			"/ims/oneroster/rostering/v1p2/users/",
 			validationResult.data,
-			OneRosterUserWriteSchema,
+			UserWriteSchema,
 			z.unknown() // Response schema is not critical here
 		)
 	}
 
 	/**
-	 * Fetches all courses from the OneRoster API, handling pagination.
-	 * @param filter Optional filter query string (e.g., "metadata.khanSlug='some-slug'")
-	 * @returns A promise that resolves to an array of all courses.
+	 * Generic method to fetch all paginated results from a collection endpoint
 	 */
-	public async getAllCourses(filter?: string): Promise<OneRosterCourseReadSchemaType[]> {
-		logger.info("OneRosterApiClient: fetching all courses", { filter })
-		const allCourses: OneRosterCourseReadSchemaType[] = []
+	async #fetchPaginatedCollection<T extends Record<string, unknown>, R>(
+		options: PaginatedFetchOptions<T>
+	): Promise<R[]> {
+		const { endpoint, responseKey, schema, filter, sort, orderBy } = options
+		const allResults: R[] = []
 		let offset = 0
-		const limit = 3000 // Max limit per OneRoster spec
+		const limit = PAGINATION_LIMIT // Max limit per OneRoster spec - not exposed to users
 
 		while (true) {
-			let endpoint = `/ims/oneroster/rostering/v1p2/courses?limit=${limit}&offset=${offset}`
+			let url = `${endpoint}?limit=${limit}&offset=${offset}`
+
+			// Add filter if provided
 			if (filter) {
-				endpoint += `&filter=${encodeURIComponent(filter)}`
+				url += `&filter=${encodeURIComponent(filter)}`
 			}
 
-			const response = await this.#request(endpoint, { method: "GET" }, GetAllCoursesResponseSchema)
-
-			if (!response || response.courses.length === 0) {
-				break // Exit loop if no more courses are returned
+			// Add sort if provided
+			if (sort) {
+				url += `&sort=${encodeURIComponent(sort)}`
+				// orderBy is optional and only used with sort
+				if (orderBy) {
+					url += `&orderBy=${orderBy}`
+				}
 			}
 
-			allCourses.push(...response.courses)
-			offset += response.courses.length
+			const response = await this.#request(url, { method: "GET" }, schema)
 
-			if (response.courses.length < limit) {
-				break // Exit if the last page was not full
+			// Handle null response or empty array
+			if (!response || !(responseKey in response)) {
+				break
+			}
+
+			const items = response[responseKey]
+			if (!Array.isArray(items) || items.length === 0) {
+				break
+			}
+
+			allResults.push(...items)
+			offset += items.length
+
+			// Check if we've fetched all items (response has fewer items than limit)
+			if (items.length < limit) {
+				break
 			}
 		}
 
-		logger.info("OneRosterApiClient: successfully fetched all courses", { count: allCourses.length, filter })
-		return allCourses
+		return allResults
+	}
+
+	/**
+	 * Fetches all courses from the OneRoster API, handling pagination.
+	 * @param options Query options including filter, sort, and orderBy
+	 * @returns A promise that resolves to an array of all courses.
+	 */
+	public async getAllCourses(options?: QueryOptions): Promise<CourseReadSchemaType[]> {
+		logger.info("oneroster: fetching all courses", options)
+
+		const courses = await this.#fetchPaginatedCollection<
+			z.infer<typeof GetAllCoursesResponseSchema>,
+			CourseReadSchemaType
+		>({
+			endpoint: "/ims/oneroster/rostering/v1p2/courses",
+			responseKey: "courses",
+			schema: GetAllCoursesResponseSchema,
+			...options
+		})
+
+		logger.info("oneroster: successfully fetched all courses", { count: courses.length, ...options })
+		return courses
 	}
 
 	/**
 	 * Fetches all classes for a specific school (organization) from the OneRoster API,
 	 * handling pagination.
 	 * @param schoolSourcedId The sourcedId of the school/org.
+	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of classes for that school.
 	 */
-	public async getClassesForSchool(schoolSourcedId: string): Promise<OneRosterClassReadSchemaType[]> {
-		logger.info("OneRosterApiClient: fetching all classes for school", { schoolSourcedId })
-		const allClasses: OneRosterClassReadSchemaType[] = []
-		let offset = 0
-		const limit = 3000
+	public async getClassesForSchool(schoolSourcedId: string, options?: QueryOptions): Promise<ClassReadSchemaType[]> {
+		logger.info("oneroster: fetching all classes for school", { schoolSourcedId, ...options })
 
 		if (!schoolSourcedId) {
 			throw errors.new("schoolSourcedId cannot be empty")
 		}
 
-		while (true) {
-			// Use the specific endpoint for fetching classes by school/org
-			const endpoint = `/ims/oneroster/rostering/v1p2/schools/${schoolSourcedId}/classes?limit=${limit}&offset=${offset}`
-			const response = await this.#request(endpoint, { method: "GET" }, GetAllClassesResponseSchema)
-
-			if (!response || response.classes.length === 0) {
-				break
-			}
-
-			allClasses.push(...response.classes)
-			offset += response.classes.length
-
-			if (response.classes.length < limit) {
-				break
-			}
-		}
-
-		logger.info("OneRosterApiClient: successfully fetched all classes for school", {
-			schoolSourcedId,
-			count: allClasses.length
+		const classes = await this.#fetchPaginatedCollection<
+			z.infer<typeof GetAllClassesResponseSchema>,
+			ClassReadSchemaType
+		>({
+			endpoint: `/ims/oneroster/rostering/v1p2/schools/${schoolSourcedId}/classes`,
+			responseKey: "classes",
+			schema: GetAllClassesResponseSchema,
+			...options
 		})
-		return allClasses
+
+		logger.info("oneroster: successfully fetched all classes for school", {
+			schoolSourcedId,
+			count: classes.length,
+			...options
+		})
+		return classes
+	}
+
+	/**
+	 * Fetches all users from the OneRoster API, handling pagination.
+	 * @param options Query options including filter, sort, and orderBy
+	 * @returns A promise that resolves to an array of all users.
+	 */
+	public async getAllUsers(options?: QueryOptions): Promise<User[]> {
+		logger.info("oneroster: fetching all users", options)
+
+		const users = await this.#fetchPaginatedCollection<z.infer<typeof GetAllUsersResponseSchema>, User>({
+			endpoint: "/ims/oneroster/rostering/v1p2/users",
+			responseKey: "users",
+			schema: GetAllUsersResponseSchema,
+			...options
+		})
+
+		logger.info("oneroster: successfully fetched all users", { count: users.length, ...options })
+		return users
 	}
 
 	/**
 	 * Fetches users from the OneRoster API by their email address.
+	 * This is a convenience method that wraps getAllUsers with a filter.
 	 * @param email The email address to search for.
 	 * @returns A promise that resolves to the first matching user object, or null if not found.
 	 */
-	public async getUsersByEmail(email: string): Promise<OneRosterUser | null> {
-		logger.info("OneRosterApiClient: fetching user by email", { email })
+	public async getUsersByEmail(email: string): Promise<User | null> {
+		logger.info("oneroster: fetching user by email", { email })
 
 		if (!email) {
 			throw errors.new("email cannot be empty")
 		}
 
-		// The filter parameter needs to be properly URL-encoded.
-		const filter = `email='${email}'`
-		const endpoint = `/ims/oneroster/rostering/v1p2/users?filter=${encodeURIComponent(filter)}&limit=1`
+		// Use getAllUsers with a filter
+		const users = await this.getAllUsers({
+			filter: `email='${email}'`
+		})
 
-		const response = await this.#request(endpoint, { method: "GET" }, GetAllUsersResponseSchema)
-
-		if (!response || response.users.length === 0) {
-			logger.info("OneRosterApiClient: no user found for email", { email })
+		if (users.length === 0) {
+			logger.info("oneroster: no user found for email", { email })
 			return null
 		}
 
-		const user = response.users[0]
+		const user = users[0]
 		if (!user) {
-			logger.info("OneRosterApiClient: no user found for email", { email })
+			logger.info("oneroster: no user found for email", { email })
 			return null
 		}
 
-		logger.info("OneRosterApiClient: successfully fetched user by email", {
+		logger.info("oneroster: successfully fetched user by email", {
 			email,
 			sourcedId: user.sourcedId
 		})
@@ -753,195 +819,139 @@ export class OneRosterApiClient {
 	}
 
 	/**
-	 * Fetches course components with optional filtering.
-	 * @param filter The filter query string (e.g., "course.sourcedId='courseid'")
+	 * Fetches course components with optional filtering and sorting.
+	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of course components.
 	 */
-	public async getCourseComponents(filter?: string): Promise<z.infer<typeof OneRosterCourseComponentReadSchema>[]> {
-		logger.info("OneRosterApiClient: fetching course components", { filter })
-		const allComponents: z.infer<typeof OneRosterCourseComponentReadSchema>[] = []
-		let offset = 0
-		const limit = 3000
+	public async getCourseComponents(options?: QueryOptions): Promise<z.infer<typeof CourseComponentReadSchema>[]> {
+		logger.info("oneroster: fetching course components", options)
 
-		while (true) {
-			let endpoint = `/ims/oneroster/rostering/v1p2/courses/components?limit=${limit}&offset=${offset}`
-			if (filter) {
-				endpoint += `&filter=${encodeURIComponent(filter)}`
-			}
-
-			const response = await this.#request(endpoint, { method: "GET" }, GetCourseComponentsResponseSchema)
-
-			if (!response || response.courseComponents.length === 0) {
-				break
-			}
-
-			allComponents.push(...response.courseComponents)
-			offset += response.courseComponents.length
-
-			if (response.courseComponents.length < limit) {
-				break
-			}
-		}
-
-		logger.info("OneRosterApiClient: successfully fetched course components", {
-			filter,
-			count: allComponents.length
+		const components = await this.#fetchPaginatedCollection<
+			z.infer<typeof GetCourseComponentsResponseSchema>,
+			z.infer<typeof CourseComponentReadSchema>
+		>({
+			endpoint: "/ims/oneroster/rostering/v1p2/courses/components",
+			responseKey: "courseComponents",
+			schema: GetCourseComponentsResponseSchema,
+			...options
 		})
-		return allComponents
+
+		logger.info("oneroster: successfully fetched course components", {
+			count: components.length,
+			...options
+		})
+		return components
 	}
 
 	/**
 	 * Fetches all resources for a specific course.
 	 * @param courseSourcedId The sourcedId of the course.
+	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of resources.
 	 */
-	public async getResourcesForCourse(courseSourcedId: string): Promise<OneRosterResource[]> {
-		logger.info("OneRosterApiClient: fetching resources for course", { courseSourcedId })
+	public async getResourcesForCourse(courseSourcedId: string, options?: QueryOptions): Promise<Resource[]> {
+		logger.info("oneroster: fetching resources for course", { courseSourcedId, ...options })
 
 		if (!courseSourcedId) {
 			throw errors.new("courseSourcedId cannot be empty")
 		}
 
-		const allResources: OneRosterResource[] = []
-		let offset = 0
-		const limit = 3000
-
-		while (true) {
-			// ✅ CORRECT: Path updated to match the OpenAPI spec - added /resources before /courses
-			const endpoint = `/ims/oneroster/resources/v1p2/resources/courses/${courseSourcedId}/resources?limit=${limit}&offset=${offset}`
-			const response = await this.#request(endpoint, { method: "GET" }, GetResourcesResponseSchema)
-
-			if (!response || response.resources.length === 0) {
-				break
-			}
-
-			allResources.push(...response.resources)
-			offset += response.resources.length
-
-			if (response.resources.length < limit) {
-				break
-			}
-		}
-
-		logger.info("OneRosterApiClient: successfully fetched resources for course", {
-			courseSourcedId,
-			count: allResources.length
+		const resources = await this.#fetchPaginatedCollection<z.infer<typeof GetResourcesResponseSchema>, Resource>({
+			endpoint: `/ims/oneroster/resources/v1p2/resources/courses/${courseSourcedId}/resources`,
+			responseKey: "resources",
+			schema: GetResourcesResponseSchema,
+			...options
 		})
-		return allResources
+
+		logger.info("oneroster: successfully fetched resources for course", {
+			courseSourcedId,
+			count: resources.length,
+			...options
+		})
+		return resources
 	}
 
 	/**
 	 * Fetches ALL resources in the system, handling pagination.
 	 * This is necessary because the API does not support filtering resources by course.
-	 * @param filter Optional filter query string (e.g., "sourcedId~'nice:'")
+	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of all resources.
 	 */
-	public async getAllResources(filter?: string): Promise<OneRosterResource[]> {
-		logger.info("OneRosterApiClient: fetching ALL resources", { filter })
-		const allResources: OneRosterResource[] = []
-		let offset = 0
-		const limit = 3000
+	public async getAllResources(options?: QueryOptions): Promise<Resource[]> {
+		logger.info("oneroster: fetching ALL resources", options)
 
-		while (true) {
-			let endpoint = `/ims/oneroster/resources/v1p2/resources?limit=${limit}&offset=${offset}`
-			if (filter) {
-				endpoint += `&filter=${encodeURIComponent(filter)}`
-			}
-
-			const response = await this.#request(endpoint, { method: "GET" }, GetResourcesResponseSchema)
-
-			// Handle both null response and empty array
-			if (!response || !response.resources || response.resources.length === 0) {
-				logger.info("OneRosterApiClient: no more resources to fetch", { offset })
-				break
-			}
-
-			// Parse and validate each resource
-			const parsedResources = response.resources.map((resource) => {
-				const parsed = OneRosterResourceSchema.parse(resource)
-				return parsed
-			})
-
-			allResources.push(...parsedResources)
-			logger.info("OneRosterApiClient: fetched batch of resources", {
-				batch: parsedResources.length,
-				total: allResources.length,
-				offset
-			})
-
-			// Check if we've fetched all resources (response has fewer items than limit)
-			if (response.resources.length < limit) {
-				logger.info("OneRosterApiClient: reached last page of resources", {
-					lastBatchSize: response.resources.length,
-					total: allResources.length
-				})
-				break
-			}
-
-			// Move to next page
-			offset += response.resources.length
-		}
-
-		logger.info("OneRosterApiClient: finished fetching all resources", {
-			total: allResources.length,
-			filter
+		const resources = await this.#fetchPaginatedCollection<z.infer<typeof GetResourcesResponseSchema>, Resource>({
+			endpoint: "/ims/oneroster/resources/v1p2/resources",
+			responseKey: "resources",
+			schema: GetResourcesResponseSchema,
+			...options
 		})
 
-		return allResources
+		logger.info("oneroster: finished fetching all resources", {
+			total: resources.length,
+			...options
+		})
+
+		return resources
 	}
 
 	/**
 	 * Fetches ALL component-resource relationships in the system, handling pagination.
 	 * This is necessary because the API does not support filtering this endpoint by course or component.
-	 * @param filter Optional filter query string (e.g., "sourcedId~'nice:'")
+	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of all component-resource relationships.
 	 */
 	public async getAllComponentResources(
-		filter?: string
-	): Promise<z.infer<typeof OneRosterComponentResourceReadSchema>[]> {
-		logger.info("OneRosterApiClient: fetching ALL component resources", { filter })
-		const allComponentResources: z.infer<typeof OneRosterComponentResourceReadSchema>[] = []
-		let offset = 0
-		const limit = 3000
+		options?: QueryOptions
+	): Promise<z.infer<typeof ComponentResourceReadSchema>[]> {
+		logger.info("oneroster: fetching ALL component resources", options)
 
-		while (true) {
-			let endpoint = `/ims/oneroster/rostering/v1p2/courses/component-resources?limit=${limit}&offset=${offset}`
-			if (filter) {
-				endpoint += `&filter=${encodeURIComponent(filter)}`
-			}
-
-			const response = await this.#request(endpoint, { method: "GET" }, GetComponentResourcesResponseSchema)
-
-			if (!response || response.componentResources.length === 0) {
-				break
-			}
-
-			allComponentResources.push(...response.componentResources)
-			offset += response.componentResources.length
-
-			if (response.componentResources.length < limit) {
-				break // Last page
-			}
-		}
-
-		logger.info("OneRosterApiClient: successfully fetched all component resources", {
-			count: allComponentResources.length,
-			filter
+		const componentResources = await this.#fetchPaginatedCollection<
+			z.infer<typeof GetComponentResourcesResponseSchema>,
+			z.infer<typeof ComponentResourceReadSchema>
+		>({
+			endpoint: "/ims/oneroster/rostering/v1p2/courses/component-resources",
+			responseKey: "componentResources",
+			schema: GetComponentResourcesResponseSchema,
+			...options
 		})
-		return allComponentResources
+
+		logger.info("oneroster: successfully fetched all component resources", {
+			count: componentResources.length,
+			...options
+		})
+		return componentResources
 	}
 
 	/**
 	 * Fetches all classes a specific user is enrolled in.
+	 * Note: The /users/{id}/classes endpoint doesn't support status filtering,
+	 * so this returns all classes the user has ever been enrolled in.
 	 * @param userSourcedId The sourcedId of the user.
+	 * @param options Query options for sorting and filtering
 	 * @returns A promise that resolves to an array of classes.
 	 */
-	public async getClassesForUser(userSourcedId: string): Promise<OneRosterClassReadSchemaType[]> {
-		logger.info("OneRosterApiClient: fetching classes for user", { userSourcedId })
-		// Note: The /users/{id}/classes endpoint doesn't support status filtering,
-		// so this returns all classes the user has ever been enrolled in.
-		// Filtering by enrollment status must be done client-side.
-		const endpoint = `/ims/oneroster/rostering/v1p2/users/${userSourcedId}/classes`
+	public async getClassesForUser(userSourcedId: string, options?: QueryOptions): Promise<ClassReadSchemaType[]> {
+		logger.info("oneroster: fetching classes for user", { userSourcedId, ...options })
+
+		let endpoint = `/ims/oneroster/rostering/v1p2/users/${userSourcedId}/classes`
+
+		// Build query parameters
+		const params = new URLSearchParams()
+		if (options?.filter) {
+			params.append("filter", options.filter)
+		}
+		if (options?.sort) {
+			params.append("sort", options.sort)
+			if (options.orderBy) {
+				params.append("orderBy", options.orderBy)
+			}
+		}
+
+		if (params.toString()) {
+			endpoint += `?${params.toString()}`
+		}
+
 		const response = await this.#request(endpoint, { method: "GET" }, GetAllClassesResponseSchema)
 		if (!response || !response.classes) {
 			logger.error("CRITICAL: Invalid API response for getClassesForUser", {
@@ -952,10 +962,11 @@ export class OneRosterApiClient {
 			throw errors.new("classes api response: invalid structure")
 		}
 		const classes = response.classes
-		logger.info("OneRosterApiClient: successfully fetched classes for user", {
+		logger.info("oneroster: successfully fetched classes for user", {
 			userSourcedId,
 			count: classes.length,
-			classIds: classes.map((c) => c.sourcedId)
+			classIds: classes.map((c) => c.sourcedId),
+			...options
 		})
 		return classes
 	}
@@ -963,20 +974,24 @@ export class OneRosterApiClient {
 	/**
 	 * Fetches course components for a specific course, filtered to only get parent components (units).
 	 * @param courseSourcedId The sourcedId of the course.
+	 * @param options Additional query options including filter, sort and orderBy
 	 * @returns A promise that resolves to an array of parent course components (units).
 	 */
 	public async getCourseComponentsForCourse(
-		courseSourcedId: string
-	): Promise<z.infer<typeof OneRosterCourseComponentReadSchema>[]> {
-		logger.info("OneRosterApiClient: fetching course components for course", { courseSourcedId })
+		courseSourcedId: string,
+		options?: QueryOptions
+	): Promise<z.infer<typeof CourseComponentReadSchema>[]> {
+		logger.info("oneroster: fetching course components for course", { courseSourcedId, ...options })
 
 		if (!courseSourcedId) {
 			throw errors.new("courseSourcedId cannot be empty")
 		}
 
-		// First try to get all components for this course with proper OneRoster filter syntax
-		const filter = `course.sourcedId='${courseSourcedId}'`
-		const allComponents = await this.getCourseComponents(filter)
+		// Merge the course filter with any additional filter
+		const courseFilter = `course.sourcedId='${courseSourcedId}'`
+		const filter = options?.filter ? `${courseFilter} AND ${options.filter}` : courseFilter
+
+		const allComponents = await this.getCourseComponents({ ...options, filter })
 
 		// Filter client-side to get only parent components (units) - no nested lessons
 		const parentComponents = allComponents.filter((component) => !component.parent || !component.parent.sourcedId)
@@ -984,42 +999,63 @@ export class OneRosterApiClient {
 		// Sort by sortOrder to maintain proper unit ordering
 		const sortedComponents = parentComponents.sort((a, b) => a.sortOrder - b.sortOrder)
 
-		logger.info("OneRosterApiClient: successfully fetched course components for course", {
+		logger.info("oneroster: successfully fetched course components for course", {
 			courseSourcedId,
 			total: allComponents.length,
-			parentComponents: sortedComponents.length
+			parentComponents: sortedComponents.length,
+			...options
 		})
 
 		return sortedComponents
 	}
 
 	/**
-	 * Fetches all enrollments for a specific user.
-	 * @param userSourcedId The sourcedId of the user.
+	 * Fetches all enrollments from the system with optional filtering and sorting.
+	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of enrollments.
 	 */
-	public async getEnrollmentsForUser(userSourcedId: string): Promise<OneRosterEnrollment[]> {
-		logger.info("OneRosterApiClient: fetching enrollments for user", { userSourcedId })
-		// ✅ MODIFIED: Added status='active' to the filter to ensure enrollment sync logic only
-		// considers active enrollments, preventing issues with soft-deleted records.
-		const filter = `user.sourcedId='${userSourcedId}' AND status='active'`
-		const endpoint = `/ims/oneroster/rostering/v1p2/enrollments?filter=${encodeURIComponent(filter)}&limit=3000`
-		logger.debug("OneRosterApiClient: getEnrollmentsForUser endpoint", { endpoint })
-		const response = await this.#request(endpoint, { method: "GET" }, GetAllEnrollmentsResponseSchema)
-		if (!response || !response.enrollments) {
-			logger.error("CRITICAL: Invalid API response for getEnrollmentsForUser", {
-				userSourcedId,
-				hasResponse: Boolean(response),
-				responseData: response
-			})
-			throw errors.new("enrollments api response: invalid structure")
-		}
-		const enrollments = response.enrollments
-		logger.info("OneRosterApiClient: successfully fetched enrollments for user", {
+	public async getAllEnrollments(options?: QueryOptions): Promise<Enrollment[]> {
+		logger.info("oneroster: fetching all enrollments", options)
+
+		const enrollments = await this.#fetchPaginatedCollection<
+			z.infer<typeof GetAllEnrollmentsResponseSchema>,
+			Enrollment
+		>({
+			endpoint: "/ims/oneroster/rostering/v1p2/enrollments",
+			responseKey: "enrollments",
+			schema: GetAllEnrollmentsResponseSchema,
+			...options
+		})
+
+		logger.info("oneroster: successfully fetched all enrollments", {
+			count: enrollments.length,
+			...options
+		})
+		return enrollments
+	}
+
+	/**
+	 * Fetches all enrollments for a specific user.
+	 * This is a convenience method that wraps getAllEnrollments with a filter.
+	 * @param userSourcedId The sourcedId of the user.
+	 * @param options Additional query options including filter, sort and orderBy
+	 * @returns A promise that resolves to an array of enrollments.
+	 */
+	public async getEnrollmentsForUser(userSourcedId: string, options?: QueryOptions): Promise<Enrollment[]> {
+		logger.info("oneroster: fetching enrollments for user", { userSourcedId, ...options })
+
+		// Merge the user filter with any additional filter
+		const userFilter = `user.sourcedId='${userSourcedId}' AND status='active'`
+		const filter = options?.filter ? `${userFilter} AND ${options.filter}` : userFilter
+
+		const enrollments = await this.getAllEnrollments({ ...options, filter })
+
+		logger.info("oneroster: successfully fetched enrollments for user", {
 			userSourcedId,
 			count: enrollments.length,
 			enrollmentClassIds: enrollments.map((e) => e.class.sourcedId),
-			enrollmentStatuses: enrollments.map((e) => e.status)
+			enrollmentStatuses: enrollments.map((e) => e.status),
+			...options
 		})
 		return enrollments
 	}
@@ -1030,7 +1066,7 @@ export class OneRosterApiClient {
 	 * @returns A promise that resolves to the API response.
 	 */
 	public async createEnrollment(enrollmentData: CreateEnrollmentInput): Promise<unknown> {
-		logger.info("OneRosterApiClient: creating enrollment", {
+		logger.info("oneroster: creating enrollment", {
 			userSourcedId: enrollmentData.user.sourcedId,
 			classSourcedId: enrollmentData.class.sourcedId
 		})
@@ -1055,7 +1091,7 @@ export class OneRosterApiClient {
 	 * @returns A promise that resolves when the deletion is complete.
 	 */
 	public async deleteEnrollment(enrollmentSourcedId: string): Promise<void> {
-		logger.info("OneRosterApiClient: deleting enrollment", { enrollmentSourcedId })
+		logger.info("oneroster: deleting enrollment", { enrollmentSourcedId })
 		if (!enrollmentSourcedId) {
 			throw errors.new("enrollmentSourcedId cannot be empty")
 		}

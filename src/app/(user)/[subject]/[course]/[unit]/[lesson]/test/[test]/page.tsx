@@ -25,8 +25,8 @@ export type TestData = {
 // Consolidated data fetching function for the test page
 async function fetchTestData(params: { test: string }): Promise<TestData> {
 	// ✅ NEW: Look up resource by slug with namespace filter
-	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${params.test}' AND metadata.type='qti' AND metadata.subType='qti-test'`
-	const resourceResult = await errors.try(oneroster.getAllResources(filter))
+	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${params.test}' AND metadata.type='qti'`
+	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
 	if (resourceResult.error) {
 		logger.error("failed to fetch test resource by slug", { error: resourceResult.error, slug: params.test })
 		throw errors.wrap(resourceResult.error, "failed to fetch test resource by slug")

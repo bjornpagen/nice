@@ -22,8 +22,8 @@ export type QuizData = {
 // Consolidated data fetching function for the quiz page
 async function fetchQuizData(params: { quiz: string }): Promise<QuizData> {
 	// ✅ NEW: Look up resource by slug with namespace filter
-	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${params.quiz}' AND metadata.type='qti' AND metadata.subType='qti-test'`
-	const resourceResult = await errors.try(oneroster.getAllResources(filter))
+	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${params.quiz}' AND metadata.type='qti'`
+	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
 	if (resourceResult.error) {
 		logger.error("failed to fetch quiz resource by slug", { error: resourceResult.error, slug: params.quiz })
 		throw errors.wrap(resourceResult.error, "failed to fetch quiz resource by slug")

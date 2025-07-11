@@ -3,13 +3,13 @@ import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { oneroster } from "@/lib/clients"
 import type { LessonChild, LessonInfo } from "@/lib/khan-academy-api"
-import type { OneRosterResource } from "@/lib/oneroster"
+import type { Resource } from "@/lib/oneroster"
 
 // Shared data fetching function
 export async function fetchLessonData(params: { subject: string; course: string; unit: string; lesson: string }) {
 	// ✅ NEW: Waterfall lookup with namespace filter
 	const courseResult = await errors.try(
-		oneroster.getAllCourses(`sourcedId~'nice:' AND metadata.khanSlug='${params.course}'`)
+		oneroster.getAllCourses({ filter: `sourcedId~'nice:' AND metadata.khanSlug='${params.course}'` })
 	)
 	if (courseResult.error) {
 		logger.error("failed to fetch course by slug", { error: courseResult.error, slug: params.course })
@@ -21,9 +21,9 @@ export async function fetchLessonData(params: { subject: string; course: string;
 	}
 
 	const unitResult = await errors.try(
-		oneroster.getCourseComponents(
-			`sourcedId~'nice:' AND course.sourcedId='${course.sourcedId}' AND metadata.khanSlug='${params.unit}'`
-		)
+		oneroster.getCourseComponents({
+			filter: `sourcedId~'nice:' AND course.sourcedId='${course.sourcedId}' AND metadata.khanSlug='${params.unit}'`
+		})
 	)
 	if (unitResult.error) {
 		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: params.unit })
@@ -35,9 +35,9 @@ export async function fetchLessonData(params: { subject: string; course: string;
 	}
 
 	const lessonResult = await errors.try(
-		oneroster.getCourseComponents(
-			`sourcedId~'nice:' AND parent.sourcedId='${unit.sourcedId}' AND metadata.khanSlug='${params.lesson}'`
-		)
+		oneroster.getCourseComponents({
+			filter: `sourcedId~'nice:' AND parent.sourcedId='${unit.sourcedId}' AND metadata.khanSlug='${params.lesson}'`
+		})
 	)
 	if (lessonResult.error) {
 		logger.error("failed to fetch lesson by slug", { error: lessonResult.error, slug: params.lesson })
@@ -50,7 +50,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 
 	// 2. Fetch all lessons for the current unit to build the sidebar
 	const unitLessonsResult = await errors.try(
-		oneroster.getCourseComponents(`sourcedId~'nice:' AND parent.sourcedId='${unit.sourcedId}'`)
+		oneroster.getCourseComponents({ filter: `sourcedId~'nice:' AND parent.sourcedId='${unit.sourcedId}'` })
 	)
 	if (unitLessonsResult.error) {
 		logger.error("failed to fetch unit lessons", { error: unitLessonsResult.error, unitSourcedId: unit.sourcedId })
@@ -58,7 +58,9 @@ export async function fetchLessonData(params: { subject: string; course: string;
 	}
 
 	// 3. Fetch ALL component resources and filter in memory (since specific filters are not supported)
-	const allComponentResourcesResult = await errors.try(oneroster.getAllComponentResources("sourcedId~'nice:'"))
+	const allComponentResourcesResult = await errors.try(
+		oneroster.getAllComponentResources({ filter: "sourcedId~'nice:'" })
+	)
 	if (allComponentResourcesResult.error) {
 		logger.error("failed to fetch component resources", { error: allComponentResourcesResult.error })
 		throw errors.wrap(allComponentResourcesResult.error, "failed to fetch component resources")
@@ -74,7 +76,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 	const resourceIds = [...new Set(allComponentResources.map((cr) => cr.resource.sourcedId))]
 
 	// Fetch resources individually if we have many, or use a simple filter for fewer resources
-	let allResourcesData: OneRosterResource[] = []
+	let allResourcesData: Resource[] = []
 	if (resourceIds.length === 0) {
 		allResourcesData = []
 	} else if (resourceIds.length <= 10) {
@@ -88,10 +90,10 @@ export async function fetchLessonData(params: { subject: string; course: string;
 			return result.data
 		})
 		const resourceResults = await Promise.all(resourcePromises)
-		allResourcesData = resourceResults.filter((r): r is OneRosterResource => r !== null)
+		allResourcesData = resourceResults.filter((r): r is Resource => r !== null)
 	} else {
 		// For larger numbers, try a simple filter approach
-		const allResourcesResult = await errors.try(oneroster.getAllResources(`sourcedId~'nice:'`))
+		const allResourcesResult = await errors.try(oneroster.getAllResources({ filter: `sourcedId~'nice:'` }))
 		if (allResourcesResult.error) {
 			logger.error("failed to fetch resources", { error: allResourcesResult.error })
 			throw errors.wrap(allResourcesResult.error, "failed to fetch resources")

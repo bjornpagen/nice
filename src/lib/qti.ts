@@ -44,9 +44,9 @@ const StimulusSchema = z.object({
 		.optional(),
 	toolName: z.string().optional(),
 	toolVersion: z.string().optional(),
-	metadata: z.record(z.any()).optional(),
+	metadata: z.record(z.string(), z.any()).optional(),
 	rawXml: z.string(),
-	content: z.record(z.any()),
+	content: z.record(z.string(), z.any()),
 	createdAt: z.string().datetime(),
 	updatedAt: z.string().datetime()
 })
@@ -78,7 +78,7 @@ const CreateStimulusInputSchema = z.object({
 		.optional(),
 	toolName: z.string().optional(),
 	toolVersion: z.string().optional(),
-	metadata: z.record(z.any()).optional()
+	metadata: z.record(z.string(), z.any()).optional()
 })
 export type CreateStimulusInput = z.infer<typeof CreateStimulusInputSchema>
 
@@ -189,9 +189,9 @@ const AssessmentItemSchema = z.object({
 	adaptive: z.boolean(),
 	responseDeclarations: z.array(ResponseDeclarationSchema).optional(),
 	outcomeDeclarations: z.array(OutcomeDeclarationSchema).optional(),
-	metadata: z.record(z.any()).optional(),
+	metadata: z.record(z.string(), z.any()).optional(),
 	rawXml: z.string(),
-	content: z.record(z.any()),
+	content: z.record(z.string(), z.any()),
 	createdAt: z.string().datetime(),
 	updatedAt: z.string().datetime()
 })
@@ -208,14 +208,14 @@ export type SearchAssessmentItemsResponse = z.infer<typeof SearchResponseSchema>
 
 const CreateItemInputSchema = z.object({
 	xml: z.string().min(1, { message: "XML content cannot be empty" }),
-	metadata: z.record(z.any()).optional()
+	metadata: z.record(z.string(), z.any()).optional()
 })
 export type CreateItemInput = z.infer<typeof CreateItemInputSchema>
 
 const UpdateItemInputSchema = z.object({
 	identifier: z.string().min(1),
 	xml: z.string().min(1),
-	metadata: z.record(z.any()).optional()
+	metadata: z.record(z.string(), z.any()).optional()
 })
 export type UpdateItemInput = z.infer<typeof UpdateItemInputSchema>
 
@@ -276,10 +276,10 @@ const AssessmentTestSchema = z.object({
 	"qti-outcome-declaration": z.array(OutcomeDeclarationSchema).optional(),
 	timeLimit: z.number().optional(),
 	maxAttempts: z.number().optional(),
-	toolsEnabled: z.record(z.boolean()).optional(),
-	metadata: z.record(z.any()).optional(),
+	toolsEnabled: z.record(z.string(), z.boolean()).optional(),
+	metadata: z.record(z.string(), z.any()).optional(),
 	rawXml: z.string(),
-	content: z.record(z.any()),
+	content: z.record(z.string(), z.any()),
 	createdAt: z.string().datetime(),
 	updatedAt: z.string().datetime(),
 	isValidXml: z.boolean().optional()
@@ -294,7 +294,7 @@ const CreateAssessmentTestInputSchema = z.object({
 	title: z.string(),
 	"qti-test-part": z.array(TestPartSchema),
 	"qti-outcome-declaration": z.array(OutcomeDeclarationSchema).optional(),
-	metadata: z.record(z.any()).optional()
+	metadata: z.record(z.string(), z.any()).optional()
 })
 export type CreateAssessmentTestInput = z.infer<typeof CreateAssessmentTestInputSchema>
 
@@ -349,7 +349,7 @@ export type TestQuestionsResponse = z.infer<typeof TestQuestionsResponseSchema>
  * Input for updating only the metadata of an assessment test.
  */
 const UpdateAssessmentTestMetadataInputSchema = z.object({
-	metadata: z.record(z.any())
+	metadata: z.record(z.string(), z.any())
 })
 export type UpdateAssessmentTestMetadataInput = z.infer<typeof UpdateAssessmentTestMetadataInputSchema>
 

@@ -12,18 +12,22 @@ export default async function QuizRedirectPage({
 	const decodedQuiz = decodeURIComponent(resolvedParams.quiz)
 	const decodedUnit = decodeURIComponent(resolvedParams.unit)
 
-	// ✅ NEW: Look up unit by slug with namespace filter
+	// Look up the unit by its slug to get its sourcedId
 	const filter = `sourcedId~'nice:' AND metadata.khanSlug='${decodedUnit}'`
-	const unitResult = await errors.try(oneroster.getCourseComponents(filter))
-	if (unitResult.error || !unitResult.data[0]) {
-		logger.error("failed to get unit for redirect", { unitSlug: decodedUnit, error: unitResult.error })
+	const unitResult = await errors.try(oneroster.getCourseComponents({ filter }))
+	if (unitResult.error) {
+		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: decodedUnit })
+		throw errors.wrap(unitResult.error, "failed to fetch unit by slug")
+	}
+	const unit = unitResult.data[0]
+	if (!unit) {
 		return <div>Could not find the unit.</div>
 	}
-	const unitSourcedId = unitResult.data[0].sourcedId
+	const unitSourcedId = unit.sourcedId
 
-	// Get child components (lessons) of the unit, including namespace filter
+	// Fetch all lessons for this unit to find quiz sibling
 	const lessonsResult = await errors.try(
-		oneroster.getCourseComponents(`sourcedId~'nice:' AND parent.sourcedId='${unitSourcedId}'`)
+		oneroster.getCourseComponents({ filter: `sourcedId~'nice:' AND parent.sourcedId='${unitSourcedId}'` })
 	)
 
 	if (lessonsResult.error) {
