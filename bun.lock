@@ -35,7 +35,6 @@
         "@radix-ui/react-toggle-group": "^1.1.10",
         "@radix-ui/react-tooltip": "^1.2.7",
         "@superbuilders/errors": "^2.0.0",
-        "@superbuilders/oneroster": "^0.7.0",
         "@superbuilders/slog": "^3.1.0",
         "@t3-oss/env-nextjs": "^0.13.8",
         "@types/lodash": "^4.17.20",
@@ -577,8 +576,6 @@
     "@standard-schema/utils": ["@standard-schema/utils@0.3.0", "", {}, "sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g=="],
 
     "@superbuilders/errors": ["@superbuilders/errors@2.0.0", "", { "dependencies": { "@biomejs/biome": "^2.0.0-beta.5" }, "peerDependencies": { "typescript": "^5.8.3" } }, "sha512-mEYTIcjPGQBLDUwAfxyF5ur7h+PbQiNbNZbG/kBziiYE2dnRSJcRL8FiEOQi4bPNUp59TGfCjxUHZ/4z4NpqRw=="],
-
-    "@superbuilders/oneroster": ["@superbuilders/oneroster@0.7.0", "", { "peerDependencies": { "@modelcontextprotocol/sdk": ">=1.5.0 <1.10.0", "zod": ">= 3" }, "optionalPeers": ["@modelcontextprotocol/sdk"], "bin": { "mcp": "bin/mcp-server.js" } }, "sha512-AWykMovQJuN1jZ6pEpvU7+WU9LCtsVDFYVINdqq6Mopla0Te9GPYjmo2XmbhND56FNzYjGXHrOXzko9g8aRYew=="],
 
     "@superbuilders/slog": ["@superbuilders/slog@3.1.0", "", { "dependencies": { "@biomejs/biome": "^2.0.0-beta.5" }, "peerDependencies": { "typescript": "^5.8.3" } }, "sha512-vsdtdNUdG9jnzuevsyzHjMiuoenokMgdxhby7lDcZhnW1np29Q0PZQXrx7q9/d6nUkh3Yz4Ukh7NOBdwLWa77A=="],
 
