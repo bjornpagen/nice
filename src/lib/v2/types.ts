@@ -1,3 +1,4 @@
+import _ from "lodash"
 import { z } from "zod"
 
 /**
@@ -106,6 +107,7 @@ export type LessonResource = z.infer<typeof LessonResourceSchema>
 export const LessonSchema = z.object({
 	slug: z.string(),
 	path: z.string(),
+	type: z.literal("Lesson"),
 	title: z.string(),
 	resources: z.array(LessonResourceSchema)
 })
@@ -242,6 +244,121 @@ export const CourseSchema = z.object({
 export type Course = z.infer<typeof CourseSchema>
 
 /**
+ * CourseUnitMaterialSchema is a type that represents a course's unit material.
+ */
+export const CourseLessonResourceMaterialSchema = z.discriminatedUnion("type", [
+	BaseResourceSchema.extend({
+		type: z.literal(LessonResourceTypeSchema.enum.Article),
+		data: ArticleLessonResourceSchema.shape.data,
+		meta: z.object({
+			unit: z.object({
+				path: z.string(),
+				title: z.string(),
+				index: z.number()
+			})
+		})
+	}),
+	BaseResourceSchema.extend({
+		type: z.literal(LessonResourceTypeSchema.enum.Exercise),
+		data: ExerciseLessonResourceSchema.shape.data,
+		meta: z.object({
+			unit: z.object({
+				path: z.string(),
+				title: z.string(),
+				index: z.number()
+			})
+		})
+	}),
+	BaseResourceSchema.extend({
+		type: z.literal(LessonResourceTypeSchema.enum.Video),
+		data: VideoLessonResourceSchema.shape.data,
+		meta: z.object({
+			unit: z.object({
+				path: z.string(),
+				title: z.string(),
+				index: z.number()
+			})
+		})
+	})
+])
+export type CourseLessonResourceMaterial = z.infer<typeof CourseLessonResourceMaterialSchema>
+
+/**
+ * CourseLessonMaterialSchema is a type that represents a course's lesson material.
+ */
+export const CourseLessonMaterialSchema = LessonSchema.extend({
+	meta: z.object({
+		unit: z.object({
+			path: z.string(),
+			title: z.string(),
+			index: z.number()
+		})
+	})
+})
+export type CourseLessonMaterial = z.infer<typeof CourseLessonMaterialSchema>
+
+/**
+ * CourseUnitMaterialSchema is a type that represents a course's unit material.
+ */
+export const CourseUnitMaterialSchema = z.discriminatedUnion("type", [
+	BaseResourceSchema.extend({
+		type: z.literal(UnitResourceTypeSchema.enum.Quiz),
+		data: QuizUnitResourceSchema.shape.data,
+		meta: z.object({
+			unit: z.object({
+				path: z.string(),
+				title: z.string(),
+				index: z.number()
+			})
+		})
+	}),
+	BaseResourceSchema.extend({
+		type: z.literal(UnitResourceTypeSchema.enum.UnitTest),
+		data: UnitTestUnitResourceSchema.shape.data,
+		meta: z.object({
+			unit: z.object({
+				path: z.string(),
+				title: z.string(),
+				index: z.number()
+			})
+		})
+	})
+])
+export type CourseUnitMaterial = z.infer<typeof CourseUnitMaterialSchema>
+
+/**
+ * CourseMaterial is a type that represents a course's flattened material.
+ */
+export const CourseMaterialSchema = z.discriminatedUnion("type", [
+	CourseLessonMaterialSchema,
+	...CourseLessonResourceMaterialSchema.options,
+	...CourseUnitMaterialSchema.options,
+	...CourseResourceSchema._def.schema.options
+])
+export type CourseMaterial = z.infer<typeof CourseMaterialSchema>
+
+/**
+ * getCourseMaterials retrieves a flattened array of a course's units' lessons, quizzes, unit tests, and the course's course challenges in their appropriate order.
+ * @param course - The course to retrieve the materials of.
+ * @returns A flattened array of a course's units' lessons, quizzes, unit tests, and the course's course challenges in their appropriate order.
+ */
+export function getCourseMaterials(course: Course): CourseMaterial[] {
+	return _.concat<CourseMaterial>(
+		_.flatMap(course.units, (unit, index) => [
+			..._.map(unit.lessons, (lesson) => ({
+				...lesson,
+				meta: { unit: { path: unit.path, title: unit.title, index: index } }
+			})),
+			..._.map(unit.resources, (resource) => ({
+				...resource,
+				meta: { unit: { path: unit.path, title: unit.title, index: index } }
+			}))
+		]),
+		course.resources
+	)
+}
+
+/**
  * Temporary data blob.
  */
 export function getCourseBlob(subject: string, course: string): Course {
@@ -261,6 +378,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 					{
 						slug: "lesson-1",
 						path: `${base}/unit-1/lesson-1`,
+						type: "Lesson",
 						title: "Lesson 1 Title",
 						resources: [
 							{
@@ -287,6 +405,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 					{
 						slug: "lesson-2",
 						path: `${base}/unit-1/lesson-2`,
+						type: "Lesson",
 						title: "Lesson 2 Title",
 						resources: [
 							{
@@ -332,6 +451,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 					{
 						slug: "lesson-3",
 						path: `${base}/unit-2/lesson-3`,
+						type: "Lesson",
 						title: "Lesson 3 Title",
 						resources: [
 							{
@@ -369,6 +489,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 					{
 						slug: "lesson-4",
 						path: `${base}/unit-2/lesson-4`,
+						type: "Lesson",
 						title: "Lesson 4 Title",
 						resources: [
 							{

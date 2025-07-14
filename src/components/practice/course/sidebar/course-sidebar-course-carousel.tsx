@@ -1,27 +1,87 @@
-"use client"
+import * as errors from "@superbuilders/errors"
+import _ from "lodash"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import Link from "next/link"
+import React from "react"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import type { Course, CourseMaterial } from "@/lib/v2/types"
 
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import type { CourseSidebarData } from "./course-sidebar"
+export function CourseSidebarCourseCarousel({
+	course,
+	materials,
+	index,
+	setIndex,
+	className
+}: {
+	course: Pick<Course, "path" | "title">
+	materials: CourseMaterial[]
+	index: number
+	setIndex: (index: number) => void
+	className?: string
+}) {
+	const material = materials[index]
+	if (material == null) {
+		throw errors.new("course sidebar course carousel: material is null")
+	}
+	const unit = _.get(material, "meta.unit")
 
-export function CourseSidebarCourseCarousel({ course }: { course: CourseSidebarData }) {
-	void course
+	const handlePrev = () => {
+		setIndex(index - 1 < 0 ? materials.length - 1 : index - 1)
+	}
+	const handleNext = () => {
+		setIndex(index + 1 >= materials.length ? 0 : index + 1)
+	}
+
 	return (
-		<div id="course-sidebar-course-carousel">
-			<Carousel>
-				<CarouselPrevious />
-				<CarouselContent>
-					<CarouselItem>1</CarouselItem>
-					<CarouselItem>2</CarouselItem>
-					<CarouselItem>3</CarouselItem>
-					<CarouselItem>4</CarouselItem>
-					<CarouselItem>5</CarouselItem>
-					<CarouselItem>6</CarouselItem>
-					<CarouselItem>7</CarouselItem>
-					<CarouselItem>8</CarouselItem>
-					<CarouselItem>9</CarouselItem>
-				</CarouselContent>
-				<CarouselNext />
-			</Carousel>
+		<div id="course-sidebar-course-carousel" className={cn("flex flex-row items-center justify-center", className)}>
+			<div id="course-sidebar-course-carousel-prev" className="flex-shrink-0">
+				<Button
+					variant="link"
+					className={cn("pl-1 text-blue-600 w-2 h-2", index === 0 && "opacity-50 cursor-not-allowed")}
+					onClick={handlePrev}
+					disabled={index === 0}
+				>
+					<ChevronLeft className="w-5 h-5" />
+				</Button>
+			</div>
+
+			<div id="course-sidebar-course-carousel-content" className="flex-1 text-center">
+				<div className="flex items-center justify-center">
+					<Link
+						href={course.path}
+						className="text-blue-600 hover:underline font-medium text-[10px] whitespace-nowrap uppercase"
+					>
+						Course: {course.title}
+					</Link>
+					{unit != null && (
+						<React.Fragment>
+							<span className="text-gray-600 text-[10px] font-bold flex-shrink-0 mx-1">{">"}</span>
+							<Link
+								href={unit.path}
+								className="text-blue-600 hover:underline font-medium text-[10px] whitespace-nowrap uppercase"
+							>
+								Unit {unit.index + 1}
+							</Link>
+						</React.Fragment>
+					)}
+				</div>
+				<div className="text-sm text-gray-800 font-medium">{material.title}</div>
+			</div>
+
+			<div id="course-sidebar-course-carousel-next" className="flex-shrink-0">
+				<Button
+					variant="link"
+					className={cn(
+						"pl-1 text-blue-600 w-2 h-2",
+						index === materials.length - 1 && "opacity-50 cursor-not-allowed"
+					)}
+					onClick={handleNext}
+					disabled={index === materials.length - 1}
+				>
+					<ChevronRight className="w-5 h-5" />
+				</Button>
+			</div>
 		</div>
 	)
 }

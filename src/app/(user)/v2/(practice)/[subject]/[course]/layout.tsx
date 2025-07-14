@@ -5,9 +5,9 @@ import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { Footer } from "@/components/footer"
-import { CourseSidebar, type CourseSidebarData } from "@/components/practice/course/sidebar/course-sidebar"
+import { CourseSidebar } from "@/components/practice/course/sidebar/course-sidebar"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { getCourseBlob } from "@/lib/v2/types"
+import { type Course, getCourseBlob } from "@/lib/v2/types"
 
 export default async function PracticeCourseLayout({
 	children,
@@ -32,7 +32,7 @@ export default async function PracticeCourseLayout({
 				<nav id="practice-course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-screen">
 					<ErrorBoundary fallback={<PracticeCourseLayoutErrorFallback />}>
 						<React.Suspense>
-							<CourseSidebar coursePromise={coursePromise} />
+							<CourseSidebar coursePromise={coursePromise} className="w-112" />
 						</React.Suspense>
 					</ErrorBoundary>
 				</nav>
@@ -61,18 +61,11 @@ function PracticeCourseLayoutErrorFallback({ className }: { className?: string }
 	)
 }
 
-function getCourseSidebarData(subject: string, course: string): CourseSidebarData | undefined {
+function getCourseSidebarData(subject: string, course: string): Course | undefined {
 	logger.debug("retrieving course data", { subject, course })
 
 	const blob = getCourseBlob(subject, course)
 	logger.debug("retrieving course data: blob", { keys: _.keys(blob) })
 
-	const units = _.map(blob.units, (unit) => _.pick(unit, ["slug", "path", "title", "lessons", "resources"]))
-	logger.debug("retrieving course data: units", { units: units.length })
-
-	const data = { ..._.pick(blob, ["slug", "path", "title"]), units }
-	logger.debug("retrieving course data: data", { keys: _.keys(data), units: data.units.length })
-
-	throw errors.new("todo")
-	// return data
+	return blob
 }

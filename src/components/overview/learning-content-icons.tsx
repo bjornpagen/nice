@@ -39,7 +39,15 @@ const variants = {
 } as const
 export type LearningContentIconVariant = keyof typeof variants
 
-export function LearningContentIcon({ variant, size = 5 }: { variant: LearningContentIconVariant; size?: number }) {
+export function LearningContentIcon({
+	variant,
+	size = 5,
+	className
+}: {
+	variant: LearningContentIconVariant
+	size?: number
+	className?: string
+}) {
 	const config = variants[variant]
 
 	return (
@@ -49,7 +57,8 @@ export function LearningContentIcon({ variant, size = 5 }: { variant: LearningCo
 					"inline-flex items-center justify-center rounded-xs relative overflow-hidden",
 					config.bg.color,
 					config.bg.border,
-					`w-${size} h-${size}`
+					`w-${size} h-${size}`,
+					className
 				)}
 			>
 				{config.bg.fill < 100 && (
