@@ -46,7 +46,11 @@ function getCourseData(subject: string, course: string): Course | undefined {
 	const blob = getCourseBlob(subject, course)
 	logger.debug("retrieving course data: blob", { keys: _.keys(blob) })
 
-	const data = { ..._.pick(blob, ["slug", "path", "title", "description", "resources"]), units: blob.units }
+	const data = {
+		..._.pick(blob, ["slug", "path", "title", "description", "resources"]),
+		type: "Course" as const,
+		units: blob.units
+	}
 	logger.debug("retrieving course data: data", { keys: _.keys(data), units: data.units.length })
 
 	return data

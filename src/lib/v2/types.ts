@@ -180,6 +180,7 @@ export type UnitResource = z.infer<typeof UnitResourceSchema>
 export const UnitSchema = z.object({
 	slug: z.string(),
 	path: z.string(),
+	type: z.literal("Unit"),
 	title: z.string(),
 	description: z.string(),
 	lessons: z.array(LessonSchema),
@@ -236,6 +237,7 @@ export type CourseResource = z.infer<typeof CourseResourceSchema>
 export const CourseSchema = z.object({
 	slug: z.string(),
 	path: z.string(),
+	type: z.literal("Course"),
 	title: z.string(),
 	description: z.string(),
 	units: z.array(UnitSchema),
@@ -366,12 +368,14 @@ export function getCourseBlob(subject: string, course: string): Course {
 	return {
 		slug: course,
 		path: base,
+		type: "Course",
 		title: course,
 		description: "Course Description",
 		units: [
 			{
 				slug: "unit-1",
 				path: `${base}/unit-1`,
+				type: "Unit",
 				title: "Unit 1 Title",
 				description: "Unit 1 Description",
 				lessons: [
@@ -445,6 +449,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			{
 				slug: "unit-2",
 				path: `${base}/unit-2`,
+				type: "Unit",
 				title: "Unit 2 Title",
 				description: "Unit 2 Description",
 				lessons: [
@@ -519,6 +524,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			{
 				slug: "unit-3",
 				path: `${base}/unit-3`,
+				type: "Unit",
 				title: "Unit 3 Title",
 				description: "Unit 3 Description",
 				lessons: [],
@@ -527,6 +533,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			{
 				slug: "unit-4",
 				path: `${base}/unit-4`,
+				type: "Unit",
 				title: "Unit 4 Title",
 				description: "Unit 4 Description",
 				lessons: [],
@@ -535,6 +542,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			{
 				slug: "unit-5",
 				path: `${base}/unit-5`,
+				type: "Unit",
 				title: "Unit 5 Title",
 				description: "Unit 5 Description",
 				lessons: [],
@@ -543,6 +551,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			{
 				slug: "unit-6",
 				path: `${base}/unit-6`,
+				type: "Unit",
 				title: "Unit 6 Title",
 				description: "Unit 6 Description",
 				lessons: [],
@@ -551,6 +560,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			{
 				slug: "unit-7",
 				path: `${base}/unit-7`,
+				type: "Unit",
 				title: "Unit 7 Title",
 				description: "Unit 7 Description",
 				lessons: [],
@@ -559,6 +569,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			{
 				slug: "unit-8",
 				path: `${base}/unit-8`,
+				type: "Unit",
 				title: "Unit 8 Title",
 				description: "Unit 8 Description",
 				lessons: [],
@@ -567,6 +578,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			{
 				slug: "unit-9",
 				path: `${base}/unit-9`,
+				type: "Unit",
 				title: "Unit 9 Title",
 				description: "Unit 9 Description",
 				lessons: [],
@@ -575,6 +587,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 			{
 				slug: "unit-10",
 				path: `${base}/unit-10`,
+				type: "Unit",
 				title: "Unit 10 Title",
 				description: "Unit 10 Description",
 				lessons: [],

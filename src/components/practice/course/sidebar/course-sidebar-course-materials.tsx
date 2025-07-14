@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import type { CourseMaterial, LessonResource } from "@/lib/v2/types"
 
-export function CourseSidebarCourseMaterialItem({
+export function CourseSidebarCourseMaterials({
 	index,
 	materials,
 	pathname
@@ -36,24 +36,22 @@ function MaterialItem({ material, pathname }: { material: CourseMaterial; pathna
 			return (
 				<React.Fragment>
 					{material.resources.map((resource) => (
-						<div
-							key={resource.path}
-							className={cn(
-								"flex items-center gap-4 py-4 px-4 hover:bg-blue-100",
-								pathname === resource.path && "bg-blue-100 border-l-4 border-l-blue-600"
-							)}
-						>
-							<ResourceItemIcon key={resource.path} resource={resource} pathname={pathname} />
-							<div className="flex flex-col">
-								<Link
-									href={resource.path}
-									className={cn("text-sm text-gray-800", pathname === resource.path && "text-blue-800")}
-								>
-									{resource.title}
-								</Link>
-								{resource.type === "Exercise" && <span className="text-xs text-gray-500">Not started</span>}
+						<Link key={resource.path} href={resource.path}>
+							<div
+								className={cn(
+									"flex items-center gap-4 py-4 px-4 hover:bg-blue-100",
+									pathname === resource.path && "bg-blue-100 border-l-4 border-l-blue-600"
+								)}
+							>
+								<ResourceItemIcon key={resource.path} resource={resource} pathname={pathname} />
+								<div className="flex flex-col">
+									<span className={cn("text-sm text-gray-800", pathname === resource.path && "text-blue-800")}>
+										{resource.title}
+									</span>
+									{resource.type === "Exercise" && <span className="text-xs text-gray-500">Not started</span>}
+								</div>
 							</div>
-						</div>
+						</Link>
 					))}
 				</React.Fragment>
 			)
