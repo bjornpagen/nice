@@ -2,18 +2,13 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { oneroster } from "@/lib/clients"
-import { createPrefixFilter } from "@/lib/filter"
 import type { LessonChild, LessonInfo } from "@/lib/khan-academy-api"
 import type { Resource } from "@/lib/oneroster"
 
 // Shared data fetching function
 export async function fetchLessonData(params: { subject: string; course: string; unit: string; lesson: string }) {
-	const prefixFilter = createPrefixFilter("nice:")
-
-	// ✅ NEW: Waterfall lookup with namespace filter
-	const courseResult = await errors.try(
-		oneroster.getAllCourses({ filter: `${prefixFilter} AND metadata.khanSlug='${params.course}' AND status='active'` })
-	)
+	// ✅ NEW: Waterfall lookup
+	const courseResult = await errors.try(oneroster.getAllCourses({ filter: `metadata.khanSlug='${params.course}'` }))
 	if (courseResult.error) {
 		logger.error("failed to fetch course by slug", { error: courseResult.error, slug: params.course })
 		throw errors.wrap(courseResult.error, "failed to fetch course by slug")
@@ -25,7 +20,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 
 	const unitResult = await errors.try(
 		oneroster.getCourseComponents({
-			filter: `${prefixFilter} AND course.sourcedId='${course.sourcedId}' AND metadata.khanSlug='${params.unit}' AND status='active'`
+			filter: `course.sourcedId='${course.sourcedId}' AND metadata.khanSlug='${params.unit}'`
 		})
 	)
 	if (unitResult.error) {
@@ -39,7 +34,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 
 	const lessonResult = await errors.try(
 		oneroster.getCourseComponents({
-			filter: `${prefixFilter} AND parent.sourcedId='${unit.sourcedId}' AND metadata.khanSlug='${params.lesson}' AND status='active'`
+			filter: `parent.sourcedId='${unit.sourcedId}' AND metadata.khanSlug='${params.lesson}'`
 		})
 	)
 	if (lessonResult.error) {
@@ -54,7 +49,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 	// 2. Fetch all lessons for the current unit to build the sidebar
 	const unitLessonsResult = await errors.try(
 		oneroster.getCourseComponents({
-			filter: `${prefixFilter} AND parent.sourcedId='${unit.sourcedId}' AND status='active'`
+			filter: `parent.sourcedId='${unit.sourcedId}'`
 		})
 	)
 	if (unitLessonsResult.error) {
@@ -63,9 +58,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 	}
 
 	// 3. Fetch ALL component resources and filter in memory (since specific filters are not supported)
-	const allComponentResourcesResult = await errors.try(
-		oneroster.getAllComponentResources({ filter: `${prefixFilter} AND status='active'` })
-	)
+	const allComponentResourcesResult = await errors.try(oneroster.getAllComponentResources({}))
 	if (allComponentResourcesResult.error) {
 		logger.error("failed to fetch component resources", { error: allComponentResourcesResult.error })
 		throw errors.wrap(allComponentResourcesResult.error, "failed to fetch component resources")
@@ -111,9 +104,7 @@ export async function fetchLessonData(params: { subject: string; course: string;
 		allResourcesData = resourceResults.filter((r): r is Resource => r !== undefined)
 	} else {
 		// For larger numbers, try a simple filter approach
-		const allResourcesResult = await errors.try(
-			oneroster.getAllResources({ filter: `${prefixFilter} AND status='active'` })
-		)
+		const allResourcesResult = await errors.try(oneroster.getAllResources({}))
 		if (allResourcesResult.error) {
 			logger.error("failed to fetch resources", { error: allResourcesResult.error })
 			throw errors.wrap(allResourcesResult.error, "failed to fetch resources")

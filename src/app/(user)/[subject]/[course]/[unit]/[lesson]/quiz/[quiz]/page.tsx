@@ -3,7 +3,6 @@ import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import * as React from "react"
 import { oneroster, qti } from "@/lib/clients"
-import { createPrefixFilter } from "@/lib/filter"
 import type { TestQuestionsResponse } from "@/lib/qti"
 import { fetchLessonData } from "../../lesson-data"
 import { LessonLayout } from "../../lesson-layout"
@@ -22,9 +21,8 @@ export type QuizData = {
 
 // Consolidated data fetching function for the quiz page
 async function fetchQuizData(params: { quiz: string }): Promise<QuizData> {
-	// ✅ NEW: Look up resource by slug with namespace filter
-	const prefixFilter = createPrefixFilter("nice:")
-	const filter = `${prefixFilter} AND metadata.khanSlug='${params.quiz}' AND metadata.type='qti' AND status='active'`
+	// ✅ NEW: Look up resource by slug
+	const filter = `metadata.khanSlug='${params.quiz}' AND metadata.type='qti'`
 	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
 	if (resourceResult.error) {
 		logger.error("failed to fetch quiz resource by slug", { error: resourceResult.error, slug: params.quiz })

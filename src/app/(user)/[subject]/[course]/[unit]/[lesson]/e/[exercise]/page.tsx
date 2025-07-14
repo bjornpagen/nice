@@ -5,7 +5,6 @@ import * as React from "react"
 import { fetchLessonData } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/lesson-data"
 import { LessonLayout } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/lesson-layout"
 import { oneroster, qti } from "@/lib/clients"
-import { createPrefixFilter } from "@/lib/filter"
 import { ErrQtiNotFound } from "@/lib/qti"
 import { Content } from "./content"
 
@@ -31,9 +30,8 @@ export type ExerciseData = {
 async function fetchExerciseData(params: { exercise: string }): Promise<ExerciseData> {
 	logger.info("fetchExerciseData: starting", { params })
 
-	// ✅ NEW: Look up resource by slug with namespace filter
-	const prefixFilter = createPrefixFilter("nice:")
-	const filter = `${prefixFilter} AND metadata.khanSlug='${params.exercise}' AND metadata.type='qti' AND status='active'`
+	// ✅ NEW: Look up resource by slug
+	const filter = `metadata.khanSlug='${params.exercise}' AND metadata.type='qti'`
 	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
 	if (resourceResult.error) {
 		logger.error("failed to fetch exercise resource by slug", { error: resourceResult.error, slug: params.exercise })
