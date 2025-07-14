@@ -5,9 +5,9 @@ import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { Footer } from "@/components/footer"
-import { CourseSidebar, type CourseSidebarData } from "@/components/overview/course/sidebar/course-sidebar"
+import { CourseSidebar } from "@/components/overview/course/sidebar/course-sidebar"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { getCourseBlob } from "@/lib/v2/types"
+import { type Course, getCourseBlob } from "@/lib/v2/types"
 
 export default async function OverviewCourseLayout({
 	children,
@@ -61,7 +61,7 @@ function OverviewCourseLayoutErrorFallback({ className }: { className?: string }
 	)
 }
 
-function getCourseSidebarData(subject: string, course: string): CourseSidebarData | undefined {
+function getCourseSidebarData(subject: string, course: string): Course | undefined {
 	logger.debug("retrieving course data", { subject, course })
 
 	const blob = getCourseBlob(subject, course)
@@ -70,8 +70,5 @@ function getCourseSidebarData(subject: string, course: string): CourseSidebarDat
 	const units = _.map(blob.units, (unit) => _.pick(unit, ["slug", "path", "title", "lessons", "resources"]))
 	logger.debug("retrieving course data: units", { units: units.length })
 
-	const data = { ..._.pick(blob, ["slug", "path", "title", "resources"]), units }
-	logger.debug("retrieving course data: data", { keys: _.keys(data), units: data.units.length })
-
-	return data
+	return blob
 }

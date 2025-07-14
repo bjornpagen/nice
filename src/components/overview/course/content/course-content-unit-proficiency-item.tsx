@@ -4,7 +4,7 @@ import { Sparkles } from "lucide-react"
 import Link from "next/link"
 import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
 import { cn } from "@/lib/utils"
-import type { CourseContentData } from "./course-content"
+import type { Course, LessonResource, UnitResource } from "@/lib/v2/types"
 
 export function CourseContentUnitProficiencyItem({
 	index,
@@ -13,7 +13,7 @@ export function CourseContentUnitProficiencyItem({
 	active = false
 }: {
 	index: number
-	unit: CourseContentData["units"][number]
+	unit: Course["units"][number]
 	className?: string
 	active?: boolean
 }) {
@@ -67,9 +67,7 @@ function MaterialProficiencyIcon({
 	material,
 	active = false
 }: {
-	material:
-		| CourseContentData["units"][number]["lessons"][number]["resources"][number]
-		| CourseContentData["units"][number]["resources"][number]
+	material: LessonResource | UnitResource
 	active?: boolean
 }) {
 	switch (material.type) {

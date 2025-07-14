@@ -1,45 +1,30 @@
 "use client"
 
+import _ from "lodash"
 import { notFound } from "next/navigation"
 import * as React from "react"
 import { ContentHeader } from "@/components/overview/content-header"
 import { Button } from "@/components/ui/button"
-import type { Course, CourseResource, Lesson, LessonResource, Prettify, Unit, UnitResource } from "@/lib/v2/types"
+import type { Course } from "@/lib/v2/types"
 import { CourseContentBreadcrumbs } from "./course-content-breadcrumbs"
 import { CourseContentChallenge } from "./course-content-challenge"
 import { CourseContentUnitOverviewItem } from "./course-content-unit-overview-item"
 import { CourseContentUnitProficiencyItem } from "./course-content-unit-proficiency-item"
 
-export type CourseContentData = Prettify<
-	Pick<Course, "path" | "title"> & {
-		units: Array<
-			Pick<Unit, "path" | "title"> & {
-				lessons: Array<
-					Pick<Lesson, "slug" | "path" | "title"> & {
-						resources: Array<Pick<LessonResource, "slug" | "path" | "title" | "type">>
-					}
-				>
-				resources: Array<Pick<UnitResource, "slug" | "path" | "title" | "type">>
-			}
-		>
-		resources: Array<Pick<CourseResource, "type" | "path">>
-	}
->
-
-export function CourseContent({ coursePromise }: { coursePromise: Promise<CourseContentData | undefined> }) {
+export function CourseContent({ coursePromise }: { coursePromise: Promise<Course | undefined> }) {
 	const course = React.use(coursePromise)
 	if (course == null) {
 		notFound()
 	}
 
-	const challenge: CourseContentData["resources"][number] | undefined = course.resources.find(
+	const challenge: Course["resources"][number] | undefined = course.resources.find(
 		(resource) => resource.type === "CourseChallenge"
 	)
 
 	return (
 		<div id="course-content">
 			<div id="course-content-header">
-				<CourseContentBreadcrumbs course={course} className="mb-4" />
+				<CourseContentBreadcrumbs course={_.pick(course, ["path"])} className="mb-4" />
 				<ContentHeader title={course.title} points={0} className="mb-4" />
 			</div>
 

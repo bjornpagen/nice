@@ -4,6 +4,7 @@ import _ from "lodash"
 import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
+import { CourseContentHeader } from "@/components/practice/course/content/course-content-header"
 import { CourseSidebar } from "@/components/practice/course/sidebar/course-sidebar"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
@@ -29,11 +30,8 @@ export default async function PracticeCourseLayout({
 	return (
 		<div id="practice-course-layout">
 			<SidebarProvider>
-				<div className="flex flex-row">
-					<nav
-						id="practice-course-layout-sidebar"
-						className="flex-none hidden md:block lg:block sticky top-14 h-screen"
-					>
+				<div className="flex flex-row w-full">
+					<nav id="practice-course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-full">
 						<ErrorBoundary fallback={<PracticeCourseLayoutErrorFallback />}>
 							<React.Suspense>
 								<CourseSidebar coursePromise={coursePromise} className="w-112" />
@@ -41,9 +39,15 @@ export default async function PracticeCourseLayout({
 						</ErrorBoundary>
 					</nav>
 
-					<main id="practice-course-layout-main" className="relative flex-1 bg-gray-50 px-8 py-4 w-screen">
+					<main id="practice-course-layout-main" className="relative flex-1 bg-gray-50 flex flex-col h-full">
 						<SidebarTrigger className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-none z-10 rounded-l-none rounded-r-md hover:cursor-pointer" />
-						{children}
+
+						<ErrorBoundary fallback={<PracticeCourseLayoutErrorFallback />}>
+							<React.Suspense>
+								<CourseContentHeader coursePromise={coursePromise} className="bg-white p-8 flex-none" />
+								<div className="flex-1 h-full">{children}</div>
+							</React.Suspense>
+						</ErrorBoundary>
 					</main>
 				</div>
 			</SidebarProvider>

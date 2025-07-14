@@ -4,15 +4,9 @@ import _ from "lodash"
 import { Home } from "lucide-react"
 import Link from "next/link"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb"
-import type { CourseContentData } from "./course-content"
+import type { Course } from "@/lib/v2/types"
 
-export function CourseContentBreadcrumbs({
-	course,
-	className
-}: {
-	course: Pick<CourseContentData, "path">
-	className?: string
-}) {
+export function CourseContentBreadcrumbs({ course, className }: { course: Pick<Course, "path">; className?: string }) {
 	logger.debug("initializing course breadcrumbs", { course: _.omit(course, "units") })
 
 	const parts = course.path.split("/")

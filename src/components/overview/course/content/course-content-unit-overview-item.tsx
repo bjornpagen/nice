@@ -4,7 +4,7 @@ import { BookOpen, Info } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import type { CourseContentData } from "./course-content"
+import type { Unit } from "@/lib/v2/types"
 
 export function CourseContentUnitOverviewItem({
 	index,
@@ -13,7 +13,7 @@ export function CourseContentUnitOverviewItem({
 	active = false
 }: {
 	index: number
-	unit: CourseContentData["units"][number]
+	unit: Unit
 	className?: string
 	active?: boolean
 }) {

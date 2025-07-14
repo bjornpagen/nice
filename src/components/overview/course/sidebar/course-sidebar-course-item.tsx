@@ -5,13 +5,13 @@ import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import type { CourseSidebarData } from "./course-sidebar"
+import type { Course } from "@/lib/v2/types"
 
 export function CourseSidebarCourseItem({
 	course,
 	className
 }: {
-	course: Pick<CourseSidebarData, "path" | "title" | "units">
+	course: Pick<Course, "path" | "title" | "units">
 	className?: string
 }) {
 	const pathname = usePathname()

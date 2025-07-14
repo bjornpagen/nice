@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import type { CourseSidebarData } from "./course-sidebar"
+import type { Unit } from "@/lib/v2/types"
 
 export function CourseSidebarUnitItem({
 	index,
@@ -11,7 +11,7 @@ export function CourseSidebarUnitItem({
 	className
 }: {
 	index: number
-	unit: Pick<CourseSidebarData["units"][number], "path" | "title" | "lessons">
+	unit: Pick<Unit, "path" | "title" | "lessons">
 	className?: string
 }) {
 	const pathname = usePathname()

@@ -3,13 +3,13 @@
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import type { CourseSidebarData } from "./course-sidebar"
+import type { CourseResource } from "@/lib/v2/types"
 
 export function CourseSidebarCourseChallenge({
 	challenge,
 	className
 }: {
-	challenge: Pick<CourseSidebarData["resources"][number], "path">
+	challenge: Pick<CourseResource, "path">
 	className?: string
 }) {
 	return (
