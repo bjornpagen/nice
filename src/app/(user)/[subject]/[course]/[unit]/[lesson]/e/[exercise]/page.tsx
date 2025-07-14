@@ -38,10 +38,10 @@ async function fetchExerciseData(params: { exercise: string }): Promise<Exercise
 		throw errors.wrap(resourceResult.error, "failed to fetch exercise resource by slug")
 	}
 	const resource = resourceResult.data[0]
-	if (!resource) {
+	if (!resource || !resource.metadata?.khanId) {
 		notFound()
 	}
-	const exerciseSourcedId = resource.sourcedId
+	const exerciseSourcedId = `nice:${resource.metadata.khanId}`
 
 	logger.info("fetchExerciseData: constructed sourced id", { exerciseSourcedId, originalParam: params.exercise })
 
