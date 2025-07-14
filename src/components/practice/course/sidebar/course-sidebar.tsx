@@ -4,6 +4,7 @@ import * as errors from "@superbuilders/errors"
 import _ from "lodash"
 import { notFound, usePathname } from "next/navigation"
 import * as React from "react"
+import { useSidebar } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
 import { type Course, getCourseMaterials } from "@/lib/v2/types"
 import { CourseSidebarCourseBreadcrumbs } from "./course-sidebar-course-breadcrumbs"
@@ -18,6 +19,7 @@ export function CourseSidebar({
 	className?: string
 }) {
 	const pathname = usePathname()
+	const { open } = useSidebar()
 
 	const course = React.use(coursePromise)
 	if (course == null) {
@@ -47,7 +49,10 @@ export function CourseSidebar({
 	const [index, setIndex] = React.useState<number>(_.clamp(cursor, 0, materials.length - 1))
 
 	return (
-		<div id="course-sidebar" className={cn("bg-gray-100 border-r border-gray-200 flex flex-col h-full p-4", className)}>
+		<div
+			id="course-sidebar"
+			className={cn("bg-gray-100 border-r border-gray-200 h-screen p-4", className, !open && "hidden")}
+		>
 			<div className="px-6 pb-4 flex-1 overflow-hidden bg-white rounded-md shadow-md">
 				<div id="course-sidebar-course-title" className="text-lg font-bold mt-4">
 					<div className="flex items-center gap-4">
@@ -80,13 +85,17 @@ export function CourseSidebar({
 					pathname={pathname}
 				/>
 
-				{/* 
-				<div id="course-sidebar-unit-items" className="divide-y divide-gray-200 mb-4">
-					{course.units.map((unit, index) => (
-						<CourseSidebarUnitItem key={index} index={index} unit={unit} />
-					))}
-				</div> 
-				*/}
+				<div id="course-sidebar-footer" className="p-2 my-4 flex flex-col gap-2 text-center">
+					<div className="text-xs text-gray-600">© 2025 Nice Academy</div>
+					<div className="text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1 justify-center">
+						<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">Terms of use</span>
+						<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">Privacy Policy</span>
+						<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">Cookie Notice</span>
+						<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">
+							Accessibility Statement
+						</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	)

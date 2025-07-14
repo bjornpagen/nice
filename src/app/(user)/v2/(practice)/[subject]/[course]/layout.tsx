@@ -4,9 +4,9 @@ import _ from "lodash"
 import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import { Footer } from "@/components/footer"
 import { CourseSidebar } from "@/components/practice/course/sidebar/course-sidebar"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { type Course, getCourseBlob } from "@/lib/v2/types"
 
 export default async function PracticeCourseLayout({
@@ -28,23 +28,25 @@ export default async function PracticeCourseLayout({
 
 	return (
 		<div id="practice-course-layout">
-			<div className="flex flex-row">
-				<nav id="practice-course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-screen">
-					<ErrorBoundary fallback={<PracticeCourseLayoutErrorFallback />}>
-						<React.Suspense>
-							<CourseSidebar coursePromise={coursePromise} className="w-112" />
-						</React.Suspense>
-					</ErrorBoundary>
-				</nav>
+			<SidebarProvider>
+				<div className="flex flex-row">
+					<nav
+						id="practice-course-layout-sidebar"
+						className="flex-none hidden md:block lg:block sticky top-14 h-screen"
+					>
+						<ErrorBoundary fallback={<PracticeCourseLayoutErrorFallback />}>
+							<React.Suspense>
+								<CourseSidebar coursePromise={coursePromise} className="w-112" />
+							</React.Suspense>
+						</ErrorBoundary>
+					</nav>
 
-				<main id="practice-course-layout-main" className="flex-1 bg-gray-50 px-8 py-4 w-screen">
-					{children}
-				</main>
-			</div>
-
-			<div id="practice-course-layout-footer flex-none">
-				<Footer />
-			</div>
+					<main id="practice-course-layout-main" className="relative flex-1 bg-gray-50 px-8 py-4 w-screen">
+						<SidebarTrigger className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-none z-10 rounded-l-none rounded-r-md hover:cursor-pointer" />
+						{children}
+					</main>
+				</div>
+			</SidebarProvider>
 		</div>
 	)
 }

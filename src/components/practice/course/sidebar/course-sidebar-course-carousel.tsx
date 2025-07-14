@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
@@ -22,9 +23,13 @@ export function CourseSidebarCourseCarousel({
 }) {
 	const material = materials[index]
 	if (material == null) {
+		logger.error("course sidebar course carousel: material is null", { course, materials })
 		throw errors.new("course sidebar course carousel: material is null")
 	}
+	logger.debug("course sidebar course carousel: material", { course, material })
+
 	const unit = _.get(material, "meta.unit")
+	logger.debug("course sidebar course carousel: unit", { course, unit })
 
 	const handlePrev = () => {
 		setIndex(index - 1 < 0 ? materials.length - 1 : index - 1)
