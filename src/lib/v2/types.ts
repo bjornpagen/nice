@@ -195,12 +195,21 @@ export const CourseResourceTypeSchema = z.enum(["CourseChallenge"])
 export type CourseResourceType = z.infer<typeof CourseResourceTypeSchema>
 
 /**
+ * QuestionChallengeData is a type that represents a question challenge data.
+ */
+export const QuestionChallengeDataSchema = z.object({
+	sourceId: z.string()
+})
+export type QuestionChallengeData = z.infer<typeof QuestionChallengeDataSchema>
+
+/**
  * CourseChallengeResource is a type that represents a course challenge resource.
  */
 export const CourseChallengeResourceSchema = z.object({
 	type: z.literal(CourseResourceTypeSchema.enum.CourseChallenge),
 	data: z.object({
-		sourceId: z.string()
+		sourceId: z.string(),
+		questions: z.array(QuestionChallengeDataSchema)
 	})
 })
 export type CourseChallengeResource = z.infer<typeof CourseChallengeResourceSchema>
@@ -601,7 +610,39 @@ export function getCourseBlob(subject: string, course: string): Course {
 				title: "Course Challenge",
 				type: "CourseChallenge",
 				data: {
-					sourceId: "1"
+					sourceId: "1",
+					questions: [
+						{
+							sourceId: "1"
+						},
+						{
+							sourceId: "2"
+						},
+						{
+							sourceId: "3"
+						},
+						{
+							sourceId: "4"
+						},
+						{
+							sourceId: "5"
+						},
+						{
+							sourceId: "6"
+						},
+						{
+							sourceId: "7"
+						},
+						{
+							sourceId: "8"
+						},
+						{
+							sourceId: "9"
+						},
+						{
+							sourceId: "10"
+						}
+					]
 				}
 			}
 		]
