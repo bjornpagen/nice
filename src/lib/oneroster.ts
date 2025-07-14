@@ -267,12 +267,25 @@ const UserWriteSchema = z.object({
 export type UserWrite = z.infer<typeof UserWriteSchema>
 
 // --- Schemas for Enrollment ---
+// Custom schema for the primary field that handles string/boolean coercion
+const primaryFieldSchema = z
+	.any()
+	.transform((val) => {
+		if (val === undefined || val === null) return undefined
+		if (typeof val === "boolean") return val
+		if (typeof val === "string") return val.toLowerCase() === "true"
+		return false
+	})
+	.optional()
+
 const EnrollmentSchema = z.object({
 	sourcedId: z.string(),
 	status: z.string(),
 	dateLastModified: z.string().datetime(),
 	role: z.string(),
-	primary: z.boolean().optional(),
+	// MODIFIED: Use custom transform to handle both string and boolean values for 'primary' field.
+	// This makes the client resilient to the API returning "true" as a string.
+	primary: primaryFieldSchema,
 	user: GUIDRefReadSchema,
 	class: GUIDRefReadSchema
 })

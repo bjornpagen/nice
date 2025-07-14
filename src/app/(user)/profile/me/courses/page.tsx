@@ -98,77 +98,95 @@ async function getUserEnrolledClasses(userId: string): Promise<Course[]> {
 	// Get all courses to extract subject information
 	const coursesMap = new Map(allCourses.map((c) => [c.sourcedId, c]))
 
-	// Fetch course components (units) for each class
-	const coursesWithUnits = await Promise.all(
-		classes.map(async (oneRosterClass) => {
-			const courseSourcedId = oneRosterClass.course.sourcedId
-			const course = coursesMap.get(courseSourcedId)
+	// MODIFIED: Use Promise.allSettled and filter out nulls to make the process resilient.
+	const coursePromises = classes.map(async (oneRosterClass) => {
+		const courseSourcedId = oneRosterClass.course.sourcedId
+		const course = coursesMap.get(courseSourcedId)
 
-			// Extract subject and course slug from metadata
-			if (!course || !course.subjects || course.subjects.length === 0) {
-				logger.error("course missing subjects", { courseId: course?.sourcedId })
-				throw errors.new(`course ${course?.sourcedId} missing subjects`)
-			}
-			const subject = course.subjects[0]
-			const courseSlug = getMetadataValue(course?.metadata, "khanSlug")
-			if (!courseSlug) {
-				logger.error("course missing required khanSlug", { courseId: courseSourcedId })
-				throw errors.new(`course ${courseSourcedId} missing required khanSlug`)
-			}
+		if (!course) {
+			logger.warn("Course data not found for an enrolled class, skipping.", {
+				classSourcedId: oneRosterClass.sourcedId,
+				courseSourcedId
+			})
+			return null
+		}
 
-			const courseDescription = getMetadataValue(course?.metadata, "description")
-			const coursePath = getMetadataValue(course?.metadata, "path")
+		// Extract subject and course slug from metadata
+		if (!course || !course.subjects || course.subjects.length === 0) {
+			logger.warn("course missing subjects, skipping", { courseId: course?.sourcedId })
+			return null
+		}
+		const subject = course.subjects[0]
+		const courseSlug = getMetadataValue(course?.metadata, "khanSlug")
+		if (!courseSlug) {
+			logger.warn("course missing required khanSlug, skipping", { courseId: courseSourcedId })
+			return null
+		}
 
-			// Fetch course components for this course (these will be our units)
-			const courseComponentsResult = await errors.try(oneroster.getCourseComponentsForCourse(courseSourcedId))
+		const courseDescription = getMetadataValue(course?.metadata, "description")
+		const coursePath = getMetadataValue(course?.metadata, "path")
 
-			let units: Unit[] = []
-			if (courseComponentsResult.error) {
-				logger.warn("failed to fetch course components for class", {
-					classId: oneRosterClass.sourcedId,
+		// Fetch course components for this course (these will be our units)
+		const courseComponentsResult = await errors.try(oneroster.getCourseComponentsForCourse(courseSourcedId))
+
+		let units: Unit[] = []
+		if (courseComponentsResult.error) {
+			logger.warn("failed to fetch course components for class, showing course without units", {
+				classId: oneRosterClass.sourcedId,
+				courseId: courseSourcedId,
+				error: courseComponentsResult.error
+			})
+		} else {
+			// Map course components to Unit structure with paths from OneRoster metadata
+			units = courseComponentsResult.data.map((component) => {
+				const unitSlug = getMetadataValue(component.metadata, "khanSlug")
+				if (!unitSlug) {
+					logger.error("unit missing required khanSlug", { unitId: component.sourcedId })
+					throw errors.new(`unit ${component.sourcedId} missing required khanSlug`)
+				}
+
+				// Use OneRoster metadata path or require it
+				const metadataPath = getMetadataValue(component.metadata, "path")
+				if (!metadataPath) {
+					logger.error("unit missing required path", { unitId: component.sourcedId })
+					throw errors.new(`unit ${component.sourcedId} missing required path`)
+				}
+
+				return {
+					id: component.sourcedId,
+					title: component.title,
+					path: metadataPath,
 					courseId: courseSourcedId,
-					error: courseComponentsResult.error
-				})
-			} else {
-				// Map course components to Unit structure with paths from OneRoster metadata
-				units = courseComponentsResult.data.map((component) => {
-					const unitSlug = getMetadataValue(component.metadata, "khanSlug")
-					if (!unitSlug) {
-						logger.error("unit missing required khanSlug", { unitId: component.sourcedId })
-						throw errors.new(`unit ${component.sourcedId} missing required khanSlug`)
-					}
+					ordering: component.sortOrder,
+					description: component.metadata?.description ? String(component.metadata.description) : "",
+					slug: unitSlug
+				}
+			})
+		}
 
-					// Use OneRoster metadata path or require it
-					const metadataPath = getMetadataValue(component.metadata, "path")
-					if (!metadataPath) {
-						logger.error("unit missing required path", { unitId: component.sourcedId })
-						throw errors.new(`unit ${component.sourcedId} missing required path`)
-					}
+		return {
+			...oneRosterClass,
+			units,
+			// Add subject and courseSlug for use in course card
+			subject,
+			courseSlug,
+			courseDescription,
+			coursePath,
+			metadata: course?.metadata
+		}
+	})
 
-					return {
-						id: component.sourcedId,
-						title: component.title,
-						path: metadataPath,
-						courseId: courseSourcedId,
-						ordering: component.sortOrder,
-						description: component.metadata?.description ? String(component.metadata.description) : "",
-						slug: unitSlug
-					}
-				})
-			}
+	const settledResults = await Promise.allSettled(coursePromises)
+	const coursesWithUnits: Course[] = []
 
-			return {
-				...oneRosterClass,
-				units,
-				// Add subject and courseSlug for use in course card
-				subject,
-				courseSlug,
-				courseDescription,
-				coursePath,
-				metadata: course?.metadata
-			}
-		})
-	)
+	for (const result of settledResults) {
+		if (result.status === "fulfilled" && result.value) {
+			coursesWithUnits.push(result.value)
+		} else if (result.status === "rejected") {
+			logger.error("Failed to process a course for user's list", { error: result.reason })
+		}
+		// Skip null values (from courses that were skipped due to missing data)
+	}
 
 	return coursesWithUnits
 }
@@ -203,15 +221,19 @@ async function getClassesForSelector(): Promise<AllSubject[]> {
 		// Extract course slug from metadata
 		const courseSlug = getMetadataValue(course?.metadata, "khanSlug")
 		if (!courseSlug) {
-			logger.error("course missing required khanSlug", { courseId: oneRosterClass.course.sourcedId })
-			throw errors.new(`course ${oneRosterClass.course.sourcedId} missing required khanSlug`)
+			// MODIFIED: Log a warning and skip the record instead of throwing an error.
+			logger.warn("course missing required khanSlug, skipping for selector", {
+				courseId: oneRosterClass.course.sourcedId
+			})
+			continue
 		}
 
 		// Use OneRoster course metadata path
 		const metadataPath = getMetadataValue(course.metadata, "path")
 		if (!metadataPath) {
-			logger.error("course missing required path", { courseId: oneRosterClass.course.sourcedId })
-			throw errors.new(`course ${oneRosterClass.course.sourcedId} missing required path`)
+			// MODIFIED: Log a warning and skip the record instead of throwing an error.
+			logger.warn("course missing required path, skipping for selector", { courseId: oneRosterClass.course.sourcedId })
+			continue
 		}
 
 		const courseForSelector: AllCourse = {
