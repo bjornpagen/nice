@@ -26,7 +26,7 @@ export const ResourceMetadataSchema = z.object({
 	description: z.string().default(""),
 	type: z.enum(["video", "qti"]),
 	subType: z.enum(["qti-stimulus", "qti-test"]).optional(),
-	lessonType: z.enum(["unittest", "quiz"]).optional(),
+	khanLessonType: z.enum(["unittest", "quiz"]).optional(),
 	url: z.string().optional(),
 	duration: z.number().optional()
 })

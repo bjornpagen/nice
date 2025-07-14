@@ -318,8 +318,12 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 			}
 			const resourceMetadata = resourceMetadataResult.data
 
-			if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-test" && resourceMetadata.lessonType) {
-				const assessmentType = resourceMetadata.lessonType === "unittest" ? "UnitTest" : "Quiz"
+			if (
+				resourceMetadata.type === "qti" &&
+				resourceMetadata.subType === "qti-test" &&
+				resourceMetadata.khanLessonType
+			) {
+				const assessmentType = resourceMetadata.khanLessonType === "unittest" ? "UnitTest" : "Quiz"
 
 				if (assessmentType === "Quiz") {
 					unitAssessments.push({
@@ -450,7 +454,7 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 			} else if (
 				resourceMetadata.type === "qti" &&
 				resourceMetadata.subType === "qti-test" &&
-				!resourceMetadata.lessonType
+				!resourceMetadata.khanLessonType
 			) {
 				// This is an exercise (test without lessonType means it's an exercise)
 				logger.debug("including exercise with new format", { sourcedId: resource.sourcedId })
@@ -527,7 +531,11 @@ async function fetchUnitData(params: { subject: string; course: string; unit: st
 			}
 			const resourceMetadata = resourceMetadataResult.data
 
-			if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-test" && resourceMetadata.lessonType) {
+			if (
+				resourceMetadata.type === "qti" &&
+				resourceMetadata.subType === "qti-test" &&
+				resourceMetadata.khanLessonType
+			) {
 				allAssessmentComponentIds.add(cr.courseComponent.sourcedId)
 			}
 		}

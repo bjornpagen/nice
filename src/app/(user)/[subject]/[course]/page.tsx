@@ -297,8 +297,12 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 			}
 			const resourceMetadata = resourceMetadataResult.data
 
-			if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-test" && resourceMetadata.lessonType) {
-				const assessmentType = resourceMetadata.lessonType === "unittest" ? "UnitTest" : "Quiz"
+			if (
+				resourceMetadata.type === "qti" &&
+				resourceMetadata.subType === "qti-test" &&
+				resourceMetadata.khanLessonType
+			) {
+				const assessmentType = resourceMetadata.khanLessonType === "unittest" ? "UnitTest" : "Quiz"
 
 				// Find the component resource to get sortOrder
 				const componentResource = componentResources.find(
@@ -422,7 +426,7 @@ async function fetchCourseData(params: { subject: string; course: string }): Pro
 				} else if (
 					resourceMetadata.type === "qti" &&
 					resourceMetadata.subType === "qti-test" &&
-					!resourceMetadata.lessonType
+					!resourceMetadata.khanLessonType
 				) {
 					// This is an exercise (test without lessonType means it's an exercise)
 					logger.debug("including exercise with new format", { sourcedId: resource.sourcedId })
