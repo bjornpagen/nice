@@ -584,7 +584,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 		resources: [
 			{
 				slug: "challenge",
-				path: `${base}/challenge`,
+				path: `${base}/test/challenge`,
 				title: "Course Challenge",
 				type: "CourseChallenge",
 				data: {

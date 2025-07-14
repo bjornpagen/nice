@@ -61,22 +61,21 @@ function MaterialItem({ material, pathname }: { material: CourseMaterial; pathna
 		case "UnitTest":
 		case "CourseChallenge":
 			return (
-				<div
-					className={cn(
-						"flex items-center gap-4 py-4 px-4 hover:bg-blue-100",
-						pathname === material.path && "bg-blue-100 border-l-4 border-l-blue-600"
-					)}
-				>
-					<div className="flex flex-col">
-						<Link
-							href={material.path}
-							className={cn("text-sm text-gray-800", pathname === material.path && "text-blue-800")}
-						>
-							{material.title}
-						</Link>
-						<span className="text-xs text-gray-500">Not started</span>
+				<Link href={material.path}>
+					<div
+						className={cn(
+							"flex items-center gap-4 py-4 px-4 hover:bg-blue-100",
+							pathname === material.path && "bg-blue-100 border-l-4 border-l-blue-600"
+						)}
+					>
+						<div className="flex flex-col">
+							<span className={cn("text-sm text-gray-800", pathname === material.path && "text-blue-800")}>
+								{material.title}
+							</span>
+							<span className="text-xs text-gray-500">Not started</span>
+						</div>
 					</div>
-				</div>
+				</Link>
 			)
 		default:
 			return undefined
