@@ -58,37 +58,33 @@ export function LessonSidebar({
 						</div>
 					</div>
 
-					{/* Scrollable lesson content area */}
-					<div className="flex-1 overflow-hidden">
-						<div className="bg-white border-x border-gray-200 mx-5 h-full">
+					{/* Scrollable content area containing lessons, breadcrumbs, and footer */}
+					<div className="flex-1 overflow-hidden px-5 pb-5">
+						<div className="bg-white border-x border-b border-gray-200 rounded-b-lg h-full">
 							<ScrollArea className="h-full [&>div]:overscroll-contain">
+								{/* Lesson content */}
 								<div className="px-5 py-2">
 									{lesson.children.map((child) => (
 										<LessonChildTab key={child.id} child={child} />
 									))}
 								</div>
-							</ScrollArea>
-						</div>
-					</div>
 
-					{/* Fixed footer section */}
-					<div className="flex-shrink-0 p-5 pt-0">
-						<div className="bg-white border-x border-b border-gray-200 rounded-b-lg">
-							{/* Breadcrumbs */}
-							<div className="bg-gray-100 mx-5 mb-2 rounded">
-								<LessonBreadcrumbs subject={subject} course={course} unit={unit} lesson={lesson} />
-							</div>
-
-							{/* Footer */}
-							<div className="p-2 mb-4 text-center">
-								<div className="text-xs text-gray-600 ">© 2025 Nice Academy</div>
-								<div className="text-xs text-gray-500 space-x-4">
-									<span className="hover:text-gray-700 underline cursor-not-allowed">Terms of use</span>
-									<span className="hover:text-gray-700 underline cursor-not-allowed">Privacy Policy</span>
-									<span className="hover:text-gray-700 underline cursor-not-allowed">Cookie Notice</span>
-									<span className="hover:text-gray-700 underline cursor-not-allowed">Accessibility Statement</span>
+								{/* Breadcrumbs at the bottom */}
+								<div className="bg-gray-100 mx-5 mb-2 rounded">
+									<LessonBreadcrumbs subject={subject} course={course} unit={unit} lesson={lesson} />
 								</div>
-							</div>
+
+								{/* Footer */}
+								<div className="p-2 mb-4 text-center">
+									<div className="text-xs text-gray-600 ">© 2025 Nice Academy</div>
+									<div className="text-xs text-gray-500 space-x-4">
+										<span className="hover:text-gray-700 underline cursor-not-allowed">Terms of use</span>
+										<span className="hover:text-gray-700 underline cursor-not-allowed">Privacy Policy</span>
+										<span className="hover:text-gray-700 underline cursor-not-allowed">Cookie Notice</span>
+										<span className="hover:text-gray-700 underline cursor-not-allowed">Accessibility Statement</span>
+									</div>
+								</div>
+							</ScrollArea>
 						</div>
 					</div>
 				</div>
