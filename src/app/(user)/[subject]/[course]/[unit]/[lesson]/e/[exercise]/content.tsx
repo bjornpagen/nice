@@ -1,85 +1,48 @@
 "use client"
 
-import { ChevronLeft, ChevronRight } from "lucide-react"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
-import { Button } from "@/components/ui/button"
+import { BottomNavigation } from "./bottom-navigation"
 import type { ExerciseData, ExerciseQuestion } from "./page"
 
 function QuestionStepper({ questions }: { questions: ExerciseQuestion[] }) {
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
-
-	if (questions.length === 0) {
-		return (
-			<div className="bg-white p-8 text-center">
-				<p className="text-gray-600">No questions available for this exercise.</p>
-			</div>
-		)
-	}
-
+	const [hasResponse, setHasResponse] = React.useState(false)
 	const currentQuestion = questions[currentQuestionIndex]
-	const isFirstQuestion = currentQuestionIndex === 0
-	const isLastQuestion = currentQuestionIndex === questions.length - 1
 
-	// TypeScript safety check
 	if (!currentQuestion) {
-		return null
+		return <div className="p-8 text-center text-red-500">Error: Question not found.</div>
 	}
 
-	const handlePrevious = () => {
-		if (!isFirstQuestion) {
-			setCurrentQuestionIndex(currentQuestionIndex - 1)
-		}
-	}
-
-	const handleNext = () => {
-		if (!isLastQuestion) {
+	const goToNext = () => {
+		if (currentQuestionIndex < questions.length - 1) {
 			setCurrentQuestionIndex(currentQuestionIndex + 1)
+			setHasResponse(false) // Reset response state for new question
 		}
+	}
+
+	const handleResponseChange = () => {
+		setHasResponse(true)
 	}
 
 	return (
-		<div className="bg-white">
-			{/* Question Header */}
-			<div className="p-6 border-b border-gray-200">
-				<div className="flex justify-between items-center">
-					<h2 className="text-lg font-semibold text-gray-800">
-						Question {currentQuestionIndex + 1} of {questions.length}
-					</h2>
-					<div className="flex gap-2">
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={handlePrevious}
-							disabled={isFirstQuestion}
-							className="flex items-center gap-1"
-						>
-							<ChevronLeft className="w-4 h-4" />
-							Previous
-						</Button>
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={handleNext}
-							disabled={isLastQuestion}
-							className="flex items-center gap-1"
-						>
-							Next
-							<ChevronRight className="w-4 h-4" />
-						</Button>
-					</div>
-				</div>
+		<div className="flex flex-col h-full bg-white">
+			<div className="flex-1 overflow-hidden">
+				<QTIRenderer
+					identifier={currentQuestion.identifier}
+					key={currentQuestion.identifier}
+					height="100%"
+					width="100%"
+					className="h-full w-full"
+					onResponseChange={handleResponseChange}
+				/>
 			</div>
-
-			{/* Question Content */}
-			<div className="p-6">
-				<QTIRenderer identifier={currentQuestion.identifier} height="auto" width="100%" className="w-full" />
-			</div>
-
-			{/* Submit Button */}
-			<div className="p-6 border-t border-gray-200 flex justify-center">
-				<Button className="px-8">Check Answer</Button>
-			</div>
+			<BottomNavigation
+				onContinue={goToNext}
+				isEnabled={hasResponse}
+				currentQuestion={currentQuestionIndex + 1}
+				totalQuestions={questions.length}
+			/>
 		</div>
 	)
 }
@@ -93,17 +56,21 @@ export function Content({ exerciseDataPromise }: { exerciseDataPromise: Promise<
 	}
 
 	return (
-		<div className="bg-white p-8">
-			{/* Exercise Introduction */}
-			<div className="max-w-2xl mx-auto text-center space-y-6">
-				<h1 className="text-3xl font-bold text-gray-800">{exercise.title}</h1>
-				<p className="text-gray-600">
-					This exercise contains {questions.length} question{questions.length !== 1 ? "s" : ""}.
-				</p>
-				<Button size="lg" onClick={() => setHasStarted(true)} className="px-8">
-					Start Exercise
-				</Button>
+		<div className="flex flex-col h-full">
+			{/* Exercise Header */}
+			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0 text-center">
+				<h1 className="text-2xl font-bold text-gray-900">{exercise.title}</h1>
 			</div>
+
+			{/* Ready to Take Exercise Section */}
+			<div className="bg-purple-900 text-white flex-1 flex flex-col items-center justify-center p-12 pb-32">
+				<div className="text-center max-w-md">
+					<h2 className="text-3xl font-bold mb-4">Ready to practice?</h2>
+					<p className="text-lg text-purple-100 mb-8">Test your knowledge with this exercise!</p>
+					<p className="text-lg font-medium mb-8">{questions.length} questions</p>
+				</div>
+			</div>
+			<BottomNavigation onContinue={() => setHasStarted(true)} isEnabled={true} isStartScreen={true} />
 		</div>
 	)
 }
