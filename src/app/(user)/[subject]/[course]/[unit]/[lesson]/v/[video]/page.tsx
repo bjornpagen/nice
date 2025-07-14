@@ -51,7 +51,7 @@ async function fetchVideoData(params: { video: string }): Promise<Video> {
 	return {
 		id: resource.sourcedId,
 		title: resource.title,
-		description: typeof resource.metadata?.description === "string" ? resource.metadata.description : "",
+		description: typeof resource.metadata?.khanDescription === "string" ? resource.metadata.khanDescription : "",
 		youtubeId
 	}
 }

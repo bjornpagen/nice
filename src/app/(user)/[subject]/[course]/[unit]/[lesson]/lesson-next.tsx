@@ -8,10 +8,9 @@ import type { LessonChild } from "@/lib/khan-academy-api"
 
 interface LessonNextProps {
 	lessonChildren: LessonChild[]
-	isCollapsed: boolean
 }
 
-export function LessonNext({ lessonChildren, isCollapsed }: LessonNextProps) {
+export function LessonNext({ lessonChildren }: LessonNextProps) {
 	const pathname = usePathname()
 
 	// Find the current item and next item
@@ -57,11 +56,7 @@ export function LessonNext({ lessonChildren, isCollapsed }: LessonNextProps) {
 	}
 
 	return (
-		<div
-			className={`fixed bottom-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50 transition-all duration-300 ease-in-out ${
-				isCollapsed ? "left-0 lg:left-8" : "left-0 lg:left-[28rem]"
-			}`}
-		>
+		<div className="bg-white border-t border-gray-200 shadow-lg">
 			<div className="max-w-7xl mx-auto px-4 py-3">
 				<div className="flex items-center justify-between">
 					<div className="flex items-center space-x-3">

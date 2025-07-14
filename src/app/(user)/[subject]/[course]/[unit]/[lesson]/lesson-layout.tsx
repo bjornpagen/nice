@@ -38,11 +38,14 @@ export function LessonLayout({
 				setSelectedLessonId={setSelectedLessonId}
 			/>
 
-			{/* Main content area - this is where streaming happens */}
-			<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
+			{/* Main area with flex column layout */}
+			<div className="flex-1 flex flex-col">
+				{/* Content area - scrollable */}
+				<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 
-			{/* Bottom navigation - renders immediately */}
-			<LessonNext lessonChildren={lessonData.children} isCollapsed={isCollapsed} />
+				{/* Bottom navigation - always visible, never overlaps content */}
+				<LessonNext lessonChildren={lessonData.children} />
+			</div>
 		</div>
 	)
 }
