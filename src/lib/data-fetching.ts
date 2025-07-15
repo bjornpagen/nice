@@ -1460,63 +1460,21 @@ export async function fetchCourseChallengePage_TestData(params: {
 }
 
 export async function fetchCourseChallengePage_LayoutData(params: {
-	test: string
 	course: string
 	subject: string
 }): Promise<CourseChallengeLayoutData> {
-	const courseResult = await errors.try(oneroster.getAllCourses({ filter: `metadata.khanSlug='${params.course}'` }))
-	if (courseResult.error) {
-		throw errors.wrap(courseResult.error, "fetch course")
-	}
-	const course = courseResult.data[0]
-	if (!course) {
-		notFound()
-	}
-
-	const unitsResult = await errors.try(
-		oneroster.getCourseComponents({ filter: `course.sourcedId='${course.sourcedId}'` })
-	)
-	if (unitsResult.error) {
-		throw errors.wrap(unitsResult.error, "fetch units")
-	}
-	const units = unitsResult.data.filter((c) => !c.parent).sort((a, b) => a.sortOrder - b.sortOrder)
-	if (units.length === 0) {
-		notFound()
-	}
-	const lastUnit = units[units.length - 1]
-	if (!lastUnit) {
-		notFound()
-	}
-
-	const lessonsResult = await errors.try(
-		oneroster.getCourseComponents({ filter: `parent.sourcedId='${lastUnit.sourcedId}'` })
-	)
-	if (lessonsResult.error) {
-		throw errors.wrap(lessonsResult.error, "fetch lessons")
-	}
-	const lessons = lessonsResult.data.sort((a, b) => a.sortOrder - b.sortOrder)
-	if (lessons.length === 0) {
-		notFound()
-	}
-	const lastLesson = lessons[lessons.length - 1]
-	if (!lastLesson) {
-		notFound()
-	}
-
-	const testData = await fetchCourseChallengePage_TestData(params)
-
-	// This part is simplified because a full `fetchLessonLayoutData` would be complex and redundant for this page's layout.
-	return {
+	// Reuse the main course page data fetcher to get all necessary context
+	const coursePageData = await fetchCoursePageData({
 		subject: params.subject,
-		course: { title: course.title, path: getMetadataValue(course.metadata, "path") },
-		test: testData.test,
-		unit: {
-			title: lastUnit.title,
-			path: getMetadataValue(lastUnit.metadata, "path"),
-			ordering: lastUnit.sortOrder,
-			children: []
-		},
-		lesson: { title: lastLesson.title, path: getMetadataValue(lastLesson.metadata, "path"), children: [] }
+		course: params.course
+	})
+
+	// The CourseSidebar component needs the full course object with units,
+	// the lesson count, and any challenges.
+	return {
+		course: coursePageData.course,
+		lessonCount: coursePageData.lessonCount,
+		challenges: coursePageData.course.challenges
 	}
 }
 

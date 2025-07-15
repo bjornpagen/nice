@@ -2,8 +2,8 @@ import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchCourseChallengePage_LayoutData, fetchCourseChallengePage_TestData } from "@/lib/data-fetching"
 import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types"
-import { TestContent } from "./test-content"
-import { TestLayout } from "./test-layout"
+import { TestContent } from "./components/test-content"
+import { TestLayout } from "./components/test-layout"
 
 export default function CourseChallengePage({
 	params

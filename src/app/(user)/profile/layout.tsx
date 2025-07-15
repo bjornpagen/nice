@@ -6,8 +6,8 @@ import { z } from "zod"
 import { Banner } from "@/components/banner"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
-import { ProfileBanner } from "./profile-banner"
-import { Sidebar } from "./sidebar"
+import { ProfileBanner } from "./components/profile-banner"
+import { Sidebar } from "./components/sidebar"
 
 // Schema to safely parse Clerk's public metadata
 const UserPublicMetadataSchema = z.object({

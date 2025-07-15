@@ -2,7 +2,7 @@ import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchArticlePageData } from "@/lib/data-fetching"
 import type { ArticlePageData } from "@/lib/types" // Import from canonical types
-import { Content } from "./content"
+import { Content } from "./components/content"
 
 // --- REMOVED: The local ArticlePageData type definition ---
 

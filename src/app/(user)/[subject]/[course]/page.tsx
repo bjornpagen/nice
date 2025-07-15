@@ -2,7 +2,7 @@ import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchCoursePageData } from "@/lib/data-fetching"
 import type { CoursePageData } from "@/lib/types"
-import { Content } from "./content"
+import { Content } from "./components/content"
 
 export default function CoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
 	logger.info("course page: received request, rendering layout immediately")

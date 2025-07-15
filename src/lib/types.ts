@@ -168,11 +168,9 @@ export interface CourseChallengePageData {
 }
 
 export interface CourseChallengeLayoutData {
-	subject: string
-	course: Pick<Course, "title" | "path">
-	test: Pick<CourseChallenge, "id" | "title" | "slug" | "description"> & { type: "CourseChallenge" }
-	unit: Pick<Unit, "title" | "path" | "ordering"> & { children: [] }
-	lesson: Pick<Lesson, "title" | "path"> & { children: [] }
+	course: Pick<Course, "id" | "title" | "description" | "path" | "units">
+	lessonCount: number
+	challenges: CourseChallenge[]
 }
 
 // Data for the /profile/me/courses page

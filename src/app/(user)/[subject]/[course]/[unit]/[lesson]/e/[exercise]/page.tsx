@@ -2,7 +2,7 @@ import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchExercisePageData } from "@/lib/data-fetching"
 import type { ExercisePageData } from "@/lib/types"
-import { Content } from "./content"
+import { Content } from "./components/content"
 
 // --- REMOVED: The local ExercisePageData type definition ---
 

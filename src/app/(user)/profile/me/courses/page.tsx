@@ -2,7 +2,7 @@ import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchProfileCoursesData } from "@/lib/data-fetching"
 import type { ProfileCoursesPageData } from "@/lib/types"
-import { Content } from "./content"
+import { Content } from "./components/content"
 
 export default function ProfileCoursesPage() {
 	logger.info("profile courses page: received request, rendering layout immediately")

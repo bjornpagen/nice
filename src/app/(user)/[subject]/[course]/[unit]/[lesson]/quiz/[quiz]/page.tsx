@@ -2,7 +2,7 @@ import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchQuizPageData } from "@/lib/data-fetching"
 import type { QuizPageData } from "@/lib/types"
-import { QuizContent } from "./quiz-content"
+import { QuizContent } from "./components/quiz-content"
 
 // --- REMOVED: The local QuizPageData type definition ---
 

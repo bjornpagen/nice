@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import type { CourseChallengeLayoutData } from "@/lib/types"
-import { LessonSidebar } from "../../[unit]/[lesson]/lesson-sidebar"
+import { CourseSidebar } from "../../../components/sidebar"
 
 export function TestLayout({
 	courseDataPromise,
@@ -12,23 +12,15 @@ export function TestLayout({
 	children: React.ReactNode
 }) {
 	const courseData = React.use(courseDataPromise)
-	const [isCollapsed, setIsCollapsed] = React.useState(false)
-
-	// No-op function since we don't have multiple lessons in a test
-	const setSelectedLessonId = React.useCallback(() => {}, [])
 
 	return (
 		<div className="flex h-full">
 			{/* Sidebar - renders immediately, no suspense needed */}
-			<LessonSidebar
-				subject={courseData.subject}
-				course={courseData.course}
-				unit={courseData.unit}
-				lesson={courseData.lesson}
-				isCollapsed={isCollapsed}
-				setIsCollapsed={setIsCollapsed}
-				setSelectedLessonId={setSelectedLessonId}
-			/>
+			<div className="flex-shrink-0 w-96">
+				<div className="sticky top-0 w-96 max-h-screen overflow-y-auto">
+					<CourseSidebar course={courseData.course} lessonCount={0} challenges={courseData.challenges} />
+				</div>
+			</div>
 
 			{/* Main content area - this is where streaming happens */}
 			<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>

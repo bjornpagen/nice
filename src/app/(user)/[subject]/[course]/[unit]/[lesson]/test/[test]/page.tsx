@@ -2,7 +2,7 @@ import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchUnitTestPageData } from "@/lib/data-fetching"
 import type { UnitTestPageData } from "@/lib/types"
-import { TestContent } from "./test-content"
+import { TestContent } from "./components/test-content"
 
 // --- REMOVED: The local UnitTestPageData type definition ---
 
