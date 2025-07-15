@@ -8,9 +8,8 @@ import "./src/env.js"
 const config = {
 	experimental: {
 		dynamicIO: true,
-		// Define custom cache profiles for our application's needs
+		reactCompiler: true,
 		cacheLife: {
-			// For structural data that changes only on content ingestion
 			curriculum: {
 				stale: 60 * 60 * 24, // 1 day
 				revalidate: 60 * 60, // 1 hour
