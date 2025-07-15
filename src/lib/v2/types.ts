@@ -15,12 +15,40 @@ const BaseResourceSchema = z.object({
 })
 
 /**
- * QuestionResourceData is a type that represents a lesson resource data.
+ * createPathValidator creates a path validation function for resource schemas.
  */
-export const QuestionExerciseDataSchema = z.object({
+function createPathValidator(patterns: Record<string, string>) {
+	return (data: { type: string; path: string }) => {
+		const pattern = patterns[data.type]
+		if (!pattern) {
+			return false
+		}
+
+		return new RegExp(`^(\\/v2)?${pattern}$`).test(data.path)
+	}
+}
+
+/**
+ * BaseDataSchema is the common schema for all resource data with just a sourceId.
+ */
+export const BaseDataSchema = z.object({
 	sourceId: z.string()
 })
-export type QuestionExerciseData = z.infer<typeof QuestionExerciseDataSchema>
+export type BaseData = z.infer<typeof BaseDataSchema>
+
+/**
+ * QuestionSchema is a unified schema for question data.
+ */
+export const QuestionSchema = BaseDataSchema
+export type Question = z.infer<typeof QuestionSchema>
+
+/**
+ * QuestionsDataSchema extends BaseDataSchema with an array of questions.
+ */
+export const QuestionsDataSchema = QuestionSchema.extend({
+	questions: z.array(QuestionSchema)
+})
+export type QuestionsData = z.infer<typeof QuestionsDataSchema>
 
 /**
  * LessonResourceType is a type that represents a lesson resource type.
@@ -33,9 +61,7 @@ export type LessonResourceType = z.infer<typeof LessonResourceTypeSchema>
  */
 export const ArticleLessonResourceSchema = z.object({
 	type: z.literal(LessonResourceTypeSchema.enum.Article),
-	data: z.object({
-		sourceId: z.string()
-	})
+	data: BaseDataSchema
 })
 export type ArticleLessonResource = z.infer<typeof ArticleLessonResourceSchema>
 
@@ -44,10 +70,7 @@ export type ArticleLessonResource = z.infer<typeof ArticleLessonResourceSchema>
  */
 export const ExerciseLessonResourceSchema = z.object({
 	type: z.literal(LessonResourceTypeSchema.enum.Exercise),
-	data: z.object({
-		sourceId: z.string(),
-		questions: z.array(QuestionExerciseDataSchema)
-	})
+	data: QuestionsDataSchema
 })
 export type ExerciseLessonResource = z.infer<typeof ExerciseLessonResourceSchema>
 
@@ -56,9 +79,7 @@ export type ExerciseLessonResource = z.infer<typeof ExerciseLessonResourceSchema
  */
 export const VideoLessonResourceSchema = z.object({
 	type: z.literal(LessonResourceTypeSchema.enum.Video),
-	data: z.object({
-		sourceId: z.string()
-	})
+	data: BaseDataSchema
 })
 export type VideoLessonResource = z.infer<typeof VideoLessonResourceSchema>
 
@@ -81,18 +102,11 @@ export const LessonResourceSchema = z
 		})
 	])
 	.refine(
-		(data) => {
-			switch (data.type) {
-				case "Article":
-					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+\/[^/]+\/a\/[^/]+$/.test(data.path)
-				case "Exercise":
-					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+\/[^/]+\/e\/[^/]+$/.test(data.path)
-				case "Video":
-					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+\/[^/]+\/v\/[^/]+$/.test(data.path)
-				default:
-					return false
-			}
-		},
+		createPathValidator({
+			Article: "/[^/]+/[^/]+/[^/]+/[^/]+/a/[^/]+",
+			Exercise: "/[^/]+/[^/]+/[^/]+/[^/]+/e/[^/]+",
+			Video: "/[^/]+/[^/]+/[^/]+/[^/]+/v/[^/]+"
+		}),
 		{
 			message:
 				"path must match resource type pattern: articles=/[subject]/[course]/[unit]/[lesson]/a/[article], exercises=/[subject]/[course]/[unit]/[lesson]/e/[exercise], videos=/[subject]/[course]/[unit]/[lesson]/v/[video]",
@@ -124,9 +138,7 @@ export type UnitResourceType = z.infer<typeof UnitResourceTypeSchema>
  */
 export const QuizUnitResourceSchema = z.object({
 	type: z.literal(UnitResourceTypeSchema.enum.Quiz),
-	data: z.object({
-		sourceId: z.string()
-	})
+	data: BaseDataSchema
 })
 export type QuizUnitResource = z.infer<typeof QuizUnitResourceSchema>
 
@@ -135,9 +147,7 @@ export type QuizUnitResource = z.infer<typeof QuizUnitResourceSchema>
  */
 export const UnitTestUnitResourceSchema = z.object({
 	type: z.literal(UnitResourceTypeSchema.enum.UnitTest),
-	data: z.object({
-		sourceId: z.string()
-	})
+	data: BaseDataSchema
 })
 export type UnitTestUnitResource = z.infer<typeof UnitTestUnitResourceSchema>
 
@@ -156,16 +166,10 @@ export const UnitResourceSchema = z
 		})
 	])
 	.refine(
-		(data) => {
-			switch (data.type) {
-				case "Quiz":
-					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+\/quiz\/[^/]+$/.test(data.path)
-				case "UnitTest":
-					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+\/test\/[^/]+$/.test(data.path)
-				default:
-					return false
-			}
-		},
+		createPathValidator({
+			Quiz: "/[^/]+/[^/]+/[^/]+/quiz/[^/]+",
+			UnitTest: "/[^/]+/[^/]+/[^/]+/test/[^/]+"
+		}),
 		{
 			message:
 				"path must match resource type pattern: quizzes=/[subject]/[course]/[unit]/quiz/[quiz], unit-tests=/[subject]/[course]/[unit]/test/[test]",
@@ -197,9 +201,7 @@ export type CourseResourceType = z.infer<typeof CourseResourceTypeSchema>
 /**
  * QuestionChallengeData is a type that represents a question challenge data.
  */
-export const QuestionChallengeDataSchema = z.object({
-	sourceId: z.string()
-})
+export const QuestionChallengeDataSchema = QuestionSchema
 export type QuestionChallengeData = z.infer<typeof QuestionChallengeDataSchema>
 
 /**
@@ -207,10 +209,7 @@ export type QuestionChallengeData = z.infer<typeof QuestionChallengeDataSchema>
  */
 export const CourseChallengeResourceSchema = z.object({
 	type: z.literal(CourseResourceTypeSchema.enum.CourseChallenge),
-	data: z.object({
-		sourceId: z.string(),
-		questions: z.array(QuestionChallengeDataSchema)
-	})
+	data: QuestionsDataSchema
 })
 export type CourseChallengeResource = z.infer<typeof CourseChallengeResourceSchema>
 
@@ -225,14 +224,9 @@ export const CourseResourceSchema = z
 		})
 	])
 	.refine(
-		(data) => {
-			switch (data.type) {
-				case "CourseChallenge":
-					return /^(\/v2)?\/[^/]+\/[^/]+\/[^/]+$/.test(data.path)
-				default:
-					return false
-			}
-		},
+		createPathValidator({
+			CourseChallenge: "/[^/]+/[^/]+/[^/]+"
+		}),
 		{
 			message: "path must match resource type pattern: challenges=/[subject]/[course]/[challenge]",
 			path: ["path"]
