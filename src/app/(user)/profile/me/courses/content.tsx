@@ -133,6 +133,7 @@ export function Content({
 	allSubjectsPromise: Promise<AllSubject[]>
 }) {
 	const { openDialog, shouldShow, closeDialog, activeDialog } = useDialogManager()
+	const [hasShownOnboarding, setHasShownOnboarding] = React.useState(false)
 
 	// Handle onboarding for new users (will be resolved by the CourseGrid suspense)
 	React.useEffect(() => {
@@ -145,12 +146,30 @@ export function Content({
 			}
 
 			const courses = result.data
-			if (courses.length === 0 && shouldShow(dialogKeys.USER_ONBOARDING)) {
+			if (courses.length === 0 && shouldShow(dialogKeys.USER_ONBOARDING) && !hasShownOnboarding) {
+				setHasShownOnboarding(true)
 				openDialog(dialogKeys.USER_ONBOARDING)
 			}
 		}
 		checkNewUser()
-	}, [coursesPromise, shouldShow, openDialog])
+	}, [coursesPromise, shouldShow, openDialog, hasShownOnboarding])
+
+	// Watch for when onboarding closes to open course selector
+	React.useEffect(() => {
+		// If we just closed the onboarding dialog and user has no courses, open course selector
+		const checkForCourseSelector = async () => {
+			if (activeDialog === null && hasShownOnboarding && !shouldShow(dialogKeys.USER_ONBOARDING)) {
+				const result = await errors.try(coursesPromise)
+				if (!result.error && result.data.length === 0) {
+					// Small delay to ensure smooth transition
+					setTimeout(() => {
+						openDialog(dialogKeys.COURSE_SELECTOR)
+					}, 100)
+				}
+			}
+		}
+		checkForCourseSelector()
+	}, [activeDialog, hasShownOnboarding, shouldShow, coursesPromise, openDialog])
 
 	const handleEditCourses = () => {
 		openDialog(dialogKeys.COURSE_SELECTOR)
@@ -176,7 +195,7 @@ export function Content({
 				<Button
 					onClick={handleEditCourses}
 					variant="outline"
-					className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4"
+					className="bg-blue-600 hover:bg-blue-700 text-white hover:text-white font-medium px-4 border-blue-600 hover:border-blue-600 hover:outline hover:outline-2 hover:outline-blue-600 hover:outline-offset-2 transition-all"
 				>
 					Edit Courses
 				</Button>
