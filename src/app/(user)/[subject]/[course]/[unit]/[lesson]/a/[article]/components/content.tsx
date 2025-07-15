@@ -45,7 +45,7 @@ export function Content({ articlePromise }: { articlePromise: Promise<ArticlePag
 			{/* Article Content - Render through QTI */}
 			<div className="flex-1 overflow-hidden">
 				<QTIRenderer
-					identifier={article.identifier}
+					identifier={article.id}
 					materialType="stimulus"
 					height="100%"
 					width="100%"

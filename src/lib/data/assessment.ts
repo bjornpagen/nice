@@ -48,14 +48,11 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 	}
 	const resourceMetadata = resourceMetadataResult.data
 
-	// Use the sourcedId as the test identifier for QTI
-	const qtiTestId = resource.sourcedId
-
 	// Fetch questions from QTI server using the existing pattern
-	const questionsResult = await errors.try(qti.getAllQuestionsForTest(qtiTestId))
+	const questionsResult = await errors.try(qti.getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
 		if (errors.is(questionsResult.error, ErrQtiNotFound)) {
-			logger.warn("quiz test not found in QTI server", { testId: qtiTestId })
+			logger.warn("quiz test not found in QTI server", { testId: resource.sourcedId })
 			// Return empty questions array if the test is not yet in QTI
 			return {
 				quiz: {
@@ -67,14 +64,12 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 				questions: []
 			}
 		}
-		logger.error("failed to fetch questions for quiz", { testId: qtiTestId, error: questionsResult.error })
+		logger.error("failed to fetch questions for quiz", { testId: resource.sourcedId, error: questionsResult.error })
 		throw errors.wrap(questionsResult.error, "fetch questions for quiz")
 	}
 
 	const questions = questionsResult.data.questions.map((q) => ({
-		id: q.question.identifier,
-		exerciseId: "",
-		qtiIdentifier: q.question.identifier
+		id: q.question.identifier
 	}))
 
 	return {
@@ -123,14 +118,11 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 	}
 	const resourceMetadata = resourceMetadataResult.data
 
-	// Use the sourcedId as the test identifier for QTI
-	const qtiTestId = resource.sourcedId
-
 	// Fetch questions from QTI server
-	const questionsResult = await errors.try(qti.getAllQuestionsForTest(qtiTestId))
+	const questionsResult = await errors.try(qti.getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
 		if (errors.is(questionsResult.error, ErrQtiNotFound)) {
-			logger.warn("unit test not found in QTI server", { testId: qtiTestId })
+			logger.warn("unit test not found in QTI server", { testId: resource.sourcedId })
 			// Return empty questions array if the test is not yet in QTI
 			return {
 				test: {
@@ -142,14 +134,15 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 				questions: []
 			}
 		}
-		logger.error("failed to fetch questions for unit test", { testId: qtiTestId, error: questionsResult.error })
+		logger.error("failed to fetch questions for unit test", {
+			testId: resource.sourcedId,
+			error: questionsResult.error
+		})
 		throw errors.wrap(questionsResult.error, "fetch questions for unit test")
 	}
 
 	const questions = questionsResult.data.questions.map((q) => ({
-		id: q.question.identifier,
-		exerciseId: "",
-		qtiIdentifier: q.question.identifier
+		id: q.question.identifier
 	}))
 
 	return {
@@ -211,11 +204,17 @@ export async function fetchCourseChallengePage_TestData(params: {
 	}
 	const testResourceMetadata = testResourceMetadataResult.data
 
-	const qtiTestData = await qti.getAllQuestionsForTest(testResource.sourcedId)
-	const questions = qtiTestData.questions.map((q) => ({
-		id: q.question.identifier,
-		exerciseId: "",
-		qtiIdentifier: q.question.identifier
+	const qtiTestDataResult = await errors.try(qti.getAllQuestionsForTest(testResource.sourcedId))
+	if (qtiTestDataResult.error) {
+		logger.error("failed to fetch questions for course challenge", {
+			testId: testResource.sourcedId,
+			error: qtiTestDataResult.error
+		})
+		throw errors.wrap(qtiTestDataResult.error, "fetch questions for course challenge")
+	}
+
+	const questions = qtiTestDataResult.data.questions.map((q) => ({
+		id: q.question.identifier
 	}))
 	return {
 		test: {

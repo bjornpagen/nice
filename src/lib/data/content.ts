@@ -39,15 +39,10 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 		})
 		throw errors.new("invalid resource type")
 	}
-	const resourceMetadata = resourceMetadataResult.data
-
-	// Construct the QTI stimulus identifier using the Khan Academy ID
-	const qtiIdentifier = `nice:${resourceMetadata.khanId}`
 
 	return {
 		id: resource.sourcedId,
-		title: resource.title,
-		identifier: qtiIdentifier
+		title: resource.title
 	}
 }
 
@@ -84,22 +79,16 @@ export async function fetchExercisePageData(params: { exercise: string }): Promi
 		})
 		throw errors.new("invalid resource type")
 	}
-	const resourceMetadata = resourceMetadataResult.data
-
-	// Use the khanId from metadata to construct the QTI test identifier
-	const qtiTestId = `nice:${resourceMetadata.khanId}`
 
 	// Fetch questions from QTI server
-	const questionsResult = await errors.try(qti.getAllQuestionsForTest(qtiTestId))
+	const questionsResult = await errors.try(qti.getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
-		logger.error("failed to fetch questions for exercise", { testId: qtiTestId, error: questionsResult.error })
+		logger.error("failed to fetch questions for exercise", { testId: resource.sourcedId, error: questionsResult.error })
 		throw errors.wrap(questionsResult.error, "fetch questions for exercise")
 	}
 
 	const questions = questionsResult.data.questions.map((q) => ({
-		id: q.question.identifier,
-		exerciseId: "",
-		qtiIdentifier: q.question.identifier
+		id: q.question.identifier
 	}))
 
 	return {
@@ -145,18 +134,17 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 		})
 		throw errors.new("invalid resource type")
 	}
-	const resourceMetadata = resourceMetadataResult.data
 
-	const youtubeId = extractYouTubeId(resourceMetadata.url)
+	const youtubeId = extractYouTubeId(resourceMetadataResult.data.url)
 	if (!youtubeId) {
-		logger.error("invalid YouTube URL", { url: resourceMetadata.url })
+		logger.error("invalid YouTube URL", { url: resourceMetadataResult.data.url })
 		throw errors.new("invalid YouTube URL")
 	}
 
 	return {
 		id: resource.sourcedId,
 		title: resource.title,
-		description: resourceMetadata.description,
+		description: resourceMetadataResult.data.description,
 		youtubeId
 	}
 }

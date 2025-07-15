@@ -32,7 +32,6 @@ export interface LessonLayoutData {
 export interface ArticlePageData {
 	id: string
 	title: string
-	identifier: string // QTI stimulus identifier
 }
 
 // Data for the /.../v/[video] page

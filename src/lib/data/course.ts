@@ -260,7 +260,6 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					logger.error("component resource not found", { lessonId: lesson.id, resourceId: resource.sourcedId })
 					throw errors.new(`component resource not found for lesson ${lesson.id} resource ${resource.sourcedId}`)
 				}
-				const _ordering = componentResource.sortOrder
 
 				if (resourceMetadata.type === "video") {
 					const youtubeUrl = resourceMetadata.url

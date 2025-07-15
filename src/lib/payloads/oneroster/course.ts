@@ -90,7 +90,7 @@ const getCourseByIdQuery = db
 	.from(schema.niceCourses)
 	.where(eq(schema.niceCourses.id, sql.placeholder("courseId")))
 	.limit(1)
-	.prepare("src_lib_oneroster_get_course_by_id")
+	.prepare("src_lib_payloads_oneroster_course_get_course_by_id")
 
 const getAllSubjectsQuery = db
 	.select({
@@ -98,7 +98,7 @@ const getAllSubjectsQuery = db
 		title: schema.niceSubjects.title
 	})
 	.from(schema.niceSubjects)
-	.prepare("src_lib_oneroster_get_all_subjects")
+	.prepare("src_lib_payloads_oneroster_course_get_all_subjects")
 
 /**
  * Generates a complete OneRoster JSON payload for a single course.
@@ -107,7 +107,7 @@ const getAllSubjectsQuery = db
  * @returns A promise that resolves to the fully structured OneRosterPayload.
  * @throws An error if the course is not found or if a database query fails.
  */
-export async function generateOnerosterPayloadForCourse(courseId: string): Promise<OneRosterPayload> {
+export async function generateCoursePayload(courseId: string): Promise<OneRosterPayload> {
 	logger.info("starting oneroster payload generation", { courseId })
 
 	// 1. Fetch the root course and all subjects in parallel.

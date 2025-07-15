@@ -1,7 +1,5 @@
 export interface Question {
 	id: string
-	exerciseId: string // The exercise this question belongs to
-	qtiIdentifier: string // The identifier for the QTI system
 }
 
 // Base type for any piece of learnable content (Video, Article, Exercise)

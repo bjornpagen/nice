@@ -2,7 +2,7 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
-import { generateOnerosterPayloadForCourse } from "@/lib/course-oneroster/oneroster"
+import { generateCoursePayload } from "@/lib/payloads/oneroster/course"
 
 export const generatePayloadForCourse = inngest.createFunction(
 	{
@@ -21,7 +21,7 @@ export const generatePayloadForCourse = inngest.createFunction(
 		logger.info("starting oneroster generation", { courseId })
 
 		// Step 1: Generate the OneRoster payload (DB-heavy operation) BEFORE the step.
-		const payloadResult = await errors.try(generateOnerosterPayloadForCourse(courseId))
+		const payloadResult = await errors.try(generateCoursePayload(courseId))
 		if (payloadResult.error) {
 			logger.error("failed to generate oneroster payload", { courseId, error: payloadResult.error })
 			throw errors.wrap(payloadResult.error, "oneroster generation")
