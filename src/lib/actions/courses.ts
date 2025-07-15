@@ -3,7 +3,11 @@
 import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { revalidatePath } from "next/cache"
 import { oneroster } from "@/lib/clients"
+import { getMetadataValue } from "../data/utils"
+import type { CourseReadSchemaType } from "../oneroster"
+import type { ProfileSubject } from "../types/profile"
 
 export async function saveUserCourses(selectedClassIds: string[]) {
 	const user = await currentUser()
@@ -11,14 +15,10 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 		throw errors.new("user not authenticated")
 	}
 
-	const sourceId = typeof user.publicMetadata.sourceId === "string" ? user.publicMetadata.sourceId : undefined
-	if (!sourceId) {
-		throw errors.new("user does not have a sourceId in clerk metadata")
-	}
+	const sourceId = typeof user.publicMetadata.sourceId === "string" ? user.publicMetadata.sourceId : user.id
 
 	logger.info("syncing user enrollments", { userId: user.id, sourceId, selectedClassIds })
 
-	// Get current enrollments for the user
 	const currentEnrollmentsResult = await errors.try(oneroster.getEnrollmentsForUser(sourceId))
 	if (currentEnrollmentsResult.error) {
 		logger.error("failed to fetch current enrollments", { sourceId, error: currentEnrollmentsResult.error })
@@ -29,7 +29,6 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 	const currentClassIds = new Set(currentEnrollments.map((e) => e.class.sourcedId))
 	const newClassIds = new Set(selectedClassIds)
 
-	// Determine what to add and what to remove
 	const classesToAdd = selectedClassIds.filter((id) => !currentClassIds.has(id))
 	const enrollmentsToRemove = currentEnrollments.filter((e) => !newClassIds.has(e.class.sourcedId))
 
@@ -38,9 +37,14 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 		toRemove: enrollmentsToRemove.length
 	})
 
+	// Early return if no changes needed
+	if (classesToAdd.length === 0 && enrollmentsToRemove.length === 0) {
+		logger.info("no enrollment changes needed", { userId: user.id, sourceId })
+		return { success: true, changed: false }
+	}
+
 	const promises: Promise<unknown>[] = []
 
-	// Create new enrollments
 	for (const classId of classesToAdd) {
 		promises.push(
 			oneroster.createEnrollment({
@@ -52,7 +56,6 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 		)
 	}
 
-	// Delete old enrollments
 	for (const enrollment of enrollmentsToRemove) {
 		promises.push(oneroster.deleteEnrollment(enrollment.sourcedId))
 	}
@@ -74,86 +77,68 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 		throw errors.new("one or more enrollment operations failed during sync")
 	}
 
+	revalidatePath("/profile/me/courses")
 	logger.info("successfully synced user enrollments", {
 		userId: user.id,
 		sourceId,
 		added: classesToAdd.length,
 		removed: enrollmentsToRemove.length
 	})
-	return { success: true }
+	return { success: true, changed: true }
 }
 
-// Type definitions for OneRoster explore dropdown (no DB dependency)
-const ONEROSTER_ORG_ID = "nice-academy"
-
-type CourseForExplore = {
-	id: string // Using OneRoster sourcedId as the key
-	title: string
-	path: string
-}
-
-type SubjectWithCoursesForExplore = {
-	slug: string
-	title: string
-	courses: CourseForExplore[]
-}
-
-export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCoursesForExplore[]> {
-	logger.info("fetching explore dropdown data from oneroster api", { orgId: ONEROSTER_ORG_ID })
-
-	const [classesResult, coursesResult] = await Promise.all([
-		errors.try(oneroster.getClassesForSchool(ONEROSTER_ORG_ID)),
-		errors.try(oneroster.getAllCourses({}))
-	])
-
+export async function getOneRosterCoursesForExplore(): Promise<ProfileSubject[]> {
+	const classesResult = await errors.try(oneroster.getClassesForSchool("nice-academy", { filter: "status='active'" }))
 	if (classesResult.error) {
 		logger.error("failed to fetch classes from oneroster", { error: classesResult.error })
 		throw errors.wrap(classesResult.error, "oneroster class fetch")
 	}
-	if (coursesResult.error) {
-		logger.error("failed to fetch courses from oneroster", { error: coursesResult.error })
-		throw errors.wrap(coursesResult.error, "oneroster course fetch")
-	}
 
-	const allClasses = classesResult.data.filter((c) => c.status === "active")
-	const allCourses = coursesResult.data
-	const coursesMap = new Map(allCourses.map((c) => [c.sourcedId, c]))
-	const coursesBySubject = new Map<string, CourseForExplore[]>()
+	const allClasses = classesResult.data
+
+	const courseIds = [...new Set(allClasses.map((c) => c.course.sourcedId))]
+	if (courseIds.length === 0) return []
+
+	// Fetch each course individually since OneRoster doesn't support IN clause
+	const coursePromises = courseIds.map(async (courseId) => {
+		const result = await errors.try(oneroster.getCourse(courseId))
+		if (result.error) {
+			logger.error("failed to fetch course", { courseId, error: result.error })
+			return null
+		}
+		return result.data
+	})
+
+	const courseResults = await Promise.all(coursePromises)
+	const allCourses = courseResults.filter((c): c is CourseReadSchemaType => c !== null && c !== undefined)
+	const coursesBySubject = new Map<string, { id: string; title: string; path: string; slug: string }[]>()
 	const processedCourseIds = new Set<string>()
 
 	for (const oneRosterClass of allClasses) {
-		const course = coursesMap.get(oneRosterClass.course.sourcedId)
+		const course = allCourses.find((c) => c.sourcedId === oneRosterClass.course.sourcedId)
 		if (!course || !course.subjects || course.subjects.length === 0) continue
 
-		// Skip if we've already processed this course (multiple classes can reference same course)
 		if (processedCourseIds.has(course.sourcedId)) continue
 		processedCourseIds.add(course.sourcedId)
 
-		// Get path from OneRoster metadata
-		const pathFromMetadata =
-			course.metadata && typeof course.metadata === "object" && "path" in course.metadata
-				? String(course.metadata.path)
-				: undefined
+		const pathFromMetadata = getMetadataValue(course.metadata || {}, "path")
+		if (!pathFromMetadata) continue
 
-		if (!pathFromMetadata) {
-			logger.debug("course missing metadata path", { sourcedId: course.sourcedId })
-			continue
-		}
+		const slugFromMetadata = getMetadataValue(course.metadata || {}, "khanSlug")
+		if (!slugFromMetadata) continue
 
-		const courseForExplore: CourseForExplore = {
-			id: course.sourcedId, // Using OneRoster sourcedId as the key
+		const courseForExplore = {
+			id: oneRosterClass.sourcedId, // Use the class ID for selection
 			title: course.title,
-			path: pathFromMetadata
+			path: pathFromMetadata,
+			slug: slugFromMetadata
 		}
 
 		for (const subject of course.subjects) {
 			if (!coursesBySubject.has(subject)) {
 				coursesBySubject.set(subject, [])
 			}
-			const subjectCourses = coursesBySubject.get(subject)
-			if (subjectCourses) {
-				subjectCourses.push(courseForExplore)
-			}
+			coursesBySubject.get(subject)?.push(courseForExplore)
 		}
 	}
 

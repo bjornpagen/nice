@@ -14,3 +14,10 @@ export function extractYouTubeId(url: string): string | null {
 
 	return null
 }
+
+// Get metadata value safely
+export function getMetadataValue(metadata: Record<string, unknown> | undefined, key: string): string | undefined {
+	if (!metadata || !(key in metadata)) return undefined
+	const value = metadata[key]
+	return typeof value === "string" ? value : undefined
+}

@@ -1,5 +1,4 @@
 import * as logger from "@superbuilders/slog"
-import * as React from "react"
 import { fetchProfileCoursesData } from "@/lib/data/profile"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
 import { Content } from "./components/content"
@@ -9,9 +8,6 @@ export default function ProfileCoursesPage() {
 
 	const coursesPromise: Promise<ProfileCoursesPageData> = fetchProfileCoursesData()
 
-	return (
-		<React.Suspense fallback={<div className="p-8">Loading courses...</div>}>
-			<Content coursesPromise={coursesPromise} />
-		</React.Suspense>
-	)
+	// Pass the promise directly without Suspense wrapper
+	return <Content coursesPromise={coursesPromise} />
 }

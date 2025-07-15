@@ -5,26 +5,14 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
-
-interface Course {
-	id: string
-	slug: string
-	title: string
-	path: string
-}
-
-interface Subject {
-	slug: string
-	title: string
-	courses: Course[]
-}
+import type { ProfileSubject } from "@/lib/types/profile"
 
 interface CourseSelectorProps {
-	subjects: Subject[]
-	onComplete?: (selectedCourseIds: string[]) => void
+	subjects: ProfileSubject[]
+	onComplete: (selectedCourseIds: string[]) => void
 	open: boolean
 	onOpenChange: (open: boolean) => void
-	initialSelectedCourseIds?: string[]
+	initialSelectedCourseIds: string[]
 }
 
 export function CourseSelector({
@@ -34,7 +22,7 @@ export function CourseSelector({
 	onOpenChange,
 	initialSelectedCourseIds = []
 }: CourseSelectorProps) {
-	const [selectedCourses, setSelectedCourses] = React.useState<Set<string>>(new Set(initialSelectedCourseIds))
+	const [selectedCourses, setSelectedCourses] = React.useState<Set<string>>(new Set())
 	const [showAllCourses, setShowAllCourses] = React.useState<Record<string, boolean>>({})
 
 	// Reset selected courses when modal opens with new initial selections
@@ -59,10 +47,7 @@ export function CourseSelector({
 
 	// Handle continue button
 	const handleContinue = () => {
-		if (onComplete) {
-			onComplete(Array.from(selectedCourses))
-		}
-		onOpenChange(false)
+		onComplete(Array.from(selectedCourses))
 	}
 
 	// Calculate how many courses to show initially (similar to Khan Academy)

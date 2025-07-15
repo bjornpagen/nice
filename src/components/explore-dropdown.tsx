@@ -7,23 +7,21 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
+import type { ProfileSubject } from "@/lib/types/profile"
 
 interface ExploreDropdownProps {
 	dark?: boolean
 }
 
 export function ExploreDropdown({ dark = false }: ExploreDropdownProps) {
-	const [subjectsWithCourses, setSubjectsWithCourses] = React.useState<Awaited<
-		ReturnType<typeof getOneRosterCoursesForExplore>
-	> | null>(null)
+	const [subjectsWithCourses, setSubjectsWithCourses] = React.useState<ProfileSubject[] | null>(null)
 	const [isLoading, setIsLoading] = React.useState(true)
+	const [showAllCourses, setShowAllCourses] = React.useState<Record<string, boolean>>({})
 
 	React.useEffect(() => {
 		const fetchData = async () => {
 			const result = await errors.try(getOneRosterCoursesForExplore())
-			if (result.error) {
-				// Failed to fetch courses, will show empty state
-			} else {
+			if (!result.error) {
 				setSubjectsWithCourses(result.data)
 			}
 			setIsLoading(false)
@@ -44,6 +42,8 @@ export function ExploreDropdown({ dark = false }: ExploreDropdownProps) {
 			</Button>
 		)
 	}
+
+	const INITIAL_COURSES_SHOWN = 12
 
 	return (
 		<DropdownMenu>
@@ -69,31 +69,54 @@ export function ExploreDropdown({ dark = false }: ExploreDropdownProps) {
 				<div className="p-8 bg-white min-h-full">
 					<div className="max-w-7xl mx-auto">
 						<div className="columns-4 gap-4 space-y-0">
-							{subjectsWithCourses?.map((subject) => (
-								<div key={subject.slug} className="break-inside-avoid mb-4">
-									<div className="mb-2">
-										<h3 className="text-xs font-semibold text-gray-600 uppercase tracking-wide cursor-pointer">
-											{subject.title}
-										</h3>
+							{subjectsWithCourses?.map((subject) => {
+								const showAll = showAllCourses[subject.slug] || false
+								const coursesToShow = showAll ? subject.courses : subject.courses.slice(0, INITIAL_COURSES_SHOWN)
+								const hasMoreCourses = subject.courses.length > INITIAL_COURSES_SHOWN
+
+								return (
+									<div key={subject.slug} className="break-inside-avoid mb-4">
+										<div className="mb-2">
+											<h3 className="text-xs font-semibold text-gray-600 uppercase tracking-wide cursor-pointer">
+												{subject.title}
+											</h3>
+										</div>
+										<div className="space-y-2">
+											{coursesToShow.map((course) => (
+												<Link
+													key={course.id}
+													href={course.path}
+													className="block text-sm text-blue-600 hover:text-blue-700 hover:underline"
+													onClick={() => {
+														// Close dropdown when clicking a link
+														document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }))
+													}}
+												>
+													{course.title}
+												</Link>
+											))}
+											{hasMoreCourses && !showAll && (
+												<button
+													type="button"
+													onClick={() => setShowAllCourses((prev) => ({ ...prev, [subject.slug]: true }))}
+													className="text-xs text-gray-500 hover:text-gray-700 hover:underline"
+												>
+													+{subject.courses.length - INITIAL_COURSES_SHOWN} more courses
+												</button>
+											)}
+											{hasMoreCourses && showAll && (
+												<button
+													type="button"
+													onClick={() => setShowAllCourses((prev) => ({ ...prev, [subject.slug]: false }))}
+													className="text-xs text-gray-500 hover:text-gray-700 hover:underline"
+												>
+													Show less
+												</button>
+											)}
+										</div>
 									</div>
-									<div className="space-y-2">
-										{subject.courses.slice(0, 12).map((course) => (
-											<Link
-												key={course.id}
-												href={course.path}
-												className="block text-sm text-blue-600 hover:text-blue-700 hover:underline"
-											>
-												{course.title}
-											</Link>
-										))}
-										{subject.courses.length > 12 && (
-											<div className="pt-0.5">
-												<span className="text-xs text-gray-500">+{subject.courses.length - 12} more courses</span>
-											</div>
-										)}
-									</div>
-								</div>
-							))}
+								)
+							})}
 						</div>
 					</div>
 				</div>

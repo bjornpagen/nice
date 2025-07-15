@@ -29,12 +29,12 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 		throw errors.new("course path: required data missing")
 	}
 
-	// The course.description field is already validated and typed by the data-fetching layer
+	// Get course description - may be undefined
 	const courseDescription = course.description
 
 	return (
 		<Card className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">
-			<CardHeader className="pb-4">
+			<CardHeader className="p-0 pb-4">
 				<CardTitle className="flex items-start justify-between mb-0 gap-3">
 					<h2 className="text-lg font-bold text-gray-800 flex-1 min-w-0">{course.title}</h2>
 					<Link href={coursePath} className="text-blue-600 hover:text-blue-700 text-sm font-medium flex-shrink-0">
@@ -62,7 +62,7 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 					)}
 				</CardDescription>
 			</CardHeader>
-			<CardContent className="pt-0 flex-1">
+			<CardContent className="p-0 flex-1">
 				{units.length > 0 ? (
 					<div className="relative">
 						{/* vertical connecting line */}
@@ -97,7 +97,7 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 					<div className="text-sm text-gray-500">Course content can be viewed by starting.</div>
 				)}
 			</CardContent>
-			<CardFooter className="flex justify-end">
+			<CardFooter className="p-0 pt-4 flex justify-end">
 				<Button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4" asChild>
 					<Link href={coursePath}>Start</Link>
 				</Button>

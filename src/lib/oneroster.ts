@@ -78,9 +78,9 @@ const CourseReadSchema = z.object({
 	title: z.string(),
 	courseCode: z.string().optional().nullable(),
 	org: GUIDRefReadSchema,
-	academicSession: GUIDRefReadSchema.optional(), // Also make this optional for reads
+	academicSession: GUIDRefReadSchema.optional().nullable(), // Made optional and nullable for reads
 	subjects: z.array(z.string()).optional().nullable(),
-	metadata: z.record(z.string(), z.unknown()).optional()
+	metadata: z.record(z.string(), z.unknown()).optional().nullable()
 })
 
 const CourseComponentReadSchema = z.object({
