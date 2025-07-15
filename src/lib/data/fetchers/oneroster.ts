@@ -69,8 +69,8 @@ export async function getUnitsForCourses(courseIds: string[]) {
 	"use cache"
 	cacheLife("curriculum")
 	if (courseIds.length === 0) return []
-	// Encapsulates the `IN` filter logic
-	const filter = `course.sourcedId IN ('${courseIds.join("','")}')`
+	// Encapsulates the `@` filter logic for OneRoster IN operator
+	const filter = `course.sourcedId @ '${courseIds.join(",")}'`
 	return oneroster.getCourseComponents({ filter })
 }
 
@@ -83,18 +83,26 @@ export async function getAllResources() {
 export async function getResourcesBySlugAndType(slug: string, type: "qti" | "video", lessonType?: "quiz" | "unittest") {
 	"use cache"
 	cacheLife("curriculum")
-	let filter = `metadata.khanSlug='${slug}' AND metadata.type='${type}'`
+	const filter = `metadata.khanSlug='${slug}' AND metadata.type='${type}'`
+	const resources = await oneroster.getAllResources({ filter })
+
+	// Filter by lessonType in-memory since OneRoster only supports one AND
 	if (lessonType) {
-		filter += ` AND metadata.khanLessonType='${lessonType}'`
+		return resources.filter((r) => r.metadata?.khanLessonType === lessonType)
 	}
-	return oneroster.getAllResources({ filter })
+
+	return resources
 }
 
 export async function getResourceByCourseAndSlug(courseId: string, slug: string, type: "qti") {
 	"use cache"
 	cacheLife("curriculum")
-	const filter = `metadata.khanSlug='${slug}' AND metadata.type='${type}' AND course.sourcedId='${courseId}'`
-	return oneroster.getAllResources({ filter })
+	const filter = `metadata.khanSlug='${slug}' AND metadata.type='${type}'`
+	const resources = await oneroster.getAllResources({ filter })
+
+	// Filter by courseId in-memory since OneRoster only supports one AND
+	// Resources are linked to courses via metadata.courseSourcedId in our implementation
+	return resources.filter((r) => r.metadata?.courseSourcedId === courseId)
 }
 
 export async function getAllComponentResources() {
