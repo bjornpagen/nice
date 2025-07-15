@@ -200,11 +200,11 @@ export async function fetchUnitPageData(params: {
 			// Validate resource metadata with Zod
 			const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 			if (!resourceMetadataResult.success) {
-				logger.warn("skipping resource with invalid metadata", {
+				logger.error("invalid resource metadata", {
 					resourceId: resource.sourcedId,
 					error: resourceMetadataResult.error
 				})
-				continue
+				throw errors.new("invalid resource metadata")
 			}
 			const resourceMetadata = resourceMetadataResult.data
 
@@ -286,11 +286,11 @@ export async function fetchUnitPageData(params: {
 			// Validate resource metadata with Zod
 			const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 			if (!resourceMetadataResult.success) {
-				logger.warn("skipping resource with invalid metadata", {
+				logger.error("invalid resource metadata", {
 					resourceId: resource.sourcedId,
 					error: resourceMetadataResult.error
 				})
-				continue
+				throw errors.new("invalid resource metadata")
 			}
 			const resourceMetadata = resourceMetadataResult.data
 
@@ -420,7 +420,11 @@ export async function fetchUnitPageData(params: {
 			// Validate resource metadata with Zod
 			const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 			if (!resourceMetadataResult.success) {
-				continue // Skip invalid resources silently in counting
+				logger.error("invalid resource metadata", {
+					resourceId: resource.sourcedId,
+					error: resourceMetadataResult.error
+				})
+				throw errors.new("invalid resource metadata")
 			}
 			const resourceMetadata = resourceMetadataResult.data
 

@@ -23,11 +23,21 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 	// Validate resource metadata with Zod
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
-		logger.error("failed to parse article resource metadata", {
+		logger.error("invalid article resource metadata", {
 			resourceId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		throw errors.wrap(resourceMetadataResult.error, "invalid article resource metadata")
+	}
+
+	// Because we use a discriminated union, we must also check the type
+	if (resourceMetadataResult.data.type !== "qti") {
+		logger.error("invalid resource type for article page", {
+			resourceId: resource.sourcedId,
+			expected: "qti",
+			actual: resourceMetadataResult.data.type
+		})
+		throw errors.new("invalid resource type")
 	}
 	const resourceMetadata = resourceMetadataResult.data
 
@@ -58,11 +68,21 @@ export async function fetchExercisePageData(params: { exercise: string }): Promi
 	// Validate resource metadata with Zod
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
-		logger.error("failed to parse exercise resource metadata", {
+		logger.error("invalid exercise resource metadata", {
 			resourceId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		throw errors.wrap(resourceMetadataResult.error, "invalid exercise resource metadata")
+	}
+
+	// Because we use a discriminated union, we must also check the type
+	if (resourceMetadataResult.data.type !== "qti") {
+		logger.error("invalid resource type for exercise page", {
+			resourceId: resource.sourcedId,
+			expected: "qti",
+			actual: resourceMetadataResult.data.type
+		})
+		throw errors.new("invalid resource type")
 	}
 	const resourceMetadata = resourceMetadataResult.data
 
@@ -106,21 +126,26 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 		notFound()
 	}
 
-	// Validate resource metadata with Zod
+	// Validate resource metadata with Zod. THIS IS THE CRITICAL PATTERN.
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
-		logger.error("failed to parse video resource metadata", {
+		logger.error("invalid video resource metadata", {
 			resourceId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		throw errors.wrap(resourceMetadataResult.error, "invalid video resource metadata")
 	}
-	const resourceMetadata = resourceMetadataResult.data
 
-	if (!resourceMetadata.url) {
-		logger.error("video resource missing URL", { resourceId: resource.sourcedId })
-		throw errors.new("video resource missing URL")
+	// Because we use a discriminated union, we must also check the type.
+	if (resourceMetadataResult.data.type !== "video") {
+		logger.error("invalid resource type for video page", {
+			resourceId: resource.sourcedId,
+			expected: "video",
+			actual: resourceMetadataResult.data.type
+		})
+		throw errors.new("invalid resource type")
 	}
+	const resourceMetadata = resourceMetadataResult.data
 
 	const youtubeId = extractYouTubeId(resourceMetadata.url)
 	if (!youtubeId) {

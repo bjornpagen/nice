@@ -30,11 +30,21 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 	// Validate resource metadata with Zod
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
-		logger.error("failed to parse quiz resource metadata", {
+		logger.error("invalid quiz resource metadata", {
 			resourceId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		throw errors.wrap(resourceMetadataResult.error, "invalid quiz resource metadata")
+	}
+
+	// Because we use a discriminated union, we must also check the type
+	if (resourceMetadataResult.data.type !== "qti") {
+		logger.error("invalid resource type for quiz page", {
+			resourceId: resource.sourcedId,
+			expected: "qti",
+			actual: resourceMetadataResult.data.type
+		})
+		throw errors.new("invalid resource type")
 	}
 	const resourceMetadata = resourceMetadataResult.data
 
@@ -95,11 +105,21 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 	// Validate resource metadata with Zod
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
-		logger.error("failed to parse unit test resource metadata", {
+		logger.error("invalid unit test resource metadata", {
 			resourceId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		throw errors.wrap(resourceMetadataResult.error, "invalid unit test resource metadata")
+	}
+
+	// Because we use a discriminated union, we must also check the type
+	if (resourceMetadataResult.data.type !== "qti") {
+		logger.error("invalid resource type for unit test page", {
+			resourceId: resource.sourcedId,
+			expected: "qti",
+			actual: resourceMetadataResult.data.type
+		})
+		throw errors.new("invalid resource type")
 	}
 	const resourceMetadata = resourceMetadataResult.data
 
@@ -173,11 +193,21 @@ export async function fetchCourseChallengePage_TestData(params: {
 	// Validate test resource metadata with Zod
 	const testResourceMetadataResult = ResourceMetadataSchema.safeParse(testResource.metadata)
 	if (!testResourceMetadataResult.success) {
-		logger.error("failed to parse test resource metadata", {
+		logger.error("invalid test resource metadata", {
 			resourceId: testResource.sourcedId,
 			error: testResourceMetadataResult.error
 		})
 		throw errors.wrap(testResourceMetadataResult.error, "invalid test resource metadata")
+	}
+
+	// Because we use a discriminated union, we must also check the type
+	if (testResourceMetadataResult.data.type !== "qti") {
+		logger.error("invalid resource type for test page", {
+			resourceId: testResource.sourcedId,
+			expected: "qti",
+			actual: testResourceMetadataResult.data.type
+		})
+		throw errors.new("invalid resource type")
 	}
 	const testResourceMetadata = testResourceMetadataResult.data
 

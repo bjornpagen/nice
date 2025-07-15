@@ -5,6 +5,7 @@ import type { LessonLayoutData } from "@/lib/types/page"
 import type { Lesson, LessonChild, Unit } from "@/lib/types/structure"
 import { oneroster } from "../clients"
 import type { Resource } from "../oneroster"
+import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "../oneroster-metadata"
 
 export async function fetchLessonLayoutData(params: {
 	subject: string
@@ -125,27 +126,45 @@ export async function fetchLessonLayoutData(params: {
 	// Map to store lesson slugs for path construction
 	const lessonSlugMap = new Map<string, string>()
 	for (const lesson of unitLessonsResult.data) {
-		if (typeof lesson.metadata?.khanSlug === "string") {
-			lessonSlugMap.set(lesson.sourcedId, lesson.metadata.khanSlug)
+		// Validate lesson metadata
+		const lessonMetadataResult = ComponentMetadataSchema.safeParse(lesson.metadata)
+		if (!lessonMetadataResult.success) {
+			logger.error("fatal: invalid lesson metadata", {
+				lessonId: lesson.sourcedId,
+				error: lessonMetadataResult.error
+			})
+			throw errors.wrap(lessonMetadataResult.error, "invalid lesson metadata")
 		}
+		lessonSlugMap.set(lesson.sourcedId, lessonMetadataResult.data.khanSlug)
 	}
 
 	for (const cr of allComponentResources) {
 		const resource = resourcesMap.get(cr.resource.sourcedId)
 		if (resource) {
+			// Validate resource metadata
+			const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+			if (!resourceMetadataResult.success) {
+				logger.error("fatal: invalid resource metadata", {
+					resourceId: resource.sourcedId,
+					error: resourceMetadataResult.error
+				})
+				throw errors.wrap(resourceMetadataResult.error, "invalid resource metadata")
+			}
+			const resourceMetadata = resourceMetadataResult.data
+
 			// Determine content type from metadata
 			let contentType: "Video" | "Article" | "Exercise" | undefined
-			if (resource.metadata?.type === "video") {
+			if (resourceMetadata.type === "video") {
 				contentType = "Video"
-			} else if (resource.metadata?.type === "qti" && resource.metadata?.subType === "qti-stimulus") {
+			} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
 				contentType = "Article"
-			} else if (resource.metadata?.type === "qti" && resource.metadata?.subType === "qti-test") {
+			} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-test") {
 				contentType = "Exercise"
 			}
 
 			if (contentType) {
 				// Use slugs from metadata/params, not from sourcedId
-				const resourceSlug = typeof resource.metadata?.khanSlug === "string" ? resource.metadata.khanSlug : null
+				const resourceSlug = resourceMetadata.khanSlug
 				if (!resourceSlug) {
 					logger.error("CRITICAL: Resource missing khanSlug", { resourceId: resource.sourcedId })
 					throw errors.new("resource: khanSlug is required")
@@ -176,12 +195,12 @@ export async function fetchLessonLayoutData(params: {
 					throw errors.new("resource: title is required")
 				}
 
-				const description = typeof resource.metadata?.description === "string" ? resource.metadata.description : ""
+				const description = resourceMetadata.description
 
 				let child: LessonChild & { sortOrder: number }
 
-				if (contentType === "Video") {
-					const youtubeUrl = typeof resource.metadata?.url === "string" ? resource.metadata.url : ""
+				if (contentType === "Video" && resourceMetadata.type === "video") {
+					const youtubeUrl = resourceMetadata.url
 					const youtubeMatch = youtubeUrl.match(/[?&]v=([^&]+)/)
 					const youtubeId = youtubeMatch?.[1] ?? ""
 
@@ -193,11 +212,11 @@ export async function fetchLessonLayoutData(params: {
 						path: contentPath,
 						type: "Video",
 						youtubeId: youtubeId,
-						duration: typeof resource.metadata?.duration === "number" ? resource.metadata.duration : 0,
+						duration: resourceMetadata.duration ?? 0,
 						sortOrder: cr.sortOrder
 					}
-				} else if (contentType === "Article") {
-					const khanId = typeof resource.metadata?.khanId === "string" ? resource.metadata.khanId : resource.sourcedId
+				} else if (contentType === "Article" && resourceMetadata.type === "qti") {
+					const khanId = resourceMetadata.khanId
 					child = {
 						id: resource.sourcedId,
 						slug: resourceSlug,
@@ -208,8 +227,7 @@ export async function fetchLessonLayoutData(params: {
 						qtiIdentifier: `nice:${khanId}`,
 						sortOrder: cr.sortOrder
 					}
-				} else {
-					// Exercise
+				} else if (contentType === "Exercise" && resourceMetadata.type === "qti") {
 					child = {
 						id: resource.sourcedId,
 						slug: resourceSlug,
@@ -220,6 +238,13 @@ export async function fetchLessonLayoutData(params: {
 						questions: [], // Empty array, will be fetched if needed
 						sortOrder: cr.sortOrder
 					}
+				} else {
+					logger.error("CRITICAL: Unexpected content type combination", {
+						resourceId: resource.sourcedId,
+						contentType,
+						metadataType: resourceMetadata.type
+					})
+					throw errors.new("resource: unexpected content type")
 				}
 				if (!lessonContentMap.has(cr.courseComponent.sourcedId)) {
 					lessonContentMap.set(cr.courseComponent.sourcedId, [])
@@ -239,14 +264,25 @@ export async function fetchLessonLayoutData(params: {
 	// 6. Assemble the final data structure
 	const unitLessonsWithContent: Lesson[] = unitLessonsResult.data
 		.map((lesson) => {
+			// Validate lesson metadata
+			const lessonMetadataResult = ComponentMetadataSchema.safeParse(lesson.metadata)
+			if (!lessonMetadataResult.success) {
+				logger.error("fatal: invalid lesson metadata in assembly", {
+					lessonId: lesson.sourcedId,
+					error: lessonMetadataResult.error
+				})
+				throw errors.wrap(lessonMetadataResult.error, "invalid lesson metadata")
+			}
+			const lessonMetadata = lessonMetadataResult.data
+
 			// Validate required fields
 			if (!lesson.title) {
 				logger.error("CRITICAL: Lesson missing title", { lessonId: lesson.sourcedId })
 				throw errors.new("lesson: title is required")
 			}
 
-			const description = typeof lesson.metadata?.description === "string" ? lesson.metadata.description : ""
-			const path = typeof lesson.metadata?.path === "string" ? lesson.metadata.path : ""
+			const description = lessonMetadata.description
+			const path = lessonMetadata.path
 
 			// Validate path if it exists
 			if (path && !path.startsWith("/")) {
@@ -265,11 +301,7 @@ export async function fetchLessonLayoutData(params: {
 				lessonChildren = children
 			}
 
-			const lessonSlug = typeof lesson.metadata?.khanSlug === "string" ? lesson.metadata.khanSlug : null
-			if (!lessonSlug) {
-				logger.error("CRITICAL: Lesson missing khanSlug", { lessonId: lesson.sourcedId })
-				throw errors.new("lesson: khanSlug is required")
-			}
+			const lessonSlug = lessonMetadata.khanSlug
 
 			return {
 				type: "Lesson" as const,
@@ -296,31 +328,63 @@ export async function fetchLessonLayoutData(params: {
 			return aSort - bSort
 		})
 
+	// Validate course metadata
+	const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
+	if (!courseMetadataResult.success) {
+		logger.error("fatal: invalid course metadata", {
+			courseId: course.sourcedId,
+			error: courseMetadataResult.error
+		})
+		throw errors.wrap(courseMetadataResult.error, "invalid course metadata")
+	}
+	const courseMetadata = courseMetadataResult.data
+
 	// Validate required course fields
 	if (!course.title) {
 		logger.error("CRITICAL: Course missing title", { courseId: course.sourcedId })
 		throw errors.new("course: title is required")
 	}
-	const coursePath = typeof course.metadata?.path === "string" ? course.metadata.path : ""
+	const coursePath = courseMetadata.path
+
+	// Validate unit metadata
+	const unitMetadataResult = ComponentMetadataSchema.safeParse(unit.metadata)
+	if (!unitMetadataResult.success) {
+		logger.error("fatal: invalid unit metadata", {
+			unitId: unit.sourcedId,
+			error: unitMetadataResult.error
+		})
+		throw errors.wrap(unitMetadataResult.error, "invalid unit metadata")
+	}
+	const unitMetadata = unitMetadataResult.data
 
 	// Validate required unit fields
 	if (!unit.title) {
 		logger.error("CRITICAL: Unit missing title", { unitId: unit.sourcedId })
 		throw errors.new("unit: title is required")
 	}
-	const unitPath = typeof unit.metadata?.path === "string" ? unit.metadata.path : ""
-	const unitSlug = typeof unit.metadata?.khanSlug === "string" ? unit.metadata.khanSlug : ""
-	const unitDescription = typeof unit.metadata?.description === "string" ? unit.metadata.description : ""
+	const unitPath = unitMetadata.path
+	const unitSlug = unitMetadata.khanSlug
+	const unitDescription = unitMetadata.description
+
+	// Validate current lesson metadata
+	const currentLessonMetadataResult = ComponentMetadataSchema.safeParse(currentLesson.metadata)
+	if (!currentLessonMetadataResult.success) {
+		logger.error("fatal: invalid current lesson metadata", {
+			lessonId: currentLesson.sourcedId,
+			error: currentLessonMetadataResult.error
+		})
+		throw errors.wrap(currentLessonMetadataResult.error, "invalid current lesson metadata")
+	}
+	const currentLessonMetadata = currentLessonMetadataResult.data
 
 	// Validate required lesson fields
 	if (!currentLesson.title) {
 		logger.error("CRITICAL: Current lesson missing title", { lessonId: currentLesson.sourcedId })
 		throw errors.new("current lesson: title is required")
 	}
-	const currentLessonPath = typeof currentLesson.metadata?.path === "string" ? currentLesson.metadata.path : ""
-	const currentLessonSlug = typeof currentLesson.metadata?.khanSlug === "string" ? currentLesson.metadata.khanSlug : ""
-	const currentLessonDescription =
-		typeof currentLesson.metadata?.description === "string" ? currentLesson.metadata.description : ""
+	const currentLessonPath = currentLessonMetadata.path
+	const currentLessonSlug = currentLessonMetadata.khanSlug
+	const currentLessonDescription = currentLessonMetadata.description
 
 	const currentLessonChildrenMap = finalLessonContentMap.get(currentLesson.sourcedId)
 

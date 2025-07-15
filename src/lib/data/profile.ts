@@ -58,11 +58,11 @@ export async function getOneRosterCoursesForExplore(): Promise<ProfileSubject[]>
 					// Validate course metadata with Zod
 					const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
 					if (!courseMetadataResult.success) {
-						logger.warn("skipping course in explore dropdown due to invalid metadata", {
+						logger.error("fatal: invalid course metadata for explore dropdown", {
 							courseId: course.sourcedId,
 							error: courseMetadataResult.error
 						})
-						return null
+						throw errors.wrap(courseMetadataResult.error, "invalid course metadata")
 					}
 					const courseMetadata = courseMetadataResult.data
 
@@ -132,11 +132,12 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 				// Validate component metadata with Zod
 				const componentMetadataResult = ComponentMetadataSchema.safeParse(unit.metadata)
 				if (!componentMetadataResult.success) {
-					logger.error("unit metadata validation failed, skipping", {
+					logger.error("fatal: invalid unit metadata for enrolled user", {
 						unitId: unit.sourcedId,
+						userId,
 						error: componentMetadataResult.error
 					})
-					continue
+					throw errors.wrap(componentMetadataResult.error, "invalid unit metadata")
 				}
 				const unitMetadata = componentMetadataResult.data
 
@@ -185,11 +186,12 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 		// Validate course metadata with Zod
 		const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
 		if (!courseMetadataResult.success) {
-			logger.error("course metadata validation failed, skipping", {
+			logger.error("fatal: invalid course metadata for enrolled user", {
 				courseId: course.sourcedId,
+				userId,
 				error: courseMetadataResult.error
 			})
-			continue
+			throw errors.wrap(courseMetadataResult.error, "invalid course metadata")
 		}
 		const courseMetadata = courseMetadataResult.data
 
