@@ -27,9 +27,7 @@ export default function RootLayout({
 	return (
 		<ClerkProvider>
 			<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-				<head>
-					<script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js" />
-				</head>
+				<head>{/* <script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js" /> */}</head>
 				<body suppressHydrationWarning>
 					<AppProvider>{children}</AppProvider>
 				</body>
