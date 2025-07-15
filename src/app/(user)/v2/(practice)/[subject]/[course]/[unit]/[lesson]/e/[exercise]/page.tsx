@@ -3,9 +3,9 @@ import _ from "lodash"
 import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import { LessonExerciseContent } from "@/components/practice/lesson/exercise/lesson-exercise-content"
+import { LessonExerciseContent } from "@/components/practice/course/unit/lesson/exercise/lesson-exercise-content"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { getCourseBlob, type LessonResource } from "@/lib/v2/types"
+import { type CourseMaterial, getCourseBlob } from "@/lib/v2/types"
 
 export default function PracticeExercisePage({
 	params
@@ -45,7 +45,7 @@ function getExerciseData(
 	unit: string,
 	lesson: string,
 	exercise: string
-): Extract<LessonResource, { type: "Exercise" }> | undefined {
+): Extract<CourseMaterial, { type: "Exercise" }> | undefined {
 	logger.debug("lesson exercise data: initializing lesson exercise data", { subject, course, unit, lesson, exercise })
 
 	const blob = getCourseBlob(subject, course)
@@ -65,7 +65,7 @@ function getExerciseData(
 
 	const exerciseData = _.find(
 		lessonData.resources,
-		(r): r is Extract<LessonResource, { type: "Exercise" }> => r.type === "Exercise" && r.slug === exercise
+		(r): r is Extract<CourseMaterial, { type: "Exercise" }> => r.type === "Exercise" && r.slug === exercise
 	)
 	if (exerciseData == null) {
 		logger.debug("lesson exercise data: no exercises found for lesson", { subject, course, unit, lesson })

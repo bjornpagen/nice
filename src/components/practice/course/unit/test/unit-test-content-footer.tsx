@@ -15,15 +15,15 @@ import {
 import { Button } from "@/components/ui/button"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { cn } from "@/lib/utils"
-import type { LessonResource } from "@/lib/v2/types"
+import type { CourseMaterial } from "@/lib/v2/types"
 
-export function LessonExerciseContentFooter({
+export function UnitTestContentFooter({
 	questions,
 	index,
 	setIndex,
 	className
 }: {
-	questions: Extract<LessonResource, { type: "Exercise" }>["data"]["questions"]
+	questions: Extract<CourseMaterial, { type: "UnitTest" }>["data"]["questions"]
 	index: number
 	setIndex: (index: number) => void
 	className?: string
@@ -51,7 +51,7 @@ function ExcessButtonSection({
 	setIndex,
 	setAnswered
 }: {
-	questions: Extract<LessonResource, { type: "Exercise" }>["data"]["questions"]
+	questions: Extract<CourseMaterial, { type: "UnitTest" }>["data"]["questions"]
 	index: number
 	setIndex: (index: number) => void
 	setAnswered: (answered: boolean) => void
@@ -106,7 +106,7 @@ function QuestionOverviewSection({
 	setIndex,
 	setAnswered
 }: {
-	questions: Extract<LessonResource, { type: "Exercise" }>["data"]["questions"]
+	questions: Extract<CourseMaterial, { type: "UnitTest" }>["data"]["questions"]
 	index: number
 	setIndex: (index: number) => void
 	setAnswered: (answered: boolean) => void
@@ -178,7 +178,7 @@ function ProgressionButtonSection({
 	answered,
 	setAnswered
 }: {
-	questions: Extract<LessonResource, { type: "Exercise" }>["data"]["questions"]
+	questions: Extract<CourseMaterial, { type: "UnitTest" }>["data"]["questions"]
 	index: number
 	setIndex: (index: number) => void
 	answered: boolean

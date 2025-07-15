@@ -3,9 +3,9 @@ import _ from "lodash"
 import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import { LessonArticleContent } from "@/components/practice/lesson/article/lesson-article-content"
+import { LessonArticleContent } from "@/components/practice/course/unit/lesson/article/lesson-article-content"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { getCourseBlob, type LessonResource } from "@/lib/v2/types"
+import { type CourseMaterial, getCourseBlob } from "@/lib/v2/types"
 
 export default function PracticeArticlePage({
 	params
@@ -45,7 +45,7 @@ function getArticleData(
 	unit: string,
 	lesson: string,
 	article: string
-): Extract<LessonResource, { type: "Article" }> | undefined {
+): Extract<CourseMaterial, { type: "Article" }> | undefined {
 	logger.debug("lesson article data: initializing lesson article data", { subject, course, unit, lesson, article })
 
 	const blob = getCourseBlob(subject, course)
@@ -65,7 +65,7 @@ function getArticleData(
 
 	const articleData = _.find(
 		lessonData.resources,
-		(r): r is Extract<LessonResource, { type: "Article" }> => r.type === "Article" && r.slug === article
+		(r): r is Extract<CourseMaterial, { type: "Article" }> => r.type === "Article" && r.slug === article
 	)
 	if (articleData == null) {
 		logger.debug("lesson article data: no articles found for lesson", { subject, course, unit, lesson })

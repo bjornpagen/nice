@@ -3,7 +3,7 @@ import _ from "lodash"
 import { AlertCircleIcon } from "lucide-react"
 import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import { UnitContent, type UnitContentData } from "@/components/overview/unit/content/unit-content"
+import { UnitContent, type UnitContentData } from "@/components/overview/course/unit/content/unit-content"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { getCourseBlob } from "@/lib/v2/types"
 

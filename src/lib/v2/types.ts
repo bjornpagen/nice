@@ -22,7 +22,11 @@ function createPathValidator(patterns: Record<string, string>) {
 	}
 }
 
+/*
+ * BaseSchema is a base schema for all resources to extend from.
+ */
 const BaseSchema = z.object({
+	meta: z.record(z.any()).optional(),
 	slug: z.string(),
 	path: z.string(),
 	title: z.string()
@@ -61,7 +65,7 @@ export type LessonResourceType = z.infer<typeof LessonResourceTypeSchema>
  */
 export const ArticleLessonResourceSchema = z.object({
 	type: z.literal(LessonResourceTypeSchema.enum.Article),
-	data: z.object({})
+	data: z.record(z.any())
 })
 export type ArticleLessonResource = z.infer<typeof ArticleLessonResourceSchema>
 
@@ -79,7 +83,7 @@ export type ExerciseLessonResource = z.infer<typeof ExerciseLessonResourceSchema
  */
 export const VideoLessonResourceSchema = z.object({
 	type: z.literal(LessonResourceTypeSchema.enum.Video),
-	data: z.object({})
+	data: z.record(z.any())
 })
 export type VideoLessonResource = z.infer<typeof VideoLessonResourceSchema>
 
@@ -403,7 +407,17 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Exercise 1 Title",
 								type: "Exercise",
 								data: {
-									questions: []
+									questions: [
+										{
+											sourceId: "1"
+										},
+										{
+											sourceId: "2"
+										},
+										{
+											sourceId: "3"
+										}
+									]
 								}
 							},
 							{
@@ -427,7 +441,20 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Exercise 2 Title",
 								type: "Exercise",
 								data: {
-									questions: []
+									questions: [
+										{
+											sourceId: "1"
+										},
+										{
+											sourceId: "2"
+										},
+										{
+											sourceId: "3"
+										},
+										{
+											sourceId: "4"
+										}
+									]
 								}
 							}
 						]
@@ -440,7 +467,17 @@ export function getCourseBlob(subject: string, course: string): Course {
 						title: "Quiz 1 Title",
 						type: "Quiz",
 						data: {
-							questions: []
+							questions: [
+								{
+									sourceId: "1"
+								},
+								{
+									sourceId: "2"
+								},
+								{
+									sourceId: "3"
+								}
+							]
 						}
 					},
 					{
@@ -449,7 +486,14 @@ export function getCourseBlob(subject: string, course: string): Course {
 						title: "Unit Test 1 Title",
 						type: "UnitTest",
 						data: {
-							questions: []
+							questions: [
+								{
+									sourceId: "1"
+								},
+								{
+									sourceId: "2"
+								}
+							]
 						}
 					}
 				]
@@ -473,7 +517,26 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Exercise 3 Title",
 								type: "Exercise",
 								data: {
-									questions: []
+									questions: [
+										{
+											sourceId: "1"
+										},
+										{
+											sourceId: "2"
+										},
+										{
+											sourceId: "3"
+										},
+										{
+											sourceId: "4"
+										},
+										{
+											sourceId: "5"
+										},
+										{
+											sourceId: "6"
+										}
+									]
 								}
 							},
 							{
@@ -522,7 +585,20 @@ export function getCourseBlob(subject: string, course: string): Course {
 						title: "Quiz 2 Title",
 						type: "Quiz",
 						data: {
-							questions: []
+							questions: [
+								{
+									sourceId: "1"
+								},
+								{
+									sourceId: "2"
+								},
+								{
+									sourceId: "3"
+								},
+								{
+									sourceId: "4"
+								}
+							]
 						}
 					}
 				]

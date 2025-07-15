@@ -3,13 +3,13 @@
 import { notFound } from "next/navigation"
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import type { LessonResource } from "@/lib/v2/types"
+import type { CourseMaterial } from "@/lib/v2/types"
 
 export function LessonArticleContent({
 	articlePromise,
 	className
 }: {
-	articlePromise: Promise<Extract<LessonResource, { type: "Article" }> | undefined>
+	articlePromise: Promise<Extract<CourseMaterial, { type: "Article" }> | undefined>
 	className?: string
 }) {
 	const article = React.use(articlePromise)

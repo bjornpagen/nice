@@ -1,8 +1,8 @@
 import _ from "lodash"
 import Link from "next/link"
+import { LearningContentIcon } from "@/components/overview/learning-content-icons"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { LearningContentIcon } from "../../learning-content-icons"
 import type { UnitContentData } from "./unit-content"
 import { UnitContentSection } from "./unit-content-section"
 
