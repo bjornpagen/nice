@@ -1,10 +1,3 @@
-// Helper to safely get metadata values
-export function getMetadataValue(metadata: Record<string, unknown> | undefined, key: string): string {
-	if (!metadata) return ""
-	const value = metadata[key]
-	return typeof value === "string" ? value : ""
-}
-
 // Extract YouTube ID from URL
 export function extractYouTubeId(url: string): string | null {
 	const patterns = [

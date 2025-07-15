@@ -3,7 +3,8 @@ import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
 import { oneroster, qti } from "../clients"
-import { extractYouTubeId, getMetadataValue } from "./utils"
+import { ResourceMetadataSchema } from "../oneroster-metadata"
+import { extractYouTubeId } from "./utils"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
 	// Look up resource by slug
@@ -15,12 +16,23 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 	}
 	const resource = resourceResult.data[0]
 
-	if (!resource || !resource.metadata?.khanId) {
+	if (!resource) {
 		notFound()
 	}
 
+	// Validate resource metadata with Zod
+	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+	if (!resourceMetadataResult.success) {
+		logger.error("failed to parse article resource metadata", {
+			resourceId: resource.sourcedId,
+			error: resourceMetadataResult.error
+		})
+		throw errors.wrap(resourceMetadataResult.error, "invalid article resource metadata")
+	}
+	const resourceMetadata = resourceMetadataResult.data
+
 	// Construct the QTI stimulus identifier using the Khan Academy ID
-	const qtiIdentifier = `nice:${resource.metadata.khanId}`
+	const qtiIdentifier = `nice:${resourceMetadata.khanId}`
 
 	return {
 		id: resource.sourcedId,
@@ -39,12 +51,23 @@ export async function fetchExercisePageData(params: { exercise: string }): Promi
 	}
 	const resource = resourceResult.data[0]
 
-	if (!resource || !resource.metadata?.khanId) {
+	if (!resource) {
 		notFound()
 	}
 
+	// Validate resource metadata with Zod
+	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+	if (!resourceMetadataResult.success) {
+		logger.error("failed to parse exercise resource metadata", {
+			resourceId: resource.sourcedId,
+			error: resourceMetadataResult.error
+		})
+		throw errors.wrap(resourceMetadataResult.error, "invalid exercise resource metadata")
+	}
+	const resourceMetadata = resourceMetadataResult.data
+
 	// Use the khanId from metadata to construct the QTI test identifier
-	const qtiTestId = `nice:${resource.metadata.khanId}`
+	const qtiTestId = `nice:${resourceMetadata.khanId}`
 
 	// Fetch questions from QTI server
 	const questionsResult = await errors.try(qti.getAllQuestionsForTest(qtiTestId))
@@ -79,25 +102,36 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 	}
 	const resource = resourceResult.data[0]
 
-	if (!resource || !resource.metadata?.url) {
+	if (!resource) {
 		notFound()
 	}
 
-	const url = resource.metadata.url
-	if (typeof url !== "string") {
-		logger.error("video URL is not a string", { url })
-		throw errors.new("video URL must be a string")
+	// Validate resource metadata with Zod
+	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+	if (!resourceMetadataResult.success) {
+		logger.error("failed to parse video resource metadata", {
+			resourceId: resource.sourcedId,
+			error: resourceMetadataResult.error
+		})
+		throw errors.wrap(resourceMetadataResult.error, "invalid video resource metadata")
 	}
-	const youtubeId = extractYouTubeId(url)
+	const resourceMetadata = resourceMetadataResult.data
+
+	if (!resourceMetadata.url) {
+		logger.error("video resource missing URL", { resourceId: resource.sourcedId })
+		throw errors.new("video resource missing URL")
+	}
+
+	const youtubeId = extractYouTubeId(resourceMetadata.url)
 	if (!youtubeId) {
-		logger.error("invalid YouTube URL", { url: resource.metadata.url })
+		logger.error("invalid YouTube URL", { url: resourceMetadata.url })
 		throw errors.new("invalid YouTube URL")
 	}
 
 	return {
 		id: resource.sourcedId,
 		title: resource.title,
-		description: getMetadataValue(resource.metadata, "description"),
+		description: resourceMetadata.description,
 		youtubeId
 	}
 }

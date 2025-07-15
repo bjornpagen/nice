@@ -6,7 +6,7 @@ import type { ProfileCourse, ProfileSubject } from "@/lib/types/profile"
 import type { Unit } from "@/lib/types/structure"
 import { oneroster } from "../clients"
 import type { ClassReadSchemaType, CourseReadSchemaType } from "../oneroster"
-import { getMetadataValue } from "./utils"
+import { ComponentMetadataSchema, CourseMetadataSchema } from "../oneroster-metadata"
 
 export async function getOneRosterCoursesForExplore(): Promise<ProfileSubject[]> {
 	// Get all courses from OneRoster
@@ -53,37 +53,37 @@ export async function getOneRosterCoursesForExplore(): Promise<ProfileSubject[]>
 		allSubjects.push({
 			slug: subjectCode,
 			title: subjectName,
-			courses: courses.map((course) => {
-				const khanSlug = getMetadataValue(course.metadata, "khanSlug")
-				if (!khanSlug) {
-					logger.error("CRITICAL: Course missing khanSlug", {
-						courseId: course.sourcedId,
-						title: course.title
-					})
-					throw errors.new("course khanSlug: required for navigation")
-				}
-				const path = getMetadataValue(course.metadata, "path")
-				if (!path) {
-					logger.error("CRITICAL: Course missing path", {
-						courseId: course.sourcedId,
-						title: course.title
-					})
-					throw errors.new("course path: required for navigation")
-				}
-				return {
-					id: course.sourcedId,
-					slug: khanSlug,
-					title: course.title,
-					path: path
-				}
-			})
+			courses: courses
+				.map((course) => {
+					// Validate course metadata with Zod
+					const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
+					if (!courseMetadataResult.success) {
+						logger.warn("skipping course in explore dropdown due to invalid metadata", {
+							courseId: course.sourcedId,
+							error: courseMetadataResult.error
+						})
+						return null
+					}
+					const courseMetadata = courseMetadataResult.data
+
+					return {
+						id: course.sourcedId,
+						slug: courseMetadata.khanSlug,
+						title: course.title,
+						path: courseMetadata.path
+					}
+				})
+				.filter((course): course is NonNullable<typeof course> => course !== null)
 		})
 	}
 
-	// Sort subjects alphabetically
-	allSubjects.sort((a, b) => a.title.localeCompare(b.title))
+	// Remove subjects with no valid courses
+	const validSubjects = allSubjects.filter((subject) => subject.courses.length > 0)
 
-	return allSubjects
+	// Sort subjects alphabetically
+	validSubjects.sort((a, b) => a.title.localeCompare(b.title))
+
+	return validSubjects
 }
 
 export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileCourse[]> {
@@ -129,25 +129,24 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 					unitsByCourseId.set(courseId, [])
 				}
 
-				const path = getMetadataValue(unit.metadata, "path")
-				if (!path) {
-					logger.error("unit is missing path in metadata, skipping", { unitId: unit.sourcedId })
+				// Validate component metadata with Zod
+				const componentMetadataResult = ComponentMetadataSchema.safeParse(unit.metadata)
+				if (!componentMetadataResult.success) {
+					logger.error("unit metadata validation failed, skipping", {
+						unitId: unit.sourcedId,
+						error: componentMetadataResult.error
+					})
 					continue
 				}
-
-				const slug = getMetadataValue(unit.metadata, "khanSlug")
-				if (!slug) {
-					logger.error("unit is missing khanSlug in metadata, skipping", { unitId: unit.sourcedId })
-					continue
-				}
+				const unitMetadata = componentMetadataResult.data
 
 				unitsByCourseId.get(courseId)?.push({
 					id: unit.sourcedId,
 					title: unit.title,
-					path,
+					path: unitMetadata.path,
 					ordering: unit.sortOrder,
-					description: getMetadataValue(unit.metadata, "description") || "",
-					slug,
+					description: unitMetadata.description,
+					slug: unitMetadata.khanSlug,
 					children: [] // Initialize with empty children
 				})
 			}
@@ -183,13 +182,22 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 			continue // Skip this course
 		}
 
-		const courseMetadata = course.metadata || {}
+		// Validate course metadata with Zod
+		const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
+		if (!courseMetadataResult.success) {
+			logger.error("course metadata validation failed, skipping", {
+				courseId: course.sourcedId,
+				error: courseMetadataResult.error
+			})
+			continue
+		}
+		const courseMetadata = courseMetadataResult.data
 
 		courses.push({
 			id: course.sourcedId,
 			title: course.title,
-			description: getMetadataValue(courseMetadata, "description"),
-			path: getMetadataValue(courseMetadata, "path"),
+			description: courseMetadata.description,
+			path: courseMetadata.path,
 			units: courseUnits
 		})
 	}

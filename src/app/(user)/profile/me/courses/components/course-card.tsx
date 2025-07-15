@@ -29,25 +29,8 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 		throw errors.new("course path: required data missing")
 	}
 
-	// Helper function to extract metadata value
-	const getMetadataValue = (metadata: Record<string, unknown> | undefined, key: string): string | undefined => {
-		if (!metadata) return undefined
-		const value = metadata[key]
-		return typeof value === "string" ? value : undefined
-	}
-
-	// Get course description - may be undefined
-	let courseDescription: string | undefined
-	const descriptionFromMetadata = getMetadataValue(course.metadata, "description")
-	const khanDescriptionFromMetadata = getMetadataValue(course.metadata, "khanDescription")
-
-	if (descriptionFromMetadata) {
-		courseDescription = descriptionFromMetadata
-	} else if (khanDescriptionFromMetadata) {
-		courseDescription = khanDescriptionFromMetadata
-	} else if (course.description) {
-		courseDescription = course.description
-	}
+	// The course.description field is already validated and typed by the data-fetching layer
+	const courseDescription = course.description
 
 	return (
 		<Card className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">

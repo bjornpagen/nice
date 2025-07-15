@@ -10,8 +10,8 @@ import type {
 	UnitTestPageData
 } from "@/lib/types/page"
 import { oneroster } from "../clients"
+import { ResourceMetadataSchema } from "../oneroster-metadata"
 import { fetchCoursePageData } from "./course"
-import { getMetadataValue } from "./utils"
 
 export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizPageData> {
 	// Look up resource by slug
@@ -27,6 +27,17 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 		notFound()
 	}
 
+	// Validate resource metadata with Zod
+	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+	if (!resourceMetadataResult.success) {
+		logger.error("failed to parse quiz resource metadata", {
+			resourceId: resource.sourcedId,
+			error: resourceMetadataResult.error
+		})
+		throw errors.wrap(resourceMetadataResult.error, "invalid quiz resource metadata")
+	}
+	const resourceMetadata = resourceMetadataResult.data
+
 	// Use the sourcedId as the test identifier for QTI
 	const qtiTestId = resource.sourcedId
 
@@ -40,7 +51,7 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 				quiz: {
 					id: resource.sourcedId,
 					title: resource.title,
-					description: getMetadataValue(resource.metadata, "description"),
+					description: resourceMetadata.description,
 					type: "Quiz" as const
 				},
 				questions: []
@@ -60,7 +71,7 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 		quiz: {
 			id: resource.sourcedId,
 			title: resource.title,
-			description: getMetadataValue(resource.metadata, "description"),
+			description: resourceMetadata.description,
 			type: "Quiz" as const
 		},
 		questions
@@ -81,6 +92,17 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 		notFound()
 	}
 
+	// Validate resource metadata with Zod
+	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+	if (!resourceMetadataResult.success) {
+		logger.error("failed to parse unit test resource metadata", {
+			resourceId: resource.sourcedId,
+			error: resourceMetadataResult.error
+		})
+		throw errors.wrap(resourceMetadataResult.error, "invalid unit test resource metadata")
+	}
+	const resourceMetadata = resourceMetadataResult.data
+
 	// Use the sourcedId as the test identifier for QTI
 	const qtiTestId = resource.sourcedId
 
@@ -94,7 +116,7 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 				test: {
 					id: resource.sourcedId,
 					title: resource.title,
-					description: getMetadataValue(resource.metadata, "description"),
+					description: resourceMetadata.description,
 					type: "UnitTest" as const
 				},
 				questions: []
@@ -114,7 +136,7 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 		test: {
 			id: resource.sourcedId,
 			title: resource.title,
-			description: getMetadataValue(resource.metadata, "description"),
+			description: resourceMetadata.description,
 			type: "UnitTest" as const
 		},
 		questions
@@ -148,6 +170,17 @@ export async function fetchCourseChallengePage_TestData(params: {
 		notFound()
 	}
 
+	// Validate test resource metadata with Zod
+	const testResourceMetadataResult = ResourceMetadataSchema.safeParse(testResource.metadata)
+	if (!testResourceMetadataResult.success) {
+		logger.error("failed to parse test resource metadata", {
+			resourceId: testResource.sourcedId,
+			error: testResourceMetadataResult.error
+		})
+		throw errors.wrap(testResourceMetadataResult.error, "invalid test resource metadata")
+	}
+	const testResourceMetadata = testResourceMetadataResult.data
+
 	const qtiTestData = await qti.getAllQuestionsForTest(testResource.sourcedId)
 	const questions = qtiTestData.questions.map((q) => ({
 		id: q.question.identifier,
@@ -160,7 +193,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 			type: "CourseChallenge",
 			title: testResource.title,
 			slug: params.test,
-			description: getMetadataValue(testResource.metadata, "description")
+			description: testResourceMetadata.description
 		},
 		questions
 	}
