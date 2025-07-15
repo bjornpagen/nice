@@ -46,6 +46,7 @@ export function CourseChallengeContent({
 						src={challengeIllustration}
 						alt="Challenge illustration"
 						className="max-w-full max-h-full min-h-0 min-w-0 object-contain"
+						priority={true}
 					/>
 				</div>
 			</div>

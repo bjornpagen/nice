@@ -39,16 +39,19 @@ export function LessonExerciseContent({
 						src={spaceFriend}
 						alt="Exercise illustration"
 						className="max-w-full max-h-full min-h-0 min-w-0 object-contain object-bottom flex-1"
+						priority={true}
 					/>
 					<Image
 						src={greenFriend}
 						alt="Exercise illustration"
 						className="max-w-full max-h-full min-h-0 min-w-0 object-contain object-bottom flex-1"
+						priority={true}
 					/>
 					<Image
 						src={lightBlueFriend}
 						alt="Exercise illustration"
 						className="max-w-full max-h-full min-h-0 min-w-0 object-contain object-bottom flex-1"
+						priority={true}
 					/>
 				</div>
 			</div>

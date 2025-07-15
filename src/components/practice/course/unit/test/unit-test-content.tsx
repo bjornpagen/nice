@@ -43,9 +43,8 @@ export function UnitTestContent({
 					<Image
 						src={testIllustration}
 						alt="Test illustration"
-						width={800}
-						height={800}
 						className="max-w-full max-h-full min-h-0 min-w-0 object-contain"
+						priority={true}
 					/>
 				</div>
 			</div>
