@@ -273,6 +273,9 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 			const articles: Article[] = []
 			const exercises: Exercise[] = []
 
+			// Use lesson slug directly
+			const lessonSlug = lesson.slug
+
 			// Categorize resources by type
 			for (const resource of lessonResources) {
 				// ✅ NEW: Validate resource metadata with Zod
@@ -314,7 +317,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						type: "Video",
 						id: resource.sourcedId,
 						title: resource.title,
-						path: resourceMetadata.path,
+						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonSlug}/v/${resourceMetadata.khanSlug}`,
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.description,
 						youtubeId: youtubeId,
@@ -326,7 +329,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						type: "Article",
 						id: resource.sourcedId,
 						title: resource.title,
-						path: resourceMetadata.path,
+						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonSlug}/a/${resourceMetadata.khanSlug}`,
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.description,
 						qtiIdentifier: `nice:${resourceMetadata.khanId}` // Add qtiIdentifier
@@ -341,7 +344,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						type: "Exercise",
 						id: resource.sourcedId,
 						title: resource.title,
-						path: resourceMetadata.path,
+						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonSlug}/e/${resourceMetadata.khanSlug}`,
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.description,
 						questions: [] // Questions are not needed on course page
@@ -701,7 +704,7 @@ export async function fetchUnitPageData(params: {
 				videos.push({
 					id: resource.sourcedId,
 					title: resource.title,
-					path: resourceMetadata.path,
+					path: `/${params.subject}/${params.course}/${params.unit}/${childSlug}/v/${resourceMetadata.khanSlug}`,
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.description,
 					youtubeId: youtubeId,
@@ -713,7 +716,7 @@ export async function fetchUnitPageData(params: {
 				articles.push({
 					id: resource.sourcedId,
 					title: resource.title,
-					path: resourceMetadata.path,
+					path: `/${params.subject}/${params.course}/${params.unit}/${childSlug}/a/${resourceMetadata.khanSlug}`,
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.description,
 					qtiIdentifier: `nice:${resourceMetadata.khanId}`,
@@ -728,7 +731,7 @@ export async function fetchUnitPageData(params: {
 				exercises.push({
 					id: resource.sourcedId,
 					title: resource.title,
-					path: resourceMetadata.path,
+					path: `/${params.subject}/${params.course}/${params.unit}/${childSlug}/e/${resourceMetadata.khanSlug}`,
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.description,
 					questions: [], // Will be fetched from QTI server

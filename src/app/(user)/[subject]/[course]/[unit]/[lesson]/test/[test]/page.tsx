@@ -17,7 +17,7 @@ export default function UnitTestPage({
 
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading test...</div>}>
-			<TestContent testPromise={testPromise} />
+			<TestContent testDataPromise={testPromise} />
 		</React.Suspense>
 	)
 }
