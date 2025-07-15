@@ -275,15 +275,6 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					}
 					const youtubeId = youtubeMatch[1]
 
-					// Validate required video fields
-					if (typeof resourceMetadata.duration !== "number") {
-						logger.error("CRITICAL: video missing duration", {
-							resourceId: resource.sourcedId,
-							khanId: resourceMetadata.khanId
-						})
-						throw errors.new("video resource missing required duration field")
-					}
-
 					videos.push({
 						id: resource.sourcedId,
 						title: resource.title,

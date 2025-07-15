@@ -14,7 +14,7 @@ export interface ContentNode {
 export interface Video extends ContentNode {
 	type: "Video"
 	youtubeId: string
-	duration: number // in seconds
+	duration?: number // in seconds (optional)
 }
 
 export interface Article extends ContentNode {
