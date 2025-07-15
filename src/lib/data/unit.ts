@@ -345,32 +345,65 @@ export async function fetchUnitPageData(params: {
 		})
 	}
 
-	// Combine lessons and assessments, then sort by ordering
-	const processedUnitChildren: UnitChild[] = [...processedLessons, ...unitAssessments].sort((a, b) => {
-		// Find their original sortOrder from the components
-		const aComponent = unitChildren.find((c) => c.sourcedId === a.id)
-		const bComponent = unitChildren.find((c) => c.sourcedId === b.id)
+	// Create a unified list of all unit children with their sort orders
+	interface UnitChildWithOrder {
+		child: UnitChild
+		sortOrder: number
+		source: "component" | "resource"
+	}
+	const childrenWithOrders: UnitChildWithOrder[] = []
 
-		if (!aComponent || !bComponent) {
-			logger.error("CRITICAL: unit child component not found - data integrity violation", {
-				unitId: unitMetadata.khanId,
-				missingA: !aComponent ? a.id : undefined,
-				missingB: !bComponent ? b.id : undefined
-			})
-			throw errors.new("unit child component missing - data corruption detected")
+	// Add lessons with their sort orders from components
+	for (const lesson of processedLessons) {
+		const component = unitChildren.find((c) => c.sourcedId === lesson.id)
+		if (!component) {
+			logger.error("lesson component not found", { lessonId: lesson.id })
+			throw errors.new("lesson component missing")
 		}
-
-		if (typeof aComponent.sortOrder !== "number" || typeof bComponent.sortOrder !== "number") {
-			logger.error("CRITICAL: component missing sortOrder", {
-				unitId: unitMetadata.khanId,
-				componentA: { id: aComponent.sourcedId, sortOrder: aComponent.sortOrder },
-				componentB: { id: bComponent.sourcedId, sortOrder: bComponent.sortOrder }
+		if (typeof component.sortOrder !== "number") {
+			logger.error("lesson component missing sortOrder", {
+				lessonId: lesson.id,
+				sortOrder: component.sortOrder
 			})
-			throw errors.new("component missing required sortOrder field")
+			throw errors.new("lesson component missing required sortOrder")
 		}
+		childrenWithOrders.push({
+			child: lesson,
+			sortOrder: component.sortOrder,
+			source: "component"
+		})
+	}
 
-		return aComponent.sortOrder - bComponent.sortOrder
-	})
+	// Add assessments with their sort orders from component resources
+	for (const assessment of unitAssessments) {
+		// Find the componentResource entry for this assessment
+		const componentResource = unitComponentResources.find((cr) => cr.resource.sourcedId === assessment.id)
+		if (!componentResource) {
+			logger.error("assessment component resource not found", {
+				assessmentId: assessment.id,
+				unitId: unitSourcedId
+			})
+			throw errors.new("assessment component resource missing")
+		}
+		if (typeof componentResource.sortOrder !== "number") {
+			logger.error("assessment component resource missing sortOrder", {
+				assessmentId: assessment.id,
+				sortOrder: componentResource.sortOrder
+			})
+			throw errors.new("assessment component resource missing required sortOrder")
+		}
+		childrenWithOrders.push({
+			child: assessment,
+			sortOrder: componentResource.sortOrder,
+			source: "resource"
+		})
+	}
+
+	// Sort all children by their sort order
+	childrenWithOrders.sort((a, b) => a.sortOrder - b.sortOrder)
+
+	// Extract just the children in sorted order
+	const processedUnitChildren: UnitChild[] = childrenWithOrders.map((item) => item.child)
 
 	const finalUnit: Unit = {
 		id: oneRosterUnit.sourcedId,
