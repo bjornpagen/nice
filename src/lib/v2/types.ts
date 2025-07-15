@@ -8,12 +8,6 @@ export type Prettify<T> = {
 	[K in keyof T]: T[K]
 } & {}
 
-const BaseResourceSchema = z.object({
-	slug: z.string(),
-	path: z.string(),
-	title: z.string()
-})
-
 /**
  * createPathValidator creates a path validation function for resource schemas.
  */
@@ -28,27 +22,33 @@ function createPathValidator(patterns: Record<string, string>) {
 	}
 }
 
+const BaseSchema = z.object({
+	slug: z.string(),
+	path: z.string(),
+	title: z.string()
+})
+
 /**
- * BaseDataSchema is the common schema for all resource data with just a sourceId.
+ * QuestionDataSchema is a unified schema for question data.
  */
-export const BaseDataSchema = z.object({
+export const QuestionDataSchema = z.object({
 	sourceId: z.string()
 })
-export type BaseData = z.infer<typeof BaseDataSchema>
+export type QuestionData = z.infer<typeof QuestionDataSchema>
 
 /**
- * QuestionSchema is a unified schema for question data.
+ * BaseQuestionsDataSchema is a unified schema for question data.
  */
-export const QuestionSchema = BaseDataSchema
-export type Question = z.infer<typeof QuestionSchema>
-
-/**
- * QuestionsDataSchema extends BaseDataSchema with an array of questions.
- */
-export const QuestionsDataSchema = QuestionSchema.extend({
-	questions: z.array(QuestionSchema)
+export const QuestionsDataSchema = z.object({
+	questions: z.array(QuestionDataSchema)
 })
 export type QuestionsData = z.infer<typeof QuestionsDataSchema>
+
+/**
+ * ExerciseQuestionsSchema is a schema for exercise questions.
+ */
+export const ExerciseQuestionsSchema = QuestionsDataSchema
+export type ExerciseQuestions = z.infer<typeof ExerciseQuestionsSchema>
 
 /**
  * LessonResourceType is a type that represents a lesson resource type.
@@ -61,7 +61,7 @@ export type LessonResourceType = z.infer<typeof LessonResourceTypeSchema>
  */
 export const ArticleLessonResourceSchema = z.object({
 	type: z.literal(LessonResourceTypeSchema.enum.Article),
-	data: BaseDataSchema
+	data: z.object({})
 })
 export type ArticleLessonResource = z.infer<typeof ArticleLessonResourceSchema>
 
@@ -70,7 +70,7 @@ export type ArticleLessonResource = z.infer<typeof ArticleLessonResourceSchema>
  */
 export const ExerciseLessonResourceSchema = z.object({
 	type: z.literal(LessonResourceTypeSchema.enum.Exercise),
-	data: QuestionsDataSchema
+	data: ExerciseQuestionsSchema
 })
 export type ExerciseLessonResource = z.infer<typeof ExerciseLessonResourceSchema>
 
@@ -79,7 +79,7 @@ export type ExerciseLessonResource = z.infer<typeof ExerciseLessonResourceSchema
  */
 export const VideoLessonResourceSchema = z.object({
 	type: z.literal(LessonResourceTypeSchema.enum.Video),
-	data: BaseDataSchema
+	data: z.object({})
 })
 export type VideoLessonResource = z.infer<typeof VideoLessonResourceSchema>
 
@@ -88,15 +88,15 @@ export type VideoLessonResource = z.infer<typeof VideoLessonResourceSchema>
  */
 export const LessonResourceSchema = z
 	.discriminatedUnion("type", [
-		BaseResourceSchema.extend({
+		BaseSchema.extend({
 			type: z.literal(LessonResourceTypeSchema.enum.Article),
 			data: ArticleLessonResourceSchema.shape.data
 		}),
-		BaseResourceSchema.extend({
+		BaseSchema.extend({
 			type: z.literal(LessonResourceTypeSchema.enum.Exercise),
 			data: ExerciseLessonResourceSchema.shape.data
 		}),
-		BaseResourceSchema.extend({
+		BaseSchema.extend({
 			type: z.literal(LessonResourceTypeSchema.enum.Video),
 			data: VideoLessonResourceSchema.shape.data
 		})
@@ -118,11 +118,8 @@ export type LessonResource = z.infer<typeof LessonResourceSchema>
 /**
  * Lesson is a type that represents a lesson.
  */
-export const LessonSchema = z.object({
-	slug: z.string(),
-	path: z.string(),
+export const LessonSchema = BaseSchema.extend({
 	type: z.literal("Lesson"),
-	title: z.string(),
 	resources: z.array(LessonResourceSchema)
 })
 export type Lesson = z.infer<typeof LessonSchema>
@@ -134,20 +131,32 @@ export const UnitResourceTypeSchema = z.enum(["Quiz", "UnitTest"])
 export type UnitResourceType = z.infer<typeof UnitResourceTypeSchema>
 
 /**
+ * QuizQuestionsDataSchema is a schema for quiz questions.
+ */
+export const QuizQuestionsDataSchema = QuestionsDataSchema
+export type QuizQuestionsData = z.infer<typeof QuizQuestionsDataSchema>
+
+/**
  * QuizUnitResource is a type that represents a quiz unit resource.
  */
 export const QuizUnitResourceSchema = z.object({
 	type: z.literal(UnitResourceTypeSchema.enum.Quiz),
-	data: BaseDataSchema
+	data: QuizQuestionsDataSchema
 })
 export type QuizUnitResource = z.infer<typeof QuizUnitResourceSchema>
+
+/**
+ * UnitTestQuestionsDataSchema is a schema for unit test questions.
+ */
+export const UnitTestQuestionsDataSchema = QuestionsDataSchema
+export type UnitTestQuestionsData = z.infer<typeof UnitTestQuestionsDataSchema>
 
 /**
  * UnitTestUnitResource is a type that represents a unit test unit resource.
  */
 export const UnitTestUnitResourceSchema = z.object({
 	type: z.literal(UnitResourceTypeSchema.enum.UnitTest),
-	data: BaseDataSchema
+	data: UnitTestQuestionsDataSchema
 })
 export type UnitTestUnitResource = z.infer<typeof UnitTestUnitResourceSchema>
 
@@ -156,23 +165,23 @@ export type UnitTestUnitResource = z.infer<typeof UnitTestUnitResourceSchema>
  */
 export const UnitResourceSchema = z
 	.discriminatedUnion("type", [
-		BaseResourceSchema.extend({
+		BaseSchema.extend({
 			type: z.literal(UnitResourceTypeSchema.enum.Quiz),
 			data: QuizUnitResourceSchema.shape.data
 		}),
-		BaseResourceSchema.extend({
+		BaseSchema.extend({
 			type: z.literal(UnitResourceTypeSchema.enum.UnitTest),
 			data: UnitTestUnitResourceSchema.shape.data
 		})
 	])
 	.refine(
 		createPathValidator({
-			Quiz: "/[^/]+/[^/]+/[^/]+/quiz/[^/]+",
+			Quiz: "/[^/]+/[^/]+/[^/]+(/[^/]+)?/quiz/[^/]+",
 			UnitTest: "/[^/]+/[^/]+/[^/]+/test/[^/]+"
 		}),
 		{
 			message:
-				"path must match resource type pattern: quizzes=/[subject]/[course]/[unit]/quiz/[quiz], unit-tests=/[subject]/[course]/[unit]/test/[test]",
+				"path must match resource type pattern: quizzes=/[subject]/[course]/[unit]/quiz/[quiz] or /[subject]/[course]/[unit]/[lesson]/quiz/[quiz], unit-tests=/[subject]/[course]/[unit]/test/[test]",
 			path: ["path"]
 		}
 	)
@@ -181,11 +190,8 @@ export type UnitResource = z.infer<typeof UnitResourceSchema>
 /**
  * Unit is a type that represents a unit.
  */
-export const UnitSchema = z.object({
-	slug: z.string(),
-	path: z.string(),
+export const UnitSchema = BaseSchema.extend({
 	type: z.literal("Unit"),
-	title: z.string(),
 	description: z.string(),
 	lessons: z.array(LessonSchema),
 	resources: z.array(UnitResourceSchema)
@@ -199,17 +205,23 @@ export const CourseResourceTypeSchema = z.enum(["CourseChallenge"])
 export type CourseResourceType = z.infer<typeof CourseResourceTypeSchema>
 
 /**
- * QuestionChallengeData is a type that represents a question challenge data.
+ * CourseChallengeQuestionsDataSchema is a schema for course challenge questions.
  */
-export const QuestionChallengeDataSchema = QuestionSchema
-export type QuestionChallengeData = z.infer<typeof QuestionChallengeDataSchema>
+export const CourseChallengeQuestionsDataSchema = QuestionsDataSchema
+export type CourseChallengeQuestionsData = z.infer<typeof CourseChallengeQuestionsDataSchema>
+
+/**
+ * CourseChallengeQuestionsSchema is a type that represents a course challenge questions.
+ */
+export const CourseChallengeQuestionsSchema = CourseChallengeQuestionsDataSchema
+export type CourseChallengeQuestions = z.infer<typeof CourseChallengeQuestionsSchema>
 
 /**
  * CourseChallengeResource is a type that represents a course challenge resource.
  */
 export const CourseChallengeResourceSchema = z.object({
 	type: z.literal(CourseResourceTypeSchema.enum.CourseChallenge),
-	data: QuestionsDataSchema
+	data: CourseChallengeQuestionsSchema
 })
 export type CourseChallengeResource = z.infer<typeof CourseChallengeResourceSchema>
 
@@ -218,7 +230,7 @@ export type CourseChallengeResource = z.infer<typeof CourseChallengeResourceSche
  */
 export const CourseResourceSchema = z
 	.discriminatedUnion("type", [
-		BaseResourceSchema.extend({
+		BaseSchema.extend({
 			type: z.literal(CourseResourceTypeSchema.enum.CourseChallenge),
 			data: CourseChallengeResourceSchema.shape.data
 		})
@@ -237,11 +249,8 @@ export type CourseResource = z.infer<typeof CourseResourceSchema>
 /**
  * Course is a type that represents a course.
  */
-export const CourseSchema = z.object({
-	slug: z.string(),
-	path: z.string(),
+export const CourseSchema = BaseSchema.extend({
 	type: z.literal("Course"),
-	title: z.string(),
 	description: z.string(),
 	units: z.array(UnitSchema),
 	resources: z.array(CourseResourceSchema)
@@ -252,7 +261,7 @@ export type Course = z.infer<typeof CourseSchema>
  * CourseUnitMaterialSchema is a type that represents a course's unit material.
  */
 export const CourseLessonResourceMaterialSchema = z.discriminatedUnion("type", [
-	BaseResourceSchema.extend({
+	BaseSchema.extend({
 		type: z.literal(LessonResourceTypeSchema.enum.Article),
 		data: ArticleLessonResourceSchema.shape.data,
 		meta: z.object({
@@ -263,7 +272,7 @@ export const CourseLessonResourceMaterialSchema = z.discriminatedUnion("type", [
 			})
 		})
 	}),
-	BaseResourceSchema.extend({
+	BaseSchema.extend({
 		type: z.literal(LessonResourceTypeSchema.enum.Exercise),
 		data: ExerciseLessonResourceSchema.shape.data,
 		meta: z.object({
@@ -274,7 +283,7 @@ export const CourseLessonResourceMaterialSchema = z.discriminatedUnion("type", [
 			})
 		})
 	}),
-	BaseResourceSchema.extend({
+	BaseSchema.extend({
 		type: z.literal(LessonResourceTypeSchema.enum.Video),
 		data: VideoLessonResourceSchema.shape.data,
 		meta: z.object({
@@ -306,7 +315,7 @@ export type CourseLessonMaterial = z.infer<typeof CourseLessonMaterialSchema>
  * CourseUnitMaterialSchema is a type that represents a course's unit material.
  */
 export const CourseUnitMaterialSchema = z.discriminatedUnion("type", [
-	BaseResourceSchema.extend({
+	BaseSchema.extend({
 		type: z.literal(UnitResourceTypeSchema.enum.Quiz),
 		data: QuizUnitResourceSchema.shape.data,
 		meta: z.object({
@@ -317,7 +326,7 @@ export const CourseUnitMaterialSchema = z.discriminatedUnion("type", [
 			})
 		})
 	}),
-	BaseResourceSchema.extend({
+	BaseSchema.extend({
 		type: z.literal(UnitResourceTypeSchema.enum.UnitTest),
 		data: UnitTestUnitResourceSchema.shape.data,
 		meta: z.object({
@@ -394,7 +403,6 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Exercise 1 Title",
 								type: "Exercise",
 								data: {
-									sourceId: "1",
 									questions: []
 								}
 							},
@@ -403,9 +411,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 								path: `${base}/unit-1/lesson-1/v/video-1`,
 								title: "Video 1 Title",
 								type: "Video",
-								data: {
-									sourceId: "1"
-								}
+								data: {}
 							}
 						]
 					},
@@ -421,7 +427,6 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Exercise 2 Title",
 								type: "Exercise",
 								data: {
-									sourceId: "2",
 									questions: []
 								}
 							}
@@ -435,7 +440,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 						title: "Quiz 1 Title",
 						type: "Quiz",
 						data: {
-							sourceId: "3"
+							questions: []
 						}
 					},
 					{
@@ -444,7 +449,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 						title: "Unit Test 1 Title",
 						type: "UnitTest",
 						data: {
-							sourceId: "4"
+							questions: []
 						}
 					}
 				]
@@ -468,7 +473,6 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Exercise 3 Title",
 								type: "Exercise",
 								data: {
-									sourceId: "3",
 									questions: []
 								}
 							},
@@ -478,7 +482,6 @@ export function getCourseBlob(subject: string, course: string): Course {
 								title: "Exercise 4 Title",
 								type: "Exercise",
 								data: {
-									sourceId: "4",
 									questions: [
 										{
 											sourceId: "1"
@@ -519,7 +522,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 						title: "Quiz 2 Title",
 						type: "Quiz",
 						data: {
-							sourceId: "4"
+							questions: []
 						}
 					}
 				]
@@ -604,7 +607,6 @@ export function getCourseBlob(subject: string, course: string): Course {
 				title: "Course Challenge",
 				type: "CourseChallenge",
 				data: {
-					sourceId: "1",
 					questions: [
 						{
 							sourceId: "1"
