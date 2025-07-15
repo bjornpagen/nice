@@ -10,9 +10,9 @@ export function Content({ articlePromise }: { articlePromise: Promise<Article> }
 	const article = React.use(articlePromise)
 
 	return (
-		<div className="bg-white pb-20">
+		<div className="bg-white h-full flex flex-col">
 			{/* Article Header */}
-			<div className="bg-white p-6 border-b border-gray-200">
+			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0">
 				<div className="text-center">
 					<h1 className="text-2xl font-bold text-gray-800 mb-4">{article.title}</h1>
 					<div className="flex justify-center space-x-4">
@@ -43,16 +43,14 @@ export function Content({ articlePromise }: { articlePromise: Promise<Article> }
 			</div>
 
 			{/* Article Content - Render through QTI */}
-			<div className="p-6">
-				<div className="max-w-4xl mx-auto">
-					<QTIRenderer
-						identifier={article.identifier}
-						materialType="stimulus"
-						height="auto"
-						width="100%"
-						className="w-full"
-					/>
-				</div>
+			<div className="flex-1 overflow-hidden">
+				<QTIRenderer
+					identifier={article.identifier}
+					materialType="stimulus"
+					height="100%"
+					width="100%"
+					className="w-full h-full"
+				/>
 			</div>
 		</div>
 	)
