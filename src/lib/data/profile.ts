@@ -1,12 +1,12 @@
 import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { ComponentMetadataSchema, CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
 import type { ProfileCourse, ProfileSubject } from "@/lib/types/profile"
 import type { Unit } from "@/lib/types/structure"
 import { oneroster } from "../clients"
 import type { ClassReadSchemaType, CourseReadSchemaType } from "../oneroster"
-import { ComponentMetadataSchema, CourseMetadataSchema } from "../oneroster-metadata"
 
 export async function getOneRosterCoursesForExplore(): Promise<ProfileSubject[]> {
 	// Get all courses from OneRoster

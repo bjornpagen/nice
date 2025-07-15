@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { qti } from "@/lib/clients"
+import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { ErrQtiNotFound } from "@/lib/qti"
 import type {
 	CourseChallengeLayoutData,
@@ -10,7 +11,6 @@ import type {
 	UnitTestPageData
 } from "@/lib/types/page"
 import { oneroster } from "../clients"
-import { ResourceMetadataSchema } from "../oneroster-metadata"
 import { fetchCoursePageData } from "./course"
 
 export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizPageData> {

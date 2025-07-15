@@ -1,11 +1,11 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
+import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Lesson, LessonChild, Unit } from "@/lib/types/structure"
 import { oneroster } from "../clients"
 import type { Resource } from "../oneroster"
-import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "../oneroster-metadata"
 
 export async function fetchLessonLayoutData(params: {
 	subject: string

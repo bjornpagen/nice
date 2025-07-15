@@ -1,9 +1,9 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
+import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
 import { oneroster, qti } from "../clients"
-import { ResourceMetadataSchema } from "../oneroster-metadata"
 import { extractYouTubeId } from "./utils"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {

@@ -1,12 +1,12 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
+import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { CourseChallenge, Quiz, UnitTest } from "@/lib/types/assessment"
 import type { Article, Exercise, Video } from "@/lib/types/content"
 import type { CoursePageData } from "@/lib/types/page"
 import type { Course, Lesson, Unit, UnitChild } from "@/lib/types/structure"
 import { oneroster } from "../clients"
-import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "../oneroster-metadata"
 
 export async function fetchCoursePageData(params: { subject: string; course: string }): Promise<CoursePageData> {
 	// First, find the course by its khanSlug since the URL param is a slug, not a Khan ID
