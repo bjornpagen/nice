@@ -7,7 +7,6 @@ import "./src/env.js"
 /** @type {import("next").NextConfig} */
 const config = {
 	experimental: {
-		ppr: "incremental",
 		dynamicIO: true,
 		// Define custom cache profiles for our application's needs
 		cacheLife: {
