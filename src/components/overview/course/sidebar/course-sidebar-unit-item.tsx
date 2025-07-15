@@ -24,14 +24,14 @@ export function CourseSidebarUnitItem({
 	}
 
 	return (
-		<div
-			id="course-sidebar-unit-item"
-			className={cn("px-4 py-3 hover:bg-blue-100 hover:shadow-sm transition-all", outerClassName, className)}
-		>
-			<Link href={unit.path} className="w-full">
+		<Link href={unit.path} className="w-full">
+			<div
+				id="course-sidebar-unit-item"
+				className={cn("px-4 py-3 hover:bg-blue-100 hover:shadow-sm transition-all", outerClassName, className)}
+			>
 				<h3 className="text-[10px] font-medium text-gray-500 uppercase">Unit {index + 1}</h3>
 				<p className={cn(innerClassName, "capitalize")}>{unit.title}</p>
-			</Link>
-		</div>
+			</div>
+		</Link>
 	)
 }
