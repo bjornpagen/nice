@@ -3,6 +3,8 @@
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
+import { Button } from "@/components/ui/button"
+import { processQtiResponse } from "@/lib/actions/qti"
 
 export default function DebugQTIPage() {
 	const [events, setEvents] = React.useState<
@@ -27,6 +29,17 @@ export default function DebugQTIPage() {
 			timestamp: string
 		}>
 	>([])
+
+	// State for response validation testing
+	const [selectedResponse, setSelectedResponse] = React.useState<{ responseIdentifier: string; value: unknown } | null>(
+		null
+	)
+	const [isChecking, setIsChecking] = React.useState(false)
+	const [checkResult, setCheckResult] = React.useState<{
+		success: boolean
+		data?: unknown
+		error?: unknown
+	} | null>(null)
 
 	// Handle all message events
 	const handleMessage = (event: MessageEvent) => {
@@ -67,9 +80,10 @@ export default function DebugQTIPage() {
 	}
 
 	// Keep the specific response change handler for demonstration
-	const handleResponseChange = (_responseIdentifier: string, _response: unknown) => {
-		// Response changes are now captured in the general event handler
-		// This handler is kept for backward compatibility and specific response handling if needed
+	const handleResponseChange = (responseIdentifier: string, response: unknown) => {
+		// Capture the response for validation testing
+		setSelectedResponse({ responseIdentifier, value: response })
+		setCheckResult(null) // Clear previous results
 	}
 
 	const clearEvents = () => {
@@ -80,14 +94,76 @@ export default function DebugQTIPage() {
 		setRawEvents([])
 	}
 
+	// Test the response validation
+	const handleCheckAnswer = async () => {
+		if (!selectedResponse) return
+
+		setIsChecking(true)
+		setCheckResult(null)
+
+		const testIdentifier = "nice:xd63798b34ccf07ad"
+
+		const result = await errors.try(processQtiResponse(testIdentifier, selectedResponse))
+
+		setIsChecking(false)
+
+		if (result.error) {
+			setCheckResult({
+				success: false,
+				error: result.error
+			})
+		} else {
+			setCheckResult({
+				success: true,
+				data: result.data
+			})
+		}
+	}
+
 	return (
 		<div className="container mx-auto p-6 space-y-6">
 			<div className="border-b pb-4">
 				<h1 className="text-3xl font-bold">QTI Renderer Debug</h1>
 				<p className="text-gray-600 mt-2">
 					Testing QTI content rendering with the demo identifier:{" "}
-					<code className="bg-gray-100 px-2 py-1 rounded">nice:x00020ee4f0de8b58</code>
+					<code className="bg-gray-100 px-2 py-1 rounded">nice:xd63798b34ccf07ad</code>
 				</p>
+			</div>
+
+			{/* Response Validation Testing Section */}
+			<div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+				<h2 className="text-lg font-semibold mb-3">Response Validation Testing</h2>
+				<div className="space-y-3">
+					<div>
+						<strong>Selected Response:</strong>
+						{selectedResponse ? (
+							<pre className="bg-white p-2 rounded text-sm mt-1 overflow-x-auto">
+								{JSON.stringify(selectedResponse, null, 2)}
+							</pre>
+						) : (
+							<span className="text-gray-500 italic ml-2">No response selected yet</span>
+						)}
+					</div>
+
+					<Button
+						onClick={handleCheckAnswer}
+						disabled={!selectedResponse || isChecking}
+						className="bg-blue-600 hover:bg-blue-700 text-white"
+					>
+						{isChecking ? "Checking..." : "Check Answer"}
+					</Button>
+
+					{checkResult && (
+						<div
+							className={`mt-3 p-3 rounded ${checkResult.success ? "bg-green-100 border border-green-300" : "bg-red-100 border border-red-300"}`}
+						>
+							<strong>{checkResult.success ? "Success!" : "Error:"}</strong>
+							<pre className="text-sm mt-1 overflow-x-auto">
+								{JSON.stringify(checkResult.success ? checkResult.data : checkResult.error, null, 2)}
+							</pre>
+						</div>
+					)}
+				</div>
 			</div>
 
 			<div className="grid lg:grid-cols-2 gap-6">
@@ -95,7 +171,7 @@ export default function DebugQTIPage() {
 					<h2 className="text-xl font-semibold">QTI Content (Assessment Item)</h2>
 					<div className="border rounded-lg overflow-hidden">
 						<QTIRenderer
-							identifier="nice:x00020ee4f0de8b58"
+							identifier="nice:xd63798b34ccf07ad"
 							materialType="assessmentItem"
 							onResponseChange={handleResponseChange}
 							onMessage={handleMessage}

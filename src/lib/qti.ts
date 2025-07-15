@@ -15,6 +15,31 @@ const TokenResponseSchema = z.object({
 	access_token: z.string().min(1)
 })
 
+// --- Process Response Schemas (New) ---
+const ProcessResponseInputSchema = z.object({
+	responseIdentifier: z.string(),
+	value: z.any()
+})
+
+const ProcessResponseResultSchema = z.object({
+	score: z.number(),
+	feedback: z
+		.object({
+			identifier: z.string(),
+			value: z.string()
+		})
+		.optional()
+})
+
+// API Request schema - what the API actually expects
+const ProcessResponseApiRequestSchema = z.object({
+	identifier: z.string(),
+	response: z.string()
+})
+
+export type ProcessResponseInput = z.infer<typeof ProcessResponseInputSchema>
+export type ProcessResponseResult = z.infer<typeof ProcessResponseResultSchema>
+
 // --- Stimulus Schemas (New) ---
 
 /**
@@ -514,9 +539,16 @@ export class Client {
 			throw errors.wrap(jsonResult.error, "qti api response parsing")
 		}
 
+		// Log the raw response for debugging
+		logger.debug("qti api: raw response", { endpoint, response: jsonResult.data })
+
 		const validation = schema.safeParse(jsonResult.data)
 		if (!validation.success) {
-			logger.error("qti api: invalid response schema", { error: validation.error, endpoint })
+			logger.error("qti api: invalid response schema", {
+				error: validation.error,
+				endpoint,
+				rawResponse: jsonResult.data
+			})
 			throw errors.wrap(validation.error, "qti api response validation")
 		}
 
@@ -1127,6 +1159,43 @@ export class Client {
 			endpoint,
 			{ method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(validation.data) },
 			AssessmentSectionSchema
+		)
+	}
+
+	/**
+	 * Processes a user's response for a given assessment item and returns the result.
+	 * @param {string} identifier - The unique identifier of the assessment item.
+	 * @param {ProcessResponseInput} input - The user's response data.
+	 * @returns {Promise<ProcessResponseResult>} The result of the response processing.
+	 */
+	async processResponse(identifier: string, input: ProcessResponseInput): Promise<ProcessResponseResult> {
+		logger.info("qti client: processing response", { identifier })
+		const validation = ProcessResponseInputSchema.safeParse(input)
+		if (!validation.success) {
+			throw errors.wrap(validation.error, "processResponse input validation")
+		}
+
+		// Transform the input to match the API's expected format
+		const apiRequest = {
+			identifier: validation.data.responseIdentifier,
+			response: String(validation.data.value)
+		}
+
+		// Validate the transformed request
+		const apiValidation = ProcessResponseApiRequestSchema.safeParse(apiRequest)
+		if (!apiValidation.success) {
+			throw errors.wrap(apiValidation.error, "processResponse api request validation")
+		}
+
+		const endpoint = `/assessment-items/${identifier}/process-response`
+		return this.#request(
+			endpoint,
+			{
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(apiValidation.data)
+			},
+			ProcessResponseResultSchema
 		)
 	}
 }
