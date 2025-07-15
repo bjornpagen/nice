@@ -27,7 +27,7 @@ export function LessonExerciseContent({
 				className={cn("flex flex-col items-center justify-center gap-2 flex-1", className)}
 			>
 				<h1 className="text-3xl font-medium">Ready to practice?</h1>
-				<h2 className="text-lg font-medium">Okay, show us what you can do!</h2>
+				<h2 className="text-lg">Okay, show us what you can do!</h2>
 				<p className="text-sm font-bold">{exercise.data.questions.length} questions</p>
 			</div>
 
