@@ -2,9 +2,9 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import type { Unit } from "./page"
+import type { CoursePage_Unit } from "./page"
 
-export function UnitTab({ index, unit }: { index: number; unit: Unit }) {
+export function UnitTab({ index, unit }: { index: number; unit: CoursePage_Unit }) {
 	const pathname = usePathname()
 	if (pathname === unit.path) {
 		return (

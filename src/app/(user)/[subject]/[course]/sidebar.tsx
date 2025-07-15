@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { CourseChallenge as CourseChallengeComponent } from "./course-challenge"
 import { CourseTab } from "./course-tab"
-import type { Course, CourseChallenge, Unit } from "./page"
+import type { CoursePage_Course, CoursePage_CourseChallenge, CoursePage_UnitWithChildren } from "./page"
 import { UnitTab } from "./unit-tab"
 
 export function CourseSidebar({
@@ -10,17 +10,17 @@ export function CourseSidebar({
 	lessonCount,
 	challenges
 }: {
-	course: Course
-	units: Unit[]
+	course: CoursePage_Course
+	units: CoursePage_UnitWithChildren[]
 	lessonCount: number
-	challenges: CourseChallenge[]
+	challenges: CoursePage_CourseChallenge[]
 }) {
 	return (
 		<div className="hidden md:block lg:block w-96 bg-white border-r border-gray-200 flex flex-col h-full">
 			<div className="px-6 pb-6 flex-1 overflow-hidden">
 				<ScrollArea className="h-full">
 					<div className="mt-4">
-						<CourseTab course={course} units={units.length} lessons={lessonCount} />
+						<CourseTab course={course} lessonCount={lessonCount} />
 					</div>
 
 					{/* Units */}

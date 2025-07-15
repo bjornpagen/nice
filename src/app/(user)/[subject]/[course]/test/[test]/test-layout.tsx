@@ -2,13 +2,13 @@
 
 import * as React from "react"
 import { LessonSidebar } from "../../[unit]/[lesson]/lesson-sidebar"
-import type { CourseData } from "./page"
+import type { CourseChallengePage_LayoutData } from "./page"
 
 export function TestLayout({
 	courseDataPromise,
 	children
 }: {
-	courseDataPromise: Promise<CourseData>
+	courseDataPromise: Promise<CourseChallengePage_LayoutData>
 	children: React.ReactNode
 }) {
 	const courseData = React.use(courseDataPromise)

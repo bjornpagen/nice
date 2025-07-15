@@ -3,9 +3,15 @@
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import type { Course } from "./page"
+import type { CoursePage_Course } from "./page"
 
-export function CourseTab({ course, units, lessons }: { course: Course; units: number; lessons: number }) {
+export function CourseTab({
+	course,
+	lessonCount
+}: {
+	course: CoursePage_Course
+	lessonCount: number
+}) {
 	const pathname = usePathname()
 	if (pathname === course.path) {
 		return (
@@ -18,9 +24,7 @@ export function CourseTab({ course, units, lessons }: { course: Course; units: n
 					</div>
 					<div>
 						<h1 className="text-sm font-bold text-gray-800">{course.title}</h1>
-						<p className="text-xs text-gray-500 mt-1">
-							{units} UNITS • {lessons} LESSONS
-						</p>
+						<p className="text-xs text-gray-500 mt-1">{lessonCount} LESSONS</p>
 					</div>
 				</Link>
 			</div>
@@ -37,9 +41,7 @@ export function CourseTab({ course, units, lessons }: { course: Course; units: n
 				</div>
 				<div>
 					<h1 className="text-sm font-bold text-gray-800">{course.title}</h1>
-					<p className="text-xs text-gray-500 mt-1">
-						{units} UNITS • {lessons} LESSONS
-					</p>
+					<p className="text-xs text-gray-500 mt-1">{lessonCount} LESSONS</p>
 				</div>
 			</Link>
 		</div>

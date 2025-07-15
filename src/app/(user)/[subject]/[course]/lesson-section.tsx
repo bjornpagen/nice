@@ -4,12 +4,12 @@ import Link from "next/link"
 import { ActivityIcon } from "@/components/icons/activity"
 import { Button } from "@/components/ui/button"
 import { capitalize } from "@/lib/utils"
-import type { Article, Exercise, Lesson, Video } from "./[unit]/page"
+import type { UnitPage_Article, UnitPage_Exercise, UnitPage_Lesson, UnitPage_Video } from "./[unit]/page"
 import { Section } from "./section"
 
 type LearningContent =
-	| { type: "Video"; content: Video; ordering: number }
-	| { type: "Article"; content: Article; ordering: number }
+	| { type: "Video"; content: UnitPage_Video; ordering: number }
+	| { type: "Article"; content: UnitPage_Article; ordering: number }
 
 export function LessonSection({
 	lesson,
@@ -17,10 +17,10 @@ export function LessonSection({
 	exercises,
 	articles
 }: {
-	lesson: Lesson
-	videos: Video[]
-	exercises: Exercise[]
-	articles: Article[]
+	lesson: UnitPage_Lesson
+	videos: UnitPage_Video[]
+	exercises: UnitPage_Exercise[]
+	articles: UnitPage_Article[]
 }) {
 	// Create a unified list of learning content (videos and articles) ordered properly
 	const learningContent: LearningContent[] = [
@@ -67,7 +67,7 @@ export function LessonSection({
 	)
 }
 
-function LessonVideo({ video }: { video: Pick<Video, "title" | "path"> }) {
+function LessonVideo({ video }: { video: Pick<UnitPage_Video, "title" | "path"> }) {
 	return (
 		<div className="bg-white flex items-center gap-2">
 			<ActivityIcon variant="video" />
@@ -78,7 +78,7 @@ function LessonVideo({ video }: { video: Pick<Video, "title" | "path"> }) {
 	)
 }
 
-function LessonArticle({ article }: { article: Pick<Article, "title" | "path"> }) {
+function LessonArticle({ article }: { article: Pick<UnitPage_Article, "title" | "path"> }) {
 	return (
 		<div className="bg-white flex items-center gap-2">
 			<ActivityIcon variant="article" />
@@ -89,7 +89,7 @@ function LessonArticle({ article }: { article: Pick<Article, "title" | "path"> }
 	)
 }
 
-function LessonExercise({ exercise, next = false }: { exercise: Exercise; next: boolean }) {
+function LessonExercise({ exercise, next = false }: { exercise: UnitPage_Exercise; next: boolean }) {
 	if (next) {
 		return (
 			<div className="bg-gray-100 rounded-xs p-2 border-t-4 border-blue-500">

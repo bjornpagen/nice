@@ -7,14 +7,14 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { CourseChallenge } from "./course-challenge"
 import { CourseHeader } from "./course-header"
-import type { CourseData } from "./page"
+import type { CoursePageData } from "./page"
 import { ProficiencyLegend } from "./proficiency-legend"
 import { ProficiencyProgressOverview } from "./proficiency-progress-overview"
 import { Section } from "./section"
 import { CourseSidebar } from "./sidebar"
 import { UnitOverviewSection } from "./unit-overview-section"
 
-export function Content({ dataPromise }: { dataPromise: Promise<CourseData> }) {
+export function Content({ dataPromise }: { dataPromise: Promise<CoursePageData> }) {
 	// Consume the single, consolidated data promise.
 	const { params, course, units, lessonCount, challenges } = React.use(dataPromise)
 

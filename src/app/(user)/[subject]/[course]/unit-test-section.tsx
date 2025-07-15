@@ -1,10 +1,10 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { startCase } from "@/lib/utils"
-import type { UnitTest } from "./[unit]/page"
+import type { UnitPage_UnitTest } from "./[unit]/page"
 import { Section } from "./section"
 
-export function UnitTestSection({ test }: { test: UnitTest }) {
+export function UnitTestSection({ test }: { test: UnitPage_UnitTest }) {
 	return (
 		<Section>
 			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">

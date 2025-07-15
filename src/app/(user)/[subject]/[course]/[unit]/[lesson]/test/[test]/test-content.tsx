@@ -3,7 +3,10 @@
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { BottomNavigation } from "./bottom-navigation"
-import type { TestData, TestQuestion } from "./page"
+import type { UnitTestPageData } from "./page"
+
+type TestData = UnitTestPageData
+type TestQuestion = UnitTestPageData["questions"][0]
 
 function QuestionStepper({ questions }: { questions: TestQuestion[] }) {
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
@@ -31,7 +34,7 @@ function QuestionStepper({ questions }: { questions: TestQuestion[] }) {
 				<QTIRenderer
 					identifier={currentQuestion.qtiIdentifier}
 					materialType="assessmentItem"
-					key={currentQuestion.identifier}
+					key={currentQuestion.qtiIdentifier}
 					height="100%"
 					width="100%"
 					className="h-full w-full"
@@ -61,7 +64,6 @@ export function TestContent({ testDataPromise }: { testDataPromise: Promise<Test
 			{/* Test Header */}
 			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0 text-center">
 				<h1 className="text-2xl font-bold text-gray-900">{test.title}</h1>
-				{test.description && <p className="text-gray-600 mt-2">{test.description}</p>}
 			</div>
 
 			{/* Ready to Take Test Section */}

@@ -1,7 +1,7 @@
 import { Sparkles } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import type { UnitChild } from "./page"
+import type { CoursePage_UnitChild } from "./page"
 import { ProficiencyProgress } from "./proficiency-progress"
 
 export function ProficiencyProgressOverview({
@@ -11,7 +11,7 @@ export function ProficiencyProgressOverview({
 	next = false
 }: {
 	index: number
-	unitChildren: UnitChild[]
+	unitChildren: CoursePage_UnitChild[]
 	path: string
 	next?: boolean
 }) {
