@@ -1,7 +1,7 @@
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
-import { fetchCourseChallengePage_LayoutData, fetchCourseChallengePage_TestData } from "@/lib/data-fetching"
-import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types"
+import { fetchCourseChallengePage_LayoutData, fetchCourseChallengePage_TestData } from "@/lib/data/assessment"
+import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types/page"
 import { TestContent } from "./components/test-content"
 import { TestLayout } from "./components/test-layout"
 

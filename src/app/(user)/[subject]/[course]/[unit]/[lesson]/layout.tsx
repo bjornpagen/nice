@@ -1,7 +1,7 @@
 import * as logger from "@superbuilders/slog"
 import type * as React from "react"
-import { fetchLessonLayoutData } from "@/lib/data-fetching"
-import type { LessonLayoutData } from "@/lib/types"
+import { fetchLessonLayoutData } from "@/lib/data/lesson"
+import type { LessonLayoutData } from "@/lib/types/page"
 import { LessonLayout } from "./components/lesson-layout"
 
 // The layout component is NOT async. It orchestrates promises and renders immediately.

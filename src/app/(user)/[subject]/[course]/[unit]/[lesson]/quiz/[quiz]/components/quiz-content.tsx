@@ -5,7 +5,7 @@ import * as React from "react"
 import { toast } from "sonner"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { processQtiResponse } from "@/lib/actions/qti"
-import type { QuizPageData } from "@/lib/types"
+import type { QuizPageData } from "@/lib/types/page"
 import { BottomNavigation } from "./bottom-navigation"
 
 export type QuizQuestion = QuizPageData["questions"][0]

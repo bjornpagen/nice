@@ -3,7 +3,8 @@
 import Link from "next/link"
 import { ActivityIcon } from "@/components/icons/activity"
 import { Button } from "@/components/ui/button"
-import type { Article, Exercise, Lesson, Video } from "@/lib/types"
+import type { Article, Exercise, Video } from "@/lib/types/content"
+import type { Lesson } from "@/lib/types/structure"
 import { capitalize } from "@/lib/utils"
 import { Section } from "./section"
 

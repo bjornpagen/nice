@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import type { Unit } from "@/lib/types"
+import type { Unit } from "@/lib/types/structure"
 
 export function UnitTab({ index, unit }: { index: number; unit: Pick<Unit, "path" | "title"> }) {
 	const pathname = usePathname()

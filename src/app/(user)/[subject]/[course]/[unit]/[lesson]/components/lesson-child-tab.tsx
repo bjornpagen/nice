@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ActivityIcon } from "@/components/icons/activity"
-import type { LessonChild } from "@/lib/types"
+import type { LessonChild } from "@/lib/types/structure"
 
 function getVariant(child: Pick<LessonChild, "type">) {
 	switch (child.type) {

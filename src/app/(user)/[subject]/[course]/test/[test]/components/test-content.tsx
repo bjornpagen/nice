@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
-import type { CourseChallengePageData } from "@/lib/types"
+import type { CourseChallengePageData } from "@/lib/types/page"
 
 type TestQuestion = CourseChallengePageData["questions"][0]
 

@@ -4,7 +4,7 @@ import Image from "next/image"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
-import type { ArticlePageData } from "@/lib/types"
+import type { ArticlePageData } from "@/lib/types/page"
 
 export function Content({ articlePromise }: { articlePromise: Promise<ArticlePageData> }) {
 	const article = React.use(articlePromise)

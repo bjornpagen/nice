@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react"
 import Link from "next/link"
-import type { UnitChild } from "@/lib/types"
+import type { UnitChild } from "@/lib/types/structure"
 import { cn } from "@/lib/utils"
 import { ProficiencyProgress } from "./proficiency-progress"
 

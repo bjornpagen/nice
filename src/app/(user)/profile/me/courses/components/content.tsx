@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { dialogKeys, useDialogManager } from "@/hooks/use-dialog-manager"
 import { saveUserCourses } from "@/lib/actions/courses"
-import type { ProfileCourse, ProfileCoursesPageData, ProfileSubject } from "@/lib/types"
+import type { ProfileCoursesPageData } from "@/lib/types/page"
+import type { ProfileCourse, ProfileSubject } from "@/lib/types/profile"
 import { CourseCard } from "./course-card"
 
 // Enhanced loading skeleton for course cards

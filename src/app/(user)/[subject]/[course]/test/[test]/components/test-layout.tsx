@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import type { CourseChallengeLayoutData } from "@/lib/types"
+import type { CourseChallengeLayoutData } from "@/lib/types/page"
 import { CourseSidebar } from "../../../components/sidebar"
 
 export function TestLayout({

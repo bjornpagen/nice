@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import type { UnitTest } from "@/lib/types"
+import type { UnitTest } from "@/lib/types/assessment"
 import { startCase } from "@/lib/utils"
 import { Section } from "./section"
 

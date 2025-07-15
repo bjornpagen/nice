@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import type { LessonLayoutData } from "@/lib/types"
+import type { LessonLayoutData } from "@/lib/types/page"
 import { LessonNext } from "./lesson-next"
 import { LessonSidebar } from "./lesson-sidebar"
 

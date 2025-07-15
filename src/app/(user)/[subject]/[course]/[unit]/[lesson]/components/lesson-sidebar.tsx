@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import type { Course, Lesson, Unit } from "@/lib/types"
+import type { Course, Lesson, Unit } from "@/lib/types/structure"
 import { LessonBreadcrumbs } from "./lesson-breadcrumbs"
 import { LessonChildTab } from "./lesson-child-tab"
 import { LessonNavigation } from "./lesson-navigation"

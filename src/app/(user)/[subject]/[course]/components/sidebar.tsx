@@ -1,5 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
-import type { Course, CourseChallenge as CourseChallengeType } from "@/lib/types"
+import type { CourseChallenge as CourseChallengeType } from "@/lib/types/assessment"
+import type { Course } from "@/lib/types/structure"
 import { CourseChallenge as CourseChallengeComponent } from "./course-challenge"
 import { CourseTab } from "./course-tab"
 import { UnitTab } from "./unit-tab"

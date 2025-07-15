@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import {
 	Breadcrumb,
@@ -6,7 +8,7 @@ import {
 	BreadcrumbList,
 	BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
-import type { Course, Lesson, Unit } from "@/lib/types"
+import type { Course, Lesson, Unit } from "@/lib/types/structure"
 import { startCase } from "@/lib/utils"
 
 export function LessonBreadcrumbs({

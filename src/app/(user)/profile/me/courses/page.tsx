@@ -1,7 +1,7 @@
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
-import { fetchProfileCoursesData } from "@/lib/data-fetching"
-import type { ProfileCoursesPageData } from "@/lib/types"
+import { fetchProfileCoursesData } from "@/lib/data/profile"
+import type { ProfileCoursesPageData } from "@/lib/types/page"
 import { Content } from "./components/content"
 
 export default function ProfileCoursesPage() {
