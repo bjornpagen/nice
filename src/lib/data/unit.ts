@@ -82,10 +82,21 @@ export async function fetchUnitPageData(params: {
 	}
 	const unitMetadata = unitMetadataResult.data
 
-	// Get all units for navigation
+	// Get all units for navigation - fetch ALL course components
+	const allCourseComponentsForNavigationResult = await errors.try(getCourseComponentsByCourseId(courseSourcedId))
+	if (allCourseComponentsForNavigationResult.error) {
+		logger.error("failed to fetch all course components for navigation", {
+			error: allCourseComponentsForNavigationResult.error,
+			courseSourcedId
+		})
+		throw errors.wrap(allCourseComponentsForNavigationResult.error, "fetch all course components for navigation")
+	}
+	const allCourseComponentsForNavigation = allCourseComponentsForNavigationResult.data
+
+	// Build all units array
 	const allUnits: Unit[] = []
-	for (const component of unitResult.data) {
-		if (component.parent) continue // Skip non-units
+	for (const component of allCourseComponentsForNavigation) {
+		if (component.parent) continue // Skip non-units (lessons)
 
 		// Validate component metadata with Zod
 		const componentMetadataResult = ComponentMetadataSchema.safeParse(component.metadata)
