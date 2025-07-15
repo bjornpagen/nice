@@ -223,6 +223,7 @@ function ProgressionButtonSection({
 				variant="default"
 				onClick={handleProgressionClick}
 				className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white"
+				disabled={questions.length <= 0}
 			>
 				Let's go!
 			</Button>
