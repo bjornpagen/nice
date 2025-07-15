@@ -25,7 +25,6 @@ export async function processQtiResponse(
 	logger.info("server action: processing qti response", { identifier })
 
 	const result = await errors.try(qti.processResponse(identifier, response))
-
 	if (result.error) {
 		logger.error("server action: failed to process qti response", {
 			identifier,

@@ -1,10 +1,13 @@
 "use client"
 
-import { CheckCircle, ChevronRight, FileCheck, X } from "lucide-react"
+import { CheckCircle, ChevronRight, ClipboardCheck, FileCheck, PenTool, X } from "lucide-react"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 
-interface BottomNavigationProps {
+export type AssessmentType = "Exercise" | "Quiz" | "Test"
+
+interface AssessmentBottomNavProps {
+	contentType: AssessmentType
 	onContinue: () => void
 	isEnabled: boolean
 	buttonText?: "Check" | "Continue"
@@ -16,9 +19,25 @@ interface BottomNavigationProps {
 	onCloseFeedback?: () => void
 }
 
-export const BottomNavigation = React.forwardRef<HTMLButtonElement, BottomNavigationProps>(
+const contentConfig = {
+	Exercise: {
+		icon: <PenTool className="w-4 h-4" />,
+		label: "Exercise"
+	},
+	Quiz: {
+		icon: <ClipboardCheck className="w-4 h-4" />,
+		label: "Quiz"
+	},
+	Test: {
+		icon: <FileCheck className="w-4 h-4" />,
+		label: "Test"
+	}
+}
+
+export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, AssessmentBottomNavProps>(
 	(
 		{
+			contentType,
 			onContinue,
 			isEnabled,
 			buttonText,
@@ -31,16 +50,19 @@ export const BottomNavigation = React.forwardRef<HTMLButtonElement, BottomNaviga
 		},
 		ref
 	) => {
+		const config = contentConfig[contentType]
+
 		return (
 			<div className="bg-white border-t border-gray-200 shadow-lg">
 				<div className="max-w-7xl mx-auto px-4 py-3">
 					<div className="flex items-center justify-between">
+						{/* Progress Section */}
 						<div className="flex items-center space-x-3">
 							<div className="text-sm text-gray-600 font-medium">{isStartScreen ? "Ready to start:" : "Progress:"}</div>
 							<div className="flex items-center space-x-2">
-								<FileCheck className="w-4 h-4" />
+								{config.icon}
 								<div className="flex flex-col">
-									<div className="text-xs text-gray-500 uppercase tracking-wide">Test</div>
+									<div className="text-xs text-gray-500 uppercase tracking-wide">{config.label}</div>
 									<div className="text-sm font-medium text-gray-900">
 										{isStartScreen ? "Get started" : `Question ${currentQuestion} of ${totalQuestions}`}
 									</div>
@@ -48,15 +70,13 @@ export const BottomNavigation = React.forwardRef<HTMLButtonElement, BottomNaviga
 							</div>
 						</div>
 
+						{/* Action Button and Feedback Section */}
 						<div className="relative">
-							{/* Feedback tooltip above the button */}
 							{showFeedback && (
 								<div className="absolute bottom-full mb-6 right-0 z-50">
 									<div className="relative bg-white rounded-lg shadow-lg border border-gray-200 p-3 min-w-[280px]">
-										{/* Arrow pointing down */}
 										<div className="absolute -bottom-2 right-6 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-white" />
 										<div className="absolute -bottom-[9px] right-6 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-gray-200" />
-
 										<div className="flex items-center justify-between">
 											<div className="flex items-center gap-3">
 												{isCorrect ? (
@@ -90,7 +110,6 @@ export const BottomNavigation = React.forwardRef<HTMLButtonElement, BottomNaviga
 									</div>
 								</div>
 							)}
-
 							<Button
 								ref={ref}
 								onClick={onContinue}
@@ -112,4 +131,4 @@ export const BottomNavigation = React.forwardRef<HTMLButtonElement, BottomNaviga
 	}
 )
 
-BottomNavigation.displayName = "BottomNavigation"
+AssessmentBottomNav.displayName = "AssessmentBottomNav"

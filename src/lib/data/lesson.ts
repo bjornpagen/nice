@@ -4,7 +4,6 @@ import { notFound } from "next/navigation"
 import {
 	getAllComponentResources,
 	getAllCoursesBySlug,
-	getAllResources,
 	getCourseComponentByCourseAndSlug,
 	getCourseComponentByParentAndSlug,
 	getCourseComponentsByParentId,
@@ -72,47 +71,42 @@ export async function fetchLessonLayoutData(params: {
 		lessonIds.has(cr.courseComponent.sourcedId)
 	)
 
-	// 4. Fetch all unique resources linked by those component resources
+	// 4. Get all unique resource IDs
 	const resourceIds = [...new Set(allComponentResources.map((cr) => cr.resource.sourcedId))]
 
-	// Fetch resources individually if we have many, or use a simple filter for fewer resources
+	// 5. Fetch all resources in parallel. Fail aggressively if ANY fetch fails.
 	let allResourcesData: Resource[] = []
-	if (resourceIds.length === 0) {
-		allResourcesData = []
-	} else if (resourceIds.length <= 10) {
-		// For small numbers, fetch individually to avoid filter syntax issues
+	if (resourceIds.length > 0) {
 		const resourcePromises = resourceIds.map(async (resourceId) => {
 			const result = await errors.try(getResource(resourceId))
 			if (result.error) {
-				logger.error("CRITICAL: Failed to fetch resource", { resourceId, error: result.error })
-				throw errors.wrap(result.error, "resource fetch failed")
+				// Log the specific failure and re-throw to fail the entire Promise.all
+				logger.error("CRITICAL: Failed to fetch required resource for lesson layout", {
+					resourceId,
+					error: result.error
+				})
+				throw errors.wrap(result.error, `resource fetch failed for ${resourceId}`)
 			}
-
 			const resource = result.data
 			if (!resource) {
-				logger.error("CRITICAL: Resource data is undefined", { resourceId })
-				throw errors.new("resource data undefined")
+				logger.error("CRITICAL: Required resource data is undefined", { resourceId })
+				throw errors.new(`resource data undefined for ${resourceId}`)
 			}
-
-			// Only include active resources - filter out inactive ones
-			if (resource.status === "active") {
-				return resource
-			}
-			logger.info("filtering out inactive resource", { resourceId, status: resource.status })
-			return undefined
+			return resource
 		})
-		const resourceResults = await Promise.all(resourcePromises)
-		// Filter out undefined values (inactive resources)
-		allResourcesData = resourceResults.filter((r): r is Resource => r !== undefined)
-	} else {
-		// For larger numbers, try a simple filter approach
-		const allResourcesResult = await errors.try(getAllResources())
-		if (allResourcesResult.error) {
-			logger.error("failed to fetch resources", { error: allResourcesResult.error })
-			throw errors.wrap(allResourcesResult.error, "failed to fetch resources")
+
+		const results = await errors.try(Promise.all(resourcePromises))
+		if (results.error) {
+			// This will catch the first error thrown from inside the map
+			logger.error("failed to fetch one or more resources for lesson layout", { error: results.error })
+			throw errors.wrap(results.error, "lesson layout resource fetch")
 		}
-		// Filter client-side to only get the resources we need
-		allResourcesData = allResourcesResult.data.filter((r) => resourceIds.includes(r.sourcedId))
+		// Filter out inactive resources *after* successful fetching
+		allResourcesData = results.data.filter((r) => {
+			if (r.status === "active") return true
+			logger.info("filtering out inactive resource", { resourceId: r.sourcedId, status: r.status })
+			return false
+		})
 	}
 
 	const resourcesMap = new Map(allResourcesData.map((r) => [r.sourcedId, r]))

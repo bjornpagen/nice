@@ -70,7 +70,7 @@ export async function getUnitsForCourses(courseIds: string[]) {
 	cacheLife("curriculum")
 	if (courseIds.length === 0) return []
 	// Encapsulates the `@` filter logic for OneRoster IN operator
-	const filter = `course.sourcedId @ '${courseIds.join(",")}'`
+	const filter = `course.sourcedId@'${courseIds.join(",")}'`
 	return oneroster.getCourseComponents({ filter })
 }
 

@@ -15,6 +15,7 @@ ignore_patterns:
   - "src/lib/perseus-to-qti/**"
   - "src/app/(user)/v2/**"
   - "src/db/**"
+  - "src/inngest/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"
