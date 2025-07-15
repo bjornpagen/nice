@@ -30,6 +30,7 @@ function QuestionStepper({ questions }: { questions: ExerciseQuestion[] }) {
 			<div className="flex-1 overflow-hidden">
 				<QTIRenderer
 					identifier={currentQuestion.identifier}
+					materialType="assessmentItem"
 					key={currentQuestion.identifier}
 					height="100%"
 					width="100%"

@@ -45,7 +45,13 @@ export function Content({ articlePromise }: { articlePromise: Promise<Article> }
 			{/* Article Content - Render through QTI */}
 			<div className="p-6">
 				<div className="max-w-4xl mx-auto">
-					<QTIRenderer identifier={article.identifier} height="auto" width="100%" className="w-full" />
+					<QTIRenderer
+						identifier={article.identifier}
+						materialType="stimulus"
+						height="auto"
+						width="100%"
+						className="w-full"
+					/>
 				</div>
 			</div>
 		</div>

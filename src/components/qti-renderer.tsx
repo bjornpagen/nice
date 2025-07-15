@@ -1,23 +1,25 @@
-import { useEffect, useRef } from "react"
+import * as errors from "@superbuilders/errors"
+import * as React from "react"
 
-// Configuration for QTI embed environments
-const QTI_ENVIRONMENTS = {
+// Configuration for QTI embed base URLs by type and environment
+const QTI_BASE_URLS = {
 	staging: {
-		origin: "https://timeback-staging.alpha-1edtech.com",
-		embedUrl: "https://timeback-staging.alpha-1edtech.com/qti-embed"
+		assessmentItem: "https://timeback-staging.alpha-1edtech.com/qti-embed",
+		stimulus: "https://timeback-staging.alpha-1edtech.com/qti-stimulus-embed"
 	},
 	production: {
-		origin: "https://alpha-powerpath-ui-production.up.railway.app",
-		embedUrl: "https://alpha-powerpath-ui-production.up.railway.app/qti-embed"
+		assessmentItem: "https://alpha-powerpath-ui-production.up.railway.app/qti-embed",
+		stimulus: "https://timeback.alpha-1edtech.com/qti-stimulus-embed"
 	}
 } as const
 
-// Toggle this to switch between environments
-const USE_STAGING = true // Set to false to use production
-const CURRENT_ENV = USE_STAGING ? QTI_ENVIRONMENTS.staging : QTI_ENVIRONMENTS.production
+// This flag should ideally be controlled by environment variables (e.g., process.env.NODE_ENV)
+// For the purpose of this PRD, it is hardcoded to reflect the provided URLs.
+const USE_STAGING = true // Set to false to use production URLs
 
 interface QTIRendererProps {
 	identifier: string
+	materialType: "assessmentItem" | "stimulus" // REQUIRED: No fallback - system must specify type
 	onResponseChange?: (responseIdentifier: string, response: unknown) => void
 	onMessage?: (event: MessageEvent) => void
 	onRawMessage?: (event: MessageEvent) => void
@@ -28,6 +30,7 @@ interface QTIRendererProps {
 
 export function QTIRenderer({
 	identifier,
+	materialType, // REQUIRED: No default fallback
 	onResponseChange,
 	onMessage,
 	onRawMessage,
@@ -35,9 +38,22 @@ export function QTIRenderer({
 	height = "600px",
 	width = "100%"
 }: QTIRendererProps) {
-	const iframeRef = useRef<HTMLIFrameElement>(null)
+	const iframeRef = React.useRef<HTMLIFrameElement>(null)
 
-	useEffect(() => {
+	const baseUrls = USE_STAGING ? QTI_BASE_URLS.staging : QTI_BASE_URLS.production
+	const baseUrl = baseUrls[materialType] // SELECT BASE URL BASED ON MATERIAL TYPE
+	const embedUrl = `${baseUrl}/${identifier}`
+
+	// Dynamically derive the expected origin from the base URL.
+	// This ensures messages are only processed from the correct source.
+	const urlResult = errors.trySync(() => new URL(baseUrl))
+	if (urlResult.error) {
+		// CRITICAL: URL parsing failed - system must stop, not continue with fallbacks
+		throw errors.wrap(urlResult.error, "qti base url parsing failed")
+	}
+	const expectedOrigin = urlResult.data.origin
+
+	React.useEffect(() => {
 		const handleMessage = (event: MessageEvent) => {
 			// Always call raw message handler if provided (no filtering)
 			if (onRawMessage) {
@@ -45,7 +61,7 @@ export function QTIRenderer({
 			}
 
 			// Only process messages from the QTI embed domain
-			if (event.origin !== CURRENT_ENV.origin) {
+			if (event.origin !== expectedOrigin) {
 				return
 			}
 
@@ -69,9 +85,7 @@ export function QTIRenderer({
 		return () => {
 			window.removeEventListener("message", handleMessage)
 		}
-	}, [onResponseChange, onMessage, onRawMessage])
-
-	const embedUrl = `${CURRENT_ENV.embedUrl}/${identifier}`
+	}, [onResponseChange, onMessage, onRawMessage, expectedOrigin])
 
 	// Use 100% for both dimensions when they are percentage values
 	const iframeStyle: React.CSSProperties = {

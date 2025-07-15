@@ -1,11 +1,11 @@
 "use client"
 
 import * as errors from "@superbuilders/errors"
-import { useState } from "react"
+import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 
 export default function DebugQTIPage() {
-	const [events, setEvents] = useState<
+	const [events, setEvents] = React.useState<
 		Array<{
 			type: string
 			data: unknown
@@ -13,7 +13,7 @@ export default function DebugQTIPage() {
 		}>
 	>([])
 
-	const [rawEvents, setRawEvents] = useState<
+	const [rawEvents, setRawEvents] = React.useState<
 		Array<{
 			origin: string
 			data: unknown
@@ -92,10 +92,11 @@ export default function DebugQTIPage() {
 
 			<div className="grid lg:grid-cols-2 gap-6">
 				<div className="space-y-4">
-					<h2 className="text-xl font-semibold">QTI Content</h2>
+					<h2 className="text-xl font-semibold">QTI Content (Assessment Item)</h2>
 					<div className="border rounded-lg overflow-hidden">
 						<QTIRenderer
 							identifier="nice:x00020ee4f0de8b58"
+							materialType="assessmentItem"
 							onResponseChange={handleResponseChange}
 							onMessage={handleMessage}
 							onRawMessage={handleRawMessage}
@@ -206,9 +207,27 @@ export default function DebugQTIPage() {
 				<h3 className="text-lg font-semibold mb-3">Integration Information</h3>
 				<div className="space-y-2 text-sm">
 					<div>
-						<strong>Embed URL:</strong>
+						<strong>Assessment Item Embed URL (Staging):</strong>
+						<code className="bg-gray-100 px-2 py-1 rounded ml-2">
+							https://timeback-staging.alpha-1edtech.com/qti-embed/nice:x00020ee4f0de8b58
+						</code>
+					</div>
+					<div>
+						<strong>Assessment Item Embed URL (Production):</strong>
 						<code className="bg-gray-100 px-2 py-1 rounded ml-2">
 							https://alpha-powerpath-ui-production.up.railway.app/qti-embed/nice:x00020ee4f0de8b58
+						</code>
+					</div>
+					<div>
+						<strong>QTI Stimulus Embed URL (Staging):</strong>
+						<code className="bg-gray-100 px-2 py-1 rounded ml-2">
+							https://timeback-staging.alpha-1edtech.com/qti-stimulus-embed/nice:x75fea13d9da53d2a
+						</code>
+					</div>
+					<div>
+						<strong>QTI Stimulus Embed URL (Production):</strong>
+						<code className="bg-gray-100 px-2 py-1 rounded ml-2">
+							https://timeback.alpha-1edtech.com/qti-stimulus-embed/Stimulus1
 						</code>
 					</div>
 					<div>
@@ -216,10 +235,14 @@ export default function DebugQTIPage() {
 						<code className="bg-gray-100 px-2 py-1 rounded ml-2">QTI_RESPONSE_CHANGE</code>
 					</div>
 					<div>
-						<strong>Origin:</strong>
+						<strong>Origin (Production Assessment Item):</strong>
 						<code className="bg-gray-100 px-2 py-1 rounded ml-2">
 							https://alpha-powerpath-ui-production.up.railway.app
 						</code>
+					</div>
+					<div>
+						<strong>Origin (Production Stimulus):</strong>
+						<code className="bg-gray-100 px-2 py-1 rounded ml-2">https://timeback.alpha-1edtech.com</code>
 					</div>
 				</div>
 			</div>
