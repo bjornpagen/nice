@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import type { CourseInfo, LessonInfo, UnitInfo } from "@/lib/khan-academy-api"
+import type { Course, Lesson, Unit } from "@/lib/types"
 import { LessonBreadcrumbs } from "./lesson-breadcrumbs"
 import { LessonChildTab } from "./lesson-child-tab"
 import { LessonNavigation } from "./lesson-navigation"
@@ -17,9 +17,9 @@ export function LessonSidebar({
 	setSelectedLessonId
 }: {
 	subject: string
-	course: Pick<CourseInfo, "title" | "path">
-	unit: Pick<UnitInfo, "title" | "path" | "children"> & { sortOrder: number }
-	lesson: Pick<LessonInfo, "title" | "path" | "children">
+	course: Pick<Course, "title" | "path">
+	unit: Pick<Unit, "title" | "path" | "children" | "ordering">
+	lesson: Pick<Lesson, "title" | "path" | "children">
 	isCollapsed: boolean
 	setIsCollapsed: (collapsed: boolean) => void
 	setSelectedLessonId: (lessonId: string) => void

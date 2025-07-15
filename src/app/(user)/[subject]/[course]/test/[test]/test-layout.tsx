@@ -1,14 +1,14 @@
 "use client"
 
 import * as React from "react"
+import type { CourseChallengeLayoutData } from "@/lib/types"
 import { LessonSidebar } from "../../[unit]/[lesson]/lesson-sidebar"
-import type { CourseChallengePage_LayoutData } from "./page"
 
 export function TestLayout({
 	courseDataPromise,
 	children
 }: {
-	courseDataPromise: Promise<CourseChallengePage_LayoutData>
+	courseDataPromise: Promise<CourseChallengeLayoutData>
 	children: React.ReactNode
 }) {
 	const courseData = React.use(courseDataPromise)

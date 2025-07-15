@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
+import type { ExercisePageData } from "@/lib/types"
 import { BottomNavigation } from "./bottom-navigation"
-import type { ExercisePageData } from "./page"
 
 function QuestionStepper({ questions }: { questions: ExercisePageData["questions"] }) {
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
@@ -48,8 +48,8 @@ function QuestionStepper({ questions }: { questions: ExercisePageData["questions
 	)
 }
 
-export function Content({ exerciseDataPromise }: { exerciseDataPromise: Promise<ExercisePageData> }) {
-	const { exercise, questions } = React.use(exerciseDataPromise)
+export function Content({ exercisePromise }: { exercisePromise: Promise<ExercisePageData> }) {
+	const { exercise, questions } = React.use(exercisePromise)
 	const [hasStarted, setHasStarted] = React.useState(false)
 
 	if (hasStarted) {

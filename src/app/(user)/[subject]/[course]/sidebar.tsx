@@ -1,32 +1,30 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
+import type { Course, CourseChallenge as CourseChallengeType } from "@/lib/types"
 import { CourseChallenge as CourseChallengeComponent } from "./course-challenge"
 import { CourseTab } from "./course-tab"
-import type { CoursePage_Course, CoursePage_CourseChallenge, CoursePage_UnitWithChildren } from "./page"
 import { UnitTab } from "./unit-tab"
 
 export function CourseSidebar({
 	course,
-	units,
 	lessonCount,
 	challenges
 }: {
-	course: CoursePage_Course
-	units: CoursePage_UnitWithChildren[]
+	course: Pick<Course, "id" | "title" | "description" | "path" | "units">
 	lessonCount: number
-	challenges: CoursePage_CourseChallenge[]
+	challenges: CourseChallengeType[]
 }) {
 	return (
 		<div className="hidden md:block lg:block w-96 bg-white border-r border-gray-200 flex flex-col h-full">
 			<div className="px-6 pb-6 flex-1 overflow-hidden">
 				<ScrollArea className="h-full">
 					<div className="mt-4">
-						<CourseTab course={course} unitCount={units.length} lessonCount={lessonCount} />
+						<CourseTab course={course} unitCount={course.units.length} lessonCount={lessonCount} />
 					</div>
 
 					{/* Units */}
-					{units.length > 0 && (
+					{course.units.length > 0 && (
 						<div>
-							{units.map((unit, index) => (
+							{course.units.map((unit, index) => (
 								<UnitTab key={unit.id} index={index} unit={unit} />
 							))}
 						</div>

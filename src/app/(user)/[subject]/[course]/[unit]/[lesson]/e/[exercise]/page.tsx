@@ -1,23 +1,10 @@
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchExercisePageData } from "@/lib/data-fetching"
+import type { ExercisePageData } from "@/lib/types"
 import { Content } from "./content"
 
-// --- DEFINED IN-FILE: Data types required by the Content component ---
-export type ExercisePageData = {
-	exercise: {
-		id: string
-		title: string
-		type: "Exercise"
-	}
-	questions: Array<{
-		id: string
-		exerciseId: string
-		qtiIdentifier: string
-	}>
-}
-
-// --- REMOVED: The local fetchExerciseData function ---
+// --- REMOVED: The local ExercisePageData type definition ---
 
 export default function ExercisePage({
 	params
@@ -26,11 +13,11 @@ export default function ExercisePage({
 }) {
 	logger.info("exercise page: received request, rendering layout immediately")
 
-	const exerciseDataPromise = params.then(fetchExercisePageData)
+	const exercisePromise: Promise<ExercisePageData> = params.then(fetchExercisePageData)
 
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading exercise...</div>}>
-			<Content exerciseDataPromise={exerciseDataPromise} />
+			<Content exercisePromise={exercisePromise} />
 		</React.Suspense>
 	)
 }

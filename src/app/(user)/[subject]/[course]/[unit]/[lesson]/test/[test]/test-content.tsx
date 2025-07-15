@@ -2,13 +2,10 @@
 
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
+import type { UnitTestPageData } from "@/lib/types"
 import { BottomNavigation } from "./bottom-navigation"
-import type { UnitTestPageData } from "./page"
 
-type TestData = UnitTestPageData
-type TestQuestion = UnitTestPageData["questions"][0]
-
-function QuestionStepper({ questions }: { questions: TestQuestion[] }) {
+function QuestionStepper({ questions }: { questions: UnitTestPageData["questions"] }) {
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
 	const [hasResponse, setHasResponse] = React.useState(false)
 	const currentQuestion = questions[currentQuestionIndex]
@@ -51,8 +48,8 @@ function QuestionStepper({ questions }: { questions: TestQuestion[] }) {
 	)
 }
 
-export function TestContent({ testDataPromise }: { testDataPromise: Promise<TestData> }) {
-	const { test, questions } = React.use(testDataPromise)
+export function TestContent({ testPromise }: { testPromise: Promise<UnitTestPageData> }) {
+	const { test, questions } = React.use(testPromise)
 	const [hasStarted, setHasStarted] = React.useState(false)
 
 	if (hasStarted) {

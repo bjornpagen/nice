@@ -3,7 +3,7 @@
 import Image from "next/image"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
-import type { VideoPageData } from "./page"
+import type { VideoPageData } from "@/lib/types"
 
 export function Content({ videoPromise }: { videoPromise: Promise<VideoPageData> }) {
 	const video = React.use(videoPromise)

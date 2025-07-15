@@ -1,17 +1,10 @@
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchArticlePageData } from "@/lib/data-fetching"
+import type { ArticlePageData } from "@/lib/types" // Import from canonical types
 import { Content } from "./content"
 
-// --- DEFINED IN-FILE: Data types required by the Content component ---
-// The Article type now contains the identifier for QTI rendering
-export type ArticlePageData = {
-	id: string
-	title: string
-	identifier: string // QTI stimulus identifier
-}
-
-// --- REMOVED: The local fetchArticleData function ---
+// --- REMOVED: The local ArticlePageData type definition ---
 
 export default function ArticlePage({
 	params
@@ -20,7 +13,7 @@ export default function ArticlePage({
 }) {
 	logger.info("article page: received request, rendering layout immediately")
 
-	const articlePromise = params.then(fetchArticlePageData)
+	const articlePromise: Promise<ArticlePageData> = params.then(fetchArticlePageData)
 
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading article...</div>}>

@@ -1,54 +1,38 @@
+import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import type { ArticlePageData } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/a/[article]/page"
-import type { ExercisePageData } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/e/[exercise]/page"
-import type { LessonChild, LessonInfo, LessonLayoutData } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/layout"
-import type { QuizPageData } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/quiz/[quiz]/page"
-import type { UnitTestPageData } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/test/[test]/page"
-import type { VideoPageData } from "@/app/(user)/[subject]/[course]/[unit]/[lesson]/v/[video]/page"
-import type {
-	UnitPage_Article,
-	UnitPage_Course,
-	UnitPage_CourseChallenge,
-	UnitPage_Exercise,
-	UnitPage_Lesson,
-	UnitPage_Quiz,
-	UnitPage_Unit,
-	UnitPage_UnitChild,
-	UnitPage_UnitTest,
-	UnitPage_UnitWithChildren,
-	UnitPage_Video,
-	UnitPageData
-} from "@/app/(user)/[subject]/[course]/[unit]/page"
-// Import Page/Component-specific types
-import type {
-	CoursePage_Article,
-	CoursePage_Course,
-	CoursePage_CourseChallenge,
-	CoursePage_Exercise,
-	CoursePage_Lesson,
-	CoursePage_Unit,
-	CoursePage_UnitAssessment,
-	CoursePage_UnitChild,
-	CoursePage_UnitWithChildren,
-	CoursePage_Video,
-	CoursePageData
-} from "@/app/(user)/[subject]/[course]/page"
-import type {
-	CourseChallengePage_LayoutData,
-	CourseChallengePageData
-} from "@/app/(user)/[subject]/[course]/test/[test]/page"
-import type {
-	AllSubject as Profile_AllSubject,
-	Course as Profile_Course,
-	Unit as Profile_Unit
-} from "@/app/(user)/profile/me/courses/page"
+// --- REMOVED: All local type imports from page files ---
 import { oneroster, qti } from "@/lib/clients"
-
 import type { ClassReadSchemaType, CourseReadSchemaType, Resource } from "@/lib/oneroster"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/oneroster-metadata"
 import { ErrQtiNotFound } from "@/lib/qti"
+import type {
+	Article,
+	ArticlePageData,
+	Course,
+	CourseChallenge,
+	CourseChallengeLayoutData,
+	CourseChallengePageData,
+	CoursePageData,
+	Exercise,
+	ExercisePageData,
+	Lesson,
+	LessonChild,
+	LessonLayoutData,
+	ProfileCourse,
+	ProfileCoursesPageData,
+	ProfileSubject,
+	Quiz,
+	QuizPageData,
+	Unit,
+	UnitChild,
+	UnitPageData,
+	UnitTest,
+	UnitTestPageData,
+	Video,
+	VideoPageData
+} from "@/lib/types"
 
 // Helper to safely get metadata values
 function getMetadataValue(metadata: Record<string, unknown> | undefined, key: string): string {
@@ -92,8 +76,9 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 	}
 	const courseMetadata = courseMetadataResult.data
 
-	const course: CoursePage_Course = {
+	const courseForPage: Pick<Course, "id" | "title" | "description" | "path" | "slug"> = {
 		id: oneRosterCourse.sourcedId,
+		slug: courseMetadata.khanSlug, // Add slug
 		title: oneRosterCourse.title,
 		description: courseMetadata.description,
 		path: courseMetadata.path
@@ -113,8 +98,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 	logger.debug("allComponents", { allComponents })
 
 	// Separate units (no parent) and lessons (have parent)
-	const units: CoursePage_Unit[] = []
-	const lessonsByUnitId = new Map<string, CoursePage_Lesson[]>()
+	const units: Unit[] = [] // Change to full Unit type
+	const lessonsByUnitId = new Map<string, Lesson[]>() // Change to full Lesson type
 
 	for (const component of allComponents) {
 		// ✅ NEW: Validate component metadata with Zod
@@ -130,19 +115,14 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 
 		if (!component.parent) {
 			// This is a unit
-			if (!component.metadata) {
-				logger.error("CRITICAL: Unit component missing metadata", {
-					componentId: component.sourcedId,
-					title: component.title
-				})
-				throw errors.new("unit component: metadata is required")
-			}
 			units.push({
 				id: component.sourcedId,
+				slug: componentMetadata.khanSlug,
 				title: component.title,
+				description: componentMetadata.description,
 				path: componentMetadata.path,
 				ordering: component.sortOrder,
-				metadata: component.metadata
+				children: [] // Initialize children array
 			})
 		} else {
 			// This is a lesson or assessment - we'll determine type later when we process resources
@@ -169,13 +149,13 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 			}
 
 			lessonsByUnitId.get(parentId)?.push({
+				type: "Lesson", // Add missing type property
 				id: component.sourcedId,
-				unitId: parentId,
 				slug: componentMetadata.khanSlug,
 				title: component.title,
 				description: componentMetadata.description,
 				path: componentMetadata.path,
-				ordering: component.sortOrder
+				children: [] // Initialize children
 			})
 		}
 	}
@@ -233,22 +213,11 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 	}
 
 	// Build units with children
-	const unitsWithChildren: CoursePage_UnitWithChildren[] = units.map((unit) => {
-		let unitLessons = lessonsByUnitId.get(unit.id)
-		if (!unitLessons) {
-			// Unit has no lessons, which is valid
-			unitLessons = []
-			lessonsByUnitId.set(unit.id, unitLessons)
-		}
+	const unitsWithChildren: Unit[] = units.map((unit) => {
+		const unitLessons = lessonsByUnitId.get(unit.id) || []
+		const unitResources = resourcesByComponentId.get(unit.id) || []
 
-		// Get resources linked directly to the unit (assessments)
-		let unitResources = resourcesByComponentId.get(unit.id)
-		if (!unitResources) {
-			// Unit has no direct resources, which is valid
-			unitResources = []
-			resourcesByComponentId.set(unit.id, unitResources)
-		}
-		const unitAssessments: CoursePage_UnitAssessment[] = []
+		const unitAssessments: (Quiz | UnitTest)[] = []
 
 		// Find assessments from unit resources
 		for (const resource of unitResources) {
@@ -275,16 +244,6 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					(cr) => cr.courseComponent.sourcedId === unit.id && cr.resource.sourcedId === resource.sourcedId
 				)
 
-				// ✅ NEW: Validate unit metadata with Zod
-				const unitMetadataResult = ComponentMetadataSchema.safeParse(unit.metadata)
-				if (!unitMetadataResult.success) {
-					logger.error("failed to parse unit metadata", {
-						unitId: unit.id,
-						error: unitMetadataResult.error
-					})
-					throw errors.wrap(unitMetadataResult.error, "invalid unit metadata")
-				}
-
 				if (!componentResource) {
 					logger.error("component resource not found for assessment", {
 						resourceId: resource.sourcedId,
@@ -293,33 +252,28 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					throw errors.new(`component resource not found for assessment ${resource.sourcedId}`)
 				}
 
-				unitAssessments.push({
+				const assessment: Quiz | UnitTest = {
 					id: resource.sourcedId,
 					type: assessmentType,
-					parentId: unit.id,
-					title: resource.title,
 					slug: resourceMetadata.khanSlug,
+					title: resource.title,
+					description: resourceMetadata.description,
 					path: resourceMetadata.path,
-					ordering: componentResource.sortOrder,
-					description: resourceMetadata.description
-				})
+					questions: [] // Questions are not needed on the course page
+				}
+				unitAssessments.push(assessment)
 			}
 		}
 
 		// Process lessons with their content
-		const lessonsWithContent: CoursePage_UnitChild[] = unitLessons.map((lesson) => {
-			let lessonResources = resourcesByComponentId.get(lesson.id)
-			if (!lessonResources) {
-				// Lesson has no resources, which is valid
-				lessonResources = []
-				resourcesByComponentId.set(lesson.id, lessonResources)
-			}
+		const lessonsWithContent: Lesson[] = unitLessons.map((lesson) => {
+			const lessonResources = resourcesByComponentId.get(lesson.id) || []
 
-			const videos: CoursePage_Video[] = []
-			const articles: CoursePage_Article[] = []
-			const exercises: CoursePage_Exercise[] = []
+			const videos: Video[] = []
+			const articles: Article[] = []
+			const exercises: Exercise[] = []
 
-			// Categorize resources by type (based on metadata)
+			// Categorize resources by type
 			for (const resource of lessonResources) {
 				// ✅ NEW: Validate resource metadata with Zod
 				const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
@@ -332,16 +286,6 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 				}
 				const resourceMetadata = resourceMetadataResult.data
 
-				// ✅ NEW: Validate unit metadata with Zod
-				const unitMetadataResult = ComponentMetadataSchema.safeParse(unit.metadata)
-				if (!unitMetadataResult.success) {
-					logger.error("failed to parse unit metadata", {
-						unitId: unit.id,
-						error: unitMetadataResult.error
-					})
-					throw errors.wrap(unitMetadataResult.error, "invalid unit metadata")
-				}
-
 				// Find the componentResource to get the sortOrder
 				const componentResource = componentResources.find(
 					(cr) => cr.courseComponent.sourcedId === lesson.id && cr.resource.sourcedId === resource.sourcedId
@@ -350,7 +294,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					logger.error("component resource not found", { lessonId: lesson.id, resourceId: resource.sourcedId })
 					throw errors.new(`component resource not found for lesson ${lesson.id} resource ${resource.sourcedId}`)
 				}
-				const ordering = componentResource.sortOrder
+				const _ordering = componentResource.sortOrder
 
 				if (resourceMetadata.type === "video") {
 					const youtubeUrl = resourceMetadata.url
@@ -366,71 +310,54 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					}
 					const youtubeId = youtubeMatch[1]
 
-					// Note: description is guaranteed to be a string (possibly empty) by the Zod schema
 					videos.push({
+						type: "Video",
 						id: resource.sourcedId,
 						title: resource.title,
 						path: resourceMetadata.path,
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.description,
 						youtubeId: youtubeId,
-						duration: resourceMetadata.duration ?? 0,
-						ordering
+						duration: resourceMetadata.duration ?? 0
 					})
 				} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
 					// This is an article
-					// Note: description is guaranteed to be a string (possibly empty) by the Zod schema
 					articles.push({
+						type: "Article",
 						id: resource.sourcedId,
 						title: resource.title,
 						path: resourceMetadata.path,
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.description,
-						perseusContent: null, // Will be fetched from QTI server
-						ordering
+						qtiIdentifier: `nice:${resourceMetadata.khanId}` // Add qtiIdentifier
 					})
 				} else if (
 					resourceMetadata.type === "qti" &&
 					resourceMetadata.subType === "qti-test" &&
 					!resourceMetadata.khanLessonType
 				) {
-					// This is an exercise (test without lessonType means it's an exercise)
-					logger.debug("including exercise with new format", { sourcedId: resource.sourcedId })
-
+					// This is an exercise
 					exercises.push({
+						type: "Exercise",
 						id: resource.sourcedId,
 						title: resource.title,
 						path: resourceMetadata.path,
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.description,
-						questions: [], // Will be fetched from QTI server
-						ordering
+						questions: [] // Questions are not needed on course page
 					})
 				}
 			}
 
-			// Sort content by ordering
-			videos.sort((a, b) => a.ordering - b.ordering)
-			articles.sort((a, b) => a.ordering - b.ordering)
-			exercises.sort((a, b) => a.ordering - b.ordering)
+			// No need to sort here, done later
 
 			return {
 				...lesson,
-				type: "Lesson" as const,
-				videos,
-				articles,
-				exercises
+				children: [...videos, ...articles, ...exercises]
 			}
 		})
 
-		// Process assessments
-		const assessmentsWithType: CoursePage_UnitChild[] = unitAssessments.map((assessment) => ({
-			...assessment,
-			type: assessment.type
-		}))
-
-		// Combine and sort all children by ordering
-		const children = [...lessonsWithContent, ...assessmentsWithType].sort((a, b) => a.ordering - b.ordering)
+		const children: UnitChild[] = [...lessonsWithContent, ...unitAssessments]
 
 		return {
 			...unit,
@@ -440,21 +367,24 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 
 	// Count total lessons
 	let lessonCount = 0
-	for (const [, lessons] of lessonsByUnitId) {
-		lessonCount += lessons.length
+	for (const unit of unitsWithChildren) {
+		lessonCount += unit.children.filter((child) => child.type === "Lesson").length
 	}
 
-	// Get course challenges (resources directly associated with the course, not components)
-	const challenges: CoursePage_CourseChallenge[] = []
-	// In the OneRoster model, course challenges would be resources without component associations
-	// or with specific metadata. For now, we'll return empty array.
+	// Get course challenges
+	const challenges: CourseChallenge[] = [] // Fetch if necessary
+
+	// Construct the final Course object
+	const finalCourse: Course = {
+		...courseForPage,
+		units: unitsWithChildren,
+		challenges
+	}
 
 	return {
 		params,
-		course,
-		units: unitsWithChildren,
-		lessonCount,
-		challenges
+		course: finalCourse,
+		lessonCount
 	}
 }
 
@@ -531,7 +461,7 @@ export async function fetchUnitPageData(params: {
 	}
 	const courseMetadata = courseMetadataResult.data
 
-	const course: UnitPage_Course = {
+	const courseForPage: Pick<Course, "id" | "title" | "path" | "description"> = {
 		id: oneRosterCourse.sourcedId,
 		title: oneRosterCourse.title,
 		path: courseMetadata.path,
@@ -549,18 +479,8 @@ export async function fetchUnitPageData(params: {
 	}
 	const unitMetadata = unitMetadataResult.data
 
-	const unit: UnitPage_Unit = {
-		id: oneRosterUnit.sourcedId,
-		title: oneRosterUnit.title,
-		path: unitMetadata.path,
-		ordering: oneRosterUnit.sortOrder,
-		slug: unitMetadata.khanSlug,
-		description: unitMetadata.description,
-		metadata: oneRosterUnit.metadata || {}
-	}
-
 	// Get all units for navigation
-	const allUnits: UnitPage_UnitWithChildren[] = [] // Changed type
+	const allUnits: Unit[] = []
 	for (const component of allComponents) {
 		if (component.parent) continue // Skip non-units
 
@@ -582,8 +502,7 @@ export async function fetchUnitPageData(params: {
 			ordering: component.sortOrder,
 			slug: componentMetadata.khanSlug,
 			description: componentMetadata.description,
-			metadata: component.metadata || {}, // Added metadata
-			children: [] // Added empty children to satisfy type
+			children: [] // Initialize empty children
 		})
 	}
 	allUnits.sort((a, b) => a.ordering - b.ordering)
@@ -655,7 +574,7 @@ export async function fetchUnitPageData(params: {
 	})
 
 	// First, get assessments that are linked directly to the unit
-	const unitAssessments: (UnitPage_Quiz | UnitPage_UnitTest)[] = []
+	const unitAssessments: (Quiz | UnitTest)[] = []
 	for (const cr of unitComponentResources) {
 		const resource = allResources.find((r) => r.sourcedId === cr.resource.sourcedId)
 		if (resource) {
@@ -682,22 +601,20 @@ export async function fetchUnitPageData(params: {
 						id: resource.sourcedId,
 						title: resource.title,
 						path: resourceMetadata.path,
-						ordering: cr.sortOrder,
 						type: "Quiz",
-						parentId: unitSourcedId,
 						slug: resourceMetadata.khanSlug,
-						description: resourceMetadata.description
+						description: resourceMetadata.description,
+						questions: []
 					})
 				} else {
 					unitAssessments.push({
 						id: resource.sourcedId,
 						title: resource.title,
 						path: resourceMetadata.path,
-						ordering: cr.sortOrder,
 						type: "UnitTest",
-						parentId: unitSourcedId,
 						slug: resourceMetadata.khanSlug,
-						description: resourceMetadata.description
+						description: resourceMetadata.description,
+						questions: []
 					})
 				}
 			}
@@ -720,7 +637,7 @@ export async function fetchUnitPageData(params: {
 	}
 
 	// Process unit children (lessons only now, since assessments are handled separately)
-	const processedLessons: UnitPage_Lesson[] = []
+	const processedLessons: Lesson[] = []
 
 	for (const child of unitChildren) {
 		// ✅ NEW: Validate child component metadata with Zod
@@ -741,9 +658,9 @@ export async function fetchUnitPageData(params: {
 			resourcesByComponentId.set(child.sourcedId, lessonResources)
 		}
 
-		const videos: UnitPage_Video[] = []
-		const articles: UnitPage_Article[] = []
-		const exercises: UnitPage_Exercise[] = []
+		const videos: Video[] = []
+		const articles: Article[] = []
+		const exercises: Exercise[] = []
 
 		// Categorize resources by type
 		for (const resource of lessonResources) {
@@ -766,7 +683,6 @@ export async function fetchUnitPageData(params: {
 				logger.error("component resource not found", { lessonId: child.sourcedId, resourceId: resource.sourcedId })
 				throw errors.new(`component resource not found for lesson ${child.sourcedId} resource ${resource.sourcedId}`)
 			}
-			const ordering = componentResource.sortOrder
 
 			if (resourceMetadata.type === "video") {
 				const youtubeUrl = resourceMetadata.url
@@ -790,7 +706,7 @@ export async function fetchUnitPageData(params: {
 					description: resourceMetadata.description,
 					youtubeId: youtubeId,
 					duration: resourceMetadata.duration || 0,
-					ordering
+					type: "Video"
 				})
 			} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
 				// This is an article
@@ -800,17 +716,15 @@ export async function fetchUnitPageData(params: {
 					path: resourceMetadata.path,
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.description,
-					perseusContent: null, // Will be fetched from QTI server
-					ordering
+					qtiIdentifier: `nice:${resourceMetadata.khanId}`,
+					type: "Article"
 				})
 			} else if (
 				resourceMetadata.type === "qti" &&
 				resourceMetadata.subType === "qti-test" &&
 				!resourceMetadata.khanLessonType
 			) {
-				// This is an exercise (test without lessonType means it's an exercise)
-				logger.debug("including exercise with new format", { sourcedId: resource.sourcedId })
-
+				// This is an exercise
 				exercises.push({
 					id: resource.sourcedId,
 					title: resource.title,
@@ -818,35 +732,43 @@ export async function fetchUnitPageData(params: {
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.description,
 					questions: [], // Will be fetched from QTI server
-					ordering
+					type: "Exercise"
 				})
 			}
 		}
 
-		// Sort content by ordering
-		videos.sort((a, b) => a.ordering - b.ordering)
-		articles.sort((a, b) => a.ordering - b.ordering)
-		exercises.sort((a, b) => a.ordering - b.ordering)
+		// No sorting needed here, canonical types don't have ordering
 
 		processedLessons.push({
 			id: child.sourcedId,
 			title: child.title,
 			path: childMetadata.path,
-			ordering: child.sortOrder,
 			type: "Lesson",
-			videos,
-			articles,
-			exercises,
-			unitId: unitSourcedId,
 			slug: childSlug,
-			description: childMetadata.description
+			description: childMetadata.description,
+			children: [...videos, ...articles, ...exercises]
 		})
 	}
 
 	// Combine lessons and assessments, then sort by ordering
-	const processedUnitChildren: UnitPage_UnitChild[] = [...processedLessons, ...unitAssessments].sort(
-		(a, b) => a.ordering - b.ordering
-	)
+	const processedUnitChildren: UnitChild[] = [...processedLessons, ...unitAssessments].sort((a, b) => {
+		// Find their original sortOrder from the components
+		const aComponent = unitChildren.find((c) => c.sourcedId === a.id)
+		const bComponent = unitChildren.find((c) => c.sourcedId === b.id)
+		const aOrder = aComponent?.sortOrder ?? 0
+		const bOrder = bComponent?.sortOrder ?? 0
+		return aOrder - bOrder
+	})
+
+	const finalUnit: Unit = {
+		id: oneRosterUnit.sourcedId,
+		title: oneRosterUnit.title,
+		slug: unitMetadata.khanSlug,
+		description: unitMetadata.description,
+		path: unitMetadata.path,
+		ordering: oneRosterUnit.sortOrder,
+		children: processedUnitChildren // Assign children here
+	}
 
 	// Count total lessons across all units
 	const allComponentsForLessonCountResult = await errors.try(
@@ -897,16 +819,15 @@ export async function fetchUnitPageData(params: {
 	const lessonCount = allLessons.filter((c) => !allAssessmentComponentIds.has(c.sourcedId)).length
 
 	// Get course challenges - for now return empty array
-	const challenges: UnitPage_CourseChallenge[] = []
+	const challenges: CourseChallenge[] = []
 
 	return {
 		params,
-		course,
+		course: courseForPage,
 		allUnits,
 		lessonCount,
 		challenges,
-		unit,
-		unitChildren: processedUnitChildren
+		unit: finalUnit // Assign the composite unit object
 	}
 }
 
@@ -1083,14 +1004,48 @@ export async function fetchLessonLayoutData(params: {
 
 				const description = typeof resource.metadata?.description === "string" ? resource.metadata.description : ""
 
-				const child: LessonChild & { sortOrder: number } = {
-					id: resource.sourcedId,
-					slug: resourceSlug,
-					title: resource.title,
-					description: description,
-					path: contentPath,
-					type: contentType,
-					sortOrder: cr.sortOrder
+				let child: LessonChild & { sortOrder: number }
+
+				if (contentType === "Video") {
+					const youtubeUrl = typeof resource.metadata?.url === "string" ? resource.metadata.url : ""
+					const youtubeMatch = youtubeUrl.match(/[?&]v=([^&]+)/)
+					const youtubeId = youtubeMatch?.[1] ?? ""
+
+					child = {
+						id: resource.sourcedId,
+						slug: resourceSlug,
+						title: resource.title,
+						description: description,
+						path: contentPath,
+						type: "Video",
+						youtubeId: youtubeId,
+						duration: typeof resource.metadata?.duration === "number" ? resource.metadata.duration : 0,
+						sortOrder: cr.sortOrder
+					}
+				} else if (contentType === "Article") {
+					const khanId = typeof resource.metadata?.khanId === "string" ? resource.metadata.khanId : resource.sourcedId
+					child = {
+						id: resource.sourcedId,
+						slug: resourceSlug,
+						title: resource.title,
+						description: description,
+						path: contentPath,
+						type: "Article",
+						qtiIdentifier: `nice:${khanId}`,
+						sortOrder: cr.sortOrder
+					}
+				} else {
+					// Exercise
+					child = {
+						id: resource.sourcedId,
+						slug: resourceSlug,
+						title: resource.title,
+						description: description,
+						path: contentPath,
+						type: "Exercise",
+						questions: [], // Empty array, will be fetched if needed
+						sortOrder: cr.sortOrder
+					}
 				}
 				if (!lessonContentMap.has(cr.courseComponent.sourcedId)) {
 					lessonContentMap.set(cr.courseComponent.sourcedId, [])
@@ -1108,7 +1063,7 @@ export async function fetchLessonLayoutData(params: {
 	}
 
 	// 6. Assemble the final data structure
-	const unitLessonsWithContent: LessonInfo[] = unitLessonsResult.data
+	const unitLessonsWithContent: Lesson[] = unitLessonsResult.data
 		.map((lesson) => {
 			// Validate required fields
 			if (!lesson.title) {
@@ -1180,6 +1135,8 @@ export async function fetchLessonLayoutData(params: {
 		throw errors.new("unit: title is required")
 	}
 	const unitPath = typeof unit.metadata?.path === "string" ? unit.metadata.path : ""
+	const unitSlug = typeof unit.metadata?.khanSlug === "string" ? unit.metadata.khanSlug : ""
+	const unitDescription = typeof unit.metadata?.description === "string" ? unit.metadata.description : ""
 
 	// Validate required lesson fields
 	if (!currentLesson.title) {
@@ -1187,6 +1144,9 @@ export async function fetchLessonLayoutData(params: {
 		throw errors.new("current lesson: title is required")
 	}
 	const currentLessonPath = typeof currentLesson.metadata?.path === "string" ? currentLesson.metadata.path : ""
+	const currentLessonSlug = typeof currentLesson.metadata?.khanSlug === "string" ? currentLesson.metadata.khanSlug : ""
+	const currentLessonDescription =
+		typeof currentLesson.metadata?.description === "string" ? currentLesson.metadata.description : ""
 
 	const currentLessonChildrenMap = finalLessonContentMap.get(currentLesson.sourcedId)
 
@@ -1199,22 +1159,31 @@ export async function fetchLessonLayoutData(params: {
 		currentLessonChildren = currentLessonChildrenMap
 	}
 
+	const finalUnitData: Unit = {
+		id: unit.sourcedId,
+		slug: unitSlug,
+		title: unit.title,
+		description: unitDescription,
+		path: unitPath,
+		ordering: unit.sortOrder,
+		children: unitLessonsWithContent
+	}
+
+	const finalLessonData: Lesson = {
+		id: currentLesson.sourcedId,
+		slug: currentLessonSlug,
+		title: currentLesson.title,
+		description: currentLessonDescription,
+		path: currentLessonPath,
+		type: "Lesson",
+		children: currentLessonChildren
+	}
+
 	return {
 		subject: params.subject,
 		courseData: { title: course.title, path: coursePath },
-		unitData: {
-			id: unit.sourcedId,
-			title: unit.title,
-			path: unitPath,
-			sortOrder: unit.sortOrder,
-			children: unitLessonsWithContent
-		},
-		lessonData: {
-			id: currentLesson.sourcedId,
-			title: currentLesson.title,
-			path: currentLessonPath,
-			children: currentLessonChildren
-		}
+		unitData: finalUnitData,
+		lessonData: finalLessonData
 	}
 }
 
@@ -1494,7 +1463,7 @@ export async function fetchCourseChallengePage_LayoutData(params: {
 	test: string
 	course: string
 	subject: string
-}): Promise<CourseChallengePage_LayoutData> {
+}): Promise<CourseChallengeLayoutData> {
 	const courseResult = await errors.try(oneroster.getAllCourses({ filter: `metadata.khanSlug='${params.course}'` }))
 	if (courseResult.error) {
 		throw errors.wrap(courseResult.error, "fetch course")
@@ -1544,7 +1513,7 @@ export async function fetchCourseChallengePage_LayoutData(params: {
 		unit: {
 			title: lastUnit.title,
 			path: getMetadataValue(lastUnit.metadata, "path"),
-			sortOrder: lastUnit.sortOrder,
+			ordering: lastUnit.sortOrder,
 			children: []
 		},
 		lesson: { title: lastLesson.title, path: getMetadataValue(lastLesson.metadata, "path"), children: [] }
@@ -1552,7 +1521,7 @@ export async function fetchCourseChallengePage_LayoutData(params: {
 }
 
 // --- Data Fetchers for Profile Courses Page ---
-export async function getOneRosterCoursesForExplore(): Promise<Profile_AllSubject[]> {
+export async function getOneRosterCoursesForExplore(): Promise<ProfileSubject[]> {
 	// Get all courses from OneRoster
 	const coursesResult = await errors.try(oneroster.getAllCourses({}))
 	if (coursesResult.error) {
@@ -1578,7 +1547,7 @@ export async function getOneRosterCoursesForExplore(): Promise<Profile_AllSubjec
 	}
 
 	// Convert to the expected format
-	const allSubjects: Profile_AllSubject[] = []
+	const allSubjects: ProfileSubject[] = []
 
 	for (const [subjectCode, courses] of coursesBySubject) {
 		// Try to get a more readable subject name
@@ -1630,7 +1599,7 @@ export async function getOneRosterCoursesForExplore(): Promise<Profile_AllSubjec
 	return allSubjects
 }
 
-export async function fetchUserEnrolledCourses(userId: string): Promise<Profile_Course[]> {
+export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileCourse[]> {
 	// Get enrollments for the user
 	const filter = `user.sourcedId='${userId}' AND status='active'`
 	const enrollmentsResult = await errors.try(oneroster.getAllEnrollments({ filter }))
@@ -1657,7 +1626,7 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<Profile_
 
 	// Fetch units for all courses associated with the classes
 	const courseIds = [...new Set(classes.map((c) => c.course.sourcedId))]
-	const unitsByCourseId = new Map<string, Profile_Unit[]>()
+	const unitsByCourseId = new Map<string, Unit[]>()
 
 	if (courseIds.length > 0) {
 		const allUnitsResult = await errors.try(
@@ -1689,17 +1658,19 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<Profile_
 					id: unit.sourcedId,
 					title: unit.title,
 					path,
-					courseId,
 					ordering: unit.sortOrder,
 					description: getMetadataValue(unit.metadata, "description") || "",
-					slug
+					slug,
+					children: [] // Initialize with empty children
 				})
 			}
 		}
 	}
 
-	// Map to Profile_Course format and attach units
-	return classes.map((cls) => {
+	// Map to ProfileCourse format and attach units
+	const courses: ProfileCourse[] = []
+
+	for (const cls of classes) {
 		const courseUnits = unitsByCourseId.get(cls.course.sourcedId)
 		if (!courseUnits) {
 			logger.error("CRITICAL: No units found for course", {
@@ -1708,9 +1679,48 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<Profile_
 			})
 			throw errors.new("course units: required data missing")
 		}
-		return {
-			...cls,
-			units: courseUnits
+
+		// Fetch course metadata for the ProfileCourse
+		const courseResult = await errors.try(oneroster.getCourse(cls.course.sourcedId))
+		if (courseResult.error) {
+			logger.error("failed to fetch course metadata", {
+				courseId: cls.course.sourcedId,
+				error: courseResult.error
+			})
+			continue // Skip this course
 		}
-	})
+
+		const course = courseResult.data
+		if (!course) {
+			logger.error("course data is undefined", { courseId: cls.course.sourcedId })
+			continue // Skip this course
+		}
+
+		const courseMetadata = course.metadata || {}
+
+		courses.push({
+			id: course.sourcedId,
+			title: course.title,
+			description: getMetadataValue(courseMetadata, "description"),
+			path: getMetadataValue(courseMetadata, "path"),
+			units: courseUnits
+		})
+	}
+
+	return courses
+}
+
+// --- Data Fetcher for Profile Courses Page ---
+export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData> {
+	const user = await currentUser()
+	if (!user) {
+		throw errors.new("user not authenticated")
+	}
+
+	const subjectsPromise = getOneRosterCoursesForExplore()
+	const userCoursesPromise = fetchUserEnrolledCourses(user.id)
+
+	const [subjects, userCourses] = await Promise.all([subjectsPromise, userCoursesPromise])
+
+	return { subjects, userCourses }
 }

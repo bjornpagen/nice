@@ -1,18 +1,20 @@
 import { ProficiencyIcon, type proficiencyIconVariants } from "@/components/icons/proficiency"
-import type { CoursePage_Exercise, CoursePage_UnitChild } from "./page"
+import type { UnitChild } from "@/lib/types"
 
 type ProficiencyItem = {
 	id: string
 	variant: keyof typeof proficiencyIconVariants
 }
 
-export function ProficiencyProgress({ unitChildren }: { unitChildren: CoursePage_UnitChild[] }) {
+export function ProficiencyProgress({ unitChildren }: { unitChildren: UnitChild[] }) {
 	const items: ProficiencyItem[] = unitChildren.flatMap((child): ProficiencyItem[] => {
-		if (child.type === "Lesson" && child.exercises != null && child.exercises.length > 0) {
-			return child.exercises.map((exercise: CoursePage_Exercise) => ({
-				id: exercise.id,
-				variant: "notStarted"
-			}))
+		if (child.type === "Lesson") {
+			return child.children
+				.filter((c) => c.type === "Exercise")
+				.map((exercise) => ({
+					id: exercise.id,
+					variant: "notStarted"
+				}))
 		}
 
 		if (child.type === "Quiz") {

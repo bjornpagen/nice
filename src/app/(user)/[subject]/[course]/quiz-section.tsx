@@ -1,10 +1,10 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import type { Quiz } from "@/lib/types"
 import { startCase } from "@/lib/utils"
-import type { UnitPage_Quiz } from "./[unit]/page"
 import { Section } from "./section"
 
-export function QuizSection({ quiz }: { quiz: UnitPage_Quiz }) {
+export function QuizSection({ quiz }: { quiz: Quiz }) {
 	return (
 		<Section>
 			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">

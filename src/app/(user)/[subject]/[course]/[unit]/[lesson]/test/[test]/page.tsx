@@ -1,24 +1,10 @@
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchUnitTestPageData } from "@/lib/data-fetching"
+import type { UnitTestPageData } from "@/lib/types"
 import { TestContent } from "./test-content"
 
-// --- DEFINED IN-FILE: Data types required by the TestContent component ---
-export type UnitTestPageData = {
-	test: {
-		id: string
-		title: string
-		description: string
-		type: "UnitTest"
-	}
-	questions: Array<{
-		id: string
-		exerciseId: string
-		qtiIdentifier: string
-	}>
-}
-
-// --- REMOVED: The local fetchTestData function ---
+// --- REMOVED: The local UnitTestPageData type definition ---
 
 export default function UnitTestPage({
 	params
@@ -27,11 +13,11 @@ export default function UnitTestPage({
 }) {
 	logger.info("unit test page: received request, rendering layout immediately")
 
-	const testDataPromise = params.then(fetchUnitTestPageData)
+	const testPromise: Promise<UnitTestPageData> = params.then(fetchUnitTestPageData)
 
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading test...</div>}>
-			<TestContent testDataPromise={testDataPromise} />
+			<TestContent testPromise={testPromise} />
 		</React.Suspense>
 	)
 }

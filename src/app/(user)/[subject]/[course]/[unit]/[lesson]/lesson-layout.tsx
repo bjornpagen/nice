@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import type { LessonLayoutData } from "./layout"
+import type { LessonLayoutData } from "@/lib/types"
 import { LessonNext } from "./lesson-next"
 import { LessonSidebar } from "./lesson-sidebar"
 
@@ -20,9 +20,13 @@ export function LessonLayout({
 
 	// Find the selected lesson from unit children
 	const selectedLesson = React.useMemo(() => {
-		const lesson = unitData.children.find((child) => child.id === selectedLessonId)
+		const foundChild = unitData.children.find((child) => child.type === "Lesson" && child.id === selectedLessonId)
+		// Type guard: if found and is Lesson type, it's a Lesson
+		if (foundChild && foundChild.type === "Lesson") {
+			return foundChild
+		}
 		// If not found, default to current lesson
-		return lesson || lessonData
+		return lessonData
 	}, [unitData.children, selectedLessonId, lessonData])
 
 	return (

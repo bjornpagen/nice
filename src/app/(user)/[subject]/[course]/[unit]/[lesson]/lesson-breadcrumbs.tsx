@@ -6,7 +6,7 @@ import {
 	BreadcrumbList,
 	BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
-import type { CourseInfo, LessonInfo, UnitInfo } from "@/lib/khan-academy-api"
+import type { Course, Lesson, Unit } from "@/lib/types"
 import { startCase } from "@/lib/utils"
 
 export function LessonBreadcrumbs({
@@ -16,9 +16,9 @@ export function LessonBreadcrumbs({
 	lesson
 }: {
 	subject: string
-	course: Pick<CourseInfo, "title" | "path">
-	unit: Pick<UnitInfo, "title" | "path">
-	lesson: Pick<LessonInfo, "title" | "path">
+	course: Pick<Course, "title" | "path">
+	unit: Pick<Unit, "title" | "path">
+	lesson: Pick<Lesson, "title" | "path">
 }) {
 	return (
 		<Breadcrumb className="text-center">

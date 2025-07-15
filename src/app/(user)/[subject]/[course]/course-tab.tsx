@@ -3,14 +3,14 @@
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import type { CoursePage_Course } from "./page"
+import type { Course } from "@/lib/types"
 
 export function CourseTab({
 	course,
 	unitCount,
 	lessonCount
 }: {
-	course: CoursePage_Course
+	course: Pick<Course, "path" | "title">
 	unitCount: number
 	lessonCount: number
 }) {

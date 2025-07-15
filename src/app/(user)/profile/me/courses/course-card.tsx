@@ -6,11 +6,11 @@ import Link from "next/link"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import type { ProfileCourse, Unit } from "@/lib/types"
 import { cn } from "@/lib/utils"
-import type { Course, Unit } from "./page"
 
 type CourseCardProps = {
-	course: Course
+	course: ProfileCourse
 	units: Unit[]
 	color: string
 }
@@ -20,12 +20,10 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 
 	// Validate required course path data
 	let coursePath: string
-	if (course.coursePath) {
-		coursePath = course.coursePath
+	if (course.path) {
+		coursePath = course.path
 	} else if (course.subject && course.courseSlug) {
 		coursePath = `/${course.subject}/${course.courseSlug}`
-	} else if (course.course?.sourcedId) {
-		coursePath = `/courses/${course.course.sourcedId}`
 	} else {
 		throw errors.new("course path: required data missing")
 	}
@@ -46,8 +44,8 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 		courseDescription = descriptionFromMetadata
 	} else if (khanDescriptionFromMetadata) {
 		courseDescription = khanDescriptionFromMetadata
-	} else if (course.courseDescription) {
-		courseDescription = course.courseDescription
+	} else if (course.description) {
+		courseDescription = course.description
 	}
 
 	return (

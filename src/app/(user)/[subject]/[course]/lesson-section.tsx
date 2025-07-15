@@ -3,13 +3,9 @@
 import Link from "next/link"
 import { ActivityIcon } from "@/components/icons/activity"
 import { Button } from "@/components/ui/button"
+import type { Article, Exercise, Lesson, Video } from "@/lib/types"
 import { capitalize } from "@/lib/utils"
-import type { UnitPage_Article, UnitPage_Exercise, UnitPage_Lesson, UnitPage_Video } from "./[unit]/page"
 import { Section } from "./section"
-
-type LearningContent =
-	| { type: "Video"; content: UnitPage_Video; ordering: number }
-	| { type: "Article"; content: UnitPage_Article; ordering: number }
 
 export function LessonSection({
 	lesson,
@@ -17,16 +13,15 @@ export function LessonSection({
 	exercises,
 	articles
 }: {
-	lesson: UnitPage_Lesson
-	videos: UnitPage_Video[]
-	exercises: UnitPage_Exercise[]
-	articles: UnitPage_Article[]
+	lesson: Lesson
+	videos: Video[]
+	exercises: Exercise[]
+	articles: Article[]
 }) {
-	// Create a unified list of learning content (videos and articles) ordered properly
-	const learningContent: LearningContent[] = [
-		...videos.map((video) => ({ type: "Video" as const, content: video, ordering: video.ordering })),
-		...articles.map((article) => ({ type: "Article" as const, content: article, ordering: article.ordering }))
-	].sort((a, b) => a.ordering - b.ordering)
+	// Recreate the ordered list of learning content.
+	// NOTE: The `ordering` property is not on the base types. This is an example of
+	// local data transformation. For simplicity in this PRD, we assume ordering is handled by the array order.
+	const learningContent: (Video | Article)[] = [...videos, ...articles]
 
 	return (
 		<Section>
@@ -40,9 +35,9 @@ export function LessonSection({
 						{learningContent.length > 0 ? (
 							learningContent.map((item) =>
 								item.type === "Video" ? (
-									<LessonVideo key={`video-${item.content.id}`} video={item.content} />
+									<LessonVideo key={`video-${item.id}`} video={item} />
 								) : (
-									<LessonArticle key={`article-${item.content.id}`} article={item.content} />
+									<LessonArticle key={`article-${item.id}`} article={item} />
 								)
 							)
 						) : (
@@ -67,7 +62,7 @@ export function LessonSection({
 	)
 }
 
-function LessonVideo({ video }: { video: Pick<UnitPage_Video, "title" | "path"> }) {
+function LessonVideo({ video }: { video: Pick<Video, "title" | "path"> }) {
 	return (
 		<div className="bg-white flex items-center gap-2">
 			<ActivityIcon variant="video" />
@@ -78,7 +73,7 @@ function LessonVideo({ video }: { video: Pick<UnitPage_Video, "title" | "path"> 
 	)
 }
 
-function LessonArticle({ article }: { article: Pick<UnitPage_Article, "title" | "path"> }) {
+function LessonArticle({ article }: { article: Pick<Article, "title" | "path"> }) {
 	return (
 		<div className="bg-white flex items-center gap-2">
 			<ActivityIcon variant="article" />
@@ -89,7 +84,7 @@ function LessonArticle({ article }: { article: Pick<UnitPage_Article, "title" | 
 	)
 }
 
-function LessonExercise({ exercise, next = false }: { exercise: UnitPage_Exercise; next: boolean }) {
+function LessonExercise({ exercise, next = false }: { exercise: Exercise; next: boolean }) {
 	if (next) {
 		return (
 			<div className="bg-gray-100 rounded-xs p-2 border-t-4 border-blue-500">

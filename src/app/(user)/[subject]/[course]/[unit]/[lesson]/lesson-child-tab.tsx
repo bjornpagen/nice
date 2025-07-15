@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ActivityIcon } from "@/components/icons/activity"
-import type { LessonChild } from "@/lib/khan-academy-api"
+import type { LessonChild } from "@/lib/types"
 
 function getVariant(child: Pick<LessonChild, "type">) {
 	switch (child.type) {

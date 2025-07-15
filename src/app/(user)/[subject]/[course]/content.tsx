@@ -5,9 +5,9 @@ import Link from "next/link"
 import * as React from "react"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
+import type { CoursePageData } from "@/lib/types"
 import { CourseChallenge } from "./course-challenge"
 import { CourseHeader } from "./course-header"
-import type { CoursePageData } from "./page"
 import { ProficiencyLegend } from "./proficiency-legend"
 import { ProficiencyProgressOverview } from "./proficiency-progress-overview"
 import { Section } from "./section"
@@ -16,7 +16,7 @@ import { UnitOverviewSection } from "./unit-overview-section"
 
 export function Content({ dataPromise }: { dataPromise: Promise<CoursePageData> }) {
 	// Consume the single, consolidated data promise.
-	const { params, course, units, lessonCount, challenges } = React.use(dataPromise)
+	const { params, course, lessonCount } = React.use(dataPromise)
 
 	return (
 		<div className="h-full overflow-y-auto overflow-x-hidden max-w-full">
@@ -26,7 +26,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<CoursePageData> 
 				<div className="flex-shrink-0 w-96">
 					<div className="sticky top-0 w-96 max-h-screen overflow-y-auto">
 						<React.Suspense>
-							<CourseSidebar course={course} units={units} lessonCount={lessonCount} challenges={challenges} />
+							<CourseSidebar course={course} lessonCount={lessonCount} challenges={course.challenges} />
 						</React.Suspense>
 					</div>
 				</div>
@@ -49,7 +49,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<CoursePageData> 
 
 					{/* Units Layout */}
 					<div className="columns-1 xl:columns-2 gap-6 mt-4">
-						{units.map((unit, index) => (
+						{course.units.map((unit, index) => (
 							<div key={unit.id} className="break-inside-avoid border-b border-gray-300">
 								<ProficiencyProgressOverview
 									index={index}
@@ -61,9 +61,9 @@ export function Content({ dataPromise }: { dataPromise: Promise<CoursePageData> 
 						))}
 
 						{/* Course Challenge */}
-						{challenges.length > 0 && challenges[0] && (
+						{course.challenges.length > 0 && course.challenges[0] && (
 							<div className="break-inside-avoid">
-								<CourseChallenge path={challenges[0].path} />
+								<CourseChallenge path={course.challenges[0].path} />
 							</div>
 						)}
 					</div>
@@ -86,7 +86,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<CoursePageData> 
 
 					{/* Units Breakdown Section */}
 					<div className="rounded-sm mt-6">
-						{units.map((unit, index) => (
+						{course.units.map((unit, index) => (
 							<div key={unit.id} className="break-inside-avoid border-b border-gray-300 mb-2 rounded-sm">
 								<UnitOverviewSection unit={unit} index={index} next={index === 0} />
 							</div>
@@ -95,7 +95,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<CoursePageData> 
 
 					{/* Course Challenge */}
 					<div className="rounded-sm">
-						{challenges.length > 0 && challenges[0] && (
+						{course.challenges.length > 0 && course.challenges[0] && (
 							<div className="break-inside-avoid">
 								<Section className="rounded-sm">
 									<h2 className="font-medium text-gray-900 text-base text-lg">Course challenge</h2>
@@ -105,7 +105,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<CoursePageData> 
 										className="bg-white text-blue-600 text-sm border border-gray-400 px-4 py-2 rounded-sm mt-2 hover:ring-2 hover:ring-blue-500 hover:text-blue-600"
 										asChild
 									>
-										<Link href={challenges[0].path}>Start Course challenge</Link>
+										<Link href={course.challenges[0].path}>Start Course challenge</Link>
 									</Button>
 								</Section>
 							</div>

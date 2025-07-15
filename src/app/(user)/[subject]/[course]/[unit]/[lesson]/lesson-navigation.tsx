@@ -2,8 +2,26 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import type { CourseInfo, LessonInfo, UnitInfo } from "@/lib/khan-academy-api"
+import type { Course, Lesson, Unit } from "@/lib/types"
 import { upperCase } from "@/lib/utils"
+
+function findNextLesson(unit: Pick<Unit, "children">, currentIndex: number): Lesson | undefined {
+	if (currentIndex >= unit.children.length - 1) return undefined
+	for (let i = currentIndex + 1; i < unit.children.length; i++) {
+		const child = unit.children[i]
+		if (child?.type === "Lesson") return child
+	}
+	return undefined
+}
+
+function findPrevLesson(unit: Pick<Unit, "children">, currentIndex: number): Lesson | undefined {
+	if (currentIndex <= 0) return undefined
+	for (let i = currentIndex - 1; i >= 0; i--) {
+		const child = unit.children[i]
+		if (child?.type === "Lesson") return child
+	}
+	return undefined
+}
 
 export function LessonNavigation({
 	course,
@@ -11,22 +29,20 @@ export function LessonNavigation({
 	lesson,
 	setSelectedLessonId
 }: {
-	course: Pick<CourseInfo, "title" | "path">
-	unit: Pick<UnitInfo, "title" | "path" | "children"> & { sortOrder: number }
-	lesson: Pick<LessonInfo, "title">
+	course: Pick<Course, "title" | "path">
+	unit: Pick<Unit, "title" | "path" | "children" | "ordering">
+	lesson: Pick<Lesson, "title">
 	setSelectedLessonId: (lessonId: string) => void
 }) {
 	const pathname = usePathname()
 
-	const index = unit.children.findIndex(
-		(child): child is LessonInfo => child.type === "Lesson" && child.title === lesson.title
-	)
+	const index = unit.children.findIndex((child) => child.type === "Lesson" && child.title === lesson.title)
 	// logger.info("lesson navigation", { index, lesson: lesson.title })
 
-	const prev = prevLesson(unit, index)
+	const prev = findPrevLesson(unit, index)
 	// logger.info("lesson navigation: prevLesson", { found: prev != null })
 
-	const next = nextLesson(unit, index)
+	const next = findNextLesson(unit, index)
 	// logger.info("lesson navigation: nextLesson", { found: next != null })
 
 	// Truncate course title if it's too long (Khan Academy style)
@@ -76,7 +92,7 @@ export function LessonNavigation({
 					</Link>
 					<span className="text-gray-600 text-xs font-medium flex-shrink-0">{" > "}</span>
 					<Link className="text-blue-600 hover:underline font-medium text-xs whitespace-nowrap" href={unitPagePath}>
-						UNIT {unit.sortOrder + 1}
+						UNIT {unit.ordering + 1}
 					</Link>
 				</div>
 				<div className="text-md text-gray-600 font-medium truncate">
@@ -97,36 +113,4 @@ export function LessonNavigation({
 			</div>
 		</div>
 	)
-}
-
-function prevLesson(
-	unit: Pick<UnitInfo, "children">,
-	index: number
-): Pick<LessonInfo, "id" | "path" | "children"> | undefined {
-	if (index <= 0) {
-		return undefined
-	}
-
-	const prev = unit.children[index - 1]
-	if (prev?.type === "Lesson") {
-		return prev
-	}
-
-	return prevLesson(unit, index - 1)
-}
-
-function nextLesson(
-	unit: Pick<UnitInfo, "children">,
-	index: number
-): Pick<LessonInfo, "id" | "path" | "children"> | undefined {
-	if (index >= unit.children.length - 1) {
-		return undefined
-	}
-
-	const next = unit.children[index + 1]
-	if (next?.type === "Lesson") {
-		return next
-	}
-
-	return nextLesson(unit, index + 1)
 }

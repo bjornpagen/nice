@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
-import type { CourseChallengePageData } from "./page"
+import type { CourseChallengePageData } from "@/lib/types"
 
 type TestQuestion = CourseChallengePageData["questions"][0]
 
@@ -45,20 +45,29 @@ function QuestionStepper({ questions }: { questions: TestQuestion[] }) {
 					onResponseChange={handleResponseChange}
 				/>
 			</div>
-			<div className="border-t bg-white p-4 flex-shrink-0">
-				<div className="flex items-center justify-between max-w-4xl mx-auto">
-					<Button onClick={goToPrevious} disabled={currentQuestionIndex === 0} variant="outline">
-						<ChevronLeft className="w-4 h-4 mr-2" />
-						Previous
-					</Button>
-					<div className="text-sm font-medium text-gray-600">
-						Question {currentQuestionIndex + 1} of {questions.length}
-					</div>
-					<Button onClick={goToNext} disabled={currentQuestionIndex === questions.length - 1}>
-						Next
-						<ChevronRight className="w-4 h-4 ml-2" />
-					</Button>
-				</div>
+			{/* Bottom Navigation */}
+			<div className="border-t border-gray-200 bg-white p-4 flex justify-between items-center">
+				<Button
+					onClick={goToPrevious}
+					disabled={currentQuestionIndex === 0}
+					variant="ghost"
+					className="flex items-center gap-2"
+				>
+					<ChevronLeft className="w-4 h-4" />
+					Previous
+				</Button>
+				<span className="text-sm text-gray-600">
+					Question {currentQuestionIndex + 1} of {questions.length}
+				</span>
+				<Button
+					onClick={goToNext}
+					disabled={currentQuestionIndex === questions.length - 1}
+					variant="ghost"
+					className="flex items-center gap-2"
+				>
+					Next
+					<ChevronRight className="w-4 h-4" />
+				</Button>
 			</div>
 		</div>
 	)

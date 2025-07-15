@@ -3,6 +3,7 @@
 import { Info } from "lucide-react"
 import * as React from "react"
 import { Footer } from "@/components/footer"
+import type { Article, Exercise, UnitChild, UnitPageData, Video } from "@/lib/types"
 import { CourseHeader } from "../course-header"
 import { LessonSection } from "../lesson-section"
 import { ProficiencyLegend } from "../proficiency-legend"
@@ -11,11 +12,10 @@ import { QuizSection } from "../quiz-section"
 import { Section } from "../section"
 import { CourseSidebar } from "../sidebar"
 import { UnitTestSection } from "../unit-test-section"
-import type { UnitPageData } from "./page"
 
 export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> }) {
 	// Consume the single, consolidated data promise.
-	const { params, course, allUnits, lessonCount, challenges, unit, unitChildren } = React.use(dataPromise)
+	const { params, course, allUnits, lessonCount, challenges, unit } = React.use(dataPromise)
 
 	const unitIndex = allUnits.findIndex((u) => u.id === unit.id)
 	if (unitIndex === -1) {
@@ -28,7 +28,11 @@ export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> })
 				<div className="flex-shrink-0 w-96">
 					<div className="sticky top-0 w-96 max-h-screen overflow-y-auto">
 						<React.Suspense fallback={<div className="w-80 bg-gray-100 animate-pulse h-full" />}>
-							<CourseSidebar course={course} units={allUnits} lessonCount={lessonCount} challenges={challenges} />
+							<CourseSidebar
+								course={{ ...course, units: allUnits }}
+								lessonCount={lessonCount}
+								challenges={challenges}
+							/>
 						</React.Suspense>
 					</div>
 				</div>
@@ -45,7 +49,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> })
 						<ProficiencyLegend />
 						<React.Suspense fallback={<div className="w-full h-4 bg-gray-200 animate-pulse rounded" />}>
 							<div className="mt-4">
-								<ProficiencyProgress unitChildren={unitChildren} />
+								<ProficiencyProgress unitChildren={unit.children} />
 							</div>
 						</React.Suspense>
 					</div>
@@ -72,7 +76,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> })
 							</div>
 						}
 					>
-						{unitChildren.map((child) => {
+						{unit.children.map((child: UnitChild) => {
 							switch (child.type) {
 								case "Lesson":
 									// Pass the fully hydrated lesson to the component
@@ -80,9 +84,9 @@ export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> })
 										<LessonSection
 											key={child.id}
 											lesson={child}
-											videos={child.videos}
-											exercises={child.exercises}
-											articles={child.articles}
+											videos={child.children.filter((c): c is Video => c.type === "Video")}
+											articles={child.children.filter((c): c is Article => c.type === "Article")}
+											exercises={child.children.filter((c): c is Exercise => c.type === "Exercise")}
 										/>
 									)
 								case "Quiz":
