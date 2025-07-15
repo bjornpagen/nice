@@ -264,8 +264,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 				if (resourceMetadata.type === "video") {
 					const youtubeUrl = resourceMetadata.url
 					if (!youtubeUrl) {
-						logger.error("video missing required url", { videoId: resource.sourcedId })
-						throw errors.new(`video ${resource.sourcedId} missing required url`)
+						logger.error("video missing YouTube URL", { videoId: resource.sourcedId })
+						throw errors.new("video missing YouTube URL")
 					}
 
 					const youtubeMatch = youtubeUrl.match(/[?&]v=([^&]+)/)
@@ -275,15 +275,24 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					}
 					const youtubeId = youtubeMatch[1]
 
+					// Validate required video fields
+					if (typeof resourceMetadata.duration !== "number") {
+						logger.error("CRITICAL: video missing duration", {
+							resourceId: resource.sourcedId,
+							khanId: resourceMetadata.khanId
+						})
+						throw errors.new("video resource missing required duration field")
+					}
+
 					videos.push({
-						type: "Video",
 						id: resource.sourcedId,
 						title: resource.title,
 						path: resourceMetadata.path,
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.description,
 						youtubeId: youtubeId,
-						duration: resourceMetadata.duration ?? 0
+						duration: resourceMetadata.duration,
+						type: "Video" as const
 					})
 				} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
 					// This is an article

@@ -52,17 +52,10 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 	const questionsResult = await errors.try(qti.getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
 		if (errors.is(questionsResult.error, ErrQtiNotFound)) {
-			logger.warn("quiz test not found in QTI server", { testId: resource.sourcedId })
-			// Return empty questions array if the test is not yet in QTI
-			return {
-				quiz: {
-					id: resource.sourcedId,
-					title: resource.title,
-					description: resourceMetadata.description,
-					type: "Quiz" as const
-				},
-				questions: []
-			}
+			logger.error("CRITICAL: quiz test not found in QTI server - data integrity violation", {
+				testId: resource.sourcedId
+			})
+			throw errors.wrap(questionsResult.error, "quiz test missing from QTI server - data corruption detected")
 		}
 		logger.error("failed to fetch questions for quiz", { testId: resource.sourcedId, error: questionsResult.error })
 		throw errors.wrap(questionsResult.error, "fetch questions for quiz")
@@ -122,17 +115,10 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 	const questionsResult = await errors.try(qti.getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
 		if (errors.is(questionsResult.error, ErrQtiNotFound)) {
-			logger.warn("unit test not found in QTI server", { testId: resource.sourcedId })
-			// Return empty questions array if the test is not yet in QTI
-			return {
-				test: {
-					id: resource.sourcedId,
-					title: resource.title,
-					description: resourceMetadata.description,
-					type: "UnitTest" as const
-				},
-				questions: []
-			}
+			logger.error("CRITICAL: unit test not found in QTI server - data integrity violation", {
+				testId: resource.sourcedId
+			})
+			throw errors.wrap(questionsResult.error, "unit test missing from QTI server - data corruption detected")
 		}
 		logger.error("failed to fetch questions for unit test", {
 			testId: resource.sourcedId,

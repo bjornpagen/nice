@@ -50,11 +50,11 @@ export async function fetchUnitPageData(params: {
 
 		const componentMetadataResult = ComponentMetadataSchema.safeParse(c.metadata)
 		if (!componentMetadataResult.success) {
-			logger.warn("skipping component with invalid metadata", {
+			logger.error("CRITICAL: invalid component metadata - data corruption detected", {
 				componentId: c.sourcedId,
 				error: componentMetadataResult.error
 			})
-			continue
+			throw errors.wrap(componentMetadataResult.error, "invalid component metadata - possible data corruption")
 		}
 		if (componentMetadataResult.data.khanSlug === decodedUnitSlug) {
 			oneRosterUnit = c
@@ -317,6 +317,15 @@ export async function fetchUnitPageData(params: {
 				}
 				const youtubeId = youtubeMatch[1]
 
+				// Validate required video fields
+				if (typeof resourceMetadata.duration !== "number") {
+					logger.error("CRITICAL: video missing duration", {
+						resourceId: resource.sourcedId,
+						khanId: resourceMetadata.khanId
+					})
+					throw errors.new("video resource missing required duration field")
+				}
+
 				videos.push({
 					id: resource.sourcedId,
 					title: resource.title,
@@ -324,7 +333,7 @@ export async function fetchUnitPageData(params: {
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.description,
 					youtubeId: youtubeId,
-					duration: resourceMetadata.duration || 0,
+					duration: resourceMetadata.duration,
 					type: "Video"
 				})
 			} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
@@ -374,9 +383,26 @@ export async function fetchUnitPageData(params: {
 		// Find their original sortOrder from the components
 		const aComponent = unitChildren.find((c) => c.sourcedId === a.id)
 		const bComponent = unitChildren.find((c) => c.sourcedId === b.id)
-		const aOrder = aComponent?.sortOrder ?? 0
-		const bOrder = bComponent?.sortOrder ?? 0
-		return aOrder - bOrder
+
+		if (!aComponent || !bComponent) {
+			logger.error("CRITICAL: unit child component not found - data integrity violation", {
+				unitId: unitMetadata.khanId,
+				missingA: !aComponent ? a.id : undefined,
+				missingB: !bComponent ? b.id : undefined
+			})
+			throw errors.new("unit child component missing - data corruption detected")
+		}
+
+		if (typeof aComponent.sortOrder !== "number" || typeof bComponent.sortOrder !== "number") {
+			logger.error("CRITICAL: component missing sortOrder", {
+				unitId: unitMetadata.khanId,
+				componentA: { id: aComponent.sourcedId, sortOrder: aComponent.sortOrder },
+				componentB: { id: bComponent.sourcedId, sortOrder: bComponent.sortOrder }
+			})
+			throw errors.new("component missing required sortOrder field")
+		}
+
+		return aComponent.sortOrder - bComponent.sortOrder
 	})
 
 	const finalUnit: Unit = {
