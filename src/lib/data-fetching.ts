@@ -1254,12 +1254,12 @@ export async function fetchExercisePageData(params: { exercise: string }): Promi
 	}
 	const resource = resourceResult.data[0]
 
-	if (!resource) {
+	if (!resource || !resource.metadata?.khanId) {
 		notFound()
 	}
 
-	// Use the sourcedId as the test identifier for QTI
-	const qtiTestId = resource.sourcedId
+	// Use the khanId from metadata to construct the QTI test identifier
+	const qtiTestId = `nice:${resource.metadata.khanId}`
 
 	// Fetch questions from QTI server
 	const questionsResult = await errors.try(qti.getAllQuestionsForTest(qtiTestId))
