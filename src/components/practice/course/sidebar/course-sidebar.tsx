@@ -64,8 +64,7 @@ export function CourseSidebar({
 							<Image
 								src={courseIconForeground}
 								alt="Course icon foreground"
-								fill
-								className="relative z-10 brightness-0 invert"
+								className="w-6 h-6 relative z-10 brightness-0 invert"
 							/>
 						</div>
 

@@ -34,13 +34,13 @@ export default async function PracticeCourseLayout({
 					<nav id="practice-course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-full">
 						<ErrorBoundary fallback={<PracticeCourseLayoutErrorFallback />}>
 							<React.Suspense>
-								<CourseSidebar coursePromise={coursePromise} className="w-112" />
+								<CourseSidebar coursePromise={coursePromise} className="w-96" />
 							</React.Suspense>
 						</ErrorBoundary>
 					</nav>
 
-					<main id="practice-course-layout-main" className="relative flex-1 bg-gray-50 flex flex-col h-full">
-						<SidebarTrigger className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-none z-10 rounded-l-none rounded-r-md hover:cursor-pointer" />
+					<main id="practice-course-layout-main" className="relative flex-1 bg-gray-50 flex flex-col h-full w-full">
+						<SidebarTrigger className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-none z-10 rounded-l-none rounded-r-md hover:cursor-pointer hidden md:flex" />
 
 						<ErrorBoundary fallback={<PracticeCourseLayoutErrorFallback />}>
 							<React.Suspense>
