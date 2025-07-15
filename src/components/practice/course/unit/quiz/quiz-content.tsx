@@ -44,7 +44,6 @@ export function QuizContent({
 						src={quizIllustration}
 						alt="Quiz illustration"
 						className="max-w-full max-h-full min-h-0 min-w-0 object-contain"
-						priority={true}
 					/>
 				</div>
 			</div>

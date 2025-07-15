@@ -2,6 +2,7 @@
 
 import * as errors from "@superbuilders/errors"
 import _ from "lodash"
+import Image from "next/image"
 import { notFound, usePathname } from "next/navigation"
 import * as React from "react"
 import { useSidebar } from "@/components/ui/sidebar"
@@ -10,6 +11,8 @@ import { type Course, getCourseMaterials } from "@/lib/v2/types"
 import { CourseSidebarCourseBreadcrumbs } from "./course-sidebar-course-breadcrumbs"
 import { CourseSidebarCourseCarousel } from "./course-sidebar-course-carousel"
 import { CourseSidebarCourseMaterials } from "./course-sidebar-course-materials"
+import courseIconForeground from "./images/7a86b575f4360619-course-icon.svg"
+import courseIconBackground from "./images/course-accordion-bg.png"
 
 export function CourseSidebar({
 	coursePromise,
@@ -56,8 +59,14 @@ export function CourseSidebar({
 			<div className="px-6 pb-4 flex-1 overflow-hidden bg-white rounded-md shadow-md">
 				<div id="course-sidebar-course-title" className="text-lg font-bold mt-4">
 					<div className="flex items-center gap-4">
-						<div className="w-10 h-10 bg-blue-600 rounded flex items-center justify-center">
-							<span className="w-3 h-3 bg-white rounded-sm" />
+						<div className="w-10 h-10 rounded flex items-center justify-center relative">
+							<Image src={courseIconBackground} alt="Course icon background" fill className="object-cover rounded" />
+							<Image
+								src={courseIconForeground}
+								alt="Course icon foreground"
+								fill
+								className="relative z-10 brightness-0 invert"
+							/>
 						</div>
 
 						<span className="font-medium text-gray-900 text-xl capitalize">{course.title}</span>
