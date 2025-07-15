@@ -3,11 +3,13 @@ import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import {
 	getAllCoursesBySlug,
+	getCourseComponentBySlug,
+	getCourseComponentsByParentId,
 	getResourceByCourseAndSlug,
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
 import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
-import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import { ComponentMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { ErrQtiNotFound } from "@/lib/qti"
 import type {
 	CourseChallengeLayoutData,
@@ -231,4 +233,128 @@ export async function fetchCourseChallengePage_LayoutData(params: {
 		lessonCount: coursePageData.lessonCount,
 		challenges: coursePageData.course.challenges
 	}
+}
+
+export async function fetchQuizRedirectPath(params: {
+	subject: string
+	course: string
+	unit: string
+	quiz: string
+}): Promise<string> {
+	const decodedUnit = decodeURIComponent(params.unit)
+
+	// Look up the unit by its slug to get its sourcedId
+	const unitResult = await errors.try(getCourseComponentBySlug(decodedUnit))
+	if (unitResult.error) {
+		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: decodedUnit })
+		throw errors.wrap(unitResult.error, "failed to fetch unit by slug")
+	}
+	const unit = unitResult.data[0]
+	if (!unit) {
+		// This will be caught by the page and result in a 404
+		throw errors.new("unit not found for redirect")
+	}
+	const unitSourcedId = unit.sourcedId
+
+	// Fetch all lessons for this unit to find quiz sibling
+	const lessonsResult = await errors.try(getCourseComponentsByParentId(unitSourcedId))
+	if (lessonsResult.error) {
+		logger.error("failed to get lessons for unit", { unitSourcedId, error: lessonsResult.error })
+		throw errors.wrap(lessonsResult.error, "failed to get lessons for unit")
+	}
+
+	const lessons = lessonsResult.data
+	if (lessons.length === 0) {
+		logger.warn("no lessons found in unit for redirect", { unitSourcedId })
+		throw errors.new("no lessons found in unit")
+	}
+
+	// Sort by ordering and get the first lesson's slug
+	lessons.sort((a, b) => a.sortOrder - b.sortOrder)
+	const firstLesson = lessons[0]
+	if (!firstLesson) {
+		logger.warn("could not determine first lesson", { unitSourcedId })
+		throw errors.new("could not determine first lesson")
+	}
+
+	// Validate lesson metadata with Zod
+	const firstLessonMetadataResult = ComponentMetadataSchema.safeParse(firstLesson.metadata)
+	if (!firstLessonMetadataResult.success) {
+		logger.error("invalid first lesson metadata", {
+			lessonId: firstLesson.sourcedId,
+			error: firstLessonMetadataResult.error
+		})
+		throw errors.wrap(firstLessonMetadataResult.error, "invalid first lesson metadata")
+	}
+	const firstLessonSlug = firstLessonMetadataResult.data.khanSlug
+	if (!firstLessonSlug) {
+		logger.error("first lesson missing khanSlug", { lessonId: firstLesson.sourcedId })
+		throw errors.new("first lesson missing khanSlug")
+	}
+
+	// Return the canonical 4-slug URL
+	const decodedQuiz = decodeURIComponent(params.quiz)
+	return `/${params.subject}/${params.course}/${decodedUnit}/${firstLessonSlug}/quiz/${decodedQuiz}`
+}
+
+export async function fetchTestRedirectPath(params: {
+	subject: string
+	course: string
+	unit: string
+	test: string
+}): Promise<string> {
+	const decodedUnit = decodeURIComponent(params.unit)
+
+	// Look up the unit by its slug to get its sourcedId
+	const unitResult = await errors.try(getCourseComponentBySlug(decodedUnit))
+	if (unitResult.error) {
+		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: decodedUnit })
+		throw errors.wrap(unitResult.error, "failed to fetch unit by slug")
+	}
+	const unit = unitResult.data[0]
+	if (!unit) {
+		// This will be caught by the page and result in a 404
+		throw errors.new("unit not found for redirect")
+	}
+	const unitSourcedId = unit.sourcedId
+
+	// Fetch all lessons for this unit to find test sibling
+	const lessonsResult = await errors.try(getCourseComponentsByParentId(unitSourcedId))
+	if (lessonsResult.error) {
+		logger.error("failed to get lessons for unit", { unitSourcedId, error: lessonsResult.error })
+		throw errors.wrap(lessonsResult.error, "failed to get lessons for unit")
+	}
+
+	const lessons = lessonsResult.data
+	if (lessons.length === 0) {
+		logger.warn("no lessons found in unit for redirect", { unitSourcedId })
+		throw errors.new("no lessons found in unit")
+	}
+
+	// Sort by ordering and get the first lesson's slug
+	lessons.sort((a, b) => a.sortOrder - b.sortOrder)
+	const firstLesson = lessons[0]
+	if (!firstLesson) {
+		logger.warn("could not determine first lesson", { unitSourcedId })
+		throw errors.new("could not determine first lesson")
+	}
+
+	// Validate lesson metadata with Zod
+	const firstLessonMetadataResult = ComponentMetadataSchema.safeParse(firstLesson.metadata)
+	if (!firstLessonMetadataResult.success) {
+		logger.error("invalid first lesson metadata", {
+			lessonId: firstLesson.sourcedId,
+			error: firstLessonMetadataResult.error
+		})
+		throw errors.wrap(firstLessonMetadataResult.error, "invalid first lesson metadata")
+	}
+	const firstLessonSlug = firstLessonMetadataResult.data.khanSlug
+	if (!firstLessonSlug) {
+		logger.error("first lesson missing khanSlug", { lessonId: firstLesson.sourcedId })
+		throw errors.new("first lesson missing khanSlug")
+	}
+
+	// Return the canonical 4-slug URL
+	const decodedTest = decodeURIComponent(params.test)
+	return `/${params.subject}/${params.course}/${decodedUnit}/${firstLessonSlug}/test/${decodedTest}`
 }

@@ -1,8 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { redirect } from "next/navigation"
-import { getCourseComponentBySlug, getCourseComponentsByParentId } from "@/lib/data/fetchers/oneroster"
-import { ComponentMetadataSchema } from "@/lib/metadata/oneroster"
+import { notFound, redirect } from "next/navigation"
+import { fetchTestRedirectPath } from "@/lib/data/assessment"
 
 export default async function TestRedirectPage({
 	params
@@ -10,61 +9,18 @@ export default async function TestRedirectPage({
 	params: Promise<{ subject: string; course: string; unit: string; test: string }>
 }) {
 	const resolvedParams = await params
-	const decodedTest = decodeURIComponent(resolvedParams.test)
-	const decodedUnit = decodeURIComponent(resolvedParams.unit)
+	logger.info("test redirect page: fetching canonical path", { params: resolvedParams })
 
-	// Look up the unit by its slug to get its sourcedId
-	const unitResult = await errors.try(getCourseComponentBySlug(decodedUnit))
-	if (unitResult.error) {
-		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: decodedUnit })
-		throw errors.wrap(unitResult.error, "failed to fetch unit by slug")
-	}
-	const unit = unitResult.data[0]
-	if (!unit) {
-		return <div>Could not find the unit.</div>
-	}
-	const unitSourcedId = unit.sourcedId
-
-	// Fetch all lessons for this unit to find test sibling
-	const lessonsResult = await errors.try(getCourseComponentsByParentId(unitSourcedId))
-
-	if (lessonsResult.error) {
-		logger.error("failed to get lessons for unit", { unitSourcedId, error: lessonsResult.error })
-		// Fallback or error page
-		return <div>Could not find lessons for this unit.</div>
-	}
-
-	const lessons = lessonsResult.data
-	if (lessons.length === 0) {
-		// No lessons in unit - this shouldn't happen but handle gracefully
-		logger.warn("no lessons found in unit for redirect", { unitSourcedId })
-		return <div>No lessons found in unit.</div>
-	}
-
-	// Sort by ordering and get the first lesson's slug
-	lessons.sort((a, b) => a.sortOrder - b.sortOrder)
-	const firstLesson = lessons[0]
-	if (!firstLesson) {
-		logger.warn("could not determine first lesson", { unitSourcedId })
-		return <div>Could not determine the first lesson.</div>
-	}
-
-	// Validate lesson metadata with Zod
-	const firstLessonMetadataResult = ComponentMetadataSchema.safeParse(firstLesson.metadata)
-	if (!firstLessonMetadataResult.success) {
-		logger.error("invalid first lesson metadata", {
-			lessonId: firstLesson.sourcedId,
-			error: firstLessonMetadataResult.error
+	const redirectPathResult = await errors.try(fetchTestRedirectPath(resolvedParams))
+	if (redirectPathResult.error) {
+		logger.error("failed to determine test redirect path", {
+			error: redirectPathResult.error,
+			params: resolvedParams
 		})
-		return <div>Could not determine the lesson path.</div>
-	}
-	const firstLessonSlug = firstLessonMetadataResult.data.khanSlug
-	if (!firstLessonSlug) {
-		logger.error("first lesson missing khanSlug", { lessonId: firstLesson.sourcedId })
-		return <div>Could not determine the lesson path.</div>
+		// If the helper throws an error (e.g., unit not found), this will trigger a 404 page.
+		// For other unexpected errors, a 500 will be triggered, which is appropriate.
+		notFound()
 	}
 
-	// Redirect to the canonical 4-slug URL
-	const canonicalUrl = `/${resolvedParams.subject}/${resolvedParams.course}/${decodedUnit}/${firstLessonSlug}/test/${decodedTest}`
-	redirect(canonicalUrl)
+	redirect(redirectPathResult.data)
 }
