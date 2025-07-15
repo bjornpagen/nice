@@ -19,46 +19,22 @@ export const ingestResources = inngest.createFunction(
 		// Process all resources in parallel
 		const stepPromises = resources.map((resource) =>
 			step.run(`ingest-resource-${resource.sourcedId}`, async () => {
-				const existingResourceResult = await errors.try(oneroster.getResource(resource.sourcedId))
-				if (existingResourceResult.error) {
-					logger.error("failed to check for existing resource", {
-						sourcedId: resource.sourcedId,
-						error: existingResourceResult.error
-					})
-					throw existingResourceResult.error
-				}
+				logger.debug("upserting resource", { sourcedId: resource.sourcedId, resource })
 
-				if (existingResourceResult.data) {
-					// Resource exists, so update it
-					logger.info("resource exists, attempting update", { sourcedId: resource.sourcedId })
-					// Remove sourcedId from the payload as it's passed separately
-					const { sourcedId: _sourcedId, ...resourceWithoutId } = resource
-					const updateResult = await errors.try(oneroster.updateResource(resource.sourcedId, resourceWithoutId))
-					if (updateResult.error) {
-						logger.error("failed to update resource", {
-							sourcedId: resource.sourcedId,
-							error: updateResult.error
-						})
-						throw updateResult.error
-					}
-					logger.debug("successfully updated resource", { sourcedId: resource.sourcedId })
-					return { sourcedId: resource.sourcedId, success: true, status: "updated" }
-				}
+				// Remove sourcedId from the payload as it's passed separately
+				const { sourcedId: _sourcedId, ...resourceWithoutId } = resource
 
-				// Resource does not exist, so create it
-				logger.info("resource does not exist, attempting creation", { sourcedId: resource.sourcedId })
-				// Keep the full resource payload INCLUDING sourcedId (as proven by curl test)
-				logger.debug("resource payload for creation", { resource })
-				const createResult = await errors.try(oneroster.createResource(resource))
-				if (createResult.error) {
-					logger.error("failed to ingest resource", {
+				// Use PUT for upsert behavior
+				const result = await errors.try(oneroster.updateResource(resource.sourcedId, resourceWithoutId))
+				if (result.error) {
+					logger.error("failed to upsert resource", {
 						sourcedId: resource.sourcedId,
-						error: createResult.error
+						error: result.error
 					})
-					throw createResult.error
+					throw result.error
 				}
-				logger.debug("successfully ingested resource", { sourcedId: resource.sourcedId })
-				return { sourcedId: resource.sourcedId, success: true, status: "created" }
+				logger.debug("successfully upserted resource", { sourcedId: resource.sourcedId })
+				return { sourcedId: resource.sourcedId, success: true, status: "upserted" }
 			})
 		)
 

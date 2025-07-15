@@ -1,7 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
-import { ErrQtiNotFound } from "@/lib/qti"
 
 export const ingestAssessmentStimuli = inngest.createFunction(
 	{ id: "ingest-assessment-stimuli", name: "Ingest QTI Assessment Stimuli" },
@@ -47,25 +46,15 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 
 			const payload = { identifier, title, content, metadata: stimulus.metadata }
 
-			const updateResult = await errors.try(qti.updateStimulus(identifier, payload))
-
-			if (updateResult.error) {
-				if (errors.is(updateResult.error, ErrQtiNotFound)) {
-					logger.info("stimulus not found, creating new one", { identifier })
-					const createResult = await errors.try(qti.createStimulus(payload))
-					if (createResult.error) {
-						logger.error("failed to create stimulus after 404 on update", { identifier, error: createResult.error })
-						throw createResult.error
-					}
-					results.push({ identifier, success: true, status: "created" })
-				} else {
-					logger.error("failed to update stimulus", { identifier, error: updateResult.error })
-					throw updateResult.error
-				}
-			} else {
-				logger.info("successfully updated stimulus", { identifier })
-				results.push({ identifier, success: true, status: "updated" })
+			// Use PUT for upsert behavior
+			logger.debug("upserting assessment stimulus", { identifier })
+			const result = await errors.try(qti.updateStimulus(identifier, payload))
+			if (result.error) {
+				logger.error("failed to upsert stimulus", { identifier, error: result.error })
+				throw result.error
 			}
+			logger.info("successfully upserted stimulus", { identifier })
+			results.push({ identifier, success: true, status: "upserted" })
 		}
 
 		const failedCount = results.filter((r) => !r.success).length

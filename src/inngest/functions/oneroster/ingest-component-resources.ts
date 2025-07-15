@@ -19,35 +19,19 @@ export const ingestComponentResources = inngest.createFunction(
 		// Process all component resources in parallel
 		const stepPromises = componentResources.map((cr) =>
 			step.run(`ingest-cr-${cr.sourcedId}`, async () => {
-				const existingCrResult = await errors.try(oneroster.getComponentResource(cr.sourcedId))
-				if (existingCrResult.error) {
-					logger.error("failed to check for existing component resource", {
-						sourcedId: cr.sourcedId,
-						error: existingCrResult.error
-					})
-					throw existingCrResult.error
-				}
+				logger.debug("upserting component resource", { sourcedId: cr.sourcedId })
 
-				if (existingCrResult.data) {
-					logger.info("component resource already exists, updating", { sourcedId: cr.sourcedId })
-					const updateResult = await errors.try(oneroster.updateComponentResource(cr.sourcedId, cr))
-					if (updateResult.error) {
-						logger.error("failed to update component resource", {
-							sourcedId: cr.sourcedId,
-							error: updateResult.error
-						})
-						throw updateResult.error
-					}
-					logger.debug("successfully updated component resource", { sourcedId: cr.sourcedId })
-					return { sourcedId: cr.sourcedId, success: true, status: "updated" }
+				// Use PUT for upsert behavior
+				const result = await errors.try(oneroster.updateComponentResource(cr.sourcedId, cr))
+				if (result.error) {
+					logger.error("failed to upsert component resource", {
+						sourcedId: cr.sourcedId,
+						error: result.error
+					})
+					throw result.error
 				}
-				const createResult = await errors.try(oneroster.createComponentResource(cr))
-				if (createResult.error) {
-					logger.error("failed to ingest component resource", { sourcedId: cr.sourcedId, error: createResult.error })
-					throw createResult.error
-				}
-				logger.debug("successfully ingested component resource", { sourcedId: cr.sourcedId })
-				return { sourcedId: cr.sourcedId, success: true, status: "created" }
+				logger.debug("successfully upserted component resource", { sourcedId: cr.sourcedId })
+				return { sourcedId: cr.sourcedId, success: true, status: "upserted" }
 			})
 		)
 

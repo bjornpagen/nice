@@ -41,33 +41,15 @@ export const ingestCourseComponents = inngest.createFunction(
 			const nextLevelComponents: ComponentType[] = []
 
 			for (const component of componentsToIngest) {
-				const existingComponentResult = await errors.try(oneroster.getCourseComponent(component.sourcedId))
-				if (existingComponentResult.error) {
-					logger.error("failed to check for existing component", {
-						sourcedId: component.sourcedId,
-						error: existingComponentResult.error
-					})
-					throw existingComponentResult.error
-				}
+				logger.debug("upserting component", { sourcedId: component.sourcedId })
 
-				if (existingComponentResult.data) {
-					logger.info("component already exists, updating", { sourcedId: component.sourcedId })
-					const updateResult = await errors.try(oneroster.updateCourseComponent(component.sourcedId, component))
-					if (updateResult.error) {
-						logger.error("failed to update component", {
-							sourcedId: component.sourcedId,
-							error: updateResult.error
-						})
-						throw updateResult.error
-					}
-				} else {
-					const result = await errors.try(oneroster.createCourseComponent(component))
-					if (result.error) {
-						logger.error("failed to ingest component", { sourcedId: component.sourcedId, error: result.error })
-						throw result.error
-					}
-					logger.debug("ingested component", { sourcedId: component.sourcedId })
+				// Use PUT for upsert behavior
+				const result = await errors.try(oneroster.updateCourseComponent(component.sourcedId, component))
+				if (result.error) {
+					logger.error("failed to upsert component", { sourcedId: component.sourcedId, error: result.error })
+					throw result.error
 				}
+				logger.debug("upserted component", { sourcedId: component.sourcedId })
 
 				ingestedIds.add(component.sourcedId)
 				const children = componentsByParent.get(component.sourcedId)

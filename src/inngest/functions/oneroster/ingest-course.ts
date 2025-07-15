@@ -10,27 +10,16 @@ export const ingestCourse = inngest.createFunction(
 		logger.info("ingesting course", { sourcedId: course.sourcedId, title: course.title })
 
 		await step.run(`ingest-course-${course.sourcedId}`, async () => {
-			const existingCourse = await errors.try(oneroster.getCourse(course.sourcedId))
-			if (existingCourse.error) {
-				logger.error("failed to check for existing course", {
-					sourcedId: course.sourcedId,
-					error: existingCourse.error
-				})
-				throw existingCourse.error
-			}
+			logger.debug("upserting course", { sourcedId: course.sourcedId })
 
-			if (existingCourse.data) {
-				logger.warn("course already exists, skipping creation", { sourcedId: course.sourcedId })
-				return { success: true, status: "skipped" }
-			}
-
-			const result = await errors.try(oneroster.createCourse(course))
+			// Use PUT for upsert behavior
+			const result = await errors.try(oneroster.updateCourse(course.sourcedId, course))
 			if (result.error) {
-				logger.error("failed to ingest course", { sourcedId: course.sourcedId, error: result.error })
+				logger.error("failed to upsert course", { sourcedId: course.sourcedId, error: result.error })
 				throw result.error
 			}
-			logger.info("successfully ingested course", { sourcedId: course.sourcedId })
-			return { success: true, status: "created" }
+			logger.info("successfully upserted course", { sourcedId: course.sourcedId })
+			return { success: true, status: "upserted" }
 		})
 
 		return { status: "success", sourcedId: course.sourcedId }

@@ -540,6 +540,23 @@ export class Client {
 		)
 	}
 
+	async updateCourse(sourcedId: string, course: z.infer<typeof CourseWriteSchema>): Promise<unknown> {
+		const validationResult = CourseWriteSchema.safeParse(course)
+		if (!validationResult.success) {
+			throw errors.wrap(validationResult.error, "invalid input for updateCourse")
+		}
+
+		return this.#request(
+			`/ims/oneroster/rostering/v1p2/courses/${sourcedId}`,
+			{
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ course: validationResult.data })
+			},
+			z.unknown()
+		)
+	}
+
 	async getCourseComponent(sourcedId: string) {
 		const result = await this.#request(
 			`/ims/oneroster/rostering/v1p2/courses/components/${sourcedId}`,
@@ -652,6 +669,31 @@ export class Client {
 				body: JSON.stringify({ class: payload })
 			},
 			z.unknown() // Success response structure not critical for this operation
+		)
+	}
+
+	async updateClass(sourcedId: string, classData: z.infer<typeof ClassWriteSchema>): Promise<unknown> {
+		const validationResult = ClassWriteSchema.safeParse(classData)
+		if (!validationResult.success) {
+			logger.error("invalid input for updateClass", { error: validationResult.error, input: classData })
+			throw errors.wrap(validationResult.error, "invalid input for updateClass")
+		}
+
+		// The API spec uses `org` for the school reference. We'll map `school` to `org` if provided.
+		const payload = { ...validationResult.data }
+		if (payload.school) {
+			payload.org = payload.school
+			delete payload.school
+		}
+
+		return this.#request(
+			`/ims/oneroster/rostering/v1p2/classes/${sourcedId}`,
+			{
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ class: payload })
+			},
+			z.unknown()
 		)
 	}
 

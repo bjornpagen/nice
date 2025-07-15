@@ -1,7 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
-import { ErrQtiNotFound } from "@/lib/qti"
 
 export const ingestAssessmentTests = inngest.createFunction(
 	{ id: "ingest-assessment-tests", name: "Ingest QTI Assessment Tests" },
@@ -18,25 +17,15 @@ export const ingestAssessmentTests = inngest.createFunction(
 		const results = []
 		for (const test of tests) {
 			const { identifier } = test
-			const updateResult = await errors.try(qti.updateAssessmentTest(identifier, test))
-
-			if (updateResult.error) {
-				if (errors.is(updateResult.error, ErrQtiNotFound)) {
-					logger.info("test not found, creating new one", { identifier })
-					const createResult = await errors.try(qti.createAssessmentTest(test))
-					if (createResult.error) {
-						logger.error("failed to create test after 404 on update", { identifier, error: createResult.error })
-						throw createResult.error
-					}
-					results.push({ identifier, success: true, status: "created" })
-				} else {
-					logger.error("failed to update test", { identifier, error: updateResult.error })
-					throw updateResult.error
-				}
-			} else {
-				logger.info("successfully updated test", { identifier })
-				results.push({ identifier, success: true, status: "updated" })
+			// Use PUT for upsert behavior
+			logger.debug("upserting assessment test", { identifier })
+			const result = await errors.try(qti.updateAssessmentTest(identifier, test))
+			if (result.error) {
+				logger.error("failed to upsert test", { identifier, error: result.error })
+				throw result.error
 			}
+			logger.info("successfully upserted test", { identifier })
+			results.push({ identifier, success: true, status: "upserted" })
 		}
 
 		const failedCount = results.filter((r) => !r.success).length

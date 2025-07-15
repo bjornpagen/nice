@@ -47,31 +47,6 @@ export const ingestClass = inngest.createFunction(
 		// Replace colon with dash in step ID to make it valid
 		const stepId = `ingest-class-${classData.sourcedId.replace(/:/g, "-")}`
 		const stepResult = await step.run(stepId, async () => {
-			logger.debug("checking for existing class", { sourcedId: classData.sourcedId })
-
-			// Wrap getClass in errors.try to handle any exceptions
-			const existingClassResult = await errors.try(oneroster.getClass(classData.sourcedId))
-			if (existingClassResult.error) {
-				logger.error("failed to check for existing class", {
-					sourcedId: classData.sourcedId,
-					error: existingClassResult.error
-				})
-				throw existingClassResult.error
-			}
-
-			const existingClass = existingClassResult.data
-			if (existingClass) {
-				logger.warn("class already exists, skipping creation", {
-					sourcedId: classData.sourcedId,
-					existingTitle: existingClass.title,
-					existingClassType: existingClass.classType,
-					existingStatus: existingClass.status
-				})
-				return { success: true, status: "skipped", existingClass }
-			}
-
-			logger.debug("class not found, proceeding with creation", { sourcedId: classData.sourcedId })
-
 			// Clean the class data to remove any Inngest metadata
 			const cleanClassData = {
 				sourcedId: classData.sourcedId,
@@ -84,11 +59,12 @@ export const ingestClass = inngest.createFunction(
 				terms: classData.terms
 			}
 
-			logger.debug("class creation payload", { classData: cleanClassData })
+			logger.debug("upserting class", { classData: cleanClassData })
 
-			const result = await errors.try(oneroster.createClass(cleanClassData))
+			// Use PUT for upsert behavior
+			const result = await errors.try(oneroster.updateClass(classData.sourcedId, cleanClassData))
 			if (result.error) {
-				logger.error("failed to create class via API", {
+				logger.error("failed to upsert class via API", {
 					sourcedId: classData.sourcedId,
 					error: result.error,
 					classData: cleanClassData
@@ -101,11 +77,11 @@ export const ingestClass = inngest.createFunction(
 				apiResponse: result.data
 			})
 
-			// Verify the class was actually created by fetching it
-			logger.debug("verifying class creation", { sourcedId: classData.sourcedId })
+			// Verify the class was created/updated by fetching it
+			logger.debug("verifying class", { sourcedId: classData.sourcedId })
 			const verificationResult = await errors.try(oneroster.getClass(classData.sourcedId))
 			if (verificationResult.error) {
-				logger.error("failed to verify class creation", {
+				logger.error("failed to verify class", {
 					sourcedId: classData.sourcedId,
 					error: verificationResult.error
 				})
@@ -120,14 +96,14 @@ export const ingestClass = inngest.createFunction(
 				throw errors.new(`class verification failed for sourcedId: ${classData.sourcedId}`)
 			}
 
-			logger.info("class successfully created and verified", {
+			logger.info("class successfully created/updated and verified", {
 				sourcedId: classData.sourcedId,
 				verifiedTitle: verifiedClass.title,
 				verifiedStatus: verifiedClass.status,
 				verifiedClassType: verifiedClass.classType
 			})
 
-			return { success: true, status: "created", createdClass: verifiedClass }
+			return { success: true, status: "upserted", class: verifiedClass }
 		})
 
 		logger.info("class ingestion completed", {

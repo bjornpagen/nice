@@ -40,6 +40,7 @@ type EntityType = z.infer<typeof EntityTypeSchema>
 interface Entity {
 	sourcedId: string
 	displayName: string
+	fullObject: unknown // Store the complete object
 }
 
 interface EntityHandler {
@@ -47,6 +48,36 @@ interface EntityHandler {
 	name: string
 	fetchAll: (prefix: string) => Promise<Entity[]>
 	delete: (id: string) => Promise<void>
+}
+
+// Helper function to format objects for display
+function formatObject(obj: unknown, indent = 0): string {
+	const spaces = "  ".repeat(indent)
+
+	if (obj === null || obj === undefined) {
+		return `${spaces}${obj}`
+	}
+
+	if (typeof obj !== "object") {
+		return `${spaces}${JSON.stringify(obj)}`
+	}
+
+	if (Array.isArray(obj)) {
+		if (obj.length === 0) return `${spaces}[]`
+		return `${spaces}[\n${obj.map((item) => formatObject(item, indent + 1)).join(",\n")}\n${spaces}]`
+	}
+
+	const entries = Object.entries(obj)
+	if (entries.length === 0) return `${spaces}{}`
+
+	const lines = entries.map(([key, value]) => {
+		if (typeof value === "object" && value !== null) {
+			return `${spaces}  ${key}:\n${formatObject(value, indent + 2)}`
+		}
+		return `${spaces}  ${key}: ${JSON.stringify(value)}`
+	})
+
+	return `${spaces}{\n${lines.join(",\n")}\n${spaces}}`
 }
 
 // Handler implementations
@@ -62,7 +93,8 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 			})
 			return items.map((r) => ({
 				sourcedId: r.sourcedId,
-				displayName: `${r.sourcedId}: ${r.title} (${r.format || "unknown"})`
+				displayName: `${r.sourcedId}: ${r.title} (${r.format || "unknown"})`,
+				fullObject: r
 			}))
 		},
 		delete: (id: string) => oneroster.deleteResource(id)
@@ -78,7 +110,8 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 			})
 			return items.map((c) => ({
 				sourcedId: c.sourcedId,
-				displayName: `${c.sourcedId}: ${c.title} (${c.org.sourcedId})`
+				displayName: `${c.sourcedId}: ${c.title} (${c.org.sourcedId})`,
+				fullObject: c
 			}))
 		},
 		delete: (id: string) => oneroster.deleteCourse(id)
@@ -94,7 +127,8 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 			})
 			return items.map((cc) => ({
 				sourcedId: cc.sourcedId,
-				displayName: `${cc.sourcedId}: ${cc.title} (course: ${cc.course.sourcedId})`
+				displayName: `${cc.sourcedId}: ${cc.title} (course: ${cc.course.sourcedId})`,
+				fullObject: cc
 			}))
 		},
 		delete: (id: string) => oneroster.deleteCourseComponent(id)
@@ -110,7 +144,8 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 			})
 			return items.map((cr) => ({
 				sourcedId: cr.sourcedId,
-				displayName: `${cr.sourcedId}: ${cr.title}`
+				displayName: `${cr.sourcedId}: ${cr.title}`,
+				fullObject: cr
 			}))
 		},
 		delete: (id: string) => oneroster.deleteComponentResource(id)
@@ -135,7 +170,8 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 			})
 			return items.map((u) => ({
 				sourcedId: u.sourcedId,
-				displayName: `${u.sourcedId}: ${u.givenName} ${u.familyName} (${u.email || "no-email"})`
+				displayName: `${u.sourcedId}: ${u.givenName} ${u.familyName} (${u.email || "no-email"})`,
+				fullObject: u
 			}))
 		},
 		delete: (id: string) => oneroster.deleteUser(id)
@@ -151,7 +187,8 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 			})
 			return items.map((e) => ({
 				sourcedId: e.sourcedId,
-				displayName: `${e.sourcedId}: ${e.role} (${e.user.sourcedId} → ${e.class.sourcedId})`
+				displayName: `${e.sourcedId}: ${e.role} (${e.user.sourcedId} → ${e.class.sourcedId})`,
+				fullObject: e
 			}))
 		},
 		delete: (id: string) => oneroster.deleteEnrollment(id)
@@ -242,19 +279,32 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 		return
 	}
 
-	// List mode
+	// List mode - now with full field dump
 	if (!shouldDelete) {
 		process.stdout.write(`\nFound ${entities.length} ${handler.name}:\n`)
+		process.stdout.write(`${"=".repeat(80)}\n`)
+
 		for (const entity of entities) {
-			process.stdout.write(`  ${entity.displayName}\n`)
+			process.stdout.write(`\n📄 ${entity.displayName}\n`)
+			process.stdout.write(`${"-".repeat(80)}\n`)
+			process.stdout.write(`${formatObject(entity.fullObject)}\n`)
+			process.stdout.write(`${"-".repeat(80)}\n`)
 		}
+
+		process.stdout.write(`\n${"=".repeat(80)}\n`)
+		process.stdout.write(`Total: ${entities.length} ${handler.name}\n`)
 		return
 	}
 
-	// Delete mode
+	// Delete mode - also show full dump before deletion
 	process.stdout.write(`\nTargeting ${entities.length} ${handler.name} for deletion:\n`)
+	process.stdout.write(`${"=".repeat(80)}\n`)
+
 	for (const entity of entities) {
-		process.stdout.write(`  💀 ${entity.displayName}\n`)
+		process.stdout.write(`\n💀 ${entity.displayName}\n`)
+		process.stdout.write(`${"-".repeat(80)}\n`)
+		process.stdout.write(`${formatObject(entity.fullObject)}\n`)
+		process.stdout.write(`${"-".repeat(80)}\n`)
 	}
 
 	const confirmed = await confirmDeletion(entities.length, handler.name)
