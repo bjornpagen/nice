@@ -125,12 +125,19 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 
 		if (!component.parent) {
 			// This is a unit
+			if (!component.metadata) {
+				logger.error("CRITICAL: Unit component missing metadata", {
+					componentId: component.sourcedId,
+					title: component.title
+				})
+				throw errors.new("unit component: metadata is required")
+			}
 			units.push({
 				id: component.sourcedId,
 				title: component.title,
 				path: componentMetadata.path,
 				ordering: component.sortOrder,
-				metadata: component.metadata || {}
+				metadata: component.metadata
 			})
 		} else {
 			// This is a lesson or assessment - we'll determine type later when we process resources
@@ -354,6 +361,15 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					}
 					const youtubeId = youtubeMatch[1]
 
+					// Validate duration is present
+					if (typeof resourceMetadata.duration !== "number") {
+						logger.error("CRITICAL: Video missing duration", {
+							videoId: resource.sourcedId,
+							title: resource.title
+						})
+						throw errors.new("video duration: required field missing")
+					}
+
 					// Note: description is guaranteed to be a string (possibly empty) by the Zod schema
 					videos.push({
 						id: resource.sourcedId,
@@ -362,7 +378,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.description,
 						youtubeId: youtubeId,
-						duration: resourceMetadata.duration || 0,
+						duration: resourceMetadata.duration,
 						ordering
 					})
 				} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
@@ -1576,12 +1592,30 @@ export async function getOneRosterCoursesForExplore(): Promise<Profile_AllSubjec
 		allSubjects.push({
 			slug: subjectCode,
 			title: subjectName,
-			courses: courses.map((course) => ({
-				id: course.sourcedId,
-				slug: getMetadataValue(course.metadata, "khanSlug") || "",
-				title: course.title,
-				path: getMetadataValue(course.metadata, "path") || ""
-			}))
+			courses: courses.map((course) => {
+				const khanSlug = getMetadataValue(course.metadata, "khanSlug")
+				if (!khanSlug) {
+					logger.error("CRITICAL: Course missing khanSlug", {
+						courseId: course.sourcedId,
+						title: course.title
+					})
+					throw errors.new("course khanSlug: required for navigation")
+				}
+				const path = getMetadataValue(course.metadata, "path")
+				if (!path) {
+					logger.error("CRITICAL: Course missing path", {
+						courseId: course.sourcedId,
+						title: course.title
+					})
+					throw errors.new("course path: required for navigation")
+				}
+				return {
+					id: course.sourcedId,
+					slug: khanSlug,
+					title: course.title,
+					path: path
+				}
+			})
 		})
 	}
 
@@ -1644,7 +1678,14 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<Profile_
 
 	// Map to Profile_Course format and attach units
 	return classes.map((cls) => {
-		const courseUnits = unitsByCourseId.get(cls.course.sourcedId) || []
+		const courseUnits = unitsByCourseId.get(cls.course.sourcedId)
+		if (!courseUnits) {
+			logger.error("CRITICAL: No units found for course", {
+				courseId: cls.course.sourcedId,
+				classId: cls.sourcedId
+			})
+			throw errors.new("course units: required data missing")
+		}
 		return {
 			...cls,
 			units: courseUnits
