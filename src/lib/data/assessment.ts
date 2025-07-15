@@ -74,7 +74,7 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 		quiz: {
 			id: resource.sourcedId,
 			title: resource.title,
-			description: resourceMetadata.description,
+			description: resourceMetadata.khanDescription,
 			type: "Quiz" as const
 		},
 		questions
@@ -139,7 +139,7 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 		test: {
 			id: resource.sourcedId,
 			title: resource.title,
-			description: resourceMetadata.description,
+			description: resourceMetadata.khanDescription,
 			type: "UnitTest" as const
 		},
 		questions
@@ -210,7 +210,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 			type: "CourseChallenge",
 			title: testResource.title,
 			slug: params.test,
-			description: testResourceMetadata.description
+			description: testResourceMetadata.khanDescription
 		},
 		questions
 	}

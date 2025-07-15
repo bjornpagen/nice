@@ -66,7 +66,7 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 					title: unit.title,
 					path: unitMetadata.path,
 					ordering: unit.sortOrder,
-					description: unitMetadata.description,
+					description: unitMetadata.khanDescription,
 					slug: unitMetadata.khanSlug,
 					children: [] // Initialize with empty children
 				})
@@ -118,7 +118,7 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 		courses.push({
 			id: course.sourcedId,
 			title: course.title,
-			description: courseMetadata.description,
+			description: courseMetadata.khanDescription,
 			path: courseMetadata.path,
 			units: courseUnits
 		})

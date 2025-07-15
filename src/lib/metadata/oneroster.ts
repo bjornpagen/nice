@@ -6,7 +6,7 @@ export const CourseMetadataSchema = z
 		khanSlug: z.string().min(1),
 		khanTitle: z.string().min(1),
 		path: z.string().min(1),
-		description: z.string().default("")
+		khanDescription: z.string().default("")
 	})
 	.strict() // Enforce strict validation
 export type CourseMetadata = z.infer<typeof CourseMetadataSchema>
@@ -17,7 +17,7 @@ export const ComponentMetadataSchema = z
 		khanSlug: z.string().min(1),
 		khanTitle: z.string().min(1),
 		path: z.string().min(1),
-		description: z.string().default("")
+		khanDescription: z.string().default("")
 	})
 	.strict() // Enforce strict validation
 export type ComponentMetadata = z.infer<typeof ComponentMetadataSchema>
@@ -28,21 +28,32 @@ const BaseResourceMetadataSchema = z.object({
 	khanSlug: z.string().min(1),
 	khanTitle: z.string().min(1),
 	path: z.string().min(1),
-	description: z.string().default("")
+	khanDescription: z.string().default("")
 })
 
 // Schema for Video-specific metadata
 const VideoResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 	type: z.literal("video"),
 	url: z.string().url(),
-	duration: z.number().optional()
+	duration: z.number().optional(),
+	format: z.string(),
+	tenantId: z.string().optional(),
+	clientAppId: z.string().optional(),
+	sourcedId: z.string().optional()
 }).strict()
 
 // Schema for QTI-specific metadata, with its own discriminated union
 const QtiResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 	type: z.literal("qti"),
 	subType: z.enum(["qti-stimulus", "qti-test"]),
-	khanLessonType: z.enum(["unittest", "quiz"]).optional()
+	khanLessonType: z.enum(["unittest", "quiz"]).optional(),
+	version: z.string(),
+	language: z.string(),
+	url: z.string().url(),
+	questionType: z.string().optional(),
+	tenantId: z.string().optional(),
+	clientAppId: z.string().optional(),
+	sourcedId: z.string().optional()
 }).strict()
 
 // The final discriminated union schema for all resources

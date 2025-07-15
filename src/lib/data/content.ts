@@ -142,7 +142,7 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 	return {
 		id: resource.sourcedId,
 		title: resource.title,
-		description: resourceMetadataResult.data.description,
+		description: resourceMetadataResult.data.khanDescription,
 		youtubeId
 	}
 }

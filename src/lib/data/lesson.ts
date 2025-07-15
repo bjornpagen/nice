@@ -185,7 +185,7 @@ export async function fetchLessonLayoutData(params: {
 					throw errors.new("resource: title is required")
 				}
 
-				const description = resourceMetadata.description
+				const description = resourceMetadata.khanDescription
 
 				let child: LessonChild & { sortOrder: number }
 
@@ -280,7 +280,7 @@ export async function fetchLessonLayoutData(params: {
 				throw errors.new("lesson: title is required")
 			}
 
-			const description = lessonMetadata.description
+			const description = lessonMetadata.khanDescription
 			const path = lessonMetadata.path
 
 			// Validate path if it exists
@@ -363,7 +363,7 @@ export async function fetchLessonLayoutData(params: {
 	}
 	const unitPath = unitMetadata.path
 	const unitSlug = unitMetadata.khanSlug
-	const unitDescription = unitMetadata.description
+	const unitDescription = unitMetadata.khanDescription
 
 	// Validate current lesson metadata
 	const currentLessonMetadataResult = ComponentMetadataSchema.safeParse(currentLesson.metadata)
@@ -383,7 +383,7 @@ export async function fetchLessonLayoutData(params: {
 	}
 	const currentLessonPath = currentLessonMetadata.path
 	const currentLessonSlug = currentLessonMetadata.khanSlug
-	const currentLessonDescription = currentLessonMetadata.description
+	const currentLessonDescription = currentLessonMetadata.khanDescription
 
 	const currentLessonChildrenMap = finalLessonContentMap.get(currentLesson.sourcedId)
 

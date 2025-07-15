@@ -68,7 +68,7 @@ export async function fetchUnitPageData(params: {
 		id: oneRosterCourse.sourcedId,
 		title: oneRosterCourse.title,
 		path: courseMetadata.path,
-		description: courseMetadata.description
+		description: courseMetadata.khanDescription
 	}
 
 	// Validate unit metadata with Zod
@@ -104,7 +104,7 @@ export async function fetchUnitPageData(params: {
 			path: componentMetadata.path,
 			ordering: component.sortOrder,
 			slug: componentMetadata.khanSlug,
-			description: componentMetadata.description,
+			description: componentMetadata.khanDescription,
 			children: [] // Initialize empty children
 		})
 	}
@@ -198,7 +198,7 @@ export async function fetchUnitPageData(params: {
 						path: resourceMetadata.path,
 						type: "Quiz",
 						slug: resourceMetadata.khanSlug,
-						description: resourceMetadata.description,
+						description: resourceMetadata.khanDescription,
 						questions: []
 					})
 				} else {
@@ -208,7 +208,7 @@ export async function fetchUnitPageData(params: {
 						path: resourceMetadata.path,
 						type: "UnitTest",
 						slug: resourceMetadata.khanSlug,
-						description: resourceMetadata.description,
+						description: resourceMetadata.khanDescription,
 						questions: []
 					})
 				}
@@ -307,7 +307,7 @@ export async function fetchUnitPageData(params: {
 					title: resource.title,
 					path: resourceMetadata.path,
 					slug: resourceMetadata.khanSlug,
-					description: resourceMetadata.description,
+					description: resourceMetadata.khanDescription,
 					youtubeId: youtubeId,
 					duration: resourceMetadata.duration,
 					type: "Video"
@@ -319,7 +319,7 @@ export async function fetchUnitPageData(params: {
 					title: resource.title,
 					path: resourceMetadata.path,
 					slug: resourceMetadata.khanSlug,
-					description: resourceMetadata.description,
+					description: resourceMetadata.khanDescription,
 					qtiIdentifier: `nice:${resourceMetadata.khanId}`,
 					type: "Article"
 				})
@@ -334,7 +334,7 @@ export async function fetchUnitPageData(params: {
 					title: resource.title,
 					path: resourceMetadata.path,
 					slug: resourceMetadata.khanSlug,
-					description: resourceMetadata.description,
+					description: resourceMetadata.khanDescription,
 					questions: [], // Will be fetched from QTI server
 					type: "Exercise"
 				})
@@ -349,7 +349,7 @@ export async function fetchUnitPageData(params: {
 			path: childMetadata.path,
 			type: "Lesson",
 			slug: childSlug,
-			description: childMetadata.description,
+			description: childMetadata.khanDescription,
 			children: [...videos, ...articles, ...exercises]
 		})
 	}
@@ -385,7 +385,7 @@ export async function fetchUnitPageData(params: {
 		id: oneRosterUnit.sourcedId,
 		title: oneRosterUnit.title,
 		slug: unitMetadata.khanSlug,
-		description: unitMetadata.description,
+		description: unitMetadata.khanDescription,
 		path: unitMetadata.path,
 		ordering: oneRosterUnit.sortOrder,
 		children: processedUnitChildren // Assign children here

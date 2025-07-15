@@ -50,7 +50,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		id: oneRosterCourse.sourcedId,
 		slug: courseMetadata.khanSlug, // Add slug
 		title: oneRosterCourse.title,
-		description: courseMetadata.description,
+		description: courseMetadata.khanDescription,
 		path: courseMetadata.path
 	}
 
@@ -85,7 +85,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 				id: component.sourcedId,
 				slug: componentMetadata.khanSlug,
 				title: component.title,
-				description: componentMetadata.description,
+				description: componentMetadata.khanDescription,
 				path: componentMetadata.path,
 				ordering: component.sortOrder,
 				children: [] // Initialize children array
@@ -119,7 +119,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 				id: component.sourcedId,
 				slug: componentMetadata.khanSlug,
 				title: component.title,
-				description: componentMetadata.description,
+				description: componentMetadata.khanDescription,
 				path: componentMetadata.path,
 				children: [] // Initialize children
 			})
@@ -223,7 +223,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					type: assessmentType,
 					slug: resourceMetadata.khanSlug,
 					title: resource.title,
-					description: resourceMetadata.description,
+					description: resourceMetadata.khanDescription,
 					path: resourceMetadata.path,
 					questions: [] // Questions are not needed on the course page
 				}
@@ -289,7 +289,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						title: resource.title,
 						path: resourceMetadata.path,
 						slug: resourceMetadata.khanSlug,
-						description: resourceMetadata.description,
+						description: resourceMetadata.khanDescription,
 						youtubeId: youtubeId,
 						duration: resourceMetadata.duration,
 						type: "Video" as const
@@ -302,7 +302,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						title: resource.title,
 						path: resourceMetadata.path,
 						slug: resourceMetadata.khanSlug,
-						description: resourceMetadata.description,
+						description: resourceMetadata.khanDescription,
 						qtiIdentifier: `nice:${resourceMetadata.khanId}` // Add qtiIdentifier
 					})
 				} else if (
@@ -317,7 +317,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						title: resource.title,
 						path: resourceMetadata.path,
 						slug: resourceMetadata.khanSlug,
-						description: resourceMetadata.description,
+						description: resourceMetadata.khanDescription,
 						questions: [] // Questions are not needed on course page
 					})
 				}
