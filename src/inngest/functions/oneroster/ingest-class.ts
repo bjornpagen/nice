@@ -48,14 +48,14 @@ export const ingestClass = inngest.createFunction(
 		const stepId = `ingest-class-${classData.sourcedId.replace(/:/g, "-")}`
 		const stepResult = await step.run(stepId, async () => {
 			// Clean the class data to remove any Inngest metadata
+			// Only pass school OR org, not both - prefer school if it exists
 			const cleanClassData = {
 				sourcedId: classData.sourcedId,
 				status: classData.status,
 				title: classData.title,
 				classType: classData.classType,
 				course: classData.course,
-				school: classData.school,
-				org: classData.org,
+				school: classData.school || classData.org, // Use school if available, otherwise org
 				terms: classData.terms
 			}
 
