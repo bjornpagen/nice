@@ -7,9 +7,11 @@ import type { CoursePage_Course } from "./page"
 
 export function CourseTab({
 	course,
+	unitCount,
 	lessonCount
 }: {
 	course: CoursePage_Course
+	unitCount: number
 	lessonCount: number
 }) {
 	const pathname = usePathname()
@@ -24,7 +26,9 @@ export function CourseTab({
 					</div>
 					<div>
 						<h1 className="text-sm font-bold text-gray-800">{course.title}</h1>
-						<p className="text-xs text-gray-500 mt-1">{lessonCount} LESSONS</p>
+						<p className="text-xs text-gray-500 mt-1">
+							{unitCount} UNITS • {lessonCount} LESSONS
+						</p>
 					</div>
 				</Link>
 			</div>
@@ -41,7 +45,9 @@ export function CourseTab({
 				</div>
 				<div>
 					<h1 className="text-sm font-bold text-gray-800">{course.title}</h1>
-					<p className="text-xs text-gray-500 mt-1">{lessonCount} LESSONS</p>
+					<p className="text-xs text-gray-500 mt-1">
+						{unitCount} UNITS • {lessonCount} LESSONS
+					</p>
 				</div>
 			</Link>
 		</div>

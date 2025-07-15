@@ -20,7 +20,7 @@ export function CourseSidebar({
 			<div className="px-6 pb-6 flex-1 overflow-hidden">
 				<ScrollArea className="h-full">
 					<div className="mt-4">
-						<CourseTab course={course} lessonCount={lessonCount} />
+						<CourseTab course={course} unitCount={units.length} lessonCount={lessonCount} />
 					</div>
 
 					{/* Units */}

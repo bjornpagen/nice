@@ -83,8 +83,13 @@ export type CoursePage_CourseChallenge = {
 	description: string
 }
 
-export type CoursePage_UnitChild = 
-	| (CoursePage_Lesson & { type: "Lesson"; videos: CoursePage_Video[]; articles: CoursePage_Article[]; exercises: CoursePage_Exercise[] })
+export type CoursePage_UnitChild =
+	| (CoursePage_Lesson & {
+			type: "Lesson"
+			videos: CoursePage_Video[]
+			articles: CoursePage_Article[]
+			exercises: CoursePage_Exercise[]
+	  })
 	| (CoursePage_UnitAssessment & { type: "Quiz" | "UnitTest" })
 
 export type CoursePage_UnitWithChildren = CoursePage_Unit & {
@@ -99,11 +104,7 @@ export type CoursePageData = {
 	challenges: CoursePage_CourseChallenge[]
 }
 
-export default function CoursePage({
-	params
-}: {
-	params: Promise<{ subject: string; course: string }>
-}) {
+export default function CoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
 	logger.info("course page: received request, rendering layout immediately")
 
 	const courseDataPromise = params.then(fetchCoursePageData)

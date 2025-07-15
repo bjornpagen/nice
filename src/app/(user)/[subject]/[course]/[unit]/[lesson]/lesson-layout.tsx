@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import type { LessonData } from "./lesson-data"
+import type { LessonLayoutData } from "./layout"
 import { LessonNext } from "./lesson-next"
 import { LessonSidebar } from "./lesson-sidebar"
 
@@ -9,7 +9,7 @@ export function LessonLayout({
 	dataPromise,
 	children
 }: {
-	dataPromise: Promise<LessonData>
+	dataPromise: Promise<LessonLayoutData>
 	children: React.ReactNode
 }) {
 	const { subject, courseData, unitData, lessonData } = React.use(dataPromise)

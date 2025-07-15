@@ -11,9 +11,9 @@ import { QuizSection } from "../quiz-section"
 import { Section } from "../section"
 import { CourseSidebar } from "../sidebar"
 import { UnitTestSection } from "../unit-test-section"
-import type { HydratedUnitData } from "./page"
+import type { UnitPageData } from "./page"
 
-export function Content({ dataPromise }: { dataPromise: Promise<HydratedUnitData> }) {
+export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> }) {
 	// Consume the single, consolidated data promise.
 	const { params, course, allUnits, lessonCount, challenges, unit, unitChildren } = React.use(dataPromise)
 

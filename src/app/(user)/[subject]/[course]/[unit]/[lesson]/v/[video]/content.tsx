@@ -3,9 +3,9 @@
 import Image from "next/image"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
-import type { Video } from "./page"
+import type { VideoPageData } from "./page"
 
-export function Content({ videoPromise }: { videoPromise: Promise<Video> }) {
+export function Content({ videoPromise }: { videoPromise: Promise<VideoPageData> }) {
 	const video = React.use(videoPromise)
 	const [activeTab, setActiveTab] = React.useState<"about" | "transcript">("about")
 

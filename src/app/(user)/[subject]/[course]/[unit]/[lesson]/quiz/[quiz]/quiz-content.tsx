@@ -63,6 +63,7 @@ export function QuizContent({ quizDataPromise }: { quizDataPromise: Promise<Quiz
 			{/* Quiz Header */}
 			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0 text-center">
 				<h1 className="text-2xl font-bold text-gray-900">{quiz.title}</h1>
+				{quiz.description && <p className="text-gray-600 mt-2">{quiz.description}</p>}
 			</div>
 
 			{/* Ready to Take Quiz Section */}

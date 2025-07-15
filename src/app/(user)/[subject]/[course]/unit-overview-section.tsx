@@ -1,7 +1,13 @@
 import { BookOpen, Info } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import type { CoursePage_Article, CoursePage_Exercise, CoursePage_Lesson, CoursePage_UnitWithChildren, CoursePage_Video } from "./page"
+import type {
+	CoursePage_Article,
+	CoursePage_Exercise,
+	CoursePage_Lesson,
+	CoursePage_UnitWithChildren,
+	CoursePage_Video
+} from "./page"
 
 export function UnitOverviewSection({
 	unit,
@@ -14,7 +20,16 @@ export function UnitOverviewSection({
 }) {
 	// Extract videos from lessons within the unit
 	const videos = unit.children
-		.filter((child): child is CoursePage_Lesson & { type: "Lesson"; videos: CoursePage_Video[]; articles: CoursePage_Article[]; exercises: CoursePage_Exercise[] } => child.type === "Lesson")
+		.filter(
+			(
+				child
+			): child is CoursePage_Lesson & {
+				type: "Lesson"
+				videos: CoursePage_Video[]
+				articles: CoursePage_Article[]
+				exercises: CoursePage_Exercise[]
+			} => child.type === "Lesson"
+		)
 		.flatMap((lesson) => lesson.videos)
 
 	return (

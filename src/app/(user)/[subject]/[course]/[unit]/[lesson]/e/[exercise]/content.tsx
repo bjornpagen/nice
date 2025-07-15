@@ -3,9 +3,9 @@
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { BottomNavigation } from "./bottom-navigation"
-import type { ExerciseData, ExerciseQuestion } from "./page"
+import type { ExercisePageData } from "./page"
 
-function QuestionStepper({ questions }: { questions: ExerciseQuestion[] }) {
+function QuestionStepper({ questions }: { questions: ExercisePageData["questions"] }) {
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
 	const [hasResponse, setHasResponse] = React.useState(false)
 	const currentQuestion = questions[currentQuestionIndex]
@@ -29,9 +29,9 @@ function QuestionStepper({ questions }: { questions: ExerciseQuestion[] }) {
 		<div className="flex flex-col h-full bg-white">
 			<div className="flex-1 overflow-hidden">
 				<QTIRenderer
-					identifier={currentQuestion.identifier}
+					identifier={currentQuestion.qtiIdentifier}
 					materialType="assessmentItem"
-					key={currentQuestion.identifier}
+					key={currentQuestion.qtiIdentifier}
 					height="100%"
 					width="100%"
 					className="h-full w-full"
@@ -48,7 +48,7 @@ function QuestionStepper({ questions }: { questions: ExerciseQuestion[] }) {
 	)
 }
 
-export function Content({ exerciseDataPromise }: { exerciseDataPromise: Promise<ExerciseData> }) {
+export function Content({ exerciseDataPromise }: { exerciseDataPromise: Promise<ExercisePageData> }) {
 	const { exercise, questions } = React.use(exerciseDataPromise)
 	const [hasStarted, setHasStarted] = React.useState(false)
 

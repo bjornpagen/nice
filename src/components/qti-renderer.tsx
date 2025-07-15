@@ -13,9 +13,8 @@ const QTI_BASE_URLS = {
 	}
 } as const
 
-// This flag should ideally be controlled by environment variables (e.g., process.env.NODE_ENV)
-// For the purpose of this PRD, it is hardcoded to reflect the provided URLs.
-const USE_STAGING = true // Set to false to use production URLs
+// This flag is now derived from the environment
+const USE_STAGING = process.env.NODE_ENV !== "production"
 
 interface QTIRendererProps {
 	identifier: string

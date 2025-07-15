@@ -12,6 +12,7 @@ export type Course = ClassReadSchemaType & {
 	courseSlug?: string
 	courseDescription?: string
 	coursePath?: string
+	metadata?: Record<string, unknown>
 } // A "Course" is now a OneRoster "Class"
 export type Unit = {
 	id: string
@@ -19,7 +20,7 @@ export type Unit = {
 	path: string
 	courseId: string
 	ordering: number
-	description: string | null
+	description: string
 	slug: string
 }
 export type AllSubject = {

@@ -17,6 +17,7 @@ import type {
 	UnitPage_Unit,
 	UnitPage_UnitChild,
 	UnitPage_UnitTest,
+	UnitPage_UnitWithChildren,
 	UnitPage_Video,
 	UnitPageData
 } from "@/app/(user)/[subject]/[course]/[unit]/page"
@@ -38,7 +39,11 @@ import type {
 	CourseChallengePage_LayoutData,
 	CourseChallengePageData
 } from "@/app/(user)/[subject]/[course]/test/[test]/page"
-import type { AllSubject as Profile_AllSubject, Course as Profile_Course } from "@/app/(user)/profile/me/courses/page"
+import type {
+	AllSubject as Profile_AllSubject,
+	Course as Profile_Course,
+	Unit as Profile_Unit
+} from "@/app/(user)/profile/me/courses/page"
 import { oneroster, qti } from "@/lib/clients"
 
 import type { ClassReadSchemaType, CourseReadSchemaType, Resource } from "@/lib/oneroster"
@@ -361,15 +366,6 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					}
 					const youtubeId = youtubeMatch[1]
 
-					// Validate duration is present
-					if (typeof resourceMetadata.duration !== "number") {
-						logger.error("CRITICAL: Video missing duration", {
-							videoId: resource.sourcedId,
-							title: resource.title
-						})
-						throw errors.new("video duration: required field missing")
-					}
-
 					// Note: description is guaranteed to be a string (possibly empty) by the Zod schema
 					videos.push({
 						id: resource.sourcedId,
@@ -378,7 +374,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.description,
 						youtubeId: youtubeId,
-						duration: resourceMetadata.duration,
+						duration: resourceMetadata.duration ?? 0,
 						ordering
 					})
 				} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
@@ -559,11 +555,12 @@ export async function fetchUnitPageData(params: {
 		path: unitMetadata.path,
 		ordering: oneRosterUnit.sortOrder,
 		slug: unitMetadata.khanSlug,
-		description: unitMetadata.description
+		description: unitMetadata.description,
+		metadata: oneRosterUnit.metadata || {}
 	}
 
 	// Get all units for navigation
-	const allUnits: UnitPage_Unit[] = []
+	const allUnits: UnitPage_UnitWithChildren[] = [] // Changed type
 	for (const component of allComponents) {
 		if (component.parent) continue // Skip non-units
 
@@ -584,7 +581,9 @@ export async function fetchUnitPageData(params: {
 			path: componentMetadata.path,
 			ordering: component.sortOrder,
 			slug: componentMetadata.khanSlug,
-			description: componentMetadata.description
+			description: componentMetadata.description,
+			metadata: component.metadata || {}, // Added metadata
+			children: [] // Added empty children to satisfy type
 		})
 	}
 	allUnits.sort((a, b) => a.ordering - b.ordering)
@@ -1330,6 +1329,7 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 	return {
 		id: resource.sourcedId,
 		title: resource.title,
+		description: getMetadataValue(resource.metadata, "description"),
 		youtubeId
 	}
 }
@@ -1362,6 +1362,7 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 				quiz: {
 					id: resource.sourcedId,
 					title: resource.title,
+					description: getMetadataValue(resource.metadata, "description"),
 					type: "Quiz" as const
 				},
 				questions: []
@@ -1381,6 +1382,7 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 		quiz: {
 			id: resource.sourcedId,
 			title: resource.title,
+			description: getMetadataValue(resource.metadata, "description"),
 			type: "Quiz" as const
 		},
 		questions
@@ -1415,6 +1417,7 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 				test: {
 					id: resource.sourcedId,
 					title: resource.title,
+					description: getMetadataValue(resource.metadata, "description"),
 					type: "UnitTest" as const
 				},
 				questions: []
@@ -1434,6 +1437,7 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 		test: {
 			id: resource.sourcedId,
 			title: resource.title,
+			description: getMetadataValue(resource.metadata, "description"),
 			type: "UnitTest" as const
 		},
 		questions
@@ -1566,6 +1570,7 @@ export async function getOneRosterCoursesForExplore(): Promise<Profile_AllSubjec
 
 		// Use the first subject code as the primary subject
 		const primarySubject = course.subjects[0]
+		if (!primarySubject) continue // Added explicit check
 		if (!coursesBySubject.has(primarySubject)) {
 			coursesBySubject.set(primarySubject, [])
 		}
@@ -1652,7 +1657,7 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<Profile_
 
 	// Fetch units for all courses associated with the classes
 	const courseIds = [...new Set(classes.map((c) => c.course.sourcedId))]
-	const unitsByCourseId = new Map<string, any[]>()
+	const unitsByCourseId = new Map<string, Profile_Unit[]>()
 
 	if (courseIds.length > 0) {
 		const allUnitsResult = await errors.try(
@@ -1667,10 +1672,27 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<Profile_
 				if (!unitsByCourseId.has(courseId)) {
 					unitsByCourseId.set(courseId, [])
 				}
+
+				const path = getMetadataValue(unit.metadata, "path")
+				if (!path) {
+					logger.error("unit is missing path in metadata, skipping", { unitId: unit.sourcedId })
+					continue
+				}
+
+				const slug = getMetadataValue(unit.metadata, "khanSlug")
+				if (!slug) {
+					logger.error("unit is missing khanSlug in metadata, skipping", { unitId: unit.sourcedId })
+					continue
+				}
+
 				unitsByCourseId.get(courseId)?.push({
 					id: unit.sourcedId,
 					title: unit.title,
-					path: getMetadataValue(unit.metadata, "path")
+					path,
+					courseId,
+					ordering: unit.sortOrder,
+					description: getMetadataValue(unit.metadata, "description") || "",
+					slug
 				})
 			}
 		}

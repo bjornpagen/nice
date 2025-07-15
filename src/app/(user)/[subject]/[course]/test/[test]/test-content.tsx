@@ -4,7 +4,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
-import type { CourseTest, TestQuestion } from "./page"
+import type { CourseChallengePageData } from "./page"
+
+type TestQuestion = CourseChallengePageData["questions"][0]
 
 function QuestionStepper({ questions }: { questions: TestQuestion[] }) {
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
@@ -26,16 +28,21 @@ function QuestionStepper({ questions }: { questions: TestQuestion[] }) {
 		}
 	}
 
+	const handleResponseChange = () => {
+		// Response change handler for QTI renderer
+	}
+
 	return (
-		<div className="flex flex-col h-full bg-white pt-6">
+		<div className="flex flex-col h-full bg-white">
 			<div className="flex-1 overflow-hidden">
 				<QTIRenderer
 					identifier={currentQuestion.qtiIdentifier}
 					materialType="assessmentItem"
-					key={currentQuestion.id}
+					key={currentQuestion.qtiIdentifier}
 					height="100%"
 					width="100%"
 					className="h-full w-full"
+					onResponseChange={handleResponseChange}
 				/>
 			</div>
 			<div className="border-t bg-white p-4 flex-shrink-0">
@@ -57,11 +64,7 @@ function QuestionStepper({ questions }: { questions: TestQuestion[] }) {
 	)
 }
 
-export function TestContent({
-	testDataPromise
-}: {
-	testDataPromise: Promise<{ test: CourseTest; questions: TestQuestion[] }>
-}) {
+export function TestContent({ testDataPromise }: { testDataPromise: Promise<CourseChallengePageData> }) {
 	const { test, questions } = React.use(testDataPromise)
 	const [hasStarted, setHasStarted] = React.useState(false)
 
@@ -72,23 +75,22 @@ export function TestContent({
 	return (
 		<div className="flex flex-col h-full">
 			{/* Test Header */}
-			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0">
+			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0 text-center">
 				<h1 className="text-2xl font-bold text-gray-900">{test.title}</h1>
-				{test.description && <p className="text-gray-600 mt-2">{test.description}</p>}
 			</div>
 
 			{/* Ready to Take Test Section */}
-			<div className="bg-blue-900 text-white flex-1 flex flex-col items-center justify-center p-12 pb-32">
+			<div className="bg-purple-700 text-white flex-1 flex flex-col items-center justify-center p-12">
 				<div className="text-center max-w-md">
-					<h2 className="text-3xl font-bold mb-4">Ready to take the course challenge?</h2>
-					<p className="text-lg text-blue-100 mb-8">Test your mastery of the entire course!</p>
+					<h2 className="text-3xl font-bold mb-4">Course Challenge</h2>
+					<p className="text-lg text-purple-100 mb-8">Test your mastery of the entire course!</p>
 					<p className="text-lg font-medium mb-8">{questions.length} questions</p>
 					<Button
 						onClick={() => setHasStarted(true)}
-						className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-medium rounded-lg disabled:opacity-50"
+						className="bg-white text-purple-700 hover:bg-gray-100 px-8 py-3 text-lg font-semibold disabled:opacity-50"
 						disabled={questions.length === 0}
 					>
-						{questions.length > 0 ? "Start Course Challenge" : "No questions available"}
+						{questions.length > 0 ? "Start Challenge" : "No Questions Available"}
 					</Button>
 				</div>
 			</div>
