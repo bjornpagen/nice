@@ -1,7 +1,8 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { redirect } from "next/navigation"
-import { oneroster } from "@/lib/clients"
+import { getCourseComponentBySlug, getCourseComponentsByParentId } from "@/lib/data/fetchers/oneroster"
+import { ComponentMetadataSchema } from "@/lib/metadata/oneroster"
 
 export default async function QuizRedirectPage({
 	params
@@ -13,8 +14,7 @@ export default async function QuizRedirectPage({
 	const decodedUnit = decodeURIComponent(resolvedParams.unit)
 
 	// Look up the unit by its slug to get its sourcedId
-	const filter = `metadata.khanSlug='${decodedUnit}'`
-	const unitResult = await errors.try(oneroster.getCourseComponents({ filter }))
+	const unitResult = await errors.try(getCourseComponentBySlug(decodedUnit))
 	if (unitResult.error) {
 		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: decodedUnit })
 		throw errors.wrap(unitResult.error, "failed to fetch unit by slug")
@@ -26,11 +26,7 @@ export default async function QuizRedirectPage({
 	const unitSourcedId = unit.sourcedId
 
 	// Fetch all lessons for this unit to find quiz sibling
-	const lessonsResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `parent.sourcedId='${unitSourcedId}'`
-		})
-	)
+	const lessonsResult = await errors.try(getCourseComponentsByParentId(unitSourcedId))
 
 	if (lessonsResult.error) {
 		logger.error("failed to get lessons for unit", { unitSourcedId, error: lessonsResult.error })
@@ -53,8 +49,16 @@ export default async function QuizRedirectPage({
 		return <div>Could not determine the first lesson.</div>
 	}
 
-	// ✅ NEW: Use lesson's khanSlug metadata instead of extracting from sourcedId
-	const firstLessonSlug = typeof firstLesson.metadata?.khanSlug === "string" ? firstLesson.metadata.khanSlug : null
+	// Validate lesson metadata with Zod
+	const firstLessonMetadataResult = ComponentMetadataSchema.safeParse(firstLesson.metadata)
+	if (!firstLessonMetadataResult.success) {
+		logger.error("invalid first lesson metadata", {
+			lessonId: firstLesson.sourcedId,
+			error: firstLessonMetadataResult.error
+		})
+		return <div>Could not determine the lesson path.</div>
+	}
+	const firstLessonSlug = firstLessonMetadataResult.data.khanSlug
 	if (!firstLessonSlug) {
 		logger.error("first lesson missing khanSlug", { lessonId: firstLesson.sourcedId })
 		return <div>Could not determine the lesson path.</div>

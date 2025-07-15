@@ -6,6 +6,19 @@ import "./src/env.js"
 
 /** @type {import("next").NextConfig} */
 const config = {
+	experimental: {
+		ppr: "incremental",
+		dynamicIO: true,
+		// Define custom cache profiles for our application's needs
+		cacheLife: {
+			// For structural data that changes only on content ingestion
+			curriculum: {
+				stale: 60 * 60 * 24, // 1 day
+				revalidate: 60 * 60, // 1 hour
+				expire: 60 * 60 * 24 * 7 // 1 week
+			}
+		}
+	},
 	images: {
 		remotePatterns: [
 			{

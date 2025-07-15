@@ -1,15 +1,15 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
+import { getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
+import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
-import { oneroster, qti } from "../clients"
 import { extractYouTubeId } from "./utils"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
 	// Look up resource by slug
-	const filter = `metadata.khanSlug='${params.article}' AND metadata.type='qti'`
-	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
+	const resourceResult = await errors.try(getResourcesBySlugAndType(params.article, "qti"))
 	if (resourceResult.error) {
 		logger.error("failed to fetch article resource by slug", { error: resourceResult.error, slug: params.article })
 		throw errors.wrap(resourceResult.error, "failed to fetch article resource by slug")
@@ -48,8 +48,7 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 
 export async function fetchExercisePageData(params: { exercise: string }): Promise<ExercisePageData> {
 	// Look up resource by slug
-	const filter = `metadata.khanSlug='${params.exercise}' AND metadata.type='qti'`
-	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
+	const resourceResult = await errors.try(getResourcesBySlugAndType(params.exercise, "qti"))
 	if (resourceResult.error) {
 		logger.error("failed to fetch exercise resource by slug", { error: resourceResult.error, slug: params.exercise })
 		throw errors.wrap(resourceResult.error, "failed to fetch exercise resource by slug")
@@ -81,7 +80,7 @@ export async function fetchExercisePageData(params: { exercise: string }): Promi
 	}
 
 	// Fetch questions from QTI server
-	const questionsResult = await errors.try(qti.getAllQuestionsForTest(resource.sourcedId))
+	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
 		logger.error("failed to fetch questions for exercise", { testId: resource.sourcedId, error: questionsResult.error })
 		throw errors.wrap(questionsResult.error, "fetch questions for exercise")
@@ -103,8 +102,7 @@ export async function fetchExercisePageData(params: { exercise: string }): Promi
 
 export async function fetchVideoPageData(params: { video: string }): Promise<VideoPageData> {
 	// Look up resource by slug
-	const filter = `metadata.khanSlug='${params.video}' AND metadata.type='video'`
-	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
+	const resourceResult = await errors.try(getResourcesBySlugAndType(params.video, "video"))
 	if (resourceResult.error) {
 		logger.error("failed to fetch video resource by slug", { error: resourceResult.error, slug: params.video })
 		throw errors.wrap(resourceResult.error, "failed to fetch video resource by slug")

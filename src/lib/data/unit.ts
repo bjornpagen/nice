@@ -1,12 +1,19 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
+import {
+	getAllComponentResources,
+	getAllCoursesBySlug,
+	getAllResources,
+	getCourseComponentByCourseAndSlug,
+	getCourseComponentsByCourseId,
+	getCourseComponentsByParentId
+} from "@/lib/data/fetchers/oneroster"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { CourseChallenge, Quiz, UnitTest } from "@/lib/types/assessment"
 import type { Article, Exercise, Video } from "@/lib/types/content"
 import type { UnitPageData } from "@/lib/types/page"
 import type { Course, Lesson, Unit, UnitChild } from "@/lib/types/structure"
-import { oneroster } from "../clients"
 
 export async function fetchUnitPageData(params: {
 	subject: string
@@ -16,10 +23,9 @@ export async function fetchUnitPageData(params: {
 	logger.debug("unit page: fetching unit data", { params })
 
 	// First, find the course by its khanSlug
-	const courseFilter = `metadata.khanSlug='${params.course}'`
-	const coursesResult = await errors.try(oneroster.getAllCourses({ filter: courseFilter }))
+	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
 	if (coursesResult.error) {
-		logger.error("failed to fetch courses", { error: coursesResult.error, filter: courseFilter })
+		logger.error("failed to fetch courses", { error: coursesResult.error, filter: params.course })
 		throw errors.wrap(coursesResult.error, "fetch courses")
 	}
 	const courses = coursesResult.data
@@ -31,39 +37,17 @@ export async function fetchUnitPageData(params: {
 	}
 
 	const courseSourcedId = oneRosterCourse.sourcedId
-	const decodedUnitSlug = decodeURIComponent(params.unit)
 
-	// Fetch all components for this course to find the unit by its khanSlug
-	const allComponentsResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `course.sourcedId='${courseSourcedId}'`
-		})
-	)
-	if (allComponentsResult.error) {
-		logger.error("failed to fetch course components", { error: allComponentsResult.error, courseSourcedId })
-		throw errors.wrap(allComponentsResult.error, "fetch course components")
+	// Fetch the specific unit by slug and course relationship
+	const unitResult = await errors.try(getCourseComponentByCourseAndSlug(oneRosterCourse.sourcedId, params.unit))
+	if (unitResult.error) {
+		logger.error("failed to fetch unit", { error: unitResult.error, courseSourcedId, unitSlug: params.unit })
+		throw errors.wrap(unitResult.error, "fetch unit")
 	}
-	const allComponents = allComponentsResult.data
-	let oneRosterUnit = null
-	for (const c of allComponents) {
-		if (c.parent) continue // Skip non-units
-
-		const componentMetadataResult = ComponentMetadataSchema.safeParse(c.metadata)
-		if (!componentMetadataResult.success) {
-			logger.error("CRITICAL: invalid component metadata - data corruption detected", {
-				componentId: c.sourcedId,
-				error: componentMetadataResult.error
-			})
-			throw errors.wrap(componentMetadataResult.error, "invalid component metadata - possible data corruption")
-		}
-		if (componentMetadataResult.data.khanSlug === decodedUnitSlug) {
-			oneRosterUnit = c
-			break
-		}
-	}
+	const oneRosterUnit = unitResult.data[0]
 
 	if (!oneRosterUnit) {
-		logger.error("unit page: unit not found by slug", { unitSlug: decodedUnitSlug, courseId: courseSourcedId })
+		logger.error("unit page: unit not found by slug", { unitSlug: params.unit, courseId: courseSourcedId })
 		notFound()
 	}
 
@@ -100,7 +84,7 @@ export async function fetchUnitPageData(params: {
 
 	// Get all units for navigation
 	const allUnits: Unit[] = []
-	for (const component of allComponents) {
+	for (const component of unitResult.data) {
 		if (component.parent) continue // Skip non-units
 
 		// Validate component metadata with Zod
@@ -127,27 +111,23 @@ export async function fetchUnitPageData(params: {
 	allUnits.sort((a, b) => a.ordering - b.ordering)
 
 	// Fetch children of this unit (lessons and assessments)
-	const unitChildrenResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `parent.sourcedId='${unitSourcedId}'`
-		})
-	)
-	if (unitChildrenResult.error) {
-		logger.error("failed to fetch unit children", { error: unitChildrenResult.error, unitSourcedId })
-		throw errors.wrap(unitChildrenResult.error, "fetch unit children")
+	const lessonsResult = await errors.try(getCourseComponentsByParentId(unitSourcedId))
+	if (lessonsResult.error) {
+		logger.error("failed to fetch unit children", { error: lessonsResult.error, unitSourcedId })
+		throw errors.wrap(lessonsResult.error, "fetch unit children")
 	}
-	const unitChildren = unitChildrenResult.data
+	const unitChildren = lessonsResult.data
 
-	// Fetch ALL resources and filter in memory
-	const allResourcesInSystemResult = await errors.try(oneroster.getAllResources({}))
+	// Fetch all resources in the system
+	const allResourcesInSystemResult = await errors.try(getAllResources())
 	if (allResourcesInSystemResult.error) {
 		logger.error("failed to fetch all resources", { error: allResourcesInSystemResult.error })
 		throw errors.wrap(allResourcesInSystemResult.error, "fetch all resources")
 	}
 	const allResourcesInSystem = allResourcesInSystemResult.data
 
-	// Fetch ALL component resources and filter in memory for this unit and its children
-	const allComponentResourcesResult = await errors.try(oneroster.getAllComponentResources({}))
+	// Fetch all component-resource associations
+	const allComponentResourcesResult = await errors.try(getAllComponentResources())
 	if (allComponentResourcesResult.error) {
 		logger.error("failed to fetch all component resources", { error: allComponentResourcesResult.error })
 		throw errors.wrap(allComponentResourcesResult.error, "fetch all component resources")
@@ -163,11 +143,7 @@ export async function fetchUnitPageData(params: {
 
 	// Get unique resource IDs from ALL component resources for the course (not just this unit)
 	// This is needed because resources might be shared across units
-	const allCourseComponentsResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `course.sourcedId='${courseSourcedId}'`
-		})
-	)
+	const allCourseComponentsResult = await errors.try(getCourseComponentsByCourseId(courseSourcedId))
 	if (allCourseComponentsResult.error) {
 		logger.error("failed to fetch all course components", { error: allCourseComponentsResult.error, courseSourcedId })
 		throw errors.wrap(allCourseComponentsResult.error, "fetch all course components")
@@ -416,11 +392,7 @@ export async function fetchUnitPageData(params: {
 	}
 
 	// Count total lessons across all units
-	const allComponentsForLessonCountResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `course.sourcedId='${courseSourcedId}'`
-		})
-	)
+	const allComponentsForLessonCountResult = await errors.try(getCourseComponentsByCourseId(courseSourcedId))
 	if (allComponentsForLessonCountResult.error) {
 		logger.error("failed to fetch all components for lesson count", {
 			error: allComponentsForLessonCountResult.error,

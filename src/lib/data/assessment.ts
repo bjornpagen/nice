@@ -1,7 +1,12 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { qti } from "@/lib/clients"
+import {
+	getAllCoursesBySlug,
+	getResourceByCourseAndSlug,
+	getResourcesBySlugAndType
+} from "@/lib/data/fetchers/oneroster"
+import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { ErrQtiNotFound } from "@/lib/qti"
 import type {
@@ -10,13 +15,11 @@ import type {
 	QuizPageData,
 	UnitTestPageData
 } from "@/lib/types/page"
-import { oneroster } from "../clients"
 import { fetchCoursePageData } from "./course"
 
 export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizPageData> {
 	// Look up resource by slug
-	const filter = `metadata.khanSlug='${params.quiz}' AND metadata.type='qti' AND metadata.khanLessonType='quiz'`
-	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
+	const resourceResult = await errors.try(getResourcesBySlugAndType(params.quiz, "qti", "quiz"))
 	if (resourceResult.error) {
 		logger.error("failed to fetch quiz resource by slug", { error: resourceResult.error, slug: params.quiz })
 		throw errors.wrap(resourceResult.error, "failed to fetch quiz resource by slug")
@@ -49,7 +52,7 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 	const resourceMetadata = resourceMetadataResult.data
 
 	// Fetch questions from QTI server using the existing pattern
-	const questionsResult = await errors.try(qti.getAllQuestionsForTest(resource.sourcedId))
+	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
 		if (errors.is(questionsResult.error, ErrQtiNotFound)) {
 			logger.error("CRITICAL: quiz test not found in QTI server - data integrity violation", {
@@ -78,8 +81,7 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 
 export async function fetchUnitTestPageData(params: { test: string }): Promise<UnitTestPageData> {
 	// Look up resource by slug
-	const filter = `metadata.khanSlug='${params.test}' AND metadata.type='qti' AND metadata.khanLessonType='unittest'`
-	const resourceResult = await errors.try(oneroster.getAllResources({ filter }))
+	const resourceResult = await errors.try(getResourcesBySlugAndType(params.test, "qti", "unittest"))
 	if (resourceResult.error) {
 		logger.error("failed to fetch unit test resource by slug", { error: resourceResult.error, slug: params.test })
 		throw errors.wrap(resourceResult.error, "failed to fetch unit test resource by slug")
@@ -112,7 +114,7 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 	const resourceMetadata = resourceMetadataResult.data
 
 	// Fetch questions from QTI server
-	const questionsResult = await errors.try(qti.getAllQuestionsForTest(resource.sourcedId))
+	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
 		if (errors.is(questionsResult.error, ErrQtiNotFound)) {
 			logger.error("CRITICAL: unit test not found in QTI server - data integrity violation", {
@@ -147,8 +149,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	course: string
 	subject: string
 }): Promise<CourseChallengePageData> {
-	const courseFilter = `metadata.khanSlug='${params.course}'`
-	const coursesResult = await errors.try(oneroster.getAllCourses({ filter: courseFilter }))
+	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
 	if (coursesResult.error) {
 		logger.error("failed to fetch course by slug", { error: coursesResult.error, slug: params.course })
 		throw errors.wrap(coursesResult.error, "fetch course")
@@ -158,10 +159,9 @@ export async function fetchCourseChallengePage_TestData(params: {
 		notFound()
 	}
 
-	const testFilter = `metadata.khanSlug='${params.test}' AND metadata.type='qti' AND course.sourcedId='${course.sourcedId}'`
-	const testResourceResult = await errors.try(oneroster.getAllResources({ filter: testFilter }))
+	const testResourceResult = await errors.try(getResourceByCourseAndSlug(course.sourcedId, params.test, "qti"))
 	if (testResourceResult.error) {
-		logger.error("failed to fetch test resource", { error: testResourceResult.error, filter: testFilter })
+		logger.error("failed to fetch test resource", { error: testResourceResult.error, courseId: course.sourcedId })
 		throw errors.wrap(testResourceResult.error, "fetch test resource")
 	}
 	const testResource = testResourceResult.data[0]
@@ -190,7 +190,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	}
 	const testResourceMetadata = testResourceMetadataResult.data
 
-	const qtiTestDataResult = await errors.try(qti.getAllQuestionsForTest(testResource.sourcedId))
+	const qtiTestDataResult = await errors.try(getAllQuestionsForTest(testResource.sourcedId))
 	if (qtiTestDataResult.error) {
 		logger.error("failed to fetch questions for course challenge", {
 			testId: testResource.sourcedId,

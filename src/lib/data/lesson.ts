@@ -1,10 +1,18 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
+import {
+	getAllComponentResources,
+	getAllCoursesBySlug,
+	getAllResources,
+	getCourseComponentByCourseAndSlug,
+	getCourseComponentByParentAndSlug,
+	getCourseComponentsByParentId,
+	getResource
+} from "@/lib/data/fetchers/oneroster"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Lesson, LessonChild, Unit } from "@/lib/types/structure"
-import { oneroster } from "../clients"
 import type { Resource } from "../oneroster"
 
 export async function fetchLessonLayoutData(params: {
@@ -14,7 +22,7 @@ export async function fetchLessonLayoutData(params: {
 	lesson: string
 }): Promise<LessonLayoutData> {
 	// Waterfall lookup
-	const courseResult = await errors.try(oneroster.getAllCourses({ filter: `metadata.khanSlug='${params.course}'` }))
+	const courseResult = await errors.try(getAllCoursesBySlug(params.course))
 	if (courseResult.error) {
 		logger.error("failed to fetch course by slug", { error: courseResult.error, slug: params.course })
 		throw errors.wrap(courseResult.error, "failed to fetch course by slug")
@@ -24,11 +32,7 @@ export async function fetchLessonLayoutData(params: {
 		notFound()
 	}
 
-	const unitResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `course.sourcedId='${course.sourcedId}' AND metadata.khanSlug='${params.unit}'`
-		})
-	)
+	const unitResult = await errors.try(getCourseComponentByCourseAndSlug(course.sourcedId, params.unit))
 	if (unitResult.error) {
 		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: params.unit })
 		throw errors.wrap(unitResult.error, "failed to fetch unit by slug")
@@ -38,11 +42,7 @@ export async function fetchLessonLayoutData(params: {
 		notFound()
 	}
 
-	const lessonResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `parent.sourcedId='${unit.sourcedId}' AND metadata.khanSlug='${params.lesson}'`
-		})
-	)
+	const lessonResult = await errors.try(getCourseComponentByParentAndSlug(unit.sourcedId, params.lesson))
 	if (lessonResult.error) {
 		logger.error("failed to fetch lesson by slug", { error: lessonResult.error, slug: params.lesson })
 		throw errors.wrap(lessonResult.error, "failed to fetch lesson by slug")
@@ -53,18 +53,14 @@ export async function fetchLessonLayoutData(params: {
 	}
 
 	// 2. Fetch all lessons for the current unit to build the sidebar
-	const unitLessonsResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `parent.sourcedId='${unit.sourcedId}'`
-		})
-	)
+	const unitLessonsResult = await errors.try(getCourseComponentsByParentId(unit.sourcedId))
 	if (unitLessonsResult.error) {
 		logger.error("failed to fetch unit lessons", { error: unitLessonsResult.error, unitSourcedId: unit.sourcedId })
 		throw errors.wrap(unitLessonsResult.error, "failed to fetch unit lessons")
 	}
 
 	// 3. Fetch ALL component resources and filter in memory (since specific filters are not supported)
-	const allComponentResourcesResult = await errors.try(oneroster.getAllComponentResources({}))
+	const allComponentResourcesResult = await errors.try(getAllComponentResources())
 	if (allComponentResourcesResult.error) {
 		logger.error("failed to fetch component resources", { error: allComponentResourcesResult.error })
 		throw errors.wrap(allComponentResourcesResult.error, "failed to fetch component resources")
@@ -86,7 +82,7 @@ export async function fetchLessonLayoutData(params: {
 	} else if (resourceIds.length <= 10) {
 		// For small numbers, fetch individually to avoid filter syntax issues
 		const resourcePromises = resourceIds.map(async (resourceId) => {
-			const result = await errors.try(oneroster.getResource(resourceId))
+			const result = await errors.try(getResource(resourceId))
 			if (result.error) {
 				logger.error("CRITICAL: Failed to fetch resource", { resourceId, error: result.error })
 				throw errors.wrap(result.error, "resource fetch failed")
@@ -110,7 +106,7 @@ export async function fetchLessonLayoutData(params: {
 		allResourcesData = resourceResults.filter((r): r is Resource => r !== undefined)
 	} else {
 		// For larger numbers, try a simple filter approach
-		const allResourcesResult = await errors.try(oneroster.getAllResources({}))
+		const allResourcesResult = await errors.try(getAllResources())
 		if (allResourcesResult.error) {
 			logger.error("failed to fetch resources", { error: allResourcesResult.error })
 			throw errors.wrap(allResourcesResult.error, "failed to fetch resources")

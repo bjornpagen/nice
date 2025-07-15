@@ -5,9 +5,8 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { revalidatePath } from "next/cache"
 import { oneroster } from "@/lib/clients"
-import { getMetadataValue } from "../data/utils"
-import type { CourseReadSchemaType } from "../oneroster"
-import type { ProfileSubject } from "../types/profile"
+import { getAllCourses, getClassesForSchool, getEnrollmentsForUser } from "@/lib/data/fetchers/oneroster"
+import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 
 export async function saveUserCourses(selectedClassIds: string[]) {
 	const user = await currentUser()
@@ -15,11 +14,13 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 		throw errors.new("user not authenticated")
 	}
 
+	// Use fallback to user.id if sourceId not in metadata (from upstream)
 	const sourceId = typeof user.publicMetadata.sourceId === "string" ? user.publicMetadata.sourceId : user.id
 
 	logger.info("syncing user enrollments", { userId: user.id, sourceId, selectedClassIds })
 
-	const currentEnrollmentsResult = await errors.try(oneroster.getEnrollmentsForUser(sourceId))
+	// Get current enrollments for the user using new fetcher
+	const currentEnrollmentsResult = await errors.try(getEnrollmentsForUser(sourceId))
 	if (currentEnrollmentsResult.error) {
 		logger.error("failed to fetch current enrollments", { sourceId, error: currentEnrollmentsResult.error })
 		throw errors.wrap(currentEnrollmentsResult.error, "get current enrollments")
@@ -37,7 +38,7 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 		toRemove: enrollmentsToRemove.length
 	})
 
-	// Early return if no changes needed
+	// Early return if no changes needed (from upstream)
 	if (classesToAdd.length === 0 && enrollmentsToRemove.length === 0) {
 		logger.info("no enrollment changes needed", { userId: user.id, sourceId })
 		return { success: true, changed: false }
@@ -87,58 +88,84 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 	return { success: true, changed: true }
 }
 
-export async function getOneRosterCoursesForExplore(): Promise<ProfileSubject[]> {
-	const classesResult = await errors.try(oneroster.getClassesForSchool("nice-academy", { filter: "status='active'" }))
+// Type definitions for OneRoster explore dropdown (no DB dependency)
+const ONEROSTER_ORG_ID = "nice-academy"
+
+type CourseForExplore = {
+	id: string // Using OneRoster sourcedId as the key
+	title: string
+	path: string
+	slug: string
+}
+
+type SubjectWithCoursesForExplore = {
+	slug: string
+	title: string
+	courses: CourseForExplore[]
+}
+
+export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCoursesForExplore[]> {
+	logger.info("fetching explore dropdown data from oneroster api", { orgId: ONEROSTER_ORG_ID })
+
+	const [classesResult, coursesResult] = await Promise.all([
+		errors.try(getClassesForSchool(ONEROSTER_ORG_ID)),
+		errors.try(getAllCourses())
+	])
+
 	if (classesResult.error) {
 		logger.error("failed to fetch classes from oneroster", { error: classesResult.error })
 		throw errors.wrap(classesResult.error, "oneroster class fetch")
 	}
+	if (coursesResult.error) {
+		logger.error("failed to fetch courses from oneroster", { error: coursesResult.error })
+		throw errors.wrap(coursesResult.error, "oneroster course fetch")
+	}
 
-	const allClasses = classesResult.data
-
-	const courseIds = [...new Set(allClasses.map((c) => c.course.sourcedId))]
-	if (courseIds.length === 0) return []
-
-	// Fetch each course individually since OneRoster doesn't support IN clause
-	const coursePromises = courseIds.map(async (courseId) => {
-		const result = await errors.try(oneroster.getCourse(courseId))
-		if (result.error) {
-			logger.error("failed to fetch course", { courseId, error: result.error })
-			return null
-		}
-		return result.data
-	})
-
-	const courseResults = await Promise.all(coursePromises)
-	const allCourses = courseResults.filter((c): c is CourseReadSchemaType => c !== null && c !== undefined)
-	const coursesBySubject = new Map<string, { id: string; title: string; path: string; slug: string }[]>()
+	const allClasses = classesResult.data.filter((c) => c.status === "active")
+	const allCourses = coursesResult.data
+	const coursesMap = new Map(allCourses.map((c) => [c.sourcedId, c]))
+	const coursesBySubject = new Map<string, CourseForExplore[]>()
 	const processedCourseIds = new Set<string>()
 
 	for (const oneRosterClass of allClasses) {
-		const course = allCourses.find((c) => c.sourcedId === oneRosterClass.course.sourcedId)
+		const course = coursesMap.get(oneRosterClass.course.sourcedId)
 		if (!course || !course.subjects || course.subjects.length === 0) continue
 
+		// Skip if we've already processed this course (multiple classes can reference same course)
 		if (processedCourseIds.has(course.sourcedId)) continue
 		processedCourseIds.add(course.sourcedId)
 
-		const pathFromMetadata = getMetadataValue(course.metadata || {}, "path")
-		if (!pathFromMetadata) continue
+		// Validate course metadata with Zod
+		const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
+		if (!courseMetadataResult.success) {
+			logger.debug("invalid course metadata", {
+				sourcedId: course.sourcedId,
+				error: courseMetadataResult.error
+			})
+			continue
+		}
+		const pathFromMetadata = courseMetadataResult.data.path
 
-		const slugFromMetadata = getMetadataValue(course.metadata || {}, "khanSlug")
-		if (!slugFromMetadata) continue
+		if (!pathFromMetadata) {
+			logger.debug("course missing metadata path", { sourcedId: course.sourcedId })
+			continue
+		}
 
-		const courseForExplore = {
-			id: oneRosterClass.sourcedId, // Use the class ID for selection
+		const courseForExplore: CourseForExplore = {
+			id: course.sourcedId, // Using OneRoster sourcedId as the key
 			title: course.title,
 			path: pathFromMetadata,
-			slug: slugFromMetadata
+			slug: courseMetadataResult.data.khanSlug
 		}
 
 		for (const subject of course.subjects) {
 			if (!coursesBySubject.has(subject)) {
 				coursesBySubject.set(subject, [])
 			}
-			coursesBySubject.get(subject)?.push(courseForExplore)
+			const subjectCourses = coursesBySubject.get(subject)
+			if (subjectCourses) {
+				subjectCourses.push(courseForExplore)
+			}
 		}
 	}
 

@@ -1,22 +1,26 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
+import {
+	getAllComponentResources,
+	getAllCoursesBySlug,
+	getAllResources,
+	getCourseComponentsByCourseId
+} from "@/lib/data/fetchers/oneroster"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { CourseChallenge, Quiz, UnitTest } from "@/lib/types/assessment"
 import type { Article, Exercise, Video } from "@/lib/types/content"
 import type { CoursePageData } from "@/lib/types/page"
 import type { Course, Lesson, Unit, UnitChild } from "@/lib/types/structure"
-import { oneroster } from "../clients"
 
 export async function fetchCoursePageData(params: { subject: string; course: string }): Promise<CoursePageData> {
 	// First, find the course by its khanSlug since the URL param is a slug, not a Khan ID
 	logger.debug("course page: looking up course by slug", { slug: params.course })
 
 	// Fetch courses filtered by khanSlug for efficiency
-	const filter = `metadata.khanSlug='${params.course}'`
-	const allCoursesResult = await errors.try(oneroster.getAllCourses({ filter }))
+	const allCoursesResult = await errors.try(getAllCoursesBySlug(params.course))
 	if (allCoursesResult.error) {
-		logger.error("failed to fetch courses", { error: allCoursesResult.error, filter })
+		logger.error("failed to fetch courses", { error: allCoursesResult.error, filter: params.course })
 		throw errors.wrap(allCoursesResult.error, "fetch courses")
 	}
 	const allCourses = allCoursesResult.data
@@ -50,12 +54,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		path: courseMetadata.path
 	}
 
-	// Fetch all course components (units and lessons)
-	const allComponentsResult = await errors.try(
-		oneroster.getCourseComponents({
-			filter: `course.sourcedId='${courseSourcedId}'`
-		})
-	)
+	// Fetch all Components that are direct children of this Course (these are Units)
+	const allComponentsResult = await errors.try(getCourseComponentsByCourseId(courseSourcedId))
 	if (allComponentsResult.error) {
 		logger.error("failed to fetch course components", { error: allComponentsResult.error, courseSourcedId })
 		throw errors.wrap(allComponentsResult.error, "fetch course components")
@@ -129,16 +129,16 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 	// Sort units by ordering
 	units.sort((a, b) => a.ordering - b.ordering)
 
-	// Fetch ALL resources and filter in memory
-	const allResourcesInSystemResult = await errors.try(oneroster.getAllResources({}))
+	// Fetch all Resources in the entire system
+	const allResourcesInSystemResult = await errors.try(getAllResources())
 	if (allResourcesInSystemResult.error) {
 		logger.error("failed to fetch all resources", { error: allResourcesInSystemResult.error })
 		throw errors.wrap(allResourcesInSystemResult.error, "fetch all resources")
 	}
 	const allResourcesInSystem = allResourcesInSystemResult.data
 
-	// Fetch ALL component resources and filter in memory
-	const allComponentResourcesResult = await errors.try(oneroster.getAllComponentResources({}))
+	// Fetch all ComponentResource associations
+	const allComponentResourcesResult = await errors.try(getAllComponentResources())
 	if (allComponentResourcesResult.error) {
 		logger.error("failed to fetch all component resources", { error: allComponentResourcesResult.error })
 		throw errors.wrap(allComponentResourcesResult.error, "fetch all component resources")
