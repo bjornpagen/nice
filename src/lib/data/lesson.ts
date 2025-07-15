@@ -206,7 +206,6 @@ export async function fetchLessonLayoutData(params: {
 						sortOrder: cr.sortOrder
 					}
 				} else if (contentType === "Article" && resourceMetadata.type === "qti") {
-					const khanId = resourceMetadata.khanId
 					child = {
 						id: resource.sourcedId,
 						slug: resourceSlug,
@@ -214,7 +213,6 @@ export async function fetchLessonLayoutData(params: {
 						description: description,
 						path: contentPath,
 						type: "Article",
-						qtiIdentifier: `nice:${khanId}`,
 						sortOrder: cr.sortOrder
 					}
 				} else if (contentType === "Exercise" && resourceMetadata.type === "qti") {

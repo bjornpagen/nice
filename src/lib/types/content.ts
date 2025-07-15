@@ -19,8 +19,6 @@ export interface Video extends ContentNode {
 
 export interface Article extends ContentNode {
 	type: "Article"
-	// For stimulus rendering via QTI
-	qtiIdentifier: string
 }
 
 export interface Exercise extends ContentNode {

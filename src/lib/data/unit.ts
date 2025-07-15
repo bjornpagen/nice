@@ -334,7 +334,6 @@ export async function fetchUnitPageData(params: {
 					path: resourceMetadata.path,
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.khanDescription,
-					qtiIdentifier: `nice:${resourceMetadata.khanId}`,
 					type: "Article",
 					sortOrder: componentResource.sortOrder
 				})
