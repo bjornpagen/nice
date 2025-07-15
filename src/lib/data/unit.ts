@@ -264,9 +264,20 @@ export async function fetchUnitPageData(params: {
 			resourcesByComponentId.set(child.sourcedId, lessonResources)
 		}
 
-		const videos: Video[] = []
-		const articles: Article[] = []
-		const exercises: Exercise[] = []
+		// Temporary types with sortOrder for sorting
+		interface VideoWithOrder extends Video {
+			sortOrder: number
+		}
+		interface ArticleWithOrder extends Article {
+			sortOrder: number
+		}
+		interface ExerciseWithOrder extends Exercise {
+			sortOrder: number
+		}
+
+		const videos: VideoWithOrder[] = []
+		const articles: ArticleWithOrder[] = []
+		const exercises: ExerciseWithOrder[] = []
 
 		// Categorize resources by type
 		for (const resource of lessonResources) {
@@ -312,7 +323,8 @@ export async function fetchUnitPageData(params: {
 					description: resourceMetadata.khanDescription,
 					youtubeId: youtubeId,
 					duration: resourceMetadata.duration,
-					type: "Video"
+					type: "Video",
+					sortOrder: componentResource.sortOrder
 				})
 			} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
 				// This is an article
@@ -323,7 +335,8 @@ export async function fetchUnitPageData(params: {
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.khanDescription,
 					qtiIdentifier: `nice:${resourceMetadata.khanId}`,
-					type: "Article"
+					type: "Article",
+					sortOrder: componentResource.sortOrder
 				})
 			} else if (
 				resourceMetadata.type === "qti" &&
@@ -338,12 +351,16 @@ export async function fetchUnitPageData(params: {
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.khanDescription,
 					questions: [], // Will be fetched from QTI server
-					type: "Exercise"
+					type: "Exercise",
+					sortOrder: componentResource.sortOrder
 				})
 			}
 		}
 
-		// No sorting needed here, canonical types don't have ordering
+		// Combine all lesson children and sort by sortOrder
+		const allLessonChildren = [...videos, ...articles, ...exercises]
+			.sort((a, b) => a.sortOrder - b.sortOrder)
+			.map(({ sortOrder, ...child }) => child) // Remove sortOrder property after sorting
 
 		processedLessons.push({
 			id: child.sourcedId,
@@ -352,7 +369,7 @@ export async function fetchUnitPageData(params: {
 			type: "Lesson",
 			slug: childSlug,
 			description: childMetadata.khanDescription,
-			children: [...videos, ...articles, ...exercises]
+			children: allLessonChildren
 		})
 	}
 

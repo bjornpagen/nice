@@ -8,21 +8,14 @@ import type { Lesson } from "@/lib/types/structure"
 import { capitalize } from "@/lib/utils"
 import { Section } from "./section"
 
-export function LessonSection({
-	lesson,
-	videos,
-	exercises,
-	articles
-}: {
-	lesson: Lesson
-	videos: Video[]
-	exercises: Exercise[]
-	articles: Article[]
-}) {
-	// Recreate the ordered list of learning content.
-	// NOTE: The `ordering` property is not on the base types. This is an example of
-	// local data transformation. For simplicity in this PRD, we assume ordering is handled by the array order.
-	const learningContent: (Video | Article)[] = [...videos, ...articles]
+export function LessonSection({ lesson }: { lesson: Lesson }) {
+	// Use the original order from lesson.children for learning content
+	const learningContent = lesson.children.filter(
+		(child): child is Video | Article => child.type === "Video" || child.type === "Article"
+	)
+
+	// Extract exercises separately (they're displayed in a different section)
+	const exercises = lesson.children.filter((child): child is Exercise => child.type === "Exercise")
 
 	return (
 		<Section>

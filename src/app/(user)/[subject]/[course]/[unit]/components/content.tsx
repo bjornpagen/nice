@@ -3,7 +3,6 @@
 import { Info } from "lucide-react"
 import * as React from "react"
 import { Footer } from "@/components/footer"
-import type { Article, Exercise, Video } from "@/lib/types/content"
 import type { UnitPageData } from "@/lib/types/page"
 import type { UnitChild } from "@/lib/types/structure"
 import { CourseHeader } from "../../components/course-header"
@@ -82,15 +81,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> })
 							switch (child.type) {
 								case "Lesson":
 									// Pass the fully hydrated lesson to the component
-									return (
-										<LessonSection
-											key={child.id}
-											lesson={child}
-											videos={child.children.filter((c): c is Video => c.type === "Video")}
-											articles={child.children.filter((c): c is Article => c.type === "Article")}
-											exercises={child.children.filter((c): c is Exercise => c.type === "Exercise")}
-										/>
-									)
+									return <LessonSection key={child.id} lesson={child} />
 								case "Quiz":
 									return <QuizSection key={child.id} quiz={child} />
 								case "UnitTest":
