@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import * as React from "react"
 
 // Configuration for QTI embed base URLs by type and environment
@@ -72,6 +73,15 @@ export function QTIRenderer({
 			// Keep existing behavior for response changes
 			if (event.data.type === "QTI_RESPONSE_CHANGE") {
 				const { responseIdentifier, response } = event.data
+
+				// Debug logging to understand what's being sent
+				logger.warn("QTI_RESPONSE_CHANGE received:", {
+					fullEventData: event.data,
+					responseIdentifier,
+					response,
+					hasResponseIdentifier: responseIdentifier !== undefined && responseIdentifier !== null,
+					responseIdentifierType: typeof responseIdentifier
+				})
 
 				if (onResponseChange) {
 					onResponseChange(responseIdentifier, response)

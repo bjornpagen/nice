@@ -24,6 +24,17 @@ export async function processQtiResponse(
 ): Promise<CheckAnswerResult> {
 	logger.info("server action: processing qti response", { identifier })
 
+	// Debug logging to understand what we're receiving
+	logger.warn("DEBUG: processQtiResponse received data", {
+		identifier,
+		response,
+		responseIdentifier: response.responseIdentifier,
+		responseValue: response.value,
+		hasResponseIdentifier: !!response.responseIdentifier,
+		responseIdentifierLength: response.responseIdentifier?.length,
+		responseIdentifierType: typeof response.responseIdentifier
+	})
+
 	const result = await errors.try(qti.processResponse(identifier, response))
 	if (result.error) {
 		logger.error("server action: failed to process qti response", {

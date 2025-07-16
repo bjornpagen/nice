@@ -1181,6 +1181,14 @@ export class Client {
 			response: String(validation.data.value)
 		}
 
+		// Debug logging to see what we're sending
+		logger.warn("DEBUG: QTI client sending to API", {
+			itemIdentifier: identifier,
+			apiRequest,
+			originalInput: input,
+			validatedData: validation.data
+		})
+
 		// Validate the transformed request
 		const apiValidation = ProcessResponseApiRequestSchema.safeParse(apiRequest)
 		if (!apiValidation.success) {
