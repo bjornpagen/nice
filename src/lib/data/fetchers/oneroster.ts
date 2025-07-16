@@ -1,6 +1,10 @@
 import * as logger from "@superbuilders/slog"
 import { unstable_cacheLife as cacheLife } from "next/cache"
 import { oneroster } from "@/lib/clients"
+import { createPrefixFilter } from "@/lib/filter"
+
+// Prefix filters for leveraging btree indexes
+const NICE_PREFIX_FILTER = createPrefixFilter("nice:")
 
 // ⚠️ IMPORTANT: OneRoster API Filtering Limitation
 // The OneRoster API only supports a SINGLE AND operation in filter queries.
@@ -113,7 +117,12 @@ export async function getAllResources() {
 	"use cache"
 	logger.info("getAllResources called")
 	cacheLife("max")
-	return oneroster.getAllResources({ filter: `status='active'` })
+	// Use prefix filter for "nice:" to leverage btree indexes for faster queries
+	// Filter by status='active' client-side due to OneRoster API AND limitation
+	const resources = await oneroster.getAllResources({ filter: NICE_PREFIX_FILTER })
+
+	// Filter by status='active' in-memory
+	return resources.filter((r) => r.status === "active")
 }
 
 export async function getResourcesBySlugAndType(slug: string, type: "qti" | "video", lessonType?: "quiz" | "unittest") {
@@ -153,7 +162,12 @@ export async function getAllComponentResources() {
 	"use cache"
 	logger.info("getAllComponentResources called")
 	cacheLife("max")
-	return oneroster.getAllComponentResources({ filter: `status='active'` })
+	// Use prefix filter for "nice:" to leverage btree indexes for faster queries
+	// Filter by status='active' client-side due to OneRoster API AND limitation
+	const resources = await oneroster.getAllComponentResources({ filter: NICE_PREFIX_FILTER })
+
+	// Filter by status='active' in-memory
+	return resources.filter((r) => r.status === "active")
 }
 
 export async function getClassesForSchool(schoolSourcedId: string) {
