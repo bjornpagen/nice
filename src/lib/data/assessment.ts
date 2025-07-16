@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { unstable_cacheLife as cacheLife } from "next/cache"
 import { notFound } from "next/navigation"
 import {
 	getAllCoursesBySlug,
@@ -27,6 +28,7 @@ export async function fetchQuizPageData(params: {
 	quiz: string
 }): Promise<QuizPageData> {
 	"use cache"
+	cacheLife("max")
 	const layoutDataPromise = fetchLessonLayoutData(params)
 	const resourcePromise = errors.try(getResourcesBySlugAndType(params.quiz, "qti", "quiz"))
 
@@ -95,6 +97,7 @@ export async function fetchUnitTestPageData(params: {
 	test: string
 }): Promise<UnitTestPageData> {
 	"use cache"
+	cacheLife("max")
 	const layoutDataPromise = fetchLessonLayoutData(params)
 	const resourcePromise = errors.try(getResourcesBySlugAndType(params.test, "qti", "unittest"))
 
@@ -161,6 +164,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	subject: string
 }): Promise<CourseChallengePageData> {
 	"use cache"
+	cacheLife("max")
 	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
 	if (coursesResult.error) {
 		logger.error("failed to fetch course by slug", { error: coursesResult.error, slug: params.course })
@@ -231,6 +235,7 @@ export async function fetchCourseChallengePage_LayoutData(params: {
 	subject: string
 }): Promise<CourseChallengeLayoutData> {
 	"use cache"
+	cacheLife("max")
 	// Reuse the main course page data fetcher to get all necessary context
 	const coursePageData = await fetchCoursePageData({
 		subject: params.subject,
@@ -253,6 +258,7 @@ export async function fetchQuizRedirectPath(params: {
 	quiz: string
 }): Promise<string> {
 	"use cache"
+	cacheLife("max")
 	const decodedUnit = decodeURIComponent(params.unit)
 
 	// Look up the unit by its slug to get its sourcedId
@@ -315,6 +321,7 @@ export async function fetchTestRedirectPath(params: {
 	test: string
 }): Promise<string> {
 	"use cache"
+	cacheLife("max")
 	const decodedUnit = decodeURIComponent(params.unit)
 
 	// Look up the unit by its slug to get its sourcedId

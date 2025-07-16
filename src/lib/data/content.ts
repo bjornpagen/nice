@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { unstable_cacheLife as cacheLife } from "next/cache"
 import { notFound } from "next/navigation"
 import { getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
 import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
@@ -10,6 +11,7 @@ import { extractYouTubeId } from "./utils"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
 	"use cache"
+	cacheLife("max")
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.article, "qti"))
 	if (resourceResult.error) {
@@ -56,6 +58,7 @@ export async function fetchExercisePageData(params: {
 	exercise: string
 }): Promise<ExercisePageData> {
 	"use cache"
+	cacheLife("max")
 	// Fetch layout data and exercise data in parallel for performance
 	const layoutDataPromise = fetchLessonLayoutData(params)
 	const resourcePromise = errors.try(getResourcesBySlugAndType(params.exercise, "qti"))
@@ -116,6 +119,7 @@ export async function fetchExercisePageData(params: {
 
 export async function fetchVideoPageData(params: { video: string }): Promise<VideoPageData> {
 	"use cache"
+	cacheLife("max")
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.video, "video"))
 	if (resourceResult.error) {

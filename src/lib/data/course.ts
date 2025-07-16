@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { unstable_cacheLife as cacheLife } from "next/cache"
 import { notFound } from "next/navigation"
 import {
 	getAllComponentResources,
@@ -16,6 +17,7 @@ import type { Course, Lesson, Unit, UnitChild } from "@/lib/types/structure"
 
 export async function fetchCoursePageData(params: { subject: string; course: string }): Promise<CoursePageData> {
 	"use cache"
+	cacheLife("max")
 	// First, find the course by its khanSlug since the URL param is a slug, not a Khan ID
 	logger.debug("course page: looking up course by slug", { slug: params.course })
 

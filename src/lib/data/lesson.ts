@@ -1,4 +1,5 @@
 import * as logger from "@superbuilders/slog"
+import { unstable_cacheLife as cacheLife } from "next/cache"
 import { notFound } from "next/navigation"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { fetchUnitPageData } from "./unit" // Import the parent data fetcher
@@ -10,6 +11,7 @@ export async function fetchLessonLayoutData(params: {
 	lesson: string
 }): Promise<LessonLayoutData> {
 	"use cache"
+	cacheLife("max")
 	// 1. Call the parent data fetcher to get all necessary context up to the unit level.
 	const unitPageData = await fetchUnitPageData(params)
 

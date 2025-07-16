@@ -1,6 +1,7 @@
 import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { unstable_cacheLife as cacheLife } from "next/cache"
 import { getActiveEnrollmentsForUser, getClass, getCourse, getUnitsForCourses } from "@/lib/data/fetchers/oneroster"
 import { ComponentMetadataSchema, CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
@@ -9,6 +10,8 @@ import type { Unit } from "@/lib/types/structure"
 import type { ClassReadSchemaType } from "../oneroster"
 
 export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileCourse[]> {
+	"use cache"
+	cacheLife("minutes")
 	// Get enrollments for the user
 	const enrollmentsResult = await errors.try(getActiveEnrollmentsForUser(userId))
 	if (enrollmentsResult.error) {
@@ -138,6 +141,8 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 }
 
 export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData> {
+	"use cache"
+	cacheLife("minutes")
 	const user = await currentUser()
 	if (!user) {
 		throw errors.new("user not authenticated")
@@ -158,6 +163,8 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 }
 
 export async function fetchProfileCoursesDataWithUser(sourceId: string): Promise<ProfileCoursesPageData> {
+	"use cache"
+	cacheLife("minutes")
 	// Import from actions since that's where the function is defined (from upstream)
 	const { getOneRosterCoursesForExplore } = await import("@/lib/actions/courses")
 
