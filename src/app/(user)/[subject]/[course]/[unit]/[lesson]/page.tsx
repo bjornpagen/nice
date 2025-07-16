@@ -1,9 +1,5 @@
-import * as logger from "@superbuilders/slog"
-
 // Main lesson page - just renders the overview content
 export default function LessonPage() {
-	logger.info("lesson page: received request, rendering overview content")
-
 	return (
 		<div className="p-8">
 			<h1 className="text-2xl font-bold mb-4">Lesson Overview</h1>

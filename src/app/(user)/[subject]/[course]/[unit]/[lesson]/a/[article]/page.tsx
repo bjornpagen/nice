@@ -1,4 +1,3 @@
-import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchArticlePageData } from "@/lib/data/content"
 import type { ArticlePageData } from "@/lib/types/page"
@@ -11,8 +10,6 @@ export default function ArticlePage({
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; article: string }>
 }) {
-	logger.info("article page: received request, rendering layout immediately")
-
 	const articlePromise: Promise<ArticlePageData> = params.then(fetchArticlePageData)
 
 	return (

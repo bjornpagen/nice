@@ -1,4 +1,3 @@
-import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchQuizPageData } from "@/lib/data/assessment"
 import type { QuizPageData } from "@/lib/types/page"
@@ -11,8 +10,6 @@ export default function QuizPage({
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; quiz: string }>
 }) {
-	logger.info("quiz page: received request, rendering layout immediately")
-
 	const quizPromise: Promise<QuizPageData> = params.then(fetchQuizPageData)
 
 	return (

@@ -1,4 +1,3 @@
-import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchUnitTestPageData } from "@/lib/data/assessment"
 import type { UnitTestPageData } from "@/lib/types/page"
@@ -11,8 +10,6 @@ export default function UnitTestPage({
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; test: string }>
 }) {
-	logger.info("unit test page: received request, rendering layout immediately")
-
 	const testPromise: Promise<UnitTestPageData> = params.then(fetchUnitTestPageData)
 
 	return (

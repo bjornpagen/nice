@@ -1,4 +1,3 @@
-import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchVideoPageData } from "@/lib/data/content"
 import type { VideoPageData } from "@/lib/types/page"
@@ -11,8 +10,6 @@ export default function VideoPage({
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; video: string }>
 }) {
-	logger.info("video page: received request, rendering layout immediately")
-
 	const videoPromise: Promise<VideoPageData> = params.then(fetchVideoPageData)
 
 	return (

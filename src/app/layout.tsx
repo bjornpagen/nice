@@ -1,7 +1,8 @@
 import { ClerkProvider } from "@clerk/nextjs"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import { AppProvider } from "@/components/providers/app-provider"
+import * as React from "react"
+import { DialogManagerProvider } from "@/components/providers/dialog-manager-provider"
 import "@/styles/globals.css"
 
 const geistSans = Geist({
@@ -25,13 +26,15 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<ClerkProvider>
-			<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-				<head>{/* <script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js" /> */}</head>
-				<body suppressHydrationWarning>
-					<AppProvider>{children}</AppProvider>
-				</body>
-			</html>
-		</ClerkProvider>
+		<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+			<head>{/* <script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js" /> */}</head>
+			<body suppressHydrationWarning>
+				<React.Suspense>
+					<ClerkProvider>
+						<DialogManagerProvider>{children}</DialogManagerProvider>
+					</ClerkProvider>
+				</React.Suspense>
+			</body>
+		</html>
 	)
 }

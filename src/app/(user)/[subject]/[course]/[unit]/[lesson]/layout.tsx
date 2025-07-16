@@ -1,4 +1,3 @@
-import * as logger from "@superbuilders/slog"
 import type * as React from "react"
 import { fetchLessonLayoutData } from "@/lib/data/lesson"
 import type { LessonLayoutData } from "@/lib/types/page"
@@ -12,8 +11,6 @@ export default function Layout({
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string }>
 	children: React.ReactNode
 }) {
-	logger.info("lesson layout: received request, rendering layout immediately")
-
 	const dataPromise: Promise<LessonLayoutData> = params.then(fetchLessonLayoutData)
 
 	return <LessonLayout dataPromise={dataPromise}>{children}</LessonLayout>

@@ -1,4 +1,3 @@
-import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchCourseChallengePage_LayoutData, fetchCourseChallengePage_TestData } from "@/lib/data/assessment"
 import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types/page"
@@ -10,8 +9,6 @@ export default function CourseChallengePage({
 }: {
 	params: Promise<{ subject: string; course: string; test: string }>
 }) {
-	logger.info("course challenge page: received request, rendering layout immediately")
-
 	const layoutDataPromise: Promise<CourseChallengeLayoutData> = params.then(fetchCourseChallengePage_LayoutData)
 	const testDataPromise: Promise<CourseChallengePageData> = params.then(fetchCourseChallengePage_TestData)
 
