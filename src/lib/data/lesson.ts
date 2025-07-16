@@ -270,13 +270,8 @@ export async function fetchLessonLayoutData(params: {
 			}
 
 			const description = lessonMetadata.khanDescription
-			const path = lessonMetadata.path
-
-			// Validate path if it exists
-			if (path && !path.startsWith("/")) {
-				logger.error("CRITICAL: Invalid lesson path format", { lessonId: lesson.sourcedId, path })
-				throw errors.new("lesson: invalid path format")
-			}
+			// Don't use metadata path, construct it from slugs
+			const lessonPath = `/${params.subject}/${params.course}/${params.unit}/${lessonMetadata.khanSlug}`
 
 			const children = finalLessonContentMap.get(lesson.sourcedId)
 
@@ -297,7 +292,7 @@ export async function fetchLessonLayoutData(params: {
 				slug: lessonSlug,
 				title: lesson.title,
 				description: description,
-				path: path,
+				path: lessonPath,
 				children: lessonChildren
 			}
 		})
@@ -332,7 +327,8 @@ export async function fetchLessonLayoutData(params: {
 		logger.error("CRITICAL: Course missing title", { courseId: course.sourcedId })
 		throw errors.new("course: title is required")
 	}
-	const coursePath = courseMetadata.path
+	// Construct course path from slugs instead of using metadata path
+	const coursePath = `/${params.subject}/${courseMetadata.khanSlug}`
 
 	// Validate unit metadata
 	const unitMetadataResult = ComponentMetadataSchema.safeParse(unit.metadata)
@@ -350,7 +346,8 @@ export async function fetchLessonLayoutData(params: {
 		logger.error("CRITICAL: Unit missing title", { unitId: unit.sourcedId })
 		throw errors.new("unit: title is required")
 	}
-	const unitPath = unitMetadata.path
+	// Construct unit path from slugs instead of using metadata path
+	const unitPath = `/${params.subject}/${params.course}/${unitMetadata.khanSlug}`
 	const unitSlug = unitMetadata.khanSlug
 	const unitDescription = unitMetadata.khanDescription
 
@@ -370,7 +367,8 @@ export async function fetchLessonLayoutData(params: {
 		logger.error("CRITICAL: Current lesson missing title", { lessonId: currentLesson.sourcedId })
 		throw errors.new("current lesson: title is required")
 	}
-	const currentLessonPath = currentLessonMetadata.path
+	// Construct lesson path from slugs instead of using metadata path
+	const currentLessonPath = `/${params.subject}/${params.course}/${params.unit}/${currentLessonMetadata.khanSlug}`
 	const currentLessonSlug = currentLessonMetadata.khanSlug
 	const currentLessonDescription = currentLessonMetadata.khanDescription
 

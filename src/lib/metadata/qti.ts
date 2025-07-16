@@ -9,6 +9,7 @@ export const QtiItemMetadataSchema = z
 		khanExerciseTitle: z.string()
 	})
 	.strict()
+	.transform(({ khanExercisePath, ...rest }) => rest)
 export type QtiItemMetadata = z.infer<typeof QtiItemMetadataSchema>
 
 export const QtiStimulusMetadataSchema = z
@@ -19,6 +20,7 @@ export const QtiStimulusMetadataSchema = z
 		khanTitle: z.string()
 	})
 	.strict()
+	.transform(({ khanPath, ...rest }) => rest)
 export type QtiStimulusMetadata = z.infer<typeof QtiStimulusMetadataSchema>
 
 export const QtiTestMetadataSchema = z
@@ -31,4 +33,5 @@ export const QtiTestMetadataSchema = z
 		khanAssessmentType: z.enum(["Exercise", "Quiz", "UnitTest", "CourseChallenge"])
 	})
 	.strict()
+	.transform(({ khanPath, ...rest }) => rest)
 export type QtiTestMetadata = z.infer<typeof QtiTestMetadataSchema>

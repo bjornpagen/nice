@@ -67,7 +67,7 @@ export async function fetchUnitPageData(params: {
 	const courseForPage: Pick<Course, "id" | "title" | "path" | "description"> = {
 		id: oneRosterCourse.sourcedId,
 		title: oneRosterCourse.title,
-		path: courseMetadata.path,
+		path: `/${params.subject}/${courseMetadata.khanSlug}`,
 		description: courseMetadata.khanDescription
 	}
 
@@ -112,7 +112,7 @@ export async function fetchUnitPageData(params: {
 		allUnits.push({
 			id: component.sourcedId,
 			title: component.title,
-			path: componentMetadata.path,
+			path: `/${params.subject}/${params.course}/${componentMetadata.khanSlug}`,
 			ordering: component.sortOrder,
 			slug: componentMetadata.khanSlug,
 			description: componentMetadata.khanDescription,
@@ -206,7 +206,7 @@ export async function fetchUnitPageData(params: {
 					unitAssessments.push({
 						id: resource.sourcedId,
 						title: resource.title,
-						path: resourceMetadata.path,
+						path: `/${params.subject}/${params.course}/${params.unit}/${assessmentType.toLowerCase()}/${resourceMetadata.khanSlug}`,
 						type: "Quiz",
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
@@ -216,7 +216,7 @@ export async function fetchUnitPageData(params: {
 					unitAssessments.push({
 						id: resource.sourcedId,
 						title: resource.title,
-						path: resourceMetadata.path,
+						path: `/${params.subject}/${params.course}/${params.unit}/${assessmentType.toLowerCase()}/${resourceMetadata.khanSlug}`,
 						type: "UnitTest",
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
@@ -318,23 +318,23 @@ export async function fetchUnitPageData(params: {
 				videos.push({
 					id: resource.sourcedId,
 					title: resource.title,
-					path: resourceMetadata.path,
+					path: `/${params.subject}/${params.course}/${params.unit}/${childSlug}/v/${resourceMetadata.khanSlug}`,
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.khanDescription,
 					youtubeId: youtubeId,
 					duration: resourceMetadata.duration,
-					type: "Video",
+					type: "Video" as const,
 					sortOrder: componentResource.sortOrder
 				})
 			} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
 				// This is an article
 				articles.push({
+					type: "Article",
 					id: resource.sourcedId,
 					title: resource.title,
-					path: resourceMetadata.path,
+					path: `/${params.subject}/${params.course}/${params.unit}/${childSlug}/a/${resourceMetadata.khanSlug}`,
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.khanDescription,
-					type: "Article",
 					sortOrder: componentResource.sortOrder
 				})
 			} else if (
@@ -344,13 +344,13 @@ export async function fetchUnitPageData(params: {
 			) {
 				// This is an exercise
 				exercises.push({
+					type: "Exercise",
 					id: resource.sourcedId,
 					title: resource.title,
-					path: resourceMetadata.path,
+					path: `/${params.subject}/${params.course}/${params.unit}/${childSlug}/e/${resourceMetadata.khanSlug}`,
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.khanDescription,
-					questions: [], // Will be fetched from QTI server
-					type: "Exercise",
+					questions: [], // Questions are not needed on course page
 					sortOrder: componentResource.sortOrder
 				})
 			}
@@ -364,7 +364,7 @@ export async function fetchUnitPageData(params: {
 		processedLessons.push({
 			id: child.sourcedId,
 			title: child.title,
-			path: childMetadata.path,
+			path: `/${params.subject}/${params.course}/${params.unit}/${childSlug}`,
 			type: "Lesson",
 			slug: childSlug,
 			description: childMetadata.khanDescription,
@@ -437,7 +437,7 @@ export async function fetchUnitPageData(params: {
 		title: oneRosterUnit.title,
 		slug: unitMetadata.khanSlug,
 		description: unitMetadata.khanDescription,
-		path: unitMetadata.path,
+		path: `/${params.subject}/${params.course}/${unitMetadata.khanSlug}`,
 		ordering: oneRosterUnit.sortOrder,
 		children: processedUnitChildren // Assign children here
 	}

@@ -292,9 +292,8 @@ export async function fetchQuizRedirectPath(params: {
 		throw errors.new("first lesson missing khanSlug")
 	}
 
-	// Return the canonical 4-slug URL
-	const decodedQuiz = decodeURIComponent(params.quiz)
-	return `/${params.subject}/${params.course}/${decodedUnit}/${firstLessonSlug}/quiz/${decodedQuiz}`
+	// Construct the redirect path
+	return `/${params.subject}/${params.course}/${params.unit}/${firstLessonSlug}/quiz/${params.quiz}`
 }
 
 export async function fetchTestRedirectPath(params: {
@@ -354,7 +353,6 @@ export async function fetchTestRedirectPath(params: {
 		throw errors.new("first lesson missing khanSlug")
 	}
 
-	// Return the canonical 4-slug URL
-	const decodedTest = decodeURIComponent(params.test)
-	return `/${params.subject}/${params.course}/${decodedUnit}/${firstLessonSlug}/test/${decodedTest}`
+	// Construct the redirect path
+	return `/${params.subject}/${params.course}/${params.unit}/${firstLessonSlug}/test/${params.test}`
 }

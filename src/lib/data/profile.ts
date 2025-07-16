@@ -64,7 +64,7 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 				unitsByCourseId.get(courseId)?.push({
 					id: unit.sourcedId,
 					title: unit.title,
-					path: unitMetadata.path,
+					path: "", // Path will be constructed when we have course slug
 					ordering: unit.sortOrder,
 					description: unitMetadata.khanDescription,
 					slug: unitMetadata.khanSlug,
@@ -115,12 +115,22 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 		}
 		const courseMetadata = courseMetadataResult.data
 
+		// We no longer have path in metadata, so we'll use a sensible default
+		// This could be improved by passing subject context from somewhere else
+		const subject = "courses" // Default subject for enrolled courses
+
+		// Now update unit paths with the course slug
+		const unitsWithCorrectPaths = courseUnits.map((unit) => ({
+			...unit,
+			path: `/${subject}/${courseMetadata.khanSlug}/${unit.slug}`
+		}))
+
 		courses.push({
 			id: course.sourcedId,
 			title: course.title,
 			description: courseMetadata.khanDescription,
-			path: courseMetadata.path,
-			units: courseUnits
+			path: `/${subject}/${courseMetadata.khanSlug}`, // Construct path from slugs
+			units: unitsWithCorrectPaths
 		})
 	}
 

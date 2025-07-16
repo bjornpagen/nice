@@ -51,7 +51,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		slug: courseMetadata.khanSlug, // Add slug
 		title: oneRosterCourse.title,
 		description: courseMetadata.khanDescription,
-		path: courseMetadata.path
+		path: `/${params.subject}/${courseMetadata.khanSlug}` // Construct path from slugs
 	}
 
 	// Fetch all Components that are direct children of this Course (these are Units)
@@ -86,7 +86,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 				slug: componentMetadata.khanSlug,
 				title: component.title,
 				description: componentMetadata.khanDescription,
-				path: componentMetadata.path,
+				path: `/${params.subject}/${params.course}/${componentMetadata.khanSlug}`, // Construct path from slugs
 				ordering: component.sortOrder,
 				children: [] // Initialize children array
 			})
@@ -120,7 +120,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 				slug: componentMetadata.khanSlug,
 				title: component.title,
 				description: componentMetadata.khanDescription,
-				path: componentMetadata.path,
+				path: `/${params.subject}/${params.course}/${parentMetadataResult.data.khanSlug}/${componentMetadata.khanSlug}`, // Construct path from slugs
 				children: [] // Initialize children
 			})
 		}
@@ -224,7 +224,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					slug: resourceMetadata.khanSlug,
 					title: resource.title,
 					description: resourceMetadata.khanDescription,
-					path: resourceMetadata.path,
+					path: `/${params.subject}/${params.course}/${unit.slug}/${assessmentType.toLowerCase()}/${resourceMetadata.khanSlug}`, // Construct path from slugs
 					questions: [] // Questions are not needed on the course page
 				}
 				unitAssessments.push(assessment)
@@ -286,10 +286,19 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					}
 					const youtubeId = youtubeMatch[1]
 
+					// Get lesson slug for path construction
+					const lessonComponentMeta = ComponentMetadataSchema.safeParse(
+						allComponents.find((c) => c.sourcedId === lesson.id)?.metadata
+					)
+					if (!lessonComponentMeta.success) {
+						logger.error("invalid lesson component metadata for video path", { lessonId: lesson.id })
+						throw errors.new("invalid lesson component metadata")
+					}
+
 					videos.push({
 						id: resource.sourcedId,
 						title: resource.title,
-						path: resourceMetadata.path,
+						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/v/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
 						youtubeId: youtubeId,
@@ -299,11 +308,20 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					})
 				} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
 					// This is an article
+					// Get lesson slug for path construction
+					const lessonComponentMeta = ComponentMetadataSchema.safeParse(
+						allComponents.find((c) => c.sourcedId === lesson.id)?.metadata
+					)
+					if (!lessonComponentMeta.success) {
+						logger.error("invalid lesson component metadata for article path", { lessonId: lesson.id })
+						throw errors.new("invalid lesson component metadata")
+					}
+
 					articles.push({
 						type: "Article",
 						id: resource.sourcedId,
 						title: resource.title,
-						path: resourceMetadata.path,
+						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/a/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
 						sortOrder: componentResource.sortOrder
@@ -314,11 +332,20 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					!resourceMetadata.khanLessonType
 				) {
 					// This is an exercise
+					// Get lesson slug for path construction
+					const lessonComponentMeta = ComponentMetadataSchema.safeParse(
+						allComponents.find((c) => c.sourcedId === lesson.id)?.metadata
+					)
+					if (!lessonComponentMeta.success) {
+						logger.error("invalid lesson component metadata for exercise path", { lessonId: lesson.id })
+						throw errors.new("invalid lesson component metadata")
+					}
+
 					exercises.push({
 						type: "Exercise",
 						id: resource.sourcedId,
 						title: resource.title,
-						path: resourceMetadata.path,
+						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/e/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
 						questions: [], // Questions are not needed on course page

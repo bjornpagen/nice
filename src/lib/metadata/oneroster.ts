@@ -9,6 +9,7 @@ export const CourseMetadataSchema = z
 		khanDescription: z.string().default("")
 	})
 	.strict() // Enforce strict validation
+	.transform(({ path, ...rest }) => rest) // Drop the path field
 export type CourseMetadata = z.infer<typeof CourseMetadataSchema>
 
 export const ComponentMetadataSchema = z
@@ -20,6 +21,7 @@ export const ComponentMetadataSchema = z
 		khanDescription: z.string().default("")
 	})
 	.strict() // Enforce strict validation
+	.transform(({ path, ...rest }) => rest) // Drop the path field
 export type ComponentMetadata = z.infer<typeof ComponentMetadataSchema>
 
 // Base schema for common resource properties
@@ -57,8 +59,7 @@ const QtiResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 }).strict()
 
 // The final discriminated union schema for all resources
-export const ResourceMetadataSchema = z.discriminatedUnion("type", [
-	VideoResourceMetadataSchema,
-	QtiResourceMetadataSchema
-])
+export const ResourceMetadataSchema = z
+	.discriminatedUnion("type", [VideoResourceMetadataSchema, QtiResourceMetadataSchema])
+	.transform(({ path, ...rest }) => rest) // Drop the path field from the union result
 export type ResourceMetadata = z.infer<typeof ResourceMetadataSchema>
