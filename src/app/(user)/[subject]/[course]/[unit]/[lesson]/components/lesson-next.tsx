@@ -15,9 +15,9 @@ export function LessonNext({ lessonChildren }: LessonNextProps) {
 
 	// Find the current item and next item
 	const currentIndex = lessonChildren.findIndex((child) => {
-		// Extract the content path from the full pathname
-		// e.g., "/physics/physics-1/forces/lesson-1/a/article-1" -> "/physics/physics-1/forces/lesson-1/a/article-1"
-		return pathname.includes(child.path)
+		// Use exact match instead of includes to prevent substring matches
+		// This prevents "/v/scarcity" from matching "/v/scarcity-and-rivalry..."
+		return pathname === child.path
 	})
 
 	// Get the next item
