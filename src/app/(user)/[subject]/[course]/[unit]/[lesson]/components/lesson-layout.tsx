@@ -1,5 +1,6 @@
 "use client"
 
+import { usePathname } from "next/navigation"
 import * as React from "react"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { LessonNext } from "./lesson-next"
@@ -17,6 +18,9 @@ export function LessonLayout({
 
 	// Track which lesson's content is currently displayed in the sidebar
 	const [selectedLessonId, setSelectedLessonId] = React.useState(lessonData.id)
+
+	const pathname = usePathname()
+	const isExercisePage = pathname.includes("/e/")
 
 	// Find the selected lesson from unit children
 	const selectedLesson = React.useMemo(() => {
@@ -47,8 +51,8 @@ export function LessonLayout({
 				{/* Content area - scrollable */}
 				<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 
-				{/* Bottom navigation - always visible, never overlaps content */}
-				<LessonNext lessonChildren={lessonData.children} />
+				{/* Conditionally render LessonNext footer */}
+				{!isExercisePage && <LessonNext lessonChildren={lessonData.children} />}
 			</div>
 		</div>
 	)

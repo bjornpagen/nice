@@ -10,7 +10,7 @@ import spaceFriend from "@/components/practice/course/unit/lesson/exercise/image
 import { QTIRenderer } from "@/components/qti-renderer"
 import { processQtiResponse } from "@/lib/actions/qti"
 import type { Question } from "@/lib/types/content"
-import type { Lesson, LessonChild, Unit, UnitChild } from "@/lib/types/structure"
+import type { Lesson, Unit, UnitChild } from "@/lib/types/structure"
 import { AssessmentBottomNav, type AssessmentType } from "./assessment-bottom-nav"
 import { AssessmentProficiencyOverview } from "./assessment-proficiency-overview"
 
@@ -171,77 +171,27 @@ export function AssessmentStepper({
 	}, [])
 
 	React.useEffect(() => {
-		if (showSummary && unitData && lessonData) {
-			const getNextItemText = (item: UnitChild | LessonChild, allUnitChildren: UnitChild[]) => {
-				if (item.type === "Lesson") {
-					const lessonNumber = allUnitChildren.filter((c) => c.type === "Lesson").findIndex((c) => c.id === item.id) + 1
-					return `Up next: Lesson ${lessonNumber}`
-				}
-				if (item.type === "Quiz") {
-					const quizNumber = allUnitChildren.filter((c) => c.type === "Quiz").findIndex((c) => c.id === item.id) + 1
-					return `Up next: Quiz ${quizNumber}`
-				}
-				if (item.type === "UnitTest") {
-					return "Up next: Unit Test"
-				}
-				return `Up next: ${item.title}`
-			}
-
+		// This simplified logic runs when the summary screen is about to be shown.
+		if (showSummary && lessonData && unitData) {
 			let foundNext: { text: string; path: string } | null = null
-			const currentUnitChildren = unitData.children
 
-			// Determine if the current assessment is a unit-level item (Quiz/Test) or a lesson-level item (Exercise)
-			const isUnitLevelAssessment = currentUnitChildren.some((child) => child.id === assessmentId)
+			// Find the index of the current exercise within its lesson's children.
+			const currentContentIndex = lessonData.children.findIndex((child) => child.id === assessmentId)
 
-			if (isUnitLevelAssessment) {
-				const currentIndex = currentUnitChildren.findIndex((child) => child.id === assessmentId)
-				if (currentIndex !== -1 && currentIndex < currentUnitChildren.length - 1) {
-					const nextUnitChild = currentUnitChildren[currentIndex + 1]
-					if (nextUnitChild) {
-						let path = nextUnitChild.path || ""
-						if (nextUnitChild.type === "Lesson" && nextUnitChild.children.length > 0) {
-							const firstChild = nextUnitChild.children[0]
-							if (firstChild?.path) {
-								path = firstChild.path
-							}
-						}
-						foundNext = { text: getNextItemText(nextUnitChild, currentUnitChildren), path }
-					}
-				}
-			} else {
-				// It's an exercise within a lesson.
-				const currentLessonIndex = currentUnitChildren.findIndex((child) => child.id === lessonData.id)
-				if (currentLessonIndex !== -1) {
-					const currentLesson = currentUnitChildren[currentLessonIndex]
-					if (currentLesson?.type === "Lesson") {
-						const currentContentIndex = currentLesson.children.findIndex((child) => child.id === assessmentId)
-						if (currentContentIndex !== -1 && currentContentIndex < currentLesson.children.length - 1) {
-							// Next item is in the same lesson.
-							const nextLessonChild = currentLesson.children[currentContentIndex + 1]
-							if (nextLessonChild) {
-								foundNext = {
-									text: getNextItemText(nextLessonChild, currentUnitChildren),
-									path: nextLessonChild.path || ""
-								}
-							}
-						} else if (currentLessonIndex < currentUnitChildren.length - 1) {
-							// Next item is in the next lesson/quiz/test.
-							const nextUnitChild = currentUnitChildren[currentLessonIndex + 1]
-							if (nextUnitChild) {
-								let path = nextUnitChild.path || ""
-								if (nextUnitChild.type === "Lesson" && nextUnitChild.children.length > 0) {
-									const firstChild = nextUnitChild.children[0]
-									if (firstChild?.path) {
-										path = firstChild.path
-									}
-								}
-								foundNext = { text: getNextItemText(nextUnitChild, currentUnitChildren), path }
-							}
-						}
+			// If the exercise is found and it's not the last item in the lesson...
+			if (currentContentIndex !== -1 && currentContentIndex < lessonData.children.length - 1) {
+				// ...the next item is the next child in the lesson.
+				const nextLessonChild = lessonData.children[currentContentIndex + 1]
+				if (nextLessonChild) {
+					foundNext = {
+						text: `Up next: ${nextLessonChild.title}`, // Set the button text to show the next resource name.
+						path: nextLessonChild.path || "#"
 					}
 				}
 			}
 
+			// If no next item is found within the lesson (i.e., it was the last one),
+			// create a link to go back to the unit overview.
 			if (!foundNext) {
 				foundNext = { text: `Back to ${unitData.title}`, path: unitData.path }
 			}
