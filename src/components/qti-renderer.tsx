@@ -14,7 +14,7 @@ const QTI_BASE_URLS = {
 } as const
 
 // This flag is now derived from the environment
-const USE_STAGING = process.env.NODE_ENV !== "production"
+const USE_STAGING = true
 
 interface QTIRendererProps {
 	identifier: string
