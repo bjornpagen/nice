@@ -6,11 +6,11 @@ import "./src/env.js"
 
 /** @type {import("next").NextConfig} */
 const config = {
-	// experimental: {
-	// 	dynamicIO: true,
-	// 	reactCompiler: true,
-	// 	useCache: true
-	// },
+	experimental: {
+		dynamicIO: true,
+		reactCompiler: true,
+		useCache: true
+	},
 	images: {
 		remotePatterns: [
 			{

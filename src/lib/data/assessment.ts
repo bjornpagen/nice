@@ -29,7 +29,13 @@ export async function fetchQuizPageData(params: {
 }): Promise<QuizPageData> {
 	"use cache"
 	cacheLife("max")
-	const layoutDataPromise = fetchLessonLayoutData(params)
+	// Pass only the params needed by fetchLessonLayoutData, not the quiz param
+	const layoutDataPromise = fetchLessonLayoutData({
+		subject: params.subject,
+		course: params.course,
+		unit: params.unit,
+		lesson: params.lesson
+	})
 	const resourcePromise = errors.try(getResourcesBySlugAndType(params.quiz, "qti", "quiz"))
 
 	const [layoutData, resourceResult] = await Promise.all([layoutDataPromise, resourcePromise])
@@ -98,7 +104,13 @@ export async function fetchUnitTestPageData(params: {
 }): Promise<UnitTestPageData> {
 	"use cache"
 	cacheLife("max")
-	const layoutDataPromise = fetchLessonLayoutData(params)
+	// Pass only the params needed by fetchLessonLayoutData, not the test param
+	const layoutDataPromise = fetchLessonLayoutData({
+		subject: params.subject,
+		course: params.course,
+		unit: params.unit,
+		lesson: params.lesson
+	})
 	const resourcePromise = errors.try(getResourcesBySlugAndType(params.test, "qti", "unittest"))
 
 	const [layoutData, resourceResult] = await Promise.all([layoutDataPromise, resourcePromise])

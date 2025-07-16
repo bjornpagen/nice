@@ -12,8 +12,13 @@ export async function fetchLessonLayoutData(params: {
 }): Promise<LessonLayoutData> {
 	"use cache"
 	cacheLife("max")
-	// 1. Call the parent data fetcher to get all necessary context up to the unit level.
-	const unitPageData = await fetchUnitPageData(params)
+	// 1. Call the parent data fetcher with ONLY the params it needs
+	// This ensures cache effectiveness - all lessons in the same unit share the cache
+	const unitPageData = await fetchUnitPageData({
+		subject: params.subject,
+		course: params.course,
+		unit: params.unit
+	})
 
 	// 2. Find the specific lesson from the already-fetched unit data.
 	const currentLesson = unitPageData.unit.children.find(
