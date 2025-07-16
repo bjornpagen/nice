@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronsUpDown } from "lucide-react"
+import { ChevronDown, ChevronUp } from "lucide-react"
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
@@ -29,7 +29,17 @@ export function PracticeProgressionSummary({
 				<h4 className="text-sm font-semibold">@peduarte starred 3 repositories</h4>
 				<CollapsibleTrigger asChild>
 					<Button variant="ghost" size="icon" className="size-8">
-						<ChevronsUpDown />
+						{isOpen ? (
+							<React.Fragment>
+								<ChevronUp className="size-4" />
+								<span>Hide</span>
+							</React.Fragment>
+						) : (
+							<React.Fragment>
+								<ChevronDown className="size-4" />
+								<span>Show</span>
+							</React.Fragment>
+						)}
 						<span className="sr-only">Toggle</span>
 					</Button>
 				</CollapsibleTrigger>
