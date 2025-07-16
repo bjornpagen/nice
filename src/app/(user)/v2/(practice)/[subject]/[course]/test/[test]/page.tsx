@@ -5,7 +5,7 @@ import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { CourseChallengeContent } from "@/components/practice/course/challenge/course-challenge-content"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { type CourseResource, getCourseBlob } from "@/lib/v2/types"
+import { type CourseMaterial, getCourseBlob, getCourseMaterials } from "@/lib/v2/types"
 
 export default function PracticeCourseChallengePage({
 	params
@@ -43,19 +43,61 @@ function getCourseChallengeData(
 	subject: string,
 	course: string,
 	test: string
-): Extract<CourseResource, { type: "CourseChallenge" }> | undefined {
-	logger.debug("course challenge data: initializing course challenge data", { subject, course, test })
+): Extract<CourseMaterial, { type: "CourseChallenge" }> | undefined {
+	logger.info("course challenge data: initializing course challenge data", { subject, course, test })
 
 	const blob = getCourseBlob(subject, course)
-	logger.debug("course challenge data: blob", { blob })
+	logger.info("course challenge data: blob retrieved", { subject, course, test, blobKeys: _.keys(blob) })
 
-	const challengeData = _.find(
-		blob.resources,
-		(r): r is Extract<CourseResource, { type: "CourseChallenge" }> => r.type === "CourseChallenge" && r.slug === test
+	const materials = getCourseMaterials(blob)
+	logger.info("course challenge data: materials extracted", { subject, course, test, materialCount: materials.length })
+
+	const challengeIndex = materials.findIndex(
+		(u): u is Extract<CourseMaterial, { type: "CourseChallenge" }> => u.type === "CourseChallenge" && u.slug === test
 	)
-	if (challengeData == null) {
+	if (challengeIndex === -1) {
 		logger.error("course challenge data: course challenge not found", { subject, course, test })
 		return undefined
+	}
+	logger.info("course challenge data: challenge index found", { subject, course, test, challengeIndex })
+
+	const challengeData = materials[challengeIndex]
+	if (challengeData == null || challengeData.type !== "CourseChallenge") {
+		logger.error("course challenge data: course challenge data not found", { subject, course, test })
+		return undefined
+	}
+	logger.info("course challenge data: challenge data retrieved", {
+		subject,
+		course,
+		test,
+		challengeDataKeys: _.keys(challengeData)
+	})
+
+	let nextMaterial = materials[challengeIndex + 1]
+	if (nextMaterial != null && nextMaterial.type === "Lesson") {
+		nextMaterial = nextMaterial.resources.find(
+			(r): r is Extract<CourseMaterial, { type: "Article" | "Exercise" | "Video" }> => r != null
+		)
+	}
+	logger.info("course challenge data: next material identified", {
+		subject,
+		course,
+		test,
+		nextMaterialKeys: _.keys(nextMaterial)
+	})
+
+	if (nextMaterial != null) {
+		challengeData.meta = {
+			...challengeData.meta,
+			next: { type: nextMaterial.type, title: nextMaterial.title }
+		}
+		logger.info("course challenge data: challenge data enhanced with next material", {
+			subject,
+			course,
+			test,
+			nextType: nextMaterial.type,
+			nextTitle: nextMaterial.title
+		})
 	}
 
 	return challengeData

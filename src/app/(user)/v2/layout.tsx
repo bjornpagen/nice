@@ -5,7 +5,7 @@ import { Banner } from "@/components/banner"
 export default function MainLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<div id="main-layout" className="min-h-screen flex flex-col">
-			<div className="fixed w-full z-50 h-16" />
+			<div className="sticky top-0 w-full z-50 h-16" />
 
 			<div id="main-layout-content" className="flex-1 flex flex-col">
 				<React.Suspense>

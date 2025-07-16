@@ -4,10 +4,10 @@ import _ from "lodash"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import * as React from "react"
+import { PracticeProgressionFooter } from "@/components/practice/practice-progression-footer"
 import { cn } from "@/lib/utils"
 import type { CourseMaterial } from "@/lib/v2/types"
 import testIllustration from "./images/test-illustration.png"
-import { UnitTestContentFooter } from "./unit-test-content-footer"
 
 export function UnitTestContent({
 	unitTestPromise,
@@ -48,8 +48,9 @@ export function UnitTestContent({
 				</div>
 			</div>
 
-			<UnitTestContentFooter
+			<PracticeProgressionFooter
 				questions={unitTest.data.questions}
+				next={unitTest.meta?.next}
 				index={index}
 				setIndex={setIndex}
 				className={"flex-none p-4"}

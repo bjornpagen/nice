@@ -26,7 +26,12 @@ export function LessonArticleContent({
 				<span className="text-3xl font-medium text-muted-foreground">QTI Renderer goes here...</span>
 			</div>
 
-			<PracticeProgressionFooter index={index} setIndex={setIndex} className={"flex-none p-4"} />
+			<PracticeProgressionFooter
+				next={article.meta.next}
+				index={index}
+				setIndex={setIndex}
+				className={"flex-none p-4"}
+			/>
 		</div>
 	)
 }

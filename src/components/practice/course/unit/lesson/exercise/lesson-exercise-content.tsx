@@ -55,6 +55,7 @@ export function LessonExerciseContent({
 
 			<PracticeProgressionFooter
 				questions={exercise.data.questions}
+				next={exercise.meta.next}
 				index={index}
 				setIndex={setIndex}
 				className={"flex-none p-4"}

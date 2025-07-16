@@ -29,7 +29,7 @@ export default async function OverviewCourseLayout({
 	return (
 		<div id="overview-course-layout">
 			<div className="flex flex-row">
-				<nav id="overview-course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-screen">
+				<nav id="overview-course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-full">
 					<ErrorBoundary fallback={<OverviewCourseLayoutErrorFallback />}>
 						<React.Suspense>
 							<CourseSidebar coursePromise={coursePromise} />
@@ -37,7 +37,7 @@ export default async function OverviewCourseLayout({
 					</ErrorBoundary>
 				</nav>
 
-				<main id="overview-course-layout-main" className="flex-1 bg-gray-50 px-8 py-4 w-screen">
+				<main id="overview-course-layout-main" className="flex-1 bg-gray-50 px-8 py-4 w-full">
 					{children}
 				</main>
 			</div>

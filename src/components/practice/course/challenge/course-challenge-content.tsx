@@ -4,16 +4,16 @@ import _ from "lodash"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import * as React from "react"
+import { PracticeProgressionFooter } from "@/components/practice/practice-progression-footer"
 import { cn } from "@/lib/utils"
-import type { CourseResource } from "@/lib/v2/types"
-import { CourseChallengeContentFooter } from "./course-challenge-content-footer"
+import type { CourseMaterial } from "@/lib/v2/types"
 import challengeIllustration from "./images/course-challenge-illustration.png"
 
 export function CourseChallengeContent({
 	challengePromise,
 	className
 }: {
-	challengePromise: Promise<Extract<CourseResource, { type: "CourseChallenge" }> | undefined>
+	challengePromise: Promise<Extract<CourseMaterial, { type: "CourseChallenge" }> | undefined>
 	className?: string
 }) {
 	const challenge = React.use(challengePromise)
@@ -50,8 +50,9 @@ export function CourseChallengeContent({
 				</div>
 			</div>
 
-			<CourseChallengeContentFooter
+			<PracticeProgressionFooter
 				questions={challenge.data.questions}
+				next={challenge.meta.next}
 				index={index}
 				setIndex={setIndex}
 				className={"flex-none p-4"}

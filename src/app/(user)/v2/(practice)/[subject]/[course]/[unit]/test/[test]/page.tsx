@@ -5,7 +5,7 @@ import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { UnitTestContent } from "@/components/practice/course/unit/test/unit-test-content"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { type CourseMaterial, getCourseBlob } from "@/lib/v2/types"
+import { type CourseMaterial, getCourseBlob, getCourseMaterials } from "@/lib/v2/types"
 
 export default function PracticeUnitTestPage({
 	params
@@ -45,24 +45,69 @@ function getUnitTestData(
 	unit: string,
 	test: string
 ): Extract<CourseMaterial, { type: "UnitTest" }> | undefined {
-	logger.debug("lesson unit test data: initializing lesson unit test data", { subject, course, unit, test })
+	logger.info("lesson unit test data: initializing lesson unit test data", { subject, course, unit, test })
 
 	const blob = getCourseBlob(subject, course)
-	logger.debug("lesson unit test data: blob", { blob })
+	logger.info("lesson unit test data: blob retrieved", { subject, course, unit, test, blobKeys: _.keys(blob) })
 
-	const unitData = _.find(blob.units, (u) => u.slug === unit)
-	if (unitData == null) {
-		logger.error("lesson unit test data: unit not found", { subject, course, unit })
+	const materials = getCourseMaterials(blob)
+	logger.info("lesson unit test data: materials extracted", {
+		subject,
+		course,
+		unit,
+		test,
+		materialCount: materials.length
+	})
+
+	const unitTestIndex = materials.findIndex(
+		(u): u is Extract<CourseMaterial, { type: "UnitTest" }> => u.type === "UnitTest" && u.slug === test
+	)
+	if (unitTestIndex === -1) {
+		logger.error("lesson unit test data: unit test not found", { subject, course, unit, test })
 		return undefined
 	}
+	logger.info("lesson unit test data: unit test index found", { subject, course, unit, test, unitTestIndex })
 
-	const unitTestData = _.find(
-		unitData.resources,
-		(r): r is Extract<CourseMaterial, { type: "UnitTest" }> => r.type === "UnitTest" && r.slug === test
-	)
-	if (unitTestData == null) {
-		logger.debug("lesson unit test data: no unit test found for unit", { subject, course, unit })
+	const unitTestData = materials[unitTestIndex]
+	if (unitTestData == null || unitTestData.type !== "UnitTest") {
+		logger.error("lesson unit test data: unit test data not found", { subject, course, unit, test })
 		return undefined
+	}
+	logger.info("lesson unit test data: unit test data retrieved", {
+		subject,
+		course,
+		unit,
+		test,
+		unitTestDataKeys: _.keys(unitTestData)
+	})
+
+	let nextMaterial = materials[unitTestIndex + 1]
+	if (nextMaterial != null && nextMaterial.type === "Lesson") {
+		nextMaterial = nextMaterial.resources.find(
+			(r): r is Extract<CourseMaterial, { type: "Article" | "Exercise" | "Video" }> => r != null
+		)
+	}
+	logger.info("lesson unit test data: next material identified", {
+		subject,
+		course,
+		unit,
+		test,
+		nextMaterialKeys: _.keys(nextMaterial)
+	})
+
+	if (nextMaterial != null) {
+		unitTestData.meta = {
+			...unitTestData.meta,
+			next: { type: nextMaterial.type, title: nextMaterial.title }
+		}
+		logger.info("lesson unit test data: unit test data enhanced with next material", {
+			subject,
+			course,
+			unit,
+			test,
+			nextType: nextMaterial.type,
+			nextTitle: nextMaterial.title
+		})
 	}
 
 	return unitTestData

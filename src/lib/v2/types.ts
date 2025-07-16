@@ -268,35 +268,41 @@ export const CourseLessonResourceMaterialSchema = z.discriminatedUnion("type", [
 	BaseSchema.extend({
 		type: z.literal(LessonResourceTypeSchema.enum.Article),
 		data: ArticleLessonResourceSchema.shape.data,
-		meta: z.object({
-			unit: z.object({
-				path: z.string(),
-				title: z.string(),
-				index: z.number()
+		meta: z
+			.object({
+				unit: z.object({
+					path: z.string(),
+					title: z.string(),
+					index: z.number()
+				})
 			})
-		})
+			.and(z.record(z.any()).optional())
 	}),
 	BaseSchema.extend({
 		type: z.literal(LessonResourceTypeSchema.enum.Exercise),
 		data: ExerciseLessonResourceSchema.shape.data,
-		meta: z.object({
-			unit: z.object({
-				path: z.string(),
-				title: z.string(),
-				index: z.number()
+		meta: z
+			.object({
+				unit: z.object({
+					path: z.string(),
+					title: z.string(),
+					index: z.number()
+				})
 			})
-		})
+			.and(z.record(z.any()).optional())
 	}),
 	BaseSchema.extend({
 		type: z.literal(LessonResourceTypeSchema.enum.Video),
 		data: VideoLessonResourceSchema.shape.data,
-		meta: z.object({
-			unit: z.object({
-				path: z.string(),
-				title: z.string(),
-				index: z.number()
+		meta: z
+			.object({
+				unit: z.object({
+					path: z.string(),
+					title: z.string(),
+					index: z.number()
+				})
 			})
-		})
+			.and(z.record(z.any()).optional())
 	})
 ])
 export type CourseLessonResourceMaterial = z.infer<typeof CourseLessonResourceMaterialSchema>
@@ -305,13 +311,15 @@ export type CourseLessonResourceMaterial = z.infer<typeof CourseLessonResourceMa
  * CourseLessonMaterialSchema is a type that represents a course's lesson material.
  */
 export const CourseLessonMaterialSchema = LessonSchema.extend({
-	meta: z.object({
-		unit: z.object({
-			path: z.string(),
-			title: z.string(),
-			index: z.number()
+	meta: z
+		.object({
+			unit: z.object({
+				path: z.string(),
+				title: z.string(),
+				index: z.number()
+			})
 		})
-	})
+		.and(z.record(z.any()).optional())
 })
 export type CourseLessonMaterial = z.infer<typeof CourseLessonMaterialSchema>
 
@@ -322,27 +330,51 @@ export const CourseUnitMaterialSchema = z.discriminatedUnion("type", [
 	BaseSchema.extend({
 		type: z.literal(UnitResourceTypeSchema.enum.Quiz),
 		data: QuizUnitResourceSchema.shape.data,
-		meta: z.object({
-			unit: z.object({
-				path: z.string(),
-				title: z.string(),
-				index: z.number()
+		meta: z
+			.object({
+				unit: z.object({
+					path: z.string(),
+					title: z.string(),
+					index: z.number()
+				})
 			})
-		})
+			.and(z.record(z.any()).optional())
 	}),
 	BaseSchema.extend({
 		type: z.literal(UnitResourceTypeSchema.enum.UnitTest),
 		data: UnitTestUnitResourceSchema.shape.data,
-		meta: z.object({
-			unit: z.object({
-				path: z.string(),
-				title: z.string(),
-				index: z.number()
+		meta: z
+			.object({
+				unit: z.object({
+					path: z.string(),
+					title: z.string(),
+					index: z.number()
+				})
 			})
-		})
+			.and(z.record(z.any()).optional())
 	})
 ])
 export type CourseUnitMaterial = z.infer<typeof CourseUnitMaterialSchema>
+
+/**
+ * CourseChallengeMaterialSchema is a type that represents a course's challenge material.
+ */
+export const CourseResourceMaterialSchema = z.discriminatedUnion("type", [
+	BaseSchema.extend({
+		type: z.literal(CourseResourceTypeSchema.enum.CourseChallenge),
+		data: CourseChallengeResourceSchema.shape.data,
+		meta: z
+			.object({
+				course: z.object({
+					path: z.string(),
+					title: z.string(),
+					index: z.number()
+				})
+			})
+			.and(z.record(z.any()).optional())
+	})
+])
+export type CourseResourceMaterial = z.infer<typeof CourseResourceMaterialSchema>
 
 /**
  * CourseMaterial is a type that represents a course's flattened material.
@@ -351,7 +383,7 @@ export const CourseMaterialSchema = z.discriminatedUnion("type", [
 	CourseLessonMaterialSchema,
 	...CourseLessonResourceMaterialSchema.options,
 	...CourseUnitMaterialSchema.options,
-	...CourseResourceSchema._def.schema.options
+	...CourseResourceMaterialSchema.options
 ])
 export type CourseMaterial = z.infer<typeof CourseMaterialSchema>
 
@@ -372,7 +404,10 @@ export function getCourseMaterials(course: Course): CourseMaterial[] {
 				meta: { unit: { path: unit.path, title: unit.title, index: index } }
 			}))
 		]),
-		course.resources
+		..._.map(course.resources, (resource, index) => ({
+			...resource,
+			meta: { course: { path: course.path, title: course.title, index: index } }
+		}))
 	)
 }
 

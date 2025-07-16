@@ -5,7 +5,7 @@ import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { LessonArticleContent } from "@/components/practice/course/unit/lesson/article/lesson-article-content"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { type CourseMaterial, getCourseBlob } from "@/lib/v2/types"
+import { type CourseMaterial, getCourseBlob, getCourseMaterials } from "@/lib/v2/types"
 
 export default function PracticeArticlePage({
 	params
@@ -46,30 +46,73 @@ function getArticleData(
 	lesson: string,
 	article: string
 ): Extract<CourseMaterial, { type: "Article" }> | undefined {
-	logger.debug("lesson article data: initializing lesson article data", { subject, course, unit, lesson, article })
+	logger.info("lesson article data: initializing lesson article data", { subject, course, unit, lesson, article })
 
 	const blob = getCourseBlob(subject, course)
-	logger.debug("lesson article data: blob", { blob })
+	logger.info("lesson article data: blob retrieved", { subject, course, unit, lesson, article, blobKeys: _.keys(blob) })
 
-	const unitData = _.find(blob.units, (u) => u.slug === unit)
-	if (unitData == null) {
-		logger.error("lesson article data: unit not found", { subject, course, unit })
-		return undefined
-	}
+	const materials = getCourseMaterials(blob)
+	logger.info("lesson article data: materials extracted", {
+		subject,
+		course,
+		unit,
+		lesson,
+		article,
+		materialCount: materials.length
+	})
 
-	const lessonData = _.find(unitData.lessons, (l) => l.slug === lesson)
-	if (lessonData == null) {
-		logger.debug("lesson article data: no lessons found for unit", { subject, course, unit })
-		return undefined
-	}
-
-	const articleData = _.find(
-		lessonData.resources,
-		(r): r is Extract<CourseMaterial, { type: "Article" }> => r.type === "Article" && r.slug === article
+	const articleIndex = materials.findIndex(
+		(u): u is Extract<CourseMaterial, { type: "Article" }> => u.type === "Article" && u.slug === article
 	)
-	if (articleData == null) {
-		logger.debug("lesson article data: no articles found for lesson", { subject, course, unit, lesson })
+	if (articleIndex === -1) {
+		logger.error("lesson article data: article not found", { subject, course, unit, lesson, article })
 		return undefined
+	}
+	logger.info("lesson article data: article index found", { subject, course, unit, lesson, article, articleIndex })
+
+	const articleData = materials[articleIndex]
+	if (articleData == null || articleData.type !== "Article") {
+		logger.error("lesson article data: article data not found", { subject, course, unit, lesson, article })
+		return undefined
+	}
+	logger.info("lesson article data: article data retrieved", {
+		subject,
+		course,
+		unit,
+		lesson,
+		article,
+		articleDataKeys: _.keys(articleData)
+	})
+
+	let nextMaterial = materials[articleIndex + 1]
+	if (nextMaterial != null && nextMaterial.type === "Lesson") {
+		nextMaterial = nextMaterial.resources.find(
+			(r): r is Extract<CourseMaterial, { type: "Article" | "Exercise" | "Video" }> => r != null
+		)
+	}
+	logger.info("lesson article data: next material identified", {
+		subject,
+		course,
+		unit,
+		lesson,
+		article,
+		nextMaterialKeys: _.keys(nextMaterial)
+	})
+
+	if (nextMaterial != null) {
+		articleData.meta = {
+			...articleData.meta,
+			next: { type: nextMaterial.type, title: nextMaterial.title }
+		}
+		logger.info("lesson article data: article data enhanced with next material", {
+			subject,
+			course,
+			unit,
+			lesson,
+			article,
+			nextType: nextMaterial.type,
+			nextTitle: nextMaterial.title
+		})
 	}
 
 	return articleData

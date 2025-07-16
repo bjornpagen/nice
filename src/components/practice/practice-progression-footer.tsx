@@ -17,11 +17,11 @@ import {
 import { Button } from "@/components/ui/button"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { cn } from "@/lib/utils"
-import type { QuestionsData } from "@/lib/v2/types"
+import type { CourseMaterial, QuestionsData } from "@/lib/v2/types"
 
 interface PracticeProgressionFooterProps extends React.ComponentProps<"div"> {
 	questions?: QuestionsData["questions"]
-	upNext?: string
+	next?: { type: CourseMaterial["type"]; title: string }
 	index: number
 	setIndex: (index: number) => void
 	onContinue?: () => void
@@ -34,7 +34,7 @@ interface PracticeProgressionFooterProps extends React.ComponentProps<"div"> {
 
 function PracticeProgressionFooter({
 	questions,
-	upNext,
+	next,
 	index,
 	setIndex,
 	onContinue,
@@ -56,7 +56,7 @@ function PracticeProgressionFooter({
 					onClick={onComplete}
 					className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white"
 				>
-					{upNext == null || upNext === "" ? "Proceed" : `Up next: ${upNext}`}
+					{next == null ? "Proceed" : `Up next: ${_.startCase(next.type)}`}
 				</Button>
 			</div>
 		)
@@ -81,7 +81,7 @@ function PracticeProgressionFooter({
 			/>
 			<RightSection
 				questions={questions}
-				upNext={upNext}
+				next={next}
 				index={index}
 				setIndex={setIndex}
 				answered={answered}
@@ -228,7 +228,7 @@ function CenterSection({
 
 function RightSection({
 	questions,
-	upNext,
+	next,
 	index,
 	setIndex,
 	answered,
@@ -239,7 +239,7 @@ function RightSection({
 	onHints
 }: {
 	questions: QuestionsData["questions"]
-	upNext?: string
+	next?: { type: CourseMaterial["type"]; title: string }
 	index: number
 	setIndex: (index: number) => void
 	answered: boolean
@@ -278,7 +278,7 @@ function RightSection({
 				onClick={handleCompleteClick}
 				className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white"
 			>
-				{upNext == null || upNext === "" ? "Proceed" : `Up next: ${upNext}`}
+				{next == null ? "Proceed" : `Up next: ${_.startCase(next.type)}`}
 			</Button>
 		)
 	}

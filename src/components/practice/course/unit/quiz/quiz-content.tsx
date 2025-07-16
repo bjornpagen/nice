@@ -4,10 +4,10 @@ import _ from "lodash"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import * as React from "react"
+import { PracticeProgressionFooter } from "@/components/practice/practice-progression-footer"
 import { cn } from "@/lib/utils"
 import type { CourseMaterial } from "@/lib/v2/types"
 import quizIllustration from "./images/quiz-illustration.png"
-import { QuizContentFooter } from "./quiz-content-footer"
 
 export function QuizContent({
 	quizPromise,
@@ -48,8 +48,9 @@ export function QuizContent({
 				</div>
 			</div>
 
-			<QuizContentFooter
+			<PracticeProgressionFooter
 				questions={quiz.data.questions}
+				next={quiz.meta.next}
 				index={index}
 				setIndex={setIndex}
 				className={"flex-none p-4"}

@@ -5,7 +5,7 @@ import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { QuizContent } from "@/components/practice/course/unit/quiz/quiz-content"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { type CourseMaterial, getCourseBlob } from "@/lib/v2/types"
+import { type CourseMaterial, getCourseBlob, getCourseMaterials } from "@/lib/v2/types"
 
 export default function PracticeQuizPage({
 	params
@@ -45,24 +45,57 @@ function getQuizData(
 	unit: string,
 	quiz: string
 ): Extract<CourseMaterial, { type: "Quiz" }> | undefined {
-	logger.debug("lesson quiz data: initializing lesson quiz data", { subject, course, unit, quiz })
+	logger.info("lesson quiz data: initializing lesson quiz data", { subject, course, unit, quiz })
 
 	const blob = getCourseBlob(subject, course)
-	logger.debug("lesson quiz data: blob", { blob })
+	logger.info("lesson quiz data: blob retrieved", { subject, course, unit, quiz, blobKeys: _.keys(blob) })
 
-	const unitData = _.find(blob.units, (u) => u.slug === unit)
-	if (unitData == null) {
-		logger.error("lesson quiz data: unit not found", { subject, course, unit })
+	const materials = getCourseMaterials(blob)
+	logger.info("lesson quiz data: materials extracted", { subject, course, unit, quiz, materialCount: materials.length })
+
+	const quizIndex = materials.findIndex(
+		(u): u is Extract<CourseMaterial, { type: "Quiz" }> => u.type === "Quiz" && u.slug === quiz
+	)
+	if (quizIndex === -1) {
+		logger.error("lesson quiz data: quiz not found", { subject, course, unit, quiz })
 		return undefined
 	}
+	logger.info("lesson quiz data: quiz index found", { subject, course, unit, quiz, quizIndex })
 
-	const quizData = _.find(
-		unitData.resources,
-		(r): r is Extract<CourseMaterial, { type: "Quiz" }> => r.type === "Quiz" && r.slug === quiz
-	)
-	if (quizData == null) {
-		logger.debug("lesson quiz data: no quiz found for unit", { subject, course, unit })
+	const quizData = materials[quizIndex]
+	if (quizData == null || quizData.type !== "Quiz") {
+		logger.error("lesson quiz data: quiz data not found", { subject, course, unit, quiz })
 		return undefined
+	}
+	logger.info("lesson quiz data: quiz data retrieved", { subject, course, unit, quiz, quizDataKeys: _.keys(quizData) })
+
+	let nextMaterial = materials[quizIndex + 1]
+	if (nextMaterial != null && nextMaterial.type === "Lesson") {
+		nextMaterial = nextMaterial.resources.find(
+			(r): r is Extract<CourseMaterial, { type: "Article" | "Exercise" | "Video" }> => r != null
+		)
+	}
+	logger.info("lesson quiz data: next material identified", {
+		subject,
+		course,
+		unit,
+		quiz,
+		nextMaterialKeys: _.keys(nextMaterial)
+	})
+
+	if (nextMaterial != null) {
+		quizData.meta = {
+			...quizData.meta,
+			next: { type: nextMaterial.type, title: nextMaterial.title }
+		}
+		logger.info("lesson quiz data: quiz data enhanced with next material", {
+			subject,
+			course,
+			unit,
+			quiz,
+			nextType: nextMaterial.type,
+			nextTitle: nextMaterial.title
+		})
 	}
 
 	return quizData

@@ -54,7 +54,7 @@ export function CourseSidebar({
 	return (
 		<div
 			id="course-sidebar"
-			className={cn("bg-gray-100 border-r border-gray-200 h-screen p-4", className, !open && "hidden")}
+			className={cn("bg-gray-100 border-r border-gray-200 h-full p-4", className, !open && "hidden")}
 		>
 			<div className="px-6 pb-4 flex-1 overflow-hidden bg-white rounded-md shadow-md">
 				<div id="course-sidebar-course-title" className="text-lg font-bold mt-4">
