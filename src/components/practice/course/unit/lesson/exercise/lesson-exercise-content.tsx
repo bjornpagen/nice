@@ -3,12 +3,12 @@
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import * as React from "react"
+import { PracticeProgressionFooter } from "@/components/practice/practice-progression-footer"
 import { cn } from "@/lib/utils"
 import type { CourseMaterial } from "@/lib/v2/types"
 import greenFriend from "./images/green-friend_v3.png"
 import lightBlueFriend from "./images/light-blue-friend_v3.png"
 import spaceFriend from "./images/space-friend_v3.png"
-import { LessonExerciseContentFooter } from "./lesson-exercise-content-footer"
 
 export function LessonExerciseContent({
 	exercisePromise,
@@ -53,7 +53,7 @@ export function LessonExerciseContent({
 				</div>
 			</div>
 
-			<LessonExerciseContentFooter
+			<PracticeProgressionFooter
 				questions={exercise.data.questions}
 				index={index}
 				setIndex={setIndex}
