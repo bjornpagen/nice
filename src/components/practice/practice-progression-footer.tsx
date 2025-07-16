@@ -30,6 +30,7 @@ interface PracticeProgressionFooterProps extends React.ComponentProps<"div"> {
 	onComplete?: () => void
 	onDraw?: () => void
 	onHints?: () => void
+	onNext?: () => void
 }
 
 function PracticeProgressionFooter({
@@ -43,6 +44,7 @@ function PracticeProgressionFooter({
 	onComplete,
 	onDraw,
 	onHints,
+	onNext,
 	className,
 	...props
 }: PracticeProgressionFooterProps) {
@@ -53,7 +55,7 @@ function PracticeProgressionFooter({
 			<div className={cn("bg-white flex flex-row gap-8 items-center justify-end", className)} {...props}>
 				<Button
 					variant="default"
-					onClick={onComplete}
+					onClick={onNext}
 					className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white"
 				>
 					{next == null ? "Proceed" : `Up next: ${_.startCase(next.type)}`}
@@ -236,7 +238,8 @@ function RightSection({
 	onContinue,
 	onSkip,
 	onComplete,
-	onHints
+	onHints,
+	onNext
 }: {
 	questions: QuestionsData["questions"]
 	next?: { type: CourseMaterial["type"]; title: string }
@@ -248,18 +251,28 @@ function RightSection({
 	onSkip?: () => void
 	onComplete?: () => void
 	onHints?: () => void
+	onNext?: () => void
 }) {
+	const handleNextClick = () => {
+		setIndex(questions.length)
+		setAnswered(false)
+		onNext?.()
+	}
+
 	const handleCompleteClick = () => {
 		setIndex(questions.length)
+		setAnswered(false)
 		onComplete?.()
 	}
 
 	const handleProgressionClick = () => {
 		if (index < questions.length) {
-			setIndex(index + 1)
+			onContinue?.()
+		} else {
+			onComplete?.()
 		}
+		setIndex(index + 1)
 		setAnswered(false)
-		onContinue?.()
 	}
 
 	const handleSkipClick = () => {
@@ -275,7 +288,7 @@ function RightSection({
 		return (
 			<Button
 				variant="default"
-				onClick={handleCompleteClick}
+				onClick={handleNextClick}
 				className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white"
 			>
 				{next == null ? "Proceed" : `Up next: ${_.startCase(next.type)}`}
@@ -287,7 +300,7 @@ function RightSection({
 		return (
 			<Button
 				variant="default"
-				onClick={handleProgressionClick}
+				onClick={index === questions.length - 1 ? handleCompleteClick : handleProgressionClick}
 				className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white"
 				disabled={questions.length <= 0}
 			>

@@ -130,15 +130,22 @@ function getVideoData(
 		videoDataKeys: _.keys(enhancedVideoData)
 	})
 
-	let nextMaterial: { type: CourseMaterial["type"]; title: string; resources?: LessonResource[] } | undefined =
-		lessonData.resources[videoIndex + 1]
+	let nextMaterial:
+		| { type: CourseMaterial["type"]; path: string; title: string; resources?: LessonResource[] }
+		| undefined = lessonData.resources[videoIndex + 1]
 	if (nextMaterial == null) {
-		nextMaterial = materials[lessonIndex + 1]
+		const nextFromMaterials = materials[lessonIndex + 1]
+		if (nextFromMaterials != null) {
+			nextMaterial = { type: nextFromMaterials.type, path: nextFromMaterials.path, title: nextFromMaterials.title }
+		}
 	}
 	if (nextMaterial != null && nextMaterial.type === "Lesson") {
-		nextMaterial = nextMaterial.resources?.find(
+		const nextFromLesson = nextMaterial.resources?.find(
 			(r): r is Extract<CourseMaterial, { type: "Article" | "Exercise" | "Video" }> => r != null
 		)
+		if (nextFromLesson != null) {
+			nextMaterial = { type: nextFromLesson.type, path: nextFromLesson.path, title: nextFromLesson.title }
+		}
 	}
 	logger.info("lesson video data: next material identified", {
 		subject,
@@ -146,13 +153,13 @@ function getVideoData(
 		unit,
 		lesson,
 		video,
-		nextMaterialKeys: _.keys(nextMaterial)
+		nextMaterial
 	})
 
 	if (nextMaterial != null) {
 		enhancedVideoData.meta = {
 			...enhancedVideoData.meta,
-			next: { type: nextMaterial.type, title: nextMaterial.title }
+			next: { type: nextMaterial.type, path: nextMaterial.path, title: nextMaterial.title }
 		}
 		logger.info("lesson video data: video data enhanced with next material", {
 			subject,
@@ -160,8 +167,7 @@ function getVideoData(
 			unit,
 			lesson,
 			video,
-			nextType: nextMaterial.type,
-			nextTitle: nextMaterial.title
+			nextMaterial
 		})
 	}
 

@@ -5,7 +5,7 @@ import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { CourseChallengeContent } from "@/components/practice/course/challenge/course-challenge-content"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { type CourseMaterial, getCourseBlob, getCourseMaterials } from "@/lib/v2/types"
+import { type CourseMaterial, getCourseBlob, getCourseMaterials, type LessonResource } from "@/lib/v2/types"
 
 export default function PracticeCourseChallengePage({
 	params
@@ -73,30 +73,34 @@ function getCourseChallengeData(
 		challengeDataKeys: _.keys(challengeData)
 	})
 
-	let nextMaterial = materials[challengeIndex + 1]
+	let nextMaterial:
+		| { type: CourseMaterial["type"]; path: string; title: string; resources?: LessonResource[] }
+		| undefined = materials[challengeIndex + 1]
 	if (nextMaterial != null && nextMaterial.type === "Lesson") {
-		nextMaterial = nextMaterial.resources.find(
+		const nextFromLesson = nextMaterial.resources?.find(
 			(r): r is Extract<CourseMaterial, { type: "Article" | "Exercise" | "Video" }> => r != null
 		)
+		if (nextFromLesson != null) {
+			nextMaterial = { type: nextFromLesson.type, path: nextFromLesson.path, title: nextFromLesson.title }
+		}
 	}
 	logger.info("course challenge data: next material identified", {
 		subject,
 		course,
 		test,
-		nextMaterialKeys: _.keys(nextMaterial)
+		nextMaterial
 	})
 
 	if (nextMaterial != null) {
 		challengeData.meta = {
 			...challengeData.meta,
-			next: { type: nextMaterial.type, title: nextMaterial.title }
+			next: { type: nextMaterial.type, path: nextMaterial.path, title: nextMaterial.title }
 		}
 		logger.info("course challenge data: challenge data enhanced with next material", {
 			subject,
 			course,
 			test,
-			nextType: nextMaterial.type,
-			nextTitle: nextMaterial.title
+			nextMaterial
 		})
 	}
 

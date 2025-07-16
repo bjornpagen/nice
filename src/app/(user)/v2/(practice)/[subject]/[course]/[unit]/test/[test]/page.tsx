@@ -5,7 +5,7 @@ import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { UnitTestContent } from "@/components/practice/course/unit/test/unit-test-content"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { type CourseMaterial, getCourseBlob, getCourseMaterials } from "@/lib/v2/types"
+import { type CourseMaterial, getCourseBlob, getCourseMaterials, type LessonResource } from "@/lib/v2/types"
 
 export default function PracticeUnitTestPage({
 	params
@@ -81,32 +81,37 @@ function getUnitTestData(
 		unitTestDataKeys: _.keys(unitTestData)
 	})
 
-	let nextMaterial = materials[unitTestIndex + 1]
+	let nextMaterial:
+		| { type: CourseMaterial["type"]; path: string; title: string; resources?: LessonResource[] }
+		| undefined = materials[unitTestIndex + 1]
 	if (nextMaterial != null && nextMaterial.type === "Lesson") {
-		nextMaterial = nextMaterial.resources.find(
+		const nextFromLesson = nextMaterial.resources?.find(
 			(r): r is Extract<CourseMaterial, { type: "Article" | "Exercise" | "Video" }> => r != null
 		)
+		if (nextFromLesson != null) {
+			nextMaterial = { type: nextFromLesson.type, path: nextFromLesson.path, title: nextFromLesson.title }
+		}
 	}
+
 	logger.info("lesson unit test data: next material identified", {
 		subject,
 		course,
 		unit,
 		test,
-		nextMaterialKeys: _.keys(nextMaterial)
+		nextMaterial
 	})
 
 	if (nextMaterial != null) {
 		unitTestData.meta = {
 			...unitTestData.meta,
-			next: { type: nextMaterial.type, title: nextMaterial.title }
+			next: { type: nextMaterial.type, path: nextMaterial.path, title: nextMaterial.title }
 		}
 		logger.info("lesson unit test data: unit test data enhanced with next material", {
 			subject,
 			course,
 			unit,
 			test,
-			nextType: nextMaterial.type,
-			nextTitle: nextMaterial.title
+			nextMaterial
 		})
 	}
 

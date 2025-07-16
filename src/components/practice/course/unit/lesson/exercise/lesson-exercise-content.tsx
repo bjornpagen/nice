@@ -4,6 +4,7 @@ import Image from "next/image"
 import { notFound } from "next/navigation"
 import * as React from "react"
 import { PracticeProgressionFooter } from "@/components/practice/practice-progression-footer"
+import { PracticeProgressionSummary } from "@/components/practice/practice-progression-summary"
 import { cn } from "@/lib/utils"
 import type { CourseMaterial } from "@/lib/v2/types"
 import greenFriend from "./images/green-friend_v3.png"
@@ -25,7 +26,8 @@ export function LessonExerciseContent({
 	const [index, setIndex] = React.useState(-1)
 
 	return (
-		<div id="lesson-exercise-content" className="flex flex-col h-full">
+		<div id="lesson-exercise-content" className="flex flex-col h-full divide-y divide-gray-800">
+			<PracticeProgressionSummary exercise={exercise} index={index} className="bg-gray-100" />
 			<div id="lesson-exercise-content-body" className={cn("flex flex-col items-center flex-1 relative", className)}>
 				<div className="flex-1" />
 				<div className="flex flex-col items-center gap-2 flex-none text-center p-4">
