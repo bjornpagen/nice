@@ -76,10 +76,18 @@ export function CourseSelector({
 						<DialogTitle className="text-2xl font-bold text-gray-900 mb-2">Personalize Nice Academy</DialogTitle>
 					</div>
 
-					{/* Blue header section */}
-					<div className="bg-[#0b7594] pt-6 pb-6 px-8 text-center">
-						<h2 className="text-xl font-semibold text-white mb-1">What courses can we help you learn?</h2>
-						<p className="text-white text-sm">Choose 4-5 and we'll gather the right lessons for you.</p>
+					{/* Banner section with SVG background */}
+					<div className="relative h-[120px] overflow-hidden">
+						{/* SVG Background */}
+						<div
+							className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+							style={{ backgroundImage: "url(/course-selector-content.svg)" }}
+						/>
+						{/* Text overlay */}
+						<div className="relative z-10 h-full flex flex-col justify-center items-center px-8">
+							<h2 className="text-xl font-semibold text-gray-900 mb-1">What courses can we help you learn?</h2>
+							<p className="text-gray-700 text-sm">Choose 4-5 and we'll gather the right lessons for you.</p>
+						</div>
 					</div>
 
 					{/* Content */}
