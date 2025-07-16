@@ -40,7 +40,6 @@ export function PracticeProgressionSummary({
 								<span>Show</span>
 							</React.Fragment>
 						)}
-						<span className="sr-only">Toggle</span>
 					</Button>
 				</CollapsibleTrigger>
 			</div>

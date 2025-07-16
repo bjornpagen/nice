@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation"
 import * as React from "react"
-import { PracticeProgressionFooter } from "@/components/practice/practice-progression-footer"
+import { PracticeProgressionFooter } from "@/components/practice/course/progression/practice-progression-footer"
 import { cn } from "@/lib/utils"
 import type { CourseMaterial } from "@/lib/v2/types"
 
