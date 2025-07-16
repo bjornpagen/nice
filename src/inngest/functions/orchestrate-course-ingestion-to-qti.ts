@@ -1,7 +1,7 @@
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
-import { and, eq, inArray, isNotNull } from "drizzle-orm"
+import { and, eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
@@ -66,7 +66,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
 				.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
 				.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-				.where(and(inArray(schema.niceLessons.unitId, unitIds), isNotNull(schema.niceQuestions.xml))),
+				.where(inArray(schema.niceLessons.unitId, unitIds)),
 
 			db
 				.select({
@@ -79,7 +79,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				.from(schema.niceArticles)
 				.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
 				.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-				.where(and(inArray(schema.niceLessons.unitId, unitIds), isNotNull(schema.niceArticles.xml))),
+				.where(inArray(schema.niceLessons.unitId, unitIds)),
 
 			db
 				.select({
@@ -112,6 +112,57 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			})
 		])
 
+		// CRITICAL VALIDATION: Ensure data integrity before proceeding
+		logger.info("validating data integrity", {
+			questionsCount: allQuestions.length,
+			articlesCount: allArticles.length,
+			exercisesCount: allExercises.length,
+			assessmentsCount: allAssessments.length
+		})
+
+		// Validate ALL questions have XML
+		for (const q of allQuestions) {
+			if (!q.xml) {
+				logger.error("CRITICAL: Question missing XML", {
+					questionId: q.id,
+					exerciseId: q.exerciseId,
+					exerciseTitle: q.exerciseTitle
+				})
+				throw errors.new(`question ${q.id} is missing XML - ALL questions MUST have XML`)
+			}
+		}
+
+		// Validate ALL articles have XML - if not, we'll create a default
+		const articlesWithXml = allArticles.map((a) => {
+			if (!a.xml) {
+				logger.warn("Article missing XML, using default 'Article not found' template", {
+					articleId: a.id,
+					articleTitle: a.title,
+					articlePath: a.path
+				})
+
+				// Create a default "Article not found" QTI XML
+				const defaultXml = `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="${a.id}"
+    title="${a.title.replace(/"/g, "&quot;")}"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <h2>Article Not Found</h2>
+        <p>The content for this article is currently unavailable.</p>
+        <p><em>Article ID: ${a.id}</em></p>
+        <p><em>Title: ${a.title.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</em></p>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>`
+
+				return { ...a, xml: defaultXml }
+			}
+			return a
+		})
+
 		// Group questions by exerciseId for efficient lookup.
 		const questionsByExerciseId = new Map<string, string[]>()
 		for (const q of allQuestions) {
@@ -119,6 +170,19 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				questionsByExerciseId.set(q.exerciseId, [])
 			}
 			questionsByExerciseId.get(q.exerciseId)?.push(q.id)
+		}
+
+		// Log warnings for exercises without questions but don't throw
+		for (const exercise of allExercises) {
+			const questions = questionsByExerciseId.get(exercise.id)
+			if (!questions || questions.length === 0) {
+				logger.warn("Exercise has no questions - will create empty test", {
+					exerciseId: exercise.id,
+					exerciseTitle: exercise.title,
+					exercisePath: exercise.path,
+					exerciseSlug: exercise.slug
+				})
+			}
 		}
 
 		// Group assessments and their exercises
@@ -144,40 +208,40 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		const { assessmentItems, assessmentStimuli, assessmentTests } = await step.run(
 			"assemble-json-payloads-from-db",
 			async () => {
-				const items = allQuestions
-					.filter((q) => q.xml !== null)
-					.map((q) => {
-						if (!q.xml) throw errors.new(`XML is null for question ${q.id}`)
-						// Use the robust helper function.
-						const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice:${q.id}`, q.exerciseTitle)
-						return {
-							xml: finalXml,
-							metadata: {
-								khanId: q.id,
-								khanExerciseId: q.exerciseId,
-								khanExerciseSlug: q.exerciseSlug,
-								khanExercisePath: q.exercisePath,
-								khanExerciseTitle: q.exerciseTitle
-							}
+				const items = allQuestions.map((q) => {
+					// TypeScript can't infer that validation happened above, so we need to check
+					if (!q.xml) {
+						throw errors.new("unreachable: question should have been validated for XML")
+					}
+					const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice:${q.id}`, q.exerciseTitle)
+					return {
+						xml: finalXml,
+						metadata: {
+							khanId: q.id,
+							khanExerciseId: q.exerciseId,
+							khanExerciseSlug: q.exerciseSlug,
+							khanExercisePath: q.exercisePath,
+							khanExerciseTitle: q.exerciseTitle
 						}
-					})
+					}
+				})
 
-				const stimuli = allArticles
-					.filter((a) => a.xml !== null)
-					.map((a) => {
-						if (!a.xml) throw errors.new(`XML is null for article ${a.id}`)
-						// Use the robust helper function.
-						const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice:${a.id}`, a.title)
-						return {
-							xml: finalXml,
-							metadata: {
-								khanId: a.id,
-								khanSlug: a.slug,
-								khanPath: a.path,
-								khanTitle: a.title
-							}
+				const stimuli = articlesWithXml.map((a) => {
+					// All articles now have XML (either original or default)
+					if (!a.xml) {
+						throw errors.new("unreachable: article should have xml after default generation")
+					}
+					const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice:${a.id}`, a.title)
+					return {
+						xml: finalXml,
+						metadata: {
+							khanId: a.id,
+							khanSlug: a.slug,
+							khanPath: a.path,
+							khanTitle: a.title
 						}
-					})
+					}
+				})
 
 				const buildTestObject = (
 					id: string,
@@ -222,52 +286,58 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					]
 				})
 
-				const explicitTests = Array.from(assessmentMap.entries())
-					.map(([assessmentId, data]) => {
-						const questionIds = data.exerciseIds.flatMap((exerciseId) => {
-							const questions = questionsByExerciseId.get(exerciseId)
-							if (!questions) {
-								logger.warn("No questions found for exercise in assessment", {
-									assessmentId,
-									exerciseId,
-									assessmentTitle: data.title
-								})
-								return []
-							}
-							return questions
-						})
-						if (questionIds.length === 0) return null
-						return buildTestObject(assessmentId, data.title, questionIds, {
-							khanId: assessmentId,
-							khanSlug: data.slug,
-							khanPath: data.path,
-							khanTitle: data.title,
-							khanDescription: data.description,
-							khanAssessmentType: data.type
-						})
-					})
-					.filter((test): test is CreateAssessmentTestInput => test !== null)
-
-				const exerciseTests = allExercises
-					.map((exercise) => {
-						const questionIds = questionsByExerciseId.get(exercise.id)
-						if (!questionIds || questionIds.length === 0) {
-							logger.debug("No questions found for exercise", {
-								exerciseId: exercise.id,
-								exerciseTitle: exercise.title
+				const explicitTests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => {
+					const questionIds = data.exerciseIds.flatMap((exerciseId) => {
+						const questions = questionsByExerciseId.get(exerciseId)
+						if (!questions) {
+							logger.warn("Exercise referenced by assessment has no questions", {
+								assessmentId,
+								exerciseId,
+								assessmentTitle: data.title
 							})
-							return null
+							return []
 						}
-						return buildTestObject(exercise.id, exercise.title, questionIds, {
-							khanId: exercise.id,
-							khanSlug: exercise.slug,
-							khanPath: exercise.path,
-							khanTitle: exercise.title,
-							khanDescription: exercise.description,
-							khanAssessmentType: "Exercise"
-						})
+						return questions
 					})
-					.filter((test): test is CreateAssessmentTestInput => test !== null)
+
+					if (questionIds.length === 0) {
+						logger.info("Creating empty test for assessment without questions", {
+							assessmentId,
+							assessmentTitle: data.title,
+							assessmentType: data.type
+						})
+					}
+
+					return buildTestObject(assessmentId, data.title, questionIds, {
+						khanId: assessmentId,
+						khanSlug: data.slug,
+						khanPath: data.path,
+						khanTitle: data.title,
+						khanDescription: data.description,
+						khanAssessmentType: data.type
+					})
+				})
+
+				const exerciseTests = allExercises.map((exercise) => {
+					// Get questions for this exercise (may be empty)
+					const questionIds = questionsByExerciseId.get(exercise.id) || []
+
+					if (questionIds.length === 0) {
+						logger.info("Creating empty test for exercise without questions", {
+							exerciseId: exercise.id,
+							exerciseTitle: exercise.title
+						})
+					}
+
+					return buildTestObject(exercise.id, exercise.title, questionIds, {
+						khanId: exercise.id,
+						khanSlug: exercise.slug,
+						khanPath: exercise.path,
+						khanTitle: exercise.title,
+						khanDescription: exercise.description,
+						khanAssessmentType: "Exercise"
+					})
+				})
 
 				const tests = [...explicitTests, ...exerciseTests]
 

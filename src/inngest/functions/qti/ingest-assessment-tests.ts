@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
+import { ErrQtiNotFound } from "@/lib/qti"
 
 export const ingestAssessmentTests = inngest.createFunction(
 	{ id: "ingest-assessment-tests", name: "Ingest QTI Assessment Tests" },
@@ -17,15 +18,31 @@ export const ingestAssessmentTests = inngest.createFunction(
 		const results = []
 		for (const test of tests) {
 			const { identifier } = test
-			// Use PUT for upsert behavior
-			logger.debug("upserting assessment test", { identifier })
-			const result = await errors.try(qti.updateAssessmentTest(identifier, test))
-			if (result.error) {
-				logger.error("failed to upsert test", { identifier, error: result.error })
-				throw result.error
+			// Try to update first (most common case)
+			logger.debug("attempting to update assessment test", { identifier })
+			const updateResult = await errors.try(qti.updateAssessmentTest(identifier, test))
+
+			if (updateResult.error) {
+				// Check if it's a 404 error - if so, create instead
+				if (errors.is(updateResult.error, ErrQtiNotFound)) {
+					logger.info("assessment test not found, creating new", { identifier })
+					const createResult = await errors.try(qti.createAssessmentTest(test))
+					if (createResult.error) {
+						logger.error("failed to create assessment test", { identifier, error: createResult.error })
+						results.push({ identifier, success: false, status: "failed", error: createResult.error })
+						continue
+					}
+					logger.info("successfully created assessment test", { identifier })
+					results.push({ identifier, success: true, status: "created" })
+				} else {
+					// Other error - log and continue
+					logger.error("failed to update assessment test", { identifier, error: updateResult.error })
+					results.push({ identifier, success: false, status: "failed", error: updateResult.error })
+				}
+			} else {
+				logger.info("successfully updated assessment test", { identifier })
+				results.push({ identifier, success: true, status: "updated" })
 			}
-			logger.info("successfully upserted test", { identifier })
-			results.push({ identifier, success: true, status: "upserted" })
 		}
 
 		const failedCount = results.filter((r) => !r.success).length
@@ -33,6 +50,6 @@ export const ingestAssessmentTests = inngest.createFunction(
 			throw errors.new(`failed to ingest ${failedCount} assessment tests`)
 		}
 
-		return { status: "success", count: results.length }
+		return { status: "success", count: results.length, results }
 	}
 )
