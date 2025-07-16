@@ -184,7 +184,7 @@ export function AssessmentStepper({
 				const nextLessonChild = lessonData.children[currentContentIndex + 1]
 				if (nextLessonChild) {
 					foundNext = {
-						text: `Up next: ${nextLessonChild.title}`, // Set the button text to show the next resource name.
+						text: `Up next: ${nextLessonChild.type}`, // Show the resource type (Article, Exercise, Video)
 						path: nextLessonChild.path || "#"
 					}
 				}
@@ -327,7 +327,10 @@ export function AssessmentStepper({
 
 		if (result.data.isCorrect) {
 			handleCorrectAnswer()
-			setCorrectAnswersCount((prev) => prev + 1)
+			// Only count as correct if it was answered correctly on the first attempt
+			if (attemptCount === 0) {
+				setCorrectAnswersCount((prev) => prev + 1)
+			}
 			setTimeout(() => setShowFeedback(true), 150)
 		} else {
 			setShowFeedback(true)

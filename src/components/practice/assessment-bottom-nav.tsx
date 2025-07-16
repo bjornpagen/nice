@@ -391,9 +391,12 @@ function RightSection({
 						className="bg-blue-600 text-white rounded-sm px-4 font-medium hover:cursor-pointer hover:bg-blue-600"
 					>
 						{(() => {
-							if (currentQuestion === totalQuestions) return "Show summary"
-							if (isCorrect) return "Next question"
-							if (hasExhaustedAttempts) return "Next question"
+							if (isCorrect) {
+								return currentQuestion === totalQuestions ? "Show summary" : "Next question"
+							}
+							if (hasExhaustedAttempts) {
+								return currentQuestion === totalQuestions ? "Show summary" : "Next question"
+							}
 							return "Try again"
 						})()}
 					</Button>
