@@ -16,8 +16,8 @@ export default function UnitTestPage({
 	const testPromise: Promise<UnitTestPageData> = params.then(fetchUnitTestPageData)
 
 	return (
-		<React.Suspense fallback={<div className="p-8">Loading test...</div>}>
-			<TestContent testDataPromise={testPromise} />
+		<React.Suspense fallback={<div>Loading test...</div>}>
+			<TestContent testPromise={testPromise} />
 		</React.Suspense>
 	)
 }

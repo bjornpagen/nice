@@ -10,7 +10,7 @@ import spaceFriend from "@/components/practice/course/unit/lesson/exercise/image
 import type { ExercisePageData } from "@/lib/types/page"
 
 export function Content({ exercisePromise }: { exercisePromise: Promise<ExercisePageData> }) {
-	const { exercise, questions } = React.use(exercisePromise)
+	const { exercise, questions, layoutData } = React.use(exercisePromise)
 	const [hasStarted, setHasStarted] = React.useState(false)
 
 	if (hasStarted) {
@@ -20,6 +20,9 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 				contentType="Exercise"
 				assessmentId={exercise.id}
 				assessmentTitle={exercise.title}
+				unitChildren={layoutData.unitData.children}
+				lessonData={layoutData.lessonData}
+				unitData={layoutData.unitData}
 			/>
 		)
 	}

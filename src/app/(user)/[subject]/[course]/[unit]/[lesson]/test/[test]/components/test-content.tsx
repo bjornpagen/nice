@@ -5,13 +5,21 @@ import { AssessmentBottomNav } from "@/components/practice/assessment-bottom-nav
 import { AssessmentStepper } from "@/components/practice/assessment-stepper"
 import type { UnitTestPageData } from "@/lib/types/page"
 
-export function TestContent({ testDataPromise }: { testDataPromise: Promise<UnitTestPageData> }) {
-	const { test, questions } = React.use(testDataPromise)
+export function TestContent({ testPromise }: { testPromise: Promise<UnitTestPageData> }) {
+	const { test, questions, layoutData } = React.use(testPromise)
 	const [hasStarted, setHasStarted] = React.useState(false)
 
 	if (hasStarted) {
 		return (
-			<AssessmentStepper questions={questions} contentType="Test" assessmentId={test.id} assessmentTitle={test.title} />
+			<AssessmentStepper
+				questions={questions}
+				contentType="Test"
+				assessmentId={test.id}
+				assessmentTitle={test.title}
+				unitChildren={layoutData.unitData.children}
+				lessonData={layoutData.lessonData}
+				unitData={layoutData.unitData}
+			/>
 		)
 	}
 

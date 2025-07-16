@@ -10,7 +10,6 @@ import {
 } from "@/lib/data/fetchers/oneroster"
 import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
 import { ComponentMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
-import { ErrQtiNotFound } from "@/lib/qti"
 import type {
 	CourseChallengeLayoutData,
 	CourseChallengePageData,
@@ -18,11 +17,21 @@ import type {
 	UnitTestPageData
 } from "@/lib/types/page"
 import { fetchCoursePageData } from "./course"
+import { fetchLessonLayoutData } from "./lesson"
 
-export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizPageData> {
+export async function fetchQuizPageData(params: {
+	subject: string
+	course: string
+	unit: string
+	lesson: string
+	quiz: string
+}): Promise<QuizPageData> {
 	"use cache"
-	// Look up resource by slug
-	const resourceResult = await errors.try(getResourcesBySlugAndType(params.quiz, "qti", "quiz"))
+	const layoutDataPromise = fetchLessonLayoutData(params)
+	const resourcePromise = errors.try(getResourcesBySlugAndType(params.quiz, "qti", "quiz"))
+
+	const [layoutData, resourceResult] = await Promise.all([layoutDataPromise, resourcePromise])
+
 	if (resourceResult.error) {
 		logger.error("failed to fetch quiz resource by slug", { error: resourceResult.error, slug: params.quiz })
 		throw errors.wrap(resourceResult.error, "failed to fetch quiz resource by slug")
@@ -52,17 +61,12 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 		})
 		throw errors.new("invalid resource type")
 	}
+
 	const resourceMetadata = resourceMetadataResult.data
 
-	// Fetch questions from QTI server using the existing pattern
+	// Fetch questions from QTI server
 	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
-		if (errors.is(questionsResult.error, ErrQtiNotFound)) {
-			logger.error("CRITICAL: quiz test not found in QTI server - data integrity violation", {
-				testId: resource.sourcedId
-			})
-			throw errors.wrap(questionsResult.error, "quiz test missing from QTI server - data corruption detected")
-		}
 		logger.error("failed to fetch questions for quiz", { testId: resource.sourcedId, error: questionsResult.error })
 		throw errors.wrap(questionsResult.error, "fetch questions for quiz")
 	}
@@ -78,17 +82,27 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 			description: resourceMetadata.khanDescription,
 			type: "Quiz" as const
 		},
-		questions
+		questions,
+		layoutData
 	}
 }
 
-export async function fetchUnitTestPageData(params: { test: string }): Promise<UnitTestPageData> {
+export async function fetchUnitTestPageData(params: {
+	subject: string
+	course: string
+	unit: string
+	lesson: string
+	test: string
+}): Promise<UnitTestPageData> {
 	"use cache"
-	// Look up resource by slug
-	const resourceResult = await errors.try(getResourcesBySlugAndType(params.test, "qti", "unittest"))
+	const layoutDataPromise = fetchLessonLayoutData(params)
+	const resourcePromise = errors.try(getResourcesBySlugAndType(params.test, "qti", "unittest"))
+
+	const [layoutData, resourceResult] = await Promise.all([layoutDataPromise, resourcePromise])
+
 	if (resourceResult.error) {
-		logger.error("failed to fetch unit test resource by slug", { error: resourceResult.error, slug: params.test })
-		throw errors.wrap(resourceResult.error, "failed to fetch unit test resource by slug")
+		logger.error("failed to fetch unittest resource by slug", { error: resourceResult.error, slug: params.test })
+		throw errors.wrap(resourceResult.error, "failed to fetch unittest resource by slug")
 	}
 	const resource = resourceResult.data[0]
 
@@ -99,38 +113,30 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 	// Validate resource metadata with Zod
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
-		logger.error("invalid unit test resource metadata", {
+		logger.error("invalid unittest resource metadata", {
 			resourceId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
-		throw errors.wrap(resourceMetadataResult.error, "invalid unit test resource metadata")
+		throw errors.wrap(resourceMetadataResult.error, "invalid unittest resource metadata")
 	}
 
 	// Because we use a discriminated union, we must also check the type
 	if (resourceMetadataResult.data.type !== "qti") {
-		logger.error("invalid resource type for unit test page", {
+		logger.error("invalid resource type for unittest page", {
 			resourceId: resource.sourcedId,
 			expected: "qti",
 			actual: resourceMetadataResult.data.type
 		})
 		throw errors.new("invalid resource type")
 	}
+
 	const resourceMetadata = resourceMetadataResult.data
 
 	// Fetch questions from QTI server
 	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
-		if (errors.is(questionsResult.error, ErrQtiNotFound)) {
-			logger.error("CRITICAL: unit test not found in QTI server - data integrity violation", {
-				testId: resource.sourcedId
-			})
-			throw errors.wrap(questionsResult.error, "unit test missing from QTI server - data corruption detected")
-		}
-		logger.error("failed to fetch questions for unit test", {
-			testId: resource.sourcedId,
-			error: questionsResult.error
-		})
-		throw errors.wrap(questionsResult.error, "fetch questions for unit test")
+		logger.error("failed to fetch questions for unittest", { testId: resource.sourcedId, error: questionsResult.error })
+		throw errors.wrap(questionsResult.error, "fetch questions for unittest")
 	}
 
 	const questions = questionsResult.data.questions.map((q) => ({
@@ -144,7 +150,8 @@ export async function fetchUnitTestPageData(params: { test: string }): Promise<U
 			description: resourceMetadata.khanDescription,
 			type: "UnitTest" as const
 		},
-		questions
+		questions,
+		layoutData
 	}
 }
 

@@ -5,6 +5,7 @@ import { getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
 import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
+import { fetchLessonLayoutData } from "./lesson"
 import { extractYouTubeId } from "./utils"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
@@ -47,10 +48,20 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 	}
 }
 
-export async function fetchExercisePageData(params: { exercise: string }): Promise<ExercisePageData> {
+export async function fetchExercisePageData(params: {
+	subject: string
+	course: string
+	unit: string
+	lesson: string
+	exercise: string
+}): Promise<ExercisePageData> {
 	"use cache"
-	// Look up resource by slug
-	const resourceResult = await errors.try(getResourcesBySlugAndType(params.exercise, "qti"))
+	// Fetch layout data and exercise data in parallel for performance
+	const layoutDataPromise = fetchLessonLayoutData(params)
+	const resourcePromise = errors.try(getResourcesBySlugAndType(params.exercise, "qti"))
+
+	const [layoutData, resourceResult] = await Promise.all([layoutDataPromise, resourcePromise])
+
 	if (resourceResult.error) {
 		logger.error("failed to fetch exercise resource by slug", { error: resourceResult.error, slug: params.exercise })
 		throw errors.wrap(resourceResult.error, "failed to fetch exercise resource by slug")
@@ -98,7 +109,8 @@ export async function fetchExercisePageData(params: { exercise: string }): Promi
 			title: resource.title,
 			type: "Exercise" as const
 		},
-		questions
+		questions,
+		layoutData // Include layout data in the response
 	}
 }
 

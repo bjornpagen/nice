@@ -1,6 +1,7 @@
 "use client"
 
 import { CheckCircle, PenTool, RotateCcw, X } from "lucide-react"
+import Link from "next/link"
 import * as React from "react"
 import {
 	AlertDialog,
@@ -37,6 +38,7 @@ interface AssessmentBottomNavProps {
 	onCorrectAnswer?: () => void
 	attemptCount?: number
 	maxAttempts?: number
+	nextItem?: { text: string; path: string } | null
 }
 
 export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, AssessmentBottomNavProps>(
@@ -57,7 +59,8 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 			className,
 			onCorrectAnswer,
 			attemptCount = 0,
-			maxAttempts = 3
+			maxAttempts = 3,
+			nextItem
 		},
 		ref
 	) => {
@@ -107,6 +110,7 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 							onReset={onReset}
 							attemptCount={attemptCount}
 							maxAttempts={maxAttempts}
+							nextItem={nextItem}
 						/>
 					</div>
 				</div>
@@ -233,7 +237,8 @@ function RightSection({
 	onSkip,
 	onReset,
 	attemptCount,
-	maxAttempts
+	maxAttempts,
+	nextItem
 }: {
 	ref?: React.Ref<HTMLButtonElement>
 	isStartScreen?: boolean
@@ -251,6 +256,7 @@ function RightSection({
 	onReset?: () => void
 	attemptCount?: number
 	maxAttempts?: number
+	nextItem?: { text: string; path: string } | null
 }) {
 	const handleSkipClick = () => {
 		if (onSkip) {
@@ -290,8 +296,9 @@ function RightSection({
 					variant="default"
 					onClick={onContinue}
 					className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white"
+					asChild
 				>
-					Up next: TODO
+					<Link href={nextItem?.path ?? "#"}>{nextItem?.text ?? "Continue"}</Link>
 				</Button>
 			</div>
 		)

@@ -46,18 +46,21 @@ export interface VideoPageData {
 export interface ExercisePageData {
 	exercise: Pick<Exercise, "id" | "title"> & { type: "Exercise" }
 	questions: Question[]
+	layoutData: LessonLayoutData
 }
 
 // Data for the /.../quiz/[quiz] page
 export interface QuizPageData {
 	quiz: Pick<Quiz, "id" | "title" | "description"> & { type: "Quiz" }
 	questions: Question[]
+	layoutData: LessonLayoutData
 }
 
 // Data for the /.../test/[test] page (Unit Test)
 export interface UnitTestPageData {
 	test: Pick<UnitTest, "id" | "title" | "description"> & { type: "UnitTest" }
 	questions: Question[]
+	layoutData: LessonLayoutData
 }
 
 // Data for the /.../test/[test] page (Course Challenge)

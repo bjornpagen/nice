@@ -10,7 +10,7 @@ import spaceFriend from "@/components/practice/course/unit/lesson/exercise/image
 import { QTIRenderer } from "@/components/qti-renderer"
 import { processQtiResponse } from "@/lib/actions/qti"
 import type { Question } from "@/lib/types/content"
-import type { UnitChild } from "@/lib/types/structure"
+import type { Lesson, LessonChild, Unit, UnitChild } from "@/lib/types/structure"
 import { AssessmentBottomNav, type AssessmentType } from "./assessment-bottom-nav"
 import { AssessmentProficiencyOverview } from "./assessment-proficiency-overview"
 
@@ -26,7 +26,8 @@ function SummaryView({
 	contentType,
 	assessmentTitle,
 	onComplete,
-	handleReset
+	handleReset,
+	nextItem
 }: {
 	title: string
 	subtitle: string
@@ -39,6 +40,7 @@ function SummaryView({
 	assessmentTitle: string
 	onComplete?: () => void
 	handleReset: () => void
+	nextItem: { text: string; path: string } | null
 }) {
 	// Play summary sound when component mounts
 	React.useEffect(() => {
@@ -110,6 +112,7 @@ function SummaryView({
 					// Reset the entire assessment to try again
 					handleReset()
 				}}
+				nextItem={nextItem}
 			/>
 		</div>
 	)
@@ -126,6 +129,8 @@ interface AssessmentStepperProps {
 		unitName: string
 		unitChildren: UnitChild[]
 	}[]
+	lessonData?: Lesson
+	unitData?: Unit
 }
 
 export function AssessmentStepper({
@@ -135,7 +140,9 @@ export function AssessmentStepper({
 	assessmentId = "",
 	assessmentTitle = "",
 	unitChildren = [],
-	courseUnits
+	courseUnits,
+	lessonData,
+	unitData
 }: AssessmentStepperProps) {
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
 	const [selectedResponse, setSelectedResponse] = React.useState<{ responseIdentifier: string; value: unknown } | null>(
@@ -148,6 +155,7 @@ export function AssessmentStepper({
 	const [attemptCount, setAttemptCount] = React.useState(0)
 	const [correctAnswersCount, setCorrectAnswersCount] = React.useState(0)
 	const [showSummary, setShowSummary] = React.useState(false)
+	const [nextItem, setNextItem] = React.useState<{ text: string; path: string } | null>(null)
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
 	const currentQuestion = questions[currentQuestionIndex]
 
@@ -161,6 +169,86 @@ export function AssessmentStepper({
 			})
 		}
 	}, [])
+
+	React.useEffect(() => {
+		if (showSummary && unitData && lessonData) {
+			const getNextItemText = (item: UnitChild | LessonChild, allUnitChildren: UnitChild[]) => {
+				if (item.type === "Lesson") {
+					const lessonNumber = allUnitChildren.filter((c) => c.type === "Lesson").findIndex((c) => c.id === item.id) + 1
+					return `Up next: Lesson ${lessonNumber}`
+				}
+				if (item.type === "Quiz") {
+					const quizNumber = allUnitChildren.filter((c) => c.type === "Quiz").findIndex((c) => c.id === item.id) + 1
+					return `Up next: Quiz ${quizNumber}`
+				}
+				if (item.type === "UnitTest") {
+					return "Up next: Unit Test"
+				}
+				return `Up next: ${item.title}`
+			}
+
+			let foundNext: { text: string; path: string } | null = null
+			const currentUnitChildren = unitData.children
+
+			// Determine if the current assessment is a unit-level item (Quiz/Test) or a lesson-level item (Exercise)
+			const isUnitLevelAssessment = currentUnitChildren.some((child) => child.id === assessmentId)
+
+			if (isUnitLevelAssessment) {
+				const currentIndex = currentUnitChildren.findIndex((child) => child.id === assessmentId)
+				if (currentIndex !== -1 && currentIndex < currentUnitChildren.length - 1) {
+					const nextUnitChild = currentUnitChildren[currentIndex + 1]
+					if (nextUnitChild) {
+						let path = nextUnitChild.path || ""
+						if (nextUnitChild.type === "Lesson" && nextUnitChild.children.length > 0) {
+							const firstChild = nextUnitChild.children[0]
+							if (firstChild?.path) {
+								path = firstChild.path
+							}
+						}
+						foundNext = { text: getNextItemText(nextUnitChild, currentUnitChildren), path }
+					}
+				}
+			} else {
+				// It's an exercise within a lesson.
+				const currentLessonIndex = currentUnitChildren.findIndex((child) => child.id === lessonData.id)
+				if (currentLessonIndex !== -1) {
+					const currentLesson = currentUnitChildren[currentLessonIndex]
+					if (currentLesson?.type === "Lesson") {
+						const currentContentIndex = currentLesson.children.findIndex((child) => child.id === assessmentId)
+						if (currentContentIndex !== -1 && currentContentIndex < currentLesson.children.length - 1) {
+							// Next item is in the same lesson.
+							const nextLessonChild = currentLesson.children[currentContentIndex + 1]
+							if (nextLessonChild) {
+								foundNext = {
+									text: getNextItemText(nextLessonChild, currentUnitChildren),
+									path: nextLessonChild.path || ""
+								}
+							}
+						} else if (currentLessonIndex < currentUnitChildren.length - 1) {
+							// Next item is in the next lesson/quiz/test.
+							const nextUnitChild = currentUnitChildren[currentLessonIndex + 1]
+							if (nextUnitChild) {
+								let path = nextUnitChild.path || ""
+								if (nextUnitChild.type === "Lesson" && nextUnitChild.children.length > 0) {
+									const firstChild = nextUnitChild.children[0]
+									if (firstChild?.path) {
+										path = firstChild.path
+									}
+								}
+								foundNext = { text: getNextItemText(nextUnitChild, currentUnitChildren), path }
+							}
+						}
+					}
+				}
+			}
+
+			if (!foundNext) {
+				foundNext = { text: `Back to ${unitData.title}`, path: unitData.path }
+			}
+
+			setNextItem(foundNext)
+		}
+	}, [showSummary, assessmentId, lessonData, unitData])
 
 	if (questions.length === 0) {
 		return <div>No questions available</div>
@@ -251,6 +339,7 @@ export function AssessmentStepper({
 					setCorrectAnswersCount(0)
 					setShowSummary(false)
 				}}
+				nextItem={nextItem}
 			/>
 		)
 	}
