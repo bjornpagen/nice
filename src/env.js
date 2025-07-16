@@ -7,10 +7,6 @@ if (!process.env.NEXT_RUNTIME && typeof window === "undefined") {
 	loadEnvConfig(projectDir)
 }
 
-// if (process.env.NODE_ENV === "development" && typeof window === "undefined") {
-// 	logger.setDefaultLogLevel(logger.DEBUG)
-// }
-
 export const env = createEnv({
 	/**
 	 * Specify your server-side environment variables schema here. This way you can ensure the app
