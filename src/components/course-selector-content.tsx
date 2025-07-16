@@ -85,8 +85,8 @@ export function CourseSelector({
 						/>
 						{/* Text overlay */}
 						<div className="relative z-10 h-full flex flex-col justify-center items-center px-8">
-							<h2 className="text-xl font-semibold text-gray-900 mb-1">What courses can we help you learn?</h2>
-							<p className="text-gray-700 text-sm">Choose 4-5 and we'll gather the right lessons for you.</p>
+							<h2 className="text-xl font-semibold text-white mb-1">What courses can we help you learn?</h2>
+							<p className="text-white text-sm">Choose 4-5 and we'll gather the right lessons for you.</p>
 						</div>
 					</div>
 
