@@ -1,13 +1,45 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
 import Image from "next/image"
 import * as React from "react"
+import type { YouTubePlayer } from "react-youtube"
+import YouTube from "react-youtube"
 import { Button } from "@/components/ui/button"
+import { updateVideoProgress } from "@/lib/actions/tracking"
 import type { VideoPageData } from "@/lib/types/page"
 
 export function Content({ videoPromise }: { videoPromise: Promise<VideoPageData> }) {
 	const video = React.use(videoPromise)
+	const { user } = useUser()
 	const [activeTab, setActiveTab] = React.useState<"about" | "transcript">("about")
+	const playerRef = React.useRef<YouTubePlayer | null>(null)
+
+	// Periodically track video progress when the user is watching.
+	React.useEffect(() => {
+		const intervalId = setInterval(() => {
+			const player = playerRef.current
+			const sourceId = user?.publicMetadata?.sourceId
+
+			// Ensure the player is ready, the user is identified, and the video is playing.
+			if (player && typeof player.getPlayerState === "function" && player.getPlayerState() === 1 && sourceId) {
+				const currentTime = player.getCurrentTime()
+				const duration = player.getDuration()
+
+				if (duration > 0 && typeof sourceId === "string") {
+					// Fire-and-forget the tracking action.
+					// We don't need to block the UI or show errors for this.
+					void updateVideoProgress(sourceId, video.id, currentTime, duration)
+				}
+			}
+		}, 15000) // Send an update every 15 seconds.
+
+		return () => clearInterval(intervalId) // Cleanup on component unmount.
+	}, [user, video.id])
+
+	const onPlayerReady = (event: { target: YouTubePlayer }) => {
+		playerRef.current = event.target
+	}
 
 	return (
 		<div className="flex flex-col h-full bg-white">
@@ -45,17 +77,25 @@ export function Content({ videoPromise }: { videoPromise: Promise<VideoPageData>
 			</div>
 
 			{/* Main Content Area */}
-			<div className="flex-1">
+			<div className="flex-1 bg-white">
 				<div className="max-w-5xl mx-auto px-6">
-					{/* Video Player - Now part of the main flow */}
+					{/* Video Player - Changed from iframe to YouTube component */}
 					<div className="py-6">
-						<div className="aspect-video bg-black rounded-lg overflow-hidden">
-							<iframe
-								src={`https://www.youtube.com/embed/${video.youtubeId}`}
+						<div className="aspect-video bg-black rounded-lg overflow-hidden relative">
+							<YouTube
+								videoId={video.youtubeId}
 								title={video.title}
-								className="w-full h-full"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-								allowFullScreen
+								className="absolute inset-0 w-full h-full"
+								onReady={onPlayerReady}
+								opts={{
+									width: "100%",
+									height: "100%",
+									playerVars: {
+										// Standard YouTube player variables
+										autoplay: 0,
+										controls: 1
+									}
+								}}
 							/>
 						</div>
 					</div>
@@ -87,7 +127,7 @@ export function Content({ videoPromise }: { videoPromise: Promise<VideoPageData>
 					</div>
 
 					{/* Tab Content - No Cards, Direct Content */}
-					<div className="py-6">
+					<div className="py-6 bg-white">
 						{activeTab === "about" && (
 							<div>
 								{video.description ? (

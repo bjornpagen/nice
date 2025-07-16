@@ -78,6 +78,7 @@
 		"react-error-boundary": "^6.0.0",
 		"react-hook-form": "^7.59.0",
 		"react-resizable-panels": "^3.0.3",
+		"react-youtube": "^10.1.0",
 		"recharts": "^3.0.2",
 		"sonner": "^2.0.6",
 		"svix": "^1.68.0",
