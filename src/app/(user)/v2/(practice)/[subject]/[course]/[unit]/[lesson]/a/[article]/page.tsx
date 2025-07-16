@@ -84,6 +84,15 @@ function getArticleData(
 		articleDataKeys: _.keys(articleData)
 	})
 
+	// Stupid typescript fuckery to get the compiler to understand that the meta object is valid.
+	const enhancedArticleData: Extract<CourseMaterial, { type: "Article" }> = {
+		...articleData,
+		meta: {
+			...articleData.meta,
+			unit: articleData.meta.unit
+		}
+	}
+
 	let nextMaterial = materials[articleIndex + 1]
 	if (nextMaterial != null && nextMaterial.type === "Lesson") {
 		nextMaterial = nextMaterial.resources.find(
@@ -100,8 +109,8 @@ function getArticleData(
 	})
 
 	if (nextMaterial != null) {
-		articleData.meta = {
-			...articleData.meta,
+		enhancedArticleData.meta = {
+			...enhancedArticleData.meta,
 			next: { type: nextMaterial.type, title: nextMaterial.title }
 		}
 		logger.info("lesson article data: article data enhanced with next material", {
@@ -115,5 +124,5 @@ function getArticleData(
 		})
 	}
 
-	return articleData
+	return enhancedArticleData
 }

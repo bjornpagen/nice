@@ -5,7 +5,7 @@ import * as React from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { LessonExerciseContent } from "@/components/practice/course/unit/lesson/exercise/lesson-exercise-content"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { type CourseMaterial, getCourseBlob, getCourseMaterials } from "@/lib/v2/types"
+import { type CourseMaterial, getCourseBlob, getCourseMaterials, type LessonResource } from "@/lib/v2/types"
 
 export default function PracticeExercisePage({
 	params
@@ -68,16 +68,38 @@ function getExerciseData(
 		materialCount: materials.length
 	})
 
-	const exerciseIndex = materials.findIndex(
-		(u): u is Extract<CourseMaterial, { type: "Exercise" }> => u.type === "Exercise" && u.slug === exercise
+	const lessonIndex = materials.findIndex(
+		(m): m is Extract<CourseMaterial, { type: "Lesson" }> => m.type === "Lesson" && m.slug === lesson
+	)
+	if (lessonIndex === -1) {
+		logger.error("lesson exercise data: lesson index not found", { subject, course, unit, lesson, exercise })
+		return undefined
+	}
+	logger.info("lesson exercise data: lesson index found", { subject, course, unit, lesson, lessonIndex })
+
+	const lessonData = materials[lessonIndex]
+	if (lessonData == null || lessonData.type !== "Lesson") {
+		logger.error("lesson exercise data: lesson data not found", { subject, course, unit, lesson, exercise })
+		return undefined
+	}
+	logger.info("lesson exercise data: lesson data retrieved", {
+		subject,
+		course,
+		unit,
+		lesson,
+		lessonDataKeys: _.keys(lessonData)
+	})
+
+	const exerciseIndex = lessonData.resources.findIndex(
+		(r): r is Extract<CourseMaterial, { type: "Exercise" }> => r.type === "Exercise" && r.slug === exercise
 	)
 	if (exerciseIndex === -1) {
-		logger.error("lesson exercise data: exercise not found", { subject, course, unit, lesson, exercise })
+		logger.error("lesson exercise data: exercise index not found", { subject, course, unit, lesson, exercise })
 		return undefined
 	}
 	logger.info("lesson exercise data: exercise index found", { subject, course, unit, lesson, exercise, exerciseIndex })
 
-	const exerciseData = materials[exerciseIndex]
+	const exerciseData = lessonData.resources[exerciseIndex]
 	if (exerciseData == null || exerciseData.type !== "Exercise") {
 		logger.error("lesson exercise data: exercise data not found", { subject, course, unit, lesson, exercise })
 		return undefined
@@ -91,9 +113,30 @@ function getExerciseData(
 		exerciseDataKeys: _.keys(exerciseData)
 	})
 
-	let nextMaterial = materials[exerciseIndex + 1]
+	// Stupid typescript fuckery to get the compiler to understand that the meta object is valid.
+	const enhancedExerciseData: Extract<CourseMaterial, { type: "Exercise" }> = {
+		...exerciseData,
+		meta: {
+			...exerciseData.meta,
+			unit: lessonData.meta.unit
+		}
+	}
+	logger.info("lesson exercise data: exercise data enhanced with unit", {
+		subject,
+		course,
+		unit,
+		lesson,
+		exercise,
+		exerciseDataKeys: _.keys(enhancedExerciseData)
+	})
+
+	let nextMaterial: { type: CourseMaterial["type"]; title: string; resources?: LessonResource[] } | undefined =
+		lessonData.resources[exerciseIndex + 1]
+	if (nextMaterial == null) {
+		nextMaterial = materials[lessonIndex + 1]
+	}
 	if (nextMaterial != null && nextMaterial.type === "Lesson") {
-		nextMaterial = nextMaterial.resources.find(
+		nextMaterial = nextMaterial.resources?.find(
 			(r): r is Extract<CourseMaterial, { type: "Article" | "Exercise" | "Video" }> => r != null
 		)
 	}
@@ -107,8 +150,8 @@ function getExerciseData(
 	})
 
 	if (nextMaterial != null) {
-		exerciseData.meta = {
-			...exerciseData.meta,
+		enhancedExerciseData.meta = {
+			...enhancedExerciseData.meta,
 			next: { type: nextMaterial.type, title: nextMaterial.title }
 		}
 		logger.info("lesson exercise data: exercise data enhanced with next material", {
@@ -122,5 +165,5 @@ function getExerciseData(
 		})
 	}
 
-	return exerciseData
+	return enhancedExerciseData
 }
