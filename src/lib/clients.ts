@@ -23,7 +23,7 @@ export const oneroster = new onerosterInternal.Client({
  * efficient token management.
  */
 export const powerpath = new powerpathInternal.Client({
-	serverUrl: env.TIMEBACK_ONEROSTER_SERVER_URL,
+	serverUrl: env.TIMEBACK_POWERPATH_SERVER_URL,
 	tokenUrl: env.TIMEBACK_TOKEN_URL,
 	clientId: env.TIMEBACK_CLIENT_ID,
 	clientSecret: env.TIMEBACK_CLIENT_SECRET
