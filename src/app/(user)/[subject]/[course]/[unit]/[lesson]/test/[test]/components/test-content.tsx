@@ -10,7 +10,9 @@ export function TestContent({ testDataPromise }: { testDataPromise: Promise<Unit
 	const [hasStarted, setHasStarted] = React.useState(false)
 
 	if (hasStarted) {
-		return <AssessmentStepper questions={questions} contentType="Test" />
+		return (
+			<AssessmentStepper questions={questions} contentType="Test" assessmentId={test.id} assessmentTitle={test.title} />
+		)
 	}
 
 	return (

@@ -10,7 +10,9 @@ export function QuizContent({ quizPromise }: { quizPromise: Promise<QuizPageData
 	const [hasStarted, setHasStarted] = React.useState(false)
 
 	if (hasStarted) {
-		return <AssessmentStepper questions={questions} contentType="Quiz" />
+		return (
+			<AssessmentStepper questions={questions} contentType="Quiz" assessmentId={quiz.id} assessmentTitle={quiz.title} />
+		)
 	}
 
 	return (
