@@ -19,7 +19,7 @@ export function PracticeProgressionSummary({
 }) {
 	const [isOpen, setIsOpen] = React.useState(false)
 
-	if (index < exercise.data.questions.length - 1) {
+	if (index < exercise.data.questions.length) {
 		return null
 	}
 
