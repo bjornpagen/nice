@@ -153,9 +153,17 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 	classes: {
 		type: "classes",
 		name: "Classes",
-		fetchAll: async (_prefix: string) => {
-			// OneRoster API limitation - can't fetch all classes directly
-			throw errors.new("classes require school ID - use specific school endpoints")
+		fetchAll: async (prefix: string) => {
+			const items = await oneroster.getAllClasses({
+				filter: createPrefixFilter(prefix),
+				sort: "sourcedId",
+				orderBy: "asc"
+			})
+			return items.map((c) => ({
+				sourcedId: c.sourcedId,
+				displayName: `${c.sourcedId}: ${c.title} (type: ${c.classType})`,
+				fullObject: c
+			}))
 		},
 		delete: (id: string) => oneroster.deleteClass(id)
 	},
@@ -259,11 +267,6 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 		]
 
 		for (const type of allTypes) {
-			if (type === "classes") {
-				logger.warn("skipping classes - requires school ID")
-				continue
-			}
-
 			process.stdout.write(`\n=== ${handlers[type].name} ===\n`)
 			await executeWipe(type, prefix, shouldDelete)
 		}

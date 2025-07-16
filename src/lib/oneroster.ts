@@ -821,6 +821,31 @@ export class Client {
 	}
 
 	/**
+	 * Fetches all classes from the OneRoster API, handling pagination.
+	 * @param options Query options including filter, sort, and orderBy
+	 * @returns A promise that resolves to an array of all classes.
+	 */
+	async getAllClasses(options?: QueryOptions): Promise<ClassReadSchemaType[]> {
+		logger.info("oneroster: fetching all classes", options)
+
+		const classes = await this.#fetchPaginatedCollection<
+			z.infer<typeof GetAllClassesResponseSchema>,
+			ClassReadSchemaType
+		>({
+			endpoint: "/ims/oneroster/rostering/v1p2/classes",
+			responseKey: "classes",
+			schema: GetAllClassesResponseSchema,
+			...options
+		})
+
+		logger.info("oneroster: successfully fetched all classes", {
+			count: classes.length,
+			...options
+		})
+		return classes
+	}
+
+	/**
 	 * Fetches all users from the OneRoster API, handling pagination.
 	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of all users.
