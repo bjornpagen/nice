@@ -1,10 +1,12 @@
 import * as logger from "@superbuilders/slog"
-import { unstable_cacheLife as cacheLife } from "next/cache"
+import { unstable_cache as cache } from "next/cache"
 import { qti } from "@/lib/clients"
 
-export async function getAllQuestionsForTest(identifier: string) {
-	"use cache"
-	logger.info("getAllQuestionsForTest called", { identifier })
-	cacheLife("max")
-	return qti.getAllQuestionsForTest(identifier)
-}
+export const getAllQuestionsForTest = cache(
+	async (identifier: string) => {
+		logger.info("getAllQuestionsForTest called", { identifier })
+		return qti.getAllQuestionsForTest(identifier)
+	},
+	["qti-getAllQuestionsForTest"],
+	{ revalidate: false } // equivalent to cacheLife("max")
+)
