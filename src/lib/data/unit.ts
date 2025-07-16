@@ -1,5 +1,4 @@
 import * as logger from "@superbuilders/slog"
-import { unstable_cacheLife as cacheLife } from "next/cache"
 import { notFound } from "next/navigation"
 import type { UnitPageData } from "@/lib/types/page"
 import { fetchCoursePageData } from "./course" // Import the top-level data fetcher
@@ -9,9 +8,7 @@ export async function fetchUnitPageData(params: {
 	course: string
 	unit: string
 }): Promise<UnitPageData> {
-	"use cache"
 	logger.info("fetchUnitPageData called", { params })
-	cacheLife("max")
 	logger.debug("unit page: fetching unit data", { params })
 
 	// 1. Call the course page data fetcher with ONLY subject and course params

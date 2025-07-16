@@ -1,6 +1,5 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { unstable_cacheLife as cacheLife } from "next/cache"
 import { notFound } from "next/navigation"
 import {
 	getAllCoursesBySlug,
@@ -27,9 +26,7 @@ export async function fetchQuizPageData(params: {
 	lesson: string
 	quiz: string
 }): Promise<QuizPageData> {
-	"use cache"
 	logger.info("fetchQuizPageData called", { params })
-	cacheLife("max")
 	// Pass only the params needed by fetchLessonLayoutData, not the quiz param
 	const layoutDataPromise = fetchLessonLayoutData({
 		subject: params.subject,
@@ -103,9 +100,7 @@ export async function fetchUnitTestPageData(params: {
 	lesson: string
 	test: string
 }): Promise<UnitTestPageData> {
-	"use cache"
 	logger.info("fetchUnitTestPageData called", { params })
-	cacheLife("max")
 	// Pass only the params needed by fetchLessonLayoutData, not the test param
 	const layoutDataPromise = fetchLessonLayoutData({
 		subject: params.subject,
@@ -177,9 +172,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	course: string
 	subject: string
 }): Promise<CourseChallengePageData> {
-	"use cache"
 	logger.info("fetchCourseChallengePage_TestData called", { params })
-	cacheLife("max")
 	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
 	if (coursesResult.error) {
 		logger.error("failed to fetch course by slug", { error: coursesResult.error, slug: params.course })
@@ -249,9 +242,7 @@ export async function fetchCourseChallengePage_LayoutData(params: {
 	course: string
 	subject: string
 }): Promise<CourseChallengeLayoutData> {
-	"use cache"
 	logger.info("fetchCourseChallengePage_LayoutData called", { params })
-	cacheLife("max")
 	// Reuse the main course page data fetcher to get all necessary context
 	const coursePageData = await fetchCoursePageData({
 		subject: params.subject,
@@ -273,9 +264,7 @@ export async function fetchQuizRedirectPath(params: {
 	unit: string
 	quiz: string
 }): Promise<string> {
-	"use cache"
 	logger.info("fetchQuizRedirectPath called", { params })
-	cacheLife("max")
 	const decodedUnit = decodeURIComponent(params.unit)
 
 	// Look up the unit by its slug to get its sourcedId
@@ -337,9 +326,7 @@ export async function fetchTestRedirectPath(params: {
 	unit: string
 	test: string
 }): Promise<string> {
-	"use cache"
 	logger.info("fetchTestRedirectPath called", { params })
-	cacheLife("max")
 	const decodedUnit = decodeURIComponent(params.unit)
 
 	// Look up the unit by its slug to get its sourcedId
