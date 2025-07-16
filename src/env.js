@@ -1,4 +1,3 @@
-import * as logger from "@superbuilders/slog"
 import { createEnv } from "@t3-oss/env-nextjs"
 import { z } from "zod"
 
@@ -8,9 +7,9 @@ if (!process.env.NEXT_RUNTIME && typeof window === "undefined") {
 	loadEnvConfig(projectDir)
 }
 
-if (process.env.NODE_ENV === "development" && typeof window === "undefined") {
-	logger.setDefaultLogLevel(logger.DEBUG)
-}
+// if (process.env.NODE_ENV === "development" && typeof window === "undefined") {
+// 	logger.setDefaultLogLevel(logger.DEBUG)
+// }
 
 export const env = createEnv({
 	/**
