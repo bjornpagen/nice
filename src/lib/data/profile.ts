@@ -156,3 +156,15 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 
 	return { subjects, userCourses }
 }
+
+export async function fetchProfileCoursesDataWithUser(sourceId: string): Promise<ProfileCoursesPageData> {
+	// Import from actions since that's where the function is defined (from upstream)
+	const { getOneRosterCoursesForExplore } = await import("@/lib/actions/courses")
+
+	const subjectsPromise = getOneRosterCoursesForExplore()
+	const userCoursesPromise = fetchUserEnrolledCourses(sourceId)
+
+	const [subjects, userCourses] = await Promise.all([subjectsPromise, userCoursesPromise])
+
+	return { subjects, userCourses }
+}
