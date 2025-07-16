@@ -1,3 +1,4 @@
+import * as logger from "@superbuilders/slog"
 import { unstable_cacheLife as cacheLife } from "next/cache"
 import { oneroster } from "@/lib/clients"
 
@@ -18,18 +19,21 @@ import { oneroster } from "@/lib/clients"
 
 export async function getCourse(sourcedId: string) {
 	"use cache"
+	logger.info("getCourse called", { sourcedId })
 	cacheLife("max")
 	return oneroster.getCourse(sourcedId)
 }
 
 export async function getResource(sourcedId: string) {
 	"use cache"
+	logger.info("getResource called", { sourcedId })
 	cacheLife("max")
 	return oneroster.getResource(sourcedId)
 }
 
 export async function getClass(classId: string) {
 	"use cache"
+	logger.info("getClass called", { classId })
 	cacheLife("max")
 	return oneroster.getClass(classId)
 }
@@ -38,36 +42,42 @@ export async function getClass(classId: string) {
 
 export async function getAllCourses() {
 	"use cache"
+	logger.info("getAllCourses called")
 	cacheLife("max")
 	return oneroster.getAllCourses({ filter: `status='active'` })
 }
 
 export async function getAllCoursesBySlug(slug: string) {
 	"use cache"
+	logger.info("getAllCoursesBySlug called", { slug })
 	cacheLife("max")
 	return oneroster.getAllCourses({ filter: `metadata.khanSlug='${slug}' AND status='active'` })
 }
 
 export async function getCourseComponentsByCourseId(courseId: string) {
 	"use cache"
+	logger.info("getCourseComponentsByCourseId called", { courseId })
 	cacheLife("max")
 	return oneroster.getCourseComponents({ filter: `course.sourcedId='${courseId}' AND status='active'` })
 }
 
 export async function getCourseComponentsByParentId(parentId: string) {
 	"use cache"
+	logger.info("getCourseComponentsByParentId called", { parentId })
 	cacheLife("max")
 	return oneroster.getCourseComponents({ filter: `parent.sourcedId='${parentId}' AND status='active'` })
 }
 
 export async function getCourseComponentBySlug(slug: string) {
 	"use cache"
+	logger.info("getCourseComponentBySlug called", { slug })
 	cacheLife("max")
 	return oneroster.getCourseComponents({ filter: `metadata.khanSlug='${slug}' AND status='active'` })
 }
 
 export async function getCourseComponentByCourseAndSlug(courseId: string, slug: string) {
 	"use cache"
+	logger.info("getCourseComponentByCourseAndSlug called", { courseId, slug })
 	cacheLife("max")
 	// Due to OneRoster API limitation, we can only use one AND operation
 	// Filter by slug in API (more selective - slugs are unique), then filter by courseId client-side
@@ -79,6 +89,7 @@ export async function getCourseComponentByCourseAndSlug(courseId: string, slug: 
 
 export async function getCourseComponentByParentAndSlug(parentId: string, slug: string) {
 	"use cache"
+	logger.info("getCourseComponentByParentAndSlug called", { parentId, slug })
 	cacheLife("max")
 	// Due to OneRoster API limitation, we can only use one AND operation
 	// Filter by slug in API (more selective - slugs are unique), then filter by parentId client-side
@@ -90,6 +101,7 @@ export async function getCourseComponentByParentAndSlug(parentId: string, slug: 
 
 export async function getUnitsForCourses(courseIds: string[]) {
 	"use cache"
+	logger.info("getUnitsForCourses called", { courseIds })
 	cacheLife("max")
 	if (courseIds.length === 0) return []
 	// Encapsulates the `@` filter logic for OneRoster IN operator
@@ -99,12 +111,14 @@ export async function getUnitsForCourses(courseIds: string[]) {
 
 export async function getAllResources() {
 	"use cache"
+	logger.info("getAllResources called")
 	cacheLife("max")
 	return oneroster.getAllResources({ filter: `status='active'` })
 }
 
 export async function getResourcesBySlugAndType(slug: string, type: "qti" | "video", lessonType?: "quiz" | "unittest") {
 	"use cache"
+	logger.info("getResourcesBySlugAndType called", { slug, type, lessonType })
 	cacheLife("max")
 	// Due to OneRoster API limitation, we can only use one AND operation
 	// Keep filtering by slug as it's reasonably selective, type filter is quick client-side
@@ -124,6 +138,7 @@ export async function getResourcesBySlugAndType(slug: string, type: "qti" | "vid
 
 export async function getResourceByCourseAndSlug(courseId: string, slug: string, type: "qti") {
 	"use cache"
+	logger.info("getResourceByCourseAndSlug called", { courseId, slug, type })
 	cacheLife("max")
 	// Due to OneRoster API limitation, we can only use one AND operation
 	// Keep filtering by slug as it's the most selective publicly queryable field
@@ -136,18 +151,21 @@ export async function getResourceByCourseAndSlug(courseId: string, slug: string,
 
 export async function getAllComponentResources() {
 	"use cache"
+	logger.info("getAllComponentResources called")
 	cacheLife("max")
 	return oneroster.getAllComponentResources({ filter: `status='active'` })
 }
 
 export async function getClassesForSchool(schoolSourcedId: string) {
 	"use cache"
+	logger.info("getClassesForSchool called", { schoolSourcedId })
 	cacheLife("max")
 	return oneroster.getClassesForSchool(schoolSourcedId)
 }
 
 export async function getEnrollmentsForUser(userSourcedId: string) {
 	"use cache"
+	logger.info("getEnrollmentsForUser called", { userSourcedId })
 	cacheLife("minutes")
 	return oneroster.getEnrollmentsForUser(userSourcedId)
 }
@@ -155,6 +173,7 @@ export async function getEnrollmentsForUser(userSourcedId: string) {
 export async function getActiveEnrollmentsForUser(userSourcedId: string) {
 	// User data is more volatile, so we'll use a shorter default profile.
 	"use cache"
+	logger.info("getActiveEnrollmentsForUser called", { userSourcedId })
 	cacheLife("minutes")
 	return oneroster.getAllEnrollments({ filter: `user.sourcedId='${userSourcedId}' AND status='active'` })
 }

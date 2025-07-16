@@ -11,6 +11,7 @@ export async function fetchLessonLayoutData(params: {
 	lesson: string
 }): Promise<LessonLayoutData> {
 	"use cache"
+	logger.info("fetchLessonLayoutData called", { params })
 	cacheLife("max")
 	// 1. Call the parent data fetcher with ONLY the params it needs
 	// This ensures cache effectiveness - all lessons in the same unit share the cache

@@ -28,6 +28,7 @@ export async function fetchQuizPageData(params: {
 	quiz: string
 }): Promise<QuizPageData> {
 	"use cache"
+	logger.info("fetchQuizPageData called", { params })
 	cacheLife("max")
 	// Pass only the params needed by fetchLessonLayoutData, not the quiz param
 	const layoutDataPromise = fetchLessonLayoutData({
@@ -103,6 +104,7 @@ export async function fetchUnitTestPageData(params: {
 	test: string
 }): Promise<UnitTestPageData> {
 	"use cache"
+	logger.info("fetchUnitTestPageData called", { params })
 	cacheLife("max")
 	// Pass only the params needed by fetchLessonLayoutData, not the test param
 	const layoutDataPromise = fetchLessonLayoutData({
@@ -176,6 +178,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	subject: string
 }): Promise<CourseChallengePageData> {
 	"use cache"
+	logger.info("fetchCourseChallengePage_TestData called", { params })
 	cacheLife("max")
 	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
 	if (coursesResult.error) {
@@ -247,6 +250,7 @@ export async function fetchCourseChallengePage_LayoutData(params: {
 	subject: string
 }): Promise<CourseChallengeLayoutData> {
 	"use cache"
+	logger.info("fetchCourseChallengePage_LayoutData called", { params })
 	cacheLife("max")
 	// Reuse the main course page data fetcher to get all necessary context
 	const coursePageData = await fetchCoursePageData({
@@ -270,6 +274,7 @@ export async function fetchQuizRedirectPath(params: {
 	quiz: string
 }): Promise<string> {
 	"use cache"
+	logger.info("fetchQuizRedirectPath called", { params })
 	cacheLife("max")
 	const decodedUnit = decodeURIComponent(params.unit)
 
@@ -333,6 +338,7 @@ export async function fetchTestRedirectPath(params: {
 	test: string
 }): Promise<string> {
 	"use cache"
+	logger.info("fetchTestRedirectPath called", { params })
 	cacheLife("max")
 	const decodedUnit = decodeURIComponent(params.unit)
 

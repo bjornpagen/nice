@@ -11,6 +11,7 @@ import { extractYouTubeId } from "./utils"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
 	"use cache"
+	logger.info("fetchArticlePageData called", { params })
 	cacheLife("max")
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.article, "qti"))
@@ -58,9 +59,16 @@ export async function fetchExercisePageData(params: {
 	exercise: string
 }): Promise<ExercisePageData> {
 	"use cache"
+	logger.info("fetchExercisePageData called", { params })
 	cacheLife("max")
 	// Fetch layout data and exercise data in parallel for performance
-	const layoutDataPromise = fetchLessonLayoutData(params)
+	// Pass only the params needed by fetchLessonLayoutData, not the exercise param
+	const layoutDataPromise = fetchLessonLayoutData({
+		subject: params.subject,
+		course: params.course,
+		unit: params.unit,
+		lesson: params.lesson
+	})
 	const resourcePromise = errors.try(getResourcesBySlugAndType(params.exercise, "qti"))
 
 	const [layoutData, resourceResult] = await Promise.all([layoutDataPromise, resourcePromise])
@@ -119,6 +127,7 @@ export async function fetchExercisePageData(params: {
 
 export async function fetchVideoPageData(params: { video: string }): Promise<VideoPageData> {
 	"use cache"
+	logger.info("fetchVideoPageData called", { params })
 	cacheLife("max")
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.video, "video"))

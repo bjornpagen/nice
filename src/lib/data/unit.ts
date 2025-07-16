@@ -10,6 +10,7 @@ export async function fetchUnitPageData(params: {
 	unit: string
 }): Promise<UnitPageData> {
 	"use cache"
+	logger.info("fetchUnitPageData called", { params })
 	cacheLife("max")
 	logger.debug("unit page: fetching unit data", { params })
 
