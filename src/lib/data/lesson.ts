@@ -9,6 +9,7 @@ import {
 	getCourseComponentsByParentId,
 	getResource
 } from "@/lib/data/fetchers/oneroster"
+import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Lesson, LessonChild, Unit } from "@/lib/types/structure"
@@ -110,6 +111,39 @@ export async function fetchLessonLayoutData(params: {
 	}
 
 	const resourcesMap = new Map(allResourcesData.map((r) => [r.sourcedId, r]))
+
+	// Identify all exercise resources to fetch their questions
+	const exerciseResourceIds = new Set<string>()
+	for (const resource of allResourcesData) {
+		const resourceMetadata = ResourceMetadataSchema.safeParse(resource.metadata).data
+		if (
+			resourceMetadata?.type === "qti" &&
+			resourceMetadata.subType === "qti-test" &&
+			!resourceMetadata.khanLessonType
+		) {
+			exerciseResourceIds.add(resource.sourcedId)
+		}
+	}
+
+	// Fetch all exercise questions in parallel
+	const questionFetchResults = await Promise.all(
+		Array.from(exerciseResourceIds).map(async (exerciseId) => {
+			const result = await errors.try(getAllQuestionsForTest(exerciseId))
+			if (result.error) {
+				logger.error("failed to fetch questions for exercise", { exerciseId, error: result.error })
+				return { exerciseId, questions: [] }
+			}
+			return {
+				exerciseId,
+				questions: result.data.questions.map((q) => ({ id: q.question.identifier }))
+			}
+		})
+	)
+
+	const questionsMap = new Map<string, number>()
+	for (const result of questionFetchResults) {
+		questionsMap.set(result.exerciseId, result.questions.length)
+	}
 
 	// 5. Build a map of lesson content with temporary sortOrder for sorting
 	const lessonContentMap = new Map<string, Array<LessonChild & { sortOrder: number }>>()
@@ -216,6 +250,17 @@ export async function fetchLessonLayoutData(params: {
 						sortOrder: cr.sortOrder
 					}
 				} else if (contentType === "Exercise" && resourceMetadata.type === "qti") {
+					const questionCount = questionsMap.get(resource.sourcedId)
+					if (questionCount === undefined) {
+						logger.error("CRITICAL: exercise questions not found in map", {
+							exerciseId: resource.sourcedId,
+							availableIds: Array.from(questionsMap.keys())
+						})
+						throw errors.new("exercise questions missing from fetch results")
+					}
+					const totalQuestions = questionCount
+					const questionsToPass = totalQuestions > 0 ? totalQuestions - 1 : 0
+
 					child = {
 						id: resource.sourcedId,
 						slug: resourceSlug,
@@ -223,7 +268,8 @@ export async function fetchLessonLayoutData(params: {
 						description: description,
 						path: contentPath,
 						type: "Exercise",
-						questions: [], // Empty array, will be fetched if needed
+						totalQuestions,
+						questionsToPass,
 						sortOrder: cr.sortOrder
 					}
 				} else {

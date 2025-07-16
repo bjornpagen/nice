@@ -21,7 +21,14 @@ export interface Article extends ContentNode {
 	type: "Article"
 }
 
-export interface Exercise extends ContentNode {
+// Exercise type for display purposes (no questions array needed)
+export interface ExerciseInfo extends ContentNode {
 	type: "Exercise"
+	totalQuestions: number
+	questionsToPass: number
+}
+
+// Full Exercise type when questions are actually needed
+export interface Exercise extends ExerciseInfo {
 	questions: Question[]
 }

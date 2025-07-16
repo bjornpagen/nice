@@ -1,8 +1,8 @@
 import type { CourseChallenge, Quiz, UnitTest } from "./assessment"
-import type { Article, ContentNode, Exercise, Video } from "./content"
+import type { Article, ContentNode, ExerciseInfo, Video } from "./content"
 
 // Union type for all learnable child content
-export type LessonChild = Video | Article | Exercise
+export type LessonChild = Video | Article | ExerciseInfo
 
 export interface Lesson extends ContentNode {
 	type: "Lesson"

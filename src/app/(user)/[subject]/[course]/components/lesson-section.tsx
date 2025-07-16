@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { ActivityIcon } from "@/components/icons/activity"
 import { Button } from "@/components/ui/button"
-import type { Article, Exercise, Video } from "@/lib/types/content"
+import type { Article, ExerciseInfo, Video } from "@/lib/types/content"
 import type { Lesson } from "@/lib/types/structure"
 import { capitalize } from "@/lib/utils"
 import { Section } from "./section"
@@ -15,7 +15,7 @@ export function LessonSection({ lesson }: { lesson: Lesson }) {
 	)
 
 	// Extract exercises separately (they're displayed in a different section)
-	const exercises = lesson.children.filter((child): child is Exercise => child.type === "Exercise")
+	const exercises = lesson.children.filter((child): child is ExerciseInfo => child.type === "Exercise")
 
 	return (
 		<Section>
@@ -78,7 +78,7 @@ function LessonArticle({ article }: { article: Pick<Article, "title" | "path"> }
 	)
 }
 
-function LessonExercise({ exercise, next = false }: { exercise: Exercise; next: boolean }) {
+function LessonExercise({ exercise, next = false }: { exercise: ExerciseInfo; next: boolean }) {
 	if (next) {
 		return (
 			<div className="bg-gray-100 rounded-xs p-2 border-t-4 border-blue-500">
@@ -87,8 +87,7 @@ function LessonExercise({ exercise, next = false }: { exercise: Exercise; next: 
 						<span className="text-blue-600 text-xs block mb-1">Up next for you:</span>
 						<h2 className="text-sm font-semibold text-gray-900 mb-1">{exercise.title}</h2>
 						<p className="text-gray-500 text-xs mb-2">
-							Get {exercise.questions.length <= 0 ? 0 : exercise.questions.length - 1} out of{" "}
-							{exercise.questions.length} questions to level up!
+							Get {exercise.questionsToPass} out of {exercise.totalQuestions} questions to level up!
 						</p>
 					</div>
 					<Button
@@ -108,8 +107,7 @@ function LessonExercise({ exercise, next = false }: { exercise: Exercise; next: 
 				<div className="flex-1">
 					<h2 className="text-sm font-semibold text-gray-900 mb-1">{exercise.title}</h2>
 					<p className="text-gray-500 text-xs mb-2">
-						Get {exercise.questions.length <= 0 ? 0 : exercise.questions.length - 1} out of {exercise.questions.length}{" "}
-						questions to level up!
+						Get {exercise.questionsToPass} out of {exercise.totalQuestions} questions to level up!
 					</p>
 				</div>
 				<Button

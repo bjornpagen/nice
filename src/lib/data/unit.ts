@@ -9,9 +9,10 @@ import {
 	getCourseComponentsByCourseId,
 	getCourseComponentsByParentId
 } from "@/lib/data/fetchers/oneroster"
+import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { CourseChallenge, Quiz, UnitTest } from "@/lib/types/assessment"
-import type { Article, Exercise, Video } from "@/lib/types/content"
+import type { Article, ExerciseInfo, Video } from "@/lib/types/content"
 import type { UnitPageData } from "@/lib/types/page"
 import type { Course, Lesson, Unit, UnitChild } from "@/lib/types/structure"
 
@@ -179,6 +180,47 @@ export async function fetchUnitPageData(params: {
 		unitSourcedId
 	})
 
+	// Identify all exercise resources within the unit's lessons to fetch their questions
+	const lessonComponentIds = new Set(unitChildren.map((c) => c.sourcedId))
+	const childComponentResourcesForExercises = allComponentResources.filter((cr) =>
+		lessonComponentIds.has(cr.courseComponent.sourcedId)
+	)
+
+	const exerciseResourceIds = new Set<string>()
+	for (const cr of childComponentResourcesForExercises) {
+		const resource = allResourcesInSystem.find((r) => r.sourcedId === cr.resource.sourcedId)
+		if (resource) {
+			const resourceMetadata = ResourceMetadataSchema.safeParse(resource.metadata).data
+			if (
+				resourceMetadata?.type === "qti" &&
+				resourceMetadata.subType === "qti-test" &&
+				!resourceMetadata.khanLessonType
+			) {
+				exerciseResourceIds.add(resource.sourcedId)
+			}
+		}
+	}
+
+	// Fetch all exercise questions in parallel
+	const questionFetchResults = await Promise.all(
+		Array.from(exerciseResourceIds).map(async (exerciseId) => {
+			const result = await errors.try(getAllQuestionsForTest(exerciseId))
+			if (result.error) {
+				logger.error("failed to fetch questions for exercise, returning empty", { exerciseId, error: result.error })
+				return { exerciseId, questions: [] } // Gracefully handle failure for a single exercise
+			}
+			return {
+				exerciseId,
+				questions: result.data.questions.map((q) => ({ id: q.question.identifier }))
+			}
+		})
+	)
+
+	const questionsMap = new Map<string, number>()
+	for (const result of questionFetchResults) {
+		questionsMap.set(result.exerciseId, result.questions.length)
+	}
+
 	// First, get assessments that are linked directly to the unit
 	const unitAssessments: (Quiz | UnitTest)[] = []
 	for (const cr of unitComponentResources) {
@@ -271,7 +313,7 @@ export async function fetchUnitPageData(params: {
 		interface ArticleWithOrder extends Article {
 			sortOrder: number
 		}
-		interface ExerciseWithOrder extends Exercise {
+		interface ExerciseWithOrder extends ExerciseInfo {
 			sortOrder: number
 		}
 
@@ -343,6 +385,17 @@ export async function fetchUnitPageData(params: {
 				!resourceMetadata.khanLessonType
 			) {
 				// This is an exercise
+				const questionCount = questionsMap.get(resource.sourcedId)
+				if (questionCount === undefined) {
+					logger.error("CRITICAL: exercise questions not found in map", {
+						exerciseId: resource.sourcedId,
+						availableIds: Array.from(questionsMap.keys())
+					})
+					throw errors.new("exercise questions missing from fetch results")
+				}
+				const totalQuestions = questionCount
+				const questionsToPass = totalQuestions > 0 ? totalQuestions - 1 : 0
+
 				exercises.push({
 					type: "Exercise",
 					id: resource.sourcedId,
@@ -350,7 +403,8 @@ export async function fetchUnitPageData(params: {
 					path: `/${params.subject}/${params.course}/${params.unit}/${childSlug}/e/${resourceMetadata.khanSlug}`,
 					slug: resourceMetadata.khanSlug,
 					description: resourceMetadata.khanDescription,
-					questions: [], // Questions are not needed on course page
+					totalQuestions,
+					questionsToPass,
 					sortOrder: componentResource.sortOrder
 				})
 			}

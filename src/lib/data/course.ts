@@ -7,9 +7,10 @@ import {
 	getAllResources,
 	getCourseComponentsByCourseId
 } from "@/lib/data/fetchers/oneroster"
+import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { CourseChallenge, Quiz, UnitTest } from "@/lib/types/assessment"
-import type { Article, Exercise, Video } from "@/lib/types/content"
+import type { Article, ExerciseInfo, Video } from "@/lib/types/content"
 import type { CoursePageData } from "@/lib/types/page"
 import type { Course, Lesson, Unit, UnitChild } from "@/lib/types/structure"
 
@@ -178,6 +179,39 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		}
 	}
 
+	// Identify all exercise resources to fetch their questions
+	const exerciseResourceIds = new Set<string>()
+	for (const resource of allResources) {
+		const resourceMetadata = ResourceMetadataSchema.safeParse(resource.metadata).data
+		if (
+			resourceMetadata?.type === "qti" &&
+			resourceMetadata.subType === "qti-test" &&
+			!resourceMetadata.khanLessonType
+		) {
+			exerciseResourceIds.add(resource.sourcedId)
+		}
+	}
+
+	// Fetch all exercise questions in parallel
+	const questionFetchResults = await Promise.all(
+		Array.from(exerciseResourceIds).map(async (exerciseId) => {
+			const result = await errors.try(getAllQuestionsForTest(exerciseId))
+			if (result.error) {
+				logger.error("failed to fetch questions for exercise", { exerciseId, error: result.error })
+				return { exerciseId, questions: [] }
+			}
+			return {
+				exerciseId,
+				questions: result.data.questions.map((q) => ({ id: q.question.identifier }))
+			}
+		})
+	)
+
+	const questionsMap = new Map<string, number>()
+	for (const result of questionFetchResults) {
+		questionsMap.set(result.exerciseId, result.questions.length)
+	}
+
 	// Build units with children
 	const unitsWithChildren: Unit[] = units.map((unit) => {
 		const unitLessons = lessonsByUnitId.get(unit.id) || []
@@ -242,7 +276,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 			interface ArticleWithOrder extends Article {
 				sortOrder: number
 			}
-			interface ExerciseWithOrder extends Exercise {
+			interface ExerciseWithOrder extends ExerciseInfo {
 				sortOrder: number
 			}
 
@@ -341,6 +375,17 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						throw errors.new("invalid lesson component metadata")
 					}
 
+					const questionCount = questionsMap.get(resource.sourcedId)
+					if (questionCount === undefined) {
+						logger.error("CRITICAL: exercise questions not found in map", {
+							exerciseId: resource.sourcedId,
+							availableIds: Array.from(questionsMap.keys())
+						})
+						throw errors.new("exercise questions missing from fetch results")
+					}
+					const totalQuestions = questionCount
+					const questionsToPass = totalQuestions > 0 ? totalQuestions - 1 : 0
+
 					exercises.push({
 						type: "Exercise",
 						id: resource.sourcedId,
@@ -348,7 +393,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/e/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
-						questions: [], // Questions are not needed on course page
+						totalQuestions,
+						questionsToPass,
 						sortOrder: componentResource.sortOrder
 					})
 				}
