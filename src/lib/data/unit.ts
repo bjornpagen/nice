@@ -11,11 +11,14 @@ export async function fetchUnitPageData(params: {
 }): Promise<UnitPageData> {
 	"use cache"
 	cacheLife("max")
-	logger.debug("unit page: fetching unit data by calling parent fetcher", { params })
+	logger.debug("unit page: fetching unit data", { params })
 
-	// 1. Call the top-level course page data fetcher to get all data for the course.
-	// Next.js caching will deduplicate this call if it's made elsewhere in the same request.
-	const coursePageData = await fetchCoursePageData(params)
+	// 1. Call the course page data fetcher with ONLY subject and course params
+	// This ensures the cache key is consistent across all units in the same course
+	const coursePageData = await fetchCoursePageData({
+		subject: params.subject,
+		course: params.course
+	})
 
 	// 2. Find the specific unit within the comprehensive course data.
 	const currentUnit = coursePageData.course.units.find((u) => u.slug === params.unit)
@@ -28,8 +31,7 @@ export async function fetchUnitPageData(params: {
 		notFound()
 	}
 
-	// 3. Assemble and return the required data structure for the unit page.
-	// This structure is identical to before, but the data is now derived, not re-fetched.
+	// 3. Return the unit page data
 	return {
 		params,
 		course: coursePageData.course,
