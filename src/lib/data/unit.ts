@@ -21,6 +21,7 @@ export async function fetchUnitPageData(params: {
 	course: string
 	unit: string
 }): Promise<UnitPageData> {
+	"use cache"
 	logger.debug("unit page: fetching unit data", { params })
 
 	// First, find the course by its khanSlug

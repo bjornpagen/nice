@@ -8,6 +8,7 @@ import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/typ
 import { extractYouTubeId } from "./utils"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
+	"use cache"
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.article, "qti"))
 	if (resourceResult.error) {
@@ -47,6 +48,7 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 }
 
 export async function fetchExercisePageData(params: { exercise: string }): Promise<ExercisePageData> {
+	"use cache"
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.exercise, "qti"))
 	if (resourceResult.error) {
@@ -101,6 +103,7 @@ export async function fetchExercisePageData(params: { exercise: string }): Promi
 }
 
 export async function fetchVideoPageData(params: { video: string }): Promise<VideoPageData> {
+	"use cache"
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.video, "video"))
 	if (resourceResult.error) {

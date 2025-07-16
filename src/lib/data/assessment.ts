@@ -20,6 +20,7 @@ import type {
 import { fetchCoursePageData } from "./course"
 
 export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizPageData> {
+	"use cache"
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.quiz, "qti", "quiz"))
 	if (resourceResult.error) {
@@ -82,6 +83,7 @@ export async function fetchQuizPageData(params: { quiz: string }): Promise<QuizP
 }
 
 export async function fetchUnitTestPageData(params: { test: string }): Promise<UnitTestPageData> {
+	"use cache"
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.test, "qti", "unittest"))
 	if (resourceResult.error) {
@@ -151,6 +153,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	course: string
 	subject: string
 }): Promise<CourseChallengePageData> {
+	"use cache"
 	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
 	if (coursesResult.error) {
 		logger.error("failed to fetch course by slug", { error: coursesResult.error, slug: params.course })
@@ -220,6 +223,7 @@ export async function fetchCourseChallengePage_LayoutData(params: {
 	course: string
 	subject: string
 }): Promise<CourseChallengeLayoutData> {
+	"use cache"
 	// Reuse the main course page data fetcher to get all necessary context
 	const coursePageData = await fetchCoursePageData({
 		subject: params.subject,
@@ -241,6 +245,7 @@ export async function fetchQuizRedirectPath(params: {
 	unit: string
 	quiz: string
 }): Promise<string> {
+	"use cache"
 	const decodedUnit = decodeURIComponent(params.unit)
 
 	// Look up the unit by its slug to get its sourcedId
@@ -302,6 +307,7 @@ export async function fetchTestRedirectPath(params: {
 	unit: string
 	test: string
 }): Promise<string> {
+	"use cache"
 	const decodedUnit = decodeURIComponent(params.unit)
 
 	// Look up the unit by its slug to get its sourcedId

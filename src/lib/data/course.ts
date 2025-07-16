@@ -15,6 +15,7 @@ import type { CoursePageData } from "@/lib/types/page"
 import type { Course, Lesson, Unit, UnitChild } from "@/lib/types/structure"
 
 export async function fetchCoursePageData(params: { subject: string; course: string }): Promise<CoursePageData> {
+	"use cache"
 	// First, find the course by its khanSlug since the URL param is a slug, not a Khan ID
 	logger.debug("course page: looking up course by slug", { slug: params.course })
 

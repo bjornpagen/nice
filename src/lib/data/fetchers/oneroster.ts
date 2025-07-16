@@ -130,12 +130,10 @@ export async function getClassesForSchool(schoolSourcedId: string) {
 }
 
 export async function getEnrollmentsForUser(userSourcedId: string) {
-	"use cache"
 	return oneroster.getEnrollmentsForUser(userSourcedId)
 }
 
 export async function getActiveEnrollmentsForUser(userSourcedId: string) {
-	"use cache"
 	// User data is more volatile, so we'll use a shorter default profile.
 	return oneroster.getAllEnrollments({ filter: `user.sourcedId='${userSourcedId}' AND status='active'` })
 }

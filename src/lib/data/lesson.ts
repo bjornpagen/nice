@@ -21,6 +21,7 @@ export async function fetchLessonLayoutData(params: {
 	unit: string
 	lesson: string
 }): Promise<LessonLayoutData> {
+	"use cache"
 	// Waterfall lookup
 	const courseResult = await errors.try(getAllCoursesBySlug(params.course))
 	if (courseResult.error) {
