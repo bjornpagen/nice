@@ -1,4 +1,3 @@
-import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import { AlertCircleIcon } from "lucide-react"
@@ -9,15 +8,10 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { type Course, getCourseBlob } from "@/lib/v2/types"
 
 export default async function OverviewCoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
-	const coursePromise = params
-		.then(({ subject, course }) => {
-			logger.debug("initializing course page", { subject, course })
-			return getCourseData(subject, course)
-		})
-		.catch((error) => {
-			logger.error("error retrieving course data", { error })
-			throw errors.wrap(error, "error retrieving course data")
-		})
+	const coursePromise = params.then(({ subject, course }) => {
+		logger.debug("initializing course page", { subject, course })
+		return getCourseData(subject, course)
+	})
 
 	return (
 		<div id="overview-course-page">

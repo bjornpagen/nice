@@ -1,4 +1,3 @@
-import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import { AlertCircleIcon } from "lucide-react"
@@ -17,15 +16,10 @@ export default async function PracticeCourseLayout({
 	children: React.ReactNode
 	params: Promise<{ subject: string; course: string }>
 }) {
-	const coursePromise = params
-		.then(({ subject, course }) => {
-			logger.debug("initializing course layout", { subject, course })
-			return getCourseSidebarData(subject, course)
-		})
-		.catch((error) => {
-			logger.error("error retrieving course sidebar data", { error })
-			throw errors.wrap(error, "error retrieving course sidebar data")
-		})
+	const coursePromise = params.then(({ subject, course }) => {
+		logger.debug("initializing course layout", { subject, course })
+		return getCourseSidebarData(subject, course)
+	})
 
 	return (
 		<div id="practice-course-layout">

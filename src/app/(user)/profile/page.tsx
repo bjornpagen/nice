@@ -1,5 +1,5 @@
-import { RedirectType, redirect } from "next/navigation"
+import { redirect } from "next/navigation"
 
-export default async function ProfilePage() {
-	redirect("/profile/me", RedirectType.push)
+export default function ProfilePage() {
+	redirect("/profile/me/courses")
 }
