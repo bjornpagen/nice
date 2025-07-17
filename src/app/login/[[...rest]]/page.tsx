@@ -23,7 +23,7 @@ export default function Home() {
 		signIn?.authenticateWithRedirect({
 			strategy: "oauth_custom_timeback",
 			redirectUrl: "/sso-callback",
-			redirectUrlComplete: "/"
+			redirectUrlComplete: "/profile/me/courses"
 		})
 	}
 
