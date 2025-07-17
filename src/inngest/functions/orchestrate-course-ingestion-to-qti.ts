@@ -52,7 +52,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		const unitIds = units.map((u) => u.id)
 
 		// Fetch all content entities in parallel for efficiency.
-		const [allQuestions, allArticles, allAssessments, allExercises] = await Promise.all([
+		const [allQuestions, allArticles, unitAssessments, courseAssessments, allExercises] = await Promise.all([
 			db
 				.select({
 					id: schema.niceQuestions.id,
@@ -96,7 +96,25 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					schema.niceAssessmentExercises,
 					eq(schema.niceAssessments.id, schema.niceAssessmentExercises.assessmentId)
 				)
-				.where(inArray(schema.niceAssessments.parentId, unitIds)),
+				.where(and(inArray(schema.niceAssessments.parentId, unitIds), eq(schema.niceAssessments.parentType, "Unit"))),
+
+			// ADDED: Fetch course-level assessments as well
+			db
+				.select({
+					assessmentId: schema.niceAssessments.id,
+					assessmentTitle: schema.niceAssessments.title,
+					assessmentType: schema.niceAssessments.type,
+					assessmentPath: schema.niceAssessments.path,
+					assessmentSlug: schema.niceAssessments.slug,
+					assessmentDescription: schema.niceAssessments.description,
+					exerciseId: schema.niceAssessmentExercises.exerciseId
+				})
+				.from(schema.niceAssessments)
+				.innerJoin(
+					schema.niceAssessmentExercises,
+					eq(schema.niceAssessments.id, schema.niceAssessmentExercises.assessmentId)
+				)
+				.where(and(eq(schema.niceAssessments.parentId, courseId), eq(schema.niceAssessments.parentType, "Course"))),
 
 			db.query.niceExercises.findMany({
 				where: inArray(
@@ -112,12 +130,15 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			})
 		])
 
+		// ADDED: Combine unit and course assessments into a single list
+		const allAssessments = [...unitAssessments, ...courseAssessments]
+
 		// CRITICAL VALIDATION: Ensure data integrity before proceeding
 		logger.info("validating data integrity", {
 			questionsCount: allQuestions.length,
 			articlesCount: allArticles.length,
 			exercisesCount: allExercises.length,
-			assessmentsCount: allAssessments.length
+			assessmentsCount: allAssessments.length // Use combined count
 		})
 
 		// Validate ALL questions have XML

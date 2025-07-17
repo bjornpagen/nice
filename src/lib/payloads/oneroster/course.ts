@@ -146,6 +146,20 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			})
 		: []
 
+	// ADDED: Fetch course-level assessments (Course Challenges)
+	const courseAssessments = await db
+		.select({
+			id: schema.niceAssessments.id,
+			title: schema.niceAssessments.title,
+			slug: schema.niceAssessments.slug,
+			path: schema.niceAssessments.path,
+			ordering: schema.niceAssessments.ordering,
+			description: schema.niceAssessments.description,
+			type: schema.niceAssessments.type
+		})
+		.from(schema.niceAssessments)
+		.where(and(eq(schema.niceAssessments.parentId, course.id), eq(schema.niceAssessments.parentType, "Course")))
+
 	const lessonContents = lessonIds.length
 		? await db.query.niceLessonContents.findMany({ where: inArray(schema.niceLessonContents.lessonId, lessonIds) })
 		: []
@@ -381,6 +395,71 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				status: "active",
 				title: assessment.title,
 				courseComponent: { sourcedId: `nice:${unit.id}`, type: "courseComponent" },
+				resource: { sourcedId: assessmentSourcedId, type: "resource" },
+				sortOrder: assessment.ordering
+			})
+		}
+	}
+
+	// ADDED: Logic to handle course-level assessments (Course Challenges)
+	if (courseAssessments.length > 0) {
+		const DUMMY_COMPONENT_TITLE = "Course Challenge"
+
+		// Find the highest unit ordering to place this component last.
+		const maxUnitOrder = units.reduce((max, u) => Math.max(max, u.ordering), -1)
+
+		onerosterPayload.courseComponents.push({
+			sourcedId: `nice:${course.id}`,
+			status: "active",
+			title: DUMMY_COMPONENT_TITLE,
+			course: { sourcedId: `nice:${course.id}`, type: "course" },
+			sortOrder: maxUnitOrder + 1, // Place it after all units
+			metadata: {
+				khanId: `${course.id}-challenges`,
+				khanSlug: "course-challenge",
+				khanTitle: DUMMY_COMPONENT_TITLE,
+				khanDescription: "A collection of course-level challenges.",
+				path: `${course.path}/challenge` // A conceptual path
+			}
+		})
+
+		// Now, create resources and link them to this dummy component
+		for (const assessment of courseAssessments.sort((a, b) => a.ordering - b.ordering)) {
+			const assessmentSourcedId = `nice:${assessment.id}`
+			if (!resourceSet.has(assessmentSourcedId)) {
+				onerosterPayload.resources.push({
+					sourcedId: assessmentSourcedId,
+					status: "active",
+					title: assessment.title,
+					vendorResourceId: `nice-academy-${assessment.id}`,
+					vendorId: "superbuilders",
+					applicationId: "nice",
+					roles: ["primary"],
+					importance: "primary",
+					metadata: {
+						type: "qti",
+						subType: "qti-test",
+						version: "3.0",
+						questionType: "custom",
+						language: "en-US",
+						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice:${assessment.id}`,
+						// Khan-specific data
+						khanId: assessment.id,
+						khanSlug: assessment.slug,
+						khanTitle: assessment.title,
+						khanDescription: assessment.description,
+						path: assessment.path,
+						khanLessonType: assessment.type.toLowerCase()
+					}
+				})
+				resourceSet.add(assessmentSourcedId)
+			}
+
+			onerosterPayload.componentResources.push({
+				sourcedId: `nice:${course.id}:${assessment.id}`,
+				status: "active",
+				title: assessment.title,
+				courseComponent: { sourcedId: `nice:${course.id}`, type: "courseComponent" },
 				resource: { sourcedId: assessmentSourcedId, type: "resource" },
 				sortOrder: assessment.ordering
 			})

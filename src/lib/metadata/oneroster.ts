@@ -48,7 +48,7 @@ const VideoResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 const QtiResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 	type: z.literal("qti"),
 	subType: z.enum(["qti-stimulus", "qti-test"]),
-	khanLessonType: z.enum(["unittest", "quiz"]).optional(),
+	khanLessonType: z.enum(["unittest", "quiz", "coursechallenge"]).optional(),
 	version: z.string(),
 	language: z.string(),
 	url: z.string().url(),
