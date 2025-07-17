@@ -20,7 +20,7 @@ export function LessonSidebar({
 	setSelectedLessonId
 }: {
 	subject: string
-	course: Pick<Course, "title" | "path">
+	course: Pick<Course, "id" | "title" | "path">
 	unit: Pick<Unit, "title" | "path" | "children" | "ordering">
 	lesson: Pick<Lesson, "title" | "path" | "children">
 	isCollapsed: boolean
@@ -35,9 +35,7 @@ export function LessonSidebar({
 		const fetchProgress = async () => {
 			const userSourcedId = user?.publicMetadata?.sourceId
 			if (typeof userSourcedId === "string") {
-				// Extract course ID from the path (assumes path like /subject/course/unit/lesson)
-				const pathParts = course.path.split("/")
-				const courseId = pathParts[2] || "" // Assuming course is the second segment after subject
+				const courseId = course.id
 
 				const progress = await getUserUnitProgress(userSourcedId, courseId)
 				setProgressMap(progress)
@@ -45,7 +43,7 @@ export function LessonSidebar({
 		}
 
 		void fetchProgress()
-	}, [user, course.path])
+	}, [user, course.id])
 
 	const toggleSidebar = () => {
 		setIsCollapsed(!isCollapsed)

@@ -37,7 +37,7 @@ export async function fetchLessonLayoutData(params: {
 	// 3. Assemble and return the required data structure for the lesson layout.
 	return {
 		subject: params.subject,
-		courseData: { title: unitPageData.course.title, path: unitPageData.course.path },
+		courseData: { id: unitPageData.course.id, title: unitPageData.course.title, path: unitPageData.course.path },
 		unitData: unitPageData.unit,
 		lessonData: currentLesson
 	}

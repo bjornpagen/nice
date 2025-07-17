@@ -36,9 +36,9 @@ export async function trackArticleView(userId: string, articleSourcedId: string)
 	const result = await errors.try(oneroster.putResult(resultSourcedId, resultPayload))
 	if (result.error) {
 		logger.error("failed to track article view", { userId, articleSourcedId, error: result.error })
-		// We do not re-throw the error, as this is a non-critical background task.
-		// The user's viewing experience should not be interrupted if tracking fails.
-		return
+		// This is a non-critical background task. Re-throw the error to allow the
+		// client to decide how to handle it, but it shouldn't block the UI.
+		throw errors.wrap(result.error, "track article view")
 	}
 
 	logger.info("successfully tracked article view", { userId, articleSourcedId, resultSourcedId })
@@ -103,7 +103,9 @@ export async function updateVideoProgress(
 			videoId,
 			error: result.error
 		})
-		return
+		// This is a non-critical background task. Re-throw the error to allow the
+		// client to decide how to handle it, but it shouldn't block the UI.
+		throw errors.wrap(result.error, "update video progress")
 	}
 
 	logger.info("successfully updated video progress", {

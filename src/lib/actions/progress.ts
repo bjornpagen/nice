@@ -27,8 +27,7 @@ export async function getUserUnitProgress(userId: string, courseSourcedId: strin
 
 	if (resultsResponse.error) {
 		logger.error("failed to fetch user progress", { userId, error: resultsResponse.error })
-		// Return empty map on error - don't disrupt the UI
-		return progressMap
+		throw errors.wrap(resultsResponse.error, "fetch user progress")
 	}
 
 	// Process results to build the progress map

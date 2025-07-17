@@ -23,7 +23,7 @@ export interface UnitPageData {
 // Data for the /.../[lesson] layout
 export interface LessonLayoutData {
 	subject: string
-	courseData: Pick<Course, "title" | "path">
+	courseData: Pick<Course, "id" | "title" | "path">
 	unitData: Unit // All data for the current unit, including all its lessons
 	lessonData: Lesson // The specific lesson being viewed
 }
