@@ -9,6 +9,13 @@ const CreateItemInputSchema = z.object({
 	metadata: z.record(z.string(), z.any()).optional()
 })
 
+// Specific GUID Reference Schemas for type safety
+const CourseRefSchema = z.object({ sourcedId: z.string(), type: z.literal("course") })
+const ComponentRefSchema = z.object({ sourcedId: z.string(), type: z.literal("courseComponent") })
+const ResourceRefSchema = z.object({ sourcedId: z.string(), type: z.literal("resource") })
+const OrgRefSchema = z.object({ sourcedId: z.string(), type: z.literal("org") })
+const AcademicSessionRefSchema = z.object({ sourcedId: z.string(), type: z.literal("term") })
+
 const events = {
 	"nice/hello.world": {
 		data: z.object({
@@ -94,7 +101,7 @@ const events = {
 					sourcedId: z.string(),
 					status: z.string(),
 					title: z.string(),
-					format: z.string(), // ✅ ADDED: This field is required by the API
+					format: z.string().optional(), // ✅ CORRECTED: Made optional to match payload reality
 					vendorResourceId: z.string(),
 					vendorId: z.string().nullable(),
 					applicationId: z.string().nullable(),
@@ -113,14 +120,8 @@ const events = {
 				status: z.string(),
 				title: z.string(),
 				courseCode: z.string().optional().nullable(),
-				org: z.object({
-					sourcedId: z.string(),
-					type: z.enum(["course", "academicSession", "org", "courseComponent", "resource", "schoolYear"])
-				}),
-				academicSession: z.object({
-					sourcedId: z.string(),
-					type: z.enum(["course", "academicSession", "org", "courseComponent", "resource", "schoolYear"])
-				}),
+				org: OrgRefSchema,
+				academicSession: AcademicSessionRefSchema,
 				subjects: z.array(z.string()).optional().nullable(),
 				metadata: z.record(z.string(), z.any()).optional()
 			})
@@ -134,17 +135,8 @@ const events = {
 					sourcedId: z.string(),
 					status: z.string(),
 					title: z.string(),
-					course: z.object({
-						sourcedId: z.string(),
-						type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
-					}),
-					parent: z
-						.object({
-							sourcedId: z.string(),
-							type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
-						})
-						.optional()
-						.nullable(),
+					course: CourseRefSchema,
+					parent: ComponentRefSchema.optional().nullable(),
 					sortOrder: z.number(),
 					metadata: z.record(z.string(), z.any()).optional()
 				})
@@ -153,21 +145,26 @@ const events = {
 	},
 	"oneroster/component-resources.ingest": {
 		data: z.object({
-			// Define a schema for component resources
 			componentResources: z.array(
 				z.object({
 					sourcedId: z.string(),
 					status: z.string(),
 					title: z.string(),
-					courseComponent: z.object({
-						sourcedId: z.string(),
-						type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
-					}),
-					resource: z.object({
-						sourcedId: z.string(),
-						type: z.enum(["course", "academicSession", "org", "courseComponent", "resource"])
-					}),
+					courseComponent: ComponentRefSchema,
+					resource: ResourceRefSchema,
 					sortOrder: z.number()
+				})
+			)
+		})
+	},
+	"oneroster/line-items.create": {
+		data: z.object({
+			componentResources: z.array(
+				z.object({
+					sourcedId: z.string(),
+					title: z.string(),
+					resource: ResourceRefSchema
+					// Other fields from the full componentResource payload are available but not strictly needed by the target function.
 				})
 			)
 		})
@@ -179,69 +176,11 @@ const events = {
 				status: z.string(),
 				title: z.string(),
 				classType: z.enum(["homeroom", "scheduled"]),
-				course: z.object({
-					sourcedId: z.string(),
-					type: z.enum([
-						"course",
-						"academicSession",
-						"org",
-						"courseComponent",
-						"resource",
-						"class",
-						"user",
-						"term",
-						"schoolYear"
-					])
-				}),
+				course: CourseRefSchema,
 				// The API spec uses 'org' for the school reference in the POST body
-				school: z
-					.object({
-						sourcedId: z.string(),
-						type: z.enum([
-							"course",
-							"academicSession",
-							"org",
-							"courseComponent",
-							"resource",
-							"class",
-							"user",
-							"term",
-							"schoolYear"
-						])
-					})
-					.optional(), // Make optional as it's passed as 'org'
-				org: z
-					.object({
-						sourcedId: z.string(),
-						type: z.enum([
-							"course",
-							"academicSession",
-							"org",
-							"courseComponent",
-							"resource",
-							"class",
-							"user",
-							"term",
-							"schoolYear"
-						])
-					})
-					.optional(), // 'org' is used for the school
-				terms: z.array(
-					z.object({
-						sourcedId: z.string(),
-						type: z.enum([
-							"course",
-							"academicSession",
-							"org",
-							"courseComponent",
-							"resource",
-							"class",
-							"user",
-							"term",
-							"schoolYear"
-						])
-					})
-				)
+				school: OrgRefSchema.optional(), // Make optional as it's passed as 'org'
+				org: OrgRefSchema.optional(), // 'org' is used for the school
+				terms: z.array(AcademicSessionRefSchema)
 			})
 		})
 	}

@@ -1,6 +1,7 @@
 import { serve } from "inngest/next"
 import { inngest } from "@/inngest/client"
 import { helloWorld } from "@/inngest/functions/hello"
+import { createAssessmentLineItems } from "@/inngest/functions/oneroster/create-assessment-line-items"
 // Import OneRoster workers
 import { generatePayloadForCourse as generateOnerosterPayloadForCourse } from "@/inngest/functions/oneroster/generate-payload-for-course"
 import { ingestClass } from "@/inngest/functions/oneroster/ingest-class"
@@ -39,6 +40,7 @@ export const { GET, POST, PUT } = serve({
 		ingestCourse,
 		ingestCourseComponents,
 		ingestResources,
+		createAssessmentLineItems,
 		// QTI Functions
 		convertPerseusArticleToQtiStimulus,
 		convertPerseusQuestionToQtiItem,

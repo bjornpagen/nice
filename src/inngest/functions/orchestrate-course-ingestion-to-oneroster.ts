@@ -2,6 +2,7 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
+import { createAssessmentLineItems } from "./oneroster/create-assessment-line-items"
 import { generatePayloadForCourse } from "./oneroster/generate-payload-for-course"
 import { ingestClass } from "./oneroster/ingest-class"
 import { ingestComponentResources } from "./oneroster/ingest-component-resources"
@@ -95,7 +96,19 @@ export const orchestrateCourseIngestionToOneroster = inngest.createFunction(
 			})
 		}
 
-		// ADDED: Step 6: FINAL step. Ingest the class object for the course.
+		// Step 6: Create AssessmentLineItems AFTER component resources exist
+		if (payload.componentResources.length > 0) {
+			await step.invoke("invoke-create-assessment-line-items", {
+				function: createAssessmentLineItems,
+				data: { componentResources: payload.componentResources }
+			})
+			logger.info("completed assessment line item creation", {
+				courseId,
+				count: payload.componentResources.length
+			})
+		}
+
+		// ADDED: Step 7: FINAL step. Ingest the class object for the course.
 		// This runs only after the course itself has been ingested.
 		await step.invoke("invoke-ingest-class", {
 			function: ingestClass,

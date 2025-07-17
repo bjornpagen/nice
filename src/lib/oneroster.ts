@@ -37,7 +37,19 @@ type PaginatedFetchOptions<T> = QueryOptions & {
 const GUIDRefReadSchema = z.object({
 	sourcedId: z.string(),
 	type: z
-		.enum(["course", "academicSession", "org", "courseComponent", "resource", "class", "user", "term", "schoolYear"])
+		.enum([
+			"course",
+			"academicSession",
+			"org",
+			"courseComponent",
+			"resource",
+			"class",
+			"user",
+			"term",
+			"schoolYear",
+			"componentResource",
+			"category"
+		])
 		.optional()
 })
 
@@ -53,7 +65,9 @@ const GUIDRefWriteSchema = z.object({
 		"class",
 		"user",
 		"term",
-		"schoolYear"
+		"schoolYear",
+		"componentResource",
+		"category"
 	])
 })
 
@@ -303,6 +317,30 @@ const CreateEnrollmentInputSchema = z.object({
 	primary: z.boolean().optional()
 })
 export type CreateEnrollmentInput = z.infer<typeof CreateEnrollmentInputSchema>
+
+// --- NEW: Schemas for AssessmentLineItem (Gradebook) ---
+const AssessmentLineItemSchema = z.object({
+	sourcedId: z.string(),
+	status: z.string().optional(),
+	title: z.string(),
+	category: GUIDRefReadSchema.optional(), // Made optional - API may not return it
+	componentResource: GUIDRefReadSchema.optional(),
+	description: z.string().optional(),
+	resultValueMin: z.number().optional(),
+	resultValueMax: z.number().optional()
+})
+export type AssessmentLineItem = z.infer<typeof AssessmentLineItemSchema>
+
+const CreateAssessmentLineItemInputSchema = z.object({
+	sourcedId: z.string(),
+	title: z.string(),
+	category: GUIDRefWriteSchema,
+	componentResource: GUIDRefWriteSchema.optional(),
+	description: z.string().optional(),
+	resultValueMin: z.number().optional(),
+	resultValueMax: z.number().optional()
+})
+export type CreateAssessmentLineItemInput = z.infer<typeof CreateAssessmentLineItemInputSchema>
 
 export class Client {
 	#accessToken: string | null = null
@@ -1248,5 +1286,63 @@ export class Client {
 		await this.#request(`/ims/oneroster/rostering/v1p2/users/${sourcedId}`, { method: "DELETE" }, z.unknown())
 
 		logger.info("oneroster: successfully deleted user", { sourcedId })
+	}
+
+	// --- NEW METHODS FOR AssessmentLineItem ---
+
+	/**
+	 * Creates or updates an Assessment Line Item. The sourcedId for the record is supplied
+	 * by the requesting system, making this operation idempotent.
+	 * @param {string} sourcedId - The unique identifier for the assessment line item.
+	 * @param {object} payload - The assessment line item data.
+	 * @returns {Promise<AssessmentLineItem>} The created or updated assessment line item object.
+	 */
+	async putAssessmentLineItem(
+		sourcedId: string,
+		payload: { assessmentLineItem: CreateAssessmentLineItemInput }
+	): Promise<AssessmentLineItem> {
+		logger.info("oneroster: putting assessment line item", { sourcedId })
+
+		const validation = z.object({ assessmentLineItem: CreateAssessmentLineItemInputSchema }).safeParse(payload)
+		if (!validation.success) {
+			logger.error("invalid input for putAssessmentLineItem", { error: validation.error })
+			throw errors.wrap(validation.error, "putAssessmentLineItem input validation")
+		}
+
+		const response = await this.#request(
+			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+			{
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(payload)
+			},
+			// The API returns the full object on success.
+			z.object({ assessmentLineItem: AssessmentLineItemSchema })
+		)
+
+		if (!response?.assessmentLineItem) {
+			logger.error("oneroster: putAssessmentLineItem did not return the expected object")
+			throw errors.new("invalid response from putAssessmentLineItem")
+		}
+
+		return response.assessmentLineItem
+	}
+
+	/**
+	 * Retrieves a specific Assessment Line Item by its identifier.
+	 * @param {string} sourcedId - The unique identifier of the assessment line item.
+	 * @returns {Promise<AssessmentLineItem | null>} The assessment line item object, or null if not found.
+	 */
+	async getAssessmentLineItem(sourcedId: string): Promise<AssessmentLineItem | null> {
+		logger.info("oneroster: getting assessment line item", { sourcedId })
+
+		const response = await this.#request(
+			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+			{ method: "GET" },
+			z.object({ assessmentLineItem: AssessmentLineItemSchema.optional() }),
+			{ swallow404: true } // Return null if not found
+		)
+
+		return response?.assessmentLineItem ?? null
 	}
 }
