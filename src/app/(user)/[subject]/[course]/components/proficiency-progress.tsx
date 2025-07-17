@@ -1,10 +1,25 @@
-import { ProficiencyIcon, type proficiencyIconVariants } from "@/components/icons/proficiency"
+import Link from "next/link"
+import { ProficiencyIcon, type ProficiencyIconVariant } from "@/components/overview/proficiency-icons"
 import type { AssessmentProgress } from "@/lib/data/progress"
-import type { UnitChild } from "@/lib/types/domain"
+import type { LessonChild, UnitChild } from "@/lib/types/domain"
 
 type ProficiencyItem = {
 	id: string
-	variant: keyof typeof proficiencyIconVariants
+	variant: ProficiencyIconVariant
+	path: string
+	title: string
+	type: "Exercise" | "Quiz" | "UnitTest"
+}
+
+function getProficiencyText(resourceType: ProficiencyItem["type"]) {
+	switch (resourceType) {
+		case "Exercise":
+			return "Exercise"
+		case "Quiz":
+			return "Quiz"
+		case "UnitTest":
+			return "Unit Test"
+	}
 }
 
 export function ProficiencyProgress({
@@ -17,15 +32,17 @@ export function ProficiencyProgress({
 	const items: ProficiencyItem[] = unitChildren.flatMap((child): ProficiencyItem[] => {
 		if (child.type === "Lesson") {
 			return child.children
-				.filter((c) => c.type === "Exercise")
+				.filter((c): c is Extract<LessonChild, { type: "Exercise" }> => c.type === "Exercise")
 				.map((exercise) => {
 					const progress = progressMap.get(exercise.id)
-					// Use proficiency level if completed, otherwise not started
-					const variant = progress?.completed && progress?.proficiency ? progress.proficiency : "notStarted"
+					const variant = progress?.completed && progress?.proficiency ? progress.proficiency : "not-started"
 
 					return {
 						id: exercise.id,
-						variant
+						variant,
+						path: exercise.path,
+						title: exercise.title,
+						type: "Exercise"
 					}
 				})
 		}
@@ -34,7 +51,10 @@ export function ProficiencyProgress({
 			return [
 				{
 					id: child.id,
-					variant: "quiz"
+					variant: "quiz",
+					path: child.path,
+					title: child.title,
+					type: "Quiz"
 				}
 			]
 		}
@@ -43,7 +63,10 @@ export function ProficiencyProgress({
 			return [
 				{
 					id: child.id,
-					variant: "unitTest"
+					variant: "unit-test",
+					path: child.path,
+					title: child.title,
+					type: "UnitTest"
 				}
 			]
 		}
@@ -58,9 +81,14 @@ export function ProficiencyProgress({
 	return (
 		<div className="flex items-center gap-1 flex-wrap max-w-full overflow-hidden">
 			{items.map((item) => (
-				<div key={item.id} className="flex items-center gap-1 flex-shrink-0">
-					<ProficiencyIcon variant={item.variant} />
-				</div>
+				<Link key={item.id} href={item.path} className="inline-flex items-center flex-shrink-0">
+					<ProficiencyIcon variant={item.variant}>
+						<h2 className="text-md font-bold text-gray-800 capitalize">
+							{getProficiencyText(item.type)}: {item.title}
+						</h2>
+						<p className="text-sm text-gray-500">Click to start this activity.</p>
+					</ProficiencyIcon>
+				</Link>
 			))}
 		</div>
 	)

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ActivityIcon } from "@/components/icons/activity"
-import { ProficiencyIcon } from "@/components/icons/proficiency"
+import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { LessonChild } from "@/lib/types/domain"
 
@@ -43,7 +43,10 @@ export function LessonChildTab({ child, progress }: { child: LessonChild; progre
 	// For non-assessments (articles, videos), use regular activity icon
 	const icon =
 		showProficiencyIcon && progress?.proficiency ? (
-			<ProficiencyIcon variant={progress.proficiency} className="w-6 h-6" />
+			<ProficiencyIcon variant={progress.proficiency} size={6}>
+				<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {child.title}</h2>
+				<p className="text-sm text-gray-500">You've completed this exercise.</p>
+			</ProficiencyIcon>
 		) : (
 			<ActivityIcon
 				variant={variant}

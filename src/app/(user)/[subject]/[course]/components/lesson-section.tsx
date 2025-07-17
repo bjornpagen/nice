@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { ActivityIcon } from "@/components/icons/activity"
-import { ProficiencyIcon } from "@/components/icons/proficiency"
+import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
 import { Button } from "@/components/ui/button"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { Article, ExerciseInfo, Lesson, Video } from "@/lib/types/domain"
@@ -151,7 +151,12 @@ function LessonExercise({
 				</div>
 				<div className="w-px bg-gray-200 mx-2" /> {/* Full height vertical separator */}
 				<div className="w-16 flex items-center justify-center flex-shrink-0">
-					{progress.proficiency && <ProficiencyIcon variant={progress.proficiency} className="w-5 h-5" />}
+					{progress.proficiency && (
+						<ProficiencyIcon variant={progress.proficiency} size={5}>
+							<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {exercise.title}</h2>
+							<p className="text-sm text-gray-500">You've completed this exercise.</p>
+						</ProficiencyIcon>
+					)}
 				</div>
 			</div>
 		)
@@ -164,7 +169,10 @@ function LessonExercise({
 					<div className="flex items-center gap-2 mb-1">
 						{showProficiency && progress.proficiency && (
 							<div className="flex-shrink-0">
-								<ProficiencyIcon variant={progress.proficiency} className="w-5 h-5" />
+								<ProficiencyIcon variant={progress.proficiency} size={5}>
+									<h2 className="text-md font-bold text-gray-800 capitalize">Exercise: {exercise.title}</h2>
+									<p className="text-sm text-gray-500">You've completed this exercise.</p>
+								</ProficiencyIcon>
 							</div>
 						)}
 						<h2 className="text-sm font-semibold text-gray-900 min-w-0">{exercise.title}</h2>
