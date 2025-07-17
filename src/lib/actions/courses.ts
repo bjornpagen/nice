@@ -6,6 +6,7 @@ import * as logger from "@superbuilders/slog"
 import { revalidatePath } from "next/cache"
 import { oneroster } from "@/lib/clients"
 import { getAllCourses, getClassesForSchool, getEnrollmentsForUser } from "@/lib/data/fetchers/oneroster"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 
 export async function saveUserCourses(selectedClassIds: string[]) {
@@ -14,8 +15,28 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 		throw errors.new("user not authenticated")
 	}
 
-	// Use fallback to user.id if sourceId not in metadata (from upstream)
-	const sourceId = typeof user.publicMetadata.sourceId === "string" ? user.publicMetadata.sourceId : user.id
+	if (!user.publicMetadata) {
+		logger.error("CRITICAL: User public metadata missing", { userId: user.id })
+		throw errors.new("user public metadata missing")
+	}
+
+	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+	if (!metadataValidation.success) {
+		logger.error("CRITICAL: Invalid user metadata", {
+			userId: user.id,
+			error: metadataValidation.error
+		})
+		throw errors.wrap(metadataValidation.error, "user metadata validation failed")
+	}
+
+	const metadata = metadataValidation.data
+
+	// sourceId is required for enrollment operations
+	if (!metadata.sourceId) {
+		logger.error("CRITICAL: sourceId missing for user", { userId: user.id })
+		throw errors.new("sourceId required for enrollment operations")
+	}
+	const sourceId = metadata.sourceId
 
 	logger.info("syncing user enrollments", { userId: user.id, sourceId, selectedClassIds })
 
@@ -146,8 +167,15 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 		}
 		const courseMetadata = courseMetadataResult.data
 
-		// Extract subject from course subjects array or use a default
-		const subjectSlug = course.subjects?.[0]?.toLowerCase().replace(/ /g, "-") || "courses"
+		// Extract subject from course subjects array
+		if (!course.subjects || course.subjects.length === 0 || !course.subjects[0]) {
+			logger.error("CRITICAL: Course subject missing", {
+				courseId: course.sourcedId,
+				title: course.title
+			})
+			throw errors.new("course subject required for path construction")
+		}
+		const subjectSlug = course.subjects[0].toLowerCase().replace(/ /g, "-")
 		const constructedPath = `/${subjectSlug}/${courseMetadata.khanSlug}`
 
 		const courseForExplore: CourseForExplore = {

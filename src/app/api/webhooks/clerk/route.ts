@@ -6,6 +6,7 @@ import { headers } from "next/headers"
 import { Webhook } from "svix"
 import { env } from "@/env.js"
 import { oneroster } from "@/lib/clients"
+import type { ClerkUserPublicMetadata } from "@/lib/metadata/clerk"
 
 export async function POST(req: Request) {
 	logger.info("clerk webhook received")
@@ -142,10 +143,14 @@ export async function POST(req: Request) {
 		}
 		const nickname = emailParts[0]
 
-		const publicMetadata: Record<string, unknown> = {
+		const publicMetadata: ClerkUserPublicMetadata = {
 			nickname: nickname,
 			username: "",
-			bio: ""
+			bio: "",
+			streak: {
+				count: 0,
+				lastActivityDate: null
+			}
 		}
 
 		// Check if the user signed up via Timeback SSO

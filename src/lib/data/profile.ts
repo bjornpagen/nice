@@ -2,6 +2,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { getActiveEnrollmentsForUser, getClass, getCourse, getUnitsForCourses } from "@/lib/data/fetchers/oneroster"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { ComponentMetadataSchema, CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
 import type { ProfileCourse } from "@/lib/types/profile"
@@ -144,8 +145,28 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 		throw errors.new("user not authenticated")
 	}
 
-	// Use fallback to user.id if sourceId not in metadata (from upstream)
-	const sourceId = typeof user.publicMetadata.sourceId === "string" ? user.publicMetadata.sourceId : user.id
+	if (!user.publicMetadata) {
+		logger.error("CRITICAL: User public metadata missing", { userId: user.id })
+		throw errors.new("user public metadata missing")
+	}
+
+	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+	if (!metadataValidation.success) {
+		logger.error("CRITICAL: Invalid user metadata", {
+			userId: user.id,
+			error: metadataValidation.error
+		})
+		throw errors.wrap(metadataValidation.error, "user metadata validation failed")
+	}
+
+	const metadata = metadataValidation.data
+
+	// sourceId is required for fetching user enrolled courses
+	if (!metadata.sourceId) {
+		logger.error("CRITICAL: sourceId missing for user", { userId: user.id })
+		throw errors.new("sourceId required for fetching enrolled courses")
+	}
+	const sourceId = metadata.sourceId
 
 	// Import from actions since that's where the function is defined (from upstream)
 	const { getOneRosterCoursesForExplore } = await import("@/lib/actions/courses")

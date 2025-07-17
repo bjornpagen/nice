@@ -6,6 +6,7 @@ import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import { trackArticleView } from "@/lib/actions/tracking"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { ArticlePageData } from "@/lib/types/page"
 
 export function Content({ articlePromise }: { articlePromise: Promise<ArticlePageData> }) {
@@ -13,8 +14,16 @@ export function Content({ articlePromise }: { articlePromise: Promise<ArticlePag
 	const { user } = useUser()
 
 	React.useEffect(() => {
-		const userSourcedId = user?.publicMetadata?.sourceId
-		if (typeof userSourcedId === "string" && article.id) {
+		// Validate user metadata if user exists
+		let userSourcedId: string | undefined
+		if (user?.publicMetadata) {
+			const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+			if (metadataValidation.success) {
+				userSourcedId = metadataValidation.data.sourceId
+			}
+		}
+
+		if (userSourcedId && article.id) {
 			// Fire-and-forget the tracking action on component mount.
 			void trackArticleView(userSourcedId, article.id)
 		}

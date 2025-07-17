@@ -2,8 +2,10 @@
 
 import { auth, clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 
 // Validation schema for profile updates
 const updateProfileSchema = z.object({
@@ -26,17 +28,38 @@ export async function updateUserProfile(data: z.infer<typeof updateProfileSchema
 	}
 
 	const validatedData = validationResult.data
+	const clerk = await clerkClient()
+
+	// Fetch existing user to preserve other metadata like streak
+	const user = await clerk.users.getUser(userId)
+
+	if (!user.publicMetadata) {
+		logger.error("CRITICAL: User public metadata missing during profile update", { userId })
+		throw errors.new("user public metadata missing")
+	}
+
+	// Validate existing metadata structure
+	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+	if (!metadataValidation.success) {
+		logger.error("CRITICAL: Invalid user metadata during profile update", {
+			userId,
+			error: metadataValidation.error
+		})
+		throw errors.wrap(metadataValidation.error, "existing user metadata invalid")
+	}
+
+	const existingMetadata = metadataValidation.data
 
 	// Update the user's public metadata in Clerk
 	const metadata = {
 		publicMetadata: {
+			...existingMetadata,
 			nickname: validatedData.nickname,
 			username: validatedData.username,
 			bio: validatedData.bio
 		}
 	}
 
-	const clerk = await clerkClient()
 	await clerk.users.updateUserMetadata(userId, metadata)
 
 	// Revalidate the profile page to show updated data

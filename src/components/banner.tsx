@@ -1,6 +1,6 @@
 import { Flame } from "lucide-react"
 
-export function Banner() {
+export function Banner({ streakCount }: { streakCount: number }) {
 	return (
 		<section className="w-full bg-white border-b border-gray-200 py-2">
 			<div className="max-w-5xl mx-auto px-4">
@@ -15,7 +15,7 @@ export function Banner() {
 						<div className="flex items-center space-x-2">
 							<Flame className="h-6 w-6 text-gray-500 fill-gray-500" />
 							<div className="text-xs text-gray-600 flex items-center space-x-1">
-								<div className="font-bold text-2xl text-gray-800 pr-1">0</div>
+								<div className="font-bold text-2xl text-gray-800 pr-1">{streakCount}</div>
 								<div className="text-[10px] flex flex-col justify-center">
 									<span>week</span>
 									<span>streak</span>

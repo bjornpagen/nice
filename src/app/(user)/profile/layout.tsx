@@ -1,41 +1,38 @@
 "use client"
 
 import { useUser } from "@clerk/nextjs"
+import * as errors from "@superbuilders/errors"
 import type * as React from "react"
-import { z } from "zod"
 import { Banner } from "@/components/banner"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { ProfileBanner } from "./components/profile-banner"
 import { Sidebar } from "./components/sidebar"
-
-// Schema to safely parse Clerk's public metadata
-const UserPublicMetadataSchema = z.object({
-	nickname: z.string().optional().default("User"),
-	username: z.string().optional().default(""),
-	bio: z.string().optional().default("")
-})
 
 function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
 	const { user } = useUser()
 
 	if (!user) {
-		return null // Or a loading/error state
+		throw errors.new("user authentication required")
 	}
 
-	const validationResult = UserPublicMetadataSchema.safeParse(user.publicMetadata)
+	if (!user.publicMetadata) {
+		throw errors.new("user public metadata missing")
+	}
+
+	const validationResult = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
 	if (!validationResult.success) {
-		// Handle validation error, e.g., log it and use defaults
-		return null
+		throw errors.wrap(validationResult.error, "user metadata validation failed")
 	}
 
-	const { nickname, username, bio } = validationResult.data
+	const { nickname, username, bio, streak } = validationResult.data
 
 	return (
 		<div className="flex flex-col h-screen bg-white font-lato">
 			<div className="flex-shrink-0 z-50">
 				<Header nickname={nickname} />
-				<Banner />
+				<Banner streakCount={streak.count} />
 			</div>
 
 			{/* User Profile Banner */}

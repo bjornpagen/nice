@@ -3,10 +3,10 @@
 import { useUser } from "@clerk/nextjs"
 import Image from "next/image"
 import * as React from "react"
-import type { YouTubePlayer } from "react-youtube"
-import YouTube from "react-youtube"
+import YouTube, { type YouTubePlayer } from "react-youtube"
 import { Button } from "@/components/ui/button"
 import { updateVideoProgress } from "@/lib/actions/tracking"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { VideoPageData } from "@/lib/types/page"
 
 export function Content({ videoPromise }: { videoPromise: Promise<VideoPageData> }) {
@@ -19,14 +19,22 @@ export function Content({ videoPromise }: { videoPromise: Promise<VideoPageData>
 	React.useEffect(() => {
 		const intervalId = setInterval(() => {
 			const player = playerRef.current
-			const sourceId = user?.publicMetadata?.sourceId
+
+			// Validate user metadata if user exists
+			let sourceId: string | undefined
+			if (user?.publicMetadata) {
+				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+				if (metadataValidation.success) {
+					sourceId = metadataValidation.data.sourceId
+				}
+			}
 
 			// Ensure the player is ready, the user is identified, and the video is playing.
 			if (player && typeof player.getPlayerState === "function" && player.getPlayerState() === 1 && sourceId) {
 				const currentTime = player.getCurrentTime()
 				const duration = player.getDuration()
 
-				if (duration > 0 && typeof sourceId === "string") {
+				if (duration > 0) {
 					// Fire-and-forget the tracking action.
 					// We don't need to block the UI or show errors for this.
 					void updateVideoProgress(sourceId, video.id, currentTime, duration)

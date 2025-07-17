@@ -10,7 +10,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 			<div id="main-layout-content" className="flex-1 flex flex-col">
 				<React.Suspense>
 					<SignedIn>
-						<Banner />
+						<Banner streakCount={0} />
 					</SignedIn>
 				</React.Suspense>
 

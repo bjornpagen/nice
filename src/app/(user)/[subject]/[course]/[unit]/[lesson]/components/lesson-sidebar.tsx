@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import * as React from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/actions/progress"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { Course, Lesson, Unit } from "@/lib/types/structure"
 import { LessonBreadcrumbs } from "./lesson-breadcrumbs"
 import { LessonChildTab } from "./lesson-child-tab"
@@ -33,10 +34,17 @@ export function LessonSidebar({
 	// Fetch user progress
 	React.useEffect(() => {
 		const fetchProgress = async () => {
-			const userSourcedId = user?.publicMetadata?.sourceId
-			if (typeof userSourcedId === "string") {
-				const courseId = course.id
+			// Validate user metadata if user exists
+			let userSourcedId: string | undefined
+			if (user?.publicMetadata) {
+				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+				if (metadataValidation.success) {
+					userSourcedId = metadataValidation.data.sourceId
+				}
+			}
 
+			if (userSourcedId) {
+				const courseId = course.id
 				const progress = await getUserUnitProgress(userSourcedId, courseId)
 				setProgressMap(progress)
 			}
