@@ -266,13 +266,26 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					throw errors.new(`component resource not found for assessment ${resource.sourcedId}`)
 				}
 
+				// Determine the URL path segment for the assessment type
+				let pathSegment: string
+				switch (assessmentType) {
+					case "Quiz":
+						pathSegment = "quiz"
+						break
+					case "UnitTest":
+						pathSegment = "test"
+						break
+					default:
+						throw errors.new(`unknown assessment type: ${assessmentType}`)
+				}
+
 				const assessment: Quiz | UnitTest = {
 					id: resource.sourcedId,
 					type: assessmentType,
 					slug: resourceMetadata.khanSlug,
 					title: resource.title,
 					description: resourceMetadata.khanDescription,
-					path: `/${params.subject}/${params.course}/${unit.slug}/${assessmentType.toLowerCase()}/${resourceMetadata.khanSlug}`, // Construct path from slugs
+					path: `/${params.subject}/${params.course}/${unit.slug}/${pathSegment}/${resourceMetadata.khanSlug}`,
 					questions: [] // Questions are not needed on the course page
 				}
 				unitAssessments.push(assessment)

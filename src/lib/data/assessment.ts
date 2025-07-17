@@ -298,12 +298,32 @@ export async function fetchQuizRedirectPath(params: {
 		})
 		throw errors.wrap(unitResult.error, "failed to fetch unit by course and slug")
 	}
+
+	// Add debugging for multiple results
+	if (unitResult.data.length > 1) {
+		logger.warn("multiple units found with same slug", {
+			slug: decodedUnit,
+			courseSourcedId,
+			foundUnits: unitResult.data.map((u) => ({
+				sourcedId: u.sourcedId,
+				title: u.title,
+				courseSourcedId: u.course?.sourcedId
+			}))
+		})
+	}
+
 	const unit = unitResult.data[0]
 	if (!unit) {
 		// This will be caught by the page and result in a 404
 		throw errors.new("unit not found for redirect")
 	}
 	const unitSourcedId = unit.sourcedId
+
+	logger.debug("found unit for redirect", {
+		unitSourcedId,
+		unitTitle: unit.title,
+		unitSlug: decodedUnit
+	})
 
 	// Fetch all lessons for this unit to find quiz sibling
 	const lessonsResult = await errors.try(getCourseComponentsByParentId(unitSourcedId))
@@ -376,12 +396,32 @@ export async function fetchTestRedirectPath(params: {
 		})
 		throw errors.wrap(unitResult.error, "failed to fetch unit by course and slug")
 	}
+
+	// Add debugging for multiple results
+	if (unitResult.data.length > 1) {
+		logger.warn("multiple units found with same slug", {
+			slug: decodedUnit,
+			courseSourcedId,
+			foundUnits: unitResult.data.map((u) => ({
+				sourcedId: u.sourcedId,
+				title: u.title,
+				courseSourcedId: u.course?.sourcedId
+			}))
+		})
+	}
+
 	const unit = unitResult.data[0]
 	if (!unit) {
 		// This will be caught by the page and result in a 404
 		throw errors.new("unit not found for redirect")
 	}
 	const unitSourcedId = unit.sourcedId
+
+	logger.debug("found unit for redirect", {
+		unitSourcedId,
+		unitTitle: unit.title,
+		unitSlug: decodedUnit
+	})
 
 	// Fetch all lessons for this unit to find test sibling
 	const lessonsResult = await errors.try(getCourseComponentsByParentId(unitSourcedId))
