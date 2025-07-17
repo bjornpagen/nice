@@ -1345,4 +1345,55 @@ export class Client {
 
 		return response?.assessmentLineItem ?? null
 	}
+
+	/**
+	 * Retrieves all Assessment Line Items.
+	 * @param {QueryOptions} options - Optional query parameters for filtering, sorting, and pagination.
+	 * @returns {Promise<AssessmentLineItem[]>} Array of assessment line items.
+	 */
+	async getAllAssessmentLineItems(options?: QueryOptions): Promise<AssessmentLineItem[]> {
+		logger.info("oneroster: fetching ALL assessment line items", options)
+
+		const GetAssessmentLineItemsResponseSchema = z.object({
+			assessmentLineItems: z.array(AssessmentLineItemSchema)
+		})
+
+		const items = await this.#fetchPaginatedCollection<
+			z.infer<typeof GetAssessmentLineItemsResponseSchema>,
+			AssessmentLineItem
+		>({
+			endpoint: "/ims/oneroster/gradebook/v1p2/assessmentLineItems",
+			responseKey: "assessmentLineItems",
+			schema: GetAssessmentLineItemsResponseSchema,
+			...options
+		})
+
+		logger.info("oneroster: finished fetching all assessment line items", {
+			total: items.length,
+			...options
+		})
+
+		return items
+	}
+
+	/**
+	 * Deletes an Assessment Line Item by its identifier.
+	 * @param {string} sourcedId - The unique identifier of the assessment line item.
+	 * @returns {Promise<void>}
+	 */
+	async deleteAssessmentLineItem(sourcedId: string): Promise<void> {
+		logger.info("oneroster: deleting assessment line item", { sourcedId })
+
+		if (!sourcedId) {
+			throw errors.new("sourcedId cannot be empty")
+		}
+
+		await this.#request(
+			`/ims/oneroster/gradebook/v1p2/assessmentLineItems/${sourcedId}`,
+			{ method: "DELETE" },
+			z.unknown()
+		)
+
+		logger.info("oneroster: successfully deleted assessment line item", { sourcedId })
+	}
 }

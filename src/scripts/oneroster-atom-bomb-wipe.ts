@@ -9,7 +9,7 @@
  *   bun run src/scripts/oneroster-atom-bomb-wipe.ts <type> <prefix> --delete
  *
  * Types: resources, courses, courseComponents, componentResources,
- *        classes, users, enrollments, all
+ *        classes, users, enrollments, assessmentLineItems, all
  *
  * Examples:
  *   bun run src/scripts/oneroster-atom-bomb-wipe.ts courses "test-"
@@ -33,6 +33,7 @@ const EntityTypeSchema = z.enum([
 	"classes",
 	"users",
 	"enrollments",
+	"assessmentLineItems",
 	"all"
 ])
 type EntityType = z.infer<typeof EntityTypeSchema>
@@ -200,6 +201,23 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 			}))
 		},
 		delete: (id: string) => oneroster.deleteEnrollment(id)
+	},
+	assessmentLineItems: {
+		type: "assessmentLineItems",
+		name: "Assessment Line Items",
+		fetchAll: async (prefix: string) => {
+			const items = await oneroster.getAllAssessmentLineItems({
+				filter: createPrefixFilter(prefix),
+				sort: "sourcedId",
+				orderBy: "asc"
+			})
+			return items.map((ali) => ({
+				sourcedId: ali.sourcedId,
+				displayName: `${ali.sourcedId}: ${ali.title}`,
+				fullObject: ali
+			}))
+		},
+		delete: (id: string) => oneroster.deleteAssessmentLineItem(id)
 	}
 }
 
@@ -260,6 +278,7 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 			"componentResources", // Delete these first (leaf nodes)
 			"courseComponents",
 			"enrollments",
+			"assessmentLineItems", // Delete before classes
 			"classes",
 			"resources",
 			"courses",
@@ -345,7 +364,7 @@ async function main() {
 			"Usage: oneroster-atom-bomb-wipe <type> <prefix> [--delete]\n\n" +
 				"Types:\n" +
 				"  resources, courses, courseComponents, componentResources,\n" +
-				"  classes, users, enrollments, all\n"
+				"  classes, users, enrollments, assessmentLineItems, all\n"
 		)
 		process.exit(1)
 	}
