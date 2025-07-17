@@ -516,7 +516,80 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 	}
 
 	// Get course challenges
-	const challenges: CourseChallenge[] = [] // Fetch if necessary
+	let challenges: CourseChallenge[] = []
+
+	// Find the course challenge dummy component
+	const courseChallengeComponent = allComponents.find((component) => {
+		const metadataResult = ComponentMetadataSchema.safeParse(component.metadata)
+		return metadataResult.success && metadataResult.data.khanSlug === "course-challenge"
+	})
+
+	if (courseChallengeComponent) {
+		// Get all component resources for the course challenge component
+		const courseChallengeComponentResources = allComponentResources.filter(
+			(cr) => cr.courseComponent.sourcedId === courseChallengeComponent.sourcedId
+		)
+
+		// Process each resource
+		for (const cr of courseChallengeComponentResources) {
+			const resource = allResources.find((r) => r.sourcedId === cr.resource.sourcedId)
+			if (!resource) {
+				logger.error("resource not found for course challenge component resource", {
+					resourceSourcedId: cr.resource.sourcedId
+				})
+				continue
+			}
+
+			// Validate resource metadata
+			const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+			if (!resourceMetadataResult.success) {
+				logger.error("invalid resource metadata for course challenge", {
+					resourceSourcedId: resource.sourcedId,
+					error: resourceMetadataResult.error
+				})
+				continue
+			}
+			const resourceMetadata = resourceMetadataResult.data
+
+			// Check if this is a course challenge resource
+			if (
+				resourceMetadata.type === "qti" &&
+				resourceMetadata.subType === "qti-test" &&
+				resourceMetadata.khanLessonType === "coursechallenge"
+			) {
+				// The ResourceMetadataSchema transform drops the path field, but we need it
+				// Parse the raw metadata to get the path
+				const rawMetadata = resource.metadata
+				if (!rawMetadata || typeof rawMetadata !== "object" || !("path" in rawMetadata)) {
+					logger.error("course challenge missing path in metadata", {
+						resourceSourcedId: resource.sourcedId
+					})
+					continue
+				}
+
+				const challengePath = String(rawMetadata.path)
+
+				const challenge: CourseChallenge = {
+					id: resourceMetadata.khanId,
+					type: "CourseChallenge" as const,
+					title: resourceMetadata.khanTitle,
+					slug: resourceMetadata.khanSlug,
+					path: challengePath,
+					description: resourceMetadata.khanDescription,
+					questions: [] // Will be populated when the challenge is accessed
+				}
+				challenges.push(challenge)
+			}
+		}
+
+		// Sort challenges by component resource sortOrder
+		const sortedChallenges = challenges.map((challenge, index) => ({
+			challenge,
+			sortOrder: courseChallengeComponentResources[index]?.sortOrder ?? 0
+		}))
+		sortedChallenges.sort((a, b) => a.sortOrder - b.sortOrder)
+		challenges = sortedChallenges.map((item) => item.challenge)
+	}
 
 	// Construct the final Course object
 	const finalCourse: Course = {

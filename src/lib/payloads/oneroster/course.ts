@@ -418,8 +418,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				khanId: `${course.id}-challenges`,
 				khanSlug: "course-challenge",
 				khanTitle: DUMMY_COMPONENT_TITLE,
-				khanDescription: "A collection of course-level challenges.",
-				path: `${course.path}/challenge` // A conceptual path
+				khanDescription: "A collection of course-level challenges."
 			}
 		})
 
