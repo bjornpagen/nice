@@ -45,13 +45,16 @@ export async function trackArticleView(userId: string, articleSourcedId: string)
 }
 
 /**
- * Updates the video progress for a user.
- * This is a fire-and-forget action that tracks how much of a video has been watched.
+ * Updates the video progress for a user by creating or updating an AssessmentResult
+ * in the OneRoster gradebook.
  *
- * @param userSourceId - The OneRoster sourceId of the user
- * @param videoId - The ID of the video being tracked
- * @param currentTime - The current playback time in seconds
- * @param duration - The total duration of the video in seconds
+ * This is a fire-and-forget action that tracks how much of a video has been watched.
+ * It marks the video as "completed" once the user watches 95% or more of the content.
+ *
+ * @param userSourceId - The OneRoster sourcedId of the user.
+ * @param videoId - The sourcedId of the video resource.
+ * @param currentTime - The current playback time in seconds.
+ * @param duration - The total duration of the video in seconds.
  */
 export async function updateVideoProgress(
 	userSourceId: string,
@@ -59,34 +62,54 @@ export async function updateVideoProgress(
 	currentTime: number,
 	duration: number
 ): Promise<void> {
-	logger.debug("tracking video progress", {
-		userSourceId,
-		videoId,
-		currentTime,
-		duration,
-		percentComplete: Math.round((currentTime / duration) * 100)
-	})
-
-	// TODO: Implement OneRoster API call here
-	// For now, this is a placeholder that just logs the progress
-	// In the future, this will call the OneRoster API to store the progress
-
-	// Example of what the OneRoster integration might look like:
-	/*
-	const result = await errors.try(
-		oneroster.putResult({
-			student: userSourceId,
-			video: videoId,
-			currentTime,
-			duration,
-			percentComplete: Math.round((currentTime / duration) * 100)
-		})
-	)
-	if (result.error) {
-		logger.error("failed to update video progress", { error: result.error })
-		// We don't throw here because this is a fire-and-forget action
-		// We don't want to disrupt the user's video watching experience
+	if (duration <= 0) {
+		logger.warn("video progress tracking skipped", { videoId, reason: "invalid duration" })
 		return
 	}
-	*/
+
+	const percentComplete = Math.round((currentTime / duration) * 100)
+	logger.debug("tracking video progress", { userSourceId, videoId, percentComplete })
+
+	// Define the completion threshold.
+	const COMPLETION_THRESHOLD = 95
+	const isCompleted = percentComplete >= COMPLETION_THRESHOLD
+
+	// The score is a float from 0.0 to 1.0. Set to 1.0 upon completion.
+	const score = isCompleted ? 1.0 : Number.parseFloat((percentComplete / 100).toFixed(2))
+	// The status becomes 'fully graded' upon completion, which marks it as complete in the UI.
+	const scoreStatus = isCompleted ? ("fully graded" as const) : ("partially graded" as const)
+
+	// The sourcedId for the line item is the same as the video resource's sourcedId.
+	const lineItemSourcedId = videoId
+	// The result's sourcedId is deterministic to ensure idempotency.
+	const resultSourcedId = `result:${userSourceId}:${lineItemSourcedId}`
+
+	const resultPayload = {
+		result: {
+			assessmentLineItem: { sourcedId: lineItemSourcedId, type: "assessmentLineItem" as const },
+			student: { sourcedId: userSourceId, type: "user" as const },
+			scoreStatus,
+			scoreDate: new Date().toISOString(),
+			score
+		}
+	}
+
+	const result = await errors.try(oneroster.putResult(resultSourcedId, resultPayload))
+	if (result.error) {
+		// This is a non-critical background task. Log the error for observability
+		// but do not re-throw, as it should not interrupt the user's experience.
+		logger.error("failed to update video progress", {
+			userSourceId,
+			videoId,
+			error: result.error
+		})
+		return
+	}
+
+	logger.info("successfully updated video progress", {
+		userSourceId,
+		videoId,
+		score,
+		status: scoreStatus
+	})
 }
