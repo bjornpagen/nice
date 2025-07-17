@@ -1,11 +1,9 @@
 "use client"
 
-import { useUser } from "@clerk/nextjs"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import * as React from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { type AssessmentProgress, getUserUnitProgress } from "@/lib/actions/progress"
-import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+import type { AssessmentProgress } from "@/lib/data/progress"
 import type { Course, Lesson, Unit } from "@/lib/types/structure"
 import { LessonBreadcrumbs } from "./lesson-breadcrumbs"
 import { LessonChildTab } from "./lesson-child-tab"
@@ -18,7 +16,8 @@ export function LessonSidebar({
 	lesson,
 	isCollapsed,
 	setIsCollapsed,
-	setSelectedLessonId
+	setSelectedLessonId,
+	progressPromise
 }: {
 	subject: string
 	course: Pick<Course, "id" | "title" | "path">
@@ -27,31 +26,9 @@ export function LessonSidebar({
 	isCollapsed: boolean
 	setIsCollapsed: (collapsed: boolean) => void
 	setSelectedLessonId: (lessonId: string) => void
+	progressPromise: Promise<Map<string, AssessmentProgress>>
 }) {
-	const { user } = useUser()
-	const [progressMap, setProgressMap] = React.useState<Map<string, AssessmentProgress>>(new Map())
-
-	// Fetch user progress
-	React.useEffect(() => {
-		const fetchProgress = async () => {
-			// Validate user metadata if user exists
-			let userSourcedId: string | undefined
-			if (user?.publicMetadata) {
-				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-				if (metadataValidation.success) {
-					userSourcedId = metadataValidation.data.sourceId
-				}
-			}
-
-			if (userSourcedId) {
-				const courseId = course.id
-				const progress = await getUserUnitProgress(userSourcedId, courseId)
-				setProgressMap(progress)
-			}
-		}
-
-		void fetchProgress()
-	}, [user, course.id])
+	const progressMap = React.use(progressPromise)
 
 	const toggleSidebar = () => {
 		setIsCollapsed(!isCollapsed)

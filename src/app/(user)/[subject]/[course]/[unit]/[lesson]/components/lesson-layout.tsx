@@ -2,15 +2,18 @@
 
 import { usePathname } from "next/navigation"
 import * as React from "react"
+import type { AssessmentProgress } from "@/lib/data/progress"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { LessonNext } from "./lesson-next"
 import { LessonSidebar } from "./lesson-sidebar"
 
 export function LessonLayout({
 	dataPromise,
+	progressPromise,
 	children
 }: {
 	dataPromise: Promise<LessonLayoutData>
+	progressPromise: Promise<Map<string, AssessmentProgress>>
 	children: React.ReactNode
 }) {
 	const { subject, courseData, unitData, lessonData } = React.use(dataPromise)
@@ -35,7 +38,7 @@ export function LessonLayout({
 
 	return (
 		<div className="flex h-full">
-			{/* Sidebar - renders immediately, no suspense needed */}
+			{/* Sidebar - renders immediately, now gets progress as a promise */}
 			<LessonSidebar
 				subject={subject}
 				course={courseData}
@@ -44,6 +47,7 @@ export function LessonLayout({
 				isCollapsed={isCollapsed}
 				setIsCollapsed={setIsCollapsed}
 				setSelectedLessonId={setSelectedLessonId}
+				progressPromise={progressPromise}
 			/>
 
 			{/* Main area with flex column layout */}

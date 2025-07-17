@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ActivityIcon } from "@/components/icons/activity"
 import { ProficiencyIcon } from "@/components/icons/proficiency"
-import type { AssessmentProgress } from "@/lib/actions/progress"
+import type { AssessmentProgress } from "@/lib/data/progress"
 import type { LessonChild } from "@/lib/types/structure"
 
 function getVariant(child: Pick<LessonChild, "type">) {

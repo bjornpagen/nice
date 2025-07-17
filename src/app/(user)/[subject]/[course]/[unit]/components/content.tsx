@@ -1,10 +1,9 @@
 "use client"
 
-import { useUser } from "@clerk/nextjs"
 import { Info } from "lucide-react"
 import * as React from "react"
 import { Footer } from "@/components/footer"
-import { type AssessmentProgress, getUserUnitProgress } from "@/lib/actions/progress"
+import type { AssessmentProgress } from "@/lib/data/progress"
 import type { UnitPageData } from "@/lib/types/page"
 import type { UnitChild } from "@/lib/types/structure"
 import { CourseHeader } from "../../components/course-header"
@@ -16,24 +15,16 @@ import { Section } from "../../components/section"
 import { CourseSidebar } from "../../components/sidebar"
 import { UnitTestSection } from "../../components/unit-test-section"
 
-export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> }) {
-	// Consume the single, consolidated data promise.
+export function Content({
+	dataPromise,
+	progressPromise
+}: {
+	dataPromise: Promise<UnitPageData>
+	progressPromise: Promise<Map<string, AssessmentProgress>>
+}) {
+	// Consume the promises.
 	const { params, course, allUnits, lessonCount, challenges, unit } = React.use(dataPromise)
-	const { user } = useUser()
-	const [progressMap, setProgressMap] = React.useState<Map<string, AssessmentProgress>>(new Map())
-
-	// Fetch user progress
-	React.useEffect(() => {
-		const fetchProgress = async () => {
-			const userSourcedId = user?.publicMetadata?.sourceId
-			if (typeof userSourcedId === "string") {
-				const progress = await getUserUnitProgress(userSourcedId, course.id)
-				setProgressMap(progress)
-			}
-		}
-
-		void fetchProgress()
-	}, [user, course.id])
+	const progressMap = React.use(progressPromise)
 
 	const unitIndex = allUnits.findIndex((u) => u.id === unit.id)
 	if (unitIndex === -1) {

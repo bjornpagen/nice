@@ -1,5 +1,8 @@
+import { currentUser } from "@clerk/nextjs/server"
 import type * as React from "react"
 import { fetchLessonLayoutData } from "@/lib/data/lesson"
+import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { LessonLayout } from "./components/lesson-layout"
 
@@ -12,6 +15,23 @@ export default function Layout({
 	children: React.ReactNode
 }) {
 	const dataPromise: Promise<LessonLayoutData> = params.then(fetchLessonLayoutData)
+	const userPromise = currentUser()
 
-	return <LessonLayout dataPromise={dataPromise}>{children}</LessonLayout>
+	const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([userPromise, dataPromise]).then(
+		([user, data]) => {
+			if (user?.publicMetadata) {
+				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+				if (metadataValidation.success && metadataValidation.data.sourceId) {
+					return getUserUnitProgress(metadataValidation.data.sourceId, data.courseData.id)
+				}
+			}
+			return new Map<string, AssessmentProgress>()
+		}
+	)
+
+	return (
+		<LessonLayout dataPromise={dataPromise} progressPromise={progressPromise}>
+			{children}
+		</LessonLayout>
+	)
 }

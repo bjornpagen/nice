@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react"
 import Link from "next/link"
-import type { AssessmentProgress } from "@/lib/actions/progress"
+import type { AssessmentProgress } from "@/lib/data/progress"
 import type { UnitChild } from "@/lib/types/structure"
 import { cn } from "@/lib/utils"
 import { ProficiencyProgress } from "./proficiency-progress"

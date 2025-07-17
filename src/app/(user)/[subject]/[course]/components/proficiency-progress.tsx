@@ -1,5 +1,5 @@
 import { ProficiencyIcon, type proficiencyIconVariants } from "@/components/icons/proficiency"
-import type { AssessmentProgress } from "@/lib/actions/progress"
+import type { AssessmentProgress } from "@/lib/data/progress"
 import type { UnitChild } from "@/lib/types/structure"
 
 type ProficiencyItem = {
