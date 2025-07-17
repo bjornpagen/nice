@@ -32,7 +32,7 @@ export function Content({ videoPromise }: { videoPromise: Promise<VideoPageData>
 					void updateVideoProgress(sourceId, video.id, currentTime, duration)
 				}
 			}
-		}, 15000) // Send an update every 15 seconds.
+		}, 1000) // Send an update every 1 second.
 
 		return () => clearInterval(intervalId) // Cleanup on component unmount.
 	}, [user, video.id])
