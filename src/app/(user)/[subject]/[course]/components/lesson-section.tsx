@@ -150,7 +150,7 @@ function LessonExercise({
 					</Button>
 				</div>
 				<div className="w-px bg-gray-200 mx-2" /> {/* Full height vertical separator */}
-				<div className="w-16 flex items-center justify-center">
+				<div className="w-16 flex items-center justify-center flex-shrink-0">
 					{progress.proficiency && <ProficiencyIcon variant={progress.proficiency} className="w-5 h-5" />}
 				</div>
 			</div>
@@ -163,9 +163,11 @@ function LessonExercise({
 				<div className="flex-1">
 					<div className="flex items-center gap-2 mb-1">
 						{showProficiency && progress.proficiency && (
-							<ProficiencyIcon variant={progress.proficiency} className="w-5 h-5" />
+							<div className="flex-shrink-0">
+								<ProficiencyIcon variant={progress.proficiency} className="w-5 h-5" />
+							</div>
 						)}
-						<h2 className="text-sm font-semibold text-gray-900">{exercise.title}</h2>
+						<h2 className="text-sm font-semibold text-gray-900 min-w-0">{exercise.title}</h2>
 					</div>
 					{showProficiency && progress.score !== undefined ? (
 						<p className="text-gray-600 text-xs mb-2">

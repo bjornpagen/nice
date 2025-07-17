@@ -16,8 +16,6 @@ export function TestContent({ testPromise }: { testPromise: Promise<UnitTestPage
 				contentType="Test"
 				assessmentId={test.id}
 				assessmentTitle={test.title}
-				unitChildren={layoutData.unitData.children}
-				lessonData={layoutData.lessonData}
 				unitData={layoutData.unitData}
 			/>
 		)

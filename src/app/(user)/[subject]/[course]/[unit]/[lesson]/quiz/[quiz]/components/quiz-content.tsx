@@ -16,8 +16,6 @@ export function QuizContent({ quizPromise }: { quizPromise: Promise<QuizPageData
 				contentType="Quiz"
 				assessmentId={quiz.id}
 				assessmentTitle={quiz.title}
-				unitChildren={layoutData.unitData.children}
-				lessonData={layoutData.lessonData}
 				unitData={layoutData.unitData}
 			/>
 		)

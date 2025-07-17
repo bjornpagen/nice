@@ -11,9 +11,8 @@ import spaceFriend from "@/components/practice/course/unit/lesson/exercise/image
 import { QTIRenderer } from "@/components/qti-renderer"
 import { processQtiResponse } from "@/lib/actions/qti"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
-import type { Lesson, Question, Unit, UnitChild } from "@/lib/types/domain"
+import type { Question, Unit } from "@/lib/types/domain"
 import { AssessmentBottomNav, type AssessmentType } from "./assessment-bottom-nav"
-import { AssessmentProficiencyOverview } from "./assessment-proficiency-overview"
 
 // Summary View Component
 function SummaryView({
@@ -125,12 +124,6 @@ interface AssessmentStepperProps {
 	onComplete?: () => void
 	assessmentId?: string
 	assessmentTitle?: string
-	unitChildren?: UnitChild[]
-	courseUnits?: {
-		unitName: string
-		unitChildren: UnitChild[]
-	}[]
-	lessonData?: Lesson
 	unitData?: Unit
 }
 
@@ -140,9 +133,6 @@ export function AssessmentStepper({
 	onComplete,
 	assessmentId = "",
 	assessmentTitle = "",
-	unitChildren = [],
-	courseUnits,
-	lessonData,
 	unitData
 }: AssessmentStepperProps) {
 	const { user } = useUser()
@@ -173,34 +163,60 @@ export function AssessmentStepper({
 	}, [])
 
 	React.useEffect(() => {
-		// This simplified logic runs when the summary screen is about to be shown.
-		if (showSummary && lessonData && unitData) {
+		// When the summary screen is shown, determine the next piece of content.
+		if (showSummary && unitData) {
+			// Create a flattened, ordered list of all navigable content items in the unit.
+			// This includes items within lessons (articles, videos, exercises) and
+			// unit-level items like quizzes and unit tests.
+			const allUnitItems: Array<{ id: string; path: string; type: string; title: string }> = []
+			for (const unitChild of unitData.children) {
+				if (unitChild.type === "Lesson") {
+					// Add all children of the lesson to the list
+					for (const lessonChild of unitChild.children) {
+						allUnitItems.push({
+							id: lessonChild.id,
+							path: lessonChild.path,
+							type: lessonChild.type,
+							title: lessonChild.title
+						})
+					}
+				} else if (unitChild.type === "Quiz" || unitChild.type === "UnitTest") {
+					// Add the quiz or unit test itself to the list
+					allUnitItems.push({
+						id: unitChild.id,
+						path: unitChild.path,
+						type: unitChild.type,
+						title: unitChild.title
+					})
+				}
+			}
+
+			// Find the index of the current assessment within this flattened list.
+			const currentIndex = allUnitItems.findIndex((item) => item.id === assessmentId)
+
 			let foundNext: { text: string; path: string } | null = null
 
-			// Find the index of the current exercise within its lesson's children.
-			const currentContentIndex = lessonData.children.findIndex((child) => child.id === assessmentId)
-
-			// If the exercise is found and it's not the last item in the lesson...
-			if (currentContentIndex !== -1 && currentContentIndex < lessonData.children.length - 1) {
-				// ...the next item is the next child in the lesson.
-				const nextLessonChild = lessonData.children[currentContentIndex + 1]
-				if (nextLessonChild) {
+			// If the current item is found and is not the last item in the entire unit...
+			if (currentIndex !== -1 && currentIndex < allUnitItems.length - 1) {
+				// ...the next item is the one at the next index.
+				const nextContent = allUnitItems[currentIndex + 1]
+				if (nextContent) {
 					foundNext = {
-						text: `Up next: ${nextLessonChild.type}`, // Show the resource type (Article, Exercise, Video)
-						path: nextLessonChild.path || "#"
+						text: `Up next: ${nextContent.type}`,
+						path: nextContent.path || "#"
 					}
 				}
 			}
 
-			// If no next item is found within the lesson (i.e., it was the last one),
-			// create a link to go back to the unit overview.
+			// If no next item is found (meaning it's the last item in the unit),
+			// then the action is to go back to the unit overview page.
 			if (!foundNext) {
 				foundNext = { text: `Back to ${unitData.title}`, path: unitData.path }
 			}
 
 			setNextItem(foundNext)
 		}
-	}, [showSummary, assessmentId, lessonData, unitData])
+	}, [showSummary, assessmentId, unitData])
 
 	// Save assessment result to OneRoster when summary is shown
 	React.useEffect(() => {
@@ -427,19 +443,10 @@ export function AssessmentStepper({
 			<audio ref={audioRef} src="/correct-sound.mp3" preload="auto">
 				<track kind="captions" />
 			</audio>
-			{/* Assessment Header with Progress Overview */}
+			{/* Assessment Header */}
 			<div className="bg-white px-6 py-4 border-b border-gray-200 flex-shrink-0">
-				<div className="flex items-center justify-between">
+				<div className="flex items-center justify-center">
 					<h1 className="text-xl font-semibold text-gray-900">{assessmentTitle || `${contentType} Assessment`}</h1>
-					{assessmentId && unitChildren.length > 0 && (
-						<AssessmentProficiencyOverview
-							currentAssessmentId={assessmentId}
-							unitChildren={unitChildren}
-							courseUnits={courseUnits}
-							completedQuestions={currentQuestionIndex}
-							totalQuestions={questions.length}
-						/>
-					)}
 				</div>
 			</div>
 			<div className="flex-1 overflow-hidden relative">

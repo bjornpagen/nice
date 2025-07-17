@@ -56,8 +56,8 @@ export function LessonChildTab({ child, progress }: { child: LessonChild; progre
 
 	const content = (
 		<Link href={child.path} className="w-full flex items-center gap-3">
-			{icon}
-			<div className="flex flex-col">
+			<div className="flex-shrink-0">{icon}</div>
+			<div className="flex flex-col min-w-0 flex-1">
 				<p className={`text-base ${isActive ? "text-blue-800" : "text-gray-800"}`}>{child.title}</p>
 				{/* Show proficiency status for assessments */}
 				{showProficiencyIcon && progress?.proficiency && progress?.score !== undefined && (
