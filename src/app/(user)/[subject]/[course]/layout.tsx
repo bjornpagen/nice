@@ -1,5 +1,4 @@
 import { currentUser } from "@clerk/nextjs/server"
-import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { Banner } from "@/components/banner"
@@ -19,22 +18,25 @@ async function UserHeader() {
 	const user = await currentUser()
 
 	if (!user) {
-		logger.error("CRITICAL: User not authenticated in course layout")
-		throw errors.new("user authentication required for course access")
+		logger.info("user not authenticated, showing default header")
+		// Show header without user-specific data
+		return <Header dark />
 	}
 
 	if (!user.publicMetadata) {
-		logger.error("CRITICAL: User public metadata missing", { userId: user.id })
-		throw errors.new("user public metadata missing")
+		logger.info("user metadata not yet available", { userId: user.id })
+		// User exists but metadata not ready, show default header
+		return <Header dark />
 	}
 
 	const validationResult = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
 	if (!validationResult.success) {
-		logger.error("CRITICAL: Invalid user metadata structure", {
+		logger.warn("invalid user metadata structure, showing default header", {
 			userId: user.id,
 			error: validationResult.error
 		})
-		throw errors.wrap(validationResult.error, "user metadata validation failed")
+		// Invalid metadata, show default header
+		return <Header dark />
 	}
 
 	const { nickname, streak } = validationResult.data
