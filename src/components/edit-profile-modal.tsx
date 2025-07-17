@@ -67,7 +67,7 @@ export function EditProfileModal({ open, onOpenChange, initialData }: EditProfil
 							id="nickname"
 							value={formData.nickname}
 							onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
-							placeholder="ameeralns35"
+							placeholder="Sal Khan"
 							maxLength={100}
 						/>
 						<p className="text-sm text-gray-500">
@@ -82,7 +82,7 @@ export function EditProfileModal({ open, onOpenChange, initialData }: EditProfil
 							id="username"
 							value={formData.username}
 							onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-							placeholder="username"
+							placeholder="salkhan"
 							maxLength={50}
 						/>
 						<p className="text-sm text-gray-500">
@@ -101,7 +101,7 @@ export function EditProfileModal({ open, onOpenChange, initialData }: EditProfil
 							id="bio"
 							value={formData.bio}
 							onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-							placeholder="Tell us about yourself"
+							placeholder="Tell us about yourself..."
 							rows={4}
 							maxLength={500}
 						/>

@@ -87,12 +87,7 @@ export function Header({
 
 					{/* User Dropdown for signed in users */}
 					<SignedIn>
-						{displayName && displayInitial ? (
-							<UserDropdown displayName={displayName} displayInitial={displayInitial} dark={dark} />
-						) : (
-							// If we don't have user data, show an error state
-							<div className={`text-sm ${dark ? "text-red-400" : "text-red-600"}`}>User data unavailable</div>
-						)}
+						<UserDropdown displayName={displayName || "User"} displayInitial={displayInitial || "U"} dark={dark} />
 					</SignedIn>
 
 					{/* Login/Signup buttons for signed out users */}
