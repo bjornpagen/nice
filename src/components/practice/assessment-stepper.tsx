@@ -11,8 +11,7 @@ import spaceFriend from "@/components/practice/course/unit/lesson/exercise/image
 import { QTIRenderer } from "@/components/qti-renderer"
 import { processQtiResponse } from "@/lib/actions/qti"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
-import type { Question } from "@/lib/types/content"
-import type { Lesson, Unit, UnitChild } from "@/lib/types/structure"
+import type { Lesson, Question, Unit, UnitChild } from "@/lib/types/domain"
 import { AssessmentBottomNav, type AssessmentType } from "./assessment-bottom-nav"
 import { AssessmentProficiencyOverview } from "./assessment-proficiency-overview"
 

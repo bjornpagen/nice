@@ -6,8 +6,7 @@ import Link from "next/link"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import type { ProfileCourse } from "@/lib/types/profile"
-import type { Unit } from "@/lib/types/structure"
+import type { ProfileCourse, Unit } from "@/lib/types/domain"
 import { cn } from "@/lib/utils"
 
 type CourseCardProps = {

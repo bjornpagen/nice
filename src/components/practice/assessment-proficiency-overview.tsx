@@ -9,7 +9,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import type { UnitChild } from "@/lib/types/structure"
+import type { UnitChild } from "@/lib/types/domain"
 import { cn } from "@/lib/utils"
 
 type ProficiencyStatus = keyof typeof proficiencyIconVariants

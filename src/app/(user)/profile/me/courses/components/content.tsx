@@ -7,8 +7,8 @@ import { CourseSelector } from "@/components/course-selector-content"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { saveUserCourses } from "@/lib/actions/courses"
+import type { ProfileCourse } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
-import type { ProfileCourse } from "@/lib/types/profile"
 import { CourseCard } from "./course-card"
 
 function CourseCardSkeleton() {

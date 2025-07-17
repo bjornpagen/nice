@@ -7,7 +7,7 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
-import type { ProfileSubject } from "@/lib/types/profile"
+import type { ProfileSubject } from "@/lib/types/domain"
 
 interface ExploreDropdownProps {
 	dark?: boolean

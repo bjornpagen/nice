@@ -4,9 +4,8 @@ import * as logger from "@superbuilders/slog"
 import { getActiveEnrollmentsForUser, getClass, getCourse, getUnitsForCourses } from "@/lib/data/fetchers/oneroster"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { ComponentMetadataSchema, CourseMetadataSchema } from "@/lib/metadata/oneroster"
+import type { ProfileCourse, Unit } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
-import type { ProfileCourse } from "@/lib/types/profile"
-import type { Unit } from "@/lib/types/structure"
 import type { ClassReadSchemaType } from "../oneroster"
 
 export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileCourse[]> {

@@ -1,7 +1,7 @@
 import { BookOpen, Info } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import type { Lesson, Unit } from "@/lib/types/structure"
+import type { Lesson, Unit } from "@/lib/types/domain"
 
 export function UnitOverviewSection({ unit, index, next = false }: { unit: Unit; index: number; next: boolean }) {
 	// Extract videos from lessons within the unit

@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import type { Course, Lesson, Unit } from "@/lib/types/structure"
+import type { Course, Lesson, Unit } from "@/lib/types/domain"
 import { upperCase } from "@/lib/utils"
 
 function findNextLesson(unit: Pick<Unit, "children">, currentIndex: number): Lesson | undefined {

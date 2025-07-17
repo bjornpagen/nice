@@ -3,7 +3,7 @@
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import type { Course } from "@/lib/types/structure"
+import type { Course } from "@/lib/types/domain"
 
 export function CourseTab({
 	course,

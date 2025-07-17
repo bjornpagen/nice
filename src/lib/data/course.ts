@@ -9,10 +9,19 @@ import {
 } from "@/lib/data/fetchers/oneroster"
 import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
-import type { CourseChallenge, Quiz, UnitTest } from "@/lib/types/assessment"
-import type { Article, ExerciseInfo, Video } from "@/lib/types/content"
+import type {
+	Article,
+	Course,
+	CourseChallenge,
+	ExerciseInfo,
+	Lesson,
+	Quiz,
+	Unit,
+	UnitChild,
+	UnitTest,
+	Video
+} from "@/lib/types/domain"
 import type { CoursePageData } from "@/lib/types/page"
-import type { Course, Lesson, Unit, UnitChild } from "@/lib/types/structure"
 
 export async function fetchCoursePageData(params: { subject: string; course: string }): Promise<CoursePageData> {
 	logger.info("fetchCoursePageData called", { params })

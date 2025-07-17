@@ -1,7 +1,4 @@
-import type { CourseChallenge, Quiz, UnitTest } from "./assessment"
-import type { Exercise, Question } from "./content"
-import type { ProfileCourse, ProfileSubject } from "./profile"
-import type { Course, Lesson, Unit } from "./structure"
+import type { Course, Lesson, ProfileCourse, ProfileSubject, Question, Unit } from "./domain"
 
 // Data for the main /<subject>/<course> page
 export interface CoursePageData {
@@ -17,7 +14,7 @@ export interface UnitPageData {
 	allUnits: Unit[] // All units in the course for the sidebar
 	unit: Unit // The specific unit being viewed
 	lessonCount: number
-	challenges: CourseChallenge[]
+	challenges: Course["challenges"]
 }
 
 // Data for the /.../[lesson] layout
@@ -44,35 +41,55 @@ export interface VideoPageData {
 
 // Data for the /.../e/[exercise] page
 export interface ExercisePageData {
-	exercise: Pick<Exercise, "id" | "title"> & { type: "Exercise" }
+	exercise: {
+		id: string
+		title: string
+		type: "Exercise"
+	}
 	questions: Question[]
 	layoutData: LessonLayoutData
 }
 
 // Data for the /.../quiz/[quiz] page
 export interface QuizPageData {
-	quiz: Pick<Quiz, "id" | "title" | "description"> & { type: "Quiz" }
+	quiz: {
+		id: string
+		title: string
+		description: string
+		type: "Quiz"
+	}
 	questions: Question[]
 	layoutData: LessonLayoutData
 }
 
 // Data for the /.../test/[test] page (Unit Test)
 export interface UnitTestPageData {
-	test: Pick<UnitTest, "id" | "title" | "description"> & { type: "UnitTest" }
+	test: {
+		id: string
+		title: string
+		description: string
+		type: "UnitTest"
+	}
 	questions: Question[]
 	layoutData: LessonLayoutData
 }
 
 // Data for the /.../test/[test] page (Course Challenge)
 export interface CourseChallengePageData {
-	test: Pick<CourseChallenge, "id" | "title" | "description" | "slug"> & { type: "CourseChallenge" }
+	test: {
+		id: string
+		title: string
+		description: string
+		slug: string
+		type: "CourseChallenge"
+	}
 	questions: Question[]
 }
 
 export interface CourseChallengeLayoutData {
 	course: Pick<Course, "id" | "title" | "description" | "path" | "units">
 	lessonCount: number
-	challenges: CourseChallenge[]
+	challenges: Course["challenges"]
 }
 
 // Data for the /profile/me/courses page

@@ -8,7 +8,7 @@ import {
 	BreadcrumbList,
 	BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
-import type { Course, Lesson, Unit } from "@/lib/types/structure"
+import type { Course, Lesson, Unit } from "@/lib/types/domain"
 import { startCase } from "@/lib/utils"
 
 export function LessonBreadcrumbs({

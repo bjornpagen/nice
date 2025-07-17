@@ -1,7 +1,7 @@
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import type { UnitPageData } from "@/lib/types/page"
-import { fetchCoursePageData } from "./course" // Import the top-level data fetcher
+import { fetchCoursePageData } from "./course"
 
 export async function fetchUnitPageData(params: {
 	subject: string

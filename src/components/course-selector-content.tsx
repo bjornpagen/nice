@@ -5,7 +5,7 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
-import type { ProfileSubject } from "@/lib/types/profile"
+import type { ProfileSubject } from "@/lib/types/domain"
 
 interface CourseSelectorProps {
 	subjects: ProfileSubject[]

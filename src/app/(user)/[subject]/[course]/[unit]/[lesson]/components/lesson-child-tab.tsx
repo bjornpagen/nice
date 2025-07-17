@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { ActivityIcon } from "@/components/icons/activity"
 import { ProficiencyIcon } from "@/components/icons/proficiency"
 import type { AssessmentProgress } from "@/lib/data/progress"
-import type { LessonChild } from "@/lib/types/structure"
+import type { LessonChild } from "@/lib/types/domain"
 
 function getVariant(child: Pick<LessonChild, "type">) {
 	switch (child.type) {

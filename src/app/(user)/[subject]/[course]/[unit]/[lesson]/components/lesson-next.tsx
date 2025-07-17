@@ -4,7 +4,7 @@ import { ChevronRight, FileText, PenTool, Play } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import type { LessonChild } from "@/lib/types/structure"
+import type { LessonChild } from "@/lib/types/domain"
 
 interface LessonNextProps {
 	lessonChildren: LessonChild[]
