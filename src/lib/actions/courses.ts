@@ -33,8 +33,9 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 
 	// sourceId is required for enrollment operations
 	if (!metadata.sourceId) {
-		logger.error("CRITICAL: sourceId missing for user", { userId: user.id })
-		throw errors.new("sourceId required for enrollment operations")
+		logger.info("user has no sourceId yet, cannot save courses", { userId: user.id })
+		// Return success but indicate no changes were made
+		return { success: true, changed: false, message: "OneRoster account required to save courses" }
 	}
 	const sourceId = metadata.sourceId
 

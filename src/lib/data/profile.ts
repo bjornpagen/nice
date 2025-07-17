@@ -160,17 +160,21 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 
 	const metadata = metadataValidation.data
 
-	// sourceId is required for fetching user enrolled courses
-	if (!metadata.sourceId) {
-		logger.error("CRITICAL: sourceId missing for user", { userId: user.id })
-		throw errors.new("sourceId required for fetching enrolled courses")
-	}
-	const sourceId = metadata.sourceId
-
 	// Import from actions since that's where the function is defined (from upstream)
 	const { getOneRosterCoursesForExplore } = await import("@/lib/actions/courses")
 
+	// Get available subjects for explore dropdown
 	const subjectsPromise = getOneRosterCoursesForExplore()
+
+	// sourceId is optional - users without it simply have no enrolled courses yet
+	if (!metadata.sourceId) {
+		logger.info("user has no sourceId yet, returning empty enrolled courses", { userId: user.id })
+		const subjects = await subjectsPromise
+		return { subjects, userCourses: [] }
+	}
+	const sourceId = metadata.sourceId
+
+	// Get user's enrolled courses
 	const userCoursesPromise = fetchUserEnrolledCourses(sourceId)
 
 	const [subjects, userCourses] = await Promise.all([subjectsPromise, userCoursesPromise])
