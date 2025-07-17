@@ -4,7 +4,7 @@ import { useUser } from "@clerk/nextjs"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import * as React from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { getUserUnitProgress } from "@/lib/actions/progress"
+import { type AssessmentProgress, getUserUnitProgress } from "@/lib/actions/progress"
 import type { Course, Lesson, Unit } from "@/lib/types/structure"
 import { LessonBreadcrumbs } from "./lesson-breadcrumbs"
 import { LessonChildTab } from "./lesson-child-tab"
@@ -28,7 +28,7 @@ export function LessonSidebar({
 	setSelectedLessonId: (lessonId: string) => void
 }) {
 	const { user } = useUser()
-	const [progressMap, setProgressMap] = React.useState<Map<string, boolean>>(new Map())
+	const [progressMap, setProgressMap] = React.useState<Map<string, AssessmentProgress>>(new Map())
 
 	// Fetch user progress
 	React.useEffect(() => {
@@ -86,7 +86,7 @@ export function LessonSidebar({
 								{/* Lesson content */}
 								<div className="px-5 py-2">
 									{lesson.children.map((child) => (
-										<LessonChildTab key={child.id} child={child} completed={progressMap.get(child.id) || false} />
+										<LessonChildTab key={child.id} child={child} progress={progressMap.get(child.id)} />
 									))}
 								</div>
 

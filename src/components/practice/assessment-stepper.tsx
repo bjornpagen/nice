@@ -1,5 +1,6 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import Image from "next/image"
 import * as React from "react"
@@ -9,6 +10,7 @@ import lightBlueFriend from "@/components/practice/course/unit/lesson/exercise/i
 import spaceFriend from "@/components/practice/course/unit/lesson/exercise/images/space-friend_v3.png"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { processQtiResponse } from "@/lib/actions/qti"
+import { saveAssessmentResult } from "@/lib/actions/tracking"
 import type { Question } from "@/lib/types/content"
 import type { Lesson, Unit, UnitChild } from "@/lib/types/structure"
 import { AssessmentBottomNav, type AssessmentType } from "./assessment-bottom-nav"
@@ -144,6 +146,7 @@ export function AssessmentStepper({
 	lessonData,
 	unitData
 }: AssessmentStepperProps) {
+	const { user } = useUser()
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
 	const [selectedResponse, setSelectedResponse] = React.useState<{ responseIdentifier: string; value: unknown } | null>(
 		null
@@ -199,6 +202,38 @@ export function AssessmentStepper({
 			setNextItem(foundNext)
 		}
 	}, [showSummary, assessmentId, lessonData, unitData])
+
+	// Save assessment result to OneRoster when summary is shown
+	React.useEffect(() => {
+		if (!showSummary || !assessmentId || !user) {
+			return
+		}
+
+		// NO FALLBACKS: We MUST have a valid OneRoster sourceId
+		if (typeof user.publicMetadata?.sourceId !== "string") {
+			// Missing critical data - STOP. Do not guess, do not use fallbacks.
+			// The assessment result will not be saved, which is the correct behavior
+			// when we don't have the required data.
+			return
+		}
+
+		const userSourcedId = user.publicMetadata.sourceId
+		const score = correctAnswersCount / questions.length
+
+		// Fire and forget - we don't want to block the UI
+		const saveResult = async () => {
+			const result = await errors.try(
+				saveAssessmentResult(assessmentId, score, correctAnswersCount, questions.length, userSourcedId)
+			)
+
+			if (result.error) {
+				// Log but don't show error to user - this is a background task
+				// We don't want to interrupt their experience if tracking fails
+			}
+		}
+
+		saveResult()
+	}, [showSummary, assessmentId, correctAnswersCount, questions.length, user])
 
 	if (questions.length === 0) {
 		return <div>No questions available</div>

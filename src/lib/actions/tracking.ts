@@ -1,5 +1,6 @@
 "use server"
 
+import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { oneroster } from "@/lib/clients"
@@ -114,4 +115,70 @@ export async function updateVideoProgress(
 		score,
 		status: scoreStatus
 	})
+}
+
+/**
+ * Saves an assessment result directly to the OneRoster gradebook.
+ * This is called when a user completes an assessment (exercise, quiz, or test).
+ *
+ * @param assessmentSourcedId - The sourcedId of the assessment
+ * @param score - The score as a decimal between 0 and 1 (e.g., 0.8 for 80%)
+ * @param correctAnswers - Number of questions answered correctly on first attempt
+ * @param totalQuestions - Total number of questions in the assessment
+ */
+export async function saveAssessmentResult(
+	assessmentSourcedId: string,
+	score: number,
+	correctAnswers: number,
+	totalQuestions: number,
+	userSourcedId: string
+) {
+	const { userId } = await auth()
+	if (!userId) throw errors.new("user not authenticated")
+
+	logger.info("saving assessment result", {
+		userId,
+		userSourcedId,
+		assessmentSourcedId,
+		score,
+		correctAnswers,
+		totalQuestions
+	})
+
+	// The line item ID is the same as the assessment ID
+	const lineItemSourcedId = assessmentSourcedId
+
+	// Create a unique result ID
+	const resultSourcedId = `result:${userSourcedId}:${lineItemSourcedId}`
+
+	const resultPayload = {
+		result: {
+			assessmentLineItem: { sourcedId: lineItemSourcedId, type: "assessmentLineItem" as const },
+			student: { sourcedId: userSourcedId, type: "user" as const },
+			scoreStatus: "fully graded" as const,
+			scoreDate: new Date().toISOString(),
+			score: score, // Score as decimal (0-1)
+			comment: `${correctAnswers}/${totalQuestions} correct on first attempt`
+		}
+	}
+
+	// Use putResult for idempotency
+	const result = await errors.try(oneroster.putResult(resultSourcedId, resultPayload))
+	if (result.error) {
+		logger.error("failed to save assessment result", {
+			userId,
+			assessmentSourcedId,
+			error: result.error
+		})
+		throw errors.wrap(result.error, "assessment result save")
+	}
+
+	logger.info("successfully saved assessment result", {
+		userId,
+		assessmentSourcedId,
+		resultSourcedId,
+		score
+	})
+
+	return result.data
 }
