@@ -8,60 +8,61 @@ import type { ProfileCourse, Unit } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
 import type { ClassReadSchemaType } from "../oneroster"
 
-export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileCourse[]> {
-	// Get enrollments for the user
-	const enrollmentsResult = await errors.try(getActiveEnrollmentsForUser(userId))
+export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<ProfileCourse[]> {
+	// Fetch active enrollments for the user
+	const enrollmentsResult = await errors.try(getActiveEnrollmentsForUser(userSourcedId))
 	if (enrollmentsResult.error) {
-		logger.error("failed to fetch user enrollments", { error: enrollmentsResult.error, userId })
-		throw errors.wrap(enrollmentsResult.error, "fetch user enrollments")
+		logger.error("failed to fetch user enrollments", { error: enrollmentsResult.error, userSourcedId })
+		throw errors.wrap(enrollmentsResult.error, "user enrollments: unable to retrieve")
 	}
 
-	// Early return if no enrollments (from upstream)
 	if (enrollmentsResult.data.length === 0) {
 		return []
 	}
 
-	const classIds = [...new Set(enrollmentsResult.data.map((enrollment) => enrollment.class.sourcedId))]
+	// Extract unique class IDs from enrollments
+	const classSourcedIds = [...new Set(enrollmentsResult.data.map((enrollment) => enrollment.class.sourcedId))]
 
-	const classPromises = classIds.map(async (classId) => {
-		const classResult = await errors.try(getClass(classId))
+	const classPromises = classSourcedIds.map(async (classSourcedId) => {
+		const classResult = await errors.try(getClass(classSourcedId))
 		if (classResult.error) {
-			logger.error("failed to fetch class details", { error: classResult.error, classId })
+			logger.error("failed to fetch class details", { error: classResult.error, classSourcedId })
 			return null
 		}
 		return classResult.data
 	})
 
-	const classes = (await Promise.all(classPromises)).filter((c): c is ClassReadSchemaType => c !== null)
+	const classResults = await Promise.all(classPromises)
+	const classes = classResults.filter((c): c is ClassReadSchemaType => c !== null)
 
-	const courseIds = [...new Set(classes.map((c) => c.course.sourcedId))]
-	const unitsByCourseId = new Map<string, Unit[]>()
+	const courseSourcedIds = [...new Set(classes.map((c) => c.course.sourcedId))]
+	const unitsByCourseSourcedId = new Map<string, Unit[]>()
 
-	if (courseIds.length > 0) {
-		const allUnitsResult = await errors.try(getUnitsForCourses(courseIds))
+	if (courseSourcedIds.length > 0) {
+		const allUnitsResult = await errors.try(getUnitsForCourses(courseSourcedIds))
 		if (allUnitsResult.error) {
-			logger.error("failed to fetch units for enrolled courses", { error: allUnitsResult.error, courseIds })
+			logger.error("failed to fetch units for enrolled courses", { error: allUnitsResult.error, courseSourcedIds })
 		} else {
 			for (const unit of allUnitsResult.data) {
 				if (unit.parent) continue
-				const courseId = unit.course.sourcedId
-				if (!unitsByCourseId.has(courseId)) {
-					unitsByCourseId.set(courseId, [])
+				const courseSourcedId = unit.course.sourcedId
+				if (!unitsByCourseSourcedId.has(courseSourcedId)) {
+					unitsByCourseSourcedId.set(courseSourcedId, [])
 				}
 
 				// Validate component metadata with Zod
 				const componentMetadataResult = ComponentMetadataSchema.safeParse(unit.metadata)
 				if (!componentMetadataResult.success) {
 					logger.error("fatal: invalid unit metadata for enrolled user", {
-						unitId: unit.sourcedId,
-						userId,
+						unitSourcedId: unit.sourcedId,
+						userSourcedId,
 						error: componentMetadataResult.error
 					})
 					throw errors.wrap(componentMetadataResult.error, "invalid unit metadata")
 				}
 				const unitMetadata = componentMetadataResult.data
 
-				unitsByCourseId.get(courseId)?.push({
+				unitsByCourseSourcedId.get(courseSourcedId)?.push({
 					id: unit.sourcedId,
 					title: unit.title,
 					path: "", // Path will be constructed when we have course slug
@@ -78,11 +79,11 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 	const courses: ProfileCourse[] = []
 
 	for (const cls of classes) {
-		const courseUnits = unitsByCourseId.get(cls.course.sourcedId)
+		const courseUnits = unitsByCourseSourcedId.get(cls.course.sourcedId)
 		if (!courseUnits) {
 			logger.error("CRITICAL: No units found for course", {
-				courseId: cls.course.sourcedId,
-				classId: cls.sourcedId
+				courseSourcedId: cls.course.sourcedId,
+				classSourcedId: cls.sourcedId
 			})
 			throw errors.new("course units: required data missing")
 		}
@@ -91,7 +92,7 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 		const courseResult = await errors.try(getCourse(cls.course.sourcedId))
 		if (courseResult.error) {
 			logger.error("failed to fetch course metadata", {
-				courseId: cls.course.sourcedId,
+				courseSourcedId: cls.course.sourcedId,
 				error: courseResult.error
 			})
 			continue // Skip this course
@@ -99,7 +100,7 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 
 		const course = courseResult.data
 		if (!course) {
-			logger.error("course data is undefined", { courseId: cls.course.sourcedId })
+			logger.error("course data is undefined", { courseSourcedId: cls.course.sourcedId })
 			continue // Skip this course
 		}
 
@@ -107,8 +108,8 @@ export async function fetchUserEnrolledCourses(userId: string): Promise<ProfileC
 		const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
 		if (!courseMetadataResult.success) {
 			logger.error("fatal: invalid course metadata for enrolled user", {
-				courseId: course.sourcedId,
-				userId,
+				courseSourcedId: course.sourcedId,
+				userSourcedId,
 				error: courseMetadataResult.error
 			})
 			throw errors.wrap(courseMetadataResult.error, "invalid course metadata")

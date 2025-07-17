@@ -26,7 +26,7 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
 		logger.error("invalid article resource metadata", {
-			resourceId: resource.sourcedId,
+			resourceSourcedId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		throw errors.wrap(resourceMetadataResult.error, "invalid article resource metadata")
@@ -35,7 +35,7 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 	// Because we use a discriminated union, we must also check the type
 	if (resourceMetadataResult.data.type !== "qti") {
 		logger.error("invalid resource type for article page", {
-			resourceId: resource.sourcedId,
+			resourceSourcedId: resource.sourcedId,
 			expected: "qti",
 			actual: resourceMetadataResult.data.type
 		})
@@ -82,7 +82,7 @@ export async function fetchExercisePageData(params: {
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
 		logger.error("invalid exercise resource metadata", {
-			resourceId: resource.sourcedId,
+			resourceSourcedId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		throw errors.wrap(resourceMetadataResult.error, "invalid exercise resource metadata")
@@ -91,7 +91,7 @@ export async function fetchExercisePageData(params: {
 	// Because we use a discriminated union, we must also check the type
 	if (resourceMetadataResult.data.type !== "qti") {
 		logger.error("invalid resource type for exercise page", {
-			resourceId: resource.sourcedId,
+			resourceSourcedId: resource.sourcedId,
 			expected: "qti",
 			actual: resourceMetadataResult.data.type
 		})
@@ -101,7 +101,10 @@ export async function fetchExercisePageData(params: {
 	// Fetch questions from QTI server
 	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
-		logger.error("failed to fetch questions for exercise", { testId: resource.sourcedId, error: questionsResult.error })
+		logger.error("failed to fetch questions for exercise", {
+			testSourcedId: resource.sourcedId,
+			error: questionsResult.error
+		})
 		throw errors.wrap(questionsResult.error, "fetch questions for exercise")
 	}
 
@@ -138,7 +141,7 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
 		logger.error("invalid video resource metadata", {
-			resourceId: resource.sourcedId,
+			resourceSourcedId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		throw errors.wrap(resourceMetadataResult.error, "invalid video resource metadata")
@@ -147,7 +150,7 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 	// Because we use a discriminated union, we must also check the type.
 	if (resourceMetadataResult.data.type !== "video") {
 		logger.error("invalid resource type for video page", {
-			resourceId: resource.sourcedId,
+			resourceSourcedId: resource.sourcedId,
 			expected: "video",
 			actual: resourceMetadataResult.data.type
 		})

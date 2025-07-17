@@ -76,14 +76,14 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 
 	// Separate units (no parent) and lessons (have parent)
 	const units: Unit[] = [] // Change to full Unit type
-	const lessonsByUnitId = new Map<string, Lesson[]>() // Change to full Lesson type
+	const lessonsByUnitSourcedId = new Map<string, Lesson[]>() // Change to full Lesson type
 
 	for (const component of allComponents) {
 		// Validate component metadata with Zod
 		const componentMetadataResult = ComponentMetadataSchema.safeParse(component.metadata)
 		if (!componentMetadataResult.success) {
 			logger.error("failed to parse component metadata", {
-				componentId: component.sourcedId,
+				componentSourcedId: component.sourcedId,
 				error: componentMetadataResult.error
 			})
 			throw errors.wrap(componentMetadataResult.error, "invalid component metadata")
@@ -103,29 +103,29 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 			})
 		} else {
 			// This is a lesson or assessment - we'll determine type later when we process resources
-			const parentId = component.parent.sourcedId
-			if (!lessonsByUnitId.has(parentId)) {
-				lessonsByUnitId.set(parentId, [])
+			const parentSourcedId = component.parent.sourcedId
+			if (!lessonsByUnitSourcedId.has(parentSourcedId)) {
+				lessonsByUnitSourcedId.set(parentSourcedId, [])
 			}
 
 			// For path generation, we need the parent's slug too
-			const parentComponent = allComponents.find((c) => c.sourcedId === parentId)
+			const parentComponent = allComponents.find((c) => c.sourcedId === parentSourcedId)
 			if (!parentComponent) {
-				logger.error("parent component not found", { parentId, childId: component.sourcedId })
-				throw errors.new(`parent component ${parentId} not found for child ${component.sourcedId}`)
+				logger.error("parent component not found", { parentSourcedId, childSourcedId: component.sourcedId })
+				throw errors.new(`parent component ${parentSourcedId} not found for child ${component.sourcedId}`)
 			}
 
 			const parentMetadataResult = ComponentMetadataSchema.safeParse(parentComponent.metadata)
 			if (!parentMetadataResult.success) {
 				logger.error("failed to parse parent component metadata", {
-					parentId,
-					childId: component.sourcedId,
+					parentSourcedId,
+					childSourcedId: component.sourcedId,
 					error: parentMetadataResult.error
 				})
 				throw errors.wrap(parentMetadataResult.error, "invalid parent component metadata")
 			}
 
-			lessonsByUnitId.get(parentId)?.push({
+			lessonsByUnitSourcedId.get(parentSourcedId)?.push({
 				type: "Lesson", // Add missing type property
 				id: component.sourcedId,
 				slug: componentMetadata.khanSlug,
@@ -155,15 +155,18 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		throw errors.wrap(allComponentResourcesResult.error, "fetch all component resources")
 	}
 	const allComponentResources = allComponentResourcesResult.data
-	const courseComponentIds = new Set(allComponents.map((c) => c.sourcedId))
+	const courseComponentSourcedIds = new Set(allComponents.map((c) => c.sourcedId))
 
-	const componentResources = allComponentResources.filter((cr) => courseComponentIds.has(cr.courseComponent.sourcedId))
+	// Get only ComponentResources that belong to Components in this Course
+	const componentResources = allComponentResources.filter((cr) =>
+		courseComponentSourcedIds.has(cr.courseComponent.sourcedId)
+	)
 
-	// Get unique resource IDs from component resources relevant to this course
-	const resourceIdsInCourse = new Set(componentResources.map((cr) => cr.resource.sourcedId))
+	// Get only Resources that are referenced by ComponentResources in this course
+	const resourceSourcedIdsInCourse = new Set(componentResources.map((cr) => cr.resource.sourcedId))
 
-	// Filter resources to only those referenced by this course's component resources
-	const allResources = allResourcesInSystem.filter((resource) => resourceIdsInCourse.has(resource.sourcedId))
+	// Filter only resources that belong to this course
+	const allResources = allResourcesInSystem.filter((resource) => resourceSourcedIdsInCourse.has(resource.sourcedId))
 
 	logger.info("filtered resources for course", {
 		totalResourcesInSystem: allResourcesInSystem.length,
@@ -173,59 +176,60 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		courseSourcedId
 	})
 
-	// Group resources by component (lesson) ID
-	const resourcesByComponentId = new Map<string, typeof allResources>()
-
+	// Map Resources to Components
+	const resourcesByComponentSourcedId = new Map<string, typeof allResources>()
 	for (const cr of componentResources) {
-		const componentId = cr.courseComponent.sourcedId
-		const resourceId = cr.resource.sourcedId
-		const resource = allResources.find((r) => r.sourcedId === resourceId)
+		const componentSourcedId = cr.courseComponent.sourcedId
+		const resourceSourcedId = cr.resource.sourcedId
+		const resource = allResources.find((r) => r.sourcedId === resourceSourcedId)
 
 		if (resource) {
-			if (!resourcesByComponentId.has(componentId)) {
-				resourcesByComponentId.set(componentId, [])
+			if (!resourcesByComponentSourcedId.has(componentSourcedId)) {
+				resourcesByComponentSourcedId.set(componentSourcedId, [])
 			}
-			resourcesByComponentId.get(componentId)?.push(resource)
+			resourcesByComponentSourcedId.get(componentSourcedId)?.push(resource)
 		}
 	}
 
-	// Identify all exercise resources to fetch their questions
-	const exerciseResourceIds = new Set<string>()
+	// Determine exercise IDs early
+	const exerciseResourceSourcedIds = new Set<string>()
 	for (const resource of allResources) {
-		const resourceMetadata = ResourceMetadataSchema.safeParse(resource.metadata).data
+		const metadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 		if (
-			resourceMetadata?.type === "qti" &&
-			resourceMetadata.subType === "qti-test" &&
-			!resourceMetadata.khanLessonType
+			metadataResult.success &&
+			metadataResult.data.type === "qti" &&
+			metadataResult.data.subType === "qti-test" &&
+			!metadataResult.data.khanLessonType
 		) {
-			exerciseResourceIds.add(resource.sourcedId)
+			exerciseResourceSourcedIds.add(resource.sourcedId)
 		}
 	}
 
-	// Fetch all exercise questions in parallel
-	const questionFetchResults = await Promise.all(
-		Array.from(exerciseResourceIds).map(async (exerciseId) => {
-			const result = await errors.try(getAllQuestionsForTest(exerciseId))
+	// Fetch questions for all exercises in parallel
+	const exerciseQuestionsPromises = await Promise.all(
+		Array.from(exerciseResourceSourcedIds).map(async (exerciseSourcedId) => {
+			const result = await errors.try(getAllQuestionsForTest(exerciseSourcedId))
 			if (result.error) {
-				logger.error("failed to fetch questions for exercise", { exerciseId, error: result.error })
-				return { exerciseId, questions: [] }
+				logger.error("failed to fetch questions for exercise", { exerciseSourcedId, error: result.error })
+				return { exerciseSourcedId, questions: [] }
 			}
 			return {
-				exerciseId,
+				exerciseSourcedId,
 				questions: result.data.questions.map((q) => ({ id: q.question.identifier }))
 			}
 		})
 	)
 
+	// Create questions map
 	const questionsMap = new Map<string, number>()
-	for (const result of questionFetchResults) {
-		questionsMap.set(result.exerciseId, result.questions.length)
+	for (const result of exerciseQuestionsPromises) {
+		questionsMap.set(result.exerciseSourcedId, result.questions.length)
 	}
 
 	// Build units with children
 	const unitsWithChildren: Unit[] = units.map((unit) => {
-		const unitLessons = lessonsByUnitId.get(unit.id) || []
-		const unitResources = resourcesByComponentId.get(unit.id) || []
+		const unitLessons = lessonsByUnitSourcedId.get(unit.id) || []
+		const unitResources = resourcesByComponentSourcedId.get(unit.id) || []
 
 		const unitAssessments: (Quiz | UnitTest)[] = []
 
@@ -235,7 +239,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 			const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 			if (!resourceMetadataResult.success) {
 				logger.error("invalid resource metadata", {
-					resourceId: resource.sourcedId,
+					resourceSourcedId: resource.sourcedId,
 					error: resourceMetadataResult.error
 				})
 				throw errors.new("invalid resource metadata")
@@ -256,8 +260,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 
 				if (!componentResource) {
 					logger.error("component resource not found for assessment", {
-						resourceId: resource.sourcedId,
-						unitId: unit.id
+						resourceSourcedId: resource.sourcedId,
+						unitSourcedId: unit.id
 					})
 					throw errors.new(`component resource not found for assessment ${resource.sourcedId}`)
 				}
@@ -277,7 +281,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 
 		// Process lessons with their content
 		const lessonsWithContent: Lesson[] = unitLessons.map((lesson) => {
-			const lessonResources = resourcesByComponentId.get(lesson.id) || []
+			const lessonResources = resourcesByComponentSourcedId.get(lesson.id) || []
 
 			// Temporary types with sortOrder for sorting
 			interface VideoWithOrder extends Video {
@@ -300,7 +304,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 				const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 				if (!resourceMetadataResult.success) {
 					logger.error("invalid resource metadata", {
-						resourceId: resource.sourcedId,
+						resourceSourcedId: resource.sourcedId,
 						error: resourceMetadataResult.error
 					})
 					throw errors.new("invalid resource metadata")
@@ -312,20 +316,23 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					(cr) => cr.courseComponent.sourcedId === lesson.id && cr.resource.sourcedId === resource.sourcedId
 				)
 				if (!componentResource) {
-					logger.error("component resource not found", { lessonId: lesson.id, resourceId: resource.sourcedId })
+					logger.error("component resource not found", {
+						lessonSourcedId: lesson.id,
+						resourceSourcedId: resource.sourcedId
+					})
 					throw errors.new(`component resource not found for lesson ${lesson.id} resource ${resource.sourcedId}`)
 				}
 
 				if (resourceMetadata.type === "video") {
 					const youtubeUrl = resourceMetadata.url
 					if (!youtubeUrl) {
-						logger.error("video missing YouTube URL", { videoId: resource.sourcedId })
+						logger.error("video missing YouTube URL", { videoSourcedId: resource.sourcedId })
 						throw errors.new("video missing YouTube URL")
 					}
 
 					const youtubeMatch = youtubeUrl.match(/[?&]v=([^&]+)/)
 					if (!youtubeMatch || !youtubeMatch[1]) {
-						logger.error("video has invalid youtube url", { videoId: resource.sourcedId, url: youtubeUrl })
+						logger.error("video has invalid youtube url", { videoSourcedId: resource.sourcedId, url: youtubeUrl })
 						throw errors.new(`video ${resource.sourcedId} has invalid youtube url`)
 					}
 					const youtubeId = youtubeMatch[1]
@@ -335,7 +342,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						allComponents.find((c) => c.sourcedId === lesson.id)?.metadata
 					)
 					if (!lessonComponentMeta.success) {
-						logger.error("invalid lesson component metadata for video path", { lessonId: lesson.id })
+						logger.error("invalid lesson component metadata for video path", { lessonSourcedId: lesson.id })
 						throw errors.new("invalid lesson component metadata")
 					}
 
@@ -357,7 +364,7 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						allComponents.find((c) => c.sourcedId === lesson.id)?.metadata
 					)
 					if (!lessonComponentMeta.success) {
-						logger.error("invalid lesson component metadata for article path", { lessonId: lesson.id })
+						logger.error("invalid lesson component metadata for article path", { lessonSourcedId: lesson.id })
 						throw errors.new("invalid lesson component metadata")
 					}
 
@@ -381,14 +388,14 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						allComponents.find((c) => c.sourcedId === lesson.id)?.metadata
 					)
 					if (!lessonComponentMeta.success) {
-						logger.error("invalid lesson component metadata for exercise path", { lessonId: lesson.id })
+						logger.error("invalid lesson component metadata for exercise path", { lessonSourcedId: lesson.id })
 						throw errors.new("invalid lesson component metadata")
 					}
 
 					const questionCount = questionsMap.get(resource.sourcedId)
 					if (questionCount === undefined) {
 						logger.error("CRITICAL: exercise questions not found in map", {
-							exerciseId: resource.sourcedId,
+							exerciseSourcedId: resource.sourcedId,
 							availableIds: Array.from(questionsMap.keys())
 						})
 						throw errors.new("exercise questions missing from fetch results")
@@ -433,12 +440,12 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		for (const lesson of lessonsWithContent) {
 			const component = allComponents.find((c) => c.sourcedId === lesson.id)
 			if (!component) {
-				logger.error("lesson component not found", { lessonId: lesson.id })
+				logger.error("lesson component not found", { lessonSourcedId: lesson.id })
 				throw errors.new("lesson component missing")
 			}
 			if (typeof component.sortOrder !== "number") {
 				logger.error("lesson component missing sortOrder", {
-					lessonId: lesson.id,
+					lessonSourcedId: lesson.id,
 					sortOrder: component.sortOrder
 				})
 				throw errors.new("lesson component missing required sortOrder")
@@ -458,14 +465,14 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 			)
 			if (!componentResource) {
 				logger.error("assessment component resource not found", {
-					assessmentId: assessment.id,
-					unitId: unit.id
+					assessmentSourcedId: assessment.id,
+					unitSourcedId: unit.id
 				})
 				throw errors.new("assessment component resource missing")
 			}
 			if (typeof componentResource.sortOrder !== "number") {
 				logger.error("assessment component resource missing sortOrder", {
-					assessmentId: assessment.id,
+					assessmentSourcedId: assessment.id,
 					sortOrder: componentResource.sortOrder
 				})
 				throw errors.new("assessment component resource missing required sortOrder")

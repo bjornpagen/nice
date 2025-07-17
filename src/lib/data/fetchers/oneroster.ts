@@ -40,9 +40,9 @@ export const getResource = cache(
 )
 
 export const getClass = cache(
-	async (classId: string) => {
-		logger.info("getClass called", { classId })
-		return oneroster.getClass(classId)
+	async (classSourcedId: string) => {
+		logger.info("getClass called", { classSourcedId })
+		return oneroster.getClass(classSourcedId)
 	},
 	["oneroster-getClass"],
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -69,18 +69,18 @@ export const getAllCoursesBySlug = cache(
 )
 
 export const getCourseComponentsByCourseId = cache(
-	async (courseId: string) => {
-		logger.info("getCourseComponentsByCourseId called", { courseId })
-		return oneroster.getCourseComponents({ filter: `course.sourcedId='${courseId}' AND status='active'` })
+	async (courseSourcedId: string) => {
+		logger.info("getCourseComponentsByCourseId called", { courseSourcedId })
+		return oneroster.getCourseComponents({ filter: `course.sourcedId='${courseSourcedId}' AND status='active'` })
 	},
 	["oneroster-getCourseComponentsByCourseId"],
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
 export const getCourseComponentsByParentId = cache(
-	async (parentId: string) => {
-		logger.info("getCourseComponentsByParentId called", { parentId })
-		return oneroster.getCourseComponents({ filter: `parent.sourcedId='${parentId}' AND status='active'` })
+	async (parentSourcedId: string) => {
+		logger.info("getCourseComponentsByParentId called", { parentSourcedId })
+		return oneroster.getCourseComponents({ filter: `parent.sourcedId='${parentSourcedId}' AND status='active'` })
 	},
 	["oneroster-getCourseComponentsByParentId"],
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -96,43 +96,43 @@ export const getCourseComponentBySlug = cache(
 )
 
 export const getCourseComponentByCourseAndSlug = cache(
-	async (courseId: string, slug: string) => {
-		logger.info("getCourseComponentByCourseAndSlug called", { courseId, slug })
+	async (courseSourcedId: string, slug: string) => {
+		logger.info("getCourseComponentByCourseAndSlug called", { courseSourcedId, slug })
 		// Due to OneRoster API limitation, we can only use one AND operation
-		// Filter by slug in API (more selective - slugs are unique), then filter by courseId client-side
+		// Filter by slug in API (more selective - slugs are unique), then filter by courseSourcedId client-side
 		const components = await oneroster.getCourseComponents({
 			filter: `metadata.khanSlug='${slug}' AND status='active'`
 		})
 
-		// Filter by courseId in-memory
-		return components.filter((c) => c.course.sourcedId === courseId)
+		// Filter by courseSourcedId in-memory
+		return components.filter((c) => c.course.sourcedId === courseSourcedId)
 	},
 	["oneroster-getCourseComponentByCourseAndSlug"],
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
 export const getCourseComponentByParentAndSlug = cache(
-	async (parentId: string, slug: string) => {
-		logger.info("getCourseComponentByParentAndSlug called", { parentId, slug })
+	async (parentSourcedId: string, slug: string) => {
+		logger.info("getCourseComponentByParentAndSlug called", { parentSourcedId, slug })
 		// Due to OneRoster API limitation, we can only use one AND operation
-		// Filter by slug in API (more selective - slugs are unique), then filter by parentId client-side
+		// Filter by slug in API (more selective - slugs are unique), then filter by parentSourcedId client-side
 		const components = await oneroster.getCourseComponents({
 			filter: `metadata.khanSlug='${slug}' AND status='active'`
 		})
 
-		// Filter by parentId in-memory
-		return components.filter((c) => c.parent?.sourcedId === parentId)
+		// Filter by parentSourcedId in-memory
+		return components.filter((c) => c.parent?.sourcedId === parentSourcedId)
 	},
 	["oneroster-getCourseComponentByParentAndSlug"],
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
 export const getUnitsForCourses = cache(
-	async (courseIds: string[]) => {
-		logger.info("getUnitsForCourses called", { courseIds })
-		if (courseIds.length === 0) return []
+	async (courseSourcedIds: string[]) => {
+		logger.info("getUnitsForCourses called", { courseSourcedIds })
+		if (courseSourcedIds.length === 0) return []
 		// Encapsulates the `@` filter logic for OneRoster IN operator
-		const filter = `course.sourcedId@'${courseIds.join(",")}' AND status='active'`
+		const filter = `course.sourcedId@'${courseSourcedIds.join(",")}' AND status='active'`
 		return oneroster.getCourseComponents({ filter })
 	},
 	["oneroster-getUnitsForCourses"],
@@ -176,15 +176,15 @@ export const getResourcesBySlugAndType = cache(
 )
 
 export const getResourceByCourseAndSlug = cache(
-	async (courseId: string, slug: string, type: "qti") => {
-		logger.info("getResourceByCourseAndSlug called", { courseId, slug, type })
+	async (courseSourcedId: string, slug: string, type: "qti") => {
+		logger.info("getResourceByCourseAndSlug called", { courseSourcedId, slug, type })
 		// Due to OneRoster API limitation, we can only use one AND operation
 		// Keep filtering by slug as it's the most selective publicly queryable field
 		const filter = `metadata.khanSlug='${slug}' AND status='active'`
 		const resources = await oneroster.getAllResources({ filter })
 
-		// Filter by type and courseId in-memory
-		return resources.filter((r) => r.metadata?.type === type && r.metadata?.courseSourcedId === courseId)
+		// Filter by type and courseSourcedId in-memory
+		return resources.filter((r) => r.metadata?.type === type && r.metadata?.courseSourcedId === courseSourcedId)
 	},
 	["oneroster-getResourceByCourseAndSlug"],
 	{ revalidate: false } // equivalent to cacheLife("max")

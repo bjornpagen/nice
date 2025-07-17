@@ -24,7 +24,10 @@ export async function fetchLessonLayoutData(params: {
 	)
 
 	if (!currentLesson) {
-		logger.error("lesson not found in unit children", { lessonSlug: params.lesson, unitId: unitPageData.unit.id })
+		logger.error("lesson not found in unit children", {
+			lessonSlug: params.lesson,
+			unitSourcedId: unitPageData.unit.id
+		})
 		notFound()
 	}
 

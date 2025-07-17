@@ -3,7 +3,7 @@ import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import {
 	getAllCoursesBySlug,
-	getCourseComponentBySlug,
+	getCourseComponentByCourseAndSlug,
 	getCourseComponentsByParentId,
 	getResourceByCourseAndSlug,
 	getResourcesBySlugAndType
@@ -52,7 +52,7 @@ export async function fetchQuizPageData(params: {
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
 		logger.error("invalid quiz resource metadata", {
-			resourceId: resource.sourcedId,
+			resourceSourcedId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		throw errors.wrap(resourceMetadataResult.error, "invalid quiz resource metadata")
@@ -61,7 +61,7 @@ export async function fetchQuizPageData(params: {
 	// Because we use a discriminated union, we must also check the type
 	if (resourceMetadataResult.data.type !== "qti") {
 		logger.error("invalid resource type for quiz page", {
-			resourceId: resource.sourcedId,
+			resourceSourcedId: resource.sourcedId,
 			expected: "qti",
 			actual: resourceMetadataResult.data.type
 		})
@@ -73,7 +73,10 @@ export async function fetchQuizPageData(params: {
 	// Fetch questions from QTI server
 	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
-		logger.error("failed to fetch questions for quiz", { testId: resource.sourcedId, error: questionsResult.error })
+		logger.error("failed to fetch questions for quiz", {
+			testSourcedId: resource.sourcedId,
+			error: questionsResult.error
+		})
 		throw errors.wrap(questionsResult.error, "fetch questions for quiz")
 	}
 
@@ -126,7 +129,7 @@ export async function fetchUnitTestPageData(params: {
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
 		logger.error("invalid unittest resource metadata", {
-			resourceId: resource.sourcedId,
+			resourceSourcedId: resource.sourcedId,
 			error: resourceMetadataResult.error
 		})
 		throw errors.wrap(resourceMetadataResult.error, "invalid unittest resource metadata")
@@ -135,7 +138,7 @@ export async function fetchUnitTestPageData(params: {
 	// Because we use a discriminated union, we must also check the type
 	if (resourceMetadataResult.data.type !== "qti") {
 		logger.error("invalid resource type for unittest page", {
-			resourceId: resource.sourcedId,
+			resourceSourcedId: resource.sourcedId,
 			expected: "qti",
 			actual: resourceMetadataResult.data.type
 		})
@@ -147,7 +150,10 @@ export async function fetchUnitTestPageData(params: {
 	// Fetch questions from QTI server
 	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
-		logger.error("failed to fetch questions for unittest", { testId: resource.sourcedId, error: questionsResult.error })
+		logger.error("failed to fetch questions for unittest", {
+			testSourcedId: resource.sourcedId,
+			error: questionsResult.error
+		})
 		throw errors.wrap(questionsResult.error, "fetch questions for unittest")
 	}
 
@@ -185,7 +191,10 @@ export async function fetchCourseChallengePage_TestData(params: {
 
 	const testResourceResult = await errors.try(getResourceByCourseAndSlug(course.sourcedId, params.test, "qti"))
 	if (testResourceResult.error) {
-		logger.error("failed to fetch test resource", { error: testResourceResult.error, courseId: course.sourcedId })
+		logger.error("failed to fetch test resource", {
+			error: testResourceResult.error,
+			courseSourcedId: course.sourcedId
+		})
 		throw errors.wrap(testResourceResult.error, "fetch test resource")
 	}
 	const testResource = testResourceResult.data[0]
@@ -197,7 +206,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	const testResourceMetadataResult = ResourceMetadataSchema.safeParse(testResource.metadata)
 	if (!testResourceMetadataResult.success) {
 		logger.error("invalid test resource metadata", {
-			resourceId: testResource.sourcedId,
+			resourceSourcedId: testResource.sourcedId,
 			error: testResourceMetadataResult.error
 		})
 		throw errors.wrap(testResourceMetadataResult.error, "invalid test resource metadata")
@@ -206,7 +215,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	// Because we use a discriminated union, we must also check the type
 	if (testResourceMetadataResult.data.type !== "qti") {
 		logger.error("invalid resource type for test page", {
-			resourceId: testResource.sourcedId,
+			resourceSourcedId: testResource.sourcedId,
 			expected: "qti",
 			actual: testResourceMetadataResult.data.type
 		})
@@ -216,11 +225,11 @@ export async function fetchCourseChallengePage_TestData(params: {
 
 	const qtiTestDataResult = await errors.try(getAllQuestionsForTest(testResource.sourcedId))
 	if (qtiTestDataResult.error) {
-		logger.error("failed to fetch questions for course challenge", {
-			testId: testResource.sourcedId,
+		logger.error("failed to fetch questions for test", {
+			testSourcedId: testResource.sourcedId,
 			error: qtiTestDataResult.error
 		})
-		throw errors.wrap(qtiTestDataResult.error, "fetch questions for course challenge")
+		throw errors.wrap(qtiTestDataResult.error, "fetch questions for test")
 	}
 
 	const questions = qtiTestDataResult.data.questions.map((q) => ({
@@ -267,11 +276,27 @@ export async function fetchQuizRedirectPath(params: {
 	logger.info("fetchQuizRedirectPath called", { params })
 	const decodedUnit = decodeURIComponent(params.unit)
 
-	// Look up the unit by its slug to get its sourcedId
-	const unitResult = await errors.try(getCourseComponentBySlug(decodedUnit))
+	// First, fetch the course to get its sourcedId
+	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
+	if (coursesResult.error) {
+		logger.error("failed to fetch course by slug", { error: coursesResult.error, slug: params.course })
+		throw errors.wrap(coursesResult.error, "fetch course")
+	}
+	const course = coursesResult.data[0]
+	if (!course) {
+		throw errors.new("course not found for redirect")
+	}
+	const courseSourcedId = course.sourcedId
+
+	// Look up the unit by BOTH course AND slug to avoid collisions
+	const unitResult = await errors.try(getCourseComponentByCourseAndSlug(courseSourcedId, decodedUnit))
 	if (unitResult.error) {
-		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: decodedUnit })
-		throw errors.wrap(unitResult.error, "failed to fetch unit by slug")
+		logger.error("failed to fetch unit by course and slug", {
+			error: unitResult.error,
+			courseSourcedId: courseSourcedId,
+			slug: decodedUnit
+		})
+		throw errors.wrap(unitResult.error, "failed to fetch unit by course and slug")
 	}
 	const unit = unitResult.data[0]
 	if (!unit) {
@@ -305,14 +330,14 @@ export async function fetchQuizRedirectPath(params: {
 	const firstLessonMetadataResult = ComponentMetadataSchema.safeParse(firstLesson.metadata)
 	if (!firstLessonMetadataResult.success) {
 		logger.error("invalid first lesson metadata", {
-			lessonId: firstLesson.sourcedId,
+			lessonSourcedId: firstLesson.sourcedId,
 			error: firstLessonMetadataResult.error
 		})
 		throw errors.wrap(firstLessonMetadataResult.error, "invalid first lesson metadata")
 	}
 	const firstLessonSlug = firstLessonMetadataResult.data.khanSlug
 	if (!firstLessonSlug) {
-		logger.error("first lesson missing khanSlug", { lessonId: firstLesson.sourcedId })
+		logger.error("first lesson missing khanSlug", { lessonSourcedId: firstLesson.sourcedId })
 		throw errors.new("first lesson missing khanSlug")
 	}
 
@@ -329,11 +354,27 @@ export async function fetchTestRedirectPath(params: {
 	logger.info("fetchTestRedirectPath called", { params })
 	const decodedUnit = decodeURIComponent(params.unit)
 
-	// Look up the unit by its slug to get its sourcedId
-	const unitResult = await errors.try(getCourseComponentBySlug(decodedUnit))
+	// First, fetch the course to get its sourcedId
+	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
+	if (coursesResult.error) {
+		logger.error("failed to fetch course by slug", { error: coursesResult.error, slug: params.course })
+		throw errors.wrap(coursesResult.error, "fetch course")
+	}
+	const course = coursesResult.data[0]
+	if (!course) {
+		throw errors.new("course not found for redirect")
+	}
+	const courseSourcedId = course.sourcedId
+
+	// Look up the unit by BOTH course AND slug to avoid collisions
+	const unitResult = await errors.try(getCourseComponentByCourseAndSlug(courseSourcedId, decodedUnit))
 	if (unitResult.error) {
-		logger.error("failed to fetch unit by slug", { error: unitResult.error, slug: decodedUnit })
-		throw errors.wrap(unitResult.error, "failed to fetch unit by slug")
+		logger.error("failed to fetch unit by course and slug", {
+			error: unitResult.error,
+			courseSourcedId: courseSourcedId,
+			slug: decodedUnit
+		})
+		throw errors.wrap(unitResult.error, "failed to fetch unit by course and slug")
 	}
 	const unit = unitResult.data[0]
 	if (!unit) {
@@ -367,14 +408,14 @@ export async function fetchTestRedirectPath(params: {
 	const firstLessonMetadataResult = ComponentMetadataSchema.safeParse(firstLesson.metadata)
 	if (!firstLessonMetadataResult.success) {
 		logger.error("invalid first lesson metadata", {
-			lessonId: firstLesson.sourcedId,
+			lessonSourcedId: firstLesson.sourcedId,
 			error: firstLessonMetadataResult.error
 		})
 		throw errors.wrap(firstLessonMetadataResult.error, "invalid first lesson metadata")
 	}
 	const firstLessonSlug = firstLessonMetadataResult.data.khanSlug
 	if (!firstLessonSlug) {
-		logger.error("first lesson missing khanSlug", { lessonId: firstLesson.sourcedId })
+		logger.error("first lesson missing khanSlug", { lessonSourcedId: firstLesson.sourcedId })
 		throw errors.new("first lesson missing khanSlug")
 	}
 
