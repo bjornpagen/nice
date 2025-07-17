@@ -37,17 +37,9 @@ export function LessonSection({
 						{learningContent.length > 0 ? (
 							learningContent.map((item) =>
 								item.type === "Video" ? (
-									<LessonVideo
-										key={`video-${item.id}`}
-										video={item}
-										completed={progressMap.get(item.id)?.completed || false}
-									/>
+									<LessonVideo key={`video-${item.id}`} video={item} progress={progressMap.get(item.id)} />
 								) : (
-									<LessonArticle
-										key={`article-${item.id}`}
-										article={item}
-										completed={progressMap.get(item.id)?.completed || false}
-									/>
+									<LessonArticle key={`article-${item.id}`} article={item} progress={progressMap.get(item.id)} />
 								)
 							)
 						) : (
@@ -77,10 +69,10 @@ export function LessonSection({
 	)
 }
 
-function LessonVideo({ video, completed }: { video: Pick<Video, "title" | "path">; completed: boolean }) {
+function LessonVideo({ video, progress }: { video: Pick<Video, "title" | "path">; progress?: AssessmentProgress }) {
 	return (
 		<div className="bg-white flex items-center gap-2">
-			<ActivityIcon variant="video" completed={completed} />
+			<ActivityIcon variant="video" completed={progress?.completed || false} progress={progress?.score} />
 			<Link href={video.path} className="text-gray-800 text-sm hover:underline">
 				{video.title}
 			</Link>
@@ -88,10 +80,16 @@ function LessonVideo({ video, completed }: { video: Pick<Video, "title" | "path"
 	)
 }
 
-function LessonArticle({ article, completed }: { article: Pick<Article, "title" | "path">; completed: boolean }) {
+function LessonArticle({
+	article,
+	progress
+}: {
+	article: Pick<Article, "title" | "path">
+	progress?: AssessmentProgress
+}) {
 	return (
 		<div className="bg-white flex items-center gap-2">
-			<ActivityIcon variant="article" completed={completed} />
+			<ActivityIcon variant="article" completed={progress?.completed || false} progress={progress?.score} />
 			<Link href={article.path} className="text-gray-800 text-sm hover:underline">
 				{article.title}
 			</Link>

@@ -50,6 +50,7 @@ export function LessonChildTab({ child, progress }: { child: LessonChild; progre
 				color={isActive ? "bg-blue-100" : undefined}
 				className="w-6 h-6"
 				completed={progress?.completed}
+				progress={progress?.score}
 			/>
 		)
 

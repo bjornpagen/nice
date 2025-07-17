@@ -64,12 +64,24 @@ export async function updateVideoProgress(
 	duration: number
 ): Promise<void> {
 	if (duration <= 0) {
-		logger.warn("video progress tracking skipped", { videoId, reason: "invalid duration" })
+		logger.warn("video progress tracking skipped", { videoId, reason: "invalid duration", duration })
 		return
 	}
 
 	const percentComplete = Math.round((currentTime / duration) * 100)
-	logger.debug("tracking video progress", { userSourceId, videoId, percentComplete })
+	const formattedCurrentTime = Math.floor(currentTime)
+	const formattedDuration = Math.floor(duration)
+
+	// Log detailed progress information
+	logger.info("saving video progress", {
+		userSourceId,
+		videoId,
+		percentComplete,
+		currentTime: formattedCurrentTime,
+		duration: formattedDuration,
+		timeWatched: `${formattedCurrentTime}s of ${formattedDuration}s`,
+		timestamp: new Date().toISOString()
+	})
 
 	// Define the completion threshold.
 	const COMPLETION_THRESHOLD = 95
@@ -79,6 +91,15 @@ export async function updateVideoProgress(
 	const score = isCompleted ? 1.0 : Number.parseFloat((percentComplete / 100).toFixed(2))
 	// The status becomes 'fully graded' upon completion, which marks it as complete in the UI.
 	const scoreStatus = isCompleted ? ("fully graded" as const) : ("partially graded" as const)
+
+	// Log whether this is marking the video as complete
+	if (isCompleted) {
+		logger.info("video marked as complete", {
+			videoId,
+			userSourceId,
+			finalPercentage: percentComplete
+		})
+	}
 
 	// The sourcedId for the line item is the same as the video resource's sourcedId.
 	const lineItemSourcedId = videoId
@@ -95,6 +116,13 @@ export async function updateVideoProgress(
 		}
 	}
 
+	logger.debug("sending video progress to OneRoster", {
+		resultSourcedId,
+		score,
+		scoreStatus,
+		videoId
+	})
+
 	const result = await errors.try(oneroster.putResult(resultSourcedId, resultPayload))
 	if (result.error) {
 		// This is a non-critical background task. Log the error for observability
@@ -102,6 +130,7 @@ export async function updateVideoProgress(
 		logger.error("failed to update video progress", {
 			userSourceId,
 			videoId,
+			percentComplete,
 			error: result.error
 		})
 		// This is a non-critical background task. Re-throw the error to allow the
@@ -109,11 +138,13 @@ export async function updateVideoProgress(
 		throw errors.wrap(result.error, "update video progress")
 	}
 
-	logger.info("successfully updated video progress", {
+	logger.info("video progress saved successfully", {
 		userSourceId,
 		videoId,
 		score,
-		status: scoreStatus
+		percentComplete,
+		status: scoreStatus,
+		isPartialProgress: !isCompleted
 	})
 }
 

@@ -51,12 +51,18 @@ export async function getUserUnitProgress(
 
 	// Process results to build the progress map
 	for (const result of resultsResponse.data) {
-		// For assessments, store score and proficiency
+		// For fully graded assessments, store score and proficiency
 		if (result.scoreStatus === "fully graded" && result.score !== undefined) {
 			progressMap.set(result.assessmentLineItem.sourcedId, {
 				completed: true,
 				score: result.score,
 				proficiency: calculateProficiency(result.score)
+			})
+		} else if (result.scoreStatus === "partially graded" && result.score !== undefined) {
+			// For partially completed items (e.g., videos in progress)
+			progressMap.set(result.assessmentLineItem.sourcedId, {
+				completed: false,
+				score: result.score
 			})
 		} else if (result.scoreStatus === "fully graded") {
 			// For non-scored items (like articles), just mark as completed
@@ -69,7 +75,8 @@ export async function getUserUnitProgress(
 	logger.info("fetched user progress", {
 		userId,
 		courseSourcedId,
-		completedCount: progressMap.size
+		completedCount: progressMap.size,
+		partialCount: Array.from(progressMap.values()).filter((p) => !p.completed && p.score !== undefined).length
 	})
 
 	return progressMap
