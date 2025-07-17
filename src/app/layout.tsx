@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import * as React from "react"
 import { DialogManagerProvider } from "@/components/providers/dialog-manager-provider"
 import "@/styles/globals.css"
+import "@/styles/variables.css"
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",

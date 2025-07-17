@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { AssessmentBottomNav } from "@/components/practice/assessment-bottom-nav"
+import { AssessmentStartScreen } from "@/components/practice/assessment-start-screen"
 import { AssessmentStepper } from "@/components/practice/assessment-stepper"
 import type { UnitTestPageData } from "@/lib/types/page"
 
@@ -24,27 +24,16 @@ export function TestContent({ testPromise }: { testPromise: Promise<UnitTestPage
 	}
 
 	return (
-		<div className="flex flex-col h-full">
-			{/* Test Header */}
-			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0 text-center">
-				<h1 className="text-2xl font-bold text-gray-900">{test.title}</h1>
-				{test.description && <p className="text-gray-600 mt-2">{test.description}</p>}
-			</div>
-
-			{/* Ready to Take Test Section */}
-			<div className="bg-blue-900 text-white flex-1 flex flex-col items-center justify-center p-12 pb-32">
-				<div className="text-center max-w-md">
-					<h2 className="text-3xl font-bold mb-4">Ready to take the unit test?</h2>
-					<p className="text-lg text-blue-100 mb-8">Test your understanding of the entire unit!</p>
-					<p className="text-lg font-medium mb-8">{questions.length} questions</p>
-				</div>
-			</div>
-			<AssessmentBottomNav
-				contentType="Test"
-				onContinue={() => setHasStarted(true)}
-				isEnabled={true}
-				isStartScreen={true}
-			/>
-		</div>
+		<AssessmentStartScreen
+			headerTitle={test.title}
+			headerDescription={test.description}
+			title="Ready to take the unit test?"
+			subtitle="Test your understanding of the entire unit!"
+			subtitleColorClass="text-blue-100"
+			questionsCount={questions.length}
+			onStart={() => setHasStarted(true)}
+			bgClass="bg-blue-900"
+			contentType="Test"
+		/>
 	)
 }

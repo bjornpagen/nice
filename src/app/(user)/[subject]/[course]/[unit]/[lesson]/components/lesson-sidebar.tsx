@@ -45,7 +45,7 @@ export function LessonSidebar({
 
 			{/* Expanded sidebar - full width */}
 			{!isCollapsed && (
-				<div className="w-112 hidden lg:flex bg-gray-50 border-r border-gray-200 flex-col h-full">
+				<div className="w-[var(--sidebar-width)] hidden lg:flex bg-gray-50 border-r border-gray-200 flex-col h-full">
 					{/* Fixed header section */}
 					<div className="flex-shrink-0 p-5 pb-0">
 						{/* Course header */}
@@ -99,7 +99,7 @@ export function LessonSidebar({
 			{/* Toggle button - fixed to middle of viewport */}
 			<div
 				className={`fixed top-1/2 -translate-y-1/2 z-50 transition-all duration-300 ease-in-out ${
-					isCollapsed ? "left-6" : "left-[27.5rem]"
+					isCollapsed ? "left-6" : "left-[calc(var(--sidebar-width)-0.5rem)]"
 				}`}
 			>
 				<button

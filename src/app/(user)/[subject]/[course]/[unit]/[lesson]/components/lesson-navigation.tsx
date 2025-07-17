@@ -1,6 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import type { Course, Lesson, Unit } from "@/lib/types/structure"
 import { upperCase } from "@/lib/utils"
@@ -34,28 +33,17 @@ export function LessonNavigation({
 	lesson: Pick<Lesson, "title">
 	setSelectedLessonId: (lessonId: string) => void
 }) {
-	const pathname = usePathname()
-
 	const index = unit.children.findIndex((child) => child.type === "Lesson" && child.title === lesson.title)
-	// logger.info("lesson navigation", { index, lesson: lesson.title })
 
 	const prev = findPrevLesson(unit, index)
-	// logger.info("lesson navigation: prevLesson", { found: prev != null })
 
 	const next = findNextLesson(unit, index)
-	// logger.info("lesson navigation: nextLesson", { found: next != null })
 
 	// Truncate course title if it's too long (Khan Academy style)
 	const truncateCourseTitle = (title: string, maxLength = 25) => {
 		if (title.length <= maxLength) return title
 		return `${title.substring(0, maxLength).trim()}...`
 	}
-
-	// Construct unit path from current pathname
-	// Current path: /economics/microeconomics/basic-economic-concepts/scarcity/v/scarcity-video
-	// Unit path should be: /economics/microeconomics/basic-economic-concepts
-	const pathSegments = pathname.split("/").filter(Boolean)
-	const unitPagePath = pathSegments.length >= 3 ? `/${pathSegments.slice(0, 3).join("/")}` : unit.path
 
 	// Handle navigation to previous lesson
 	const handlePrevLesson = () => {
@@ -91,7 +79,7 @@ export function LessonNavigation({
 						COURSE: {upperCase(truncateCourseTitle(course.title))}
 					</Link>
 					<span className="text-gray-600 text-xs font-medium flex-shrink-0">{" > "}</span>
-					<Link className="text-blue-600 hover:underline font-medium text-xs whitespace-nowrap" href={unitPagePath}>
+					<Link className="text-blue-600 hover:underline font-medium text-xs whitespace-nowrap" href={unit.path}>
 						UNIT {unit.ordering + 1}
 					</Link>
 				</div>
