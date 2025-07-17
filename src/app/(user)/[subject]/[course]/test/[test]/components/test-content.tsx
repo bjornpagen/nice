@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
+import type { Question } from "@/lib/types/domain"
 import type { CourseChallengePageData } from "@/lib/types/page"
 
 type TestQuestion = CourseChallengePageData["questions"][0]
@@ -77,8 +78,10 @@ export function TestContent({ testDataPromise }: { testDataPromise: Promise<Cour
 	const { test, questions } = React.use(testDataPromise)
 	const [hasStarted, setHasStarted] = React.useState(false)
 
+	const randomizedQuestions = getRandomizedQuestions(questions, questions.length / 4)
+
 	if (hasStarted) {
-		return <QuestionStepper questions={questions} />
+		return <QuestionStepper questions={randomizedQuestions} />
 	}
 
 	return (
@@ -93,16 +96,21 @@ export function TestContent({ testDataPromise }: { testDataPromise: Promise<Cour
 				<div className="text-center max-w-md">
 					<h2 className="text-3xl font-bold mb-4">Course Challenge</h2>
 					<p className="text-lg text-purple-100 mb-8">Test your mastery of the entire course!</p>
-					<p className="text-lg font-medium mb-8">{questions.length} questions</p>
+					<p className="text-lg font-medium mb-8">{randomizedQuestions.length} questions</p>
 					<Button
 						onClick={() => setHasStarted(true)}
 						className="bg-white text-purple-700 hover:bg-gray-100 px-8 py-3 text-lg font-semibold disabled:opacity-50"
-						disabled={questions.length === 0}
+						disabled={randomizedQuestions.length === 0}
 					>
-						{questions.length > 0 ? "Start Challenge" : "No Questions Available"}
+						{randomizedQuestions.length > 0 ? "Start Challenge" : "No Questions Available"}
 					</Button>
 				</div>
 			</div>
 		</div>
 	)
+}
+
+function getRandomizedQuestions(questions: Question[], limit?: number) {
+	const shuffledQuestions = questions.sort(() => Math.random() - 0.5)
+	return shuffledQuestions.slice(0, limit ?? questions.length)
 }
