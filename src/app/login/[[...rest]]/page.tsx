@@ -68,7 +68,8 @@ export default function Home() {
 									className="w-full h-12 text-base font-medium border-gray-300 hover:bg-gray-50"
 									onClick={handleTimeBackSignIn}
 								>
-									Continue with TimeBack™
+									<span className="mr-2">Continue with</span>
+									<Image src="/timeback.png" alt="TimeBack" width={100} height={100} className="h-5 w-auto" />
 								</Button>
 
 								<p className="text-xs text-gray-500 text-center leading-relaxed">
