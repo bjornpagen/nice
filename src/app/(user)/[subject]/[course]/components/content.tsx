@@ -1,10 +1,12 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
 import { Info } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
+import { type AssessmentProgress, getUserUnitProgress } from "@/lib/actions/progress"
 import type { CoursePageData } from "@/lib/types/page"
 import { CourseChallenge } from "./course-challenge"
 import { CourseHeader } from "./course-header"
@@ -17,6 +19,21 @@ import { UnitOverviewSection } from "./unit-overview-section"
 export function Content({ dataPromise }: { dataPromise: Promise<CoursePageData> }) {
 	// Consume the single, consolidated data promise.
 	const { params, course, lessonCount } = React.use(dataPromise)
+	const { user } = useUser()
+	const [progressMap, setProgressMap] = React.useState<Map<string, AssessmentProgress>>(new Map())
+
+	// Fetch user progress
+	React.useEffect(() => {
+		const fetchProgress = async () => {
+			const userSourcedId = user?.publicMetadata?.sourceId
+			if (typeof userSourcedId === "string") {
+				const progress = await getUserUnitProgress(userSourcedId, course.id)
+				setProgressMap(progress)
+			}
+		}
+
+		void fetchProgress()
+	}, [user, course.id])
 
 	return (
 		<div className="h-full overflow-y-auto overflow-x-hidden max-w-full">
@@ -56,6 +73,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<CoursePageData> 
 									unitChildren={unit.children}
 									path={unit.path}
 									next={index === 0}
+									progressMap={progressMap}
 								/>
 							</div>
 						))}

@@ -1,8 +1,10 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
 import { Info } from "lucide-react"
 import * as React from "react"
 import { Footer } from "@/components/footer"
+import { type AssessmentProgress, getUserUnitProgress } from "@/lib/actions/progress"
 import type { UnitPageData } from "@/lib/types/page"
 import type { UnitChild } from "@/lib/types/structure"
 import { CourseHeader } from "../../components/course-header"
@@ -17,6 +19,21 @@ import { UnitTestSection } from "../../components/unit-test-section"
 export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> }) {
 	// Consume the single, consolidated data promise.
 	const { params, course, allUnits, lessonCount, challenges, unit } = React.use(dataPromise)
+	const { user } = useUser()
+	const [progressMap, setProgressMap] = React.useState<Map<string, AssessmentProgress>>(new Map())
+
+	// Fetch user progress
+	React.useEffect(() => {
+		const fetchProgress = async () => {
+			const userSourcedId = user?.publicMetadata?.sourceId
+			if (typeof userSourcedId === "string") {
+				const progress = await getUserUnitProgress(userSourcedId, course.id)
+				setProgressMap(progress)
+			}
+		}
+
+		void fetchProgress()
+	}, [user, course.id])
 
 	const unitIndex = allUnits.findIndex((u) => u.id === unit.id)
 	if (unitIndex === -1) {
@@ -50,7 +67,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> })
 						<ProficiencyLegend />
 						<React.Suspense fallback={<div className="w-full h-4 bg-gray-200 animate-pulse rounded" />}>
 							<div className="mt-4">
-								<ProficiencyProgress unitChildren={unit.children} />
+								<ProficiencyProgress unitChildren={unit.children} progressMap={progressMap} />
 							</div>
 						</React.Suspense>
 					</div>
@@ -81,7 +98,7 @@ export function Content({ dataPromise }: { dataPromise: Promise<UnitPageData> })
 							switch (child.type) {
 								case "Lesson":
 									// Pass the fully hydrated lesson to the component
-									return <LessonSection key={child.id} lesson={child} />
+									return <LessonSection key={child.id} lesson={child} progressMap={progressMap} />
 								case "Quiz":
 									return <QuizSection key={child.id} quiz={child} />
 								case "UnitTest":

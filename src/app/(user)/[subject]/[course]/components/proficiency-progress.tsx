@@ -1,4 +1,5 @@
 import { ProficiencyIcon, type proficiencyIconVariants } from "@/components/icons/proficiency"
+import type { AssessmentProgress } from "@/lib/actions/progress"
 import type { UnitChild } from "@/lib/types/structure"
 
 type ProficiencyItem = {
@@ -6,15 +7,27 @@ type ProficiencyItem = {
 	variant: keyof typeof proficiencyIconVariants
 }
 
-export function ProficiencyProgress({ unitChildren }: { unitChildren: UnitChild[] }) {
+export function ProficiencyProgress({
+	unitChildren,
+	progressMap
+}: {
+	unitChildren: UnitChild[]
+	progressMap: Map<string, AssessmentProgress>
+}) {
 	const items: ProficiencyItem[] = unitChildren.flatMap((child): ProficiencyItem[] => {
 		if (child.type === "Lesson") {
 			return child.children
 				.filter((c) => c.type === "Exercise")
-				.map((exercise) => ({
-					id: exercise.id,
-					variant: "notStarted"
-				}))
+				.map((exercise) => {
+					const progress = progressMap.get(exercise.id)
+					// Use proficiency level if completed, otherwise not started
+					const variant = progress?.completed && progress?.proficiency ? progress.proficiency : "notStarted"
+
+					return {
+						id: exercise.id,
+						variant
+					}
+				})
 		}
 
 		if (child.type === "Quiz") {

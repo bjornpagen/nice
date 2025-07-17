@@ -1,5 +1,6 @@
 import { Sparkles } from "lucide-react"
 import Link from "next/link"
+import type { AssessmentProgress } from "@/lib/actions/progress"
 import type { UnitChild } from "@/lib/types/structure"
 import { cn } from "@/lib/utils"
 import { ProficiencyProgress } from "./proficiency-progress"
@@ -8,12 +9,14 @@ export function ProficiencyProgressOverview({
 	index,
 	unitChildren,
 	path,
-	next = false
+	next = false,
+	progressMap
 }: {
 	index: number
 	unitChildren: UnitChild[]
 	path: string
 	next?: boolean
+	progressMap: Map<string, AssessmentProgress>
 }) {
 	return (
 		<div className={cn("py-3 px-6", next ? "bg-blue-100" : "bg-gray-50")}>
@@ -31,7 +34,7 @@ export function ProficiencyProgressOverview({
 						</div>
 					</div>
 					<div className="ml-20">
-						<ProficiencyProgress unitChildren={unitChildren} />
+						<ProficiencyProgress unitChildren={unitChildren} progressMap={progressMap} />
 					</div>
 				</>
 			) : (
@@ -41,7 +44,7 @@ export function ProficiencyProgressOverview({
 							Unit {index + 1}
 						</Link>
 					</h3>
-					<ProficiencyProgress unitChildren={unitChildren} />
+					<ProficiencyProgress unitChildren={unitChildren} progressMap={progressMap} />
 				</div>
 			)}
 		</div>
