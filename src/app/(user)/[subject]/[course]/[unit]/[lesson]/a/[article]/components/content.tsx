@@ -1,13 +1,24 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
 import Image from "next/image"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
+import { trackArticleView } from "@/lib/actions/tracking"
 import type { ArticlePageData } from "@/lib/types/page"
 
 export function Content({ articlePromise }: { articlePromise: Promise<ArticlePageData> }) {
 	const article = React.use(articlePromise)
+	const { user } = useUser()
+
+	React.useEffect(() => {
+		const userSourcedId = user?.publicMetadata?.sourceId
+		if (typeof userSourcedId === "string" && article.id) {
+			// Fire-and-forget the tracking action on component mount.
+			void trackArticleView(userSourcedId, article.id)
+		}
+	}, [user, article.id])
 
 	return (
 		<div className="bg-white h-full flex flex-col">

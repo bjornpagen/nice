@@ -1,7 +1,10 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import * as React from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { getUserUnitProgress } from "@/lib/actions/progress"
 import type { Course, Lesson, Unit } from "@/lib/types/structure"
 import { LessonBreadcrumbs } from "./lesson-breadcrumbs"
 import { LessonChildTab } from "./lesson-child-tab"
@@ -24,6 +27,26 @@ export function LessonSidebar({
 	setIsCollapsed: (collapsed: boolean) => void
 	setSelectedLessonId: (lessonId: string) => void
 }) {
+	const { user } = useUser()
+	const [progressMap, setProgressMap] = React.useState<Map<string, boolean>>(new Map())
+
+	// Fetch user progress
+	React.useEffect(() => {
+		const fetchProgress = async () => {
+			const userSourcedId = user?.publicMetadata?.sourceId
+			if (typeof userSourcedId === "string") {
+				// Extract course ID from the path (assumes path like /subject/course/unit/lesson)
+				const pathParts = course.path.split("/")
+				const courseId = pathParts[2] || "" // Assuming course is the second segment after subject
+
+				const progress = await getUserUnitProgress(userSourcedId, courseId)
+				setProgressMap(progress)
+			}
+		}
+
+		void fetchProgress()
+	}, [user, course.path])
+
 	const toggleSidebar = () => {
 		setIsCollapsed(!isCollapsed)
 	}
@@ -65,7 +88,7 @@ export function LessonSidebar({
 								{/* Lesson content */}
 								<div className="px-5 py-2">
 									{lesson.children.map((child) => (
-										<LessonChildTab key={child.id} child={child} />
+										<LessonChildTab key={child.id} child={child} completed={progressMap.get(child.id) || false} />
 									))}
 								</div>
 

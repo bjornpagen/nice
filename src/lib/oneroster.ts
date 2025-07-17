@@ -67,7 +67,9 @@ const GUIDRefWriteSchema = z.object({
 		"term",
 		"schoolYear",
 		"componentResource",
-		"category"
+		"category",
+		"assessmentLineItem",
+		"lineItem"
 	])
 })
 
@@ -341,6 +343,33 @@ const CreateAssessmentLineItemInputSchema = z.object({
 	resultValueMax: z.number().optional()
 })
 export type CreateAssessmentLineItemInput = z.infer<typeof CreateAssessmentLineItemInputSchema>
+
+// --- NEW: Schemas for AssessmentResult ---
+const ScoreStatusEnum = z.enum(["exempt", "fully graded", "not submitted", "partially graded", "submitted"])
+
+const AssessmentResultSchema = z.object({
+	sourcedId: z.string(),
+	status: z.enum(["active", "tobedeleted"]),
+	dateLastModified: z.string().datetime(),
+	assessmentLineItem: GUIDRefReadSchema,
+	student: GUIDRefReadSchema,
+	scoreStatus: ScoreStatusEnum,
+	score: z.number(),
+	scoreDate: z.string().datetime(),
+	comment: z.string().nullable().optional()
+})
+export type AssessmentResult = z.infer<typeof AssessmentResultSchema>
+
+const CreateResultInputSchema = z.object({
+	result: z.object({
+		assessmentLineItem: GUIDRefWriteSchema,
+		student: GUIDRefWriteSchema,
+		scoreStatus: ScoreStatusEnum,
+		scoreDate: z.string().datetime(),
+		score: z.number()
+	})
+})
+export type CreateResultInput = z.infer<typeof CreateResultInputSchema>
 
 export class Client {
 	#accessToken: string | null = null
@@ -1395,5 +1424,87 @@ export class Client {
 		)
 
 		logger.info("oneroster: successfully deleted assessment line item", { sourcedId })
+	}
+
+	/**
+	 * Creates a new Assessment Result in the gradebook.
+	 * @param {CreateResultInput} payload - The result data to create.
+	 * @returns {Promise<unknown>} The API response.
+	 */
+	async createResult(payload: CreateResultInput): Promise<unknown> {
+		const validationResult = CreateResultInputSchema.safeParse(payload)
+		if (!validationResult.success) {
+			logger.error("invalid input for createResult", { error: validationResult.error, input: payload })
+			throw errors.wrap(validationResult.error, "invalid input for createResult")
+		}
+
+		logger.info("creating assessment result", {
+			studentId: payload.result.student.sourcedId,
+			lineItemId: payload.result.assessmentLineItem.sourcedId
+		})
+
+		return this.#request(
+			"/ims/oneroster/gradebook/v1p2/results/",
+			{
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(validationResult.data)
+			},
+			z.unknown() // The response for a single creation is not critical here.
+		)
+	}
+
+	/**
+	 * Creates or updates an Assessment Result.
+	 * @param sourcedId The unique identifier for the result.
+	 * @param payload The result data.
+	 * @returns The created or updated result.
+	 */
+	async putResult(
+		sourcedId: string,
+		payload: { result: z.infer<typeof CreateResultInputSchema>["result"] }
+	): Promise<AssessmentResult> {
+		const validation = CreateResultInputSchema.safeParse(payload)
+		if (!validation.success) {
+			throw errors.wrap(validation.error, "putResult input validation")
+		}
+
+		const response = await this.#request(
+			`/ims/oneroster/gradebook/v1p2/assessmentResults/${sourcedId}`,
+			{
+				method: "PUT",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ assessmentResult: validation.data.result })
+			},
+			z.object({ assessmentResult: AssessmentResultSchema })
+		)
+
+		if (!response?.assessmentResult) {
+			throw errors.new("invalid response from putResult")
+		}
+
+		return response.assessmentResult
+	}
+
+	/**
+	 * Fetches all assessment results with optional filtering and sorting.
+	 * @param options Query options including filter, sort, and orderBy
+	 * @returns A promise that resolves to an array of assessment results.
+	 */
+	async getAllResults(options?: QueryOptions): Promise<AssessmentResult[]> {
+		logger.info("oneroster: fetching all results", options)
+
+		const results = await this.#fetchPaginatedCollection<{ assessmentResults: AssessmentResult[] }, AssessmentResult>({
+			endpoint: "/ims/oneroster/gradebook/v1p2/assessmentResults",
+			responseKey: "assessmentResults",
+			schema: z.object({ assessmentResults: z.array(AssessmentResultSchema) }),
+			...options
+		})
+
+		logger.info("oneroster: successfully fetched all results", {
+			count: results.length,
+			...options
+		})
+		return results
 	}
 }

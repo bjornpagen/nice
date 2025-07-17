@@ -18,7 +18,7 @@ function getVariant(child: Pick<LessonChild, "type">) {
 	}
 }
 
-export function LessonChildTab({ child }: { child: LessonChild }) {
+export function LessonChildTab({ child, completed = false }: { child: LessonChild; completed?: boolean }) {
 	const variant = getVariant(child)
 
 	const pathname = usePathname()
@@ -26,10 +26,10 @@ export function LessonChildTab({ child }: { child: LessonChild }) {
 		return (
 			<div className="bg-blue-100 border border-blue-200 border-l-4 border-l-blue-600 px-4 py-6 shadow-sm">
 				<Link href={child.path} className="w-full flex items-center gap-3">
-					<ActivityIcon variant={variant} color="bg-blue-100" className="w-6 h-6" />
+					<ActivityIcon variant={variant} color="bg-blue-100" className="w-6 h-6" completed={completed} />
 					<div className="flex flex-col">
 						<p className="text-base text-blue-800">{child.title}</p>
-						{variant === "exercise" && <p className="text-xs text-gray-500">Not started</p>}
+						{variant === "exercise" && !completed && <p className="text-xs text-gray-500">Not started</p>}
 					</div>
 				</Link>
 			</div>
@@ -39,10 +39,10 @@ export function LessonChildTab({ child }: { child: LessonChild }) {
 	return (
 		<div className="px-4 py-6 border-t border-b border-gray-200 hover:bg-white hover:shadow-sm transition-all">
 			<Link href={child.path} className="w-full flex items-center gap-3">
-				<ActivityIcon variant={variant} className="w-6 h-6" />
+				<ActivityIcon variant={variant} className="w-6 h-6" completed={completed} />
 				<div className="flex flex-col">
 					<p className="text-base text-gray-800">{child.title}</p>
-					{variant === "exercise" && <p className="text-xs text-gray-500">Not started</p>}
+					{variant === "exercise" && !completed && <p className="text-xs text-gray-500">Not started</p>}
 				</div>
 			</Link>
 		</div>

@@ -1,4 +1,4 @@
-import { FileText, Pencil, Play } from "lucide-react"
+import { Check, FileText, Pencil, Play } from "lucide-react"
 import type * as React from "react"
 import { cn } from "@/lib/utils"
 
@@ -26,11 +26,13 @@ export const activityIconVariants = {
 export function ActivityIcon({
 	variant,
 	color,
-	className
+	className,
+	completed = false
 }: {
 	variant: keyof typeof activityIconVariants
 	color?: string
 	className?: string
+	completed?: boolean
 }): React.ReactNode {
 	const config = activityIconVariants[variant]
 
@@ -45,22 +47,46 @@ export function ActivityIcon({
 		return "w-2.5 h-2.5" // default
 	}
 
-	return (
-		<div
-			className={cn(
-				"inline-flex items-center justify-center rounded-xs w-5 h-5 relative overflow-hidden",
-				color ?? config.color,
-				config.border,
-				className
-			)}
-		>
-			{/* White overlay mask */}
-			{config.fill < 100 && (
-				<div className="absolute top-0 left-0 w-full bg-white" style={{ height: `${100 - config.fill}%` }} />
-			)}
+	// Determine check size based on container size
+	const getCheckSize = () => {
+		if (className?.includes("w-8") || className?.includes("h-8")) {
+			return "w-3 h-3"
+		}
+		if (className?.includes("w-6") || className?.includes("h-6")) {
+			return "w-2.5 h-2.5"
+		}
+		return "w-2 h-2" // default
+	}
 
-			{/* Icon content */}
-			<div className="relative z-10">{config.getIcon(getIconSize())}</div>
+	return (
+		<div className="relative inline-block">
+			{/* Main icon container */}
+			<div
+				className={cn(
+					"inline-flex items-center justify-center rounded-xs w-5 h-5 relative overflow-hidden",
+					color ?? config.color,
+					config.border,
+					className
+				)}
+			>
+				{/* White overlay mask */}
+				{config.fill < 100 && (
+					<div className="absolute top-0 left-0 w-full bg-white" style={{ height: `${100 - config.fill}%` }} />
+				)}
+
+				{/* Icon content - always use the same gray color */}
+				<div className="relative z-10">{config.getIcon(getIconSize())}</div>
+
+				{/* Blue underline when completed */}
+				{completed && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600" />}
+			</div>
+
+			{/* Blue check mark in top right corner */}
+			{completed && (
+				<div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-600 rounded-full flex items-center justify-center shadow-sm">
+					<Check className={cn(getCheckSize(), "text-white")} strokeWidth={3} />
+				</div>
+			)}
 		</div>
 	)
 }
