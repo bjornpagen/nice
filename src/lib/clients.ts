@@ -1,6 +1,20 @@
 import { env } from "@/env"
+import * as caliperInternal from "./caliper"
 import * as onerosterInternal from "./oneroster"
 import * as qtiInternal from "./qti"
+
+/**
+ * A singleton instance of the CaliperApiClient.
+ * This client is configured once with environment variables and should be used
+ * for all Caliper API interactions to ensure consistent configuration and
+ * efficient token management.
+ */
+export const caliper = new caliperInternal.CaliperApiClient({
+	serverUrl: env.TIMEBACK_CALIPER_SERVER_URL,
+	tokenUrl: env.TIMEBACK_TOKEN_URL,
+	clientId: env.TIMEBACK_CLIENT_ID,
+	clientSecret: env.TIMEBACK_CLIENT_SECRET
+})
 
 /**
  * A singleton instance of the OneRosterApiClient.

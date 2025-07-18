@@ -14,7 +14,7 @@ export default function ArticlePage({
 
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading article...</div>}>
-			<Content articlePromise={articlePromise} />
+			<Content articlePromise={articlePromise} paramsPromise={params} />
 		</React.Suspense>
 	)
 }
