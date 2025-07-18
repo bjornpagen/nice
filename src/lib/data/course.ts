@@ -557,17 +557,9 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 				resourceMetadata.subType === "qti-test" &&
 				resourceMetadata.khanLessonType === "coursechallenge"
 			) {
-				// The ResourceMetadataSchema transform drops the path field, but we need it
-				// Parse the raw metadata to get the path
-				const rawMetadata = resource.metadata
-				if (!rawMetadata || typeof rawMetadata !== "object" || !("path" in rawMetadata)) {
-					logger.error("course challenge missing path in metadata", {
-						resourceSourcedId: resource.sourcedId
-					})
-					continue
-				}
-
-				const challengePath = String(rawMetadata.path)
+				// The ResourceMetadataSchema transform drops the path field, so we reconstruct it
+				// from slugs, adhering to our architectural pattern.
+				const challengePath = `/${params.subject}/${params.course}/test/${resourceMetadata.khanSlug}`
 
 				const challenge: CourseChallenge = {
 					id: resourceMetadata.khanId,
