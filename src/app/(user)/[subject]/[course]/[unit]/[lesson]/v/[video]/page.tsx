@@ -14,7 +14,7 @@ export default function VideoPage({
 
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading video...</div>}>
-			<Content videoPromise={videoPromise} />
+			<Content videoPromise={videoPromise} paramsPromise={params} />
 		</React.Suspense>
 	)
 }

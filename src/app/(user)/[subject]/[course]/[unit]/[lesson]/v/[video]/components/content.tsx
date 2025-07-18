@@ -5,15 +5,45 @@ import Image from "next/image"
 import * as React from "react"
 import YouTube, { type YouTubePlayer } from "react-youtube"
 import { Button } from "@/components/ui/button"
+import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { updateVideoProgress } from "@/lib/actions/tracking"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { VideoPageData } from "@/lib/types/page"
 
-export function Content({ videoPromise }: { videoPromise: Promise<VideoPageData> }) {
+// Helper function to map URL subjects to Caliper enum values
+function mapSubjectToCaliperSubject(
+	subject: string
+): "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None" {
+	switch (subject.toLowerCase()) {
+		case "science":
+			return "Science"
+		case "math":
+			return "Math"
+		case "reading":
+			return "Reading"
+		case "language":
+			return "Language"
+		case "social-studies":
+			return "Social Studies"
+		default:
+			return "None"
+	}
+}
+
+export function Content({
+	videoPromise,
+	paramsPromise
+}: {
+	videoPromise: Promise<VideoPageData>
+	paramsPromise: Promise<{ subject: string; course: string; unit: string; lesson: string; video: string }>
+}) {
 	const video = React.use(videoPromise)
+	const params = React.use(paramsPromise)
 	const { user } = useUser()
 	const [activeTab, setActiveTab] = React.useState<"about" | "transcript">("about")
 	const playerRef = React.useRef<YouTubePlayer | null>(null)
+
+	const SEND_INTERVAL_SECONDS = 3 // Send a Caliper event every 3 seconds
 
 	// Periodically track video progress when the user is watching.
 	React.useEffect(() => {
@@ -35,15 +65,35 @@ export function Content({ videoPromise }: { videoPromise: Promise<VideoPageData>
 				const duration = player.getDuration()
 
 				if (duration > 0) {
-					// Fire-and-forget the tracking action.
-					// We don't need to block the UI or show errors for this.
+					// Existing OneRoster progress update (fire-and-forget)
 					void updateVideoProgress(sourceId, video.id, currentTime, duration)
+
+					// NEW: Send Caliper TimeSpentEvent (only if user exists)
+					if (user) {
+						const actor = {
+							id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${sourceId}`,
+							type: "TimebackUser" as const,
+							email: user.primaryEmailAddress?.emailAddress ?? ""
+						}
+
+						const context = {
+							id: `https://alpharead.alpha.school/videos/${video.id}`,
+							type: "TimebackActivityContext" as const,
+							subject: mapSubjectToCaliperSubject(params.subject),
+							app: { name: "Nice Academy" },
+							course: { name: params.course },
+							activity: { name: video.title }
+						}
+
+						// Fire-and-forget Caliper event
+						void sendCaliperTimeSpentEvent(actor, context, SEND_INTERVAL_SECONDS)
+					}
 				}
 			}
-		}, 1000) // Send an update every 1 second.
+		}, SEND_INTERVAL_SECONDS * 1000) // Convert interval to milliseconds
 
 		return () => clearInterval(intervalId) // Cleanup on component unmount.
-	}, [user, video.id])
+	}, [user, video.id, video.title, params.subject, params.course])
 
 	const onPlayerReady = (event: { target: YouTubePlayer }) => {
 		playerRef.current = event.target
