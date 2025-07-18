@@ -91,7 +91,15 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		const componentMetadata = componentMetadataResult.data
 
 		if (!component.parent) {
-			// This is a unit
+			// This is a unit - skip if it's a course challenge dummy component
+			if (componentMetadata.khanSlug === "course-challenge") {
+				logger.debug("skipping course challenge dummy component from units", {
+					componentSourcedId: component.sourcedId,
+					title: component.title
+				})
+				continue
+			}
+
 			units.push({
 				id: component.sourcedId,
 				slug: componentMetadata.khanSlug,

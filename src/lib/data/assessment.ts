@@ -2,10 +2,11 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import {
+	getAllComponentResources,
 	getAllCoursesBySlug,
+	getAllResources,
 	getCourseComponentByCourseAndSlug,
 	getCourseComponentsByParentId,
-	getResourceByCourseAndSlug,
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
 import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
@@ -179,6 +180,8 @@ export async function fetchCourseChallengePage_TestData(params: {
 	subject: string
 }): Promise<CourseChallengePageData> {
 	logger.info("fetchCourseChallengePage_TestData called", { params })
+
+	// Step 1: Find the course by its slug to get its sourcedId.
 	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
 	if (coursesResult.error) {
 		logger.error("failed to fetch course by slug", { error: coursesResult.error, slug: params.course })
@@ -188,21 +191,102 @@ export async function fetchCourseChallengePage_TestData(params: {
 	if (!course) {
 		notFound()
 	}
+	const courseSourcedId = course.sourcedId
 
-	const testResourceResult = await errors.try(getResourceByCourseAndSlug(course.sourcedId, params.test, "qti"))
-	if (testResourceResult.error) {
-		logger.error("failed to fetch test resource", {
-			error: testResourceResult.error,
-			courseSourcedId: course.sourcedId
+	// Step 2: Find the "dummy" course component that holds course challenges.
+	// This component is predictably created with the slug "course-challenge".
+	const challengeComponentResult = await errors.try(
+		getCourseComponentByCourseAndSlug(courseSourcedId, "course-challenge")
+	)
+	if (challengeComponentResult.error) {
+		logger.error("failed to fetch course challenge component", {
+			error: challengeComponentResult.error,
+			courseSourcedId
 		})
-		throw errors.wrap(testResourceResult.error, "fetch test resource")
+		throw errors.wrap(challengeComponentResult.error, "fetch course challenge component")
 	}
-	const testResource = testResourceResult.data[0]
-	if (!testResource) {
+
+	// There might be multiple components with the same slug - find the one with resources
+	const candidateComponents = challengeComponentResult.data
+	if (candidateComponents.length === 0) {
+		logger.warn("course challenge component not found for course", { courseSourcedId })
 		notFound()
 	}
 
-	// Validate test resource metadata with Zod
+	logger.info("found course challenge component candidates", {
+		count: candidateComponents.length,
+		candidates: candidateComponents.map((c) => ({ sourcedId: c.sourcedId, title: c.title })),
+		courseSourcedId
+	})
+
+	// Step 3: Find all component-resource links to determine which component to use
+	const allComponentResourcesResult = await errors.try(getAllComponentResources())
+	if (allComponentResourcesResult.error) {
+		logger.error("failed to fetch all component resources", { error: allComponentResourcesResult.error })
+		throw errors.wrap(allComponentResourcesResult.error, "fetch all component resources")
+	}
+
+	// Find which candidate component actually has resources
+	let challengeComponent = null
+	let relevantComponentResources: typeof allComponentResourcesResult.data = []
+
+	for (const candidate of candidateComponents) {
+		const candidateResources = allComponentResourcesResult.data.filter(
+			(cr) => cr.courseComponent.sourcedId === candidate.sourcedId
+		)
+
+		if (candidateResources.length > 0) {
+			challengeComponent = candidate
+			relevantComponentResources = candidateResources
+			logger.info("selected course challenge component with resources", {
+				componentSourcedId: candidate.sourcedId,
+				resourceCount: candidateResources.length
+			})
+			break
+		}
+	}
+
+	if (!challengeComponent || relevantComponentResources.length === 0) {
+		logger.warn("no course challenge component with resources found", {
+			candidateCount: candidateComponents.length,
+			courseSourcedId
+		})
+		notFound()
+	}
+
+	// Step 4: Find the specific resource that matches the `test` slug from the URL.
+	const allRelevantResourceIds = new Set(relevantComponentResources.map((cr) => cr.resource.sourcedId))
+	const allResourcesResult = await errors.try(getAllResources())
+	if (allResourcesResult.error) {
+		logger.error("failed to fetch all resources", { error: allResourcesResult.error })
+		throw errors.wrap(allResourcesResult.error, "fetch all resources")
+	}
+
+	// Decode the URL-encoded test parameter (e.g., "x2832fbb7463fe65a%3Acourse-challenge" -> "x2832fbb7463fe65a:course-challenge")
+	const decodedTestSlug = decodeURIComponent(params.test)
+	logger.info("searching for resource with slug", {
+		rawSlug: params.test,
+		decodedSlug: decodedTestSlug
+	})
+
+	const testResource = allResourcesResult.data.find((res) => {
+		if (!allRelevantResourceIds.has(res.sourcedId)) {
+			return false
+		}
+		const metadataResult = ResourceMetadataSchema.safeParse(res.metadata)
+		return metadataResult.success && metadataResult.data.khanSlug === decodedTestSlug
+	})
+
+	if (!testResource) {
+		logger.error("could not find a matching course challenge resource for slug", {
+			slug: params.test,
+			decodedSlug: decodedTestSlug,
+			courseSourcedId
+		})
+		notFound()
+	}
+
+	// The rest of the function remains the same, as we have now successfully found the resource.
 	const testResourceMetadataResult = ResourceMetadataSchema.safeParse(testResource.metadata)
 	if (!testResourceMetadataResult.success) {
 		logger.error("invalid test resource metadata", {
@@ -212,7 +296,6 @@ export async function fetchCourseChallengePage_TestData(params: {
 		throw errors.wrap(testResourceMetadataResult.error, "invalid test resource metadata")
 	}
 
-	// Because we use a discriminated union, we must also check the type
 	if (testResourceMetadataResult.data.type !== "qti") {
 		logger.error("invalid resource type for test page", {
 			resourceSourcedId: testResource.sourcedId,
