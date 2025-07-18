@@ -17,12 +17,21 @@ export const ingestAssessmentItems = inngest.createFunction(
 
 		const results = []
 		for (const item of items) {
-			// Extract identifier from XML. A more robust regex might be needed for complex cases.
-			const idMatch = item.xml.match(/identifier="([^"]+)"/)
-			const identifier = idMatch ? idMatch[1] : null
+			// Extract identifier from the root qti-assessment-item element using a robust regex.
+			// This regex specifically targets the root tag to avoid matching identifiers from nested elements.
+			// - `<qti-assessment-item` : Matches the opening of the root tag
+			// - `(?:\s+[^>]*)` : Non-capturing group for attributes before identifier (optional)
+			// - `\s+identifier=` : Matches whitespace and the identifier attribute
+			// - `"([^"]+)"` : Captures the identifier value in group 1
+			// - `[^>]*>` : Matches remaining attributes and closing >
+			const idMatch = item.xml.match(/<qti-assessment-item(?:\s+[^>]*)?\s+identifier="([^"]+)"[^>]*>/)
+			const identifier = idMatch?.[1] ?? null
 
 			if (!identifier) {
-				logger.error("could not extract identifier from item XML, skipping", { xmlStart: item.xml.substring(0, 100) })
+				logger.error("could not extract identifier from item XML, skipping", {
+					xmlStart: item.xml.substring(0, 100),
+					hasQtiAssessmentItem: item.xml.includes("<qti-assessment-item")
+				})
 				results.push({ success: false, status: "skipped_no_id" })
 				continue
 			}

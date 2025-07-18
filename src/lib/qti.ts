@@ -255,48 +255,14 @@ export type SearchItemsInput = z.infer<typeof SearchItemsInputSchema>
 // --- Assessment Test Schemas (New) ---
 
 /**
- * Schema for a reference to an assessment item within a section.
- */
-const AssessmentItemRefSchema = z.object({
-	identifier: z.string(),
-	href: z.string(),
-	sequence: z.number().optional()
-})
-export type AssessmentItemRef = z.infer<typeof AssessmentItemRefSchema>
-
-/**
- * Schema for an assessment section. Sections group assessment items within a test part.
- */
-const AssessmentSectionSchema = z.object({
-	identifier: z.string(),
-	title: z.string(),
-	visible: z.boolean(),
-	required: z.boolean().optional(),
-	fixed: z.boolean().optional(),
-	sequence: z.number(),
-	"qti-assessment-item-ref": z.array(AssessmentItemRefSchema).optional()
-})
-export type AssessmentSection = z.infer<typeof AssessmentSectionSchema>
-
-/**
- * Schema for a test part. Test parts group sections and define navigation/submission rules.
- */
-const TestPartSchema = z.object({
-	identifier: z.string(),
-	navigationMode: z.enum(["linear", "nonlinear"]),
-	submissionMode: z.enum(["individual", "simultaneous"]),
-	"qti-assessment-section": z.array(AssessmentSectionSchema)
-})
-export type TestPart = z.infer<typeof TestPartSchema>
-
-/**
  * Schema for an assessment test, the top-level container for a test.
+ * This schema is used for responses from the API only.
  */
 const AssessmentTestSchema = z.object({
 	identifier: z.string(),
 	title: z.string(),
 	qtiVersion: z.string(),
-	"qti-test-part": z.array(TestPartSchema),
+	"qti-test-part": z.array(z.any()), // We no longer need the detailed schema since we're working with XML
 	"qti-outcome-declaration": z.array(OutcomeDeclarationSchema).optional(),
 	timeLimit: z.number().optional(),
 	maxAttempts: z.number().optional(),
@@ -313,19 +279,13 @@ export type AssessmentTest = z.infer<typeof AssessmentTestSchema>
 /**
  * Input for creating an Assessment Test.
  */
-const CreateAssessmentTestInputSchema = z.object({
-	identifier: z.string(),
-	title: z.string(),
-	"qti-test-part": z.array(TestPartSchema),
-	"qti-outcome-declaration": z.array(OutcomeDeclarationSchema).optional(),
-	metadata: z.record(z.string(), z.any()).optional()
-})
+const CreateAssessmentTestInputSchema = z.string().min(1, { message: "XML content cannot be empty" })
 export type CreateAssessmentTestInput = z.infer<typeof CreateAssessmentTestInputSchema>
 
 /**
  * Input for updating an Assessment Test.
  */
-export type UpdateAssessmentTestInput = CreateAssessmentTestInput
+export type UpdateAssessmentTestInput = z.infer<typeof CreateAssessmentTestInputSchema>
 
 /**
  * Input for searching for assessment tests.
@@ -368,38 +328,6 @@ const TestQuestionsResponseSchema = z.object({
 	)
 })
 export type TestQuestionsResponse = z.infer<typeof TestQuestionsResponseSchema>
-
-/**
- * Input for updating only the metadata of an assessment test.
- */
-const UpdateAssessmentTestMetadataInputSchema = z.object({
-	metadata: z.record(z.string(), z.any())
-})
-export type UpdateAssessmentTestMetadataInput = z.infer<typeof UpdateAssessmentTestMetadataInputSchema>
-
-/**
- * Input for creating a new test part.
- */
-export type CreateTestPartInput = TestPart
-
-/**
- * Input for creating a new section.
- */
-export type CreateSectionInput = AssessmentSection
-
-/**
- * Input for adding an item reference to a section.
- */
-const AddItemToSectionInputSchema = AssessmentItemRefSchema.pick({ identifier: true, href: true, sequence: true })
-export type AddItemToSectionInput = z.infer<typeof AddItemToSectionInputSchema>
-
-/**
- * Input for reordering items within a section.
- */
-const ReorderSectionItemsInputSchema = z.object({
-	items: z.array(AssessmentItemRefSchema.pick({ identifier: true, sequence: true }))
-})
-export type ReorderSectionItemsInput = z.infer<typeof ReorderSectionItemsInputSchema>
 
 // --- API CLIENT CONFIG TYPE ---
 type ApiClientConfig = {
@@ -789,19 +717,26 @@ export class Client {
 	// --- Assessment Test Management Methods (New) ---
 
 	/**
-	 * Creates a new assessment test.
-	 * @param {CreateAssessmentTestInput} input - The test data, including parts and sections.
+	 * Creates a new assessment test from a raw XML payload.
+	 * @param {string} xml - The raw QTI XML string for the assessment test.
 	 * @returns {Promise<AssessmentTest>} The created assessment test object.
 	 */
-	async createAssessmentTest(input: CreateAssessmentTestInput): Promise<AssessmentTest> {
-		logger.info("qti client: creating assessment test", { identifier: input.identifier })
-		return this.#createEntity(
-			"assessmentTest",
+	async createAssessmentTest(xml: CreateAssessmentTestInput): Promise<AssessmentTest> {
+		const validationResult = CreateAssessmentTestInputSchema.safeParse(xml)
+		if (!validationResult.success) {
+			logger.error("qti client: invalid input for createAssessmentTest", { error: validationResult.error })
+			throw errors.wrap(validationResult.error, "createAssessmentTest input validation")
+		}
+
+		logger.info("qti client: creating assessment test from XML")
+		return this.#request(
 			"/assessment-tests",
-			input,
-			CreateAssessmentTestInputSchema,
-			AssessmentTestSchema,
-			(data) => data // No transformation needed
+			{
+				method: "POST",
+				headers: { "Content-Type": "application/xml" },
+				body: validationResult.data
+			},
+			AssessmentTestSchema
 		)
 	}
 
@@ -819,24 +754,24 @@ export class Client {
 	}
 
 	/**
-	 * Updates an existing assessment test.
+	 * Updates an existing assessment test from a raw XML payload.
 	 * @param {string} identifier - The identifier of the test to update.
-	 * @param {UpdateAssessmentTestInput} input - The new test data.
+	 * @param {string} xml - The new raw QTI XML for the assessment test.
 	 * @returns {Promise<AssessmentTest>} The updated assessment test object.
 	 */
-	async updateAssessmentTest(identifier: string, input: UpdateAssessmentTestInput): Promise<AssessmentTest> {
-		logger.info("qti client: updating assessment test", { identifier })
-		const validation = CreateAssessmentTestInputSchema.safeParse(input)
-		if (!validation.success) {
-			logger.error("qti client: invalid input for updateAssessmentTest", { error: validation.error })
-			throw errors.wrap(validation.error, "updateAssessmentTest input validation")
+	async updateAssessmentTest(identifier: string, xml: UpdateAssessmentTestInput): Promise<AssessmentTest> {
+		const validationResult = CreateAssessmentTestInputSchema.safeParse(xml)
+		if (!validationResult.success) {
+			logger.error("qti client: invalid input for updateAssessmentTest", { error: validationResult.error })
+			throw errors.wrap(validationResult.error, "updateAssessmentTest input validation")
 		}
+		logger.info("qti client: updating assessment test from XML", { identifier })
 		return this.#request(
 			`/assessment-tests/${identifier}`,
 			{
 				method: "PUT",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(validation.data)
+				headers: { "Content-Type": "application/xml" },
+				body: validationResult.data
 			},
 			AssessmentTestSchema
 		)
@@ -889,277 +824,6 @@ export class Client {
 		}
 		const endpoint = `/assessment-tests/${identifier}/questions`
 		return this.#request(endpoint, { method: "GET" }, TestQuestionsResponseSchema)
-	}
-
-	/**
-	 * Updates only the metadata of an assessment test.
-	 * @param {string} identifier - The identifier of the test to update.
-	 * @param {UpdateAssessmentTestMetadataInput} input - The new metadata.
-	 * @returns {Promise<AssessmentTest>} The updated assessment test object.
-	 */
-	async updateAssessmentTestMetadata(
-		identifier: string,
-		input: UpdateAssessmentTestMetadataInput
-	): Promise<AssessmentTest> {
-		logger.info("qti client: updating assessment test metadata", { identifier })
-		const validation = UpdateAssessmentTestMetadataInputSchema.safeParse(input)
-		if (!validation.success) {
-			throw errors.wrap(validation.error, "updateAssessmentTestMetadata input validation")
-		}
-		const endpoint = `/assessment-tests/${identifier}/metadata`
-		return this.#request(
-			endpoint,
-			{ method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(validation.data) },
-			AssessmentTestSchema
-		)
-	}
-
-	// --- Test Part Management Methods (New) ---
-
-	/**
-	 * Creates a new test part within an assessment test.
-	 * @param {string} assessmentTestIdentifier - The identifier of the parent test.
-	 * @param {CreateTestPartInput} input - The test part data.
-	 * @returns {Promise<TestPart>} The created test part object.
-	 */
-	async createTestPart(assessmentTestIdentifier: string, input: CreateTestPartInput): Promise<TestPart> {
-		logger.info("qti client: creating test part", { assessmentTestIdentifier, partIdentifier: input.identifier })
-		const validation = TestPartSchema.safeParse(input)
-		if (!validation.success) {
-			throw errors.wrap(validation.error, "createTestPart input validation")
-		}
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts`
-		return this.#request(
-			endpoint,
-			{ method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(validation.data) },
-			TestPartSchema
-		)
-	}
-
-	/**
-	 * Retrieves a specific test part by its identifier.
-	 * @param {string} assessmentTestIdentifier - The identifier of the parent test.
-	 * @param {string} testPartIdentifier - The identifier of the test part.
-	 * @returns {Promise<TestPart>} The test part object.
-	 */
-	async getTestPart(assessmentTestIdentifier: string, testPartIdentifier: string): Promise<TestPart> {
-		logger.info("qti client: getting test part", { assessmentTestIdentifier, testPartIdentifier })
-		if (!assessmentTestIdentifier || !testPartIdentifier) {
-			throw errors.new("qti client: both assessmentTestIdentifier and testPartIdentifier are required for getTestPart")
-		}
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts/${testPartIdentifier}`
-		return this.#request(endpoint, { method: "GET" }, TestPartSchema)
-	}
-
-	/**
-	 * Updates an existing test part.
-	 * @param {string} assessmentTestIdentifier - The identifier of the parent test.
-	 * @param {string} testPartIdentifier - The identifier of the test part to update.
-	 * @param {CreateTestPartInput} input - The new test part data.
-	 * @returns {Promise<TestPart>} The updated test part object.
-	 */
-	async updateTestPart(
-		assessmentTestIdentifier: string,
-		testPartIdentifier: string,
-		input: CreateTestPartInput
-	): Promise<TestPart> {
-		logger.info("qti client: updating test part", { assessmentTestIdentifier, testPartIdentifier })
-		const validation = TestPartSchema.safeParse(input)
-		if (!validation.success) {
-			throw errors.wrap(validation.error, "updateTestPart input validation")
-		}
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts/${testPartIdentifier}`
-		return this.#request(
-			endpoint,
-			{ method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(validation.data) },
-			TestPartSchema
-		)
-	}
-
-	/**
-	 * Deletes a test part.
-	 * @param {string} assessmentTestIdentifier - The identifier of the parent test.
-	 * @param {string} testPartIdentifier - The identifier of the test part to delete.
-	 * @returns {Promise<void>}
-	 */
-	async deleteTestPart(assessmentTestIdentifier: string, testPartIdentifier: string): Promise<void> {
-		logger.info("qti client: deleting test part", { assessmentTestIdentifier, testPartIdentifier })
-		if (!assessmentTestIdentifier || !testPartIdentifier) {
-			throw errors.new(
-				"qti client: both assessmentTestIdentifier and testPartIdentifier are required for deleteTestPart"
-			)
-		}
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts/${testPartIdentifier}`
-		await this.#request(endpoint, { method: "DELETE" }, z.null())
-	}
-
-	// --- Section Management Methods (New) ---
-
-	/**
-	 * Creates a new section within a test part.
-	 * @param {string} assessmentTestIdentifier - The identifier of the parent test.
-	 * @param {string} testPartIdentifier - The identifier of the parent test part.
-	 * @param {CreateSectionInput} input - The section data.
-	 * @returns {Promise<AssessmentSection>} The created section object.
-	 */
-	async createSection(
-		assessmentTestIdentifier: string,
-		testPartIdentifier: string,
-		input: CreateSectionInput
-	): Promise<AssessmentSection> {
-		logger.info("qti client: creating section", { assessmentTestIdentifier, testPartIdentifier, input })
-		const validation = AssessmentSectionSchema.safeParse(input)
-		if (!validation.success) {
-			throw errors.wrap(validation.error, "createSection input validation")
-		}
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts/${testPartIdentifier}/sections`
-		return this.#request(
-			endpoint,
-			{ method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(validation.data) },
-			AssessmentSectionSchema
-		)
-	}
-
-	/**
-	 * Retrieves a specific section by its identifier.
-	 * @param {string} assessmentTestIdentifier - The identifier of the parent test.
-	 * @param {string} testPartIdentifier - The identifier of the parent test part.
-	 * @param {string} sectionIdentifier - The identifier of the section.
-	 * @returns {Promise<AssessmentSection>} The section object.
-	 */
-	async getSection(
-		assessmentTestIdentifier: string,
-		testPartIdentifier: string,
-		sectionIdentifier: string
-	): Promise<AssessmentSection> {
-		logger.info("qti client: getting section", { assessmentTestIdentifier, testPartIdentifier, sectionIdentifier })
-		if (!assessmentTestIdentifier || !testPartIdentifier || !sectionIdentifier) {
-			throw errors.new("qti client: all identifiers are required for getSection")
-		}
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts/${testPartIdentifier}/sections/${sectionIdentifier}`
-		return this.#request(endpoint, { method: "GET" }, AssessmentSectionSchema)
-	}
-
-	/**
-	 * Updates an existing section.
-	 * @param {string} assessmentTestIdentifier - The identifier of the parent test.
-	 * @param {string} testPartIdentifier - The identifier of the parent test part.
-	 * @param {string} sectionIdentifier - The identifier of the section to update.
-	 * @param {CreateSectionInput} input - The new section data.
-	 * @returns {Promise<AssessmentSection>} The updated section object.
-	 */
-	async updateSection(
-		assessmentTestIdentifier: string,
-		testPartIdentifier: string,
-		sectionIdentifier: string,
-		input: CreateSectionInput
-	): Promise<AssessmentSection> {
-		logger.info("qti client: updating section", { assessmentTestIdentifier, testPartIdentifier, sectionIdentifier })
-		const validation = AssessmentSectionSchema.safeParse(input)
-		if (!validation.success) {
-			throw errors.wrap(validation.error, "updateSection input validation")
-		}
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts/${testPartIdentifier}/sections/${sectionIdentifier}`
-		return this.#request(
-			endpoint,
-			{ method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(validation.data) },
-			AssessmentSectionSchema
-		)
-	}
-
-	/**
-	 * Deletes a section.
-	 * @param {string} assessmentTestIdentifier - The identifier of the parent test.
-	 * @param {string} testPartIdentifier - The identifier of the parent test part.
-	 * @param {string} sectionIdentifier - The identifier of the section to delete.
-	 * @returns {Promise<void>}
-	 */
-	async deleteSection(
-		assessmentTestIdentifier: string,
-		testPartIdentifier: string,
-		sectionIdentifier: string
-	): Promise<void> {
-		logger.info("qti client: deleting section", { assessmentTestIdentifier, testPartIdentifier, sectionIdentifier })
-		if (!assessmentTestIdentifier || !testPartIdentifier || !sectionIdentifier) {
-			throw errors.new("qti client: all identifiers are required for deleteSection")
-		}
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts/${testPartIdentifier}/sections/${sectionIdentifier}`
-		await this.#request(endpoint, { method: "DELETE" }, z.null())
-	}
-
-	/**
-	 * Adds an assessment item reference to a section.
-	 * @param {object} params - The identifiers for test, part, and section.
-	 * @param {string} params.assessmentTestIdentifier
-	 * @param {string} params.testPartIdentifier
-	 * @param {string} params.sectionIdentifier
-	 * @param {AddItemToSectionInput} input - The item reference to add.
-	 * @returns {Promise<AssessmentSection>} The updated section object.
-	 */
-	async addAssessmentItemToSection(
-		params: { assessmentTestIdentifier: string; testPartIdentifier: string; sectionIdentifier: string },
-		input: AddItemToSectionInput
-	): Promise<AssessmentSection> {
-		const { assessmentTestIdentifier, testPartIdentifier, sectionIdentifier } = params
-		logger.info("qti client: adding item to section", { ...params, itemIdentifier: input.identifier })
-		const validation = AddItemToSectionInputSchema.safeParse(input)
-		if (!validation.success) {
-			throw errors.wrap(validation.error, "addAssessmentItemToSection input validation")
-		}
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts/${testPartIdentifier}/sections/${sectionIdentifier}/items`
-		return this.#request(
-			endpoint,
-			{ method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(validation.data) },
-			AssessmentSectionSchema
-		)
-	}
-
-	/**
-	 * Removes an assessment item reference from a section.
-	 * @param {object} params - The identifiers for test, part, section, and item.
-	 * @param {string} params.assessmentTestIdentifier
-	 * @param {string} params.testPartIdentifier
-	 * @param {string} params.sectionIdentifier
-	 * @param {string} params.itemIdentifier
-	 * @returns {Promise<void>}
-	 */
-	async removeAssessmentItemFromSection(params: {
-		assessmentTestIdentifier: string
-		testPartIdentifier: string
-		sectionIdentifier: string
-		itemIdentifier: string
-	}): Promise<void> {
-		const { assessmentTestIdentifier, testPartIdentifier, sectionIdentifier, itemIdentifier } = params
-		logger.info("qti client: removing item from section", { ...params })
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts/${testPartIdentifier}/sections/${sectionIdentifier}/items/${itemIdentifier}`
-		await this.#request(endpoint, { method: "DELETE" }, z.null())
-	}
-
-	/**
-	 * Reorders assessment items within a section.
-	 * @param {object} params - The identifiers for test, part, and section.
-	 * @param {string} params.assessmentTestIdentifier
-	 * @param {string} params.testPartIdentifier
-	 * @param {string} params.sectionIdentifier
-	 * @param {ReorderSectionItemsInput} input - An array of item identifiers in the new order.
-	 * @returns {Promise<AssessmentSection>} The updated section object.
-	 */
-	async reorderSectionItems(
-		params: { assessmentTestIdentifier: string; testPartIdentifier: string; sectionIdentifier: string },
-		input: ReorderSectionItemsInput
-	): Promise<AssessmentSection> {
-		const { assessmentTestIdentifier, testPartIdentifier, sectionIdentifier } = params
-		logger.info("qti client: reordering section items", { ...params, itemCount: input.items.length })
-		const validation = ReorderSectionItemsInputSchema.safeParse(input)
-		if (!validation.success) {
-			throw errors.wrap(validation.error, "reorderSectionItems input validation")
-		}
-		const endpoint = `/assessment-tests/${assessmentTestIdentifier}/test-parts/${testPartIdentifier}/sections/${sectionIdentifier}/items/order`
-		return this.#request(
-			endpoint,
-			{ method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(validation.data) },
-			AssessmentSectionSchema
-		)
 	}
 
 	/**

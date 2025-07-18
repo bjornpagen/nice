@@ -16,17 +16,35 @@ export const ingestAssessmentTests = inngest.createFunction(
 		logger.info("ingesting assessment tests", { count: tests.length })
 
 		const results = []
-		for (const test of tests) {
-			const { identifier } = test
+		for (const testXml of tests) {
+			// Extract identifier from the root qti-assessment-test element using a robust regex.
+			// This regex specifically targets the root tag to avoid matching identifiers from nested elements.
+			// - `<qti-assessment-test` : Matches the opening of the root tag
+			// - `(?:\s+[^>]*)` : Non-capturing group for attributes before identifier (optional)
+			// - `\s+identifier=` : Matches whitespace and the identifier attribute
+			// - `"([^"]+)"` : Captures the identifier value in group 1
+			// - `[^>]*>` : Matches remaining attributes and closing >
+			const idMatch = testXml.match(/<qti-assessment-test(?:\s+[^>]*)?\s+identifier="([^"]+)"[^>]*>/)
+			const identifier = idMatch?.[1] ?? null
+
+			if (!identifier) {
+				logger.error("could not extract identifier from test XML, skipping", {
+					xmlStart: testXml.substring(0, 200),
+					hasQtiAssessmentTest: testXml.includes("<qti-assessment-test")
+				})
+				results.push({ success: false, status: "skipped_no_id" })
+				continue
+			}
+
 			// Try to update first (most common case)
 			logger.debug("attempting to update assessment test", { identifier })
-			const updateResult = await errors.try(qti.updateAssessmentTest(identifier, test))
+			const updateResult = await errors.try(qti.updateAssessmentTest(identifier, testXml))
 
 			if (updateResult.error) {
 				// Check if it's a 404 error - if so, create instead
 				if (errors.is(updateResult.error, ErrQtiNotFound)) {
 					logger.info("assessment test not found, creating new", { identifier })
-					const createResult = await errors.try(qti.createAssessmentTest(test))
+					const createResult = await errors.try(qti.createAssessmentTest(testXml))
 					if (createResult.error) {
 						logger.error("failed to create assessment test", { identifier, error: createResult.error })
 						results.push({ identifier, success: false, status: "failed", error: createResult.error })

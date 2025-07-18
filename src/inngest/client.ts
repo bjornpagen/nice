@@ -1,7 +1,6 @@
 import * as logger from "@superbuilders/slog"
 import { EventSchemas, type GetEvents, Inngest } from "inngest"
 import { z } from "zod"
-import type { CreateAssessmentTestInput } from "@/lib/qti"
 
 // Helper schema for the XML-based item input
 const CreateItemInputSchema = z.object({
@@ -77,9 +76,8 @@ const events = {
 		})
 	},
 	"qti/assessment-tests.ingest": {
-		// Note: The schema for CreateAssessmentTestInput is complex, so we cast it.
 		data: z.object({
-			tests: z.array(z.custom<CreateAssessmentTestInput>())
+			tests: z.array(z.string())
 		})
 	},
 	// OneRoster Events

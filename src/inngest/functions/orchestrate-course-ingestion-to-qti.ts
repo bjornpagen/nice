@@ -268,44 +268,37 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					id: string,
 					title: string,
 					itemIds: string[],
-					metadata: Record<string, unknown>
-				): CreateAssessmentTestInput => ({
-					identifier: `nice:${id}`,
-					title: title,
-					metadata,
-					"qti-outcome-declaration": [
-						{
-							identifier: "SCORE",
-							cardinality: "single",
-							baseType: "float"
-						},
-						{
-							identifier: "MAX_SCORE",
-							cardinality: "single",
-							baseType: "float"
-						}
-					],
-					"qti-test-part": [
-						{
-							identifier: "PART_1",
-							navigationMode: "nonlinear",
-							submissionMode: "individual",
-							"qti-assessment-section": [
-								{
-									identifier: "SECTION_1",
-									title: "Main Section",
-									visible: true,
-									sequence: 1,
-									"qti-assessment-item-ref": itemIds.map((itemId, index) => ({
-										identifier: `nice:${itemId}`,
-										href: `/assessment-items/nice:${itemId}`,
-										sequence: index + 1
-									}))
-								}
-							]
-						}
-					]
-				})
+					// metadata is kept for logging and potential future use but is not sent to the QTI API
+					_metadata: Record<string, unknown>
+				): CreateAssessmentTestInput => {
+					const safeTitle = title.replace(/"/g, "&quot;")
+					const itemRefsXml = itemIds
+						.map(
+							(itemId, index) =>
+								`<qti-assessment-item-ref identifier="nice:${itemId}" href="/assessment-items/nice:${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
+						)
+						.join("\n            ")
+
+					// The entire test is now constructed as a single XML string.
+					return `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice:${id}" title="${safeTitle}">
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0.0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="MAX_SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>${itemIds.length}.0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
+        <qti-assessment-section identifier="SECTION_1" title="Main Section" visible="true">
+            ${itemRefsXml}
+        </qti-assessment-section>
+    </qti-test-part>
+</qti-assessment-test>`
+				}
 
 				const explicitTests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => {
 					const questionIds = data.exerciseIds.flatMap((exerciseId) => {

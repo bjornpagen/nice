@@ -17,10 +17,20 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 
 		const results = []
 		for (const stimulus of stimuli) {
-			const idMatch = stimulus.xml.match(/identifier="([^"]+)"/)
+			// Extract identifier from the root qti-assessment-stimulus element using a robust regex.
+			// This regex specifically targets the root tag to avoid matching identifiers from nested elements.
+			// - `<qti-assessment-stimulus` : Matches the opening of the root tag
+			// - `(?:\s+[^>]*)` : Non-capturing group for attributes before identifier (optional)
+			// - `\s+identifier=` : Matches whitespace and the identifier attribute
+			// - `"([^"]+)"` : Captures the identifier value in group 1
+			// - `[^>]*>` : Matches remaining attributes and closing >
+			const idMatch = stimulus.xml.match(/<qti-assessment-stimulus(?:\s+[^>]*)?\s+identifier="([^"]+)"[^>]*>/)
 			const identifier = idMatch?.[1] ?? null
 			if (!identifier) {
-				logger.error("could not extract identifier from stimulus XML", { xml: stimulus.xml.substring(0, 150) })
+				logger.error("could not extract identifier from stimulus XML", {
+					xml: stimulus.xml.substring(0, 150),
+					hasQtiAssessmentStimulus: stimulus.xml.includes("<qti-assessment-stimulus")
+				})
 				continue
 			}
 
