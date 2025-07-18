@@ -22,16 +22,14 @@ export const ingestResources = inngest.createFunction(
 			step.run(`ingest-resource-${resource.sourcedId}`, async () => {
 				logger.debug("upserting resource", { sourcedId: resource.sourcedId, resource })
 
-				// Remove sourcedId from the payload as it's passed separately
-				const { sourcedId: _sourcedId, ...resourceWithoutId } = resource
-
 				// Use PUT for upsert behavior
-				const result = await errors.try(oneroster.updateResource(resource.sourcedId, resourceWithoutId))
+				const result = await errors.try(oneroster.updateResource(resource.sourcedId, resource))
 				if (result.error) {
 					// Check if it's a 404 error - if so, create instead
 					if (errors.is(result.error, ErrOneRosterNotFound)) {
 						logger.info("resource not found, creating new", { sourcedId: resource.sourcedId })
-						const createResult = await errors.try(oneroster.createResource(resourceWithoutId))
+						// Include sourcedId in the create payload - the API supports this for idempotent creation
+						const createResult = await errors.try(oneroster.createResource(resource))
 						if (createResult.error) {
 							logger.error("failed to create resource", {
 								sourcedId: resource.sourcedId,
