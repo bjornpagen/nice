@@ -91,6 +91,12 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
+	// ✅ ADDED: New event to trigger the upload of generated OneRoster files.
+	"oneroster/course.upload": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
 	"oneroster/resources.ingest": {
 		data: z.object({
 			// Define a schema for the resource objects based on the OpenAPI spec

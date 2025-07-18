@@ -1,40 +1,42 @@
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
+import { eq } from "drizzle-orm"
+import { db } from "@/db"
+import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { createAssessmentLineItems } from "./oneroster/create-assessment-line-items"
-import { generatePayloadForCourse } from "./oneroster/generate-payload-for-course"
 import { ingestClass } from "./oneroster/ingest-class"
 import { ingestComponentResources } from "./oneroster/ingest-component-resources"
 import { ingestCourse } from "./oneroster/ingest-course"
 import { ingestCourseComponents } from "./oneroster/ingest-course-components"
 import { ingestResources } from "./oneroster/ingest-resources"
 
-export const orchestrateCourseIngestionToOneroster = inngest.createFunction(
+export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 	{
-		id: "orchestrate-course-ingestion-to-oneroster",
-		name: "Orchestrate Course Ingestion to OneRoster"
+		id: "orchestrate-course-upload-to-oneroster",
+		name: "Orchestrate Course Upload to OneRoster"
 	},
-	{ event: "oneroster/course.ingest" },
+	{ event: "oneroster/course.upload" },
 	async ({ event, step, logger }) => {
 		const { courseId } = event.data
-		logger.info("starting oneroster ingestion workflow", { courseId })
+		logger.info("starting oneroster upload workflow from local files", { courseId })
 
-		// Step 1: Generate the full OneRoster payload for the course. This remains the same.
-		const generationResult = await step.invoke("generate-oneroster-payload", {
-			function: generatePayloadForCourse,
-			data: { courseId }
+		// Step 1: Get the course slug to determine the file path, mirroring the QTI upload orchestrator.
+		const courseResult = await db.query.niceCourses.findFirst({
+			where: eq(schema.niceCourses.id, courseId),
+			columns: { slug: true }
 		})
-
-		if (!generationResult.success || !generationResult.outputDirectory) {
-			throw errors.new("failed to generate oneroster payload")
+		if (!courseResult) {
+			throw errors.new(`course not found in database: ${courseId}`)
 		}
-		logger.info("successfully generated oneroster payload", { courseId, outputDir: generationResult.outputDirectory })
 
-		// Step 2: Read the generated files to get the actual data. This remains the same.
+		const courseDir = path.join(process.cwd(), "data", courseResult.slug, "oneroster")
+
+		// Step 2: Read the generated payload files from the filesystem.
 		const payload = await step.run("read-payload-files", async () => {
 			const readFile = async (filename: string) => {
-				const filePath = path.join(generationResult.outputDirectory, filename)
+				const filePath = path.join(courseDir, filename)
 				const content = await fs.readFile(filePath, "utf-8")
 				return JSON.parse(content)
 			}
@@ -48,11 +50,16 @@ export const orchestrateCourseIngestionToOneroster = inngest.createFunction(
 			return { course, class: classData, courseComponents, resources, componentResources }
 		})
 
-		// --- NEW SEQUENTIAL INGESTION LOGIC ---
-		// The following steps replace the old parallel `step.sendEvent` fan-out.
+		logger.info("read oneroster payloads from disk", {
+			courseId,
+			courseComponentCount: payload.courseComponents.length,
+			resourceCount: payload.resources.length,
+			componentResourceCount: payload.componentResources.length
+		})
 
-		// Step 3: Ingest all resources first and WAIT for completion.
-		// This is a critical dependency for componentResources.
+		// Step 3: Sequentially invoke the ingestion functions, preserving the original, correct dependency order.
+
+		// Ingest resources first as they are dependencies for componentResources.
 		if (payload.resources.length > 0) {
 			await step.invoke("invoke-ingest-resources", {
 				function: ingestResources,
@@ -61,13 +68,11 @@ export const orchestrateCourseIngestionToOneroster = inngest.createFunction(
 			logger.info("completed resource ingestion", { courseId, count: payload.resources.length })
 		}
 
-		// Step 4: Ingest the course and its components. These can run in parallel.
-		// This is a dependency for componentResources.
+		// Ingest the course and its components in parallel.
 		const courseIngestPromise = step.invoke("invoke-ingest-course", {
 			function: ingestCourse,
 			data: { course: payload.course }
 		})
-
 		const componentsIngestPromise =
 			payload.courseComponents.length > 0
 				? step.invoke("invoke-ingest-components", {
@@ -75,16 +80,13 @@ export const orchestrateCourseIngestionToOneroster = inngest.createFunction(
 						data: { components: payload.courseComponents }
 					})
 				: Promise.resolve()
-
 		await Promise.all([courseIngestPromise, componentsIngestPromise])
-
 		logger.info("completed course and component ingestion", {
 			courseId,
 			components: payload.courseComponents.length
 		})
 
-		// Step 5: FINAL step. Ingest the component-resource links.
-		// This runs only after all its dependencies (resources and components) have been created.
+		// Ingest component-resource links after their dependencies are created.
 		if (payload.componentResources.length > 0) {
 			await step.invoke("invoke-ingest-component-resources", {
 				function: ingestComponentResources,
@@ -96,7 +98,7 @@ export const orchestrateCourseIngestionToOneroster = inngest.createFunction(
 			})
 		}
 
-		// Step 6: Create AssessmentLineItems AFTER component resources exist
+		// Create AssessmentLineItems after component resources exist.
 		if (payload.componentResources.length > 0) {
 			await step.invoke("invoke-create-assessment-line-items", {
 				function: createAssessmentLineItems,
@@ -108,20 +110,25 @@ export const orchestrateCourseIngestionToOneroster = inngest.createFunction(
 			})
 		}
 
-		// ADDED: Step 7: FINAL step. Ingest the class object for the course.
-		// This runs only after the course itself has been ingested.
+		// Finally, ingest the class object for the course.
 		await step.invoke("invoke-ingest-class", {
 			function: ingestClass,
 			data: { class: payload.class }
 		})
 		logger.info("completed class ingestion", { courseId, classSourcedId: payload.class.sourcedId })
 
-		logger.info("all oneroster ingestion steps have completed successfully", { courseId })
+		logger.info("all oneroster upload steps have completed successfully", { courseId })
 
 		return {
-			message: "OneRoster ingestion workflow completed successfully.",
+			message: "OneRoster upload workflow completed successfully.",
 			courseId,
-			stats: generationResult.stats
+			uploaded: {
+				course: 1,
+				class: 1,
+				courseComponents: payload.courseComponents.length,
+				resources: payload.resources.length,
+				componentResources: payload.componentResources.length
+			}
 		}
 	}
 )
