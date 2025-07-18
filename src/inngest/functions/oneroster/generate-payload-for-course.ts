@@ -63,12 +63,14 @@ export const generatePayloadForCourse = inngest.createFunction(
 			}
 
 			// Write each section to its own file
+			// MODIFIED: Update the list of files to include the new assessment line items
 			const files = [
 				{ name: "course.json", data: payload.course },
 				{ name: "class.json", data: payload.class },
 				{ name: "courseComponents.json", data: payload.courseComponents },
 				{ name: "resources.json", data: payload.resources },
-				{ name: "componentResources.json", data: payload.componentResources }
+				{ name: "componentResources.json", data: payload.componentResources },
+				{ name: "assessmentLineItems.json", data: payload.assessmentLineItems }
 			]
 
 			for (const file of files) {
@@ -103,12 +105,14 @@ export const generatePayloadForCourse = inngest.createFunction(
 				class: path.join(outputDir, "class.json"),
 				courseComponents: path.join(outputDir, "courseComponents.json"),
 				resources: path.join(outputDir, "resources.json"),
-				componentResources: path.join(outputDir, "componentResources.json")
+				componentResources: path.join(outputDir, "componentResources.json"),
+				assessmentLineItems: path.join(outputDir, "assessmentLineItems.json")
 			},
 			stats: {
 				courseComponents: payload.courseComponents.length,
 				resources: payload.resources.length,
-				componentResources: payload.componentResources.length
+				componentResources: payload.componentResources.length,
+				assessmentLineItems: payload.assessmentLineItems.length
 			}
 		}
 	}

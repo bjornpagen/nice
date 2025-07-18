@@ -65,6 +65,26 @@ interface OneRosterClass {
 	terms: OneRosterGUIDRef[]
 }
 
+// ADDED: Interface for AssessmentLineItem
+interface OneRosterAssessmentLineItem {
+	sourcedId: string
+	title: string
+	status: "active"
+	category: {
+		sourcedId: string
+		type: "category"
+	}
+	parentAssessmentLineItem?: {
+		sourcedId: string
+		type: "assessmentLineItem"
+	}
+	componentResource?: {
+		sourcedId: string
+		type: "componentResource"
+	}
+	metadata?: Record<string, unknown>
+}
+
 export interface OneRosterPayload {
 	course: OneRosterCourse
 	// ADDED: class property to the payload
@@ -72,6 +92,8 @@ export interface OneRosterPayload {
 	courseComponents: OneRosterCourseComponent[]
 	resources: OneRosterResource[]
 	componentResources: OneRosterCourseComponentResource[]
+	// ADDED: A new property to hold all generated line items
+	assessmentLineItems: OneRosterAssessmentLineItem[]
 }
 
 // --- CONSTANTS ---
@@ -160,6 +182,21 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		.from(schema.niceAssessments)
 		.where(and(eq(schema.niceAssessments.parentId, course.id), eq(schema.niceAssessments.parentType, "Course")))
 
+	// --- ADDED: Fetch assessment_exercises to build hierarchy ---
+	const allAssessmentIds = [...assessments.map((a) => a.id), ...courseAssessments.map((ca) => ca.id)]
+	const assessmentExercises = allAssessmentIds.length
+		? await db.query.niceAssessmentExercises.findMany({
+				where: inArray(schema.niceAssessmentExercises.assessmentId, allAssessmentIds)
+			})
+		: []
+	const exercisesByAssessmentId = new Map<string, string[]>()
+	for (const ae of assessmentExercises) {
+		if (!exercisesByAssessmentId.has(ae.assessmentId)) {
+			exercisesByAssessmentId.set(ae.assessmentId, [])
+		}
+		exercisesByAssessmentId.get(ae.assessmentId)?.push(ae.exerciseId)
+	}
+
 	const lessonContents = lessonIds.length
 		? await db.query.niceLessonContents.findMany({ where: inArray(schema.niceLessonContents.lessonId, lessonIds) })
 		: []
@@ -244,10 +281,27 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		},
 		courseComponents: [],
 		resources: [],
-		componentResources: []
+		componentResources: [],
+		assessmentLineItems: []
 	}
 
 	const resourceSet = new Set<string>()
+
+	// --- NEW: Hierarchical Line Item Generation ---
+
+	// Find the top-level course challenge
+	const courseChallenge = courseAssessments.find((ca) => ca.type === "CourseChallenge")
+	let courseChallengeLineItemId: string | undefined
+
+	if (courseChallenge) {
+		courseChallengeLineItemId = `nice:${courseChallenge.id}`
+		onerosterPayload.assessmentLineItems.push({
+			sourcedId: courseChallengeLineItemId,
+			title: courseChallenge.title,
+			status: "active",
+			category: { sourcedId: "default-category", type: "category" }
+		})
+	}
 
 	for (const unit of units.sort((a, b) => a.ordering - b.ordering)) {
 		onerosterPayload.courseComponents.push({
@@ -264,6 +318,51 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				path: unit.path
 			}
 		})
+
+		const unitTest = assessments.find((a) => a.parentId === unit.id && a.type === "UnitTest")
+		let unitTestLineItemId: string | undefined
+
+		if (unitTest) {
+			unitTestLineItemId = `nice:${unitTest.id}`
+			onerosterPayload.assessmentLineItems.push({
+				sourcedId: unitTestLineItemId,
+				title: unitTest.title,
+				status: "active",
+				category: { sourcedId: "default-category", type: "category" },
+				parentAssessmentLineItem: courseChallengeLineItemId
+					? { sourcedId: courseChallengeLineItemId, type: "assessmentLineItem" }
+					: undefined
+			})
+		}
+
+		const unitQuizzes = assessments.filter((a) => a.parentId === unit.id && a.type === "Quiz")
+		for (const quiz of unitQuizzes.sort((a, b) => a.ordering - b.ordering)) {
+			const quizLineItemId = `nice:${quiz.id}`
+			onerosterPayload.assessmentLineItems.push({
+				sourcedId: quizLineItemId,
+				title: quiz.title,
+				status: "active",
+				category: { sourcedId: "default-category", type: "category" },
+				parentAssessmentLineItem: unitTestLineItemId
+					? { sourcedId: unitTestLineItemId, type: "assessmentLineItem" }
+					: undefined
+			})
+
+			// Find exercises for this quiz and create their line items
+			const quizExerciseIds = exercisesByAssessmentId.get(quiz.id) || []
+			for (const exerciseId of quizExerciseIds) {
+				const exercise = exercises.find((e) => e.id === exerciseId)
+				if (exercise) {
+					onerosterPayload.assessmentLineItems.push({
+						sourcedId: `nice:${exercise.id}`,
+						title: exercise.title,
+						status: "active",
+						category: { sourcedId: "default-category", type: "category" },
+						parentAssessmentLineItem: { sourcedId: quizLineItemId, type: "assessmentLineItem" }
+					})
+				}
+			}
+		}
 
 		const unitLessons = lessons.filter((l) => l.unitId === unit.id).sort((a, b) => a.ordering - b.ordering)
 		for (const lesson of unitLessons) {
@@ -344,6 +443,20 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							metadata
 						})
 						resourceSet.add(contentSourcedId)
+
+						// --- NEW: Add flat line items for videos and articles here ---
+						if (content.type === "Video" || content.type === "Article") {
+							onerosterPayload.assessmentLineItems.push({
+								sourcedId: contentSourcedId, // The ID matches the resource ID
+								title: `Progress for: ${content.title}`,
+								status: "active",
+								category: { sourcedId: "default-category", type: "category" },
+								componentResource: {
+									sourcedId: `nice:${lesson.id}:${content.id}`,
+									type: "componentResource"
+								}
+							})
+						}
 					}
 
 					onerosterPayload.componentResources.push({

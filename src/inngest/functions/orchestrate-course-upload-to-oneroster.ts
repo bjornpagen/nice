@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { createAssessmentLineItems } from "./oneroster/create-assessment-line-items"
+import { ingestAssessmentLineItems } from "./oneroster/ingest-assessment-line-items"
 import { ingestClass } from "./oneroster/ingest-class"
 import { ingestComponentResources } from "./oneroster/ingest-component-resources"
 import { ingestCourse } from "./oneroster/ingest-course"
@@ -46,15 +46,17 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 			const courseComponents = await readFile("courseComponents.json")
 			const resources = await readFile("resources.json")
 			const componentResources = await readFile("componentResources.json")
+			const assessmentLineItems = await readFile("assessmentLineItems.json")
 
-			return { course, class: classData, courseComponents, resources, componentResources }
+			return { course, class: classData, courseComponents, resources, componentResources, assessmentLineItems }
 		})
 
 		logger.info("read oneroster payloads from disk", {
 			courseId,
 			courseComponentCount: payload.courseComponents.length,
 			resourceCount: payload.resources.length,
-			componentResourceCount: payload.componentResources.length
+			componentResourceCount: payload.componentResources.length,
+			assessmentLineItemCount: payload.assessmentLineItems.length
 		})
 
 		// Step 3: Sequentially invoke the ingestion functions, preserving the original, correct dependency order.
@@ -98,15 +100,15 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 			})
 		}
 
-		// Create AssessmentLineItems after component resources exist.
-		if (payload.componentResources.length > 0) {
-			await step.invoke("invoke-create-assessment-line-items", {
-				function: createAssessmentLineItems,
-				data: { componentResources: payload.componentResources }
+		// NEW Step 6: Ingest the hierarchically structured assessment line items.
+		if (payload.assessmentLineItems.length > 0) {
+			await step.invoke("invoke-ingest-assessment-line-items", {
+				function: ingestAssessmentLineItems,
+				data: { assessmentLineItems: payload.assessmentLineItems }
 			})
-			logger.info("completed assessment line item creation", {
+			logger.info("completed hierarchical assessment line item ingestion", {
 				courseId,
-				count: payload.componentResources.length
+				count: payload.assessmentLineItems.length
 			})
 		}
 
@@ -127,7 +129,8 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 				class: 1,
 				courseComponents: payload.courseComponents.length,
 				resources: payload.resources.length,
-				componentResources: payload.componentResources.length
+				componentResources: payload.componentResources.length,
+				assessmentLineItems: payload.assessmentLineItems.length
 			}
 		}
 	}

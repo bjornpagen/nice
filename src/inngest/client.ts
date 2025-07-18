@@ -173,6 +173,34 @@ const events = {
 			)
 		})
 	},
+	"oneroster/assessment-line-items.ingest": {
+		data: z.object({
+			assessmentLineItems: z.array(
+				z.object({
+					sourcedId: z.string(),
+					title: z.string(),
+					status: z.literal("active"),
+					category: z.object({
+						sourcedId: z.string(),
+						type: z.literal("category")
+					}),
+					parentAssessmentLineItem: z
+						.object({
+							sourcedId: z.string(),
+							type: z.literal("assessmentLineItem")
+						})
+						.optional(),
+					componentResource: z
+						.object({
+							sourcedId: z.string(),
+							type: z.literal("componentResource")
+						})
+						.optional(),
+					metadata: z.record(z.string(), z.any()).optional()
+				})
+			)
+		})
+	},
 	"oneroster/class.ingest": {
 		data: z.object({
 			class: z.object({
