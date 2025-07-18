@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
+import { ErrOneRosterNotFound } from "@/lib/oneroster"
 
 export const ingestResources = inngest.createFunction(
 	{ id: "ingest-resources", name: "Ingest OneRoster Resources" },
@@ -27,6 +28,21 @@ export const ingestResources = inngest.createFunction(
 				// Use PUT for upsert behavior
 				const result = await errors.try(oneroster.updateResource(resource.sourcedId, resourceWithoutId))
 				if (result.error) {
+					// Check if it's a 404 error - if so, create instead
+					if (errors.is(result.error, ErrOneRosterNotFound)) {
+						logger.info("resource not found, creating new", { sourcedId: resource.sourcedId })
+						const createResult = await errors.try(oneroster.createResource(resourceWithoutId))
+						if (createResult.error) {
+							logger.error("failed to create resource", {
+								sourcedId: resource.sourcedId,
+								error: createResult.error
+							})
+							throw createResult.error
+						}
+						logger.debug("successfully created resource", { sourcedId: resource.sourcedId })
+						return { sourcedId: resource.sourcedId, success: true, status: "created" }
+					}
+					// Other error - re-throw
 					logger.error("failed to upsert resource", {
 						sourcedId: resource.sourcedId,
 						error: result.error

@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
+import { ErrOneRosterNotFound } from "@/lib/oneroster"
 
 export const ingestClass = inngest.createFunction(
 	{ id: "ingest-class", name: "Ingest OneRoster Class" },
@@ -64,18 +65,34 @@ export const ingestClass = inngest.createFunction(
 			// Use PUT for upsert behavior
 			const result = await errors.try(oneroster.updateClass(classData.sourcedId, cleanClassData))
 			if (result.error) {
-				logger.error("failed to upsert class via API", {
+				// Check if it's a 404 error - if so, create instead
+				if (errors.is(result.error, ErrOneRosterNotFound)) {
+					logger.info("class not found, creating new", { sourcedId: classData.sourcedId })
+					const createResult = await errors.try(oneroster.createClass(cleanClassData))
+					if (createResult.error) {
+						logger.error("failed to create class", {
+							sourcedId: classData.sourcedId,
+							error: createResult.error,
+							classData: cleanClassData
+						})
+						throw createResult.error
+					}
+					logger.info("successfully created class", { sourcedId: classData.sourcedId })
+				} else {
+					// Other error - re-throw
+					logger.error("failed to upsert class via API", {
+						sourcedId: classData.sourcedId,
+						error: result.error,
+						classData: cleanClassData
+					})
+					throw result.error
+				}
+			} else {
+				logger.info("class API call successful", {
 					sourcedId: classData.sourcedId,
-					error: result.error,
-					classData: cleanClassData
+					apiResponse: result.data
 				})
-				throw result.error
 			}
-
-			logger.info("class API call successful", {
-				sourcedId: classData.sourcedId,
-				apiResponse: result.data
-			})
 
 			// Verify the class was created/updated by fetching it
 			logger.debug("verifying class", { sourcedId: classData.sourcedId })

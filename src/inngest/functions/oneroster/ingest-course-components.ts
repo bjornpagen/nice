@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
+import { ErrOneRosterNotFound } from "@/lib/oneroster"
 
 export const ingestCourseComponents = inngest.createFunction(
 	{ id: "ingest-course-components", name: "Ingest OneRoster Course Components" },
@@ -46,10 +47,23 @@ export const ingestCourseComponents = inngest.createFunction(
 				// Use PUT for upsert behavior
 				const result = await errors.try(oneroster.updateCourseComponent(component.sourcedId, component))
 				if (result.error) {
-					logger.error("failed to upsert component", { sourcedId: component.sourcedId, error: result.error })
-					throw result.error
+					// Check if it's a 404 error - if so, create instead
+					if (errors.is(result.error, ErrOneRosterNotFound)) {
+						logger.info("component not found, creating new", { sourcedId: component.sourcedId })
+						const createResult = await errors.try(oneroster.createCourseComponent(component))
+						if (createResult.error) {
+							logger.error("failed to create component", { sourcedId: component.sourcedId, error: createResult.error })
+							throw createResult.error
+						}
+						logger.debug("successfully created component", { sourcedId: component.sourcedId })
+					} else {
+						// Other error - re-throw
+						logger.error("failed to upsert component", { sourcedId: component.sourcedId, error: result.error })
+						throw result.error
+					}
+				} else {
+					logger.debug("upserted component", { sourcedId: component.sourcedId })
 				}
-				logger.debug("upserted component", { sourcedId: component.sourcedId })
 
 				ingestedIds.add(component.sourcedId)
 				const children = componentsByParent.get(component.sourcedId)
