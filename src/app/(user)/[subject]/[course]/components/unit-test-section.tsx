@@ -1,23 +1,27 @@
+import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import type { UnitTest } from "@/lib/types/domain"
 import { startCase } from "@/lib/utils"
+import unitTestNotStartedImage from "./images/unit-test-not-started.svg"
 import { Section } from "./section"
 
 export function UnitTestSection({ test }: { test: UnitTest }) {
 	return (
-		<Section>
-			<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-				<div className="flex flex-col">
+		<Section className="relative overflow-hidden">
+			<div className="flex justify-between items-end gap-6">
+				<div className="flex flex-col flex-1">
 					<Link href={test.path} className="font-bold text-gray-900 mb-2 text-md hover:underline">
 						{startCase(test.title)}
 					</Link>
-
-					<p className="text-gray-600 text-xs">Test your understanding of the entire unit!</p>
+					<p className="text-gray-600 text-xs mb-4">Test your understanding of the entire unit!</p>
+					<Button variant="outline" className="text-blue-600 hover:border-blue-600 w-fit" asChild>
+						<Link href={test.path}>Start Unit test</Link>
+					</Button>
 				</div>
-				<Button variant="outline" className="text-blue-600 hover:border-blue-600" asChild>
-					<Link href={test.path}>Start Unit Test</Link>
-				</Button>
+				<div className="flex-shrink-0 hidden sm:block relative" style={{ marginBottom: "-2rem" }}>
+					<Image src={unitTestNotStartedImage} alt="Unit test mascot" width={280} height={280} />
+				</div>
 			</div>
 		</Section>
 	)
