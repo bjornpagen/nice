@@ -9,6 +9,7 @@ import greenFriend from "@/components/practice/course/unit/lesson/exercise/image
 import lightBlueFriend from "@/components/practice/course/unit/lesson/exercise/images/light-blue-friend_v3.png"
 import spaceFriend from "@/components/practice/course/unit/lesson/exercise/images/space-friend_v3.png"
 import { QTIRenderer } from "@/components/qti-renderer"
+import { sendCaliperActivityCompletedEvent } from "@/lib/actions/caliper"
 import { processQtiResponse } from "@/lib/actions/qti"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
 import type { Question, Unit } from "@/lib/types/domain"
@@ -247,8 +248,53 @@ export function AssessmentStepper({
 			}
 		}
 
+		// NEW: Fire and forget Caliper event
+		const sendCaliperEvent = async () => {
+			if (!unitData) return
+
+			// Extract subject and course from unit path: "/{subject}/{course}/{unit}"
+			const pathParts = unitData.path.split("/")
+			if (pathParts.length < 3) return
+			const subject = pathParts[1]
+			const course = pathParts[2]
+			if (!subject || !course) return
+
+			// Map subject to valid enum values
+			const subjectMapping: Record<string, "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"> = {
+				science: "Science",
+				math: "Math",
+				reading: "Reading",
+				language: "Language",
+				"social-studies": "Social Studies"
+			}
+			const mappedSubject = subjectMapping[subject] ?? "None"
+
+			const actor = {
+				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userSourcedId}`,
+				type: "TimebackUser" as const,
+				email: user.primaryEmailAddress?.emailAddress ?? ""
+			}
+
+			const context = {
+				id: `https://alpharead.alpha.school/assessments/${assessmentId}`,
+				type: "TimebackActivityContext" as const,
+				subject: mappedSubject,
+				app: { name: "Nice Academy" },
+				course: { name: course },
+				activity: { name: assessmentTitle }
+			}
+
+			const metrics = [
+				{ type: "totalQuestions" as const, value: questions.length },
+				{ type: "correctQuestions" as const, value: correctAnswersCount }
+			]
+
+			void sendCaliperActivityCompletedEvent(actor, context, metrics)
+		}
+
 		saveResult()
-	}, [showSummary, assessmentId, correctAnswersCount, questions.length, user])
+		sendCaliperEvent()
+	}, [showSummary, assessmentId, correctAnswersCount, questions.length, user, unitData, assessmentTitle])
 
 	if (questions.length === 0) {
 		return <div>No questions available</div>
