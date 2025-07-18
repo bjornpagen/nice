@@ -17,7 +17,7 @@ export const ComponentMetadataSchema = z
 		khanId: z.string().min(1),
 		khanSlug: z.string().min(1),
 		khanTitle: z.string().min(1),
-		path: z.string().min(1),
+		path: z.string().min(1).optional(), // Make path optional to handle missing path fields
 		khanDescription: z.string().default("")
 	})
 	.strict() // Enforce strict validation
@@ -29,7 +29,7 @@ const BaseResourceMetadataSchema = z.object({
 	khanId: z.string().min(1),
 	khanSlug: z.string().min(1),
 	khanTitle: z.string().min(1),
-	path: z.string().min(1),
+	path: z.string().min(1).optional(), // Make path optional to handle missing path fields
 	khanDescription: z.string().default("")
 })
 
