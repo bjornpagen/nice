@@ -5,7 +5,7 @@ import Image from "next/image"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
-import { sendCaliperActivityCompletedEvent } from "@/lib/actions/caliper"
+import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { trackArticleView } from "@/lib/actions/tracking"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { ArticlePageData } from "@/lib/types/page"
@@ -20,8 +20,12 @@ export function Content({
 	const article = React.use(articlePromise)
 	const params = React.use(paramsPromise)
 	const { user } = useUser()
+	const startTimeRef = React.useRef<Date | null>(null)
 
 	React.useEffect(() => {
+		// Record the start time when component mounts
+		startTimeRef.current = new Date()
+
 		// Validate user metadata if user exists
 		let userSourcedId: string | undefined
 		if (user?.publicMetadata) {
@@ -35,7 +39,7 @@ export function Content({
 			// Fire-and-forget the existing OneRoster tracking action on component mount.
 			void trackArticleView(userSourcedId, article.id)
 
-			// NEW: Send Caliper event for article completion
+			// Send Caliper event for article completion
 			const actor = {
 				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userSourcedId}`,
 				type: "TimebackUser" as const,
@@ -65,6 +69,19 @@ export function Content({
 			const metrics = [{ type: "xpEarned" as const, value: 1 }]
 
 			void sendCaliperActivityCompletedEvent(actor, context, metrics)
+
+			// Cleanup function to send time spent event when component unmounts
+			return () => {
+				if (startTimeRef.current && user) {
+					const endTime = new Date()
+					const durationInSeconds = Math.floor((endTime.getTime() - startTimeRef.current.getTime()) / 1000)
+
+					// Only send if user spent at least 1 second on the article
+					if (durationInSeconds >= 1) {
+						void sendCaliperTimeSpentEvent(actor, context, durationInSeconds)
+					}
+				}
+			}
 		}
 	}, [user, article.id, article.title, params.subject, params.course])
 

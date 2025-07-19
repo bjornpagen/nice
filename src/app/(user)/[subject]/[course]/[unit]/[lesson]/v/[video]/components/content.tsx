@@ -43,9 +43,60 @@ export function Content({
 	const [activeTab, setActiveTab] = React.useState<"about" | "transcript">("about")
 	const playerRef = React.useRef<YouTubePlayer | null>(null)
 
-	const SEND_INTERVAL_SECONDS = 3 // Send a Caliper event every 3 seconds
+	// Refs for tracking cumulative watch time
+	const watchStartTimeRef = React.useRef<Date | null>(null)
+	const totalWatchTimeRef = React.useRef<number>(0)
+	const isPlayingRef = React.useRef<boolean>(false)
+	const hasSentFinalEventRef = React.useRef<boolean>(false)
 
-	// Periodically track video progress when the user is watching.
+	// Function to send the cumulative time spent event
+	const sendCumulativeTimeEvent = React.useCallback(() => {
+		// Prevent duplicate sends
+		if (hasSentFinalEventRef.current) return
+
+		// Calculate final watch time
+		let finalWatchTime = totalWatchTimeRef.current
+		if (isPlayingRef.current && watchStartTimeRef.current) {
+			// Add time from current play session
+			const currentSessionTime = (Date.now() - watchStartTimeRef.current.getTime()) / 1000
+			finalWatchTime += currentSessionTime
+		}
+
+		// Only send if watched at least 1 second
+		if (finalWatchTime < 1) return
+
+		// Validate user metadata
+		let sourceId: string | undefined
+		if (user?.publicMetadata) {
+			const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+			if (metadataValidation.success) {
+				sourceId = metadataValidation.data.sourceId
+			}
+		}
+
+		if (sourceId && user) {
+			const actor = {
+				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${sourceId}`,
+				type: "TimebackUser" as const,
+				email: user.primaryEmailAddress?.emailAddress ?? ""
+			}
+
+			const context = {
+				id: `https://alpharead.alpha.school/videos/${video.id}`,
+				type: "TimebackActivityContext" as const,
+				subject: mapSubjectToCaliperSubject(params.subject),
+				app: { name: "Nice Academy" },
+				course: { name: params.course },
+				activity: { name: video.title }
+			}
+
+			// Send cumulative time event
+			void sendCaliperTimeSpentEvent(actor, context, Math.floor(finalWatchTime))
+			hasSentFinalEventRef.current = true
+		}
+	}, [user, video.id, video.title, params.subject, params.course])
+
+	// Still track progress periodically for OneRoster
 	React.useEffect(() => {
 		const intervalId = setInterval(() => {
 			const player = playerRef.current
@@ -67,36 +118,50 @@ export function Content({
 				if (duration > 0) {
 					// Existing OneRoster progress update (fire-and-forget)
 					void updateVideoProgress(sourceId, video.id, currentTime, duration)
-
-					// NEW: Send Caliper TimeSpentEvent (only if user exists)
-					if (user) {
-						const actor = {
-							id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${sourceId}`,
-							type: "TimebackUser" as const,
-							email: user.primaryEmailAddress?.emailAddress ?? ""
-						}
-
-						const context = {
-							id: `https://alpharead.alpha.school/videos/${video.id}`,
-							type: "TimebackActivityContext" as const,
-							subject: mapSubjectToCaliperSubject(params.subject),
-							app: { name: "Nice Academy" },
-							course: { name: params.course },
-							activity: { name: video.title }
-						}
-
-						// Fire-and-forget Caliper event
-						void sendCaliperTimeSpentEvent(actor, context, SEND_INTERVAL_SECONDS)
-					}
 				}
 			}
-		}, SEND_INTERVAL_SECONDS * 1000) // Convert interval to milliseconds
+		}, 3000) // Still update OneRoster progress every 3 seconds
 
-		return () => clearInterval(intervalId) // Cleanup on component unmount.
-	}, [user, video.id, video.title, params.subject, params.course])
+		return () => clearInterval(intervalId)
+	}, [user, video.id])
+
+	// Cleanup: send cumulative event when component unmounts
+	React.useEffect(() => {
+		return () => {
+			sendCumulativeTimeEvent()
+		}
+	}, [sendCumulativeTimeEvent])
 
 	const onPlayerReady = (event: { target: YouTubePlayer }) => {
 		playerRef.current = event.target
+	}
+
+	const onPlayerStateChange = (event: { target: YouTubePlayer; data: number }) => {
+		const playerState = event.data
+
+		// Playing state
+		if (playerState === 1) {
+			if (!isPlayingRef.current) {
+				// Started playing
+				watchStartTimeRef.current = new Date()
+				isPlayingRef.current = true
+			}
+		}
+		// Paused, ended, or any other state
+		else if (isPlayingRef.current) {
+			// Stopped playing - accumulate watch time
+			if (watchStartTimeRef.current) {
+				const sessionTime = (Date.now() - watchStartTimeRef.current.getTime()) / 1000
+				totalWatchTimeRef.current += sessionTime
+			}
+			isPlayingRef.current = false
+			watchStartTimeRef.current = null
+
+			// If video ended (state 0), send the cumulative event
+			if (playerState === 0) {
+				sendCumulativeTimeEvent()
+			}
+		}
 	}
 
 	return (
@@ -145,6 +210,7 @@ export function Content({
 								title={video.title}
 								className="absolute inset-0 w-full h-full"
 								onReady={onPlayerReady}
+								onStateChange={onPlayerStateChange}
 								opts={{
 									width: "100%",
 									height: "100%",

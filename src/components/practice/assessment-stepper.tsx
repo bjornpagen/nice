@@ -9,7 +9,7 @@ import greenFriend from "@/components/practice/course/unit/lesson/exercise/image
 import lightBlueFriend from "@/components/practice/course/unit/lesson/exercise/images/light-blue-friend_v3.png"
 import spaceFriend from "@/components/practice/course/unit/lesson/exercise/images/space-friend_v3.png"
 import { QTIRenderer } from "@/components/qti-renderer"
-import { sendCaliperActivityCompletedEvent } from "@/lib/actions/caliper"
+import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { processQtiResponse } from "@/lib/actions/qti"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
 import type { Question, Unit } from "@/lib/types/domain"
@@ -151,6 +151,7 @@ export function AssessmentStepper({
 	const [nextItem, setNextItem] = React.useState<{ text: string; path: string } | null>(null)
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
 	const currentQuestion = questions[currentQuestionIndex]
+	const assessmentStartTimeRef = React.useRef<Date | null>(null)
 
 	const MAX_ATTEMPTS = 3
 	const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
@@ -162,6 +163,13 @@ export function AssessmentStepper({
 			})
 		}
 	}, [])
+
+	// Record start time when assessment begins
+	React.useEffect(() => {
+		if (!assessmentStartTimeRef.current && questions.length > 0) {
+			assessmentStartTimeRef.current = new Date()
+		}
+	}, [questions.length])
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
@@ -248,8 +256,8 @@ export function AssessmentStepper({
 			}
 		}
 
-		// NEW: Fire and forget Caliper event
-		const sendCaliperEvent = async () => {
+		// Fire and forget Caliper events
+		const sendCaliperEvents = async () => {
 			if (!unitData) return
 
 			// Extract subject and course from unit path: "/{subject}/{course}/{unit}"
@@ -289,11 +297,23 @@ export function AssessmentStepper({
 				{ type: "correctQuestions" as const, value: correctAnswersCount }
 			]
 
+			// Send activity completed event
 			void sendCaliperActivityCompletedEvent(actor, context, metrics)
+
+			// Send time spent event if we have a start time
+			if (assessmentStartTimeRef.current) {
+				const endTime = new Date()
+				const durationInSeconds = Math.floor((endTime.getTime() - assessmentStartTimeRef.current.getTime()) / 1000)
+
+				// Only send if assessment took at least 1 second
+				if (durationInSeconds >= 1) {
+					void sendCaliperTimeSpentEvent(actor, context, durationInSeconds)
+				}
+			}
 		}
 
 		saveResult()
-		sendCaliperEvent()
+		sendCaliperEvents()
 	}, [showSummary, assessmentId, correctAnswersCount, questions.length, user, unitData, assessmentTitle])
 
 	if (questions.length === 0) {
