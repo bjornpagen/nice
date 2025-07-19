@@ -17,15 +17,15 @@ export const ingestAssessmentTests = inngest.createFunction(
 
 		const results = []
 		for (const testXml of tests) {
-			// Extract identifier from the root qti-assessment-test element using a robust regex.
+			// Extract identifier from the root qti-assessment-test element using a robust regex with named capture groups.
 			// This regex specifically targets the root tag to avoid matching identifiers from nested elements.
 			// - `<qti-assessment-test` : Matches the opening of the root tag
 			// - `(?:\s+[^>]*)` : Non-capturing group for attributes before identifier (optional)
 			// - `\s+identifier=` : Matches whitespace and the identifier attribute
-			// - `"([^"]+)"` : Captures the identifier value in group 1
+			// - `"(?<identifier>[^"]+)"` : Named capture group for the identifier value
 			// - `[^>]*>` : Matches remaining attributes and closing >
-			const idMatch = testXml.match(/<qti-assessment-test(?:\s+[^>]*)?\s+identifier="([^"]+)"[^>]*>/)
-			const identifier = idMatch?.[1] ?? null
+			const idMatch = testXml.match(/<qti-assessment-test(?:\s+[^>]*)?\s+identifier="(?<identifier>[^"]+)"[^>]*>/)
+			const identifier = idMatch?.groups?.identifier ?? null
 
 			if (!identifier) {
 				logger.error("could not extract identifier from test XML, skipping", {

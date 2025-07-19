@@ -5,7 +5,6 @@ import { and, eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import type { CreateAssessmentTestInput } from "@/lib/qti"
 
 /**
  * Replaces the identifier and title attributes on the root tag of a given XML string.
@@ -267,35 +266,50 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				const buildTestObject = (
 					id: string,
 					title: string,
-					itemIds: string[],
-					// metadata is kept for logging and potential future use but is not sent to the QTI API
-					_metadata: Record<string, unknown>
-				): CreateAssessmentTestInput => {
+					questions: { id: string; exerciseId: string; exerciseTitle: string }[],
+					metadata: Record<string, unknown>
+				): string => {
 					const safeTitle = title.replace(/"/g, "&quot;")
-					const itemRefsXml = itemIds
-						.map(
-							(itemId, index) =>
-								`<qti-assessment-item-ref identifier="nice:${itemId}" href="/assessment-items/nice:${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
-						)
-						.join("\n            ")
+
+					// Group questions by their source exercise.
+					const questionsByExercise = new Map<string, { title: string; questionIds: string[] }>()
+					for (const q of questions) {
+						if (!questionsByExercise.has(q.exerciseId)) {
+							questionsByExercise.set(q.exerciseId, { title: q.exerciseTitle, questionIds: [] })
+						}
+						questionsByExercise.get(q.exerciseId)?.questionIds.push(q.id)
+					}
+
+					// Determine the number of questions to select from each exercise based on assessment type.
+					const selectCount =
+						metadata.khanAssessmentType === "UnitTest" || metadata.khanAssessmentType === "CourseChallenge" ? 4 : 2
+
+					const sectionsXml = Array.from(questionsByExercise.entries())
+						.map(([exerciseId, { title: exerciseTitle, questionIds }]) => {
+							const safeExerciseTitle = exerciseTitle.replace(/"/g, "&quot;")
+							const itemRefsXml = questionIds
+								.map(
+									(itemId, itemIndex) =>
+										`<qti-assessment-item-ref identifier="nice:${itemId}" href="/assessment-items/nice:${itemId}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+								)
+								.join("\n                ")
+
+							return `        <qti-assessment-section identifier="SECTION_${exerciseId}" title="${safeExerciseTitle}" visible="false">
+            <qti-selection select="${Math.min(selectCount, questionIds.length)}" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>
+            ${itemRefsXml}
+        </qti-assessment-section>`
+						})
+						.join("\n")
 
 					// The entire test is now constructed as a single XML string.
 					return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice:${id}" title="${safeTitle}">
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
-        <qti-default-value>
-            <qti-value>0.0</qti-value>
-        </qti-default-value>
-    </qti-outcome-declaration>
-    <qti-outcome-declaration identifier="MAX_SCORE" cardinality="single" base-type="float">
-        <qti-default-value>
-            <qti-value>${itemIds.length}.0</qti-value>
-        </qti-default-value>
+        <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
     </qti-outcome-declaration>
     <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
-        <qti-assessment-section identifier="SECTION_1" title="Main Section" visible="true">
-            ${itemRefsXml}
-        </qti-assessment-section>
+${sectionsXml}
     </qti-test-part>
 </qti-assessment-test>`
 				}
@@ -322,7 +336,21 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 						})
 					}
 
-					return buildTestObject(assessmentId, data.title, questionIds, {
+					// Map question IDs to full question objects with exercise information
+					const allQuestionsForTest = questionIds.map((id) => {
+						const question = allQuestions.find((q) => q.id === id)
+						if (!question) {
+							logger.error("Question not found when building test", { questionId: id, assessmentId })
+							throw errors.new(`question ${id} not found when building test`)
+						}
+						return {
+							id: question.id,
+							exerciseId: question.exerciseId,
+							exerciseTitle: question.exerciseTitle
+						}
+					})
+
+					return buildTestObject(assessmentId, data.title, allQuestionsForTest, {
 						khanId: assessmentId,
 						khanSlug: data.slug,
 						khanPath: data.path,
@@ -343,14 +371,29 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 						})
 					}
 
-					return buildTestObject(exercise.id, exercise.title, questionIds, {
-						khanId: exercise.id,
-						khanSlug: exercise.slug,
-						khanPath: exercise.path,
-						khanTitle: exercise.title,
-						khanDescription: exercise.description,
-						khanAssessmentType: "Exercise"
-					})
+					// For standalone exercises, we create a test that shows ALL questions.
+					// This is done by creating a single section with NO selection/ordering rules.
+					const safeTitle = exercise.title.replace(/"/g, "&quot;")
+					const itemRefsXml = questionIds
+						.map(
+							(itemId, index) =>
+								`<qti-assessment-item-ref identifier="nice:${itemId}" href="/assessment-items/nice:${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
+						)
+						.join("\n                ")
+
+					// For standalone exercises, we create a test that shows ALL questions.
+					// This is done by creating a single section with NO selection/ordering rules.
+					return `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice:${exercise.id}" title="${safeTitle}">
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
+        <qti-assessment-section identifier="SECTION_${exercise.id}" title="${safeTitle}" visible="true">
+            ${itemRefsXml}
+        </qti-assessment-section>
+    </qti-test-part>
+</qti-assessment-test>`
 				})
 
 				const tests = [...explicitTests, ...exerciseTests]
