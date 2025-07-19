@@ -54,6 +54,7 @@ export const TimebackActivityMetricsCollectionSchema = z.object({
 	items: z.array(TimebackActivityMetricSchema)
 })
 
+// STRICT schemas for SENDING events (original requirements)
 export const TimebackActivityCompletedEventSchema = z.object({
 	"@context": z.literal("http://purl.imsglobal.org/ctx/caliper/v1p2"),
 	id: z
@@ -108,6 +109,53 @@ export const CaliperEnvelopeSchema = z.object({
 	data: z.array(z.union([TimebackActivityCompletedEventSchema, TimebackTimeSpentEventSchema])).min(1)
 })
 export type CaliperEnvelope = z.infer<typeof CaliperEnvelopeSchema>
+
+// FLEXIBLE schemas for RECEIVING events (handles API inconsistencies)
+const FlexibleTimebackActivityCompletedEventSchema = z.object({
+	"@context": z.literal("http://purl.imsglobal.org/ctx/caliper/v1p2").optional(),
+	id: z
+		.union([
+			z
+				.string()
+				.uuid()
+				.transform((val) => `urn:uuid:${val}`),
+			z.number().transform((val) => val.toString())
+		])
+		.optional(),
+	type: z.literal("ActivityEvent"),
+	profile: z.literal("TimebackProfile").optional(),
+	action: z.literal("Completed"),
+	actor: TimebackUserSchema,
+	object: TimebackActivityContextSchema,
+	eventTime: z.string().datetime(),
+	generated: TimebackActivityMetricsCollectionSchema
+})
+
+const FlexibleTimebackTimeSpentEventSchema = z.object({
+	"@context": z.literal("http://purl.imsglobal.org/ctx/caliper/v1p2").optional(),
+	id: z
+		.union([
+			z
+				.string()
+				.uuid()
+				.transform((val) => `urn:uuid:${val}`),
+			z.number().transform((val) => val.toString())
+		])
+		.optional(),
+	type: z.literal("TimeSpentEvent"),
+	profile: z.literal("TimebackProfile").optional(),
+	action: z.literal("SpentTime"),
+	actor: TimebackUserSchema,
+	object: TimebackActivityContextSchema,
+	eventTime: z.string().datetime(),
+	generated: TimebackTimeSpentMetricsCollectionSchema
+})
+
+// Schema for parsing received events (flexible)
+export const CaliperEventSchema = z.union([
+	FlexibleTimebackActivityCompletedEventSchema,
+	FlexibleTimebackTimeSpentEventSchema
+])
 
 export class CaliperApiClient {
 	#accessToken: string | null = null
@@ -242,5 +290,52 @@ export class CaliperApiClient {
 		)
 
 		logger.info("caliper client: events sent successfully")
+	}
+
+	// New method to fetch events
+	public async getEvents(actorId: string): Promise<z.infer<typeof CaliperEventSchema>[]> {
+		logger.info("caliper client: fetching events for actor", { actorId })
+		const endpoint = `/caliper/events?actorId=${encodeURIComponent(actorId)}&limit=1000` // Fetch up to 1000 events
+
+		// Use a more flexible schema for the API response that handles validation errors gracefully
+		const response = await this.#request(endpoint, { method: "GET" }, z.unknown())
+
+		// Parse the response manually to handle validation errors
+		if (!response || typeof response !== "object" || !("events" in response)) {
+			logger.warn("caliper client: getEvents returned invalid response structure", { actorId, response })
+			return []
+		}
+
+		// Runtime validation for events property
+		const eventsProperty = "events" in response ? response.events : undefined
+		if (!Array.isArray(eventsProperty)) {
+			logger.warn("caliper client: events is not an array", { actorId, events: eventsProperty })
+			return []
+		}
+
+		const events = eventsProperty
+
+		// Filter and validate events, skipping invalid ones
+		const validEvents: z.infer<typeof CaliperEventSchema>[] = []
+		for (const [index, event] of events.entries()) {
+			const validation = CaliperEventSchema.safeParse(event)
+			if (validation.success) {
+				validEvents.push(validation.data)
+			} else {
+				logger.warn("caliper client: skipping invalid event", {
+					actorId,
+					eventIndex: index,
+					validationError: validation.error.issues
+				})
+			}
+		}
+
+		logger.info("caliper client: events fetched successfully", {
+			actorId,
+			totalEvents: events.length,
+			validEvents: validEvents.length,
+			skippedEvents: events.length - validEvents.length
+		})
+		return validEvents
 	}
 }
