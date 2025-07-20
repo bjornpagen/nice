@@ -26,6 +26,11 @@ export function Content({
 	const { params, course, allUnits, lessonCount, challenges, unit } = React.use(dataPromise)
 	const progressMap = React.use(progressPromise)
 
+	// Safety check for allUnits
+	if (!allUnits || !Array.isArray(allUnits)) {
+		return <div>Error: Course units data is missing. Please try refreshing the page.</div>
+	}
+
 	const unitIndex = allUnits.findIndex((u) => u.id === unit.id)
 	if (unitIndex === -1) {
 		return <div>Unit not found.</div>

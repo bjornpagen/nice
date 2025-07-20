@@ -355,7 +355,9 @@ const AssessmentResultSchema = z.object({
 	assessmentLineItem: GUIDRefReadSchema,
 	student: GUIDRefReadSchema,
 	scoreStatus: ScoreStatusEnum,
-	score: z.number(),
+	// MODIFIED: score is no longer a required number.
+	// It can be a number, null, or undefined.
+	score: z.number().nullable().optional(),
 	scoreDate: z.string().datetime(),
 	comment: z.string().nullable().optional()
 })

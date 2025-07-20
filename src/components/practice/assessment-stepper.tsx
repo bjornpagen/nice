@@ -9,8 +9,14 @@ import greenFriend from "@/components/practice/course/unit/lesson/exercise/image
 import lightBlueFriend from "@/components/practice/course/unit/lesson/exercise/images/light-blue-friend_v3.png"
 import spaceFriend from "@/components/practice/course/unit/lesson/exercise/images/space-friend_v3.png"
 import { QTIRenderer } from "@/components/qti-renderer"
+import {
+	checkAndCreateNewAttemptIfNeeded,
+	createNewAssessmentAttempt,
+	finalizeAssessment,
+	processQuestionResponse
+} from "@/lib/actions/assessment"
 import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
-import { processQtiResponse } from "@/lib/actions/qti"
+import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
 import type { Question, Unit } from "@/lib/types/domain"
 import { AssessmentBottomNav, type AssessmentType } from "./assessment-bottom-nav"
@@ -123,7 +129,8 @@ interface AssessmentStepperProps {
 	questions: Question[]
 	contentType: AssessmentType
 	onComplete?: () => void
-	assessmentId?: string
+	assessmentId?: string // ComponentResource ID for PowerPath
+	resourceId?: string // Resource ID for OneRoster assessment results
 	assessmentTitle?: string
 	unitData?: Unit
 }
@@ -133,6 +140,7 @@ export function AssessmentStepper({
 	contentType,
 	onComplete,
 	assessmentId = "",
+	resourceId = "",
 	assessmentTitle = "",
 	unitData
 }: AssessmentStepperProps) {
@@ -148,11 +156,14 @@ export function AssessmentStepper({
 	const [attemptCount, setAttemptCount] = React.useState(0)
 	const [correctAnswersCount, setCorrectAnswersCount] = React.useState(0)
 	const [showSummary, setShowSummary] = React.useState(false)
+	// ADDED: New state to track the current attempt number. Default to 1 for the first attempt.
+	const [attemptNumber, setAttemptNumber] = React.useState(1)
 	const [nextItem, setNextItem] = React.useState<{ text: string; path: string } | null>(null)
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
 	const currentQuestion = questions[currentQuestionIndex]
 	const assessmentStartTimeRef = React.useRef<Date | null>(null)
 
+	const isInteractiveAssessment = contentType === "Quiz" || contentType === "Test"
 	const MAX_ATTEMPTS = 3
 	const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
 
@@ -170,6 +181,26 @@ export function AssessmentStepper({
 			assessmentStartTimeRef.current = new Date()
 		}
 	}, [questions.length])
+
+	// ADDED: Check for and create new attempt when component mounts or when assessment changes
+	React.useEffect(() => {
+		if (!isInteractiveAssessment || !user?.publicMetadata?.sourceId || !assessmentId) {
+			return
+		}
+
+		const userSourcedId = user.publicMetadata.sourceId
+		if (typeof userSourcedId !== "string") {
+			return
+		}
+
+		// Check if we need to create a new attempt and get the current attempt number
+		const initializeAttempt = async () => {
+			const currentAttemptNumber = await checkAndCreateNewAttemptIfNeeded(userSourcedId, assessmentId)
+			setAttemptNumber(currentAttemptNumber)
+		}
+
+		initializeAttempt()
+	}, [assessmentId, isInteractiveAssessment, user?.publicMetadata?.sourceId])
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
@@ -227,32 +258,40 @@ export function AssessmentStepper({
 		}
 	}, [showSummary, assessmentId, unitData])
 
-	// Save assessment result to OneRoster when summary is shown
+	// MODIFIED: This useEffect now passes the attemptNumber to the server action.
 	React.useEffect(() => {
-		if (!showSummary || !assessmentId || !user) {
+		if (!showSummary || !resourceId || !user?.publicMetadata?.sourceId) {
 			return
 		}
 
-		// NO FALLBACKS: We MUST have a valid OneRoster sourceId
-		if (typeof user.publicMetadata?.sourceId !== "string") {
-			// Missing critical data - STOP. Do not guess, do not use fallbacks.
-			// The assessment result will not be saved, which is the correct behavior
-			// when we don't have the required data.
-			return
-		}
-
+		// Proper type check for userSourcedId
 		const userSourcedId = user.publicMetadata.sourceId
-		const score = correctAnswersCount / questions.length
+		if (typeof userSourcedId !== "string") {
+			return
+		}
+		const score = questions.length > 0 ? correctAnswersCount / questions.length : 0
 
-		// Fire and forget - we don't want to block the UI
-		const saveResult = async () => {
-			const result = await errors.try(
-				saveAssessmentResult(assessmentId, score, correctAnswersCount, questions.length, userSourcedId)
-			)
+		const finalizeAndAnalyze = async () => {
+			await errors.try(saveAssessmentResult(resourceId, score, correctAnswersCount, questions.length, userSourcedId))
 
-			if (result.error) {
-				// Log but don't show error to user - this is a background task
-				// We don't want to interrupt their experience if tracking fails
+			if (isInteractiveAssessment) {
+				// First finalize the assessment to ensure all responses are graded
+				const finalizeResult = await errors.try(finalizeAssessment(userSourcedId, assessmentId))
+				if (finalizeResult.error) {
+					toast.error("Could not finalize assessment. Proficiency analysis may be incomplete.")
+					return
+				}
+
+				// Add a small delay to ensure PowerPath has processed everything
+				await new Promise((resolve) => setTimeout(resolve, 1000))
+
+				// Pass the attemptNumber to the action
+				const analysisPromise = updateProficiencyFromAssessment(userSourcedId, assessmentId, attemptNumber)
+				toast.promise(analysisPromise, {
+					loading: "Analyzing your skill performance...",
+					success: (result) => `Updated proficiency for ${result.exercisesUpdated} skills!`,
+					error: "Could not complete skill analysis."
+				})
 			}
 		}
 
@@ -312,9 +351,20 @@ export function AssessmentStepper({
 			}
 		}
 
-		saveResult()
+		finalizeAndAnalyze()
 		sendCaliperEvents()
-	}, [showSummary, assessmentId, correctAnswersCount, questions.length, user, unitData, assessmentTitle])
+	}, [
+		showSummary,
+		assessmentId,
+		resourceId,
+		user,
+		correctAnswersCount,
+		questions.length,
+		isInteractiveAssessment,
+		unitData,
+		assessmentTitle,
+		attemptNumber // ADDED: Add attemptNumber to dependency array
+	])
 
 	if (questions.length === 0) {
 		return <div>No questions available</div>
@@ -424,24 +474,43 @@ export function AssessmentStepper({
 	}
 
 	const handleCheckAnswer = async () => {
-		if (!selectedResponse || !currentQuestion) return
+		if (!selectedResponse || !currentQuestion || !user?.publicMetadata?.sourceId) return
 
 		setIsSubmitting(true)
 		setShowFeedback(false)
 
-		const result = await errors.try(processQtiResponse(currentQuestion.id, selectedResponse))
+		const userSourcedId = user.publicMetadata.sourceId
+		if (typeof userSourcedId !== "string") return
 
-		setIsSubmitting(false)
+		// Call server action to process question response
+		const responseValue =
+			typeof selectedResponse.value === "string" ? selectedResponse.value : String(selectedResponse.value)
+
+		const result = await errors.try(
+			processQuestionResponse(
+				currentQuestion.id,
+				responseValue,
+				userSourcedId,
+				assessmentId,
+				isInteractiveAssessment,
+				attemptCount // Pass the current attempt count
+			)
+		)
+
 		if (result.error) {
 			toast.error("Failed to check answer. Please try again.")
+			setIsSubmitting(false)
 			return
 		}
 
+		const isCorrect = result.data?.isCorrect ?? false
+
+		setIsSubmitting(false)
 		setIsAnswerChecked(true)
-		setIsAnswerCorrect(result.data.isCorrect)
+		setIsAnswerCorrect(isCorrect)
 		setAttemptCount((prev) => prev + 1)
 
-		if (result.data.isCorrect) {
+		if (isCorrect) {
 			handleCorrectAnswer()
 			// Only count as correct if it was answered correctly on the first attempt
 			if (attemptCount === 0) {
@@ -476,8 +545,59 @@ export function AssessmentStepper({
 		setTimeout(goToNext, 1500)
 	}
 
-	const handleReset = () => {
-		// Reset the entire assessment
+	// MODIFIED: handleReset is now async and calls the new action
+	const handleReset = async () => {
+		// For exercises, just reset without creating a new PowerPath attempt
+		if (!isInteractiveAssessment) {
+			setCurrentQuestionIndex(0)
+			setSelectedResponse(null)
+			setShowFeedback(false)
+			setIsAnswerCorrect(false)
+			setIsAnswerChecked(false)
+			setAttemptCount(0)
+			setCorrectAnswersCount(0)
+			setShowSummary(false)
+			assessmentStartTimeRef.current = new Date()
+			return
+		}
+
+		// For quizzes and tests, create a new PowerPath attempt
+		if (!user?.publicMetadata?.sourceId) {
+			toast.error("Could not start a new attempt. User session is invalid.")
+			return
+		}
+
+		// Proper type checking instead of assertion
+		if (typeof user.publicMetadata.sourceId !== "string") {
+			toast.error("Invalid user session data.")
+			return
+		}
+
+		const userSourcedId = user.publicMetadata.sourceId
+
+		// Step 1: Create a new attempt via the server action.
+		const attemptPromise = createNewAssessmentAttempt(userSourcedId, assessmentId)
+		toast.promise(attemptPromise, {
+			loading: "Starting a new attempt...",
+			success: "New attempt started. Good luck!",
+			error: "Failed to start a new attempt. Please try again."
+		})
+
+		const result = await errors.try(attemptPromise)
+		if (result.error) {
+			// If the API call fails, we do NOT reset the state. The user can try again.
+			return
+		}
+
+		// MODIFIED: Capture the new attempt number from the API response.
+		const newAttemptNumber = result.data.attempt.attempt
+		if (typeof newAttemptNumber !== "number") {
+			toast.error("Could not retrieve new attempt number from the server.")
+			return
+		}
+		setAttemptNumber(newAttemptNumber) // Update state with the new attempt number
+
+		// Step 2: Only on success, reset the component's state for the new attempt.
 		setCurrentQuestionIndex(0)
 		setSelectedResponse(null)
 		setShowFeedback(false)
@@ -486,6 +606,7 @@ export function AssessmentStepper({
 		setAttemptCount(0)
 		setCorrectAnswersCount(0)
 		setShowSummary(false)
+		assessmentStartTimeRef.current = new Date() // Reset the timer for the new attempt
 	}
 
 	// Determine button text and action

@@ -187,7 +187,7 @@ function LessonExercise({
 	)
 }
 
-function getProficiencyText(proficiency: "attempted" | "familiar" | "proficient"): string {
+function getProficiencyText(proficiency: "attempted" | "familiar" | "proficient" | "mastered"): string {
 	switch (proficiency) {
 		case "attempted":
 			return "Attempted"
@@ -195,5 +195,7 @@ function getProficiencyText(proficiency: "attempted" | "familiar" | "proficient"
 			return "Familiar"
 		case "proficient":
 			return "Proficient"
+		case "mastered":
+			return "Mastered"
 	}
 }

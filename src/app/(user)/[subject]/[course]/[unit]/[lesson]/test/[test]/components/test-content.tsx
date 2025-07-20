@@ -14,7 +14,8 @@ export function TestContent({ testPromise }: { testPromise: Promise<UnitTestPage
 			<AssessmentStepper
 				questions={questions}
 				contentType="Test"
-				assessmentId={test.id}
+				assessmentId={test.componentResourceSourcedId}
+				resourceId={test.id}
 				assessmentTitle={test.title}
 				unitData={layoutData.unitData}
 			/>

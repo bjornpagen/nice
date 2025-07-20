@@ -14,7 +14,8 @@ export function QuizContent({ quizPromise }: { quizPromise: Promise<QuizPageData
 			<AssessmentStepper
 				questions={questions}
 				contentType="Quiz"
-				assessmentId={quiz.id}
+				assessmentId={quiz.componentResourceSourcedId}
+				resourceId={quiz.id}
 				assessmentTitle={quiz.title}
 				unitData={layoutData.unitData}
 			/>

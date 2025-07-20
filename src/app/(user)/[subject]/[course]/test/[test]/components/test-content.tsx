@@ -11,7 +11,13 @@ export function TestContent({ testDataPromise }: { testDataPromise: Promise<Cour
 
 	if (hasStarted) {
 		return (
-			<AssessmentStepper questions={questions} contentType="Test" assessmentId={test.id} assessmentTitle={test.title} />
+			<AssessmentStepper
+				questions={questions}
+				contentType="Test"
+				assessmentId={test.componentResourceSourcedId}
+				resourceId={test.id}
+				assessmentTitle={test.title}
+			/>
 		)
 	}
 

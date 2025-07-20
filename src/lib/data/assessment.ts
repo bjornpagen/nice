@@ -49,6 +49,27 @@ export async function fetchQuizPageData(params: {
 		notFound()
 	}
 
+	// Find the ComponentResource that links this quiz resource to its parent unit
+	const allComponentResourcesResult = await errors.try(getAllComponentResources())
+	if (allComponentResourcesResult.error) {
+		logger.error("failed to fetch component resources to find quiz unit context", {
+			error: allComponentResourcesResult.error
+		})
+		throw errors.wrap(allComponentResourcesResult.error, "fetch component resources for quiz context")
+	}
+
+	const componentResource = allComponentResourcesResult.data.find(
+		(cr) => cr.resource.sourcedId === resource.sourcedId && cr.courseComponent.sourcedId === layoutData.unitData.id
+	)
+
+	if (!componentResource) {
+		logger.error("could not find componentResource linking quiz to unit", {
+			resourceSourcedId: resource.sourcedId,
+			unitSourcedId: layoutData.unitData.id
+		})
+		notFound()
+	}
+
 	// Validate resource metadata with Zod
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
@@ -88,6 +109,7 @@ export async function fetchQuizPageData(params: {
 	return {
 		quiz: {
 			id: resource.sourcedId,
+			componentResourceSourcedId: componentResource.sourcedId,
 			title: resource.title,
 			description: resourceMetadata.khanDescription,
 			type: "Quiz" as const
@@ -123,6 +145,27 @@ export async function fetchUnitTestPageData(params: {
 	const resource = resourceResult.data[0]
 
 	if (!resource) {
+		notFound()
+	}
+
+	// Find the ComponentResource that links this unit test resource to its parent unit
+	const allComponentResourcesResult = await errors.try(getAllComponentResources())
+	if (allComponentResourcesResult.error) {
+		logger.error("failed to fetch component resources to find unit test context", {
+			error: allComponentResourcesResult.error
+		})
+		throw errors.wrap(allComponentResourcesResult.error, "fetch component resources for unit test context")
+	}
+
+	const componentResource = allComponentResourcesResult.data.find(
+		(cr) => cr.resource.sourcedId === resource.sourcedId && cr.courseComponent.sourcedId === layoutData.unitData.id
+	)
+
+	if (!componentResource) {
+		logger.error("could not find componentResource linking unit test to unit", {
+			resourceSourcedId: resource.sourcedId,
+			unitSourcedId: layoutData.unitData.id
+		})
 		notFound()
 	}
 
@@ -165,6 +208,7 @@ export async function fetchUnitTestPageData(params: {
 	return {
 		test: {
 			id: resource.sourcedId,
+			componentResourceSourcedId: componentResource.sourcedId,
 			title: resource.title,
 			description: resourceMetadata.khanDescription,
 			type: "UnitTest" as const
@@ -286,6 +330,20 @@ export async function fetchCourseChallengePage_TestData(params: {
 		notFound()
 	}
 
+	// Find the ComponentResource that links this course challenge resource to the dummy component
+	const componentResource = relevantComponentResources.find(
+		(cr) =>
+			cr.resource.sourcedId === testResource.sourcedId && cr.courseComponent.sourcedId === challengeComponent.sourcedId
+	)
+
+	if (!componentResource) {
+		logger.error("could not find componentResource linking course challenge to its component", {
+			resourceSourcedId: testResource.sourcedId,
+			componentSourcedId: challengeComponent.sourcedId
+		})
+		notFound()
+	}
+
 	// The rest of the function remains the same, as we have now successfully found the resource.
 	const testResourceMetadataResult = ResourceMetadataSchema.safeParse(testResource.metadata)
 	if (!testResourceMetadataResult.success) {
@@ -321,6 +379,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	return {
 		test: {
 			id: testResource.sourcedId,
+			componentResourceSourcedId: componentResource.sourcedId,
 			type: "CourseChallenge",
 			title: testResource.title,
 			slug: params.test,

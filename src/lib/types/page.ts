@@ -53,7 +53,8 @@ export interface ExercisePageData {
 // Data for the /.../quiz/[quiz] page
 export interface QuizPageData {
 	quiz: {
-		id: string
+		id: string // This is the Resource sourcedId
+		componentResourceSourcedId: string // This is the ID PowerPath needs
 		title: string
 		description: string
 		type: "Quiz"
@@ -65,7 +66,8 @@ export interface QuizPageData {
 // Data for the /.../test/[test] page (Unit Test)
 export interface UnitTestPageData {
 	test: {
-		id: string
+		id: string // This is the Resource sourcedId
+		componentResourceSourcedId: string // This is the ID PowerPath needs
 		title: string
 		description: string
 		type: "UnitTest"
@@ -77,7 +79,8 @@ export interface UnitTestPageData {
 // Data for the /.../test/[test] page (Course Challenge)
 export interface CourseChallengePageData {
 	test: {
-		id: string
+		id: string // This is the Resource sourcedId
+		componentResourceSourcedId: string // This is the ID PowerPath needs
 		title: string
 		description: string
 		slug: string

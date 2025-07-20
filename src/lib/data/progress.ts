@@ -14,7 +14,7 @@ import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 export type AssessmentProgress = {
 	completed: boolean
 	score?: number
-	proficiency?: "attempted" | "familiar" | "proficient"
+	proficiency?: "attempted" | "familiar" | "proficient" | "mastered"
 }
 
 /**
@@ -38,8 +38,10 @@ export async function getUserUnitProgress(
 	 * 0-70% = attempted
 	 * 70-99.999% = familiar
 	 * 100% = proficient
+	 * 110% (1.1) = mastered (Khan Academy mastery upgrade)
 	 */
-	const calculateProficiency = (score: number): "attempted" | "familiar" | "proficient" => {
+	const calculateProficiency = (score: number): "attempted" | "familiar" | "proficient" | "mastered" => {
+		if (score >= 1.1) return "mastered"
 		if (score >= 1.0) return "proficient"
 		if (score >= 0.7) return "familiar"
 		return "attempted"
@@ -60,23 +62,24 @@ export async function getUserUnitProgress(
 
 	// Process results to build the progress map
 	for (const result of resultsResponse.data) {
-		// For fully graded assessments, store score and proficiency
-		if (result.scoreStatus === "fully graded" && result.score !== undefined) {
+		// MODIFIED: Check if score is a valid number before using it.
+		if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
 			progressMap.set(result.assessmentLineItem.sourcedId, {
 				completed: true,
 				score: result.score,
 				proficiency: calculateProficiency(result.score)
 			})
-		} else if (result.scoreStatus === "partially graded" && result.score !== undefined) {
-			// For partially completed items (e.g., videos in progress)
+			// MODIFIED: Handle partially graded items that have a score.
+		} else if (result.scoreStatus === "partially graded" && typeof result.score === "number") {
 			progressMap.set(result.assessmentLineItem.sourcedId, {
 				completed: false,
 				score: result.score
 			})
+			// MODIFIED: Handle completed items that have no score (like article views).
 		} else if (result.scoreStatus === "fully graded") {
-			// For non-scored items (like articles), just mark as completed
 			progressMap.set(result.assessmentLineItem.sourcedId, {
 				completed: true
+				// No score or proficiency is set.
 			})
 		}
 	}
@@ -84,7 +87,7 @@ export async function getUserUnitProgress(
 	logger.info("fetched user progress", {
 		userId,
 		courseSourcedId,
-		completedCount: progressMap.size,
+		completedCount: Array.from(progressMap.values()).filter((p) => p.completed).length,
 		partialCount: Array.from(progressMap.values()).filter((p) => !p.completed && p.score !== undefined).length
 	})
 
