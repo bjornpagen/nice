@@ -223,6 +223,47 @@ export async function updateProficiencyFromAssessment(
 			}
 		}
 
+		// ADDED: Special case - Unit test softer penalty for wrong answers
+		// Only apply penalty if they got 0% correct (typically 1 question wrong)
+		// This handles both single-question (common) and multi-question (rare) unit tests:
+		// - Single question: 0/1 = 0% → Apply penalty
+		// - Multiple questions: Only if ALL wrong (0/2, 0/3, etc) → Apply penalty
+		// - Partial credit (1/2, 2/3): Normal percentage calculation applies
+		if (lessonType === "unit-test" && percentageCorrect === 0) {
+			const currentScore = currentProficiencyMap.get(exerciseId)
+			if (currentScore !== undefined && currentScore > 0) {
+				// Apply softer penalty based on current proficiency level
+				if (currentScore >= 1.0) {
+					// Was proficient (100%) → Drop to familiar (70%)
+					proficiencyScore = 0.7
+					logger.info("applying softer unit test penalty", {
+						exerciseId,
+						previousScore: currentScore,
+						newScore: proficiencyScore,
+						reason: "proficient to familiar on unit test miss"
+					})
+				} else if (currentScore >= 0.7) {
+					// Was familiar (70-99%) → Drop to attempted (50%)
+					proficiencyScore = 0.5
+					logger.info("applying softer unit test penalty", {
+						exerciseId,
+						previousScore: currentScore,
+						newScore: proficiencyScore,
+						reason: "familiar to attempted on unit test miss"
+					})
+				} else {
+					// Was attempted or lower → Keep their current score (no further penalty)
+					proficiencyScore = currentScore
+					logger.info("maintaining current score on unit test miss", {
+						exerciseId,
+						previousScore: currentScore,
+						newScore: proficiencyScore,
+						reason: "already at attempted level or below"
+					})
+				}
+			}
+		}
+
 		logger.info("calculated exercise proficiency", {
 			exerciseId,
 			score: proficiencyScore,
@@ -231,8 +272,12 @@ export async function updateProficiencyFromAssessment(
 			isUnitTest
 		})
 
-		// Only save if there's a meaningful update (score > 0)
-		if (proficiencyScore > 0) {
+		// Only save if there's a meaningful update
+		// For unit tests with softer penalties, we save even if score is > 0 to apply the penalty
+		if (
+			proficiencyScore > 0 ||
+			(lessonType === "unit-test" && percentageCorrect === 0 && currentProficiencyMap.has(exerciseId))
+		) {
 			updatePromises.push(
 				saveAssessmentResult(
 					exerciseId,
