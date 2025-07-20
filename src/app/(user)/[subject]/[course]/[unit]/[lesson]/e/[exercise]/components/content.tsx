@@ -19,6 +19,7 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 				questions={questions}
 				contentType="Exercise"
 				assessmentId={exercise.id}
+				resourceId={exercise.id}
 				assessmentTitle={exercise.title}
 				unitData={layoutData.unitData}
 			/>

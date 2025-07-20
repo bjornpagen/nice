@@ -13,7 +13,8 @@ import {
 	checkAndCreateNewAttemptIfNeeded,
 	createNewAssessmentAttempt,
 	finalizeAssessment,
-	processQuestionResponse
+	processQuestionResponse,
+	processSkippedQuestion
 } from "@/lib/actions/assessment"
 import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
@@ -537,11 +538,24 @@ export function AssessmentStepper({
 	}
 
 	const handleSkip = () => {
-		// Mark as exhausted attempts and move to next
+		// For ALL assessments, treat skip as incorrect
+		// Log this as an incorrect response to PowerPath
+		if (user?.publicMetadata?.sourceId && assessmentId && isInteractiveAssessment) {
+			const userSourcedId = user.publicMetadata.sourceId
+			if (typeof userSourcedId === "string") {
+				processSkippedQuestion(currentQuestion.id, userSourcedId, assessmentId, attemptCount).catch(() => {
+					// Error is logged inside processSkippedQuestion, no need to log again
+				})
+			}
+		}
+
+		// Treat skip as wrong answer
+		setIsAnswerCorrect(false)
 		setAttemptCount(MAX_ATTEMPTS)
 		setIsAnswerChecked(true)
 		setShowFeedback(true)
-		// Move to next question after a short delay
+
+		// Move to next question after showing feedback
 		setTimeout(goToNext, 1500)
 	}
 

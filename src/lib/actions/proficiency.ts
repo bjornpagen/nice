@@ -273,10 +273,16 @@ export async function updateProficiencyFromAssessment(
 		})
 
 		// Only save if there's a meaningful update
-		// For unit tests with softer penalties, we save even if score is > 0 to apply the penalty
+		// We save if:
+		// 1. Score is greater than 0 (any positive progress)
+		// 2. Unit test with penalty to apply (softer penalty logic)
+		// 3. Score is 0 but user had previous progress (downgrade)
+		// 4. Score is 0 and this is from a quiz/test (new failure to record)
 		if (
 			proficiencyScore > 0 ||
-			(lessonType === "unit-test" && percentageCorrect === 0 && currentProficiencyMap.has(exerciseId))
+			(lessonType === "unit-test" && percentageCorrect === 0 && currentProficiencyMap.has(exerciseId)) ||
+			(proficiencyScore === 0 && currentProficiencyMap.has(exerciseId)) ||
+			(proficiencyScore === 0 && (lessonType === "quiz" || lessonType === "unit-test"))
 		) {
 			updatePromises.push(
 				saveAssessmentResult(

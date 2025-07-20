@@ -185,3 +185,60 @@ export async function finalizeAssessment(userSourcedId: string, assessmentId: st
 
 	return result.data
 }
+
+/**
+ * Processes a skipped question by logging it as incorrect to PowerPath.
+ * This is used for summative assessments (quizzes, tests) where skipping
+ * should count as an incorrect answer.
+ *
+ * @param {string} questionId - The question that was skipped
+ * @param {string} userSourcedId - The user's OneRoster sourcedId
+ * @param {string} assessmentId - The assessment's (lesson) sourcedId
+ * @param {number} attemptNumber - The current attempt number
+ */
+export async function processSkippedQuestion(
+	questionId: string,
+	userSourcedId: string,
+	assessmentId: string,
+	attemptNumber: number
+) {
+	logger.info("logging skipped question as incorrect", {
+		questionId,
+		userSourcedId,
+		assessmentId,
+		attemptNumber
+	})
+
+	// Only log to PowerPath on the FIRST attempt (attemptNumber === 0)
+	// This matches our existing logic for regular responses
+	if (attemptNumber === 0) {
+		logger.info("logging first attempt skip to powerpath", {
+			questionId,
+			attemptNumber
+		})
+
+		// Send a special "SKIPPED" response that PowerPath will score as incorrect
+		const result = await errors.try(
+			powerpath.updateStudentQuestionResponse({
+				student: userSourcedId,
+				lesson: assessmentId,
+				question: questionId,
+				response: "SKIPPED" // Conventional value to indicate a skip
+			})
+		)
+
+		if (result.error) {
+			logger.error("failed to log skipped question to powerpath", {
+				error: result.error,
+				questionId,
+				userSourcedId
+			})
+			// Don't throw - this is a best-effort operation
+		}
+	} else {
+		logger.debug("skipping powerpath logging for retry skip", {
+			questionId,
+			attemptNumber
+		})
+	}
+}
