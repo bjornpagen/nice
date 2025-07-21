@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import confetti from "canvas-confetti"
 import Image from "next/image"
 import * as React from "react"
 import { toast } from "sonner"
@@ -168,13 +169,56 @@ export function AssessmentStepper({
 	const MAX_ATTEMPTS = 3
 	const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
 
+	const triggerConfetti = React.useCallback(() => {
+		const canvas = document.createElement("canvas")
+		canvas.style.position = "fixed"
+		canvas.style.bottom = "0"
+		canvas.style.right = "0"
+		canvas.style.width = "200px"
+		canvas.style.height = "200px"
+		canvas.style.pointerEvents = "none"
+		canvas.style.zIndex = "1000"
+		document.body.appendChild(canvas)
+
+		const myConfetti = confetti.create(canvas, {
+			resize: true,
+			useWorker: true
+		})
+
+		const confettiPromise = myConfetti({
+			particleCount: 50,
+			spread: 70,
+			origin: { y: 1, x: 1 },
+			angle: 135,
+			startVelocity: 30,
+			scalar: 0.8,
+			ticks: 150,
+			colors: ["#26ccff", "#a25afd", "#ff5e7e", "#88ff5a", "#fcff42"]
+		})
+
+		// In modern browsers, confettiPromise will always be a Promise
+		// The null case is for old browsers without Promise support
+		if (confettiPromise) {
+			confettiPromise.then(() => {
+				document.body.removeChild(canvas)
+			})
+		} else {
+			// Fallback for browsers without Promise support
+			// Remove canvas after animation duration
+			setTimeout(() => {
+				document.body.removeChild(canvas)
+			}, 3000)
+		}
+	}, [])
+
 	const handleCorrectAnswer = React.useCallback(() => {
 		if (audioRef.current) {
 			audioRef.current.play().catch(() => {
 				// Ignore audio play errors (e.g., autoplay policy)
 			})
 		}
-	}, [])
+		triggerConfetti()
+	}, [triggerConfetti])
 
 	// Record start time when assessment begins
 	React.useEffect(() => {
