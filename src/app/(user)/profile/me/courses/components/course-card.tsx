@@ -1,6 +1,5 @@
 "use client"
 
-import * as errors from "@superbuilders/errors"
 import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
@@ -18,18 +17,10 @@ type CourseCardProps = {
 export function CourseCard({ course, units, color }: CourseCardProps) {
 	const [isExpanded, setIsExpanded] = React.useState(false)
 
-	// Validate required course path data
-	let coursePath: string
-	if (course.path) {
-		coursePath = course.path
-	} else if (course.subject && course.courseSlug) {
-		coursePath = `/${course.subject}/${course.courseSlug}`
-	} else {
-		throw errors.new("course path: required data missing")
-	}
-
-	// Get course description - may be undefined
-	const courseDescription = course.description
+	// CRITICAL: `course.path` and `course.description` are guaranteed to be non-empty strings by the ProfileCourse type.
+	// No fallbacks `||` or `??` are needed here.
+	const coursePath: string = course.path
+	const courseDescription: string = course.description
 
 	return (
 		<Card className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">
@@ -41,7 +32,7 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 					</Link>
 				</CardTitle>
 				<CardDescription className="text-gray-600 relative">
-					{courseDescription ? (
+					{courseDescription !== "" ? (
 						<>
 							<div className={cn("transition-all duration-200", !isExpanded && "line-clamp-3")}>
 								{courseDescription}

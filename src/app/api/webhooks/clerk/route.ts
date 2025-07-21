@@ -4,9 +4,31 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { headers } from "next/headers"
 import { Webhook } from "svix"
+import { z } from "zod"
 import { env } from "@/env.js"
 import { oneroster } from "@/lib/clients"
-import type { ClerkUserPublicMetadata } from "@/lib/metadata/clerk"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+
+// NEW: Define Zod schemas for the incoming Clerk webhook payload.
+// This ensures strict validation of external data sources.
+const WebhookEventDataSchema = z.object({
+	id: z.string().nonempty(),
+	email_addresses: z.array(
+		z.object({
+			id: z.string().nonempty(),
+			email_address: z.string().email().nonempty()
+		})
+	),
+	primary_email_address_id: z.string().nonempty(),
+	external_accounts: z.array(z.object({ provider: z.string().nonempty() })).default([]),
+	first_name: z.string().default(""), // Treat as potentially empty but always present string
+	last_name: z.string().default("") // Treat as potentially empty but always present string
+})
+
+const WebhookEventSchema = z.object({
+	type: z.literal("user.created"),
+	data: WebhookEventDataSchema
+})
 
 export async function POST(req: Request) {
 	logger.info("clerk webhook received")
@@ -53,238 +75,167 @@ export async function POST(req: Request) {
 	}
 
 	const webhookData = verifyResult.data
-
-	// Basic structure validation
-	if (!webhookData || typeof webhookData !== "object" || !("type" in webhookData)) {
-		logger.error("invalid webhook event structure")
-		return new Response("Error occurred -- invalid event structure", {
-			status: 400
+	// CRITICAL: Validate the entire webhook event structure using Zod.
+	const eventValidation = WebhookEventSchema.safeParse(webhookData)
+	if (!eventValidation.success) {
+		logger.error("CRITICAL: Invalid webhook event structure", {
+			webhookData,
+			error: eventValidation.error
 		})
+		// Fail loudly if the incoming data doesn't match our strict schema.
+		return new Response("Error occurred -- invalid webhook event structure", { status: 400 })
 	}
 
-	// Safe access to type property
-	const eventType = "type" in webhookData ? webhookData.type : null
-	if (typeof eventType !== "string") {
-		logger.error("invalid event type", { eventType })
-		return new Response("Error occurred -- invalid event type", {
-			status: 400
-		})
+	const event = eventValidation.data
+	const {
+		id: clerkId,
+		email_addresses,
+		primary_email_address_id,
+		external_accounts,
+		first_name,
+		last_name
+	} = event.data
+
+	logger.info("processing user created event", { userId: clerkId })
+
+	const primaryEmail = email_addresses.find((email) => email.id === primary_email_address_id)
+
+	if (!primaryEmail) {
+		logger.error("CRITICAL: No primary email found for user", { clerkId })
+		// This is a critical data integrity error. We cannot create a user without a primary email.
+		return new Response("Error occurred -- no primary email", { status: 400 })
 	}
 
-	// Handle user.created events
-	if (eventType === "user.created") {
-		// Safe access to data property
-		const eventData = "data" in webhookData ? webhookData.data : null
+	const emailAddress = primaryEmail.email_address
 
-		if (!eventData || typeof eventData !== "object") {
-			logger.error("invalid user.created event data")
-			return new Response("Error occurred -- invalid user data", {
-				status: 400
-			})
-		}
+	const emailParts = emailAddress.split("@")
+	if (emailParts.length !== 2 || emailParts[0] === undefined) {
+		logger.error("CRITICAL: Invalid email format for nickname extraction", {
+			clerkId,
+			emailAddress,
+			emailPartsLength: emailParts.length
+		})
+		// This is a critical error. We need a valid email to proceed.
+		return new Response("Error occurred -- invalid email format for nickname", { status: 400 })
+	}
+	const nickname = emailParts[0]
 
-		// MODIFIED: Extract first_name and last_name from the webhook payload
-		const clerkId = "id" in eventData && typeof eventData.id === "string" ? eventData.id : null
-		const emailAddresses = "email_addresses" in eventData ? eventData.email_addresses : null
-		const primaryEmailId = "primary_email_address_id" in eventData ? eventData.primary_email_address_id : null
-		const externalAccounts = "external_accounts" in eventData ? eventData.external_accounts : []
-		const firstName =
-			"first_name" in eventData && typeof eventData.first_name === "string" ? eventData.first_name : null
-		const lastName = "last_name" in eventData && typeof eventData.last_name === "string" ? eventData.last_name : null
+	// Use the Zod schema for ClerkUserPublicMetadata to ensure correctness.
+	// Defaults will be applied by the schema for empty strings/numbers/dates if not provided by Zod schema default.
+	const publicMetadataPayload = ClerkUserPublicMetadataSchema.parse({
+		nickname: nickname,
+		username: "",
+		bio: "",
+		streak: { count: 0, lastActivityDate: null }, // Initialize with defaults as per schema
+		sourceId: undefined // Initially undefined
+	})
 
-		if (!clerkId) {
-			logger.error("invalid user data in webhook - missing clerk id")
-			return new Response("Error occurred -- invalid user data", {
-				status: 400
-			})
-		}
+	const isTimebackUser = external_accounts.some((account) => account.provider === "oauth_custom_timeback")
 
-		logger.info("processing user created event", { userId: clerkId })
+	if (isTimebackUser) {
+		logger.info("user identified as timeback sso user, attempting to fetch sourceid", {
+			userId: clerkId,
+			emailAddress
+		})
 
-		// Find primary email
-		if (!Array.isArray(emailAddresses)) {
-			logger.error("no email addresses found for user", { clerkId })
-			return new Response("Error occurred -- no email addresses", {
-				status: 400
-			})
-		}
-
-		const primaryEmail = emailAddresses.find(
-			(email: unknown) => email && typeof email === "object" && "id" in email && email.id === primaryEmailId
-		)
-
-		if (!primaryEmail || typeof primaryEmail !== "object" || !("email_address" in primaryEmail)) {
-			logger.error("no primary email found for user", { clerkId })
-			return new Response("Error occurred -- no primary email", {
-				status: 400
-			})
-		}
-
-		// Safe access to email address
-		const emailAddress = "email_address" in primaryEmail ? primaryEmail.email_address : null
-		if (typeof emailAddress !== "string") {
-			logger.error("invalid email address format", { clerkId })
-			return new Response("Error occurred -- invalid email format", {
-				status: 400
-			})
-		}
-
-		// Extract nickname from email (part before @)
-		const emailParts = emailAddress.split("@")
-		if (emailParts.length !== 2 || !emailParts[0]) {
-			logger.error("CRITICAL: Invalid email format for nickname extraction", {
-				clerkId,
-				emailAddress,
-				emailPartsLength: emailParts.length
-			})
-			return new Response("Error occurred -- invalid email format for nickname", {
-				status: 400
-			})
-		}
-		const nickname = emailParts[0]
-
-		const publicMetadata: ClerkUserPublicMetadata = {
-			nickname: nickname,
-			username: "",
-			bio: "",
-			streak: {
-				count: 0,
-				lastActivityDate: null
-			}
-		}
-
-		// Check if the user signed up via Timeback SSO
-		const isTimebackUser =
-			Array.isArray(externalAccounts) &&
-			externalAccounts.some(
-				(account: unknown) =>
-					account &&
-					typeof account === "object" &&
-					"provider" in account &&
-					account.provider === "oauth_custom_timeback"
-			)
-
-		if (isTimebackUser) {
-			logger.info("user identified as timeback sso user, attempting to fetch sourceid", {
+		const onerosterUserResult = await errors.try(oneroster.getUsersByEmail(emailAddress))
+		if (onerosterUserResult.error) {
+			logger.warn("failed to get user from oneroster, proceeding without sourceid", {
 				userId: clerkId,
-				emailAddress
+				error: onerosterUserResult.error
 			})
+		} else if (onerosterUserResult.data) {
+			publicMetadataPayload.sourceId = onerosterUserResult.data.sourcedId
+			logger.info("successfully fetched sourceid from oneroster", {
+				userId: clerkId,
+				sourceId: onerosterUserResult.data.sourcedId
+			})
+		} else {
+			logger.info("user not found in oneroster, creating a new one", { userId: clerkId, emailAddress })
+			const newSourcedId = randomUUID()
 
-			// This operation is optional and should not block the user creation flow.
-			const onerosterUserResult = await errors.try(oneroster.getUsersByEmail(emailAddress))
-			if (onerosterUserResult.error) {
-				logger.warn("failed to get user from oneroster, proceeding without sourceid", {
-					userId: clerkId,
-					error: onerosterUserResult.error
+			// CRITICAL: Ensure we have valid names. No fallbacks like `firstName || nickname`.
+			// If `first_name` is an empty string, it means it's genuinely missing from Clerk.
+			if (first_name === "") {
+				logger.error("CRITICAL: Cannot create OneRoster user without first name", {
+					userId: clerkId
 				})
-			} else if (onerosterUserResult.data) {
-				const onerosterUser = onerosterUserResult.data
-				publicMetadata.sourceId = onerosterUser.sourcedId
-				logger.info("successfully fetched sourceid from oneroster", {
-					userId: clerkId,
-					sourceId: onerosterUser.sourcedId
+				// This is a critical failure. We must stop here.
+				return new Response("Error occurred -- missing first name for OneRoster user", { status: 400 })
+			}
+
+			const givenName = first_name
+
+			// CRITICAL: Ensure family name. No fallbacks like `lastName || familyNameFromEmail`.
+			// `last_name` is guaranteed to be a string (possibly empty) by the Zod schema.
+			if (last_name === "") {
+				logger.error("CRITICAL: Cannot create OneRoster user without last name", {
+					userId: clerkId
 				})
-			} else {
-				// MODIFIED: Create a new user in OneRoster if one is not found
-				logger.info("user not found in oneroster, creating a new one", { userId: clerkId, emailAddress })
-				const newSourcedId = randomUUID()
+				// This is a critical failure. We must stop here.
+				return new Response("Error occurred -- missing last name for OneRoster user", { status: 400 })
+			}
 
-				// Validate required name fields
-				if (!firstName && !nickname) {
-					logger.error("CRITICAL: Cannot create OneRoster user without name information", {
-						userId: clerkId,
-						hasFirstName: Boolean(firstName),
-						hasNickname: Boolean(nickname)
-					})
-					// In this case, we'll proceed without creating a OneRoster user
-					// since this is a secondary operation
-					logger.warn("proceeding without oneroster user creation due to missing name data", {
-						userId: clerkId
-					})
-				} else {
-					const givenName = firstName || nickname
-					const familyNameFromEmail = emailAddress.split("@")[1]?.split(".")[0]
-					const familyName = lastName || familyNameFromEmail
+			const familyName = last_name
 
-					if (!familyName) {
-						logger.error("CRITICAL: Cannot determine family name for OneRoster user", {
-							userId: clerkId,
-							hasLastName: Boolean(lastName),
-							emailDomain: emailAddress.split("@")[1]
-						})
-						// Proceed without creating OneRoster user
-						logger.warn("proceeding without oneroster user creation due to missing family name", {
-							userId: clerkId
-						})
-					} else {
-						const newUserPayload = {
-							sourcedId: newSourcedId,
-							status: "active" as const,
-							enabledUser: true,
-							givenName: givenName,
-							familyName: familyName,
-							email: emailAddress,
-							roles: [
-								{
-									roleType: "primary" as const,
-									role: "student" as const, // Default role to 'student'
-									org: {
-										sourcedId: "nice-academy" // Use the static org sourcedId
-									}
-								}
-							]
-						}
-
-						const createUserResult = await errors.try(oneroster.createUser(newUserPayload))
-						if (createUserResult.error) {
-							logger.warn("failed to create new user in oneroster, proceeding without sourceid", {
-								userId: clerkId,
-								error: createUserResult.error
-							})
-						} else {
-							publicMetadata.sourceId = newSourcedId
-							logger.info("successfully created new user in oneroster and assigned sourceid", {
-								userId: clerkId,
-								sourceId: newSourcedId
-							})
+			const newUserPayload = {
+				sourcedId: newSourcedId,
+				status: "active" as const,
+				enabledUser: true,
+				givenName: givenName,
+				familyName: familyName,
+				email: emailAddress,
+				roles: [
+					{
+						roleType: "primary" as const,
+						role: "student" as const,
+						org: {
+							sourcedId: "nice-academy"
 						}
 					}
-				}
+				]
+			}
+
+			const createUserResult = await errors.try(oneroster.createUser(newUserPayload))
+			if (createUserResult.error) {
+				logger.warn("failed to create new user in oneroster, proceeding without sourceid", {
+					userId: clerkId,
+					error: createUserResult.error
+				})
+			} else {
+				publicMetadataPayload.sourceId = newSourcedId
+				logger.info("successfully created new user in oneroster and assigned sourceid", {
+					userId: clerkId,
+					sourceId: newSourcedId
+				})
 			}
 		}
-
-		const metadata = {
-			publicMetadata: publicMetadata
-		}
-
-		// Set initial user metadata in Clerk
-		const clerk = await clerkClient()
-
-		// First check if the user still exists (webhook might be stale)
-		const userCheckResult = await errors.try(clerk.users.getUser(clerkId))
-		if (userCheckResult.error) {
-			logger.warn("user not found in clerk, likely deleted - skipping metadata update", {
-				clerkId,
-				error: userCheckResult.error
-			})
-			// Return success to prevent webhook retries for deleted users
-			return new Response("", { status: 200 })
-		}
-
-		const setResult = await errors.try(clerk.users.updateUserMetadata(clerkId, metadata))
-
-		if (setResult.error) {
-			logger.error("failed to set initial user metadata in clerk", {
-				error: setResult.error,
-				clerkId
-			})
-			return new Response("Error occurred -- clerk metadata update failed", {
-				status: 500
-			})
-		}
-
-		logger.info("user metadata initialized successfully", { clerkId, nickname })
 	}
+
+	const clerk = await clerkClient()
+
+	const userCheckResult = await errors.try(clerk.users.getUser(clerkId))
+	if (userCheckResult.error) {
+		logger.warn("user not found in clerk, likely deleted - skipping metadata update", {
+			clerkId,
+			error: userCheckResult.error
+		})
+		return new Response("", { status: 200 })
+	}
+
+	const setResult = await errors.try(clerk.users.updateUserMetadata(clerkId, { publicMetadata: publicMetadataPayload }))
+
+	if (setResult.error) {
+		logger.error("failed to set initial user metadata in clerk", {
+			error: setResult.error,
+			clerkId
+		})
+		return new Response("Error occurred -- clerk metadata update failed", {
+			status: 500
+		})
+	}
+
+	logger.info("user metadata initialized successfully", { clerkId, nickname })
 
 	return new Response("", { status: 200 })
 }

@@ -102,6 +102,14 @@ export async function fetchQuizPageData(params: {
 		throw errors.wrap(questionsResult.error, "fetch questions for quiz")
 	}
 
+	if (!Array.isArray(questionsResult.data.questions)) {
+		logger.error("CRITICAL: QTI test questions are not an array", {
+			testSourcedId: resource.sourcedId,
+			questionsData: questionsResult.data.questions
+		})
+		throw errors.new("QTI test questions: malformed data")
+	}
+
 	const questions = questionsResult.data.questions.map((q) => ({
 		id: q.question.identifier
 	}))
@@ -199,6 +207,14 @@ export async function fetchUnitTestPageData(params: {
 			error: questionsResult.error
 		})
 		throw errors.wrap(questionsResult.error, "fetch questions for unittest")
+	}
+
+	if (!Array.isArray(questionsResult.data.questions)) {
+		logger.error("CRITICAL: QTI test questions are not an array", {
+			testSourcedId: resource.sourcedId,
+			questionsData: questionsResult.data.questions
+		})
+		throw errors.new("QTI test questions: malformed data")
 	}
 
 	const questions = questionsResult.data.questions.map((q) => ({
@@ -371,6 +387,14 @@ export async function fetchCourseChallengePage_TestData(params: {
 			error: qtiTestDataResult.error
 		})
 		throw errors.wrap(qtiTestDataResult.error, "fetch questions for test")
+	}
+
+	if (!Array.isArray(qtiTestDataResult.data.questions)) {
+		logger.error("CRITICAL: QTI test questions are not an array", {
+			testSourcedId: testResource.sourcedId,
+			questionsData: qtiTestDataResult.data.questions
+		})
+		throw errors.new("QTI test questions: malformed data")
 	}
 
 	const questions = qtiTestDataResult.data.questions.map((q) => ({

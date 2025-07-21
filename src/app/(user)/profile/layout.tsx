@@ -1,11 +1,12 @@
 "use client"
 
 import { useUser } from "@clerk/nextjs"
+import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import { Banner } from "@/components/banner"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
-import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { ProfileBanner } from "./components/profile-banner"
 import { Sidebar } from "./components/sidebar"
 
@@ -14,53 +15,34 @@ function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
 
 	// Effect to periodically check for metadata updates
 	React.useEffect(() => {
-		if (
-			isLoaded &&
-			user &&
-			(!user.publicMetadata || !ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata).success)
-		) {
-			// Refresh every 2 seconds while metadata is being set up
+		// Only trigger reload if user is loaded, exists, and metadata is explicitly missing or invalid.
+		// If `parseUserPublicMetadata` throws, it means it's invalid.
+		if (isLoaded && user && errors.trySync(() => parseUserPublicMetadata(user.publicMetadata)).error) {
 			const interval = setInterval(() => {
 				window.location.reload()
 			}, 2000)
 
-			// Clean up interval on unmount
 			return () => clearInterval(interval)
 		}
 	}, [isLoaded, user])
 
 	// During prerendering or initial load, show nothing or a skeleton
 	if (!isLoaded || !user) {
-		return null // This will be replaced by the actual content when the page loads on the client
+		return null // Return null, as per `rules/rsc-data-fetching-patterns.mdc`
 	}
 
-	// Handle missing or invalid metadata gracefully
-	if (!user.publicMetadata) {
-		// Metadata not set yet - likely webhook still processing
-		return (
-			<div className="flex items-center justify-center min-h-screen">
-				<div className="text-center">
-					<h2 className="text-xl font-semibold mb-2">Setting up your account...</h2>
-					<p className="text-gray-600">Please wait a moment while we prepare your profile.</p>
-				</div>
-			</div>
-		)
+	// CRITICAL: Attempt to parse metadata. If it fails, throw an error.
+	// This ensures that the system does not proceed with invalid user context.
+	const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
+	if (publicMetadataResult.error) {
+		// CRITICAL: Invalid user public metadata. Since this is a client component,
+		// we cannot use logger, so we throw the error to be caught by error boundary.
+		// Re-throw the error to indicate a critical failure.
+		// A higher-level error boundary should catch this for the user.
+		throw errors.wrap(publicMetadataResult.error, "clerk user metadata validation")
 	}
 
-	const validationResult = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-	if (!validationResult.success) {
-		// Metadata exists but doesn't match schema - webhook might still be processing
-		return (
-			<div className="flex items-center justify-center min-h-screen">
-				<div className="text-center">
-					<h2 className="text-xl font-semibold mb-2">Finalizing your account...</h2>
-					<p className="text-gray-600">Your profile will be ready in just a moment.</p>
-				</div>
-			</div>
-		)
-	}
-
-	const { nickname, username, bio, streak } = validationResult.data
+	const { nickname, username, bio, streak } = publicMetadataResult.data
 
 	return (
 		<div className="flex flex-col h-screen bg-white font-lato">

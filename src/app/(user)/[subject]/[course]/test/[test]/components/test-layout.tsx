@@ -18,7 +18,11 @@ export function TestLayout({
 			{/* Sidebar - renders immediately, no suspense needed */}
 			<div className="flex-shrink-0 w-96">
 				<div className="sticky top-0 w-96 max-h-screen overflow-y-auto">
-					<CourseSidebar course={courseData.course} lessonCount={0} challenges={courseData.challenges} />
+					<CourseSidebar
+						course={courseData.course}
+						lessonCount={courseData.lessonCount}
+						challenges={courseData.challenges}
+					/>
 				</div>
 			</div>
 

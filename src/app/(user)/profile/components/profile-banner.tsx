@@ -30,20 +30,18 @@ export function ProfileBanner({ uid, username, bio }: { uid: string; username: s
 								/>
 							</div>
 							<div>
-								<h2 className="text-2xl font-bold text-gray-900 mb-1">
-									{uid ? uid : <span className="text-red-500">Error: Missing user ID</span>}
-								</h2>
+								<h2 className="text-2xl font-bold text-gray-900 mb-1">{uid}</h2>
 								<div className="flex items-center space-x-2 text-sm">
 									<Button
 										variant="link"
 										className={
-											username
+											username !== ""
 												? "text-black p-0 h-auto hover:text-gray-600"
 												: "text-blue-600 hover:underline p-0 h-auto underline"
 										}
 										onClick={() => setShowEditModal(true)}
 									>
-										{username ? `@${username}` : "Pick a username"}
+										{username !== "" ? `@${username}` : "Pick a username"}
 									</Button>
 									<span className="text-gray-400">-</span>
 									<Button

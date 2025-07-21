@@ -29,7 +29,7 @@ interface QTIRendererProps {
 
 export function QTIRenderer({
 	identifier,
-	materialType, // REQUIRED: No default fallback
+	materialType, // This is explicitly required now
 	onResponseChange,
 	onMessage,
 	onRawMessage,
@@ -49,6 +49,11 @@ export function QTIRenderer({
 	if (urlResult.error) {
 		// CRITICAL: URL parsing failed - system must stop, not continue with fallbacks
 		throw errors.wrap(urlResult.error, "qti base url parsing failed")
+	}
+	// CRITICAL: Ensure `urlResult.data` is not null/undefined as it's the result of a successful parse.
+	// If it somehow were, it indicates an invariant violation.
+	if (!urlResult.data) {
+		throw errors.new("qti base url: missing parsed URL data")
 	}
 	const expectedOrigin = urlResult.data.origin
 

@@ -108,6 +108,14 @@ export async function fetchExercisePageData(params: {
 		throw errors.wrap(questionsResult.error, "fetch questions for exercise")
 	}
 
+	if (!Array.isArray(questionsResult.data.questions)) {
+		logger.error("CRITICAL: QTI test questions are not an array", {
+			testSourcedId: resource.sourcedId,
+			questionsData: questionsResult.data.questions
+		})
+		throw errors.new("QTI test questions: malformed data")
+	}
+
 	const questions = questionsResult.data.questions.map((q) => ({
 		id: q.question.identifier
 	}))

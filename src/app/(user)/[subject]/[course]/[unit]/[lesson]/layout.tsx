@@ -1,8 +1,10 @@
 import { currentUser } from "@clerk/nextjs/server"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type * as React from "react"
 import { fetchLessonLayoutData } from "@/lib/data/lesson"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
-import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { LessonLayout } from "./components/lesson-layout"
 
@@ -19,10 +21,17 @@ export default function Layout({
 
 	const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([userPromise, dataPromise]).then(
 		([user, data]) => {
-			if (user?.publicMetadata) {
-				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-				if (metadataValidation.success && metadataValidation.data.sourceId) {
-					return getUserUnitProgress(metadataValidation.data.sourceId, data.courseData.id)
+			if (user) {
+				const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
+				if (publicMetadataResult.error) {
+					logger.warn("invalid user public metadata, cannot fetch progress", {
+						userId: user.id,
+						error: publicMetadataResult.error
+					})
+					return new Map<string, AssessmentProgress>()
+				}
+				if (publicMetadataResult.data.sourceId) {
+					return getUserUnitProgress(publicMetadataResult.data.sourceId, data.courseData.id)
 				}
 			}
 			return new Map<string, AssessmentProgress>()

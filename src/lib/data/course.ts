@@ -221,6 +221,13 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 				logger.error("failed to fetch questions for exercise", { exerciseSourcedId, error: result.error })
 				return { exerciseSourcedId, questions: [] }
 			}
+			if (!Array.isArray(result.data.questions)) {
+				logger.error("CRITICAL: QTI test questions are not an array", {
+					exerciseSourcedId,
+					questionsData: result.data.questions
+				})
+				return { exerciseSourcedId, questions: [] }
+			}
 			return {
 				exerciseSourcedId,
 				questions: result.data.questions.map((q) => ({ id: q.question.identifier }))

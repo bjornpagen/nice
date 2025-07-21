@@ -8,7 +8,7 @@ import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { trackArticleView } from "@/lib/actions/tracking"
-import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { ArticlePageData } from "@/lib/types/page"
 
 export function Content({
@@ -27,13 +27,19 @@ export function Content({
 		// Record the start time when component mounts
 		startTimeRef.current = new Date()
 
-		// Validate user metadata if user exists
 		let onerosterUserSourcedId: string | undefined
-		if (user?.publicMetadata) {
-			const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
-			if (metadataValidation.success) {
-				onerosterUserSourcedId = metadataValidation.data.sourceId
+		let userEmail: string | undefined
+
+		if (user) {
+			const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
+			if (publicMetadataResult.error) {
+				// CRITICAL: User metadata is invalid. We must stop.
+				// This indicates a severe data integrity issue or misconfiguration.
+				// This prevents proceeding with potentially corrupted user context.
+				throw errors.wrap(publicMetadataResult.error, "clerk user metadata validation")
 			}
+			onerosterUserSourcedId = publicMetadataResult.data.sourceId
+			userEmail = user.primaryEmailAddress?.emailAddress
 		}
 
 		if (onerosterUserSourcedId && article.id) {
@@ -41,8 +47,8 @@ export function Content({
 			void trackArticleView(onerosterUserSourcedId, article.id)
 
 			// Send Caliper event for article completion
-			const userEmail = user?.primaryEmailAddress?.emailAddress
 			if (!userEmail) {
+				// CRITICAL: User email is required for Caliper. This should not be null/undefined.
 				throw errors.new("article tracking: user email required for caliper event")
 			}
 
@@ -62,6 +68,7 @@ export function Content({
 			}
 			const mappedSubject = subjectMapping[params.subject]
 			if (!mappedSubject) {
+				// CRITICAL: Subject is unmapped. This indicates a configuration or routing error.
 				throw errors.new("article tracking: unmapped subject")
 			}
 
@@ -81,13 +88,29 @@ export function Content({
 
 			// Cleanup function to send time spent event when component unmounts
 			return () => {
-				if (startTimeRef.current && user) {
+				if (startTimeRef.current && user && onerosterUserSourcedId && userEmail) {
 					const endTime = new Date()
 					const durationInSeconds = Math.floor((endTime.getTime() - startTimeRef.current.getTime()) / 1000)
 
 					// Only send if user spent at least 1 second on the article
 					if (durationInSeconds >= 1) {
-						void sendCaliperTimeSpentEvent(actor, context, durationInSeconds)
+						// Ensure actor is valid before sending.
+						const actorForCleanup = {
+							id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
+							type: "TimebackUser" as const,
+							email: userEmail
+						}
+
+						// Ensure context is valid before sending.
+						const contextForCleanup = {
+							id: `https://alpharead.alpha.school/articles/${article.id}`,
+							type: "TimebackActivityContext" as const,
+							subject: mappedSubject,
+							app: { name: "Nice Academy" },
+							course: { name: params.course },
+							activity: { name: article.title }
+						}
+						void sendCaliperTimeSpentEvent(actorForCleanup, contextForCleanup, durationInSeconds)
 					}
 				}
 			}
