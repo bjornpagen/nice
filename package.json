@@ -1,7 +1,7 @@
 {
 	"name": "superstarter",
 	"version": "1.0.0",
-	"private": false,
+	"private": true,
 	"type": "module",
 	"scripts": {
 		"build": "next build",
@@ -99,7 +99,8 @@
 		"postcss": "^8.5.6",
 		"tailwindcss": "^4.1.11",
 		"tw-animate-css": "^1.3.5",
-		"typescript": "^5.8.3"
+		"typescript": "^5.8.3",
+		"@types/bun": "latest"
 	},
 	"ct3aMetadata": {
 		"initVersion": "7.39.3"
