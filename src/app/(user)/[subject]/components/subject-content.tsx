@@ -3,9 +3,9 @@
 import { Book } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
-import type { DONOTUSETHIS_Subject } from "../page"
+import type { ProfileSubject } from "@/lib/types/domain"
 
-export function SubjectContent({ subjectPromise }: { subjectPromise: Promise<DONOTUSETHIS_Subject | undefined> }) {
+export function SubjectContent({ subjectPromise }: { subjectPromise: Promise<ProfileSubject | undefined> }) {
 	const subject = React.use(subjectPromise)
 	if (!subject) {
 		return <div>Subject not found</div>
@@ -30,7 +30,7 @@ export function SubjectContent({ subjectPromise }: { subjectPromise: Promise<DON
 	)
 }
 
-function SubjectCourseItem({ course }: { course: DONOTUSETHIS_Subject["courses"][number] }) {
+function SubjectCourseItem({ course }: { course: ProfileSubject["courses"][number] }) {
 	return (
 		<div className="bg-white border border-gray-200 rounded-xs p-6 flex gap-6 items-start">
 			{/* faux icon */}
@@ -41,13 +41,6 @@ function SubjectCourseItem({ course }: { course: DONOTUSETHIS_Subject["courses"]
 				<Link href={course.path} className="text-sm font-semibold mb-2 hover:underline cursor-pointer block w-fit">
 					{course.title}
 				</Link>
-				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-1 gap-x-4 text-xs text-gray-700">
-					{course.units.map((unit) => (
-						<Link key={unit.path} href={unit.path} className="truncate hover:underline cursor-pointer">
-							{unit.title}
-						</Link>
-					))}
-				</div>
 			</div>
 		</div>
 	)

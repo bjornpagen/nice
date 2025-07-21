@@ -2,10 +2,8 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
-import Image from "next/image"
 import * as React from "react"
 import YouTube, { type YouTubePlayer } from "react-youtube"
-import { Button } from "@/components/ui/button"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { updateVideoProgress } from "@/lib/actions/tracking"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
@@ -181,32 +179,6 @@ export function Content({
 			<div className="border-b">
 				<div className="max-w-5xl mx-auto p-6 text-center">
 					<h1 className="text-2xl font-bold text-gray-900 mb-4">{video.title}</h1>
-					<div className="flex justify-center items-center">
-						<div className="flex space-x-4">
-							<Button
-								variant="outline"
-								className="text-green-600 border-green-600 hover:bg-green-50 text-sm cursor-not-allowed"
-								disabled
-							>
-								<Image
-									src="https://cdn.kastatic.org/images/google_classroom_color.png"
-									alt=""
-									className="w-4 h-4 mr-2"
-									width={16}
-									height={16}
-								/>
-								Google Classroom
-							</Button>
-							<Button
-								variant="outline"
-								className="text-purple-600 border-purple-600 hover:bg-purple-50 text-sm cursor-not-allowed"
-								disabled
-							>
-								<span className="mr-2">📘</span>
-								Microsoft Teams
-							</Button>
-						</div>
-					</div>
 				</div>
 			</div>
 

@@ -1,22 +1,13 @@
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { Footer } from "@/components/footer"
+import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
+import type { ProfileSubject } from "@/lib/types/domain"
 import { SubjectContent } from "./components/subject-content"
 
-// TODO: This is ONLY A TEMPORARY FUCKING FIX. DO NOT FUCKING USE THIS.
-export interface DONOTUSETHIS_Subject {
-	title: string
-	courses: Array<{
-		path: string
-		title: string
-		units: Array<{
-			path: string
-			title: string
-		}>
-	}>
-}
-
 export default function SubjectPage({ params }: { params: Promise<{ subject: string }> }) {
-	const subjectPromise = params.then((params) => fetchSubjectPageData(params.subject))
+	const subjectPromise: Promise<ProfileSubject | undefined> = params.then(fetchSubjectPageData)
 
 	return (
 		<div className="bg-gray-100">
@@ -29,30 +20,27 @@ export default function SubjectPage({ params }: { params: Promise<{ subject: str
 	)
 }
 
-async function fetchSubjectPageData(subject: string): Promise<DONOTUSETHIS_Subject | undefined> {
-	return {
-		title: subject,
-		courses: [
-			{
-				path: "/math/course/1",
-				title: "Algebra",
-				units: [
-					{
-						path: "/math/course/1/unit/1",
-						title: "Algebra 1"
-					}
-				]
-			},
-			{
-				path: "/math/course/2",
-				title: "Geometry",
-				units: [
-					{
-						path: "/math/course/2/unit/1",
-						title: "Geometry 1"
-					}
-				]
-			}
-		]
+async function fetchSubjectPageData(params: { subject: string }): Promise<ProfileSubject | undefined> {
+	logger.info("fetching subject page data from OneRoster", { subjectSlug: params.subject })
+
+	const allSubjectsResult = await errors.try(getOneRosterCoursesForExplore())
+	if (allSubjectsResult.error) {
+		logger.error("failed to fetch all subjects for explore", { error: allSubjectsResult.error })
+		throw errors.wrap(allSubjectsResult.error, "oneroster subjects fetch")
 	}
+
+	// Find the specific subject matching the URL slug
+	const targetSubject = allSubjectsResult.data.find((s) => s.slug === params.subject)
+
+	if (!targetSubject) {
+		logger.warn("subject not found in OneRoster data", { subjectSlug: params.subject })
+		return undefined // Return undefined to indicate not found, which React.use can handle
+	}
+
+	logger.info("successfully fetched subject data", {
+		subjectSlug: params.subject,
+		courseCount: targetSubject.courses.length
+	})
+
+	return targetSubject
 }

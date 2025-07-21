@@ -67,24 +67,6 @@ export function Header({
 
 				{/* Right Section */}
 				<div className="flex items-center space-x-2 sm:space-x-4 flex-1 justify-end">
-					{/* AI for Teachers (hidden on mobile and small screens) */}
-					<Button
-						variant="link"
-						className={`hidden lg:flex items-center space-x-1 p-2 cursor-not-allowed ${dark ? "text-white" : "text-blue-600"}`}
-						disabled
-					>
-						<span className="text-sm font-medium">AI for Teachers</span>
-					</Button>
-
-					{/* Donate button (hidden on mobile) */}
-					<Button
-						variant="link"
-						className={`hidden md:flex items-center space-x-1 p-2 cursor-not-allowed ${dark ? "text-white" : "text-blue-600"}`}
-						disabled
-					>
-						<span className="text-sm font-medium">Donate</span>
-					</Button>
-
 					{/* User Dropdown for signed in users */}
 					<SignedIn>
 						{displayName && displayInitial ? (
