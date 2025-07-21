@@ -17,26 +17,30 @@ interface ExercisePerformance {
  * mastery learning where performance on comprehensive assessments updates the
  * proficiency of individual skills that were tested.
  *
- * @param {string} userSourcedId - The OneRoster sourcedId of the user.
- * @param {string} assessmentSourcedId - The OneRoster sourcedId of the completed assessment.
- * @param {number} attemptNumber - The specific attempt number to analyze.
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
+ * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr456)
+ * @param attemptNumber - The specific attempt number to analyze.
  */
 export async function updateProficiencyFromAssessment(
-	userSourcedId: string,
-	assessmentSourcedId: string,
+	onerosterUserSourcedId: string,
+	onerosterComponentResourceSourcedId: string,
 	attemptNumber: number // ADDED: This is the crucial new parameter
 ) {
-	logger.info("starting granular proficiency analysis", { userSourcedId, assessmentSourcedId, attemptNumber })
+	logger.info("starting granular proficiency analysis", {
+		onerosterUserSourcedId,
+		onerosterComponentResourceSourcedId,
+		attemptNumber
+	})
 
 	// Step 1: Get the graded results from PowerPath for the SPECIFIC attempt
 	// Note: PowerPath auto-finalizes assessments when all questions are answered,
 	// so we don't need to explicitly finalize. This also allows retakes to work smoothly.
 	const progressResult = await errors.try(
-		powerpath.getAssessmentProgress(userSourcedId, assessmentSourcedId, attemptNumber)
+		powerpath.getAssessmentProgress(onerosterUserSourcedId, onerosterComponentResourceSourcedId, attemptNumber)
 	)
 	if (progressResult.error) {
 		logger.error("failed to get assessment progress for proficiency analysis", {
-			assessmentSourcedId,
+			onerosterComponentResourceSourcedId,
 			attemptNumber,
 			error: progressResult.error
 		})
@@ -47,7 +51,7 @@ export async function updateProficiencyFromAssessment(
 
 	// ADDED: Log the raw PowerPath response to debug scoring issues
 	logger.info("powerpath assessment progress response", {
-		assessmentSourcedId,
+		onerosterComponentResourceSourcedId,
 		attemptNumber,
 		finalized,
 		score,
@@ -58,7 +62,7 @@ export async function updateProficiencyFromAssessment(
 	// Early return if assessment isn't finalized or has no question results
 	if (!finalized || score === undefined || questionResults.some((q) => q.correct === undefined)) {
 		logger.warn("assessment not fully graded yet, skipping proficiency analysis", {
-			assessmentSourcedId,
+			onerosterComponentResourceSourcedId,
 			finalized,
 			hasScore: score !== undefined,
 			questionsWithResults: questionResults.filter((q) => q.correct !== undefined).length,
@@ -68,38 +72,38 @@ export async function updateProficiencyFromAssessment(
 	}
 
 	// Step 2: Map questions to exercises using QTI metadata
-	const questionIdToExerciseIdMap = new Map<string, string>()
+	const qtiItemIdToOneRosterResourceSourcedIdMap = new Map<string, string>()
 
 	// Fetch QTI metadata for all questions in parallel for better performance
 	const qtiMetadataPromises = questionResults.map(async (question) => {
 		const itemResult = await errors.try(qti.getAssessmentItem(question.id))
 		if (itemResult.error) {
 			logger.warn("failed to fetch QTI item metadata for question", {
-				questionId: question.id,
+				qtiItemId: question.id,
 				error: itemResult.error
 			})
 			return null
 		}
 
-		const exerciseId = itemResult.data.metadata?.khanExerciseId
-		if (!exerciseId) {
+		const khanExerciseId = itemResult.data.metadata?.khanExerciseId
+		if (!khanExerciseId) {
 			logger.warn("question missing exercise ID in QTI metadata", {
-				questionId: question.id,
+				qtiItemId: question.id,
 				metadata: itemResult.data.metadata
 			})
 			return null
 		}
 
-		// Convert from raw exercise ID to OneRoster sourcedId format
-		const oneRosterExerciseId = `nice:${exerciseId}`
+		// Convert from raw Khan exercise ID to OneRoster resource sourcedId format
+		const onerosterResourceSourcedId = `nice:${khanExerciseId}`
 
 		logger.debug("mapped question to exercise", {
-			questionId: question.id,
-			rawExerciseId: exerciseId,
-			oneRosterExerciseId
+			qtiItemId: question.id,
+			khanExerciseId,
+			onerosterResourceSourcedId
 		})
 
-		return { questionId: question.id, exerciseId: oneRosterExerciseId }
+		return { qtiItemId: question.id, onerosterResourceSourcedId }
 	})
 
 	// Wait for all QTI metadata fetches to complete
@@ -108,12 +112,12 @@ export async function updateProficiencyFromAssessment(
 	// Build the mapping from successful results
 	for (const result of qtiMetadataResults) {
 		if (result) {
-			questionIdToExerciseIdMap.set(result.questionId, result.exerciseId)
+			qtiItemIdToOneRosterResourceSourcedIdMap.set(result.qtiItemId, result.onerosterResourceSourcedId)
 		}
 	}
 
-	if (questionIdToExerciseIdMap.size === 0) {
-		logger.info("no questions could be mapped to exercises", { assessmentSourcedId })
+	if (qtiItemIdToOneRosterResourceSourcedIdMap.size === 0) {
+		logger.info("no questions could be mapped to exercises", { onerosterComponentResourceSourcedId })
 		return { success: true, exercisesUpdated: 0 }
 	}
 
@@ -121,19 +125,19 @@ export async function updateProficiencyFromAssessment(
 	const currentProficiencyMap = new Map<string, number>()
 	if (lessonType === "unit-test") {
 		// For unit tests, we need to check current proficiency to handle mastery upgrades
-		const exerciseIds = Array.from(new Set(questionIdToExerciseIdMap.values()))
+		const onerosterResourceSourcedIds = Array.from(new Set(qtiItemIdToOneRosterResourceSourcedIdMap.values()))
 
 		// Get current results for all exercises being tested
-		const currentResultsPromises = exerciseIds.map(async (exerciseId) => {
+		const currentResultsPromises = onerosterResourceSourcedIds.map(async (onerosterResourceSourcedId) => {
 			const resultsResult = await errors.try(
 				oneroster.getAllResults({
-					filter: `student.sourcedId='${userSourcedId}' AND assessmentLineItem.sourcedId='${exerciseId}'`
+					filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${onerosterResourceSourcedId}'`
 				})
 			)
 
 			if (resultsResult.error) {
 				logger.warn("failed to fetch current proficiency for mastery check", {
-					exerciseId,
+					onerosterResourceSourcedId,
 					error: resultsResult.error
 				})
 				return null
@@ -147,7 +151,7 @@ export async function updateProficiencyFromAssessment(
 				)[0]
 
 				if (latestResult && typeof latestResult.score === "number") {
-					return { exerciseId, currentScore: latestResult.score }
+					return { onerosterResourceSourcedId, currentScore: latestResult.score }
 				}
 			}
 
@@ -157,7 +161,7 @@ export async function updateProficiencyFromAssessment(
 		const currentResults = await Promise.all(currentResultsPromises)
 		for (const result of currentResults) {
 			if (result) {
-				currentProficiencyMap.set(result.exerciseId, result.currentScore)
+				currentProficiencyMap.set(result.onerosterResourceSourcedId, result.currentScore)
 			}
 		}
 	}
@@ -166,17 +170,21 @@ export async function updateProficiencyFromAssessment(
 	const performanceMap = new Map<string, ExercisePerformance>()
 
 	for (const question of questionResults) {
-		const exerciseId = questionIdToExerciseIdMap.get(question.id)
-		if (!exerciseId) {
-			logger.warn("could not map question to exercise", { questionId: question.id, assessmentSourcedId })
+		const onerosterResourceSourcedId = qtiItemIdToOneRosterResourceSourcedIdMap.get(question.id)
+		if (!onerosterResourceSourcedId) {
+			logger.warn("could not map question to exercise", { qtiItemId: question.id, onerosterComponentResourceSourcedId })
 			continue
 		}
 
-		if (!performanceMap.has(exerciseId)) {
-			performanceMap.set(exerciseId, { exerciseId, correctCount: 0, totalCount: 0 })
+		if (!performanceMap.has(onerosterResourceSourcedId)) {
+			performanceMap.set(onerosterResourceSourcedId, {
+				exerciseId: onerosterResourceSourcedId,
+				correctCount: 0,
+				totalCount: 0
+			})
 		}
 
-		const performance = performanceMap.get(exerciseId)
+		const performance = performanceMap.get(onerosterResourceSourcedId)
 		if (performance) {
 			performance.totalCount++
 			if (question.correct) {
@@ -185,8 +193,8 @@ export async function updateProficiencyFromAssessment(
 
 			// ADDED: Log each question's contribution to help debug
 			logger.debug("processing question for exercise", {
-				questionId: question.id,
-				exerciseId,
+				qtiItemId: question.id,
+				onerosterResourceSourcedId,
 				isCorrect: question.correct,
 				runningCorrect: performance.correctCount,
 				runningTotal: performance.totalCount
@@ -195,7 +203,7 @@ export async function updateProficiencyFromAssessment(
 	}
 
 	if (performanceMap.size === 0) {
-		logger.info("no exercises found with answered questions to update", { assessmentSourcedId })
+		logger.info("no exercises found with answered questions to update", { onerosterComponentResourceSourcedId })
 		return { success: true, exercisesUpdated: 0 }
 	}
 
@@ -290,7 +298,7 @@ export async function updateProficiencyFromAssessment(
 					proficiencyScore,
 					performance.correctCount,
 					performance.totalCount,
-					userSourcedId
+					onerosterUserSourcedId
 				)
 			)
 		}
@@ -300,10 +308,10 @@ export async function updateProficiencyFromAssessment(
 	const successfulUpdates = results.filter((r) => r.status === "fulfilled").length
 
 	logger.info("granular proficiency analysis complete", {
-		assessmentSourcedId,
+		onerosterComponentResourceSourcedId,
 		exercisesAnalyzed: performanceMap.size,
 		exercisesUpdated: successfulUpdates,
-		questionsMapped: questionIdToExerciseIdMap.size,
+		questionsMapped: qtiItemIdToOneRosterResourceSourcedIdMap.size,
 		totalQuestions: questionResults.length
 	})
 

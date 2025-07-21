@@ -298,7 +298,11 @@ function RightSection({
 					className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white"
 					asChild
 				>
-					<Link href={nextItem?.path ?? "#"}>{nextItem?.text ?? "Continue"}</Link>
+					{nextItem?.path && nextItem.text ? (
+						<Link href={nextItem.path}>{nextItem.text}</Link>
+					) : (
+						<span>Error: Missing navigation data</span>
+					)}
 				</Button>
 			</div>
 		)
@@ -444,7 +448,7 @@ function RightSection({
 				)}
 				disabled={!isEnabled}
 			>
-				{buttonText || "Check"}
+				{buttonText}
 			</Button>
 		</div>
 	)

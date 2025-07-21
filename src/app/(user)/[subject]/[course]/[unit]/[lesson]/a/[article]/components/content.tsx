@@ -1,6 +1,7 @@
 "use client"
 
 import { useUser } from "@clerk/nextjs"
+import * as errors from "@superbuilders/errors"
 import Image from "next/image"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
@@ -27,23 +28,28 @@ export function Content({
 		startTimeRef.current = new Date()
 
 		// Validate user metadata if user exists
-		let userSourcedId: string | undefined
+		let onerosterUserSourcedId: string | undefined
 		if (user?.publicMetadata) {
 			const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
 			if (metadataValidation.success) {
-				userSourcedId = metadataValidation.data.sourceId
+				onerosterUserSourcedId = metadataValidation.data.sourceId
 			}
 		}
 
-		if (userSourcedId && article.id) {
+		if (onerosterUserSourcedId && article.id) {
 			// Fire-and-forget the existing OneRoster tracking action on component mount.
-			void trackArticleView(userSourcedId, article.id)
+			void trackArticleView(onerosterUserSourcedId, article.id)
 
 			// Send Caliper event for article completion
+			const userEmail = user?.primaryEmailAddress?.emailAddress
+			if (!userEmail) {
+				throw errors.new("article tracking: user email required for caliper event")
+			}
+
 			const actor = {
-				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userSourcedId}`,
+				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
 				type: "TimebackUser" as const,
-				email: user?.primaryEmailAddress?.emailAddress ?? ""
+				email: userEmail
 			}
 
 			// Map subject string to the enum value
@@ -54,7 +60,10 @@ export function Content({
 				language: "Language",
 				"social-studies": "Social Studies"
 			}
-			const mappedSubject = subjectMapping[params.subject] ?? "None"
+			const mappedSubject = subjectMapping[params.subject]
+			if (!mappedSubject) {
+				throw errors.new("article tracking: unmapped subject")
+			}
 
 			const context = {
 				id: `https://alpharead.alpha.school/articles/${article.id}`,

@@ -62,7 +62,7 @@ function SummaryView({
 		<div className="flex flex-col h-full bg-white">
 			{/* Summary Header */}
 			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0 text-center">
-				<h1 className="text-2xl font-bold text-gray-900">{assessmentTitle || `${contentType} Assessment`}</h1>
+				<h1 className="text-2xl font-bold text-gray-900">{assessmentTitle}</h1>
 			</div>
 
 			{/* Summary Content */}
@@ -130,9 +130,9 @@ interface AssessmentStepperProps {
 	questions: Question[]
 	contentType: AssessmentType
 	onComplete?: () => void
-	assessmentId?: string // ComponentResource ID for PowerPath
-	resourceId?: string // Resource ID for OneRoster assessment results
-	assessmentTitle?: string
+	onerosterComponentResourceSourcedId: string // The OneRoster componentResource sourcedId (e.g., nice:cr123) - used by PowerPath
+	onerosterResourceSourcedId: string // The OneRoster resource sourcedId (e.g., nice:exercise456) - used for OneRoster assessment results
+	assessmentTitle: string
 	unitData?: Unit
 }
 
@@ -140,9 +140,9 @@ export function AssessmentStepper({
 	questions,
 	contentType,
 	onComplete,
-	assessmentId = "",
-	resourceId = "",
-	assessmentTitle = "",
+	onerosterComponentResourceSourcedId,
+	onerosterResourceSourcedId,
+	assessmentTitle,
 	unitData
 }: AssessmentStepperProps) {
 	const { user } = useUser()
@@ -185,23 +185,26 @@ export function AssessmentStepper({
 
 	// ADDED: Check for and create new attempt when component mounts or when assessment changes
 	React.useEffect(() => {
-		if (!isInteractiveAssessment || !user?.publicMetadata?.sourceId || !assessmentId) {
+		if (!isInteractiveAssessment || !user?.publicMetadata?.sourceId || !onerosterComponentResourceSourcedId) {
 			return
 		}
 
-		const userSourcedId = user.publicMetadata.sourceId
-		if (typeof userSourcedId !== "string") {
+		const onerosterUserSourcedId = user.publicMetadata.sourceId
+		if (typeof onerosterUserSourcedId !== "string") {
 			return
 		}
 
 		// Check if we need to create a new attempt and get the current attempt number
 		const initializeAttempt = async () => {
-			const currentAttemptNumber = await checkAndCreateNewAttemptIfNeeded(userSourcedId, assessmentId)
+			const currentAttemptNumber = await checkAndCreateNewAttemptIfNeeded(
+				onerosterUserSourcedId,
+				onerosterComponentResourceSourcedId
+			)
 			setAttemptNumber(currentAttemptNumber)
 		}
 
 		initializeAttempt()
-	}, [assessmentId, isInteractiveAssessment, user?.publicMetadata?.sourceId])
+	}, [onerosterComponentResourceSourcedId, isInteractiveAssessment, user?.publicMetadata?.sourceId])
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
@@ -233,7 +236,7 @@ export function AssessmentStepper({
 			}
 
 			// Find the index of the current assessment within this flattened list.
-			const currentIndex = allUnitItems.findIndex((item) => item.id === assessmentId)
+			const currentIndex = allUnitItems.findIndex((item) => item.id === onerosterComponentResourceSourcedId)
 
 			let foundNext: { text: string; path: string } | null = null
 
@@ -244,7 +247,7 @@ export function AssessmentStepper({
 				if (nextContent) {
 					foundNext = {
 						text: `Up next: ${nextContent.type}`,
-						path: nextContent.path || "#"
+						path: nextContent.path
 					}
 				}
 			}
@@ -257,27 +260,37 @@ export function AssessmentStepper({
 
 			setNextItem(foundNext)
 		}
-	}, [showSummary, assessmentId, unitData])
+	}, [showSummary, onerosterComponentResourceSourcedId, unitData])
 
 	// MODIFIED: This useEffect now passes the attemptNumber to the server action.
 	React.useEffect(() => {
-		if (!showSummary || !resourceId || !user?.publicMetadata?.sourceId) {
+		if (!showSummary || !onerosterResourceSourcedId || !user?.publicMetadata?.sourceId) {
 			return
 		}
 
-		// Proper type check for userSourcedId
-		const userSourcedId = user.publicMetadata.sourceId
-		if (typeof userSourcedId !== "string") {
+		// Proper type check for onerosterUserSourcedId
+		const onerosterUserSourcedId = user.publicMetadata.sourceId
+		if (typeof onerosterUserSourcedId !== "string") {
 			return
 		}
 		const score = questions.length > 0 ? correctAnswersCount / questions.length : 0
 
 		const finalizeAndAnalyze = async () => {
-			await errors.try(saveAssessmentResult(resourceId, score, correctAnswersCount, questions.length, userSourcedId))
+			await errors.try(
+				saveAssessmentResult(
+					onerosterResourceSourcedId,
+					score,
+					correctAnswersCount,
+					questions.length,
+					onerosterUserSourcedId
+				)
+			)
 
 			if (isInteractiveAssessment) {
 				// First finalize the assessment to ensure all responses are graded
-				const finalizeResult = await errors.try(finalizeAssessment(userSourcedId, assessmentId))
+				const finalizeResult = await errors.try(
+					finalizeAssessment(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
+				)
 				if (finalizeResult.error) {
 					toast.error("Could not finalize assessment. Proficiency analysis may be incomplete.")
 					return
@@ -287,7 +300,11 @@ export function AssessmentStepper({
 				await new Promise((resolve) => setTimeout(resolve, 1000))
 
 				// Pass the attemptNumber to the action
-				const analysisPromise = updateProficiencyFromAssessment(userSourcedId, assessmentId, attemptNumber)
+				const analysisPromise = updateProficiencyFromAssessment(
+					onerosterUserSourcedId,
+					onerosterComponentResourceSourcedId,
+					attemptNumber
+				)
 				toast.promise(analysisPromise, {
 					loading: "Analyzing your skill performance...",
 					success: (result) => `Updated proficiency for ${result.exercisesUpdated} skills!`,
@@ -315,16 +332,24 @@ export function AssessmentStepper({
 				language: "Language",
 				"social-studies": "Social Studies"
 			}
-			const mappedSubject = subjectMapping[subject] ?? "None"
+			const mappedSubject = subjectMapping[subject]
+			if (!mappedSubject) {
+				throw errors.new("assessment completion: unmapped subject")
+			}
+
+			const userEmail = user.primaryEmailAddress?.emailAddress
+			if (!userEmail) {
+				throw errors.new("assessment completion: user email required for caliper event")
+			}
 
 			const actor = {
-				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userSourcedId}`,
+				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
 				type: "TimebackUser" as const,
-				email: user.primaryEmailAddress?.emailAddress ?? ""
+				email: userEmail
 			}
 
 			const context = {
-				id: `https://alpharead.alpha.school/assessments/${assessmentId}`,
+				id: `https://alpharead.alpha.school/assessments/${onerosterComponentResourceSourcedId}`,
 				type: "TimebackActivityContext" as const,
 				subject: mappedSubject,
 				app: { name: "Nice Academy" },
@@ -356,8 +381,8 @@ export function AssessmentStepper({
 		sendCaliperEvents()
 	}, [
 		showSummary,
-		assessmentId,
-		resourceId,
+		onerosterComponentResourceSourcedId,
+		onerosterResourceSourcedId,
 		user,
 		correctAnswersCount,
 		questions.length,
@@ -443,7 +468,7 @@ export function AssessmentStepper({
 				correctAnswersCount={correctAnswersCount}
 				totalQuestions={questions.length}
 				contentType={contentType}
-				assessmentTitle={assessmentTitle || `${contentType} Assessment`}
+				assessmentTitle={assessmentTitle}
 				onComplete={onComplete}
 				handleReset={() => {
 					// Reset the entire assessment to try again
@@ -480,8 +505,8 @@ export function AssessmentStepper({
 		setIsSubmitting(true)
 		setShowFeedback(false)
 
-		const userSourcedId = user.publicMetadata.sourceId
-		if (typeof userSourcedId !== "string") return
+		const onerosterUserSourcedId = user.publicMetadata.sourceId
+		if (typeof onerosterUserSourcedId !== "string") return
 
 		// Call server action to process question response
 		const responseValue =
@@ -491,8 +516,8 @@ export function AssessmentStepper({
 			processQuestionResponse(
 				currentQuestion.id,
 				responseValue,
-				userSourcedId,
-				assessmentId,
+				onerosterUserSourcedId,
+				onerosterComponentResourceSourcedId,
 				isInteractiveAssessment,
 				attemptCount // Pass the current attempt count
 			)
@@ -504,7 +529,14 @@ export function AssessmentStepper({
 			return
 		}
 
-		const isCorrect = result.data?.isCorrect ?? false
+		if (!result.data) {
+			throw errors.new("question response: missing result data")
+		}
+
+		const isCorrect = result.data.isCorrect
+		if (typeof isCorrect !== "boolean") {
+			throw errors.new("question response: invalid correctness indicator")
+		}
 
 		setIsSubmitting(false)
 		setIsAnswerChecked(true)
@@ -540,10 +572,15 @@ export function AssessmentStepper({
 	const handleSkip = () => {
 		// For ALL assessments, treat skip as incorrect
 		// Log this as an incorrect response to PowerPath
-		if (user?.publicMetadata?.sourceId && assessmentId && isInteractiveAssessment) {
-			const userSourcedId = user.publicMetadata.sourceId
-			if (typeof userSourcedId === "string") {
-				processSkippedQuestion(currentQuestion.id, userSourcedId, assessmentId, attemptCount).catch(() => {
+		if (user?.publicMetadata?.sourceId && onerosterComponentResourceSourcedId && isInteractiveAssessment) {
+			const onerosterUserSourcedId = user.publicMetadata.sourceId
+			if (typeof onerosterUserSourcedId === "string") {
+				processSkippedQuestion(
+					currentQuestion.id,
+					onerosterUserSourcedId,
+					onerosterComponentResourceSourcedId,
+					attemptCount
+				).catch(() => {
 					// Error is logged inside processSkippedQuestion, no need to log again
 				})
 			}
@@ -587,10 +624,10 @@ export function AssessmentStepper({
 			return
 		}
 
-		const userSourcedId = user.publicMetadata.sourceId
+		const onerosterUserSourcedId = user.publicMetadata.sourceId
 
 		// Step 1: Create a new attempt via the server action.
-		const attemptPromise = createNewAssessmentAttempt(userSourcedId, assessmentId)
+		const attemptPromise = createNewAssessmentAttempt(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
 		toast.promise(attemptPromise, {
 			loading: "Starting a new attempt...",
 			success: "New attempt started. Good luck!",
@@ -647,7 +684,7 @@ export function AssessmentStepper({
 			{/* Assessment Header */}
 			<div className="bg-white px-6 py-4 border-b border-gray-200 flex-shrink-0">
 				<div className="flex items-center justify-center">
-					<h1 className="text-xl font-semibold text-gray-900">{assessmentTitle || `${contentType} Assessment`}</h1>
+					<h1 className="text-xl font-semibold text-gray-900">{assessmentTitle}</h1>
 				</div>
 			</div>
 			<div className="flex-1 overflow-hidden relative">

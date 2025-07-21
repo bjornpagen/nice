@@ -9,8 +9,8 @@
  *   bun run src/scripts/atom-bomb-wipe.ts <type> <prefix> --delete
  *
  * Types: resources, courses, courseComponents, componentResources,
- *        classes, users, enrollments, assessmentLineItems, assessmentItems,
- *        assessmentStimuli, assessmentTests, all
+ *        classes, users, enrollments, assessmentLineItems, assessmentResults,
+ *        assessmentItems, assessmentStimuli, assessmentTests, all
  *
  * Examples:
  *   bun run src/scripts/atom-bomb-wipe.ts courses "test-"
@@ -35,6 +35,7 @@ const EntityTypeSchema = z.enum([
 	"users",
 	"enrollments",
 	"assessmentLineItems",
+	"assessmentResults",
 	"assessmentItems",
 	"assessmentStimuli",
 	"assessmentTests",
@@ -223,6 +224,39 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		},
 		delete: (id: string) => oneroster.deleteAssessmentLineItem(id)
 	},
+	assessmentResults: {
+		type: "assessmentResults",
+		name: "Assessment Results (User Progress)",
+		fetchAll: async (prefix: string) => {
+			// For AssessmentResults, we need to filter by the sourcedId which now follows pattern nice:result-{userId}-{lineItemId}
+			const items = await oneroster.getAllResults({
+				filter: createPrefixFilter(prefix),
+				sort: "sourcedId",
+				orderBy: "asc"
+			})
+			return items.map((r) => ({
+				sourcedId: r.sourcedId,
+				displayName: `${r.sourcedId}: ${r.student?.sourcedId || "unknown-user"} -> ${r.assessmentLineItem?.sourcedId || "unknown-item"} (score: ${r.score ?? "none"})`,
+				fullObject: r
+			}))
+		},
+		delete: async (id: string) => {
+			// OneRoster doesn't provide a DELETE endpoint for results
+			// We can't soft delete them either as the API doesn't accept status field updates
+			// The best we can do is update the result to show 0 score
+			// In production, results would be cleaned up by deleting the assessmentLineItem
+			logger.warn("oneroster: cannot fully delete result, setting score to 0", { id })
+			await oneroster.putResult(id, {
+				result: {
+					assessmentLineItem: { sourcedId: "placeholder", type: "assessmentLineItem" as const },
+					student: { sourcedId: "placeholder", type: "user" as const },
+					scoreStatus: "not submitted" as const,
+					scoreDate: new Date().toISOString(),
+					score: 0
+				}
+			})
+		}
+	},
 	assessmentItems: {
 		type: "assessmentItems",
 		name: "QTI Assessment Items",
@@ -332,6 +366,7 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 				"assessmentStimuli",
 				// OneRoster Objects (delete dependencies first)
 				"enrollments",
+				"assessmentResults",
 				"assessmentLineItems",
 				"componentResources",
 				"courseComponents",
@@ -392,6 +427,7 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 			"assessmentStimuli",
 			// OneRoster Objects (delete dependencies first)
 			"enrollments",
+			"assessmentResults",
 			"assessmentLineItems",
 			"componentResources",
 			"courseComponents",
@@ -483,7 +519,7 @@ async function main() {
 			"Usage: atom-bomb-wipe <type> <prefix> [--delete]\n\n" +
 				"Types:\n" +
 				"  resources, courses, courseComponents, componentResources,\n" +
-				"  classes, users, enrollments, assessmentLineItems,\n" +
+				"  classes, users, enrollments, assessmentLineItems, assessmentResults,\n" +
 				"  assessmentItems, assessmentStimuli, assessmentTests, all\n"
 		)
 		process.exit(1)

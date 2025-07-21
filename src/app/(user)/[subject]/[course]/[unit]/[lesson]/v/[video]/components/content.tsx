@@ -1,6 +1,7 @@
 "use client"
 
 import { useUser } from "@clerk/nextjs"
+import * as errors from "@superbuilders/errors"
 import Image from "next/image"
 import * as React from "react"
 import YouTube, { type YouTubePlayer } from "react-youtube"
@@ -75,10 +76,15 @@ export function Content({
 		}
 
 		if (sourceId && user) {
+			const userEmail = user.primaryEmailAddress?.emailAddress
+			if (!userEmail) {
+				throw errors.new("video tracking: user email required for caliper event")
+			}
+
 			const actor = {
 				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${sourceId}`,
 				type: "TimebackUser" as const,
-				email: user.primaryEmailAddress?.emailAddress ?? ""
+				email: userEmail
 			}
 
 			const context = {
@@ -102,22 +108,27 @@ export function Content({
 			const player = playerRef.current
 
 			// Validate user metadata if user exists
-			let sourceId: string | undefined
+			let onerosterUserSourcedId: string | undefined
 			if (user?.publicMetadata) {
 				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
 				if (metadataValidation.success) {
-					sourceId = metadataValidation.data.sourceId
+					onerosterUserSourcedId = metadataValidation.data.sourceId
 				}
 			}
 
 			// Ensure the player is ready, the user is identified, and the video is playing.
-			if (player && typeof player.getPlayerState === "function" && player.getPlayerState() === 1 && sourceId) {
+			if (
+				player &&
+				typeof player.getPlayerState === "function" &&
+				player.getPlayerState() === 1 &&
+				onerosterUserSourcedId
+			) {
 				const currentTime = player.getCurrentTime()
 				const duration = player.getDuration()
 
 				if (duration > 0) {
 					// Existing OneRoster progress update (fire-and-forget)
-					void updateVideoProgress(sourceId, video.id, currentTime, duration)
+					void updateVideoProgress(onerosterUserSourcedId, video.id, currentTime, duration)
 				}
 			}
 		}, 3000) // Still update OneRoster progress every 3 seconds

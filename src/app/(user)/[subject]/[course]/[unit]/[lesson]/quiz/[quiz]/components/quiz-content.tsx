@@ -14,8 +14,8 @@ export function QuizContent({ quizPromise }: { quizPromise: Promise<QuizPageData
 			<AssessmentStepper
 				questions={questions}
 				contentType="Quiz"
-				assessmentId={quiz.componentResourceSourcedId}
-				resourceId={quiz.id}
+				onerosterComponentResourceSourcedId={quiz.componentResourceSourcedId} // The componentResource sourcedId that PowerPath uses
+				onerosterResourceSourcedId={quiz.id} // The quiz resource sourcedId for OneRoster results
 				assessmentTitle={quiz.title}
 				unitData={layoutData.unitData}
 			/>

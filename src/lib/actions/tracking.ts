@@ -10,22 +10,22 @@ import { oneroster } from "@/lib/clients"
  * AssessmentResult in the OneRoster gradebook.
  * This action is designed to be idempotent; it will not create duplicate results.
  *
- * @param userId - The user's sourcedId.
- * @param articleSourcedId - The sourcedId of the article resource.
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
+ * @param onerosterArticleResourceSourcedId - The OneRoster resource sourcedId for the article (e.g., nice:article456)
  */
-export async function trackArticleView(userId: string, articleSourcedId: string) {
-	logger.info("tracking article view", { userId, articleSourcedId })
+export async function trackArticleView(onerosterUserSourcedId: string, onerosterArticleResourceSourcedId: string) {
+	logger.info("tracking article view", { onerosterUserSourcedId, onerosterArticleResourceSourcedId })
 
-	// The line item ID is deterministically linked to the article ID.
-	const lineItemSourcedId = articleSourcedId
+	// The line item sourcedId is the same as the resource sourcedId
+	const onerosterLineItemSourcedId = onerosterArticleResourceSourcedId
 
-	// The result ID is a combination of user and line item to ensure uniqueness.
-	const resultSourcedId = `result:${userId}:${lineItemSourcedId}`
+	// The result sourcedId follows our pattern
+	const onerosterResultSourcedId = `nice:${onerosterUserSourcedId}:${onerosterLineItemSourcedId}`
 
 	const resultPayload = {
 		result: {
-			assessmentLineItem: { sourcedId: lineItemSourcedId, type: "assessmentLineItem" as const },
-			student: { sourcedId: userId, type: "user" as const },
+			assessmentLineItem: { sourcedId: onerosterLineItemSourcedId, type: "assessmentLineItem" as const },
+			student: { sourcedId: onerosterUserSourcedId, type: "user" as const },
 			scoreStatus: "fully graded" as const,
 			scoreDate: new Date().toISOString(),
 			score: 1.0 // Use 1.0 to represent "completed"
@@ -34,15 +34,23 @@ export async function trackArticleView(userId: string, articleSourcedId: string)
 
 	// Use putResult for idempotency. If the result already exists, this will
 	// simply update it. If not, it will be created.
-	const result = await errors.try(oneroster.putResult(resultSourcedId, resultPayload))
+	const result = await errors.try(oneroster.putResult(onerosterResultSourcedId, resultPayload))
 	if (result.error) {
-		logger.error("failed to track article view", { userId, articleSourcedId, error: result.error })
+		logger.error("failed to track article view", {
+			onerosterUserSourcedId,
+			onerosterArticleResourceSourcedId,
+			error: result.error
+		})
 		// This is a non-critical background task. Re-throw the error to allow the
 		// client to decide how to handle it, but it shouldn't block the UI.
 		throw errors.wrap(result.error, "track article view")
 	}
 
-	logger.info("successfully tracked article view", { userId, articleSourcedId, resultSourcedId })
+	logger.info("successfully tracked article view", {
+		onerosterUserSourcedId,
+		onerosterArticleResourceSourcedId,
+		onerosterResultSourcedId
+	})
 }
 
 /**
@@ -52,19 +60,23 @@ export async function trackArticleView(userId: string, articleSourcedId: string)
  * This is a fire-and-forget action that tracks how much of a video has been watched.
  * It marks the video as "completed" once the user watches 95% or more of the content.
  *
- * @param userSourceId - The OneRoster sourcedId of the user.
- * @param videoId - The sourcedId of the video resource.
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
+ * @param onerosterVideoResourceSourcedId - The OneRoster resource sourcedId for the video (e.g., nice:video456)
  * @param currentTime - The current playback time in seconds.
  * @param duration - The total duration of the video in seconds.
  */
 export async function updateVideoProgress(
-	userSourceId: string,
-	videoId: string,
+	onerosterUserSourcedId: string,
+	onerosterVideoResourceSourcedId: string,
 	currentTime: number,
 	duration: number
 ): Promise<void> {
 	if (duration <= 0) {
-		logger.warn("video progress tracking skipped", { videoId, reason: "invalid duration", duration })
+		logger.warn("video progress tracking skipped", {
+			onerosterVideoResourceSourcedId,
+			reason: "invalid duration",
+			duration
+		})
 		return
 	}
 
@@ -74,8 +86,8 @@ export async function updateVideoProgress(
 
 	// Log detailed progress information
 	logger.info("saving video progress", {
-		userSourceId,
-		videoId,
+		onerosterUserSourcedId,
+		onerosterVideoResourceSourcedId,
 		percentComplete,
 		currentTime: formattedCurrentTime,
 		duration: formattedDuration,
@@ -95,21 +107,21 @@ export async function updateVideoProgress(
 	// Log whether this is marking the video as complete
 	if (isCompleted) {
 		logger.info("video marked as complete", {
-			videoId,
-			userSourceId,
+			onerosterVideoResourceSourcedId,
+			onerosterUserSourcedId,
 			finalPercentage: percentComplete
 		})
 	}
 
-	// The sourcedId for the line item is the same as the video resource's sourcedId.
-	const lineItemSourcedId = videoId
-	// The result's sourcedId is deterministic to ensure idempotency.
-	const resultSourcedId = `result:${userSourceId}:${lineItemSourcedId}`
+	// The line item sourcedId is the same as the video resource sourcedId
+	const onerosterLineItemSourcedId = onerosterVideoResourceSourcedId
+	// The result sourcedId follows our pattern
+	const onerosterResultSourcedId = `nice:${onerosterUserSourcedId}:${onerosterLineItemSourcedId}`
 
 	const resultPayload = {
 		result: {
-			assessmentLineItem: { sourcedId: lineItemSourcedId, type: "assessmentLineItem" as const },
-			student: { sourcedId: userSourceId, type: "user" as const },
+			assessmentLineItem: { sourcedId: onerosterLineItemSourcedId, type: "assessmentLineItem" as const },
+			student: { sourcedId: onerosterUserSourcedId, type: "user" as const },
 			scoreStatus,
 			scoreDate: new Date().toISOString(),
 			score
@@ -117,19 +129,19 @@ export async function updateVideoProgress(
 	}
 
 	logger.debug("sending video progress to OneRoster", {
-		resultSourcedId,
+		onerosterResultSourcedId,
 		score,
 		scoreStatus,
-		videoId
+		onerosterVideoResourceSourcedId
 	})
 
-	const result = await errors.try(oneroster.putResult(resultSourcedId, resultPayload))
+	const result = await errors.try(oneroster.putResult(onerosterResultSourcedId, resultPayload))
 	if (result.error) {
 		// This is a non-critical background task. Log the error for observability
 		// but do not re-throw, as it should not interrupt the user's experience.
 		logger.error("failed to update video progress", {
-			userSourceId,
-			videoId,
+			onerosterUserSourcedId,
+			onerosterVideoResourceSourcedId,
 			percentComplete,
 			error: result.error
 		})
@@ -139,8 +151,8 @@ export async function updateVideoProgress(
 	}
 
 	logger.info("video progress saved successfully", {
-		userSourceId,
-		videoId,
+		onerosterUserSourcedId,
+		onerosterVideoResourceSourcedId,
 		score,
 		percentComplete,
 		status: scoreStatus,
@@ -152,40 +164,41 @@ export async function updateVideoProgress(
  * Saves an assessment result directly to the OneRoster gradebook.
  * This is called when a user completes an assessment (exercise, quiz, or test).
  *
- * @param assessmentSourcedId - The sourcedId of the assessment
+ * @param onerosterResourceSourcedId - The OneRoster resource sourcedId for the assessment (e.g., nice:exercise789)
  * @param score - The score as a decimal between 0 and 1 (e.g., 0.8 for 80%)
  * @param correctAnswers - Number of questions answered correctly on first attempt
  * @param totalQuestions - Total number of questions in the assessment
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
  */
 export async function saveAssessmentResult(
-	assessmentSourcedId: string,
+	onerosterResourceSourcedId: string,
 	score: number,
 	correctAnswers: number,
 	totalQuestions: number,
-	userSourcedId: string
+	onerosterUserSourcedId: string
 ) {
-	const { userId } = await auth()
-	if (!userId) throw errors.new("user not authenticated")
+	const { userId: clerkUserId } = await auth()
+	if (!clerkUserId) throw errors.new("user not authenticated")
 
 	logger.info("saving assessment result", {
-		userId,
-		userSourcedId,
-		assessmentSourcedId,
+		clerkUserId,
+		onerosterUserSourcedId,
+		onerosterResourceSourcedId,
 		score,
 		correctAnswers,
 		totalQuestions
 	})
 
-	// The line item ID is the same as the assessment ID
-	const lineItemSourcedId = assessmentSourcedId
+	// The line item sourcedId is the same as the resource sourcedId
+	const onerosterLineItemSourcedId = onerosterResourceSourcedId
 
-	// Create a unique result ID
-	const resultSourcedId = `result:${userSourcedId}:${lineItemSourcedId}`
+	// The result sourcedId follows our pattern
+	const onerosterResultSourcedId = `nice:${onerosterUserSourcedId}:${onerosterLineItemSourcedId}`
 
 	const resultPayload = {
 		result: {
-			assessmentLineItem: { sourcedId: lineItemSourcedId, type: "assessmentLineItem" as const },
-			student: { sourcedId: userSourcedId, type: "user" as const },
+			assessmentLineItem: { sourcedId: onerosterLineItemSourcedId, type: "assessmentLineItem" as const },
+			student: { sourcedId: onerosterUserSourcedId, type: "user" as const },
 			scoreStatus: "fully graded" as const,
 			scoreDate: new Date().toISOString(),
 			score: score, // Score as decimal (0-1)
@@ -194,20 +207,20 @@ export async function saveAssessmentResult(
 	}
 
 	// Use putResult for idempotency
-	const result = await errors.try(oneroster.putResult(resultSourcedId, resultPayload))
+	const result = await errors.try(oneroster.putResult(onerosterResultSourcedId, resultPayload))
 	if (result.error) {
 		logger.error("failed to save assessment result", {
-			userId,
-			assessmentSourcedId,
+			clerkUserId,
+			onerosterResourceSourcedId,
 			error: result.error
 		})
 		throw errors.wrap(result.error, "assessment result save")
 	}
 
 	logger.info("successfully saved assessment result", {
-		userId,
-		assessmentSourcedId,
-		resultSourcedId,
+		clerkUserId,
+		onerosterResourceSourcedId,
+		onerosterResultSourcedId,
 		score
 	})
 

@@ -18,8 +18,8 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 			<AssessmentStepper
 				questions={questions}
 				contentType="Exercise"
-				assessmentId={exercise.id}
-				resourceId={exercise.id}
+				onerosterComponentResourceSourcedId={exercise.id} // For exercises, the resource itself acts as the componentResource
+				onerosterResourceSourcedId={exercise.id} // The exercise resource sourcedId for OneRoster results
 				assessmentTitle={exercise.title}
 				unitData={layoutData.unitData}
 			/>

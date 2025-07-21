@@ -30,7 +30,9 @@ export function ProfileBanner({ uid, username, bio }: { uid: string; username: s
 								/>
 							</div>
 							<div>
-								<h2 className="text-2xl font-bold text-gray-900 mb-1">{uid || "User"}</h2>
+								<h2 className="text-2xl font-bold text-gray-900 mb-1">
+									{uid ? uid : <span className="text-red-500">Error: Missing user ID</span>}
+								</h2>
 								<div className="flex items-center space-x-2 text-sm">
 									<Button
 										variant="link"
