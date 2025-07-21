@@ -22,7 +22,7 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 		notFound()
 	}
 
-	// Validate resource metadata with Zod
+	// Validate resource metadata with Zod. THIS IS THE CRITICAL PATTERN.
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
 		logger.error("invalid article resource metadata", {
@@ -32,7 +32,7 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 		throw errors.wrap(resourceMetadataResult.error, "invalid article resource metadata")
 	}
 
-	// Because we use a discriminated union, we must also check the type
+	// Because we use a discriminated union, we must also check the type.
 	if (resourceMetadataResult.data.type !== "qti") {
 		logger.error("invalid resource type for article page", {
 			resourceSourcedId: resource.sourcedId,
@@ -40,6 +40,16 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 			actual: resourceMetadataResult.data.type
 		})
 		throw errors.new("invalid resource type")
+	}
+
+	// Validate that the article slug from the URL matches the resource's actual khanSlug.
+	if (params.article !== resourceMetadataResult.data.khanSlug) {
+		logger.warn("mismatched article slug in URL", {
+			requestedSlug: params.article,
+			actualSlug: resourceMetadataResult.data.khanSlug,
+			resourceId: resource.sourcedId
+		})
+		notFound()
 	}
 
 	return {
@@ -78,7 +88,7 @@ export async function fetchExercisePageData(params: {
 		notFound()
 	}
 
-	// Validate resource metadata with Zod
+	// Validate resource metadata with Zod. THIS IS THE CRITICAL PATTERN.
 	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
 	if (!resourceMetadataResult.success) {
 		logger.error("invalid exercise resource metadata", {
@@ -88,7 +98,7 @@ export async function fetchExercisePageData(params: {
 		throw errors.wrap(resourceMetadataResult.error, "invalid exercise resource metadata")
 	}
 
-	// Because we use a discriminated union, we must also check the type
+	// Because we use a discriminated union, we must also check the type.
 	if (resourceMetadataResult.data.type !== "qti") {
 		logger.error("invalid resource type for exercise page", {
 			resourceSourcedId: resource.sourcedId,
@@ -96,6 +106,16 @@ export async function fetchExercisePageData(params: {
 			actual: resourceMetadataResult.data.type
 		})
 		throw errors.new("invalid resource type")
+	}
+
+	// Validate that the exercise slug from the URL matches the resource's actual khanSlug.
+	if (params.exercise !== resourceMetadataResult.data.khanSlug) {
+		logger.warn("mismatched exercise slug in URL", {
+			requestedSlug: params.exercise,
+			actualSlug: resourceMetadataResult.data.khanSlug,
+			resourceId: resource.sourcedId
+		})
+		notFound()
 	}
 
 	// Fetch questions from QTI server
@@ -163,6 +183,16 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 			actual: resourceMetadataResult.data.type
 		})
 		throw errors.new("invalid resource type")
+	}
+
+	// Validate that the video slug from the URL matches the resource's actual khanSlug.
+	if (params.video !== resourceMetadataResult.data.khanSlug) {
+		logger.warn("mismatched video slug in URL", {
+			requestedSlug: params.video,
+			actualSlug: resourceMetadataResult.data.khanSlug,
+			resourceId: resource.sourcedId
+		})
+		notFound()
 	}
 
 	const youtubeId = extractYouTubeId(resourceMetadataResult.data.url)

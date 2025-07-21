@@ -10,6 +10,8 @@ export async function fetchLessonLayoutData(params: {
 	lesson: string
 }): Promise<LessonLayoutData> {
 	logger.info("fetchLessonLayoutData called", { params })
+	logger.debug("unit page: fetching unit data", { params })
+
 	// 1. Call the parent data fetcher with ONLY the params it needs
 	// This ensures cache effectiveness - all lessons in the same unit share the cache
 	const unitPageData = await fetchUnitPageData({
@@ -23,17 +25,12 @@ export async function fetchLessonLayoutData(params: {
 		(child) => child.type === "Lesson" && child.slug === params.lesson
 	)
 
-	if (!currentLesson) {
-		logger.error("lesson not found in unit children", {
+	if (!currentLesson || currentLesson.type !== "Lesson") {
+		logger.error("lesson not found or is not of type 'Lesson' within unit children", {
 			lessonSlug: params.lesson,
-			unitSourcedId: unitPageData.unit.id
+			unitSourcedId: unitPageData.unit.id,
+			foundType: currentLesson?.type
 		})
-		notFound()
-	}
-
-	// Ensure the found child is of type Lesson before returning.
-	if (currentLesson.type !== "Lesson") {
-		logger.error("found content is not a lesson", { lessonSlug: params.lesson, type: currentLesson.type })
 		notFound()
 	}
 

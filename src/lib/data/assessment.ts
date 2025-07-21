@@ -504,6 +504,50 @@ export async function fetchQuizRedirectPath(params: {
 		throw errors.new("no lessons found in unit")
 	}
 
+	// 1. Fetch all resources for this unit and its lessons.
+	const unitAndLessonComponentSourcedIds = [unitSourcedId, ...lessons.map((l) => l.sourcedId)]
+	const allComponentResourcesInUnitResult = await errors.try(getAllComponentResources())
+	if (allComponentResourcesInUnitResult.error) {
+		logger.error("failed to fetch all component resources for unit and lessons", {
+			unitSourcedId,
+			error: allComponentResourcesInUnitResult.error
+		})
+		throw errors.wrap(allComponentResourcesInUnitResult.error, "fetch component resources for unit/lesson context")
+	}
+
+	const relevantComponentResources = allComponentResourcesInUnitResult.data.filter((cr) =>
+		unitAndLessonComponentSourcedIds.includes(cr.courseComponent.sourcedId)
+	)
+	const relevantResourceIds = relevantComponentResources.map((cr) => cr.resource.sourcedId)
+
+	const allResourcesResult = await errors.try(getAllResources())
+	if (allResourcesResult.error) {
+		logger.error("failed to fetch all resources for quiz validation", {
+			unitSourcedId,
+			error: allResourcesResult.error
+		})
+		throw errors.wrap(allResourcesResult.error, "fetch all resources for quiz validation")
+	}
+
+	const quizResource = allResourcesResult.data.find((res) => {
+		if (!relevantResourceIds.includes(res.sourcedId)) return false
+		const metadataResult = ResourceMetadataSchema.safeParse(res.metadata)
+		return (
+			metadataResult.success &&
+			metadataResult.data.khanSlug === params.quiz &&
+			metadataResult.data.type === "qti" &&
+			metadataResult.data.khanLessonType === "quiz"
+		)
+	})
+
+	if (!quizResource) {
+		logger.warn("quiz resource not found within the specified unit/lesson hierarchy", {
+			unitSourcedId,
+			quizSlug: params.quiz
+		})
+		notFound()
+	}
+
 	// Sort by ordering and get the first lesson's slug
 	lessons.sort((a, b) => a.sortOrder - b.sortOrder)
 	const firstLesson = lessons[0]
@@ -600,6 +644,50 @@ export async function fetchTestRedirectPath(params: {
 	if (lessons.length === 0) {
 		logger.warn("no lessons found in unit for redirect", { unitSourcedId })
 		throw errors.new("no lessons found in unit")
+	}
+
+	// 1. Fetch all resources for this unit and its lessons.
+	const unitAndLessonComponentSourcedIds = [unitSourcedId, ...lessons.map((l) => l.sourcedId)]
+	const allComponentResourcesInUnitResult = await errors.try(getAllComponentResources())
+	if (allComponentResourcesInUnitResult.error) {
+		logger.error("failed to fetch all component resources for unit and lessons", {
+			unitSourcedId,
+			error: allComponentResourcesInUnitResult.error
+		})
+		throw errors.wrap(allComponentResourcesInUnitResult.error, "fetch component resources for unit/lesson context")
+	}
+
+	const relevantComponentResources = allComponentResourcesInUnitResult.data.filter((cr) =>
+		unitAndLessonComponentSourcedIds.includes(cr.courseComponent.sourcedId)
+	)
+	const relevantResourceIds = relevantComponentResources.map((cr) => cr.resource.sourcedId)
+
+	const allResourcesResult = await errors.try(getAllResources())
+	if (allResourcesResult.error) {
+		logger.error("failed to fetch all resources for unit test validation", {
+			unitSourcedId,
+			error: allResourcesResult.error
+		})
+		throw errors.wrap(allResourcesResult.error, "fetch all resources for unit test validation")
+	}
+
+	const unitTestResource = allResourcesResult.data.find((res) => {
+		if (!relevantResourceIds.includes(res.sourcedId)) return false
+		const metadataResult = ResourceMetadataSchema.safeParse(res.metadata)
+		return (
+			metadataResult.success &&
+			metadataResult.data.khanSlug === params.test &&
+			metadataResult.data.type === "qti" &&
+			metadataResult.data.khanLessonType === "unittest"
+		)
+	})
+
+	if (!unitTestResource) {
+		logger.warn("unit test resource not found within the specified unit/lesson hierarchy", {
+			unitSourcedId,
+			testSlug: params.test
+		})
+		notFound()
 	}
 
 	// Sort by ordering and get the first lesson's slug

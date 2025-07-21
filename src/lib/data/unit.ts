@@ -22,7 +22,7 @@ export async function fetchUnitPageData(params: {
 	const currentUnit = coursePageData.course.units.find((u) => u.slug === params.unit)
 
 	if (!currentUnit) {
-		logger.error("unit page: unit not found in course data", {
+		logger.error("unit not found within course units", {
 			unitSlug: params.unit,
 			courseId: coursePageData.course.id
 		})
