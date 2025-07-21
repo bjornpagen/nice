@@ -84,10 +84,8 @@ export type Type = z.infer<typeof TypeSchema>
 export const SourcedIdSchema = z
 	.string()
 	.nonempty()
-	.regex(/^nice:x[a-f0-9]+(?::[a-fx0-9]+)*$/)
-	.describe(
-		"The sourcedId of the resource, as stored in the TimeBack platform. Must be 'nice:x' followed by hex characters, optionally with colon-separated additional parts."
-	)
+	.regex(/^nice:(?:x[a-f0-9]+|[0-9]+)(?::(?:x[a-f0-9]+|[0-9]+))*$/)
+	.describe("The sourcedId of the resource, as stored in the TimeBack platform.")
 export type SourcedId = z.infer<typeof SourcedIdSchema>
 
 export const SlugSchema = z
@@ -1015,22 +1013,22 @@ export function buildOneRosterCourse(
 				parentType: parent.type
 			})
 
-			if (parent.type === "unit" && courseComponent.type === "lesson") {
-				logger.debug("building oneroster course: found parent", {
-					courseComponentSourcedId: courseComponent.sourcedId,
-					parentSourcedId,
-					parentType: parent.type
-				})
-				parent.children[courseComponent.sourcedId] = courseComponent
+			if (parent.type !== "unit" || courseComponent.type !== "lesson") {
+				logger.error(
+					"building oneroster course: invalid course component data: parent is not a variant of the course component",
+					{ courseComponentSourcedId: courseComponent.sourcedId, parentSourcedId }
+				)
+				throw errors.new(
+					`invalid course component data: parent is not a variant of the course component: ${courseComponent.sourcedId}`
+				)
 			}
 
-			logger.error(
-				"building oneroster course: invalid course component data: parent is not a variant of the course component",
-				{ courseComponentSourcedId: courseComponent.sourcedId, parentSourcedId }
-			)
-			throw errors.new(
-				`invalid course component data: parent is not a variant of the course component: ${courseComponent.sourcedId}`
-			)
+			logger.debug("building oneroster course: found parent", {
+				courseComponentSourcedId: courseComponent.sourcedId,
+				parentSourcedId,
+				parentType: parent.type
+			})
+			parent.children[courseComponent.sourcedId] = courseComponent
 		}
 
 		const courseSourcedId = courseComponent.meta.courseSourcedId
@@ -1047,22 +1045,33 @@ export function buildOneRosterCourse(
 			courseType: course.type
 		})
 
-		if (course.type === "course" && courseComponent.type === "unit") {
-			logger.debug("building oneroster course: found course", {
-				courseComponentSourcedId: courseComponent.sourcedId,
-				courseSourcedId,
-				courseType: course.type
-			})
-			course.children[courseComponent.sourcedId] = courseComponent
+		switch (courseComponent.type) {
+			case "unit": {
+				logger.debug("building oneroster course: adding unit to course", {
+					courseComponentSourcedId: courseComponent.sourcedId,
+					courseSourcedId,
+					courseType: course.type
+				})
+				course.children[courseComponent.sourcedId] = courseComponent
+				break
+			}
+			case "lesson": {
+				logger.debug("building oneroster course: lesson processed via parent relationship", {
+					courseComponentSourcedId: courseComponent.sourcedId
+				})
+				break
+			}
+			case "__course_challenge": {
+				logger.debug("building oneroster course: course challenge component found", {
+					courseComponentSourcedId: courseComponent.sourcedId
+				})
+				break
+			}
+			default: {
+				logger.error("building oneroster course: unknown course component type")
+				throw errors.new("unknown course component type")
+			}
 		}
-
-		logger.error(
-			"building oneroster course: invalid course component data: course is not a variant of the course component",
-			{ courseComponentSourcedId: courseComponent.sourcedId, courseSourcedId }
-		)
-		throw errors.new(
-			`invalid course component data: course is not a variant of the course component: ${courseComponent.sourcedId}`
-		)
 	}
 
 	return course
