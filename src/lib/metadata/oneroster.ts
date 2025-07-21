@@ -4,6 +4,7 @@ export const CourseMetadataSchema = z
 	.object({
 		khanId: z.string().min(1),
 		khanSlug: z.string().min(1),
+		khanSubjectSlug: z.string().min(1),
 		khanTitle: z.string().min(1),
 		khanDescription: z.string().default("")
 	})

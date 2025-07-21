@@ -25,7 +25,7 @@ export function CourseSidebarCourseBreadcrumbs({
 	if (subject == null) {
 		logger.error("course sidebar breadcrumbs: subject not found", {
 			course,
-			material: _.pick(material, ["type", "path"])
+			material
 		})
 		throw errors.new("course sidebar breadcrumbs: subject not found")
 	}
@@ -40,7 +40,7 @@ export function CourseSidebarCourseBreadcrumbs({
 	if (resource == null) {
 		logger.error("course sidebar breadcrumbs: resource not found", {
 			course,
-			material: _.pick(material, ["type", "path"])
+			material
 		})
 		throw errors.new("course sidebar breadcrumbs: resource not found")
 	}

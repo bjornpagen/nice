@@ -168,16 +168,7 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 		}
 		const courseMetadata = courseMetadataResult.data
 
-		// Extract subject from course subjects array
-		if (!course.subjects || course.subjects.length === 0 || !course.subjects[0]) {
-			logger.error("CRITICAL: Course subject missing", {
-				courseId: course.sourcedId,
-				title: course.title
-			})
-			throw errors.new("course subject required for path construction")
-		}
-		const subjectSlug = course.subjects[0].toLowerCase().replace(/ /g, "-")
-		const constructedPath = `/${subjectSlug}/${courseMetadata.khanSlug}`
+		const constructedPath = `/${courseMetadata.khanSubjectSlug}/${courseMetadata.khanSlug}`
 
 		const courseForExplore: CourseForExplore = {
 			id: course.sourcedId, // Using OneRoster sourcedId as the key

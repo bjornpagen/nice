@@ -264,6 +264,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			metadata: {
 				khanId: course.id,
 				khanSlug: course.slug,
+				khanSubjectSlug: subjectSlug,
 				khanTitle: course.title,
 				khanDescription: course.description
 			}
