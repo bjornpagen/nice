@@ -265,8 +265,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				khanId: course.id,
 				khanSlug: course.slug,
 				khanTitle: course.title,
-				khanDescription: course.description,
-				path: course.path
+				khanDescription: course.description
 			}
 		},
 		// ADDED: class object generation
@@ -314,8 +313,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				khanId: unit.id,
 				khanSlug: unit.slug,
 				khanTitle: unit.title,
-				khanDescription: unit.description,
-				path: unit.path
+				khanDescription: unit.description
 			}
 		})
 
@@ -377,8 +375,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					khanId: lesson.id,
 					khanSlug: lesson.slug,
 					khanTitle: lesson.title,
-					khanDescription: lesson.description,
-					path: lesson.path
+					khanDescription: lesson.description
 				}
 			})
 
@@ -395,8 +392,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							khanId: content.id,
 							khanSlug: content.slug,
 							khanTitle: content.title,
-							khanDescription: content.description,
-							path: content.path
+							khanDescription: content.description
 						}
 
 						if (lc.contentType === "Article") {
@@ -496,7 +492,6 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						khanSlug: assessment.slug,
 						khanTitle: assessment.title,
 						khanDescription: assessment.description,
-						path: assessment.path,
 						khanLessonType: assessment.type.toLowerCase()
 					}
 				})
@@ -560,7 +555,6 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						khanSlug: assessment.slug,
 						khanTitle: assessment.title,
 						khanDescription: assessment.description,
-						path: assessment.path,
 						khanLessonType: assessment.type.toLowerCase()
 					}
 				})

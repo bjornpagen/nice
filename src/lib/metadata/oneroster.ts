@@ -5,11 +5,9 @@ export const CourseMetadataSchema = z
 		khanId: z.string().min(1),
 		khanSlug: z.string().min(1),
 		khanTitle: z.string().min(1),
-		path: z.string().min(1),
 		khanDescription: z.string().default("")
 	})
 	.strict() // Enforce strict validation
-	.transform(({ path, ...rest }) => rest) // Drop the path field
 export type CourseMetadata = z.infer<typeof CourseMetadataSchema>
 
 export const ComponentMetadataSchema = z
@@ -17,11 +15,9 @@ export const ComponentMetadataSchema = z
 		khanId: z.string().min(1),
 		khanSlug: z.string().min(1),
 		khanTitle: z.string().min(1),
-		path: z.string().min(1).optional(), // Make path optional to handle missing path fields
 		khanDescription: z.string().default("")
 	})
 	.strict() // Enforce strict validation
-	.transform(({ path, ...rest }) => rest) // Drop the path field
 export type ComponentMetadata = z.infer<typeof ComponentMetadataSchema>
 
 // Base schema for common resource properties
@@ -29,7 +25,6 @@ const BaseResourceMetadataSchema = z.object({
 	khanId: z.string().min(1),
 	khanSlug: z.string().min(1),
 	khanTitle: z.string().min(1),
-	path: z.string().min(1).optional(), // Make path optional to handle missing path fields
 	khanDescription: z.string().default("")
 })
 
@@ -59,7 +54,8 @@ const QtiResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 }).strict()
 
 // The final discriminated union schema for all resources
-export const ResourceMetadataSchema = z
-	.discriminatedUnion("type", [VideoResourceMetadataSchema, QtiResourceMetadataSchema])
-	.transform(({ path, ...rest }) => rest) // Drop the path field from the union result
+export const ResourceMetadataSchema = z.discriminatedUnion("type", [
+	VideoResourceMetadataSchema,
+	QtiResourceMetadataSchema
+])
 export type ResourceMetadata = z.infer<typeof ResourceMetadataSchema>

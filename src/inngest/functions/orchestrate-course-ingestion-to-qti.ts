@@ -240,7 +240,6 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 							khanId: q.id,
 							khanExerciseId: q.exerciseId,
 							khanExerciseSlug: q.exerciseSlug,
-							khanExercisePath: q.exercisePath,
 							khanExerciseTitle: q.exerciseTitle
 						}
 					}
@@ -257,7 +256,6 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 						metadata: {
 							khanId: a.id,
 							khanSlug: a.slug,
-							khanPath: a.path,
 							khanTitle: a.title
 						}
 					}
@@ -353,7 +351,6 @@ ${sectionsXml}
 					return buildTestObject(assessmentId, data.title, allQuestionsForTest, {
 						khanId: assessmentId,
 						khanSlug: data.slug,
-						khanPath: data.path,
 						khanTitle: data.title,
 						khanDescription: data.description,
 						khanAssessmentType: data.type
