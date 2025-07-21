@@ -1,19 +1,8 @@
-import { sql } from "drizzle-orm"
-import {
-	foreignKey,
-	index,
-	integer,
-	jsonb,
-	pgSchema,
-	primaryKey,
-	text,
-	timestamp,
-	uniqueIndex
-} from "drizzle-orm/pg-core"
+import { foreignKey, index, integer, jsonb, pgSchema, primaryKey, text, uniqueIndex } from "drizzle-orm/pg-core"
 
 /**
  * This file defines the entire database schema for the "nice" project,
- * consolidating all tables for content and user progress.
+ * consolidating all tables for content.
  *
  * It follows a fully normalized relational model:
  * 1.  Normalized Content: Each piece of content (video, exercise, article) has a single,
@@ -36,18 +25,6 @@ export { assessmentTypeEnum as niceAssessmentTypeEnum }
 
 const assessmentParentTypeEnum = schema.enum("assessment_parent_type_enum", ["Unit", "Course"])
 export { assessmentParentTypeEnum as niceAssessmentParentTypeEnum }
-
-const userContentTypeEnum = schema.enum("user_content_type_enum", ["Exercise", "Video", "Article"])
-export { userContentTypeEnum as niceUserContentTypeEnum }
-
-const userContentStatusEnum = schema.enum("user_content_status_enum", [
-	"not_started",
-	"attempted",
-	"familiar",
-	"proficient",
-	"mastered"
-])
-export { userContentStatusEnum as niceUserContentStatusEnum }
 
 const lessonContentTypeEnum = schema.enum("lesson_content_type_enum", ["Video", "Article", "Exercise"])
 export { lessonContentTypeEnum as niceLessonContentTypeEnum }
@@ -250,63 +227,3 @@ const assessmentExercises = schema.table(
 	]
 )
 export { assessmentExercises as niceAssessmentExercises }
-
-// --- User Tables ---
-
-const usersCourses = schema.table(
-	"users_courses",
-	{
-		clerkId: text("clerk_id").notNull(),
-		courseId: text("course_id").notNull(),
-		enrolledAt: timestamp("enrolled_at", { withTimezone: true }).notNull().default(sql`now()`)
-	},
-	(table) => [
-		primaryKey({ columns: [table.clerkId, table.courseId] }),
-		index("uc_clerk_id_idx").on(table.clerkId),
-		index("uc_course_id_idx").on(table.courseId),
-		foreignKey({
-			name: "uc_course_fk",
-			columns: [table.courseId],
-			foreignColumns: [courses.id]
-		}).onDelete("cascade")
-	]
-)
-export { usersCourses as niceUsersCourses }
-
-// --- User Progress Tables ---
-
-const userContentProgress = schema.table(
-	"user_content_progress",
-	{
-		clerkId: text("clerk_id").notNull(),
-		contentId: text("content_id").notNull(),
-		contentType: userContentTypeEnum("content_type").notNull(),
-		status: userContentStatusEnum("status").notNull().default("not_started"),
-		lastAttemptedAt: timestamp("last_attempted_at", { withTimezone: true }),
-		timeSpentSec: integer("time_spent_sec").notNull().default(0)
-	},
-	(table) => [primaryKey({ columns: [table.clerkId, table.contentId] }), index("ucp_clerk_id_idx").on(table.clerkId)]
-)
-export { userContentProgress as niceUserContentProgress }
-
-const userExerciseAttempts = schema.table(
-	"user_exercise_attempts",
-	{
-		id: text("id").primaryKey(),
-		clerkId: text("clerk_id").notNull(),
-		exerciseId: text("exercise_id").notNull(),
-		scoreCorrect: integer("score_correct").notNull(),
-		scoreTotal: integer("score_total").notNull(),
-		attemptedAt: timestamp("attempted_at", { withTimezone: true }).notNull().default(sql`now()`)
-	},
-	(table) => [
-		index("uea_clerk_id_idx").on(table.clerkId),
-		index("uea_exercise_id_idx").on(table.exerciseId),
-		foreignKey({
-			name: "uea_exercise_fk",
-			columns: [table.exerciseId],
-			foreignColumns: [exercises.id]
-		}).onDelete("cascade")
-	]
-)
-export { userExerciseAttempts as niceUserExerciseAttempts }
