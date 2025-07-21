@@ -3,6 +3,36 @@ import { unstable_cache as cache } from "next/cache"
 import { oneroster } from "@/lib/clients"
 import { createPrefixFilter } from "@/lib/filter"
 
+/**
+ * ⚠️ CRITICAL: OneRoster API Soft Delete Behavior
+ *
+ * The OneRoster API implements a soft delete pattern where records are NEVER physically deleted.
+ * Instead, when a DELETE request is made, the record's status is changed from "active" to "tobedeleted".
+ *
+ * This means:
+ * 1. Deleted records STILL APPEAR in API responses unless explicitly filtered out
+ * 2. Every query MUST include `status='active'` in the filter to exclude soft-deleted records
+ * 3. Without this filter, the application will display "deleted" courses, classes, users, etc.
+ *
+ * FOOTGUNS TO AVOID:
+ * - NEVER fetch data without a status filter
+ * - NEVER trust that a DELETE operation removes the record from results
+ * - NEVER use endpoints that don't support filtering without additional client-side filtering
+ * - ALWAYS verify that ALL fetchers in this file include status='active' filtering
+ *
+ * Example of the problem:
+ * - User deletes a class via the API: DELETE /classes/123
+ * - API changes the class status from "active" to "tobedeleted"
+ * - Calling getClassesForSchool() without proper filtering returns the "deleted" class
+ * - Users see deleted classes in the UI, causing confusion
+ *
+ * Correct pattern:
+ * getAllClasses({ filter: "status='active'" })
+ *
+ * Some endpoints like the original getClassesForSchool don't support filtering directly,
+ * so we must use alternative endpoints (getAllClasses) with proper filters.
+ */
+
 // Prefix filters for leveraging btree indexes
 const NICE_PREFIX_FILTER = createPrefixFilter("nice:")
 
@@ -207,7 +237,7 @@ export const getAllComponentResources = cache(
 export const getClassesForSchool = cache(
 	async (schoolSourcedId: string) => {
 		logger.info("getClassesForSchool called", { schoolSourcedId })
-		return oneroster.getClassesForSchool(schoolSourcedId)
+		return oneroster.getAllClasses({ filter: `school.sourcedId='${schoolSourcedId}' AND status='active'` })
 	},
 	["oneroster-getClassesForSchool"],
 	{ revalidate: false } // equivalent to cacheLife("max")

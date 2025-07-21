@@ -1,26 +1,27 @@
 #!/usr/bin/env bun
 /**
- * OneRoster Atom Bomb Wipe
+ * Atom Bomb Wipe
  *
- * Total annihilation of OneRoster objects by prefix.
+ * Total annihilation of OneRoster and QTI objects by prefix.
  *
  * Usage:
- *   bun run src/scripts/oneroster-atom-bomb-wipe.ts <type> <prefix>
- *   bun run src/scripts/oneroster-atom-bomb-wipe.ts <type> <prefix> --delete
+ *   bun run src/scripts/atom-bomb-wipe.ts <type> <prefix>
+ *   bun run src/scripts/atom-bomb-wipe.ts <type> <prefix> --delete
  *
  * Types: resources, courses, courseComponents, componentResources,
- *        classes, users, enrollments, assessmentLineItems, all
+ *        classes, users, enrollments, assessmentLineItems, assessmentItems,
+ *        assessmentStimuli, assessmentTests, all
  *
  * Examples:
- *   bun run src/scripts/oneroster-atom-bomb-wipe.ts courses "test-"
- *   bun run src/scripts/oneroster-atom-bomb-wipe.ts all "demo-" --delete
+ *   bun run src/scripts/atom-bomb-wipe.ts courses "test-"
+ *   bun run src/scripts/atom-bomb-wipe.ts all "demo-" --delete
  */
 
 import * as readline from "node:readline/promises"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { oneroster } from "@/lib/clients"
+import { oneroster, qti } from "@/lib/clients"
 import { createPrefixFilter } from "@/lib/filter"
 
 const CONFIRMATION = "YES, I AM ABSOLUTELY SURE"
@@ -34,6 +35,9 @@ const EntityTypeSchema = z.enum([
 	"users",
 	"enrollments",
 	"assessmentLineItems",
+	"assessmentItems",
+	"assessmentStimuli",
+	"assessmentTests",
 	"all"
 ])
 type EntityType = z.infer<typeof EntityTypeSchema>
@@ -218,6 +222,45 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 			}))
 		},
 		delete: (id: string) => oneroster.deleteAssessmentLineItem(id)
+	},
+	assessmentItems: {
+		type: "assessmentItems",
+		name: "QTI Assessment Items",
+		fetchAll: async (prefix: string) => {
+			const items = await qti.searchAssessmentItems({ query: prefix, page: 1, limit: 1000 })
+			return items.items.map((i) => ({
+				sourcedId: i.identifier,
+				displayName: `${i.identifier}: ${i.title}`,
+				fullObject: i
+			}))
+		},
+		delete: (id: string) => qti.deleteAssessmentItem(id)
+	},
+	assessmentStimuli: {
+		type: "assessmentStimuli",
+		name: "QTI Assessment Stimuli",
+		fetchAll: async (prefix: string) => {
+			const items = await qti.searchStimuli({ query: prefix, page: 1, limit: 1000 })
+			return items.items.map((s) => ({
+				sourcedId: s.identifier,
+				displayName: `${s.identifier}: ${s.title}`,
+				fullObject: s
+			}))
+		},
+		delete: (id: string) => qti.deleteStimulus(id)
+	},
+	assessmentTests: {
+		type: "assessmentTests",
+		name: "QTI Assessment Tests",
+		fetchAll: async (prefix: string) => {
+			const items = await qti.searchAssessmentTests({ query: prefix, page: 1, limit: 1000 })
+			return items.items.map((t) => ({
+				sourcedId: t.identifier,
+				displayName: `${t.identifier}: ${t.title}`,
+				fullObject: t
+			}))
+		},
+		delete: (id: string) => qti.deleteAssessmentTest(id)
 	}
 }
 
@@ -275,10 +318,15 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 		logger.info("executing full wipe", { prefix })
 
 		const allTypes: Exclude<EntityType, "all">[] = [
-			"componentResources", // Delete these first (leaf nodes)
-			"courseComponents",
+			// QTI Objects (delete tests first as they reference items/stimuli)
+			"assessmentTests",
+			"assessmentItems",
+			"assessmentStimuli",
+			// OneRoster Objects (delete dependencies first)
 			"enrollments",
-			"assessmentLineItems", // Delete before classes
+			"assessmentLineItems",
+			"componentResources",
+			"courseComponents",
 			"classes",
 			"resources",
 			"courses",
@@ -361,10 +409,11 @@ async function main() {
 
 	if (positionalArgs.length !== 2) {
 		process.stderr.write(
-			"Usage: oneroster-atom-bomb-wipe <type> <prefix> [--delete]\n\n" +
+			"Usage: atom-bomb-wipe <type> <prefix> [--delete]\n\n" +
 				"Types:\n" +
 				"  resources, courses, courseComponents, componentResources,\n" +
-				"  classes, users, enrollments, assessmentLineItems, all\n"
+				"  classes, users, enrollments, assessmentLineItems,\n" +
+				"  assessmentItems, assessmentStimuli, assessmentTests, all\n"
 		)
 		process.exit(1)
 	}
