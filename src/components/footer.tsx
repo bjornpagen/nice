@@ -126,7 +126,7 @@ const courses = [
 		href: "https://khanacademy.org/partner-content"
 	},
 	{
-		name: "Khan for educators",
+		name: "Nice for educators",
 		href: "https://khanacademy.org/khan-for-educators"
 	}
 ]

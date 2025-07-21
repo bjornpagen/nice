@@ -17,9 +17,9 @@ export function CookieConsentDialog({ show, onComplete }: CookieConsentDialogPro
 				</DialogHeader>
 				<div className="space-y-4">
 					<p className="text-sm text-gray-600 leading-relaxed">
-						Cookies are small files placed on your device that collect information when you use Khan Academy. Strictly
+						Cookies are small files placed on your device that collect information when you use Nice Academy. Strictly
 						necessary cookies are used to make our site work and are required. Other types of cookies are used to
-						improve your experience, to analyze how Khan Academy is used, and to market our service.
+						improve your experience, to analyze how Nice Academy is used, and to market our service.
 					</p>
 					<div className="flex flex-col space-y-2">
 						<Button onClick={onComplete} className="bg-blue-600 hover:bg-blue-700 font-medium">

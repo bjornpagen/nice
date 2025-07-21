@@ -207,7 +207,7 @@ export function Content({
 						</div>
 					</div>
 
-					{/* Khan Academy Style Tabs */}
+					{/* Nice Academy Style Tabs */}
 					<div className="border-b border-gray-200">
 						<div className="flex space-x-8">
 							<button

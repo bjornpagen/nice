@@ -41,7 +41,7 @@ const onboardingSteps: OnboardingStep[] = [
 		content: (
 			<span>
 				Click the button to go directly to your <b>next suggested skill</b>
-				{" on your personalized Khan Academy journey."}
+				{" on your personalized Nice Academy journey."}
 			</span>
 		)
 	},

@@ -50,7 +50,7 @@ export default function Home() {
 						<div className="rounded-lg bg-blue-50 p-6 border border-blue-100">
 							<h3 className="font-semibold text-gray-800 mb-2">Did you know?</h3>
 							<p className="text-gray-600 leading-relaxed">
-								Regardless of who you are, mastering even just one more skill on Khan Academy results in learning gains.
+								Regardless of who you are, mastering even just one more skill on Nice Academy results in learning gains.
 							</p>
 						</div>
 					</div>
@@ -75,7 +75,7 @@ export default function Home() {
 								<p className="text-xs text-gray-500 text-center leading-relaxed">
 									By logging in, you agree to the{" "}
 									<button type="button" className="text-blue-600 hover:underline">
-										Khan Academy Terms of Service
+										Nice Academy Terms of Service
 									</button>{" "}
 									and{" "}
 									<button type="button" className="text-blue-600 hover:underline">
@@ -85,7 +85,7 @@ export default function Home() {
 								</p>
 
 								<p className="text-sm text-center text-gray-600 pt-2">
-									Need a Khan Academy account?{" "}
+									Need a Nice Academy account?{" "}
 									<button type="button" className="text-blue-600 hover:underline font-semibold">
 										Sign up today
 									</button>

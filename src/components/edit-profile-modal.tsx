@@ -67,11 +67,11 @@ export function EditProfileModal({ open, onOpenChange, initialData }: EditProfil
 							id="nickname"
 							value={formData.nickname}
 							onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
-							placeholder="Sal Khan"
+							placeholder="Sal Nice"
 							maxLength={100}
 						/>
 						<p className="text-sm text-gray-500">
-							This is how your name will appear around Khan Academy, and how your friends and coaches will recognize
+							This is how your name will appear around Nice Academy, and how your friends and coaches will recognize
 							you.
 						</p>
 					</div>
@@ -86,9 +86,9 @@ export function EditProfileModal({ open, onOpenChange, initialData }: EditProfil
 							maxLength={50}
 						/>
 						<p className="text-sm text-gray-500">
-							Your username will appear in your Khan Academy address.
+							Your username will appear in your Nice Academy address.
 							<br />
-							http://www.khanacademy.org/profile/{formData.username}
+							http://www.nice.academy/profile/{formData.username}
 						</p>
 						<div className="flex items-center space-x-1 text-sm text-gray-500">
 							<span>Anyone can see your username, avatar, and bio.</span>

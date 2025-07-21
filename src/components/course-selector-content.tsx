@@ -50,7 +50,7 @@ export function CourseSelector({
 		onComplete(Array.from(selectedCourses))
 	}
 
-	// Calculate how many courses to show initially (similar to Khan Academy)
+	// Calculate how many courses to show initially (similar to Nice Academy)
 	const INITIAL_COURSES_SHOWN = 8
 
 	return (

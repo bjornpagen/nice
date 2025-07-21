@@ -39,7 +39,7 @@ export function LessonNavigation({
 
 	const next = findNextLesson(unit, index)
 
-	// Truncate course title if it's too long (Khan Academy style)
+	// Truncate course title if it's too long (Nice Academy style)
 	const truncateCourseTitle = (title: string, maxLength = 25) => {
 		if (title.length <= maxLength) return title
 		return `${title.substring(0, maxLength).trim()}...`
