@@ -43,6 +43,31 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		notFound()
 	}
 
+	// Validate that the subject slug from the URL matches the course's actual primary subject.
+	if (!oneRosterCourse.subjects || oneRosterCourse.subjects.length === 0 || !oneRosterCourse.subjects[0]) {
+		logger.error("course has no subjects defined, cannot validate subject slug", {
+			courseId: oneRosterCourse.sourcedId,
+			courseTitle: oneRosterCourse.title
+		})
+		// This indicates a data integrity issue in OneRoster or our payload generation.
+		// For safety, we treat it as not found.
+		notFound()
+	}
+
+	const actualSubjectTitle = oneRosterCourse.subjects[0]
+	const actualSubjectSlug = actualSubjectTitle.toLowerCase().replace(/ /g, "-")
+
+	if (params.subject !== actualSubjectSlug) {
+		logger.warn("mismatched subject slug in URL for course", {
+			requestedSubject: params.subject,
+			actualSubject: actualSubjectSlug,
+			courseSlug: params.course,
+			courseId: oneRosterCourse.sourcedId
+		})
+		// If the subject slug in the URL does not match the actual subject of the course, return 404.
+		notFound()
+	}
+
 	const courseSourcedId = oneRosterCourse.sourcedId
 	logger.debug("course page: found course", { courseSourcedId, slug: params.course })
 
