@@ -752,19 +752,27 @@ export class Client {
 			throw errors.wrap(validationResult.error, "invalid input for updateClass")
 		}
 
-		// The API spec uses `org` for the school reference. We'll map `school` to `org` if provided.
-		const payload = { ...validationResult.data }
-		if (payload.school) {
-			payload.org = payload.school
-			delete payload.school
+		// Create payload without course, org, and school fields (not accepted by PUT endpoint)
+		// The PUT endpoint only accepts: status, title, classType, terms, and other update-allowed fields
+		const updatePayload = {
+			status: validationResult.data.status,
+			title: validationResult.data.title,
+			classType: validationResult.data.classType,
+			terms: validationResult.data.terms
 		}
+
+		logger.debug("updateClass payload after filtering to update-allowed fields", {
+			sourcedId,
+			originalFields: Object.keys(validationResult.data),
+			updateFields: Object.keys(updatePayload)
+		})
 
 		return this.#request(
 			`/ims/oneroster/rostering/v1p2/classes/${sourcedId}`,
 			{
 				method: "PUT",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ class: payload })
+				body: JSON.stringify({ class: updatePayload })
 			},
 			z.unknown()
 		)

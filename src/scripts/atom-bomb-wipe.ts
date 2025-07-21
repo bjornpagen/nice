@@ -22,7 +22,6 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { oneroster, qti } from "@/lib/clients"
-import { createPrefixFilter } from "@/lib/filter"
 
 const CONFIRMATION = "YES, I AM ABSOLUTELY SURE"
 
@@ -93,7 +92,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		name: "Resources",
 		fetchAll: async (prefix: string) => {
 			const items = await oneroster.getAllResources({
-				filter: createPrefixFilter(prefix),
+				filter: `sourcedId~'${prefix}'`,
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
@@ -110,7 +109,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		name: "Courses",
 		fetchAll: async (prefix: string) => {
 			const items = await oneroster.getAllCourses({
-				filter: createPrefixFilter(prefix),
+				filter: `sourcedId~'${prefix}'`,
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
@@ -127,7 +126,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		name: "Course Components",
 		fetchAll: async (prefix: string) => {
 			const items = await oneroster.getCourseComponents({
-				filter: createPrefixFilter(prefix),
+				filter: `sourcedId~'${prefix}'`,
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
@@ -144,7 +143,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		name: "Component Resources",
 		fetchAll: async (prefix: string) => {
 			const items = await oneroster.getAllComponentResources({
-				filter: createPrefixFilter(prefix),
+				filter: `sourcedId~'${prefix}'`,
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
@@ -161,7 +160,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		name: "Classes",
 		fetchAll: async (prefix: string) => {
 			const items = await oneroster.getAllClasses({
-				filter: createPrefixFilter(prefix),
+				filter: `sourcedId~'${prefix}'`,
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
@@ -178,7 +177,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		name: "Users",
 		fetchAll: async (prefix: string) => {
 			const items = await oneroster.getAllUsers({
-				filter: createPrefixFilter(prefix),
+				filter: `sourcedId~'${prefix}'`,
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
@@ -195,7 +194,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		name: "Enrollments",
 		fetchAll: async (prefix: string) => {
 			const items = await oneroster.getAllEnrollments({
-				filter: createPrefixFilter(prefix),
+				filter: `sourcedId~'${prefix}'`,
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
@@ -212,7 +211,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		name: "Assessment Line Items",
 		fetchAll: async (prefix: string) => {
 			const items = await oneroster.getAllAssessmentLineItems({
-				filter: createPrefixFilter(prefix),
+				filter: `sourcedId~'${prefix}'`,
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
@@ -230,7 +229,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		fetchAll: async (prefix: string) => {
 			// For AssessmentResults, we need to filter by the sourcedId which now follows pattern nice:result-{userId}-{lineItemId}
 			const items = await oneroster.getAllResults({
-				filter: createPrefixFilter(prefix),
+				filter: `sourcedId~'${prefix}'`,
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
