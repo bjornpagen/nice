@@ -162,6 +162,7 @@ export function AssessmentStepper({
 	const [attemptNumber, setAttemptNumber] = React.useState(1)
 	const [nextItem, setNextItem] = React.useState<{ text: string; path: string } | null>(null)
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
+	const wrongAudioRef = React.useRef<HTMLAudioElement | null>(null)
 	const currentQuestion = questions[currentQuestionIndex]
 	const assessmentStartTimeRef = React.useRef<Date | null>(null)
 
@@ -219,6 +220,14 @@ export function AssessmentStepper({
 		}
 		triggerConfetti()
 	}, [triggerConfetti])
+
+	const handleWrongAnswer = React.useCallback(() => {
+		if (wrongAudioRef.current) {
+			wrongAudioRef.current.play().catch(() => {
+				// Ignore audio play errors (e.g., autoplay policy)
+			})
+		}
+	}, [])
 
 	// Record start time when assessment begins
 	React.useEffect(() => {
@@ -595,6 +604,7 @@ export function AssessmentStepper({
 			}
 			setTimeout(() => setShowFeedback(true), 150)
 		} else {
+			handleWrongAnswer()
 			setShowFeedback(true)
 		}
 	}
@@ -723,6 +733,9 @@ export function AssessmentStepper({
 	return (
 		<div className="flex flex-col h-full bg-white">
 			<audio ref={audioRef} src="/correct-sound.mp3" preload="auto">
+				<track kind="captions" />
+			</audio>
+			<audio ref={wrongAudioRef} src="/wrong-answer.mp3" preload="auto">
 				<track kind="captions" />
 			</audio>
 			{/* Assessment Header */}
