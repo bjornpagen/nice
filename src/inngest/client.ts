@@ -47,6 +47,13 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
+	// ✅ ADD: New event for differentiating a single question
+	"qti/question.differentiate": {
+		data: z.object({
+			questionId: z.string().min(1),
+			numberOfVariations: z.number().int().positive()
+		})
+	},
 	// QTI Ingestion Events
 	"qti/course.payload.generate": {
 		data: z.object({

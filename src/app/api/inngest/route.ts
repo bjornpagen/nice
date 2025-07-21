@@ -18,6 +18,8 @@ import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-co
 // Import QTI workers
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
+// ✅ ADD: Import the new differentiate function
+import { differentiateQuestion } from "@/inngest/functions/qti/differentiate-question"
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
@@ -50,6 +52,8 @@ export const { GET, POST, PUT } = serve({
 		ingestAssessmentStimuli,
 		ingestAssessmentTests,
 		requestAllItemMigrationsForCourse,
-		requestAllStimulusMigrationsForCourse
+		requestAllStimulusMigrationsForCourse,
+		// ✅ ADD: Register the new function
+		differentiateQuestion
 	]
 })
