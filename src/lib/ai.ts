@@ -1,4 +1,3 @@
-import { type GenerateContentRequest, GoogleGenerativeAI } from "@google/generative-ai"
 import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
 import OpenAI from "openai"
@@ -8,81 +7,17 @@ import { env } from "@/env"
 import { loadConversionExamples } from "./qti-examples"
 import { VALID_QTI_TAGS } from "./qti-tags"
 
-const GEMINI_MODEL = "gemini-2.5-flash"
-const OPENAI_FIXER_MODEL = "o4-mini-2025-04-16"
-const MAX_RETRIES = 5
-const INITIAL_BACKOFF_MS = 1000
+const OPENAI_MODEL = "o4-mini-2025-04-16"
 
-const gemini = new GoogleGenerativeAI(env.GEMINI_API_KEY)
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
+
+const QtiGenerationSchema = z.object({
+	qti_xml: z.string().describe("The single, complete, and perfectly-formed QTI 3.0 XML string.")
+})
 
 const QtiCorrectionSchema = z.object({
 	corrected_xml: z.string().describe("The single, complete, and perfectly-formed QTI 3.0 XML string.")
 })
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
-/**
- * Generates content using the Gemini API with a retry mechanism for rate limiting.
- * @param logger The logger instance.
- * @param request The generation request object.
- * @returns The generated content response.
- */
-async function generateContentWithRetry(logger: logger.Logger, request: GenerateContentRequest) {
-	logger.debug("starting gemini content generation", {
-		model: GEMINI_MODEL,
-		maxRetries: MAX_RETRIES,
-		initialBackoff: INITIAL_BACKOFF_MS
-	})
-
-	let lastError: unknown
-	for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-		logger.debug("attempting gemini api call", {
-			attempt: attempt + 1,
-			maxAttempts: MAX_RETRIES
-		})
-
-		const result = await errors.try(gemini.getGenerativeModel({ model: GEMINI_MODEL }).generateContent(request))
-
-		if (result.error) {
-			lastError = result.error
-			const isRateLimitError = lastError instanceof Error && lastError.message.includes("429")
-
-			logger.debug("gemini api call failed", {
-				attempt: attempt + 1,
-				isRateLimitError,
-				errorMessage: lastError instanceof Error ? lastError.message : "unknown error"
-			})
-
-			if (!isRateLimitError) {
-				logger.error("gemini api call failed with non-retriable error", { error: lastError })
-				throw lastError
-			}
-
-			const delay = INITIAL_BACKOFF_MS * 2 ** attempt + Math.random() * 1000
-			logger.warn("gemini api rate limited, retrying", {
-				attempt: attempt + 1,
-				delay: `${Math.round(delay / 1000)}s`
-			})
-
-			logger.debug("sleeping before retry", { delayMs: delay })
-			await sleep(delay)
-			continue
-		}
-
-		logger.debug("gemini api call successful", {
-			attempt: attempt + 1,
-			responseLength: result.data.response?.text()?.length
-		})
-		return result.data
-	}
-
-	logger.error("gemini api call failed after all retries", { error: lastError })
-	if (lastError instanceof Error) {
-		throw errors.wrap(lastError, "gemini api call")
-	}
-	throw errors.new("gemini api call failed")
-}
 
 /**
  * Creates the structured prompt for the AI model to convert Perseus JSON to QTI XML,
@@ -173,6 +108,9 @@ FINAL REMINDER: The examples demonstrate PERFECT QTI 3.0 XML output. Follow thei
 <perseus_json>
 ${perseusJsonString}
 </perseus_json>
+
+# FINAL OUTPUT
+Return a single JSON object with the final generated XML, as per the specified schema.
 `
 
 	logger.debug("prompt created", {
@@ -196,7 +134,7 @@ export async function generateQtiFromPerseus(
 	perseusData: unknown,
 	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" }
 ): Promise<string> {
-	logger.debug("starting qti generation from perseus", { type: options.type })
+	logger.debug("starting qti generation from perseus with openai", { type: options.type })
 
 	const perseusJsonString = JSON.stringify(perseusData, null, 2)
 	logger.debug("stringified perseus data", { jsonLength: perseusJsonString.length })
@@ -207,67 +145,123 @@ export async function generateQtiFromPerseus(
 		options
 	)
 
-	logger.debug("calling gemini for qti generation", { rootTag })
+	logger.debug("calling openai for qti generation", { model: OPENAI_MODEL, rootTag })
 
-	const result = await errors.try(
-		generateContentWithRetry(logger, {
-			contents: [{ role: "user", parts: [{ text: userContent }] }],
-			systemInstruction: { role: "system", parts: [{ text: systemInstruction }] }
+	const response = await errors.try(
+		openai.chat.completions.parse({
+			model: OPENAI_MODEL,
+			messages: [
+				{ role: "system", content: systemInstruction },
+				{ role: "user", content: userContent }
+			],
+			response_format: zodResponseFormat(QtiGenerationSchema, "qti_generator"),
+			reasoning_effort: "high"
 		})
 	)
-	if (result.error) {
-		logger.error("failed to generate qti xml from perseus", { error: result.error })
-		throw errors.wrap(result.error, "ai qti generation")
+	if (response.error) {
+		logger.error("failed to generate qti xml from perseus via openai", { error: response.error })
+		throw errors.wrap(response.error, "ai qti generation")
 	}
 
-	const response = result.data
-	const responseText = response.response.text()
-
-	logger.debug("received gemini response", {
-		responseLength: responseText?.length,
-		hasResponse: !!responseText
+	logger.debug("received openai response", {
+		choiceCount: response.data.choices.length,
+		finishReason: response.data.choices[0]?.finish_reason
 	})
 
-	if (!responseText) {
-		logger.warn("gemini returned an empty response for qti conversion")
+	const message = response.data.choices[0]?.message
+	if (!message) {
+		logger.error("openai returned no message")
 		throw errors.new("empty ai response")
 	}
 
-	// NEW ROBUST EXTRACTION:
-	// This single regex replaces the previous brittle cleaning and matching steps.
-	// It robustly finds the first complete XML block, ignoring any surrounding text,
-	// markdown, or quotes from the AI.
-	//
-	// - `(<\?xml[^>]*\?>)?`   : Group 1, optional. Matches the XML declaration. `[^>]*` is a safe way to match attributes.
-	// - `\s*`                 : Matches optional whitespace between the declaration and the root tag.
-	// - `<(${rootTag})`       : Matches the opening of the root tag and captures the tag name (e.g., "qti-assessment-item") in Group 2.
-	// - `[^>]*>`              : Matches the rest of the opening tag's attributes.
-	// - `[\s\S]*?`            : Non-greedily matches all characters, including newlines, for the tag's content.
-	// - `<\/\\2>`             : Matches the closing tag by using a backreference (`\2`) to the captured root tag name, ensuring a correct and complete closing tag.
-	const extractionRegex = new RegExp(`(<\\?xml[^>]*\\?>)?\\s*<(${rootTag})[^>]*>[\\s\\S]*?<\\/\\2>`)
-	const xmlMatch = responseText.match(extractionRegex)
-
-	logger.debug("robust xml extraction result", {
-		foundMatch: !!xmlMatch?.[0],
-		matchLength: xmlMatch?.[0]?.length,
-		hasXmlDeclaration: !!xmlMatch?.[1]
-	})
-
-	if (!xmlMatch || !xmlMatch[0]) {
-		logger.error("robust extraction failed: ai response did not contain valid qti xml", {
-			response: responseText.substring(0, 200),
-			responseEnd: responseText.substring(responseText.length - 200),
-			entireResponse: responseText,
-			rootTag
-		})
-		throw errors.new("invalid ai xml output: robust extraction failed")
+	// Handle refusals
+	if (message.refusal) {
+		logger.error("openai refused to generate qti xml", { refusal: message.refusal })
+		throw errors.new(`ai refused request: ${message.refusal}`)
 	}
 
-	const extractedXml = xmlMatch[0].trim()
+	// Access the automatically parsed data
+	if (!message.parsed) {
+		logger.error("openai returned no parsed content for qti conversion")
+		throw errors.new("empty ai response")
+	}
 
-	logger.debug("successfully extracted qti xml", {
+	const qtiXml = message.parsed.qti_xml
+	if (!qtiXml) {
+		logger.warn("openai returned an empty qti_xml in response")
+		throw errors.new("empty ai response")
+	}
+
+	// ROBUST XML VALIDATION AND EXTRACTION:
+	// Step 1: Check for XML declaration (optional)
+	const xmlDeclMatch = qtiXml.match(/^(?<declaration><\?xml[^>]*\?>)?/s)
+	const hasXmlDeclaration = !!xmlDeclMatch?.groups?.declaration
+
+	logger.debug("xml declaration check", {
+		hasXmlDeclaration,
+		declaration: xmlDeclMatch?.groups?.declaration?.substring(0, 50)
+	})
+
+	// Step 2: Extract the root element with robust named capture groups
+	// This regex ensures we match the complete XML document with proper opening and closing tags
+	const rootElementRegex = new RegExp(
+		"(?:^|\\s)" + // Start of string or whitespace
+			`<(?<rootTag>${rootTag})` + // Opening tag must match our expected root
+			"(?<attributes>(?:\\s+[^>]*)?)" + // Optional attributes
+			">" + // Close opening tag
+			"(?<content>[\\s\\S]*?)" + // Content (non-greedy)
+			"</\\k<rootTag>>" + // Closing tag with backreference to ensure it matches
+			"(?:\\s*$)?", // Optional trailing whitespace
+		"s" // Dot matches newline
+	)
+
+	const rootMatch = qtiXml.match(rootElementRegex)
+
+	if (!rootMatch || !rootMatch.groups) {
+		// Try to find ANY qti root element for better error reporting
+		const anyQtiMatch = qtiXml.match(/<(?<anyRoot>qti-[a-z-]+)(?:\s+[^>]*)?>/)
+
+		logger.error("robust extraction failed: ai response did not contain valid qti xml", {
+			expectedRootTag: rootTag,
+			foundRootTag: anyQtiMatch?.groups?.anyRoot,
+			response: qtiXml.substring(0, 200),
+			responseEnd: qtiXml.substring(qtiXml.length - 200)
+		})
+		throw errors.new(
+			`invalid ai xml output: expected ${rootTag} but ${anyQtiMatch?.groups?.anyRoot ? `found ${anyQtiMatch.groups.anyRoot}` : "found no valid QTI root element"}`
+		)
+	}
+
+	// TypeScript now knows rootMatch.groups is defined
+	const { content, rootTag: extractedRootTag, attributes } = rootMatch.groups
+
+	// Step 3: Validate the content doesn't have truncated closing tags
+	if (!content) {
+		logger.error("extracted xml has no content", { rootTag })
+		throw errors.new("invalid ai xml output: empty content")
+	}
+
+	const truncatedTagMatch = content.match(/<\/(?:_|\s*>|\.\.\.)/)
+	if (truncatedTagMatch) {
+		const matchIndex = truncatedTagMatch.index ?? 0
+		logger.error("detected truncated closing tag in xml content", {
+			truncatedTag: truncatedTagMatch[0],
+			context: content.substring(Math.max(0, matchIndex - 50), Math.min(content.length, matchIndex + 50))
+		})
+		throw errors.new("invalid ai xml output: contains truncated closing tags")
+	}
+
+	// Step 4: Reconstruct the complete XML with declaration if present
+	const extractedXml = (
+		(hasXmlDeclaration && xmlDeclMatch?.groups?.declaration ? xmlDeclMatch.groups.declaration : "") +
+		rootMatch[0].trim()
+	).trim()
+
+	logger.debug("successfully generated and extracted qti xml from openai", {
 		xmlLength: extractedXml.length,
-		rootTag
+		rootTag: extractedRootTag,
+		hasAttributes: !!attributes?.trim(),
+		hasXmlDeclaration
 	})
 
 	return extractedXml
@@ -326,16 +320,17 @@ Return a single JSON object with the final corrected XML.
 `
 
 	logger.debug("calling openai for xml correction", {
-		model: OPENAI_FIXER_MODEL,
+		model: OPENAI_MODEL,
 		promptLength: userPrompt.length,
 		validTagCount: VALID_QTI_TAGS.length
 	})
 
 	const response = await errors.try(
-		openai.chat.completions.create({
-			model: OPENAI_FIXER_MODEL,
+		openai.chat.completions.parse({
+			model: OPENAI_MODEL,
 			messages: [{ role: "user", content: userPrompt }],
-			response_format: zodResponseFormat(QtiCorrectionSchema, "qti_corrector")
+			response_format: zodResponseFormat(QtiCorrectionSchema, "qti_corrector"),
+			reasoning_effort: "high"
 		})
 	)
 	if (response.error) {
@@ -348,45 +343,107 @@ Return a single JSON object with the final corrected XML.
 		finishReason: response.data.choices[0]?.finish_reason
 	})
 
-	const messageContent = response.data.choices[0]?.message.content
-	if (!messageContent) {
-		logger.error("qti xml correction returned no content")
+	const message = response.data.choices[0]?.message
+	if (!message) {
+		logger.error("openai returned no message")
 		throw errors.new("qti xml correction returned no content")
 	}
 
-	logger.debug("parsing correction response", { contentLength: messageContent.length })
-
-	const parsedResult = errors.trySync(() => JSON.parse(messageContent))
-	if (parsedResult.error) {
-		logger.error("failed to parse qti correction response", {
-			error: parsedResult.error,
-			rawContent: messageContent.substring(0, 100),
-			rawContentEnd: messageContent.substring(messageContent.length - 100)
-		})
-		throw errors.wrap(parsedResult.error, "parsing qti correction response")
+	// Handle refusals
+	if (message.refusal) {
+		logger.error("openai refused to correct qti xml", { refusal: message.refusal })
+		throw errors.new(`ai refused request: ${message.refusal}`)
 	}
 
-	logger.debug("validating correction response against schema")
+	// Access the automatically parsed data
+	if (!message.parsed) {
+		logger.error("qti xml correction returned no parsed content")
+		throw errors.new("qti xml correction returned no content")
+	}
 
-	const validationResult = QtiCorrectionSchema.safeParse(parsedResult.data)
-	if (!validationResult.success) {
-		logger.error("qti correction response validation failed", {
-			error: validationResult.error,
-			parsedData: parsedResult.data
-		})
-		throw errors.wrap(validationResult.error, "qti correction response validation")
+	const correctedXml = message.parsed.corrected_xml
+	if (!correctedXml) {
+		logger.error("qti xml correction returned empty corrected_xml")
+		throw errors.new("qti xml correction returned no content")
 	}
 
 	logger.info("successfully corrected qti xml", {
 		rootTag,
-		correctedXmlLength: validationResult.data.corrected_xml.length
+		correctedXmlLength: correctedXml.length
 	})
+
+	// ROBUST XML VALIDATION AND EXTRACTION:
+	// Step 1: Check for XML declaration (optional)
+	const xmlDeclMatch = correctedXml.match(/^(?<declaration><\?xml[^>]*\?>)?/s)
+	const hasXmlDeclaration = !!xmlDeclMatch?.groups?.declaration
+
+	logger.debug("xml declaration check for corrected xml", {
+		hasXmlDeclaration,
+		declaration: xmlDeclMatch?.groups?.declaration?.substring(0, 50)
+	})
+
+	// Step 2: Extract the root element with robust named capture groups
+	const rootElementRegex = new RegExp(
+		"(?:^|\\s)" + // Start of string or whitespace
+			`<(?<rootTag>${rootTag})` + // Opening tag must match our expected root
+			"(?<attributes>(?:\\s+[^>]*)?)" + // Optional attributes
+			">" + // Close opening tag
+			"(?<content>[\\s\\S]*?)" + // Content (non-greedy)
+			"</\\k<rootTag>>" + // Closing tag with backreference to ensure it matches
+			"(?:\\s*$)?", // Optional trailing whitespace
+		"s" // Dot matches newline
+	)
+
+	const rootMatch = correctedXml.match(rootElementRegex)
+
+	if (!rootMatch || !rootMatch.groups) {
+		// Try to find ANY qti root element for better error reporting
+		const anyQtiMatch = correctedXml.match(/<(?<anyRoot>qti-[a-z-]+)(?:\s+[^>]*)?>/)
+
+		logger.error("robust extraction failed: corrected xml is not valid", {
+			expectedRootTag: rootTag,
+			foundRootTag: anyQtiMatch?.groups?.anyRoot,
+			response: correctedXml.substring(0, 200),
+			responseEnd: correctedXml.substring(correctedXml.length - 200)
+		})
+		throw errors.new(
+			`invalid corrected xml output: expected ${rootTag} but ${anyQtiMatch?.groups?.anyRoot ? `found ${anyQtiMatch.groups.anyRoot}` : "found no valid QTI root element"}`
+		)
+	}
+
+	// TypeScript now knows rootMatch.groups is defined
+	const { content, rootTag: extractedRootTag, attributes } = rootMatch.groups
+
+	// Step 3: Validate the content doesn't have truncated closing tags
+	if (!content) {
+		logger.error("corrected xml has no content", { rootTag })
+		throw errors.new("invalid corrected xml output: empty content")
+	}
+
+	const truncatedTagMatch = content.match(/<\/(?:_|\s*>|\.\.\.)/)
+	if (truncatedTagMatch) {
+		const matchIndex = truncatedTagMatch.index ?? 0
+		logger.error("detected truncated closing tag in corrected xml content", {
+			truncatedTag: truncatedTagMatch[0],
+			context: content.substring(Math.max(0, matchIndex - 50), Math.min(content.length, matchIndex + 50))
+		})
+		throw errors.new("invalid corrected xml output: contains truncated closing tags")
+	}
+
+	// Step 4: Reconstruct the complete XML with declaration if present
+	const extractedXml = (
+		(hasXmlDeclaration && xmlDeclMatch?.groups?.declaration ? xmlDeclMatch.groups.declaration : "") +
+		rootMatch[0].trim()
+	).trim()
 
 	logger.debug("correction complete", {
 		originalLength: invalidXml.length,
-		correctedLength: validationResult.data.corrected_xml.length,
-		lengthDiff: validationResult.data.corrected_xml.length - invalidXml.length
+		correctedLength: extractedXml.length,
+		lengthDiff: extractedXml.length - invalidXml.length,
+		rootTag: extractedRootTag,
+		hasAttributes: !!attributes?.trim(),
+		hasXmlDeclaration
 	})
 
-	return validationResult.data.corrected_xml
+	return extractedXml
 }

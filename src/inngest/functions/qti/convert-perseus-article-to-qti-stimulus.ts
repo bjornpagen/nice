@@ -42,10 +42,10 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 		id: "convert-perseus-article-to-qti-stimulus",
 		name: "Convert Perseus Article to QTI Stimulus",
 		concurrency: {
-			// Limit to 5 concurrent executions, shared across all Gemini functions account-wide.
-			// This global limit prevents rate-limiting from the Gemini API.
+			// Limit to 5 concurrent executions, shared across all OpenAI functions account-wide.
+			// This global limit prevents rate-limiting from the OpenAI API.
 			limit: 5,
-			key: '"gemini-api-global-concurrency"'
+			key: '"openai-api-global-concurrency"'
 		}
 	},
 	{ event: "qti/stimulus.migrate" },
