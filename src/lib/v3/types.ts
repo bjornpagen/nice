@@ -984,6 +984,17 @@ export function buildOneRosterCourse(
 			resourceSourcedId: resource.sourcedId
 		})
 
+		const order = oneRosterComponentResource.sortOrder
+		if (order != null) {
+			logger.debug("building oneroster course: found sort order", {
+				courseSourcedId: course.sourcedId,
+				courseComponentSourcedId: courseComponent.sourcedId,
+				resourceSourcedId: resource.sourcedId,
+				order
+			})
+			resource.order = order
+		}
+
 		attachResource(course, courseComponent, resource)
 		logger.debug("building oneroster course: attached resource to course component", {
 			courseSourcedId: course.sourcedId,
