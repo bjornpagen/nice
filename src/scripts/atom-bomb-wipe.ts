@@ -312,11 +312,79 @@ async function confirmDeletion(count: number, typeName: string): Promise<boolean
 	return answer === CONFIRMATION
 }
 
-async function executeWipe(entityType: EntityType, prefix: string, shouldDelete: boolean) {
+async function executeWipe(entityType: EntityType, prefix: string, shouldDelete: boolean, skipConfirmation = false) {
 	// Handle "all" type by recursing through each type
 	if (entityType === "all") {
 		logger.info("executing full wipe", { prefix })
 
+		// For delete mode with "all", ask for confirmation once upfront
+		if (shouldDelete && !skipConfirmation) {
+			// Count total entities across all types
+			let totalCount = 0
+			const entityCounts: Record<string, number> = {}
+
+			process.stdout.write("\n🔍 Scanning for entities to delete...\n")
+
+			const allTypes: Exclude<EntityType, "all">[] = [
+				// QTI Objects (delete tests first as they reference items/stimuli)
+				"assessmentTests",
+				"assessmentItems",
+				"assessmentStimuli",
+				// OneRoster Objects (delete dependencies first)
+				"enrollments",
+				"assessmentLineItems",
+				"componentResources",
+				"courseComponents",
+				"classes",
+				"resources",
+				"courses",
+				"users"
+			]
+
+			for (const type of allTypes) {
+				const entities = await fetchEntities(type, prefix)
+				entityCounts[type] = entities.length
+				totalCount += entities.length
+			}
+
+			// Show summary
+			process.stdout.write(`\n${"=".repeat(80)}\n`)
+			process.stdout.write("🚨 ATOM BOMB WIPE - SUMMARY 🚨\n")
+			process.stdout.write(`${"=".repeat(80)}\n\n`)
+
+			for (const type of allTypes) {
+				const handler = handlers[type]
+				const count = entityCounts[type] || 0
+				if (count > 0) {
+					process.stdout.write(`  ${handler.name}: ${count} entities\n`)
+				}
+			}
+
+			process.stdout.write(`\n${"=".repeat(80)}\n`)
+			process.stdout.write(`TOTAL: ${totalCount} entities will be PERMANENTLY DELETED\n`)
+			process.stdout.write(`${"=".repeat(80)}\n`)
+
+			if (totalCount === 0) {
+				process.stdout.write("\nNo entities found with the specified prefix.\n")
+				return
+			}
+
+			// Single confirmation for all
+			const confirmed = await confirmDeletion(totalCount, "entities across all types")
+			if (!confirmed) {
+				process.stdout.write("Aborted.\n")
+				return
+			}
+
+			// Now execute all deletions with confirmation skipped
+			for (const type of allTypes) {
+				process.stdout.write(`\n=== ${handlers[type].name} ===\n`)
+				await executeWipe(type, prefix, shouldDelete, true)
+			}
+			return
+		}
+
+		// For list mode or if confirmation was already done
 		const allTypes: Exclude<EntityType, "all">[] = [
 			// QTI Objects (delete tests first as they reference items/stimuli)
 			"assessmentTests",
@@ -335,7 +403,7 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 
 		for (const type of allTypes) {
 			process.stdout.write(`\n=== ${handlers[type].name} ===\n`)
-			await executeWipe(type, prefix, shouldDelete)
+			await executeWipe(type, prefix, shouldDelete, true)
 		}
 		return
 	}
@@ -377,10 +445,13 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 		process.stdout.write(`${"-".repeat(80)}\n`)
 	}
 
-	const confirmed = await confirmDeletion(entities.length, handler.name)
-	if (!confirmed) {
-		process.stdout.write("Aborted.\n")
-		return
+	// Skip confirmation if flag is set (used when running "all")
+	if (!skipConfirmation) {
+		const confirmed = await confirmDeletion(entities.length, handler.name)
+		if (!confirmed) {
+			process.stdout.write("Aborted.\n")
+			return
+		}
 	}
 
 	process.stdout.write("\n💣 DETONATING...\n")
