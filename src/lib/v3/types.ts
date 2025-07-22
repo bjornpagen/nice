@@ -1,7 +1,12 @@
 import * as errors from "@superbuilders/errors"
-import type { OneRoster } from "@superbuilders/oneroster"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
+import type {
+	ComponentResource as OneRosterComponentResource,
+	Course as OneRosterCourse,
+	CourseComponent as OneRosterCourseComponent,
+	Resource as OneRosterResource
+} from "@/lib/oneroster"
 
 /**
  * Prettify is a utility type that properly formats the LSP definition of a type.
@@ -332,32 +337,51 @@ export const ModelSchema = z.discriminatedUnion("type", [
 export type Model = z.infer<typeof ModelSchema>
 
 // ------------------------------------------------------------
-// OneRoster Schemas
+// Utility Definitions
 // ------------------------------------------------------------
 
 /**
- * OneRosterResource is a schema for a resource from the OneRoster API.
+ * AssessmentTypeSchema is a schema for any type of assessment.
+ * This is a helper type to make it easier to check if a resource is an assessment.
  */
-type OneRosterResource = Awaited<ReturnType<typeof OneRoster.prototype.resourcesManagement.getResource>>["resource"]
+export const AssessmentTypeSchema = z.enum([
+	LessonResourceTypeSchema.enum.exercise,
+	UnitResourceTypeSchema.enum.quiz,
+	UnitResourceTypeSchema.enum.unit_test,
+	CourseResourceTypeSchema.enum.course_challenge
+] as const)
+export type AssessmentType = z.infer<typeof AssessmentTypeSchema>
 
 /**
- * OneRosterComponentResource is a schema for a component resource from the OneRoster API.
+ * UnitContentSchema is a schema for the content of a unit.
+ * This is a helper type to make it easier to check if a unit's resources or children are content.
  */
-type OneRosterComponentResource = Awaited<
-	ReturnType<typeof OneRoster.prototype.courseComponentResourcesManagement.getComponentResource>
->["componentResource"]
+export const UnitContentSchema = z.discriminatedUnion("type", [LessonComponentSchema, ...UnitResourceSchema.options])
+export type UnitContent = z.infer<typeof UnitContentSchema>
 
 /**
- * OneRosterCourseComponent is a schema for a course component from the OneRoster API.
+ * UnitAssessmentTypeSchema is a schema for the type of an assessment that can appear in a unit.
+ * This is a helper type to make it easier to check if a unit's resources or children are assessments.
  */
-type OneRosterCourseComponent = Awaited<
-	ReturnType<typeof OneRoster.prototype.courseComponentsManagement.getCourseComponent>
->["courseComponent"]
+export const UnitAssessmentTypeSchema = AssessmentTypeSchema.exclude([CourseResourceTypeSchema.enum.course_challenge])
+export type UnitAssessmentType = z.infer<typeof UnitAssessmentTypeSchema>
 
 /**
- * OneRosterCourse is a schema for a course from the OneRoster API.
+ * UnitAssessmentSchema is a schema for an assessment in a unit.
+ * This is a helper type to make it easier to store assessments in a unit.
  */
-type OneRosterCourse = Awaited<ReturnType<typeof OneRoster.prototype.coursesManagement.getCourse>>["course"]
+export const UnitAssessmentSchema = z.discriminatedUnion("type", [
+	ExerciseResourceSchema,
+	...UnitResourceSchema.options
+])
+export type UnitAssessment = z.infer<typeof UnitAssessmentSchema>
+
+/**
+ * CourseContentSchema is a schema for the content of a course.
+ * This is a helper type to make it easier to check if a course's resources or children are content.
+ */
+export const CourseContentSchema = z.discriminatedUnion("type", [UnitComponentSchema, ...CourseResourceSchema.options])
+export type CourseContent = z.infer<typeof CourseContentSchema>
 
 // ------------------------------------------------------------
 // Constants
@@ -657,6 +681,14 @@ export function parseOneRosterResource(oneRosterResource: Partial<OneRosterResou
 		logger.error("parsing oneroster resource: invalid resource data: khan path is missing", { sourcedId })
 		throw errors.new(`invalid resource data: khan path is missing: ${sourcedId}`)
 	}
+	if (typeof khanPath !== "string") {
+		logger.error("parsing oneroster resource: invalid resource data: khan path is not a string", {
+			sourcedId,
+			khanPath,
+			type: typeof khanPath
+		})
+		throw errors.new(`invalid resource data: khan path is not a string: ${sourcedId}`)
+	}
 	logger.debug("parsing oneroster resource: khan path", { sourcedId, khanPath })
 
 	const khanType = getTypeFromPathname(khanPath)
@@ -741,10 +773,18 @@ export function parseOneRosterCourseComponent(
 	}
 	logger.debug("parsing oneroster course component: khan slug", { sourcedId, khanSlug })
 
-	const khanPath = khanMeta.path
-	if (khanPath == null && sourcedId !== courseSourcedId) {
+	const khanPath = sourcedId !== courseSourcedId ? khanMeta.path : ""
+	if (khanPath == null) {
 		logger.error("parsing oneroster course component: invalid component data: khan path is missing", { sourcedId })
 		throw errors.new(`invalid component data: khan path is missing: ${sourcedId}`)
+	}
+	if (typeof khanPath !== "string") {
+		logger.error("parsing oneroster resource: invalid resource data: khan path is not a string", {
+			sourcedId,
+			khanPath,
+			type: typeof khanPath
+		})
+		throw errors.new(`invalid component data: khan path is not a string: ${sourcedId}`)
 	}
 	logger.debug("parsing oneroster course component: khan path", { sourcedId, khanPath })
 
@@ -835,6 +875,14 @@ export function parseOneRosterCourse(oneRosterCourse: Partial<OneRosterCourse>):
 	if (khanPath == null) {
 		logger.error("parsing oneroster course: invalid course data: khan path is missing", { sourcedId })
 		throw errors.new(`invalid course data: khan path is missing: ${sourcedId}`)
+	}
+	if (typeof khanPath !== "string") {
+		logger.error("parsing oneroster resource: invalid resource data: khan path is not a string", {
+			sourcedId,
+			khanPath,
+			type: typeof khanPath
+		})
+		throw errors.new(`invalid course data: khan path is not a string: ${sourcedId}`)
 	}
 	logger.debug("parsing oneroster course: khan path", { sourcedId, khanPath })
 
@@ -1086,4 +1134,76 @@ export function buildOneRosterCourse(
 	}
 
 	return course
+}
+
+export function buildUnitContents(unit: UnitComponent): UnitContent[] {
+	const contents: UnitContent[] = []
+
+	contents.push(...Object.values(unit.children))
+	contents.push(...Object.values(unit.resources))
+	logger.debug("building unit contents: pushed children and resources", {
+		unitSourcedId: unit.sourcedId,
+		count: contents.length
+	})
+
+	contents.sort((a, b) => a.order - b.order)
+	logger.debug("building unit contents: sorted contents", {
+		unitSourcedId: unit.sourcedId,
+		count: contents.length
+	})
+
+	return contents
+}
+
+export function buildUnitAssessments(unit: UnitComponent): UnitAssessment[] {
+	const assessments: UnitAssessment[] = []
+
+	const contents = buildUnitContents(unit)
+	for (const content of contents) {
+		switch (content.type) {
+			case CourseComponentTypeSchema.enum.lesson: {
+				const exercises = Object.values(content.resources).filter(
+					(resource): resource is ExerciseResource => resource.type === LessonResourceTypeSchema.enum.exercise
+				)
+				logger.debug("building unit assessments: found exercises", {
+					unitSourcedId: unit.sourcedId,
+					lessonSourcedId: content.sourcedId,
+					count: exercises.length
+				})
+
+				assessments.push(...exercises)
+				break
+			}
+			case UnitResourceTypeSchema.enum.quiz:
+			case UnitResourceTypeSchema.enum.unit_test: {
+				assessments.push(content)
+				break
+			}
+		}
+	}
+	logger.debug("building unit assessments: found assessments", {
+		unitSourcedId: unit.sourcedId,
+		count: assessments.length
+	})
+
+	return assessments
+}
+
+export function buildCourseContents(course: Course): CourseContent[] {
+	const contents: CourseContent[] = []
+
+	contents.push(...Object.values(course.children))
+	contents.push(...Object.values(course.resources))
+	logger.debug("building course contents: pushed children and resources", {
+		courseSourcedId: course.sourcedId,
+		count: contents.length
+	})
+
+	contents.sort((a, b) => a.order - b.order)
+	logger.debug("building course contents: sorted contents", {
+		courseSourcedId: course.sourcedId,
+		count: contents.length
+	})
+
+	return contents
 }

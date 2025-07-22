@@ -344,11 +344,11 @@ describe("function:parseOneRosterCourse", () => {
 			courseCode: "ap-microeconomics",
 			org: {
 				sourcedId: "nice-academy",
-				type: "org"
+				type: "org" as const
 			},
 			academicSession: {
 				sourcedId: "nice-academy-term",
-				type: "term"
+				type: "term" as const
 			},
 			metadata: {
 				khanId: "x2832fbb7463fe65a",
