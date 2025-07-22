@@ -23,6 +23,8 @@ import { differentiateQuestion } from "@/inngest/functions/qti/differentiate-que
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
+// ✅ ADD: Import the new paraphrase function
+import { paraphraseStimulus } from "@/inngest/functions/qti/paraphrase-stimulus"
 import { requestAllItemMigrationsForCourse } from "@/inngest/functions/qti/request-all-item-migrations-for-course"
 import { requestAllStimulusMigrationsForCourse } from "@/inngest/functions/qti/request-all-stimulus-migrations-for-course"
 
@@ -54,6 +56,8 @@ export const { GET, POST, PUT } = serve({
 		requestAllItemMigrationsForCourse,
 		requestAllStimulusMigrationsForCourse,
 		// ✅ ADD: Register the new function
-		differentiateQuestion
+		differentiateQuestion,
+		// ✅ ADD: Register the new paraphrase function
+		paraphraseStimulus
 	]
 })

@@ -54,6 +54,12 @@ const events = {
 			numberOfVariations: z.number().int().positive()
 		})
 	},
+	// ✅ ADD: New event for paraphrasing a single stimulus
+	"qti/stimulus.paraphrase": {
+		data: z.object({
+			articleId: z.string().min(1)
+		})
+	},
 	// QTI Ingestion Events
 	"qti/course.payload.generate": {
 		data: z.object({
