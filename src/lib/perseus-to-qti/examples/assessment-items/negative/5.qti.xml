@@ -5,8 +5,7 @@
   REASONS FOR BEING A NEGATIVE EXAMPLE:
 
   1.  CRITICAL: Leaking the Number of Correct Answers - The interaction is a "select all that apply" type, but it is incorrectly configured with `max-choices="2"`. This attribute explicitly tells the user that there are exactly two correct answers, providing an unfair clue and compromising the question's validity. For this type of question, `max-choices` should be set to "0" (for unlimited) or "4" (the total number of choices) to ensure the user must evaluate each option independently without knowing the correct count.
-
-  2.  FUNCTIONAL: Incorrect Interaction Behavior - The interaction is set with `shuffle="false"`. The source Perseus JSON specified `"randomize": true`, meaning the choices should be presented in a random order. This conversion fails to replicate the intended randomization of the original item.
+  2.  CRITICAL: Incorrect Interaction Behavior - The interaction is set with `shuffle="false"`. The source Perseus JSON specified `"randomize": true`, meaning the choices should be presented in a random order. This conversion fails to replicate the intended randomization of the original item.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"

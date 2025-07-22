@@ -4,8 +4,7 @@
   REASONS FOR BEING A NEGATIVE EXAMPLE:
 
   1.  CRITICAL: Loss of Mathematical Semantics - The numbers "708", "79", and the ">" symbol are represented as plain text. The Perseus source uses LaTeX (`$708$`) to indicate these are mathematical entities. The correct QTI conversion requires wrapping this content in <math> tags with MathML markup (e.g., <math><mn>708</mn></math>). This failure loses critical semantic information, harms accessibility for screen readers, and prevents proper rendering by math engines.
-
-  2.  FUNCTIONAL: Incorrect Interaction Behavior - The interaction is set with `shuffle="false"`. The source Perseus "sorter" widget implies that the initial choices should be jumbled for the user to arrange. By setting shuffle to false, the choices may be presented in their correct order, fundamentally changing the task.
+  2.  CRITICAL: Incorrect Interaction Behavior - The interaction is set with `shuffle="false"`. The source Perseus "sorter" widget implies that the initial choices should be jumbled for the user to arrange. By setting shuffle to false, the choices may be presented in their correct order, fundamentally changing the task.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"

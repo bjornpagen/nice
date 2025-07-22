@@ -1,0 +1,60 @@
+{
+	"hints": [
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/dddc511c9c3382c1837e86b912490300df7eade8": {
+					"width": 126,
+					"height": 320
+				}
+			},
+			"content": "The rectangle has $\\blueE6$ rows.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/dddc511c9c3382c1837e86b912490300df7eade8)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/6cfe22d4abb82731e114b94d3c3f7b6cd43b3c56": {
+					"width": 126,
+					"height": 320
+				}
+			},
+			"content": "The rectangle has $\\maroonD2$ columns.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/6cfe22d4abb82731e114b94d3c3f7b6cd43b3c56)",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "The rectangle has $6$ rows and $2$ columns.", "replace": false, "widgets": {} }
+	],
+	"question": {
+		"images": {
+			"web+graphie://cdn.kastatic.org/ka-perseus-graphie/ba57c0913282504591a5947d943562970ba43e9f": {
+				"width": 126,
+				"height": 320
+			}
+		},
+		"content": "The rectangle has $12$ same-sized squares.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/ba57c0913282504591a5947d943562970ba43e9f)\n\n**How many rows and columns does the rectangle have?**\n\n[[☃ radio 1]]\n\n",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{ "content": "$5$ rows and $2$ columns", "correct": false },
+						{ "content": "$6$ rows and $2$ columns", "correct": true },
+						{ "content": "$6$ rows and $1$ column", "correct": false, "isNoneOfTheAbove": false }
+					],
+					"randomize": true,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": { "major": 1, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
