@@ -173,6 +173,28 @@ function CenterSection({
 		return <div className="flex-1" />
 	}
 
+	// Calculate which dots to show for the carousel
+	const MAX_VISIBLE_DOTS = 5
+	const HALF_WINDOW = Math.floor(MAX_VISIBLE_DOTS / 2)
+
+	let startIndex = 0
+	let endIndex = totalQuestions
+
+	if (totalQuestions > MAX_VISIBLE_DOTS) {
+		// Center the current question when possible
+		startIndex = Math.max(0, currentQuestion - 1 - HALF_WINDOW)
+		endIndex = startIndex + MAX_VISIBLE_DOTS
+
+		// Adjust if we're at the end
+		if (endIndex > totalQuestions) {
+			endIndex = totalQuestions
+			startIndex = Math.max(0, endIndex - MAX_VISIBLE_DOTS)
+		}
+	}
+
+	const showLeftEllipsis = startIndex > 0
+	const showRightEllipsis = endIndex < totalQuestions
+
 	return (
 		<div className="flex-1 flex flex-row gap-4 items-center justify-center">
 			<Button variant="ghost" asChild>
@@ -206,16 +228,24 @@ function CenterSection({
 				{currentQuestion} of {totalQuestions}
 			</p>
 			<div className="flex flex-row items-center justify-center gap-2">
-				{Array.from({ length: totalQuestions }, (_, i) => (
-					<span
-						key={i}
-						className={cn(
-							"inline-block w-2 h-2 rounded-full ring-1 ring-gray-400 bg-white",
-							i < currentQuestion && "bg-gray-400 fill-gray-400",
-							i === currentQuestion - 1 && "w-3 h-3"
-						)}
-					/>
-				))}
+				{showLeftEllipsis && <span className="text-gray-400 text-xs font-medium">...</span>}
+				{Array.from({ length: endIndex - startIndex }, (_, i) => {
+					const questionIndex = startIndex + i
+					const isActive = questionIndex === currentQuestion - 1
+					const isCompleted = questionIndex < currentQuestion - 1
+
+					return (
+						<span
+							key={questionIndex}
+							className={cn(
+								"inline-block w-2 h-2 rounded-full ring-1 ring-gray-400 bg-white transition-all duration-200",
+								isCompleted && "bg-gray-400",
+								isActive && "w-3 h-3 bg-blue-600 ring-blue-600"
+							)}
+						/>
+					)
+				})}
+				{showRightEllipsis && <span className="text-gray-400 text-xs font-medium">...</span>}
 			</div>
 		</div>
 	)
