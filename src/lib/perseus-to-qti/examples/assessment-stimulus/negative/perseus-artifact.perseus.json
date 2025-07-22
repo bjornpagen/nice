@@ -1,0 +1,16 @@
+[
+	{
+		"content": "This is a passage about graphing. Here is a graph: [[☃ grapher 1]]",
+		"images": {},
+		"widgets": {
+			"grapher 1": {
+				"type": "grapher",
+				"options": {
+					"graph": {
+						"range": [[-10, 10], [-10, 10]]
+					}
+				}
+			}
+		}
+	}
+]

@@ -9,6 +9,7 @@ interface ConversionExample {
 	name: string
 	perseus: unknown
 	qti: string
+	type: "positive" | "negative"
 }
 
 // Cache for loaded examples to avoid re-reading files on every request
@@ -38,92 +39,103 @@ export async function loadConversionExamples(
 	// Both "assessmentItem" and "stimulus" examples use the same extensions
 	const perseusExt = ".perseus.json"
 	const qtiExt = ".qti.xml"
-	const exampleDir = isStimulus ? `${EXAMPLES_DIR}/assessment-stimulus` : `${EXAMPLES_DIR}/assessment-items`
+	const baseDir = isStimulus ? `${EXAMPLES_DIR}/assessment-stimulus` : `${EXAMPLES_DIR}/assessment-items`
 
-	const filesResult = await errors.try(fs.readdir(exampleDir))
-	if (filesResult.error) {
-		logger.error("failed to read examples directory, cannot load examples", {
-			error: filesResult.error,
-			path: exampleDir
+	// Load examples from both positive and negative directories
+	const allExamples: ConversionExample[] = []
+
+	for (const exampleType of ["positive", "negative"] as const) {
+		const exampleDir = `${baseDir}/${exampleType}`
+
+		const filesResult = await errors.try(fs.readdir(exampleDir))
+		if (filesResult.error) {
+			logger.warn("failed to read examples directory, skipping", {
+				error: filesResult.error,
+				path: exampleDir,
+				type,
+				exampleType
+			})
+			continue
+		}
+
+		const perseusFiles = filesResult.data.filter((file) => file.endsWith(perseusExt))
+		if (perseusFiles.length === 0) {
+			logger.warn("no perseus example files found in examples directory", {
+				path: exampleDir,
+				type,
+				exampleType
+			})
+			continue
+		}
+
+		const examplePromises = perseusFiles.map(async (perseusFile): Promise<ConversionExample | null> => {
+			const baseName = perseusFile.replace(perseusExt, "")
+			const qtiFile = `${baseName}${qtiExt}`
+			const perseusPath = `${exampleDir}/${perseusFile}`
+			const qtiPath = `${exampleDir}/${qtiFile}`
+
+			const [perseusContentResult, qtiContentResult] = await Promise.all([
+				errors.try(fs.readFile(perseusPath, "utf-8")),
+				errors.try(fs.readFile(qtiPath, "utf-8"))
+			])
+
+			if (perseusContentResult.error) {
+				logger.warn("failed to read perseus file, skipping example", {
+					file: perseusFile,
+					error: perseusContentResult.error
+				})
+				return null
+			}
+			if (qtiContentResult.error) {
+				logger.warn("qti file not found for perseus example, skipping", {
+					perseusFile,
+					qtiFile,
+					error: qtiContentResult.error
+				})
+				return null
+			}
+
+			const perseusJsonResult = errors.trySync(() => JSON.parse(perseusContentResult.data))
+			if (perseusJsonResult.error) {
+				logger.warn("failed to parse perseus json, skipping example", {
+					file: perseusFile,
+					error: perseusJsonResult.error
+				})
+				return null
+			}
+
+			return {
+				name: baseName,
+				perseus: perseusJsonResult.data,
+				qti: qtiContentResult.data,
+				type: exampleType
+			}
 		})
-		const empty: ConversionExample[] = []
-		if (isStimulus) {
-			cachedStimulusExamples = empty
-		} else {
-			cachedAssessmentItemExamples = empty
-		}
-		return empty
+
+		const results = await Promise.all(examplePromises)
+		const validExamples = results.filter((e): e is ConversionExample => e !== null)
+		allExamples.push(...validExamples)
+
+		logger.info("loaded examples from directory", {
+			type,
+			exampleType,
+			loaded: validExamples.length,
+			total: perseusFiles.length
+		})
 	}
 
-	const perseusFiles = filesResult.data.filter((file) => file.endsWith(perseusExt))
-	if (perseusFiles.length === 0) {
-		logger.warn("no perseus example files found in examples directory", { path: exampleDir, type })
-		const empty: ConversionExample[] = []
-		if (isStimulus) {
-			cachedStimulusExamples = empty
-		} else {
-			cachedAssessmentItemExamples = empty
-		}
-		return empty
-	}
-
-	const examplePromises = perseusFiles.map(async (perseusFile): Promise<ConversionExample | null> => {
-		const baseName = perseusFile.replace(perseusExt, "")
-		const qtiFile = `${baseName}${qtiExt}`
-		const perseusPath = `${exampleDir}/${perseusFile}`
-		const qtiPath = `${exampleDir}/${qtiFile}`
-
-		const [perseusContentResult, qtiContentResult] = await Promise.all([
-			errors.try(fs.readFile(perseusPath, "utf-8")),
-			errors.try(fs.readFile(qtiPath, "utf-8"))
-		])
-
-		if (perseusContentResult.error) {
-			logger.warn("failed to read perseus file, skipping example", {
-				file: perseusFile,
-				error: perseusContentResult.error
-			})
-			return null
-		}
-		if (qtiContentResult.error) {
-			logger.warn("qti file not found for perseus example, skipping", {
-				perseusFile,
-				qtiFile,
-				error: qtiContentResult.error
-			})
-			return null
-		}
-
-		const perseusJsonResult = errors.trySync(() => JSON.parse(perseusContentResult.data))
-		if (perseusJsonResult.error) {
-			logger.warn("failed to parse perseus json, skipping example", {
-				file: perseusFile,
-				error: perseusJsonResult.error
-			})
-			return null
-		}
-
-		return {
-			name: baseName,
-			perseus: perseusJsonResult.data,
-			qti: qtiContentResult.data
-		}
-	})
-
-	const allResults = await Promise.all(examplePromises)
-	const validExamples = allResults.filter((e): e is ConversionExample => e !== null)
-
-	logger.info("successfully loaded qti conversion examples", {
+	logger.info("successfully loaded all qti conversion examples", {
 		type,
-		loaded: validExamples.length,
-		total: perseusFiles.length
+		totalLoaded: allExamples.length,
+		positiveCount: allExamples.filter((e) => e.type === "positive").length,
+		negativeCount: allExamples.filter((e) => e.type === "negative").length
 	})
 
 	// Cache the results
 	if (isStimulus) {
-		cachedStimulusExamples = validExamples
+		cachedStimulusExamples = allExamples
 	} else {
-		cachedAssessmentItemExamples = validExamples
+		cachedAssessmentItemExamples = allExamples
 	}
-	return validExamples
+	return allExamples
 }

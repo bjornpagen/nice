@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is intentionally malformed to serve as a negative example.
+  REASON FOR BEING BAD: The <qti-simple-choice> tag for "ChoiceB" has a lazy/truncated closing tag `</_>`.
+  This is a critical failure that breaks XML parsing. All closing tags must be complete and correct, e.g., `</qti-simple-choice>`.
+-->
+<qti-assessment-item xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd"
+    identifier="bad-closing-tag-example" title="Invalid Closing Tag Example" adaptive="false" time-dependent="false">
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>ChoiceB</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-item-body>
+        <p>Which number is greater?</p>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+            <qti-simple-choice identifier="ChoiceA">5</qti-simple-choice>
+            <qti-simple-choice identifier="ChoiceB">10</_>
+        </qti-choice-interaction>
+    </qti-item-body>
+    <qti-response-processing template="http://www.imsglobal.org/question/qti_v3p0/rptemplates/match_correct"/>
+</qti-assessment-item> 

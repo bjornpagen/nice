@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is intentionally malformed to serve as a negative example.
+  REASON FOR BEING BAD: It contains a raw Perseus widget artifact: `[[☃ grapher 1]]`.
+  These artifacts are specific to Khan Academy's Perseus renderer and are not valid in QTI.
+  They MUST be completely removed or converted into a static representation (like an image) during conversion.
+  Leaving them in will cause the QTI API to fail validation.
+-->
+<qti-assessment-stimulus xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="perseus-artifact-example"
+    title="Perseus Artifact Example"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <p>This is a passage about graphing. Here is a graph: [[☃ grapher 1]]</p>
+    </qti-stimulus-body>
+</qti-assessment-stimulus> 

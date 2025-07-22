@@ -47,10 +47,16 @@ export async function createQtiConversionPrompt(
 	const examples = await loadConversionExamples({ type })
 	logger.debug("loaded conversion examples", {
 		exampleCount: examples.length,
-		exampleNames: examples.map((e) => e.name)
+		exampleNames: examples.map((e) => e.name),
+		positiveCount: examples.filter((e) => e.type === "positive").length,
+		negativeCount: examples.filter((e) => e.type === "negative").length
 	})
 
-	const examplesXml = examples
+	// Separate positive and negative examples
+	const positiveExamples = examples.filter((e) => e.type === "positive")
+	const negativeExamples = examples.filter((e) => e.type === "negative")
+
+	const positiveExamplesXml = positiveExamples
 		.map(
 			(example) => `
 <example name="${example.name}">
@@ -65,10 +71,32 @@ ${example.qti}
 		)
 		.join("\n")
 
+	// Format negative examples to show the malformed XML
+	const negativeExamplesFromData = negativeExamples
+		.map(
+			(example) => `
+<negative_example_from_data name="${example.name}">
+  <perseus_json>
+${JSON.stringify(example.perseus, null, 2)}
+  </perseus_json>
+  <malformed_qti_xml>
+${example.qti}
+  </malformed_qti_xml>
+</negative_example_from_data>
+`
+		)
+		.join("\n")
+
 	const userContent = `
 <examples>
-${examplesXml}
+${positiveExamplesXml}
 </examples>
+
+<negative_examples_from_filesystem>
+<!-- THESE ARE REAL EXAMPLES OF MALFORMED QTI XML LOADED FROM OUR NEGATIVE EXAMPLES DIRECTORY -->
+<!-- Each example contains an XML comment explaining why it is incorrect -->
+${negativeExamplesFromData}
+</negative_examples_from_filesystem>
 
 <critical_negative_examples>
 <!-- THESE ARE EXAMPLES OF WHAT MUST NEVER APPEAR IN QTI XML -->
