@@ -25,7 +25,6 @@ export function QuizContent({ quizPromise }: { quizPromise: Promise<QuizPageData
 	return (
 		<AssessmentStartScreen
 			headerTitle={quiz.title}
-			headerDescription={quiz.description}
 			title="Ready to take the quiz?"
 			subtitle="Test your knowledge!"
 			subtitleColorClass="text-purple-100"

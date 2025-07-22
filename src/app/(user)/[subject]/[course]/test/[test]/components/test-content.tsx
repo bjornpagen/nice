@@ -24,7 +24,6 @@ export function TestContent({ testDataPromise }: { testDataPromise: Promise<Cour
 	return (
 		<AssessmentStartScreen
 			headerTitle={test.title}
-			headerDescription={test.description}
 			title="Ready for the Course Challenge?"
 			subtitle="Test your mastery of the entire course!"
 			subtitleColorClass="text-purple-100"

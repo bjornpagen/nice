@@ -25,7 +25,6 @@ export function TestContent({ testPromise }: { testPromise: Promise<UnitTestPage
 	return (
 		<AssessmentStartScreen
 			headerTitle={test.title}
-			headerDescription={test.description}
 			title="Ready to take the unit test?"
 			subtitle="Test your understanding of the entire unit!"
 			subtitleColorClass="text-blue-100"
