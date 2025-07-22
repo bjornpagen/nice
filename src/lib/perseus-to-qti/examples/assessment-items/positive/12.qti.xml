@@ -52,7 +52,7 @@
             <p>A cargo ship engineer wants to make the following argument:</p>
             <blockquote><p><strong>Green shipping corridors are already possible with current technology.</strong></p></blockquote>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="2">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="2">
             <qti-prompt>Which two pieces of evidence from the text would best support their argument?</qti-prompt>
             <qti-simple-choice identifier="A">
                 "Cargo ships use fuels that release harmful gasses, warming the planet." (paragraph 1)

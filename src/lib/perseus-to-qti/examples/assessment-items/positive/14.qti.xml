@@ -26,7 +26,7 @@
                  width="320"
                  height="103"/>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="3">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="3">
             <qti-prompt>How can we calculate the shaded area?</qti-prompt>
             <qti-simple-choice identifier="A">
                 <math xmlns="http://www.w3.org/1998/Math/MathML">

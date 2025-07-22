@@ -29,7 +29,7 @@
                 </math>.
             </p>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1" class="qti-orientation-vertical">
             <qti-prompt>Which of the formulas below would be a correct formula to use if we wanted to calculate the cross-price elasticity of demand for good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> and good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math>?</qti-prompt>
             <qti-simple-choice identifier="A">
                 <math xmlns="http://www.w3.org/1998/Math/MathML">

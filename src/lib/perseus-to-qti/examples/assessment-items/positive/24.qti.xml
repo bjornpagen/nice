@@ -83,7 +83,7 @@
                 </mrow>
             </math>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1" class="qti-orientation-vertical">
             <qti-simple-choice identifier="A">
                 continuous, not differentiable
                 <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">This would be the case if the function values matched at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math> but the derivatives from left and right were different. Check both the limit values and the derivatives.</qti-feedback-inline>

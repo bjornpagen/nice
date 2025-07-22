@@ -44,7 +44,7 @@
             </math></p>
         </div>
         
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="4">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="4">
             <qti-prompt>Which graphs agree with this statement?</qti-prompt>
             <qti-simple-choice identifier="A">
                 <img src="https://cdn.kastatic.org/ka-perseus-graphie/4fbef7f08a2546267b2472df755cf728f80b5c76.svg"

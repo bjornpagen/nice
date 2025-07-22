@@ -33,7 +33,7 @@
                 </mrow>
             </math>.</p>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>Which of the following is equivalent to <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>g</mi><mo>(</mo><mi>g</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>)</mo></math>?</qti-prompt>
             <qti-simple-choice identifier="A">
                 <math xmlns="http://www.w3.org/1998/Math/MathML">

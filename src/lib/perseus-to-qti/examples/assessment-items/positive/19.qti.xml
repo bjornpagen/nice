@@ -21,7 +21,7 @@
         <div id="reference_text">
             <pre>Python is fun!</pre>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>Which of the programs has the following output?</qti-prompt>
             <qti-simple-choice identifier="A">
                 <pre>print("Python is fun!")</pre>

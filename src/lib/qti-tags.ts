@@ -3,57 +3,192 @@
  * It serves as a single source of truth for validation and for providing context
  * to AI models tasked with generating or correcting QTI XML.
  *
- * All tags are prefixed with `qti-` as per the standard.
+ * All tags are prefixed with `qti-` as per the standard, based on the
+ * "Question & Test Interoperability (QTI) 3.0 Best Practices and Implementation Guide".
  */
 export const VALID_QTI_TAGS: Readonly<string[]> = [
-	// Core assessment structure
+	// Core Assessment Structure
 	"qti-assessment-item",
+	"qti-assessment-item-ref",
+	"qti-assessment-section",
+	"qti-assessment-section-ref",
 	"qti-assessment-stimulus",
+	"qti-assessment-stimulus-ref",
 	"qti-assessment-test",
 	"qti-test-part",
-	"qti-assessment-section",
-	"qti-assessment-item-ref",
 
-	// Response and outcome declarations
-	"qti-response-declaration",
-	"qti-outcome-declaration",
+	// Declarations & Variables
+	"qti-context-declaration",
 	"qti-correct-response",
-	"qti-value",
 	"qti-default-value",
-	"qti-mapping",
-	"qti-map-entry",
+	"qti-outcome-declaration",
+	"qti-response-declaration",
+	"qti-template-declaration",
+	"qti-template-default",
+	"qti-variable",
 
-	// Body elements
+	// Body & Content Containers
+	"qti-content-body",
 	"qti-item-body",
 	"qti-stimulus-body",
-	"qti-content-body",
 
-	// Interactions
+	// Interactions (General)
+	"qti-associate-interaction",
 	"qti-choice-interaction",
-	"qti-simple-choice",
-	"qti-text-entry-interaction",
 	"qti-extended-text-interaction",
+	"qti-gap-match-interaction",
+	"qti-hottext-interaction",
+	"qti-inline-choice-interaction",
+	"qti-match-interaction",
+	"qti-order-interaction",
+	"qti-slider-interaction",
+	"qti-text-entry-interaction",
+	"qti-upload-interaction",
 
-	// Prompts and feedback
+	// Interactions (Graphical & Object-based)
+	"qti-drawing-interaction",
+	"qti-graphic-associate-interaction",
+	"qti-graphic-gap-match-interaction",
+	"qti-graphic-order-interaction",
+	"qti-hotspot-interaction",
+	"qti-media-interaction",
+	"qti-position-object-interaction",
+	"qti-select-point-interaction",
+
+	// Interactions (Custom & Special Purpose)
+	"qti-custom-interaction",
+	"qti-end-attempt-interaction",
+	"qti-portable-custom-interaction",
+
+	// Interaction Components & Children
+	"qti-associable-hotspot",
+	"qti-gap",
+	"qti-gap-img",
+	"qti-gap-text",
+	"qti-hotspot-choice",
+	"qti-hottext",
+	"qti-inline-choice",
+	"qti-interaction-markup",
+	"qti-interaction-module",
+	"qti-interaction-modules",
+	"qti-label",
+	"qti-position-object-stage",
 	"qti-prompt",
-	"qti-feedback-inline",
+	"qti-simple-associable-choice",
+	"qti-simple-choice",
+	"qti-simple-match-set",
+
+	// Feedback & Rubrics
 	"qti-feedback-block",
+	"qti-feedback-inline",
+	"qti-modal-feedback",
+	"qti-rubric-block",
+	"qti-test-feedback",
 
-	// Response processing
-	"qti-response-processing",
+	// Response & Outcome Processing (Logic & Rules)
+	"qti-outcome-condition",
+	"qti-outcome-else",
+	"qti-outcome-else-if",
+	"qti-outcome-if",
+	"qti-outcome-processing",
 	"qti-response-condition",
-	"qti-response-if",
 	"qti-response-else",
-
-	// Conditional processing elements
-	"qti-if",
-	"qti-else",
-	"qti-and",
-	"qti-or",
-	"qti-not",
-	"qti-match",
-	"qti-variable",
-	"qti-correct",
+	"qti-response-else-if",
+	"qti-response-if",
+	"qti-response-processing",
+	"qti-set-correct-response",
 	"qti-set-outcome-value",
-	"qti-base-value"
+
+	// Processing Expressions & Operators
+	"qti-and",
+	"qti-area-map-entry",
+	"qti-area-mapping",
+	"qti-base-value",
+	"qti-correct",
+	"qti-custom-operator",
+	"qti-delete",
+	"qti-divide",
+	"qti-equal",
+	"qti-equal-rounded",
+	"qti-field-value",
+	"qti-gcd",
+	"qti-gt",
+	"qti-index",
+	"qti-integer-divide",
+	"qti-integer-modulus",
+	"qti-integer-to-float",
+	"qti-is-null",
+	"qti-lookup-outcome-value",
+	"qti-lt",
+	"qti-map-entry",
+	"qti-map-response",
+	"qti-mapping",
+	"qti-match",
+	"qti-match-table",
+	"qti-match-table-entry",
+	"qti-math-constant",
+	"qti-math-operator",
+	"qti-max",
+	"qti-member",
+	"qti-min",
+	"qti-multiple",
+	"qti-not",
+	"qti-or",
+	"qti-ordered",
+	"qti-product",
+	"qti-random",
+	"qti-random-integer",
+	"qti-repeat",
+	"qti-round-to",
+	"qti-stats-operator",
+	"qti-sum",
+	"qti-test-variables",
+	"qti-value",
+
+	// Templating
+	"qti-context-variable",
+	"qti-printed-variable",
+	"qti-set-template-value",
+	"qti-template-block",
+	"qti-template-condition",
+	"qti-template-constraint",
+	"qti-template-else",
+	"qti-template-else-if",
+	"qti-template-if",
+	"qti-template-inline",
+	"qti-template-processing",
+	"qti-template-variable",
+
+	// Test-level Sequencing & Control
+	"qti-adaptive-selection",
+	"qti-branch-rule",
+	"qti-item-session-control",
+	"qti-ordering",
+	"qti-pre-condition",
+	"qti-selection",
+
+	// Accessibility & Supplemental Content (Catalogs)
+	"qti-card",
+	"qti-card-entry",
+	"qti-catalog",
+	"qti-catalog-info",
+	"qti-file-href",
+	"qti-html-content",
+
+	// Companion Materials & Resources
+	"qti-calculator",
+	"qti-calculator-type",
+	"qti-companion-materials-info",
+	"qti-description",
+	"qti-digital-material",
+	"qti-increment-US",
+	"qti-major-increment",
+	"qti-minimum-length",
+	"qti-minor-increment",
+	"qti-physical-material",
+	"qti-protractor",
+	"qti-resource-icon",
+	"qti-rule",
+	"qti-rule-system-SI",
+	"qti-stylesheet"
 ] as const

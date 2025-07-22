@@ -54,7 +54,7 @@
             </math>.
         </p>
         
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>What is the length of 
                 <math xmlns="http://www.w3.org/1998/Math/MathML">
                     <mover accent="true">

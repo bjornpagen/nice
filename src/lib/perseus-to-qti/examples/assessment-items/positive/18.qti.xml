@@ -62,7 +62,7 @@
                 </tbody>
             </table>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>In which of the years was Libertyville most likely experiencing a trough in its business cycle?</qti-prompt>
             <qti-simple-choice identifier="A">
                 2014

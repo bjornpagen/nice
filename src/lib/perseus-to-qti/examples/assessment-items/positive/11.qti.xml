@@ -27,7 +27,7 @@
             <p><small>Image source: Image provided by Charl Durand under a Pexels license.</small></p>
         </div>
         
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="2">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="2">
             <qti-prompt>Based on the information in the text, what are two reasons why there are so few lions today?</qti-prompt>
             <qti-simple-choice identifier="A">
                 Hunters illegally kill lions for their teeth and claws.

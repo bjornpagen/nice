@@ -27,7 +27,7 @@
                 <p>Source: <a href="http://www.people-press.org/2017/05/03/public-trust-in-government-1958-2017/#chart">Pew Research Center</a></p>
             </blockquote>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>Which of the following accurately describes a trend of public trust in the federal government from 1958 to 2017?</qti-prompt>
             <qti-simple-choice identifier="A">
                 Public trust has generally declined, rising briefly during periods of economic growth and the 9/11 crisis

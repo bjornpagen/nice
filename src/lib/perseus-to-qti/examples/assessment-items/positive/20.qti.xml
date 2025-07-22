@@ -22,7 +22,7 @@
         <div id="reference_text">
             <img src="https://cdn.kastatic.org/ka-perseus-graphie/71814476610d1ed8a4e30e69e329b9ba02c0f4c9.svg" alt="Function f is graphed. The graph is a downward-opening parabola with its vertex at (-3, 4), and it passes through the points (-5, 0) and (-1, 0)."/>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>Which of the following points is the vertex of the parabola?</qti-prompt>
             <qti-simple-choice identifier="A">
                 <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mo>-</mo><mn>5</mn><mo>,</mo><mn>0</mn><mo>)</mo></math>

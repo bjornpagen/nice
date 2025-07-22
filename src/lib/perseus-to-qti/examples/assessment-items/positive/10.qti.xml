@@ -27,7 +27,7 @@
             </blockquote>
         </div>
         
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>What type of evidence would support this claim?</qti-prompt>
             <qti-simple-choice identifier="A">
                 Changes in laws regarding the rights of peasants after revolts were suppressed

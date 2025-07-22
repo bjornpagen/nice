@@ -56,7 +56,7 @@ xml:lang="en-US">
         </table>
     </div>
     
-    <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1">
+    <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1">
         <qti-prompt>Which mosaic plot correctly displays these results?</qti-prompt>
         <qti-simple-choice identifier="A">
             <img src="https://cdn.kastatic.org/ka-perseus-graphie/b934740e35cda05ab6eaf07f3120887a966a9d4e.svg" alt="A mosaic plot where the column for adults is wider than the column for children."/>

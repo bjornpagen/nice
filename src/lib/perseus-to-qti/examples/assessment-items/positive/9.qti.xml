@@ -56,7 +56,7 @@
             </ol>
             <p><small>Text source: <em>The Case of the Vanishing Golden Frogs: A Scientific Mystery</em> by Sandra Markle, Lerner Publishing Group, ©️ 2012.<br/>Image source: "Atelopus zeteki1" provided by Brian Gratwicke is in the public domain.</small></p>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>Which inference is best supported by Text 1?</qti-prompt>
             <qti-simple-choice identifier="A">
                 Scientists are hopeful that they will discover a cure to the deadly Bd fungus in the next few years.

@@ -32,7 +32,7 @@
             <img src="https://cdn.kastatic.org/ka-perseus-graphie/ae4196a094624e159449c904c453ccebf6eec26c.svg" width="180" height="88" alt="A rectangle divided into 6 equal parts. The first, third, and fifth parts are shaded."/>
         </div>
         
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="3">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="3">
             <qti-prompt>Which of the following rectangles have exactly <math xmlns="http://www.w3.org/1998/Math/MathML">
                 <mfrac>
                     <mn>3</mn>

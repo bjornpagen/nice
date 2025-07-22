@@ -25,7 +25,7 @@
                 <p>Ours is a society of written laws. Judges are not free to overlook plain <abbr title="relating to, created by, or regulated by a statue or law">statutory</abbr> commands on the strength of nothing more than suppositions about intentions or guesswork about expectations. In Title VII, Congress adopted broad language making it illegal for an employer to rely on an employee's sex when deciding to fire that employee.  We do not hesitate to recognize today a necessary consequence of that legislative choice: An employer who fires an individual merely for being gay or transgender defies the law.</p>
             </blockquote>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>What method of constitutional interpretation did Justice Gorsuch use in this opinion?</qti-prompt>
             <qti-simple-choice identifier="A">
                 History

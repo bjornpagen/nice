@@ -25,7 +25,7 @@
                  height="805"
                  alt="A cross-section of four horizontal rock layers. The top layer is labeled A, the one below it is B, the next is C, and the bottom layer is D."/>
         </div>
-        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1">
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>If these rock layers have been undisturbed, which layer is the youngest?</qti-prompt>
             <qti-simple-choice identifier="A">
                 A
