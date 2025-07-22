@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is a negative example because it is semantically incorrect, even if syntactically valid.
+  REASON FOR BEING BAD: Critical context from the original Perseus JSON is missing.
+  The source content specifies "Olaf starts counting at 365. He counts by fives."
+  This crucial information was omitted from the <qti-item-body>, making the question "What two numbers does Olaf count next?" impossible to answer.
+  This demonstrates a failure mode where the AI correctly converts the interaction but fails to include all necessary contextual text.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="nice-tmp:x0d18927f62bed18d"
+    title="Skip-count by 5s"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
+            <qti-prompt>What two numbers does Olaf count next?</qti-prompt>
+            <qti-simple-choice identifier="A">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>375</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>385</mn></math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">Not quite. Olaf is skip counting by fives, so after 365 comes 370 then 375, not 385.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>370</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>380</mn></math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">Not quite. After 370, Olaf counts 375, not 380.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>370</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>375</mn></math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">Correct! Olaf adds 5 to 365 to get 370, then 5 to 370 to get 375.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>370</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>385</mn></math>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">Not quite. After 370 comes 375, not 385.</qti-feedback-inline>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> Olaf adds 5 to 365 to get <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>370</mn></math>, then adds 5 to get <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>375</mn></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Remember, skip counting by fives means you keep adding 5 to each previous number, so the next numbers are 370 and 375.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>
