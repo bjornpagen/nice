@@ -262,7 +262,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			id: string,
 			title: string,
 			questions: { id: string; exerciseId: string; exerciseTitle: string }[],
-			metadata: Record<string, unknown>
+			_metadata: Record<string, unknown>
 		): string => {
 			const safeTitle = title.replace(/"/g, "&quot;")
 
@@ -276,8 +276,8 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			}
 
 			// Determine the number of questions to select from each exercise based on assessment type.
-			const selectCount =
-				metadata.khanAssessmentType === "UnitTest" || metadata.khanAssessmentType === "CourseChallenge" ? 4 : 2
+			// All summative assessments (Quizzes, Unit Tests, Course Challenges) will now select 2 questions per exercise.
+			const selectCount = 2
 
 			const sectionsXml = Array.from(questionsByExercise.entries())
 				.map(([exerciseId, { title: exerciseTitle, questionIds }]) => {
@@ -365,8 +365,6 @@ ${sectionsXml}
 				})
 			}
 
-			// For standalone exercises, we create a test that shows ALL questions.
-			// This is done by creating a single section with NO selection/ordering rules.
 			const safeTitle = exercise.title.replace(/"/g, "&quot;")
 			const itemRefsXml = questionIds
 				.map(
@@ -375,8 +373,10 @@ ${sectionsXml}
 				)
 				.join("\n                ")
 
-			// For standalone exercises, we create a test that shows ALL questions.
-			// This is done by creating a single section with NO selection/ordering rules.
+			// The number of questions to select. Math.min ensures we don't try to select more questions than exist.
+			const selectCountForExercise = Math.min(5, questionIds.length)
+
+			// For standalone exercises, we now create a test that selects a random sample of questions.
 			return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice:${exercise.id}" title="${safeTitle}">
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
@@ -384,6 +384,8 @@ ${sectionsXml}
     </qti-outcome-declaration>
     <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
         <qti-assessment-section identifier="SECTION_${exercise.id}" title="${safeTitle}" visible="true">
+            <qti-selection select="${selectCountForExercise}" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>
             ${itemRefsXml}
         </qti-assessment-section>
     </qti-test-part>
