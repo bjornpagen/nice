@@ -3,11 +3,11 @@ import { join } from "node:path"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import {
-	buildCourseContents,
-	buildUnitAssessments,
-	buildUnitContents,
 	type Course,
 	CourseSchema,
+	fetchCourseContents,
+	fetchUnitAssessments,
+	fetchUnitContents,
 	type Model,
 	type SourcedId,
 	type UnitComponent
@@ -150,7 +150,7 @@ async function main(): Promise<void> {
 	}
 
 	// Get course contents
-	const courseContentSourcedIds = buildCourseContents(course)
+	const courseContentSourcedIds = fetchCourseContents(course)
 	const courseContentObjects = resolveCourseContents(course, courseContentSourcedIds)
 
 	const results: AnalysisResults = {
@@ -169,10 +169,10 @@ async function main(): Promise<void> {
 	for (const unit of Object.values(course.children)) {
 		logger.debug("processing unit", { unitSourcedId: unit.sourcedId, title: unit.title })
 
-		const unitContentSourcedIds = buildUnitContents(unit)
+		const unitContentSourcedIds = fetchUnitContents(unit)
 		const unitContentObjects = resolveUnitContents(unit, unitContentSourcedIds)
 
-		const unitAssessmentSourcedIds = buildUnitAssessments(unit)
+		const unitAssessmentSourcedIds = fetchUnitAssessments(unit)
 		const unitAssessmentObjects = resolveUnitAssessments(unit, unitAssessmentSourcedIds)
 
 		results.units.push({
@@ -204,8 +204,8 @@ async function main(): Promise<void> {
 		let md = "# Course Analysis Results\n\n"
 		md += `**Course**: ${course.title} (${course.sourcedId})\n\n`
 
-		// buildCourseContents() results
-		md += "## buildCourseContents() Results\n\n"
+		// fetchCourseContents() results
+		md += "## fetchCourseContents() Results\n\n"
 		md += `Found ${results.course.contentSourcedIds.length} course-level contents:\n\n`
 
 		for (const content of results.course.contentObjects) {
@@ -238,8 +238,8 @@ async function main(): Promise<void> {
 			md += `## Unit: ${unit.title}\n\n`
 			md += `**SourcedId**: \`${unit.sourcedId}\`\n\n`
 
-			// buildUnitContents() results
-			md += "### buildUnitContents() Results\n\n"
+			// fetchUnitContents() results
+			md += "### fetchUnitContents() Results\n\n"
 			md += `Found ${unit.contentSourcedIds.length} unit contents:\n\n`
 
 			for (const content of unit.contentObjects) {
@@ -277,8 +277,8 @@ async function main(): Promise<void> {
 			}))
 			md += `\`\`\`json\n${JSON.stringify(simplifiedUnitContentObjects, null, 2)}\n\`\`\`\n\n`
 
-			// buildUnitAssessments() results
-			md += "### buildUnitAssessments() Results\n\n"
+			// fetchUnitAssessments() results
+			md += "### fetchUnitAssessments() Results\n\n"
 			md += `Found ${unit.assessmentSourcedIds.length} assessments:\n\n`
 
 			for (const assessment of unit.assessmentObjects) {

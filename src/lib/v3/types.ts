@@ -1089,7 +1089,7 @@ export function buildOneRosterCourse(
 	return course
 }
 
-export function buildUnitContents(unit: UnitComponent): SourcedId[] {
+export function fetchUnitContents(unit: UnitComponent): SourcedId[] {
 	const contents: { sourcedId: SourcedId; order: number }[] = []
 
 	contents.push(
@@ -1104,8 +1104,8 @@ export function buildUnitContents(unit: UnitComponent): SourcedId[] {
 	})
 
 	contents.push(
-		...Object.entries(unit.resources).map(([sourcedId, resource]) => ({
-			sourcedId,
+		...Object.values(unit.resources).map((resource) => ({
+			sourcedId: resource.sourcedId,
 			order: resource.order
 		}))
 	)
@@ -1123,10 +1123,10 @@ export function buildUnitContents(unit: UnitComponent): SourcedId[] {
 	return contents.map((content) => content.sourcedId)
 }
 
-export function buildUnitAssessments(unit: UnitComponent): SourcedId[] {
+export function fetchUnitAssessments(unit: UnitComponent): SourcedId[] {
 	const assessments: { sourcedId: SourcedId; order: number }[] = []
 
-	const contents = buildUnitContents(unit)
+	const contents = fetchUnitContents(unit)
 	for (const content of contents) {
 		const resource = unit.resources[content]
 		if (resource != null) {
@@ -1182,7 +1182,7 @@ export function buildUnitAssessments(unit: UnitComponent): SourcedId[] {
 	return assessments.map((assessment) => assessment.sourcedId)
 }
 
-export function buildCourseContents(course: Course): SourcedId[] {
+export function fetchCourseContents(course: Course): SourcedId[] {
 	const contents: { sourcedId: SourcedId; order: number }[] = []
 
 	contents.push(
@@ -1196,7 +1196,13 @@ export function buildCourseContents(course: Course): SourcedId[] {
 		count: contents.length
 	})
 
-	logger.debug("building course contents: pushed children and resources", {
+	contents.push(
+		...Object.values(course.resources).map((resource) => ({
+			sourcedId: resource.sourcedId,
+			order: resource.order
+		}))
+	)
+	logger.debug("building course contents: pushed resources", {
 		courseSourcedId: course.sourcedId,
 		count: contents.length
 	})
