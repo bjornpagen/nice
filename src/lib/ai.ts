@@ -208,10 +208,11 @@ When you encounter Perseus widgets:
 3.  **MENTAL CHECK.**
     Before you output your final answer, perform a mental check: "Did I close every single tag I opened with its full name? Is the final closing tag present?"
 
-4.  **ESCAPE ALL XML-RESERVED CHARACTERS.**
-    In text nodes and attribute values, you must never emit raw \`<\`, \`>\`, \`&\`, \`'\` or \`"\` – always replace them with \`&lt;\`, \`&gt;\`, \`&amp;\`, \`&apos;\` and \`&quot;\` respectively.
-    - ✅ **CORRECT:** \`&lt;mo&gt;&lt;/mo&gt;\`, \`title="AT&amp;T"\`
-    - ❌ **FORBIDDEN:** \`<mo>\`, \`title="AT&T"\`
+4.  **ESCAPE XML-RESERVED CHARACTERS IN CONTENT ONLY.**
+    In text content and attribute values, you must escape special XML characters. However, do NOT escape the XML tags themselves.
+    - ✅ **CORRECT:** \`<mo>&lt;</mo>\` (for less-than symbol), \`<mo>&gt;</mo>\` (for greater-than symbol), \`title="AT&amp;T"\`
+    - ❌ **FORBIDDEN:** \`<mo><</mo>\` (raw less-than), \`title="AT&T"\` (raw ampersand)
+    - ❌ **FORBIDDEN:** \`&lt;mo&gt;&lt;/mo&gt;\` (do NOT escape the actual XML tags)
 
 ---
 
