@@ -209,6 +209,7 @@ const CreateClassInputSchema = ClassWriteSchema
 // --- NEW: Custom Error for API Failures ---
 export const ErrOneRosterAPI = errors.new("oneroster api error")
 export const ErrOneRosterNotFound = errors.new("oneroster resource not found")
+export const ErrOneRosterNotFoundAs422 = errors.new("oneroster resource not found (422)")
 
 // Export the read schema types that will be used by server actions
 export type CourseReadSchemaType = z.infer<typeof CourseReadSchema>
@@ -485,6 +486,13 @@ export class Client {
 			// ✅ USE THE CUSTOM ERROR TYPE
 			if (response.status === 404) {
 				throw errors.wrap(ErrOneRosterNotFound, `oneroster api error: status 404 on ${endpoint}`)
+			}
+			// Handle 422 errors that indicate "not found"
+			if (response.status === 422 && text.toLowerCase().includes("not found")) {
+				throw errors.wrap(
+					ErrOneRosterNotFoundAs422,
+					`oneroster api error: status 422 on ${endpoint} - resource not found`
+				)
 			}
 			throw errors.wrap(ErrOneRosterAPI, `status ${response.status} on ${endpoint}`)
 		}

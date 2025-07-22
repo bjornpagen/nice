@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
-import { ErrOneRosterNotFound } from "@/lib/oneroster"
+import { ErrOneRosterNotFound, ErrOneRosterNotFoundAs422 } from "@/lib/oneroster"
 
 export const ingestClass = inngest.createFunction(
 	{ id: "ingest-class", name: "Ingest OneRoster Class" },
@@ -65,8 +65,8 @@ export const ingestClass = inngest.createFunction(
 			// Use PUT for upsert behavior
 			const result = await errors.try(oneroster.updateClass(classData.sourcedId, cleanClassData))
 			if (result.error) {
-				// Check if it's a 404 error - if so, create instead
-				if (errors.is(result.error, ErrOneRosterNotFound)) {
+				// Check if it's a 404 error OR a 422 "not found" error - if so, create instead
+				if (errors.is(result.error, ErrOneRosterNotFound) || errors.is(result.error, ErrOneRosterNotFoundAs422)) {
 					logger.info("class not found, creating new", { sourcedId: classData.sourcedId })
 					const createResult = await errors.try(oneroster.createClass(cleanClassData))
 					if (createResult.error) {

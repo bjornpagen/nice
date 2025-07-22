@@ -35,7 +35,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		name: "Orchestrate Course Ingestion to QTI"
 	},
 	{ event: "qti/course.ingest" },
-	async ({ event, step, logger }) => {
+	async ({ event, logger }) => {
 		const { courseId } = event.data
 		logger.info("starting qti json dump workflow from database", { courseId })
 
@@ -225,83 +225,80 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		}
 
 		// Step 3: Assemble the JSON payloads from the fetched data.
-		const { assessmentItems, assessmentStimuli, assessmentTests } = await step.run(
-			"assemble-json-payloads-from-db",
-			async () => {
-				const items = allQuestions.map((q) => {
-					// TypeScript can't infer that validation happened above, so we need to check
-					if (!q.xml) {
-						throw errors.new("unreachable: question should have been validated for XML")
-					}
-					const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice:${q.id}`, q.exerciseTitle)
-					return {
-						xml: finalXml,
-						metadata: {
-							khanId: q.id,
-							khanExerciseId: q.exerciseId,
-							khanExerciseSlug: q.exerciseSlug,
-							khanExerciseTitle: q.exerciseTitle
-						}
-					}
-				})
+		const items = allQuestions.map((q) => {
+			// TypeScript can't infer that validation happened above, so we need to check
+			if (!q.xml) {
+				throw errors.new("unreachable: question should have been validated for XML")
+			}
+			const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice:${q.id}`, q.exerciseTitle)
+			return {
+				xml: finalXml,
+				metadata: {
+					khanId: q.id,
+					khanExerciseId: q.exerciseId,
+					khanExerciseSlug: q.exerciseSlug,
+					khanExerciseTitle: q.exerciseTitle
+				}
+			}
+		})
 
-				const stimuli = articlesWithXml.map((a) => {
-					// All articles now have XML (either original or default)
-					if (!a.xml) {
-						throw errors.new("unreachable: article should have xml after default generation")
-					}
-					const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice:${a.id}`, a.title)
-					return {
-						xml: finalXml,
-						metadata: {
-							khanId: a.id,
-							khanSlug: a.slug,
-							khanTitle: a.title
-						}
-					}
-				})
+		const stimuli = articlesWithXml.map((a) => {
+			// All articles now have XML (either original or default)
+			if (!a.xml) {
+				throw errors.new("unreachable: article should have xml after default generation")
+			}
+			const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice:${a.id}`, a.title)
+			return {
+				xml: finalXml,
+				metadata: {
+					khanId: a.id,
+					khanSlug: a.slug,
+					khanTitle: a.title
+				}
+			}
+		})
 
-				const buildTestObject = (
-					id: string,
-					title: string,
-					questions: { id: string; exerciseId: string; exerciseTitle: string }[],
-					metadata: Record<string, unknown>
-				): string => {
-					const safeTitle = title.replace(/"/g, "&quot;")
+		const buildTestObject = (
+			id: string,
+			title: string,
+			questions: { id: string; exerciseId: string; exerciseTitle: string }[],
+			metadata: Record<string, unknown>
+		): string => {
+			const safeTitle = title.replace(/"/g, "&quot;")
 
-					// Group questions by their source exercise.
-					const questionsByExercise = new Map<string, { title: string; questionIds: string[] }>()
-					for (const q of questions) {
-						if (!questionsByExercise.has(q.exerciseId)) {
-							questionsByExercise.set(q.exerciseId, { title: q.exerciseTitle, questionIds: [] })
-						}
-						questionsByExercise.get(q.exerciseId)?.questionIds.push(q.id)
-					}
+			// Group questions by their source exercise.
+			const questionsByExercise = new Map<string, { title: string; questionIds: string[] }>()
+			for (const q of questions) {
+				if (!questionsByExercise.has(q.exerciseId)) {
+					questionsByExercise.set(q.exerciseId, { title: q.exerciseTitle, questionIds: [] })
+				}
+				questionsByExercise.get(q.exerciseId)?.questionIds.push(q.id)
+			}
 
-					// Determine the number of questions to select from each exercise based on assessment type.
-					const selectCount =
-						metadata.khanAssessmentType === "UnitTest" || metadata.khanAssessmentType === "CourseChallenge" ? 4 : 2
+			// Determine the number of questions to select from each exercise based on assessment type.
+			const selectCount =
+				metadata.khanAssessmentType === "UnitTest" || metadata.khanAssessmentType === "CourseChallenge" ? 4 : 2
 
-					const sectionsXml = Array.from(questionsByExercise.entries())
-						.map(([exerciseId, { title: exerciseTitle, questionIds }]) => {
-							const safeExerciseTitle = exerciseTitle.replace(/"/g, "&quot;")
-							const itemRefsXml = questionIds
-								.map(
-									(itemId, itemIndex) =>
-										`<qti-assessment-item-ref identifier="nice:${itemId}" href="/assessment-items/nice:${itemId}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
-								)
-								.join("\n                ")
+			const sectionsXml = Array.from(questionsByExercise.entries())
+				.map(([exerciseId, { title: exerciseTitle, questionIds }]) => {
+					const safeExerciseTitle = exerciseTitle.replace(/"/g, "&quot;")
+					const itemRefsXml = questionIds
+						.map(
+							(itemId, itemIndex) =>
+								`<qti-assessment-item-ref identifier="nice:${itemId}" href="/assessment-items/nice:${itemId}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+						)
+						.join("\n                ")
 
-							return `        <qti-assessment-section identifier="SECTION_${exerciseId}" title="${safeExerciseTitle}" visible="false">
+					return `        <qti-assessment-section identifier="SECTION_${exerciseId}" title="${safeExerciseTitle}" visible="false">
             <qti-selection select="${Math.min(selectCount, questionIds.length)}" with-replacement="false"/>
             <qti-ordering shuffle="true"/>
             ${itemRefsXml}
         </qti-assessment-section>`
-						})
-						.join("\n")
+				})
+				.join("\n")
 
-					// The entire test is now constructed as a single XML string.
-					return `<?xml version="1.0" encoding="UTF-8"?>
+			// The entire test is now constructed as a single XML string.
+			return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice:${id}" title="${safeTitle}">
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
@@ -310,77 +307,77 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 ${sectionsXml}
     </qti-test-part>
 </qti-assessment-test>`
+		}
+
+		const explicitTests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => {
+			const questionIds = data.exerciseIds.flatMap((exerciseId) => {
+				const questions = questionsByExerciseId.get(exerciseId)
+				if (!questions) {
+					logger.warn("Exercise referenced by assessment has no questions", {
+						assessmentId,
+						exerciseId,
+						assessmentTitle: data.title
+					})
+					return []
 				}
+				return questions
+			})
 
-				const explicitTests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => {
-					const questionIds = data.exerciseIds.flatMap((exerciseId) => {
-						const questions = questionsByExerciseId.get(exerciseId)
-						if (!questions) {
-							logger.warn("Exercise referenced by assessment has no questions", {
-								assessmentId,
-								exerciseId,
-								assessmentTitle: data.title
-							})
-							return []
-						}
-						return questions
-					})
-
-					if (questionIds.length === 0) {
-						logger.info("Creating empty test for assessment without questions", {
-							assessmentId,
-							assessmentTitle: data.title,
-							assessmentType: data.type
-						})
-					}
-
-					// Map question IDs to full question objects with exercise information
-					const allQuestionsForTest = questionIds.map((id) => {
-						const question = allQuestions.find((q) => q.id === id)
-						if (!question) {
-							logger.error("Question not found when building test", { questionId: id, assessmentId })
-							throw errors.new(`question ${id} not found when building test`)
-						}
-						return {
-							id: question.id,
-							exerciseId: question.exerciseId,
-							exerciseTitle: question.exerciseTitle
-						}
-					})
-
-					return buildTestObject(assessmentId, data.title, allQuestionsForTest, {
-						khanId: assessmentId,
-						khanSlug: data.slug,
-						khanTitle: data.title,
-						khanDescription: data.description,
-						khanAssessmentType: data.type
-					})
+			if (questionIds.length === 0) {
+				logger.info("Creating empty test for assessment without questions", {
+					assessmentId,
+					assessmentTitle: data.title,
+					assessmentType: data.type
 				})
+			}
 
-				const exerciseTests = allExercises.map((exercise) => {
-					// Get questions for this exercise (may be empty)
-					const questionIds = questionsByExerciseId.get(exercise.id) || []
+			// Map question IDs to full question objects with exercise information
+			const allQuestionsForTest = questionIds.map((id) => {
+				const question = allQuestions.find((q) => q.id === id)
+				if (!question) {
+					logger.error("Question not found when building test", { questionId: id, assessmentId })
+					throw errors.new(`question ${id} not found when building test`)
+				}
+				return {
+					id: question.id,
+					exerciseId: question.exerciseId,
+					exerciseTitle: question.exerciseTitle
+				}
+			})
 
-					if (questionIds.length === 0) {
-						logger.info("Creating empty test for exercise without questions", {
-							exerciseId: exercise.id,
-							exerciseTitle: exercise.title
-						})
-					}
+			return buildTestObject(assessmentId, data.title, allQuestionsForTest, {
+				khanId: assessmentId,
+				khanSlug: data.slug,
+				khanTitle: data.title,
+				khanDescription: data.description,
+				khanAssessmentType: data.type
+			})
+		})
 
-					// For standalone exercises, we create a test that shows ALL questions.
-					// This is done by creating a single section with NO selection/ordering rules.
-					const safeTitle = exercise.title.replace(/"/g, "&quot;")
-					const itemRefsXml = questionIds
-						.map(
-							(itemId, index) =>
-								`<qti-assessment-item-ref identifier="nice:${itemId}" href="/assessment-items/nice:${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
-						)
-						.join("\n                ")
+		const exerciseTests = allExercises.map((exercise) => {
+			// Get questions for this exercise (may be empty)
+			const questionIds = questionsByExerciseId.get(exercise.id) || []
 
-					// For standalone exercises, we create a test that shows ALL questions.
-					// This is done by creating a single section with NO selection/ordering rules.
-					return `<?xml version="1.0" encoding="UTF-8"?>
+			if (questionIds.length === 0) {
+				logger.info("Creating empty test for exercise without questions", {
+					exerciseId: exercise.id,
+					exerciseTitle: exercise.title
+				})
+			}
+
+			// For standalone exercises, we create a test that shows ALL questions.
+			// This is done by creating a single section with NO selection/ordering rules.
+			const safeTitle = exercise.title.replace(/"/g, "&quot;")
+			const itemRefsXml = questionIds
+				.map(
+					(itemId, index) =>
+						`<qti-assessment-item-ref identifier="nice:${itemId}" href="/assessment-items/nice:${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
+				)
+				.join("\n                ")
+
+			// For standalone exercises, we create a test that shows ALL questions.
+			// This is done by creating a single section with NO selection/ordering rules.
+			return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice:${exercise.id}" title="${safeTitle}">
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
@@ -391,13 +388,13 @@ ${sectionsXml}
         </qti-assessment-section>
     </qti-test-part>
 </qti-assessment-test>`
-				})
+		})
 
-				const tests = [...explicitTests, ...exerciseTests]
+		const tests = [...explicitTests, ...exerciseTests]
 
-				return { assessmentItems: items, assessmentStimuli: stimuli, assessmentTests: tests }
-			}
-		)
+		const assessmentItems = items
+		const assessmentStimuli = stimuli
+		const assessmentTests = tests
 
 		// Step 4: Write the final JSON files to the data/ directory.
 		const course = await db.query.niceCourses.findFirst({
@@ -408,16 +405,14 @@ ${sectionsXml}
 			throw errors.new("course not found for final dump")
 		}
 
-		const outputDir = await step.run("write-json-dump", async () => {
-			const courseDir = path.join(process.cwd(), "data", course.slug, "qti")
-			await fs.mkdir(courseDir, { recursive: true })
+		const courseDir = path.join(process.cwd(), "data", course.slug, "qti")
+		await fs.mkdir(courseDir, { recursive: true })
 
-			await fs.writeFile(path.join(courseDir, "assessmentItems.json"), JSON.stringify(assessmentItems, null, 2))
-			await fs.writeFile(path.join(courseDir, "assessmentStimuli.json"), JSON.stringify(assessmentStimuli, null, 2))
-			await fs.writeFile(path.join(courseDir, "assessmentTests.json"), JSON.stringify(assessmentTests, null, 2))
+		await fs.writeFile(path.join(courseDir, "assessmentItems.json"), JSON.stringify(assessmentItems, null, 2))
+		await fs.writeFile(path.join(courseDir, "assessmentStimuli.json"), JSON.stringify(assessmentStimuli, null, 2))
+		await fs.writeFile(path.join(courseDir, "assessmentTests.json"), JSON.stringify(assessmentTests, null, 2))
 
-			return courseDir
-		})
+		const outputDir = courseDir
 
 		logger.info("completed QTI JSON dump workflow successfully", {
 			courseId,
