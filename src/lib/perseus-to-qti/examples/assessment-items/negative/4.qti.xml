@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is a negative example because it contains critical semantic errors and fails to follow best practices for a multiple-response question.
+
+  REASONS FOR BEING A NEGATIVE EXAMPLE:
+
+  1.  CRITICAL: Leaking the Number of Correct Answers - The interaction is set with `max-choices="3"`. In a multiple-response question where the user must identify *all* correct options, this attribute reveals that there are exactly three correct answers. This fundamentally undermines the assessment's validity by providing a significant clue. For a 'select all that apply' style question, `max-choices` should be set to `0` (unlimited) or the total number of choices (in this case, 4) to avoid leaking this information.
+
+  2.  CRITICAL: Loss of Mathematical Semantics - The prompt ("the number 14") and all choices (e.g., "1 ten + 4 ones", "10 + 1 + 1 + 1 + 1") contain mathematical content that was represented with LaTeX in the source JSON. This output incorrectly converts them to plain text. They should be wrapped in <math> tags with proper MathML markup to preserve their mathematical meaning, ensure accessibility for screen readers, and support correct rendering by math-aware systems.
+-->
+<qti-assessment-item xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd" identifier="nice-tmp:xbdba8f498431e983" title="2-digit place value challenge" time-dependent="false" xml:lang="en-US">
+    <qti-response-declaration base-type="identifier" cardinality="multiple" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+            <qti-value>B</qti-value>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+    <qti-item-body>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="3">
+            <qti-prompt>Which are the same as the number 14?</qti-prompt>
+            <qti-simple-choice identifier="A">
+                1 ten + 4 ones
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">Correct! 1 ten + 4 ones equals 14.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                10 + 1 + 1 + 1 + 1
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">Correct! Summing these gives 14.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                1 ten + 1 + 1 + 1 + 1
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">Correct! This also equals 14.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                1 ten + 4 tens
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">Not quite. 1 ten + 4 tens equals 50, not 14.</qti-feedback-inline>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> You selected all representations that equal 14.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Check each option to see if it adds up to 14.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+</qti-assessment-item>
