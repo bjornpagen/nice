@@ -3,7 +3,7 @@
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
-    identifier="measure-length-different-units"
+    identifier="measure-length-different-units-final"
     title="Measure length in different units"
     time-dependent="false"
     xml:lang="en-US">
@@ -41,9 +41,11 @@
                      width="320" height="125"
                      style="position: absolute; top: 0; left: 0; z-index: 0;"/>
                 
-                <!-- Flexbox container for ruler labels. 'gap' controls spacing between numbers. -->
-                <div style="position: absolute; top: 98px; left: 0px; z-index: 1; font-size:12px; font-family: sans-serif; display: flex; gap: 29px;">
-                    <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math></div>
+                <!-- Unit label, now anchored from the bottom of the container. -->
+                <div style="position: absolute; bottom: 22px; left: 8px; z-index: 1; font-size:12px; font-family: sans-serif;">cm</div>
+                
+                <!-- Flexbox container for ruler labels, now anchored from the bottom of the container. -->
+                <div style="position: absolute; bottom: 22px; left: 28px; z-index: 1; font-size:12px; font-family: sans-serif; display: flex; gap: 29.25px;">
                     <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn></math></div>
                     <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math></div>
                     <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math></div>
