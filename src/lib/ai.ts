@@ -70,10 +70,100 @@ ${example.qti}
 ${examplesXml}
 </examples>
 
+<critical_negative_examples>
+<!-- THESE ARE EXAMPLES OF WHAT MUST NEVER APPEAR IN QTI XML -->
+<negative_example reason="Perseus widget artifacts cause QTI API to return 'unknown' type and fail validation">
+  <perseus_artifact>[[☃ plotter 1]]</perseus_artifact>
+  <explanation>This is a Perseus-specific interactive plotter widget. It MUST be completely removed or converted to a standard QTI interaction.</explanation>
+</negative_example>
+<negative_example reason="Perseus interactive graphs are not valid QTI">
+  <perseus_artifact>[[☃ interactive-graph 1]]</perseus_artifact>
+  <explanation>Perseus interactive graph widgets have no QTI equivalent and MUST be removed.</explanation>
+</negative_example>
+<negative_example reason="Perseus number line widgets are not QTI standard">
+  <perseus_artifact>[[☃ number-line 1]]</perseus_artifact>
+  <explanation>Number line widgets from Perseus cannot be represented in QTI and MUST be removed.</explanation>
+</negative_example>
+<negative_example reason="Perseus table widgets are not QTI interactions">
+  <perseus_artifact>[[☃ table 1]]</perseus_artifact>
+  <explanation>Perseus table widgets must be converted to static HTML tables or removed entirely.</explanation>
+</negative_example>
+<negative_example reason="Any Perseus widget notation will break QTI">
+  <perseus_artifact>[[☃ ANY_WIDGET_NAME ANY_NUMBER]]</perseus_artifact>
+  <explanation>ANY text matching the pattern [[☃ ...]] is a Perseus widget and MUST be removed. The QTI API cannot process these and will return 'unknown' type, causing system failures.</explanation>
+</negative_example>
+<negative_example reason="CDATA sections are not allowed in QTI XML">
+  <perseus_artifact><![CDATA[{"maxY":7,"type":"pic"}]]></perseus_artifact>
+  <explanation>CDATA sections are FORBIDDEN in QTI. All data must be properly XML-encoded. Never use <![CDATA[...]]> anywhere.</explanation>
+</negative_example>
+<negative_example reason="Perseus markdown image syntax is not valid QTI">
+  <perseus_artifact>![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/example.svg)</perseus_artifact>
+  <explanation>This is Perseus-specific markdown syntax. Convert to proper HTML img tag: <img src="https://cdn.kastatic.org/ka-perseus-graphie/example.svg" alt="description"/></explanation>
+</negative_example>
+<negative_example reason="Perseus URL schemes must be converted">
+  <perseus_artifact>web+graphie://cdn.kastatic.org/...</perseus_artifact>
+  <explanation>Perseus uses custom URL schemes like 'web+graphie://'. These MUST be converted to standard 'https://' URLs.</explanation>
+</negative_example>
+<negative_example reason="Non-standard QTI elements are AI hallucinations">
+  <perseus_artifact><qti-plotter-interaction response-identifier="RESPONSE"></perseus_artifact>
+  <explanation>There is NO such element as qti-plotter-interaction in QTI 3.0. This is an AI hallucination. Use only standard QTI elements like qti-choice-interaction, qti-text-entry-interaction, etc.</explanation>
+</negative_example>
+<negative_example reason="More non-standard QTI elements">
+  <perseus_artifact><qti-graphing-interaction><qti-graphing-category>...</perseus_artifact>
+  <explanation>qti-graphing-interaction, qti-plotter-graph, qti-plotter-axis, qti-graphing-category are ALL INVALID. These do not exist in QTI 3.0.</explanation>
+</negative_example>
+<negative_example reason="Object tags for plotters are not QTI">
+  <perseus_artifact><object data-type="plotter" type="application/json"><param name="options">...</perseus_artifact>
+  <explanation>This is NOT a valid QTI interaction. The object element cannot be used to create interactive assessments in QTI.</explanation>
+</negative_example>
+</critical_negative_examples>
+
 <instructions>
 Below is a Perseus JSON object. Your task is to provide the corresponding QTI 3.0 XML. Use the PERFECT examples above to inform your output. Respond with ONLY the XML content.
 
 Your output will be fed directly into an automated XML parser. If the XML is not well-formed, the entire system will crash. Pay extreme attention to the rules below.
+
+---
+### CRITICAL: PERSEUS ARTIFACTS REMOVAL ###
+
+**THE MOST CRITICAL RULE: NO PERSEUS WIDGET ARTIFACTS**
+
+Perseus uses special notation like [[☃ widget-name 1]] for interactive widgets. These MUST NEVER appear in your QTI output. If you include ANY Perseus widget notation:
+- The QTI API will fail to recognize the interaction type
+- The system will receive "unknown" as the interaction type
+- The entire processing pipeline will fail
+
+When you encounter Perseus widgets:
+1. If it's a graph/plotter/drawing widget asking students to create something, you MUST either:
+   - Remove the interaction entirely and make it an informational item
+   - Convert it to a text-entry asking for coordinates or values
+   - Convert it to multiple-choice if there are discrete answer options
+2. NEVER output the [[☃ ...]] notation itself
+3. NEVER reference Perseus-specific features that have no QTI equivalent
+
+**ADDITIONAL CRITICAL BANS:**
+
+1. **NO CDATA SECTIONS**: Never use \`<![CDATA[...]]>\` anywhere in the XML. All content must be properly XML-encoded.
+
+2. **NO PERSEUS MARKDOWN IMAGES**: Convert any \`![alt text](url)\` syntax to proper HTML: \`<img src="url" alt="alt text"/>\`
+
+3. **NO PERSEUS URL SCHEMES**: Convert \`web+graphie://\` to \`https://\`. Perseus uses custom URL protocols that are invalid in standard web contexts.
+
+4. **NO INVENTED QTI ELEMENTS**: Do NOT create elements like:
+   - \`<qti-plotter-interaction>\` (DOES NOT EXIST)
+   - \`<qti-graphing-interaction>\` (DOES NOT EXIST)
+   - \`<qti-plotter-graph>\` (DOES NOT EXIST)
+   - \`<qti-plotter-axis>\` (DOES NOT EXIST)
+   - \`<qti-graphing-category>\` (DOES NOT EXIST)
+   - \`<object data-type="plotter">\` (NOT A VALID QTI INTERACTION)
+   
+   These are AI hallucinations. Use ONLY the standard QTI 3.0 elements shown in the examples.
+
+5. **WHEN YOU CAN'T CONVERT**: If a Perseus widget has no QTI equivalent, you MUST:
+   - Remove the interactive element entirely
+   - Keep any instructional text
+   - Add a note in the prompt like "Students should work this problem on paper"
+   - Set the response type to text-entry where they can enter their final answer
 
 ---
 ### ABSOLUTE XML RULES - NON-NEGOTIABLE ###
@@ -257,6 +347,28 @@ export async function generateQtiFromPerseus(
 		rootMatch[0].trim()
 	).trim()
 
+	// Step 5: Check for Perseus artifacts that should never appear in QTI
+	// This regex captures Perseus widget notation like [[☃ widget-name 1]]
+	// Named groups: fullMatch, widgetName, widgetNumber (optional), widgetContent (fallback for any remaining content)
+	const perseusArtifactRegex =
+		/\[\[☃\s*(?<widgetName>[a-zA-Z0-9_-]+)(?:\s+(?<widgetNumber>\d+))?(?:\s+(?<widgetContent>[^\]]+))?\]\]/
+	const perseusArtifactMatch = extractedXml.match(perseusArtifactRegex)
+	if (perseusArtifactMatch) {
+		logger.error("detected perseus widget artifact in generated qti xml", {
+			artifact: perseusArtifactMatch[0],
+			widgetType: perseusArtifactMatch.groups?.widgetName,
+			widgetNumber: perseusArtifactMatch.groups?.widgetNumber,
+			extraContent: perseusArtifactMatch.groups?.widgetContent,
+			context: extractedXml.substring(
+				Math.max(0, (perseusArtifactMatch.index ?? 0) - 100),
+				Math.min(extractedXml.length, (perseusArtifactMatch.index ?? 0) + 100)
+			)
+		})
+		throw errors.new(
+			`invalid ai xml output: contains perseus widget artifact '${perseusArtifactMatch[0]}' which will cause qti api to fail`
+		)
+	}
+
 	logger.debug("successfully generated and extracted qti xml from openai", {
 		xmlLength: extractedXml.length,
 		rootTag: extractedRootTag,
@@ -435,6 +547,28 @@ Return a single JSON object with the final corrected XML.
 		(hasXmlDeclaration && xmlDeclMatch?.groups?.declaration ? xmlDeclMatch.groups.declaration : "") +
 		rootMatch[0].trim()
 	).trim()
+
+	// Step 5: Check for Perseus artifacts that should never appear in QTI
+	// This regex captures Perseus widget notation like [[☃ widget-name 1]]
+	// Named groups: fullMatch, widgetName, widgetNumber (optional), widgetContent (fallback for any remaining content)
+	const perseusArtifactRegex =
+		/\[\[☃\s*(?<widgetName>[a-zA-Z0-9_-]+)(?:\s+(?<widgetNumber>\d+))?(?:\s+(?<widgetContent>[^\]]+))?\]\]/
+	const perseusArtifactMatch = extractedXml.match(perseusArtifactRegex)
+	if (perseusArtifactMatch) {
+		logger.error("detected perseus widget artifact in generated qti xml", {
+			artifact: perseusArtifactMatch[0],
+			widgetType: perseusArtifactMatch.groups?.widgetName,
+			widgetNumber: perseusArtifactMatch.groups?.widgetNumber,
+			extraContent: perseusArtifactMatch.groups?.widgetContent,
+			context: extractedXml.substring(
+				Math.max(0, (perseusArtifactMatch.index ?? 0) - 100),
+				Math.min(extractedXml.length, (perseusArtifactMatch.index ?? 0) + 100)
+			)
+		})
+		throw errors.new(
+			`invalid ai xml output: contains perseus widget artifact '${perseusArtifactMatch[0]}' which will cause qti api to fail`
+		)
+	}
 
 	logger.debug("correction complete", {
 		originalLength: invalidXml.length,

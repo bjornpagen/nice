@@ -43,9 +43,9 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		id: "convert-perseus-question-to-qti-item",
 		name: "Convert Perseus Question to QTI Item",
 		concurrency: {
-			// Limit to 5 concurrent executions, shared across all OpenAI functions account-wide.
+			// Limit to 10 concurrent executions, shared across all OpenAI functions account-wide.
 			// This global limit prevents rate-limiting from the OpenAI API.
-			limit: 5,
+			limit: 160,
 			key: '"openai-api-global-concurrency"'
 		}
 	},
