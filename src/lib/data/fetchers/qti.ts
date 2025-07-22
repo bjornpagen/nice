@@ -10,3 +10,12 @@ export const getAllQuestionsForTest = cache(
 	["qti-getAllQuestionsForTest"],
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
+
+export const getAssessmentTest = cache(
+	async (identifier: string) => {
+		logger.info("getAssessmentTest called", { identifier })
+		return qti.getAssessmentTest(identifier)
+	},
+	["qti-getAssessmentTest"],
+	{ revalidate: false } // equivalent to cacheLife("max")
+)

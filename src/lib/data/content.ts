@@ -1,10 +1,12 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
+import { connection } from "next/server"
 import { getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
-import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
+import { getAllQuestionsForTest, getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
+import { applyQtiSelectionAndOrdering } from "./assessment"
 import { fetchLessonLayoutData } from "./lesson"
 import { extractYouTubeId } from "./utils"
 
@@ -65,8 +67,10 @@ export async function fetchExercisePageData(params: {
 	lesson: string
 	exercise: string
 }): Promise<ExercisePageData> {
+	// Opt into dynamic rendering since we use Math.random() for shuffling
+	await connection()
+
 	logger.info("fetchExercisePageData called", { params })
-	// Fetch layout data and exercise data in parallel for performance
 	// Pass only the params needed by fetchLessonLayoutData, not the exercise param
 	const layoutDataPromise = fetchLessonLayoutData({
 		subject: params.subject,
@@ -136,9 +140,19 @@ export async function fetchExercisePageData(params: {
 		throw errors.new("QTI test questions: malformed data")
 	}
 
-	const questions = questionsResult.data.questions.map((q) => ({
-		id: q.question.identifier
-	}))
+	// Fetch the assessment test XML to get selection and ordering rules
+	const assessmentTestResult = await errors.try(getAssessmentTest(resource.sourcedId))
+	if (assessmentTestResult.error) {
+		logger.error("failed to fetch assessment test XML for exercise", {
+			testSourcedId: resource.sourcedId,
+			error: assessmentTestResult.error
+		})
+		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for exercise")
+	}
+
+	// Use the same helper. It will correctly handle exercises that don't have
+	// selection/ordering rules by returning all questions.
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, questionsResult.data.questions)
 
 	return {
 		exercise: {

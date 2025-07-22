@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
+import { connection } from "next/server"
 import {
 	getAllComponentResources,
 	getAllCoursesBySlug,
@@ -9,16 +10,166 @@ import {
 	getCourseComponentsByParentId,
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
-import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
+import { getAllQuestionsForTest, getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { ComponentMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import type { Question } from "@/lib/types/domain"
 import type {
 	CourseChallengeLayoutData,
 	CourseChallengePageData,
 	QuizPageData,
 	UnitTestPageData
 } from "@/lib/types/page"
+import type { AssessmentTest, TestQuestionsResponse } from "../qti"
 import { fetchCoursePageData } from "./course"
 import { fetchLessonLayoutData } from "./lesson"
+
+/**
+ * Shuffles an array in place using the Fisher-Yates algorithm.
+ * This function creates a shallow copy to avoid mutating the original array.
+ * @param array The array to shuffle.
+ * @returns The shuffled array.
+ */
+function shuffleArray<T>(array: T[]): T[] {
+	const shuffled = [...array]
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1))
+		// Swap elements using a temporary variable
+		// We know these indices are valid because i < shuffled.length and j <= i
+		const elementI = shuffled[i]
+		const elementJ = shuffled[j]
+		if (elementI !== undefined && elementJ !== undefined) {
+			shuffled[i] = elementJ
+			shuffled[j] = elementI
+		}
+	}
+	return shuffled
+}
+
+/**
+ * Parses a QTI assessment test's XML to apply selection and ordering rules.
+ * This function is designed to be robust, using named capture groups in its regex
+ * and handling edge cases gracefully.
+ *
+ * @param assessmentTest The assessment test object containing the rawXml
+ * @param allQuestions The array of all possible questions for this test
+ * @returns A filtered and ordered array of questions according to the test's rules.
+ */
+export function applyQtiSelectionAndOrdering(
+	assessmentTest: AssessmentTest,
+	allQuestions: TestQuestionsResponse["questions"]
+): Question[] {
+	const xml = assessmentTest.rawXml
+	const allQuestionsMap = new Map(allQuestions.map((q) => [q.question.identifier, q]))
+
+	logger.debug("applyQtiSelectionAndOrdering: starting processing", {
+		testIdentifier: assessmentTest.identifier,
+		totalQuestionsProvided: allQuestions.length,
+		xmlLength: xml.length
+	})
+
+	// Log first 1000 chars of XML for debugging
+	logger.debug("applyQtiSelectionAndOrdering: XML sample", {
+		testIdentifier: assessmentTest.identifier,
+		xmlSample: xml.substring(0, 1000)
+	})
+
+	// Regex to find all <qti-assessment-section> blocks, capturing their content non-greedily.
+	const sectionRegex = /<qti-assessment-section[^>]*>([\s\S]*?)<\/qti-assessment-section>/g
+	const sections = [...xml.matchAll(sectionRegex)]
+
+	logger.debug("applyQtiSelectionAndOrdering: found sections", {
+		testIdentifier: assessmentTest.identifier,
+		sectionCount: sections.length
+	})
+
+	// If no sections are defined (e.g., in a simple Exercise), return all questions in their original order.
+	if (sections.length === 0) {
+		logger.debug("no qti sections found, returning all questions", { testIdentifier: assessmentTest.identifier })
+		return allQuestions.map((q) => ({ id: q.question.identifier }))
+	}
+
+	const selectedQuestionIds: string[] = []
+
+	for (let sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
+		const sectionMatch = sections[sectionIndex]
+		const sectionContent = sectionMatch?.[1] ?? ""
+
+		// 1. Extract all item references from the current section using a robust regex.
+		const itemRefRegex = /<qti-assessment-item-ref[^>]*identifier="(?<identifier>[^"]+)"/g
+		let itemRefs = [...sectionContent.matchAll(itemRefRegex)].map((match) => match.groups?.identifier ?? "")
+
+		logger.debug("applyQtiSelectionAndOrdering: processing section", {
+			testIdentifier: assessmentTest.identifier,
+			sectionIndex,
+			itemRefsFound: itemRefs.length,
+			itemRefs: itemRefs.slice(0, 5) // Log first 5 for debugging
+		})
+
+		// 2. Apply ordering (shuffling) if specified.
+		const orderingMatch = sectionContent.match(/<qti-ordering[^>]*shuffle="true"/)
+		if (orderingMatch) {
+			logger.debug("applyQtiSelectionAndOrdering: shuffling enabled for section", {
+				testIdentifier: assessmentTest.identifier,
+				sectionIndex
+			})
+			itemRefs = shuffleArray(itemRefs)
+		}
+
+		// 3. Apply selection to limit the number of questions, using a named capture group for clarity.
+		const selectionMatch = sectionContent.match(/<qti-selection[^>]*select="(?<selectCount>\d+)"/)
+		const selectCountStr = selectionMatch?.groups?.selectCount
+		if (selectCountStr) {
+			const selectCount = Number.parseInt(selectCountStr, 10)
+			if (!Number.isNaN(selectCount)) {
+				logger.debug("applyQtiSelectionAndOrdering: applying selection limit", {
+					testIdentifier: assessmentTest.identifier,
+					sectionIndex,
+					selectCount,
+					itemRefsBeforeSelection: itemRefs.length,
+					itemRefsAfterSelection: Math.min(selectCount, itemRefs.length)
+				})
+				itemRefs = itemRefs.slice(0, selectCount)
+			} else {
+				logger.warn("invalid non-numeric select attribute in QTI test", {
+					testIdentifier: assessmentTest.identifier,
+					selectAttribute: selectCountStr
+				})
+			}
+		} else {
+			logger.debug("applyQtiSelectionAndOrdering: no selection limit for section", {
+				testIdentifier: assessmentTest.identifier,
+				sectionIndex
+			})
+		}
+
+		selectedQuestionIds.push(...itemRefs)
+	}
+
+	// Graceful fallback: If parsing results in zero questions (e.g., malformed XML),
+	// return all questions to avoid breaking the user's assessment experience.
+	if (selectedQuestionIds.length === 0) {
+		logger.warn("qti parsing resulted in zero selected questions, returning all as fallback", {
+			testIdentifier: assessmentTest.identifier
+		})
+		return allQuestions.map((q) => ({ id: q.question.identifier }))
+	}
+
+	// 4. Map the final list of IDs back to the full question objects, preserving the new order.
+	const finalQuestions = selectedQuestionIds
+		.map((id) => allQuestionsMap.get(id))
+		.filter((q): q is Exclude<typeof q, undefined> => !!q)
+		.map((q) => ({ id: q.question.identifier }))
+
+	logger.info("applied qti selection and ordering rules", {
+		testIdentifier: assessmentTest.identifier,
+		initialCount: allQuestions.length,
+		finalCount: finalQuestions.length,
+		selectedQuestionIds: selectedQuestionIds.length,
+		sectionsProcessed: sections.length
+	})
+
+	return finalQuestions
+}
 
 export async function fetchQuizPageData(params: {
 	subject: string
@@ -27,17 +178,16 @@ export async function fetchQuizPageData(params: {
 	lesson: string
 	quiz: string
 }): Promise<QuizPageData> {
+	// Opt into dynamic rendering since we use Math.random() for shuffling
+	await connection()
+
+	const layoutData = await fetchLessonLayoutData(params)
+
 	logger.info("fetchQuizPageData called", { params })
 	// Pass only the params needed by fetchLessonLayoutData, not the quiz param
-	const layoutDataPromise = fetchLessonLayoutData({
-		subject: params.subject,
-		course: params.course,
-		unit: params.unit,
-		lesson: params.lesson
-	})
 	const resourcePromise = errors.try(getResourcesBySlugAndType(params.quiz, "qti", "quiz"))
 
-	const [layoutData, resourceResult] = await Promise.all([layoutDataPromise, resourcePromise])
+	const [resourceResult] = await Promise.all([resourcePromise])
 
 	if (resourceResult.error) {
 		logger.error("failed to fetch quiz resource by slug", { error: resourceResult.error, slug: params.quiz })
@@ -110,9 +260,18 @@ export async function fetchQuizPageData(params: {
 		throw errors.new("QTI test questions: malformed data")
 	}
 
-	const questions = questionsResult.data.questions.map((q) => ({
-		id: q.question.identifier
-	}))
+	// Fetch the assessment test XML to get selection and ordering rules
+	const assessmentTestResult = await errors.try(getAssessmentTest(resource.sourcedId))
+	if (assessmentTestResult.error) {
+		logger.error("failed to fetch assessment test XML for quiz", {
+			testSourcedId: resource.sourcedId,
+			error: assessmentTestResult.error
+		})
+		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for quiz")
+	}
+
+	// Apply selection and ordering rules to the fetched questions.
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, questionsResult.data.questions)
 
 	return {
 		quiz: {
@@ -134,17 +293,16 @@ export async function fetchUnitTestPageData(params: {
 	lesson: string
 	test: string
 }): Promise<UnitTestPageData> {
+	// Opt into dynamic rendering since we use Math.random() for shuffling
+	await connection()
+
+	const layoutData = await fetchLessonLayoutData(params)
+
 	logger.info("fetchUnitTestPageData called", { params })
 	// Pass only the params needed by fetchLessonLayoutData, not the test param
-	const layoutDataPromise = fetchLessonLayoutData({
-		subject: params.subject,
-		course: params.course,
-		unit: params.unit,
-		lesson: params.lesson
-	})
 	const resourcePromise = errors.try(getResourcesBySlugAndType(params.test, "qti", "unittest"))
 
-	const [layoutData, resourceResult] = await Promise.all([layoutDataPromise, resourcePromise])
+	const [resourceResult] = await Promise.all([resourcePromise])
 
 	if (resourceResult.error) {
 		logger.error("failed to fetch unittest resource by slug", { error: resourceResult.error, slug: params.test })
@@ -217,9 +375,18 @@ export async function fetchUnitTestPageData(params: {
 		throw errors.new("QTI test questions: malformed data")
 	}
 
-	const questions = questionsResult.data.questions.map((q) => ({
-		id: q.question.identifier
-	}))
+	// Fetch the assessment test XML to get selection and ordering rules
+	const assessmentTestResult = await errors.try(getAssessmentTest(resource.sourcedId))
+	if (assessmentTestResult.error) {
+		logger.error("failed to fetch assessment test XML for unittest", {
+			testSourcedId: resource.sourcedId,
+			error: assessmentTestResult.error
+		})
+		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for unittest")
+	}
+
+	// Apply selection and ordering rules to the fetched questions.
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, questionsResult.data.questions)
 
 	return {
 		test: {
@@ -239,15 +406,18 @@ export async function fetchCourseChallengePage_TestData(params: {
 	course: string
 	subject: string
 }): Promise<CourseChallengePageData> {
+	// Opt into dynamic rendering since we use Math.random() for shuffling
+	await connection()
+
 	logger.info("fetchCourseChallengePage_TestData called", { params })
 
 	// Step 1: Find the course by its slug to get its sourcedId.
-	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
-	if (coursesResult.error) {
-		logger.error("failed to fetch course by slug", { error: coursesResult.error, slug: params.course })
-		throw errors.wrap(coursesResult.error, "fetch course")
+	const courseResult = await errors.try(getAllCoursesBySlug(params.course))
+	if (courseResult.error) {
+		logger.error("failed to fetch course by slug", { error: courseResult.error, slug: params.course })
+		throw errors.wrap(courseResult.error, "fetch course")
 	}
-	const course = coursesResult.data[0]
+	const course = courseResult.data[0]
 	if (!course) {
 		notFound()
 	}
@@ -397,9 +567,19 @@ export async function fetchCourseChallengePage_TestData(params: {
 		throw errors.new("QTI test questions: malformed data")
 	}
 
-	const questions = qtiTestDataResult.data.questions.map((q) => ({
-		id: q.question.identifier
-	}))
+	// Fetch the assessment test XML to get selection and ordering rules
+	const assessmentTestResult = await errors.try(getAssessmentTest(testResource.sourcedId))
+	if (assessmentTestResult.error) {
+		logger.error("failed to fetch assessment test XML for course challenge", {
+			testSourcedId: testResource.sourcedId,
+			error: assessmentTestResult.error
+		})
+		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for course challenge")
+	}
+
+	// Apply selection and ordering rules to the fetched questions.
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, qtiTestDataResult.data.questions)
+
 	return {
 		test: {
 			id: testResource.sourcedId,
@@ -417,12 +597,10 @@ export async function fetchCourseChallengePage_LayoutData(params: {
 	course: string
 	subject: string
 }): Promise<CourseChallengeLayoutData> {
-	logger.info("fetchCourseChallengePage_LayoutData called", { params })
-	// Reuse the main course page data fetcher to get all necessary context
-	const coursePageData = await fetchCoursePageData({
-		subject: params.subject,
-		course: params.course
-	})
+	// Opt into dynamic rendering since we use Math.random() for shuffling
+	await connection()
+
+	const coursePageData = await fetchCoursePageData({ subject: params.subject, course: params.course })
 
 	// The CourseSidebar component needs the full course object with units,
 	// the lesson count, and any challenges.
