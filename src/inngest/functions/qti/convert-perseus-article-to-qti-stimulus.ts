@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
+import { z } from "zod"
 import { db } from "@/db"
 import { niceArticles } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
@@ -37,6 +38,22 @@ async function upsertStimulus(identifier: string, title: string, content: string
 	return content
 }
 
+const PerseusContentSectionSchema = z.object({
+	content: z.string().default(""),
+	images: z.record(z.any()).default({}),
+	widgets: z
+		.record(
+			z
+				.object({
+					type: z.string().optional()
+				})
+				.passthrough()
+		)
+		.default({})
+})
+
+const PerseusContentSchema = z.array(PerseusContentSectionSchema)
+
 export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 	{
 		id: "convert-perseus-article-to-qti-stimulus",
@@ -59,6 +76,8 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 				.select({
 					id: niceArticles.id,
 					title: niceArticles.title,
+					slug: niceArticles.slug,
+					path: niceArticles.path,
 					perseusContent: niceArticles.perseusContent
 				})
 				.from(niceArticles)
@@ -75,9 +94,35 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 			return { status: "aborted", reason: "not_found_or_no_data" }
 		}
 
-		// Step 2: Convert Perseus JSON to QTI XML via AI
+		// Step 2: Pre-process the Perseus content to remove interactive widgets
+		const stimulusOnlyPerseusContent = await step.run("preprocess-perseus-content", async () => {
+			const validationResult = PerseusContentSchema.safeParse(article.perseusContent)
+			if (!validationResult.success) {
+				throw errors.wrap(validationResult.error, "invalid perseus content structure")
+			}
+
+			const processedContent = validationResult.data.map((section) => {
+				// Check if this section contains an interactive widget set
+				const hasGradedGroup = Object.values(section.widgets).some((widget) => widget.type === "graded-group-set")
+
+				if (hasGradedGroup) {
+					// Replace the widget placeholder with empty string and remove the widget data.
+					return {
+						...section,
+						content: section.content.replace(/\[\[☃ graded-group-set \d+\]\]/g, ""),
+						widgets: {} // Remove all widgets from this section
+					}
+				}
+				// If no interactive widgets, return the section as is.
+				return section
+			})
+
+			return processedContent
+		})
+
+		// Step 3: Convert the sanitized Perseus JSON to QTI XML via AI
 		const qtiXml = await step.run("generate-qti-stimulus-from-perseus", async () => {
-			const result = await errors.try(generateQtiFromPerseus(logger, article.perseusContent, { type: "stimulus" }))
+			const result = await errors.try(generateQtiFromPerseus(logger, stimulusOnlyPerseusContent, { type: "stimulus" }))
 			if (result.error) {
 				logger.error("failed to generate qti stimulus from perseus", { articleId, error: result.error })
 				throw errors.wrap(result.error, "ai conversion")
@@ -87,7 +132,7 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 
 		const tempIdentifier = `nice-tmp:${article.id}`
 
-		// Step 3: Validate XML by creating and immediately deleting it from the QTI API
+		// Step 4: Validate XML by creating and immediately deleting it from the QTI API
 		const validatedXml = await step.run("validate-and-delete-from-qti-api", async () => {
 			let finalXml = qtiXml
 			const upsertResult = await errors.try(upsertStimulus(tempIdentifier, article.title, qtiXml))
