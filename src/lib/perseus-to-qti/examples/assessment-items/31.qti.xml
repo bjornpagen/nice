@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="counting-bananas-drag-and-drop"
+    title="Counting Bananas by Dragging"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="multiple" base-type="directedPair"/>
+    
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <qti-graphic-gap-match-interaction response-identifier="RESPONSE" class="qti-choices-bottom" max-associations="10">
+            <qti-prompt><strong>Put 10 bananas in the box.</strong></qti-prompt>
+            
+            <!-- A larger transparent image is used to create a bigger drop area for the 10 bananas. -->
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='300'%3E%3C/svg%3E" width="500" height="300" alt=""/>
+            
+            <!-- Source objects (draggable bananas). We provide 12 to create a choice pool. -->
+            <qti-gap-img identifier="BANANA1" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA2" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA3" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA4" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA5" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA6" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA7" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA8" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA9" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA10" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA11" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/></qti-gap-img>
+            <qti-gap-img identifier="BANANA12" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="An apple."/></qti-gap-img>
+            
+            <!-- 10 Target hotspots inside the box. -->
+            <qti-associable-hotspot identifier="TARGET1" shape="rect" coords="20,20,80,80" match-max="1"/>
+            <qti-associable-hotspot identifier="TARGET2" shape="rect" coords="90,20,150,80" match-max="1"/>
+            <qti-associable-hotspot identifier="TARGET3" shape="rect" coords="160,20,220,80" match-max="1"/>
+            <qti-associable-hotspot identifier="TARGET4" shape="rect" coords="230,20,290,80" match-max="1"/>
+            <qti-associable-hotspot identifier="TARGET5" shape="rect" coords="300,20,360,80" match-max="1"/>
+            <qti-associable-hotspot identifier="TARGET6" shape="rect" coords="20,90,80,150" match-max="1"/>
+            <qti-associable-hotspot identifier="TARGET7" shape="rect" coords="90,90,150,150" match-max="1"/>
+            <qti-associable-hotspot identifier="TARGET8" shape="rect" coords="160,90,220,150" match-max="1"/>
+            <qti-associable-hotspot identifier="TARGET9" shape="rect" coords="230,90,290,150" match-max="1"/>
+            <qti-associable-hotspot identifier="TARGET10" shape="rect" coords="300,90,360,150" match-max="1"/>
+        </qti-graphic-gap-match-interaction>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> You put 10 bananas in the box.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Make sure there are exactly 10 bananas in the box.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-equal tolerance-mode="exact">
+                    <qti-count>
+                        <qti-variable identifier="RESPONSE"/>
+                    </qti-count>
+                    <qti-base-value base-type="integer">10</qti-base-value>
+                </qti-equal>
+            </qti-response-if>
+            <qti-set-outcome-value identifier="SCORE">
+                <qti-base-value base-type="float">1</qti-base-value>
+            </qti-set-outcome-value>
+            <qti-set-outcome-value identifier="FEEDBACK">
+                <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+            </qti-set-outcome-value>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>
