@@ -107,18 +107,18 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 		// Validate course metadata with Zod
 		const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
 		if (!courseMetadataResult.success) {
-			logger.error("fatal: invalid course metadata for enrolled user", {
+			logger.warn("skipping course with invalid metadata for enrolled user", {
 				courseSourcedId: course.sourcedId,
 				userSourcedId,
-				error: courseMetadataResult.error
+				error: courseMetadataResult.error,
+				metadata: course.metadata
 			})
-			throw errors.wrap(courseMetadataResult.error, "invalid course metadata")
+			continue // Skip this course instead of throwing
 		}
 		const courseMetadata = courseMetadataResult.data
 
-		// We no longer have path in metadata, so we'll use a sensible default
-		// This could be improved by passing subject context from somewhere else
-		const subject = "courses" // Default subject for enrolled courses
+		// Use the actual subject slug from the course metadata
+		const subject = courseMetadata.khanSubjectSlug
 
 		// Now update unit paths with the course slug
 		const unitsWithCorrectPaths = courseUnits.map((unit) => ({
