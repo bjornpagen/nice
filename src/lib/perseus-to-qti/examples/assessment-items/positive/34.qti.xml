@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="measure-length-different-units"
+    title="Measure length in different units"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE_PAPERCLIPS" base-type="integer" cardinality="single">
+        <qti-correct-response>
+            <qti-value>14</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESPONSE_CM" base-type="integer" cardinality="single">
+        <qti-correct-response>
+            <qti-value>7</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>The length of a rectangle is measured in small paper clips and in centimeters.</p>
+
+        <div id="reference_text_1">
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/b6c2b6a7c043eef2a5198d9f55182dde2f58b1f4.svg"
+                 alt="The rectangle measured in small paperclips."
+                 width="320"
+                 height="125"/>
+        </div>
+        <p>
+            <strong>The rectangle is <qti-text-entry-interaction response-identifier="RESPONSE_PAPERCLIPS" expected-length="2"/> small paperclips long.</strong>
+        </p>
+
+        <div id="reference_text_2">
+            <div style="position: relative; width: 320px; height: 125px;">
+                 <img src="https://cdn.kastatic.org/ka-perseus-graphie/6f898446a3345d2d7cea8f462442e80bfc91e3f8.svg"
+                     alt="The rectangle measured on a ruler in centimeters, now with numbers."
+                     width="320" height="125"
+                     style="position: absolute; top: 0; left: 0; z-index: 0;"/>
+                
+                <!-- Flexbox container for ruler labels. 'gap' controls spacing between numbers. -->
+                <div style="position: absolute; top: 98px; left: 0px; z-index: 1; font-size:12px; font-family: sans-serif; display: flex; gap: 29px;">
+                    <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math></div>
+                    <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn></math></div>
+                    <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math></div>
+                    <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math></div>
+                    <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math></div>
+                    <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math></div>
+                    <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn></math></div>
+                    <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math></div>
+                    <div><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math></div>
+                </div>
+            </div>
+        </div>
+        <p>
+            <strong>The rectangle is <qti-text-entry-interaction response-identifier="RESPONSE_CM" expected-length="2"/> centimeters long.</strong>
+        </p>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> The rectangle measures 14 small paperclips in length and 7 centimeters in length.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Count the number of small paperclips along the rectangle to get 14. Then measure from the 0 cm mark on the ruler to the end of the rectangle to get 7 centimeters.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-if>
+                <qti-and>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_PAPERCLIPS"/>
+                        <qti-correct identifier="RESPONSE_PAPERCLIPS"/>
+                    </qti-match>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_CM"/>
+                        <qti-correct identifier="RESPONSE_CM"/>
+                    </qti-match>
+                </qti-and>
+            </qti-if>
+            <qti-set-outcome-value identifier="FEEDBACK">
+                <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+            </qti-set-outcome-value>
+            <qti-else>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>
