@@ -337,53 +337,6 @@ export const ModelSchema = z.discriminatedUnion("type", [
 export type Model = z.infer<typeof ModelSchema>
 
 // ------------------------------------------------------------
-// Utility Definitions
-// ------------------------------------------------------------
-
-/**
- * AssessmentTypeSchema is a schema for any type of assessment.
- * This is a helper type to make it easier to check if a resource is an assessment.
- */
-export const AssessmentTypeSchema = z.enum([
-	LessonResourceTypeSchema.enum.exercise,
-	UnitResourceTypeSchema.enum.quiz,
-	UnitResourceTypeSchema.enum.unit_test,
-	CourseResourceTypeSchema.enum.course_challenge
-] as const)
-export type AssessmentType = z.infer<typeof AssessmentTypeSchema>
-
-/**
- * UnitContentSchema is a schema for the content of a unit.
- * This is a helper type to make it easier to check if a unit's resources or children are content.
- */
-export const UnitContentSchema = z.discriminatedUnion("type", [LessonComponentSchema, ...UnitResourceSchema.options])
-export type UnitContent = z.infer<typeof UnitContentSchema>
-
-/**
- * UnitAssessmentTypeSchema is a schema for the type of an assessment that can appear in a unit.
- * This is a helper type to make it easier to check if a unit's resources or children are assessments.
- */
-export const UnitAssessmentTypeSchema = AssessmentTypeSchema.exclude([CourseResourceTypeSchema.enum.course_challenge])
-export type UnitAssessmentType = z.infer<typeof UnitAssessmentTypeSchema>
-
-/**
- * UnitAssessmentSchema is a schema for an assessment in a unit.
- * This is a helper type to make it easier to store assessments in a unit.
- */
-export const UnitAssessmentSchema = z.discriminatedUnion("type", [
-	ExerciseResourceSchema,
-	...UnitResourceSchema.options
-])
-export type UnitAssessment = z.infer<typeof UnitAssessmentSchema>
-
-/**
- * CourseContentSchema is a schema for the content of a course.
- * This is a helper type to make it easier to check if a course's resources or children are content.
- */
-export const CourseContentSchema = z.discriminatedUnion("type", [UnitComponentSchema, ...CourseResourceSchema.options])
-export type CourseContent = z.infer<typeof CourseContentSchema>
-
-// ------------------------------------------------------------
 // Constants
 // ------------------------------------------------------------
 
@@ -1136,12 +1089,27 @@ export function buildOneRosterCourse(
 	return course
 }
 
-export function buildUnitContents(unit: UnitComponent): UnitContent[] {
-	const contents: UnitContent[] = []
+export function buildUnitContents(unit: UnitComponent): SourcedId[] {
+	const contents: { sourcedId: SourcedId; order: number }[] = []
 
-	contents.push(...Object.values(unit.children))
-	contents.push(...Object.values(unit.resources))
-	logger.debug("building unit contents: pushed children and resources", {
+	contents.push(
+		...Object.values(unit.children).map((child) => ({
+			sourcedId: child.sourcedId,
+			order: child.order
+		}))
+	)
+	logger.debug("building unit contents: pushed children", {
+		unitSourcedId: unit.sourcedId,
+		count: contents.length
+	})
+
+	contents.push(
+		...Object.entries(unit.resources).map(([sourcedId, resource]) => ({
+			sourcedId,
+			order: resource.order
+		}))
+	)
+	logger.debug("building unit contents: pushed resources", {
 		unitSourcedId: unit.sourcedId,
 		count: contents.length
 	})
@@ -1152,48 +1120,82 @@ export function buildUnitContents(unit: UnitComponent): UnitContent[] {
 		count: contents.length
 	})
 
-	return contents
+	return contents.map((content) => content.sourcedId)
 }
 
-export function buildUnitAssessments(unit: UnitComponent): UnitAssessment[] {
-	const assessments: UnitAssessment[] = []
+export function buildUnitAssessments(unit: UnitComponent): SourcedId[] {
+	const assessments: { sourcedId: SourcedId; order: number }[] = []
 
 	const contents = buildUnitContents(unit)
 	for (const content of contents) {
-		switch (content.type) {
-			case CourseComponentTypeSchema.enum.lesson: {
-				const exercises = Object.values(content.resources).filter(
-					(resource): resource is ExerciseResource => resource.type === LessonResourceTypeSchema.enum.exercise
-				)
-				logger.debug("building unit assessments: found exercises", {
-					unitSourcedId: unit.sourcedId,
-					lessonSourcedId: content.sourcedId,
-					count: exercises.length
-				})
+		const resource = unit.resources[content]
+		if (resource != null) {
+			assessments.push({
+				sourcedId: resource.sourcedId,
+				order: resource.order
+			})
+			logger.debug("building unit assessments: found assessment in resource", {
+				unitSourcedId: unit.sourcedId,
+				resourceSourcedId: resource.sourcedId
+			})
 
-				assessments.push(...exercises)
-				break
-			}
-			case UnitResourceTypeSchema.enum.quiz:
-			case UnitResourceTypeSchema.enum.unit_test: {
-				assessments.push(content)
-				break
-			}
+			continue
 		}
+
+		const child = unit.children[content]
+		if (child != null) {
+			const exercises = Object.values(child.resources).filter(
+				(resource): resource is ExerciseResource => resource.type === LessonResourceTypeSchema.enum.exercise
+			)
+			logger.debug("building unit assessments: found exercises in child", {
+				unitSourcedId: unit.sourcedId,
+				childSourcedId: child.sourcedId,
+				count: exercises.length
+			})
+
+			assessments.push(
+				...exercises.map((exercise) => ({
+					sourcedId: exercise.sourcedId,
+					order: exercise.order
+				}))
+			)
+			logger.debug("building unit assessments: pushed exercises", {
+				unitSourcedId: unit.sourcedId,
+				childSourcedId: child.sourcedId,
+				count: assessments.length
+			})
+
+			continue
+		}
+
+		logger.error("building unit assessments: no assessment found", {
+			unitSourcedId: unit.sourcedId,
+			contentSourcedId: content
+		})
+		throw errors.new(`no assessment found: ${content}`)
 	}
 	logger.debug("building unit assessments: found assessments", {
 		unitSourcedId: unit.sourcedId,
 		count: assessments.length
 	})
 
-	return assessments
+	return assessments.map((assessment) => assessment.sourcedId)
 }
 
-export function buildCourseContents(course: Course): CourseContent[] {
-	const contents: CourseContent[] = []
+export function buildCourseContents(course: Course): SourcedId[] {
+	const contents: { sourcedId: SourcedId; order: number }[] = []
 
-	contents.push(...Object.values(course.children))
-	contents.push(...Object.values(course.resources))
+	contents.push(
+		...Object.values(course.children).map((child) => ({
+			sourcedId: child.sourcedId,
+			order: child.order
+		}))
+	)
+	logger.debug("building course contents: pushed children", {
+		courseSourcedId: course.sourcedId,
+		count: contents.length
+	})
+
 	logger.debug("building course contents: pushed children and resources", {
 		courseSourcedId: course.sourcedId,
 		count: contents.length
@@ -1205,5 +1207,5 @@ export function buildCourseContents(course: Course): CourseContent[] {
 		count: contents.length
 	})
 
-	return contents
+	return contents.map((content) => content.sourcedId)
 }
