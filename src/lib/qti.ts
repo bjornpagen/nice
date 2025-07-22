@@ -18,7 +18,7 @@ const TokenResponseSchema = z.object({
 // --- Process Response Schemas (New) ---
 const ProcessResponseInputSchema = z.object({
 	responseIdentifier: z.string(),
-	value: z.any()
+	value: z.union([z.string(), z.number(), z.array(z.unknown()), z.record(z.string(), z.unknown())])
 })
 
 const ProcessResponseResultSchema = z.object({
@@ -34,7 +34,7 @@ const ProcessResponseResultSchema = z.object({
 // API Request schema - what the API actually expects
 const ProcessResponseApiRequestSchema = z.object({
 	identifier: z.string(),
-	response: z.string()
+	response: z.union([z.string(), z.array(z.string()), z.record(z.string(), z.string())])
 })
 
 export type ProcessResponseInput = z.infer<typeof ProcessResponseInputSchema>
@@ -839,11 +839,34 @@ export class Client {
 			throw errors.wrap(validation.error, "processResponse input validation")
 		}
 
-		// Transform the input to match the API's expected format
-		const apiRequest = {
-			identifier: validation.data.responseIdentifier,
-			response: String(validation.data.value)
+		const { responseIdentifier, value } = validation.data
+
+		let responsePayload: string | string[] | Record<string, string>
+
+		if (typeof value === "object" && !Array.isArray(value) && value !== null) {
+			// It's a record for multi-input, convert all values to string
+			responsePayload = Object.fromEntries(Object.entries(value).map(([key, val]) => [key, String(val)]))
+		} else if (Array.isArray(value)) {
+			// It's an array for ordered questions
+			responsePayload = value.map(String)
+		} else {
+			// It's a single value
+			responsePayload = String(value)
 		}
+
+		const apiRequest = {
+			identifier: responseIdentifier,
+			response: responsePayload
+		}
+
+		// Add detailed logging to debug the issue
+		logger.debug("qti client: prepared api request", {
+			identifier,
+			responseIdentifier,
+			originalValue: value,
+			responsePayload,
+			apiRequest
+		})
 
 		// Validate the transformed request
 		const apiValidation = ProcessResponseApiRequestSchema.safeParse(apiRequest)

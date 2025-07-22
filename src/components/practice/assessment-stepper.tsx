@@ -148,9 +148,8 @@ export function AssessmentStepper({
 }: AssessmentStepperProps) {
 	const { user } = useUser()
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
-	const [selectedResponse, setSelectedResponse] = React.useState<{ responseIdentifier: string; value: unknown } | null>(
-		null
-	)
+	const [selectedResponses, setSelectedResponses] = React.useState<Record<string, unknown>>({})
+	const [expectedResponses, setExpectedResponses] = React.useState<string[]>([])
 	const [showFeedback, setShowFeedback] = React.useState(false)
 	const [isAnswerCorrect, setIsAnswerCorrect] = React.useState(false)
 	const [isAnswerChecked, setIsAnswerChecked] = React.useState(false)
@@ -526,7 +525,8 @@ export function AssessmentStepper({
 				handleReset={() => {
 					// Reset the entire assessment to try again
 					setCurrentQuestionIndex(0)
-					setSelectedResponse(null)
+					setSelectedResponses({})
+					setExpectedResponses([])
 					setShowFeedback(false)
 					setIsAnswerCorrect(false)
 					setIsAnswerChecked(false)
@@ -544,7 +544,17 @@ export function AssessmentStepper({
 	}
 
 	const handleResponseChange = (responseIdentifier: string, response: unknown) => {
-		setSelectedResponse({ responseIdentifier, value: response })
+		// Add the identifier to our list of expected inputs if it's not already there
+		if (!expectedResponses.includes(responseIdentifier)) {
+			setExpectedResponses((prev) => [...prev, responseIdentifier])
+		}
+
+		// Update the current value for this specific input
+		setSelectedResponses((prev) => ({
+			...prev,
+			[responseIdentifier]: response
+		}))
+
 		// Reset feedback when user changes answer after a wrong attempt
 		if (isAnswerChecked && !isAnswerCorrect) {
 			setShowFeedback(false)
@@ -553,25 +563,59 @@ export function AssessmentStepper({
 	}
 
 	const handleCheckAnswer = async () => {
-		if (!selectedResponse || !currentQuestion || !user?.publicMetadata?.sourceId) return
+		if (Object.keys(selectedResponses).length === 0 || !currentQuestion) {
+			return
+		}
 
 		setIsSubmitting(true)
 		setShowFeedback(false)
 
-		const onerosterUserSourcedId = user.publicMetadata.sourceId
-		if (typeof onerosterUserSourcedId !== "string") return
+		// Extract user source ID if available (for authenticated users)
+		const onerosterUserSourcedId = user?.publicMetadata?.sourceId
+		const isAuthenticated = typeof onerosterUserSourcedId === "string"
 
-		// Call server action to process question response
-		const responseValue =
-			typeof selectedResponse.value === "string" ? selectedResponse.value : String(selectedResponse.value)
+		// Determine response format based on the question type
+		const responseIdentifiers = Object.keys(selectedResponses)
+		let responseValue: string | unknown[] | Record<string, unknown>
+		let responseIdentifier: string
+
+		if (responseIdentifiers.length === 1 && responseIdentifiers[0]) {
+			// Single response identifier
+			const singleValue = selectedResponses[responseIdentifiers[0]]
+			responseIdentifier = responseIdentifiers[0]
+
+			// Check if it's an array (multi-select) or single value
+			if (Array.isArray(singleValue)) {
+				// Multi-select question - send the array directly
+				responseValue = singleValue
+			} else {
+				// Single response - convert to string for compatibility
+				responseValue = String(singleValue)
+			}
+		} else {
+			// Multiple response identifiers (fill-in-the-blank)
+			// Check if all identifiers are "RESPONSE" (shouldn't happen, but just in case)
+			const allSameIdentifier = responseIdentifiers.every((id) => id === responseIdentifiers[0])
+
+			if (allSameIdentifier && responseIdentifiers[0] === "RESPONSE") {
+				// If somehow we have multiple RESPONSE entries, combine into array
+				responseValue = Object.values(selectedResponses)
+				responseIdentifier = "RESPONSE"
+			} else {
+				// Different identifiers - this is fill-in-the-blank, send the entire object
+				responseValue = selectedResponses
+				responseIdentifier = "RESPONSE" // Generic identifier for multi-input
+			}
+		}
 
 		const result = await errors.try(
 			processQuestionResponse(
 				currentQuestion.id,
 				responseValue,
-				onerosterUserSourcedId,
-				onerosterComponentResourceSourcedId,
-				isInteractiveAssessment,
+				responseIdentifier,
+				isAuthenticated ? onerosterUserSourcedId : undefined,
+				isAuthenticated ? onerosterComponentResourceSourcedId : undefined,
+				isInteractiveAssessment && isAuthenticated,
 				attemptCount // Pass the current attempt count
 			)
 		)
@@ -612,7 +656,8 @@ export function AssessmentStepper({
 	const goToNext = () => {
 		if (currentQuestionIndex < questions.length - 1) {
 			setCurrentQuestionIndex(currentQuestionIndex + 1)
-			setSelectedResponse(null)
+			setSelectedResponses({})
+			setExpectedResponses([])
 			setShowFeedback(false)
 			setIsAnswerCorrect(false)
 			setIsAnswerChecked(false)
@@ -655,7 +700,8 @@ export function AssessmentStepper({
 		// For exercises, just reset without creating a new PowerPath attempt
 		if (!isInteractiveAssessment) {
 			setCurrentQuestionIndex(0)
-			setSelectedResponse(null)
+			setSelectedResponses({})
+			setExpectedResponses([])
 			setShowFeedback(false)
 			setIsAnswerCorrect(false)
 			setIsAnswerChecked(false)
@@ -704,7 +750,8 @@ export function AssessmentStepper({
 
 		// Step 2: Only on success, reset the component's state for the new attempt.
 		setCurrentQuestionIndex(0)
-		setSelectedResponse(null)
+		setSelectedResponses({})
+		setExpectedResponses([])
 		setShowFeedback(false)
 		setIsAnswerCorrect(false)
 		setIsAnswerChecked(false)
@@ -729,6 +776,12 @@ export function AssessmentStepper({
 	}
 
 	const buttonConfig = getButtonConfig()
+
+	// Enable button only when all expected fields have been filled
+	const isButtonEnabled =
+		expectedResponses.length > 0 &&
+		expectedResponses.every((id) => selectedResponses[id] !== "" && selectedResponses[id] !== undefined) &&
+		!isSubmitting
 
 	return (
 		<div className="flex flex-col h-full bg-white">
@@ -763,7 +816,7 @@ export function AssessmentStepper({
 				contentType={contentType}
 				onContinue={buttonConfig.action}
 				buttonText={buttonConfig.text === "Check" ? "Check" : "Continue"}
-				isEnabled={!!selectedResponse && !isSubmitting}
+				isEnabled={isButtonEnabled}
 				currentQuestion={currentQuestionIndex + 1}
 				totalQuestions={questions.length}
 				showFeedback={showFeedback}

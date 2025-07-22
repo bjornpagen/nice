@@ -29,7 +29,8 @@ import { powerpath, qti } from "@/lib/clients"
  */
 export async function processQuestionResponse(
 	qtiItemId: string,
-	selectedResponse: string,
+	selectedResponse: string | unknown[] | Record<string, unknown>,
+	responseIdentifier: string,
 	onerosterUserSourcedId?: string,
 	onerosterComponentResourceSourcedId?: string,
 	isInteractiveAssessment?: boolean,
@@ -37,22 +38,74 @@ export async function processQuestionResponse(
 ) {
 	logger.debug("processing question response", {
 		qtiItemId,
+		responseIdentifier,
 		onerosterUserSourcedId,
 		onerosterComponentResourceSourcedId,
 		isInteractiveAssessment,
 		attemptCount
 	})
 
-	// Get immediate correctness feedback from QTI
-	const qtiResult = await errors.try(
-		qti.processResponse(qtiItemId, { responseIdentifier: "RESPONSE", value: selectedResponse })
-	)
-	if (qtiResult.error) {
-		logger.error("qti response processing failed", { error: qtiResult.error, qtiItemId })
-		throw errors.wrap(qtiResult.error, "qti response processing")
-	}
+	let isCorrect = false
 
-	const isCorrect = qtiResult.data.score > 0
+	// Handle fill-in-the-blank questions with multiple responses
+	if (typeof selectedResponse === "object" && !Array.isArray(selectedResponse) && selectedResponse !== null) {
+		// This is a fill-in-the-blank question with multiple inputs.
+		// The QTI API expects each response to be processed in a separate API call.
+		const responseEntries = Object.entries(selectedResponse)
+
+		logger.info("processing multi-input question", {
+			qtiItemId,
+			responseCount: responseEntries.length,
+			responseIdentifiers: responseEntries.map(([id]) => id)
+		})
+
+		const results = await Promise.all(
+			responseEntries.map(([identifier, value]) =>
+				errors.try(
+					qti.processResponse(qtiItemId, {
+						responseIdentifier: identifier,
+						value: String(value) // Ensure value is a string
+					})
+				)
+			)
+		)
+
+		// Check for any failed API calls
+		const anyErrors = results.some((r) => r.error)
+		if (anyErrors) {
+			const failedResponses = results.filter((r) => r.error)
+			logger.error("one or more qti response processing calls failed for multi-input question", {
+				failedResponses: failedResponses.map((r, _idx) => ({
+					identifier: responseEntries[results.indexOf(r)]?.[0],
+					error: r.error
+				})),
+				qtiItemId,
+				selectedResponse
+			})
+			throw errors.new("qti response processing failed for multi-input question")
+		}
+
+		// The entire question is correct only if ALL individual responses are correct.
+		isCorrect = results.every((r) => r.data && r.data.score > 0)
+
+		logger.info("multi-input question processing complete", {
+			qtiItemId,
+			isCorrect,
+			individualScores: results.map((r, idx) => ({
+				identifier: responseEntries[idx]?.[0],
+				score: r.data?.score
+			}))
+		})
+	} else {
+		// Single response or array response (multi-select)
+		const qtiResult = await errors.try(qti.processResponse(qtiItemId, { responseIdentifier, value: selectedResponse }))
+		if (qtiResult.error) {
+			logger.error("qti response processing failed", { error: qtiResult.error, qtiItemId })
+			throw errors.wrap(qtiResult.error, "qti response processing")
+		}
+
+		isCorrect = qtiResult.data.score > 0
+	}
 
 	// CRITICAL: Only log to PowerPath on the FIRST attempt (attemptCount === 0)
 	// This matches Khan Academy's behavior where only first attempts count for proficiency
@@ -63,12 +116,23 @@ export async function processQuestionResponse(
 			attemptCount
 		})
 
+		// Convert response to string or string array for PowerPath
+		let powerpathResponse: string | string[]
+		if (typeof selectedResponse === "object" && !Array.isArray(selectedResponse)) {
+			// For multi-input questions, send as array of values
+			powerpathResponse = Object.values(selectedResponse).map(String)
+		} else if (Array.isArray(selectedResponse)) {
+			powerpathResponse = selectedResponse.map(String)
+		} else {
+			powerpathResponse = String(selectedResponse)
+		}
+
 		powerpath
 			.updateStudentQuestionResponse({
 				student: onerosterUserSourcedId,
 				lesson: onerosterComponentResourceSourcedId,
 				question: qtiItemId,
-				response: selectedResponse
+				response: powerpathResponse
 			})
 			.catch((err) => {
 				logger.error("failed to log question response to powerpath", { error: err, qtiItemId, onerosterUserSourcedId })
@@ -81,10 +145,12 @@ export async function processQuestionResponse(
 		})
 	}
 
+	// For fill-in-the-blank questions, we don't have a single score/feedback
+	// Return a simplified response
 	return {
 		isCorrect,
-		score: qtiResult.data.score,
-		feedback: qtiResult.data.feedback
+		score: isCorrect ? 1 : 0,
+		feedback: isCorrect ? "Correct!" : "Not quite right. Try again."
 	} as const
 }
 
