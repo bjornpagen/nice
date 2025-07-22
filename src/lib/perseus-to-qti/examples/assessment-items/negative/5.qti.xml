@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is a negative example because it contains a critical flaw that invalidates the assessment and other semantic errors.
+
+  REASONS FOR BEING A NEGATIVE EXAMPLE:
+
+  1.  CRITICAL: Leaking the Number of Correct Answers - The interaction is a "select all that apply" type, but it is incorrectly configured with `max-choices="2"`. This attribute explicitly tells the user that there are exactly two correct answers, providing an unfair clue and compromising the question's validity. For this type of question, `max-choices` should be set to "0" (for unlimited) or "4" (the total number of choices) to ensure the user must evaluate each option independently without knowing the correct count.
+
+  2.  FUNCTIONAL: Incorrect Interaction Behavior - The interaction is set with `shuffle="false"`. The source Perseus JSON specified `"randomize": true`, meaning the choices should be presented in a random order. This conversion fails to replicate the intended randomization of the original item.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="nice-tmp:xab9d378a1c2166c5"
+    title="Identify shapes"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="identifier" cardinality="multiple" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>B</qti-value>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="2">
+            <qti-prompt>Which of the following shapes are quadrilaterals?</qti-prompt>
+            <qti-simple-choice identifier="A">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/6edc3646e178a2e3c6fecd0b92d0d21279405c02.svg" alt="A shape with 5 sides."/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">Not quite. A quadrilateral is a polygon with 4 sides.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/d41c10626916ca56b72163a729b7f08617e01478.svg" alt="A shape with 4 sides."/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">Correct! This shape has 4 sides.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/1b812a19c0ebee7d394fe15d871d55f6c8b4c4ee.svg" alt="A shape with 4 sides."/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">Correct! This shape has 4 sides.</qti-feedback-inline>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                <img src="https://cdn.kastatic.org/ka-perseus-graphie/c9d1aa3a7184a6f3fe927a24fc9f8fd10378f081.svg" alt="A shape that has an open gap on one side."/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">Not quite. This shape is not a closed polygon with 4 sides.</qti-feedback-inline>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> Quadrilaterals are polygons with exactly 4 sides. You correctly selected the shapes that meet this definition.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Remember, a quadrilateral is a polygon with 4 straight sides and 4 vertices. Check each shape and select those with exactly 4 sides.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+</qti-assessment-item>
