@@ -13,10 +13,13 @@ export async function fetchUnitPageData(params: {
 
 	// 1. Call the course page data fetcher with ONLY subject and course params
 	// This ensures the cache key is consistent across all units in the same course
-	const coursePageData = await fetchCoursePageData({
-		subject: params.subject,
-		course: params.course
-	})
+	const coursePageData = await fetchCoursePageData(
+		{
+			subject: params.subject,
+			course: params.course
+		},
+		{ skip: { questions: true } }
+	)
 
 	// 2. Find the specific unit within the comprehensive course data.
 	const currentUnit = coursePageData.course.units.find((u) => u.slug === params.unit)

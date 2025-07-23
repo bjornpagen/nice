@@ -5,6 +5,7 @@ import _ from "lodash"
 import Image from "next/image"
 import { notFound, usePathname } from "next/navigation"
 import * as React from "react"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { useSidebar } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
 import { type Course, getCourseMaterials } from "@/lib/v2/types"
@@ -54,9 +55,14 @@ export function CourseSidebar({
 	return (
 		<div
 			id="course-sidebar"
-			className={cn("bg-gray-100 border-r border-gray-200 h-full p-4", className, !open && "hidden")}
+			className={cn(
+				"bg-gray-100 border-r border-gray-200 p-4 flex flex-col overflow-hidden",
+				className,
+				!open && "hidden"
+			)}
+			style={{ maxHeight: "calc(100vh - 112px)" }}
 		>
-			<div className="px-6 pb-4 flex-1 overflow-hidden bg-white rounded-md shadow-md">
+			<div className="px-6 pb-4 flex flex-col bg-white rounded-md shadow-md h-full overflow-hidden">
 				<div id="course-sidebar-course-title" className="text-lg font-bold mt-4">
 					<div className="flex items-center gap-4">
 						<div className="w-10 h-10 rounded flex items-center justify-center relative">
@@ -79,31 +85,39 @@ export function CourseSidebar({
 					<CourseSidebarCourseCarousel course={course} materials={materials} index={index} setIndex={setIndex} />
 				</div>
 
-				{/* Separator */}
-				<div className="h-px my-4 bg-gray-200" />
+				<ScrollArea className="overflow-auto" style={{ height: "60vh" }}>
+					<div>
+						{/* Separator */}
+						<div className="h-px my-4 bg-gray-200" />
 
-				<CourseSidebarCourseMaterials index={index} materials={materials} pathname={pathname} />
+						<CourseSidebarCourseMaterials index={index} materials={materials} pathname={pathname} />
 
-				{/* Separator */}
-				<div className="h-px my-4 bg-gray-200" />
+						{/* Separator */}
+						<div className="h-px my-4 bg-gray-200" />
 
-				<CourseSidebarCourseBreadcrumbs
-					course={_.pick(course, ["path", "title"])}
-					material={material}
-					pathname={pathname}
-				/>
+						<CourseSidebarCourseBreadcrumbs
+							course={_.pick(course, ["path", "title"])}
+							material={material}
+							pathname={pathname}
+						/>
 
-				<div id="course-sidebar-footer" className="p-2 my-4 flex flex-col gap-2 text-center">
-					<div className="text-xs text-gray-600">© 2025 Nice Academy</div>
-					<div className="text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1 justify-center">
-						<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">Terms of use</span>
-						<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">Privacy Policy</span>
-						<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">Cookie Notice</span>
-						<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">
-							Accessibility Statement
-						</span>
+						<div id="course-sidebar-footer" className="p-2 my-4 flex flex-col gap-2 text-center">
+							<div className="text-xs text-gray-600">© 2025 Nice Academy</div>
+							<div className="text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1 justify-center">
+								<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">Terms of use</span>
+								<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">
+									Privacy Policy
+								</span>
+								<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">
+									Cookie Notice
+								</span>
+								<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">
+									Accessibility Statement
+								</span>
+							</div>
+						</div>
 					</div>
-				</div>
+				</ScrollArea>
 			</div>
 		</div>
 	)

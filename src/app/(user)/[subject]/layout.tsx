@@ -10,7 +10,7 @@ function UserHeaderSkeleton() {
 	return (
 		<ClerkLoading>
 			<Header dark />
-			<div className="w-full bg-gray-100 animate-pulse border-b border-gray-200 py-2 h-[57px]" />
+			<div className="w-full bg-gray-100 animate-pulse border-b border-gray-200 py-2 h-[56px]" />
 		</ClerkLoading>
 	)
 }
@@ -63,7 +63,7 @@ export default function CourseLayout({ children }: { children: React.ReactNode }
 					</ClerkLoading>
 				</React.Suspense>
 			</div>
-			<div className="flex-1 overflow-hidden">{children}</div>
+			<div className="flex-1 overflow-hidden max-w-full">{children}</div>
 		</div>
 	)
 }

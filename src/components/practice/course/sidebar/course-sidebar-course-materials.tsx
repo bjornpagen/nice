@@ -2,7 +2,6 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 import { LearningContentIcon } from "@/components/overview/learning-content-icons"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import type { CourseMaterial, LessonResource } from "@/lib/v2/types"
 import courseChallengeIllustration from "./images/course-challenge-sidebar-illustration.png"
@@ -24,12 +23,10 @@ export function CourseSidebarCourseMaterials({
 	}
 
 	return (
-		<div id="course-sidebar-course-materials transition-all">
-			<ScrollArea className="h-full">
-				<div className="flex flex-col divide-y divide-gray-200">
-					<MaterialItem material={material} pathname={pathname} />
-				</div>
-			</ScrollArea>
+		<div id="course-sidebar-course-materials" className="transition-all">
+			<div className="flex flex-col divide-y divide-gray-200">
+				<MaterialItem material={material} pathname={pathname} />
+			</div>
 		</div>
 	)
 }

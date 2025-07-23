@@ -23,8 +23,11 @@ import type {
 } from "@/lib/types/domain"
 import type { CoursePageData } from "@/lib/types/page"
 
-export async function fetchCoursePageData(params: { subject: string; course: string }): Promise<CoursePageData> {
-	logger.info("fetchCoursePageData called", { params })
+export async function fetchCoursePageData(
+	params: { subject: string; course: string },
+	options?: { skip?: { questions?: boolean } }
+): Promise<CoursePageData> {
+	logger.info("fetchCoursePageData called", { params, options })
 	// First, find the course by its khanSlug since the URL param is a slug, not a Khan ID
 	logger.debug("course page: looking up course by slug", { slug: params.course })
 
@@ -226,32 +229,52 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		}
 	}
 
-	// Fetch questions for all exercises in parallel
-	const exerciseQuestionsPromises = await Promise.all(
-		Array.from(exerciseResourceSourcedIds).map(async (exerciseSourcedId) => {
-			const result = await errors.try(getAllQuestionsForTest(exerciseSourcedId))
-			if (result.error) {
-				logger.error("failed to fetch questions for exercise", { exerciseSourcedId, error: result.error })
-				return { exerciseSourcedId, questions: [] }
-			}
-			if (!Array.isArray(result.data.questions)) {
-				logger.error("CRITICAL: QTI test questions are not an array", {
-					exerciseSourcedId,
-					questionsData: result.data.questions
-				})
-				return { exerciseSourcedId, questions: [] }
-			}
-			return {
-				exerciseSourcedId,
-				questions: result.data.questions.map((q) => ({ id: q.question.identifier }))
-			}
-		})
-	)
-
 	// Create questions map
 	const questionsMap = new Map<string, number>()
-	for (const result of exerciseQuestionsPromises) {
-		questionsMap.set(result.exerciseSourcedId, result.questions.length)
+
+	// Check if we should skip fetching questions
+	const shouldSkipQuestions = options?.skip?.questions === true
+
+	if (!shouldSkipQuestions) {
+		// Fetch questions for all exercises in parallel
+		logger.info("fetching questions for exercises", {
+			count: exerciseResourceSourcedIds.size,
+			skipQuestions: shouldSkipQuestions
+		})
+
+		const exerciseQuestionsPromises = await Promise.all(
+			Array.from(exerciseResourceSourcedIds).map(async (exerciseSourcedId) => {
+				const result = await errors.try(getAllQuestionsForTest(exerciseSourcedId))
+				if (result.error) {
+					logger.error("failed to fetch questions for exercise", { exerciseSourcedId, error: result.error })
+					return { exerciseSourcedId, questions: [] }
+				}
+				if (!Array.isArray(result.data.questions)) {
+					logger.error("CRITICAL: QTI test questions are not an array", {
+						exerciseSourcedId,
+						questionsData: result.data.questions
+					})
+					return { exerciseSourcedId, questions: [] }
+				}
+				return {
+					exerciseSourcedId,
+					questions: result.data.questions.map((q) => ({ id: q.question.identifier }))
+				}
+			})
+		)
+
+		// Populate the questionsMap with actual question counts
+		for (const result of exerciseQuestionsPromises) {
+			questionsMap.set(result.exerciseSourcedId, result.questions.length)
+		}
+	} else {
+		// Skip fetching questions and use default values
+		logger.info("skipping question fetching for exercises", { count: exerciseResourceSourcedIds.size })
+
+		// Populate questionsMap with default values (5 questions per exercise)
+		for (const exerciseSourcedId of exerciseResourceSourcedIds) {
+			questionsMap.set(exerciseSourcedId, 5) // Default to 5 questions
+		}
 	}
 
 	// Build units with children
