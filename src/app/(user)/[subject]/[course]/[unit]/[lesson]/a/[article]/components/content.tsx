@@ -4,7 +4,7 @@ import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
-import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
+import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { trackArticleView } from "@/lib/actions/tracking"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { ArticlePageData } from "@/lib/types/page"
@@ -44,18 +44,6 @@ export function Content({
 			// Fire-and-forget the existing OneRoster tracking action on component mount.
 			void trackArticleView(onerosterUserSourcedId, article.id)
 
-			// Send Caliper event for article completion
-			if (!userEmail) {
-				// CRITICAL: User email is required for Caliper. This should not be null/undefined.
-				throw errors.new("article tracking: user email required for caliper event")
-			}
-
-			const actor = {
-				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
-				type: "TimebackUser" as const,
-				email: userEmail
-			}
-
 			// Map subject string to the enum value
 			const subjectMapping: Record<string, "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"> = {
 				science: "Science",
@@ -69,20 +57,6 @@ export function Content({
 				// CRITICAL: Subject is unmapped. This indicates a configuration or routing error.
 				throw errors.new("article tracking: unmapped subject")
 			}
-
-			const context = {
-				id: `https://alpharead.alpha.school/articles/${article.id}`,
-				type: "TimebackActivityContext" as const,
-				subject: mappedSubject,
-				app: { name: "Nice Academy" },
-				course: { name: params.course },
-				activity: { name: article.title }
-			}
-
-			// For articles, we send a completion metric
-			const metrics = [{ type: "xpEarned" as const, value: 1 }]
-
-			void sendCaliperActivityCompletedEvent(actor, context, metrics)
 
 			// Cleanup function to send time spent event when component unmounts
 			return () => {
