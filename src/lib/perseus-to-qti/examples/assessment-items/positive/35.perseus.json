@@ -1,57 +1,60 @@
 {
 	"hints": [
-		{ "images": {}, "content": "First, let's find the length of each pencil. ", "replace": false, "widgets": {} },
 		{
 			"images": {
-				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/e3b10a6df592a5ca027815a274fbd68da1477796": {
-					"width": 265,
-					"height": 162
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/dddf311f29b338aff17d13fa1dddfbf46e3f2bdc": {
+					"width": 337,
+					"height": 314
 				}
 			},
-			"content": "All of the pencils begin at $0\\text{ cm}$ on the ruler.  So, we can look at where our pencils end on the ruler to find their length.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/e3b10a6df592a5ca027815a274fbd68da1477796)",
+			"content": "There are $\\purpleD{8\\text{ triangles}}$. We can find $\\purpleD {\\text{Triangles}}$ at the bottom of the graph and create a bar over it that is even with $\\purpleD{8}$.  \n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/dddf311f29b338aff17d13fa1dddfbf46e3f2bdc)",
 			"replace": false,
 			"widgets": {}
 		},
+		{ "images": {}, "content": "Now, let's graph the $3$ other types of shapes.", "replace": false, "widgets": {} },
 		{
 			"images": {},
-			"content": "$\\redE{\\text{Pencil A}}$ measure $\\redE{8}$ cm long.\n\n$\\blueE{\\text{Pencil B}}$ measure $\\blueE{7}$ cm long.\n\n$\\goldE{\\text{Pencil C}}$ measure $\\goldE{4}$ cm long.\n\n$\\purpleD{\\text{Pencil D}}$ measure $\\purpleD{4}$ cm long.",
+			"content": "Here is the completed bar graph:\n\n[[☃ plotter 2]]\n",
 			"replace": false,
-			"widgets": {}
-		},
-		{
-			"images": {
-				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/e5579975f53d05ff09945df912540b185af58e9f": {
-					"width": 270,
-					"height": 164
+			"widgets": {
+				"plotter 2": {
+					"type": "plotter",
+					"graded": true,
+					"static": true,
+					"options": {
+						"maxY": 10,
+						"type": "bar",
+						"labels": ["Type of shape", "Number of shape"],
+						"scaleY": 1,
+						"correct": [8, 5, 3, 9],
+						"starting": [8, 5, 3, 9],
+						"categories": ["Triangles", "Circles", "Rectangles", "Squares"],
+						"snapsPerLine": 1,
+						"labelInterval": 1
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
 				}
-			},
-			"content": "Now, let's graph the measures on the line plot.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/e5579975f53d05ff09945df912540b185af58e9f)",
-			"replace": false,
-			"widgets": {}
+			}
 		}
 	],
 	"question": {
-		"images": {
-			"web+graphie://cdn.kastatic.org/ka-perseus-graphie/e3b10a6df592a5ca027815a274fbd68da1477796": {
-				"width": 265,
-				"height": 162
-			}
-		},
-		"content": "The lengths of $4$ pencils are measured below.  \n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/e3b10a6df592a5ca027815a274fbd68da1477796)\n\n**Record the length of each pencil on the line plot.**  \n*Click above the line plot to make dots for each measurement.*\n\n[[☃ plotter 2]]",
+		"images": {},
+		"content": "A second grade classroom has a bin of shapes. \n\nType of shape | Number of shapes\n:- | :-: \nTriangles | $8$ \nCircles |$5$  \nRectangles |  $3$ \nSquares | $9$ \n\n**Create a bar graph to show the number of shapes in the bin.**\n\n[[☃ plotter 1]]\n\n",
 		"widgets": {
-			"plotter 2": {
+			"plotter 1": {
 				"type": "plotter",
 				"graded": true,
 				"static": false,
 				"options": {
 					"maxY": 10,
-					"type": "dotplot",
-					"labels": ["Length (centimeters)", ""],
+					"type": "bar",
+					"labels": ["Type of shape", "Number of shape"],
 					"scaleY": 1,
-					"correct": [0, 0, 0, 0, 2, 0, 0, 1, 1],
-					"starting": [0, 0, 0, 0, 0, 0, 0, 0, 0],
-					"categories": ["$0$", "$1$", "$2$", "$3$", "$4$", "$5$", "$6$", "$7$", "$8$"],
-					"snapsPerLine": 2,
+					"correct": [8, 5, 3, 9],
+					"starting": [0, 0, 0, 0],
+					"categories": ["Triangles", "Circles", "Rectangles", "Squares"],
+					"snapsPerLine": 1,
 					"labelInterval": 1
 				},
 				"version": { "major": 0, "minor": 0 },
