@@ -5,7 +5,7 @@ import type { ProgressPageData } from "@/lib/data/progress"
 import { ProgressTable } from "./progress-table"
 
 export function Content({ progressPromise }: { progressPromise: Promise<ProgressPageData> }) {
-	const { activities, exerciseMinutes, totalLearningMinutes } = React.use(progressPromise)
+	const { activities, exerciseMinutes, totalLearningMinutes, totalXpEarned } = React.use(progressPromise)
 
 	return (
 		<React.Fragment>
@@ -13,6 +13,9 @@ export function Content({ progressPromise }: { progressPromise: Promise<Progress
 				<h1 className="text-2xl font-bold text-gray-800">My progress</h1>
 
 				<div className="flex items-center space-x-6">
+					<span className="text-sm">
+						<span className="font-bold text-xl text-green-600">{totalXpEarned}</span> XP earned
+					</span>
 					<span className="text-sm">
 						<span className="font-bold text-xl">{exerciseMinutes}</span> exercise minutes
 					</span>

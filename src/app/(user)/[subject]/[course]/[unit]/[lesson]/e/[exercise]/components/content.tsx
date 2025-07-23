@@ -22,6 +22,7 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 				onerosterResourceSourcedId={exercise.id} // The exercise resource sourcedId for OneRoster results
 				assessmentTitle={exercise.title}
 				unitData={layoutData.unitData}
+				expectedXp={exercise.expectedXp}
 			/>
 		)
 	}

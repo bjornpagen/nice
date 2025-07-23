@@ -47,6 +47,7 @@ export interface ExercisePageData {
 		id: string
 		title: string
 		type: "Exercise"
+		expectedXp: number
 	}
 	questions: Question[]
 	layoutData: LessonLayoutData
@@ -60,6 +61,7 @@ export interface QuizPageData {
 		title: string
 		description: string
 		type: "Quiz"
+		expectedXp: number
 	}
 	questions: Question[]
 	layoutData: LessonLayoutData
@@ -73,6 +75,7 @@ export interface UnitTestPageData {
 		title: string
 		description: string
 		type: "UnitTest"
+		expectedXp: number
 	}
 	questions: Question[]
 	layoutData: LessonLayoutData
@@ -87,6 +90,7 @@ export interface CourseChallengePageData {
 		description: string
 		slug: string
 		type: "CourseChallenge"
+		expectedXp: number
 	}
 	questions: Question[]
 }

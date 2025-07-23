@@ -18,6 +18,7 @@ export function TestContent({ testPromise }: { testPromise: Promise<UnitTestPage
 				onerosterResourceSourcedId={test.id} // The test resource sourcedId for OneRoster results
 				assessmentTitle={test.title}
 				unitData={layoutData.unitData}
+				expectedXp={test.expectedXp}
 			/>
 		)
 	}

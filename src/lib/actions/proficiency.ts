@@ -3,12 +3,18 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
-import { oneroster, powerpath, qti } from "@/lib/clients"
+import { oneroster, qti } from "@/lib/clients"
+import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 
 interface ExercisePerformance {
 	exerciseId: string
 	correctCount: number
 	totalCount: number
+}
+
+interface QuestionResult {
+	qtiItemId: string
+	isCorrect: boolean
 }
 
 /**
@@ -20,62 +26,61 @@ interface ExercisePerformance {
  * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
  * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr456)
  * @param attemptNumber - The specific attempt number to analyze.
+ * @param sessionResults - An array of question results from the client session.
  */
 export async function updateProficiencyFromAssessment(
 	onerosterUserSourcedId: string,
 	onerosterComponentResourceSourcedId: string,
-	attemptNumber: number // ADDED: This is the crucial new parameter
+	attemptNumber: number,
+	sessionResults: QuestionResult[]
 ) {
-	logger.info("starting granular proficiency analysis", {
+	logger.info("starting granular proficiency analysis from session results", {
 		onerosterUserSourcedId,
 		onerosterComponentResourceSourcedId,
-		attemptNumber
-	})
-
-	// Step 1: Get the graded results from PowerPath for the SPECIFIC attempt
-	// Note: PowerPath auto-finalizes assessments when all questions are answered,
-	// so we don't need to explicitly finalize. This also allows retakes to work smoothly.
-	const progressResult = await errors.try(
-		powerpath.getAssessmentProgress(onerosterUserSourcedId, onerosterComponentResourceSourcedId, attemptNumber)
-	)
-	if (progressResult.error) {
-		logger.error("failed to get assessment progress for proficiency analysis", {
-			onerosterComponentResourceSourcedId,
-			attemptNumber,
-			error: progressResult.error
-		})
-		// Return early but don't throw - we've done our best
-		return { success: true, exercisesUpdated: 0 }
-	}
-	const { questions: questionResults, lessonType, finalized, score } = progressResult.data
-
-	// ADDED: Log the raw PowerPath response to debug scoring issues
-	logger.info("powerpath assessment progress response", {
-		onerosterComponentResourceSourcedId,
 		attemptNumber,
-		finalized,
-		score,
-		questionCount: questionResults.length,
-		questions: questionResults
+		sessionResultCount: sessionResults.length
 	})
 
-	// Early return if assessment isn't finalized or has no question results
-	if (!finalized || score === undefined || questionResults.some((q) => q.correct === undefined)) {
-		logger.warn("assessment not fully graded yet, skipping proficiency analysis", {
+	// Step 1: Fetch the lessonType from the resource's metadata in OneRoster
+	const componentResourceResult = await errors.try(oneroster.getComponentResource(onerosterComponentResourceSourcedId))
+	if (componentResourceResult.error) {
+		logger.error("failed to fetch component resource for proficiency analysis", {
 			onerosterComponentResourceSourcedId,
-			finalized,
-			hasScore: score !== undefined,
-			questionsWithResults: questionResults.filter((q) => q.correct !== undefined).length,
-			totalQuestions: questionResults.length
+			error: componentResourceResult.error
 		})
-		return { success: true, exercisesUpdated: 0 }
+		throw errors.wrap(componentResourceResult.error, "fetch component resource")
 	}
+	if (!componentResourceResult.data) {
+		throw errors.new("component resource data is null")
+	}
+	const resourceSourcedId = componentResourceResult.data.resource.sourcedId
+
+	const resourceResult = await errors.try(oneroster.getResource(resourceSourcedId))
+	if (resourceResult.error) {
+		logger.error("failed to fetch resource for proficiency analysis", {
+			resourceSourcedId,
+			error: resourceResult.error
+		})
+		throw errors.wrap(resourceResult.error, "fetch resource")
+	}
+	if (!resourceResult.data) {
+		throw errors.new("resource data is null")
+	}
+
+	const metadataResult = ResourceMetadataSchema.safeParse(resourceResult.data.metadata)
+	if (!metadataResult.success) {
+		logger.error("invalid resource metadata", { resourceSourcedId, error: metadataResult.error })
+		throw errors.wrap(metadataResult.error, "invalid resource metadata")
+	}
+	// Default to 'exercise' if khanLessonType is not present, though it should be for quizzes/tests.
+	const lessonType =
+		metadataResult.data.type === "qti" ? (metadataResult.data.khanLessonType ?? "exercise") : "exercise"
 
 	// Step 2: Map questions to exercises using QTI metadata
 	const qtiItemIdToOneRosterResourceSourcedIdMap = new Map<string, string>()
+	const questionResultsFromSession = sessionResults.map((q) => ({ id: q.qtiItemId, correct: q.isCorrect }))
 
-	// Fetch QTI metadata for all questions in parallel for better performance
-	const qtiMetadataPromises = questionResults.map(async (question) => {
+	const qtiMetadataPromises = questionResultsFromSession.map(async (question) => {
 		const itemResult = await errors.try(qti.getAssessmentItem(question.id))
 		if (itemResult.error) {
 			logger.warn("failed to fetch QTI item metadata for question", {
@@ -94,22 +99,16 @@ export async function updateProficiencyFromAssessment(
 			return null
 		}
 
-		// Convert from raw Khan exercise ID to OneRoster resource sourcedId format
 		const onerosterResourceSourcedId = `nice:${khanExerciseId}`
-
 		logger.debug("mapped question to exercise", {
 			qtiItemId: question.id,
 			khanExerciseId,
 			onerosterResourceSourcedId
 		})
-
 		return { qtiItemId: question.id, onerosterResourceSourcedId }
 	})
 
-	// Wait for all QTI metadata fetches to complete
 	const qtiMetadataResults = await Promise.all(qtiMetadataPromises)
-
-	// Build the mapping from successful results
 	for (const result of qtiMetadataResults) {
 		if (result) {
 			qtiItemIdToOneRosterResourceSourcedIdMap.set(result.qtiItemId, result.onerosterResourceSourcedId)
@@ -123,7 +122,7 @@ export async function updateProficiencyFromAssessment(
 
 	// Step 3: Get current proficiency levels for mastery upgrade logic
 	const currentProficiencyMap = new Map<string, number>()
-	if (lessonType === "unit-test") {
+	if (lessonType === "unittest") {
 		// For unit tests, we need to check current proficiency to handle mastery upgrades
 		const onerosterResourceSourcedIds = Array.from(new Set(qtiItemIdToOneRosterResourceSourcedIdMap.values()))
 
@@ -169,7 +168,7 @@ export async function updateProficiencyFromAssessment(
 	// Step 4: Aggregate performance by exercise
 	const performanceMap = new Map<string, ExercisePerformance>()
 
-	for (const question of questionResults) {
+	for (const question of questionResultsFromSession) {
 		const onerosterResourceSourcedId = qtiItemIdToOneRosterResourceSourcedIdMap.get(question.id)
 		if (!onerosterResourceSourcedId) {
 			logger.warn("could not map question to exercise", { qtiItemId: question.id, onerosterComponentResourceSourcedId })
@@ -211,14 +210,14 @@ export async function updateProficiencyFromAssessment(
 	const updatePromises: Promise<unknown>[] = []
 	for (const [exerciseId, performance] of performanceMap.entries()) {
 		const percentageCorrect = performance.correctCount / performance.totalCount
-		const isUnitTest = lessonType === "unit-test"
+		const isUnitTest = lessonType === "unittest"
 
 		// Calculate proficiency score for this exercise
 		let proficiencyScore = percentageCorrect // Store the EXACT percentage, not discrete levels
 
 		// Special case: Unit test mastery upgrade
 		// If student was already at 100% (1.0) and gets unit test question correct → Mastered (1.1)
-		if (lessonType === "unit-test" && percentageCorrect === 1.0) {
+		if (lessonType === "unittest" && percentageCorrect === 1.0) {
 			const currentScore = currentProficiencyMap.get(exerciseId)
 			if (currentScore && currentScore >= 1.0) {
 				proficiencyScore = 1.1 // Mastered level
@@ -237,7 +236,7 @@ export async function updateProficiencyFromAssessment(
 		// - Single question: 0/1 = 0% → Apply penalty
 		// - Multiple questions: Only if ALL wrong (0/2, 0/3, etc) → Apply penalty
 		// - Partial credit (1/2, 2/3): Normal percentage calculation applies
-		if (lessonType === "unit-test" && percentageCorrect === 0) {
+		if (lessonType === "unittest" && percentageCorrect === 0) {
 			const currentScore = currentProficiencyMap.get(exerciseId)
 			if (currentScore !== undefined && currentScore > 0) {
 				// Apply softer penalty based on current proficiency level
@@ -288,9 +287,9 @@ export async function updateProficiencyFromAssessment(
 		// 4. Score is 0 and this is from a quiz/test (new failure to record)
 		if (
 			proficiencyScore > 0 ||
-			(lessonType === "unit-test" && percentageCorrect === 0 && currentProficiencyMap.has(exerciseId)) ||
+			(lessonType === "unittest" && percentageCorrect === 0 && currentProficiencyMap.has(exerciseId)) ||
 			(proficiencyScore === 0 && currentProficiencyMap.has(exerciseId)) ||
-			(proficiencyScore === 0 && (lessonType === "quiz" || lessonType === "unit-test"))
+			(proficiencyScore === 0 && (lessonType === "quiz" || lessonType === "unittest"))
 		) {
 			updatePromises.push(
 				saveAssessmentResult(
@@ -312,7 +311,7 @@ export async function updateProficiencyFromAssessment(
 		exercisesAnalyzed: performanceMap.size,
 		exercisesUpdated: successfulUpdates,
 		questionsMapped: qtiItemIdToOneRosterResourceSourcedIdMap.size,
-		totalQuestions: questionResults.length
+		totalQuestions: questionResultsFromSession.length
 	})
 
 	return { success: true, exercisesUpdated: successfulUpdates }

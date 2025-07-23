@@ -1509,6 +1509,31 @@ export class Client {
 	}
 
 	/**
+	 * Retrieves a specific Assessment Result by its identifier.
+	 * @param {string} sourcedId - The unique identifier of the assessment result.
+	 * @returns {Promise<AssessmentResult | null>} The assessment result object, or null if not found.
+	 */
+	async getResult(sourcedId: string): Promise<AssessmentResult | null> {
+		logger.info("oneroster: getting assessment result", { sourcedId })
+
+		const GetResultResponseSchema = z.object({
+			assessmentResult: AssessmentResultSchema.optional()
+		})
+
+		const response = await this.#request(
+			`/ims/oneroster/gradebook/v1p2/assessmentResults/${sourcedId}`,
+			{ method: "GET" },
+			GetResultResponseSchema,
+			{ swallow404: true } // Return null if not found
+		)
+
+		if (!response || !response.assessmentResult) {
+			return null
+		}
+		return response.assessmentResult
+	}
+
+	/**
 	 * Fetches all assessment results with optional filtering and sorting.
 	 * @param options Query options including filter, sort, and orderBy
 	 * @returns A promise that resolves to an array of assessment results.

@@ -25,7 +25,7 @@ import { powerpath, qti } from "@/lib/clients"
  * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user456)
  * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr789) - used by PowerPath
  * @param isInteractiveAssessment - Whether this is a quiz or test (vs exercise)
- * @param attemptCount - The attempt number (0 = first attempt)
+ * @param assessmentAttemptNumber - The attempt number (0 = first attempt)
  */
 export async function processQuestionResponse(
 	qtiItemId: string,
@@ -34,7 +34,7 @@ export async function processQuestionResponse(
 	onerosterUserSourcedId?: string,
 	onerosterComponentResourceSourcedId?: string,
 	isInteractiveAssessment?: boolean,
-	attemptCount?: number
+	assessmentAttemptNumber?: number
 ) {
 	logger.debug("processing question response", {
 		qtiItemId,
@@ -42,7 +42,7 @@ export async function processQuestionResponse(
 		onerosterUserSourcedId,
 		onerosterComponentResourceSourcedId,
 		isInteractiveAssessment,
-		attemptCount
+		assessmentAttemptNumber
 	})
 
 	let isCorrect = false
@@ -107,13 +107,18 @@ export async function processQuestionResponse(
 		isCorrect = qtiResult.data.score > 0
 	}
 
-	// CRITICAL: Only log to PowerPath on the FIRST attempt (attemptCount === 0)
+	// CRITICAL: Only log to PowerPath on the FIRST attempt (assessmentAttemptNumber === 0)
 	// This matches Khan Academy's behavior where only first attempts count for proficiency
-	if (isInteractiveAssessment && onerosterUserSourcedId && onerosterComponentResourceSourcedId && attemptCount === 0) {
+	if (
+		isInteractiveAssessment &&
+		onerosterUserSourcedId &&
+		onerosterComponentResourceSourcedId &&
+		assessmentAttemptNumber === 0
+	) {
 		logger.info("logging first attempt response to powerpath", {
 			qtiItemId,
 			isCorrect,
-			attemptCount
+			assessmentAttemptNumber
 		})
 
 		// Convert response to string or string array for PowerPath
@@ -137,10 +142,10 @@ export async function processQuestionResponse(
 			.catch((err) => {
 				logger.error("failed to log question response to powerpath", { error: err, qtiItemId, onerosterUserSourcedId })
 			})
-	} else if (attemptCount && attemptCount > 0) {
+	} else if (assessmentAttemptNumber && assessmentAttemptNumber > 0) {
 		logger.debug("skipping powerpath logging for retry attempt", {
 			qtiItemId,
-			attemptCount,
+			assessmentAttemptNumber,
 			isCorrect
 		})
 	}
@@ -308,21 +313,21 @@ export async function processSkippedQuestion(
 	qtiItemId: string,
 	onerosterUserSourcedId: string,
 	onerosterComponentResourceSourcedId: string,
-	attemptNumber: number
+	assessmentAttemptNumber: number
 ) {
 	logger.info("logging skipped question as incorrect", {
 		qtiItemId,
 		onerosterUserSourcedId,
 		onerosterComponentResourceSourcedId,
-		attemptNumber
+		assessmentAttemptNumber
 	})
 
-	// Only log to PowerPath on the FIRST attempt (attemptNumber === 0)
+	// Only log to PowerPath on the FIRST attempt (assessmentAttemptNumber === 0)
 	// This matches our existing logic for regular responses
-	if (attemptNumber === 0) {
+	if (assessmentAttemptNumber === 0) {
 		logger.info("logging first attempt skip to powerpath", {
 			qtiItemId,
-			attemptNumber
+			assessmentAttemptNumber
 		})
 
 		// Send a special "SKIPPED" response that PowerPath will score as incorrect
@@ -346,7 +351,7 @@ export async function processSkippedQuestion(
 	} else {
 		logger.debug("skipping powerpath logging for retry skip", {
 			qtiItemId,
-			attemptNumber
+			assessmentAttemptNumber
 		})
 	}
 }

@@ -99,6 +99,7 @@ export interface ProgressPageData {
 	activities: Activity[]
 	exerciseMinutes: number
 	totalLearningMinutes: number
+	totalXpEarned: number // Add XP to the interface
 }
 
 function getProficiencyText(score: number): "Proficient" | "Familiar" | "Attempted" {
@@ -110,6 +111,7 @@ function getProficiencyText(score: number): "Proficient" | "Familiar" | "Attempt
 function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[]): ProgressPageData {
 	let exerciseMinutes = 0
 	let totalLearningMinutes = 0
+	let totalXpEarned = 0 // Track total XP
 
 	// Create activities with event times for proper sorting
 	const eventActivities = events
@@ -117,10 +119,17 @@ function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[
 			if (event.action === "Completed") {
 				const totalQuestionsItem = event.generated.items.find((item) => item.type === "totalQuestions")
 				const correctQuestionsItem = event.generated.items.find((item) => item.type === "correctQuestions")
+				const xpEarnedItem = event.generated.items.find((item) => item.type === "xpEarned") // Extract XP
 
 				const totalQuestions = totalQuestionsItem?.value ?? 0
 				const correctQuestions = correctQuestionsItem?.value ?? 0
+				const xpEarned = xpEarnedItem?.value ?? 0 // Get XP value
 				const score = totalQuestions > 0 ? correctQuestions / totalQuestions : 0
+
+				// Add to total XP (only count positive XP, not penalties)
+				if (xpEarned > 0) {
+					totalXpEarned += xpEarned
+				}
 
 				// Determine activity type from object ID with better categorization
 				const getActivityIcon = (objectId: string): string => {
@@ -140,7 +149,8 @@ function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[
 						date: format(new Date(event.eventTime), "MMM dd, yyyy 'at' h:mm a"),
 						level: getProficiencyText(score),
 						problems: `${correctQuestions}/${totalQuestions}`,
-						time: "–"
+						time: "–",
+						xp: xpEarned // Add XP to activity
 					},
 					eventTime: event.eventTime
 				}
@@ -188,7 +198,7 @@ function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[
 
 	const activities: Activity[] = eventActivities.map((item) => item.activity)
 
-	return { activities, exerciseMinutes, totalLearningMinutes }
+	return { activities, exerciseMinutes, totalLearningMinutes, totalXpEarned }
 }
 
 export async function fetchProgressPageData(): Promise<ProgressPageData> {
@@ -200,7 +210,7 @@ export async function fetchProgressPageData(): Promise<ProgressPageData> {
 	const metadata = ClerkUserPublicMetadataSchema.parse(user.publicMetadata)
 	if (!metadata.sourceId) {
 		logger.warn("user has no sourceId, cannot fetch progress", { userId: user.id })
-		return { activities: [], exerciseMinutes: 0, totalLearningMinutes: 0 }
+		return { activities: [], exerciseMinutes: 0, totalLearningMinutes: 0, totalXpEarned: 0 }
 	}
 
 	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${metadata.sourceId}`
@@ -209,7 +219,7 @@ export async function fetchProgressPageData(): Promise<ProgressPageData> {
 	if (eventsResult.error) {
 		logger.error("failed to fetch caliper events", { actorId, error: eventsResult.error })
 		// Return empty state on failure to avoid crashing the page
-		return { activities: [], exerciseMinutes: 0, totalLearningMinutes: 0 }
+		return { activities: [], exerciseMinutes: 0, totalLearningMinutes: 0, totalXpEarned: 0 }
 	}
 
 	return transformEventsToActivities(eventsResult.data)

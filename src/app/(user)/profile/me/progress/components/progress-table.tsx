@@ -12,6 +12,7 @@ export type Activity = {
 	level: "Proficient" | "Familiar" | "Attempted" | "–"
 	problems: string
 	time: string
+	xp?: number // Add optional xp field
 }
 
 export type ProgressTableProps = {
@@ -84,6 +85,11 @@ export function ProgressTable({ activities }: ProgressTableProps) {
 										<span className="text-gray-600">
 											<span className="font-medium">{activity.time}</span> min
 										</span>
+										{activity.xp !== undefined && (
+											<span className="text-green-600 font-medium">
+												{activity.xp > 0 ? `+${activity.xp} XP` : `${activity.xp} XP`}
+											</span>
+										)}
 									</div>
 								</div>
 							</div>
@@ -95,21 +101,22 @@ export function ProgressTable({ activities }: ProgressTableProps) {
 			{/* Desktop Table View */}
 			<div className="hidden lg:block">
 				<div className="bg-gray-50 border border-gray-200 rounded-t-lg">
-					<div className="grid grid-cols-12 gap-4 px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-						<div className="col-span-6">Activity</div>
+					<div className="grid grid-cols-14 gap-4 px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+						<div className="col-span-5">Activity</div>
 						<div className="col-span-2">Date</div>
 						<div className="col-span-2">Level</div>
-						<div className="col-span-1 text-center">Problems</div>
-						<div className="col-span-1 text-right">Time</div>
+						<div className="col-span-2 text-center">Problems</div>
+						<div className="col-span-1 text-center">Time</div>
+						<div className="col-span-2 text-right">XP</div>
 					</div>
 				</div>
 				<div className="border border-t-0 border-gray-200 rounded-b-lg bg-white">
 					{currentActivities.map((activity, index) => (
 						<div
 							key={`${activity.title}-${activity.date}-${index}`}
-							className="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0"
+							className="grid grid-cols-14 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0"
 						>
-							<div className="col-span-6">
+							<div className="col-span-5">
 								<div className="flex items-start space-x-3">
 									<ActivityIcon variant={getActivityVariant(activity.icon)} className="w-6 h-6 flex-shrink-0 mt-0.5" />
 									<div className="min-w-0 flex-1">
@@ -132,8 +139,17 @@ export function ProgressTable({ activities }: ProgressTableProps) {
 									<span className="text-gray-400 text-sm">–</span>
 								)}
 							</div>
-							<div className="col-span-1 text-sm text-gray-600 text-center self-start pt-0.5">{activity.problems}</div>
-							<div className="col-span-1 text-sm text-gray-600 text-right self-start pt-0.5">{activity.time}</div>
+							<div className="col-span-2 text-sm text-gray-600 text-center self-start pt-0.5">{activity.problems}</div>
+							<div className="col-span-1 text-sm text-gray-600 text-center self-start pt-0.5">{activity.time}</div>
+							<div className="col-span-2 text-sm font-medium text-right self-start pt-0.5">
+								{activity.xp !== undefined ? (
+									<span className={activity.xp > 0 ? "text-green-600" : "text-red-600"}>
+										{activity.xp > 0 ? `+${activity.xp}` : activity.xp} XP
+									</span>
+								) : (
+									<span className="text-gray-400">–</span>
+								)}
+							</div>
 						</div>
 					))}
 					{currentActivities.length === 0 && (

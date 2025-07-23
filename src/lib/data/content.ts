@@ -158,7 +158,8 @@ export async function fetchExercisePageData(params: {
 		exercise: {
 			id: resource.sourcedId,
 			title: resource.title,
-			type: "Exercise" as const
+			type: "Exercise" as const,
+			expectedXp: resourceMetadataResult.data.xp
 		},
 		questions,
 		layoutData // Include layout data in the response

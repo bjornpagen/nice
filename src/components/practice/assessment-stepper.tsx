@@ -135,6 +135,7 @@ interface AssessmentStepperProps {
 	onerosterResourceSourcedId: string // The OneRoster resource sourcedId (e.g., nice:exercise456) - used for OneRoster assessment results
 	assessmentTitle: string
 	unitData?: Unit
+	expectedXp: number
 }
 
 export function AssessmentStepper({
@@ -144,7 +145,8 @@ export function AssessmentStepper({
 	onerosterComponentResourceSourcedId,
 	onerosterResourceSourcedId,
 	assessmentTitle,
-	unitData
+	unitData,
+	expectedXp // Will be used when caliper action is updated
 }: AssessmentStepperProps) {
 	const { user } = useUser()
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
@@ -159,6 +161,7 @@ export function AssessmentStepper({
 	const [showSummary, setShowSummary] = React.useState(false)
 	// ADDED: New state to track the current attempt number. Default to 1 for the first attempt.
 	const [attemptNumber, setAttemptNumber] = React.useState(1)
+	const [sessionResults, setSessionResults] = React.useState<{ qtiItemId: string; isCorrect: boolean }[]>([]) // NEW STATE
 	const [nextItem, setNextItem] = React.useState<{ text: string; path: string } | null>(null)
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
 	const wrongAudioRef = React.useRef<HTMLAudioElement | null>(null)
@@ -351,11 +354,12 @@ export function AssessmentStepper({
 				// Add a small delay to ensure PowerPath has processed everything
 				await new Promise((resolve) => setTimeout(resolve, 1000))
 
-				// Pass the attemptNumber to the action
+				// MODIFIED: Pass sessionResults to updateProficiencyFromAssessment
 				const analysisPromise = updateProficiencyFromAssessment(
 					onerosterUserSourcedId,
 					onerosterComponentResourceSourcedId,
-					attemptNumber
+					attemptNumber,
+					sessionResults // NEW ARGUMENT
 				)
 				toast.promise(analysisPromise, {
 					loading: "Analyzing your skill performance...",
@@ -409,23 +413,26 @@ export function AssessmentStepper({
 				activity: { name: assessmentTitle }
 			}
 
-			const metrics = [
-				{ type: "totalQuestions" as const, value: questions.length },
-				{ type: "correctQuestions" as const, value: correctAnswersCount }
-			]
-
-			// Send activity completed event
-			void sendCaliperActivityCompletedEvent(actor, context, metrics)
-
-			// Send time spent event if we have a start time
+			// Calculate duration before sending events
+			let durationInSeconds: number | undefined
 			if (assessmentStartTimeRef.current) {
 				const endTime = new Date()
-				const durationInSeconds = Math.floor((endTime.getTime() - assessmentStartTimeRef.current.getTime()) / 1000)
+				durationInSeconds = Math.floor((endTime.getTime() - assessmentStartTimeRef.current.getTime()) / 1000)
+			}
 
-				// Only send if assessment took at least 1 second
-				if (durationInSeconds >= 1) {
-					void sendCaliperTimeSpentEvent(actor, context, durationInSeconds)
-				}
+			const performance = {
+				expectedXp: expectedXp,
+				totalQuestions: questions.length,
+				correctQuestions: correctAnswersCount,
+				durationInSeconds: durationInSeconds
+			}
+
+			// Send activity completed event
+			void sendCaliperActivityCompletedEvent(actor, context, performance)
+
+			// Send time spent event if we have a duration of at least 1 second
+			if (durationInSeconds && durationInSeconds >= 1) {
+				void sendCaliperTimeSpentEvent(actor, context, durationInSeconds)
 			}
 		}
 
@@ -441,7 +448,9 @@ export function AssessmentStepper({
 		isInteractiveAssessment,
 		unitData,
 		assessmentTitle,
-		attemptNumber // ADDED: Add attemptNumber to dependency array
+		attemptNumber, // ADDED: Add attemptNumber to dependency array
+		expectedXp,
+		sessionResults // ADDED: Add sessionResults to dependency array
 	])
 
 	if (questions.length === 0) {
@@ -616,7 +625,7 @@ export function AssessmentStepper({
 				isAuthenticated ? onerosterUserSourcedId : undefined,
 				isAuthenticated ? onerosterComponentResourceSourcedId : undefined,
 				isInteractiveAssessment && isAuthenticated,
-				attemptCount // Pass the current attempt count
+				attemptNumber - 1 // Pass assessment attempt number (0-indexed) instead of question attempt count
 			)
 		)
 
@@ -634,6 +643,9 @@ export function AssessmentStepper({
 		if (typeof isCorrect !== "boolean") {
 			throw errors.new("question response: invalid correctness indicator")
 		}
+
+		// NEW: Add result to session state
+		setSessionResults((prev) => [...prev, { qtiItemId: currentQuestion.id, isCorrect }])
 
 		setIsSubmitting(false)
 		setIsAnswerChecked(true)
@@ -678,12 +690,15 @@ export function AssessmentStepper({
 					currentQuestion.id,
 					onerosterUserSourcedId,
 					onerosterComponentResourceSourcedId,
-					attemptCount
+					attemptNumber - 1 // Pass assessment attempt number (0-indexed) instead of question attempt count
 				).catch(() => {
 					// Error is logged inside processSkippedQuestion, no need to log again
 				})
 			}
 		}
+
+		// NEW: Add skipped result to session state
+		setSessionResults((prev) => [...prev, { qtiItemId: currentQuestion.id, isCorrect: false }])
 
 		// Treat skip as wrong answer
 		setIsAnswerCorrect(false)

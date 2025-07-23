@@ -18,6 +18,7 @@ export function QuizContent({ quizPromise }: { quizPromise: Promise<QuizPageData
 				onerosterResourceSourcedId={quiz.id} // The quiz resource sourcedId for OneRoster results
 				assessmentTitle={quiz.title}
 				unitData={layoutData.unitData}
+				expectedXp={quiz.expectedXp}
 			/>
 		)
 	}
