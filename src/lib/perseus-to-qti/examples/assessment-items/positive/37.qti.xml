@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="bar-graph-shapes-data-entry"
+    title="Create a bar graph from data"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE_TRIANGLES" base-type="integer" cardinality="single">
+        <qti-correct-response>
+            <qti-value>8</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESPONSE_CIRCLES" base-type="integer" cardinality="single">
+        <qti-correct-response>
+            <qti-value>5</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESPONSE_RECTANGLES" base-type="integer" cardinality="single">
+        <qti-correct-response>
+            <qti-value>3</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESPONSE_SQUARES" base-type="integer" cardinality="single">
+        <qti-correct-response>
+            <qti-value>9</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <div id="reference_text">
+            <p>A second grade classroom has a bin of shapes.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type of shape</th>
+                        <th style="text-align:center;">Number of shapes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Triangles</td>
+                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td>Circles</td>
+                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td>Rectangles</td>
+                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td>Squares</td>
+                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <qti-prompt>Use the table to enter the number of shapes in the bin.</qti-prompt>
+        
+        <div class="data-entry-grid">
+            <p>Triangles: <qti-text-entry-interaction response-identifier="RESPONSE_TRIANGLES" expected-length="2"/></p>
+            <p>Circles: <qti-text-entry-interaction response-identifier="RESPONSE_CIRCLES" expected-length="2"/></p>
+            <p>Rectangles: <qti-text-entry-interaction response-identifier="RESPONSE_RECTANGLES" expected-length="2"/></p>
+            <p>Squares: <qti-text-entry-interaction response-identifier="RESPONSE_SQUARES" expected-length="2"/></p>
+        </div>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Excellent!</strong> You entered all the correct numbers from the data table.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Check each number against the values in the table. The correct values are: Triangles: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>, Circles: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>, Rectangles: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>, and Squares: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_TRIANGLES"/>
+                        <qti-correct identifier="RESPONSE_TRIANGLES"/>
+                    </qti-match>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_CIRCLES"/>
+                        <qti-correct identifier="RESPONSE_CIRCLES"/>
+                    </qti-match>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_RECTANGLES"/>
+                        <qti-correct identifier="RESPONSE_RECTANGLES"/>
+                    </qti-match>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_SQUARES"/>
+                        <qti-correct identifier="RESPONSE_SQUARES"/>
+                    </qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>
