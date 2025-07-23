@@ -26,7 +26,8 @@ const BaseResourceMetadataSchema = z.object({
 	khanId: z.string().min(1),
 	khanSlug: z.string().min(1),
 	khanTitle: z.string().min(1),
-	khanDescription: z.string().default("")
+	khanDescription: z.string().default(""),
+	xp: z.number().default(0)
 })
 
 // Schema for Video-specific metadata

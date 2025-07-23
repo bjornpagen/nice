@@ -5,6 +5,7 @@ export interface CoursePageData {
 	params: { subject: string; course: string }
 	course: Course
 	lessonCount: number // Aggregate count for the sidebar
+	totalXP: number // Total XP available in the course
 }
 
 // Data for the /<subject>/<course>/<unit> page
@@ -15,6 +16,7 @@ export interface UnitPageData {
 	unit: Unit // The specific unit being viewed
 	lessonCount: number
 	challenges: Course["challenges"]
+	totalXP: number // Total XP available in the unit
 }
 
 // Data for the /.../[lesson] layout

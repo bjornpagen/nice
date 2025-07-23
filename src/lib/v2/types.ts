@@ -29,7 +29,8 @@ const BaseSchema = z.object({
 	meta: z.record(z.any()).optional(),
 	slug: z.string(),
 	path: z.string(),
-	title: z.string()
+	title: z.string(),
+	xp: z.number().default(0).optional()
 })
 
 /**

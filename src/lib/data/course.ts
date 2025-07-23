@@ -152,7 +152,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 				title: component.title,
 				description: componentMetadata.khanDescription,
 				path: `/${params.subject}/${params.course}/${parentMetadataResult.data.khanSlug}/${componentMetadata.khanSlug}`, // Construct path from slugs
-				children: [] // Initialize children
+				children: [], // Initialize children
+				xp: 0 // Default XP value
 			})
 		}
 	}
@@ -313,7 +314,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					title: resource.title,
 					description: resourceMetadata.khanDescription,
 					path: `/${params.subject}/${params.course}/${unit.slug}/${pathSegment}/${resourceMetadata.khanSlug}`,
-					questions: [] // Questions are not needed on the course page
+					questions: [], // Questions are not needed on the course page
+					xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 				}
 				unitAssessments.push(assessment)
 			}
@@ -395,7 +397,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						youtubeId: youtubeId,
 						duration: resourceMetadata.duration,
 						type: "Video" as const,
-						sortOrder: componentResource.sortOrder
+						sortOrder: componentResource.sortOrder,
+						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 					})
 				} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
 					// This is an article
@@ -415,7 +418,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						path: `/${params.subject}/${params.course}/${unit.slug}/${lessonComponentMeta.data.khanSlug}/a/${resourceMetadata.khanSlug}`, // Construct path from slugs
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
-						sortOrder: componentResource.sortOrder
+						sortOrder: componentResource.sortOrder,
+						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 					})
 				} else if (
 					resourceMetadata.type === "qti" &&
@@ -455,7 +459,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 						description: resourceMetadata.khanDescription,
 						totalQuestions,
 						questionsToPass,
-						sortOrder: componentResource.sortOrder
+						sortOrder: componentResource.sortOrder,
+						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 					})
 				}
 			}
@@ -598,7 +603,8 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 					slug: resourceMetadata.khanSlug,
 					path: challengePath,
 					description: resourceMetadata.khanDescription,
-					questions: [] // Will be populated when the challenge is accessed
+					questions: [], // Will be populated when the challenge is accessed
+					xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 				}
 				challenges.push(challenge)
 			}
@@ -620,9 +626,33 @@ export async function fetchCoursePageData(params: { subject: string; course: str
 		challenges
 	}
 
+	// Calculate total XP for the course
+	let totalXP = 0
+
+	// Add XP from all units
+	for (const unit of unitsWithChildren) {
+		for (const child of unit.children) {
+			if (child.type === "Lesson") {
+				// Add XP from lesson content (videos, articles, exercises)
+				for (const content of child.children) {
+					totalXP += content.xp
+				}
+			} else {
+				// Add XP from quizzes and unit tests
+				totalXP += child.xp
+			}
+		}
+	}
+
+	// Add XP from course challenges
+	for (const challenge of challenges) {
+		totalXP += challenge.xp
+	}
+
 	return {
 		params,
 		course: finalCourse,
-		lessonCount
+		lessonCount,
+		totalXP
 	}
 }

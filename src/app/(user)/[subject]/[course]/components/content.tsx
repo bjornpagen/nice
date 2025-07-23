@@ -23,7 +23,7 @@ export function Content({
 	progressPromise: Promise<Map<string, AssessmentProgress>>
 }) {
 	// Consume the promises.
-	const { params, course, lessonCount } = React.use(dataPromise)
+	const { params, course, lessonCount, totalXP } = React.use(dataPromise)
 	const progressMap = React.use(progressPromise)
 
 	return (
@@ -48,7 +48,7 @@ export function Content({
 						{/* Course Details */}
 						<h1 className="text-3xl font-bold text-gray-800 mb-2">{course.title}</h1>
 						<div className="flex items-center space-x-2 text-gray-600">
-							<span className="text-sm">0 possible mastery points</span>
+							<span className="text-sm">{totalXP} possible mastery points</span>
 							<Info className="w-4 h-4 bg-gray-200 rounded-full cursor-not-allowed" />
 						</div>
 

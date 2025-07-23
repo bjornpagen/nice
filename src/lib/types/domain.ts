@@ -14,6 +14,7 @@ export interface ContentNode {
 	title: string
 	description: string
 	path: string
+	xp: number
 }
 
 // --- Content Types ---

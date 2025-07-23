@@ -29,13 +29,29 @@ export async function fetchUnitPageData(params: {
 		notFound()
 	}
 
-	// 3. Return the unit page data
+	// 3. Calculate total XP for the unit
+	let totalXP = 0
+
+	for (const child of currentUnit.children) {
+		if (child.type === "Lesson") {
+			// Add XP from lesson content (videos, articles, exercises)
+			for (const content of child.children) {
+				totalXP += content.xp
+			}
+		} else {
+			// Add XP from quizzes and unit tests
+			totalXP += child.xp
+		}
+	}
+
+	// 4. Return the unit page data
 	return {
 		params,
 		course: coursePageData.course,
 		allUnits: coursePageData.course.units,
 		lessonCount: coursePageData.lessonCount,
 		challenges: coursePageData.course.challenges,
-		unit: currentUnit
+		unit: currentUnit,
+		totalXP
 	}
 }
