@@ -1,5 +1,7 @@
 import { serve } from "inngest/next"
 import { inngest } from "@/inngest/client"
+// Import QTI workers
+import { clearCourseXmlData } from "@/inngest/functions/clear-course-xml-data"
 import { helloWorld } from "@/inngest/functions/hello"
 // Import OneRoster workers
 import { generatePayloadForCourse as generateOnerosterPayloadForCourse } from "@/inngest/functions/oneroster/generate-payload-for-course"
@@ -15,7 +17,6 @@ import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orches
 import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
-// Import QTI workers
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 // ✅ ADD: Import the new differentiate function
@@ -48,6 +49,7 @@ export const { GET, POST, PUT } = serve({
 		ingestResources,
 		ingestAssessmentLineItems,
 		// QTI Functions
+		clearCourseXmlData,
 		convertPerseusArticleToQtiStimulus,
 		convertPerseusQuestionToQtiItem,
 		ingestAssessmentItems,

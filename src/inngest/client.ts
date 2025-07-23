@@ -78,6 +78,12 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
+	// ✅ ADDED: New event to clear XML data for a course.
+	"qti/course.clear-xml": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
 	"qti/assessment-items.ingest": {
 		data: z.object({
 			items: z.array(CreateItemInputSchema)
