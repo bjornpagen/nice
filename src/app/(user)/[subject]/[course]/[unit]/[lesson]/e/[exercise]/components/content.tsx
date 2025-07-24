@@ -34,6 +34,7 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 			subtitle="Test your knowledge with this exercise!"
 			subtitleColorClass="text-blue-100"
 			questionsCount={questions.length}
+			expectedXp={exercise.expectedXp}
 			onStart={() => setHasStarted(true)}
 			bgClass="bg-blue-950"
 			contentType="Exercise"

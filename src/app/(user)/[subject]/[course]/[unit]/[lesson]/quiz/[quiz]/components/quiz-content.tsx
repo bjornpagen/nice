@@ -32,6 +32,7 @@ export function QuizContent({ quizPromise }: { quizPromise: Promise<QuizPageData
 			subtitle="Get ready for questions on the unit so far."
 			subtitleColorClass="text-blue-100"
 			questionsCount={questions.length}
+			expectedXp={quiz.expectedXp}
 			onStart={() => setHasStarted(true)}
 			bgClass="bg-blue-950"
 			contentType="Quiz"

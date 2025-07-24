@@ -10,6 +10,7 @@ interface Props {
 	subtitle: string
 	subtitleColorClass: string
 	questionsCount: number
+	expectedXp?: number // Total XP for the assessment
 	onStart: () => void
 	bgClass: string
 	contentType: AssessmentType
@@ -24,6 +25,7 @@ export function AssessmentStartScreen({
 	subtitle,
 	subtitleColorClass,
 	questionsCount,
+	expectedXp,
 	onStart,
 	bgClass,
 	contentType,
@@ -44,7 +46,15 @@ export function AssessmentStartScreen({
 				<div className="text-center max-w-md z-10">
 					<h2 className="text-3xl font-bold mb-4">{title}</h2>
 					<p className={`text-lg mb-8 ${subtitleColorClass}`}>{subtitle}</p>
-					<p className="text-lg font-medium mb-8">{questionsCount} questions</p>
+					<div className="text-lg font-medium mb-8 flex items-center justify-center gap-3">
+						<span>{questionsCount} questions</span>
+						{expectedXp && (
+							<>
+								<span>•</span>
+								<span>{expectedXp} Total XP</span>
+							</>
+						)}
+					</div>
 				</div>
 				{children}
 			</div>

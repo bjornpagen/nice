@@ -32,6 +32,7 @@ export function TestContent({ testPromise }: { testPromise: Promise<UnitTestPage
 			subtitle="Welcome to the unit test — where you get to test your skills for the entire unit!"
 			subtitleColorClass="text-blue-100"
 			questionsCount={questions.length}
+			expectedXp={test.expectedXp}
 			onStart={() => setHasStarted(true)}
 			bgClass="bg-blue-950"
 			contentType="Test"
