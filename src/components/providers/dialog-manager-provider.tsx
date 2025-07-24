@@ -71,6 +71,9 @@ export function DialogManagerProvider({ children }: { children: React.ReactNode 
 				onComplete={() => {
 					closeDialog()
 					markAsSeen(dialogKeys.USER_ONBOARDING)
+					// Reload the page to fetch the user's metadata from Clerk after onboarding.
+					// This resolves the race condition for new users.
+					window.location.reload()
 				}}
 			/>
 

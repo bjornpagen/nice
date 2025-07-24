@@ -6,25 +6,24 @@ import * as React from "react"
 import { Banner } from "@/components/banner"
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
+import { dialogKeys, useDialogManager } from "@/hooks/use-dialog-manager"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { ProfileBanner } from "./components/profile-banner"
 import { Sidebar } from "./components/sidebar"
 
 function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
 	const { user, isLoaded } = useUser()
+	const { openDialog, shouldShow } = useDialogManager()
 
-	// Effect to periodically check for metadata updates
+	// Effect to show onboarding modal for new users
 	React.useEffect(() => {
-		// Only trigger reload if user is loaded, exists, and metadata is explicitly missing or invalid.
-		// If `parseUserPublicMetadata` throws, it means it's invalid.
-		if (isLoaded && user && errors.trySync(() => parseUserPublicMetadata(user.publicMetadata)).error) {
-			const interval = setInterval(() => {
-				window.location.reload()
-			}, 2000)
+		// A "new user" is defined as one whose metadata has not yet been populated by the Clerk webhook
+		const isNewUser = isLoaded && user && errors.trySync(() => parseUserPublicMetadata(user.publicMetadata)).error
 
-			return () => clearInterval(interval)
+		if (isNewUser && shouldShow(dialogKeys.USER_ONBOARDING)) {
+			openDialog(dialogKeys.USER_ONBOARDING)
 		}
-	}, [isLoaded, user])
+	}, [isLoaded, user, openDialog, shouldShow])
 
 	// During prerendering or initial load, show nothing or a skeleton
 	if (!isLoaded || !user) {
