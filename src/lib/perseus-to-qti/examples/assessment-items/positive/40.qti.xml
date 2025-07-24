@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  REASON FOR USING A CUSTOM SVG IMAGE:
+  The original Perseus item uses a 'graphie' asset, which is not a single static image. The asset
+  is a set of instructions for a renderer that dynamically draws the axes, labels, grid lines, and bars.
+  A standard QTI <img> tag cannot execute these instructions, and linking to the graphie URL would
+  result in an incomplete or blank image. To ensure the visual information is accurately and reliably
+  displayed in a standard QTI format, a complete, static SVG of the final bar chart has been generated
+  and embedded as a data URI.
+-->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
