@@ -815,7 +815,7 @@ export function AssessmentStepper({
 					<h1 className="text-xl font-semibold text-gray-900">{assessmentTitle}</h1>
 				</div>
 			</div>
-			<div className="flex-1 overflow-y-auto overflow-x-hidden relative" style={{ maxHeight: "calc(100vh - 250px)" }}>
+			<div className="flex-1 overflow-y-auto overflow-x-hidden relative">
 				<QTIRenderer
 					identifier={currentQuestion.id}
 					materialType="assessmentItem"

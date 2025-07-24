@@ -174,7 +174,7 @@ export function Content({
 	}
 
 	return (
-		<div className="flex flex-col bg-white">
+		<div className="flex flex-col bg-white h-full">
 			{/* Video Title and Share Buttons */}
 			<div className="border-b">
 				<div className="max-w-5xl mx-auto p-6 text-center">
@@ -183,7 +183,7 @@ export function Content({
 			</div>
 
 			{/* Main Content Area */}
-			<div className="bg-white overflow-y-auto" style={{ maxHeight: "calc(100vh - 300px)" }}>
+			<div className="bg-white overflow-y-auto flex-1">
 				<div className="max-w-5xl mx-auto px-6">
 					{/* Video Player - Changed from iframe to YouTube component */}
 					<div className="py-6">

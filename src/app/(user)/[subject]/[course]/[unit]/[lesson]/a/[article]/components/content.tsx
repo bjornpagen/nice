@@ -99,7 +99,7 @@ export function Content({
 			</div>
 
 			{/* Article Content - Render through QTI */}
-			<div className="flex-1 overflow-y-auto" style={{ maxHeight: "calc(100vh - 250px)" }}>
+			<div className="flex-1 overflow-y-auto">
 				<QTIRenderer
 					identifier={article.id}
 					materialType="stimulus"
