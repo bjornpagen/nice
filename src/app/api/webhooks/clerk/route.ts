@@ -21,8 +21,14 @@ const WebhookEventDataSchema = z.object({
 	),
 	primary_email_address_id: z.string().nonempty(),
 	external_accounts: z.array(z.object({ provider: z.string().nonempty() })).default([]),
-	first_name: z.string().default(""), // Treat as potentially empty but always present string
-	last_name: z.string().default("") // Treat as potentially empty but always present string
+	first_name: z
+		.string()
+		.nullable()
+		.transform((val) => val ?? ""), // Handle null from Clerk, transform to empty string
+	last_name: z
+		.string()
+		.nullable()
+		.transform((val) => val ?? "") // Handle null from Clerk, transform to empty string
 })
 
 const WebhookEventSchema = z.object({
