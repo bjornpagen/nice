@@ -43,6 +43,13 @@ export function Content({ coursesPromise }: { coursesPromise: Promise<ProfileCou
 	const { subjects, userCourses } = React.use(coursesPromise)
 	const [isModalOpen, setIsModalOpen] = React.useState(false)
 
+	// Automatically open course selector if user has no courses
+	React.useEffect(() => {
+		if (userCourses.length === 0) {
+			setIsModalOpen(true)
+		}
+	}, [userCourses.length])
+
 	const handleCourseSelection = async (selectedClassIds: string[]) => {
 		const initialCourseIds = userCourses.map((course) => course.id)
 		const initialSet = new Set(initialCourseIds)
