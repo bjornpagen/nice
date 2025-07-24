@@ -1,3 +1,5 @@
+import { env } from "@/env.js"
+
 /**
  * Cache key utilities for deployment-aware caching
  */
@@ -7,6 +9,12 @@
  * Uses Vercel's deployment info to ensure cache clears on every commit
  */
 export function createCacheKey(baseKey: string[]): string[] {
-	const deploymentId = process.env.VERCEL_GIT_COMMIT_SHA || process.env.VERCEL_DEPLOYMENT_ID || "dev"
-	return [...baseKey, deploymentId]
+	// Include node env and deployment id (if available) in cache key
+	const parts = [...baseKey, env.NODE_ENV]
+
+	if (env.VERCEL_DEPLOYMENT_ID) {
+		parts.push(env.VERCEL_DEPLOYMENT_ID)
+	}
+
+	return parts
 }
