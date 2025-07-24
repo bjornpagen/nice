@@ -1,8 +1,10 @@
 "use client"
 
+import Image from "next/image"
 import * as React from "react"
 import { AssessmentStartScreen } from "@/components/practice/assessment-start-screen"
 import { AssessmentStepper } from "@/components/practice/assessment-stepper"
+import testIllustration from "@/components/practice/course/unit/test/images/test-illustration.png"
 import type { UnitTestPageData } from "@/lib/types/page"
 
 export function TestContent({ testPromise }: { testPromise: Promise<UnitTestPageData> }) {
@@ -26,13 +28,18 @@ export function TestContent({ testPromise }: { testPromise: Promise<UnitTestPage
 	return (
 		<AssessmentStartScreen
 			headerTitle={test.title}
-			title="Ready to take the unit test?"
-			subtitle="Test your understanding of the entire unit!"
+			title="All set for the unit test?"
+			subtitle="Welcome to the unit test — where you get to test your skills for the entire unit!"
 			subtitleColorClass="text-blue-100"
 			questionsCount={questions.length}
 			onStart={() => setHasStarted(true)}
-			bgClass="bg-blue-900"
+			bgClass="bg-blue-950"
 			contentType="Test"
-		/>
+		>
+			{/* Test Illustration - Much Larger */}
+			<div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 justify-center items-center overflow-hidden h-2/3 max-h-96 w-full hidden [@media(min-height:600px)]:block">
+				<Image src={testIllustration} alt="Test illustration" className="w-full h-full object-contain" />
+			</div>
+		</AssessmentStartScreen>
 	)
 }
