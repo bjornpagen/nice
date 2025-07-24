@@ -84,7 +84,12 @@ export const getClass = cache(
 export const getAllCourses = cache(
 	async () => {
 		logger.info("getAllCourses called")
-		return oneroster.getAllCourses({ filter: `status='active'` })
+		// Use prefix filter for "nice:" to leverage btree indexes for faster queries
+		// Filter by status='active' client-side due to OneRoster API AND limitation
+		const courses = await oneroster.getAllCourses({ filter: NICE_PREFIX_FILTER })
+
+		// Filter by status='active' in-memory
+		return courses.filter((c) => c.status === "active")
 	},
 	createCacheKey(["oneroster-getAllCourses"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
