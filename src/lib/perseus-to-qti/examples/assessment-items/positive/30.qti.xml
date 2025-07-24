@@ -60,21 +60,19 @@
     <qti-response-processing>
         <qti-response-condition>
             <qti-response-if>
-                 <!-- The scoring logic checks if the user created exactly 5 pairs. -->
-                 <!-- NOTE: The correct operator is qti-count, not qti-number-records. -->
                 <qti-equal tolerance-mode="exact">
                     <qti-count>
                         <qti-variable identifier="RESPONSE"/>
                     </qti-count>
                     <qti-base-value base-type="integer">5</qti-base-value>
                 </qti-equal>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
             </qti-response-if>
-            <qti-set-outcome-value identifier="SCORE">
-                <qti-base-value base-type="float">1</qti-base-value>
-            </qti-set-outcome-value>
-            <qti-set-outcome-value identifier="FEEDBACK">
-                <qti-base-value base-type="identifier">CORRECT</qti-base-value>
-            </qti-set-outcome-value>
             <qti-response-else>
                 <qti-set-outcome-value identifier="SCORE">
                     <qti-base-value base-type="float">0</qti-base-value>
