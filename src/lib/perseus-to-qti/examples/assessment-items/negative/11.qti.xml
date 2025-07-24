@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is a negative example because it is syntactically invalid and will fail to parse.
+
+  REASON FOR BEING A NEGATIVE EXAMPLE:
+
+  1.  CRITICAL: Use of Undefined XML Entity - The MathML content within the incorrect feedback block uses the named entity `−` for the minus sign (`<mo>−</mo>`). While this is a valid entity in HTML5, it is *not* a predefined entity in the XML 1.0 standard.
+  2.  CRITICAL: Parsing Failure - A strict XML parser will encounter `−` and halt with an "entity not defined" error. This makes the entire QTI item unusable. The correct way to represent the minus sign in this context is with its numeric character reference, `−`, or the literal hyphen-minus character '-'. This demonstrates a common but critical error when converting content (especially math) from HTML-like contexts to strict XML.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="nice-tmp:x9c2d80b89107e0f8"
+    title="Subtract within 10"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>4</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>There are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn></math> raccoons.</p>
+        <div id="reference_text">
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/ecf6d05b219c090d0c004cf26f6cdb89284bdc66.png"
+                 alt="Ten raccoons in a row" width="381" height="156"/>
+        </div>
+        <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn></math> are fast.</p>
+        <qti-prompt><strong>How many are not fast?</strong></qti-prompt>
+        <p><qti-text-entry-interaction response-identifier="RESPONSE" expected-length="2"/> are not fast.</p>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> Subtracting <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn></math> from <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn></math> leaves <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> raccoons that are not fast.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember, there are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn></math> raccoons in total and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn></math> of them are fast. Subtract to find how many are not fast: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>−</mo><mn>6</mn><mo>=</mo><mn>4</mn></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>
