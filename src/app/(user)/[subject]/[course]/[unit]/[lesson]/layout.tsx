@@ -84,6 +84,9 @@ export default function Layout({
 							// Find matching lesson for current URL path
 							const isCurrentLesson = pathname.includes(`/${lesson.slug}/`)
 
+							// Find the original index in unit.children to preserve ordering
+							const originalIndex = unit.children.findIndex((child) => child.id === lesson.id)
+
 							// Create base lesson format
 							const lessonBase = {
 								id: lesson.id,
@@ -91,6 +94,7 @@ export default function Layout({
 								path: lesson.path,
 								type: "Lesson" as const,
 								title: lesson.title,
+								sortOrder: originalIndex, // Preserve original ordering
 
 								// Convert resources within lessons
 								resources: lesson.children.map((resource) => {
@@ -182,6 +186,9 @@ export default function Layout({
 							const lessons = unit.children.filter((child) => child.type === "Lesson")
 							const lastLesson = lessons[lessons.length - 1]
 
+							// Find the original index in unit.children to preserve ordering
+							const originalIndex = unit.children.findIndex((child) => child.id === assessment.id)
+
 							// Construct the correct path: unit/lastLesson/quiz|test/slug
 							// Map assessment types to URL segments
 							const pathSegment = assessment.type === "Quiz" ? "quiz" : "test"
@@ -196,6 +203,7 @@ export default function Layout({
 									path: correctPath,
 									type: "Quiz" as const,
 									title: assessment.title,
+									sortOrder: originalIndex, // Preserve original ordering
 									data: { questions: [] }
 								}
 							}
@@ -205,6 +213,7 @@ export default function Layout({
 								path: correctPath,
 								type: "UnitTest" as const,
 								title: assessment.title,
+								sortOrder: originalIndex, // Preserve original ordering
 								data: { questions: [] }
 							}
 						})

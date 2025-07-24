@@ -31,7 +31,8 @@ const BaseSchema = z.object({
 	slug: z.string(),
 	path: z.string(),
 	title: z.string(),
-	xp: z.number().default(0).optional()
+	xp: z.number().default(0).optional(),
+	sortOrder: z.number().optional() // Add sort order to preserve database ordering
 })
 
 /**
@@ -396,16 +397,22 @@ export type CourseMaterial = z.infer<typeof CourseMaterialSchema>
  */
 export function getCourseMaterials(course: Course): CourseMaterial[] {
 	return _.concat<CourseMaterial>(
-		_.flatMap(course.units, (unit, index) => [
-			..._.map(unit.lessons, (lesson) => ({
-				...lesson,
-				meta: { unit: { path: unit.path, title: unit.title, index: index } }
-			})),
-			..._.map(unit.resources, (resource) => ({
-				...resource,
-				meta: { unit: { path: unit.path, title: unit.title, index: index } }
-			}))
-		]),
+		_.flatMap(course.units, (unit, index) => {
+			// Combine lessons and resources with metadata
+			const allUnitItems = [
+				..._.map(unit.lessons, (lesson) => ({
+					...lesson,
+					meta: { unit: { path: unit.path, title: unit.title, index: index } }
+				})),
+				..._.map(unit.resources, (resource) => ({
+					...resource,
+					meta: { unit: { path: unit.path, title: unit.title, index: index } }
+				}))
+			]
+
+			// Sort by sortOrder if available, otherwise maintain current order
+			return _.sortBy(allUnitItems, (item) => item.sortOrder ?? 999999)
+		}),
 		..._.map(course.resources, (resource, index) => ({
 			...resource,
 			meta: { course: { path: course.path, title: course.title, index: index } }

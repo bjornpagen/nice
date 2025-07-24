@@ -19,11 +19,18 @@ export function LessonLayout({
 	coursePromise: Promise<CourseV2 | undefined>
 	children: React.ReactNode
 }) {
-	const { lessonData } = React.use(dataPromise)
+	const { unitData } = React.use(dataPromise)
 	// Now we pass progressPromise to the sidebar instead of consuming it here
 
 	const pathname = usePathname()
+
+	// Don't show LessonNext on exercise, quiz, unit test, or course challenge pages
 	const isExercisePage = pathname.includes("/e/")
+	const isQuizPage = pathname.includes("/quiz/")
+	const isUnitTestPage = pathname.includes("/test/")
+	const isCourseChallengePage = pathname.includes("/test/") && !pathname.includes("/lesson/")
+
+	const shouldShowLessonNext = !isExercisePage && !isQuizPage && !isUnitTestPage && !isCourseChallengePage
 
 	return (
 		<div className="flex h-full">
@@ -42,7 +49,7 @@ export function LessonLayout({
 				<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 
 				{/* Conditionally render LessonNext footer */}
-				{!isExercisePage && <LessonNext lessonChildren={lessonData.children} />}
+				{shouldShowLessonNext && <LessonNext unitData={unitData} />}
 			</div>
 		</div>
 	)
