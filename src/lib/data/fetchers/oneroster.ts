@@ -257,7 +257,15 @@ export const getActiveEnrollmentsForUser = cache(
 	async (userSourcedId: string) => {
 		// User data is more volatile, so we'll use a shorter default profile.
 		logger.info("getActiveEnrollmentsForUser called", { userSourcedId })
-		return oneroster.getAllEnrollments({ filter: `user.sourcedId='${userSourcedId}' AND status='active'` })
+
+		// Due to OneRoster API limitation, we can only use one AND operation for complex filters
+		// Fetch all active enrollments for user, then filter for Khan Academy classes client-side
+		const allEnrollments = await oneroster.getAllEnrollments({
+			filter: `user.sourcedId='${userSourcedId}' AND status='active'`
+		})
+
+		// Filter for Khan Academy (nice:) classes only - excludes PowerPath and other systems
+		return allEnrollments.filter((enrollment) => enrollment.class.sourcedId.startsWith("nice:"))
 	},
 	createCacheKey(["oneroster-getActiveEnrollmentsForUser"]),
 	{ revalidate: 60 } // equivalent to cacheLife("minutes")
