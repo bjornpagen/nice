@@ -50,12 +50,44 @@ const NICE_PREFIX_FILTER = createPrefixFilter("nice:")
 // This limitation affects functions like getResourcesBySlugAndType() and
 // getResourceByCourseAndSlug() which need to filter results after fetching.
 
+// --- Universal Safety Filtering ---
+
+/**
+ * ⚠️ CRITICAL: Universal client-side safety filters
+ *
+ * These functions provide defensive filtering to ensure that even if API-level
+ * filtering fails or is bypassed, we never return soft-deleted records to the application.
+ *
+ * ALWAYS use these helpers when returning OneRoster entities to ensure data consistency.
+ */
+
+function ensureActiveStatus<T extends { status: string }>(entities: T[]): T[] {
+	return entities.filter((entity) => entity.status === "active")
+}
+
+function ensureActiveCourse<T extends { status: string }>(course: T | null | undefined): T | null {
+	if (!course) return null
+	return course.status === "active" ? course : null
+}
+
+function ensureActiveClass<T extends { status: string }>(classEntity: T | null | undefined): T | null {
+	if (!classEntity) return null
+	return classEntity.status === "active" ? classEntity : null
+}
+
+function ensureActiveResource<T extends { status: string }>(resource: T | null | undefined): T | null {
+	if (!resource) return null
+	return resource.status === "active" ? resource : null
+}
+
 // --- Single Entity Fetchers ---
 
 export const getCourse = cache(
 	async (sourcedId: string) => {
 		logger.info("getCourse called", { sourcedId })
-		return oneroster.getCourse(sourcedId)
+		const course = await oneroster.getCourse(sourcedId)
+		// ⚠️ CRITICAL: Apply client-side safety filtering
+		return ensureActiveCourse(course)
 	},
 	createCacheKey(["oneroster-getCourse"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -64,7 +96,9 @@ export const getCourse = cache(
 export const getResource = cache(
 	async (sourcedId: string) => {
 		logger.info("getResource called", { sourcedId })
-		return oneroster.getResource(sourcedId)
+		const resource = await oneroster.getResource(sourcedId)
+		// ⚠️ CRITICAL: Apply client-side safety filtering
+		return ensureActiveResource(resource)
 	},
 	createCacheKey(["oneroster-getResource"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -73,7 +107,9 @@ export const getResource = cache(
 export const getClass = cache(
 	async (classSourcedId: string) => {
 		logger.info("getClass called", { classSourcedId })
-		return oneroster.getClass(classSourcedId)
+		const classEntity = await oneroster.getClass(classSourcedId)
+		// ⚠️ CRITICAL: Apply client-side safety filtering
+		return ensureActiveClass(classEntity)
 	},
 	createCacheKey(["oneroster-getClass"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -88,8 +124,8 @@ export const getAllCourses = cache(
 		// Filter by status='active' client-side due to OneRoster API AND limitation
 		const courses = await oneroster.getAllCourses({ filter: NICE_PREFIX_FILTER })
 
-		// Filter by status='active' in-memory
-		return courses.filter((c) => c.status === "active")
+		// ⚠️ CRITICAL: Apply universal client-side safety filtering
+		return ensureActiveStatus(courses)
 	},
 	createCacheKey(["oneroster-getAllCourses"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -98,7 +134,9 @@ export const getAllCourses = cache(
 export const getAllCoursesBySlug = cache(
 	async (slug: string) => {
 		logger.info("getAllCoursesBySlug called", { slug })
-		return oneroster.getAllCourses({ filter: `metadata.khanSlug='${slug}' AND status='active'` })
+		const courses = await oneroster.getAllCourses({ filter: `metadata.khanSlug='${slug}' AND status='active'` })
+		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
+		return ensureActiveStatus(courses)
 	},
 	createCacheKey(["oneroster-getAllCoursesBySlug"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -107,7 +145,11 @@ export const getAllCoursesBySlug = cache(
 export const getCourseComponentsByCourseId = cache(
 	async (courseSourcedId: string) => {
 		logger.info("getCourseComponentsByCourseId called", { courseSourcedId })
-		return oneroster.getCourseComponents({ filter: `course.sourcedId='${courseSourcedId}' AND status='active'` })
+		const components = await oneroster.getCourseComponents({
+			filter: `course.sourcedId='${courseSourcedId}' AND status='active'`
+		})
+		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
+		return ensureActiveStatus(components)
 	},
 	createCacheKey(["oneroster-getCourseComponentsByCourseId"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -116,7 +158,11 @@ export const getCourseComponentsByCourseId = cache(
 export const getCourseComponentsByParentId = cache(
 	async (parentSourcedId: string) => {
 		logger.info("getCourseComponentsByParentId called", { parentSourcedId })
-		return oneroster.getCourseComponents({ filter: `parent.sourcedId='${parentSourcedId}' AND status='active'` })
+		const components = await oneroster.getCourseComponents({
+			filter: `parent.sourcedId='${parentSourcedId}' AND status='active'`
+		})
+		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
+		return ensureActiveStatus(components)
 	},
 	createCacheKey(["oneroster-getCourseComponentsByParentId"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -125,7 +171,11 @@ export const getCourseComponentsByParentId = cache(
 export const getCourseComponentBySlug = cache(
 	async (slug: string) => {
 		logger.info("getCourseComponentBySlug called", { slug })
-		return oneroster.getCourseComponents({ filter: `metadata.khanSlug='${slug}' AND status='active'` })
+		const components = await oneroster.getCourseComponents({
+			filter: `metadata.khanSlug='${slug}' AND status='active'`
+		})
+		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
+		return ensureActiveStatus(components)
 	},
 	createCacheKey(["oneroster-getCourseComponentBySlug"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -140,8 +190,9 @@ export const getCourseComponentByCourseAndSlug = cache(
 			filter: `metadata.khanSlug='${slug}' AND status='active'`
 		})
 
-		// Filter by courseSourcedId in-memory
-		return components.filter((c) => c.course.sourcedId === courseSourcedId)
+		// ⚠️ CRITICAL: Apply client-side safety filtering and course filtering
+		const activeComponents = ensureActiveStatus(components)
+		return activeComponents.filter((c) => c.course.sourcedId === courseSourcedId)
 	},
 	createCacheKey(["oneroster-getCourseComponentByCourseAndSlug"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -156,8 +207,9 @@ export const getCourseComponentByParentAndSlug = cache(
 			filter: `metadata.khanSlug='${slug}' AND status='active'`
 		})
 
-		// Filter by parentSourcedId in-memory
-		return components.filter((c) => c.parent?.sourcedId === parentSourcedId)
+		// ⚠️ CRITICAL: Apply client-side safety filtering and parent filtering
+		const activeComponents = ensureActiveStatus(components)
+		return activeComponents.filter((c) => c.parent?.sourcedId === parentSourcedId)
 	},
 	createCacheKey(["oneroster-getCourseComponentByParentAndSlug"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -169,7 +221,9 @@ export const getUnitsForCourses = cache(
 		if (courseSourcedIds.length === 0) return []
 		// Encapsulates the `@` filter logic for OneRoster IN operator
 		const filter = `course.sourcedId@'${courseSourcedIds.join(",")}' AND status='active'`
-		return oneroster.getCourseComponents({ filter })
+		const components = await oneroster.getCourseComponents({ filter })
+		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
+		return ensureActiveStatus(components)
 	},
 	createCacheKey(["oneroster-getUnitsForCourses"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -182,8 +236,8 @@ export const getAllResources = cache(
 		// Filter by status='active' client-side due to OneRoster API AND limitation
 		const resources = await oneroster.getAllResources({ filter: NICE_PREFIX_FILTER })
 
-		// Filter by status='active' in-memory
-		return resources.filter((r) => r.status === "active")
+		// ⚠️ CRITICAL: Apply universal client-side safety filtering
+		return ensureActiveStatus(resources)
 	},
 	createCacheKey(["oneroster-getAllResources"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -197,8 +251,11 @@ export const getResourcesBySlugAndType = cache(
 		const filter = `metadata.khanSlug='${slug}' AND status='active'`
 		const resources = await oneroster.getAllResources({ filter })
 
+		// ⚠️ CRITICAL: Apply client-side safety filtering first
+		const activeResources = ensureActiveStatus(resources)
+
 		// Filter by type in-memory
-		let filtered = resources.filter((r) => r.metadata?.type === type)
+		let filtered = activeResources.filter((r) => r.metadata?.type === type)
 
 		// Filter by lessonType in-memory if specified
 		if (lessonType) {
@@ -219,8 +276,9 @@ export const getResourceByCourseAndSlug = cache(
 		const filter = `metadata.khanSlug='${slug}' AND status='active'`
 		const resources = await oneroster.getAllResources({ filter })
 
-		// Filter by type and courseSourcedId in-memory
-		return resources.filter((r) => r.metadata?.type === type && r.metadata?.courseSourcedId === courseSourcedId)
+		// ⚠️ CRITICAL: Apply client-side safety filtering first
+		const activeResources = ensureActiveStatus(resources)
+		return activeResources.filter((r) => r.metadata?.type === type && r.metadata?.courseSourcedId === courseSourcedId)
 	},
 	createCacheKey(["oneroster-getResourceByCourseAndSlug"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -233,8 +291,8 @@ export const getAllComponentResources = cache(
 		// Filter by status='active' client-side due to OneRoster API AND limitation
 		const resources = await oneroster.getAllComponentResources({ filter: NICE_PREFIX_FILTER })
 
-		// Filter by status='active' in-memory
-		return resources.filter((r) => r.status === "active")
+		// ⚠️ CRITICAL: Apply universal client-side safety filtering
+		return ensureActiveStatus(resources)
 	},
 	createCacheKey(["oneroster-getAllComponentResources"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -243,7 +301,11 @@ export const getAllComponentResources = cache(
 export const getClassesForSchool = cache(
 	async (schoolSourcedId: string) => {
 		logger.info("getClassesForSchool called", { schoolSourcedId })
-		return oneroster.getAllClasses({ filter: `school.sourcedId='${schoolSourcedId}' AND status='active'` })
+		const classes = await oneroster.getAllClasses({
+			filter: `school.sourcedId='${schoolSourcedId}' AND status='active'`
+		})
+		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
+		return ensureActiveStatus(classes)
 	},
 	createCacheKey(["oneroster-getClassesForSchool"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
@@ -252,7 +314,9 @@ export const getClassesForSchool = cache(
 export const getEnrollmentsForUser = cache(
 	async (userSourcedId: string) => {
 		logger.info("getEnrollmentsForUser called", { userSourcedId })
-		return oneroster.getEnrollmentsForUser(userSourcedId)
+		const enrollments = await oneroster.getEnrollmentsForUser(userSourcedId)
+		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
+		return ensureActiveStatus(enrollments)
 	},
 	createCacheKey(["oneroster-getEnrollmentsForUser"]),
 	{ revalidate: 60 } // equivalent to cacheLife("minutes")
@@ -269,8 +333,11 @@ export const getActiveEnrollmentsForUser = cache(
 			filter: `user.sourcedId='${userSourcedId}' AND status='active'`
 		})
 
+		// ⚠️ CRITICAL: Apply client-side safety filtering first
+		const activeEnrollments = ensureActiveStatus(allEnrollments)
+
 		// Filter for Khan Academy (nice:) classes only - excludes PowerPath and other systems
-		return allEnrollments.filter((enrollment) => enrollment.class.sourcedId.startsWith("nice:"))
+		return activeEnrollments.filter((enrollment) => enrollment.class.sourcedId.startsWith("nice:"))
 	},
 	createCacheKey(["oneroster-getActiveEnrollmentsForUser"]),
 	{ revalidate: 60 } // equivalent to cacheLife("minutes")
