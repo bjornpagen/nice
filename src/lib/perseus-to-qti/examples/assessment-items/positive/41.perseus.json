@@ -1,0 +1,127 @@
+{
+	"hints": [
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/1ff029e47b3dcd3343e05a1fcbf8382f9b93ef2c": {
+					"width": 380,
+					"height": 100
+				}
+			},
+			"content": "Mrs. Bain gave away $\\goldE{30}$ awards before today.\n\n![A number line starts at 30.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/1ff029e47b3dcd3343e05a1fcbf8382f9b93ef2c)\n\nTo add on the number line, we jump to the **right**.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/0b2662131c96d0e21ceb1a84106c8fe15204b3c6": {
+					"width": 380,
+					"height": 100
+				}
+			},
+			"content": "Then she gave away $\\maroonD{11}$ spelling awards.\n\n![A number line starts at 30 with plus 11 and goes to 41. ](web+graphie://cdn.kastatic.org/ka-perseus-graphie/0b2662131c96d0e21ceb1a84106c8fe15204b3c6)\n\n$\\goldE{30} + \\maroonD{11} = 41$",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/9c14cd0f673675e8d3393b2409106f5e6b68a3cb": {
+					"width": 380,
+					"height": 100
+				}
+			},
+			"content": "Then she gave away $\\blueE{36}$ science awards.\n\n![A number line starts at 30 with plus 11 and goes to 41. From 41 plus 36 goes to 77. ](web+graphie://cdn.kastatic.org/ka-perseus-graphie/9c14cd0f673675e8d3393b2409106f5e6b68a3cb)\n\n$41+  \\blueE{36} = 77$",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/416db8bac4c6725d9728033428b2d5b99fa5c0ba": {
+					"width": 380,
+					"height": 100
+				}
+			},
+			"content": "Last, she gave away $\\purpleD{18}$ math awards.\n\n![A number line starts at 30 with plus 11 and goes to 41. From 41 plus 36 goes to 77. From 77 plus 18 goes to 95.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/416db8bac4c6725d9728033428b2d5b99fa5c0ba)\n\n$77+\\purpleD{18} = 95$",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/73b1023d8c52ca23de0b2a2c782e31d6dcceba2e": {
+					"width": 380,
+					"height": 100
+				}
+			},
+			"content": "This number line represents how to find the total number of awards Mrs. Bain gave away:\n\n![A number line starts at 30 with plus 11 and goes to 41. From 41 plus 36 goes to 77. From 77 plus 18 goes to ?.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/73b1023d8c52ca23de0b2a2c782e31d6dcceba2e)\n\nMrs. Bain gave $95$ total awards.",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "Before today, Mrs. Bain had given a total of $30$ awards.  \n\nToday, Mrs. Bain gave $11$ more spelling awards,  $36$ more science awards, and $18$ more math awards.      \n\n**Which number line shows how to find how many total awards Mrs. Bain has given?**\n\n[[☃ radio 1]]\n\n\n**How many awards has Mrs. Bain now given?**  \n\n[[☃ numeric-input 1]] awards",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"content": "![A number line starts at 30 with plus 10 and goes to 40. From 40 plus 36 goes to 76. From 76 plus 18 goes to ?.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/fcb889a31abc411032418dfa04d395675abd2c72)",
+							"correct": false
+						},
+						{
+							"content": "![A number line starts at 30 with plus 11 and goes to 41. From 41 plus 36 goes to 77. From 77 plus 18 goes to ?.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/73b1023d8c52ca23de0b2a2c782e31d6dcceba2e)",
+							"correct": true
+						}
+					],
+					"randomize": true,
+					"numCorrect": 1,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": { "major": 2, "minor": 0 },
+				"alignment": "default"
+			},
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": 95,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false,
+		"periodicTableWithKey": false,
+		"financialCalculatorTotalAmount": false,
+		"financialCalculatorTimeToPayOff": false,
+		"financialCalculatorMonthlyPayment": false
+	}
+}

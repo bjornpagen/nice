@@ -1,0 +1,87 @@
+{
+	"hints": [
+		{ "images": {}, "content": "First, find the bar that is for the Lions.", "replace": false, "widgets": {} },
+		{
+			"images": {},
+			"content": "Next, find the number that is even with the top of the $\\goldD{\\text{Lions}}$ bar.\n\nThis number tells us how many games the Lions won.\n\n$~$\n\n[[☃ image 1]]\n\n$~$\n",
+			"replace": false,
+			"widgets": {
+				"image 1": {
+					"type": "image",
+					"graded": true,
+					"static": false,
+					"options": {
+						"alt": "A vertical bar graph. Team is on\nthe horizontal axis. Games Won is on the vertical axis and has lines marking from 0 to 15. There are bars for each of the Teams: 1 bar for Lions, 1 bar for Tigers, and 1 bar for Bears.\n•Lions, 14. \n•Tigers, 2.\n• Bears, 7.\n\nThe number 14 is circled in Red on the vertical axis with a line extending to the Lions bar. ",
+						"box": [480, 340],
+						"range": [[0, 10], [0, 10]],
+						"title": "",
+						"labels": [],
+						"static": false,
+						"caption": "",
+						"backgroundImage": {
+							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5c05bc25a1e43613f766889e1a8518b14e934305",
+							"width": 480,
+							"height": 340
+						}
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "block"
+				}
+			}
+		},
+		{ "images": {}, "content": "The Lions won $\\goldD{14}$ games.", "replace": false, "widgets": {} }
+	],
+	"question": {
+		"images": {},
+		"content": "The Lions, Tigers, and Bears won baseball games last summer.\n\nThis bar graph shows how many games each team won.\n\n[[☃ image 1]]\n\n **How many games did the Lions win?**  \n\n[[☃ input-number 1]] games",
+		"widgets": {
+			"image 1": {
+				"type": "image",
+				"graded": true,
+				"static": false,
+				"options": {
+					"alt": "A vertical bar graph. Team is on\nthe horizontal axis. Games Won is on the vertical axis and has lines marking from 0 to 15. There are bars for each of the Teams: 1 bar for Lions, 1 bar for Tigers, and 1 bar for Bears.\n•Lions, 14. \n•Tigers, 2.\n• Bears, 7.",
+					"box": [480, 340],
+					"range": [[0, 10], [0, 10]],
+					"title": "",
+					"labels": [],
+					"static": false,
+					"caption": "",
+					"backgroundImage": {
+						"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fbad193f97bf4f6285e3ea803ee1d4e3fc0e1096",
+						"width": 480,
+						"height": 340
+					}
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "block"
+			},
+			"input-number 1": {
+				"type": "input-number",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"value": 14,
+					"inexact": false,
+					"maxError": 0.1,
+					"simplify": "required",
+					"answerType": "number"
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false,
+		"periodicTableWithKey": false,
+		"financialCalculatorTotalAmount": false,
+		"financialCalculatorTimeToPayOff": false,
+		"financialCalculatorMonthlyPayment": false
+	}
+}

@@ -1,87 +1,71 @@
 {
 	"hints": [
-		{ "images": {}, "content": "First, find the bar that is for the park.", "replace": false, "widgets": {} },
 		{
 			"images": {},
-			"content": "Next, find the number that is even with the top of the $\\red{\\text{Park}}$ bar.\n\nThis number tells us how many kids are at the park.\n\n$~$\n\n[[☃ image 1]]\n\n$~$",
+			"content": "We can think of $33 + \\purpleD4\\maroonD8$ as $33 +\\purpleD{40}+\\maroonD8$.",
 			"replace": false,
-			"widgets": {
-				"image 1": {
-					"type": "image",
-					"graded": true,
-					"static": false,
-					"options": {
-						"alt": "A vertical bar graph. Place is on\nthe horizontal axis. Number of Kids is on the vertical axis and has lines marking from 0 to 10. There are bars for each of the Places: 1 bar for Park, 1 bar for Pool, and 1 bar for Beach.\n•Park, 9. \n•Pool, 4.\n• Beach, 6.\n\nThe number 9 is circled in Red on the vertical axis with a line extending to the Park bar. The label Park is in Red on the horizontal axis.\n",
-						"box": [480, 340],
-						"range": [[0, 10], [0, 10]],
-						"title": "",
-						"labels": [],
-						"static": false,
-						"caption": "",
-						"backgroundImage": {
-							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e870be461538282e6f48bef03e7b3f2d7034c77a",
-							"width": 480,
-							"height": 340
-						}
-					},
-					"version": { "major": 0, "minor": 0 },
-					"alignment": "block"
-				}
-			}
+			"widgets": {}
 		},
-		{ "images": {}, "content": "There are $\\red9$ kids at the park.", "replace": false, "widgets": {} }
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/bf49838dd9b1b5b66f2cf122cd15ffc104a1507f": {
+					"width": 380,
+					"height": 100
+				}
+			},
+			"content": "So, on the number line, we start at $33$ and move **right** $\\purpleD{40}$.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/bf49838dd9b1b5b66f2cf122cd15ffc104a1507f)\n\n$33 + \\purpleD{40} = 73$",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/0607d673ff4342b890e8433603f468875e198dd0": {
+					"width": 380,
+					"height": 100
+				}
+			},
+			"content": "Next, we can move **right** $\\maroonD8$ more.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/0607d673ff4342b890e8433603f468875e198dd0)\n\n$73+ \\maroonD8 = 81$",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "$\\Large{{33} + \\purpleD4\\maroonD8 = 81}$", "replace": false, "widgets": {} }
 	],
 	"question": {
-		"images": {},
-		"content": "Groups of kids are at the park, pool, or beach.\n\nThis bar graph shows how many kids are at each place.\n\n[[☃ image 1]]\n\n **How many kids are at the park?**  \n\n[[☃ input-number 1]] kids",
+		"images": {
+			"web+graphie://cdn.kastatic.org/ka-perseus-graphie/c6e6fc0a79d6fafe0d65758182e7a1d884c50816": {
+				"width": 380,
+				"height": 100
+			}
+		},
+		"content": "**Add.**  \n*Use the number line to help you add $33 + 48$.*\n\n$\\Large{33 + 48 ={}}$ [[☃ numeric-input 1]]\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/c6e6fc0a79d6fafe0d65758182e7a1d884c50816)",
 		"widgets": {
-			"image 1": {
-				"type": "image",
-				"graded": true,
-				"static": false,
-				"options": {
-					"alt": "A vertical bar graph. Place is on\nthe horizontal axis. Number of Kids is on the vertical axis and has lines marking from 0 to 10. There are bars for each of the Places: 1 bar for Park, 1 bar for Pool, and 1 bar for Beach.\n•Park, 9. \n•Pool, 4.\n• Beach, 6.",
-					"box": [480, 340],
-					"range": [[0, 10], [0, 10]],
-					"title": "",
-					"labels": [],
-					"static": false,
-					"caption": "",
-					"backgroundImage": {
-						"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/bd1c0397ceec5d430f489a903f14df51007609bc",
-						"width": 480,
-						"height": 340
-					}
-				},
-				"version": { "major": 0, "minor": 0 },
-				"alignment": "block"
-			},
-			"input-number 1": {
-				"type": "input-number",
+			"numeric-input 1": {
+				"type": "numeric-input",
 				"graded": true,
 				"static": false,
 				"options": {
 					"size": "normal",
-					"value": 9,
-					"inexact": false,
-					"maxError": 0.1,
-					"simplify": "required",
-					"answerType": "number"
+					"static": false,
+					"answers": [
+						{
+							"value": 81,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
 				},
 				"version": { "major": 0, "minor": 0 },
 				"alignment": "default"
 			}
 		}
 	},
-	"answerArea": {
-		"tTable": false,
-		"zTable": false,
-		"chi2Table": false,
-		"calculator": false,
-		"periodicTable": false,
-		"periodicTableWithKey": false,
-		"financialCalculatorTotalAmount": false,
-		"financialCalculatorTimeToPayOff": false,
-		"financialCalculatorMonthlyPayment": false
-	}
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
 }
