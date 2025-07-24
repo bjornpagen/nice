@@ -194,6 +194,89 @@ When you encounter Perseus widgets:
    - Set the response type to text-entry where they can enter their final answer
 
 ---
+### CRITICAL: BAR CHART TO TABLE CONVERSION ###
+
+**MANDATORY RULE: ALL BAR CHARTS MUST BE CONVERTED TO TABLES**
+
+Due to technical limitations, bar chart images from Perseus (identified by phrases like "bar graph", "vertical bar graph", "horizontal bar graph" in alt text or content) do NOT render with visible numbers, axis labels, or data values. The bars appear blank and unlabeled, making the questions unsolvable.
+
+**CONVERSION REQUIREMENTS:**
+
+1. **DETECT BAR CHARTS**: Look for:
+   - Images with alt text containing "bar graph", "bar chart", or similar terms
+   - Questions asking about data from a "bar graph" or "chart"
+   - Perseus graphie images that represent bar charts
+
+2. **EXTRACT DATA**: The actual data values are typically found in:
+   - The image's alt text (e.g., "Lions, 14. Tigers, 2. Bears, 7.")
+   - Hint content that reveals the values
+   - The correct answer value
+
+3. **CREATE HTML TABLE**: Replace the bar chart image with a properly structured HTML table:
+   \`\`\`xml
+   <table>
+       <thead>
+           <tr>
+               <th>[Category Name]</th>
+               <th style="text-align:center;">[Value Label]</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <td>[Item 1]</td>
+               <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>[Value 1]</mn></math></td>
+           </tr>
+           <!-- Additional rows as needed -->
+       </tbody>
+   </table>
+   \`\`\`
+
+4. **UPDATE WORDING**: Change all references:
+   - "bar graph" → "table"
+   - "bar chart" → "table"
+   - "graph shows" → "table shows"
+   - "look at the bar graph" → "look at the table"
+   - In feedback: "The bar for X shows..." → "The table shows that X..."
+
+5. **PRESERVE QUESTION INTENT**: The core question remains the same - students still need to read data, just from a table instead of a graph.
+
+**EXAMPLE CONVERSION:**
+
+Perseus: "This bar graph shows how many games each team won. [[☃ image 1]] How many games did the Lions win?"
+With alt text: "A vertical bar graph... Lions, 14. Tigers, 2. Bears, 7."
+
+QTI Output:
+\`\`\`xml
+<p>The Lions, Tigers, and Bears won baseball games last summer.</p>
+<p>The table below shows how many games each team won.</p>
+<table>
+    <thead>
+        <tr>
+            <th>Team</th>
+            <th style="text-align:center;">Games Won</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Lions</td>
+            <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>14</mn></math></td>
+        </tr>
+        <tr>
+            <td>Tigers</td>
+            <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math></td>
+        </tr>
+        <tr>
+            <td>Bears</td>
+            <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math></td>
+        </tr>
+    </tbody>
+</table>
+<qti-prompt>How many games did the Lions win?</qti-prompt>
+\`\`\`
+
+**THIS IS NON-NEGOTIABLE**: If you encounter ANY bar chart problem, you MUST convert it to a table format. Never output a bar chart image in the final QTI, as it will be unusable.
+
+---
 ### ABSOLUTE XML RULES - NON-NEGOTIABLE ###
 
 1.  **THE MOST IMPORTANT RULE: FULL CLOSING TAGS ONLY.**
