@@ -3,6 +3,7 @@
 import { randomUUID } from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { env } from "@/env"
 import { awardBankedXpForAssessment } from "@/lib/actions/xp"
 import type {
 	CaliperEnvelope,
@@ -14,7 +15,7 @@ import type {
 import { caliper, oneroster } from "@/lib/clients"
 import { calculateAwardedXp, MASTERY_THRESHOLD } from "@/lib/xp"
 
-const SENSOR_ID = "https://nice-academy.vercel.app"
+const SENSOR_ID = env.NEXT_PUBLIC_APP_DOMAIN
 
 /**
  * Sends a TimebackActivityEvent to track the completion of an activity.

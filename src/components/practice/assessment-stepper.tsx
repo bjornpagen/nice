@@ -134,6 +134,7 @@ interface AssessmentStepperProps {
 	onerosterComponentResourceSourcedId: string // The OneRoster componentResource sourcedId (e.g., nice:cr123) - used by PowerPath
 	onerosterResourceSourcedId: string // The OneRoster resource sourcedId (e.g., nice:exercise456) - used for OneRoster assessment results
 	assessmentTitle: string
+	assessmentPath: string // The canonical URL path for this assessment
 	unitData?: Unit
 	expectedXp: number
 }
@@ -145,6 +146,7 @@ export function AssessmentStepper({
 	onerosterComponentResourceSourcedId,
 	onerosterResourceSourcedId,
 	assessmentTitle,
+	assessmentPath,
 	unitData,
 	expectedXp // Will be used when caliper action is updated
 }: AssessmentStepperProps) {
@@ -405,7 +407,7 @@ export function AssessmentStepper({
 			}
 
 			const context = {
-				id: `https://alpharead.alpha.school/assessments/${onerosterComponentResourceSourcedId}`,
+				id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}${assessmentPath}`,
 				type: "TimebackActivityContext" as const,
 				subject: mappedSubject,
 				app: { name: "Nice Academy" },
@@ -448,6 +450,7 @@ export function AssessmentStepper({
 		isInteractiveAssessment,
 		unitData,
 		assessmentTitle,
+		assessmentPath,
 		attemptNumber, // ADDED: Add attemptNumber to dependency array
 		expectedXp,
 		sessionResults // ADDED: Add sessionResults to dependency array

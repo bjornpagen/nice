@@ -21,6 +21,7 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 				onerosterComponentResourceSourcedId={exercise.id} // For exercises, the resource itself acts as the componentResource
 				onerosterResourceSourcedId={exercise.id} // The exercise resource sourcedId for OneRoster results
 				assessmentTitle={exercise.title}
+				assessmentPath={exercise.path}
 				unitData={layoutData.unitData}
 				expectedXp={exercise.expectedXp}
 			/>

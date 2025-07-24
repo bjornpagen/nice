@@ -86,7 +86,7 @@ export function Content({
 			}
 
 			const context = {
-				id: `https://alpharead.alpha.school/videos/${video.id}`,
+				id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${params.subject}/${params.course}/${params.unit}/${params.lesson}/v/${params.video}`,
 				type: "TimebackActivityContext" as const,
 				subject: mapSubjectToCaliperSubject(params.subject),
 				app: { name: "Nice Academy" },
@@ -98,7 +98,7 @@ export function Content({
 			void sendCaliperTimeSpentEvent(actor, context, Math.floor(finalWatchTime))
 			hasSentFinalEventRef.current = true
 		}
-	}, [user, video.id, video.title, params.subject, params.course])
+	}, [user, video.title, params.subject, params.course, params.unit, params.lesson, params.video])
 
 	// Still track progress periodically for OneRoster
 	React.useEffect(() => {

@@ -37,6 +37,7 @@ export const env = createEnv({
 	 */
 	client: {
 		// NEXT_PUBLIC_CLIENTVAR: z.string(),
+		NEXT_PUBLIC_APP_DOMAIN: z.string().url(),
 		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
 		NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string().optional(),
 		NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string().optional(),
@@ -53,6 +54,7 @@ export const env = createEnv({
 		NODE_ENV: process.env.NODE_ENV,
 		RAPIDAPI_YT_API_KEY: process.env.RAPIDAPI_YT_API_KEY,
 		RAPIDAPI_YT_API_HOST: process.env.RAPIDAPI_YT_API_HOST,
+		NEXT_PUBLIC_APP_DOMAIN: process.env.NEXT_PUBLIC_APP_DOMAIN,
 		NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
 		NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
 		NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,

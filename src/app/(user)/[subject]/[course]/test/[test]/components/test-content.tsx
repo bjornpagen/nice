@@ -19,6 +19,7 @@ export function TestContent({ testDataPromise }: { testDataPromise: Promise<Cour
 				onerosterComponentResourceSourcedId={test.componentResourceSourcedId} // The componentResource sourcedId that PowerPath uses
 				onerosterResourceSourcedId={test.id} // The test resource sourcedId for OneRoster results
 				assessmentTitle={test.title}
+				assessmentPath={test.path}
 				expectedXp={test.expectedXp}
 			/>
 		)

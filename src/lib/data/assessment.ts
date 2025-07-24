@@ -278,6 +278,7 @@ export async function fetchQuizPageData(params: {
 			id: resource.sourcedId,
 			componentResourceSourcedId: componentResource.sourcedId,
 			title: resource.title,
+			path: `/${params.subject}/${params.course}/${params.unit}/${params.lesson}/quiz/${resourceMetadata.khanSlug}`,
 			description: resourceMetadata.khanDescription,
 			type: "Quiz" as const,
 			expectedXp: resourceMetadata.xp
@@ -394,6 +395,7 @@ export async function fetchUnitTestPageData(params: {
 			id: resource.sourcedId,
 			componentResourceSourcedId: componentResource.sourcedId,
 			title: resource.title,
+			path: `/${params.subject}/${params.course}/${params.unit}/${params.lesson}/test/${resourceMetadata.khanSlug}`,
 			description: resourceMetadata.khanDescription,
 			type: "UnitTest" as const,
 			expectedXp: resourceMetadata.xp
@@ -589,6 +591,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 			type: "CourseChallenge",
 			title: testResource.title,
 			slug: params.test,
+			path: `/${params.subject}/${params.course}/test/${testResourceMetadata.khanSlug}`,
 			description: testResourceMetadata.khanDescription,
 			expectedXp: testResourceMetadata.xp
 		},

@@ -133,9 +133,11 @@ function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[
 
 				// Determine activity type from object ID with better categorization
 				const getActivityIcon = (objectId: string): string => {
-					if (objectId.includes("/articles/")) return "article"
-					if (objectId.includes("/videos/")) return "video"
-					if (objectId.includes("/exercises/") || objectId.includes("/assessments/")) return "exercise"
+					if (objectId.includes("/a/")) return "article"
+					if (objectId.includes("/v/")) return "video"
+					if (objectId.includes("/e/") || objectId.includes("/quiz/") || objectId.includes("/test/")) {
+						return "exercise"
+					}
 					// Default to exercise for completed activities with scores
 					return "exercise"
 				}
@@ -163,15 +165,21 @@ function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[
 				const durationSeconds = timeSpentItem.value
 				const durationMinutes = Math.round(durationSeconds / 60)
 				totalLearningMinutes += durationMinutes
-				if (event.object.id.includes("/assessments/")) {
+				if (
+					event.object.id.includes("/e/") ||
+					event.object.id.includes("/quiz/") ||
+					event.object.id.includes("/test/")
+				) {
 					exerciseMinutes += durationMinutes
 				}
 
 				// Determine activity type from object ID
 				const getActivityIcon = (objectId: string): string => {
-					if (objectId.includes("/videos/")) return "video"
-					if (objectId.includes("/articles/")) return "article"
-					if (objectId.includes("/exercises/") || objectId.includes("/assessments/")) return "exercise"
+					if (objectId.includes("/v/")) return "video"
+					if (objectId.includes("/a/")) return "article"
+					if (objectId.includes("/e/") || objectId.includes("/quiz/") || objectId.includes("/test/")) {
+						return "exercise"
+					}
 					// Default to article for time-spent activities without clear indicators
 					return "article"
 				}

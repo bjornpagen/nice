@@ -75,7 +75,7 @@ export function Content({
 
 						// Ensure context is valid before sending.
 						const contextForCleanup = {
-							id: `https://alpharead.alpha.school/articles/${article.id}`,
+							id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${params.subject}/${params.course}/${params.unit}/${params.lesson}/a/${params.article}`,
 							type: "TimebackActivityContext" as const,
 							subject: mappedSubject,
 							app: { name: "Nice Academy" },
@@ -87,7 +87,7 @@ export function Content({
 				}
 			}
 		}
-	}, [user, article.id, article.title, params.subject, params.course])
+	}, [user, article.id, article.title, params.subject, params.course, params.unit, params.lesson, params.article])
 
 	return (
 		<div className="bg-white h-full flex flex-col">

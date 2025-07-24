@@ -46,6 +46,7 @@ export interface ExercisePageData {
 	exercise: {
 		id: string
 		title: string
+		path: string
 		type: "Exercise"
 		expectedXp: number
 	}
@@ -59,6 +60,7 @@ export interface QuizPageData {
 		id: string // This is the Resource sourcedId
 		componentResourceSourcedId: string // This is the ID PowerPath needs
 		title: string
+		path: string
 		description: string
 		type: "Quiz"
 		expectedXp: number
@@ -73,6 +75,7 @@ export interface UnitTestPageData {
 		id: string // This is the Resource sourcedId
 		componentResourceSourcedId: string // This is the ID PowerPath needs
 		title: string
+		path: string
 		description: string
 		type: "UnitTest"
 		expectedXp: number
@@ -87,6 +90,7 @@ export interface CourseChallengePageData {
 		id: string // This is the Resource sourcedId
 		componentResourceSourcedId: string // This is the ID PowerPath needs
 		title: string
+		path: string
 		description: string
 		slug: string
 		type: "CourseChallenge"

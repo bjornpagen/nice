@@ -158,6 +158,7 @@ export async function fetchExercisePageData(params: {
 		exercise: {
 			id: resource.sourcedId,
 			title: resource.title,
+			path: `/${params.subject}/${params.course}/${params.unit}/${params.lesson}/e/${resourceMetadataResult.data.khanSlug}`,
 			type: "Exercise" as const,
 			expectedXp: resourceMetadataResult.data.xp
 		},

@@ -19,6 +19,7 @@ export function QuizContent({ quizPromise }: { quizPromise: Promise<QuizPageData
 				onerosterComponentResourceSourcedId={quiz.componentResourceSourcedId} // The componentResource sourcedId that PowerPath uses
 				onerosterResourceSourcedId={quiz.id} // The quiz resource sourcedId for OneRoster results
 				assessmentTitle={quiz.title}
+				assessmentPath={quiz.path}
 				unitData={layoutData.unitData}
 				expectedXp={quiz.expectedXp}
 			/>
