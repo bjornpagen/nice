@@ -1,0 +1,102 @@
+{
+	"hints": [
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/45a764740b107b33cf6707c08fe70c7abdbda8c9": {
+					"width": 225,
+					"height": 238
+				}
+			},
+			"content": "On a clock there are two hands. The $\\redD{\\text{hour hand}}$ is the shorter hand.  The $\\blueE{\\text{minute hand}}$ is the longer hand.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/45a764740b107b33cf6707c08fe70c7abdbda8c9)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/cceb63d74f1f29778c9dc79ae9867443f9b76fd8": {
+					"width": 225,
+					"height": 225
+				}
+			},
+			"content": "The hour hand is between $5$ and $6$, so it is after $5$ o'clock but not yet $6$ o'clock.  \n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/cceb63d74f1f29778c9dc79ae9867443f9b76fd8)\n\nThe hour is $5$.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/1ab12f55cf150cf2bc6ccbb9f8bee6c187fafa8e": {
+					"width": 225,
+					"height": 238
+				}
+			},
+			"content": "The minute hand starts pointing straight up for $0$ minutes.  \n\nWhen counting minutes, the distance between each tick mark represents $1$ minute.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/1ab12f55cf150cf2bc6ccbb9f8bee6c187fafa8e)\n\nEach number on the clock represents $5$ minutes, with a total of $\\blueE{60}$ minutes in each hour.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/ea7c805e5a365c863405c53bdfd84e00ecefe614": {
+					"width": 360,
+					"height": 72
+				},
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/fd29a2021824302ac67d097fa87cb10a3d576906": {
+					"width": 225,
+					"height": 225
+				}
+			},
+			"content": "We can relate the clock to a number line. \n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/fd29a2021824302ac67d097fa87cb10a3d576906)\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/ea7c805e5a365c863405c53bdfd84e00ecefe614)\n\nThe minute hand is at $50$ minutes past $5{:}00$.",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "The time is $5{:}50$. ", "replace": false, "widgets": {} }
+	],
+	"question": {
+		"images": {
+			"web+graphie://cdn.kastatic.org/ka-perseus-graphie/4d41bf1fcbfb871fc4778b6dd810982361b9a373": {
+				"width": 225,
+				"height": 225
+			}
+		},
+		"content": "**What time is it?**\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/4d41bf1fcbfb871fc4778b6dd810982361b9a373)\n\nThe time is [[☃ numeric-input 1]] : [[☃ numeric-input 2]].",
+		"widgets": {
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "small",
+					"static": false,
+					"answers": [
+						{ "value": 5, "status": "correct", "strict": false, "message": "", "maxError": 0, "simplify": "required" }
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			},
+			"numeric-input 2": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "small",
+					"static": false,
+					"answers": [
+						{ "value": 50, "status": "correct", "strict": false, "message": "", "maxError": 0, "simplify": "required" }
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}

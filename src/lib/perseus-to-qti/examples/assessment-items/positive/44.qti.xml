@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  REASON FOR USING A CUSTOM SVG IMAGE:
+  The original Perseus item uses a 'graphie' asset, which is not a single static image. The asset
+  is a set of instructions for a renderer that dynamically draws the clock face, ticks, numbers, and hands.
+  A standard QTI <img> tag cannot execute these instructions. To ensure the visual information is
+  accurately and reliably displayed, a complete, static SVG of the final clock has been generated
+  and embedded as a data URI.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="telling-time-analog-clock"
+    title="What time is it?"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE_HR" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>2</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    
+    <qti-response-declaration identifier="RESPONSE_MIN" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>5</qti-value>
+        </qti-correct-response>
+        <!-- Mapping for leading zero to allow "05" as a valid response -->
+        <qti-mapping>
+            <qti-map-entry map-key="05" mapped-value="5"/>
+        </qti-mapping>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>Look at the time on the clock.</p>
+        <div id="reference_text">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250' viewBox='0 0 937.5 937.5'%3E%3Cdefs%3E%3Cstyle%3E .face %7B fill: none; stroke: %23000; stroke-width: 5; %7D .tick-lg, .tick-md, .tick-sm %7B stroke: %23000; %7D .tick-lg %7B stroke-width: 5; %7D .tick-md %7B stroke-width: 3.5; %7D .tick-sm %7B stroke-width: 2; %7D .label %7B font-family: sans-serif; font-size: 87.5px; text-anchor: middle; %7D .hour-hand %7B stroke: %23000; stroke-width: 14; stroke-linecap: round; %7D .minute-hand %7B stroke: %23000; stroke-width: 8; stroke-linecap: round; %7D .pivot %7B fill: %23000; %7D %3C/style%3E%3C/defs%3E%3Ccircle class='face' cx='468.75' cy='468.75' r='429.688'/%3E%3Cg class='label'%3E%3Ctext x='638.477' y='206.128'%3E1%3C/text%3E%3Ctext x='762.725' y='330.376'%3E2%3C/text%3E%3Ctext x='808.203' y='500.103'%3E3%3C/text%3E%3Ctext x='762.725' y='669.829'%3E4%3C/text%3E%3Ctext x='638.477' y='794.078'%3E5%3C/text%3E%3Ctext x='468.75' y='839.556'%3E6%3C/text%3E%3Ctext x='299.023' y='794.078'%3E7%3C/text%3E%3Ctext x='174.775' y='669.829'%3E8%3C/text%3E%3Ctext x='129.297' y='500.103'%3E9%3C/text%3E%3Ctext x='187.666' y='330.376'%3E10%3C/text%3E%3Ctext x='311.914' y='206.128'%3E11%3C/text%3E%3Ctext x='468.75' y='160.65'%3E12%3C/text%3E%3C/g%3E%3C!-- Ticks --%3E%3Cg transform='translate(468.75, 468.75)'%3E%3Cg%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(0)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(30)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(60)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(90)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(120)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(150)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(180)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(210)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(240)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(270)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(300)'/%3E%3Cline class='tick-lg' y1='-429.688' y2='-386.719' transform='rotate(330)'/%3E%3C/g%3E%3Cg%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(6)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(12)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(18)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(24)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(36)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(42)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(48)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(54)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(66)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(72)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(78)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(84)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(96)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(102)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(108)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(114)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(126)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(132)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(138)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(144)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(156)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(162)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(168)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(174)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(186)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(192)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(198)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(204)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(216)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(222)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(228)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(234)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(246)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(252)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(258)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(264)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(276)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(282)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(288)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(294)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(306)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(312)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(318)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(324)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(336)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(342)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(348)'/%3E%3Cline class='tick-sm' y1='-429.688' y2='-408.203' transform='rotate(354)'/%3E%3C/g%3E%3C/g%3E%3C!-- Hands for 2:05 --%3E%3Cg transform='translate(468.75, 468.75)'%3E%3Cline class='minute-hand' y1='0' y2='-350' transform='rotate(30)'/%3E%3Cline class='hour-hand' y1='0' y2='-200' transform='rotate(62.5)'/%3E%3C/g%3E%3Ccircle class='pivot' cx='468.75' cy='468.75' r='20'/%3E%3C/svg%3E"
+                 alt="An analog clock showing the time 2:05. The shorter hour hand is pointing slightly past the 2, and the longer minute hand is pointing directly at the 1."
+                 width="250"
+                 height="250"/>
+        </div>
+        
+        <qti-prompt>What time is it?</qti-prompt>
+        <p>
+            The time is <qti-text-entry-interaction response-identifier="RESPONSE_HR" expected-length="2"/> : <qti-text-entry-interaction response-identifier="RESPONSE_MIN" expected-length="2"/>.
+        </p>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The time shown is 2:05.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> The shorter hour hand is just past the 2, so the hour is 2. The longer minute hand is pointing at the 1, which represents 5 minutes past the hour. Therefore, the time is 2:05.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_HR"/>
+                        <qti-correct identifier="RESPONSE_HR"/>
+                    </qti-match>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_MIN"/>
+                        <qti-correct identifier="RESPONSE_MIN"/>
+                    </qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>
