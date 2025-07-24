@@ -138,7 +138,7 @@ function MaterialItem({
 						alt={`${material.type} illustration`}
 						width={400}
 						height={400}
-						className="w-full aspect-square object-contain"
+						className="w-full aspect-[4/3] object-cover"
 					/>
 				</React.Fragment>
 			)
