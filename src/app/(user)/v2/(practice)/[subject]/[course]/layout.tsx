@@ -1,3 +1,5 @@
+import { currentUser } from "@clerk/nextjs/server"
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import _ from "lodash"
 import { AlertCircleIcon } from "lucide-react"
@@ -7,6 +9,8 @@ import { CourseContentHeader } from "@/components/practice/course/content/course
 import { CourseSidebar } from "@/components/practice/course/sidebar/course-sidebar"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
+import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { type Course, getCourseBlob } from "@/lib/v2/types"
 
 export default async function PracticeCourseLayout({
@@ -21,6 +25,25 @@ export default async function PracticeCourseLayout({
 		return getCourseSidebarData(subject, course)
 	})
 
+	// Get progress data similar to main lesson layout
+	const progressPromise = params.then(async ({ course }) => {
+		const user = await currentUser()
+		if (user?.publicMetadata) {
+			const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
+			if (publicMetadataResult.error) {
+				logger.warn("invalid user public metadata, cannot fetch progress", {
+					userId: user.id,
+					error: publicMetadataResult.error
+				})
+				return new Map<string, AssessmentProgress>()
+			}
+			if (publicMetadataResult.data.sourceId) {
+				return getUserUnitProgress(publicMetadataResult.data.sourceId, course)
+			}
+		}
+		return new Map<string, AssessmentProgress>()
+	})
+
 	return (
 		<div id="practice-course-layout">
 			<SidebarProvider>
@@ -28,7 +51,7 @@ export default async function PracticeCourseLayout({
 					<nav id="practice-course-layout-sidebar" className="flex-none hidden md:block lg:block sticky top-14 h-full">
 						<ErrorBoundary fallback={<PracticeCourseLayoutErrorFallback />}>
 							<React.Suspense>
-								<CourseSidebar coursePromise={coursePromise} className="w-96" />
+								<CourseSidebar coursePromise={coursePromise} progressPromise={progressPromise} className="w-96" />
 							</React.Suspense>
 						</ErrorBoundary>
 					</nav>

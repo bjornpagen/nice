@@ -26,6 +26,7 @@ function createPathValidator(patterns: Record<string, string>) {
  * BaseSchema is a base schema for all resources to extend from.
  */
 const BaseSchema = z.object({
+	id: z.string(),
 	meta: z.record(z.any()).optional(),
 	slug: z.string(),
 	path: z.string(),
@@ -418,6 +419,7 @@ export function getCourseMaterials(course: Course): CourseMaterial[] {
 export function getCourseBlob(subject: string, course: string): Course {
 	const base = `/v2/${subject}/${course}`
 	return {
+		id: course,
 		slug: course,
 		path: base,
 		type: "Course",
@@ -425,6 +427,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 		description: "Course Description",
 		units: [
 			{
+				id: "unit-1",
 				slug: "unit-1",
 				path: `${base}/unit-1`,
 				type: "Unit",
@@ -432,12 +435,14 @@ export function getCourseBlob(subject: string, course: string): Course {
 				description: "Unit 1 Description",
 				lessons: [
 					{
+						id: "lesson-1",
 						slug: "lesson-1",
 						path: `${base}/unit-1/lesson-1`,
 						type: "Lesson",
 						title: "Lesson 1 Title",
 						resources: [
 							{
+								id: "exercise-1",
 								slug: "exercise-1",
 								path: `${base}/unit-1/lesson-1/e/exercise-1`,
 								title: "Exercise 1 Title",
@@ -457,6 +462,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 								}
 							},
 							{
+								id: "video-1",
 								slug: "video-1",
 								path: `${base}/unit-1/lesson-1/v/video-1`,
 								title: "Video 1 Title",
@@ -466,12 +472,14 @@ export function getCourseBlob(subject: string, course: string): Course {
 						]
 					},
 					{
+						id: "lesson-2",
 						slug: "lesson-2",
 						path: `${base}/unit-1/lesson-2`,
 						type: "Lesson",
 						title: "Lesson 2 Title",
 						resources: [
 							{
+								id: "exercise-2",
 								slug: "exercise-2",
 								path: `${base}/unit-1/lesson-2/e/exercise-2`,
 								title: "Exercise 2 Title",
@@ -498,6 +506,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				],
 				resources: [
 					{
+						id: "quiz-1",
 						slug: "quiz-1",
 						path: `${base}/unit-1/quiz/quiz-1`,
 						title: "Quiz 1 Title",
@@ -517,6 +526,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 						}
 					},
 					{
+						id: "unit-test-1",
 						slug: "unit-test-1",
 						path: `${base}/unit-1/test/unit-test-1`,
 						title: "Unit Test 1 Title",
@@ -535,6 +545,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				]
 			},
 			{
+				id: "unit-2",
 				slug: "unit-2",
 				path: `${base}/unit-2`,
 				type: "Unit",
@@ -542,12 +553,14 @@ export function getCourseBlob(subject: string, course: string): Course {
 				description: "Unit 2 Description",
 				lessons: [
 					{
+						id: "lesson-3",
 						slug: "lesson-3",
 						path: `${base}/unit-2/lesson-3`,
 						type: "Lesson",
 						title: "Lesson 3 Title",
 						resources: [
 							{
+								id: "exercise-3",
 								slug: "exercise-3",
 								path: `${base}/unit-2/lesson-3/e/exercise-3`,
 								title: "Exercise 3 Title",
@@ -576,6 +589,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 								}
 							},
 							{
+								id: "exercise-4",
 								slug: "exercise-4",
 								path: `${base}/unit-2/lesson-3/e/exercise-4`,
 								title: "Exercise 4 Title",
@@ -597,12 +611,14 @@ export function getCourseBlob(subject: string, course: string): Course {
 						]
 					},
 					{
+						id: "lesson-4",
 						slug: "lesson-4",
 						path: `${base}/unit-2/lesson-4`,
 						type: "Lesson",
 						title: "Lesson 4 Title",
 						resources: [
 							{
+								id: "article-1",
 								slug: "article-1",
 								path: `${base}/unit-2/lesson-4/a/article-1`,
 								title: "Article 1 Title",
@@ -616,6 +632,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				],
 				resources: [
 					{
+						id: "quiz-2",
 						slug: "quiz-2",
 						path: `${base}/unit-2/quiz/quiz-2`,
 						title: "Quiz 2 Title",
@@ -640,6 +657,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				]
 			},
 			{
+				id: "unit-3",
 				slug: "unit-3",
 				path: `${base}/unit-3`,
 				type: "Unit",
@@ -649,6 +667,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: []
 			},
 			{
+				id: "unit-4",
 				slug: "unit-4",
 				path: `${base}/unit-4`,
 				type: "Unit",
@@ -658,6 +677,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: []
 			},
 			{
+				id: "unit-5",
 				slug: "unit-5",
 				path: `${base}/unit-5`,
 				type: "Unit",
@@ -667,6 +687,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: []
 			},
 			{
+				id: "unit-6",
 				slug: "unit-6",
 				path: `${base}/unit-6`,
 				type: "Unit",
@@ -676,6 +697,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: []
 			},
 			{
+				id: "unit-7",
 				slug: "unit-7",
 				path: `${base}/unit-7`,
 				type: "Unit",
@@ -685,6 +707,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: []
 			},
 			{
+				id: "unit-8",
 				slug: "unit-8",
 				path: `${base}/unit-8`,
 				type: "Unit",
@@ -694,6 +717,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: []
 			},
 			{
+				id: "unit-9",
 				slug: "unit-9",
 				path: `${base}/unit-9`,
 				type: "Unit",
@@ -703,6 +727,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 				resources: []
 			},
 			{
+				id: "unit-10",
 				slug: "unit-10",
 				path: `${base}/unit-10`,
 				type: "Unit",
@@ -714,6 +739,7 @@ export function getCourseBlob(subject: string, course: string): Course {
 		],
 		resources: [
 			{
+				id: "challenge",
 				slug: "challenge",
 				path: `${base}/test/challenge`,
 				title: "Course Challenge",

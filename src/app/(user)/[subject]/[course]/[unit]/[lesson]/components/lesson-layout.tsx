@@ -20,9 +20,7 @@ export function LessonLayout({
 	children: React.ReactNode
 }) {
 	const { lessonData } = React.use(dataPromise)
-	// We need to call React.use on progressPromise to avoid the linter warning
-	// even though we don't actually use the value directly
-	React.use(progressPromise)
+	// Now we pass progressPromise to the sidebar instead of consuming it here
 
 	const pathname = usePathname()
 	const isExercisePage = pathname.includes("/e/")
@@ -30,7 +28,7 @@ export function LessonLayout({
 	return (
 		<div className="flex h-full w-full overflow-hidden">
 			{/* Use the V2 CourseSidebar instead of LessonSidebar */}
-			<CourseSidebar coursePromise={coursePromise} className="w-96 flex-shrink-0" />
+			<CourseSidebar coursePromise={coursePromise} progressPromise={progressPromise} className="w-96 flex-shrink-0" />
 
 			{/* Main area with flex column layout */}
 			<div className="flex-1 flex flex-col">

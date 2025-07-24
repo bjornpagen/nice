@@ -6,6 +6,7 @@ import Image from "next/image"
 import { notFound, usePathname } from "next/navigation"
 import * as React from "react"
 import { useSidebar } from "@/components/ui/sidebar"
+import type { AssessmentProgress } from "@/lib/data/progress"
 import { cn } from "@/lib/utils"
 import { type Course, getCourseMaterials } from "@/lib/v2/types"
 import { CourseSidebarCourseBreadcrumbs } from "./course-sidebar-course-breadcrumbs"
@@ -16,15 +17,18 @@ import courseIconBackground from "./images/course-accordion-bg.png"
 
 export function CourseSidebar({
 	coursePromise,
+	progressPromise,
 	className
 }: {
 	coursePromise: Promise<Course | undefined>
+	progressPromise: Promise<Map<string, AssessmentProgress>>
 	className?: string
 }) {
 	const pathname = usePathname()
 	const { open } = useSidebar()
 
 	const course = React.use(coursePromise)
+	const progressMap = React.use(progressPromise)
 	if (course == null) {
 		notFound()
 	}
@@ -40,16 +44,31 @@ export function CourseSidebar({
 		}
 		return material.path === pathname
 	})
+
+	// If we can't find an exact match, try to find a reasonable fallback
+	let finalCursor = cursor
 	if (cursor === -1) {
+		// For quiz/test pages, try to find any quiz/test in the materials
+		if (pathname.includes("/quiz/") || pathname.includes("/test/")) {
+			finalCursor = _.findIndex(materials, (material) => material.type === "Quiz" || material.type === "UnitTest")
+		}
+
+		// If still no match, default to the first material
+		if (finalCursor === -1 && materials.length > 0) {
+			finalCursor = 0
+		}
+	}
+
+	if (finalCursor === -1) {
 		throw errors.new(`course sidebar: material not found: ${pathname}`)
 	}
 
-	const material = materials[cursor]
+	const material = materials[finalCursor]
 	if (material == null) {
 		throw errors.new(`course sidebar: material not found: ${pathname}`)
 	}
 
-	const [index, setIndex] = React.useState<number>(_.clamp(cursor, 0, materials.length - 1))
+	const [index, setIndex] = React.useState<number>(_.clamp(finalCursor, 0, materials.length - 1))
 
 	return (
 		<div
@@ -82,7 +101,12 @@ export function CourseSidebar({
 				{/* Separator */}
 				<div className="h-px my-4 bg-gray-200" />
 
-				<CourseSidebarCourseMaterials index={index} materials={materials} pathname={pathname} />
+				<CourseSidebarCourseMaterials
+					index={index}
+					materials={materials}
+					pathname={pathname}
+					progressMap={progressMap}
+				/>
 
 				{/* Separator */}
 				<div className="h-px my-4 bg-gray-200" />

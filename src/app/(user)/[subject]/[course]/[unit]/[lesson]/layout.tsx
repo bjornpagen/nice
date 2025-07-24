@@ -60,6 +60,7 @@ export default function Layout({
 
 		// Convert the v1 course to v2 format
 		const courseV2: CourseV2 = {
+			id: courseData.id,
 			slug: courseData.slug,
 			path: courseData.path,
 			type: "Course" as const,
@@ -70,6 +71,7 @@ export default function Layout({
 			units: courseData.units.map((unit) => {
 				// Map each v1 unit to v2 format
 				const unitV2 = {
+					id: unit.id,
 					slug: unit.slug,
 					path: unit.path,
 					type: "Unit" as const,
@@ -85,6 +87,7 @@ export default function Layout({
 
 							// Create base lesson format
 							const lessonBase = {
+								id: lesson.id,
 								slug: lesson.slug,
 								path: lesson.path,
 								type: "Lesson" as const,
@@ -93,6 +96,7 @@ export default function Layout({
 								// Convert resources within lessons
 								resources: lesson.children.map((resource) => {
 									const baseResource = {
+										id: resource.id,
 										slug: resource.slug,
 										path: resource.path,
 										title: resource.title
@@ -131,6 +135,7 @@ export default function Layout({
 									// Add the appropriate resource based on type
 									if (resourceType === "e") {
 										const exerciseResource = {
+											id: resourceSlug,
 											slug: resourceSlug,
 											path: pathname,
 											title: `Exercise: ${resourceSlug}`,
@@ -140,6 +145,7 @@ export default function Layout({
 										lessonBase.resources.push(exerciseResource)
 									} else if (resourceType === "a") {
 										const articleResource = {
+											id: resourceSlug,
 											slug: resourceSlug,
 											path: pathname,
 											title: `Article: ${resourceSlug}`,
@@ -149,6 +155,7 @@ export default function Layout({
 										lessonBase.resources.push(articleResource)
 									} else if (resourceType === "v") {
 										const videoResource = {
+											id: resourceSlug,
 											slug: resourceSlug,
 											path: pathname,
 											title: `Video: ${resourceSlug}`,
@@ -172,18 +179,31 @@ export default function Layout({
 					resources: unit.children
 						.filter((child) => child.type === "Quiz" || child.type === "UnitTest")
 						.map((assessment) => {
+							// Find the last lesson in this unit to construct correct path
+							const lessons = unit.children.filter((child) => child.type === "Lesson")
+							const lastLesson = lessons[lessons.length - 1]
+
+							// Construct the correct path: unit/lastLesson/quiz|test/slug
+							// Map assessment types to URL segments
+							const pathSegment = assessment.type === "Quiz" ? "quiz" : "test"
+							const correctPath = lastLesson
+								? `${unit.path}/${lastLesson.slug}/${pathSegment}/${assessment.slug}`
+								: assessment.path // fallback to original path if no lessons found
+
 							if (assessment.type === "Quiz") {
 								return {
+									id: assessment.id,
 									slug: assessment.slug,
-									path: assessment.path,
+									path: correctPath,
 									type: "Quiz" as const,
 									title: assessment.title,
 									data: { questions: [] }
 								}
 							}
 							return {
+								id: assessment.id,
 								slug: assessment.slug,
-								path: assessment.path,
+								path: correctPath,
 								type: "UnitTest" as const,
 								title: assessment.title,
 								data: { questions: [] }
@@ -196,6 +216,7 @@ export default function Layout({
 
 			// Convert course challenges
 			resources: courseData.challenges.map((challenge) => ({
+				id: challenge.id,
 				slug: challenge.slug,
 				path: challenge.path,
 				type: "CourseChallenge" as const,

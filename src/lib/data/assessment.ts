@@ -729,31 +729,31 @@ export async function fetchQuizRedirectPath(params: {
 		notFound()
 	}
 
-	// Sort by ordering and get the first lesson's slug
+	// Sort by ordering and get the last lesson's slug
 	lessons.sort((a, b) => a.sortOrder - b.sortOrder)
-	const firstLesson = lessons[0]
-	if (!firstLesson) {
-		logger.warn("could not determine first lesson", { unitSourcedId })
-		throw errors.new("could not determine first lesson")
+	const lastLesson = lessons[lessons.length - 1]
+	if (!lastLesson) {
+		logger.warn("could not determine last lesson", { unitSourcedId })
+		throw errors.new("could not determine last lesson")
 	}
 
 	// Validate lesson metadata with Zod
-	const firstLessonMetadataResult = ComponentMetadataSchema.safeParse(firstLesson.metadata)
-	if (!firstLessonMetadataResult.success) {
-		logger.error("invalid first lesson metadata", {
-			lessonSourcedId: firstLesson.sourcedId,
-			error: firstLessonMetadataResult.error
+	const lastLessonMetadataResult = ComponentMetadataSchema.safeParse(lastLesson.metadata)
+	if (!lastLessonMetadataResult.success) {
+		logger.error("invalid last lesson metadata", {
+			lessonSourcedId: lastLesson.sourcedId,
+			error: lastLessonMetadataResult.error
 		})
-		throw errors.wrap(firstLessonMetadataResult.error, "invalid first lesson metadata")
+		throw errors.wrap(lastLessonMetadataResult.error, "invalid last lesson metadata")
 	}
-	const firstLessonSlug = firstLessonMetadataResult.data.khanSlug
-	if (!firstLessonSlug) {
-		logger.error("first lesson missing khanSlug", { lessonSourcedId: firstLesson.sourcedId })
-		throw errors.new("first lesson missing khanSlug")
+	const lastLessonSlug = lastLessonMetadataResult.data.khanSlug
+	if (!lastLessonSlug) {
+		logger.error("last lesson missing khanSlug", { lessonSourcedId: lastLesson.sourcedId })
+		throw errors.new("last lesson missing khanSlug")
 	}
 
 	// Construct the redirect path
-	return `/${params.subject}/${params.course}/${params.unit}/${firstLessonSlug}/quiz/${params.quiz}`
+	return `/${params.subject}/${params.course}/${params.unit}/${lastLessonSlug}/quiz/${params.quiz}`
 }
 
 export async function fetchTestRedirectPath(params: {
@@ -871,29 +871,29 @@ export async function fetchTestRedirectPath(params: {
 		notFound()
 	}
 
-	// Sort by ordering and get the first lesson's slug
+	// Sort by ordering and get the last lesson's slug
 	lessons.sort((a, b) => a.sortOrder - b.sortOrder)
-	const firstLesson = lessons[0]
-	if (!firstLesson) {
-		logger.warn("could not determine first lesson", { unitSourcedId })
-		throw errors.new("could not determine first lesson")
+	const lastLesson = lessons[lessons.length - 1]
+	if (!lastLesson) {
+		logger.warn("could not determine last lesson", { unitSourcedId })
+		throw errors.new("could not determine last lesson")
 	}
 
 	// Validate lesson metadata with Zod
-	const firstLessonMetadataResult = ComponentMetadataSchema.safeParse(firstLesson.metadata)
-	if (!firstLessonMetadataResult.success) {
-		logger.error("invalid first lesson metadata", {
-			lessonSourcedId: firstLesson.sourcedId,
-			error: firstLessonMetadataResult.error
+	const lastLessonMetadataResult = ComponentMetadataSchema.safeParse(lastLesson.metadata)
+	if (!lastLessonMetadataResult.success) {
+		logger.error("invalid last lesson metadata", {
+			lessonSourcedId: lastLesson.sourcedId,
+			error: lastLessonMetadataResult.error
 		})
-		throw errors.wrap(firstLessonMetadataResult.error, "invalid first lesson metadata")
+		throw errors.wrap(lastLessonMetadataResult.error, "invalid last lesson metadata")
 	}
-	const firstLessonSlug = firstLessonMetadataResult.data.khanSlug
-	if (!firstLessonSlug) {
-		logger.error("first lesson missing khanSlug", { lessonSourcedId: firstLesson.sourcedId })
-		throw errors.new("first lesson missing khanSlug")
+	const lastLessonSlug = lastLessonMetadataResult.data.khanSlug
+	if (!lastLessonSlug) {
+		logger.error("last lesson missing khanSlug", { lessonSourcedId: lastLesson.sourcedId })
+		throw errors.new("last lesson missing khanSlug")
 	}
 
 	// Construct the redirect path
-	return `/${params.subject}/${params.course}/${params.unit}/${firstLessonSlug}/test/${params.test}`
+	return `/${params.subject}/${params.course}/${params.unit}/${lastLessonSlug}/test/${params.test}`
 }
