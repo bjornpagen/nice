@@ -108,13 +108,33 @@ function getProficiencyText(score: number): "Proficient" | "Familiar" | "Attempt
 	return "Attempted"
 }
 
+// Helper function to extract relative URL from Caliper event object ID
+function extractRelativeUrl(objectId: string): string {
+	try {
+		const url = new URL(objectId)
+		return url.pathname // Returns just the path part (e.g., "/subject/course/unit/lesson/v/video")
+	} catch {
+		// If objectId is not a valid URL, return it as-is (fallback)
+		return objectId
+	}
+}
+
 function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[]): ProgressPageData {
 	let exerciseMinutes = 0
 	let totalLearningMinutes = 0
 	let totalXpEarned = 0 // Track total XP
 
+	// Filter events to only include those from Nice Academy
+	const niceAcademyEvents = events.filter((event) => event.object.app.name === "Nice Academy")
+
+	logger.debug("filtered events by app name", {
+		totalEvents: events.length,
+		niceAcademyEvents: niceAcademyEvents.length,
+		filteredOut: events.length - niceAcademyEvents.length
+	})
+
 	// Create activities with event times for proper sorting
-	const eventActivities = events
+	const eventActivities = niceAcademyEvents
 		.map((event): { activity: Activity; eventTime: string } | null => {
 			if (event.action === "Completed") {
 				const totalQuestionsItem = event.generated.items.find((item) => item.type === "totalQuestions")
@@ -152,7 +172,8 @@ function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[
 						level: getProficiencyText(score),
 						problems: `${correctQuestions}/${totalQuestions}`,
 						time: "–",
-						xp: xpEarned // Add XP to activity
+						xp: xpEarned, // Add XP to activity
+						url: extractRelativeUrl(event.object.id) // Add clickable URL
 					},
 					eventTime: event.eventTime
 				}
@@ -193,7 +214,8 @@ function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[
 						date: format(new Date(event.eventTime), "MMM dd, yyyy 'at' h:mm a"),
 						level: "–",
 						problems: "–",
-						time: durationMinutes.toString()
+						time: durationMinutes.toString(),
+						url: extractRelativeUrl(event.object.id) // Add clickable URL
 					},
 					eventTime: event.eventTime
 				}

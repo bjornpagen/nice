@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import * as React from "react"
 import { ActivityIcon } from "@/components/icons/activity"
 import { Button } from "@/components/ui/button"
@@ -13,6 +14,7 @@ export type Activity = {
 	problems: string
 	time: string
 	xp?: number // Add optional xp field
+	url?: string // Add optional url field for navigation
 }
 
 export type ProgressTableProps = {
@@ -20,8 +22,15 @@ export type ProgressTableProps = {
 }
 
 export function ProgressTable({ activities }: ProgressTableProps) {
+	const router = useRouter()
 	const [currentPage, setCurrentPage] = React.useState(1)
 	const itemsPerPage = 10
+
+	const handleActivityClick = (activity: Activity) => {
+		if (activity.url) {
+			router.push(activity.url)
+		}
+	}
 
 	const totalPages = Math.ceil(activities.length / itemsPerPage)
 	const startIndex = (currentPage - 1) * itemsPerPage
@@ -56,9 +65,11 @@ export function ProgressTable({ activities }: ProgressTableProps) {
 			{/* Mobile/Tablet Card View */}
 			<div className="block lg:hidden space-y-3">
 				{currentActivities.map((activity, index) => (
-					<div
+					<button
 						key={`${activity.title}-${activity.date}-${index}`}
-						className="bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors"
+						type="button"
+						className="w-full text-left bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+						onClick={() => handleActivityClick(activity)}
 					>
 						<div className="flex items-start space-x-3">
 							<ActivityIcon variant={getActivityVariant(activity.icon)} className="w-8 h-8 flex-shrink-0 mt-1" />
@@ -94,7 +105,7 @@ export function ProgressTable({ activities }: ProgressTableProps) {
 								</div>
 							</div>
 						</div>
-					</div>
+					</button>
 				))}
 			</div>
 
@@ -112,9 +123,11 @@ export function ProgressTable({ activities }: ProgressTableProps) {
 				</div>
 				<div className="border border-t-0 border-gray-200 rounded-b-lg bg-white">
 					{currentActivities.map((activity, index) => (
-						<div
+						<button
 							key={`${activity.title}-${activity.date}-${index}`}
-							className="grid grid-cols-14 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0"
+							type="button"
+							className="w-full text-left grid grid-cols-14 gap-4 px-6 py-4 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0 cursor-pointer"
+							onClick={() => handleActivityClick(activity)}
 						>
 							<div className="col-span-5">
 								<div className="flex items-start space-x-3">
@@ -150,7 +163,7 @@ export function ProgressTable({ activities }: ProgressTableProps) {
 									<span className="text-gray-400">–</span>
 								)}
 							</div>
-						</div>
+						</button>
 					))}
 					{currentActivities.length === 0 && (
 						<div className="text-center py-12 text-gray-500">
