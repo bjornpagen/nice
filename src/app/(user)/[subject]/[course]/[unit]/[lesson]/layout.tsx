@@ -2,7 +2,6 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type * as React from "react"
-import { SidebarProvider } from "@/components/ui/sidebar"
 import { fetchCoursePageData } from "@/lib/data/course"
 import { fetchLessonLayoutData } from "@/lib/data/lesson"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
@@ -249,10 +248,8 @@ export default function Layout({
 	)
 
 	return (
-		<SidebarProvider>
-			<LessonLayout dataPromise={dataPromise} progressPromise={progressPromise} coursePromise={courseV2Promise}>
-				{children}
-			</LessonLayout>
-		</SidebarProvider>
+		<LessonLayout dataPromise={dataPromise} progressPromise={progressPromise} coursePromise={courseV2Promise}>
+			{children}
+		</LessonLayout>
 	)
 }

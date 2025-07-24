@@ -6,7 +6,7 @@ import Image from "next/image"
 import { notFound, usePathname } from "next/navigation"
 import * as React from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { useSidebar } from "@/components/ui/sidebar"
+// import { useSidebar } from "@/components/ui/sidebar" // Removed for relative positioning layout
 import type { AssessmentProgress } from "@/lib/data/progress"
 import { cn } from "@/lib/utils"
 import { type Course, getCourseMaterials } from "@/lib/v2/types"
@@ -26,7 +26,7 @@ export function CourseSidebar({
 	className?: string
 }) {
 	const pathname = usePathname()
-	const { open } = useSidebar()
+	// Removed useSidebar() dependency for relative positioning layout
 
 	const course = React.use(coursePromise)
 	const progressMap = React.use(progressPromise)
@@ -61,66 +61,86 @@ export function CourseSidebar({
 	const [index, setIndex] = React.useState<number>(_.clamp(cursor, 0, materials.length - 1))
 
 	return (
-		<div
-			id="course-sidebar"
-			className={cn("bg-gray-100 border-r border-gray-200 h-full overflow-hidden", className, !open && "hidden")}
-		>
-			<ScrollArea className="h-full bg-white border-none">
-				<div className="px-6 py-4 flex-1 overflow-hidden">
-					<div id="course-sidebar-course-title" className="text-lg font-bold mb-4">
-						<div className="flex items-center gap-4">
-							<div className="w-10 h-10 rounded flex items-center justify-center relative">
-								<Image src={courseIconBackground} alt="Course icon background" fill className="object-cover rounded" />
-								<Image
-									src={courseIconForeground}
-									alt="Course icon foreground"
-									className="w-6 h-6 relative z-10 brightness-0 invert"
-								/>
+		<div id="course-sidebar" className={cn("bg-transparent h-full overflow-hidden", className)}>
+			{/* Add padding and white background container to match legacy styling */}
+			<div className="p-5 h-full flex flex-col">
+				{/* White content card with proper borders */}
+				<div className="bg-white border border-gray-200 rounded-lg max-h-full flex flex-col">
+					{/* FIXED HEADER SECTION - Course title and carousel */}
+					<div className="flex-shrink-0 px-6 pt-4 pb-0">
+						<div id="course-sidebar-course-title" className="text-lg font-bold mb-4">
+							<div className="flex items-center gap-4">
+								<div className="w-10 h-10 rounded flex items-center justify-center relative">
+									<Image
+										src={courseIconBackground}
+										alt="Course icon background"
+										fill
+										className="object-cover rounded"
+									/>
+									<Image
+										src={courseIconForeground}
+										alt="Course icon foreground"
+										className="w-6 h-6 relative z-10 brightness-0 invert"
+									/>
+								</div>
+
+								<span className="font-medium text-gray-900 text-xl capitalize">{course.title}</span>
 							</div>
-
-							<span className="font-medium text-gray-900 text-xl capitalize">{course.title}</span>
 						</div>
+
+						{/* Separator */}
+						<div className="h-px my-4 bg-gray-200" />
+
+						<div className="mt-4">
+							<CourseSidebarCourseCarousel course={course} materials={materials} index={index} setIndex={setIndex} />
+						</div>
+
+						{/* Separator */}
+						<div className="h-px mt-4 mb-0 bg-gray-200" />
 					</div>
 
-					{/* Separator */}
-					<div className="h-px my-4 bg-gray-200" />
+					{/* SCROLLABLE CONTENT SECTION - Materials, breadcrumbs, footer */}
+					<div className="flex-1 overflow-hidden">
+						<ScrollArea className="h-full bg-white border-none">
+							<div className="px-6 pb-4">
+								<CourseSidebarCourseMaterials
+									index={index}
+									materials={materials}
+									pathname={pathname}
+									progressMap={progressMap}
+								/>
 
-					<div className="mt-4">
-						<CourseSidebarCourseCarousel course={course} materials={materials} index={index} setIndex={setIndex} />
-					</div>
+								{/* Separator */}
+								<div className="h-px my-4 bg-gray-200" />
 
-					{/* Separator */}
-					<div className="h-px my-4 bg-gray-200" />
+								<CourseSidebarCourseBreadcrumbs
+									course={_.pick(course, ["path", "title"])}
+									material={material}
+									pathname={pathname}
+								/>
 
-					<CourseSidebarCourseMaterials
-						index={index}
-						materials={materials}
-						pathname={pathname}
-						progressMap={progressMap}
-					/>
-
-					{/* Separator */}
-					<div className="h-px my-4 bg-gray-200" />
-
-					<CourseSidebarCourseBreadcrumbs
-						course={_.pick(course, ["path", "title"])}
-						material={material}
-						pathname={pathname}
-					/>
-
-					<div id="course-sidebar-footer" className="p-2 my-4 flex flex-col gap-2 text-center">
-						<div className="text-xs text-gray-600">© 2025 Nice Academy</div>
-						<div className="text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1 justify-center">
-							<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">Terms of use</span>
-							<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">Privacy Policy</span>
-							<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">Cookie Notice</span>
-							<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">
-								Accessibility Statement
-							</span>
-						</div>
+								<div id="course-sidebar-footer" className="p-2 my-4 flex flex-col gap-2 text-center">
+									<div className="text-xs text-gray-600">© 2025 Nice Academy</div>
+									<div className="text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1 justify-center">
+										<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">
+											Terms of use
+										</span>
+										<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">
+											Privacy Policy
+										</span>
+										<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">
+											Cookie Notice
+										</span>
+										<span className="hover:text-gray-700 underline cursor-not-allowed whitespace-nowrap">
+											Accessibility Statement
+										</span>
+									</div>
+								</div>
+							</div>
+						</ScrollArea>
 					</div>
 				</div>
-			</ScrollArea>
+			</div>
 		</div>
 	)
 }

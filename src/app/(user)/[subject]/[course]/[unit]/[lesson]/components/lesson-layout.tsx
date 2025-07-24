@@ -26,14 +26,20 @@ export function LessonLayout({
 	const isExercisePage = pathname.includes("/e/")
 
 	return (
-		<div className="flex h-full w-full overflow-hidden">
-			{/* Use the V2 CourseSidebar instead of LessonSidebar */}
-			<CourseSidebar coursePromise={coursePromise} progressPromise={progressPromise} className="w-96 flex-shrink-0" />
+		<div className="flex h-full">
+			{/* Wrap CourseSidebar in a flex container to match legacy layout behavior */}
+			<div className="w-[var(--sidebar-width)] flex-shrink-0 bg-gray-50 border-r border-gray-200 h-full">
+				<CourseSidebar
+					coursePromise={coursePromise}
+					progressPromise={progressPromise}
+					className="h-full bg-transparent border-none"
+				/>
+			</div>
 
 			{/* Main area with flex column layout */}
 			<div className="flex-1 flex flex-col">
 				{/* Content area - scrollable */}
-				<div className="flex-1 overflow-y-auto bg-gray-50 w-full">{children}</div>
+				<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 
 				{/* Conditionally render LessonNext footer */}
 				{!isExercisePage && <LessonNext lessonChildren={lessonData.children} />}
