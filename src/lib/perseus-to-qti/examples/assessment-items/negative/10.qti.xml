@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This is a NEGATIVE example.
+    This QTI XML file demonstrates a critical flaw in converting from the Perseus format.
+    The flaw results in a user experience that is mathematically incorrect and confusing.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="nice-tmp:xebba2ef48762fd43-NEGATIVE-EXAMPLE"
+    title="Making 5 (Negative Example)"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>4</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <div id="reference_text">
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/89755f49534fa8e4228cf0c6433387fbbff230c3.png" alt="An image showing blue and pink dots representing an addition problem." width="254" height="54"/>
+        </div>
+
+        <qti-prompt>Enter the number that makes the equation true.</qti-prompt>
+        
+        <!-- CRITICAL FLAW: Misplacement of the input box.
+             The original Perseus item is structured as `[INPUT] + 1 = 5`. This QTI implementation incorrectly
+             places the text entry box *after* the equation, resulting in the user seeing `+ 1 = 5 [BOX]`.
+             This breaks the mathematical logic and makes the item nonsensical. The text entry interaction
+             should be placed before the MathML for the rest of the equation. -->
+        <p>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <mo>+</mo>
+                    <mn>1</mn>
+                    <mo>=</mo>
+                    <mn>5</mn>
+                </mrow>
+            </math>
+            <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="2"/>
+        </p>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>5</mn></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Think about what number plus <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn></math> equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>. Counting on from 1 can help.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>

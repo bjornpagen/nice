@@ -165,6 +165,7 @@ export function AssessmentStepper({
 	const [attemptNumber, setAttemptNumber] = React.useState(1)
 	const [sessionResults, setSessionResults] = React.useState<{ qtiItemId: string; isCorrect: boolean }[]>([]) // NEW STATE
 	const [nextItem, setNextItem] = React.useState<{ text: string; path: string } | null>(null)
+	const [debugClickCount, setDebugClickCount] = React.useState(0)
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
 	const wrongAudioRef = React.useRef<HTMLAudioElement | null>(null)
 	const currentQuestion = questions[currentQuestionIndex]
@@ -812,7 +813,17 @@ export function AssessmentStepper({
 			{/* Assessment Header */}
 			<div className="bg-white px-6 py-4 border-b border-gray-200 flex-shrink-0">
 				<div className="flex items-center justify-center">
-					<h1 className="text-xl font-semibold text-gray-900">{assessmentTitle}</h1>
+					<h1
+						className="text-xl font-semibold text-gray-900 select-none"
+						onClick={() => {
+							setDebugClickCount((prev) => prev + 1)
+						}}
+					>
+						{assessmentTitle}
+						{debugClickCount >= 5 && currentQuestion && (
+							<span className="ml-3 text-sm font-mono text-gray-500">{currentQuestion.id}</span>
+						)}
+					</h1>
 				</div>
 			</div>
 			<div className="flex-1 overflow-y-auto overflow-x-hidden relative">
