@@ -1,0 +1,149 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "Let's look at each name to see which ones can classify our shape.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "##Quadrilateral\n\nA quadrilateral is a [[☃ definition 1]] with $4$ sides.\n\n[[☃ explanation 3]]\n\nThe shape is a polygon with $4$ sides, so it *is* a quadrilateral.",
+			"replace": false,
+			"widgets": {
+				"definition 1": {
+					"type": "definition",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"definition": "A closed figure with straight sides.",
+						"togglePrompt": "polygon"
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
+				},
+				"explanation 3": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Got it, thanks!",
+						"showPrompt": "Show me examples of quadrilaterals.",
+						"explanation": "These are quadrilaterals.\n\n![The shapes all have 4 straight sides.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/d82c8ab098090a7311bca960776e59398fc5a4fb)\n\nThese are *not* quadrilaterals.\n\n![The shapes do not have 4 straight sides.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/1c7750dd8e5931a47334a4a72af780fba6eb2d34)"
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "##Rhombus\n\nRhombuses are quadrilaterals with $4$ sides of equal length. \n\nThe shape is a quadrilateral, but it does **not** have $4$ equal sides, so it is **not** a rhombus.\n\n[[☃ explanation 4]]",
+			"replace": false,
+			"widgets": {
+				"explanation 4": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Got it, thanks!",
+						"showPrompt": "Show me examples of rhombuses.",
+						"explanation": "![All the shapes have 4 equal sides.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/ed7962e9a34dddb74aecc04ddf4d6e32451a3988)\n\nYes, a square is also a rhombus, because all $4$ sides of a square have the same length."
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "##Square\n\nA square is a quadrilateral with $4$ equal side lengths and $4$ [[☃ explanation 1]].\n\n[[☃ explanation 2]]\n\nThis shape is a quadrilateral but it does **not** have $4$ sides of equal length, so it is **not** a square.",
+			"replace": false,
+			"widgets": {
+				"explanation 1": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Hide explanation",
+						"showPrompt": "right angles",
+						"explanation": "We call a corner a right angle if we can fit a little square perfectly inside it.\n\nHere is an example of a shape with $2$ right angles: \n\n![The shape has 2 right angles and 2 angles that are not right angles.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/f8081758208a0824fab2ae3e0aa5470ed9d0053e)"
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
+				},
+				"explanation 2": {
+					"type": "explanation",
+					"graded": true,
+					"static": false,
+					"options": {
+						"static": false,
+						"widgets": {},
+						"hidePrompt": "Got it, thanks!",
+						"showPrompt": "Show me examples of squares.",
+						"explanation": "![The shapes have 4 equal sides and 4 right angles.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/c89a31fc913d5ff08b7b4c655e077f40d5170d66)"
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "The following names can classify the shape:\n\n- Quadrilateral",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {
+			"web+graphie://cdn.kastatic.org/ka-perseus-graphie/496de3871bb28ceba516da8ce2d51ded5f92c314": {
+				"width": 117,
+				"height": 150
+			}
+		},
+		"content": "**How can we classify the following shape?**\n\n![A shape with 4 straight sides. The sides are not equal and the angles are not right angles.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/496de3871bb28ceba516da8ce2d51ded5f92c314)\n\n[[☃ radio 5]]",
+		"widgets": {
+			"radio 5": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{ "content": "Quadrilateral", "correct": true },
+						{ "content": "Rhombus", "correct": false, "isNoneOfTheAbove": false },
+						{ "content": "Square", "correct": false, "isNoneOfTheAbove": false },
+						{ "content": "None of the above", "isNoneOfTheAbove": false }
+					],
+					"randomize": false,
+					"numCorrect": 1,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": true,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": { "major": 2, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false,
+		"periodicTableWithKey": false,
+		"financialCalculatorTotalAmount": false,
+		"financialCalculatorTimeToPayOff": false,
+		"financialCalculatorMonthlyPayment": false
+	}
+}
