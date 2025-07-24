@@ -1,0 +1,46 @@
+{
+	"hints": [
+		{
+			"images": {
+				"https://cdn.kastatic.org/ka-perseus-graphie/2e7401b400f73c8dde1f7b7738420bc3554c5eaa.png": {
+					"width": 250,
+					"height": 250
+				}
+			},
+			"content": "![](https://cdn.kastatic.org/ka-perseus-graphie/2e7401b400f73c8dde1f7b7738420bc3554c5eaa.png)\n\nWe can take apart $\\green{9}$ to make $\\pink5$ and $\\blue4$.  \nWe can put together $\\pink5$ and $\\blue4$ to make $\\green9$. ",
+			"widgets": {}
+		},
+		{ "images": {}, "content": "$\\green9-\\pink5= \\blue4$ because $\\blue4+\\pink5=\\green9$", "widgets": {} }
+	],
+	"question": {
+		"images": {},
+		"content": "**Fill in the blanks.**  \n\n | | |\n:-: | :-: | :-:\n$9-5=$ [[☃ input-number 1]] | because | [[☃ input-number 2]] $+$ $5=9$\n",
+		"widgets": {
+			"input-number 1": {
+				"type": "input-number",
+				"graded": true,
+				"options": {
+					"size": "small",
+					"value": 4,
+					"inexact": false,
+					"maxError": 0.1,
+					"simplify": "required",
+					"answerType": "number"
+				}
+			},
+			"input-number 2": {
+				"type": "input-number",
+				"graded": true,
+				"options": {
+					"size": "small",
+					"value": 4,
+					"inexact": false,
+					"maxError": 0.1,
+					"simplify": "required",
+					"answerType": "number"
+				}
+			}
+		}
+	},
+	"answerArea": { "type": "multiple", "options": { "images": {}, "content": "", "widgets": {} }, "calculator": false }
+}

@@ -4,8 +4,8 @@
 
   REASON FOR BEING A NEGATIVE EXAMPLE:
 
-  1.  CRITICAL: Use of Undefined XML Entity - The MathML content within the incorrect feedback block uses the named entity `−` for the minus sign (`<mo>−</mo>`). While this is a valid entity in HTML5, it is *not* a predefined entity in the XML 1.0 standard.
-  2.  CRITICAL: Parsing Failure - A strict XML parser will encounter `−` and halt with an "entity not defined" error. This makes the entire QTI item unusable. The correct way to represent the minus sign in this context is with its numeric character reference, `−`, or the literal hyphen-minus character '-'. This demonstrates a common but critical error when converting content (especially math) from HTML-like contexts to strict XML.
+  1.  CRITICAL: Use of Undefined XML Entity - The MathML content within the incorrect feedback block uses the named entity `&minus;` for the minus sign (`<mo>&minus;</mo>`). While this is a valid entity in HTML5, it is *not* a predefined entity in the XML 1.0 standard.
+  2.  CRITICAL: Parsing Failure - A strict XML parser will encounter `&minus;` and halt with an "entity not defined" error. This makes the entire QTI item unusable. The correct way to represent the minus sign in this context is with the literal hyphen character '-'. This demonstrates a common but critical error when converting content (especially math) from HTML-like contexts to strict XML.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
@@ -46,7 +46,7 @@
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember, there are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn></math> raccoons in total and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn></math> of them are fast. Subtract to find how many are not fast: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>−</mo><mn>6</mn><mo>=</mo><mn>4</mn></math>.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember, there are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn></math> raccoons in total and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn></math> of them are fast. Subtract to find how many are not fast: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>&minus;</mo><mn>6</mn><mo>=</mo><mn>4</mn></math>.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>
