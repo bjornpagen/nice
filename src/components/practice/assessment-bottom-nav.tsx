@@ -38,7 +38,7 @@ interface AssessmentBottomNavProps {
 	onCorrectAnswer?: () => void
 	attemptCount?: number
 	maxAttempts?: number
-	nextItem?: { text: string; path: string } | null
+	nextItem?: { text: string; path: string; type?: string } | null
 }
 
 export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, AssessmentBottomNavProps>(
@@ -286,7 +286,7 @@ function RightSection({
 	onReset?: () => void
 	attemptCount?: number
 	maxAttempts?: number
-	nextItem?: { text: string; path: string } | null
+	nextItem?: { text: string; path: string; type?: string } | null
 }) {
 	const handleSkipClick = () => {
 		if (onSkip) {
@@ -315,6 +315,33 @@ function RightSection({
 
 	// Complete screen
 	if (isComplete) {
+		const getTypeLabel = (type: string): string => {
+			switch (type) {
+				case "Video":
+					return "Video"
+				case "Article":
+					return "Article"
+				case "Exercise":
+					return "Exercise"
+				case "Quiz":
+					return "Quiz"
+				case "UnitTest":
+					return "Unit Test"
+				default:
+					return type
+			}
+		}
+
+		const getButtonContent = () => {
+			if (nextItem?.path && nextItem.type) {
+				return <Link href={nextItem.path}>Up next: {getTypeLabel(nextItem.type)}</Link>
+			}
+			if (nextItem?.path && nextItem.text) {
+				return <Link href={nextItem.path}>{nextItem.text}</Link>
+			}
+			return <span>Error: Missing navigation data</span>
+		}
+
 		return (
 			<div className="flex items-center gap-4">
 				<Button variant="ghost" onClick={onReset} className="text-blue-600 hover:text-blue-600 hover:underline">
@@ -328,11 +355,7 @@ function RightSection({
 					className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white"
 					asChild
 				>
-					{nextItem?.path && nextItem.text ? (
-						<Link href={nextItem.path}>{nextItem.text}</Link>
-					) : (
-						<span>Error: Missing navigation data</span>
-					)}
+					{getButtonContent()}
 				</Button>
 			</div>
 		)

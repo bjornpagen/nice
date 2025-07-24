@@ -44,7 +44,8 @@ export interface VideoPageData {
 // Data for the /.../e/[exercise] page
 export interface ExercisePageData {
 	exercise: {
-		id: string
+		id: string // This is the Resource sourcedId
+		componentResourceSourcedId: string // This is the ID needed for XP farming prevention
 		title: string
 		path: string
 		type: "Exercise"

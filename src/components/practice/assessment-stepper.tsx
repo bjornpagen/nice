@@ -164,7 +164,7 @@ export function AssessmentStepper({
 	// ADDED: New state to track the current attempt number. Default to 1 for the first attempt.
 	const [attemptNumber, setAttemptNumber] = React.useState(1)
 	const [sessionResults, setSessionResults] = React.useState<{ qtiItemId: string; isCorrect: boolean }[]>([]) // NEW STATE
-	const [nextItem, setNextItem] = React.useState<{ text: string; path: string } | null>(null)
+	const [nextItem, setNextItem] = React.useState<{ text: string; path: string; type?: string } | null>(null)
 	const [debugClickCount, setDebugClickCount] = React.useState(0)
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
 	const wrongAudioRef = React.useRef<HTMLAudioElement | null>(null)
@@ -294,9 +294,9 @@ export function AssessmentStepper({
 			}
 
 			// Find the index of the current assessment within this flattened list.
-			const currentIndex = allUnitItems.findIndex((item) => item.id === onerosterComponentResourceSourcedId)
+			const currentIndex = allUnitItems.findIndex((item) => item.id === onerosterResourceSourcedId)
 
-			let foundNext: { text: string; path: string } | null = null
+			let foundNext: { text: string; path: string; type?: string } | null = null
 
 			// If the current item is found and is not the last item in the entire unit...
 			if (currentIndex !== -1 && currentIndex < allUnitItems.length - 1) {
@@ -305,7 +305,8 @@ export function AssessmentStepper({
 				if (nextContent) {
 					foundNext = {
 						text: `Up next: ${nextContent.type}`,
-						path: nextContent.path
+						path: nextContent.path,
+						type: nextContent.type
 					}
 				}
 			}
@@ -318,7 +319,7 @@ export function AssessmentStepper({
 
 			setNextItem(foundNext)
 		}
-	}, [showSummary, onerosterComponentResourceSourcedId, unitData])
+	}, [showSummary, onerosterResourceSourcedId, unitData])
 
 	// MODIFIED: This useEffect now passes the attemptNumber to the server action.
 	React.useEffect(() => {
@@ -413,7 +414,10 @@ export function AssessmentStepper({
 				subject: mappedSubject,
 				app: { name: "Nice Academy" },
 				course: { name: course },
-				activity: { name: assessmentTitle }
+				activity: {
+					name: assessmentTitle,
+					id: onerosterResourceSourcedId // This is the key fix - ensures we use the proper resource ID
+				}
 			}
 
 			// Calculate duration before sending events

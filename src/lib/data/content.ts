@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { connection } from "next/server"
-import { getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
+import { getAllComponentResources, getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
 import { getAllQuestionsForTest, getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
@@ -122,6 +122,27 @@ export async function fetchExercisePageData(params: {
 		notFound()
 	}
 
+	// Find the ComponentResource that links this exercise resource to its parent lesson
+	const allComponentResourcesResult = await errors.try(getAllComponentResources())
+	if (allComponentResourcesResult.error) {
+		logger.error("failed to fetch component resources to find exercise lesson context", {
+			error: allComponentResourcesResult.error
+		})
+		throw errors.wrap(allComponentResourcesResult.error, "fetch component resources for exercise context")
+	}
+
+	const componentResource = allComponentResourcesResult.data.find(
+		(cr) => cr.resource.sourcedId === resource.sourcedId && cr.courseComponent.sourcedId === layoutData.lessonData.id
+	)
+
+	if (!componentResource) {
+		logger.error("could not find componentResource linking exercise to lesson", {
+			resourceSourcedId: resource.sourcedId,
+			lessonSourcedId: layoutData.lessonData.id
+		})
+		notFound()
+	}
+
 	// Fetch questions from QTI server
 	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
 	if (questionsResult.error) {
@@ -157,6 +178,7 @@ export async function fetchExercisePageData(params: {
 	return {
 		exercise: {
 			id: resource.sourcedId,
+			componentResourceSourcedId: componentResource.sourcedId,
 			title: resource.title,
 			path: `/${params.subject}/${params.course}/${params.unit}/${params.lesson}/e/${resourceMetadataResult.data.khanSlug}`,
 			type: "Exercise" as const,
