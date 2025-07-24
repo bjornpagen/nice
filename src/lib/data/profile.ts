@@ -171,7 +171,7 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 	if (!metadata.sourceId) {
 		logger.info("user has no sourceId yet, returning empty enrolled courses", { userId: user.id })
 		const subjects = await subjectsPromise
-		return { subjects, userCourses: [] }
+		return { subjects, userCourses: [], needsSync: true }
 	}
 	const sourceId = metadata.sourceId
 

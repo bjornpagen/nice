@@ -109,4 +109,5 @@ export interface CourseChallengeLayoutData {
 export interface ProfileCoursesPageData {
 	subjects: ProfileSubject[]
 	userCourses: ProfileCourse[]
+	needsSync?: boolean // True if user doesn't have sourceId yet
 }

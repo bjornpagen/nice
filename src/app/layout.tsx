@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import * as React from "react"
 import { DialogManagerProvider } from "@/components/providers/dialog-manager-provider"
+import { UserSyncProvider } from "@/components/UserSyncProvider"
 import "@/styles/globals.css"
 import "@/styles/variables.css"
 
@@ -32,7 +33,9 @@ export default function RootLayout({
 			<body suppressHydrationWarning>
 				<React.Suspense>
 					<ClerkProvider>
-						<DialogManagerProvider>{children}</DialogManagerProvider>
+						<UserSyncProvider>
+							<DialogManagerProvider>{children}</DialogManagerProvider>
+						</UserSyncProvider>
 					</ClerkProvider>
 				</React.Suspense>
 			</body>
