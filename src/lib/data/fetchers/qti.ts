@@ -1,5 +1,6 @@
 import * as logger from "@superbuilders/slog"
 import { unstable_cache as cache } from "next/cache"
+import { createCacheKey } from "@/lib/cache"
 import { qti } from "@/lib/clients"
 
 export const getAllQuestionsForTest = cache(
@@ -7,7 +8,7 @@ export const getAllQuestionsForTest = cache(
 		logger.info("getAllQuestionsForTest called", { identifier })
 		return qti.getAllQuestionsForTest(identifier)
 	},
-	["qti-getAllQuestionsForTest"],
+	createCacheKey(["qti-getAllQuestionsForTest"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -16,6 +17,6 @@ export const getAssessmentTest = cache(
 		logger.info("getAssessmentTest called", { identifier })
 		return qti.getAssessmentTest(identifier)
 	},
-	["qti-getAssessmentTest"],
+	createCacheKey(["qti-getAssessmentTest"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )

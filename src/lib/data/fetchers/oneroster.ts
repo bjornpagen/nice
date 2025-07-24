@@ -1,5 +1,6 @@
 import * as logger from "@superbuilders/slog"
 import { unstable_cache as cache } from "next/cache"
+import { createCacheKey } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
 import { createPrefixFilter } from "@/lib/filter"
 
@@ -56,7 +57,7 @@ export const getCourse = cache(
 		logger.info("getCourse called", { sourcedId })
 		return oneroster.getCourse(sourcedId)
 	},
-	["oneroster-getCourse"],
+	createCacheKey(["oneroster-getCourse"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -65,7 +66,7 @@ export const getResource = cache(
 		logger.info("getResource called", { sourcedId })
 		return oneroster.getResource(sourcedId)
 	},
-	["oneroster-getResource"],
+	createCacheKey(["oneroster-getResource"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -74,7 +75,7 @@ export const getClass = cache(
 		logger.info("getClass called", { classSourcedId })
 		return oneroster.getClass(classSourcedId)
 	},
-	["oneroster-getClass"],
+	createCacheKey(["oneroster-getClass"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -85,7 +86,7 @@ export const getAllCourses = cache(
 		logger.info("getAllCourses called")
 		return oneroster.getAllCourses({ filter: `status='active'` })
 	},
-	["oneroster-getAllCourses"],
+	createCacheKey(["oneroster-getAllCourses"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -94,7 +95,7 @@ export const getAllCoursesBySlug = cache(
 		logger.info("getAllCoursesBySlug called", { slug })
 		return oneroster.getAllCourses({ filter: `metadata.khanSlug='${slug}' AND status='active'` })
 	},
-	["oneroster-getAllCoursesBySlug"],
+	createCacheKey(["oneroster-getAllCoursesBySlug"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -103,7 +104,7 @@ export const getCourseComponentsByCourseId = cache(
 		logger.info("getCourseComponentsByCourseId called", { courseSourcedId })
 		return oneroster.getCourseComponents({ filter: `course.sourcedId='${courseSourcedId}' AND status='active'` })
 	},
-	["oneroster-getCourseComponentsByCourseId"],
+	createCacheKey(["oneroster-getCourseComponentsByCourseId"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -112,7 +113,7 @@ export const getCourseComponentsByParentId = cache(
 		logger.info("getCourseComponentsByParentId called", { parentSourcedId })
 		return oneroster.getCourseComponents({ filter: `parent.sourcedId='${parentSourcedId}' AND status='active'` })
 	},
-	["oneroster-getCourseComponentsByParentId"],
+	createCacheKey(["oneroster-getCourseComponentsByParentId"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -121,7 +122,7 @@ export const getCourseComponentBySlug = cache(
 		logger.info("getCourseComponentBySlug called", { slug })
 		return oneroster.getCourseComponents({ filter: `metadata.khanSlug='${slug}' AND status='active'` })
 	},
-	["oneroster-getCourseComponentBySlug"],
+	createCacheKey(["oneroster-getCourseComponentBySlug"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -137,7 +138,7 @@ export const getCourseComponentByCourseAndSlug = cache(
 		// Filter by courseSourcedId in-memory
 		return components.filter((c) => c.course.sourcedId === courseSourcedId)
 	},
-	["oneroster-getCourseComponentByCourseAndSlug"],
+	createCacheKey(["oneroster-getCourseComponentByCourseAndSlug"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -153,7 +154,7 @@ export const getCourseComponentByParentAndSlug = cache(
 		// Filter by parentSourcedId in-memory
 		return components.filter((c) => c.parent?.sourcedId === parentSourcedId)
 	},
-	["oneroster-getCourseComponentByParentAndSlug"],
+	createCacheKey(["oneroster-getCourseComponentByParentAndSlug"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -165,7 +166,7 @@ export const getUnitsForCourses = cache(
 		const filter = `course.sourcedId@'${courseSourcedIds.join(",")}' AND status='active'`
 		return oneroster.getCourseComponents({ filter })
 	},
-	["oneroster-getUnitsForCourses"],
+	createCacheKey(["oneroster-getUnitsForCourses"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -179,7 +180,7 @@ export const getAllResources = cache(
 		// Filter by status='active' in-memory
 		return resources.filter((r) => r.status === "active")
 	},
-	["oneroster-getAllResources"],
+	createCacheKey(["oneroster-getAllResources"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -201,7 +202,7 @@ export const getResourcesBySlugAndType = cache(
 
 		return filtered
 	},
-	["oneroster-getResourcesBySlugAndType"],
+	createCacheKey(["oneroster-getResourcesBySlugAndType"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -216,7 +217,7 @@ export const getResourceByCourseAndSlug = cache(
 		// Filter by type and courseSourcedId in-memory
 		return resources.filter((r) => r.metadata?.type === type && r.metadata?.courseSourcedId === courseSourcedId)
 	},
-	["oneroster-getResourceByCourseAndSlug"],
+	createCacheKey(["oneroster-getResourceByCourseAndSlug"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -230,7 +231,7 @@ export const getAllComponentResources = cache(
 		// Filter by status='active' in-memory
 		return resources.filter((r) => r.status === "active")
 	},
-	["oneroster-getAllComponentResources"],
+	createCacheKey(["oneroster-getAllComponentResources"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -239,7 +240,7 @@ export const getClassesForSchool = cache(
 		logger.info("getClassesForSchool called", { schoolSourcedId })
 		return oneroster.getAllClasses({ filter: `school.sourcedId='${schoolSourcedId}' AND status='active'` })
 	},
-	["oneroster-getClassesForSchool"],
+	createCacheKey(["oneroster-getClassesForSchool"]),
 	{ revalidate: false } // equivalent to cacheLife("max")
 )
 
@@ -248,7 +249,7 @@ export const getEnrollmentsForUser = cache(
 		logger.info("getEnrollmentsForUser called", { userSourcedId })
 		return oneroster.getEnrollmentsForUser(userSourcedId)
 	},
-	["oneroster-getEnrollmentsForUser"],
+	createCacheKey(["oneroster-getEnrollmentsForUser"]),
 	{ revalidate: 60 } // equivalent to cacheLife("minutes")
 )
 
@@ -258,6 +259,6 @@ export const getActiveEnrollmentsForUser = cache(
 		logger.info("getActiveEnrollmentsForUser called", { userSourcedId })
 		return oneroster.getAllEnrollments({ filter: `user.sourcedId='${userSourcedId}' AND status='active'` })
 	},
-	["oneroster-getActiveEnrollmentsForUser"],
+	createCacheKey(["oneroster-getActiveEnrollmentsForUser"]),
 	{ revalidate: 60 } // equivalent to cacheLife("minutes")
 )
