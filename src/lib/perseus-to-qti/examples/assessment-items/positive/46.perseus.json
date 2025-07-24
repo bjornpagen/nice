@@ -1,0 +1,123 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "[[☃ image 1]]",
+			"replace": true,
+			"widgets": {
+				"image 1": {
+					"type": "image",
+					"graded": true,
+					"static": false,
+					"options": {
+						"alt": "Three blue dots.",
+						"box": [60, 180],
+						"range": [[0, 10], [0, 10]],
+						"title": "",
+						"labels": [],
+						"static": false,
+						"caption": "",
+						"backgroundImage": {
+							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1fc5dac526b7306a40d25308087f4d07d60df695",
+							"width": 60,
+							"height": 180
+						}
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "block"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "[[☃ image 1]]\n\n[[☃ image 2]]",
+			"replace": true,
+			"widgets": {
+				"image 1": {
+					"type": "image",
+					"graded": true,
+					"static": false,
+					"options": {
+						"alt": "Three blue dots.",
+						"box": [60, 180],
+						"range": [[0, 10], [0, 10]],
+						"title": "",
+						"labels": [],
+						"static": false,
+						"caption": "",
+						"backgroundImage": {
+							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1fc5dac526b7306a40d25308087f4d07d60df695",
+							"width": 60,
+							"height": 180
+						}
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "block"
+				},
+				"image 2": {
+					"type": "image",
+					"graded": true,
+					"static": false,
+					"options": {
+						"alt": "One pink dot.",
+						"box": [60, 120],
+						"range": [[0, 10], [0, 10]],
+						"title": "",
+						"labels": [],
+						"static": false,
+						"caption": "",
+						"backgroundImage": {
+							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a17e5738f818bedb26fadd0a074ea7766b6de2fb",
+							"width": 60,
+							"height": 120
+						}
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "block"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "There are $\\blueE{3}$ blue dots. There is $\\maroonE{1}$ pink dot.",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "There are a total of $4$ dots.", "replace": false, "widgets": {} }
+	],
+	"question": {
+		"images": {},
+		"content": "**Solve.**\n\n[[☃ numeric-input 1]] $= \\blueE{3} + \\maroonE{1}$ ",
+		"widgets": {
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{ "value": 4, "status": "correct", "strict": false, "message": "", "maxError": 0, "simplify": true }
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false,
+		"periodicTableWithKey": false,
+		"financialCalculatorTotalAmount": false,
+		"financialCalculatorTimeToPayOff": false,
+		"financialCalculatorMonthlyPayment": false
+	},
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
