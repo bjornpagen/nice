@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  REASON FOR USING A CUSTOM SVG IMAGE:
+  The original Perseus item uses a 'graphie' asset, which is not a single static image. The asset
+  is a set of instructions for a renderer that dynamically draws the visual subtraction problem.
+  A standard QTI <img> tag cannot execute these instructions, and linking to the graphie URL would
+  result in an incomplete or blank image. To ensure the visual information is accurately and reliably
+  displayed in a standard QTI format, a complete, static SVG of the problem has been generated
+  and embedded as a data URI.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="visual-subtraction-5-minus-1"
+    title="Visual Subtraction"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>4</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <qti-prompt>Solve.</qti-prompt>
+        <div id="reference_text" style="display: flex; align-items: center; gap: 10px;">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='80'%3E%3Cdefs%3E%3Cstyle%3E .dot %7B fill: %236495ED; %7D .cross %7B stroke: red; stroke-width: 5; %7D .eq %7B font-size: 50px; font-family: sans-serif; %7D %3C/style%3E%3C/defs%3E%3C!-- 5 dots --%3E%3Ccircle class='dot' cx='40' cy='40' r='30'/%3E%3Ccircle class='dot' cx='110' cy='40' r='30'/%3E%3Ccircle class='dot' cx='180' cy='40' r='30'/%3E%3Ccircle class='dot' cx='250' cy='40' r='30'/%3E%3Ccircle class='dot' cx='320' cy='40' r='30'/%3E%3C!-- Cross out 1 dot --%3E%3Cline class='cross' x1='290' y1='10' x2='350' y2='70'/%3E%3Cline class='cross' x1='290' y1='70' x2='350' y2='10'/%3E%3C!-- Equals sign --%3E%3Ctext class='eq' x='360' y='58'%3E=%3C/text%3E%3C/svg%3E"
+                 alt="Five blue dots are shown. The last dot is crossed out with a red X. An equals sign follows the dots."
+                 width="400"
+                 height="80"/>
+            <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="2"/>
+        </div>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn><mo>-</mo><mn>1</mn><mo>=</mo><mn>4</mn></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> There are 5 dots to start with, and 1 is crossed out. That leaves 4 dots.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>

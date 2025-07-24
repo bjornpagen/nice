@@ -1,0 +1,62 @@
+{
+	"hints": [
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/c21d61d13b6670a95361b4e19bfac0385a97b22b": {
+					"width": 90,
+					"height": 150
+				}
+			},
+			"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/c21d61d13b6670a95361b4e19bfac0385a97b22b)",
+			"replace": true,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/2c94688cfd7267a2b33710899cc59bb437219c38": {
+					"width": 90,
+					"height": 150
+				}
+			},
+			"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/2c94688cfd7267a2b33710899cc59bb437219c38)",
+			"replace": true,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "We began with $\\blue{5}$ dots and crossed out $\\red{1}$ of them.",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "We are left with $4$ dots.", "replace": false, "widgets": {} }
+	],
+	"question": {
+		"images": {
+			"web+graphie://cdn.kastatic.org/ka-perseus-graphie/3e30b585a86d80745851c5721fa7577cb9f236e3": {
+				"width": 480,
+				"height": 80
+			}
+		},
+		"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/3e30b585a86d80745851c5721fa7577cb9f236e3)\n\n[[☃ numeric-input 1]]",
+		"widgets": {
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{ "value": 4, "status": "correct", "strict": false, "message": "", "maxError": 0, "simplify": "optional" }
+					],
+					"labelText": "",
+					"coefficient": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}

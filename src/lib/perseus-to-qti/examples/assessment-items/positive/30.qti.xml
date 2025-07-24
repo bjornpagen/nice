@@ -1,58 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This QTI XML has been refactored from a Perseus 'orderer' (drag-and-drop) item to a 'choiceInteraction'.
+
+  REASON FOR THE CHANGE:
+  Interactive item types like drag-and-drop can have inconsistent support across different QTI platforms.
+  To ensure maximum reliability, the assessment has been converted to a multiple-choice question.
+
+  THE NEW APPROACH:
+  The core skill (counting a quantity of 5) is assessed by asking the user to *select* the box
+  that correctly contains 5 apples. Each choice is constructed using standard HTML <div> and <img> tags
+  with inline CSS for styling, avoiding the use of complex SVGs for layout.
+-->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
-    identifier="counting-apples-drag-and-drop"
-    title="Counting Apples by Dragging"
+    identifier="count-apples-mc-div-version"
+    title="Count the apples"
     time-dependent="false"
     xml:lang="en-US">
 
-    <qti-response-declaration identifier="RESPONSE" cardinality="multiple" base-type="directedPair"/>
-    
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>CHOICE_5</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value>
             <qti-value>0</qti-value>
         </qti-default-value>
     </qti-outcome-declaration>
-    
     <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <qti-graphic-gap-match-interaction response-identifier="RESPONSE" class="qti-choices-bottom" max-associations="5">
-            <qti-prompt><span class="qti-keyword-emphasis">Put 5 apples in the box.</span></qti-prompt>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
+            <qti-prompt>Which box has 5 apples?</qti-prompt>
             
-            <!-- 
-              This <img> is required by the QTI spec to define the coordinate space for the hotspots.
-              A Data URI for a transparent image is used to make the stage invisible but keep the drop zones functional.
-            -->
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250'%3E%3C/svg%3E" width="400" height="250" alt=""/>
+            <qti-simple-choice identifier="CHOICE_3">
+                <div style="border: 2px solid black; padding: 10px; width: 250px; min-height: 120px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px;">
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                </div>
+            </qti-simple-choice>
             
-            <!-- Source objects (draggable apples). We provide more than 5 to create a choice. -->
-            <qti-gap-img identifier="APPLE1" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/></qti-gap-img>
-            <qti-gap-img identifier="APPLE2" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/></qti-gap-img>
-            <qti-gap-img identifier="APPLE3" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/></qti-gap-img>
-            <qti-gap-img identifier="APPLE4" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/></qti-gap-img>
-            <qti-gap-img identifier="APPLE5" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/></qti-gap-img>
-            <qti-gap-img identifier="APPLE6" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/></qti-gap-img>
-            <qti-gap-img identifier="APPLE7" match-max="1"><img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/></qti-gap-img>
-            
-            <!-- Target hotspots inside the box. These are invisible drop zones. -->
-            <qti-associable-hotspot identifier="TARGET1" shape="rect" coords="50,50,110,110" match-max="1"/>
-            <qti-associable-hotspot identifier="TARGET2" shape="rect" coords="120,50,180,110" match-max="1"/>
-            <qti-associable-hotspot identifier="TARGET3" shape="rect" coords="190,50,250,110" match-max="1"/>
-            <qti-associable-hotspot identifier="TARGET4" shape="rect" coords="260,50,320,110" match-max="1"/>
-            <qti-associable-hotspot identifier="TARGET5" shape="rect" coords="150,120,210,180" match-max="1"/>
-        </qti-graphic-gap-match-interaction>
+            <qti-simple-choice identifier="CHOICE_4">
+                <div style="border: 2px solid black; padding: 10px; width: 250px; min-height: 120px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px;">
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                </div>
+            </qti-simple-choice>
+
+            <qti-simple-choice identifier="CHOICE_5">
+                <div style="border: 2px solid black; padding: 10px; width: 250px; min-height: 120px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px;">
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                </div>
+            </qti-simple-choice>
+
+            <qti-simple-choice identifier="CHOICE_6">
+                <div style="border: 2px solid black; padding: 10px; width: 250px; min-height: 120px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px;">
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/28f4953f6bb142014453203d2231872d7327437b.png" width="50" height="50" alt="An apple."/>
+                </div>
+            </qti-simple-choice>
+
+        </qti-choice-interaction>
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><span class="qti-keyword-emphasis">Correct!</span> You put 5 apples in the box.</p>
+                <p><span class="qti-keyword-emphasis">Great job!</span> That box has exactly five apples.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><span class="qti-keyword-emphasis">Not quite.</span> Make sure there are exactly 5 apples in the box.</p>
+                <p><span class="qti-keyword-emphasis">Try again.</span> Count the apples in each box to find the one with exactly five.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>
@@ -60,12 +92,10 @@
     <qti-response-processing>
         <qti-response-condition>
             <qti-response-if>
-                <qti-equal tolerance-mode="exact">
-                    <qti-count>
-                        <qti-variable identifier="RESPONSE"/>
-                    </qti-count>
-                    <qti-base-value base-type="integer">5</qti-base-value>
-                </qti-equal>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
                 <qti-set-outcome-value identifier="SCORE">
                     <qti-base-value base-type="float">1</qti-base-value>
                 </qti-set-outcome-value>
@@ -83,4 +113,5 @@
             </qti-response-else>
         </qti-response-condition>
     </qti-response-processing>
+
 </qti-assessment-item>
