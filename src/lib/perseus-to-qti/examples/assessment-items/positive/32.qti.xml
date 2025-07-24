@@ -34,12 +34,12 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> You have arranged the cards as 708 > 79, which is a true comparison.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> You have arranged the cards as 708 > 79, which is a true comparison.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Make sure the largest number is on the left and the symbol correctly represents the relationship.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Make sure the largest number is on the left and the symbol correctly represents the relationship.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

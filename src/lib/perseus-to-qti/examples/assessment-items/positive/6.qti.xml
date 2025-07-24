@@ -14,7 +14,6 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value>
             <qti-value>0</qti-value>
@@ -161,12 +160,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> Cross-price elasticity of demand measures how the quantity demanded of one good (<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math>) responds to changes in the price of another good (<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math>). The formula shows the percentage change in quantity of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> divided by the percentage change in price of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math>.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> Cross-price elasticity of demand measures how the quantity demanded of one good (<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math>) responds to changes in the price of another good (<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math>). The formula shows the percentage change in quantity of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> divided by the percentage change in price of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math>.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Remember that cross-price elasticity measures how one good's quantity responds to another good's price change. Look for the formula that has the quantity of good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> in the numerator and the price of good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math> in the denominator.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember that cross-price elasticity measures how one good's quantity responds to another good's price change. Look for the formula that has the quantity of good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi></math> in the numerator and the price of good <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>Y</mi></math> in the denominator.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

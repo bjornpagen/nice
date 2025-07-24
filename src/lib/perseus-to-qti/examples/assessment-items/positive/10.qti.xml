@@ -14,7 +14,6 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value>
             <qti-value>0</qti-value>
@@ -26,10 +25,10 @@
     <qti-item-body>
         <p>Before answering the question, read the following excerpt.</p>
         <div id="reference_text">
-            <blockquote>
+            <div class="qti-well">
                 <p>"In 1381, English peasants had their turn in a rebellion that spread through much of England and then to London, where King Richard II tricked and murdered its leaders. The other rebels were quickly dispersed and hunted down. Similar popular uprisings occurred - and were suppressed - in the Holy Roman Empire, Hungary, Norway, Finland, Sweden, Iberia and the Netherlands. Only one major revolt was successful. (...) Although most of these revolts were quickly put down, their message was not, it seems, entirely lost on the nobility. The English rebels had explicitly sought to end serfdom, and they had also questioned the social inequalities that were at the heart of aristocratic privilege. (...) These revolts, in other words, put the landed elite on notice, providing them with a good incentive to develop less exploitative methods of manorial management."</p>
-                <p><small>From Judith M. Bennett and C. Warren Hollister, <em>Medieval Europe: A Short History</em> (New York: McGraw Hill, 2006), 331-332.</small></p>
-            </blockquote>
+                <p><small>From Judith M. Bennett and C. Warren Hollister, <span class="qti-italic">Medieval Europe: A Short History</span> (New York: McGraw Hill, 2006), 331-332.</small></p>
+            </div>
         </div>
         
         <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
@@ -54,12 +53,12 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> The author claims that even though the revolts were militarily defeated, the ruling class heard the "message" and had an "incentive to develop less exploitative methods." Evidence of new laws improving the rights or conditions for peasants would directly support this claim.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The author claims that even though the revolts were militarily defeated, the ruling class heard the "message" and had an "incentive to develop less exploitative methods." Evidence of new laws improving the rights or conditions for peasants would directly support this claim.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> The author's central claim is that the revolts, despite failing, successfully frightened the nobility into making changes. To support this, you need to find evidence that shows a positive change for peasants <em>after</em> the failed revolts.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> The author's central claim is that the revolts, despite failing, successfully frightened the nobility into making changes. To support this, you need to find evidence that shows a positive change for peasants <span class="qti-italic">after</span> the failed revolts.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

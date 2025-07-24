@@ -15,7 +15,6 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value>
             <qti-value>0</qti-value>
@@ -58,12 +57,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Excellent!</strong> You correctly identified the two reasons directly stated in the text: habitat loss due to human expansion and hunting by farmers to protect livestock.</p>
+                <p><span class="qti-keyword-emphasis">Excellent!</span> You correctly identified the two reasons directly stated in the text: habitat loss due to human expansion and hunting by farmers to protect livestock.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Reread the first paragraph carefully. The author explicitly lists three reasons for the decline in the lion population. Your two choices must match the reasons given in the text.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Reread the first paragraph carefully. The author explicitly lists three reasons for the decline in the lion population. Your two choices must match the reasons given in the text.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

@@ -22,6 +22,11 @@
         </qti-correct-response>
     </qti-response-declaration>
 
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
     <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
     <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
@@ -50,16 +55,39 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> The rectangle is arranged in 6 rows and 2 columns, making 12 equal squares in total.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The rectangle is arranged in 6 rows and 2 columns, making 12 equal squares in total.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> In an arrangement of 12 equal squares, 6 rows and 2 columns are needed to form the rectangle.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> In an arrangement of 12 equal squares, 6 rows and 2 columns are needed to form the rectangle.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>
 
-    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
 
 </qti-assessment-item>

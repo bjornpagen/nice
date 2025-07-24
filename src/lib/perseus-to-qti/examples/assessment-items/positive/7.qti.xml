@@ -14,7 +14,6 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value>
             <qti-value>0</qti-value>
@@ -52,12 +51,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> Layer A is the youngest. According to the principle of superposition, in undisturbed sedimentary rock layers, the oldest layers are at the bottom and the youngest are at the top. Each layer was deposited on top of the layer below it.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> Layer A is the youngest. According to the principle of superposition, in undisturbed sedimentary rock layers, the oldest layers are at the bottom and the youngest are at the top. Each layer was deposited on top of the layer below it.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Think about how rock layers form. New sediment is deposited on top of existing layers. In undisturbed rock formations, this means the youngest layer will always be at the top (layer A) and the oldest at the bottom (layer D).</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Think about how rock layers form. New sediment is deposited on top of existing layers. In undisturbed rock formations, this means the youngest layer will always be at the top (layer A) and the oldest at the bottom (layer D).</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

@@ -14,7 +14,6 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value>
             <qti-value>0</qti-value>
@@ -29,25 +28,25 @@
                 <thead>
                     <tr>
                         <th>Final exam</th>
-                        <th style="text-align:center;">Score on a <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math>-point scale</th>
+                        <th class="qti-align-center">Score on a <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math>-point scale</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Astronomy</td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math></td>
                     </tr>
                     <tr>
                         <td>Biology</td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math></td>
                     </tr>
                     <tr>
                         <td>Physics</td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math></td>
                     </tr>
                     <tr>
                         <td>Chemistry</td>
-                        <td style="text-align:center;">?</td>
+                        <td class="qti-align-center">?</td>
                     </tr>
                 </tbody>
             </table>
@@ -61,12 +60,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> Haruka scored <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>87</mn></math> points on her chemistry exam.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> Haruka scored <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>87</mn></math> points on her chemistry exam.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> To find the missing score, use the formula for mean:</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> To find the missing score, use the formula for mean:</p>
                 <p>Mean = (Sum of all scores) ÷ (Number of scores)</p>
                 <ol>
                     <li>Calculate the total points: Mean × Number of exams = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn><mo>×</mo><mn>4</mn><mo>=</mo><mn>336</mn></math> points</li>

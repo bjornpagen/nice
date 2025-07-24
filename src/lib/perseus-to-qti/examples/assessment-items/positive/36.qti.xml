@@ -52,12 +52,12 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> The shape is a quadrilateral because it is a closed polygon with exactly 4 sides. It is not a rhombus or a square because its sides are not all equal in length.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The shape is a quadrilateral because it is a closed polygon with exactly 4 sides. It is not a rhombus or a square because its sides are not all equal in length.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Remember the definitions: A quadrilateral has 4 sides. A rhombus has 4 equal sides. A square has 4 equal sides and 4 right angles. This shape only meets the definition of a quadrilateral.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember the definitions: A quadrilateral has 4 sides. A rhombus has 4 equal sides. A square has 4 equal sides and 4 right angles. This shape only meets the definition of a quadrilateral.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

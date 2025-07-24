@@ -37,7 +37,7 @@
         
         <qti-prompt>At this rate, how much of his shirt does he iron each minute?</qti-prompt>
         
-        <p><em>Enter an exact answer, without rounding.</em></p>
+        <p><span class="qti-italic">Enter an exact answer, without rounding.</span></p>
 
         <div>
             <p>Your answer should be a simplified fraction.</p>
@@ -53,12 +53,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> Brian irons <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>5</mn><mn>81</mn></mfrac></math> of his shirt each minute.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> Brian irons <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>5</mn><mn>81</mn></mfrac></math> of his shirt each minute.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> To find the rate per minute:</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> To find the rate per minute:</p>
                 <ol>
                     <li>Divide shirts by minutes: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>9</mn></mfrac><mo>÷</mo><mrow><mn>3</mn><mfrac><mn>3</mn><mn>5</mn></mfrac></mrow></math></li>
                     <li>Convert the mixed number: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mfrac><mn>3</mn><mn>5</mn></mfrac><mo>=</mo><mfrac><mn>18</mn><mn>5</mn></mfrac></math></li>

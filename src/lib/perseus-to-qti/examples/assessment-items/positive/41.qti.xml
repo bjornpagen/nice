@@ -54,15 +54,15 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Excellent!</strong> You correctly identified the number line and calculated the total number of awards.</p>
+                <p><span class="qti-keyword-emphasis">Excellent!</span> You correctly identified the number line and calculated the total number of awards.</p>
                 <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>30</mn><mo>+</mo><mn>11</mn><mo>+</mo><mn>36</mn><mo>+</mo><mn>18</mn><mo>=</mo><mn>95</mn></math>.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Let's add up the awards step-by-step.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Let's add up the awards step-by-step.</p>
                 <ol>
-                    <li>She started with <strong>30</strong> awards.</li>
+                    <li>She started with <span class="qti-keyword-emphasis">30</span> awards.</li>
                     <li>Then gave 11 more: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>30</mn><mo>+</mo><mn>11</mn><mo>=</mo><mn>41</mn></math>.</li>
                     <li>Then gave 36 more: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>41</mn><mo>+</mo><mn>36</mn><mo>=</mo><mn>77</mn></math>.</li>
                     <li>Finally, she gave 18 more: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>77</mn><mo>+</mo><mn>18</mn><mo>=</mo><mn>95</mn></math>.</li>

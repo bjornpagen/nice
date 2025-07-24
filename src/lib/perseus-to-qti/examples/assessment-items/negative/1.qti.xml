@@ -21,6 +21,11 @@
         </qti-correct-response>
     </qti-response-declaration>
 
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
     <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
     <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
@@ -47,16 +52,39 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> Olaf adds 5 to 365 to get <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>370</mn></math>, then adds 5 to get <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>375</mn></math>.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> Olaf adds 5 to 365 to get <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>370</mn></math>, then adds 5 to get <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>375</mn></math>.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Remember, skip counting by fives means you keep adding 5 to each previous number, so the next numbers are 370 and 375.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember, skip counting by fives means you keep adding 5 to each previous number, so the next numbers are 370 and 375.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>
 
-    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
 
 </qti-assessment-item>

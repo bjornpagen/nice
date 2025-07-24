@@ -14,7 +14,6 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value>
             <qti-value>0</qti-value>
@@ -46,12 +45,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> During Era 3 (6,000 BCE to 700 CE), societies participated in regional trade networks. Major networks emerged in Afro-Eurasia and Mesoamerica, connecting neighboring societies but not yet spanning the globe.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> During Era 3 (6,000 BCE to 700 CE), societies participated in regional trade networks. Major networks emerged in Afro-Eurasia and Mesoamerica, connecting neighboring societies but not yet spanning the globe.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Think about the scale of trade during this early era. While trade was expanding beyond purely local exchanges, it had not yet reached a global scale. Regional networks connected neighboring societies, particularly in Afro-Eurasia and Mesoamerica.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Think about the scale of trade during this early era. While trade was expanding beyond purely local exchanges, it had not yet reached a global scale. Regional networks connected neighboring societies, particularly in Afro-Eurasia and Mesoamerica.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

@@ -23,7 +23,7 @@
     <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <p><em>The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</em></p>
+        <p><span class="qti-italic">The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</span></p>
         <div id="reference_text">
             <table>
                 <thead>
@@ -93,12 +93,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> 2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> 2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> A trough occurs at the bottom of a recession, when GDP stops falling and starts growing again. Notice that GDP fell in 2015 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>) and 2016 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>), then rose in 2017 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>+</mo><mn>2</mn><mo>%</mo></math>). This makes 2016 the trough year.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> A trough occurs at the bottom of a recession, when GDP stops falling and starts growing again. Notice that GDP fell in 2015 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>) and 2016 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>), then rose in 2017 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>+</mo><mn>2</mn><mo>%</mo></math>). This makes 2016 the trough year.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

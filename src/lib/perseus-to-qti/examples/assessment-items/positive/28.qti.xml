@@ -27,22 +27,22 @@
             <table>
                 <tbody>
                     <tr>
-                        <td style="text-align:left;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>8</mn></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6</mn></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>3</mn></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math></td>
+                        <td class="qti-align-left"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>8</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>3</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math></td>
                     </tr>
                     <tr>
-                        <td style="text-align:left;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>30</mn></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>29</mn></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>36</mn></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>20</mn></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>35</mn></math></td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>47</mn></math></td>
+                        <td class="qti-align-left"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>30</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>29</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>36</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>20</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>35</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>47</mn></math></td>
                     </tr>
                 </tbody>
             </table>
@@ -70,12 +70,12 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> The best estimate for <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math> is the average rate of change of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math> over the narrowest interval containing <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math> that can be formed from the table. This interval is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>6</mn><mo>,</mo><mo>-</mo><mn>3</mn><mo>]</mo></math>. The average rate of change is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>3</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>20</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>36</mn><mo>)</mo></mrow><mn>3</mn></mfrac><mo>=</mo><mfrac><mn>16</mn><mn>3</mn></mfrac><mo>≈</mo><mn>5.33</mn></math>.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The best estimate for <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math> is the average rate of change of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math> over the narrowest interval containing <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math> that can be formed from the table. This interval is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>6</mn><mo>,</mo><mo>-</mo><mn>3</mn><mo>]</mo></math>. The average rate of change is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>3</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>20</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>36</mn><mo>)</mo></mrow><mn>3</mn></mfrac><mo>=</mo><mfrac><mn>16</mn><mn>3</mn></mfrac><mo>≈</mo><mn>5.33</mn></math>.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> To estimate the derivative <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math>, you should calculate the average rate of change over the smallest interval that contains <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>. Looking at the table, the points closest to <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>4</mn></math> are <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>6</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>3</mn></math>. The average rate of change is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>3</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>20</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>36</mn><mo>)</mo></mrow><mn>3</mn></mfrac><mo>=</mo><mfrac><mn>16</mn><mn>3</mn></mfrac><mo>≈</mo><mn>5.33</mn></math>.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> To estimate the derivative <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math>, you should calculate the average rate of change over the smallest interval that contains <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>. Looking at the table, the points closest to <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>4</mn></math> are <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>6</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>3</mn></math>. The average rate of change is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>3</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>20</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>36</mn><mo>)</mo></mrow><mn>3</mn></mfrac><mo>=</mo><mfrac><mn>16</mn><mn>3</mn></mfrac><mo>≈</mo><mn>5.33</mn></math>.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

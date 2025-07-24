@@ -14,7 +14,6 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value>
             <qti-value>0</qti-value>
@@ -24,11 +23,11 @@
     <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <p>This is an excerpt from the Court's opinion in <em>Bostock v. Clayton County</em> (2020).</p>
+        <p>This is an excerpt from the Court's opinion in <span class="qti-italic">Bostock v. Clayton County</span> (2020).</p>
         <div id="reference_text">
-            <blockquote>
+            <div class="qti-well">
                 <p>Ours is a society of written laws. Judges are not free to overlook plain <abbr title="relating to, created by, or regulated by a statue or law">statutory</abbr> commands on the strength of nothing more than suppositions about intentions or guesswork about expectations. In Title VII, Congress adopted broad language making it illegal for an employer to rely on an employee's sex when deciding to fire that employee.  We do not hesitate to recognize today a necessary consequence of that legislative choice: An employer who fires an individual merely for being gay or transgender defies the law.</p>
-            </blockquote>
+            </div>
         </div>
         <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
             <qti-prompt>What method of constitutional interpretation did Justice Gorsuch use in this opinion?</qti-prompt>
@@ -52,12 +51,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> Justice Gorsuch used prudential interpretation, considering the practical consequences of the Court's decision. By extending Title VII protections to LGBTQ+ employees, the Court acknowledged how societal understanding has evolved while applying the law's plain language to modern circumstances.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> Justice Gorsuch used prudential interpretation, considering the practical consequences of the Court's decision. By extending Title VII protections to LGBTQ+ employees, the Court acknowledged how societal understanding has evolved while applying the law's plain language to modern circumstances.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Look at how Justice Gorsuch focuses on the "necessary consequence" of applying Title VII's language. He's not examining history, precedent, or constitutional structure, but rather considering the practical impact of interpreting the law's "broad language" in today's context.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Look at how Justice Gorsuch focuses on the "necessary consequence" of applying Title VII's language. He's not examining history, precedent, or constitutional structure, but rather considering the practical impact of interpreting the law's "broad language" in today's context.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

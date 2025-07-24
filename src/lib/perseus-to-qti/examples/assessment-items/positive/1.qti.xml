@@ -48,12 +48,12 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> A typical bowl of soup holds about <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cups. Three quarts would be the volume of a large pot, not a single serving.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> A typical bowl of soup holds about <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cups. Three quarts would be the volume of a large pot, not a single serving.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Think about the size of common liquid containers. A cup is like a juice box, while a quart is like a large shampoo bottle. A bowl of soup is much closer in volume to <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> juice boxes than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> large shampoo bottles.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Think about the size of common liquid containers. A cup is like a juice box, while a quart is like a large shampoo bottle. A bowl of soup is much closer in volume to <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> juice boxes than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> large shampoo bottles.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

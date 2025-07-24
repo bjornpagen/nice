@@ -38,12 +38,12 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> The bar for the Lions goes up to the line for 14, so they won 14 games.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The bar for the Lions goes up to the line for 14, so they won 14 games.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> To find the number of games the Lions won, first find the "Lions" label on the horizontal axis. Then, follow that bar up to the top. The number on the vertical axis that aligns with the top of the bar is the answer. The Lions' bar reaches the line for 14 games.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> To find the number of games the Lions won, first find the "Lions" label on the horizontal axis. Then, follow that bar up to the top. The number on the vertical axis that aligns with the top of the bar is the answer. The Lions' bar reaches the line for 14 games.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

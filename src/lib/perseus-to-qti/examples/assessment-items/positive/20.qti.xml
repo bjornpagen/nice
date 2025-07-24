@@ -49,12 +49,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> The vertex at <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mo>-</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>)</mo></math> is the highest point on this downward-opening parabola, where the graph changes from increasing to decreasing.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The vertex at <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mo>-</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>)</mo></math> is the highest point on this downward-opening parabola, where the graph changes from increasing to decreasing.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> The vertex of a parabola is its turning point—the highest point for a downward-opening parabola or the lowest point for an upward-opening parabola. For this downward-opening parabola, look for the highest point, which is at <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mo>-</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>)</mo></math>.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> The vertex of a parabola is its turning point—the highest point for a downward-opening parabola or the lowest point for an upward-opening parabola. For this downward-opening parabola, look for the highest point, which is at <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mo>-</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>)</mo></math>.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

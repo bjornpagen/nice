@@ -15,7 +15,6 @@
         </qti-correct-response>
     </qti-response-declaration>
 
-
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value>
             <qti-value>0</qti-value>
@@ -53,9 +52,8 @@
                 <li>Many of these islands are doing their part to fight climate change. For example, the island nation of Tuvalu has committed to a serious green energy plan for its population. The Marshall Islands use a wind-powered cargo ship to move between their ports.</li>
                 <li>To be fair, green shipping corridors must be expanded and they must include everyone. After all, climate change affects everyone, and so this is a battle we must fight together.</li>
             </ol>
-            <hr/>
             <p>A cargo ship engineer wants to make the following argument:</p>
-            <blockquote><p><strong>Green shipping corridors are already possible with current technology.</strong></p></blockquote>
+            <div class="qti-well"><p><span class="qti-keyword-emphasis">Green shipping corridors are already possible with current technology.</span></p></div>
         </div>
         <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="2">
             <qti-prompt>Which two pieces of evidence from the text would best support their argument?</qti-prompt>
@@ -86,12 +84,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Excellent!</strong> You identified the two best pieces of evidence showing that green shipping technology already exists: the 2023 green cargo ship powered by food waste fuel and the Marshall Islands' current use of wind-powered cargo ships.</p>
+                <p><span class="qti-keyword-emphasis">Excellent!</span> You identified the two best pieces of evidence showing that green shipping technology already exists: the 2023 green cargo ship powered by food waste fuel and the Marshall Islands' current use of wind-powered cargo ships.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Look for evidence that shows green shipping technology is already in use, not statements about problems or theoretical possibilities. The engineer wants to prove this technology exists now, so find examples of actual green ships currently operating.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Look for evidence that shows green shipping technology is already in use, not statements about problems or theoretical possibilities. The engineer wants to prove this technology exists now, so find examples of actual green ships currently operating.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

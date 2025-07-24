@@ -25,7 +25,7 @@
 
     <qti-item-body>
         <div id="reference_text">
-            <blockquote><strong>Holly</strong> injured her rear on a spiky cactus.</blockquote>
+            <div class="qti-well"><span class="qti-keyword-emphasis">Holly</span> injured her rear on a spiky cactus.</div>
         </div>
         
         <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
@@ -42,12 +42,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> "Holly" is the subject of the sentence. The subject tells us who or what is performing the action. The rest of the sentence, "injured her rear on a spiky cactus," is the predicate.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> "Holly" is the subject of the sentence. The subject tells us who or what is performing the action. The rest of the sentence, "injured her rear on a spiky cactus," is the predicate.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Remember that a clause has two main parts: the subject (the main person or thing performing an action) and the predicate (the verb and everything that describes the action). Since the bolded part "Holly" tells us who is performing the action, it's the subject.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember that a clause has two main parts: the subject (the main person or thing performing an action) and the predicate (the verb and everything that describes the action). Since the bolded part "Holly" tells us who is performing the action, it's the subject.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

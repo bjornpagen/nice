@@ -49,12 +49,12 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> The data set {11, 8, 8, 3} has one 3, two 8s, and one 11. You chose the plot that shows this correctly.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The data set {11, 8, 8, 3} has one 3, two 8s, and one 11. You chose the plot that shows this correctly.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Count how many times each number appears in the list {11, 8, 8, 3}. There should be a dot on the plot for each pencil.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Count how many times each number appears in the list {11, 8, 8, 3}. There should be a dot on the plot for each pencil.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

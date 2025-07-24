@@ -48,12 +48,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> You identified the program with proper Python syntax: parentheses for the print function and quotation marks for the string.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> You identified the program with proper Python syntax: parentheses for the print function and quotation marks for the string.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> In Python, the print function requires: (1) parentheses around the content to print, and (2) quotation marks around strings. Only print("Python is fun!") has both correctly.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> In Python, the print function requires: (1) parentheses around the content to print, and (2) quotation marks around strings. Only print("Python is fun!") has both correctly.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

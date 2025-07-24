@@ -43,12 +43,12 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> The comparison <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>42</mn><mo>&lt;</mo><mn>411</mn></math> is true because 42 is less than 411.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The comparison <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>42</mn><mo>&lt;</mo><mn>411</mn></math> is true because 42 is less than 411.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Remember, 42 is less than 411, so the “less-than” symbol (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>) should point toward the smaller number.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember, 42 is less than 411, so the "less-than" symbol (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>) should point toward the smaller number.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

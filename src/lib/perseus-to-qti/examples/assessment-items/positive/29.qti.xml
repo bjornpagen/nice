@@ -59,12 +59,12 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> Producer surplus is the area above the supply curve and below the equilibrium price, from the y-axis out to the equilibrium quantity.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> Producer surplus is the area above the supply curve and below the equilibrium price, from the y-axis out to the equilibrium quantity.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Remember that producer surplus is the area representing the difference between what producers are willing to accept for a good and what they actually receive. On a graph, this is the area above the supply curve and below the market price, up to the quantity sold.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember that producer surplus is the area representing the difference between what producers are willing to accept for a good and what they actually receive. On a graph, this is the area above the supply curve and below the market price, up to the quantity sold.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

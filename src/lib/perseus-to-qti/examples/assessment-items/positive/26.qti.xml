@@ -29,33 +29,33 @@ xml:lang="en-US">
             <thead>
                 <tr>
                     <th>Age group</th>
-                    <th style="text-align:right;">Sprinkles</th>
-                    <th style="text-align:right;">Chocolate chips</th>
-                    <th style="text-align:right;">Neither</th>
-                    <th style="text-align:right;">Total</th>
+                    <th class="qti-align-right">Sprinkles</th>
+                    <th class="qti-align-right">Chocolate chips</th>
+                    <th class="qti-align-right">Neither</th>
+                    <th class="qti-align-right">Total</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Children</td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>27</mn></math></td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>38</mn></math></td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math></td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>27</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>38</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math></td>
                 </tr>
                 <tr>
                     <td>Adults</td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn></math></td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math></td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn></math></td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>48</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>48</mn></math></td>
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>40</mn></math></td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn></math></td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>20</mn></math></td>
-                    <td style="text-align:right;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>40</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>20</mn></math></td>
+                    <td class="qti-align-right"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn></math></td>
                 </tr>
             </tbody>
         </table>
@@ -79,13 +79,13 @@ xml:lang="en-US">
 
     <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
         <qti-content-body>
-            <p><strong>Correct!</strong> Jian misread the table, thinking there were <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn></math> children and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn></math> adults, which would result in equal-width columns.</p>
+            <p><span class="qti-keyword-emphasis">Correct!</span> Jian misread the table, thinking there were <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn></math> children and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn></math> adults, which would result in equal-width columns.</p>
             <p>Since there are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math> children (<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>60</mn><mo>%</mo></math> of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn></math>) and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>48</mn></math> adults (<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>40</mn><mo>%</mo></math> of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn></math>), the children column should be wider than the adults column. Additionally, within each column, the heights of the segments should be proportional to the topping preferences for that age group.</p>
         </qti-content-body>
     </qti-feedback-block>
     <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
         <qti-content-body>
-            <p><strong>Not quite.</strong> Remember, in a mosaic plot the width of each column represents the proportion of that category in the total sample.</p>
+            <p><span class="qti-keyword-emphasis">Not quite.</span> Remember, in a mosaic plot the width of each column represents the proportion of that category in the total sample.</p>
             <p>Look at the totals in the table: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math> children vs <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>48</mn></math> adults. This means children make up <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn><mo>/</mo><mn>120</mn><mo>=</mo><mn>60</mn><mo>%</mo></math> of the sample, while adults make up <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>48</mn><mo>/</mo><mn>120</mn><mo>=</mo><mn>40</mn><mo>%</mo></math>. The children column should be noticeably wider than the adults column.</p>
         </qti-content-body>
     </qti-feedback-block>

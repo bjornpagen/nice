@@ -22,7 +22,7 @@
     <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <p>Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.</p>
+        <p>Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <span class="qti-italic">negatively</span> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.</p>
         
         <p>
             <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -70,7 +70,7 @@
         </p>
 
         <qti-prompt>Use Stokes' theorem to rewrite the surface integral as a line integral.</qti-prompt>
-        <p><em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em></p>
+        <p><span class="qti-italic">Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</span></p>
         
         <p>
             <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -120,7 +120,7 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> The missing component is 
+                <p><span class="qti-keyword-emphasis">Correct!</span> The missing component is 
                 <math xmlns="http://www.w3.org/1998/Math/MathML">
                     <mrow>
                         <mfrac>
@@ -137,7 +137,7 @@
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Let's use Stokes' theorem to solve this.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Let's use Stokes' theorem to solve this.</p>
                 <p>Stokes' theorem states: 
                     <math xmlns="http://www.w3.org/1998/Math/MathML">
                         <mrow>

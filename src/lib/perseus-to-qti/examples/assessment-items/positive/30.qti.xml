@@ -20,7 +20,7 @@
 
     <qti-item-body>
         <qti-graphic-gap-match-interaction response-identifier="RESPONSE" class="qti-choices-bottom" max-associations="5">
-            <qti-prompt><strong>Put 5 apples in the box.</strong></qti-prompt>
+            <qti-prompt><span class="qti-keyword-emphasis">Put 5 apples in the box.</span></qti-prompt>
             
             <!-- 
               This <img> is required by the QTI spec to define the coordinate space for the hotspots.
@@ -47,12 +47,12 @@
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Correct!</strong> You put 5 apples in the box.</p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> You put 5 apples in the box.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Make sure there are exactly 5 apples in the box.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Make sure there are exactly 5 apples in the box.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

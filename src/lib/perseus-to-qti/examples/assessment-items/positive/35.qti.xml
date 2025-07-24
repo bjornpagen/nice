@@ -43,25 +43,25 @@
                 <thead>
                     <tr>
                         <th>Type of shape</th>
-                        <th style="text-align:center;">Number of shapes</th>
+                        <th class="qti-align-center">Number of shapes</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Triangles</td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math></td>
                     </tr>
                     <tr>
                         <td>Circles</td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math></td>
                     </tr>
                     <tr>
                         <td>Rectangles</td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math></td>
                     </tr>
                     <tr>
                         <td>Squares</td>
-                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math></td>
+                        <td class="qti-align-center"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math></td>
                     </tr>
                 </tbody>
             </table>
@@ -69,7 +69,7 @@
         
         <qti-prompt>Use the table to enter the number of shapes in the bin.</qti-prompt>
         
-        <div class="data-entry-grid">
+        <div>
             <p>Triangles: <qti-text-entry-interaction response-identifier="RESPONSE_TRIANGLES" expected-length="2"/></p>
             <p>Circles: <qti-text-entry-interaction response-identifier="RESPONSE_CIRCLES" expected-length="2"/></p>
             <p>Rectangles: <qti-text-entry-interaction response-identifier="RESPONSE_RECTANGLES" expected-length="2"/></p>
@@ -78,12 +78,12 @@
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Excellent!</strong> You entered all the correct numbers from the data table.</p>
+                <p><span class="qti-keyword-emphasis">Excellent!</span> You entered all the correct numbers from the data table.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><strong>Not quite.</strong> Check each number against the values in the table. The correct values are: Triangles: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>, Circles: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>, Rectangles: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>, and Squares: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Check each number against the values in the table. The correct values are: Triangles: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>, Circles: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>, Rectangles: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>, and Squares: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>
