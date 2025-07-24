@@ -267,8 +267,8 @@ const UserWriteSchema = z.object({
 	sourcedId: z.string(),
 	status: z.enum(["active", "tobedeleted"]).default("active"),
 	enabledUser: z.boolean(),
-	givenName: z.string(),
-	familyName: z.string(),
+	givenName: z.string().min(0), // Allow empty strings for names
+	familyName: z.string().min(0), // Allow empty strings for names
 	email: z.string().email().nullable().optional(),
 	roles: z
 		.array(

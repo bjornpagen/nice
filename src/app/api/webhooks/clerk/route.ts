@@ -160,29 +160,18 @@ export async function POST(req: Request) {
 			logger.info("user not found in oneroster, creating a new one", { userId: clerkId, emailAddress })
 			const newSourcedId = randomUUID()
 
-			// CRITICAL: Ensure we have valid names. No fallbacks like `firstName || nickname`.
-			// If `first_name` is an empty string, it means it's genuinely missing from Clerk.
-			if (first_name === "") {
-				logger.error("CRITICAL: Cannot create OneRoster user without first name", {
-					userId: clerkId
-				})
-				// This is a critical failure. We must stop here.
-				return new Response("Error occurred -- missing first name for OneRoster user", { status: 400 })
-			}
-
+			// Pass names as-is from Clerk (including empty strings)
+			// The OneRoster API can handle empty names
 			const givenName = first_name
-
-			// CRITICAL: Ensure family name. No fallbacks like `lastName || familyNameFromEmail`.
-			// `last_name` is guaranteed to be a string (possibly empty) by the Zod schema.
-			if (last_name === "") {
-				logger.error("CRITICAL: Cannot create OneRoster user without last name", {
-					userId: clerkId
-				})
-				// This is a critical failure. We must stop here.
-				return new Response("Error occurred -- missing last name for OneRoster user", { status: 400 })
-			}
-
 			const familyName = last_name
+
+			logger.debug("creating oneroster user with names", {
+				userId: clerkId,
+				givenName,
+				familyName,
+				hasGivenName: Boolean(first_name),
+				hasFamilyName: Boolean(last_name)
+			})
 
 			const newUserPayload = {
 				sourcedId: newSourcedId,
