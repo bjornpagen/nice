@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="kids-at-locations-table"
+    title="Number of Kids at Different Locations"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration base-type="integer" cardinality="single" identifier="RESPONSE">
+        <qti-correct-response>
+            <qti-value>9</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>Groups of kids are at the park, pool, or beach.</p>
+        <p>The table below shows how many kids are at each place.</p>
+        
+        <div id="reference_text">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Place</th>
+                        <th style="text-align:center;">Number of Kids</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Park</td>
+                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td>Pool</td>
+                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math></td>
+                    </tr>
+                    <tr>
+                        <td>Beach</td>
+                        <td style="text-align:center;"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn></math></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <qti-prompt>How many kids are at the park?</qti-prompt>
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="2"/> kids
+        </p>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Correct!</strong> According to the table, there are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math> kids at the park.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><strong>Not quite.</strong> Find the "Park" row in the table and read the number in the "Number of Kids" column next to it.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing template="https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct"/>
+
+</qti-assessment-item>
