@@ -1,6 +1,12 @@
+import { currentUser } from "@clerk/nextjs/server"
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchCourseChallengePage_LayoutData, fetchCourseChallengePage_TestData } from "@/lib/data/assessment"
+import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
+import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types/page"
+import type { Course as CourseV2 } from "@/lib/v2/types"
 import { TestContent } from "./components/test-content"
 import { TestLayout } from "./components/test-layout"
 
@@ -12,8 +18,137 @@ export default function CourseChallengePage({
 	const layoutDataPromise: Promise<CourseChallengeLayoutData> = params.then(fetchCourseChallengePage_LayoutData)
 	const testDataPromise: Promise<CourseChallengePageData> = params.then(fetchCourseChallengePage_TestData)
 
+	// Transform CourseChallengeLayoutData to CourseV2 format for the practice sidebar
+	const coursePromise: Promise<CourseV2 | undefined> = layoutDataPromise.then((courseData) => {
+		// Convert the course data to V2 format
+		const courseV2: CourseV2 = {
+			id: courseData.course.id,
+			slug: courseData.course.path.split("/").pop() || "",
+			path: courseData.course.path,
+			type: "Course" as const,
+			title: courseData.course.title,
+			description: courseData.course.description,
+
+			// Convert units to V2 format
+			units: courseData.course.units.map((unit) => ({
+				id: unit.id,
+				slug: unit.slug,
+				path: unit.path,
+				type: "Unit" as const,
+				title: unit.title,
+				description: unit.description,
+
+				// Convert lessons
+				lessons: unit.children
+					.filter((child) => child.type === "Lesson")
+					.map((lesson) => ({
+						id: lesson.id,
+						slug: lesson.slug,
+						path: lesson.path,
+						type: "Lesson" as const,
+						title: lesson.title,
+
+						// Convert lesson resources
+						resources: lesson.children.map((resource) => {
+							const baseResource = {
+								id: resource.id,
+								slug: resource.slug,
+								path: resource.path,
+								title: resource.title
+							}
+
+							if (resource.type === "Article") {
+								return {
+									...baseResource,
+									type: "Article" as const,
+									data: {}
+								}
+							}
+							if (resource.type === "Exercise") {
+								return {
+									...baseResource,
+									type: "Exercise" as const,
+									data: { questions: [] }
+								}
+							}
+							return {
+								...baseResource,
+								type: "Video" as const,
+								data: {}
+							}
+						})
+					})),
+
+				// Convert unit-level assessments (quizzes, unit tests)
+				resources: unit.children
+					.filter((child) => child.type === "Quiz" || child.type === "UnitTest")
+					.map((assessment) => {
+						// Find the last lesson in this unit to construct correct path
+						const lessons = unit.children.filter((child) => child.type === "Lesson")
+						const lastLesson = lessons[lessons.length - 1]
+
+						// Construct the correct path: unit/lastLesson/quiz|test/slug
+						const pathSegment = assessment.type === "Quiz" ? "quiz" : "test"
+						const correctPath = lastLesson
+							? `${unit.path}/${lastLesson.slug}/${pathSegment}/${assessment.slug}`
+							: assessment.path
+
+						if (assessment.type === "Quiz") {
+							return {
+								id: assessment.id,
+								slug: assessment.slug,
+								path: correctPath,
+								type: "Quiz" as const,
+								title: assessment.title,
+								data: { questions: [] }
+							}
+						}
+						return {
+							id: assessment.id,
+							slug: assessment.slug,
+							path: correctPath,
+							type: "UnitTest" as const,
+							title: assessment.title,
+							data: { questions: [] }
+						}
+					})
+			})),
+
+			// Convert course challenges
+			resources: courseData.challenges.map((challenge) => ({
+				id: challenge.id,
+				slug: challenge.slug,
+				path: challenge.path,
+				type: "CourseChallenge" as const,
+				title: challenge.title,
+				data: { questions: [] }
+			}))
+		}
+
+		return courseV2
+	})
+
+	// Get progress data
+	const progressPromise: Promise<Map<string, AssessmentProgress>> = layoutDataPromise.then(async (courseData) => {
+		const user = await currentUser()
+		if (user) {
+			const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
+			if (publicMetadataResult.error) {
+				logger.warn("invalid user public metadata, cannot fetch progress", {
+					userId: user.id,
+					error: publicMetadataResult.error
+				})
+				return new Map<string, AssessmentProgress>()
+			}
+			if (publicMetadataResult.data.sourceId) {
+				return getUserUnitProgress(publicMetadataResult.data.sourceId, courseData.course.id)
+			}
+		}
+		return new Map<string, AssessmentProgress>()
+	})
+
 	return (
-		<TestLayout courseDataPromise={layoutDataPromise}>
+		<TestLayout coursePromise={coursePromise} progressPromise={progressPromise}>
 			<React.Suspense fallback={<div className="p-8">Loading course challenge...</div>}>
 				<TestContent testDataPromise={testDataPromise} />
 			</React.Suspense>
