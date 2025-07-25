@@ -486,7 +486,27 @@ export class Client {
 			})
 
 			// Check for JWT expiration
-			if (response.status === 401 && text.toLowerCase().includes("jwt expired")) {
+			let isJwtExpired = false
+			if (response.status === 401) {
+				// Try to parse as JSON to check imsx_description field
+				const jsonParseResult = errors.trySync(() => JSON.parse(text))
+				if (!jsonParseResult.error && jsonParseResult.data?.imsx_description) {
+					isJwtExpired = jsonParseResult.data.imsx_description.toLowerCase().includes("jwt expired")
+					logger.debug("oneroster auth: checked JWT expiration from imsx_description", {
+						imsx_description: jsonParseResult.data.imsx_description,
+						isJwtExpired
+					})
+				} else {
+					// Fallback to simple text search if not valid JSON
+					isJwtExpired = text.toLowerCase().includes("jwt expired")
+					logger.debug("oneroster auth: checked JWT expiration from text search", {
+						textSnippet: text.substring(0, 100),
+						isJwtExpired
+					})
+				}
+			}
+
+			if (isJwtExpired) {
 				logger.info("oneroster auth: jwt expired, attempting to refresh token", { endpoint })
 				// Clear the expired token
 				this.#accessToken = null

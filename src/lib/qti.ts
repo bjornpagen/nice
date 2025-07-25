@@ -441,7 +441,25 @@ export class Client {
 			logger.error("qti api returned non-ok status", { q: response.status, body: errorBody, endpoint })
 
 			// Check for JWT expiration
-			if (response.status === 401 && errorBody.toLowerCase().includes("jwt expired")) {
+			let isJwtExpired = false
+			if (response.status === 401) {
+				// Try to parse as JSON first
+				const jsonParseResult = errors.trySync(() => JSON.parse(errorBody))
+				if (!jsonParseResult.error) {
+					// Check various possible JWT expiration fields
+					const data = jsonParseResult.data
+					isJwtExpired =
+						data?.imsx_description?.toLowerCase().includes("jwt expired") ||
+						data?.error?.toLowerCase().includes("jwt expired") ||
+						data?.message?.toLowerCase().includes("jwt expired") ||
+						JSON.stringify(data).toLowerCase().includes("jwt expired")
+				} else {
+					// Fallback to simple text search if not valid JSON
+					isJwtExpired = errorBody.toLowerCase().includes("jwt expired")
+				}
+			}
+
+			if (isJwtExpired) {
 				logger.info("qti auth: jwt expired, attempting to refresh token", { endpoint })
 				// Clear the expired token
 				this.#accessToken = null
