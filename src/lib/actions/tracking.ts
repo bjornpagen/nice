@@ -226,3 +226,60 @@ export async function saveAssessmentResult(
 
 	return result.data
 }
+
+/**
+ * Retrieves the saved video progress for a user.
+ * Returns the last watched position in seconds, or null if no progress is saved.
+ *
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
+ * @param onerosterVideoResourceSourcedId - The OneRoster resource sourcedId for the video (e.g., nice:video456)
+ * @returns The last watched position in seconds, or null if no progress found
+ */
+export async function getVideoProgress(
+	onerosterUserSourcedId: string,
+	onerosterVideoResourceSourcedId: string
+): Promise<{ currentTime: number; percentComplete: number } | null> {
+	logger.debug("fetching video progress", {
+		onerosterUserSourcedId,
+		onerosterVideoResourceSourcedId
+	})
+
+	// The result sourcedId follows our pattern
+	const onerosterResultSourcedId = `nice:${onerosterUserSourcedId}:${onerosterVideoResourceSourcedId}`
+
+	const result = await errors.try(oneroster.getResult(onerosterResultSourcedId))
+	if (result.error) {
+		logger.debug("no video progress found", {
+			onerosterUserSourcedId,
+			onerosterVideoResourceSourcedId,
+			error: result.error
+		})
+		return null
+	}
+
+	const assessmentResult = result.data
+	if (!assessmentResult || typeof assessmentResult.score !== "number") {
+		logger.debug("no valid video progress data", {
+			onerosterUserSourcedId,
+			onerosterVideoResourceSourcedId
+		})
+		return null
+	}
+
+	// Convert score (0.0-1.0) back to percentage (0-100)
+	const percentComplete = Math.round(assessmentResult.score * 100)
+
+	logger.debug("video progress retrieved", {
+		onerosterUserSourcedId,
+		onerosterVideoResourceSourcedId,
+		percentComplete,
+		scoreStatus: assessmentResult.scoreStatus
+	})
+
+	// We don't store currentTime directly, so we can't return it
+	// The client will need to calculate it based on video duration
+	return {
+		currentTime: 0, // Will be calculated on the client side
+		percentComplete
+	}
+}

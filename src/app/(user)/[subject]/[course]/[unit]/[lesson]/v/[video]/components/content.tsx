@@ -5,7 +5,7 @@ import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import YouTube, { type YouTubePlayer } from "react-youtube"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
-import { updateVideoProgress } from "@/lib/actions/tracking"
+import { getVideoProgress, updateVideoProgress } from "@/lib/actions/tracking"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { VideoPageData } from "@/lib/types/page"
 
@@ -47,6 +47,10 @@ export function Content({
 	const totalWatchTimeRef = React.useRef<number>(0)
 	const isPlayingRef = React.useRef<boolean>(false)
 	const hasSentFinalEventRef = React.useRef<boolean>(false)
+
+	// Refs for resume functionality
+	const hasResumedRef = React.useRef<boolean>(false)
+	const savedProgressRef = React.useRef<{ percentComplete: number } | null>(null)
 
 	// Function to send the cumulative time spent event
 	const sendCumulativeTimeEvent = React.useCallback(() => {
@@ -100,6 +104,35 @@ export function Content({
 		}
 	}, [user, video.title, params.subject, params.course, params.unit, params.lesson, params.video])
 
+	// Load saved progress when component mounts
+	React.useEffect(() => {
+		const loadSavedProgress = async () => {
+			// Validate user metadata
+			let onerosterUserSourcedId: string | undefined
+			if (user?.publicMetadata) {
+				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+				if (metadataValidation.success) {
+					onerosterUserSourcedId = metadataValidation.data.sourceId
+				}
+			}
+
+			if (onerosterUserSourcedId) {
+				const result = await errors.try(getVideoProgress(onerosterUserSourcedId, video.id))
+				if (result.error) {
+					// Note: Failed to load video progress, starting from beginning
+					return
+				}
+
+				if (result.data && result.data.percentComplete > 0 && result.data.percentComplete < 95) {
+					savedProgressRef.current = result.data
+					// Note: Loaded saved video progress, will resume from this position
+				}
+			}
+		}
+
+		void loadSavedProgress()
+	}, [user, video.id])
+
 	// Still track progress periodically for OneRoster
 	React.useEffect(() => {
 		const intervalId = setInterval(() => {
@@ -147,9 +180,21 @@ export function Content({
 
 	const onPlayerStateChange = (event: { target: YouTubePlayer; data: number }) => {
 		const playerState = event.data
+		const player = event.target
 
 		// Playing state
 		if (playerState === 1) {
+			// Handle resume functionality - seek to saved position on first play
+			if (!hasResumedRef.current && savedProgressRef.current && savedProgressRef.current.percentComplete > 0) {
+				const duration = player.getDuration()
+				if (duration > 0) {
+					const resumeTime = (savedProgressRef.current.percentComplete / 100) * duration
+					// Note: Resuming video from saved position
+					player.seekTo(resumeTime, true)
+					hasResumedRef.current = true
+				}
+			}
+
 			if (!isPlayingRef.current) {
 				// Started playing
 				watchStartTimeRef.current = new Date()
@@ -198,9 +243,13 @@ export function Content({
 									width: "100%",
 									height: "100%",
 									playerVars: {
-										// Standard YouTube player variables
-										autoplay: 0,
-										controls: 1
+										// To prevent gaming the time-spent metric, we disable seeking.
+										// `controls: 0` hides the video player controls, including the seek bar.
+										// Play/pause is still possible by clicking the video.
+										controls: 0,
+										// `disablekb: 1` disables keyboard controls to prevent seeking with arrow keys.
+										disablekb: 1,
+										autoplay: 0
 									}
 								}}
 							/>
