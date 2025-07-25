@@ -4,6 +4,7 @@ import { randomUUID } from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { env } from "@/env"
+import { updateStreak } from "@/lib/actions/streak"
 import { awardBankedXpForAssessment } from "@/lib/actions/xp"
 import type {
 	CaliperEnvelope,
@@ -234,6 +235,19 @@ export async function sendCaliperActivityCompletedEvent(
 					totalBankedXp: bankedXp
 				})
 			}
+		}
+	}
+
+	// 5. Update user's streak if they earned positive XP
+	if (finalXp > 0) {
+		const streakResult = await errors.try(updateStreak())
+		if (streakResult.error) {
+			logger.error("failed to update user streak after awarding xp", {
+				userId: actor.id,
+				finalXp,
+				error: streakResult.error
+			})
+			throw errors.wrap(streakResult.error, "streak update")
 		}
 	}
 
