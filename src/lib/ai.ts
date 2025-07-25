@@ -147,6 +147,10 @@ ${negativeExamplesFromData}
 </critical_negative_examples>
 
 <instructions>
+### PREAMBLE: THE GOAL OF THIS CONVERSION ###
+
+You are converting from Perseus JSON, a proprietary format from Khan Academy, to QTI 3.0 XML, an industry standard. A direct 1:1 conversion is often impossible and undesirable. The ultimate goal is to produce a **high-quality, student-facing, and robust QTI assessment item.** This means prioritizing student comprehension and system reliability over a literal translation of Perseus features. Perseus's dynamic 'graphie' images are particularly problematic and require special handling as detailed below. Your primary objective is to create an item that is solvable, fair, and technically sound.
+
 Below is a Perseus JSON object. Your task is to provide the corresponding QTI 3.0 XML. Use the PERFECT examples above to inform your output. Respond with ONLY the XML content.
 
 Your output will be fed directly into an automated XML parser. If the XML is not well-formed, the entire system will crash. Pay extreme attention to the rules below.
@@ -214,6 +218,17 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
 </correct_qti_output>
 
 ---
+### CRITICAL: CONTENT AND SEMANTIC RULES ###
+
+1.  **Preserve All Necessary Context:** Do not omit introductory sentences or setup text. The question must be fully understandable.
+2.  **Convert All LaTeX to MathML:** Any text enclosed in \`$...$\` is LaTeX and MUST be converted to \`<math>...</math>\`. This applies to prompts, choices, and feedback. Do not render math as plain text.
+3.  **Correct Interaction Placement:** Ensure interactive elements like \`<qti-text-entry-interaction>\` are placed correctly within sentences or equations to preserve their meaning.
+4.  **Avoid Leaking Answers in Multiple-Choice:** For "select all that apply" questions (\`multipleSelect: true\`), the \`max-choices\` attribute in \`<qti-choice-interaction>\` should be set to the *total number of choices*, not the number of correct answers.
+5.  **Use Full Response Processing:** Do NOT use \`<qti-response-processing template="...">\`. Always write a full \`<qti-response-condition>\` block that explicitly sets BOTH the \`SCORE\` and \`FEEDBACK\` outcome variables.
+6.  **Do Not Hallucinate Content:** Do not add extraneous text, symbols (like dollar signs), or formatting that is not present in the original Perseus JSON.
+7.  **Handle \`sorter\` Widgets Correctly:** A Perseus \`sorter\` becomes a \`<qti-order-interaction>\`. Do not use \`min-choices\` or \`max-choices\` for simple reordering tasks, as this changes the interaction behavior.
+
+---
 ### ADDITIONAL CRITICAL BANS ###
 
 1. **NO CDATA SECTIONS**: Never use \`<![CDATA[...]]>\` anywhere in the XML. All content must be properly XML-encoded.
@@ -253,11 +268,16 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
 3.  **MENTAL CHECK.**
     Before you output your final answer, perform a mental check: "Did I close every single tag I opened with its full name? Is the final closing tag present?"
 
-4.  **ESCAPE XML-RESERVED CHARACTERS IN CONTENT ONLY.**
+4.  **NO HTML ENTITIES IN XML:** Do not use named HTML entities like \`&nbsp;\` or \`&minus;\`. These are invalid in XML and will cause parsing to fail.
+    - ✅ **CORRECT (Space):** Use a regular space character: \` \`
+    - ✅ **CORRECT (Minus):** In MathML, use \`<mo>-</mo>\`. In plain text, use the hyphen \`-\`.
+    - ❌ **ABSOLUTELY FORBIDDEN:** \`9&nbsp;&minus;&nbsp;5\`
+
+5.  **ESCAPE XML-RESERVED CHARACTERS IN CONTENT ONLY.**
     In text content and attribute values, you must escape special XML characters. However, do NOT escape the XML tags themselves.
-    - ✅ **CORRECT:** \`<mo><</mo>\` (for less-than symbol), \`<mo>></mo>\` (for greater-than symbol), \`title="AT&T"\`
+    - ✅ **CORRECT:** \`<mo>&lt;</mo>\` (for less-than symbol), \`<mo>&gt;</mo>\` (for greater-than symbol), \`title="AT&amp;T"\`
     - ❌ **FORBIDDEN:** \`<mo><</mo>\` (raw less-than), \`title="AT&T"\` (raw ampersand)
-    - ❌ **FORBIDDEN:** \`<mo></mo>\` (do NOT escape the actual XML tags)
+    - ❌ **FORBIDDEN:** \`&lt;mo&gt;&lt;/mo&gt;\` (do NOT escape the actual XML tags)
 
 ---
 
