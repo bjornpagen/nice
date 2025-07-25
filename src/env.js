@@ -27,6 +27,8 @@ export const env = createEnv({
 		TIMEBACK_ONEROSTER_SERVER_URL: z.string().min(1),
 		TIMEBACK_POWERPATH_SERVER_URL: z.string().min(1),
 		TIMEBACK_CALIPER_SERVER_URL: z.string().url().min(1),
+		BROWSERBASE_API_KEY: z.string().min(1),
+		BROWSERBASE_PROJECT_ID: z.string().min(1),
 		// Vercel deployment variable (optional, only present in deployed environments)
 		VERCEL_DEPLOYMENT_ID: z.string().optional()
 	},
@@ -71,6 +73,8 @@ export const env = createEnv({
 		TIMEBACK_ONEROSTER_SERVER_URL: process.env.TIMEBACK_ONEROSTER_SERVER_URL,
 		TIMEBACK_POWERPATH_SERVER_URL: process.env.TIMEBACK_POWERPATH_SERVER_URL,
 		TIMEBACK_CALIPER_SERVER_URL: process.env.TIMEBACK_CALIPER_SERVER_URL,
+		BROWSERBASE_API_KEY: process.env.BROWSERBASE_API_KEY,
+		BROWSERBASE_PROJECT_ID: process.env.BROWSERBASE_PROJECT_ID,
 		VERCEL_DEPLOYMENT_ID: process.env.VERCEL_DEPLOYMENT_ID
 	},
 	/**
