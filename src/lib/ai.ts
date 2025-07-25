@@ -169,7 +169,51 @@ When you encounter Perseus widgets:
 2. NEVER output the [[☃ ...]] notation itself
 3. NEVER reference Perseus-specific features that have no QTI equivalent
 
-**ADDITIONAL CRITICAL BANS:**
+---
+### CRITICAL: STRATEGY FOR PERSEUS 'GRAPHIE' IMAGES ###
+
+Perseus uses a dynamic renderer called 'graphie'. A direct conversion of a 'graphie' URL to a static SVG often fails or produces an incomplete image (e.g., a ruler without tick marks). You must follow a specific strategy based on the type of visual content.
+
+**1. REPLACE WITH CUSTOM SVG:**
+For the following types of visuals, you MUST NOT use the original 'graphie' URL. Instead, you MUST generate a complete, static, self-contained SVG representation of the final state of the visual. This is often best done with an inline data URI (\`data:image/svg+xml,...\`). This rule applies to:
+  - **Number Lines** (including time-based and multi-step number lines)
+  - **Pictographs**
+  - **Dot Plots** (from 'plotter' widgets)
+  - **Bar Charts** (from 'plotter' widgets)
+
+**2. SUPPLEMENT WITH TEXT:**
+For the following types of visuals, you MUST use the original 'graphie' URL (converted to \`https://...\`) but you MUST ALSO add a descriptive text note below the image to make the question solvable even if the image's details fail to render. This rule applies to:
+  - **Rulers**
+  - **Analog Clocks**
+
+**Example of the "Supplement with Text" Strategy:**
+
+<perseus_json>
+{
+  "question": {
+    "content": "What is the length of the mouse?\\n\\n![](web+graphie://.../ruler_image.svg)\\n\\n[[☃ numeric-input 1]] inches"
+  }
+}
+</perseus_json>
+
+<correct_qti_output>
+  ...
+  <qti-item-body>
+    <qti-prompt>What is the length of the mouse?</qti-prompt>
+    <div id="reference_text">
+      <img src="https://.../ruler_image.svg" alt="A mouse against a ruler."/>
+      <p><span class="qti-italic">Note: The mouse's nose is at the 0-inch mark and its tail ends at the 4-inch mark.</span></p>
+    </div>
+    <p>
+      <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="2"/> inches
+    </p>
+  ...
+  </qti-item-body>
+  ...
+</correct_qti_output>
+
+---
+### ADDITIONAL CRITICAL BANS ###
 
 1. **NO CDATA SECTIONS**: Never use \`<![CDATA[...]]>\` anywhere in the XML. All content must be properly XML-encoded.
 
@@ -210,9 +254,9 @@ When you encounter Perseus widgets:
 
 4.  **ESCAPE XML-RESERVED CHARACTERS IN CONTENT ONLY.**
     In text content and attribute values, you must escape special XML characters. However, do NOT escape the XML tags themselves.
-    - ✅ **CORRECT:** \`<mo>&lt;</mo>\` (for less-than symbol), \`<mo>&gt;</mo>\` (for greater-than symbol), \`title="AT&amp;T"\`
+    - ✅ **CORRECT:** \`<mo><</mo>\` (for less-than symbol), \`<mo>></mo>\` (for greater-than symbol), \`title="AT&T"\`
     - ❌ **FORBIDDEN:** \`<mo><</mo>\` (raw less-than), \`title="AT&T"\` (raw ampersand)
-    - ❌ **FORBIDDEN:** \`&lt;mo&gt;&lt;/mo&gt;\` (do NOT escape the actual XML tags)
+    - ❌ **FORBIDDEN:** \`<mo></mo>\` (do NOT escape the actual XML tags)
 
 ---
 
