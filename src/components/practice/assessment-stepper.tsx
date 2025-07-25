@@ -227,7 +227,10 @@ export function AssessmentStepper({
 	}, [triggerConfetti])
 
 	const handleWrongAnswer = React.useCallback(() => {
-		if (wrongAudioRef.current) {
+		// 1 in 5000 chance of playing the wrong answer sound
+		const shouldPlaySound = Math.random() < 1 / 5000
+
+		if (shouldPlaySound && wrongAudioRef.current) {
 			wrongAudioRef.current.play().catch(() => {
 				// Ignore audio play errors (e.g., autoplay policy)
 			})
