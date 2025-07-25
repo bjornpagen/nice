@@ -3,8 +3,8 @@
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
-    identifier="penny-overlay-final"
-    title="Penny's Dad Height"
+    identifier="penny-dad-height-estimation-hybrid"
+    title="Penny's Dad Height Estimation"
     time-dependent="false"
     xml:lang="en-US">
 
@@ -26,23 +26,10 @@
         <p>Penny is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>25</mn></math> centimeters tall.</p>
         
         <div id="reference_text">
-            <!-- Centering margin has been removed. The div will now align left by default. -->
-            <div style="position: relative; width: 400px; height: 244px;">
-                <img src="https://cdn.kastatic.org/ka-perseus-graphie/89fe48d349774409e48c733ed2efd12197e21f1b.svg" 
-                     alt="A diagram showing Penny and her taller father with height markers." 
-                     width="400" height="244"
-                     style="position: absolute; top: 0; left: 0; z-index: 0;"/>
-
-                <!-- Penny's Label -->
-                <div style="position: absolute; top: 126px; left: 0px; z-index: 2; font-size:12px; font-family: sans-serif; background-color:white; padding: 0 2px; line-height:1;">
-                    <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>25</mn></math> cm
-                </div>
-                
-                <!-- Dad's Label -->
-                <div style="position: absolute; top: 92px; left: 180px; z-index: 2; font-size:12px; font-family: sans-serif; background-color:white; padding: 0 2px; line-height:1;">
-                    <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>?</mo></math> cm
-                </div>
-            </div>
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/89fe48d349774409e48c733ed2efd12197e21f1b.svg" 
+                 alt="A diagram showing Penny, a small penguin, and her taller father, a larger penguin, with height markers." 
+                 width="400" height="244"/>
+            <p><span class="qti-italic">Note: The diagram indicates Penny's height is 25 cm and shows her dad is proportionally taller.</span></p>
         </div>
         
         <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
