@@ -1,0 +1,63 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "${<}$ means \"less than\".\n\n${=}$ means \"equal to\".\n\n${>}$ means \"greater than\".",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/973209e7a0e11afab064ca76c23d28d135e9cb9e": {
+					"width": 135,
+					"height": 115
+				}
+			},
+			"content": "$\\blueE{4}\\maroonD8 = \\blueE{4\\text{ tens}} + \\maroonD{8\\text{ ones}}$\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/973209e7a0e11afab064ca76c23d28d135e9cb9e)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/15bf4e1907b6b9fc2916e50c85a5c234141488ea": {
+					"width": 115,
+					"height": 115
+				}
+			},
+			"content": "$\\blueE{4}\\maroonD3 = \\blueE{4\\text{ tens}} + \\maroonD{3\\text{ ones}}$\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/15bf4e1907b6b9fc2916e50c85a5c234141488ea)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "${\\blueE4\\underline\\maroonD8}$ is greater than ${\\blueE4\\underline\\maroonD3}$.",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "${\\blueE4\\maroonD8} > {\\blueE4\\maroonD3}$", "replace": false, "widgets": {} }
+	],
+	"question": {
+		"images": {},
+		"content": "**Compare using $>,<,$ or $=$.**\n\n ${48}$ [[☃ dropdown 1]] ${43}$",
+		"widgets": {
+			"dropdown 1": {
+				"type": "dropdown",
+				"graded": true,
+				"static": false,
+				"options": {
+					"static": false,
+					"choices": [
+						{ "content": ">", "correct": true },
+						{ "content": "<", "correct": false },
+						{ "content": "=", "correct": false }
+					],
+					"placeholder": ""
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}

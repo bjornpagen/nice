@@ -184,6 +184,20 @@ For the following types of visuals, you MUST NOT use the original 'graphie' URL.
   - **Pictographs**
   - **Dot Plots** (from 'plotter' widgets)
   - **Bar Charts** (from 'plotter' widgets)
+  - **Visual Grids/Dot Arrays** (grid patterns showing dots for counting or repeated addition)
+
+**CRITICAL EMOJI RULE:** When creating custom SVG replacements for visual arrays, pictographs, or grids where the ONLY visual element is a repeated singleton icon (e.g., sharks, horses, animals, nuts, squirrels, etc.), you MUST use the corresponding emoji character instead of drawing the shape. Examples include but are not limited to:
+  - Sharks → 🦈
+  - Horses → 🐴
+  - Dogs → 🐕
+  - Cats → 🐈
+  - Squirrels → 🐿️
+  - Nuts/Acorns → 🌰
+  - Apples → 🍎
+  - Stars → ⭐
+  - Hearts → ❤️
+
+The emoji should be rendered as text elements within the SVG, positioned appropriately to create the visual array or grid pattern. See the positive examples for the correct implementation pattern.
 
 **2. SUPPLEMENT WITH TEXT:**
 For the following types of visuals, you MUST use the original 'graphie' URL (converted to \`https://...\`) but you MUST ALSO add a descriptive text note below the image to make the question solvable even if the image's details fail to render. This rule applies to:
