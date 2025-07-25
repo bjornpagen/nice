@@ -7,7 +7,7 @@ import { env } from "@/env"
 import { loadConversionExamples } from "./qti-examples"
 import { VALID_QTI_TAGS } from "./qti-tags"
 
-const OPENAI_MODEL = "o3"
+const OPENAI_MODEL = "gpt-4.1-2025-04-14"
 
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
