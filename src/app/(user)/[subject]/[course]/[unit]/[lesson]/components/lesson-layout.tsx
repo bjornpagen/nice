@@ -19,7 +19,7 @@ export function LessonLayout({
 	coursePromise: Promise<CourseV2 | undefined>
 	children: React.ReactNode
 }) {
-	const { unitData } = React.use(dataPromise)
+	React.use(dataPromise)
 	// Now we pass progressPromise to the sidebar instead of consuming it here
 
 	const pathname = usePathname()
@@ -49,7 +49,7 @@ export function LessonLayout({
 				<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 
 				{/* Conditionally render LessonNext footer */}
-				{shouldShowLessonNext && <LessonNext unitData={unitData} />}
+				{shouldShowLessonNext && <LessonNext coursePromise={coursePromise} />}
 			</div>
 		</div>
 	)

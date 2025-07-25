@@ -1,53 +1,80 @@
 "use client"
 
+import _ from "lodash"
 import { BookCheck, ChevronRight, FileText, PenTool, Play, TestTube } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import * as React from "react"
 import { Button } from "@/components/ui/button"
-import type { Unit } from "@/lib/types/domain"
+import type { Course as CourseV2 } from "@/lib/v2/types"
+import { getCourseMaterials } from "@/lib/v2/types"
 
 interface LessonNextProps {
-	unitData: Unit
+	coursePromise: Promise<CourseV2 | undefined>
 }
 
-export function LessonNext({ unitData }: LessonNextProps) {
+export function LessonNext({ coursePromise }: LessonNextProps) {
 	const pathname = usePathname()
+	const course = React.use(coursePromise)
 
-	// Create a flattened, ordered list of all navigable content items in the unit
-	// This includes items within lessons (articles, videos, exercises) and
-	// unit-level items like quizzes and unit tests
-	const allUnitItems: Array<{ id: string; path: string; type: string; title: string }> = []
-
-	for (const unitChild of unitData.children) {
-		if (unitChild.type === "Lesson") {
-			// Add all children of the lesson to the list
-			for (const lessonChild of unitChild.children) {
-				allUnitItems.push({
-					id: lessonChild.id,
-					path: lessonChild.path,
-					type: lessonChild.type,
-					title: lessonChild.title
-				})
-			}
-		} else if (unitChild.type === "Quiz" || unitChild.type === "UnitTest") {
-			// Add the quiz or unit test itself to the list
-			allUnitItems.push({
-				id: unitChild.id,
-				path: unitChild.path,
-				type: unitChild.type,
-				title: unitChild.title
-			})
-		}
+	if (!course) {
+		return null
 	}
 
-	// Find the current item and next item
-	const currentIndex = allUnitItems.findIndex((item) => {
-		// Use exact match instead of includes to prevent substring matches
-		return pathname === item.path
+	// Use the same approach as course-sidebar.tsx for consistency
+	const materials = getCourseMaterials(course)
+
+	// Find the current material (lesson or assessment) first
+	const currentMaterialIndex = _.findIndex(materials, (material) => {
+		if (material.type === "Lesson") {
+			// For lessons, check if any resource matches the current pathname exactly
+			return _.some(material.resources, (resource) => resource.path === pathname)
+		}
+		// For unit-level resources (Quiz, UnitTest, CourseChallenge), use exact path match
+		return material.path === pathname
 	})
 
-	// Get the next item
-	const nextItem = currentIndex >= 0 && currentIndex < allUnitItems.length - 1 ? allUnitItems[currentIndex + 1] : null
+	if (currentMaterialIndex === -1) {
+		return null // Current page not found in materials
+	}
+
+	const currentMaterial = materials[currentMaterialIndex]
+	if (!currentMaterial) {
+		return null
+	}
+
+	// Now find the next navigable item
+	let nextItem = null
+
+	if (currentMaterial.type === "Lesson") {
+		// Find current resource within the lesson
+		const currentResourceIndex = _.findIndex(currentMaterial.resources, (resource) => resource.path === pathname)
+
+		if (currentResourceIndex >= 0 && currentResourceIndex < currentMaterial.resources.length - 1) {
+			// Next resource in same lesson
+			nextItem = currentMaterial.resources[currentResourceIndex + 1]
+		} else {
+			// Look for next material (could be another lesson or assessment)
+			const nextMaterial = materials[currentMaterialIndex + 1]
+			if (nextMaterial) {
+				if (nextMaterial.type === "Lesson" && nextMaterial.resources.length > 0) {
+					nextItem = nextMaterial.resources[0] // First resource of next lesson
+				} else {
+					nextItem = nextMaterial // Next assessment
+				}
+			}
+		}
+	} else {
+		// Current is an assessment (Quiz, UnitTest, CourseChallenge), look for next material
+		const nextMaterial = materials[currentMaterialIndex + 1]
+		if (nextMaterial) {
+			if (nextMaterial.type === "Lesson" && nextMaterial.resources.length > 0) {
+				nextItem = nextMaterial.resources[0] // First resource of next lesson
+			} else {
+				nextItem = nextMaterial // Next assessment
+			}
+		}
+	}
 
 	// Don't show if there's no next item
 	if (!nextItem) {
