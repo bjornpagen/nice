@@ -1,0 +1,68 @@
+{
+	"hints": [
+		{ "images": {}, "content": "Let's use place value blocks to help us solve!", "replace": false, "widgets": {} },
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/caea56ad7dc4b4a2c0115540aacf7fc366a6cfbe": {
+					"width": 400,
+					"height": 176
+				}
+			},
+			"content": "The number has $\\purpleD2$ hundreds, $\\blueE{14}$ tens, and $\\maroonD{3}$ ones.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/caea56ad7dc4b4a2c0115540aacf7fc366a6cfbe)\n",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/5aac334e96f7921937fd61a408bb94d23780434e": {
+					"width": 400,
+					"height": 264
+				}
+			},
+			"content": "$\\blueE{10}\\text{ tens} = \\purpleD1\\text{ hundred}$ so we can move the $\\blueE{10}\\text{ tens}$ to the hundreds column.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/5aac334e96f7921937fd61a408bb94d23780434e)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/7ceca82154545bab77ff973127135be039b0d4a4": {
+					"width": 400,
+					"height": 176
+				}
+			},
+			"content": "Now, there is a total of $3$ hundreds, $4$ tens, and $3$ ones.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/7ceca82154545bab77ff973127135be039b0d4a4)\n\n$3$ hundreds, $4$ tens, and $3$ ones = $343$",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "$2\\text{ hundreds} + 14\\text{ tens}+ 3\\text{ ones}= 343$",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "**What number represents the same amount as $2$ hundreds $+$ $14$ tens $+$ $3$ ones?**\n\n[[☃ input-number 1]]",
+		"widgets": {
+			"input-number 1": {
+				"type": "input-number",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"value": 343,
+					"inexact": false,
+					"maxError": 0.1,
+					"simplify": "required",
+					"answerType": "number",
+					"rightAlign": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
