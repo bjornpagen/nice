@@ -183,8 +183,10 @@ For the following types of visuals, you MUST NOT use the original 'graphie' URL.
   - **Number Lines** (including time-based and multi-step number lines)
   - **Pictographs**
   - **Dot Plots** (from 'plotter' widgets)
+  - **Line Plots** (graphs showing connected points to represent data trends)
   - **Bar Charts** (from 'plotter' widgets)
   - **Visual Grids/Dot Arrays** (grid patterns showing dots for counting or repeated addition)
+  - **Line Sorting/Ordering Questions** (where students must order lines by height, length, or other attributes)
 
 **CRITICAL EMOJI RULE:** When creating custom SVG replacements for visual arrays, pictographs, or grids where the ONLY visual element is a repeated singleton icon (e.g., sharks, horses, animals, nuts, squirrels, etc.), you MUST use the corresponding emoji character instead of drawing the shape. Examples include but are not limited to:
   - Sharks → 🦈
@@ -282,10 +284,12 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
 3.  **MENTAL CHECK.**
     Before you output your final answer, perform a mental check: "Did I close every single tag I opened with its full name? Is the final closing tag present?"
 
-4.  **NO HTML ENTITIES IN XML:** Do not use named HTML entities like \`&nbsp;\` or \`&minus;\`. These are invalid in XML and will cause parsing to fail.
+4.  **NO HTML ENTITIES IN XML:** Do not use named HTML entities including but not limited to \`&nbsp;\`, \`&minus;\`, \`&ndash;\`, or \`&mdash;\`. These are invalid in XML and will cause parsing to fail.
     - ✅ **CORRECT (Space):** Use a regular space character: \` \`
     - ✅ **CORRECT (Minus):** In MathML, use \`<mo>-</mo>\`. In plain text, use the hyphen \`-\`.
-    - ❌ **ABSOLUTELY FORBIDDEN:** \`9&nbsp;&minus;&nbsp;5\`
+    - ✅ **CORRECT (En Dash):** Use the actual en dash character: \`–\` (U+2013)
+    - ✅ **CORRECT (Em Dash):** Use the actual em dash character: \`—\` (U+2014)
+    - ❌ **ABSOLUTELY FORBIDDEN:** \`9&nbsp;&minus;&nbsp;5\`, \`text&ndash;text\`, \`text&mdash;more text\`
 
 5.  **ESCAPE XML-RESERVED CHARACTERS IN CONTENT ONLY.**
     In text content and attribute values, you must escape special XML characters. However, do NOT escape the XML tags themselves.

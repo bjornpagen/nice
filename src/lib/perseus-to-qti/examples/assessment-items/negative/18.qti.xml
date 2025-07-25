@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is a negative example because it fails to accurately represent the visual logic of the original question.
+
+  REASON FOR BEING A NEGATIVE EXAMPLE:
+
+  1.  CRITICAL: Incomplete Visual Representation - The original Perseus item uses a number line with arcs to show the "jumps" of addition (e.g., +400, +10, +2). The custom SVG images in this QTI output omit these crucial arcs.
+  2.  CRITICAL: Unsolvable Question - Without the arcs showing the jumps, the user is presented with a series of seemingly random points on a number line. The core task—identifying the sequence of additions that correctly sums to 412—is impossible to perform. This demonstrates a failure to convert not just the visual elements, but the entire logical basis of the question.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="nice-tmp:x3ab7677184bd3dfe"
+    title="Add on a number line"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <!-- RESPONSE DECLARATION -->
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <!-- OUTCOME DECLARATIONS -->
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
+
+    <!-- ITEM BODY -->
+    <qti-item-body>
+        <qti-prompt>Which number line shows <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>243</mn><mo>+</mo><mn>412</mn></math> ?</qti-prompt>
+
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
+            <!-- CHOICE A -->
+            <qti-simple-choice identifier="A">
+                <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20120'%3E%3Cline%20x1='20'%20y1='60'%20x2='380'%20y2='60'%20stroke='black'%20stroke-width='2'/%3E%3Cline%20x1='20'%20y1='55'%20x2='20'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='20'%20y='80'%20font-size='12'%20text-anchor='middle'%3E243%3C/text%3E%3Cline%20x1='145'%20y1='55'%20x2='145'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='145'%20y='80'%20font-size='12'%20text-anchor='middle'%3E643%3C/text%3E%3Cline%20x1='235'%20y1='55'%20x2='235'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='235'%20y='80'%20font-size='12'%20text-anchor='middle'%3E653%3C/text%3E%3Cline%20x1='290'%20y1='55'%20x2='290'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='290'%20y='80'%20font-size='12'%20text-anchor='middle'%3E655%3C/text%3E%3C/svg%3E"
+                     alt="Number line with points at 243, 643, 653, and 655."/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">Correct! The jumps of +400, +10, and +2 land on 655, which is 243 + 412.</qti-feedback-inline>
+            </qti-simple-choice>
+
+            <!-- CHOICE B -->
+            <qti-simple-choice identifier="B">
+                <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20120'%3E%3Cline%20x1='20'%20y1='60'%20x2='380'%20y2='60'%20stroke='black'%20stroke-width='2'/%3E%3Cline%20x1='20'%20y1='55'%20x2='20'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='20'%20y='80'%20font-size='12'%20text-anchor='middle'%3E243%3C/text%3E%3Cline%20x1='145'%20y1='55'%20x2='145'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='145'%20y='80'%20font-size='12'%20text-anchor='middle'%3E283%3C/text%3E%3Cline%20x1='235'%20y1='55'%20x2='235'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='235'%20y='80'%20font-size='12'%20text-anchor='middle'%3E293%3C/text%3E%3Cline%20x1='290'%20y1='55'%20x2='290'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='290'%20y='80'%20font-size='12'%20text-anchor='middle'%3E313%3C/text%3E%3C/svg%3E"
+                     alt="Number line with points at 243, 283, 293, and 313."/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">Not quite. This shows jumps of +40, +10, and +20 which total +70, not +412.</qti-feedback-inline>
+            </qti-simple-choice>
+
+            <!-- CHOICE C -->
+            <qti-simple-choice identifier="C">
+                <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20120'%3E%3Cline%20x1='20'%20y1='60'%20x2='380'%20y2='60'%20stroke='black'%20stroke-width='2'/%3E%3Cline%20x1='20'%20y1='55'%20x2='20'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='20'%20y='80'%20font-size='12'%20text-anchor='middle'%3E243%3C/text%3E%3Cline%20x1='145'%20y1='55'%20x2='145'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='145'%20y='80'%20font-size='12'%20text-anchor='middle'%3E643%3C/text%3E%3Cline%20x1='235'%20y1='55'%20x2='235'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='235'%20y='80'%20font-size='12'%20text-anchor='middle'%3E663%3C/text%3E%3Cline%20x1='290'%20y1='55'%20x2='290'%20y2='65'%20stroke='black'/%3E%3Ctext%20x='290'%20y='80'%20font-size='12'%20text-anchor='middle'%3E664%3C/text%3E%3C/svg%3E"
+                     alt="Number line with points at 243, 643, 663, and 664."/>
+                <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">Not quite. The final value here is 664, which is 421 more than 243, not 412.</qti-feedback-inline>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+
+        <!-- ITEM-LEVEL FEEDBACK -->
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> Starting at 243, adding 400 takes you to 643, adding 10 more reaches 653, and finally adding 2 reaches 655. Therefore, 243 + 412 = 655.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Break 412 into 400, 10, and 2. On a number line, start at 243, jump 400 to reach 643, jump 10 to 653, and jump 2 to 655.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <!-- RESPONSE PROCESSING -->
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>

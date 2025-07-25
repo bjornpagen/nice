@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This QTI XML has been converted from a Perseus 'sorter' item.
+
+  REASON FOR USING CUSTOM SVG IMAGES:
+  In accordance with the established conversion strategy, visual elements that are essential for solving
+  the problem, such as the lines to be ordered in this item, must be converted into static, self-contained
+  SVG images. This prevents rendering failures that can occur when attempting to directly use the dynamic
+  'graphie' assets. The original 'graphie' URLs for each line have been replaced with custom-generated,
+  inline SVG data URIs to ensure the item is robust and universally renderable. The SVGs have been
+  specifically designed to be bottom-aligned for accurate visual comparison.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="order-lines-by-height"
+    title="Order Lines from Shortest to Tallest"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="ordered" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>CHOICE_B</qti-value>
+            <qti-value>CHOICE_A</qti-value>
+            <qti-value>CHOICE_C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <qti-prompt>Order the lines from shortest to tallest.<br/><span class="qti-italic">Put the shortest line on the left.</span></qti-prompt>
+
+        <qti-order-interaction response-identifier="RESPONSE" shuffle="true" orientation="horizontal">
+            
+            <qti-simple-choice identifier="CHOICE_A">
+                <!-- Medium Line (Bottom Aligned) -->
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='120' viewBox='0 0 30 120'%3E%3Cline x1='15' y1='25' x2='15' y2='110' stroke='black' stroke-width='4'/%3E%3C/svg%3E" 
+                     alt="A vertical line of medium height."/>
+            </qti-simple-choice>
+            
+            <qti-simple-choice identifier="CHOICE_B">
+                <!-- Shortest Line (Bottom Aligned) -->
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='120' viewBox='0 0 30 120'%3E%3Cline x1='15' y1='50' x2='15' y2='110' stroke='black' stroke-width='4'/%3E%3C/svg%3E" 
+                     alt="A short vertical line."/>
+            </qti-simple-choice>
+
+            <qti-simple-choice identifier="CHOICE_C">
+                <!-- Tallest Line (Bottom Aligned) -->
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='120' viewBox='0 0 30 120'%3E%3Cline x1='15' y1='10' x2='15' y2='110' stroke='black' stroke-width='4'/%3E%3C/svg%3E" 
+                     alt="A tall vertical line."/>
+            </qti-simple-choice>
+
+        </qti-order-interaction>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> You have correctly ordered the lines from shortest to tallest.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember to place the shortest line first on the left, followed by the next tallest, and finally the tallest line on the right.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>

@@ -1,0 +1,98 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "To divide a shape in half, we divide the whole into **$2$ equal parts**.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/255991878292eece7058378c673fe91f18a2dfcd": {
+					"width": 90,
+					"height": 90
+				}
+			},
+			"content": "This circle is divided into $4$ equal pieces:  \n\n![A circle has two lines passing through the center dividing it into 4 equal parts.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/255991878292eece7058378c673fe91f18a2dfcd)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/56c754cd9878e09d591ba74274a6fad0ce021e6b": {
+					"width": 90,
+					"height": 90
+				}
+			},
+			"content": "This circle is divided into $2$ pieces, but the pieces are not equal in size:  \n\n![A circle has a line that does not pass through the center dividing it into 2 parts.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/56c754cd9878e09d591ba74274a6fad0ce021e6b)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/1cf4eb548314de1ca46239b30c74d2204b775d03": {
+					"width": 90,
+					"height": 90
+				},
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/b74a74128cec3ef491aba4237553ca8c9122d943": {
+					"width": 90,
+					"height": 90
+				}
+			},
+			"content": "These circles are divided into halves:  \n\n![2 circles. Each one is divided into 2 equal parts.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/1cf4eb548314de1ca46239b30c74d2204b775d03) ![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/b74a74128cec3ef491aba4237553ca8c9122d943)",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "**Which circles are divided into halves?**\n\n[[☃ radio 1]]",
+		"widgets": {
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"content": "![A circle is divided into 3 unequal parts. 2 parts are almost half the circle. The third part is a very small section.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/27c324ac39dfee259f0d22a03caeb1050dd53b0d)",
+							"correct": false
+						},
+						{
+							"content": "![A circle has a line passing through the center dividing it into 2 parts.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/1cf4eb548314de1ca46239b30c74d2204b775d03)",
+							"correct": true
+						},
+						{
+							"content": "![A circle has a line passing through the center dividing it into 2 parts.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/b74a74128cec3ef491aba4237553ca8c9122d943)",
+							"correct": true
+						},
+						{
+							"content": "![A circle has a line that does not pass through the center dividing it into 2 parts.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/56c754cd9878e09d591ba74274a6fad0ce021e6b)",
+							"correct": false
+						}
+					],
+					"randomize": true,
+					"numCorrect": 2,
+					"countChoices": true,
+					"displayCount": null,
+					"multipleSelect": true,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": { "major": 2, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false,
+		"periodicTableWithKey": false,
+		"financialCalculatorTotalAmount": false,
+		"financialCalculatorTimeToPayOff": false,
+		"financialCalculatorMonthlyPayment": false
+	}
+}

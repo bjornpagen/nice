@@ -1,0 +1,51 @@
+{
+	"hints": [
+		{ "images": {}, "content": "Drag the shortest line all the way to the left.", "replace": false, "widgets": {} },
+		{ "images": {}, "content": "Now drag the rest of the lines into place.", "replace": false, "widgets": {} },
+		{
+			"images": {
+				"https://cdn.kastatic.org/ka-perseus-images/d06991240c6e1af3fff6a04c0775751242fccf25.png": {
+					"width": 115,
+					"height": 244
+				}
+			},
+			"content": "These lines are in order from shortest to tallest:\n\n![3 vertical lines. The shortest is on the left. The second tallest is next. The tallest is on the right.](https://cdn.kastatic.org/ka-perseus-images/d06991240c6e1af3fff6a04c0775751242fccf25.png)",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "**Order the lines from shortest to tallest.**  \n*Put the shortest line on the left.*\n \n[[☃ sorter 1]]",
+		"widgets": {
+			"sorter 1": {
+				"type": "sorter",
+				"graded": true,
+				"static": false,
+				"options": {
+					"layout": "horizontal",
+					"correct": [
+						"![A vertical line that is second tallest.](https://cdn.kastatic.org/ka-perseus-graphie/0a9767585a2520b289013be493bf845b324d733f.png)",
+						"![A vertical line that is shortest.](https://cdn.kastatic.org/ka-perseus-graphie/c295c750c615395f20fe75c9536c2222518a4cb8.png)",
+						"![A vertical line that is tallest.](https://cdn.kastatic.org/ka-perseus-graphie/38e4b523d5eb3e0f94fa6d474b28af21bb19d4bf.png)"
+					],
+					"padding": true
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": {
+		"tTable": false,
+		"zTable": false,
+		"chi2Table": false,
+		"calculator": false,
+		"periodicTable": false,
+		"periodicTableWithKey": false,
+		"financialCalculatorTotalAmount": false,
+		"financialCalculatorTimeToPayOff": false,
+		"financialCalculatorMonthlyPayment": false
+	},
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
