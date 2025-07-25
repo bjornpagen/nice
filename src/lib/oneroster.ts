@@ -210,6 +210,7 @@ const CreateClassInputSchema = ClassWriteSchema
 export const ErrOneRosterAPI = errors.new("oneroster api error")
 export const ErrOneRosterNotFound = errors.new("oneroster resource not found")
 export const ErrOneRosterNotFoundAs422 = errors.new("oneroster resource not found (422)")
+export const ErrJWTExpired = errors.new("jwt expired")
 
 // Export the read schema types that will be used by server actions
 export type CourseReadSchemaType = z.infer<typeof CourseReadSchema>
@@ -483,6 +484,74 @@ export class Client {
 				method: options.method,
 				requestBody: requestBodySample
 			})
+
+			// Check for JWT expiration
+			if (response.status === 401 && text.toLowerCase().includes("jwt expired")) {
+				logger.info("oneroster auth: jwt expired, attempting to refresh token", { endpoint })
+				// Clear the expired token
+				this.#accessToken = null
+				// Get a new token
+				await this.#ensureAccessToken()
+				// Retry the request with the new token
+				const retryHeaders = {
+					...options.headers,
+					Authorization: `Bearer ${this.#accessToken}`
+				}
+				const retryResult = await errors.try(fetch(url, { ...options, headers: retryHeaders }))
+				if (retryResult.error) {
+					logger.error("oneroster api request failed after token refresh", { error: retryResult.error, endpoint })
+					throw errors.wrap(retryResult.error, "oneroster api request after token refresh")
+				}
+				const retryResponse = retryResult.data
+				if (!retryResponse.ok) {
+					if (retryResponse.status === 404 && requestOptions?.swallow404) {
+						logger.debug("swallowing 404 for idempotent check after token refresh", { endpoint })
+						return null
+					}
+					const retryText = await retryResponse.text()
+					logger.error("oneroster api returned non-ok status after token refresh", {
+						status: retryResponse.status,
+						body: retryText,
+						endpoint,
+						method: options.method,
+						requestBody: requestBodySample
+					})
+					throw errors.wrap(
+						ErrJWTExpired,
+						`oneroster jwt refresh failed: status ${retryResponse.status} on ${endpoint}`
+					)
+				}
+				// Process successful retry response
+				if (retryResponse.status === 204) {
+					return schema.parse(null)
+				}
+				const retryText = await retryResponse.text()
+				if (!retryText || retryText.trim() === "") {
+					return schema.parse(null)
+				}
+				const retryJsonResult = errors.trySync(() => JSON.parse(retryText))
+				if (retryJsonResult.error) {
+					logger.error("oneroster api: failed to parse json response after token refresh", {
+						error: retryJsonResult.error,
+						endpoint,
+						responseText: retryText
+					})
+					throw errors.wrap(retryJsonResult.error, `oneroster api response parsing for ${endpoint} after token refresh`)
+				}
+				const retryValidation = schema.safeParse(retryJsonResult.data)
+				if (!retryValidation.success) {
+					logger.error("oneroster api: invalid response schema after token refresh", {
+						error: retryValidation.error,
+						endpoint
+					})
+					throw errors.wrap(
+						retryValidation.error,
+						`oneroster api response validation for ${endpoint} after token refresh`
+					)
+				}
+				return retryValidation.data
+			}
+
 			// ✅ USE THE CUSTOM ERROR TYPE
 			if (response.status === 404) {
 				throw errors.wrap(ErrOneRosterNotFound, `oneroster api error: status 404 on ${endpoint}`)

@@ -5,6 +5,7 @@ import { z } from "zod"
 // --- ERROR CONSTANTS ---
 export const ErrPowerPathAPI = errors.new("powerpath api error")
 export const ErrPowerPathNotFound = errors.new("powerpath resource not found")
+export const ErrJWTExpired = errors.new("jwt expired")
 
 // --- API CLIENT CONFIG TYPE ---
 type ApiClientConfig = {
@@ -162,6 +163,68 @@ export class Client {
 		if (!response.ok) {
 			const errorBody = await response.text()
 			logger.error("powerpath api returned non-ok status", { status: response.status, body: errorBody, endpoint })
+
+			// Check for JWT expiration
+			if (response.status === 401 && errorBody.toLowerCase().includes("jwt expired")) {
+				logger.info("powerpath auth: jwt expired, attempting to refresh token", { endpoint })
+				// Clear the expired token
+				this.#accessToken = null
+				// Get a new token
+				await this.#ensureAccessToken()
+				// Retry the request with the new token
+				const retryHeaders = {
+					...options.headers,
+					Authorization: `Bearer ${this.#accessToken}`
+				}
+				const retryResult = await errors.try(fetch(url, { ...options, headers: retryHeaders }))
+				if (retryResult.error) {
+					logger.error("powerpath api request failed after token refresh", { error: retryResult.error, endpoint })
+					throw errors.wrap(retryResult.error, "powerpath api request after token refresh")
+				}
+				const retryResponse = retryResult.data
+				if (!retryResponse.ok) {
+					const retryErrorBody = await retryResponse.text()
+					logger.error("powerpath api returned non-ok status after token refresh", {
+						status: retryResponse.status,
+						body: retryErrorBody,
+						endpoint
+					})
+					throw errors.wrap(
+						ErrJWTExpired,
+						`powerpath jwt refresh failed: status ${retryResponse.status} on ${endpoint}`
+					)
+				}
+				// Process successful retry response
+				if (retryResponse.status === 204) {
+					const validation = schema.safeParse(null)
+					if (!validation.success) {
+						logger.error("powerpath api: schema validation failed for 204 response after token refresh", {
+							error: validation.error,
+							endpoint
+						})
+						throw errors.wrap(validation.error, "powerpath api 204 response validation after token refresh")
+					}
+					return validation.data
+				}
+				const retryJsonResult = await errors.try(retryResponse.json())
+				if (retryJsonResult.error) {
+					logger.error("powerpath api: failed to parse json response after token refresh", {
+						error: retryJsonResult.error,
+						endpoint
+					})
+					throw errors.wrap(retryJsonResult.error, "powerpath api response parsing after token refresh")
+				}
+				const retryValidation = schema.safeParse(retryJsonResult.data)
+				if (!retryValidation.success) {
+					logger.error("powerpath api: invalid response schema after token refresh", {
+						error: retryValidation.error,
+						endpoint
+					})
+					throw errors.wrap(retryValidation.error, "powerpath api response validation after token refresh")
+				}
+				return retryValidation.data
+			}
+
 			if (response.status === 404) {
 				throw errors.wrap(ErrPowerPathNotFound, `powerpath api error: status 404 on ${endpoint}`)
 			}

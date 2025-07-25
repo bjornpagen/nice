@@ -7,6 +7,7 @@ export const ErrQtiNotFound = errors.new("qti resource not found")
 export const ErrQtiUnprocessable = errors.new("qti request unprocessable/invalid")
 export const ErrQtiConflict = errors.new("qti resource conflict")
 export const ErrQtiInternalServerError = errors.new("qti internal server error")
+export const ErrJWTExpired = errors.new("jwt expired")
 
 // --- ZOD SCHEMAS (Existing + New) ---
 
@@ -438,6 +439,58 @@ export class Client {
 		if (!response.ok) {
 			const errorBody = await response.text()
 			logger.error("qti api returned non-ok status", { q: response.status, body: errorBody, endpoint })
+
+			// Check for JWT expiration
+			if (response.status === 401 && errorBody.toLowerCase().includes("jwt expired")) {
+				logger.info("qti auth: jwt expired, attempting to refresh token", { endpoint })
+				// Clear the expired token
+				this.#accessToken = null
+				// Get a new token
+				await this.#ensureAccessToken()
+				// Retry the request with the new token
+				const retryHeaders = {
+					...options.headers,
+					Authorization: `Bearer ${this.#accessToken}`
+				}
+				const retryResult = await errors.try(fetch(url, { ...options, headers: retryHeaders }))
+				if (retryResult.error) {
+					logger.error("qti api request failed after token refresh", { error: retryResult.error, endpoint })
+					throw errors.wrap(retryResult.error, "qti api request after token refresh")
+				}
+				const retryResponse = retryResult.data
+				if (!retryResponse.ok) {
+					const retryErrorBody = await retryResponse.text()
+					logger.error("qti api returned non-ok status after token refresh", {
+						status: retryResponse.status,
+						body: retryErrorBody,
+						endpoint
+					})
+					throw errors.wrap(ErrJWTExpired, `qti jwt refresh failed: status ${retryResponse.status} on ${endpoint}`)
+				}
+				// Process successful retry response
+				if (retryResponse.status === 204) {
+					return schema.parse(null)
+				}
+				const retryJsonResult = await errors.try(retryResponse.json())
+				if (retryJsonResult.error) {
+					logger.error("qti api: failed to parse json response after token refresh", {
+						error: retryJsonResult.error,
+						endpoint
+					})
+					throw errors.wrap(retryJsonResult.error, "qti api response parsing after token refresh")
+				}
+				logger.debug("qti api: raw response after token refresh", { endpoint, response: retryJsonResult.data })
+				const retryValidation = schema.safeParse(retryJsonResult.data)
+				if (!retryValidation.success) {
+					logger.error("qti api: invalid response schema after token refresh", {
+						error: retryValidation.error,
+						endpoint,
+						rawResponse: retryJsonResult.data
+					})
+					throw errors.wrap(retryValidation.error, "qti api response validation after token refresh")
+				}
+				return retryValidation.data
+			}
 
 			// NEW: Throw specific, exported errors based on status code
 			if (response.status === 404) {

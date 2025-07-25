@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  This XML is a negative example because it represents an unfaithful and semantically incorrect conversion from the source material.
+  This XML is a negative example because it contains invalid MathML that is both syntactically and semantically incorrect.
 
   REASON FOR BEING A NEGATIVE EXAMPLE:
 
-  1.  CRITICAL: Introduction of Extraneous Content - The QTI output incorrectly wraps the text input field with dollar signs (`$ ... $`) AND an unnecessary `<p>` tag. These elements are nowhere to be found in the source Perseus JSON.
-  2.  CRITICAL: Semantic Error - The original question is a pure place value problem about composing a number from hundreds, tens, and ones. By adding dollar signs, the converter has incorrectly and confusingly framed the question as a currency problem. This fundamentally alters the semantic context of the item.
-  3.  CRITICAL: Unfaithful Conversion - This is a classic example of a "hallucination" where the conversion process adds content that was not in the source, leading to a confusing and flawed user experience. A correct conversion would simply have the input field without any surrounding currency symbols or extraneous paragraph tags.
-  4.  CRITICAL: Use of Undefined XML Entities - The content uses `&nbsp;` entities (for non-breaking spaces) which are NOT predefined in the XML 1.0 standard. A strict XML parser will encounter these entities and halt with an "entity not defined" error, making the entire QTI item unusable. The correct approach is to use regular spaces instead of `&nbsp;`.
+  1.  CRITICAL: Invalid Character in MathML - The `<mo>` tag within the hint's MathML (`<math>...<mo> 212</mo>...</math>`) contains a non-printable control character or an invalid character sequence. This type of character can make the entire XML file unparsable, causing a fatal error when a system tries to load it. This is a common result of data corruption or improper character encoding during conversion.
+  2.  CRITICAL: Semantic Error in MathML - Even if the file could be parsed, the visible content is nonsensical. The `<mo>` tag, which is reserved for mathematical operators (like `+`, `-`, `=`), incorrectly contains a number (`212`). The intended expression was `13 - 4`, but the corrupted MathML (`<mn>13</mn><mo> 212</mo><mn>4</mn>`) is meaningless.
+  3.  This corruption results in a broken hint that either fails to render or displays confusing, incorrect information to the user, making the item highly flawed.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
-    identifier="nice-tmp:xdc4cd04aafb68684"
-    title="Hundreds, tens, and ones"
+    identifier="nice-tmp:x3f9c6d3b0f16eeb5"
+    title="Subtract within 20 visually"
     time-dependent="false"
     xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
         <qti-correct-response>
-            <qti-value>343</qti-value>
+            <qti-value>9</qti-value>
         </qti-correct-response>
     </qti-response-declaration>
 
@@ -32,30 +31,27 @@
     <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <qti-prompt>
-            What number represents the same amount as 
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                <mn>2</mn>
-            </math> hundreds&nbsp;&nbsp;+
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                <mn>14</mn>
-            </math> tens&nbsp;&nbsp;+
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
-                <mn>3</mn>
-            </math> ones?
-        </qti-prompt>
-        <p>$ <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="4"/>$</p>
+        <qti-prompt>Subtract.</qti-prompt>
+        <p><span class="qti-italic">Hint: Use the place value blocks to help solve <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn><mo>212</mo><mn>4</mn></math>.</span></p>
+        <div id="reference_text">
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/552734b86e1832b3364cf20780222bb7ffcb6fe2.svg"
+                 width="105"
+                 height="140"
+                 alt="Place value blocks illustrating 13 minus 4"/>
+        </div>
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="2"/> =
+            <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn><mo>−</mo><mn>4</mn></math>
+        </p>
 
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>
-                <p><span class="qti-keyword-emphasis">Correct!</span> Two hundreds, fourteen tens, and three ones equal 
-                    <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>343</mn></math>.
-                </p>
+                <p><span class="qti-keyword-emphasis">Correct!</span> <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn><mo>−</mo><mn>4</mn><mo>=</mo><mn>9</mn></math>.</p>
             </qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
             <qti-content-body>
-                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember: 14 tens is the same as 1 hundred and 4 tens. Adding those to the original 2 hundreds gives 3 hundreds, 4 tens, and 3 ones, which is 343.</p>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Try removing 4 ones from 13. You should be left with 9.</p>
             </qti-content-body>
         </qti-feedback-block>
     </qti-item-body>

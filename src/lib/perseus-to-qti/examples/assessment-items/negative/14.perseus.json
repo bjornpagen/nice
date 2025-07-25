@@ -1,0 +1,88 @@
+{
+	"hints": [
+		{ "images": {}, "content": "Let's use the place value blocks to help us solve. ", "replace": false, "widgets": {} },
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/69581e01528113251253bd43185f1a3db8a18876": {
+					"width": 54,
+					"height": 140
+				}
+			},
+			"content": "The first set of blocks has $\\blueE{13}$ place value blocks. \n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/69581e01528113251253bd43185f1a3db8a18876)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/bf88e5b8b9070b742be0b09c38af6a8a2b92c1ad": {
+					"width": 28,
+					"height": 140
+				}
+			},
+			"content": "The second set of blocks has $\\maroonD{4}$ place value blocks. \n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/bf88e5b8b9070b742be0b09c38af6a8a2b92c1ad)",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/1bbaff25ce434f83e5d062b0f4178f823485ca8d": {
+					"width": 54,
+					"height": 140
+				}
+			},
+			"content": "Let's take away $\\maroonD4$ place value blocks from the $\\blueE{13}$ blocks.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/1bbaff25ce434f83e5d062b0f4178f823485ca8d)\n",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {
+				"web+graphie://cdn.kastatic.org/ka-perseus-graphie/301bb28cd36c577d484fbcc439dcdb0c1f6868d5": {
+					"width": 38,
+					"height": 200
+				}
+			},
+			"content": "There are $\\blueE9$ blocks left.\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/301bb28cd36c577d484fbcc439dcdb0c1f6868d5)",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "${}\\Large\\blueE9=\\blueE{13} - \\maroonD4$", "replace": false, "widgets": {} }
+	],
+	"question": {
+		"images": {
+			"web+graphie://cdn.kastatic.org/ka-perseus-graphie/552734b86e1832b3364cf20780222bb7ffcb6fe2": {
+				"width": 105,
+				"height": 140
+			}
+		},
+		"content": "**Subtract.**  \n*Hint: Use the place value blocks to help solve $13 - 4$.*\n\n [[☃ numeric-input 1]] ${}\\Large=\\blueE{13} - \\maroonD4$\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/552734b86e1832b3364cf20780222bb7ffcb6fe2)",
+		"widgets": {
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": 9,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
