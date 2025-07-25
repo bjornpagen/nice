@@ -10,8 +10,13 @@
   THE NEW APPROACH:
   The core skill (counting a quantity of 10) is now assessed by asking the user to *select* the box
   that correctly contains 10 bananas from a set of static images. This preserves the educational
-  goal while using a universally supported QTI interaction type. The choices are constructed using
-  standard HTML <div> and <img> tags with inline CSS for styling.
+  goal while using a universally supported QTI interaction type.
+
+  BANANA EMOJI IMPLEMENTATION:
+  Following the CRITICAL EMOJI RULE from our AI conversion guidelines, the Perseus graphie images 
+  of bananas have been replaced with banana emojis (🍌) rendered as text elements within inline SVG 
+  images. This approach is more reliable than external graphie images which may fail to load, and 
+  provides a consistent, self-contained visual representation of the counting task.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
@@ -40,61 +45,19 @@
             <qti-prompt>Which box has 10 bananas?</qti-prompt>
             
             <qti-simple-choice identifier="CHOICE_8">
-                <div style="border: 2px solid black; padding: 10px; width: 300px; min-height: 120px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px;">
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                </div>
+                <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120' viewBox='0 0 300 120'%3E%3Crect x='0' y='0' width='300' height='120' fill='white' stroke='black' stroke-width='2'/%3E%3Ctext font-size='40' text-anchor='middle'%3E%3Ctspan x='37.5' y='45'%3E🍌%3C/tspan%3E%3Ctspan x='112.5' y='45'%3E🍌%3C/tspan%3E%3Ctspan x='187.5' y='45'%3E🍌%3C/tspan%3E%3Ctspan x='262.5' y='45'%3E🍌%3C/tspan%3E%3Ctspan x='37.5' y='90'%3E🍌%3C/tspan%3E%3Ctspan x='112.5' y='90'%3E🍌%3C/tspan%3E%3Ctspan x='187.5' y='90'%3E🍌%3C/tspan%3E%3Ctspan x='262.5' y='90'%3E🍌%3C/tspan%3E%3C/text%3E%3C/svg%3E" alt="Box containing 8 bananas"/>
             </qti-simple-choice>
 
             <qti-simple-choice identifier="CHOICE_9">
-                <div style="border: 2px solid black; padding: 10px; width: 300px; min-height: 120px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px;">
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                </div>
+                <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='140' viewBox='0 0 300 140'%3E%3Crect x='0' y='0' width='300' height='140' fill='white' stroke='black' stroke-width='2'/%3E%3Ctext font-size='40' text-anchor='middle'%3E%3Ctspan x='50' y='40'%3E🍌%3C/tspan%3E%3Ctspan x='150' y='40'%3E🍌%3C/tspan%3E%3Ctspan x='250' y='40'%3E🍌%3C/tspan%3E%3Ctspan x='50' y='80'%3E🍌%3C/tspan%3E%3Ctspan x='150' y='80'%3E🍌%3C/tspan%3E%3Ctspan x='250' y='80'%3E🍌%3C/tspan%3E%3Ctspan x='50' y='120'%3E🍌%3C/tspan%3E%3Ctspan x='150' y='120'%3E🍌%3C/tspan%3E%3Ctspan x='250' y='120'%3E🍌%3C/tspan%3E%3C/text%3E%3C/svg%3E" alt="Box containing 9 bananas"/>
             </qti-simple-choice>
 
             <qti-simple-choice identifier="CHOICE_10">
-                <div style="border: 2px solid black; padding: 10px; width: 300px; min-height: 120px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px;">
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                </div>
+                <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120' viewBox='0 0 300 120'%3E%3Crect x='0' y='0' width='300' height='120' fill='white' stroke='black' stroke-width='2'/%3E%3Ctext font-size='40' text-anchor='middle'%3E%3Ctspan x='30' y='45'%3E🍌%3C/tspan%3E%3Ctspan x='90' y='45'%3E🍌%3C/tspan%3E%3Ctspan x='150' y='45'%3E🍌%3C/tspan%3E%3Ctspan x='210' y='45'%3E🍌%3C/tspan%3E%3Ctspan x='270' y='45'%3E🍌%3C/tspan%3E%3Ctspan x='30' y='90'%3E🍌%3C/tspan%3E%3Ctspan x='90' y='90'%3E🍌%3C/tspan%3E%3Ctspan x='150' y='90'%3E🍌%3C/tspan%3E%3Ctspan x='210' y='90'%3E🍌%3C/tspan%3E%3Ctspan x='270' y='90'%3E🍌%3C/tspan%3E%3C/text%3E%3C/svg%3E" alt="Box containing 10 bananas"/>
             </qti-simple-choice>
 
             <qti-simple-choice identifier="CHOICE_11">
-                <div style="border: 2px solid black; padding: 10px; width: 300px; min-height: 120px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px;">
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                    <img src="https://cdn.kastatic.org/ka-perseus-graphie/9bb69f238fb7a981c06fb2ce69ca3f9e131add62.png" width="50" height="50" alt="A banana."/>
-                </div>
+                <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='140' viewBox='0 0 300 140'%3E%3Crect x='0' y='0' width='300' height='140' fill='white' stroke='black' stroke-width='2'/%3E%3Ctext font-size='40' text-anchor='middle'%3E%3Ctspan x='37.5' y='40'%3E🍌%3C/tspan%3E%3Ctspan x='112.5' y='40'%3E🍌%3C/tspan%3E%3Ctspan x='187.5' y='40'%3E🍌%3C/tspan%3E%3Ctspan x='262.5' y='40'%3E🍌%3C/tspan%3E%3Ctspan x='37.5' y='80'%3E🍌%3C/tspan%3E%3Ctspan x='112.5' y='80'%3E🍌%3C/tspan%3E%3Ctspan x='187.5' y='80'%3E🍌%3C/tspan%3E%3Ctspan x='262.5' y='80'%3E🍌%3C/tspan%3E%3Ctspan x='75' y='120'%3E🍌%3C/tspan%3E%3Ctspan x='150' y='120'%3E🍌%3C/tspan%3E%3Ctspan x='225' y='120'%3E🍌%3C/tspan%3E%3C/text%3E%3C/svg%3E" alt="Box containing 11 bananas"/>
             </qti-simple-choice>
 
         </qti-choice-interaction>
