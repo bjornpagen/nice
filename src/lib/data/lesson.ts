@@ -10,7 +10,8 @@ export async function fetchLessonLayoutData(params: {
 	lesson: string
 }): Promise<LessonLayoutData> {
 	logger.info("fetchLessonLayoutData called", { params })
-	logger.debug("unit page: fetching unit data", { params })
+	const decodedLesson = decodeURIComponent(params.lesson)
+	logger.debug("unit page: fetching unit data", { params, decodedLesson })
 
 	// 1. Call the parent data fetcher with ONLY the params it needs
 	// This ensures cache effectiveness - all lessons in the same unit share the cache
@@ -21,13 +22,15 @@ export async function fetchLessonLayoutData(params: {
 	})
 
 	// 2. Find the specific lesson from the already-fetched unit data.
+	// Use the decoded lesson slug to handle special characters like colons
 	const currentLesson = unitPageData.unit.children.find(
-		(child) => child.type === "Lesson" && child.slug === params.lesson
+		(child) => child.type === "Lesson" && child.slug === decodedLesson
 	)
 
 	if (!currentLesson || currentLesson.type !== "Lesson") {
 		logger.error("lesson not found or is not of type 'Lesson' within unit children", {
-			lessonSlug: params.lesson,
+			lessonSlug: decodedLesson,
+			originalLessonParam: params.lesson,
 			unitSourcedId: unitPageData.unit.id,
 			foundType: currentLesson?.type
 		})
