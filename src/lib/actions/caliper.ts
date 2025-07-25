@@ -28,6 +28,7 @@ const SENSOR_ID = env.NEXT_PUBLIC_APP_DOMAIN
  * @param actor - The user who performed the action.
  * @param context - The activity context (course, lesson, etc.).
  * @param performance - The performance data including expectedXp, totalQuestions, and correctQuestions.
+ * @param shouldAwardXp - Optional flag indicating if XP should be awarded (when pre-checked by caller)
  */
 export async function sendCaliperActivityCompletedEvent(
 	actor: TimebackActivityCompletedEvent["actor"],
@@ -37,7 +38,8 @@ export async function sendCaliperActivityCompletedEvent(
 		totalQuestions: number
 		correctQuestions: number
 		durationInSeconds?: number
-	}
+	},
+	shouldAwardXp?: boolean
 ) {
 	logger.info("sending caliper activity completed event", {
 		actorId: actor.id,
@@ -76,44 +78,17 @@ export async function sendCaliperActivityCompletedEvent(
 
 	// 1. Check current proficiency before calculating any XP
 	let assessmentXp = 0
-	const currentResultsResult = await errors.try(
-		oneroster.getAllResults({
-			filter: `student.sourcedId='${userSourcedId}' AND assessmentLineItem.sourcedId='${assessmentLineItemId}'`
-		})
-	)
 
-	if (currentResultsResult.error) {
-		logger.error("failed to fetch current proficiency for xp check", {
-			userSourcedId,
-			assessmentLineItemId,
-			error: currentResultsResult.error
-		})
-		// Fail safe: If we can't check current proficiency, award 0 XP to prevent exploitation.
-		assessmentXp = 0
-	} else {
-		const currentResults = currentResultsResult.data
-		let currentProficiency = 0 // Default to 0 if no previous attempts
-
-		if (currentResults.length > 0) {
-			// Get the most recent result to determine current proficiency
-			const latestResult = currentResults.sort(
-				(a, b) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
-			)[0]
-
-			if (latestResult && typeof latestResult.score === "number") {
-				currentProficiency = latestResult.score
-			}
-		}
-
-		if (currentProficiency >= MASTERY_THRESHOLD) {
-			logger.info("xp farming prevented: user already proficient on this assessment", {
+	// If shouldAwardXp is explicitly provided, use that decision
+	if (shouldAwardXp !== undefined) {
+		if (!shouldAwardXp) {
+			logger.info("xp farming prevented: caller determined user already proficient", {
 				userSourcedId,
-				assessmentLineItemId,
-				currentProficiency
+				assessmentLineItemId
 			})
-			assessmentXp = 0 // User already proficient, no new XP is awarded.
+			assessmentXp = 0
 		} else {
-			// Current proficiency is below mastery - calculate XP for this attempt
+			// Calculate XP normally
 			if (performance.totalQuestions === 0) {
 				logger.error("CRITICAL: Assessment has zero questions", {
 					assessmentId: context.activity?.id,
@@ -131,13 +106,78 @@ export async function sendCaliperActivityCompletedEvent(
 				performance.durationInSeconds
 			)
 
-			logger.info("awarding xp for proficiency improvement", {
+			logger.info("awarding xp based on caller decision", {
 				userSourcedId,
 				assessmentLineItemId,
-				currentProficiency,
-				newAccuracy: accuracy,
+				accuracy,
 				awardedXp: assessmentXp
 			})
+		}
+	} else {
+		// Fallback to checking proficiency ourselves (for backward compatibility)
+		const currentResultsResult = await errors.try(
+			oneroster.getAllResults({
+				filter: `student.sourcedId='${userSourcedId}' AND assessmentLineItem.sourcedId='${assessmentLineItemId}'`
+			})
+		)
+
+		if (currentResultsResult.error) {
+			logger.error("failed to fetch current proficiency for xp check", {
+				userSourcedId,
+				assessmentLineItemId,
+				error: currentResultsResult.error
+			})
+			// Fail safe: If we can't check current proficiency, award 0 XP to prevent exploitation.
+			assessmentXp = 0
+		} else {
+			const currentResults = currentResultsResult.data
+			let currentProficiency = 0 // Default to 0 if no previous attempts
+
+			if (currentResults.length > 0) {
+				// Get the most recent result to determine current proficiency
+				const latestResult = currentResults.sort(
+					(a, b) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
+				)[0]
+
+				if (latestResult && typeof latestResult.score === "number") {
+					currentProficiency = latestResult.score
+				}
+			}
+
+			if (currentProficiency >= MASTERY_THRESHOLD) {
+				logger.info("xp farming prevented: user already proficient on this assessment", {
+					userSourcedId,
+					assessmentLineItemId,
+					currentProficiency
+				})
+				assessmentXp = 0 // User already proficient, no new XP is awarded.
+			} else {
+				// Current proficiency is below mastery - calculate XP for this attempt
+				if (performance.totalQuestions === 0) {
+					logger.error("CRITICAL: Assessment has zero questions", {
+						assessmentId: context.activity?.id,
+						performance
+					})
+					throw errors.new("assessment must have at least one question")
+				}
+				const accuracy = performance.correctQuestions / performance.totalQuestions
+
+				// Calculate XP for the assessment itself (including penalty check)
+				assessmentXp = calculateAwardedXp(
+					performance.expectedXp,
+					accuracy,
+					performance.totalQuestions,
+					performance.durationInSeconds
+				)
+
+				logger.info("awarding xp for proficiency improvement", {
+					userSourcedId,
+					assessmentLineItemId,
+					currentProficiency,
+					newAccuracy: accuracy,
+					awardedXp: assessmentXp
+				})
+			}
 		}
 	}
 

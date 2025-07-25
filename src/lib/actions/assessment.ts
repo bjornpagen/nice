@@ -2,7 +2,7 @@
 
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { powerpath, qti } from "@/lib/clients"
+import { oneroster, powerpath, qti } from "@/lib/clients"
 
 /**
  * IMPORTANT NOTE ABOUT POWERPATH TERMINOLOGY:
@@ -354,4 +354,77 @@ export async function processSkippedQuestion(
 			assessmentAttemptNumber
 		})
 	}
+}
+
+/**
+ * Checks if a user has already achieved proficiency (80%+) on an assessment.
+ * This is used to prevent XP farming by checking BEFORE saving a new result.
+ *
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
+ * @param onerosterAssessmentSourcedId - The OneRoster assessment resource sourcedId (e.g., nice:exercise456)
+ * @returns Whether the user is already proficient (true) or not (false)
+ */
+export async function checkExistingProficiency(
+	onerosterUserSourcedId: string,
+	onerosterAssessmentSourcedId: string
+): Promise<boolean> {
+	logger.info("checking existing proficiency", {
+		onerosterUserSourcedId,
+		onerosterAssessmentSourcedId
+	})
+
+	const resultsResult = await errors.try(
+		oneroster.getAllResults({
+			filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${onerosterAssessmentSourcedId}'`
+		})
+	)
+
+	if (resultsResult.error) {
+		logger.error("failed to check existing proficiency", {
+			onerosterUserSourcedId,
+			onerosterAssessmentSourcedId,
+			error: resultsResult.error
+		})
+		// NO FALLBACK - if we can't check, we throw
+		throw errors.wrap(resultsResult.error, "proficiency check")
+	}
+
+	const results = resultsResult.data
+	if (results.length === 0) {
+		logger.debug("no existing results found", {
+			onerosterUserSourcedId,
+			onerosterAssessmentSourcedId
+		})
+		return false
+	}
+
+	// Get the most recent result
+	const latestResult = results.sort(
+		(a, b) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
+	)[0]
+
+	if (!latestResult) {
+		throw errors.new("proficiency check: sorted results array is empty")
+	}
+
+	if (typeof latestResult.score !== "number") {
+		logger.error("proficiency check: invalid score type", {
+			onerosterUserSourcedId,
+			onerosterAssessmentSourcedId,
+			scoreType: typeof latestResult.score,
+			score: latestResult.score
+		})
+		throw errors.new("proficiency check: score must be a number")
+	}
+
+	const isProficient = latestResult.score >= 0.8
+
+	logger.info("proficiency check complete", {
+		onerosterUserSourcedId,
+		onerosterAssessmentSourcedId,
+		currentScore: latestResult.score,
+		isProficient
+	})
+
+	return isProficient
 }

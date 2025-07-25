@@ -12,6 +12,7 @@ import spaceFriend from "@/components/practice/course/unit/lesson/exercise/image
 import { QTIRenderer } from "@/components/qti-renderer"
 import {
 	checkAndCreateNewAttemptIfNeeded,
+	checkExistingProficiency,
 	createNewAssessmentAttempt,
 	finalizeAssessment,
 	processQuestionResponse,
@@ -338,7 +339,22 @@ export function AssessmentStepper({
 		const score = questions.length > 0 ? correctAnswersCount / questions.length : 0
 
 		const finalizeAndAnalyze = async () => {
-			await errors.try(
+			// Check existing proficiency BEFORE saving the result
+			let shouldAwardXp = true
+
+			// Check proficiency for ALL assessments to prevent XP farming race condition
+			const proficiencyResult = await errors.try(
+				checkExistingProficiency(onerosterUserSourcedId, onerosterResourceSourcedId)
+			)
+			if (proficiencyResult.error) {
+				// NO FALLBACK - if we can't check proficiency, we throw
+				throw errors.wrap(proficiencyResult.error, "pre-save proficiency check")
+			}
+
+			shouldAwardXp = !proficiencyResult.data
+
+			// NOW save the assessment result
+			const saveResult = await errors.try(
 				saveAssessmentResult(
 					onerosterResourceSourcedId,
 					score,
@@ -348,6 +364,10 @@ export function AssessmentStepper({
 				)
 			)
 
+			if (saveResult.error) {
+				throw errors.wrap(saveResult.error, "save assessment result")
+			}
+
 			if (isInteractiveAssessment) {
 				// First finalize the assessment to ensure all responses are graded
 				const finalizeResult = await errors.try(
@@ -355,7 +375,7 @@ export function AssessmentStepper({
 				)
 				if (finalizeResult.error) {
 					toast.error("Could not finalize assessment. Proficiency analysis may be incomplete.")
-					return
+					return shouldAwardXp
 				}
 
 				// Add a small delay to ensure PowerPath has processed everything
@@ -374,10 +394,13 @@ export function AssessmentStepper({
 					error: "Could not complete skill analysis."
 				})
 			}
+
+			// Return whether XP should be awarded
+			return shouldAwardXp
 		}
 
 		// Fire and forget Caliper events
-		const sendCaliperEvents = async () => {
+		const sendCaliperEvents = async (shouldAwardXp: boolean) => {
 			if (!unitData) return
 
 			// Extract subject and course from unit path: "/{subject}/{course}/{unit}"
@@ -437,8 +460,8 @@ export function AssessmentStepper({
 				durationInSeconds: durationInSeconds
 			}
 
-			// Send activity completed event
-			void sendCaliperActivityCompletedEvent(actor, context, performance)
+			// Send activity completed event WITH the shouldAwardXp flag
+			void sendCaliperActivityCompletedEvent(actor, context, performance, shouldAwardXp)
 
 			// Send time spent event if we have a duration of at least 1 second
 			if (durationInSeconds && durationInSeconds >= 1) {
@@ -446,8 +469,13 @@ export function AssessmentStepper({
 			}
 		}
 
-		finalizeAndAnalyze()
-		sendCaliperEvents()
+		// Execute both functions with proper async flow
+		const executeFinalization = async () => {
+			const shouldAwardXp = await finalizeAndAnalyze()
+			sendCaliperEvents(shouldAwardXp)
+		}
+
+		executeFinalization()
 	}, [
 		showSummary,
 		onerosterComponentResourceSourcedId,

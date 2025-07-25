@@ -3,11 +3,13 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { oneroster } from "@/lib/clients"
+import type { AssessmentResult, Resource } from "@/lib/oneroster"
 
 /**
  * Calculates the total "banked" XP from passive content (articles, videos)
  * related to a Quiz, but ONLY for content that has been 100% completed.
- * This function awards XP for passive content in ALL lessons within the same unit as the quiz,
+ * This function awards XP for passive content in lessons that come AFTER the previous quiz
+ * (or start of unit if no previous quiz) and BEFORE the current quiz,
  * but only if the user has a perfect score (1.0) for that content.
  */
 export async function awardBankedXpForAssessment(
@@ -16,123 +18,254 @@ export async function awardBankedXpForAssessment(
 ): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
 	logger.info("calculating banked xp for quiz", { quizResourceId, userSourcedId })
 
-	// 1. Find the parent unit of the quiz
-	const allCrsResult = await errors.try(oneroster.getAllComponentResources())
-	if (allCrsResult.error) {
-		logger.error("failed to fetch component resources", { error: allCrsResult.error })
-		throw errors.wrap(allCrsResult.error, "fetch component resources")
+	// Extract just the user ID if it's in URL format
+	const userId = userSourcedId.includes("/") ? userSourcedId.split("/").pop() || userSourcedId : userSourcedId
+
+	// 1. Find the quiz's parent unit via ComponentResource
+	const quizCrResult = await errors.try(
+		oneroster.getAllComponentResources({
+			filter: `resource.sourcedId='${quizResourceId}' AND status='active'`
+		})
+	)
+	if (quizCrResult.error) {
+		logger.error("failed to fetch quiz component resource", { error: quizCrResult.error })
+		throw errors.wrap(quizCrResult.error, "quiz component resource fetch")
 	}
 
-	const quizCr = allCrsResult.data.find((cr) => cr.resource.sourcedId === quizResourceId)
-	if (!quizCr) {
-		logger.warn("could not find componentResource for quiz, cannot award banked xp", { quizResourceId })
+	const quizComponentResource = quizCrResult.data[0]
+	if (!quizComponentResource) {
+		logger.warn("could not find component resource for quiz", { quizResourceId })
 		return { bankedXp: 0, awardedResourceIds: [] }
 	}
 
-	const parentUnitId = quizCr.courseComponent.sourcedId
+	const parentUnitId = quizComponentResource.courseComponent.sourcedId
+	const quizSortOrder = quizComponentResource.sortOrder
 
-	// 2. Find all lessons that are siblings to the quiz under the same parent unit
-	const allUnitComponentsResult = await errors.try(
+	// 2. Get all components in the unit to find both this quiz's position and any previous quiz
+	const unitComponentsResult = await errors.try(
 		oneroster.getCourseComponents({
-			filter: `parent.sourcedId='${parentUnitId}' AND status='active'`
+			filter: `parent.sourcedId='${parentUnitId}' AND status='active'`,
+			orderBy: "asc",
+			sort: "metadata.sortOrder"
 		})
 	)
-	if (allUnitComponentsResult.error) {
-		logger.error("failed to fetch unit components", {
-			parentUnitId,
-			error: allUnitComponentsResult.error
-		})
-		throw errors.wrap(allUnitComponentsResult.error, "fetch unit components")
+	if (unitComponentsResult.error) {
+		logger.error("failed to fetch unit components", { error: unitComponentsResult.error })
+		throw errors.wrap(unitComponentsResult.error, "unit components fetch")
 	}
 
-	const lessonIds = allUnitComponentsResult.data
-		.filter((c) => c.metadata?.khanLessonType !== "quiz" && c.metadata?.khanLessonType !== "unittest")
-		.map((c) => c.sourcedId)
-
-	if (lessonIds.length === 0) {
-		logger.info("no sibling lessons found for quiz, no banked xp to award", { parentUnitId })
-		return { bankedXp: 0, awardedResourceIds: [] }
-	}
-
-	// 3. Find all passive content resources within those lessons
-	const lessonCrs = allCrsResult.data.filter((cr) => lessonIds.includes(cr.courseComponent.sourcedId))
-	const passiveResourceIds = lessonCrs.map((cr) => cr.resource.sourcedId)
-	if (passiveResourceIds.length === 0) {
-		return { bankedXp: 0, awardedResourceIds: [] }
-	}
-
-	// 4. Get ALL assessment results for this user and these resources
-	const existingResultsResult = await errors.try(
-		oneroster.getAllResults({
-			filter: `student.sourcedId='${userSourcedId}' AND assessmentLineItem.sourcedId@'${passiveResourceIds.join(",")}'`
+	// 3. Get all ComponentResources for the unit to identify quizzes
+	const unitCrResult = await errors.try(
+		oneroster.getAllComponentResources({
+			filter: `courseComponent.sourcedId='${parentUnitId}' AND status='active'`
 		})
 	)
-	if (existingResultsResult.error) {
-		logger.error("failed to fetch assessment results", {
-			userSourcedId,
-			error: existingResultsResult.error
-		})
-		throw errors.wrap(existingResultsResult.error, "fetch assessment results")
+	if (unitCrResult.error) {
+		logger.error("failed to fetch unit component resources", { error: unitCrResult.error })
+		throw errors.wrap(unitCrResult.error, "unit component resources fetch")
 	}
 
-	// Create a map of resourceId -> score for quick lookup
-	const resourceScoreMap = new Map<string, number>()
-	for (const result of existingResultsResult.data) {
-		if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
-			resourceScoreMap.set(result.assessmentLineItem.sourcedId, result.score)
-		}
+	// Find all quizzes in the unit by checking resource types
+	const quizResourceIds = new Set<string>()
+	for (const cr of unitCrResult.data) {
+		// We'll need to check if this is a quiz resource
+		// For now, we'll identify them by sortOrder since quizzes are placed at specific positions
+		quizResourceIds.add(cr.resource.sourcedId)
 	}
 
-	// 5. Fetch full resource details to get expectedXp
-	const allResourcesResult = await errors.try(
+	// Fetch resource details to identify which are quizzes
+	const resourceIds = Array.from(quizResourceIds)
+	const resourcesResult = await errors.try(
 		oneroster.getAllResources({
-			filter: `sourcedId@'${passiveResourceIds.join(",")}'`
+			filter: `sourcedId@'${resourceIds.join(",")}' AND status='active'`
 		})
 	)
-	if (allResourcesResult.error) {
-		logger.error("failed to fetch resources", {
-			error: allResourcesResult.error
-		})
-		throw errors.wrap(allResourcesResult.error, "fetch resources")
+	if (resourcesResult.error) {
+		logger.error("failed to fetch resources", { error: resourcesResult.error })
+		throw errors.wrap(resourcesResult.error, "resources fetch")
 	}
 
-	let bankedXp = 0
-	const awardedResourceIds: string[] = []
-
-	for (const resource of allResourcesResult.data) {
-		const metadata = resource.metadata
-		if (!metadata) continue
-
-		const isPassiveContent =
-			metadata.type === "video" || (metadata.type === "qti" && metadata.subType === "qti-stimulus")
-		const score = resourceScoreMap.get(resource.sourcedId)
-
-		// Only award XP if content is passive AND has been 100% completed (score = 1.0)
-		if (isPassiveContent && score === 1.0) {
-			const xp = metadata.xp
-			if (typeof xp === "number" && xp > 0) {
-				bankedXp += xp
-				awardedResourceIds.push(resource.sourcedId)
-				logger.debug("awarding xp for completed content", {
-					resourceId: resource.sourcedId,
-					xp,
-					type: metadata.type
-				})
-			}
-		} else if (isPassiveContent && score !== undefined && score < 1.0) {
-			logger.debug("skipping incomplete content", {
-				resourceId: resource.sourcedId,
-				score,
-				type: metadata.type
-			})
+	// Identify quiz resources by their type
+	const quizCrMap = new Map<string, number>() // resourceId -> sortOrder
+	for (const cr of unitCrResult.data) {
+		const resource = resourcesResult.data.find((r) => r.sourcedId === cr.resource.sourcedId)
+		if (resource && resource.metadata?.type === "qti") {
+			quizCrMap.set(resource.sourcedId, cr.sortOrder)
 		}
 	}
 
-	logger.info("calculated banked xp for completed content", {
-		bankedXp,
-		awardedResourceCount: awardedResourceIds.length,
-		totalPassiveContent: passiveResourceIds.length
+	// Find the previous quiz (the one with highest sortOrder that's still less than current quiz)
+	let previousQuizSortOrder = -1
+	for (const [resourceId, sortOrder] of quizCrMap.entries()) {
+		if (resourceId !== quizResourceId && sortOrder < quizSortOrder && sortOrder > previousQuizSortOrder) {
+			previousQuizSortOrder = sortOrder
+		}
+	}
+
+	logger.info("found quiz boundaries", {
+		currentQuizSortOrder: quizSortOrder,
+		previousQuizSortOrder,
+		totalQuizzesInUnit: quizCrMap.size
 	})
 
-	return { bankedXp, awardedResourceIds }
+	// 4. Find lessons between the previous quiz (or start) and current quiz
+	const lessons = unitComponentsResult.data.filter((component) => {
+		// Skip if it's a quiz or unit test (checking metadata)
+		if (component.metadata?.khanLessonType === "quiz" || component.metadata?.khanLessonType === "unit-test") {
+			return false
+		}
+
+		// For lessons, the sortOrder is on the CourseComponent itself
+		// A lesson is eligible if its sortOrder falls in our range
+		return component.sortOrder > previousQuizSortOrder && component.sortOrder < quizSortOrder
+	})
+
+	logger.info("found lessons between quizzes", {
+		parentUnitId,
+		previousQuizSortOrder,
+		currentQuizSortOrder: quizSortOrder,
+		eligibleLessonCount: lessons.length,
+		eligibleLessonIds: lessons.map((l) => l.sourcedId)
+	})
+
+	if (lessons.length === 0) {
+		logger.info("no lessons found between previous quiz and current quiz")
+		return { bankedXp: 0, awardedResourceIds: [] }
+	}
+
+	// 5. Get all passive resources (videos, articles) from eligible lessons
+	const passiveResources: Resource[] = []
+
+	for (const lesson of lessons) {
+		// Get ComponentResources for this lesson
+		const lessonCrResult = await errors.try(
+			oneroster.getAllComponentResources({
+				filter: `courseComponent.sourcedId='${lesson.sourcedId}' AND status='active'`
+			})
+		)
+		if (lessonCrResult.error) {
+			logger.error("failed to fetch lesson component resources", {
+				lessonId: lesson.sourcedId,
+				error: lessonCrResult.error
+			})
+			continue
+		}
+
+		// All resources in eligible lessons should be considered
+		const eligibleCrs = lessonCrResult.data
+
+		if (eligibleCrs.length === 0) continue
+
+		// Fetch the actual resources
+		const resourceIds = eligibleCrs.map((cr) => cr.resource.sourcedId)
+		const resourcesResult = await errors.try(
+			oneroster.getAllResources({
+				filter: `sourcedId@'${resourceIds.join(",")}' AND status='active'`
+			})
+		)
+		if (resourcesResult.error) {
+			logger.error("failed to fetch lesson resources", {
+				lessonId: lesson.sourcedId,
+				error: resourcesResult.error
+			})
+			continue
+		}
+
+		// Filter for passive content (articles and videos)
+		const passiveContent = resourcesResult.data.filter((r) => {
+			const resourceType = r.metadata?.type
+			return resourceType === "video" || (resourceType === "qti" && r.metadata?.subType === "qti-stimulus")
+		})
+		passiveResources.push(...passiveContent)
+	}
+
+	logger.info("found passive resources between quizzes", {
+		totalPassiveContent: passiveResources.length,
+		resourceIds: passiveResources.map((r) => r.sourcedId)
+	})
+
+	if (passiveResources.length === 0) {
+		return { bankedXp: 0, awardedResourceIds: [] }
+	}
+
+	// 6. Get resource IDs for passive content
+	const passiveResourceIds = passiveResources.map((r) => r.sourcedId)
+
+	// 7. Fetch assessment results for these resources
+	logger.info("found passive resources between quizzes", {
+		totalPassiveContent: passiveResourceIds.length,
+		resourceIds: passiveResourceIds
+	})
+
+	if (passiveResourceIds.length === 0) {
+		logger.info("no passive content found between quizzes")
+		return { bankedXp: 0, awardedResourceIds: [] }
+	}
+
+	// Fetch assessment results for each resource individually
+	const assessmentResultPromises = passiveResourceIds.map((resourceId) =>
+		errors.try(
+			oneroster.getAllResults({
+				filter: `student.sourcedId='${userId}' AND assessmentLineItem.sourcedId='${resourceId}'`
+			})
+		)
+	)
+
+	// Wait for all results in parallel
+	const assessmentResultResponses = await Promise.all(assessmentResultPromises)
+
+	// Combine all results
+	const allResults: AssessmentResult[] = []
+	for (let i = 0; i < assessmentResultResponses.length; i++) {
+		const response = assessmentResultResponses[i]
+		if (!response || response.error) {
+			logger.error("failed to fetch assessment results for resource", {
+				error: response?.error,
+				resourceId: passiveResourceIds[i]
+			})
+			// Continue with other resources instead of failing entirely
+			continue
+		}
+		if (response.data) {
+			allResults.push(...response.data)
+		}
+	}
+
+	// 7. Calculate banked XP for 100% completed content
+	let totalBankedXp = 0
+	const awardedResourceIds: string[] = []
+
+	for (const result of allResults) {
+		// Only award XP for perfect scores (1.0)
+		if (result.score === 1) {
+			const resource = passiveResources.find((r) => r.sourcedId === result.assessmentLineItem.sourcedId)
+			if (resource?.metadata) {
+				const xpValue = resource.metadata.xp
+				if (typeof xpValue === "number" && xpValue > 0) {
+					totalBankedXp += xpValue
+					awardedResourceIds.push(resource.sourcedId)
+
+					logger.debug("awarding banked xp for resource", {
+						resourceId: resource.sourcedId,
+						resourceType: resource.metadata.type,
+						xpValue,
+						userScore: result.score
+					})
+				}
+			}
+		}
+	}
+
+	logger.info("calculated banked xp for completed content between quizzes", {
+		bankedXp: totalBankedXp,
+		awardedResourceCount: awardedResourceIds.length,
+		totalPassiveContentInRange: passiveResources.length,
+		previousQuizSortOrder,
+		currentQuizSortOrder: quizSortOrder
+	})
+
+	return {
+		bankedXp: totalBankedXp,
+		awardedResourceIds
+	}
 }
