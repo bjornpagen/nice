@@ -9,6 +9,8 @@ import { toast } from "sonner"
 import greenFriend from "@/components/practice/course/unit/lesson/exercise/images/green-friend_v3.png"
 import lightBlueFriend from "@/components/practice/course/unit/lesson/exercise/images/light-blue-friend_v3.png"
 import spaceFriend from "@/components/practice/course/unit/lesson/exercise/images/space-friend_v3.png"
+import quizIllustration from "@/components/practice/course/unit/quiz/images/quiz-illustration.png"
+import testIllustration from "@/components/practice/course/unit/test/images/test-illustration.png"
 import { QTIRenderer } from "@/components/qti-renderer"
 import {
 	checkAndCreateNewAttemptIfNeeded,
@@ -75,20 +77,22 @@ function SummaryView({
 					<h2 className={`text-4xl font-bold mb-4 whitespace-nowrap ${titleClass}`}>{title}</h2>
 					{subtitle && (
 						<p
-							className={`text-lg mb-8 whitespace-nowrap ${contentType === "Exercise" ? "text-blue-100" : "text-gray-700"}`}
+							className={`text-lg mb-8 whitespace-nowrap ${contentType === "Exercise" || contentType === "Quiz" || contentType === "Test" ? "text-blue-100" : "text-gray-700"}`}
 						>
 							{subtitle}
 						</p>
 					)}
 					<div className="mt-8">
-						<p className={`text-3xl font-bold ${contentType === "Exercise" ? "text-white" : "text-gray-900"}`}>
+						<p
+							className={`text-3xl font-bold ${contentType === "Exercise" || contentType === "Quiz" || contentType === "Test" ? "text-white" : "text-gray-900"}`}
+						>
 							{correctAnswersCount}/{totalQuestions} correct
 						</p>
 					</div>
 				</div>
 
-				{/* Character Images for Exercises */}
-				{showCharacters && (
+				{/* Illustrations based on content type */}
+				{showCharacters && contentType === "Exercise" && (
 					<div className="absolute bottom-0 flex flex-row w-full justify-center items-end overflow-hidden h-1/3 max-h-64">
 						<Image
 							src={spaceFriend}
@@ -105,6 +109,16 @@ function SummaryView({
 							alt="Exercise illustration"
 							className="max-w-full max-h-full min-h-0 min-w-0 object-contain object-bottom flex-1"
 						/>
+					</div>
+				)}
+				{showCharacters && contentType === "Quiz" && (
+					<div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 justify-center items-center overflow-hidden h-1/2 max-h-80 w-full hidden [@media(min-height:600px)]:block">
+						<Image src={quizIllustration} alt="Quiz illustration" className="w-full h-full object-contain" />
+					</div>
+				)}
+				{showCharacters && contentType === "Test" && (
+					<div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 justify-center items-center overflow-hidden h-2/3 max-h-96 w-full hidden [@media(min-height:600px)]:block">
+						<Image src={testIllustration} alt="Test illustration" className="w-full h-full object-contain" />
 					</div>
 				)}
 			</div>
@@ -528,31 +542,31 @@ export function AssessmentStepper({
 				}
 			}
 
-			// For quizzes and tests, use the original color scheme
+			// For quizzes and tests, use the same blue theme as exercises
 			if (percentage < 50) {
 				return {
 					title: "Keep Growing! Keep Grinding!",
 					subtitle: "Your level stayed the same. Keep on practicing and you'll level up in no time!",
-					titleClass: "text-orange-900",
-					bgClass: "bg-orange-100",
-					showCharacters: false
+					titleClass: "text-white",
+					bgClass: "bg-blue-950",
+					showCharacters: true
 				}
 			}
 			if (percentage >= 50 && percentage < 80) {
 				return {
 					title: "Keep On Practicing!",
 					subtitle: "",
-					titleClass: "text-blue-900",
-					bgClass: "bg-blue-100",
-					showCharacters: false
+					titleClass: "text-white",
+					bgClass: "bg-blue-950",
+					showCharacters: true
 				}
 			}
 			return {
 				title: "All Done! Great Work!",
 				subtitle: "",
-				titleClass: "text-green-900",
-				bgClass: "bg-green-100",
-				showCharacters: false
+				titleClass: "text-white",
+				bgClass: "bg-blue-950",
+				showCharacters: true
 			}
 		}
 
