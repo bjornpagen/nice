@@ -1,8 +1,10 @@
 "use client"
 
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import * as React from "react"
 import { CourseSidebar } from "@/components/practice/course/sidebar/course-sidebar"
+import { Button } from "@/components/ui/button"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/v2/types"
@@ -23,6 +25,7 @@ export function LessonLayout({
 	// Now we pass progressPromise to the sidebar instead of consuming it here
 
 	const pathname = usePathname()
+	const [isCollapsed, setIsCollapsed] = React.useState(false)
 
 	// Don't show LessonNext on exercise, quiz, unit test, or course challenge pages
 	const isExercisePage = pathname.includes("/e/")
@@ -32,10 +35,15 @@ export function LessonLayout({
 
 	const shouldShowLessonNext = !isExercisePage && !isQuizPage && !isUnitTestPage && !isCourseChallengePage
 
+	const toggleSidebar = () => setIsCollapsed(!isCollapsed)
+
 	return (
 		<div className="flex h-full">
 			{/* Wrap CourseSidebar in a flex container to match legacy layout behavior */}
-			<div className="w-[var(--sidebar-width)] flex-shrink-0 bg-gray-50 border-r border-gray-200 h-full">
+			<div
+				className="w-[var(--sidebar-width)] flex-shrink-0 bg-gray-50 border-r border-gray-200 h-full sidebar-container"
+				data-collapsed={isCollapsed}
+			>
 				<CourseSidebar
 					coursePromise={coursePromise}
 					progressPromise={progressPromise}
@@ -44,7 +52,18 @@ export function LessonLayout({
 			</div>
 
 			{/* Main area with flex column layout */}
-			<div className="flex-1 flex flex-col">
+			<div className="flex-1 flex flex-col relative">
+				{/* Sidebar toggle button */}
+				<Button
+					onClick={toggleSidebar}
+					variant="ghost"
+					size="icon"
+					className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md z-10 rounded-l-none rounded-r-md hover:cursor-pointer size-7 border border-l-0"
+				>
+					{isCollapsed ? <ChevronRightIcon className="h-4 w-4" /> : <ChevronLeftIcon className="h-4 w-4" />}
+					<span className="sr-only">Toggle Sidebar</span>
+				</Button>
+
 				{/* Content area - scrollable */}
 				<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 

@@ -2,3 +2,13 @@
 :root {
 	--sidebar-width: 28rem;
 }
+
+/* Sidebar collapse transition */
+.sidebar-container {
+	transition: width 200ms ease-linear;
+}
+
+.sidebar-container[data-collapsed="true"] {
+	width: 0 !important;
+	overflow: hidden;
+}
