@@ -330,6 +330,41 @@ const TestQuestionsResponseSchema = z.object({
 })
 export type TestQuestionsResponse = z.infer<typeof TestQuestionsResponseSchema>
 
+// --- Validation Schemas (New) ---
+
+/**
+ * Input for validating a QTI XML string.
+ * You must provide a schema type and either the raw XML content or the ID of an existing entity.
+ */
+export const ValidateXmlInputSchema = z
+	.object({
+		xml: z.string().optional(),
+		schema: z.enum(["test", "item", "stimulus"]),
+		entityId: z.string().optional()
+	})
+	.refine((data) => data.xml || data.entityId, {
+		message: "Either 'xml' or 'entityId' must be provided for validation."
+	})
+export type ValidateXmlInput = z.infer<typeof ValidateXmlInputSchema>
+
+/**
+ * Response from the QTI XML validation endpoint.
+ */
+const ValidateXmlRawResponseSchema = z.object({
+	success: z.enum(["true", "false"]),
+	entityId: z.string(),
+	xmlContent: z.string(),
+	validationErrors: z.array(z.string()),
+	message: z.string()
+})
+
+export const ValidateXmlResponseSchema = ValidateXmlRawResponseSchema.transform((data) => ({
+	...data,
+	success: data.success === "true"
+}))
+
+export type ValidateXmlResponse = z.infer<typeof ValidateXmlResponseSchema>
+
 // --- API CLIENT CONFIG TYPE ---
 type ApiClientConfig = {
 	serverUrl: string
@@ -955,5 +990,38 @@ export class Client {
 			},
 			ProcessResponseResultSchema
 		)
+	}
+
+	// --- Validation Methods (New) ---
+
+	/**
+	 * Validates a QTI XML string against the corresponding XSD specification.
+	 * You can provide the XML directly or reference an existing entity by its ID.
+	 * @param {ValidateXmlInput} input - The validation input, containing the schema type and either XML content or an entity ID.
+	 * @returns {Promise<ValidateXmlResponse>} The validation result.
+	 */
+	async validateXml(input: ValidateXmlInput): Promise<ValidateXmlResponse> {
+		logger.info("qti client: validating xml", { schema: input.schema, entityId: input.entityId })
+		const validation = ValidateXmlInputSchema.safeParse(input)
+		if (!validation.success) {
+			throw errors.wrap(validation.error, "validateXml input validation")
+		}
+
+		const endpoint = "/validate"
+		const rawResponse = await this.#request(
+			endpoint,
+			{
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(validation.data)
+			},
+			ValidateXmlRawResponseSchema
+		)
+
+		// Transform the raw response to convert success string to boolean
+		return {
+			...rawResponse,
+			success: rawResponse.success === "true"
+		}
 	}
 }
