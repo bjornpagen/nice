@@ -185,6 +185,7 @@ For the following types of visuals, you MUST NOT use the original 'graphie' URL.
 For the following types of visuals, you MUST use the original 'graphie' URL (converted to \`https://...\`) but you MUST ALSO add a descriptive text note below the image to make the question solvable even if the image's details fail to render. This rule applies to:
   - **Rulers**
   - **Analog Clocks**
+  - **Ruler-like visual estimations** (e.g., estimating an object's height relative to another object of known height)
 
 **Example of the "Supplement with Text" Strategy:**
 
