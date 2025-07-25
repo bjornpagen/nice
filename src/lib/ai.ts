@@ -7,7 +7,7 @@ import { env } from "@/env"
 import { loadConversionExamples } from "./qti-examples"
 import { VALID_QTI_TAGS } from "./qti-tags"
 
-const OPENAI_MODEL = "gpt-4.1-2025-04-14"
+const OPENAI_MODEL = "o3"
 
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
@@ -18,6 +18,58 @@ const QtiGenerationSchema = z.object({
 const QtiCorrectionSchema = z.object({
 	corrected_xml: z.string().describe("The single, complete, and perfectly-formed QTI 3.0 XML string.")
 })
+
+/**
+ * Validates that the generated QTI XML does not contain any disallowed HTML entities.
+ * The QTI standard requires using actual characters or numeric entities, not named HTML entities.
+ *
+ * @param xml The QTI XML string to validate
+ * @param logger The logger instance
+ * @throws Error if disallowed HTML entities are found
+ */
+function checkForDisallowedHtmlEntities(xml: string, logger: logger.Logger): void {
+	// Robust regex that matches ONLY the 4 explicitly banned HTML entities
+	// Using word boundaries to ensure exact matches
+	const disallowedEntitiesRegex = /&(?:nbsp|minus|ndash|mdash);/g
+
+	// Find all matches to provide comprehensive error reporting
+	const matches = xml.matchAll(disallowedEntitiesRegex)
+	const foundEntities: Array<{ entity: string; index: number }> = []
+
+	for (const match of matches) {
+		if (match.index !== undefined) {
+			foundEntities.push({
+				entity: match[0],
+				index: match.index
+			})
+		}
+	}
+
+	if (foundEntities.length > 0) {
+		// Get context around the first occurrence
+		const firstMatch = foundEntities[0]
+		if (!firstMatch) {
+			// This should never happen due to the length check, but TypeScript needs the guard
+			throw errors.new("invalid ai xml output: contains disallowed html entities")
+		}
+		const contextStart = Math.max(0, firstMatch.index - 100)
+		const contextEnd = Math.min(xml.length, firstMatch.index + 100)
+		const context = xml.substring(contextStart, contextEnd)
+
+		logger.error("detected disallowed html entities in generated qti xml", {
+			entities: foundEntities.map((f) => f.entity),
+			entityCount: foundEntities.length,
+			firstEntity: firstMatch.entity,
+			firstIndex: firstMatch.index,
+			context,
+			allEntities: [...new Set(foundEntities.map((f) => f.entity))] // Unique entities found
+		})
+
+		throw errors.new(
+			`invalid ai xml output: contains disallowed html entities: ${[...new Set(foundEntities.map((f) => f.entity))].join(", ")}. Use actual characters instead (space for &nbsp;, hyphen for &minus;, en dash character for &ndash;, em dash character for &mdash;)`
+		)
+	}
+}
 
 /**
  * Creates the structured prompt for the AI model to convert Perseus JSON to QTI XML,
@@ -481,6 +533,9 @@ export async function generateQtiFromPerseus(
 		)
 	}
 
+	// Step 6: Check for disallowed HTML entities
+	checkForDisallowedHtmlEntities(extractedXml, logger)
+
 	logger.debug("successfully generated and extracted qti xml from openai", {
 		xmlLength: extractedXml.length,
 		rootTag: extractedRootTag,
@@ -681,6 +736,9 @@ Return a single JSON object with the final corrected XML.
 			`invalid ai xml output: contains perseus widget artifact '${perseusArtifactMatch[0]}' which will cause qti api to fail`
 		)
 	}
+
+	// Step 6: Check for disallowed HTML entities
+	checkForDisallowedHtmlEntities(extractedXml, logger)
 
 	logger.debug("correction complete", {
 		originalLength: invalidXml.length,

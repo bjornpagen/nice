@@ -350,18 +350,13 @@ export type ValidateXmlInput = z.infer<typeof ValidateXmlInputSchema>
 /**
  * Response from the QTI XML validation endpoint.
  */
-const ValidateXmlRawResponseSchema = z.object({
-	success: z.enum(["true", "false"]),
+export const ValidateXmlResponseSchema = z.object({
+	success: z.boolean(),
 	entityId: z.string(),
 	xmlContent: z.string(),
 	validationErrors: z.array(z.string()),
 	message: z.string()
 })
-
-export const ValidateXmlResponseSchema = ValidateXmlRawResponseSchema.transform((data) => ({
-	...data,
-	success: data.success === "true"
-}))
 
 export type ValidateXmlResponse = z.infer<typeof ValidateXmlResponseSchema>
 
@@ -1008,20 +1003,14 @@ export class Client {
 		}
 
 		const endpoint = "/validate"
-		const rawResponse = await this.#request(
+		return await this.#request(
 			endpoint,
 			{
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(validation.data)
 			},
-			ValidateXmlRawResponseSchema
+			ValidateXmlResponseSchema
 		)
-
-		// Transform the raw response to convert success string to boolean
-		return {
-			...rawResponse,
-			success: rawResponse.success === "true"
-		}
 	}
 }
