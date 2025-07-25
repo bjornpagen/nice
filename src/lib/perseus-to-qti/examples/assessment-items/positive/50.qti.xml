@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This QTI XML has been refactored from its original Perseus format to be more robust.
+
+  REASON FOR THE CHANGE:
+  The original item is a measurement question that relies on a 'graphie' image of a ruler.
+  These dynamic assets can be unreliable when converted to static images, often resulting in the
+  loss of critical details like ruler tick marks. To prevent an unsolvable question due to a
+  potentially broken or incomplete image, the visual component has been supplemented with a
+  clear textual description.
+
+  THE NEW APPROACH:
+  The item now includes both the original image for visual context and a sentence explicitly
+  stating the start and end points of the measurement. This ensures that the question is always
+  solvable, even if the image's tick marks are not visible, while preserving the original intent
+  and interaction type of the question.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="measure-mouse-length-hybrid"
+    title="Measure the length of a mouse"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>4</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <qti-prompt>What is the length of the mouse?</qti-prompt>
+        <div id="reference_text">
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/ab73094ac82a4d98244289fa96532c576019b0cf.svg"
+                 width="320"
+                 height="224"
+                 alt="A cartoon mouse is shown against a ruler."/>
+            <p><span class="qti-italic">Note: The mouse's nose is at the 0-inch mark and its tail ends at the 4-inch mark.</span></p>
+        </div>
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="2"/> inches
+        </p>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The length is the distance between the start point (<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math> inches) and the end point (<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> inches). The length is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>-</mo><mn>0</mn><mo>=</mo><mn>4</mn></math> inches.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> The problem states that the measurement starts at <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math> inches and ends at <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> inches. The length is the distance between these two points.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>

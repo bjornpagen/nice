@@ -1,0 +1,50 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "The length starts at $0\\text{ in}$ on the ruler.  \n\nWhere does the length end?",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "The length ends at $4\\text{ in}$.", "replace": false, "widgets": {} },
+		{ "images": {}, "content": "The mouse's length is $4$ inches.", "replace": false, "widgets": {} }
+	],
+	"question": {
+		"images": {
+			"web+graphie://cdn.kastatic.org/ka-perseus-graphie/ab73094ac82a4d98244289fa96532c576019b0cf": {
+				"width": 320,
+				"height": 224
+			}
+		},
+		"content": "**What is the length of the mouse?**  \n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/ab73094ac82a4d98244289fa96532c576019b0cf)\n\n\n[[☃ numeric-input 1]] inches",
+		"widgets": {
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": 4,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "width in inches",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
