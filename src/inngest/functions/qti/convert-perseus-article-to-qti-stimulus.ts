@@ -1,6 +1,5 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
-import { z } from "zod"
 import { db } from "@/db"
 import { niceArticles } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
@@ -38,22 +37,6 @@ async function upsertStimulus(identifier: string, title: string, content: string
 	return content
 }
 
-const PerseusContentSectionSchema = z.object({
-	content: z.string().default(""),
-	images: z.record(z.any()).default({}),
-	widgets: z
-		.record(
-			z
-				.object({
-					type: z.string().optional()
-				})
-				.passthrough()
-		)
-		.default({})
-})
-
-const PerseusContentSchema = z.array(PerseusContentSectionSchema)
-
 export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 	{
 		id: "convert-perseus-article-to-qti-stimulus",
@@ -66,7 +49,7 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 		}
 	},
 	{ event: "qti/stimulus.migrate" },
-	async ({ event, step, logger }) => {
+	async ({ event, logger }) => {
 		const { articleId } = event.data
 		logger.info("starting article to qti stimulus validation", { articleId })
 
@@ -94,103 +77,73 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 			return { status: "aborted", reason: "not_found_or_no_data" }
 		}
 
-		// Step 2: Pre-process the Perseus content to remove interactive widgets
-		const stimulusOnlyPerseusContent = await step.run("preprocess-perseus-content", async () => {
-			const validationResult = PerseusContentSchema.safeParse(article.perseusContent)
-			if (!validationResult.success) {
-				throw errors.wrap(validationResult.error, "invalid perseus content structure")
-			}
-
-			const processedContent = validationResult.data.map((section) => {
-				// Check if this section contains an interactive widget set
-				const hasGradedGroup = Object.values(section.widgets).some((widget) => widget.type === "graded-group-set")
-
-				if (hasGradedGroup) {
-					// Replace the widget placeholder with empty string and remove the widget data.
-					return {
-						...section,
-						content: section.content.replace(/\[\[☃ graded-group-set \d+\]\]/g, ""),
-						widgets: {} // Remove all widgets from this section
-					}
-				}
-				// If no interactive widgets, return the section as is.
-				return section
-			})
-
-			return processedContent
-		})
-
-		// Step 3: Convert the sanitized Perseus JSON to QTI XML via AI
-		const qtiXml = await step.run("generate-qti-stimulus-from-perseus", async () => {
-			const result = await errors.try(generateQtiFromPerseus(logger, stimulusOnlyPerseusContent, { type: "stimulus" }))
-			if (result.error) {
-				logger.error("failed to generate qti stimulus from perseus", { articleId, error: result.error })
-				throw errors.wrap(result.error, "ai conversion")
-			}
-			return result.data
-		})
+		// Step 2: Convert the Perseus JSON to QTI XML via AI
+		const generateResult = await errors.try(
+			generateQtiFromPerseus(logger, article.perseusContent, { type: "stimulus" })
+		)
+		if (generateResult.error) {
+			logger.error("failed to generate qti stimulus from perseus", { articleId, error: generateResult.error })
+			throw errors.wrap(generateResult.error, "ai conversion")
+		}
+		const qtiXml = generateResult.data
 
 		const tempIdentifier = `nice-tmp:${article.id}`
 
-		// Step 4: Validate XML by creating and immediately deleting it from the QTI API
-		const validatedXml = await step.run("validate-and-delete-from-qti-api", async () => {
-			let finalXml = qtiXml
-			const upsertResult = await errors.try(upsertStimulus(tempIdentifier, article.title, qtiXml))
+		// Step 3: Validate XML by creating and immediately deleting it from the QTI API
+		let finalXml = qtiXml
+		const upsertResult = await errors.try(upsertStimulus(tempIdentifier, article.title, qtiXml))
 
-			if (upsertResult.error) {
-				if (
-					errors.is(upsertResult.error, ErrQtiUnprocessable) ||
-					errors.is(upsertResult.error, ErrQtiInternalServerError)
-				) {
-					logger.warn("initial upsert failed, attempting correction", {
-						qtiId: tempIdentifier,
-						error: upsertResult.error
-					})
-
-					const fixResult = await errors.try(
-						fixInvalidQtiXml(logger, {
-							invalidXml: qtiXml,
-							errorMessage: upsertResult.error.toString(),
-							rootTag: "qti-assessment-stimulus"
-						})
-					)
-					if (fixResult.error) {
-						logger.error("failed to fix invalid qti xml", { qtiId: tempIdentifier, error: fixResult.error })
-						throw errors.wrap(fixResult.error, "ai xml correction")
-					}
-					finalXml = fixResult.data
-
-					const secondResult = await errors.try(upsertStimulus(tempIdentifier, article.title, finalXml))
-					if (secondResult.error) {
-						logger.error("second qti upsert attempt failed", { qtiId: tempIdentifier, error: secondResult.error })
-						throw errors.wrap(secondResult.error, "second qti upsert")
-					}
-					finalXml = secondResult.data
-				} else {
-					logger.error("qti upsert failed with unexpected error", { qtiId: tempIdentifier, error: upsertResult.error })
-					throw upsertResult.error
-				}
-			} else {
-				finalXml = upsertResult.data
-			}
-
-			// On success, immediately delete the temporary stimulus
-			const deleteResult = await errors.try(qti.deleteStimulus(tempIdentifier))
-			if (deleteResult.error) {
-				logger.error("failed to delete validated stimulus from QTI API, but continuing", {
-					identifier: tempIdentifier,
-					error: deleteResult.error
+		if (upsertResult.error) {
+			if (
+				errors.is(upsertResult.error, ErrQtiUnprocessable) ||
+				errors.is(upsertResult.error, ErrQtiInternalServerError)
+			) {
+				logger.warn("initial upsert failed, attempting correction", {
+					qtiId: tempIdentifier,
+					error: upsertResult.error
 				})
-			}
 
-			return finalXml
-		})
+				const fixResult = await errors.try(
+					fixInvalidQtiXml(logger, {
+						invalidXml: qtiXml,
+						errorMessage: upsertResult.error.toString(),
+						rootTag: "qti-assessment-stimulus"
+					})
+				)
+				if (fixResult.error) {
+					logger.error("failed to fix invalid qti xml", { qtiId: tempIdentifier, error: fixResult.error })
+					throw errors.wrap(fixResult.error, "ai xml correction")
+				}
+				finalXml = fixResult.data
+
+				const secondResult = await errors.try(upsertStimulus(tempIdentifier, article.title, finalXml))
+				if (secondResult.error) {
+					logger.error("second qti upsert attempt failed", { qtiId: tempIdentifier, error: secondResult.error })
+					throw errors.wrap(secondResult.error, "second qti upsert")
+				}
+				finalXml = secondResult.data
+			} else {
+				logger.error("qti upsert failed with unexpected error", { qtiId: tempIdentifier, error: upsertResult.error })
+				throw upsertResult.error
+			}
+		} else {
+			finalXml = upsertResult.data
+		}
+
+		// On success, immediately delete the temporary stimulus
+		const deleteResult = await errors.try(qti.deleteStimulus(tempIdentifier))
+		if (deleteResult.error) {
+			logger.error("failed to delete validated stimulus from QTI API, but continuing", {
+				identifier: tempIdentifier,
+				error: deleteResult.error
+			})
+		}
 
 		logger.info("successfully validated qti stimulus", { articleId, identifier: tempIdentifier })
 
-		// NEW Step 4: Write the validated XML to the database.
+		// Step 4: Write the validated XML to the database.
 		const updateResult = await errors.try(
-			db.update(niceArticles).set({ xml: validatedXml }).where(eq(niceArticles.id, articleId))
+			db.update(niceArticles).set({ xml: finalXml }).where(eq(niceArticles.id, articleId))
 		)
 
 		if (updateResult.error) {

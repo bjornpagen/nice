@@ -50,7 +50,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		}
 	},
 	{ event: "qti/item.migrate" },
-	async ({ event, step, logger }) => {
+	async ({ event, logger }) => {
 		const { questionId } = event.data
 		logger.info("starting question to qti item validation", { questionId })
 
@@ -78,76 +78,70 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		}
 
 		// Step 2: Convert Perseus JSON to QTI XML via AI
-		const qtiXml = await step.run("generate-qti-from-perseus", async () => {
-			const result = await errors.try(generateQtiFromPerseus(logger, question.parsedData))
-			if (result.error) {
-				logger.error("failed to generate qti from perseus", { questionId, error: result.error })
-				throw errors.wrap(result.error, "ai conversion")
-			}
-			return result.data
-		})
+		const generateResult = await errors.try(generateQtiFromPerseus(logger, question.parsedData))
+		if (generateResult.error) {
+			logger.error("failed to generate qti from perseus", { questionId, error: generateResult.error })
+			throw errors.wrap(generateResult.error, "ai conversion")
+		}
+		const qtiXml = generateResult.data
 
 		const tempIdentifier = `nice-tmp:${question.id}`
 
 		// Step 3: Validate XML by creating and immediately deleting it from the QTI API
-		const validatedXml = await step.run("validate-and-delete-from-qti-api", async () => {
-			let finalXml = qtiXml
-			const upsertResult = await errors.try(upsertItem(tempIdentifier, question.exerciseTitle, qtiXml))
+		let finalXml = qtiXml
+		const upsertResult = await errors.try(upsertItem(tempIdentifier, question.exerciseTitle, qtiXml))
 
-			if (upsertResult.error) {
-				if (
-					errors.is(upsertResult.error, ErrQtiUnprocessable) ||
-					errors.is(upsertResult.error, ErrQtiInternalServerError)
-				) {
-					logger.warn("initial upsert failed, attempting correction", {
-						qtiId: tempIdentifier,
-						error: upsertResult.error
-					})
-
-					const fixResult = await errors.try(
-						fixInvalidQtiXml(logger, {
-							invalidXml: qtiXml,
-							errorMessage: upsertResult.error.toString(),
-							rootTag: "qti-assessment-item"
-						})
-					)
-					if (fixResult.error) {
-						logger.error("failed to fix invalid qti xml", { qtiId: tempIdentifier, error: fixResult.error })
-						throw errors.wrap(fixResult.error, "ai xml correction")
-					}
-					finalXml = fixResult.data
-
-					const secondResult = await errors.try(upsertItem(tempIdentifier, question.exerciseTitle, finalXml))
-					if (secondResult.error) {
-						logger.error("second qti upsert attempt failed", { qtiId: tempIdentifier, error: secondResult.error })
-						throw errors.wrap(secondResult.error, "second qti upsert")
-					}
-					finalXml = secondResult.data
-				} else {
-					logger.error("qti upsert failed with unexpected error", { qtiId: tempIdentifier, error: upsertResult.error })
-					throw upsertResult.error
-				}
-			} else {
-				finalXml = upsertResult.data
-			}
-
-			// On success, immediately delete the temporary item
-			const deleteResult = await errors.try(qti.deleteAssessmentItem(tempIdentifier))
-			if (deleteResult.error) {
-				logger.error("failed to delete validated item from QTI API, but continuing", {
-					identifier: tempIdentifier,
-					error: deleteResult.error
+		if (upsertResult.error) {
+			if (
+				errors.is(upsertResult.error, ErrQtiUnprocessable) ||
+				errors.is(upsertResult.error, ErrQtiInternalServerError)
+			) {
+				logger.warn("initial upsert failed, attempting correction", {
+					qtiId: tempIdentifier,
+					error: upsertResult.error
 				})
-			}
 
-			return finalXml
-		})
+				const fixResult = await errors.try(
+					fixInvalidQtiXml(logger, {
+						invalidXml: qtiXml,
+						errorMessage: upsertResult.error.toString(),
+						rootTag: "qti-assessment-item"
+					})
+				)
+				if (fixResult.error) {
+					logger.error("failed to fix invalid qti xml", { qtiId: tempIdentifier, error: fixResult.error })
+					throw errors.wrap(fixResult.error, "ai xml correction")
+				}
+				finalXml = fixResult.data
+
+				const secondResult = await errors.try(upsertItem(tempIdentifier, question.exerciseTitle, finalXml))
+				if (secondResult.error) {
+					logger.error("second qti upsert attempt failed", { qtiId: tempIdentifier, error: secondResult.error })
+					throw errors.wrap(secondResult.error, "second qti upsert")
+				}
+				finalXml = secondResult.data
+			} else {
+				logger.error("qti upsert failed with unexpected error", { qtiId: tempIdentifier, error: upsertResult.error })
+				throw upsertResult.error
+			}
+		} else {
+			finalXml = upsertResult.data
+		}
+
+		// On success, immediately delete the temporary item
+		const deleteResult = await errors.try(qti.deleteAssessmentItem(tempIdentifier))
+		if (deleteResult.error) {
+			logger.error("failed to delete validated item from QTI API, but continuing", {
+				identifier: tempIdentifier,
+				error: deleteResult.error
+			})
+		}
 
 		logger.info("successfully validated qti item", { questionId, identifier: tempIdentifier })
 
-		// NEW Step 4: Write the validated XML to the database.
+		// Step 4: Write the validated XML to the database.
 		const updateResult = await errors.try(
-			db.update(niceQuestions).set({ xml: validatedXml }).where(eq(niceQuestions.id, questionId))
+			db.update(niceQuestions).set({ xml: finalXml }).where(eq(niceQuestions.id, questionId))
 		)
 
 		if (updateResult.error) {
