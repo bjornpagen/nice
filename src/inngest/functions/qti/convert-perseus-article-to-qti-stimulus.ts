@@ -61,7 +61,7 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 		concurrency: {
 			// Limit to 5 concurrent executions, shared across all OpenAI functions account-wide.
 			// This global limit prevents rate-limiting from the OpenAI API.
-			limit: 5,
+			limit: 160,
 			key: '"openai-api-global-concurrency"'
 		}
 	},
