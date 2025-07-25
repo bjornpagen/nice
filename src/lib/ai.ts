@@ -72,6 +72,133 @@ function checkForDisallowedHtmlEntities(xml: string, logger: logger.Logger): voi
 }
 
 /**
+ * Validates that all image URLs in the QTI XML are accessible.
+ * Extracts all image URLs (SVG, JPG, JPEG, PNG) and verifies they don't return 403 or 404.
+ *
+ * @param xml The QTI XML string to validate
+ * @param logger The logger instance
+ * @throws Error if any image URLs are inaccessible
+ */
+async function validateImageUrls(xml: string, logger: logger.Logger): Promise<void> {
+	// EXTREMELY robust regex for extracting image URLs from XML attributes
+	// Uses named capture groups for clarity and handles various XML edge cases:
+	// - Handles arbitrary whitespace around = sign
+	// - Supports both single (') and double (") quotes
+	// - Captures the quote type to ensure matching closing quote
+	// - Handles newlines and other whitespace within attributes
+	// - Case insensitive for attribute names and extensions
+	// - Only captures URLs ending with image extensions
+	const imageUrlRegex =
+		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>(?:(?!k<quote>).)+?\.(?:svg|jpe?g|png))(?:k<quote>)/gi
+
+	const matches = xml.matchAll(imageUrlRegex)
+	const imageUrls: string[] = []
+	const urlDetails: Array<{ url: string; attribute: string }> = []
+
+	for (const match of matches) {
+		if (!match.groups) {
+			logger.error("CRITICAL: Regex match without groups", { match: match[0] })
+			throw errors.new("image url extraction: regex match missing groups")
+		}
+		if (!match.groups.url) {
+			logger.error("CRITICAL: Regex match missing url group", { match: match[0] })
+			throw errors.new("image url extraction: regex match missing url")
+		}
+		if (!match.groups.attribute) {
+			logger.error("CRITICAL: Regex match missing attribute group", { match: match[0] })
+			throw errors.new("image url extraction: regex match missing attribute")
+		}
+
+		imageUrls.push(match.groups.url)
+		urlDetails.push({
+			url: match.groups.url,
+			attribute: match.groups.attribute
+		})
+	}
+
+	// Deduplicate URLs
+	const uniqueUrls = [...new Set(imageUrls)]
+
+	if (uniqueUrls.length === 0) {
+		logger.debug("no image urls found in qti xml")
+		return
+	}
+
+	logger.debug("validating image urls in qti xml", {
+		urlCount: uniqueUrls.length,
+		urls: uniqueUrls,
+		urlDetails: urlDetails.slice(0, 10) // Log first 10 for debugging
+	})
+
+	// Check each URL
+	const invalidUrls: Array<{ url: string; status: number; error?: string }> = []
+
+	for (const url of uniqueUrls) {
+		// Only validate HTTP/HTTPS URLs
+		if (!url.startsWith("http://") && !url.startsWith("https://")) {
+			logger.debug("skipping non-http url", { url })
+			continue
+		}
+
+		const fetchResult = await errors.try(
+			fetch(url, {
+				signal: AbortSignal.timeout(10000) // 10 second timeout for full download
+			})
+		)
+
+		if (fetchResult.error) {
+			logger.warn("failed to fetch image url", { url, error: fetchResult.error })
+			invalidUrls.push({
+				url,
+				status: 0,
+				error: `Failed to fetch: ${fetchResult.error.toString()}`
+			})
+			continue
+		}
+
+		const response = fetchResult.data
+		if (response.status === 403 || response.status === 404) {
+			logger.warn("image url returned error status", {
+				url,
+				status: response.status
+			})
+			invalidUrls.push({ url, status: response.status })
+		} else if (!response.ok) {
+			logger.warn("image url returned non-ok status", {
+				url,
+				status: response.status
+			})
+			// We only throw for 403/404 as requested, but log other errors
+		}
+	}
+
+	if (invalidUrls.length > 0) {
+		const errorDetails = invalidUrls
+			.map(({ url, status, error }) => {
+				if (error) {
+					return `${url}: ${error}`
+				}
+				return `${url}: HTTP ${status}`
+			})
+			.join(", ")
+
+		logger.error("detected inaccessible image urls in qti xml", {
+			invalidUrls,
+			totalChecked: uniqueUrls.length,
+			failedCount: invalidUrls.length
+		})
+
+		throw errors.new(
+			`invalid ai xml output: contains inaccessible images: ${errorDetails}. Ensure all image URLs are valid and accessible`
+		)
+	}
+
+	logger.debug("all image urls validated successfully", {
+		urlCount: uniqueUrls.length
+	})
+}
+
+/**
  * Creates the structured prompt for the AI model to convert Perseus JSON to QTI XML,
  * including a rich set of few-shot examples.
  * @param logger The logger instance.
@@ -536,6 +663,9 @@ export async function generateQtiFromPerseus(
 	// Step 6: Check for disallowed HTML entities
 	checkForDisallowedHtmlEntities(extractedXml, logger)
 
+	// Step 7: Validate image URLs
+	await validateImageUrls(extractedXml, logger)
+
 	logger.debug("successfully generated and extracted qti xml from openai", {
 		xmlLength: extractedXml.length,
 		rootTag: extractedRootTag,
@@ -739,6 +869,9 @@ Return a single JSON object with the final corrected XML.
 
 	// Step 6: Check for disallowed HTML entities
 	checkForDisallowedHtmlEntities(extractedXml, logger)
+
+	// Step 7: Validate image URLs
+	await validateImageUrls(extractedXml, logger)
 
 	logger.debug("correction complete", {
 		originalLength: invalidXml.length,
