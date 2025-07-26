@@ -39,7 +39,12 @@ export const TimebackActivityContextSchema = z.object({
 	subject: z.enum(["Science", "Math", "Reading", "Language", "Social Studies", "None"]),
 	app: z.object({ id: z.string().url().optional(), name: z.string() }),
 	course: z.object({ id: z.string().url().optional(), name: z.string() }).optional(),
-	activity: z.object({ id: z.string().url().optional(), name: z.string() }).optional()
+	activity: z
+		.object({
+			id: z.string().optional(), // CHANGED: Make the activity ID optional
+			name: z.string()
+		})
+		.optional()
 })
 export type TimebackActivityContext = z.infer<typeof TimebackActivityContextSchema>
 

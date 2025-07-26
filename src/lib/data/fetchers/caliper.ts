@@ -1,3 +1,4 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { unstable_cache as cache } from "next/cache"
 import type { z } from "zod"
@@ -37,10 +38,90 @@ function filterTimeSpentEventsByResources(
 	events: z.infer<typeof CaliperEventSchema>[],
 	resourceIds: Set<string>
 ): z.infer<typeof CaliperEventSchema>[] {
+	// Convert OneRoster resource IDs to resource slugs for URL pattern matching
+	// OneRoster IDs like "nice:x2a55d09c" need to be converted to URL patterns
+	const resourceSlugs = new Set<string>()
+
+	for (const resourceId of resourceIds) {
+		// Validate that the resource ID has the expected format
+		if (!resourceId.startsWith("nice:")) {
+			logger.error("CRITICAL: Invalid OneRoster resource ID format", {
+				resourceId,
+				expectedFormat: "nice:x..."
+			})
+			throw errors.new("invalid OneRoster resource ID format")
+		}
+
+		// Extract the resource identifier part (remove "nice:" prefix)
+		const resourceSlug = resourceId.slice(5) // Remove "nice:" prefix
+		if (resourceSlug.length === 0) {
+			logger.error("CRITICAL: Empty resource slug after removing prefix", { resourceId })
+			throw errors.new("empty resource slug")
+		}
+
+		resourceSlugs.add(resourceSlug)
+	}
+
+	logger.debug("converted oneroster resource ids to url patterns for filtering", {
+		originalResourceIds: Array.from(resourceIds),
+		extractedSlugs: Array.from(resourceSlugs),
+		conversionCount: resourceSlugs.size
+	})
+
 	return events.filter((event) => {
 		if (event.action !== "SpentTime") return false
+
+		// Debug logging for ALL TimeSpent events to understand the structure
+		logger.debug("examining timespent event", {
+			eventAction: event.action,
+			activityId: event.object.activity?.id,
+			contextId: event.object.id,
+			eventId: event.id
+		})
+
+		// First try to match by explicit activity.id (OneRoster format)
 		const activityId = event.object.activity?.id
-		return activityId && resourceIds.has(activityId)
+		if (activityId && resourceIds.has(activityId)) {
+			logger.debug("matched timespent event by activity id", {
+				eventAction: event.action,
+				activityId,
+				matchType: "activity_id"
+			})
+			return true
+		}
+
+		// If no explicit activity.id match, try URL pattern matching
+		// TimeSpent events may use context.id (URL) as the primary identifier
+		const contextId = event.object.id
+		if (!contextId) {
+			logger.debug("skipping event with no context id", { eventId: event.id })
+			return false
+		}
+
+		// Check if the URL contains any of our target resource patterns
+		// Articles: /a/{slug}, Videos: /v/{slug}
+		for (const slug of resourceSlugs) {
+			if (contextId.includes(`/a/${slug}`) || contextId.includes(`/v/${slug}`)) {
+				logger.debug("matched timespent event by url pattern", {
+					eventAction: event.action,
+					contextId,
+					matchedSlug: slug,
+					matchType: "url_pattern"
+				})
+				return true
+			}
+		}
+
+		// Log when we fail to match a TimeSpent event
+		logger.debug("timespent event did not match any resource", {
+			eventAction: event.action,
+			activityId: event.object.activity?.id,
+			contextId: event.object.id,
+			targetResourceIds: Array.from(resourceIds),
+			targetSlugs: Array.from(resourceSlugs)
+		})
+
+		return false
 	})
 }
 

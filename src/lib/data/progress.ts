@@ -7,7 +7,9 @@ import { format } from "date-fns"
 import type { z } from "zod"
 import type { Activity } from "@/app/(user)/profile/me/progress/components/progress-table"
 import type { CaliperEventSchema } from "@/lib/caliper"
-import { caliper, oneroster } from "@/lib/clients"
+import { oneroster } from "@/lib/clients"
+// CHANGED: Import the new fetcher instead of using caliper client directly
+import { getAllEventsForUser } from "@/lib/data/fetchers/caliper"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 
 // Original types and functions for course/unit progress
@@ -245,10 +247,10 @@ export async function fetchProgressPageData(): Promise<ProgressPageData> {
 
 	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${metadata.sourceId}`
 
-	const eventsResult = await errors.try(caliper.getEvents(actorId))
+	// CHANGED: Use the new fetcher instead of direct caliper client call
+	const eventsResult = await errors.try(getAllEventsForUser(actorId))
 	if (eventsResult.error) {
 		logger.error("failed to fetch caliper events", { actorId, error: eventsResult.error })
-		// Return empty state on failure to avoid crashing the page
 		return { activities: [], exerciseMinutes: 0, totalLearningMinutes: 0, totalXpEarned: 0 }
 	}
 
