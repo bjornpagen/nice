@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
 import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
+import type { ChatCompletionContentPart } from "openai/resources/chat/completions"
 import { z } from "zod"
 import { env } from "@/env"
 import { createQtiConversionPrompt, createQtiSufficiencyValidationPrompt } from "./prompts"
@@ -181,22 +182,37 @@ export async function generateXml(
  * @param logger The logger instance.
  * @param perseusJson The source Perseus JSON.
  * @param qtiXml The generated QTI XML to validate.
+ * @param imageUrls An array of image URLs extracted from the QTI XML.
  * @returns A promise that resolves to the structured validation result.
  */
 export async function validateXmlWithAi(
 	logger: logger.Logger,
 	perseusJson: unknown,
-	qtiXml: string
+	qtiXml: string,
+	imageUrls: string[] // NEW: Add imageUrls parameter
 ): Promise<z.infer<typeof QtiSolvabilityValidationSchema>> {
 	const { developer, user } = createQtiSufficiencyValidationPrompt(perseusJson, qtiXml)
 
-	logger.debug("calling openai for qti solvability validation", { model: OPENAI_MODEL })
+	logger.debug("calling openai for qti solvability validation", {
+		model: OPENAI_MODEL,
+		imageCount: imageUrls.length
+	})
+
+	// Construct the multimodal message payload
+	const userMessageContent: ChatCompletionContentPart[] = [{ type: "text", text: user }]
+	for (const url of imageUrls) {
+		userMessageContent.push({
+			type: "image_url",
+			image_url: { url }
+		})
+	}
+
 	const response = await errors.try(
 		openai.chat.completions.parse({
-			model: OPENAI_MODEL,
+			model: OPENAI_MODEL, // CHANGED: Use o3 which supports vision
 			messages: [
 				{ role: "system", content: developer },
-				{ role: "user", content: user }
+				{ role: "user", content: userMessageContent } // CHANGED: Send multimodal content
 			],
 			response_format: zodResponseFormat(QtiSolvabilityValidationSchema, "qti_validator")
 		})

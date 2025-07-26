@@ -17,7 +17,9 @@ const REGEX = {
 	PERSEUS_ARTIFACT: /\[\[☃\s*[\s\S]*?\]\]/g,
 	TRUNCATED_TAG: /<\/(?:_|\s*>|\.\.\.)/,
 	IMAGE_URL:
-		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:svg|jpe?g|png))(?:k<quote>)/gi
+		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:svg|jpe?g|png))(?:k<quote>)/gi,
+	SUPPORTED_IMAGE_URL:
+		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:jpe?g|png))(?:k<quote>)/gi
 } as const
 
 /**
@@ -331,7 +333,30 @@ export async function validateContentSufficiency(xml: string, context: Validatio
 	const { logger, perseusContent } = context
 	logger.info("running ai content solvability validation")
 
-	const validationResult = await errors.try(validateXmlWithAi(logger, perseusContent, xml))
+	// 1. Extract all image URLs from the XML to provide them as context to the AI.
+	const allImageUrls = [...new Set(Array.from(xml.matchAll(REGEX.IMAGE_URL), (m) => m.groups?.url ?? ""))]
+
+	// 2. Filter to only include supported image formats (PNG, JPG, JPEG) - SVG is not supported by multimodal AI
+	const supportedImageUrls = allImageUrls.filter((url) => {
+		const lowerUrl = url.toLowerCase()
+		return lowerUrl.endsWith(".png") || lowerUrl.endsWith(".jpg") || lowerUrl.endsWith(".jpeg")
+	})
+
+	if (supportedImageUrls.length > 0) {
+		logger.debug("extracted supported image urls for ai validation", {
+			count: supportedImageUrls.length,
+			urls: supportedImageUrls,
+			totalImageCount: allImageUrls.length,
+			excludedSvgCount: allImageUrls.length - supportedImageUrls.length
+		})
+	} else if (allImageUrls.length > 0) {
+		logger.debug("all extracted images were svg, skipping image analysis", {
+			svgCount: allImageUrls.length
+		})
+	}
+
+	// 3. Call the AI validator with the XML, source JSON, and extracted image URLs.
+	const validationResult = await errors.try(validateXmlWithAi(logger, perseusContent, xml, supportedImageUrls))
 	if (validationResult.error) {
 		throw errors.wrap(validationResult.error, "ai content solvability validation")
 	}

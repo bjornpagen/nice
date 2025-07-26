@@ -377,14 +377,16 @@ export function createQtiSufficiencyValidationPrompt(
 	qtiXml: string
 ): { developer: string; user: string } {
 	const developer =
-		"You are a meticulous QTI 3.0 assessment expert. Your ONLY task is to determine if a generated QTI XML assessment item is solvable. You must respond ONLY with a valid JSON object."
+		"You are a meticulous QTI 3.0 assessment expert. Your ONLY task is to determine if a generated QTI XML assessment item is solvable, considering both its text and any accompanying images. You must respond ONLY with a valid JSON object."
 
 	const user = `
 <task_definition>
   # Task
   Your ONLY task is to determine if the provided QTI XML is self-contained and provides sufficient information for a student to solve the question. The question is considered IMPOSSIBLE to solve if critical context, images, tables, or structural elements are missing, malformed, or altered in a way that breaks the problem's logic.
 
-  **CRITICAL CLARIFICATION:** Your job is NOT to check if the QTI is a "faithful translation" of the Perseus interaction type. A change in format (e.g., a Perseus plotter becoming a QTI multiple-choice with static images) is ACCEPTABLE and should be considered **solvable**, as long as all necessary information from the source is present in the final QTI. The ONLY question is: "Can a student solve this?"
+  You will be provided with the source Perseus JSON, the generated QTI XML, and an array of images referenced in the QTI XML. You MUST analyze these images for any defects that would make the question unsolvable.
+
+  **CRITICAL CLARIFICATION:** Your job is NOT to check if the QTI is a "faithful translation" of the Perseus interaction type. A change in format (e.g., a Perseus plotter becoming a QTI multiple-choice with static images) is ACCEPTABLE and should be considered **solvable**, as long as all necessary information from the source is present in the final QTI. The ONLY question is: "Can a student solve this with the provided text and images?"
 </task_definition>
 
 <inputs>
@@ -401,9 +403,14 @@ export function createQtiSufficiencyValidationPrompt(
 <instructions_and_constraints>
   # Instructions & Rules
   1.  **Compare Source and Output:** Scrutinize the Perseus \`question.content\` and compare it against the QTI \`<qti-item-body>\`.
-  2.  **Check for Critical Omissions:** Identify if any information essential to solving the problem has been dropped (e.g., initial numbers, data tables, images).
-  3.  **Do Not Judge Correctness:** Your task is NOT to check if the correct answer is right. You only check if the question is SOLVABLE.
-  4.  **Strict JSON Output:** Respond ONLY with a JSON object with two keys: \`"is_solvable"\` (boolean) and \`"reason"\` (a detailed explanation ONLY if not solvable, otherwise an empty string).
+  2.  **Analyze Images (CRITICAL):** Carefully inspect each image provided. Check for the following unsolvable conditions:
+      - The image is corrupted, malformed, or fails to load.
+      - The image is blank or does not display the intended content.
+      - Critical information is missing from the image (e.g., a number grid is missing numbers, a diagram is missing labels, a ruler is missing markings).
+      - The text in the image is illegible.
+  3.  **Check for Critical Omissions:** Identify if any information essential to solving the problem has been dropped from the text or is missing from the images.
+  4.  **Do Not Judge Correctness:** Your task is NOT to check if the correct answer is right. You only check if the question is SOLVABLE.
+  5.  **Strict JSON Output:** Respond ONLY with a JSON object with two keys: \`"is_solvable"\` (boolean) and \`"reason"\` (a detailed explanation ONLY if not solvable, otherwise an empty string).
 </instructions_and_constraints>
 
 <output_format>
