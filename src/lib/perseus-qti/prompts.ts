@@ -408,9 +408,15 @@ export function createQtiSufficiencyValidationPrompt(
       - The image is blank or does not display the intended content.
       - Critical information is missing from the image (e.g., a number grid is missing numbers, a diagram is missing labels, a ruler is missing markings).
       - The text in the image is illegible.
+
+      **IMPORTANT:** When you identify a broken, nonsensical, or insufficient image, you MUST include in your reason a specific recommendation to:
+      - Stop using the problematic image URL
+      - Generate a custom SVG replacement that captures the intended visual content
+      - Refer to the positive examples in the conversion prompt for guidance on creating inline SVG data URIs
+
   3.  **Check for Critical Omissions:** Identify if any information essential to solving the problem has been dropped from the text or is missing from the images.
   4.  **Do Not Judge Correctness:** Your task is NOT to check if the correct answer is right. You only check if the question is SOLVABLE.
-  5.  **Strict JSON Output:** Respond ONLY with a JSON object with two keys: \`"is_solvable"\` (boolean) and \`"reason"\` (a detailed explanation ONLY if not solvable, otherwise an empty string).
+  5.  **Strict JSON Output:** Respond ONLY with a JSON object with two keys: \`"is_solvable"\` (boolean) and \`"reason"\` (a detailed explanation with actionable recommendations ONLY if not solvable, otherwise an empty string).
 </instructions_and_constraints>
 
 <output_format>
