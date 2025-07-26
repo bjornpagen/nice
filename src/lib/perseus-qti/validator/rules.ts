@@ -14,10 +14,116 @@ type ValidationContext = {
 const REGEX = {
 	PERSEUS_ARTIFACT: /\[\[☃\s*[\s\S]*?\]\]/g,
 	TRUNCATED_TAG: /<\/(?:_|\s*>|\.\.\.)/,
-	DISALLOWED_ENTITIES: /&(?:nbsp|minus|ndash|mdash);/g,
 	IMAGE_URL:
 		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:svg|jpe?g|png))(?:k<quote>)/gi
 } as const
+
+/**
+ * Validates that < and > symbols are properly escaped within XML content.
+ * This prevents XML parsing errors from unescaped angle brackets in text content.
+ */
+function validateXmlAngleBrackets(xml: string, logger: logger.Logger): string | null {
+	// First, remove all valid XML constructs to isolate just the content
+	// This is done in stages to avoid false positives
+
+	// Step 1: Remove XML declaration
+	let contentOnly = xml.replace(/<\?xml[^?]*\?>/g, "")
+
+	// Step 2: Remove XML comments (which might contain < or >)
+	contentOnly = contentOnly.replace(/<!--[\s\S]*?-->/g, "")
+
+	// Step 3: Remove CDATA sections (which can contain unescaped < and >)
+	contentOnly = contentOnly.replace(/<!\[CDATA\[[\s\S]*?\]\]>/g, "")
+
+	// Step 4: Extract only the text content between tags
+	// This regex captures content between > and < that isn't part of a tag
+	const textContentMatches: string[] = []
+
+	// Match content between tags, being careful with self-closing tags
+	const contentRegex = />([^<]+)</g
+	let match: RegExpExecArray | null
+	match = contentRegex.exec(contentOnly)
+	while (match !== null) {
+		if (match[1]) {
+			textContentMatches.push(match[1])
+		}
+		match = contentRegex.exec(contentOnly)
+	}
+
+	// Also check attribute values which could contain < or >
+	const attrValueRegex = /\s+\w+\s*=\s*"([^"]*)"/g
+	match = attrValueRegex.exec(xml)
+	while (match !== null) {
+		if (match[1]) {
+			textContentMatches.push(match[1])
+		}
+		match = attrValueRegex.exec(xml)
+	}
+
+	// Now check each piece of content for unescaped < or >
+	for (const content of textContentMatches) {
+		// Skip if this content is just whitespace
+		if (!content.trim()) continue
+
+		// Check for unescaped < (not part of &lt;)
+		const unescapedLessThan = content.match(/(?<!&l)(?<!&)t;|(?<!&lt);|<(?!\/|[a-zA-Z])/g)
+		if (unescapedLessThan) {
+			logger.error("found unescaped < in xml content", {
+				content: content.substring(0, 100),
+				match: unescapedLessThan[0],
+				context: content.substring(
+					Math.max(0, content.indexOf(unescapedLessThan[0]) - 20),
+					Math.min(content.length, content.indexOf(unescapedLessThan[0]) + 20)
+				)
+			})
+			return "invalid xml content: Unescaped '<' character found. Use &lt; instead."
+		}
+
+		// Check for unescaped > (not part of &gt;)
+		const unescapedGreaterThan = content.match(/(?<!&g)(?<!&)t;|(?<!&gt);|>(?![^<]*<)/g)
+		if (unescapedGreaterThan) {
+			logger.error("found unescaped > in xml content", {
+				content: content.substring(0, 100),
+				match: unescapedGreaterThan[0],
+				context: content.substring(
+					Math.max(0, content.indexOf(unescapedGreaterThan[0]) - 20),
+					Math.min(content.length, content.indexOf(unescapedGreaterThan[0]) + 20)
+				)
+			})
+			return "invalid xml content: Unescaped '>' character found. Use &gt; instead."
+		}
+	}
+
+	// Additional check: Look for < or > that might be in text nodes using a different approach
+	// This catches cases where < or > appear in ways the above might miss
+	const xmlWithoutTags = xml
+		.replace(/<[^>]+>/g, " ") // Replace all tags with spaces
+		.replace(/&lt;/g, "") // Remove valid &lt;
+		.replace(/&gt;/g, "") // Remove valid &gt;
+		.replace(/&amp;/g, "") // Remove valid &amp;
+
+	if (xmlWithoutTags.includes("<")) {
+		logger.error("found unescaped < after tag removal", {
+			sample: xmlWithoutTags.substring(
+				Math.max(0, xmlWithoutTags.indexOf("<") - 50),
+				Math.min(xmlWithoutTags.length, xmlWithoutTags.indexOf("<") + 50)
+			)
+		})
+		return "invalid xml content: Unescaped '<' character found in text content. Use &lt; instead."
+	}
+
+	if (xmlWithoutTags.includes(">")) {
+		logger.error("found unescaped > after tag removal", {
+			sample: xmlWithoutTags.substring(
+				Math.max(0, xmlWithoutTags.indexOf(">") - 50),
+				Math.min(xmlWithoutTags.length, xmlWithoutTags.indexOf(">") + 50)
+			)
+		})
+		return "invalid xml content: Unescaped '>' character found in text content. Use &gt; instead."
+	}
+
+	return null
+}
 
 export function validateRootElement(xml: string, context: ValidationContext): void {
 	const rootTagRegex = new RegExp(
@@ -48,13 +154,11 @@ export function validatePerseusArtifacts(xml: string, _context: ValidationContex
 	}
 }
 
-export function validateHtmlEntities(xml: string, _context: ValidationContext): void {
-	const matches = xml.match(REGEX.DISALLOWED_ENTITIES)
-	if (matches) {
-		const uniqueEntities = [...new Set(matches)]
-		throw errors.new(
-			`invalid xml content: Disallowed HTML entities found: ${uniqueEntities.join(", ")}. Use actual characters or numeric entities instead.`
-		)
+export function validateHtmlEntities(xml: string, context: ValidationContext): void {
+	// Check for unescaped angle brackets which are the most critical issue
+	const angleValidationError = validateXmlAngleBrackets(xml, context.logger)
+	if (angleValidationError) {
+		throw errors.new(angleValidationError)
 	}
 }
 

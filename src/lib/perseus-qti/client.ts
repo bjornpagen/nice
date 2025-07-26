@@ -5,6 +5,7 @@ import { zodResponseFormat } from "openai/helpers/zod"
 import { z } from "zod"
 import { env } from "@/env"
 import { createQtiConversionPrompt, createQtiCorrectionPrompt } from "./prompts"
+import { convertHtmlEntities, stripXmlComments } from "./strip"
 
 const OPENAI_MODEL = "o3"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
@@ -16,57 +17,6 @@ const QtiGenerationSchema = z.object({
 const QtiCorrectionSchema = z.object({
 	corrected_xml: z.string().describe("The single, complete, and perfectly-formed QTI 3.0 XML string.")
 })
-
-/**
- * Strips all XML comments from the provided XML string.
- * This prevents issues with malformed comments that could cause XML parsing errors.
- *
- * @param xml The XML string to process
- * @param logger The logger instance
- * @returns The XML string with all comments removed
- */
-function stripXmlComments(xml: string, logger: logger.Logger): string {
-	// EXTREMELY robust regex for matching XML comments
-	// This handles multi-line comments and ensures we don't accidentally match
-	// things that look like comments but aren't (e.g., within CDATA sections)
-	//
-	// The regex breakdown:
-	// <!--              : Matches the exact opening of an XML comment
-	// (?<content>       : Named capture group for the comment content
-	//   (?:             : Non-capturing group for the content pattern
-	//     (?!-->)       : Negative lookahead - ensures we don't match -->
-	//     [\s\S]        : Matches any character including newlines
-	//   )*              : Zero or more of any character that isn't part of -->
-	// )                 : End of content capture group
-	// -->               : Matches the exact closing of an XML comment
-	const commentRegex = /<!--(?<content>(?:(?!-->)[\s\S])*)-->/g
-
-	// Count comments for logging
-	const commentMatches = xml.match(commentRegex)
-	const commentCount = commentMatches ? commentMatches.length : 0
-
-	if (commentCount > 0) {
-		logger.debug("stripping xml comments", {
-			commentCount,
-			firstComment: commentMatches?.[0]?.substring(0, 100),
-			originalLength: xml.length
-		})
-	}
-
-	// Replace all comments with empty string
-	const strippedXml = xml.replace(commentRegex, "")
-
-	if (commentCount > 0) {
-		logger.debug("xml comments stripped", {
-			commentCount,
-			originalLength: xml.length,
-			strippedLength: strippedXml.length,
-			bytesRemoved: xml.length - strippedXml.length
-		})
-	}
-
-	return strippedXml
-}
 
 /**
  * Extracts and validates the XML from the AI response
@@ -212,8 +162,11 @@ export async function generateXml(
 		throw errors.new("empty ai response")
 	}
 
+	// Convert problematic HTML entities before extraction and validation
+	const cleanedXml = convertHtmlEntities(qtiXml, logger)
+
 	// Extract and validate the XML using the EXACT same logic from the old code
-	return extractAndValidateXml(qtiXml, rootTag, logger)
+	return extractAndValidateXml(cleanedXml, rootTag, logger)
 }
 
 export async function correctXml(
@@ -284,6 +237,9 @@ export async function correctXml(
 		correctedXmlLength: correctedXml.length
 	})
 
+	// Convert problematic HTML entities before extraction and validation
+	const cleanedXml = convertHtmlEntities(correctedXml, logger)
+
 	// Extract and validate the corrected XML using the EXACT same logic from the old code
-	return extractAndValidateXml(correctedXml, rootTag, logger)
+	return extractAndValidateXml(cleanedXml, rootTag, logger)
 }

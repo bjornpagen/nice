@@ -180,6 +180,7 @@ For the following types of visuals, you MUST NOT use the original 'graphie' URL.
   - Horses → 🐴
   - Dogs → 🐕
   - Cats → 🐈
+  - Penguins → 🐧
   - Squirrels → 🐿️
   - Nuts/Acorns → 🌰
   - Apples → 🍎
@@ -271,22 +272,11 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
 3.  **MENTAL CHECK.**
     Before you output your final answer, perform a mental check: "Did I close every single tag I opened with its full name? Is the final closing tag present?"
 
-4.  **NO HTML ENTITIES ANYWHERE (see #5 for the ONLY exceptions):** Do not use ANY named HTML entities ANYWHERE in the output, including but not limited to \`&nbsp;\`, \`&minus;\`, \`&ndash;\`, \`&mdash;\`, \`&copy;\`, \`&reg;\`, \`&trade;\`, \`&times;\`, \`&divide;\`, etc. This prohibition applies to ALL content - XML, HTML, MathML, text, attributes - EVERYWHERE. The ONLY exceptions are the essential XML escaping entities listed in rule #5 below.
-    - ✅ **CORRECT (Space):** Use a regular space character: \` \`
-    - ✅ **CORRECT (Minus):** In MathML, use \`<mo>-</mo>\`. In plain text, use the hyphen \`-\`.
-    - ✅ **CORRECT (En Dash):** Use the actual en dash character: \`–\` (U+2013)
-    - ✅ **CORRECT (Em Dash):** Use the actual em dash character: \`—\` (U+2014)
-    - ✅ **CORRECT (Multiplication):** Use \`×\` (U+00D7) or \`*\` instead of \`&times;\`
-    - ❌ **ABSOLUTELY FORBIDDEN:** \`9&nbsp;&minus;&nbsp;5\`, \`text&ndash;text\`, \`text&mdash;more text\`, \`3&times;4\`, \`&copy;2023\`
-
-5.  **EXCEPTIONS TO RULE #4 - ONLY REQUIRED XML ESCAPING:** These are the ONLY HTML/XML entities you are allowed to use anywhere in your output. Only use the absolute minimum XML character escaping required for well-formed XML. The ONLY acceptable entity references are:
+4.  **REQUIRED XML ESCAPING:** Only use the absolute minimum XML character escaping required for well-formed XML. The ONLY acceptable entity references are:
     - \`&lt;\` for less-than symbol (<) when it appears in content
     - \`&gt;\` for greater-than symbol (>) when it appears in content
-    - \`&le;\` for less-than-or-equal-to (≤) in mathematical contexts
-    - \`&ge;\` for greater-than-or-equal-to (≥) in mathematical contexts
     - \`&amp;\` for ampersand (&) when it appears in content
-    - ✅ **CORRECT:** \`<mo>&lt;</mo>\` (for less-than symbol), \`<mo>&gt;</mo>\` (for greater-than symbol), \`<mo>&le;</mo>\` (for ≤), \`<mo>&ge;</mo>\` (for ≥), \`title="AT&amp;T"\`
-    - ❌ **FORBIDDEN:** Using ANY other HTML entities like \`&nbsp;\`, \`&minus;\`, \`&times;\`, etc.
+    - ✅ **CORRECT:** \`<mo>&lt;</mo>\` (for less-than symbol), \`<mo>&gt;</mo>\` (for greater-than symbol), \`title="AT&amp;T"\`
     - ❌ **FORBIDDEN:** \`<mo><</mo>\` (raw less-than), \`title="AT&T"\` (raw ampersand)
     - ❌ **FORBIDDEN:** \`&lt;mo&gt;&lt;/mo&gt;\` (do NOT escape the actual XML tags)
 
