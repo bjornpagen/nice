@@ -294,10 +294,6 @@ function RightSection({
 		}
 	}
 
-	const handleHintsClick = () => {
-		// TODO: Implement hints
-	}
-
 	// Start screen
 	if (isStartScreen) {
 		return (
@@ -421,25 +417,32 @@ function RightSection({
 				)}
 				<div className="flex flex-row gap-2">
 					{!hasExhaustedAttempts && (
-						<HoverCard openDelay={0} closeDelay={0}>
-							<HoverCardTrigger className="hover:cursor-not-allowed">
-								<Button
-									variant="link"
-									onClick={handleHintsClick}
-									className="text-blue-600 hover:underline hover:cursor-not-allowed"
-									disabled
-								>
-									Hints
-								</Button>
-							</HoverCardTrigger>
-							<HoverCardContent
-								side="top"
-								className="bg-white text-black items-center justify-center w-fit"
-								sideOffset={10}
-							>
-								<p className="text-xs">Show solution and move on</p>
-							</HoverCardContent>
-						</HoverCard>
+						<Button variant="link" className="text-blue-600 hover:underline hover:cursor-pointer" asChild>
+							<AlertDialog>
+								<AlertDialogTrigger className="text-sm text-blue-600 hover:underline hover:cursor-pointer">
+									Skip
+								</AlertDialogTrigger>
+								<AlertDialogContent className="bg-white text-blue-600">
+									<AlertDialogHeader>
+										<AlertDialogTitle>Are you sure?</AlertDialogTitle>
+									</AlertDialogHeader>
+									<AlertDialogDescription>
+										Skipped questions will count as incorrect. You'll still be able to review the solution.
+									</AlertDialogDescription>
+									<AlertDialogFooter>
+										<AlertDialogAction
+											onClick={handleSkipClick}
+											className="bg-white text-blue-600 hover:cursor-pointer hover:bg-white hover:underline"
+										>
+											Yes, skip
+										</AlertDialogAction>
+										<AlertDialogCancel className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white hover:ring-1 hover:ring-blue-600 hover:ring-offset-1">
+											Cancel
+										</AlertDialogCancel>
+									</AlertDialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>
+						</Button>
 					)}
 					<Button
 						ref={ref}
