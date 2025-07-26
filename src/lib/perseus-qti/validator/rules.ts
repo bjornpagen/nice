@@ -161,7 +161,7 @@ export async function validateImageUrls(xml: string, _context: ValidationContext
 		return
 	}
 
-	const invalidUrls: { url: string; status: number; error?: string }[] = []
+	const invalidUrls: { url: string; status: number; error?: string; suggestion?: string }[] = []
 
 	for (const url of uniqueUrls) {
 		const res = await errors.try(fetch(url, { signal: AbortSignal.timeout(10000) }))
@@ -170,13 +170,44 @@ export async function validateImageUrls(xml: string, _context: ValidationContext
 			continue
 		}
 		if (res.data.status === 403 || res.data.status === 404) {
-			invalidUrls.push({ url, status: res.data.status })
+			// Try alternative file extensions
+			const lastDotIndex = url.lastIndexOf(".")
+			if (lastDotIndex !== -1) {
+				const baseUrl = url.substring(0, lastDotIndex)
+				const originalExt = url.substring(lastDotIndex + 1).toLowerCase()
+				const alternativeExts = ["svg", "jpg", "png"].filter((ext) => ext !== originalExt)
+
+				let workingUrl: string | null = null
+				for (const ext of alternativeExts) {
+					const altUrl = `${baseUrl}.${ext}`
+					const altRes = await errors.try(fetch(altUrl, { signal: AbortSignal.timeout(10000) }))
+					if (!altRes.error && altRes.data.status === 200) {
+						workingUrl = altUrl
+						break
+					}
+				}
+
+				if (workingUrl) {
+					invalidUrls.push({ url, status: res.data.status, suggestion: workingUrl })
+				} else {
+					invalidUrls.push({ url, status: res.data.status })
+				}
+			} else {
+				invalidUrls.push({ url, status: res.data.status })
+			}
 		}
 	}
 
 	if (invalidUrls.length > 0) {
 		const errorDetails = invalidUrls
-			.map((u) => `${u.url} (status: ${u.status}${u.error ? `, error: ${u.error}` : ""})`)
+			.map((u) => {
+				let detail = `${u.url} (status: ${u.status}${u.error ? `, error: ${u.error}` : ""}`
+				if (u.suggestion) {
+					detail += `, suggested replacement: ${u.suggestion}`
+				}
+				detail += ")"
+				return detail
+			})
 			.join("; ")
 		const message = `invalid image urls: Found ${invalidUrls.length} inaccessible image URLs. They must be corrected or removed. Details: ${errorDetails}`
 		throw errors.new(message)

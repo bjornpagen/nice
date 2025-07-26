@@ -194,6 +194,7 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
   - **Rulers**
   - **Analog Clocks**
   - **Ruler-like visual estimations** (e.g., estimating an object's height relative to another object of known height)
+  - **Measure the line/object with the number of boxes questions**
 
 **Example of the "Supplement with Text" Strategy:**
 
