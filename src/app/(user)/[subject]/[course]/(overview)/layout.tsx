@@ -20,7 +20,7 @@ export default function CourseLayout({
 
 	return (
 		<div className="h-full overflow-y-auto overflow-x-hidden max-w-full">
-			<div className="flex max-w-full">
+			<div className="flex max-w-full min-h-screen">
 				{/* Sidebar */}
 				<div className="flex-shrink-0 w-96">
 					<div className="sticky top-0 w-96 max-h-screen overflow-y-auto">
