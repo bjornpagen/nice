@@ -16,8 +16,6 @@ export function Header({
 	nickname?: string
 	className?: string
 }) {
-	// If nickname is not provided, we should not render the user dropdown at all
-	// This indicates a critical issue with user data
 	const displayName = nickname
 	const displayInitial = nickname ? nickname.charAt(0).toUpperCase() : undefined
 
@@ -70,9 +68,12 @@ export function Header({
 					{/* User Dropdown for signed in users */}
 					<SignedIn>
 						{displayName && displayInitial ? (
-							<UserDropdown displayName={displayName} displayInitial={displayInitial} dark={dark} />
+							<div className="animate-in fade-in-0 duration-300">
+								<UserDropdown displayName={displayName} displayInitial={displayInitial} dark={dark} />
+							</div>
 						) : (
-							<span className="text-red-500">Error: Missing user data</span>
+							// Don't show anything during loading - just reserve the space
+							<div className="w-8 h-8" />
 						)}
 					</SignedIn>
 
