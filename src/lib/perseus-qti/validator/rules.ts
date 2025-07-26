@@ -205,7 +205,7 @@ export async function validateImageUrls(xml: string, _context: ValidationContext
 			.map((u) => {
 				let detail = `${u.url} (status: ${u.status}${u.error ? `, error: ${u.error}` : ""}`
 				if (u.suggestion) {
-					detail += `, suggested replacement: ${u.suggestion}`
+					detail += `, MUST be replaced with: ${u.suggestion} (confirmed working)`
 				}
 				detail += ")"
 				return detail
