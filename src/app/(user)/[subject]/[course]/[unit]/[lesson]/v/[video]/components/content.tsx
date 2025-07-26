@@ -95,14 +95,17 @@ export function Content({
 				subject: mapSubjectToCaliperSubject(params.subject),
 				app: { name: "Nice Academy" },
 				course: { name: params.course },
-				activity: { name: video.title }
+				activity: {
+					name: video.title,
+					id: `nice:${video.id}` // CHANGED: Add the resource sourcedId
+				}
 			}
 
 			// Send cumulative time event
 			void sendCaliperTimeSpentEvent(actor, context, Math.floor(finalWatchTime))
 			hasSentFinalEventRef.current = true
 		}
-	}, [user, video.title, params.subject, params.course, params.unit, params.lesson, params.video])
+	}, [user, video.title, video.id, params.subject, params.course, params.unit, params.lesson, params.video])
 
 	// Load saved progress when component mounts
 	React.useEffect(() => {

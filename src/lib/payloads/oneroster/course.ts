@@ -405,7 +405,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								version: "3.0",
 								language: "en-US",
 								url: `${env.TIMEBACK_QTI_SERVER_URL}/stimuli/nice:${content.id}`,
-								xp: 3 // Articles are worth 3 XP each
+								xp: 2 // CHANGED: Articles are now worth 2 XP each
 							}
 						} else if (lc.contentType === "Video") {
 							// Videos need proper URL
@@ -427,7 +427,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								questionType: "custom",
 								language: "en-US",
 								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice:${content.id}`,
-								xp: 5 // Exercises are hardcoded to 5 XP
+								xp: 3 // CHANGED: Exercises are now worth 3 XP each
 							}
 						}
 
@@ -477,7 +477,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			if (!resourceSet.has(assessmentSourcedId)) {
 				// Calculate XP based on number of exercises in the assessment
 				const exerciseCount = exercisesByAssessmentId.get(assessment.id)?.length || 0
-				const assessmentXp = exerciseCount * 2 // XP is exercises × 2
+				const assessmentXp = exerciseCount * 1 // CHANGED: XP is now exercises × 1
 
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
@@ -545,7 +545,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			if (!resourceSet.has(assessmentSourcedId)) {
 				// Calculate XP based on number of exercises in the assessment
 				const exerciseCount = exercisesByAssessmentId.get(assessment.id)?.length || 0
-				const assessmentXp = exerciseCount * 2 // XP is exercises × 2
+				const assessmentXp = exerciseCount * 1 // CHANGED: XP is now exercises × 1
 
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,

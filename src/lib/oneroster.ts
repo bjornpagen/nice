@@ -487,26 +487,16 @@ export class Client {
 
 			// Check for JWT expiration
 			let isJwtExpired = false
-			if (response.status === 401) {
-				// Try to parse as JSON to check imsx_description field
-				const jsonParseResult = errors.trySync(() => JSON.parse(text))
-				if (!jsonParseResult.error && jsonParseResult.data?.imsx_description) {
-					isJwtExpired = jsonParseResult.data.imsx_description.toLowerCase().includes("jwt expired")
-					logger.debug("oneroster auth: checked JWT expiration from imsx_description", {
-						imsx_description: jsonParseResult.data.imsx_description,
-						isJwtExpired
-					})
-				} else {
-					// Fallback to simple text search if not valid JSON
-					isJwtExpired = text.toLowerCase().includes("jwt expired")
-					logger.debug("oneroster auth: checked JWT expiration from text search", {
-						textSnippet: text.substring(0, 100),
-						isJwtExpired
-					})
-				}
+			const jsonParseResult = errors.trySync(() => JSON.parse(text))
+			if (jsonParseResult.error) {
+				// If we can't parse as JSON, check the text content
+				isJwtExpired = text.includes("JWT signature verification failed") || text.includes("jwt expired")
+			} else {
+				isJwtExpired = jsonParseResult.data?.error === "JWT signature verification failed"
 			}
 
-			if (isJwtExpired) {
+			// Handle JWT expiration with retry
+			if (response.status === 401 || isJwtExpired) {
 				logger.info("oneroster auth: jwt expired, attempting to refresh token", { endpoint })
 				// Clear the expired token
 				this.#accessToken = null
@@ -572,6 +562,81 @@ export class Client {
 				return retryValidation.data
 			}
 
+			// ADDED: Handle 5xx server errors with single retry for transient infrastructure issues
+			if (response.status >= 500 && response.status < 600) {
+				logger.warn("oneroster api: server error detected, attempting single retry", {
+					status: response.status,
+					endpoint,
+					method: options.method
+				})
+
+				// Wait 500ms before retry to allow transient issues to resolve
+				await new Promise((resolve) => setTimeout(resolve, 500))
+
+				// Retry the request once
+				const retryResult = await errors.try(fetch(url, { ...options, headers }))
+				if (retryResult.error) {
+					logger.error("oneroster api request failed on retry after server error", {
+						error: retryResult.error,
+						endpoint,
+						originalStatus: response.status
+					})
+					throw errors.wrap(retryResult.error, "oneroster api request retry after server error")
+				}
+
+				const retryResponse = retryResult.data
+				if (retryResponse.ok) {
+					logger.info("oneroster api: server error retry succeeded", {
+						originalStatus: response.status,
+						retryStatus: retryResponse.status,
+						endpoint,
+						method: options.method
+					})
+
+					// Process successful retry response (same logic as normal success path)
+					if (retryResponse.status === 204) {
+						return schema.parse(null)
+					}
+					const retryText = await retryResponse.text()
+					if (!retryText || retryText.trim() === "") {
+						return schema.parse(null)
+					}
+					const retryJsonResult = errors.trySync(() => JSON.parse(retryText))
+					if (retryJsonResult.error) {
+						logger.error("oneroster api: failed to parse json response after server error retry", {
+							error: retryJsonResult.error,
+							endpoint,
+							responseText: retryText
+						})
+						throw errors.wrap(
+							retryJsonResult.error,
+							`oneroster api response parsing for ${endpoint} after server error retry`
+						)
+					}
+					const retryValidation = schema.safeParse(retryJsonResult.data)
+					if (!retryValidation.success) {
+						logger.error("oneroster api: invalid response schema after server error retry", {
+							error: retryValidation.error,
+							endpoint
+						})
+						throw errors.wrap(
+							retryValidation.error,
+							`oneroster api response validation for ${endpoint} after server error retry`
+						)
+					}
+					return retryValidation.data
+				}
+				// Retry also failed - log and proceed with original error handling
+				const retryText = await retryResponse.text()
+				logger.error("oneroster api: server error retry also failed", {
+					originalStatus: response.status,
+					retryStatus: retryResponse.status,
+					endpoint,
+					method: options.method,
+					retryBody: retryText
+				})
+			}
+
 			// ✅ USE THE CUSTOM ERROR TYPE
 			if (response.status === 404) {
 				throw errors.wrap(ErrOneRosterNotFound, `oneroster api error: status 404 on ${endpoint}`)
@@ -583,7 +648,7 @@ export class Client {
 					`oneroster api error: status 422 on ${endpoint} - resource not found`
 				)
 			}
-			throw errors.wrap(ErrOneRosterAPI, `status ${response.status} on ${endpoint}`)
+			throw errors.wrap(ErrOneRosterAPI, `status ${response.status} on ${endpoint}: ${text}`)
 		}
 
 		// Handle 204 No Content for DELETE requests gracefully

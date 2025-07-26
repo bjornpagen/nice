@@ -80,7 +80,10 @@ export function Content({
 							subject: mappedSubject,
 							app: { name: "Nice Academy" },
 							course: { name: params.course },
-							activity: { name: article.title }
+							activity: {
+								name: article.title,
+								id: article.id // FIXED: article.id already contains "nice:" prefix
+							}
 						}
 						void sendCaliperTimeSpentEvent(actorForCleanup, contextForCleanup, durationInSeconds)
 					}
