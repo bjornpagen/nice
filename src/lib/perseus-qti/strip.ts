@@ -31,6 +31,7 @@ export function convertHtmlEntities(xml: string, logger: logger.Logger): string 
 		"&pound;": "£", // Pound sign (U+00A3)
 		"&yen;": "¥", // Yen sign (U+00A5)
 		"&cent;": "¢", // Cent sign (U+00A2)
+		"&rsquo;": "’", // Right single quotation mark (U+2019)
 		"&le;": "≤", // Less than or equal to (U+2264)
 		"&ge;": "≥" // Greater than or equal to (U+2265)
 		// Note: We do NOT convert &lt;, &gt;, &amp; as these are required for XML escaping
