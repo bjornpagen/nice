@@ -34,9 +34,20 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 		}
 		const article = articleResult.data
 		if (!article?.perseusContent) {
-			logger.warn("article has no perseus content", { articleId })
+			logger.warn("article has no perseus content, skipping", { articleId })
 			return { success: true, qtiXml: null }
 		}
+
+		// ADDED: More aggressive validation and logging
+		if (typeof article.perseusContent !== "object" || Object.keys(article.perseusContent).length === 0) {
+			logger.error("CRITICAL: article perseus content is empty or not an object", { articleId })
+			throw errors.new(`article ${articleId} has empty or invalid perseus content`)
+		}
+
+		logger.debug("processing perseus content for article", {
+			articleId,
+			contentSnippet: JSON.stringify(article.perseusContent).substring(0, 200)
+		})
 
 		const qtiXmlResult = await errors.try(
 			orchestratePerseusToQtiConversion({

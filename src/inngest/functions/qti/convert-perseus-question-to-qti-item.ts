@@ -40,11 +40,21 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		}
 		const question = questionResult.data[0]
 		if (!question?.parsedData) {
-			logger.warn("question has no parsed data", { questionId })
+			logger.warn("question has no parsed data, skipping", { questionId })
 			return { success: true, qtiXml: null }
 		}
 
-		// Validate that we have the required exercise title
+		// ADDED: More aggressive validation and logging
+		if (typeof question.parsedData !== "object" || Object.keys(question.parsedData).length === 0) {
+			logger.error("CRITICAL: question parsedData is empty or not an object", { questionId })
+			throw errors.new(`question ${questionId} has empty or invalid parsedData`)
+		}
+
+		logger.debug("processing perseus content for question", {
+			questionId,
+			contentSnippet: JSON.stringify(question.parsedData).substring(0, 200)
+		})
+
 		if (!question.exerciseTitle) {
 			logger.error("CRITICAL: exercise title missing for question", {
 				questionId,

@@ -180,8 +180,12 @@ export async function generateXml(
 	}
 
 	logger.debug("received openai response", {
+		fullResponse: response.data,
 		choiceCount: response.data.choices.length,
-		finishReason: response.data.choices[0]?.finish_reason
+		finishReason: response.data.choices[0]?.finish_reason,
+		message: response.data.choices[0]?.message,
+		parsed: response.data.choices[0]?.message?.parsed,
+		usage: response.data.usage
 	})
 
 	const message = response.data.choices[0]?.message
@@ -204,7 +208,7 @@ export async function generateXml(
 
 	const qtiXml = message.parsed.qti_xml
 	if (!qtiXml) {
-		logger.warn("openai returned an empty qti_xml in response")
+		logger.error("openai returned an empty qti_xml in response")
 		throw errors.new("empty ai response")
 	}
 
@@ -243,8 +247,12 @@ export async function correctXml(
 	}
 
 	logger.debug("received openai response", {
+		fullResponse: response.data,
 		choiceCount: response.data.choices.length,
-		finishReason: response.data.choices[0]?.finish_reason
+		finishReason: response.data.choices[0]?.finish_reason,
+		message: response.data.choices[0]?.message,
+		parsed: response.data.choices[0]?.message?.parsed,
+		usage: response.data.usage
 	})
 
 	const message = response.data.choices[0]?.message

@@ -136,6 +136,10 @@ You are converting from Perseus JSON, a proprietary format from Khan Academy, to
 
 Below is a Perseus JSON object. Your task is to provide the corresponding QTI 3.0 XML. Use the PERFECT examples above to inform your output. Respond with ONLY the XML content.
 
+<perseus_json>
+${perseusJsonString}
+</perseus_json>
+
 Your output will be fed directly into an automated XML parser. If the XML is not well-formed, the entire system will crash. Pay extreme attention to the rules below.
 
 ---
