@@ -3,58 +3,25 @@ import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { fixInvalidQtiXml, generateQtiFromPerseus } from "@/lib/ai"
-import { qti } from "@/lib/clients"
-import { ErrQtiInternalServerError, ErrQtiNotFound, ErrQtiUnprocessable } from "@/lib/qti"
+import { orchestratePerseusToQtiConversion } from "@/lib/perseus-qti/orchestrator"
 
-// Helper function to encapsulate the idempotent upsert logic.
-async function upsertItem(identifier: string, title: string, xml: string): Promise<string> {
-	// Use a robust regex to replace attributes on the root tag, avoiding a full parse/rebuild cycle
-	// that was corrupting namespace declarations. This is safer and more reliable.
-	const safeTitle = title.replace(/"/g, "&quot;")
-
-	// This regex finds the <qti-assessment-item> tag and allows us to modify its attributes.
-	const finalXml = xml.replace(/<qti-assessment-item([^>]*?)>/, (_match: string, group1: string) => {
-		// Replace the identifier attribute.
-		let updatedAttrs = group1.replace(/identifier="[^"]*"/, `identifier="${identifier}"`)
-		// Replace the title attribute.
-		updatedAttrs = updatedAttrs.replace(/title="[^"]*"/, `title="${safeTitle}"`)
-		return `<qti-assessment-item${updatedAttrs}>`
-	})
-
-	const updateResult = await errors.try(qti.updateAssessmentItem({ identifier, xml: finalXml }))
-	if (updateResult.error) {
-		// Use errors.is for type-safe error checking
-		if (errors.is(updateResult.error, ErrQtiNotFound)) {
-			const createResult = await errors.try(qti.createAssessmentItem({ xml: finalXml }))
-			if (createResult.error) {
-				throw errors.wrap(createResult.error, "qti create after update 404")
-			}
-			return finalXml
-		}
-		// For other errors, re-throw to be handled by the caller.
-		throw updateResult.error
-	}
-	return finalXml
-}
+// A global key, including quotes, to ensure all OpenAI functions share the same concurrency limit.
+const OPENAI_CONCURRENCY_KEY = '"openai-api-global-concurrency"'
 
 export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 	{
 		id: "convert-perseus-question-to-qti-item",
 		name: "Convert Perseus Question to QTI Item",
 		concurrency: {
-			// Limit to 10 concurrent executions, shared across all OpenAI functions account-wide.
-			// This global limit prevents rate-limiting from the OpenAI API.
-			limit: 160,
-			key: '"openai-api-global-concurrency"'
+			limit: 1,
+			key: OPENAI_CONCURRENCY_KEY
 		}
 	},
 	{ event: "qti/item.migrate" },
 	async ({ event, logger }) => {
 		const { questionId } = event.data
-		logger.info("starting question to qti item validation", { questionId })
+		logger.info("starting question to qti item conversion", { questionId })
 
-		// Step 1: Fetch question data from DB (Read-only)
 		const questionResult = await errors.try(
 			db
 				.select({
@@ -68,88 +35,50 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 				.limit(1)
 		)
 		if (questionResult.error) {
-			logger.error("failed to fetch question from db", { questionId, error: questionResult.error })
-			throw errors.wrap(questionResult.error, "db query")
+			logger.error("failed to fetch question", { questionId, error: questionResult.error })
+			throw errors.wrap(questionResult.error, "db query for question")
 		}
 		const question = questionResult.data[0]
-		if (!question || !question.parsedData) {
-			logger.warn("question not found or has no parsed data", { questionId })
-			return { status: "aborted", reason: "not_found_or_no_data" }
+		if (!question?.parsedData) {
+			logger.warn("question has no parsed data", { questionId })
+			return { success: true, qtiXml: null }
 		}
 
-		// Step 2: Convert Perseus JSON to QTI XML via AI
-		const generateResult = await errors.try(generateQtiFromPerseus(logger, question.parsedData))
-		if (generateResult.error) {
-			logger.error("failed to generate qti from perseus", { questionId, error: generateResult.error })
-			throw errors.wrap(generateResult.error, "ai conversion")
-		}
-		const qtiXml = generateResult.data
-
-		const tempIdentifier = `nice-tmp:${question.id}`
-
-		// Step 3: Validate XML by creating and immediately deleting it from the QTI API
-		let finalXml = qtiXml
-		const upsertResult = await errors.try(upsertItem(tempIdentifier, question.exerciseTitle, qtiXml))
-
-		if (upsertResult.error) {
-			if (
-				errors.is(upsertResult.error, ErrQtiUnprocessable) ||
-				errors.is(upsertResult.error, ErrQtiInternalServerError)
-			) {
-				logger.warn("initial upsert failed, attempting correction", {
-					qtiId: tempIdentifier,
-					error: upsertResult.error
-				})
-
-				const fixResult = await errors.try(
-					fixInvalidQtiXml(logger, {
-						invalidXml: qtiXml,
-						errorMessage: upsertResult.error.toString(),
-						rootTag: "qti-assessment-item"
-					})
-				)
-				if (fixResult.error) {
-					logger.error("failed to fix invalid qti xml", { qtiId: tempIdentifier, error: fixResult.error })
-					throw errors.wrap(fixResult.error, "ai xml correction")
-				}
-				finalXml = fixResult.data
-
-				const secondResult = await errors.try(upsertItem(tempIdentifier, question.exerciseTitle, finalXml))
-				if (secondResult.error) {
-					logger.error("second qti upsert attempt failed", { qtiId: tempIdentifier, error: secondResult.error })
-					throw errors.wrap(secondResult.error, "second qti upsert")
-				}
-				finalXml = secondResult.data
-			} else {
-				logger.error("qti upsert failed with unexpected error", { qtiId: tempIdentifier, error: upsertResult.error })
-				throw upsertResult.error
-			}
-		} else {
-			finalXml = upsertResult.data
-		}
-
-		// On success, immediately delete the temporary item
-		const deleteResult = await errors.try(qti.deleteAssessmentItem(tempIdentifier))
-		if (deleteResult.error) {
-			logger.error("failed to delete validated item from QTI API, but continuing", {
-				identifier: tempIdentifier,
-				error: deleteResult.error
+		// Validate that we have the required exercise title
+		if (!question.exerciseTitle) {
+			logger.error("CRITICAL: exercise title missing for question", {
+				questionId,
+				exerciseId: question.id
 			})
+			throw errors.new("exercise title required: data integrity violation")
 		}
 
-		logger.info("successfully validated qti item", { questionId, identifier: tempIdentifier })
-
-		// Step 4: Write the validated XML to the database.
-		const updateResult = await errors.try(
-			db.update(niceQuestions).set({ xml: finalXml }).where(eq(niceQuestions.id, questionId))
+		const qtiXmlResult = await errors.try(
+			orchestratePerseusToQtiConversion({
+				id: question.id,
+				type: "assessmentItem",
+				title: question.exerciseTitle,
+				perseusContent: question.parsedData,
+				logger
+			})
 		)
+		if (qtiXmlResult.error) {
+			logger.error("failed to orchestrate perseus to qti conversion for question", {
+				questionId,
+				error: qtiXmlResult.error
+			})
+			throw errors.wrap(qtiXmlResult.error, "perseus to qti conversion")
+		}
 
+		const updateResult = await errors.try(
+			db.update(niceQuestions).set({ xml: qtiXmlResult.data }).where(eq(niceQuestions.id, questionId))
+		)
 		if (updateResult.error) {
 			logger.error("failed to update question with qti xml", { questionId, error: updateResult.error })
 			throw errors.wrap(updateResult.error, "db update")
 		}
 
-		logger.info("successfully stored qti xml in database", { questionId })
+		logger.info("successfully converted question and stored qti xml", { questionId })
 		return { status: "success", questionId: question.id }
 	}
 )
