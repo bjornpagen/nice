@@ -233,6 +233,36 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
 6.  **Do Not Hallucinate Content:** Do not add extraneous text, symbols (like dollar signs), or formatting that is not present in the original Perseus JSON.
 7.  **Handle \`sorter\` Widgets Correctly:** A Perseus \`sorter\` becomes a \`<qti-order-interaction>\`. Do not use \`min-choices\` or \`max-choices\` for simple reordering tasks, as this changes the interaction behavior.
 
+### CRITICAL: NOTES SECTION FOR ACCESSIBILITY ###
+
+**Notes Section Placement and Content Rules:**
+
+1.  **PLACEMENT:** The Notes section MUST be part of a \`<div id="reference_text">\` block that is placed BEFORE the \`<qti-prompt>\` tag. This ensures screen reader users receive the visual context before hearing the question.
+
+2.  **NEVER REVEAL ANSWERS:** The Notes section must NEVER contain or hint at the correct answer. It exists solely to provide necessary visual context for accessibility.
+
+3.  **CONTENT GUIDELINES:** The Notes section should describe:
+    - Visual elements that are essential to understanding the problem
+    - Specific measurements or positions shown in diagrams (e.g., "The mouse's nose is at the 0-inch mark")
+    - Clock positions (e.g., "The hour hand is just past the 2")
+    - Relative sizes or proportions (e.g., "her dad is proportionally taller")
+    - Any visual information needed to solve the problem without seeing the image
+
+4.  **FORMAT:** Use this exact structure:
+    \`\`\`xml
+    <div id="reference_text">
+        <img src="https://..." alt="Brief description" width="X" height="Y"/>
+        <p><span class="qti-italic">Note: [Detailed visual context description]</span></p>
+    </div>
+    <qti-prompt>...</qti-prompt>
+    \`\`\`
+
+5.  **WHEN TO INCLUDE:** Add a Notes section when:
+    - The question involves measuring with rulers or visual estimation
+    - Reading analog clocks or other visual instruments
+    - Comparing sizes, heights, or proportions visually
+    - Any problem where the image contains critical information not in the text
+
 ---
 ### ADDITIONAL CRITICAL BANS ###
 
