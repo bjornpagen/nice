@@ -48,15 +48,15 @@ export async function sendCaliperActivityCompletedEvent(
 		performance
 	})
 
-	// Extract activity ID from context.activity.id or fall back to context.id
-	let assessmentLineItemId = context.activity?.id || context.id.split("/").pop()
-	if (!assessmentLineItemId) {
-		logger.error("CRITICAL: Could not determine activity ID", {
+	// Extract activity ID from context.activity.id (required for XP calculation)
+	if (!context.activity?.id) {
+		logger.error("CRITICAL: Missing activity ID in context", {
 			contextId: context.id,
-			activityId: context.activity?.id
+			activityContext: context.activity
 		})
 		throw errors.new("activity ID is required for XP calculation")
 	}
+	let assessmentLineItemId = context.activity.id
 
 	// Handle compound componentResource IDs (format: nice:unitId:resourceId)
 	// Assessment results are saved under resource ID, not componentResource ID
@@ -66,7 +66,7 @@ export async function sendCaliperActivityCompletedEvent(
 		// Extract just the resource ID: nice:x82a512f747dc1208
 		assessmentLineItemId = `${idParts[0]}:${idParts[2]}`
 		logger.debug("extracted resource id from compound id", {
-			originalId: context.activity?.id || context.id.split("/").pop(),
+			originalId: context.activity.id,
 			extractedResourceId: assessmentLineItemId
 		})
 	}
@@ -123,62 +123,60 @@ export async function sendCaliperActivityCompletedEvent(
 		)
 
 		if (currentResultsResult.error) {
-			logger.error("failed to fetch current proficiency for xp check", {
+			logger.error("CRITICAL: Failed to fetch proficiency for XP calculation", {
 				userSourcedId,
 				assessmentLineItemId,
 				error: currentResultsResult.error
 			})
-			// Fail safe: If we can't check current proficiency, award 0 XP to prevent exploitation.
-			assessmentXp = 0
+			throw errors.wrap(currentResultsResult.error, "proficiency check required for XP calculation")
+		}
+		const currentResults = currentResultsResult.data
+		let currentProficiency = 0 // Default to 0 if no previous attempts
+
+		if (currentResults.length > 0) {
+			// Get the most recent result to determine current proficiency
+			const latestResult = currentResults.sort(
+				(a, b) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
+			)[0]
+
+			if (latestResult && typeof latestResult.score === "number") {
+				currentProficiency = latestResult.score
+			}
+		}
+
+		if (currentProficiency >= MASTERY_THRESHOLD) {
+			logger.info("xp farming prevented: user already proficient on this assessment", {
+				userSourcedId,
+				assessmentLineItemId,
+				currentProficiency
+			})
+			assessmentXp = 0 // User already proficient, no new XP is awarded.
 		} else {
-			const currentResults = currentResultsResult.data
-			let currentProficiency = 0 // Default to 0 if no previous attempts
-
-			if (currentResults.length > 0) {
-				// Get the most recent result to determine current proficiency
-				const latestResult = currentResults.sort(
-					(a, b) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
-				)[0]
-
-				if (latestResult && typeof latestResult.score === "number") {
-					currentProficiency = latestResult.score
-				}
-			}
-
-			if (currentProficiency >= MASTERY_THRESHOLD) {
-				logger.info("xp farming prevented: user already proficient on this assessment", {
-					userSourcedId,
-					assessmentLineItemId,
-					currentProficiency
+			// Current proficiency is below mastery - calculate XP for this attempt
+			if (performance.totalQuestions === 0) {
+				logger.error("CRITICAL: Assessment has zero questions", {
+					assessmentId: context.activity?.id,
+					performance
 				})
-				assessmentXp = 0 // User already proficient, no new XP is awarded.
-			} else {
-				// Current proficiency is below mastery - calculate XP for this attempt
-				if (performance.totalQuestions === 0) {
-					logger.error("CRITICAL: Assessment has zero questions", {
-						assessmentId: context.activity?.id,
-						performance
-					})
-					throw errors.new("assessment must have at least one question")
-				}
-				const accuracy = performance.correctQuestions / performance.totalQuestions
-
-				// Calculate XP for the assessment itself (including penalty check)
-				assessmentXp = calculateAwardedXp(
-					performance.expectedXp,
-					accuracy,
-					performance.totalQuestions,
-					performance.durationInSeconds
-				)
-
-				logger.info("awarding xp for proficiency improvement", {
-					userSourcedId,
-					assessmentLineItemId,
-					currentProficiency,
-					newAccuracy: accuracy,
-					awardedXp: assessmentXp
-				})
+				throw errors.new("assessment must have at least one question")
 			}
+			const accuracy = performance.correctQuestions / performance.totalQuestions
+
+			// Calculate XP for the assessment itself (including penalty check)
+			assessmentXp = calculateAwardedXp(
+				performance.expectedXp,
+				accuracy,
+				performance.totalQuestions,
+				performance.durationInSeconds
+			)
+
+			logger.info("awarding xp for proficiency improvement", {
+				userSourcedId,
+				assessmentLineItemId,
+				currentProficiency,
+				newAccuracy: accuracy,
+				awardedXp: assessmentXp
+			})
 		}
 	}
 

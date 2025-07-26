@@ -145,13 +145,16 @@ export function applyQtiSelectionAndOrdering(
 		selectedQuestionIds.push(...itemRefs)
 	}
 
-	// Graceful fallback: If parsing results in zero questions (e.g., malformed XML),
-	// return all questions to avoid breaking the user's assessment experience.
+	// Critical validation: If parsing results in zero questions, the QTI XML is malformed
+	// and must be fixed rather than continuing with incorrect assessment structure.
 	if (selectedQuestionIds.length === 0) {
-		logger.warn("qti parsing resulted in zero selected questions, returning all as fallback", {
-			testIdentifier: assessmentTest.identifier
+		logger.error("CRITICAL: QTI parsing failed - no questions selected", {
+			testIdentifier: assessmentTest.identifier,
+			sectionCount: sections.length,
+			xmlLength: xml.length,
+			xmlSample: xml.substring(0, 500)
 		})
-		return allQuestions.map((q) => ({ id: q.question.identifier }))
+		throw errors.new("QTI assessment parsing: no questions selected")
 	}
 
 	// 4. Map the final list of IDs back to the full question objects, preserving the new order.

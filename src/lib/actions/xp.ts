@@ -17,7 +17,20 @@ export async function awardBankedXpForAssessment(
 ): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
 	logger.info("calculating banked xp for quiz", { quizResourceId, userSourcedId })
 
-	const userId = userSourcedId.includes("/") ? userSourcedId.split("/").pop() || userSourcedId : userSourcedId
+	let userId: string
+	if (userSourcedId.includes("/")) {
+		const parsed = userSourcedId.split("/").pop()
+		if (!parsed) {
+			logger.error("CRITICAL: Failed to parse user ID from sourced ID", {
+				userSourcedId,
+				expectedFormat: "https://api.../users/{id}"
+			})
+			throw errors.new("invalid user sourced ID format")
+		}
+		userId = parsed
+	} else {
+		userId = userSourcedId
+	}
 
 	// 1. Find the quiz's parent unit and position
 	const quizCrResult = await errors.try(
