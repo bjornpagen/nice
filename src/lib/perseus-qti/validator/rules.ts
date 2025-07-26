@@ -51,11 +51,11 @@ function validateXmlAngleBrackets(xml: string, logger: logger.Logger): string | 
 	}
 
 	// Also check attribute values which could contain < or >
-	const attrValueRegex = /\s+\w+\s*=\s*"([^"]*)"/g
+	const attrValueRegex = /\s+[-\w:]+\s*=\s*(["'])(.*?)\1/g
 	match = attrValueRegex.exec(xml)
 	while (match !== null) {
-		if (match[1]) {
-			textContentMatches.push(match[1])
+		if (match[2]) {
+			textContentMatches.push(match[2])
 		}
 		match = attrValueRegex.exec(xml)
 	}
@@ -65,29 +65,25 @@ function validateXmlAngleBrackets(xml: string, logger: logger.Logger): string | 
 		// Skip if this content is just whitespace
 		if (!content.trim()) continue
 
-		// Check for unescaped < (not part of &lt;)
-		const unescapedLessThan = content.match(/(?<!&l)(?<!&)t;|(?<!&lt);|<(?!\/|[a-zA-Z])/g)
-		if (unescapedLessThan) {
+		// Check for unescaped <
+		if (content.includes("<")) {
 			logger.error("found unescaped < in xml content", {
 				content: content.substring(0, 100),
-				match: unescapedLessThan[0],
 				context: content.substring(
-					Math.max(0, content.indexOf(unescapedLessThan[0]) - 20),
-					Math.min(content.length, content.indexOf(unescapedLessThan[0]) + 20)
+					Math.max(0, content.indexOf("<") - 20),
+					Math.min(content.length, content.indexOf("<") + 20)
 				)
 			})
 			return "invalid xml content: Unescaped '<' character found. Use &lt; instead."
 		}
 
-		// Check for unescaped > (not part of &gt;)
-		const unescapedGreaterThan = content.match(/(?<!&g)(?<!&)t;|(?<!&gt);|>(?![^<]*<)/g)
-		if (unescapedGreaterThan) {
+		// Check for unescaped >
+		if (content.includes(">")) {
 			logger.error("found unescaped > in xml content", {
 				content: content.substring(0, 100),
-				match: unescapedGreaterThan[0],
 				context: content.substring(
-					Math.max(0, content.indexOf(unescapedGreaterThan[0]) - 20),
-					Math.min(content.length, content.indexOf(unescapedGreaterThan[0]) + 20)
+					Math.max(0, content.indexOf(">") - 20),
+					Math.min(content.length, content.indexOf(">") + 20)
 				)
 			})
 			return "invalid xml content: Unescaped '>' character found. Use &gt; instead."
@@ -96,11 +92,8 @@ function validateXmlAngleBrackets(xml: string, logger: logger.Logger): string | 
 
 	// Additional check: Look for < or > that might be in text nodes using a different approach
 	// This catches cases where < or > appear in ways the above might miss
-	const xmlWithoutTags = xml
-		.replace(/<[^>]+>/g, " ") // Replace all tags with spaces
-		.replace(/&lt;/g, "") // Remove valid &lt;
-		.replace(/&gt;/g, "") // Remove valid &gt;
-		.replace(/&amp;/g, "") // Remove valid &amp;
+	const tagRegex = /<(?:"[^"]*"|'[^']*'|[^>"'])+>/g
+	const xmlWithoutTags = contentOnly.replace(tagRegex, " ")
 
 	if (xmlWithoutTags.includes("<")) {
 		logger.error("found unescaped < after tag removal", {
