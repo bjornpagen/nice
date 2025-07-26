@@ -23,6 +23,15 @@ import type {
 } from "@/lib/types/domain"
 import type { CoursePageData } from "@/lib/types/page"
 
+// Helper function to remove "Nice Academy - " prefix from course titles
+function removeNiceAcademyPrefix(title: string): string {
+	const prefix = "Nice Academy - "
+	if (title.startsWith(prefix)) {
+		return title.substring(prefix.length).trim()
+	}
+	return title
+}
+
 export async function fetchCoursePageData(
 	params: { subject: string; course: string },
 	options?: { skip?: { questions?: boolean } }
@@ -75,7 +84,7 @@ export async function fetchCoursePageData(
 	const courseForPage: Pick<Course, "id" | "title" | "description" | "path" | "slug"> = {
 		id: oneRosterCourse.sourcedId,
 		slug: courseMetadata.khanSlug, // Add slug
-		title: oneRosterCourse.title,
+		title: removeNiceAcademyPrefix(oneRosterCourse.title),
 		description: courseMetadata.khanDescription,
 		path: `/${params.subject}/${courseMetadata.khanSlug}` // Construct path from slugs
 	}

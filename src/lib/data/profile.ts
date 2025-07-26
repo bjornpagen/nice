@@ -8,6 +8,15 @@ import type { ProfileCourse, Unit } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
 import type { ClassReadSchemaType } from "../oneroster"
 
+// Helper function to remove "Nice Academy - " prefix from course titles
+function removeNiceAcademyPrefix(title: string): string {
+	const prefix = "Nice Academy - "
+	if (title.startsWith(prefix)) {
+		return title.substring(prefix.length).trim()
+	}
+	return title
+}
+
 export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<ProfileCourse[]> {
 	// Fetch active enrollments for the user
 	const enrollmentsResult = await errors.try(getActiveEnrollmentsForUser(userSourcedId))
@@ -128,7 +137,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 
 		courses.push({
 			id: course.sourcedId,
-			title: course.title,
+			title: removeNiceAcademyPrefix(course.title),
 			description: courseMetadata.khanDescription,
 			path: `/${subject}/${courseMetadata.khanSlug}`, // Construct path from slugs
 			units: unitsWithCorrectPaths

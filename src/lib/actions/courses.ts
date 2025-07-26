@@ -126,6 +126,15 @@ type SubjectWithCoursesForExplore = {
 	courses: CourseForExplore[]
 }
 
+// Helper function to remove "Nice Academy -" prefix from course titles
+function removeNiceAcademyPrefix(title: string): string {
+	const prefix = "Nice Academy -"
+	if (title.startsWith(prefix)) {
+		return title.substring(prefix.length).trim()
+	}
+	return title
+}
+
 export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCoursesForExplore[]> {
 	logger.info("fetching explore dropdown data from oneroster api", { orgId: ONEROSTER_ORG_ID })
 
@@ -172,7 +181,7 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 
 		const courseForExplore: CourseForExplore = {
 			id: course.sourcedId, // Using OneRoster sourcedId as the key
-			title: course.title,
+			title: removeNiceAcademyPrefix(course.title),
 			path: constructedPath,
 			slug: courseMetadata.khanSlug
 		}

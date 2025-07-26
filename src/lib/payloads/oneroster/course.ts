@@ -8,6 +8,15 @@ import { env } from "@/env"
 // --- ONE ROSTER TYPE DEFINITIONS ---
 // These interfaces define the structure of the final JSON payload.
 
+// Helper function to add "Nice Academy - " prefix to course titles for OneRoster
+function addNiceAcademyPrefix(title: string): string {
+	const prefix = "Nice Academy - "
+	if (!title.startsWith(prefix)) {
+		return `${prefix}${title}`
+	}
+	return title
+}
+
 interface OneRosterGUIDRef {
 	sourcedId: string
 	type: "course" | "academicSession" | "org" | "courseComponent" | "resource" | "term" | "schoolYear"
@@ -256,7 +265,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		course: {
 			sourcedId: `nice:${course.id}`,
 			status: "active",
-			title: course.title,
+			title: addNiceAcademyPrefix(course.title),
 			subjects: [subjectTitle],
 			courseCode: course.slug,
 			org: { sourcedId: ORG_SOURCED_ID, type: "org" },
@@ -273,7 +282,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		class: {
 			sourcedId: `nice:${course.id}`,
 			status: "active",
-			title: course.title,
+			title: addNiceAcademyPrefix(course.title),
 			classType: "scheduled",
 			course: { sourcedId: `nice:${course.id}`, type: "course" },
 			school: { sourcedId: ORG_SOURCED_ID, type: "org" },
