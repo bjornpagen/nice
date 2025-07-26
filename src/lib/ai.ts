@@ -20,6 +20,57 @@ const QtiCorrectionSchema = z.object({
 })
 
 /**
+ * Strips all XML comments from the provided XML string.
+ * This prevents issues with malformed comments that could cause XML parsing errors.
+ *
+ * @param xml The XML string to process
+ * @param logger The logger instance
+ * @returns The XML string with all comments removed
+ */
+function stripXmlComments(xml: string, logger: logger.Logger): string {
+	// EXTREMELY robust regex for matching XML comments
+	// This handles multi-line comments and ensures we don't accidentally match
+	// things that look like comments but aren't (e.g., within CDATA sections)
+	//
+	// The regex breakdown:
+	// <!--              : Matches the exact opening of an XML comment
+	// (?<content>       : Named capture group for the comment content
+	//   (?:             : Non-capturing group for the content pattern
+	//     (?!-->)       : Negative lookahead - ensures we don't match -->
+	//     [\s\S]        : Matches any character including newlines
+	//   )*              : Zero or more of any character that isn't part of -->
+	// )                 : End of content capture group
+	// -->               : Matches the exact closing of an XML comment
+	const commentRegex = /<!--(?<content>(?:(?!-->)[\s\S])*)-->/g
+
+	// Count comments for logging
+	const commentMatches = xml.match(commentRegex)
+	const commentCount = commentMatches ? commentMatches.length : 0
+
+	if (commentCount > 0) {
+		logger.debug("stripping xml comments", {
+			commentCount,
+			firstComment: commentMatches?.[0]?.substring(0, 100),
+			originalLength: xml.length
+		})
+	}
+
+	// Replace all comments with empty string
+	const strippedXml = xml.replace(commentRegex, "")
+
+	if (commentCount > 0) {
+		logger.debug("xml comments stripped", {
+			commentCount,
+			originalLength: xml.length,
+			strippedLength: strippedXml.length,
+			bytesRemoved: xml.length - strippedXml.length
+		})
+	}
+
+	return strippedXml
+}
+
+/**
  * Validates that the generated QTI XML does not contain any disallowed HTML entities.
  * The QTI standard requires using actual characters or numeric entities, not named HTML entities.
  *
@@ -463,16 +514,22 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
 3.  **MENTAL CHECK.**
     Before you output your final answer, perform a mental check: "Did I close every single tag I opened with its full name? Is the final closing tag present?"
 
-4.  **NO HTML ENTITIES IN XML:** Do not use named HTML entities including but not limited to \`&nbsp;\`, \`&minus;\`, \`&ndash;\`, or \`&mdash;\`. These are invalid in XML and will cause parsing to fail.
+4.  **NO HTML ENTITIES ANYWHERE (see #5 for the ONLY exceptions):** Do not use ANY named HTML entities ANYWHERE in the output, including but not limited to \`&nbsp;\`, \`&minus;\`, \`&ndash;\`, \`&mdash;\`, \`&copy;\`, \`&reg;\`, \`&trade;\`, \`&times;\`, \`&divide;\`, etc. This prohibition applies to ALL content - XML, HTML, MathML, text, attributes - EVERYWHERE. The ONLY exceptions are the essential XML escaping entities listed in rule #5 below.
     - ✅ **CORRECT (Space):** Use a regular space character: \` \`
     - ✅ **CORRECT (Minus):** In MathML, use \`<mo>-</mo>\`. In plain text, use the hyphen \`-\`.
     - ✅ **CORRECT (En Dash):** Use the actual en dash character: \`–\` (U+2013)
     - ✅ **CORRECT (Em Dash):** Use the actual em dash character: \`—\` (U+2014)
-    - ❌ **ABSOLUTELY FORBIDDEN:** \`9&nbsp;&minus;&nbsp;5\`, \`text&ndash;text\`, \`text&mdash;more text\`
+    - ✅ **CORRECT (Multiplication):** Use \`×\` (U+00D7) or \`*\` instead of \`&times;\`
+    - ❌ **ABSOLUTELY FORBIDDEN:** \`9&nbsp;&minus;&nbsp;5\`, \`text&ndash;text\`, \`text&mdash;more text\`, \`3&times;4\`, \`&copy;2023\`
 
-5.  **ESCAPE XML-RESERVED CHARACTERS IN CONTENT ONLY.**
-    In text content and attribute values, you must escape special XML characters. However, do NOT escape the XML tags themselves.
-    - ✅ **CORRECT:** \`<mo>&lt;</mo>\` (for less-than symbol), \`<mo>&gt;</mo>\` (for greater-than symbol), \`title="AT&amp;T"\`
+5.  **EXCEPTIONS TO RULE #4 - ONLY REQUIRED XML ESCAPING:** These are the ONLY HTML/XML entities you are allowed to use anywhere in your output. Only use the absolute minimum XML character escaping required for well-formed XML. The ONLY acceptable entity references are:
+    - \`&lt;\` for less-than symbol (<) when it appears in content
+    - \`&gt;\` for greater-than symbol (>) when it appears in content
+    - \`&le;\` for less-than-or-equal-to (≤) in mathematical contexts
+    - \`&ge;\` for greater-than-or-equal-to (≥) in mathematical contexts
+    - \`&amp;\` for ampersand (&) when it appears in content
+    - ✅ **CORRECT:** \`<mo>&lt;</mo>\` (for less-than symbol), \`<mo>&gt;</mo>\` (for greater-than symbol), \`<mo>&le;</mo>\` (for ≤), \`<mo>&ge;</mo>\` (for ≥), \`title="AT&amp;T"\`
+    - ❌ **FORBIDDEN:** Using ANY other HTML entities like \`&nbsp;\`, \`&minus;\`, \`&times;\`, etc.
     - ❌ **FORBIDDEN:** \`<mo><</mo>\` (raw less-than), \`title="AT&T"\` (raw ampersand)
     - ❌ **FORBIDDEN:** \`&lt;mo&gt;&lt;/mo&gt;\` (do NOT escape the actual XML tags)
 
@@ -660,20 +717,23 @@ export async function generateQtiFromPerseus(
 		)
 	}
 
-	// Step 6: Check for disallowed HTML entities
-	checkForDisallowedHtmlEntities(extractedXml, logger)
+	// Step 6: Strip all XML comments to prevent malformed comment errors
+	const strippedXml = stripXmlComments(extractedXml, logger)
 
-	// Step 7: Validate image URLs
-	await validateImageUrls(extractedXml, logger)
+	// Step 7: Check for disallowed HTML entities
+	checkForDisallowedHtmlEntities(strippedXml, logger)
+
+	// Step 8: Validate image URLs
+	await validateImageUrls(strippedXml, logger)
 
 	logger.debug("successfully generated and extracted qti xml from openai", {
-		xmlLength: extractedXml.length,
+		xmlLength: strippedXml.length,
 		rootTag: extractedRootTag,
 		hasAttributes: !!attributes?.trim(),
 		hasXmlDeclaration
 	})
 
-	return extractedXml
+	return strippedXml
 }
 
 /**
@@ -867,20 +927,23 @@ Return a single JSON object with the final corrected XML.
 		)
 	}
 
-	// Step 6: Check for disallowed HTML entities
-	checkForDisallowedHtmlEntities(extractedXml, logger)
+	// Step 6: Strip all XML comments to prevent malformed comment errors
+	const strippedXml = stripXmlComments(extractedXml, logger)
 
-	// Step 7: Validate image URLs
-	await validateImageUrls(extractedXml, logger)
+	// Step 7: Check for disallowed HTML entities
+	checkForDisallowedHtmlEntities(strippedXml, logger)
+
+	// Step 8: Validate image URLs
+	await validateImageUrls(strippedXml, logger)
 
 	logger.debug("correction complete", {
 		originalLength: invalidXml.length,
-		correctedLength: extractedXml.length,
-		lengthDiff: extractedXml.length - invalidXml.length,
+		correctedLength: strippedXml.length,
+		lengthDiff: strippedXml.length - invalidXml.length,
 		rootTag: extractedRootTag,
 		hasAttributes: !!attributes?.trim(),
 		hasXmlDeclaration
 	})
 
-	return extractedXml
+	return strippedXml
 }
