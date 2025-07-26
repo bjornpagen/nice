@@ -7,7 +7,9 @@ export function UnitOverviewSection({ unit, index, next = false }: { unit: Unit;
 	// Extract videos from lessons within the unit
 	const videos = unit.children
 		.filter((child): child is Lesson => child.type === "Lesson")
-		.flatMap((lesson) => lesson.children.filter((c) => c.type === "Video"))
+		.flatMap((lesson) =>
+			lesson.children.filter((c) => c.type === "Video").map((video) => ({ ...video, lessonId: lesson.id }))
+		)
 
 	return (
 		<div
@@ -33,7 +35,7 @@ export function UnitOverviewSection({ unit, index, next = false }: { unit: Unit;
 
 			<div className="grid grid-cols-2 gap-x-8 gap-y-1 mb-4">
 				{videos.map((video) => (
-					<div key={video.id}>
+					<div key={`${video.lessonId}-${video.id}`}>
 						<Link href={video.path} className="text-gray-600 hover:text-gray-800 hover:underline text-xs">
 							{video.title}
 						</Link>
