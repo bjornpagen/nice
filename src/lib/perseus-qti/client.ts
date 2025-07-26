@@ -4,7 +4,7 @@ import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
 import { z } from "zod"
 import { env } from "@/env"
-import { createQtiConversionPrompt, createQtiCorrectionPrompt } from "./prompts"
+import { createQtiConversionPrompt, createQtiSufficiencyValidationPrompt } from "./prompts"
 import { convertHtmlEntities, stripXmlComments } from "./strip"
 
 const OPENAI_MODEL = "o3"
@@ -14,8 +14,10 @@ const QtiGenerationSchema = z.object({
 	qti_xml: z.string().describe("The single, complete, and perfectly-formed QTI 3.0 XML string.")
 })
 
-const QtiCorrectionSchema = z.object({
-	corrected_xml: z.string().describe("The single, complete, and perfectly-formed QTI 3.0 XML string.")
+// NEW: Zod schema for the solvability validation response
+const QtiSolvabilityValidationSchema = z.object({
+	is_solvable: z.boolean(),
+	reason: z.string()
 })
 
 /**
@@ -100,16 +102,23 @@ function extractAndValidateXml(xml: string, rootTag: string, logger: logger.Logg
 	return strippedXml
 }
 
+interface RegenerationContext {
+	flawedXml: string
+	errorReason: string
+}
+
 export async function generateXml(
 	logger: logger.Logger,
 	perseusData: unknown,
-	options: { type: "assessmentItem" | "stimulus" }
+	options: { type: "assessmentItem" | "stimulus" },
+	regenerationContext?: RegenerationContext
 ): Promise<string> {
 	const perseusJsonString = JSON.stringify(perseusData, null, 2)
 	const { systemInstruction, userContent, rootTag } = await createQtiConversionPrompt(
 		logger,
 		perseusJsonString,
-		options
+		options,
+		regenerationContext
 	)
 
 	logger.debug("calling openai for qti generation", { model: OPENAI_MODEL, rootTag })
@@ -138,108 +147,81 @@ export async function generateXml(
 		usage: response.data.usage
 	})
 
-	const message = response.data.choices[0]?.message
+	const choice = response.data.choices[0]
+	// ✅ CORRECT: Explicit validation, no fallbacks. Fails fast and loud.
+	if (!choice) {
+		logger.error("CRITICAL: OpenAI response contained no choices")
+		throw errors.new("openai returned no choices")
+	}
+	const message = choice.message
 	if (!message) {
-		logger.error("openai returned no message")
+		logger.error("CRITICAL: OpenAI choice contained no message")
 		throw errors.new("empty ai response")
 	}
-
-	// Handle refusals
 	if (message.refusal) {
 		logger.error("openai refused to generate qti xml", { refusal: message.refusal })
 		throw errors.new(`ai refused request: ${message.refusal}`)
 	}
-
-	// Access the automatically parsed data
 	if (!message.parsed) {
-		logger.error("openai returned no parsed content for qti conversion")
-		throw errors.new("empty ai response")
+		logger.error("CRITICAL: OpenAI returned no parsed content for qti conversion")
+		throw errors.new("empty ai response: no parsed content")
 	}
 
 	const qtiXml = message.parsed.qti_xml
 	if (!qtiXml) {
-		logger.error("openai returned an empty qti_xml in response")
-		throw errors.new("empty ai response")
+		logger.error("CRITICAL: OpenAI returned an empty qti_xml string in response")
+		throw errors.new("empty ai response: qti_xml string is empty")
 	}
-
-	// Convert problematic HTML entities before extraction and validation
 	const cleanedXml = convertHtmlEntities(qtiXml, logger)
-
-	// Extract and validate the XML using the EXACT same logic from the old code
 	return extractAndValidateXml(cleanedXml, rootTag, logger)
 }
 
-export async function correctXml(
+/**
+ * NEW: A dedicated client function for the AI-powered solvability validator.
+ * @param logger The logger instance.
+ * @param perseusJson The source Perseus JSON.
+ * @param qtiXml The generated QTI XML to validate.
+ * @returns A promise that resolves to the structured validation result.
+ */
+export async function validateXmlWithAi(
 	logger: logger.Logger,
-	input: { invalidXml: string; errorMessage: string; rootTag: "qti-assessment-item" | "qti-assessment-stimulus" }
-): Promise<string> {
-	const { invalidXml, errorMessage, rootTag } = input
-	logger.debug("attempting to fix invalid qti xml", {
-		rootTag,
-		error: errorMessage,
-		invalidXmlLength: invalidXml.length
-	})
+	perseusJson: unknown,
+	qtiXml: string
+): Promise<z.infer<typeof QtiSolvabilityValidationSchema>> {
+	const { developer, user } = createQtiSufficiencyValidationPrompt(perseusJson, qtiXml)
 
-	const userPrompt = createQtiCorrectionPrompt(invalidXml, errorMessage, rootTag)
-	logger.debug("calling openai for xml correction", {
-		model: OPENAI_MODEL,
-		promptLength: userPrompt.length
-	})
-
+	logger.debug("calling openai for qti solvability validation", { model: OPENAI_MODEL })
 	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
-			messages: [{ role: "user", content: userPrompt }],
-			response_format: zodResponseFormat(QtiCorrectionSchema, "qti_corrector"),
-			reasoning_effort: "high"
+			messages: [
+				{ role: "system", content: developer },
+				{ role: "user", content: user }
+			],
+			response_format: zodResponseFormat(QtiSolvabilityValidationSchema, "qti_validator")
 		})
 	)
+
 	if (response.error) {
-		logger.error("failed to fix qti xml", { error: response.error })
-		throw errors.wrap(response.error, "qti xml correction")
+		logger.error("failed to validate qti xml via openai", { error: response.error })
+		throw errors.wrap(response.error, "ai qti validation")
 	}
 
-	logger.debug("received openai response", {
-		fullResponse: response.data,
-		choiceCount: response.data.choices.length,
-		finishReason: response.data.choices[0]?.finish_reason,
-		message: response.data.choices[0]?.message,
-		parsed: response.data.choices[0]?.message?.parsed,
-		usage: response.data.usage
-	})
-
-	const message = response.data.choices[0]?.message
-	if (!message) {
-		logger.error("openai returned no message")
-		throw errors.new("qti xml correction returned no content")
+	const choice = response.data.choices[0]
+	// ✅ CORRECT: Explicit validation, no fallbacks.
+	if (!choice) {
+		logger.error("CRITICAL: OpenAI validation response contained no choices")
+		throw errors.new("openai validation returned no choices")
 	}
-
-	// Handle refusals
+	const message = choice.message
+	if (!message || !message.parsed) {
+		logger.error("CRITICAL: OpenAI validation returned no parsed content")
+		throw errors.new("empty ai response: no parsed content for validation")
+	}
 	if (message.refusal) {
-		logger.error("openai refused to correct qti xml", { refusal: message.refusal })
+		logger.error("openai refused qti validation request", { refusal: message.refusal })
 		throw errors.new(`ai refused request: ${message.refusal}`)
 	}
 
-	// Access the automatically parsed data
-	if (!message.parsed) {
-		logger.error("qti xml correction returned no parsed content")
-		throw errors.new("qti xml correction returned no content")
-	}
-
-	const correctedXml = message.parsed.corrected_xml
-	if (!correctedXml) {
-		logger.error("qti xml correction returned empty corrected_xml")
-		throw errors.new("qti xml correction returned no content")
-	}
-
-	logger.info("successfully corrected qti xml", {
-		rootTag,
-		correctedXmlLength: correctedXml.length
-	})
-
-	// Convert problematic HTML entities before extraction and validation
-	const cleanedXml = convertHtmlEntities(correctedXml, logger)
-
-	// Extract and validate the corrected XML using the EXACT same logic from the old code
-	return extractAndValidateXml(cleanedXml, rootTag, logger)
+	return message.parsed
 }

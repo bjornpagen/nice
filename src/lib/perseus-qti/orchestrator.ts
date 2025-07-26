@@ -1,76 +1,86 @@
 import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
-import { correctXml, generateXml } from "./client"
+import { generateXml } from "./client"
 import { runValidationPipeline } from "./validator"
 
-type ConversionOptions =
-	| {
-			id: string
-			type: "assessmentItem"
-			title: string // Title is REQUIRED - we get it from the database join
-			perseusContent: unknown
-			logger: logger.Logger
-	  }
-	| {
-			id: string
-			type: "stimulus"
-			title: string // Title is required for stimuli
-			perseusContent: unknown
-			logger: logger.Logger
-	  }
+const MAX_CONVERSION_ATTEMPTS = 2 // The initial attempt + 1 retry
+
+type ConversionOptions = {
+	id: string
+	type: "assessmentItem" | "stimulus"
+	title: string
+	perseusContent: unknown
+	logger: logger.Logger
+}
 
 export async function orchestratePerseusToQtiConversion(options: ConversionOptions): Promise<string> {
-	const { id, type, perseusContent, logger } = options
+	const { id, type, perseusContent, logger, title } = options
 	const rootTag = type === "stimulus" ? "qti-assessment-stimulus" : "qti-assessment-item"
 
-	// Extract title - it's required for both types, enforced by the type system and validation
-	const title = options.title
+	let lastXml = ""
+	let lastError: Error | null = null
 
-	// 1. Initial Generation Attempt
-	const initialXmlResult = await errors.try(generateXml(logger, perseusContent, { type }))
-	if (initialXmlResult.error) {
-		logger.error("initial xml generation failed", { error: initialXmlResult.error })
-		throw errors.wrap(initialXmlResult.error, "initial xml generation")
-	}
-	const initialXml = initialXmlResult.data
+	for (let attempt = 1; attempt <= MAX_CONVERSION_ATTEMPTS; attempt++) {
+		logger.info("starting qti conversion attempt", { type, id, attempt, maxAttempts: MAX_CONVERSION_ATTEMPTS })
 
-	// 2. First Validation Pass
-	const initialValidation = await runValidationPipeline(initialXml, { id, rootTag, title, logger })
-	if (initialValidation.isValid) {
-		logger.info("initial xml generation was valid", { type })
-		return initialXml
-	}
+		// ✅ CORRECT: Explicit check for lastError. No optional chaining or fallbacks.
+		let regenerationContext: { flawedXml: string; errorReason: string } | undefined
+		if (attempt > 1 && lastError) {
+			regenerationContext = {
+				flawedXml: lastXml,
+				errorReason: lastError.message
+			}
+		}
 
-	logger.warn("initial xml generation failed validation, attempting correction", {
-		type,
-		errors: initialValidation.errors.map((e) => e.toString())
-	})
+		// 1. Generation Attempt (or Regeneration Attempt)
+		const generationPromise: Promise<string> = regenerationContext
+			? generateXml(logger, perseusContent, { type }, regenerationContext)
+			: generateXml(logger, perseusContent, { type })
 
-	// 3. Correction Attempt
-	const correctedXmlResult = await errors.try(
-		correctXml(logger, {
-			invalidXml: initialXml,
-			// Pass a JSON string array of error messages, fulfilling the prompt's contract.
-			errorMessage: JSON.stringify(initialValidation.errors.map((e) => e.toString())),
-			rootTag
-		})
-	)
-	if (correctedXmlResult.error) {
-		logger.error("xml correction failed", { error: correctedXmlResult.error })
-		throw errors.wrap(correctedXmlResult.error, "xml correction")
-	}
-	const correctedXml = correctedXmlResult.data
+		const generationResult = await errors.try(generationPromise)
 
-	// 4. Final Validation Pass
-	const finalValidation = await runValidationPipeline(correctedXml, { id, rootTag, title, logger })
-	if (!finalValidation.isValid) {
-		logger.error("corrected xml failed validation again", {
+		if (generationResult.error) {
+			lastError = generationResult.error
+			lastXml = ""
+			logger.error("xml generation/regeneration failed", { attempt, error: lastError })
+			continue // Go to next attempt
+		}
+		const generatedXml = generationResult.data
+		lastXml = generatedXml
+
+		// 2. Full Validation Pass
+		const validationResult = await runValidationPipeline(generatedXml, { id, rootTag, title, logger, perseusContent })
+		if (validationResult.isValid) {
+			logger.info("xml generation and validation successful", { type, id, attempt })
+			return generatedXml
+		}
+
+		// 3. Handle any Validation Failure
+		const combinedErrorMessages = validationResult.errors.map((e) => e.message).join("\n- ")
+		lastError = errors.new(
+			`Validation failed with ${validationResult.errors.length} errors:\n- ${combinedErrorMessages}`
+		)
+
+		logger.warn("xml validation failed, preparing for regeneration", {
 			type,
-			errors: finalValidation.errors.map((e) => e.toString())
+			id,
+			attempt,
+			errorCount: validationResult.errors.length,
+			firstError: validationResult.errors[0]?.message
 		})
-		throw errors.new("corrected xml failed validation")
+
+		if (attempt === MAX_CONVERSION_ATTEMPTS) {
+			break
+		}
 	}
 
-	logger.info("successfully corrected and validated xml", { type })
-	return correctedXml
+	// ✅ CORRECT: Explicit check for lastError before wrapping to prevent null pointer exceptions.
+	if (!lastError) {
+		logger.error("CRITICAL: Conversion loop finished without a final error", { type, id })
+		throw errors.new(
+			`all ${MAX_CONVERSION_ATTEMPTS} attempts to convert perseus content failed without a specific error`
+		)
+	}
+	logger.error("all qti conversion attempts failed", { type, id, lastError })
+	throw errors.wrap(lastError, `all ${MAX_CONVERSION_ATTEMPTS} attempts to convert perseus content failed`)
 }

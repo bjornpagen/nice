@@ -2,18 +2,25 @@ import type * as logger from "@superbuilders/slog"
 import { loadConversionExamples } from "@/lib/qti-examples"
 import { VALID_QTI_TAGS } from "@/lib/qti-tags"
 
+interface RegenerationContext {
+	flawedXml: string
+	errorReason: string
+}
+
 /**
  * Creates the structured prompt for the AI model to convert Perseus JSON to QTI XML,
  * including a rich set of few-shot examples.
  * @param logger The logger instance.
  * @param perseusJsonString The stringified Perseus JSON data for the current conversion task.
  * @param options An object to specify the conversion type. Defaults to 'assessmentItem'.
+ * @param regenerationContext Optional context for regeneration attempts.
  * @returns The system instruction and user content for the AI prompt.
  */
 export async function createQtiConversionPrompt(
 	logger: logger.Logger,
 	perseusJsonString: string,
-	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" }
+	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" },
+	regenerationContext?: RegenerationContext
 ) {
 	const { type } = options
 	const rootTag = type === "stimulus" ? "qti-assessment-stimulus" : "qti-assessment-item"
@@ -21,7 +28,8 @@ export async function createQtiConversionPrompt(
 	logger.debug("creating qti conversion prompt", {
 		type,
 		rootTag,
-		perseusDataLength: perseusJsonString.length
+		perseusDataLength: perseusJsonString.length,
+		isRegeneration: !!regenerationContext
 	})
 
 	const systemInstruction = `You are an expert XML generator for educational content. Your primary and most critical function is to convert a Perseus JSON object into a single, well-formed QTI 3.0 XML \`${rootTag}\`. Your output MUST be only the raw XML. The XML MUST be perfect and parseable. The most common and catastrophic failure is an incomplete or malformed closing tag. You are STRICTLY FORBIDDEN from using partial or lazy closing tags like \`</_>\` or \`</>\`. Every single XML element, such as \`<p>\`, must have a corresponding full closing tag, \`</p>\`. This rule is absolute and cannot be violated.`
@@ -39,6 +47,7 @@ export async function createQtiConversionPrompt(
 	const positiveExamples = examples.filter((e) => e.type === "positive")
 	const negativeExamples = examples.filter((e) => e.type === "negative")
 
+	// Always include positive examples
 	const positiveExamplesXml = positiveExamples
 		.map(
 			(example) => `
@@ -54,10 +63,12 @@ ${example.qti}
 		)
 		.join("\n")
 
-	// Format negative examples to show the malformed XML
-	const negativeExamplesFromData = negativeExamples
-		.map(
-			(example) => `
+	// Conditionally build negative examples block
+	let negativeExamplesBlock = ""
+	if (!regenerationContext) {
+		const negativeExamplesFromData = negativeExamples
+			.map(
+				(example) => `
 <negative_example_from_data name="${example.name}">
   <perseus_json>
 ${JSON.stringify(example.perseus, null, 2)}
@@ -67,20 +78,48 @@ ${example.qti}
   </malformed_qti_xml>
 </negative_example_from_data>
 `
-		)
-		.join("\n")
+			)
+			.join("\n")
 
-	const userContent = `
-<examples>
-${positiveExamplesXml}
-</examples>
-
+		negativeExamplesBlock = `
 <negative_examples_from_filesystem>
 <!-- THESE ARE REAL EXAMPLES OF MALFORMED QTI XML LOADED FROM OUR NEGATIVE EXAMPLES DIRECTORY -->
 <!-- Each example contains an XML comment explaining why it is incorrect -->
 ${negativeExamplesFromData}
 </negative_examples_from_filesystem>
+`
+	}
 
+	const regenerationBlock = regenerationContext
+		? `
+<regeneration_context>
+### REGENERATION TASK ###
+The previous attempt to generate this QTI XML failed validation for the following reason.
+Your task is to regenerate the XML, fixing this specific error while preserving the original intent.
+
+**Reason for Failure:**
+${regenerationContext.errorReason}
+
+**Flawed XML from Previous Attempt:**
+\`\`\`xml
+${regenerationContext.flawedXml}
+\`\`\`
+
+**Instructions for Correction:**
+1. Analyze the provided reason and the flawed XML.
+2. Identify the mistake in the previous attempt (e.g., missing context, incorrect structure, invalid XML).
+3. **Pay close attention to the positive examples provided below to understand the correct structure and content fidelity required.**
+4. Generate a new, completely valid QTI XML that corrects the error and fully represents the source Perseus JSON.
+</regeneration_context>
+`
+		: ""
+
+	const userContent = `
+${regenerationBlock}
+<examples>
+${positiveExamplesXml}
+</examples>
+${negativeExamplesBlock}
 <critical_negative_examples>
 <!-- THESE ARE EXAMPLES OF WHAT MUST NEVER APPEAR IN QTI XML -->
 <negative_example reason="Perseus widget artifacts cause QTI API to return 'unknown' type and fail validation">
@@ -328,6 +367,53 @@ FINAL REMINDER: The examples demonstrate PERFECT QTI 3.0 XML output. Follow thei
 	})
 
 	return { systemInstruction, userContent, rootTag }
+}
+
+/**
+ * NEW: Creates the prompt for the AI-powered Content Solvability Validator.
+ */
+export function createQtiSufficiencyValidationPrompt(
+	perseusJson: unknown,
+	qtiXml: string
+): { developer: string; user: string } {
+	const developer =
+		"You are a meticulous QTI 3.0 assessment expert. Your ONLY task is to determine if a generated QTI XML assessment item is solvable. You must respond ONLY with a valid JSON object."
+
+	const user = `
+<task_definition>
+  # Task
+  Your ONLY task is to determine if the provided QTI XML is self-contained and provides sufficient information for a student to solve the question. The question is considered IMPOSSIBLE to solve if critical context, images, tables, or structural elements are missing, malformed, or altered in a way that breaks the problem's logic.
+
+  **CRITICAL CLARIFICATION:** Your job is NOT to check if the QTI is a "faithful translation" of the Perseus interaction type. A change in format (e.g., a Perseus plotter becoming a QTI multiple-choice with static images) is ACCEPTABLE and should be considered **solvable**, as long as all necessary information from the source is present in the final QTI. The ONLY question is: "Can a student solve this?"
+</task_definition>
+
+<inputs>
+  <perseus_json>
+    ${JSON.stringify(perseusJson, null, 2)}
+  </perseus_json>
+  <generated_qti_xml>
+    <![CDATA[
+      ${qtiXml}
+    ]]>
+  </generated_qti_xml>
+</inputs>
+
+<instructions_and_constraints>
+  # Instructions & Rules
+  1.  **Compare Source and Output:** Scrutinize the Perseus \`question.content\` and compare it against the QTI \`<qti-item-body>\`.
+  2.  **Check for Critical Omissions:** Identify if any information essential to solving the problem has been dropped (e.g., initial numbers, data tables, images).
+  3.  **Do Not Judge Correctness:** Your task is NOT to check if the correct answer is right. You only check if the question is SOLVABLE.
+  4.  **Strict JSON Output:** Respond ONLY with a JSON object with two keys: \`"is_solvable"\` (boolean) and \`"reason"\` (a detailed explanation ONLY if not solvable, otherwise an empty string).
+</instructions_and_constraints>
+
+<output_format>
+  {
+    "is_solvable": boolean,
+    "reason": "string"
+  }
+</output_format>
+`
+	return { developer, user }
 }
 
 export function createQtiCorrectionPrompt(

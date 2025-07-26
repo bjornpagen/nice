@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
 import { qti } from "@/lib/clients"
+import { validateXmlWithAi } from "@/lib/perseus-qti/client"
 import { ErrQtiNotFound } from "@/lib/qti"
 
 type ValidationContext = {
@@ -8,6 +9,7 @@ type ValidationContext = {
 	rootTag: string
 	title: string // Title is required
 	logger: logger.Logger
+	perseusContent: unknown
 }
 
 // Centralized Regex Constants
@@ -315,4 +317,29 @@ export async function validateWithQtiApi(xml: string, context: ValidationContext
 	} else {
 		throw errors.new(`unsupported root tag for api validation: ${context.rootTag}`)
 	}
+}
+
+/**
+ * NEW: A custom error to be thrown when the AI validator deems the content unsolvable.
+ */
+export const ErrContentUnsolvable = errors.new("qti content is not self-contained or solvable")
+
+/**
+ * NEW: Validates that the generated QTI XML is self-contained and solvable using an AI model.
+ */
+export async function validateContentSufficiency(xml: string, context: ValidationContext): Promise<void> {
+	const { logger, perseusContent } = context
+	logger.info("running ai content solvability validation")
+
+	const validationResult = await errors.try(validateXmlWithAi(logger, perseusContent, xml))
+	if (validationResult.error) {
+		throw errors.wrap(validationResult.error, "ai content solvability validation")
+	}
+
+	const { is_solvable, reason } = validationResult.data
+	if (!is_solvable) {
+		throw errors.wrap(ErrContentUnsolvable, reason)
+	}
+
+	logger.info("ai content solvability validation passed")
 }

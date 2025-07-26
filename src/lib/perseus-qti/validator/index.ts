@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
 import {
+	validateContentSufficiency,
 	validateHtmlEntities,
 	validateImageUrls,
 	validatePerseusArtifacts,
@@ -12,8 +13,9 @@ import {
 type ValidationContext = {
 	id: string
 	rootTag: string
-	title: string // Title is required
+	title: string
 	logger: logger.Logger
+	perseusContent: unknown // UPDATED: Add perseusContent to the context.
 }
 
 type SyncValidationPass = (xml: string, context: ValidationContext) => void
@@ -39,7 +41,11 @@ export async function runValidationPipeline(
 		}
 	}
 
-	const asyncPasses: AsyncValidationPass[] = [validateImageUrls, validateWithQtiApi]
+	const asyncPasses: AsyncValidationPass[] = [
+		validateImageUrls,
+		validateContentSufficiency, // ADDED: The new AI validation pass.
+		validateWithQtiApi
+	]
 	for (const pass of asyncPasses) {
 		const result = await errors.try(pass(xml, context))
 		if (result.error) {
