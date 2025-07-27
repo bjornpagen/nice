@@ -17,6 +17,31 @@ function addNiceAcademyPrefix(title: string): string {
 	return title
 }
 
+// Helper function to map our internal subject titles to OneRoster-compatible values
+function mapToOneRosterSubjects(internalSubjectTitle: string): string[] {
+	const subjectMapping: Record<string, string[]> = {
+		"English Language Arts": ["Reading", "Vocabulary"],
+		Math: ["Math"],
+		Science: ["Science"],
+		"Arts and Humanities": ["Social Studies"],
+		Economics: ["Social Studies"],
+		Computing: ["Science"], // Computing could map to Science as closest match
+		"Test Prep": ["Reading", "Math"], // Test prep often covers both
+		"College, Careers, and More": ["Social Studies"]
+	}
+
+	const mapped = subjectMapping[internalSubjectTitle]
+	if (!mapped) {
+		logger.warn("unmapped subject title, defaulting to Reading", {
+			internalSubjectTitle,
+			availableMappings: Object.keys(subjectMapping)
+		})
+		return ["Reading"] // Safe fallback
+	}
+
+	return mapped
+}
+
 interface OneRosterGUIDRef {
 	sourcedId: string
 	type: "course" | "academicSession" | "org" | "courseComponent" | "resource" | "term" | "schoolYear"
@@ -266,7 +291,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			sourcedId: `nice:${course.id}`,
 			status: "active",
 			title: addNiceAcademyPrefix(course.title),
-			subjects: [subjectTitle],
+			subjects: mapToOneRosterSubjects(subjectTitle),
 			courseCode: course.slug,
 			org: { sourcedId: ORG_SOURCED_ID, type: "org" },
 			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" },
