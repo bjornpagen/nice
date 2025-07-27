@@ -299,7 +299,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 
 async function fetchEntities(entityType: Exclude<EntityType, "all">, prefix: string): Promise<Entity[]> {
 	const handler = handlers[entityType]
-	logger.info("fetching entities", { type: handler.name, prefix })
+	logger.debug("fetching entities", { type: handler.name, prefix })
 
 	const result = await errors.try(handler.fetchAll(prefix))
 	if (result.error) {
@@ -307,23 +307,11 @@ async function fetchEntities(entityType: Exclude<EntityType, "all">, prefix: str
 		throw errors.wrap(result.error, `${entityType} fetch`)
 	}
 
-	logger.info("fetched entities", { type: handler.name, count: result.data.length })
-	return result.data
-}
+	logger.debug("fetched entities", { type: handler.name, count: result.data.length })
 
-async function deleteEntity(handler: EntityHandler, entity: Entity): Promise<boolean> {
-	const result = await errors.try(handler.delete(entity.sourcedId))
-	if (result.error) {
-		logger.error("delete failed", {
-			type: handler.name,
-			sourcedId: entity.sourcedId,
-			error: result.error
-		})
-		return false
-	}
-
-	logger.debug("deleted", { type: handler.name, sourcedId: entity.sourcedId })
-	return true
+	// Ensure stable sorting by sourcedId
+	// This is important when results come from parallel operations
+	return result.data.sort((a, b) => a.sourcedId.localeCompare(b.sourcedId))
 }
 
 async function confirmDeletion(count: number, typeName: string): Promise<boolean> {
@@ -358,6 +346,8 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 
 			process.stdout.write("\n🔍 Scanning for entities to delete...\n")
 
+			// CRITICAL: This array defines the canonical order for entity types
+			// Entities are always grouped by type and displayed in this exact order
 			const allTypes: Exclude<EntityType, "all">[] = [
 				// QTI Objects (delete tests first as they reference items/stimuli)
 				"assessmentTests",
@@ -375,10 +365,24 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 				"users"
 			]
 
+			// Fetch all entity counts in parallel
+			const countPromises = allTypes.map(async (type) => ({
+				type,
+				entities: await fetchEntities(type, prefix)
+			}))
+
+			const countResults = await Promise.all(countPromises)
+
+			// Create a map for O(1) lookup
+			const countResultsByType = new Map(countResults.map((r) => [r.type, r]))
+
+			// Process results in the exact order defined by allTypes
+			// This ensures counts are always displayed in the same order
 			for (const type of allTypes) {
-				const entities = await fetchEntities(type, prefix)
-				entityCounts[type] = entities.length
-				totalCount += entities.length
+				const result = countResultsByType.get(type)
+				if (!result) continue // Shouldn't happen, but be safe
+				entityCounts[type] = result.entities.length
+				totalCount += result.entities.length
 			}
 
 			// Show summary
@@ -419,6 +423,9 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 		}
 
 		// For list mode or if confirmation was already done
+		// CRITICAL: This array defines the canonical order for displaying entity types
+		// - For listing: ensures stable grouping and output order
+		// - For deletion: respects dependency order (dependents before dependencies)
 		const allTypes: Exclude<EntityType, "all">[] = [
 			// QTI Objects (delete tests first as they reference items/stimuli)
 			"assessmentTests",
@@ -436,6 +443,50 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 			"users"
 		]
 
+		// In list mode, fetch all types in parallel first
+		if (!shouldDelete) {
+			process.stdout.write("\n🔍 Fetching all entities in parallel...\n")
+
+			const fetchPromises = allTypes.map(async (type) => ({
+				type,
+				handler: handlers[type],
+				entities: await fetchEntities(type, prefix)
+			}))
+
+			const allResults = await Promise.all(fetchPromises)
+
+			// Create a map for O(1) lookup while preserving type order
+			const resultsByType = new Map(allResults.map((r) => [r.type, r]))
+
+			// Display results in the exact order defined by allTypes
+			// This ensures stable grouping of entity types regardless of fetch completion order
+			for (const type of allTypes) {
+				const result = resultsByType.get(type)
+				if (!result) continue // Shouldn't happen, but be safe
+				if (result.entities.length > 0) {
+					process.stdout.write(`\n=== ${result.handler.name} ===\n`)
+					process.stdout.write(`Found ${result.entities.length} ${result.handler.name}:\n`)
+					process.stdout.write(`${"=".repeat(80)}\n`)
+
+					for (const entity of result.entities) {
+						process.stdout.write(`\n📄 ${entity.displayName}\n`)
+						process.stdout.write(`${"-".repeat(80)}\n`)
+						process.stdout.write(`${formatObject(entity.fullObject)}\n`)
+						process.stdout.write(`${"-".repeat(80)}\n`)
+					}
+
+					process.stdout.write(`\n${"=".repeat(80)}\n`)
+					process.stdout.write(`Total: ${result.entities.length} ${result.handler.name}\n`)
+				} else {
+					process.stdout.write(`\n=== ${result.handler.name} ===\n`)
+					process.stdout.write(`No ${result.handler.name} found with prefix "${prefix}"\n`)
+				}
+			}
+			return
+		}
+
+		// For delete mode with confirmation already done, execute sequentially
+		// (to respect deletion order dependencies)
 		for (const type of allTypes) {
 			process.stdout.write(`\n=== ${handlers[type].name} ===\n`)
 			await executeWipe(type, prefix, shouldDelete, true)
@@ -490,22 +541,61 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 	}
 
 	process.stdout.write("\n💣 DETONATING...\n")
+	process.stdout.write(`  🚀 Launching ${entities.length} parallel deletions...\n`)
 
+	// Execute all deletions in parallel
+	const deletePromises = entities.map(async (entity) => {
+		const result = await errors.try(handler.delete(entity.sourcedId))
+		return {
+			entity,
+			success: !result.error,
+			error: result.error
+		}
+	})
+
+	const results = await Promise.allSettled(deletePromises)
+
+	// Process results
 	let success = 0
 	let failed = 0
+	const failures: Array<{ sourcedId: string; error: unknown }> = []
 
-	for (const entity of entities) {
-		const deleted = await deleteEntity(handler, entity)
-		if (deleted) {
-			process.stdout.write(`  ✅ ${entity.sourcedId}\n`)
-			success++
+	for (const result of results) {
+		if (result.status === "fulfilled") {
+			const deleteResult = result.value
+			if (deleteResult.success) {
+				success++
+			} else {
+				failed++
+				failures.push({
+					sourcedId: deleteResult.entity.sourcedId,
+					error: deleteResult.error
+				})
+			}
 		} else {
-			process.stdout.write(`  ❌ ${entity.sourcedId}\n`)
+			// Promise itself rejected (shouldn't happen with our errors.try wrapper)
 			failed++
+			logger.error("unexpected promise rejection", { error: result.reason })
 		}
 	}
 
-	process.stdout.write(`\n${handler.name} Wipe Complete:\n` + `  Deleted: ${success}\n` + `  Failed: ${failed}\n`)
+	// Display results summary
+	process.stdout.write(`\n${handler.name} Wipe Complete:\n`)
+	process.stdout.write(`  ✅ Deleted: ${success}\n`)
+	process.stdout.write(`  ❌ Failed: ${failed}\n`)
+
+	// Log failures for debugging
+	if (failures.length > 0) {
+		process.stdout.write("\nFailed deletions:\n")
+		for (const failure of failures) {
+			process.stdout.write(`  ❌ ${failure.sourcedId}\n`)
+			logger.error("delete failed", {
+				type: handler.name,
+				sourcedId: failure.sourcedId,
+				error: failure.error
+			})
+		}
+	}
 }
 
 async function main() {
