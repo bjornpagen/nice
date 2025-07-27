@@ -15,8 +15,7 @@ export const ingestAssessmentItems = inngest.createFunction(
 
 		logger.info("ingesting assessment items", { count: items.length })
 
-		const results = []
-		for (const item of items) {
+		const itemPromises = items.map(async (item) => {
 			// Extract identifier from the root qti-assessment-item element using a robust regex.
 			// This regex specifically targets the root tag to avoid matching identifiers from nested elements.
 			// - `<qti-assessment-item` : Matches the opening of the root tag
@@ -32,8 +31,7 @@ export const ingestAssessmentItems = inngest.createFunction(
 					xmlStart: item.xml.substring(0, 100),
 					hasQtiAssessmentItem: item.xml.includes("<qti-assessment-item")
 				})
-				results.push({ success: false, status: "skipped_no_id" })
-				continue
+				return { success: false, status: "skipped_no_id" }
 			}
 
 			// Try to update first (most common case)
@@ -49,21 +47,21 @@ export const ingestAssessmentItems = inngest.createFunction(
 					const createResult = await errors.try(qti.createAssessmentItem({ xml: item.xml, metadata: item.metadata }))
 					if (createResult.error) {
 						logger.error("failed to create assessment item", { identifier, error: createResult.error })
-						results.push({ identifier, success: false, status: "failed", error: createResult.error })
-						continue
+						return { identifier, success: false, status: "failed", error: createResult.error }
 					}
 					logger.info("successfully created assessment item", { identifier })
-					results.push({ identifier, success: true, status: "created" })
-				} else {
-					// Other error - log and continue
-					logger.error("failed to update assessment item", { identifier, error: updateResult.error })
-					results.push({ identifier, success: false, status: "failed", error: updateResult.error })
+					return { identifier, success: true, status: "created" }
 				}
-			} else {
-				logger.info("successfully updated assessment item", { identifier })
-				results.push({ identifier, success: true, status: "updated" })
+				// Other error - log and continue
+				logger.error("failed to update assessment item", { identifier, error: updateResult.error })
+				return { identifier, success: false, status: "failed", error: updateResult.error }
 			}
-		}
+			logger.info("successfully updated assessment item", { identifier })
+			return { identifier, success: true, status: "updated" }
+		})
+
+		// Process all items in parallel
+		const results = await Promise.all(itemPromises)
 
 		const failedCount = results.filter((r) => !r.success).length
 		if (failedCount > 0) {

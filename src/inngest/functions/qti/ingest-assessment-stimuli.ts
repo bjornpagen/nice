@@ -15,8 +15,7 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 
 		logger.info("ingesting assessment stimuli", { count: stimuli.length })
 
-		const results = []
-		for (const stimulus of stimuli) {
+		const stimuliPromises = stimuli.map(async (stimulus) => {
 			// Extract identifier from the root qti-assessment-stimulus element using a robust regex.
 			// This regex specifically targets the root tag to avoid matching identifiers from nested elements.
 			// - `<qti-assessment-stimulus` : Matches the opening of the root tag
@@ -31,7 +30,7 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 					xml: stimulus.xml.substring(0, 150),
 					hasQtiAssessmentStimulus: stimulus.xml.includes("<qti-assessment-stimulus")
 				})
-				continue
+				return { success: false, status: "skipped_no_id" }
 			}
 
 			const titleMatch = stimulus.xml.match(/title="([^"]+)"/)
@@ -68,21 +67,21 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 					const createResult = await errors.try(qti.createStimulus(payload))
 					if (createResult.error) {
 						logger.error("failed to create stimulus", { identifier, error: createResult.error })
-						results.push({ identifier, success: false, status: "failed", error: createResult.error })
-						continue
+						return { identifier, success: false, status: "failed", error: createResult.error }
 					}
 					logger.info("successfully created stimulus", { identifier })
-					results.push({ identifier, success: true, status: "created" })
-				} else {
-					// Other error - log and continue
-					logger.error("failed to update stimulus", { identifier, error: updateResult.error })
-					results.push({ identifier, success: false, status: "failed", error: updateResult.error })
+					return { identifier, success: true, status: "created" }
 				}
-			} else {
-				logger.info("successfully updated stimulus", { identifier })
-				results.push({ identifier, success: true, status: "updated" })
+				// Other error - log and continue
+				logger.error("failed to update stimulus", { identifier, error: updateResult.error })
+				return { identifier, success: false, status: "failed", error: updateResult.error }
 			}
-		}
+			logger.info("successfully updated stimulus", { identifier })
+			return { identifier, success: true, status: "updated" }
+		})
+
+		// Process all stimuli in parallel
+		const results = await Promise.all(stimuliPromises)
 
 		const failedCount = results.filter((r) => !r.success).length
 		if (failedCount > 0) {

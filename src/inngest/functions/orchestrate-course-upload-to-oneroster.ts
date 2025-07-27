@@ -41,12 +41,16 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 				return JSON.parse(content)
 			}
 
-			const course = await readFile("course.json")
-			const classData = await readFile("class.json")
-			const courseComponents = await readFile("courseComponents.json")
-			const resources = await readFile("resources.json")
-			const componentResources = await readFile("componentResources.json")
-			const assessmentLineItems = await readFile("assessmentLineItems.json")
+			// Parallelize all file reads
+			const [course, classData, courseComponents, resources, componentResources, assessmentLineItems] =
+				await Promise.all([
+					readFile("course.json"),
+					readFile("class.json"),
+					readFile("courseComponents.json"),
+					readFile("resources.json"),
+					readFile("componentResources.json"),
+					readFile("assessmentLineItems.json")
+				])
 
 			return { course, class: classData, courseComponents, resources, componentResources, assessmentLineItems }
 		})
@@ -70,54 +74,69 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 			logger.info("completed resource ingestion", { courseId, count: payload.resources.length })
 		}
 
-		// Ingest the course and its components in parallel.
-		const courseIngestPromise = step.invoke("invoke-ingest-course", {
-			function: ingestCourse,
-			data: { course: payload.course }
-		})
-		const componentsIngestPromise =
-			payload.courseComponents.length > 0
-				? step.invoke("invoke-ingest-components", {
-						function: ingestCourseComponents,
-						data: { components: payload.courseComponents }
-					})
-				: Promise.resolve()
-		await Promise.all([courseIngestPromise, componentsIngestPromise])
-		logger.info("completed course and component ingestion", {
+		// Ingest course, components, and class in parallel (no dependencies between them)
+		const parallelIngestionPromises = []
+
+		parallelIngestionPromises.push(
+			step.invoke("invoke-ingest-course", {
+				function: ingestCourse,
+				data: { course: payload.course }
+			})
+		)
+
+		if (payload.courseComponents.length > 0) {
+			parallelIngestionPromises.push(
+				step.invoke("invoke-ingest-components", {
+					function: ingestCourseComponents,
+					data: { components: payload.courseComponents }
+				})
+			)
+		}
+
+		parallelIngestionPromises.push(
+			step.invoke("invoke-ingest-class", {
+				function: ingestClass,
+				data: { class: payload.class }
+			})
+		)
+
+		await Promise.all(parallelIngestionPromises)
+		logger.info("completed course, components, and class ingestion", {
 			courseId,
 			components: payload.courseComponents.length
 		})
-
-		// Ingest component-resource links after their dependencies are created.
-		if (payload.componentResources.length > 0) {
-			await step.invoke("invoke-ingest-component-resources", {
-				function: ingestComponentResources,
-				data: { componentResources: payload.componentResources }
-			})
-			logger.info("completed component-resource link ingestion", {
-				courseId,
-				count: payload.componentResources.length
-			})
-		}
-
-		// NEW Step 6: Ingest the hierarchically structured assessment line items.
-		if (payload.assessmentLineItems.length > 0) {
-			await step.invoke("invoke-ingest-assessment-line-items", {
-				function: ingestAssessmentLineItems,
-				data: { assessmentLineItems: payload.assessmentLineItems }
-			})
-			logger.info("completed hierarchical assessment line item ingestion", {
-				courseId,
-				count: payload.assessmentLineItems.length
-			})
-		}
-
-		// Finally, ingest the class object for the course.
-		await step.invoke("invoke-ingest-class", {
-			function: ingestClass,
-			data: { class: payload.class }
-		})
 		logger.info("completed class ingestion", { courseId, classSourcedId: payload.class.sourcedId })
+
+		// Ingest component-resource links and assessment line items in parallel
+		// Both depend on previously ingested data but not on each other
+		const finalIngestionPromises = []
+
+		if (payload.componentResources.length > 0) {
+			finalIngestionPromises.push(
+				step.invoke("invoke-ingest-component-resources", {
+					function: ingestComponentResources,
+					data: { componentResources: payload.componentResources }
+				})
+			)
+		}
+
+		if (payload.assessmentLineItems.length > 0) {
+			finalIngestionPromises.push(
+				step.invoke("invoke-ingest-assessment-line-items", {
+					function: ingestAssessmentLineItems,
+					data: { assessmentLineItems: payload.assessmentLineItems }
+				})
+			)
+		}
+
+		if (finalIngestionPromises.length > 0) {
+			await Promise.all(finalIngestionPromises)
+			logger.info("completed component resources and assessment line items ingestion", {
+				courseId,
+				componentResourceCount: payload.componentResources.length,
+				assessmentLineItemCount: payload.assessmentLineItems.length
+			})
+		}
 
 		logger.info("all oneroster upload steps have completed successfully", { courseId })
 

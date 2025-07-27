@@ -15,8 +15,7 @@ export const ingestAssessmentTests = inngest.createFunction(
 
 		logger.info("ingesting assessment tests", { count: tests.length })
 
-		const results = []
-		for (const testXml of tests) {
+		const testPromises = tests.map(async (testXml) => {
 			// Extract identifier from the root qti-assessment-test element using a robust regex with named capture groups.
 			// This regex specifically targets the root tag to avoid matching identifiers from nested elements.
 			// - `<qti-assessment-test` : Matches the opening of the root tag
@@ -32,8 +31,7 @@ export const ingestAssessmentTests = inngest.createFunction(
 					xmlStart: testXml.substring(0, 200),
 					hasQtiAssessmentTest: testXml.includes("<qti-assessment-test")
 				})
-				results.push({ success: false, status: "skipped_no_id" })
-				continue
+				return { success: false, status: "skipped_no_id" }
 			}
 
 			// Try to update first (most common case)
@@ -47,21 +45,21 @@ export const ingestAssessmentTests = inngest.createFunction(
 					const createResult = await errors.try(qti.createAssessmentTest(testXml))
 					if (createResult.error) {
 						logger.error("failed to create assessment test", { identifier, error: createResult.error })
-						results.push({ identifier, success: false, status: "failed", error: createResult.error })
-						continue
+						return { identifier, success: false, status: "failed", error: createResult.error }
 					}
 					logger.info("successfully created assessment test", { identifier })
-					results.push({ identifier, success: true, status: "created" })
-				} else {
-					// Other error - log and continue
-					logger.error("failed to update assessment test", { identifier, error: updateResult.error })
-					results.push({ identifier, success: false, status: "failed", error: updateResult.error })
+					return { identifier, success: true, status: "created" }
 				}
-			} else {
-				logger.info("successfully updated assessment test", { identifier })
-				results.push({ identifier, success: true, status: "updated" })
+				// Other error - log and continue
+				logger.error("failed to update assessment test", { identifier, error: updateResult.error })
+				return { identifier, success: false, status: "failed", error: updateResult.error }
 			}
-		}
+			logger.info("successfully updated assessment test", { identifier })
+			return { identifier, success: true, status: "updated" }
+		})
+
+		// Process all tests in parallel
+		const results = await Promise.all(testPromises)
 
 		const failedCount = results.filter((r) => !r.success).length
 		if (failedCount > 0) {
