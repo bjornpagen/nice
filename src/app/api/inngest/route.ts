@@ -17,9 +17,11 @@ import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orches
 import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
+// ADD: Import the new independent functions.
+import { orchestrateHardcodedOnerosterIngestion } from "@/inngest/functions/orchestrate-hardcoded-oneroster-ingestion"
 // ADD: Import the two new hardcoded migration orchestrators
 import { orchestrateHardcodedPerseusMigration } from "@/inngest/functions/orchestrate-hardcoded-perseus-migration"
-import { orchestrateHardcodedPublish } from "@/inngest/functions/orchestrate-hardcoded-publish"
+import { orchestrateHardcodedQtiIngestion } from "@/inngest/functions/orchestrate-hardcoded-qti-ingestion"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 // ✅ ADD: Import the new differentiate function
@@ -45,7 +47,9 @@ export const { GET, POST, PUT } = serve({
 		orchestrateCourseUploadToQti,
 		// ADD: Register the new hardcoded migration orchestrators
 		orchestrateHardcodedPerseusMigration,
-		orchestrateHardcodedPublish,
+		// ADD: Register the new independent functions.
+		orchestrateHardcodedOnerosterIngestion,
+		orchestrateHardcodedQtiIngestion,
 		// OneRoster Functions
 		generateOnerosterPayloadForCourse,
 		ingestClass,

@@ -240,8 +240,12 @@ const events = {
 	"migration/hardcoded.perseus-to-qti": {
 		data: z.object({}) // No data needed
 	},
-	// ADD: New event to trigger data generation and upload for hardcoded courses
-	"migration/hardcoded.generate-and-upload": {
+	// ADD: New event to trigger OneRoster data generation and upload for hardcoded courses
+	"migration/hardcoded.oneroster.ingest": {
+		data: z.object({}) // No data needed
+	},
+	// ADD: New event to trigger QTI data generation and upload for hardcoded courses
+	"migration/hardcoded.qti.ingest": {
 		data: z.object({}) // No data needed
 	}
 }

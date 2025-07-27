@@ -1,9 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
-import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
 import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orchestrate-course-oneroster-generation"
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
-import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
 
 const HARDCODED_COURSE_IDS = [
 	"xb5feb28c", // Early math review
@@ -17,14 +15,14 @@ const HARDCODED_COURSE_IDS = [
 	"x42e41b058fcf4059" // 8th grade math (TX TEKS)
 ]
 
-export const orchestrateHardcodedPublish = inngest.createFunction(
+export const orchestrateHardcodedOnerosterIngestion = inngest.createFunction(
 	{
-		id: "orchestrate-hardcoded-publish",
-		name: "Orchestrate Hardcoded Data Generation and Upload"
+		id: "orchestrate-hardcoded-oneroster-ingestion",
+		name: "Orchestrate Hardcoded OneRoster Generation and Upload"
 	},
-	{ event: "migration/hardcoded.generate-and-upload" },
+	{ event: "migration/hardcoded.oneroster.ingest" },
 	async ({ step, logger }) => {
-		logger.info("starting hardcoded data generation and upload", { courseCount: HARDCODED_COURSE_IDS.length })
+		logger.info("starting hardcoded oneroster data generation and upload", { courseCount: HARDCODED_COURSE_IDS.length })
 
 		// Step 1: Generate OneRoster payloads for all courses
 		logger.info("fanning out oneroster payload generation jobs")
@@ -56,37 +54,7 @@ export const orchestrateHardcodedPublish = inngest.createFunction(
 		}
 		logger.info("successfully completed all oneroster upload jobs")
 
-		// Step 3: Generate QTI JSON data from the database for all courses
-		logger.info("fanning out qti ingestion jobs")
-		const qtiIngestionPromises = HARDCODED_COURSE_IDS.map((courseId) =>
-			step.invoke(`ingest-qti-for-${courseId}`, {
-				function: orchestrateCourseIngestionToQti,
-				data: { courseId }
-			})
-		)
-		const qtiIngestionResults = await errors.try(Promise.all(qtiIngestionPromises))
-		if (qtiIngestionResults.error) {
-			logger.error("one or more qti ingestion steps failed", { error: qtiIngestionResults.error })
-			throw errors.wrap(qtiIngestionResults.error, "qti ingestion fan-out")
-		}
-		logger.info("successfully completed all qti ingestion jobs")
-
-		// Step 4: Upload QTI JSON data to the QTI service
-		logger.info("fanning out qti upload jobs")
-		const qtiUploadPromises = HARDCODED_COURSE_IDS.map((courseId) =>
-			step.invoke(`upload-qti-for-${courseId}`, {
-				function: orchestrateCourseUploadToQti,
-				data: { courseId }
-			})
-		)
-		const qtiUploadResults = await errors.try(Promise.all(qtiUploadPromises))
-		if (qtiUploadResults.error) {
-			logger.error("one or more qti upload steps failed", { error: qtiUploadResults.error })
-			throw errors.wrap(qtiUploadResults.error, "qti upload fan-out")
-		}
-		logger.info("successfully completed all qti upload jobs")
-
-		logger.info("successfully completed generation and upload for all hardcoded courses")
+		logger.info("successfully completed oneroster generation and upload for all hardcoded courses")
 		return {
 			status: "complete",
 			courseCount: HARDCODED_COURSE_IDS.length
