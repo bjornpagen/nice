@@ -135,6 +135,17 @@ function removeNiceAcademyPrefix(title: string): string {
 	return title
 }
 
+// Helper function to map OneRoster subjects back to UI-friendly subjects
+function mapFromOneRosterSubjects(onerosterSubjects: string[]): string {
+	// If we see Reading or Vocabulary, group them under "Reading & Language Arts"
+	if (onerosterSubjects.includes("Reading") || onerosterSubjects.includes("Vocabulary")) {
+		return "Reading & Language Arts"
+	}
+
+	// For other subjects, just use the first one
+	return onerosterSubjects[0] || "Other"
+}
+
 export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCoursesForExplore[]> {
 	logger.info("fetching explore dropdown data from oneroster api", { orgId: ONEROSTER_ORG_ID })
 
@@ -186,12 +197,17 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 			slug: courseMetadata.khanSlug
 		}
 
-		for (const subject of course.subjects) {
-			if (!coursesBySubject.has(subject)) {
-				coursesBySubject.set(subject, [])
-			}
-			const subjectCourses = coursesBySubject.get(subject)
-			if (subjectCourses) {
+		// Map OneRoster subjects back to UI-friendly subjects
+		const uiSubject = mapFromOneRosterSubjects(course.subjects)
+
+		if (!coursesBySubject.has(uiSubject)) {
+			coursesBySubject.set(uiSubject, [])
+		}
+		const subjectCourses = coursesBySubject.get(uiSubject)
+		if (subjectCourses) {
+			// Check if course is already in this subject (to avoid duplicates)
+			const existingCourse = subjectCourses.find((c) => c.id === courseForExplore.id)
+			if (!existingCourse) {
 				subjectCourses.push(courseForExplore)
 			}
 		}

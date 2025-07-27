@@ -63,78 +63,145 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 			assessmentLineItemCount: payload.assessmentLineItems.length
 		})
 
-		// Step 3: Sequentially invoke the ingestion functions, preserving the original, correct dependency order.
+		// Step 3: Sequentially invoke the ingestion functions in strict dependency order with batching
 
-		// Ingest resources first as they are dependencies for componentResources.
+		// 1. Ingest resources first (they are dependencies for componentResources) - BATCHED
 		if (payload.resources.length > 0) {
-			await step.invoke("invoke-ingest-resources", {
-				function: ingestResources,
-				data: { resources: payload.resources }
+			const RESOURCE_BATCH_SIZE = 10
+			const resourceBatches = []
+			for (let i = 0; i < payload.resources.length; i += RESOURCE_BATCH_SIZE) {
+				resourceBatches.push(payload.resources.slice(i, i + RESOURCE_BATCH_SIZE))
+			}
+
+			logger.info("processing resources in batches", {
+				courseId,
+				totalResources: payload.resources.length,
+				batchSize: RESOURCE_BATCH_SIZE,
+				totalBatches: resourceBatches.length
 			})
-			logger.info("completed resource ingestion", { courseId, count: payload.resources.length })
-		}
 
-		// Ingest course, components, and class in parallel (no dependencies between them)
-		const parallelIngestionPromises = []
-
-		parallelIngestionPromises.push(
-			step.invoke("invoke-ingest-course", {
-				function: ingestCourse,
-				data: { course: payload.course }
-			})
-		)
-
-		if (payload.courseComponents.length > 0) {
-			parallelIngestionPromises.push(
-				step.invoke("invoke-ingest-components", {
-					function: ingestCourseComponents,
-					data: { components: payload.courseComponents }
+			for (let i = 0; i < resourceBatches.length; i++) {
+				const batch = resourceBatches[i]
+				await step.invoke(`invoke-ingest-resources-batch-${i + 1}`, {
+					function: ingestResources,
+					data: { resources: batch }
 				})
-			)
+				logger.info("completed resource batch", {
+					courseId,
+					batchNumber: i + 1,
+					totalBatches: resourceBatches.length,
+					batchSize: batch.length,
+					totalProcessed: (i + 1) * RESOURCE_BATCH_SIZE,
+					remaining: Math.max(0, payload.resources.length - (i + 1) * RESOURCE_BATCH_SIZE)
+				})
+			}
+
+			logger.info("completed all resource batches", { courseId, totalResources: payload.resources.length })
 		}
 
-		parallelIngestionPromises.push(
-			step.invoke("invoke-ingest-class", {
-				function: ingestClass,
-				data: { class: payload.class }
-			})
-		)
+		// 2. Ingest course (must exist before courseComponents) - SINGLE ENTITY
+		await step.invoke("invoke-ingest-course", {
+			function: ingestCourse,
+			data: { course: payload.course }
+		})
+		logger.info("completed course ingestion", { courseId })
 
-		await Promise.all(parallelIngestionPromises)
-		logger.info("completed course, components, and class ingestion", {
-			courseId,
-			components: payload.courseComponents.length
+		// 3. Ingest courseComponents (depend on course existing) - SINGLE BATCH
+		if (payload.courseComponents.length > 0) {
+			logger.info("processing all course components in single operation", {
+				courseId,
+				totalComponents: payload.courseComponents.length
+			})
+
+			await step.invoke("invoke-ingest-course-components", {
+				function: ingestCourseComponents,
+				data: { components: payload.courseComponents }
+			})
+
+			logger.info("completed course component ingestion", {
+				courseId,
+				totalComponents: payload.courseComponents.length
+			})
+		}
+
+		// 4. Ingest componentResources (depend on both courseComponents and resources) - BATCHED
+		if (payload.componentResources.length > 0) {
+			const COMPONENT_RESOURCE_BATCH_SIZE = 15
+			const componentResourceBatches = []
+			for (let i = 0; i < payload.componentResources.length; i += COMPONENT_RESOURCE_BATCH_SIZE) {
+				componentResourceBatches.push(payload.componentResources.slice(i, i + COMPONENT_RESOURCE_BATCH_SIZE))
+			}
+
+			logger.info("processing component resources in batches", {
+				courseId,
+				totalComponentResources: payload.componentResources.length,
+				batchSize: COMPONENT_RESOURCE_BATCH_SIZE,
+				totalBatches: componentResourceBatches.length
+			})
+
+			for (let i = 0; i < componentResourceBatches.length; i++) {
+				const batch = componentResourceBatches[i]
+				await step.invoke(`invoke-ingest-component-resources-batch-${i + 1}`, {
+					function: ingestComponentResources,
+					data: { componentResources: batch }
+				})
+				logger.info("completed component resource batch", {
+					courseId,
+					batchNumber: i + 1,
+					totalBatches: componentResourceBatches.length,
+					batchSize: batch.length,
+					totalProcessed: (i + 1) * COMPONENT_RESOURCE_BATCH_SIZE,
+					remaining: Math.max(0, payload.componentResources.length - (i + 1) * COMPONENT_RESOURCE_BATCH_SIZE)
+				})
+			}
+
+			logger.info("completed all component resource batches", {
+				courseId,
+				totalComponentResources: payload.componentResources.length
+			})
+		}
+
+		// 5. Ingest class (depends on course) - SINGLE ENTITY
+		await step.invoke("invoke-ingest-class", {
+			function: ingestClass,
+			data: { class: payload.class }
 		})
 		logger.info("completed class ingestion", { courseId, classSourcedId: payload.class.sourcedId })
 
-		// Ingest component-resource links and assessment line items in parallel
-		// Both depend on previously ingested data but not on each other
-		const finalIngestionPromises = []
-
-		if (payload.componentResources.length > 0) {
-			finalIngestionPromises.push(
-				step.invoke("invoke-ingest-component-resources", {
-					function: ingestComponentResources,
-					data: { componentResources: payload.componentResources }
-				})
-			)
-		}
-
+		// 6. Ingest assessmentLineItems (depend on class and other entities) - BATCHED
 		if (payload.assessmentLineItems.length > 0) {
-			finalIngestionPromises.push(
-				step.invoke("invoke-ingest-assessment-line-items", {
-					function: ingestAssessmentLineItems,
-					data: { assessmentLineItems: payload.assessmentLineItems }
-				})
-			)
-		}
+			const ASSESSMENT_BATCH_SIZE = 25
+			const assessmentBatches = []
+			for (let i = 0; i < payload.assessmentLineItems.length; i += ASSESSMENT_BATCH_SIZE) {
+				assessmentBatches.push(payload.assessmentLineItems.slice(i, i + ASSESSMENT_BATCH_SIZE))
+			}
 
-		if (finalIngestionPromises.length > 0) {
-			await Promise.all(finalIngestionPromises)
-			logger.info("completed component resources and assessment line items ingestion", {
+			logger.info("processing assessment line items in batches", {
 				courseId,
-				componentResourceCount: payload.componentResources.length,
-				assessmentLineItemCount: payload.assessmentLineItems.length
+				totalAssessmentLineItems: payload.assessmentLineItems.length,
+				batchSize: ASSESSMENT_BATCH_SIZE,
+				totalBatches: assessmentBatches.length
+			})
+
+			for (let i = 0; i < assessmentBatches.length; i++) {
+				const batch = assessmentBatches[i]
+				await step.invoke(`invoke-ingest-assessment-line-items-batch-${i + 1}`, {
+					function: ingestAssessmentLineItems,
+					data: { assessmentLineItems: batch }
+				})
+				logger.info("completed assessment line item batch", {
+					courseId,
+					batchNumber: i + 1,
+					totalBatches: assessmentBatches.length,
+					batchSize: batch.length,
+					totalProcessed: (i + 1) * ASSESSMENT_BATCH_SIZE,
+					remaining: Math.max(0, payload.assessmentLineItems.length - (i + 1) * ASSESSMENT_BATCH_SIZE)
+				})
+			}
+
+			logger.info("completed all assessment line item batches", {
+				courseId,
+				totalAssessmentLineItems: payload.assessmentLineItems.length
 			})
 		}
 

@@ -65,6 +65,18 @@ export const ingestCourseComponents = inngest.createFunction(
 					logger.debug("upserted component", { sourcedId: component.sourcedId })
 				}
 
+				// CRITICAL: Verify the component actually exists after "successful" upload
+				// OneRoster API sometimes lies about success, causing downstream failures
+				const verifyResult = await errors.try(oneroster.getCourseComponent(component.sourcedId))
+				if (verifyResult.error) {
+					logger.error("CRITICAL: Component upload claimed success but verification failed", {
+						sourcedId: component.sourcedId,
+						verificationError: verifyResult.error
+					})
+					throw errors.new(`component verification failed after upload: ${component.sourcedId}`)
+				}
+				logger.debug("component verified in OneRoster", { sourcedId: component.sourcedId })
+
 				ingestedIds.add(component.sourcedId)
 				const children = componentsByParent.get(component.sourcedId)
 				if (children) {
