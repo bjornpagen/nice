@@ -2,7 +2,6 @@ import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
 import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orchestrate-course-oneroster-generation"
-import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
 
@@ -18,31 +17,16 @@ const HARDCODED_COURSE_IDS = [
 	"x42e41b058fcf4059" // 8th grade math (TX TEKS)
 ]
 
-export const orchestrateHardcodedCourseMigration = inngest.createFunction(
+export const orchestrateHardcodedPublish = inngest.createFunction(
 	{
-		id: "orchestrate-hardcoded-course-migration",
-		name: "Orchestrate Hardcoded Course Migration"
+		id: "orchestrate-hardcoded-publish",
+		name: "Orchestrate Hardcoded Data Generation and Upload"
 	},
-	{ event: "migration/hardcoded.start" },
+	{ event: "migration/hardcoded.generate-and-upload" },
 	async ({ step, logger }) => {
-		logger.info("starting hardcoded course migration", { courseCount: HARDCODED_COURSE_IDS.length })
+		logger.info("starting hardcoded data generation and upload", { courseCount: HARDCODED_COURSE_IDS.length })
 
-		// Step 1: Generate QTI XML for all courses
-		logger.info("fanning out qti xml generation jobs")
-		const qtiGenerationPromises = HARDCODED_COURSE_IDS.map((courseId) =>
-			step.invoke(`generate-qti-xml-for-${courseId}`, {
-				function: orchestrateCourseXmlGeneration,
-				data: { courseId }
-			})
-		)
-		const qtiGenerationResults = await errors.try(Promise.all(qtiGenerationPromises))
-		if (qtiGenerationResults.error) {
-			logger.error("one or more qti xml generation steps failed", { error: qtiGenerationResults.error })
-			throw errors.wrap(qtiGenerationResults.error, "qti xml generation fan-out")
-		}
-		logger.info("successfully completed all qti xml generation jobs")
-
-		// Step 2: Generate OneRoster payloads for all courses
+		// Step 1: Generate OneRoster payloads for all courses
 		logger.info("fanning out oneroster payload generation jobs")
 		const onerosterGenerationPromises = HARDCODED_COURSE_IDS.map((courseId) =>
 			step.invoke(`generate-oneroster-payload-for-${courseId}`, {
@@ -57,7 +41,7 @@ export const orchestrateHardcodedCourseMigration = inngest.createFunction(
 		}
 		logger.info("successfully completed all oneroster payload generation jobs")
 
-		// Step 3: Upload OneRoster payloads for all courses
+		// Step 2: Upload OneRoster payloads for all courses
 		logger.info("fanning out oneroster upload jobs")
 		const onerosterUploadPromises = HARDCODED_COURSE_IDS.map((courseId) =>
 			step.invoke(`upload-oneroster-payload-for-${courseId}`, {
@@ -72,7 +56,7 @@ export const orchestrateHardcodedCourseMigration = inngest.createFunction(
 		}
 		logger.info("successfully completed all oneroster upload jobs")
 
-		// Step 4: Generate QTI JSON data from the database for all courses
+		// Step 3: Generate QTI JSON data from the database for all courses
 		logger.info("fanning out qti ingestion jobs")
 		const qtiIngestionPromises = HARDCODED_COURSE_IDS.map((courseId) =>
 			step.invoke(`ingest-qti-for-${courseId}`, {
@@ -87,7 +71,7 @@ export const orchestrateHardcodedCourseMigration = inngest.createFunction(
 		}
 		logger.info("successfully completed all qti ingestion jobs")
 
-		// Step 5: Upload QTI JSON data to the QTI service
+		// Step 4: Upload QTI JSON data to the QTI service
 		logger.info("fanning out qti upload jobs")
 		const qtiUploadPromises = HARDCODED_COURSE_IDS.map((courseId) =>
 			step.invoke(`upload-qti-for-${courseId}`, {
@@ -102,7 +86,7 @@ export const orchestrateHardcodedCourseMigration = inngest.createFunction(
 		}
 		logger.info("successfully completed all qti upload jobs")
 
-		logger.info("successfully completed migration for all hardcoded courses")
+		logger.info("successfully completed generation and upload for all hardcoded courses")
 		return {
 			status: "complete",
 			courseCount: HARDCODED_COURSE_IDS.length

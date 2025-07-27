@@ -236,8 +236,13 @@ const events = {
 			})
 		})
 	},
-	"migration/hardcoded.start": {
-		data: z.object({}) // No data needed to trigger
+	// ADD: New event to trigger Perseus to QTI XML generation for hardcoded courses
+	"migration/hardcoded.perseus-to-qti": {
+		data: z.object({}) // No data needed
+	},
+	// ADD: New event to trigger data generation and upload for hardcoded courses
+	"migration/hardcoded.generate-and-upload": {
+		data: z.object({}) // No data needed
 	}
 }
 
