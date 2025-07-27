@@ -235,6 +235,9 @@ const events = {
 				terms: z.array(AcademicSessionRefSchema)
 			})
 		})
+	},
+	"migration/hardcoded.start": {
+		data: z.object({}) // No data needed to trigger
 	}
 }
 

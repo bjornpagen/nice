@@ -17,6 +17,7 @@ import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orches
 import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
+import { orchestrateHardcodedCourseMigration } from "@/inngest/functions/orchestrate-hardcoded-course-migration"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 // ✅ ADD: Import the new differentiate function
@@ -40,6 +41,7 @@ export const { GET, POST, PUT } = serve({
 		orchestrateCourseIngestionToQti,
 		orchestrateCourseXmlGeneration,
 		orchestrateCourseUploadToQti,
+		orchestrateHardcodedCourseMigration,
 		// OneRoster Functions
 		generateOnerosterPayloadForCourse,
 		ingestClass,
