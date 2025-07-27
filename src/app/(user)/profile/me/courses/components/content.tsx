@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import * as React from "react"
 import { toast } from "sonner"
 import { CourseSelector } from "@/components/course-selector-content"
+import { OnboardingModal } from "@/components/onboarding-modal"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { saveUserCourses } from "@/lib/actions/courses"
@@ -72,8 +73,16 @@ function CourseGrid({ courses }: { courses: ProfileCourse[] }) {
 export function Content({ coursesPromise }: { coursesPromise: Promise<ProfileCoursesPageData> }) {
 	const { subjects, userCourses, needsSync } = React.use(coursesPromise)
 	const [isModalOpen, setIsModalOpen] = React.useState(false)
+	const [showOnboarding, setShowOnboarding] = React.useState(false)
 	const { user, isLoaded } = useUser()
 	const router = useRouter()
+
+	// Show onboarding modal for new users with no courses
+	React.useEffect(() => {
+		if (!needsSync && userCourses.length === 0) {
+			setShowOnboarding(true)
+		}
+	}, [needsSync, userCourses.length])
 
 	// Monitor for sync completion
 	React.useEffect(() => {
@@ -136,6 +145,12 @@ export function Content({ coursesPromise }: { coursesPromise: Promise<ProfileCou
 		setIsModalOpen(false)
 	}
 
+	const handleOnboardingComplete = () => {
+		setShowOnboarding(false)
+		// Open course selector to help them get started
+		setIsModalOpen(true)
+	}
+
 	// Show skeleton while syncing
 	if (needsSync && isLoaded) {
 		return (
@@ -166,6 +181,8 @@ export function Content({ coursesPromise }: { coursesPromise: Promise<ProfileCou
 			</div>
 
 			<CourseGrid courses={userCourses} />
+
+			<OnboardingModal show={showOnboarding} onComplete={handleOnboardingComplete} />
 
 			<CourseSelector
 				subjects={subjects}
