@@ -13,7 +13,7 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 		id: "convert-perseus-article-to-qti-stimulus",
 		name: "Convert Perseus Article to QTI Stimulus",
 		concurrency: {
-			limit: 160,
+			limit: 200,
 			key: OPENAI_CONCURRENCY_KEY
 		}
 	},
