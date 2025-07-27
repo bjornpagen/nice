@@ -1708,4 +1708,25 @@ export class Client {
 		})
 		return results
 	}
+
+	/**
+	 * Deletes an Assessment Result by its identifier.
+	 * @param {string} sourcedId - The unique identifier of the assessment result.
+	 * @returns {Promise<void>}
+	 */
+	async deleteAssessmentResult(sourcedId: string): Promise<void> {
+		logger.info("oneroster: deleting assessment result", { sourcedId })
+
+		if (!sourcedId) {
+			throw errors.new("sourcedId cannot be empty")
+		}
+
+		await this.#request(
+			`/ims/oneroster/gradebook/v1p2/assessmentResults/${sourcedId}`,
+			{ method: "DELETE" },
+			z.unknown()
+		)
+
+		logger.info("oneroster: successfully deleted assessment result", { sourcedId })
+	}
 }

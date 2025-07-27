@@ -85,6 +85,45 @@ function formatObject(obj: unknown, indent = 0): string {
 	return `${spaces}{\n${lines.join(",\n")}\n${spaces}}`
 }
 
+// Helper to filter out soft-deleted OneRoster entities
+// OneRoster uses soft deletes where status='tobedeleted' means deleted
+// We must filter these client-side to avoid re-deleting already deleted items
+function filterActiveOnly<T extends { status?: string }>(items: T[]): T[] {
+	const originalCount = items.length
+	const filtered = items.filter((item) => item.status === "active")
+	const filteredCount = originalCount - filtered.length
+
+	if (filteredCount > 0) {
+		logger.info("filtered out soft-deleted entities", {
+			activeCount: filtered.length,
+			filteredCount,
+			totalFetched: originalCount
+		})
+	}
+
+	return filtered
+}
+
+// Helper to filter by exact prefix match
+// The API's tilde operator is a wildcard (ILIKE), not a prefix match
+// We must ensure sourcedIds actually START WITH the prefix
+function filterByExactPrefix<T extends { sourcedId: string }>(items: T[], prefix: string): T[] {
+	const originalCount = items.length
+	const filtered = items.filter((item) => item.sourcedId.startsWith(prefix))
+	const filteredCount = originalCount - filtered.length
+
+	if (filteredCount > 0) {
+		logger.info("filtered out non-prefix-matching entities", {
+			prefix,
+			matchingCount: filtered.length,
+			filteredCount,
+			totalFetched: originalCount
+		})
+	}
+
+	return filtered
+}
+
 // Handler implementations
 const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 	resources: {
@@ -96,11 +135,22 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
-			return items.map((r) => ({
-				sourcedId: r.sourcedId,
-				displayName: `${r.sourcedId}: ${r.title} (${r.format || "unknown"})`,
-				fullObject: r
-			}))
+			// Filter out soft-deleted items
+			const activeItems = filterActiveOnly(items)
+			// Filter by exact prefix match
+			const prefixMatchedItems = filterByExactPrefix(activeItems, prefix)
+			return prefixMatchedItems.map((r) => {
+				// Validate required fields
+				if (!r.format) {
+					logger.warn("resource missing format field", { sourcedId: r.sourcedId })
+				}
+				const formatDisplay = r.format ? r.format : "NO_FORMAT"
+				return {
+					sourcedId: r.sourcedId,
+					displayName: `${r.sourcedId}: ${r.title} (${formatDisplay})`,
+					fullObject: r
+				}
+			})
 		},
 		delete: (id: string) => oneroster.deleteResource(id)
 	},
@@ -113,7 +163,11 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
-			return items.map((c) => ({
+			// Filter out soft-deleted items
+			const activeItems = filterActiveOnly(items)
+			// Filter by exact prefix match
+			const prefixMatchedItems = filterByExactPrefix(activeItems, prefix)
+			return prefixMatchedItems.map((c) => ({
 				sourcedId: c.sourcedId,
 				displayName: `${c.sourcedId}: ${c.title} (${c.org.sourcedId})`,
 				fullObject: c
@@ -130,7 +184,11 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
-			return items.map((cc) => ({
+			// Filter out soft-deleted items
+			const activeItems = filterActiveOnly(items)
+			// Filter by exact prefix match
+			const prefixMatchedItems = filterByExactPrefix(activeItems, prefix)
+			return prefixMatchedItems.map((cc) => ({
 				sourcedId: cc.sourcedId,
 				displayName: `${cc.sourcedId}: ${cc.title} (course: ${cc.course.sourcedId})`,
 				fullObject: cc
@@ -147,7 +205,11 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
-			return items.map((cr) => ({
+			// Filter out soft-deleted items
+			const activeItems = filterActiveOnly(items)
+			// Filter by exact prefix match
+			const prefixMatchedItems = filterByExactPrefix(activeItems, prefix)
+			return prefixMatchedItems.map((cr) => ({
 				sourcedId: cr.sourcedId,
 				displayName: `${cr.sourcedId}: ${cr.title}`,
 				fullObject: cr
@@ -164,7 +226,11 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
-			return items.map((c) => ({
+			// Filter out soft-deleted items
+			const activeItems = filterActiveOnly(items)
+			// Filter by exact prefix match
+			const prefixMatchedItems = filterByExactPrefix(activeItems, prefix)
+			return prefixMatchedItems.map((c) => ({
 				sourcedId: c.sourcedId,
 				displayName: `${c.sourcedId}: ${c.title} (type: ${c.classType})`,
 				fullObject: c
@@ -181,11 +247,22 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
-			return items.map((u) => ({
-				sourcedId: u.sourcedId,
-				displayName: `${u.sourcedId}: ${u.givenName} ${u.familyName} (${u.email || "no-email"})`,
-				fullObject: u
-			}))
+			// Filter out soft-deleted items
+			const activeItems = filterActiveOnly(items)
+			// Filter by exact prefix match
+			const prefixMatchedItems = filterByExactPrefix(activeItems, prefix)
+			return prefixMatchedItems.map((u) => {
+				// Validate required fields
+				if (!u.email) {
+					logger.warn("user missing email field", { sourcedId: u.sourcedId })
+				}
+				const emailDisplay = u.email ? u.email : "NO_EMAIL"
+				return {
+					sourcedId: u.sourcedId,
+					displayName: `${u.sourcedId}: ${u.givenName} ${u.familyName} (${emailDisplay})`,
+					fullObject: u
+				}
+			})
 		},
 		delete: (id: string) => oneroster.deleteUser(id)
 	},
@@ -198,7 +275,11 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
-			return items.map((e) => ({
+			// Filter out soft-deleted items
+			const activeItems = filterActiveOnly(items)
+			// Filter by exact prefix match
+			const prefixMatchedItems = filterByExactPrefix(activeItems, prefix)
+			return prefixMatchedItems.map((e) => ({
 				sourcedId: e.sourcedId,
 				displayName: `${e.sourcedId}: ${e.role} (${e.user.sourcedId} → ${e.class.sourcedId})`,
 				fullObject: e
@@ -215,7 +296,11 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
-			return items.map((ali) => ({
+			// Filter out soft-deleted items
+			const activeItems = filterActiveOnly(items)
+			// Filter by exact prefix match
+			const prefixMatchedItems = filterByExactPrefix(activeItems, prefix)
+			return prefixMatchedItems.map((ali) => ({
 				sourcedId: ali.sourcedId,
 				displayName: `${ali.sourcedId}: ${ali.title}`,
 				fullObject: ali
@@ -233,35 +318,51 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 				sort: "sourcedId",
 				orderBy: "asc"
 			})
-			return items.map((r) => ({
-				sourcedId: r.sourcedId,
-				displayName: `${r.sourcedId}: ${r.student?.sourcedId || "unknown-user"} -> ${r.assessmentLineItem?.sourcedId || "unknown-item"} (score: ${r.score ?? "none"})`,
-				fullObject: r
-			}))
-		},
-		delete: async (id: string) => {
-			// OneRoster doesn't provide a DELETE endpoint for results
-			// We can't soft delete them either as the API doesn't accept status field updates
-			// The best we can do is update the result to show 0 score
-			// In production, results would be cleaned up by deleting the assessmentLineItem
-			logger.warn("oneroster: cannot fully delete result, setting score to 0", { id })
-			await oneroster.putResult(id, {
-				result: {
-					assessmentLineItem: { sourcedId: "placeholder", type: "assessmentLineItem" as const },
-					student: { sourcedId: "placeholder", type: "user" as const },
-					scoreStatus: "not submitted" as const,
-					scoreDate: new Date().toISOString(),
-					score: 0
+			// Filter out soft-deleted items
+			const activeItems = filterActiveOnly(items)
+			// Filter by exact prefix match
+			const prefixMatchedItems = filterByExactPrefix(activeItems, prefix)
+			return prefixMatchedItems.map((r) => {
+				// Validate required fields
+				if (!r.student || !r.student.sourcedId) {
+					logger.warn("assessment result missing student reference", { sourcedId: r.sourcedId })
+				}
+				if (!r.assessmentLineItem || !r.assessmentLineItem.sourcedId) {
+					logger.warn("assessment result missing line item reference", { sourcedId: r.sourcedId })
+				}
+				if (r.score === null || r.score === undefined) {
+					logger.warn("assessment result missing score", { sourcedId: r.sourcedId })
+				}
+
+				const studentDisplay = r.student?.sourcedId ? r.student.sourcedId : "NO_STUDENT"
+				const lineItemDisplay = r.assessmentLineItem?.sourcedId ? r.assessmentLineItem.sourcedId : "NO_LINE_ITEM"
+				const scoreDisplay = r.score !== null && r.score !== undefined ? r.score.toString() : "NO_SCORE"
+
+				return {
+					sourcedId: r.sourcedId,
+					displayName: `${r.sourcedId}: ${studentDisplay} -> ${lineItemDisplay} (score: ${scoreDisplay})`,
+					fullObject: r
 				}
 			})
-		}
+		},
+		delete: (id: string) => oneroster.deleteAssessmentResult(id)
 	},
 	assessmentItems: {
 		type: "assessmentItems",
 		name: "QTI Assessment Items",
 		fetchAll: async (prefix: string) => {
 			const items = await qti.searchAssessmentItems({ query: prefix, page: 1, limit: 1000 })
-			return items.items.map((i) => ({
+			// Filter by exact prefix match on identifier
+			const prefixMatchedItems = items.items.filter((item) => item.identifier.startsWith(prefix))
+			if (items.items.length !== prefixMatchedItems.length) {
+				logger.info("filtered out non-prefix-matching QTI items", {
+					prefix,
+					matchingCount: prefixMatchedItems.length,
+					filteredCount: items.items.length - prefixMatchedItems.length,
+					totalFetched: items.items.length
+				})
+			}
+			return prefixMatchedItems.map((i) => ({
 				sourcedId: i.identifier,
 				displayName: `${i.identifier}: ${i.title}`,
 				fullObject: i
@@ -274,7 +375,17 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		name: "QTI Assessment Stimuli",
 		fetchAll: async (prefix: string) => {
 			const items = await qti.searchStimuli({ query: prefix, page: 1, limit: 1000 })
-			return items.items.map((s) => ({
+			// Filter by exact prefix match on identifier
+			const prefixMatchedItems = items.items.filter((item) => item.identifier.startsWith(prefix))
+			if (items.items.length !== prefixMatchedItems.length) {
+				logger.info("filtered out non-prefix-matching QTI stimuli", {
+					prefix,
+					matchingCount: prefixMatchedItems.length,
+					filteredCount: items.items.length - prefixMatchedItems.length,
+					totalFetched: items.items.length
+				})
+			}
+			return prefixMatchedItems.map((s) => ({
 				sourcedId: s.identifier,
 				displayName: `${s.identifier}: ${s.title}`,
 				fullObject: s
@@ -287,7 +398,17 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		name: "QTI Assessment Tests",
 		fetchAll: async (prefix: string) => {
 			const items = await qti.searchAssessmentTests({ query: prefix, page: 1, limit: 1000 })
-			return items.items.map((t) => ({
+			// Filter by exact prefix match on identifier
+			const prefixMatchedItems = items.items.filter((item) => item.identifier.startsWith(prefix))
+			if (items.items.length !== prefixMatchedItems.length) {
+				logger.info("filtered out non-prefix-matching QTI tests", {
+					prefix,
+					matchingCount: prefixMatchedItems.length,
+					filteredCount: items.items.length - prefixMatchedItems.length,
+					totalFetched: items.items.length
+				})
+			}
+			return prefixMatchedItems.map((t) => ({
 				sourcedId: t.identifier,
 				displayName: `${t.identifier}: ${t.title}`,
 				fullObject: t
@@ -392,7 +513,11 @@ async function executeWipe(entityType: EntityType, prefix: string, shouldDelete:
 
 			for (const type of allTypes) {
 				const handler = handlers[type]
-				const count = entityCounts[type] || 0
+				const count = entityCounts[type]
+				if (count === undefined) {
+					logger.error("entity count missing for type", { type })
+					throw errors.new(`entity count missing for type: ${type}`)
+				}
 				if (count > 0) {
 					process.stdout.write(`  ${handler.name}: ${count} entities\n`)
 				}
@@ -617,8 +742,13 @@ async function main() {
 	const rawType = positionalArgs[0]
 	const prefix = positionalArgs[1]
 
-	if (!rawType || !prefix) {
-		process.stderr.write("Error: Missing required arguments\n")
+	if (rawType === undefined) {
+		process.stderr.write("Error: Missing type argument\n")
+		process.exit(1)
+	}
+
+	if (prefix === undefined) {
+		process.stderr.write("Error: Missing prefix argument\n")
 		process.exit(1)
 	}
 
@@ -632,10 +762,12 @@ async function main() {
 
 	const entityType = typeResult.data
 
+	const mode = shouldDelete ? "DELETE" : "LIST"
+
 	logger.info("starting atom bomb wipe", {
 		type: entityType,
 		prefix,
-		mode: shouldDelete ? "DELETE" : "LIST"
+		mode
 	})
 
 	await executeWipe(entityType, prefix, shouldDelete)
