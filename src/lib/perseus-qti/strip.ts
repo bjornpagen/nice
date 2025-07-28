@@ -83,3 +83,46 @@ export function stripXmlComments(xml: string, logger: logger.Logger): string {
 
 	return strippedXml
 }
+
+/**
+ * Removes consecutive newlines from the XML string, leaving only single newlines.
+ * This handles all types of line endings (Unix \n, Windows \r\n, and mixed).
+ *
+ * @param xml The XML string to process
+ * @param logger The logger instance
+ * @returns The XML string with consecutive newlines reduced to single newlines
+ */
+export function removeDoubleNewlines(xml: string, logger: logger.Logger): string {
+	// First normalize all line endings to \n for consistent processing
+	// This handles \r\n (Windows), \r (old Mac), and leaves \n (Unix) as is
+	const normalizedXml = xml.replace(/\r\n/g, "\n").replace(/\r/g, "\n")
+
+	// Count the number of double (or more) newline sequences before replacement
+	const doubleNewlineMatches = normalizedXml.match(/\n{2,}/g)
+	const doubleNewlineCount = doubleNewlineMatches ? doubleNewlineMatches.length : 0
+
+	if (doubleNewlineCount > 0) {
+		// Calculate total excess newlines
+		const excessNewlines = doubleNewlineMatches?.reduce((sum, match) => sum + match.length - 1, 0)
+
+		logger.debug("removing double newlines", {
+			doubleNewlineSequences: doubleNewlineCount,
+			totalExcessNewlines: excessNewlines,
+			originalLength: xml.length
+		})
+	}
+
+	// Replace any sequence of 2 or more newlines with a single newline
+	const cleanedXml = normalizedXml.replace(/\n{2,}/g, "\n")
+
+	if (doubleNewlineCount > 0) {
+		logger.debug("double newlines removed", {
+			sequencesRemoved: doubleNewlineCount,
+			originalLength: xml.length,
+			cleanedLength: cleanedXml.length,
+			bytesRemoved: xml.length - cleanedXml.length
+		})
+	}
+
+	return cleanedXml
+}
