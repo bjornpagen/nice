@@ -1,5 +1,3 @@
-"use client"
-
 import type * as React from "react"
 import { Sidebar } from "@/components/practice/course/sidebar/sidebar"
 import type { AssessmentProgress } from "@/lib/data/progress"

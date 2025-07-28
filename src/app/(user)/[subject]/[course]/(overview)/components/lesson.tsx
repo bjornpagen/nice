@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link"
 import { ActivityIcon } from "@/components/icons/activity"
 import { ProficiencyIcon } from "@/components/overview/proficiency-icons"

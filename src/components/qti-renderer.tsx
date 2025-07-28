@@ -1,3 +1,5 @@
+"use client"
+
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
 
