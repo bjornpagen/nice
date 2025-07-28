@@ -6,8 +6,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
-import type { Course as CourseV2 } from "@/lib/v2/types"
-import { getCourseMaterials } from "@/lib/v2/types"
+import type { Course as CourseV2 } from "@/lib/types/sidebar"
+import { getCourseMaterials } from "@/lib/types/sidebar"
 
 interface LessonNextProps {
 	coursePromise: Promise<CourseV2 | undefined>

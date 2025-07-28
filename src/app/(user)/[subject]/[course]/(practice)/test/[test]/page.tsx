@@ -6,7 +6,7 @@ import { fetchCourseChallengePage_LayoutData, fetchCourseChallengePage_TestData 
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types/page"
-import type { Course as CourseV2 } from "@/lib/v2/types"
+import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { TestContent } from "./components/test-content"
 import { TestLayout } from "./components/test-layout"
 

@@ -5,8 +5,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import React from "react"
 import { Button } from "@/components/ui/button"
+import type { Course, CourseMaterial } from "@/lib/types/sidebar"
 import { cn } from "@/lib/utils"
-import type { Course, CourseMaterial } from "@/lib/v2/types"
 
 export function CourseSidebarCourseCarousel({
 	course,

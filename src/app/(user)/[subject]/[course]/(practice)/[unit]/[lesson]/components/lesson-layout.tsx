@@ -7,7 +7,7 @@ import { CourseSidebar } from "@/components/practice/course/sidebar/course-sideb
 import { Button } from "@/components/ui/button"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { LessonLayoutData } from "@/lib/types/page"
-import type { Course as CourseV2 } from "@/lib/v2/types"
+import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { LessonNext } from "./lesson-next"
 
 export function LessonLayout({

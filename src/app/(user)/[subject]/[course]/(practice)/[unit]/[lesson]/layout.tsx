@@ -7,7 +7,7 @@ import { fetchLessonLayoutData } from "@/lib/data/lesson"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { LessonLayoutData } from "@/lib/types/page"
-import type { Course as CourseV2 } from "@/lib/v2/types"
+import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { LessonLayout } from "./components/lesson-layout"
 
 // The layout component is NOT async. It orchestrates promises and renders immediately.

@@ -10,7 +10,7 @@ import {
 	BreadcrumbList,
 	BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
-import type { Course, CourseLessonMaterial, CourseMaterial } from "@/lib/v2/types"
+import type { Course, CourseLessonMaterial, CourseMaterial } from "@/lib/types/sidebar"
 
 export function CourseSidebarCourseBreadcrumbs({
 	course,

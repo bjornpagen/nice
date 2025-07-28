@@ -3,7 +3,7 @@
 import type * as React from "react"
 import { CourseSidebar } from "@/components/practice/course/sidebar/course-sidebar"
 import type { AssessmentProgress } from "@/lib/data/progress"
-import type { Course as CourseV2 } from "@/lib/v2/types"
+import type { Course as CourseV2 } from "@/lib/types/sidebar"
 
 export function TestLayout({
 	coursePromise,
