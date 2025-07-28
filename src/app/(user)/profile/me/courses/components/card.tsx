@@ -36,7 +36,8 @@ export function Card({ course, units }: CardProps) {
 						See all ({units.length})
 					</Link>
 				</CardTitle>
-				<CardDescription className="text-gray-600 relative">
+				{/* Fixed height description area to align progress bars */}
+				<CardDescription className="text-gray-600 relative h-[72px]">
 					{courseDescription !== "" ? (
 						<>
 							<div className={cn("transition-all duration-200", !isExpanded && "line-clamp-3")}>
@@ -58,26 +59,31 @@ export function Card({ course, units }: CardProps) {
 				</CardDescription>
 			</CardHeader>
 
-			{/* XP Progress Bar */}
-			{totalXP > 0 && (
-				<div className="px-0 pb-4">
-					<div className="flex items-center justify-between mb-2">
-						<span className="text-sm font-medium text-gray-700">Progress</span>
-						<span className="text-sm text-gray-600">
-							{earnedXP} / {totalXP} XP
-						</span>
-					</div>
-					<div className="w-full bg-gray-200 rounded-full h-2">
-						<div
-							className="h-2 rounded-full transition-all duration-300"
-							style={{
-								width: `${Math.min(progressPercentage, 100)}%`,
-								backgroundColor: "#13BF96"
-							}}
-						/>
-					</div>
-				</div>
-			)}
+			{/* XP Progress Bar - now aligned at same level across all cards */}
+			<div className="px-0 pb-4">
+				{totalXP > 0 ? (
+					<>
+						<div className="flex items-center justify-between mb-2">
+							<span className="text-sm font-medium text-gray-700">Progress</span>
+							<span className="text-sm text-gray-600">
+								{earnedXP} / {totalXP} XP
+							</span>
+						</div>
+						<div className="w-full bg-gray-200 rounded-full h-2">
+							<div
+								className="h-2 rounded-full transition-all duration-300"
+								style={{
+									width: `${Math.min(progressPercentage, 100)}%`,
+									backgroundColor: "#13BF96"
+								}}
+							/>
+						</div>
+					</>
+				) : (
+					// Reserve space even when no XP data to maintain alignment
+					<div className="h-[40px]" />
+				)}
+			</div>
 
 			<CardContent className="p-0 flex-1">
 				{units.length > 0 ? (
