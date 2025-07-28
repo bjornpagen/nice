@@ -12,6 +12,9 @@ import { ingestCourse } from "./oneroster/ingest-course"
 import { ingestCourseComponents } from "./oneroster/ingest-course-components"
 import { ingestResources } from "./oneroster/ingest-resources"
 
+// Universal batch size for OneRoster uploads
+const ONEROSTER_BATCH_SIZE = 100
+
 export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 	{
 		id: "orchestrate-course-upload-to-oneroster",
@@ -67,16 +70,15 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 
 		// 1. Ingest resources first (they are dependencies for componentResources) - BATCHED
 		if (payload.resources.length > 0) {
-			const RESOURCE_BATCH_SIZE = 10
 			const resourceBatches = []
-			for (let i = 0; i < payload.resources.length; i += RESOURCE_BATCH_SIZE) {
-				resourceBatches.push(payload.resources.slice(i, i + RESOURCE_BATCH_SIZE))
+			for (let i = 0; i < payload.resources.length; i += ONEROSTER_BATCH_SIZE) {
+				resourceBatches.push(payload.resources.slice(i, i + ONEROSTER_BATCH_SIZE))
 			}
 
 			logger.info("processing resources in batches", {
 				courseId,
 				totalResources: payload.resources.length,
-				batchSize: RESOURCE_BATCH_SIZE,
+				batchSize: ONEROSTER_BATCH_SIZE,
 				totalBatches: resourceBatches.length
 			})
 
@@ -91,8 +93,8 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 					batchNumber: i + 1,
 					totalBatches: resourceBatches.length,
 					batchSize: batch.length,
-					totalProcessed: (i + 1) * RESOURCE_BATCH_SIZE,
-					remaining: Math.max(0, payload.resources.length - (i + 1) * RESOURCE_BATCH_SIZE)
+					totalProcessed: (i + 1) * ONEROSTER_BATCH_SIZE,
+					remaining: Math.max(0, payload.resources.length - (i + 1) * ONEROSTER_BATCH_SIZE)
 				})
 			}
 
@@ -126,16 +128,15 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 
 		// 4. Ingest componentResources (depend on both courseComponents and resources) - BATCHED
 		if (payload.componentResources.length > 0) {
-			const COMPONENT_RESOURCE_BATCH_SIZE = 15
 			const componentResourceBatches = []
-			for (let i = 0; i < payload.componentResources.length; i += COMPONENT_RESOURCE_BATCH_SIZE) {
-				componentResourceBatches.push(payload.componentResources.slice(i, i + COMPONENT_RESOURCE_BATCH_SIZE))
+			for (let i = 0; i < payload.componentResources.length; i += ONEROSTER_BATCH_SIZE) {
+				componentResourceBatches.push(payload.componentResources.slice(i, i + ONEROSTER_BATCH_SIZE))
 			}
 
 			logger.info("processing component resources in batches", {
 				courseId,
 				totalComponentResources: payload.componentResources.length,
-				batchSize: COMPONENT_RESOURCE_BATCH_SIZE,
+				batchSize: ONEROSTER_BATCH_SIZE,
 				totalBatches: componentResourceBatches.length
 			})
 
@@ -150,8 +151,8 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 					batchNumber: i + 1,
 					totalBatches: componentResourceBatches.length,
 					batchSize: batch.length,
-					totalProcessed: (i + 1) * COMPONENT_RESOURCE_BATCH_SIZE,
-					remaining: Math.max(0, payload.componentResources.length - (i + 1) * COMPONENT_RESOURCE_BATCH_SIZE)
+					totalProcessed: (i + 1) * ONEROSTER_BATCH_SIZE,
+					remaining: Math.max(0, payload.componentResources.length - (i + 1) * ONEROSTER_BATCH_SIZE)
 				})
 			}
 
@@ -170,16 +171,15 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 
 		// 6. Ingest assessmentLineItems (depend on class and other entities) - BATCHED
 		if (payload.assessmentLineItems.length > 0) {
-			const ASSESSMENT_BATCH_SIZE = 25
 			const assessmentBatches = []
-			for (let i = 0; i < payload.assessmentLineItems.length; i += ASSESSMENT_BATCH_SIZE) {
-				assessmentBatches.push(payload.assessmentLineItems.slice(i, i + ASSESSMENT_BATCH_SIZE))
+			for (let i = 0; i < payload.assessmentLineItems.length; i += ONEROSTER_BATCH_SIZE) {
+				assessmentBatches.push(payload.assessmentLineItems.slice(i, i + ONEROSTER_BATCH_SIZE))
 			}
 
 			logger.info("processing assessment line items in batches", {
 				courseId,
 				totalAssessmentLineItems: payload.assessmentLineItems.length,
-				batchSize: ASSESSMENT_BATCH_SIZE,
+				batchSize: ONEROSTER_BATCH_SIZE,
 				totalBatches: assessmentBatches.length
 			})
 
@@ -194,8 +194,8 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 					batchNumber: i + 1,
 					totalBatches: assessmentBatches.length,
 					batchSize: batch.length,
-					totalProcessed: (i + 1) * ASSESSMENT_BATCH_SIZE,
-					remaining: Math.max(0, payload.assessmentLineItems.length - (i + 1) * ASSESSMENT_BATCH_SIZE)
+					totalProcessed: (i + 1) * ONEROSTER_BATCH_SIZE,
+					remaining: Math.max(0, payload.assessmentLineItems.length - (i + 1) * ONEROSTER_BATCH_SIZE)
 				})
 			}
 

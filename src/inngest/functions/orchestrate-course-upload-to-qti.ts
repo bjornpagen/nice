@@ -9,6 +9,9 @@ import { ingestAssessmentItems } from "./qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "./qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "./qti/ingest-assessment-tests"
 
+// Universal batch size for QTI uploads
+const QTI_BATCH_SIZE = 100
+
 export const orchestrateCourseUploadToQti = inngest.createFunction(
 	{
 		id: "orchestrate-course-upload-to-qti",
@@ -54,34 +57,103 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 			testCount: tests.length
 		})
 
-		// Ingest items and stimuli in parallel
+		// Ingest items and stimuli in parallel, with batching
 		const promises = []
 		if (items.length > 0) {
-			promises.push(
-				step.invoke("ingest-assessment-items", {
-					function: ingestAssessmentItems,
-					data: { items }
+			const itemBatches = []
+			for (let i = 0; i < items.length; i += QTI_BATCH_SIZE) {
+				itemBatches.push(items.slice(i, i + QTI_BATCH_SIZE))
+			}
+
+			logger.info("processing assessment items in batches", {
+				courseId,
+				totalItems: items.length,
+				batchSize: QTI_BATCH_SIZE,
+				totalBatches: itemBatches.length
+			})
+
+			for (let i = 0; i < itemBatches.length; i++) {
+				const batch = itemBatches[i]
+				promises.push(
+					step.invoke(`invoke-ingest-assessment-items-batch-${i + 1}`, {
+						function: ingestAssessmentItems,
+						data: { items: batch }
+					})
+				)
+				logger.info("completed assessment item batch", {
+					courseId,
+					batchNumber: i + 1,
+					totalBatches: itemBatches.length,
+					batchSize: batch.length,
+					totalProcessed: (i + 1) * QTI_BATCH_SIZE,
+					remaining: Math.max(0, items.length - (i + 1) * QTI_BATCH_SIZE)
 				})
-			)
+			}
 		}
 		if (stimuli.length > 0) {
-			promises.push(
-				step.invoke("ingest-assessment-stimuli", {
-					function: ingestAssessmentStimuli,
-					data: { stimuli }
+			const stimuliBatches = []
+			for (let i = 0; i < stimuli.length; i += QTI_BATCH_SIZE) {
+				stimuliBatches.push(stimuli.slice(i, i + QTI_BATCH_SIZE))
+			}
+
+			logger.info("processing assessment stimuli in batches", {
+				courseId,
+				totalStimuli: stimuli.length,
+				batchSize: QTI_BATCH_SIZE,
+				totalBatches: stimuliBatches.length
+			})
+
+			for (let i = 0; i < stimuliBatches.length; i++) {
+				const batch = stimuliBatches[i]
+				promises.push(
+					step.invoke(`invoke-ingest-assessment-stimuli-batch-${i + 1}`, {
+						function: ingestAssessmentStimuli,
+						data: { stimuli: batch }
+					})
+				)
+				logger.info("completed assessment stimuli batch", {
+					courseId,
+					batchNumber: i + 1,
+					totalBatches: stimuliBatches.length,
+					batchSize: batch.length,
+					totalProcessed: (i + 1) * QTI_BATCH_SIZE,
+					remaining: Math.max(0, stimuli.length - (i + 1) * QTI_BATCH_SIZE)
 				})
-			)
+			}
 		}
 		await Promise.all(promises)
 
 		logger.info("completed ingestion of items and stimuli", { courseId })
 
-		// Ingest tests after items and stimuli are complete
+		// Ingest tests after items and stimuli are complete, with batching
 		if (tests.length > 0) {
-			await step.invoke("ingest-assessment-tests", {
-				function: ingestAssessmentTests,
-				data: { tests }
+			const testBatches = []
+			for (let i = 0; i < tests.length; i += QTI_BATCH_SIZE) {
+				testBatches.push(tests.slice(i, i + QTI_BATCH_SIZE))
+			}
+
+			logger.info("processing assessment tests in batches", {
+				courseId,
+				totalTests: tests.length,
+				batchSize: QTI_BATCH_SIZE,
+				totalBatches: testBatches.length
 			})
+
+			for (let i = 0; i < testBatches.length; i++) {
+				const batch = testBatches[i]
+				await step.invoke(`invoke-ingest-assessment-tests-batch-${i + 1}`, {
+					function: ingestAssessmentTests,
+					data: { tests: batch }
+				})
+				logger.info("completed assessment test batch", {
+					courseId,
+					batchNumber: i + 1,
+					totalBatches: testBatches.length,
+					batchSize: batch.length,
+					totalProcessed: (i + 1) * QTI_BATCH_SIZE,
+					remaining: Math.max(0, tests.length - (i + 1) * QTI_BATCH_SIZE)
+				})
+			}
 		}
 
 		logger.info("completed qti upload workflow", { courseId })
