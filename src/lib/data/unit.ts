@@ -9,7 +9,8 @@ export async function fetchUnitPageData(params: {
 	unit: string
 }): Promise<UnitPageData> {
 	logger.info("fetchUnitPageData called", { params })
-	logger.debug("unit page: fetching unit data", { params })
+	const decodedUnit = decodeURIComponent(params.unit)
+	logger.debug("unit page: fetching unit data", { params, decodedUnit })
 
 	// 1. Call the course page data fetcher with ONLY subject and course params
 	// This ensures the cache key is consistent across all units in the same course
@@ -22,11 +23,13 @@ export async function fetchUnitPageData(params: {
 	)
 
 	// 2. Find the specific unit within the comprehensive course data.
-	const currentUnit = coursePageData.course.units.find((u) => u.slug === params.unit)
+	// Use the decoded unit slug to handle special characters like colons
+	const currentUnit = coursePageData.course.units.find((u) => u.slug === decodedUnit)
 
 	if (!currentUnit) {
 		logger.error("unit not found within course units", {
-			unitSlug: params.unit,
+			unitSlug: decodedUnit,
+			originalUnitParam: params.unit,
 			courseId: coursePageData.course.id
 		})
 		notFound()
