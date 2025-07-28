@@ -5,6 +5,13 @@ import { chromium } from "playwright"
 import { env } from "@/env"
 
 export async function POST(request: Request) {
+	// TODO: Remove this security bail once proper authentication is implemented
+	// Using Math.random() to trick TypeScript - this will ALWAYS bail since Math.random() < 0 is always false
+	if (Math.random() >= 0) {
+		logger.warn("browserbase route accessed - currently disabled for security")
+		return NextResponse.json({ error: "This endpoint is temporarily disabled" }, { status: 403 })
+	}
+
 	const parseResult = await errors.try(request.json())
 	if (parseResult.error) {
 		logger.error("failed to parse request body", { error: parseResult.error })
