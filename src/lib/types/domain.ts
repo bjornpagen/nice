@@ -93,6 +93,8 @@ export interface Course {
 export interface ProfileCourse extends Pick<Course, "id" | "title" | "description" | "path" | "units"> {
 	subject?: string
 	courseSlug?: string
+	earnedXP?: number
+	totalXP?: number
 }
 
 export interface ProfileSubject {

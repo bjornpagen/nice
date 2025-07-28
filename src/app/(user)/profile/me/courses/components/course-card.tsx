@@ -22,6 +22,11 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 	const coursePath: string = course.path
 	const courseDescription: string = course.description
 
+	// Calculate XP progress
+	const earnedXP = course.earnedXP ?? 0
+	const totalXP = course.totalXP ?? 0
+	const progressPercentage = totalXP > 0 ? (earnedXP / totalXP) * 100 : 0
+
 	return (
 		<Card className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">
 			<CardHeader className="p-0 pb-4">
@@ -52,6 +57,28 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 					)}
 				</CardDescription>
 			</CardHeader>
+
+			{/* XP Progress Bar */}
+			{totalXP > 0 && (
+				<div className="px-0 pb-4">
+					<div className="flex items-center justify-between mb-2">
+						<span className="text-sm font-medium text-gray-700">Progress</span>
+						<span className="text-sm text-gray-600">
+							{earnedXP} / {totalXP} XP
+						</span>
+					</div>
+					<div className="w-full bg-gray-200 rounded-full h-2">
+						<div
+							className="h-2 rounded-full transition-all duration-300"
+							style={{
+								width: `${Math.min(progressPercentage, 100)}%`,
+								backgroundColor: "#13BF96"
+							}}
+						/>
+					</div>
+				</div>
+			)}
+
 			<CardContent className="p-0 flex-1">
 				{units.length > 0 ? (
 					<div className="relative">

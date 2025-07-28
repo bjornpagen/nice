@@ -1,6 +1,9 @@
 import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import type { z } from "zod"
+import type { CaliperEventSchema } from "@/lib/caliper"
+import { getAllEventsForUser } from "@/lib/data/fetchers/caliper"
 import { getActiveEnrollmentsForUser, getClass, getCourse, getUnitsForCourses } from "@/lib/data/fetchers/oneroster"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { ComponentMetadataSchema, CourseMetadataSchema } from "@/lib/metadata/oneroster"
@@ -15,6 +18,156 @@ function removeNiceAcademyPrefix(title: string): string {
 		return title.substring(prefix.length).trim()
 	}
 	return title
+}
+
+/**
+ * Fetches earned XP for a specific course from Caliper events
+ * Filters events by course slug (not title) since Caliper uses slugs
+ */
+async function fetchCourseEarnedXP(actorId: string, courseSlug: string): Promise<number> {
+	logger.debug("fetching earned XP for course", { actorId, courseSlug })
+
+	const eventsResult = await errors.try(getAllEventsForUser(actorId))
+	if (eventsResult.error) {
+		logger.error("failed to fetch caliper events for course XP", {
+			actorId,
+			courseSlug,
+			error: eventsResult.error
+		})
+		return 0
+	}
+
+	const events = eventsResult.data
+	let totalEarnedXP = 0
+
+	// Debug: Log all unique course names found in events
+	const uniqueCourseNames = new Set<string>()
+	for (const event of events) {
+		if (event.object.course?.name) {
+			uniqueCourseNames.add(event.object.course.name)
+		}
+	}
+	logger.debug("unique course names found in Caliper events", {
+		uniqueCourseNames: Array.from(uniqueCourseNames),
+		targetCourseSlug: courseSlug,
+		totalEvents: events.length
+	})
+
+	// Filter events for this specific course using slug matching
+	const courseEvents = events.filter((event: z.infer<typeof CaliperEventSchema>) => {
+		// Match by course slug in the event object
+		const eventCourseSlug = event.object.course?.name
+		if (!eventCourseSlug) return false
+
+		// Direct slug comparison (no prefix removal needed for slugs)
+		const matches = eventCourseSlug === courseSlug
+
+		logger.debug("comparing course slugs", {
+			eventCourseSlug,
+			targetCourseSlug: courseSlug,
+			matches
+		})
+
+		return matches
+	})
+
+	// Sum XP from completed activities in this course
+	for (const event of courseEvents) {
+		if (event.action === "Completed") {
+			const xpEarnedItem = event.generated.items.find((item) => item.type === "xpEarned")
+			const xpEarned = xpEarnedItem?.value ?? 0
+
+			// Only count positive XP (not penalties)
+			if (xpEarned > 0) {
+				totalEarnedXP += xpEarned
+			}
+
+			logger.debug("found completed event with XP", {
+				eventId: event.id,
+				activityName: event.object.activity?.name,
+				xpEarned,
+				totalEarnedXP
+			})
+		}
+	}
+
+	logger.debug("calculated earned XP for course", {
+		actorId,
+		courseSlug,
+		totalEarnedXP,
+		courseEventsCount: courseEvents.length,
+		completedEventsCount: courseEvents.filter((e) => e.action === "Completed").length
+	})
+
+	return totalEarnedXP
+}
+
+/**
+ * Calculates total possible XP for a course by fetching from our local database
+ * Uses the same XP calculation logic as fetchCoursePageData
+ */
+async function fetchCourseTotalXP(courseSourcedId: string): Promise<number> {
+	logger.debug("calculating total XP for course from local database", { courseSourcedId })
+
+	// Import the course data fetching function
+	const { fetchCoursePageData } = await import("@/lib/data/course")
+	const { CourseMetadataSchema } = await import("@/lib/metadata/oneroster")
+	const { getCourse } = await import("@/lib/data/fetchers/oneroster")
+
+	// First get the course metadata to extract the subject and course slugs
+	const courseResult = await errors.try(getCourse(courseSourcedId))
+	if (courseResult.error) {
+		logger.error("failed to fetch course metadata for XP calculation", {
+			courseSourcedId,
+			error: courseResult.error
+		})
+		return 0
+	}
+
+	const course = courseResult.data
+	if (!course) {
+		logger.error("course not found for XP calculation", { courseSourcedId })
+		return 0
+	}
+
+	// Validate course metadata with Zod
+	const courseMetadataResult = CourseMetadataSchema.safeParse(course.metadata)
+	if (!courseMetadataResult.success) {
+		logger.error("invalid course metadata for XP calculation", {
+			courseSourcedId,
+			error: courseMetadataResult.error
+		})
+		return 0
+	}
+	const courseMetadata = courseMetadataResult.data
+
+	// Use the course metadata to fetch detailed course data with XP
+	const coursePageDataResult = await errors.try(
+		fetchCoursePageData({
+			subject: courseMetadata.khanSubjectSlug,
+			course: courseMetadata.khanSlug
+		})
+	)
+	if (coursePageDataResult.error) {
+		logger.error("failed to fetch course page data for XP calculation", {
+			courseSourcedId,
+			subject: courseMetadata.khanSubjectSlug,
+			courseSlug: courseMetadata.khanSlug,
+			error: coursePageDataResult.error
+		})
+		return 0
+	}
+
+	const totalXP = coursePageDataResult.data.totalXP
+
+	logger.debug("calculated total XP for course from local database", {
+		courseSourcedId,
+		totalXP,
+		subject: courseMetadata.khanSubjectSlug,
+		courseSlug: courseMetadata.khanSlug
+	})
+
+	return totalXP
 }
 
 export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<ProfileCourse[]> {
@@ -189,7 +342,48 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 
 	const [subjects, userCourses] = await Promise.all([subjectsPromise, userCoursesPromise])
 
-	return { subjects, userCourses }
+	// Fetch XP data for each course in parallel
+	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${sourceId}`
+
+	logger.info("fetching XP data for user courses", {
+		userId: user.id,
+		sourceId,
+		courseCount: userCourses.length
+	})
+
+	const userCoursesWithXP = await Promise.all(
+		userCourses.map(async (course) => {
+			// Extract course slug from path (e.g., "/math/early-math" -> "early-math")
+			const courseSlug = course.path.split("/").pop()
+			if (!courseSlug) {
+				logger.error("failed to extract course slug from path", {
+					courseId: course.id,
+					coursePath: course.path
+				})
+				return { ...course, earnedXP: 0, totalXP: 0 }
+			}
+
+			const [earnedXP, totalXP] = await Promise.all([
+				fetchCourseEarnedXP(actorId, courseSlug),
+				fetchCourseTotalXP(course.id)
+			])
+
+			return {
+				...course,
+				earnedXP,
+				totalXP
+			}
+		})
+	)
+
+	logger.info("XP data fetched for user courses", {
+		userId: user.id,
+		courseCount: userCoursesWithXP.length,
+		totalEarnedXP: userCoursesWithXP.reduce((sum, course) => sum + (course.earnedXP ?? 0), 0),
+		totalPossibleXP: userCoursesWithXP.reduce((sum, course) => sum + (course.totalXP ?? 0), 0)
+	})
+
+	return { subjects, userCourses: userCoursesWithXP }
 }
 
 export async function fetchProfileCoursesDataWithUser(sourceId: string): Promise<ProfileCoursesPageData> {
