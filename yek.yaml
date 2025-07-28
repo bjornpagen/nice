@@ -13,10 +13,7 @@ ignore_patterns:
   - "public/**"
   - "src/components/ui/**"
   - "src/lib/perseus-to-qti/**"
-  - "src/app/(user)/v2/**"
   - "src/db/**"
-  - "src/app/**"
-  - "src/components/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"
