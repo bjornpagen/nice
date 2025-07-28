@@ -102,3 +102,17 @@ export interface ProfileSubject {
 	title: string
 	courses: Pick<Course, "id" | "slug" | "title" | "path">[]
 }
+
+// --- Progress Types ---
+
+export type Activity = {
+	icon: string
+	title: string
+	subject: string
+	date: string
+	level: "Proficient" | "Familiar" | "Attempted" | "–"
+	problems: string
+	time: string
+	xp?: number
+	url?: string
+}

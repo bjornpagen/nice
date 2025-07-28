@@ -4,17 +4,17 @@ import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card as UICard } from "@/components/ui/card"
 import type { ProfileCourse, Unit } from "@/lib/types/domain"
 import { cn } from "@/lib/utils"
 
-type CourseCardProps = {
+type CardProps = {
 	course: ProfileCourse
 	units: Unit[]
 	color: string
 }
 
-export function CourseCard({ course, units, color }: CourseCardProps) {
+export function Card({ course, units, color }: CardProps) {
 	const [isExpanded, setIsExpanded] = React.useState(false)
 
 	// CRITICAL: `course.path` and `course.description` are guaranteed to be non-empty strings by the ProfileCourse type.
@@ -28,7 +28,7 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 	const progressPercentage = totalXP > 0 ? (earnedXP / totalXP) * 100 : 0
 
 	return (
-		<Card className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">
+		<UICard className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">
 			<CardHeader className="p-0 pb-4">
 				<CardTitle className="flex items-start justify-between mb-0 gap-3">
 					<h2 className="text-lg font-bold text-gray-800 flex-1 min-w-0">{course.title}</h2>
@@ -119,6 +119,6 @@ export function CourseCard({ course, units, color }: CourseCardProps) {
 					<Link href={coursePath}>Start</Link>
 				</Button>
 			</CardFooter>
-		</Card>
+		</UICard>
 	)
 }

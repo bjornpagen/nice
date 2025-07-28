@@ -3,12 +3,12 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import * as React from "react"
-import { CourseSidebar } from "@/components/practice/course/sidebar/course-sidebar"
+import { Sidebar } from "@/components/practice/course/sidebar/sidebar"
 import { Button } from "@/components/ui/button"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
-import { LessonNext } from "./lesson-next"
+import { LessonFooter } from "./lesson-footer"
 
 export function LessonLayout({
 	dataPromise,
@@ -27,24 +27,24 @@ export function LessonLayout({
 	const pathname = usePathname()
 	const [isCollapsed, setIsCollapsed] = React.useState(false)
 
-	// Don't show LessonNext on exercise, quiz, unit test, or course challenge pages
+	// Don't show Next on exercise, quiz, unit test, or course challenge pages
 	const isExercisePage = pathname.includes("/e/")
 	const isQuizPage = pathname.includes("/quiz/")
 	const isUnitTestPage = pathname.includes("/test/")
 	const isCourseChallengePage = pathname.includes("/test/") && !pathname.includes("/lesson/")
 
-	const shouldShowLessonNext = !isExercisePage && !isQuizPage && !isUnitTestPage && !isCourseChallengePage
+	const shouldShowNext = !isExercisePage && !isQuizPage && !isUnitTestPage && !isCourseChallengePage
 
 	const toggleSidebar = () => setIsCollapsed(!isCollapsed)
 
 	return (
 		<div className="flex h-full">
-			{/* Wrap CourseSidebar in a flex container to match legacy layout behavior */}
+			{/* Wrap Sidebar in a flex container to match legacy layout behavior */}
 			<div
 				className="w-[var(--sidebar-width)] flex-shrink-0 bg-gray-50 border-r border-gray-200 h-full sidebar-container"
 				data-collapsed={isCollapsed}
 			>
-				<CourseSidebar
+				<Sidebar
 					coursePromise={coursePromise}
 					progressPromise={progressPromise}
 					className="h-full bg-transparent border-none"
@@ -67,8 +67,8 @@ export function LessonLayout({
 				{/* Content area - scrollable */}
 				<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 
-				{/* Conditionally render LessonNext footer */}
-				{shouldShowLessonNext && <LessonNext coursePromise={coursePromise} />}
+				{/* Conditionally render LessonFooter */}
+				{shouldShowNext && <LessonFooter coursePromise={coursePromise} />}
 			</div>
 		</div>
 	)

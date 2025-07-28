@@ -5,12 +5,12 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { format } from "date-fns"
 import type { z } from "zod"
-import type { Activity } from "@/app/(user)/profile/me/progress/components/progress-table"
 import type { CaliperEventSchema } from "@/lib/caliper"
 import { oneroster } from "@/lib/clients"
 // CHANGED: Import the new fetcher instead of using caliper client directly
 import { getAllEventsForUser } from "@/lib/data/fetchers/caliper"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+import type { Activity } from "@/lib/types/domain"
 
 // Original types and functions for course/unit progress
 export type AssessmentProgress = {

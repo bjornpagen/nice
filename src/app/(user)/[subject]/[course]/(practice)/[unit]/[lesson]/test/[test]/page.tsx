@@ -1,7 +1,7 @@
 import * as React from "react"
 import { fetchUnitTestPageData } from "@/lib/data/assessment"
 import type { UnitTestPageData } from "@/lib/types/page"
-import { TestContent } from "./components/test-content"
+import { Content } from "./components/content"
 
 // --- REMOVED: The local UnitTestPageData type definition ---
 
@@ -14,7 +14,7 @@ export default function UnitTestPage({
 
 	return (
 		<React.Suspense fallback={<div>Loading test...</div>}>
-			<TestContent testPromise={testPromise} />
+			<Content testPromise={testPromise} />
 		</React.Suspense>
 	)
 }

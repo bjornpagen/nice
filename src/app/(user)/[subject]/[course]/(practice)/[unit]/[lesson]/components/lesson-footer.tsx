@@ -9,11 +9,11 @@ import { Button } from "@/components/ui/button"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { getCourseMaterials } from "@/lib/types/sidebar"
 
-interface LessonNextProps {
+interface LessonFooterProps {
 	coursePromise: Promise<CourseV2 | undefined>
 }
 
-export function LessonNext({ coursePromise }: LessonNextProps) {
+export function LessonFooter({ coursePromise }: LessonFooterProps) {
 	const pathname = usePathname()
 	const course = React.use(coursePromise)
 

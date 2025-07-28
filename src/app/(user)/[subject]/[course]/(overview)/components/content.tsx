@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { CoursePageData } from "@/lib/types/page"
 import { CourseChallenge } from "./course-challenge"
-import { CourseHeader } from "./course-header"
-import { ProficiencyLegend } from "./proficiency-legend"
-import { ProficiencyProgressOverview } from "./proficiency-progress-overview"
+import { Header } from "./header"
+import { Legend } from "./legend"
+import { ProgressOverview } from "./progress-overview"
 import { Section } from "./section"
 // REMOVED: The sidebar is no longer imported or rendered here.
 // import { CourseSidebar } from "./sidebar"
@@ -30,7 +30,7 @@ export function Content({
 	// The component now returns only the main content without sidebar container
 	return (
 		<>
-			<CourseHeader subject={params.subject} course={params.course} />
+			<Header subject={params.subject} course={params.course} />
 
 			{/* Course Header */}
 			<div className="mb-6">
@@ -41,14 +41,14 @@ export function Content({
 					<Info className="w-4 h-4 bg-gray-200 rounded-full cursor-not-allowed" />
 				</div>
 
-				<ProficiencyLegend />
+				<Legend />
 			</div>
 
 			{/* Units Layout */}
 			<div className="columns-1 xl:columns-2 gap-6 mt-4">
 				{course.units.map((unit, index) => (
 					<div key={`${course.id}-unit-${unit.id}`} className="break-inside-avoid border-b border-gray-300">
-						<ProficiencyProgressOverview
+						<ProgressOverview
 							index={index}
 							unitChildren={unit.children}
 							path={unit.path}

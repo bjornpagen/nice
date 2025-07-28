@@ -7,7 +7,7 @@ import { AssessmentStepper } from "@/components/practice/assessment-stepper"
 import quizIllustration from "@/components/practice/course/unit/quiz/images/quiz-illustration.png"
 import type { QuizPageData } from "@/lib/types/page"
 
-export function QuizContent({ quizPromise }: { quizPromise: Promise<QuizPageData> }) {
+export function Content({ quizPromise }: { quizPromise: Promise<QuizPageData> }) {
 	const { quiz, questions, layoutData } = React.use(quizPromise)
 	const [hasStarted, setHasStarted] = React.useState(false)
 

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { fetchQuizPageData } from "@/lib/data/assessment"
 import type { QuizPageData } from "@/lib/types/page"
-import { QuizContent } from "./components/quiz-content"
+import { Content } from "./components/content"
 
 // --- REMOVED: The local QuizPageData type definition ---
 
@@ -14,7 +14,7 @@ export default function QuizPage({
 
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading quiz...</div>}>
-			<QuizContent quizPromise={quizPromise} />
+			<Content quizPromise={quizPromise} />
 		</React.Suspense>
 	)
 }

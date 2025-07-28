@@ -22,7 +22,7 @@ function getProficiencyText(resourceType: ProficiencyItem["type"]) {
 	}
 }
 
-export function ProficiencyProgress({
+export function Progress({
 	unitChildren,
 	progressMap
 }: {

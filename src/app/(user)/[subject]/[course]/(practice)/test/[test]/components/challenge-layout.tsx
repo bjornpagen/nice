@@ -1,11 +1,11 @@
 "use client"
 
 import type * as React from "react"
-import { CourseSidebar } from "@/components/practice/course/sidebar/course-sidebar"
+import { Sidebar } from "@/components/practice/course/sidebar/sidebar"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
 
-export function TestLayout({
+export function ChallengeLayout({
 	coursePromise,
 	progressPromise,
 	children
@@ -18,7 +18,7 @@ export function TestLayout({
 		<div className="flex h-full">
 			{/* Practice Course Sidebar */}
 			<div className="w-[var(--sidebar-width)] flex-shrink-0 bg-gray-50 border-r border-gray-200 h-full">
-				<CourseSidebar
+				<Sidebar
 					coursePromise={coursePromise}
 					progressPromise={progressPromise}
 					className="h-full bg-transparent border-none"

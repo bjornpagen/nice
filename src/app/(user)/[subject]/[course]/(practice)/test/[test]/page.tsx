@@ -7,8 +7,8 @@ import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progres
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
-import { TestContent } from "./components/test-content"
-import { TestLayout } from "./components/test-layout"
+import { ChallengeLayout } from "./components/challenge-layout"
+import { Content } from "./components/content"
 
 export default function CourseChallengePage({
 	params
@@ -148,10 +148,10 @@ export default function CourseChallengePage({
 	})
 
 	return (
-		<TestLayout coursePromise={coursePromise} progressPromise={progressPromise}>
+		<ChallengeLayout coursePromise={coursePromise} progressPromise={progressPromise}>
 			<React.Suspense fallback={<div className="p-8">Loading course challenge...</div>}>
-				<TestContent testDataPromise={testDataPromise} />
+				<Content testDataPromise={testDataPromise} />
 			</React.Suspense>
-		</TestLayout>
+		</ChallengeLayout>
 	)
 }

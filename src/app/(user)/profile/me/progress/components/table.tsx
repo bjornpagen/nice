@@ -4,24 +4,13 @@ import { useRouter } from "next/navigation"
 import * as React from "react"
 import { ActivityIcon } from "@/components/icons/activity"
 import { Button } from "@/components/ui/button"
+import type { Activity } from "@/lib/types/domain"
 
-export type Activity = {
-	icon: string
-	title: string
-	subject: string
-	date: string
-	level: "Proficient" | "Familiar" | "Attempted" | "–"
-	problems: string
-	time: string
-	xp?: number // Add optional xp field
-	url?: string // Add optional url field for navigation
-}
-
-export type ProgressTableProps = {
+export type TableProps = {
 	activities: Activity[]
 }
 
-export function ProgressTable({ activities }: ProgressTableProps) {
+export function Table({ activities }: TableProps) {
 	const router = useRouter()
 	const [currentPage, setCurrentPage] = React.useState(1)
 	const itemsPerPage = 10

@@ -5,7 +5,7 @@ import Link from "next/link"
 import * as React from "react"
 import type { ProfileSubject } from "@/lib/types/domain"
 
-export function SubjectContent({ subjectPromise }: { subjectPromise: Promise<ProfileSubject | undefined> }) {
+export function Content({ subjectPromise }: { subjectPromise: Promise<ProfileSubject | undefined> }) {
 	const subject = React.use(subjectPromise)
 	if (!subject) {
 		return <div>Subject not found</div>

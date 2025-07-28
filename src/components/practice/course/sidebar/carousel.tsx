@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import type { Course, CourseMaterial } from "@/lib/types/sidebar"
 import { cn } from "@/lib/utils"
 
-export function CourseSidebarCourseCarousel({
+export function Carousel({
 	course,
 	materials,
 	index,

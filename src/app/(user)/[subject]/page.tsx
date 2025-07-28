@@ -4,7 +4,7 @@ import * as React from "react"
 import { Footer } from "@/components/footer"
 import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
 import type { ProfileSubject } from "@/lib/types/domain"
-import { SubjectContent } from "./components/subject-content"
+import { Content } from "./components/content"
 
 export default function SubjectPage({ params }: { params: Promise<{ subject: string }> }) {
 	const subjectPromise: Promise<ProfileSubject | undefined> = params.then(fetchSubjectPageData)
@@ -12,7 +12,7 @@ export default function SubjectPage({ params }: { params: Promise<{ subject: str
 	return (
 		<div className="bg-gray-100">
 			<React.Suspense fallback={<div>Loading subject...</div>}>
-				<SubjectContent subjectPromise={subjectPromise} />
+				<Content subjectPromise={subjectPromise} />
 			</React.Suspense>
 
 			<Footer />

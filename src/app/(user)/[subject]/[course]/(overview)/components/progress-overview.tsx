@@ -3,9 +3,9 @@ import Link from "next/link"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { UnitChild } from "@/lib/types/domain"
 import { cn } from "@/lib/utils"
-import { ProficiencyProgress } from "./proficiency-progress"
+import { Progress } from "./progress"
 
-export function ProficiencyProgressOverview({
+export function ProgressOverview({
 	index,
 	unitChildren,
 	path,
@@ -34,7 +34,7 @@ export function ProficiencyProgressOverview({
 						</div>
 					</div>
 					<div className="ml-20">
-						<ProficiencyProgress unitChildren={unitChildren} progressMap={progressMap} />
+						<Progress unitChildren={unitChildren} progressMap={progressMap} />
 					</div>
 				</>
 			) : (
@@ -44,7 +44,7 @@ export function ProficiencyProgressOverview({
 							Unit {index + 1}
 						</Link>
 					</h3>
-					<ProficiencyProgress unitChildren={unitChildren} progressMap={progressMap} />
+					<Progress unitChildren={unitChildren} progressMap={progressMap} />
 				</div>
 			)}
 		</div>

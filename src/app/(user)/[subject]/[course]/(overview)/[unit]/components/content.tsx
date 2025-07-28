@@ -5,15 +5,15 @@ import * as React from "react"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { UnitChild } from "@/lib/types/domain"
 import type { UnitPageData } from "@/lib/types/page"
-import { CourseHeader } from "../../components/course-header"
-import { LessonSection } from "../../components/lesson-section"
-import { ProficiencyLegend } from "../../components/proficiency-legend"
-import { ProficiencyProgress } from "../../components/proficiency-progress"
-import { QuizSection } from "../../components/quiz-section"
+import { Header } from "../../components/header"
+import { Legend } from "../../components/legend"
+import { LessonSection } from "../../components/lesson"
+import { Progress } from "../../components/progress"
+import { QuizSection } from "../../components/quiz"
 import { Section } from "../../components/section"
 // REMOVED: The sidebar is no longer imported or rendered here.
 // import { CourseSidebar } from "../../components/sidebar"
-import { UnitTestSection } from "../../components/unit-test-section"
+import { UnitTestSection } from "../../components/unit-test"
 
 export function Content({
 	dataPromise,
@@ -40,7 +40,7 @@ export function Content({
 	// The component now returns only the main content without sidebar container
 	return (
 		<>
-			<CourseHeader subject={params.subject} course={params.course} />
+			<Header subject={params.subject} course={params.course} />
 			<div className="mb-6">
 				<h1 className="text-3xl font-bold text-gray-800 mb-2">
 					Unit {unitIndex + 1}: {unit.title}
@@ -49,10 +49,10 @@ export function Content({
 					<span className="text-sm">{totalXP} possible mastery points</span>
 					<Info className="w-4 h-4 bg-gray-200 rounded-full cursor-not-allowed" />
 				</div>
-				<ProficiencyLegend />
+				<Legend />
 				<React.Suspense fallback={<div className="w-full h-4 bg-gray-200 animate-pulse rounded" />}>
 					<div className="mt-4">
-						<ProficiencyProgress unitChildren={unit.children} progressMap={progressMap} />
+						<Progress unitChildren={unit.children} progressMap={progressMap} />
 					</div>
 				</React.Suspense>
 			</div>

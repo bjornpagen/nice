@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import type { Course, CourseLessonMaterial, CourseMaterial } from "@/lib/types/sidebar"
 
-export function CourseSidebarCourseBreadcrumbs({
+export function Breadcrumbs({
 	course,
 	material,
 	pathname

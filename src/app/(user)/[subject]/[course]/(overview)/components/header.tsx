@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { capitalize } from "@/lib/utils"
 
-export function CourseHeader({ subject, course }: { subject: string; course: string }) {
+export function Header({ subject, course }: { subject: string; course: string }) {
 	return (
 		<div className="flex items-center space-x-2 text-sm text-blue-600 mb-6">
 			<Breadcrumb>

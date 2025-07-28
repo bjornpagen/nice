@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import type { ProgressPageData } from "@/lib/data/progress"
-import { ProgressTable } from "./progress-table"
+import { Table } from "./table"
 
 export function Content({ progressPromise }: { progressPromise: Promise<ProgressPageData> }) {
 	const { activities, exerciseMinutes, totalLearningMinutes, totalXpEarned } = React.use(progressPromise)
@@ -27,7 +27,7 @@ export function Content({ progressPromise }: { progressPromise: Promise<Progress
 
 			<div className="bg-white rounded-lg border border-gray-200">
 				{activities.length > 0 ? (
-					<ProgressTable activities={activities} />
+					<Table activities={activities} />
 				) : (
 					<div className="text-center p-12 text-gray-500">
 						<h2 className="text-xl font-semibold">No activity yet</h2>

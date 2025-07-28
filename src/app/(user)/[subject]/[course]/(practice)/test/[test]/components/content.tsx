@@ -7,7 +7,7 @@ import { AssessmentStepper } from "@/components/practice/assessment-stepper"
 import courseChallengeIllustration from "@/components/practice/course/challenge/images/course-challenge-illustration.png"
 import type { CourseChallengePageData } from "@/lib/types/page"
 
-export function TestContent({ testDataPromise }: { testDataPromise: Promise<CourseChallengePageData> }) {
+export function Content({ testDataPromise }: { testDataPromise: Promise<CourseChallengePageData> }) {
 	const { test, questions } = React.use(testDataPromise)
 	const [hasStarted, setHasStarted] = React.useState(false)
 

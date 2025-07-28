@@ -13,7 +13,7 @@ import { saveUserCourses } from "@/lib/actions/courses"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { ProfileCourse } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
-import { CourseCard } from "./course-card"
+import { Card } from "./card"
 
 function CourseCardSkeleton() {
 	return (
@@ -64,7 +64,7 @@ function CourseGrid({ courses }: { courses: ProfileCourse[] }) {
 				if (!course.units) {
 					throw errors.new("course units: missing required data")
 				}
-				return <CourseCard key={course.id} course={course} units={course.units} color={color} />
+				return <Card key={course.id} course={course} units={course.units} color={color} />
 			})}
 		</div>
 	)

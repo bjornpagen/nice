@@ -1,7 +1,6 @@
 "use client"
 
 import * as errors from "@superbuilders/errors"
-import _ from "lodash"
 import Image from "next/image"
 import { notFound, usePathname } from "next/navigation"
 import * as React from "react"
@@ -10,13 +9,13 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import { type Course, getCourseMaterials } from "@/lib/types/sidebar"
 import { cn } from "@/lib/utils"
-import { CourseSidebarCourseBreadcrumbs } from "./course-sidebar-course-breadcrumbs"
-import { CourseSidebarCourseCarousel } from "./course-sidebar-course-carousel"
-import { CourseSidebarCourseMaterials } from "./course-sidebar-course-materials"
+import { Breadcrumbs } from "./breadcrumbs"
+import { Carousel } from "./carousel"
 import courseIconForeground from "./images/7a86b575f4360619-course-icon.svg"
 import courseIconBackground from "./images/course-accordion-bg.png"
+import { Materials } from "./materials"
 
-export function CourseSidebar({
+export function Sidebar({
 	coursePromise,
 	progressPromise,
 	className
@@ -39,15 +38,20 @@ export function CourseSidebar({
 		throw errors.new(`course sidebar: no content found for course: ${course.title}`)
 	}
 
-	const cursor = _.findIndex(materials, (material) => {
-		if (material.type === "Lesson") {
-			// For lessons, check if any resource matches the current pathname exactly
-			return _.some(material.resources, (resource) => resource.path === pathname)
+	const cursor = React.useMemo(() => {
+		if (course == null) {
+			return -1
 		}
+		return materials.findIndex((material) => {
+			if (material.type === "Lesson") {
+				// For lessons, check if any resource matches the current pathname exactly
+				return material.resources.some((resource) => resource.path === pathname)
+			}
 
-		// For unit-level resources (Quiz, UnitTest, CourseChallenge), use exact path match
-		return material.path === pathname
-	})
+			// For unit-level resources (Quiz, UnitTest, CourseChallenge), use exact path match
+			return material.path === pathname
+		})
+	}, [course, materials, pathname])
 
 	if (cursor === -1) {
 		throw errors.new(`course sidebar: material not found: ${pathname}`)
@@ -58,7 +62,7 @@ export function CourseSidebar({
 		throw errors.new(`course sidebar: material not found: ${pathname}`)
 	}
 
-	const [index, setIndex] = React.useState<number>(_.clamp(cursor, 0, materials.length - 1))
+	const [index, setIndex] = React.useState<number>(Math.max(0, Math.min(cursor, materials.length - 1)))
 
 	return (
 		<div id="course-sidebar" className={cn("bg-transparent h-full overflow-hidden", className)}>
@@ -92,7 +96,7 @@ export function CourseSidebar({
 						<div className="h-px my-4 bg-gray-200" />
 
 						<div className="mt-4">
-							<CourseSidebarCourseCarousel course={course} materials={materials} index={index} setIndex={setIndex} />
+							<Carousel course={course} materials={materials} index={index} setIndex={setIndex} />
 						</div>
 
 						{/* Separator */}
@@ -103,18 +107,13 @@ export function CourseSidebar({
 					<div className="flex-1 overflow-hidden">
 						<ScrollArea className="h-full bg-white border-none">
 							<div className="px-6 pb-4">
-								<CourseSidebarCourseMaterials
-									index={index}
-									materials={materials}
-									pathname={pathname}
-									progressMap={progressMap}
-								/>
+								<Materials index={index} materials={materials} pathname={pathname} progressMap={progressMap} />
 
 								{/* Separator */}
 								<div className="h-px my-4 bg-gray-200" />
 
-								<CourseSidebarCourseBreadcrumbs
-									course={_.pick(course, ["path", "title"])}
+								<Breadcrumbs
+									course={{ path: course.path, title: course.title }}
 									material={material}
 									pathname={pathname}
 								/>

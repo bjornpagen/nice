@@ -24,7 +24,7 @@ function getProficiencyText(proficiency: "attempted" | "familiar" | "proficient"
 	}
 }
 
-export function CourseSidebarCourseMaterials({
+export function Materials({
 	index,
 	materials,
 	pathname,
