@@ -6,6 +6,7 @@ import {
 	validateImageUrls,
 	validatePerseusArtifacts,
 	validateRootElement,
+	validateTitleAttribute,
 	validateTruncatedTags,
 	validateWithQtiApi
 } from "./rules"
@@ -29,6 +30,7 @@ export async function runValidationPipeline(
 
 	const syncPasses: SyncValidationPass[] = [
 		validateRootElement,
+		validateTitleAttribute,
 		validateTruncatedTags,
 		validatePerseusArtifacts,
 		validateHtmlEntities

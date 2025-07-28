@@ -133,6 +133,33 @@ export function validateRootElement(xml: string, context: ValidationContext): vo
 	}
 }
 
+export function validateTitleAttribute(xml: string, context: ValidationContext): void {
+	// Extract the root element opening tag
+	const rootTagMatch = xml.match(new RegExp(`<${context.rootTag}([^>]*)>`, "s"))
+	if (!rootTagMatch) {
+		throw errors.new(`invalid xml: could not find ${context.rootTag} opening tag`)
+	}
+
+	const attributes = rootTagMatch[1]
+	if (!attributes) {
+		throw errors.new(`invalid xml: missing attributes in <${context.rootTag}> element`)
+	}
+
+	// Check if title attribute exists
+	const titleMatch = attributes.match(/\btitle\s*=\s*["']([^"']*?)["']/)
+	if (!titleMatch) {
+		throw errors.new(`invalid xml: missing required 'title' attribute in <${context.rootTag}> element`)
+	}
+
+	// Check if title is empty
+	const titleValue = titleMatch[1]
+	if (!titleValue || !titleValue.trim()) {
+		throw errors.new(`invalid xml: 'title' attribute in <${context.rootTag}> element cannot be empty`)
+	}
+
+	context.logger.debug("validated title attribute", { title: titleValue.trim() })
+}
+
 export function validateTruncatedTags(xml: string, _context: ValidationContext): void {
 	const match = xml.match(REGEX.TRUNCATED_TAG)
 	if (match) {
