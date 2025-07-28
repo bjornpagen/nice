@@ -59,7 +59,7 @@ export function Header({
 
 				{/* Centered Logo */}
 				<Link href="/" className="absolute left-1/2 transform -translate-x-1/2 flex items-center space-x-2">
-					<Smile className={`h-6 w-6 ${dark ? "text-white" : "text-blue-600"}`} />
+					<Smile className={`h-6 w-6 -rotate-30 ${dark ? "text-white" : "text-blue-600"}`} />
 					<span className={`text-lg font-bold ${dark ? "text-white" : "text-gray-800"}`}>Nice Academy</span>
 				</Link>
 
