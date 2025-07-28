@@ -36,9 +36,13 @@ export function LessonSection({
 						{learningContent.length > 0 ? (
 							learningContent.map((item) =>
 								item.type === "Video" ? (
-									<LessonVideo key={`video-${item.id}`} video={item} progress={progressMap.get(item.id)} />
+									<LessonVideo key={`${lesson.id}-video-${item.id}`} video={item} progress={progressMap.get(item.id)} />
 								) : (
-									<LessonArticle key={`article-${item.id}`} article={item} progress={progressMap.get(item.id)} />
+									<LessonArticle
+										key={`${lesson.id}-article-${item.id}`}
+										article={item}
+										progress={progressMap.get(item.id)}
+									/>
 								)
 							)
 						) : (
@@ -52,7 +56,7 @@ export function LessonSection({
 						{exercises.length > 0 ? (
 							exercises.map((exercise, index) => (
 								<LessonExercise
-									key={exercise.id}
+									key={`${lesson.id}-exercise-${exercise.id}`}
 									exercise={exercise}
 									next={index === 0}
 									progress={progressMap.get(exercise.id)}

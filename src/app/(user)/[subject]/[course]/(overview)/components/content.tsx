@@ -47,7 +47,7 @@ export function Content({
 			{/* Units Layout */}
 			<div className="columns-1 xl:columns-2 gap-6 mt-4">
 				{course.units.map((unit, index) => (
-					<div key={unit.id} className="break-inside-avoid border-b border-gray-300">
+					<div key={`${course.id}-unit-${unit.id}`} className="break-inside-avoid border-b border-gray-300">
 						<ProficiencyProgressOverview
 							index={index}
 							unitChildren={unit.children}
@@ -69,7 +69,10 @@ export function Content({
 			{/* Units Breakdown Section */}
 			<div className="rounded-sm mt-6">
 				{course.units.map((unit, index) => (
-					<div key={unit.id} className="break-inside-avoid border-b border-gray-300 mb-2 rounded-sm">
+					<div
+						key={`${course.id}-unit-breakdown-${unit.id}`}
+						className="break-inside-avoid border-b border-gray-300 mb-2 rounded-sm"
+					>
 						<UnitOverviewSection unit={unit} index={index} next={index === 0} />
 					</div>
 				))}

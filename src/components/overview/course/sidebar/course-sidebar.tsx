@@ -34,7 +34,11 @@ export function CourseSidebar({
 
 					<div id="course-sidebar-unit-items" className="divide-y divide-gray-200 mb-4">
 						{course.units.map((unit, index) => (
-							<CourseSidebarUnitItem key={index} index={index} unit={_.pick(unit, ["path", "title", "lessons"])} />
+							<CourseSidebarUnitItem
+								key={`${course.id}-sidebar-unit-${unit.id}`}
+								index={index}
+								unit={_.pick(unit, ["path", "title", "lessons"])}
+							/>
 						))}
 					</div>
 

@@ -71,7 +71,11 @@ export function LessonSidebar({
 								{/* Lesson content */}
 								<div className="px-5 py-2">
 									{lesson.children.map((child) => (
-										<LessonChildTab key={child.id} child={child} progress={progressMap.get(child.id)} />
+										<LessonChildTab
+											key={`${lesson.path}-child-${child.id}`}
+											child={child}
+											progress={progressMap.get(child.id)}
+										/>
 									))}
 								</div>
 

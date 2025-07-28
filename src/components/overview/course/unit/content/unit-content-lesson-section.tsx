@@ -37,7 +37,10 @@ export function UnitContentLessonSection({
 					<div className="space-y-3">
 						{learningContents.length > 0 ? (
 							learningContents.map((resource) => (
-								<LessonResourceLearningContentItem key={resource.slug} resource={resource} />
+								<LessonResourceLearningContentItem
+									key={`${lesson.slug}-resource-${resource.slug}`}
+									resource={resource}
+								/>
 							))
 						) : (
 							<div className="text-gray-800 text-sm">No learning content found.</div>
@@ -52,7 +55,7 @@ export function UnitContentLessonSection({
 						{exerciseContents.length > 0 ? (
 							exerciseContents.map((exercise, i) => (
 								<LessonResourceExerciseContentItem
-									key={exercise.slug}
+									key={`${lesson.slug}-exercise-${exercise.slug}`}
 									exercise={exercise}
 									active={index === 0 && i === 0}
 								/>

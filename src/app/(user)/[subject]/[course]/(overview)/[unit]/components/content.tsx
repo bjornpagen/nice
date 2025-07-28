@@ -83,11 +83,11 @@ export function Content({
 					switch (child.type) {
 						case "Lesson":
 							// Pass the fully hydrated lesson to the component
-							return <LessonSection key={child.id} lesson={child} progressMap={progressMap} />
+							return <LessonSection key={`${unit.id}-lesson-${child.id}`} lesson={child} progressMap={progressMap} />
 						case "Quiz":
-							return <QuizSection key={child.id} quiz={child} />
+							return <QuizSection key={`${unit.id}-quiz-${child.id}`} quiz={child} />
 						case "UnitTest":
-							return <UnitTestSection key={child.id} test={child} />
+							return <UnitTestSection key={`${unit.id}-test-${child.id}`} test={child} />
 						default:
 							return null
 					}

@@ -31,7 +31,7 @@ export function CourseContent({ coursePromise }: { coursePromise: Promise<Course
 			<div id="course-content-unit-proficiency-items" className="sm:columns-1 md:columns-2 lg:columns-2 gap-6 mt-4">
 				{course.units.map((unit, index) => (
 					<CourseContentUnitProficiencyItem
-						key={index}
+						key={`${course.id}-content-unit-${unit.id}`}
 						index={index}
 						unit={unit}
 						active={index === 0}
@@ -57,7 +57,13 @@ export function CourseContent({ coursePromise }: { coursePromise: Promise<Course
 
 			<div id="course-content-unit-overview-items">
 				{course.units.map((unit, index) => (
-					<CourseContentUnitOverviewItem key={index} index={index} unit={unit} active={index === 0} className="mb-2" />
+					<CourseContentUnitOverviewItem
+						key={`${course.id}-overview-unit-${unit.id}`}
+						index={index}
+						unit={unit}
+						active={index === 0}
+						className="mb-2"
+					/>
 				))}
 			</div>
 		</div>
