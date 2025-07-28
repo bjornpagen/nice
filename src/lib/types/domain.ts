@@ -95,6 +95,12 @@ export interface ProfileCourse extends Pick<Course, "id" | "title" | "descriptio
 	courseSlug?: string
 	earnedXP?: number
 	totalXP?: number
+	unitProficiencies?: Array<{
+		unitId: string
+		proficiencyPercentage: number
+		proficientExercises: number
+		totalExercises: number
+	}>
 }
 
 export interface ProfileSubject {

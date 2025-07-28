@@ -3,13 +3,22 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import type { CaliperEventSchema } from "@/lib/caliper"
+import { oneroster } from "@/lib/clients"
 import { getAllEventsForUser } from "@/lib/data/fetchers/caliper"
 import { getActiveEnrollmentsForUser, getClass, getCourse, getUnitsForCourses } from "@/lib/data/fetchers/oneroster"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
-import { ComponentMetadataSchema, CourseMetadataSchema } from "@/lib/metadata/oneroster"
-import type { ProfileCourse, Unit } from "@/lib/types/domain"
+import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
+import type { Lesson, ProfileCourse, Quiz, Unit, UnitTest } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
 import type { ClassReadSchemaType } from "../oneroster"
+
+// NEW: Interface for unit proficiency tracking
+export interface UnitProficiency {
+	unitId: string
+	proficiencyPercentage: number
+	proficientExercises: number
+	totalExercises: number
+}
 
 // Helper function to remove "Nice Academy - " prefix from course titles
 function removeNiceAcademyPrefix(title: string): string {
@@ -170,6 +179,169 @@ async function fetchCourseTotalXP(courseSourcedId: string): Promise<number> {
 	return totalXP
 }
 
+/**
+ * Fetches unit proficiency data for a user across all units in a course.
+ * Only exercises, quizzes, and unit tests with 100% scores count as "proficient".
+ *
+ * @param userSourcedId - The user's OneRoster sourcedId
+ * @param courseData - The complete course data with units and their content
+ * @returns Array of unit proficiency percentages
+ */
+async function fetchUnitProficiencies(
+	userSourcedId: string,
+	courseData: { units: Unit[] }
+): Promise<UnitProficiency[]> {
+	logger.info("🎯 STARTING fetchUnitProficiencies", { userSourcedId, unitCount: courseData.units.length })
+
+	// Get all assessment results for this user from OneRoster
+	const resultsResponse = await errors.try(
+		oneroster.getAllResults({
+			filter: `student.sourcedId='${userSourcedId}'`
+		})
+	)
+	if (resultsResponse.error) {
+		logger.error("failed to fetch assessment results for proficiency calculation", {
+			userSourcedId,
+			error: resultsResponse.error
+		})
+		// Return empty proficiencies rather than failing - graceful degradation
+		return courseData.units.map((unit) => ({
+			unitId: unit.id,
+			proficiencyPercentage: 0,
+			proficientExercises: 0,
+			totalExercises: 0
+		}))
+	}
+
+	// Create a map of resourceId -> assessment result for quick lookup
+	const resultsMap = new Map<string, { score: number; isFullyGraded: boolean }>()
+	for (const result of resultsResponse.data) {
+		if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
+			resultsMap.set(result.assessmentLineItem.sourcedId, {
+				score: result.score,
+				isFullyGraded: true
+			})
+		}
+	}
+
+	logger.debug("processed assessment results", {
+		userSourcedId,
+		totalResults: resultsResponse.data.length,
+		fullyGradedResults: resultsMap.size
+	})
+
+	// Calculate proficiency for each unit
+	const unitProficiencies: UnitProficiency[] = []
+
+	for (const unit of courseData.units) {
+		const assessableContentIds: string[] = []
+
+		logger.info("🔍 Processing unit for proficiency", {
+			unitId: unit.id,
+			unitTitle: unit.title,
+			childrenCount: unit.children.length,
+			childrenTypes: unit.children.map((c) => c.type)
+		})
+
+		// Collect all assessable content IDs from this unit
+		for (const child of unit.children) {
+			if (child.type === "Lesson") {
+				logger.debug("Processing lesson", {
+					lessonId: child.id,
+					lessonTitle: child.title,
+					contentCount: child.children.length,
+					contentTypes: child.children.map((c) => c.type)
+				})
+				// Add exercises from within lessons
+				for (const content of child.children) {
+					if (content.type === "Exercise") {
+						assessableContentIds.push(content.id)
+						logger.debug("Found exercise in lesson", {
+							exerciseId: content.id,
+							exerciseTitle: content.title,
+							lessonTitle: child.title
+						})
+					}
+				}
+			} else if (child.type === "Quiz" || child.type === "UnitTest") {
+				// Add unit-level quizzes and tests
+				assessableContentIds.push(child.id)
+				logger.debug("Found unit-level assessment", {
+					assessmentId: child.id,
+					assessmentTitle: child.title,
+					assessmentType: child.type
+				})
+			}
+		}
+
+		// Count how many of these assessable items the user has completed with 100% score
+		let proficientCount = 0
+		logger.debug("Checking proficiency for assessable content", {
+			unitTitle: unit.title,
+			assessableContentIds,
+			totalAssessable: assessableContentIds.length,
+			availableResultIds: Array.from(resultsMap.keys()).slice(0, 10) // First 10 for brevity
+		})
+
+		for (const contentId of assessableContentIds) {
+			const result = resultsMap.get(contentId)
+			if (result?.isFullyGraded && result.score >= 1.0) {
+				proficientCount++
+				logger.debug("Found proficient result", {
+					contentId,
+					score: result.score,
+					unitTitle: unit.title
+				})
+			} else if (result) {
+				logger.debug("Found non-proficient result", {
+					contentId,
+					score: result.score,
+					isFullyGraded: result.isFullyGraded,
+					unitTitle: unit.title
+				})
+			}
+		}
+
+		// Calculate proficiency percentage
+		const proficiencyPercentage =
+			assessableContentIds.length > 0 ? Math.round((proficientCount / assessableContentIds.length) * 100) : 0
+
+		unitProficiencies.push({
+			unitId: unit.id,
+			proficiencyPercentage,
+			proficientExercises: proficientCount,
+			totalExercises: assessableContentIds.length
+		})
+
+		logger.debug("calculated unit proficiency", {
+			unitId: unit.id,
+			unitTitle: unit.title,
+			proficiencyPercentage,
+			proficientCount,
+			totalAssessable: assessableContentIds.length
+		})
+	}
+
+	logger.info("🏁 COMPLETED unit proficiency calculation", {
+		userSourcedId,
+		unitCount: unitProficiencies.length,
+		averageProficiency:
+			unitProficiencies.length > 0
+				? Math.round(
+						unitProficiencies.reduce((sum, up) => sum + up.proficiencyPercentage, 0) / unitProficiencies.length
+					)
+				: 0,
+		proficiencies: unitProficiencies.map((up) => ({
+			unitId: up.unitId,
+			percentage: up.proficiencyPercentage,
+			proficient: up.proficientExercises,
+			total: up.totalExercises
+		}))
+	})
+
+	return unitProficiencies
+}
+
 export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<ProfileCourse[]> {
 	// Fetch active enrollments for the user
 	const enrollmentsResult = await errors.try(getActiveEnrollmentsForUser(userSourcedId))
@@ -201,38 +373,242 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 	const unitsByCourseSourcedId = new Map<string, Unit[]>()
 
 	if (courseSourcedIds.length > 0) {
-		const allUnitsResult = await errors.try(getUnitsForCourses(courseSourcedIds))
+		// Fetch all components and resources for building unit hierarchy
+		const [allUnitsResult, allResourcesResult] = await Promise.all([
+			errors.try(getUnitsForCourses(courseSourcedIds)),
+			import("@/lib/data/fetchers/oneroster").then(({ getAllResources }) => errors.try(getAllResources()))
+		])
+
 		if (allUnitsResult.error) {
 			logger.error("failed to fetch units for enrolled courses", { error: allUnitsResult.error, courseSourcedIds })
+		} else if (allResourcesResult.error) {
+			logger.error("failed to fetch resources for enrolled courses", { error: allResourcesResult.error })
 		} else {
-			for (const unit of allUnitsResult.data) {
-				if (unit.parent) continue
-				const courseSourcedId = unit.course.sourcedId
-				if (!unitsByCourseSourcedId.has(courseSourcedId)) {
-					unitsByCourseSourcedId.set(courseSourcedId, [])
+			// Import required schemas and functions
+			const { ComponentMetadataSchema, ResourceMetadataSchema } = await import("@/lib/metadata/oneroster")
+			const { getAllComponentResources } = await import("@/lib/data/fetchers/oneroster")
+
+			const allComponents = allUnitsResult.data
+			const allResources = allResourcesResult.data
+
+			// Get component-resource mappings
+			const componentResourcesResult = await errors.try(getAllComponentResources())
+			if (componentResourcesResult.error) {
+				logger.error("failed to fetch component resources", { error: componentResourcesResult.error })
+				throw errors.wrap(componentResourcesResult.error, "component resources unavailable")
+			}
+			const componentResources = componentResourcesResult.data
+
+			// Process each course separately
+			for (const courseSourcedId of courseSourcedIds) {
+				const courseComponents = allComponents.filter((c) => c.course.sourcedId === courseSourcedId)
+				const courseComponentResources = componentResources.filter((cr) =>
+					courseComponents.some((c) => c.sourcedId === cr.courseComponent.sourcedId)
+				)
+
+				// Build units and lessons maps for this course
+				const units: Unit[] = []
+
+				// Temporary interfaces for building hierarchy with sortOrder
+				interface TempExercise {
+					type: "Exercise"
+					id: string
+					title: string
+					path: string
+					sortOrder: number
 				}
 
-				// Validate component metadata with Zod
-				const componentMetadataResult = ComponentMetadataSchema.safeParse(unit.metadata)
-				if (!componentMetadataResult.success) {
-					logger.error("fatal: invalid unit metadata for enrolled user", {
-						unitSourcedId: unit.sourcedId,
-						userSourcedId,
-						error: componentMetadataResult.error
+				interface TempLesson extends Omit<Lesson, "children"> {
+					children: TempExercise[]
+					sortOrder?: number
+				}
+
+				interface TempAssessment {
+					type: "Quiz" | "UnitTest"
+					id: string
+					title: string
+					path: string
+					sortOrder: number
+				}
+
+				const lessonsByUnitSourcedId = new Map<string, TempLesson[]>()
+
+				// First pass: identify units and lessons
+				for (const component of courseComponents) {
+					const componentMetadataResult = ComponentMetadataSchema.safeParse(component.metadata)
+					if (!componentMetadataResult.success) {
+						logger.error("invalid component metadata for enrolled course", {
+							componentSourcedId: component.sourcedId,
+							error: componentMetadataResult.error
+						})
+						continue
+					}
+					const componentMetadata = componentMetadataResult.data
+
+					if (!component.parent) {
+						// This is a unit - skip course challenges
+						if (componentMetadata.khanSlug === "course-challenge") {
+							continue
+						}
+
+						units.push({
+							id: component.sourcedId,
+							title: component.title,
+							path: "", // Will be set later
+							ordering: component.sortOrder,
+							description: componentMetadata.khanDescription,
+							slug: componentMetadata.khanSlug,
+							children: [] // Will be populated
+						})
+					} else {
+						// This is a lesson
+						const parentSourcedId = component.parent.sourcedId
+						if (!lessonsByUnitSourcedId.has(parentSourcedId)) {
+							lessonsByUnitSourcedId.set(parentSourcedId, [])
+						}
+
+						lessonsByUnitSourcedId.get(parentSourcedId)?.push({
+							type: "Lesson",
+							id: component.sourcedId,
+							slug: componentMetadata.khanSlug,
+							title: component.title,
+							description: componentMetadata.khanDescription,
+							path: "", // Will be set later
+							children: [], // Will be populated with exercises
+							xp: 0
+						})
+					}
+				}
+
+				// Second pass: populate lessons with exercises and unit-level assessments
+				for (const unit of units) {
+					const unitLessons = lessonsByUnitSourcedId.get(unit.id) || []
+					const unitAssessments: TempAssessment[] = []
+
+					// Find resources for this unit and its lessons
+					const unitComponentResources = courseComponentResources.filter(
+						(cr) =>
+							cr.courseComponent.sourcedId === unit.id ||
+							unitLessons.some((lesson) => lesson.id === cr.courseComponent.sourcedId)
+					)
+
+					// Process each resource
+					for (const componentResource of unitComponentResources) {
+						const resource = allResources.find((r) => r.sourcedId === componentResource.resource.sourcedId)
+						if (!resource) continue
+
+						const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
+						if (!resourceMetadataResult.success) continue
+
+						const resourceMetadata = resourceMetadataResult.data
+
+						// Check if this is an assessable resource (exercise, quiz, or test)
+						if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-test") {
+							if (componentResource.courseComponent.sourcedId === unit.id) {
+								// This is a unit-level assessment
+								if (resourceMetadata.khanLessonType === "unittest") {
+									unitAssessments.push({
+										type: "UnitTest",
+										id: resource.sourcedId,
+										title: resource.title,
+										path: "", // Will be set later
+										sortOrder: componentResource.sortOrder
+									})
+								} else if (resourceMetadata.khanLessonType?.includes("quiz")) {
+									unitAssessments.push({
+										type: "Quiz",
+										id: resource.sourcedId,
+										title: resource.title,
+										path: "", // Will be set later
+										sortOrder: componentResource.sortOrder
+									})
+								}
+							} else {
+								// This is a lesson-level exercise
+								const lesson = unitLessons.find((l) => l.id === componentResource.courseComponent.sourcedId)
+								if (lesson && !resourceMetadata.khanLessonType) {
+									// Only exercises (no lesson type) count as assessable within lessons
+									lesson.children.push({
+										type: "Exercise",
+										id: resource.sourcedId,
+										title: resource.title,
+										path: "", // Will be set later
+										sortOrder: componentResource.sortOrder
+									})
+								}
+							}
+						}
+					}
+
+					// Sort lesson children by sortOrder
+					for (const lesson of unitLessons) {
+						lesson.children.sort((a, b) => a.sortOrder - b.sortOrder)
+					}
+
+					// Combine lessons and assessments, sort by sortOrder
+					const allUnitChildren = [
+						...unitLessons.map((lesson) => ({ ...lesson, sortOrder: lesson.sortOrder || 0 })),
+						...unitAssessments
+					].sort((a, b) => a.sortOrder - b.sortOrder)
+
+					// Remove sortOrder and convert to proper domain types
+					unit.children = allUnitChildren.map(({ sortOrder, ...child }) => {
+						if (child.type === "Lesson") {
+							const lesson: Lesson = {
+								type: "Lesson",
+								id: child.id,
+								slug: child.slug,
+								title: child.title,
+								description: child.description,
+								path: child.path,
+								children: child.children.map(({ sortOrder: _, ...exercise }) => ({
+									type: exercise.type,
+									id: exercise.id,
+									title: exercise.title,
+									path: exercise.path,
+									slug: "", // Not needed for proficiency calculation
+									description: "",
+									totalQuestions: 5, // Default value
+									questionsToPass: 4, // Default value
+									xp: 0
+								})),
+								xp: child.xp
+							}
+							return lesson
+						}
+						if (child.type === "Quiz") {
+							const quiz: Quiz = {
+								type: "Quiz",
+								id: child.id,
+								title: child.title,
+								path: child.path,
+								slug: "",
+								description: "",
+								questions: [], // Not needed for proficiency calculation
+								xp: 0
+							}
+							return quiz
+						}
+
+						// UnitTest case
+						const unitTest: UnitTest = {
+							type: "UnitTest",
+							id: child.id,
+							title: child.title,
+							path: child.path,
+							slug: "",
+							description: "",
+							questions: [], // Not needed for proficiency calculation
+							xp: 0
+						}
+						return unitTest
 					})
-					throw errors.wrap(componentMetadataResult.error, "invalid unit metadata")
 				}
-				const unitMetadata = componentMetadataResult.data
 
-				unitsByCourseSourcedId.get(courseSourcedId)?.push({
-					id: unit.sourcedId,
-					title: unit.title,
-					path: "", // Path will be constructed when we have course slug
-					ordering: unit.sortOrder,
-					description: unitMetadata.khanDescription,
-					slug: unitMetadata.khanSlug,
-					children: [] // Initialize with empty children
-				})
+				// Sort units by ordering
+				units.sort((a, b) => a.ordering - b.ordering)
+
+				unitsByCourseSourcedId.set(courseSourcedId, units)
 			}
 		}
 	}
@@ -360,18 +736,20 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 					courseId: course.id,
 					coursePath: course.path
 				})
-				return { ...course, earnedXP: 0, totalXP: 0 }
+				return { ...course, earnedXP: 0, totalXP: 0, unitProficiencies: [] }
 			}
 
-			const [earnedXP, totalXP] = await Promise.all([
+			const [earnedXP, totalXP, unitProficiencies] = await Promise.all([
 				fetchCourseEarnedXP(actorId, courseSlug),
-				fetchCourseTotalXP(course.id)
+				fetchCourseTotalXP(course.id),
+				fetchUnitProficiencies(sourceId, course)
 			])
 
 			return {
 				...course,
 				earnedXP,
-				totalXP
+				totalXP,
+				unitProficiencies
 			}
 		})
 	)

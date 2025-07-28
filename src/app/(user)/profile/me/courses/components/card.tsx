@@ -5,16 +5,16 @@ import Link from "next/link"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card as UICard } from "@/components/ui/card"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import type { ProfileCourse, Unit } from "@/lib/types/domain"
 import { cn } from "@/lib/utils"
 
 type CardProps = {
 	course: ProfileCourse
 	units: Unit[]
-	color: string
 }
 
-export function Card({ course, units, color }: CardProps) {
+export function Card({ course, units }: CardProps) {
 	const [isExpanded, setIsExpanded] = React.useState(false)
 
 	// CRITICAL: `course.path` and `course.description` are guaranteed to be non-empty strings by the ProfileCourse type.
@@ -86,28 +86,49 @@ export function Card({ course, units, color }: CardProps) {
 						<div className="absolute left-5 top-5 bottom-5 w-0.5 bg-gray-300" />
 
 						<div className="space-y-4">
-							{units.slice(0, 5).map((unit: Unit) => (
-								<div key={unit.id} className="flex items-center space-x-3 relative">
-									{/* circular icon background */}
-									<div
-										className={cn(
-											"w-10 h-10 rounded-full flex items-center justify-center relative z-10 flex-shrink-0",
-											color
-										)}
-									>
-										<BookOpen className="w-6 h-6 text-white" />
-									</div>
+							{units.slice(0, 5).map((unit: Unit) => {
+								// Find proficiency data for this unit
+								const proficiencyData = course.unitProficiencies?.find((p) => p.unitId === unit.id)
+								const proficiencyPercent = proficiencyData?.proficiencyPercentage ?? 0
 
-									<div className="flex-1 min-w-0">
-										<Link
-											href={unit.path}
-											className="text-gray-800 hover:text-blue-600 font-medium text-sm block break-words"
-										>
-											{unit.title.trim()}
-										</Link>
+								return (
+									<div key={unit.id} className="flex items-center space-x-3 relative">
+										<TooltipProvider>
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<div
+														className="w-10 h-10 rounded-full flex items-center justify-center relative z-10 flex-shrink-0 cursor-help"
+														style={{
+															background:
+																proficiencyPercent > 0
+																	? `linear-gradient(to bottom, #2563EB 0%, #2563EB ${proficiencyPercent}%, #D1D5DB ${proficiencyPercent}%, #D1D5DB 100%)`
+																	: "#D1D5DB"
+														}}
+													>
+														<BookOpen className="w-6 h-6 text-white" />
+													</div>
+												</TooltipTrigger>
+												{proficiencyData && proficiencyData.totalExercises > 0 && (
+													<TooltipContent>
+														<p>
+															{proficiencyData.proficientExercises}/{proficiencyData.totalExercises} proficient skills
+														</p>
+													</TooltipContent>
+												)}
+											</Tooltip>
+										</TooltipProvider>
+
+										<div className="flex-1 min-w-0">
+											<Link
+												href={unit.path}
+												className="text-gray-800 hover:text-blue-600 font-medium text-sm block break-words"
+											>
+												{unit.title.trim()}
+											</Link>
+										</div>
 									</div>
-								</div>
-							))}
+								)
+							})}
 						</div>
 					</div>
 				) : (

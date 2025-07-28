@@ -64,7 +64,7 @@ function CourseGrid({ courses }: { courses: ProfileCourse[] }) {
 				if (!course.units) {
 					throw errors.new("course units: missing required data")
 				}
-				return <Card key={course.id} course={course} units={course.units} color={color} />
+				return <Card key={course.id} course={course} units={course.units} />
 			})}
 		</div>
 	)
