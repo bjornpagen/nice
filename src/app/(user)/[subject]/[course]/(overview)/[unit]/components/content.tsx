@@ -11,8 +11,6 @@ import { LessonSection } from "../../components/lesson"
 import { Progress } from "../../components/progress"
 import { QuizSection } from "../../components/quiz"
 import { Section } from "../../components/section"
-// REMOVED: The sidebar is no longer imported or rendered here.
-// import { CourseSidebar } from "../../components/sidebar"
 import { UnitTestSection } from "../../components/unit-test"
 
 export function Content({
@@ -22,22 +20,13 @@ export function Content({
 	dataPromise: Promise<UnitPageData>
 	progressPromise: Promise<Map<string, AssessmentProgress>>
 }) {
-	// Consume the promises.
 	const { params, allUnits, unit, totalXP } = React.use(dataPromise)
 	const progressMap = React.use(progressPromise)
 
-	// Safety check for allUnits
-	if (!allUnits || !Array.isArray(allUnits)) {
-		return <div>Error: Course units data is missing. Please try refreshing the page.</div>
-	}
-
+	// Data validation is now handled in the data fetching layer.
+	// We can trust that `unit` and `allUnits` are valid here.
 	const unitIndex = allUnits.findIndex((u) => u.id === unit.id)
-	if (unitIndex === -1) {
-		return <div>Unit not found.</div>
-	}
 
-	// REMOVED: The outer layout structure is now handled by layout.tsx
-	// The component now returns only the main content without sidebar container
 	return (
 		<>
 			<Header subject={params.subject} course={params.course} />
@@ -82,7 +71,6 @@ export function Content({
 				{unit.children.map((child: UnitChild) => {
 					switch (child.type) {
 						case "Lesson":
-							// Pass the fully hydrated lesson to the component
 							return <LessonSection key={`${unit.id}-lesson-${child.id}`} lesson={child} progressMap={progressMap} />
 						case "Quiz":
 							return <QuizSection key={`${unit.id}-quiz-${child.id}`} quiz={child} />
