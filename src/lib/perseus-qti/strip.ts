@@ -1,4 +1,5 @@
 import type * as logger from "@superbuilders/slog"
+import he from "he"
 
 /**
  * Converts problematic HTML entities to their numeric equivalents or actual characters.
@@ -9,46 +10,17 @@ import type * as logger from "@superbuilders/slog"
  * @returns The XML string with HTML entities converted
  */
 export function convertHtmlEntities(xml: string, logger: logger.Logger): string {
-	// Map of HTML entities to their replacements
-	// Using actual Unicode characters instead of numeric entities where possible
-	const entityMap: Record<string, string> = {
-		"&nbsp;": "\u00A0", // Non-breaking space
-		"&minus;": "−", // Minus sign (U+2212)
-		"&ndash;": "–", // En dash (U+2013)
-		"&mdash;": "—", // Em dash (U+2014)
-		"&times;": "×", // Multiplication sign (U+00D7)
-		"&divide;": "÷", // Division sign (U+00F7)
-		"&copy;": "©", // Copyright (U+00A9)
-		"&reg;": "®", // Registered (U+00AE)
-		"&trade;": "™", // Trademark (U+2122)
-		"&deg;": "°", // Degree (U+00B0)
-		"&plusmn;": "±", // Plus-minus (U+00B1)
-		"&frac14;": "¼", // One quarter (U+00BC)
-		"&frac12;": "½", // One half (U+00BD)
-		"&frac34;": "¾", // Three quarters (U+00BE)
-		"&hellip;": "…", // Horizontal ellipsis (U+2026)
-		"&euro;": "€", // Euro sign (U+20AC)
-		"&pound;": "£", // Pound sign (U+00A3)
-		"&yen;": "¥", // Yen sign (U+00A5)
-		"&cent;": "¢", // Cent sign (U+00A2)
-		"&rsquo;": "’", // Right single quotation mark (U+2019)
-		"&le;": "≤", // Less than or equal to (U+2264)
-		"&ge;": "≥" // Greater than or equal to (U+2265)
-		// Note: We do NOT convert &lt;, &gt;, &amp; as these are required for XML escaping
-	}
+	const exceptions = new Set(["&quot;", "&apos;", "&lt;", "&gt;", "&amp;"])
+	const entityRegex = /&(#?[a-zA-Z0-9]+);/g
 
-	let convertedXml = xml
 	let totalReplacements = 0
-
-	// Replace each entity with its equivalent
-	for (const [entity, replacement] of Object.entries(entityMap)) {
-		const regex = new RegExp(entity.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")
-		const matches = convertedXml.match(regex)
-		if (matches) {
-			totalReplacements += matches.length
-			convertedXml = convertedXml.replace(regex, replacement)
+	const convertedXml = xml.replace(entityRegex, (match) => {
+		if (exceptions.has(match)) {
+			return match
 		}
-	}
+		totalReplacements++
+		return he.decode(match)
+	})
 
 	if (totalReplacements > 0) {
 		logger.debug("converted html entities to unicode characters", {
