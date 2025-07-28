@@ -3,12 +3,12 @@ import Link from "next/link"
 import React from "react"
 import { ActivityIcon } from "@/components/icons/activity"
 import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
+import courseChallengeIllustration from "@/components/practice/course/sidebar/images/course-challenge-sidebar-illustration.png"
+import quizIllustration from "@/components/practice/course/sidebar/images/quiz-sidebar-illustration.png"
+import unitTestIllustration from "@/components/practice/course/sidebar/images/unit-test-sidebar-illustration.png"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { CourseMaterial, LessonResource } from "@/lib/types/sidebar"
 import { cn } from "@/lib/utils"
-import courseChallengeIllustration from "./images/course-challenge-sidebar-illustration.png"
-import quizIllustration from "./images/quiz-sidebar-illustration.png"
-import unitTestIllustration from "./images/unit-test-sidebar-illustration.png"
 
 // Helper function to get proficiency text, adapted from legacy LessonChildTab
 function getProficiencyText(proficiency: "attempted" | "familiar" | "proficient" | "mastered"): string {

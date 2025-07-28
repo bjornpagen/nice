@@ -1,10 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
+import unitTestNotStartedImage from "@/app/(user)/[subject]/[course]/(overview)/components/images/unit-test-not-started.svg"
+import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/section"
 import { Button } from "@/components/ui/button"
 import type { UnitTest } from "@/lib/types/domain"
 import { startCase } from "@/lib/utils"
-import unitTestNotStartedImage from "./images/unit-test-not-started.svg"
-import { Section } from "./section"
 
 export function UnitTestSection({ test }: { test: UnitTest }) {
 	return (

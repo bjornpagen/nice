@@ -1,10 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
+import quizNotStartedImage from "@/app/(user)/[subject]/[course]/(overview)/components/images/quiz-not-started.svg"
+import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/section"
 import { Button } from "@/components/ui/button"
 import type { Quiz } from "@/lib/types/domain"
 import { startCase } from "@/lib/utils"
-import quizNotStartedImage from "./images/quiz-not-started.svg"
-import { Section } from "./section"
 
 export function QuizSection({ quiz }: { quiz: Quiz }) {
 	return (

@@ -4,16 +4,16 @@ import * as errors from "@superbuilders/errors"
 import Image from "next/image"
 import { notFound, usePathname } from "next/navigation"
 import * as React from "react"
+import { Breadcrumbs } from "@/components/practice/course/sidebar/breadcrumbs"
+import { Carousel } from "@/components/practice/course/sidebar/carousel"
+import courseIconForeground from "@/components/practice/course/sidebar/images/7a86b575f4360619-course-icon.svg"
+import courseIconBackground from "@/components/practice/course/sidebar/images/course-accordion-bg.png"
+import { Materials } from "@/components/practice/course/sidebar/materials"
 import { ScrollArea } from "@/components/ui/scroll-area"
 // import { useSidebar } from "@/components/ui/sidebar" // Removed for relative positioning layout
 import type { AssessmentProgress } from "@/lib/data/progress"
 import { type Course, getCourseMaterials } from "@/lib/types/sidebar"
 import { cn } from "@/lib/utils"
-import { Breadcrumbs } from "./breadcrumbs"
-import { Carousel } from "./carousel"
-import courseIconForeground from "./images/7a86b575f4360619-course-icon.svg"
-import courseIconBackground from "./images/course-accordion-bg.png"
-import { Materials } from "./materials"
 
 export function Sidebar({
 	coursePromise,

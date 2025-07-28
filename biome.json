@@ -7,7 +7,8 @@
 		"./gritql/no-new-error.grit",
 		"./gritql/no-slog-in-client-components.grit",
 		"./gritql/no-try.grit",
-		"./gritql/no-implicit-select-all.grit"
+		"./gritql/no-implicit-select-all.grit",
+		"./gritql/no-relative-imports.grit"
 	],
 	"vcs": {
 		"enabled": false,
