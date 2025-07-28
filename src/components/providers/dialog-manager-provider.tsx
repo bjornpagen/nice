@@ -17,7 +17,7 @@ export function DialogManagerProvider({ children }: { children: React.ReactNode 
 		setIsMounted(true)
 	}, [])
 
-	const getSeenDialogs = React.useCallback((): DialogKey[] => {
+	function getSeenDialogs(): DialogKey[] {
 		if (!isMounted) return []
 		const seen = window.localStorage.getItem(SEEN_DIALOGS_STORAGE_KEY)
 		if (!seen) return []
@@ -34,17 +34,17 @@ export function DialogManagerProvider({ children }: { children: React.ReactNode 
 		}
 
 		return []
-	}, [isMounted])
+	}
 
-	const openDialog = (key: DialogKey) => {
+	function openDialog(key: DialogKey) {
 		setActiveDialog(key)
 	}
 
-	const closeDialog = () => {
+	function closeDialog() {
 		setActiveDialog(null)
 	}
 
-	const markAsSeen = (key: DialogKey) => {
+	function markAsSeen(key: DialogKey) {
 		if (!isMounted) return
 		const seenDialogs = getSeenDialogs()
 		if (!seenDialogs.includes(key)) {
@@ -53,7 +53,7 @@ export function DialogManagerProvider({ children }: { children: React.ReactNode 
 		}
 	}
 
-	const shouldShow = (key: DialogKey): boolean => {
+	function shouldShow(key: DialogKey): boolean {
 		if (!isMounted) return false
 		const seenDialogs = getSeenDialogs()
 		return !seenDialogs.includes(key)

@@ -38,7 +38,7 @@ export function Sidebar({
 		throw errors.new(`course sidebar: no content found for course: ${course.title}`)
 	}
 
-	const cursor = React.useMemo(() => {
+	const cursor = (() => {
 		if (course == null) {
 			return -1
 		}
@@ -51,7 +51,7 @@ export function Sidebar({
 			// For unit-level resources (Quiz, UnitTest, CourseChallenge), use exact path match
 			return material.path === pathname
 		})
-	}, [course, materials, pathname])
+	})()
 
 	if (cursor === -1) {
 		throw errors.new(`course sidebar: material not found: ${pathname}`)

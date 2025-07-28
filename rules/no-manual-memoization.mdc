@@ -1,0 +1,60 @@
+---
+description: 
+globs: *.tsx
+alwaysApply: false
+---
+### No Manual Memoization
+
+#### ⚠️ CRITICAL: Ban React.useMemo, React.useCallback, and React.memo
+
+With the adoption of React Compiler (part of React 19), manual memoization APIs are strictly prohibited. This includes `React.useMemo` for values, `React.useCallback` for functions, and `React.memo` for components. These should be removed from the codebase.
+
+**Rationale:**
+
+1. **Automatic Optimization by React Compiler:** React Compiler automatically memos components, values, and function calls where appropriate, making manual interventions redundant. It analyzes code at compile-time to prevent unnecessary re-renders without developer input. Using manual memoization can interfere with these optimizations, potentially causing suboptimal performance or preventing the compiler from applying its rules effectively.
+
+2. **Reduced Code Complexity:** Manual memoization adds boilerplate code, dependency arrays (which are error-prone), and maintenance overhead. By relying on the compiler, we simplify the codebase, reduce bugs from incorrect dependency arrays, and improve readability.
+
+3. **Potential for Harm:** In some cases, manual memoization can lead to issues like memory leaks (e.g., from captured closures) or prevent the compiler from optimizing as intended. Research shows that while the compiler handles most cases automatically, manual overrides can disrupt this process and lead to "uphill battles" in performance tuning.
+
+4. **Best Practices Alignment:** According to React documentation and community discussions (e.g., React.dev reference on memo, DeveloperWay articles on React Compiler), the compiler applies the equivalent of `memo` to all components and optimizes values/functions, reducing the need for manual intervention. Preemptive manual memoization is often unnecessary and can be "evil" in compiled environments.
+
+**Other Memoization Functions Considered:** Based on web research, the primary React-built-in memoization APIs are `useMemo`, `useCallback`, and `memo`. Third-party alternatives like `lodash.memoize` were noted but are not used in our stack; if encountered, they should also be avoided for the same reasons. No other core React memoization functions (e.g., `useTransition` is for transitions, not memoization) warrant banning at this time.
+
+#### Prohibited Patterns
+
+```typescript
+// ❌ WRONG: Manual value memoization
+const memoizedValue = React.useMemo(() => computeExpensiveValue(a, b), [a, b])
+
+// ❌ WRONG: Manual callback memoization
+const memoizedCallback = React.useCallback(() => {
+  doSomething(a, b)
+}, [a, b])
+
+// ❌ WRONG: Manual component memoization
+const MemoComponent = React.memo(function MyComponent(props) {
+  /* render using props */
+})
+```
+
+#### Correct Patterns
+
+Rely on React Compiler to handle optimizations automatically. Remove manual wrappers:
+
+```typescript
+// ✅ CORRECT: Let the compiler handle it
+const value = computeExpensiveValue(a, b)
+
+// ✅ CORRECT: Plain function definition
+const callback = () => {
+  doSomething(a, b)
+}
+
+// ✅ CORRECT: Plain component without memo
+function MyComponent(props) {
+  /* render using props */
+}
+```
+
+If a specific case requires manual memoization (extremely rare with the compiler), it must be approved in code review with justification. Otherwise, adhere to the ban for consistency and performance.

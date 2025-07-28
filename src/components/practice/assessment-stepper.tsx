@@ -192,7 +192,7 @@ export function AssessmentStepper({
 	const MAX_ATTEMPTS = 3
 	const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
 
-	const triggerConfetti = React.useCallback(() => {
+	function triggerConfetti() {
 		const canvas = document.createElement("canvas")
 		canvas.style.position = "fixed"
 		canvas.style.bottom = "0"
@@ -232,18 +232,18 @@ export function AssessmentStepper({
 				document.body.removeChild(canvas)
 			}, 3000)
 		}
-	}, [])
+	}
 
-	const handleCorrectAnswer = React.useCallback(() => {
+	function handleCorrectAnswer() {
 		if (audioRef.current) {
 			audioRef.current.play().catch(() => {
 				// Ignore audio play errors (e.g., autoplay policy)
 			})
 		}
 		triggerConfetti()
-	}, [triggerConfetti])
+	}
 
-	const handleWrongAnswer = React.useCallback(() => {
+	function handleWrongAnswer() {
 		// 1 in 5000 chance of playing the wrong answer sound
 		const shouldPlaySound = Math.random() < 1 / 5000
 
@@ -252,7 +252,7 @@ export function AssessmentStepper({
 				// Ignore audio play errors (e.g., autoplay policy)
 			})
 		}
-	}, [])
+	}
 
 	// Record start time when assessment begins
 	React.useEffect(() => {

@@ -53,7 +53,7 @@ export function Content({
 	const savedProgressRef = React.useRef<{ percentComplete: number } | null>(null)
 
 	// Function to send the cumulative time spent event
-	const sendCumulativeTimeEvent = React.useCallback(() => {
+	function sendCumulativeTimeEvent() {
 		// Prevent duplicate sends
 		if (hasSentFinalEventRef.current) return
 
@@ -105,7 +105,7 @@ export function Content({
 			void sendCaliperTimeSpentEvent(actor, context, Math.floor(finalWatchTime))
 			hasSentFinalEventRef.current = true
 		}
-	}, [user, video.title, video.id, params.subject, params.course, params.unit, params.lesson, params.video])
+	}
 
 	// Load saved progress when component mounts
 	React.useEffect(() => {
@@ -176,15 +176,65 @@ export function Content({
 	// Cleanup: send cumulative event when component unmounts
 	React.useEffect(() => {
 		return () => {
-			sendCumulativeTimeEvent()
-		}
-	}, [sendCumulativeTimeEvent])
+			// Prevent duplicate sends
+			if (hasSentFinalEventRef.current) return
 
-	const onPlayerReady = (event: { target: YouTubePlayer }) => {
+			// Calculate final watch time
+			let finalWatchTime = totalWatchTimeRef.current
+			if (isPlayingRef.current && watchStartTimeRef.current) {
+				// Add time from current play session
+				const currentSessionTime = (Date.now() - watchStartTimeRef.current.getTime()) / 1000
+				finalWatchTime += currentSessionTime
+			}
+
+			// Only send if watched at least 1 second
+			if (finalWatchTime < 1) return
+
+			// Validate user metadata
+			let sourceId: string | undefined
+			if (user?.publicMetadata) {
+				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+				if (metadataValidation.success) {
+					sourceId = metadataValidation.data.sourceId
+				}
+			}
+
+			if (sourceId && user) {
+				const userEmail = user.primaryEmailAddress?.emailAddress
+				if (!userEmail) {
+					throw errors.new("video tracking: user email required for caliper event")
+				}
+
+				const actor = {
+					id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${sourceId}`,
+					type: "TimebackUser" as const,
+					email: userEmail
+				}
+
+				const context = {
+					id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}/${params.subject}/${params.course}/${params.unit}/${params.lesson}/v/${params.video}`,
+					type: "TimebackActivityContext" as const,
+					subject: mapSubjectToCaliperSubject(params.subject),
+					app: { name: "Nice Academy" },
+					course: { name: params.course },
+					activity: {
+						name: video.title,
+						id: `nice:${video.id}` // CHANGED: Add the resource sourcedId
+					}
+				}
+
+				// Send cumulative time event
+				void sendCaliperTimeSpentEvent(actor, context, Math.floor(finalWatchTime))
+				hasSentFinalEventRef.current = true
+			}
+		}
+	}, [user, video.title, video.id, params.subject, params.course, params.unit, params.lesson, params.video])
+
+	function onPlayerReady(event: { target: YouTubePlayer }) {
 		playerRef.current = event.target
 	}
 
-	const onPlayerStateChange = (event: { target: YouTubePlayer; data: number }) => {
+	function onPlayerStateChange(event: { target: YouTubePlayer; data: number }) {
 		const playerState = event.data
 		const player = event.target
 
