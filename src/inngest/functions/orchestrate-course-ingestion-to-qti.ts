@@ -5,29 +5,7 @@ import { and, eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-
-/**
- * Replaces the identifier and title attributes on the root tag of a given XML string.
- * @param xml The original XML string.
- * @param rootTag The name of the root tag (e.g., "qti-assessment-item").
- * @param newIdentifier The new identifier to set.
- * @param newTitle The new title to set.
- * @returns The XML string with updated attributes.
- */
-function replaceRootAttributes(xml: string, rootTag: string, newIdentifier: string, newTitle: string): string {
-	// A robust regex to find the root tag and capture its attributes.
-	const rootTagRegex = new RegExp(`<(${rootTag})([^>]*?)>`)
-
-	// Escape the title to be safely used in an XML attribute.
-	const safeTitle = newTitle.replace(/"/g, "&quot;")
-
-	return xml.replace(rootTagRegex, (_match, tagName, existingAttrs) => {
-		// Replace attributes within the captured group.
-		let updatedAttrs = existingAttrs.replace(/identifier="[^"]*"/, `identifier="${newIdentifier}"`)
-		updatedAttrs = updatedAttrs.replace(/title="[^"]*"/, `title="${safeTitle}"`)
-		return `<${tagName}${updatedAttrs}>`
-	})
-}
+import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 
 export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	{
@@ -168,13 +146,13 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
     identifier="${a.id}"
-    title="${a.title.replace(/"/g, "&quot;")}"
+    title="${escapeXmlAttribute(a.title)}"
     xml:lang="en-US">
     <qti-stimulus-body>
         <h2>Article Not Found</h2>
         <p>The content for this article is currently unavailable.</p>
         <p><em>Article ID: ${a.id}</em></p>
-        <p><em>Title: ${a.title.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</em></p>
+        <p><em>Title: ${escapeXmlAttribute(a.title)}</em></p>
     </qti-stimulus-body>
 </qti-assessment-stimulus>`
 
@@ -264,7 +242,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			questions: { id: string; exerciseId: string; exerciseTitle: string }[],
 			_metadata: Record<string, unknown>
 		): string => {
-			const safeTitle = title.replace(/"/g, "&quot;")
+			const safeTitle = escapeXmlAttribute(title)
 
 			// Group questions by their source exercise.
 			const questionsByExercise = new Map<string, { title: string; questionIds: string[] }>()
@@ -281,7 +259,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 
 			const sectionsXml = Array.from(questionsByExercise.entries())
 				.map(([exerciseId, { title: exerciseTitle, questionIds }]) => {
-					const safeExerciseTitle = exerciseTitle.replace(/"/g, "&quot;")
+					const safeExerciseTitle = escapeXmlAttribute(exerciseTitle)
 					const itemRefsXml = questionIds
 						.map(
 							(itemId, itemIndex) =>
@@ -365,7 +343,7 @@ ${sectionsXml}
 				})
 			}
 
-			const safeTitle = exercise.title.replace(/"/g, "&quot;")
+			const safeTitle = escapeXmlAttribute(exercise.title)
 			const itemRefsXml = questionIds
 				.map(
 					(itemId, index) =>

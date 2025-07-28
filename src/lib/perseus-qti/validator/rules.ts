@@ -3,6 +3,7 @@ import type * as logger from "@superbuilders/slog"
 import { qti } from "@/lib/clients"
 import { validateXmlWithAi } from "@/lib/perseus-qti/client"
 import { ErrQtiNotFound } from "@/lib/qti"
+import { escapeXmlAttribute } from "@/lib/xml-utils"
 
 type ValidationContext = {
 	id: string
@@ -253,12 +254,7 @@ async function upsertStimulus(identifier: string, title: string, content: string
 
 // Private helper for validating assessment items via the API.
 async function upsertAndCleanupItem(identifier: string, xml: string, context: ValidationContext): Promise<void> {
-	const safeTitle = context.title
-		.replace(/&/g, "&amp;") // Must replace & first to avoid double-escaping
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "&apos;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
+	const safeTitle = escapeXmlAttribute(context.title)
 
 	const finalXml = xml.replace(/<qti-assessment-item([^>]*?)>/, (_match, group1) => {
 		// Update identifier attribute
