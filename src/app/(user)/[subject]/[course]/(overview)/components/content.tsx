@@ -4,8 +4,8 @@ import { Info } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
-import type { AssessmentProgress } from "@/lib/data/progress"
 import type { CoursePageData } from "@/lib/types/page"
+import type { CourseProgressData } from "../page"
 import { CourseChallenge } from "./course-challenge"
 import { Header } from "./header"
 import { Legend } from "./legend"
@@ -20,11 +20,11 @@ export function Content({
 	progressPromise
 }: {
 	dataPromise: Promise<CoursePageData>
-	progressPromise: Promise<Map<string, AssessmentProgress>>
+	progressPromise: Promise<CourseProgressData>
 }) {
 	// Consume the promises.
 	const { params, course, totalXP } = React.use(dataPromise)
-	const progressMap = React.use(progressPromise)
+	const { progressMap, unitProficiencies } = React.use(progressPromise)
 
 	// REMOVED: The outer layout structure is now handled by layout.tsx
 	// The component now returns only the main content without sidebar container
@@ -68,14 +68,19 @@ export function Content({
 
 			{/* Units Breakdown Section */}
 			<div className="rounded-sm mt-6">
-				{course.units.map((unit, index) => (
-					<div
-						key={`${course.id}-unit-breakdown-${unit.id}`}
-						className="break-inside-avoid border-b border-gray-300 mb-2 rounded-sm"
-					>
-						<UnitOverviewSection unit={unit} index={index} next={index === 0} />
-					</div>
-				))}
+				{course.units.map((unit, index) => {
+					// Find the proficiency data for this unit
+					const unitProficiency = unitProficiencies.find((up) => up.unitId === unit.id)
+
+					return (
+						<div
+							key={`${course.id}-unit-breakdown-${unit.id}`}
+							className="break-inside-avoid border-b border-gray-300 mb-2 rounded-sm"
+						>
+							<UnitOverviewSection unit={unit} index={index} next={index === 0} unitProficiency={unitProficiency} />
+						</div>
+					)
+				})}
 			</div>
 
 			{/* Course Challenge */}

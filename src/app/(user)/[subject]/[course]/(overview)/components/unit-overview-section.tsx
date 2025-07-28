@@ -1,15 +1,29 @@
 import { BookOpen, Info } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import type { UnitProficiency } from "@/lib/data/progress"
 import type { Lesson, Unit } from "@/lib/types/domain"
 
-export function UnitOverviewSection({ unit, index, next = false }: { unit: Unit; index: number; next: boolean }) {
+export function UnitOverviewSection({
+	unit,
+	index,
+	next = false,
+	unitProficiency
+}: {
+	unit: Unit
+	index: number
+	next: boolean
+	unitProficiency?: UnitProficiency
+}) {
 	// Extract videos from lessons within the unit
 	const videos = unit.children
 		.filter((child): child is Lesson => child.type === "Lesson")
 		.flatMap((lesson) =>
 			lesson.children.filter((c) => c.type === "Video").map((video) => ({ ...video, lessonId: lesson.id }))
 		)
+
+	// Get the proficiency percentage, defaulting to 0% if no data available
+	const masteryPercentage = unitProficiency?.proficiencyPercentage ?? 0
 
 	return (
 		<div
@@ -26,7 +40,7 @@ export function UnitOverviewSection({ unit, index, next = false }: { unit: Unit;
 					</h2>
 				</div>
 				<div className="ml-auto text-right flex items-center gap-2">
-					<div className="text-xs text-gray-600">Unit mastery: 0%</div>
+					<div className="text-xs text-gray-600">Unit mastery: {masteryPercentage}%</div>
 					<Info className="w-4 h-4 text-gray-500 cursor-not-allowed" />
 				</div>
 			</div>

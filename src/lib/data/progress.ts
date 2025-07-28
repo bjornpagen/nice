@@ -19,6 +19,14 @@ export type AssessmentProgress = {
 	proficiency?: "attempted" | "familiar" | "proficient" | "mastered"
 }
 
+// NEW: Interface for unit proficiency (matching profile.ts structure)
+export interface UnitProficiency {
+	unitId: string
+	proficiencyPercentage: number
+	proficientExercises: number
+	totalExercises: number
+}
+
 /**
  * Fetches the user's progress for resources within a specific course unit.
  * This returns a map of resourceId -> progress details including score and proficiency.
