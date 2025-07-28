@@ -1,6 +1,5 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import _ from "lodash"
 import Link from "next/link"
 import * as React from "react"
 import {
@@ -25,22 +24,22 @@ export function Breadcrumbs({
 	if (subject == null) {
 		logger.error("course sidebar breadcrumbs: subject not found", {
 			course,
-			material: _.pick(material, ["type", "path"])
+			material: { type: material.type, path: material.path }
 		})
 		throw errors.new("course sidebar breadcrumbs: subject not found")
 	}
 
-	const unit = _.get(material, "meta.unit")
+	const unit = material.meta && "unit" in material.meta ? material.meta.unit : undefined
 	logger.debug("course sidebar breadcrumbs: unit", { course, unit })
 
 	const lesson: CourseLessonMaterial | undefined = material.type === "Lesson" ? material : undefined
 	logger.debug("course sidebar breadcrumbs: lesson", { course, lesson })
 
-	const resource = lesson != null ? _.find(lesson.resources, (resource) => resource.path === pathname) : material
+	const resource = lesson != null ? lesson.resources.find((resource) => resource.path === pathname) : material
 	if (resource == null) {
 		logger.error("course sidebar breadcrumbs: resource not found", {
 			course,
-			material: _.pick(material, ["type", "path"])
+			material: { type: material.type, path: material.path }
 		})
 		throw errors.new("course sidebar breadcrumbs: resource not found")
 	}

@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { Crown, Star, Zap } from "lucide-react"
 import type * as React from "react"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
@@ -143,7 +142,9 @@ export function ProficiencyIcon({
 
 						{config.fg.icon && (
 							<div className="relative z-10">
-								<config.fg.icon className={cn(config.fg.color, `w-${_.round(size * 0.6)} h-${_.round(size * 0.6)}`)} />
+								<config.fg.icon
+									className={cn(config.fg.color, `w-${Math.round(size * 0.6)} h-${Math.round(size * 0.6)}`)}
+								/>
 							</div>
 						)}
 					</div>

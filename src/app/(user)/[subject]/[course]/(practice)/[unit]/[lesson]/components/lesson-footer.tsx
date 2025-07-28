@@ -1,6 +1,5 @@
 "use client"
 
-import _ from "lodash"
 import { BookCheck, ChevronRight, FileText, PenTool, Play, TestTube } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -25,10 +24,10 @@ export function LessonFooter({ coursePromise }: LessonFooterProps) {
 	const materials = getCourseMaterials(course)
 
 	// Find the current material (lesson or assessment) first
-	const currentMaterialIndex = _.findIndex(materials, (material) => {
+	const currentMaterialIndex = materials.findIndex((material) => {
 		if (material.type === "Lesson") {
 			// For lessons, check if any resource matches the current pathname exactly
-			return _.some(material.resources, (resource) => resource.path === pathname)
+			return material.resources.some((resource) => resource.path === pathname)
 		}
 		// For unit-level resources (Quiz, UnitTest, CourseChallenge), use exact path match
 		return material.path === pathname
@@ -48,7 +47,7 @@ export function LessonFooter({ coursePromise }: LessonFooterProps) {
 
 	if (currentMaterial.type === "Lesson") {
 		// Find current resource within the lesson
-		const currentResourceIndex = _.findIndex(currentMaterial.resources, (resource) => resource.path === pathname)
+		const currentResourceIndex = currentMaterial.resources.findIndex((resource) => resource.path === pathname)
 
 		if (currentResourceIndex >= 0 && currentResourceIndex < currentMaterial.resources.length - 1) {
 			// Next resource in same lesson

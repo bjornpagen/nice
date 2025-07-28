@@ -1,6 +1,5 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import _ from "lodash"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import React from "react"
@@ -28,7 +27,7 @@ export function Carousel({
 	}
 	logger.debug("course sidebar course carousel: material", { course, material })
 
-	const unit = _.get(material, "meta.unit")
+	const unit = material.meta && "unit" in material.meta ? material.meta.unit : undefined
 	logger.debug("course sidebar course carousel: unit", { course, unit })
 
 	const handlePrev = () => {

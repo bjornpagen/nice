@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { Pencil, Play, ScrollText } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -58,7 +57,9 @@ export function LearningContentIcon({ variant, size = 5 }: { variant: LearningCo
 
 				{config.fg.icon && (
 					<div className="relative z-10">
-						<config.fg.icon className={cn(config.fg.color, `w-${_.round(size * 0.6)} h-${_.round(size * 0.6)}`)} />
+						<config.fg.icon
+							className={cn(config.fg.color, `w-${Math.round(size * 0.6)} h-${Math.round(size * 0.6)}`)}
+						/>
 					</div>
 				)}
 			</div>
