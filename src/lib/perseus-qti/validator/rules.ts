@@ -253,7 +253,12 @@ async function upsertStimulus(identifier: string, title: string, content: string
 
 // Private helper for validating assessment items via the API.
 async function upsertAndCleanupItem(identifier: string, xml: string, context: ValidationContext): Promise<void> {
-	const safeTitle = context.title.replace(/"/g, "&quot;")
+	const safeTitle = context.title
+		.replace(/&/g, "&amp;") // Must replace & first to avoid double-escaping
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&apos;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
 
 	const finalXml = xml.replace(/<qti-assessment-item([^>]*?)>/, (_match, group1) => {
 		// Update identifier attribute

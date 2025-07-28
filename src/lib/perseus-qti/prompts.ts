@@ -346,8 +346,10 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
     - \`&lt;\` for less-than symbol (<) when it appears in content
     - \`&gt;\` for greater-than symbol (>) when it appears in content
     - \`&amp;\` for ampersand (&) when it appears in content
-    - ✅ **CORRECT:** \`<mo>&lt;</mo>\` (for less-than symbol), \`<mo>&gt;</mo>\` (for greater-than symbol), \`title="AT&amp;T"\`
-    - ❌ **FORBIDDEN:** \`<mo><</mo>\` (raw less-than), \`title="AT&T"\` (raw ampersand)
+     - \`&quot;\` for double quote (") when it appears in content or attribute values
+    - \`&apos;\` for single quote/apostrophe (') when it appears in content or attribute values
+    - ✅ **CORRECT:** \`<mo>&lt;</mo>\` (for less-than symbol), \`<mo>&gt;</mo>\` (for greater-than symbol), \`title="AT&amp;T"\`, \`title="It&apos;s correct"\`
+    - ❌ **FORBIDDEN:** \`<mo><</mo>\` (raw less-than), \`title="AT&T"\` (raw ampersand), \`title="It's wrong"\` (raw apostrophe)
     - ❌ **FORBIDDEN:** \`&lt;mo&gt;&lt;/mo&gt;\` (do NOT escape the actual XML tags)
 
 ---
