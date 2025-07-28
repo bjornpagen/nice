@@ -20,6 +20,7 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 				contentType="Exercise"
 				onerosterComponentResourceSourcedId={exercise.componentResourceSourcedId} // Use the componentResource ID for XP farming prevention
 				onerosterResourceSourcedId={exercise.id} // The exercise resource sourcedId for OneRoster results
+				onerosterCourseSourcedId={exercise.onerosterCourseSourcedId} // Pass the onerosterCourseSourcedId
 				assessmentTitle={exercise.title}
 				assessmentPath={exercise.path}
 				unitData={layoutData.unitData}

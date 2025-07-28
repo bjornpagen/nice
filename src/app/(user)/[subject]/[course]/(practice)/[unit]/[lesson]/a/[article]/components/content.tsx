@@ -42,7 +42,10 @@ export function Content({
 
 		if (onerosterUserSourcedId && article.id) {
 			// Fire-and-forget the existing OneRoster tracking action on component mount.
-			void trackArticleView(onerosterUserSourcedId, article.id)
+			void trackArticleView(onerosterUserSourcedId, article.id, {
+				subjectSlug: params.subject,
+				courseSlug: params.course
+			})
 
 			// Map subject string to the enum value
 			const subjectMapping: Record<string, "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"> = {

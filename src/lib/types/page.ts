@@ -46,6 +46,7 @@ export interface ExercisePageData {
 	exercise: {
 		id: string // This is the Resource sourcedId
 		componentResourceSourcedId: string // This is the ID needed for XP farming prevention
+		onerosterCourseSourcedId: string // The ID of the parent course for cache invalidation
 		title: string
 		path: string
 		type: "Exercise"
@@ -60,6 +61,7 @@ export interface QuizPageData {
 	quiz: {
 		id: string // This is the Resource sourcedId
 		componentResourceSourcedId: string // This is the ID PowerPath needs
+		onerosterCourseSourcedId: string // The ID of the parent course for cache invalidation
 		title: string
 		path: string
 		description: string
@@ -75,6 +77,7 @@ export interface UnitTestPageData {
 	test: {
 		id: string // This is the Resource sourcedId
 		componentResourceSourcedId: string // This is the ID PowerPath needs
+		onerosterCourseSourcedId: string // The ID of the parent course for cache invalidation
 		title: string
 		path: string
 		description: string
@@ -90,6 +93,7 @@ export interface CourseChallengePageData {
 	test: {
 		id: string // This is the Resource sourcedId
 		componentResourceSourcedId: string // This is the ID PowerPath needs
+		onerosterCourseSourcedId: string // The ID of the parent course for cache invalidation
 		title: string
 		path: string
 		description: string

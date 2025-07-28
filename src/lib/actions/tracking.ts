@@ -3,7 +3,10 @@
 import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { revalidateTag } from "next/cache"
+import * as cacheUtils from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
+import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
 
 /**
  * Tracks that a user has viewed an article by creating a "completed"
@@ -12,8 +15,13 @@ import { oneroster } from "@/lib/clients"
  *
  * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
  * @param onerosterArticleResourceSourcedId - The OneRoster resource sourcedId for the article (e.g., nice:article456)
+ * @param courseInfo - Slugs to identify the course for cache invalidation.
  */
-export async function trackArticleView(onerosterUserSourcedId: string, onerosterArticleResourceSourcedId: string) {
+export async function trackArticleView(
+	onerosterUserSourcedId: string,
+	onerosterArticleResourceSourcedId: string,
+	courseInfo: { subjectSlug: string; courseSlug: string }
+) {
 	logger.info("tracking article view", { onerosterUserSourcedId, onerosterArticleResourceSourcedId })
 
 	// The line item sourcedId is the same as the resource sourcedId
@@ -46,6 +54,20 @@ export async function trackArticleView(onerosterUserSourcedId: string, oneroster
 		throw errors.wrap(result.error, "track article view")
 	}
 
+	// Invalidate the user progress cache for this course.
+	const courseResult = await errors.try(getAllCoursesBySlug(courseInfo.courseSlug))
+	if (courseResult.error || !courseResult.data[0]) {
+		logger.error("failed to find course for cache invalidation", {
+			courseSlug: courseInfo.courseSlug,
+			error: courseResult.error
+		})
+	} else {
+		const onerosterCourseSourcedId = courseResult.data[0].sourcedId
+		const { tag } = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
+		revalidateTag(tag)
+		logger.info("invalidated user progress cache", { cacheTag: tag })
+	}
+
 	logger.info("successfully tracked article view", {
 		onerosterUserSourcedId,
 		onerosterArticleResourceSourcedId,
@@ -64,12 +86,14 @@ export async function trackArticleView(onerosterUserSourcedId: string, oneroster
  * @param onerosterVideoResourceSourcedId - The OneRoster resource sourcedId for the video (e.g., nice:video456)
  * @param currentTime - The current playback time in seconds.
  * @param duration - The total duration of the video in seconds.
+ * @param courseInfo - Slugs to identify the course for cache invalidation.
  */
 export async function updateVideoProgress(
 	onerosterUserSourcedId: string,
 	onerosterVideoResourceSourcedId: string,
 	currentTime: number,
-	duration: number
+	duration: number,
+	courseInfo: { subjectSlug: string; courseSlug: string }
 ): Promise<void> {
 	if (duration <= 0) {
 		logger.warn("video progress tracking skipped", {
@@ -150,6 +174,20 @@ export async function updateVideoProgress(
 		throw errors.wrap(result.error, "update video progress")
 	}
 
+	// Invalidate the user progress cache for this course.
+	const courseResult = await errors.try(getAllCoursesBySlug(courseInfo.courseSlug))
+	if (courseResult.error || !courseResult.data[0]) {
+		logger.error("failed to find course for cache invalidation", {
+			courseSlug: courseInfo.courseSlug,
+			error: courseResult.error
+		})
+	} else {
+		const onerosterCourseSourcedId = courseResult.data[0].sourcedId
+		const { tag } = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
+		revalidateTag(tag)
+		logger.info("invalidated user progress cache", { cacheTag: tag })
+	}
+
 	logger.info("video progress saved successfully", {
 		onerosterUserSourcedId,
 		onerosterVideoResourceSourcedId,
@@ -169,13 +207,15 @@ export async function updateVideoProgress(
  * @param correctAnswers - Number of questions answered correctly on first attempt
  * @param totalQuestions - Total number of questions in the assessment
  * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
+ * @param onerosterCourseSourcedId - The sourcedId of the course this assessment belongs to, for cache invalidation.
  */
 export async function saveAssessmentResult(
 	onerosterResourceSourcedId: string,
 	score: number,
 	correctAnswers: number,
 	totalQuestions: number,
-	onerosterUserSourcedId: string
+	onerosterUserSourcedId: string,
+	onerosterCourseSourcedId: string
 ) {
 	const { userId: clerkUserId } = await auth()
 	if (!clerkUserId) throw errors.new("user not authenticated")
@@ -216,6 +256,11 @@ export async function saveAssessmentResult(
 		})
 		throw errors.wrap(result.error, "assessment result save")
 	}
+
+	// Invalidate the user progress cache for this course.
+	const { tag } = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
+	revalidateTag(tag)
+	logger.info("invalidated user progress cache", { cacheTag: tag })
 
 	logger.info("successfully saved assessment result", {
 		clerkUserId,

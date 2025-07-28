@@ -4,7 +4,9 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { format } from "date-fns"
+import { unstable_cache as cache } from "next/cache"
 import type { z } from "zod"
+import * as cacheUtils from "@/lib/cache"
 import type { CaliperEventSchema } from "@/lib/caliper"
 import { oneroster } from "@/lib/clients"
 // CHANGED: Import the new fetcher instead of using caliper client directly
@@ -32,76 +34,94 @@ export interface UnitProficiency {
  * This returns a map of resourceId -> progress details including score and proficiency.
  *
  * @param userId - The user's OneRoster sourcedId
- * @param courseSourcedId - The course sourcedId
+ * @param onerosterCourseSourcedId - The course sourcedId
  * @returns A map of resource IDs to their progress details
  */
 export async function getUserUnitProgress(
 	userId: string,
-	courseSourcedId: string
+	onerosterCourseSourcedId: string
 ): Promise<Map<string, AssessmentProgress>> {
-	logger.info("fetching user unit progress", { userId, courseSourcedId })
+	// Generate cache keys and tags from the centralized utility.
+	const { keyParts, tag } = cacheUtils.userProgressByCourse(userId, onerosterCourseSourcedId)
 
-	const progressMap = new Map<string, AssessmentProgress>()
+	// Wrap the data fetching logic with Next.js's unstable_cache.
+	// Note: We cache as an array since Maps don't survive JSON serialization
+	const cachedArray = await cache(
+		async () => {
+			logger.info("CACHE MISS: fetching user unit progress from API", { userId, onerosterCourseSourcedId })
 
-	/**
-	 * Calculate proficiency level based on score
-	 * 0-70% = attempted
-	 * 70-99.999% = familiar
-	 * 100% = proficient
-	 * 110% (1.1) = mastered (Khan Academy mastery upgrade)
-	 */
-	const calculateProficiency = (score: number): "attempted" | "familiar" | "proficient" | "mastered" => {
-		if (score >= 1.1) return "mastered"
-		if (score >= 1.0) return "proficient"
-		if (score >= 0.7) return "familiar"
-		return "attempted"
-	}
+			const progressMap = new Map<string, AssessmentProgress>()
 
-	// For now, we'll fetch all assessmentResults for the user
-	// In a real implementation, you'd want to filter by course/unit
-	const resultsResponse = await errors.try(
-		oneroster.getAllResults({
-			filter: `student.sourcedId='${userId}'`
-		})
-	)
+			/**
+			 * Calculate proficiency level based on score
+			 * 0-70% = attempted
+			 * 70-99.999% = familiar
+			 * 100% = proficient
+			 * 110% (1.1) = mastered (Khan Academy mastery upgrade)
+			 */
+			const calculateProficiency = (score: number): "attempted" | "familiar" | "proficient" | "mastered" => {
+				if (score >= 1.1) return "mastered"
+				if (score >= 1.0) return "proficient"
+				if (score >= 0.7) return "familiar"
+				return "attempted"
+			}
 
-	if (resultsResponse.error) {
-		logger.error("failed to fetch user progress", { userId, error: resultsResponse.error })
-		throw errors.wrap(resultsResponse.error, "fetch user progress")
-	}
+			// For now, we'll fetch all assessmentResults for the user
+			// In a real implementation, you'd want to filter by course/unit
+			const resultsResponse = await errors.try(
+				oneroster.getAllResults({
+					filter: `student.sourcedId='${userId}'`
+				})
+			)
 
-	// Process results to build the progress map
-	for (const result of resultsResponse.data) {
-		// MODIFIED: Check if score is a valid number before using it.
-		if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
-			progressMap.set(result.assessmentLineItem.sourcedId, {
-				completed: true,
-				score: result.score,
-				proficiency: calculateProficiency(result.score)
+			if (resultsResponse.error) {
+				logger.error("failed to fetch user progress", { userId, error: resultsResponse.error })
+				throw errors.wrap(resultsResponse.error, "fetch user progress")
+			}
+
+			// Process results to build the progress map
+			for (const result of resultsResponse.data) {
+				// MODIFIED: Check if score is a valid number before using it.
+				if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
+					progressMap.set(result.assessmentLineItem.sourcedId, {
+						completed: true,
+						score: result.score,
+						proficiency: calculateProficiency(result.score)
+					})
+					// MODIFIED: Handle partially graded items that have a score.
+				} else if (result.scoreStatus === "partially graded" && typeof result.score === "number") {
+					progressMap.set(result.assessmentLineItem.sourcedId, {
+						completed: false,
+						score: result.score
+					})
+					// MODIFIED: Handle completed items that have no score (like article views).
+				} else if (result.scoreStatus === "fully graded") {
+					progressMap.set(result.assessmentLineItem.sourcedId, {
+						completed: true
+						// No score or proficiency is set.
+					})
+				}
+			}
+
+			logger.info("fetched user progress", {
+				userId,
+				onerosterCourseSourcedId,
+				completedCount: Array.from(progressMap.values()).filter((p) => p.completed).length,
+				partialCount: Array.from(progressMap.values()).filter((p) => !p.completed && p.score !== undefined).length
 			})
-			// MODIFIED: Handle partially graded items that have a score.
-		} else if (result.scoreStatus === "partially graded" && typeof result.score === "number") {
-			progressMap.set(result.assessmentLineItem.sourcedId, {
-				completed: false,
-				score: result.score
-			})
-			// MODIFIED: Handle completed items that have no score (like article views).
-		} else if (result.scoreStatus === "fully graded") {
-			progressMap.set(result.assessmentLineItem.sourcedId, {
-				completed: true
-				// No score or proficiency is set.
-			})
+
+			// Convert Map to array for caching (Maps don't survive JSON serialization)
+			return Array.from(progressMap.entries())
+		},
+		keyParts,
+		{
+			tags: [tag],
+			revalidate: 3600 // 1 hour
 		}
-	}
+	)()
 
-	logger.info("fetched user progress", {
-		userId,
-		courseSourcedId,
-		completedCount: Array.from(progressMap.values()).filter((p) => p.completed).length,
-		partialCount: Array.from(progressMap.values()).filter((p) => !p.completed && p.score !== undefined).length
-	})
-
-	return progressMap
+	// Convert array back to Map
+	return new Map(cachedArray)
 }
 
 // New types and functions for progress page

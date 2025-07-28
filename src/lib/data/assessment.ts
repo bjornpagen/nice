@@ -280,6 +280,7 @@ export async function fetchQuizPageData(params: {
 		quiz: {
 			id: resource.sourcedId,
 			componentResourceSourcedId: componentResource.sourcedId,
+			onerosterCourseSourcedId: layoutData.courseData.id, // Add course ID
 			title: resource.title,
 			path: `/${params.subject}/${params.course}/${params.unit}/${params.lesson}/quiz/${resourceMetadata.khanSlug}`,
 			description: resourceMetadata.khanDescription,
@@ -397,6 +398,7 @@ export async function fetchUnitTestPageData(params: {
 		test: {
 			id: resource.sourcedId,
 			componentResourceSourcedId: componentResource.sourcedId,
+			onerosterCourseSourcedId: layoutData.courseData.id, // Add course ID
 			title: resource.title,
 			path: `/${params.subject}/${params.course}/${params.unit}/${params.lesson}/test/${resourceMetadata.khanSlug}`,
 			description: resourceMetadata.khanDescription,
@@ -428,17 +430,17 @@ export async function fetchCourseChallengePage_TestData(params: {
 	if (!course) {
 		notFound()
 	}
-	const courseSourcedId = course.sourcedId
+	const onerosterCourseSourcedId = course.sourcedId
 
 	// Step 2: Find the "dummy" course component that holds course challenges.
 	// This component is predictably created with the slug "course-challenge".
 	const challengeComponentResult = await errors.try(
-		getCourseComponentByCourseAndSlug(courseSourcedId, "course-challenge")
+		getCourseComponentByCourseAndSlug(onerosterCourseSourcedId, "course-challenge")
 	)
 	if (challengeComponentResult.error) {
 		logger.error("failed to fetch course challenge component", {
 			error: challengeComponentResult.error,
-			courseSourcedId
+			onerosterCourseSourcedId
 		})
 		throw errors.wrap(challengeComponentResult.error, "fetch course challenge component")
 	}
@@ -446,14 +448,14 @@ export async function fetchCourseChallengePage_TestData(params: {
 	// There might be multiple components with the same slug - find the one with resources
 	const candidateComponents = challengeComponentResult.data
 	if (candidateComponents.length === 0) {
-		logger.warn("course challenge component not found for course", { courseSourcedId })
+		logger.warn("course challenge component not found for course", { onerosterCourseSourcedId })
 		notFound()
 	}
 
 	logger.info("found course challenge component candidates", {
 		count: candidateComponents.length,
 		candidates: candidateComponents.map((c) => ({ sourcedId: c.sourcedId, title: c.title })),
-		courseSourcedId
+		onerosterCourseSourcedId
 	})
 
 	// Step 3: Find all component-resource links to determine which component to use
@@ -486,7 +488,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	if (!challengeComponent || relevantComponentResources.length === 0) {
 		logger.warn("no course challenge component with resources found", {
 			candidateCount: candidateComponents.length,
-			courseSourcedId
+			onerosterCourseSourcedId
 		})
 		notFound()
 	}
@@ -518,7 +520,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 		logger.error("could not find a matching course challenge resource for slug", {
 			slug: params.test,
 			decodedSlug: decodedTestSlug,
-			courseSourcedId
+			onerosterCourseSourcedId
 		})
 		notFound()
 	}
@@ -591,6 +593,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 		test: {
 			id: testResource.sourcedId,
 			componentResourceSourcedId: componentResource.sourcedId,
+			onerosterCourseSourcedId: onerosterCourseSourcedId, // Add course ID
 			type: "CourseChallenge",
 			title: testResource.title,
 			slug: params.test,

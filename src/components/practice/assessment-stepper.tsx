@@ -148,6 +148,7 @@ interface AssessmentStepperProps {
 	onComplete?: () => void
 	onerosterComponentResourceSourcedId: string // The OneRoster componentResource sourcedId (e.g., nice:cr123) - used by PowerPath
 	onerosterResourceSourcedId: string // The OneRoster resource sourcedId (e.g., nice:exercise456) - used for OneRoster assessment results
+	onerosterCourseSourcedId: string // The parent course ID for cache invalidation
 	assessmentTitle: string
 	assessmentPath: string // The canonical URL path for this assessment
 	unitData?: Unit
@@ -160,6 +161,7 @@ export function AssessmentStepper({
 	onComplete,
 	onerosterComponentResourceSourcedId,
 	onerosterResourceSourcedId,
+	onerosterCourseSourcedId, // Destructure the new prop
 	assessmentTitle,
 	assessmentPath,
 	unitData,
@@ -374,7 +376,8 @@ export function AssessmentStepper({
 					score,
 					correctAnswersCount,
 					questions.length,
-					onerosterUserSourcedId
+					onerosterUserSourcedId,
+					onerosterCourseSourcedId // Pass the onerosterCourseSourcedId here
 				)
 			)
 
@@ -400,7 +403,8 @@ export function AssessmentStepper({
 					onerosterUserSourcedId,
 					onerosterComponentResourceSourcedId,
 					attemptNumber,
-					sessionResults // NEW ARGUMENT
+					sessionResults, // NEW ARGUMENT
+					onerosterCourseSourcedId // Pass onerosterCourseSourcedId
 				)
 				toast.promise(analysisPromise, {
 					loading: "Analyzing your skill performance...",
@@ -503,7 +507,8 @@ export function AssessmentStepper({
 		assessmentPath,
 		attemptNumber, // ADDED: Add attemptNumber to dependency array
 		expectedXp,
-		sessionResults // ADDED: Add sessionResults to dependency array
+		sessionResults, // ADDED: Add sessionResults to dependency array
+		onerosterCourseSourcedId // Add onerosterCourseSourcedId to dependency array
 	])
 
 	if (questions.length === 0) {

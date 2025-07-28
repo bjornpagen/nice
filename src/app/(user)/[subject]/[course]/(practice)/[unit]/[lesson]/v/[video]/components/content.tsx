@@ -162,13 +162,16 @@ export function Content({
 
 				if (duration > 0) {
 					// Existing OneRoster progress update (fire-and-forget)
-					void updateVideoProgress(onerosterUserSourcedId, video.id, currentTime, duration)
+					void updateVideoProgress(onerosterUserSourcedId, video.id, currentTime, duration, {
+						subjectSlug: params.subject,
+						courseSlug: params.course
+					})
 				}
 			}
 		}, 3000) // Still update OneRoster progress every 3 seconds
 
 		return () => clearInterval(intervalId)
-	}, [user, video.id])
+	}, [user, video.id, params.subject, params.course])
 
 	// Cleanup: send cumulative event when component unmounts
 	React.useEffect(() => {

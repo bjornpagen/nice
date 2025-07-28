@@ -27,12 +27,14 @@ interface QuestionResult {
  * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr456)
  * @param attemptNumber - The specific attempt number to analyze.
  * @param sessionResults - An array of question results from the client session.
+ * @param onerosterCourseSourcedId - The sourcedId of the course for cache invalidation.
  */
 export async function updateProficiencyFromAssessment(
 	onerosterUserSourcedId: string,
 	onerosterComponentResourceSourcedId: string,
 	attemptNumber: number,
-	sessionResults: QuestionResult[]
+	sessionResults: QuestionResult[],
+	onerosterCourseSourcedId: string
 ) {
 	logger.info("starting granular proficiency analysis from session results", {
 		onerosterUserSourcedId,
@@ -297,7 +299,8 @@ export async function updateProficiencyFromAssessment(
 					proficiencyScore,
 					performance.correctCount,
 					performance.totalCount,
-					onerosterUserSourcedId
+					onerosterUserSourcedId,
+					onerosterCourseSourcedId
 				)
 			)
 		}

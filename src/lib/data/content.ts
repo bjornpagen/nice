@@ -179,6 +179,7 @@ export async function fetchExercisePageData(params: {
 		exercise: {
 			id: resource.sourcedId,
 			componentResourceSourcedId: componentResource.sourcedId,
+			onerosterCourseSourcedId: layoutData.courseData.id, // Add course ID
 			title: resource.title,
 			path: `/${params.subject}/${params.course}/${params.unit}/${params.lesson}/e/${resourceMetadataResult.data.khanSlug}`,
 			type: "Exercise" as const,
