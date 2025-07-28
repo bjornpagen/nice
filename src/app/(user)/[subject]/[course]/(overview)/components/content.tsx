@@ -26,6 +26,31 @@ export function Content({
 	const { params, course, totalXP } = React.use(dataPromise)
 	const { progressMap, unitProficiencies } = React.use(progressPromise)
 
+	// Find the first unit with < 90% mastery to be the "next" unit
+	const findNextUnit = (unitIndex: number): boolean => {
+		// First, find the index of the first unit with < 90% mastery
+		let nextUnitIndex = -1
+		for (let i = 0; i < course.units.length; i++) {
+			const currentUnit = course.units[i]
+			if (!currentUnit) continue
+
+			const currentUnitProficiency = unitProficiencies.find((up) => up.unitId === currentUnit.id)
+			const currentMasteryPercentage = currentUnitProficiency?.proficiencyPercentage ?? 0
+
+			if (currentMasteryPercentage < 90) {
+				nextUnitIndex = i
+				break
+			}
+		}
+
+		// If no unit has < 90% mastery, fall back to first unit
+		if (nextUnitIndex === -1) {
+			nextUnitIndex = 0
+		}
+
+		return unitIndex === nextUnitIndex
+	}
+
 	// REMOVED: The outer layout structure is now handled by layout.tsx
 	// The component now returns only the main content without sidebar container
 	return (
@@ -52,7 +77,7 @@ export function Content({
 							index={index}
 							unitChildren={unit.children}
 							path={unit.path}
-							next={index === 0}
+							next={findNextUnit(index)}
 							progressMap={progressMap}
 						/>
 					</div>
@@ -77,7 +102,12 @@ export function Content({
 							key={`${course.id}-unit-breakdown-${unit.id}`}
 							className="break-inside-avoid border-b border-gray-300 mb-2 rounded-sm"
 						>
-							<UnitOverviewSection unit={unit} index={index} next={index === 0} unitProficiency={unitProficiency} />
+							<UnitOverviewSection
+								unit={unit}
+								index={index}
+								next={findNextUnit(index)}
+								unitProficiency={unitProficiency}
+							/>
 						</div>
 					)
 				})}
