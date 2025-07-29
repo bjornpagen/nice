@@ -7,6 +7,7 @@ import {
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import { assertNoEncodedColons } from "@/lib/utils"
 
 type ResourceType = "article" | "exercise" | "video"
 
@@ -16,6 +17,9 @@ type ResourceType = "article" | "exercise" | "video"
  */
 export async function findResourcePath(slug: string, type: ResourceType): Promise<string | null> {
 	logger.info("finding resource path", { slug, type })
+
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(slug, "findResourcePath slug parameter")
 
 	// Step 1: Find the resource by slug and type
 	const onerosterType = type === "article" || type === "exercise" ? "qti" : "video"

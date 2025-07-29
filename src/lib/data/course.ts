@@ -22,6 +22,7 @@ import type {
 	Video
 } from "@/lib/types/domain"
 import type { CoursePageData } from "@/lib/types/page"
+import { assertNoEncodedColons } from "@/lib/utils"
 
 // Helper function to remove "Nice Academy - " prefix from course titles
 function removeNiceAcademyPrefix(title: string): string {
@@ -37,6 +38,11 @@ export async function fetchCoursePageData(
 	options?: { skip?: { questions?: boolean } }
 ): Promise<CoursePageData> {
 	logger.info("fetchCoursePageData called", { params, options })
+
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(params.course, "fetchCoursePageData course parameter")
+	assertNoEncodedColons(params.subject, "fetchCoursePageData subject parameter")
+
 	// First, find the course by its khanSlug since the URL param is a slug, not a Khan ID
 	logger.debug("course page: looking up course by slug", { slug: params.course })
 

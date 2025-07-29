@@ -13,7 +13,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 // import { useSidebar } from "@/components/ui/sidebar" // Removed for relative positioning layout
 import type { AssessmentProgress } from "@/lib/data/progress"
 import { type Course, getCourseMaterials } from "@/lib/types/sidebar"
-import { cn } from "@/lib/utils"
+import { assertNoEncodedColons, cn } from "@/lib/utils"
 
 export function Sidebar({
 	coursePromise,
@@ -25,6 +25,8 @@ export function Sidebar({
 	className?: string
 }) {
 	const pathname = usePathname()
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(pathname, "sidebar pathname")
 	// Removed useSidebar() dependency for relative positioning layout
 
 	const course = React.use(coursePromise)

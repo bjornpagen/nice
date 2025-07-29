@@ -7,6 +7,7 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { getCourseMaterials } from "@/lib/types/sidebar"
+import { assertNoEncodedColons } from "@/lib/utils"
 
 interface LessonFooterProps {
 	coursePromise: Promise<CourseV2 | undefined>
@@ -14,6 +15,8 @@ interface LessonFooterProps {
 
 export function LessonFooter({ coursePromise }: LessonFooterProps) {
 	const pathname = usePathname()
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(pathname, "lesson-footer pathname")
 	const course = React.use(coursePromise)
 
 	if (!course) {

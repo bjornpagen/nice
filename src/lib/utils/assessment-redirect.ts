@@ -9,6 +9,7 @@ import {
 	getCourseComponentsByParentId
 } from "@/lib/data/fetchers/oneroster"
 import { ComponentMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import { assertNoEncodedColons } from "@/lib/utils"
 
 export interface AssessmentRedirectParams {
 	subject: string
@@ -32,9 +33,9 @@ export async function findAssessmentRedirectPath(params: AssessmentRedirectParam
 		params
 	})
 
-	// CRITICAL: Decode ALL URL parameters to handle encoded characters like colons
-	const decodedUnit = decodeURIComponent(params.unit)
-	const decodedAssessment = decodeURIComponent(params.assessment)
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(params.unit, "findAssessmentRedirectPath unit parameter")
+	assertNoEncodedColons(params.assessment, "findAssessmentRedirectPath assessment parameter")
 
 	// First, fetch the course to get its sourcedId
 	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
@@ -52,12 +53,12 @@ export async function findAssessmentRedirectPath(params: AssessmentRedirectParam
 	const courseSourcedId = course.sourcedId
 
 	// Look up the unit by BOTH course AND slug to avoid collisions
-	const unitResult = await errors.try(getCourseComponentByCourseAndSlug(courseSourcedId, decodedUnit))
+	const unitResult = await errors.try(getCourseComponentByCourseAndSlug(courseSourcedId, params.unit))
 	if (unitResult.error) {
 		logger.error("failed to fetch unit by course and slug", {
 			error: unitResult.error,
 			courseSourcedId: courseSourcedId,
-			slug: decodedUnit
+			slug: params.unit
 		})
 		throw errors.wrap(unitResult.error, "fetch unit by course and slug")
 	}
@@ -65,7 +66,7 @@ export async function findAssessmentRedirectPath(params: AssessmentRedirectParam
 	// Add debugging for multiple results
 	if (unitResult.data.length > 1) {
 		logger.warn("multiple units found with same slug", {
-			slug: decodedUnit,
+			slug: params.unit,
 			courseSourcedId,
 			foundUnits: unitResult.data.map((u) => ({
 				sourcedId: u.sourcedId,
@@ -85,7 +86,7 @@ export async function findAssessmentRedirectPath(params: AssessmentRedirectParam
 	logger.debug("found unit for redirect", {
 		unitSourcedId,
 		unitTitle: unit.title,
-		unitSlug: decodedUnit
+		unitSlug: params.unit
 	})
 
 	// Fetch all lessons for this unit
@@ -136,7 +137,7 @@ export async function findAssessmentRedirectPath(params: AssessmentRedirectParam
 		const metadataResult = ResourceMetadataSchema.safeParse(res.metadata)
 		return (
 			metadataResult.success &&
-			metadataResult.data.khanSlug === decodedAssessment && // Use decoded value!
+			metadataResult.data.khanSlug === params.assessment && // Use decoded value!
 			metadataResult.data.type === "qti" &&
 			metadataResult.data.khanLessonType === params.assessmentType
 		)
@@ -145,7 +146,7 @@ export async function findAssessmentRedirectPath(params: AssessmentRedirectParam
 	if (!assessmentResource) {
 		logger.warn("assessment resource not found within the specified unit/lesson hierarchy", {
 			unitSourcedId,
-			assessmentSlug: decodedAssessment,
+			assessmentSlug: params.assessment,
 			assessmentType: params.assessmentType
 		})
 		notFound()

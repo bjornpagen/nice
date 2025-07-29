@@ -39,7 +39,8 @@ export function Breadcrumbs({
 	if (resource == null) {
 		logger.error("course sidebar breadcrumbs: resource not found", {
 			course,
-			material: { type: material.type, path: material.path }
+			material: { type: material.type, path: material.path },
+			pathname
 		})
 		throw errors.new("course sidebar breadcrumbs: resource not found")
 	}

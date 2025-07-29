@@ -6,11 +6,14 @@ import { getAllComponentResources, getResourcesBySlugAndType } from "@/lib/data/
 import { getAllQuestionsForTest, getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
+import { assertNoEncodedColons } from "@/lib/utils"
 import { applyQtiSelectionAndOrdering } from "./assessment"
 import { fetchLessonLayoutData } from "./lesson"
 import { extractYouTubeId } from "./utils"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(params.article, "fetchArticlePageData article parameter")
 	logger.info("fetchArticlePageData called", { params })
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.article, "qti"))
@@ -71,6 +74,8 @@ export async function fetchExercisePageData(params: {
 	await connection()
 
 	logger.info("fetchExercisePageData called", { params })
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(params.exercise, "fetchExercisePageData exercise parameter")
 	// Pass only the params needed by fetchLessonLayoutData, not the exercise param
 	const layoutDataPromise = fetchLessonLayoutData({
 		subject: params.subject,
@@ -192,6 +197,8 @@ export async function fetchExercisePageData(params: {
 
 export async function fetchVideoPageData(params: { video: string }): Promise<VideoPageData> {
 	logger.info("fetchVideoPageData called", { params })
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(params.video, "fetchVideoPageData video parameter")
 	// Look up resource by slug
 	const resourceResult = await errors.try(getResourcesBySlugAndType(params.video, "video"))
 	if (resourceResult.error) {

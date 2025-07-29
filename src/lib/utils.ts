@@ -1,3 +1,4 @@
+import * as errors from "@superbuilders/errors"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -40,4 +41,18 @@ export function startCase(str: string): string {
 export function upperCase(str: string): string {
 	if (!str) return ""
 	return str.toUpperCase()
+}
+
+/**
+ * Defensive check to ensure URLs don't contain encoded colons.
+ * This should never happen if middleware is working correctly.
+ *
+ * @param value The value to check
+ * @param context Where this check is happening (for error messages)
+ * @throws Error if encoded colons are detected
+ */
+export function assertNoEncodedColons(value: string, context: string): void {
+	if (value.includes("%3A") || value.includes("%3a")) {
+		throw errors.new(`encoded colon detected in ${context}: ${value}. Middleware should have normalized this.`)
+	}
 }

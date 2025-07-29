@@ -8,6 +8,7 @@ import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progres
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
+import { assertNoEncodedColons } from "@/lib/utils"
 import { LessonLayout } from "./components/lesson-layout"
 
 // The layout component is NOT async. It orchestrates promises and renders immediately.
@@ -25,6 +26,12 @@ export default function Layout({
 
 	// Create a promise for the v2 course format using real data
 	const courseV2Promise: Promise<CourseV2 | undefined> = params.then(async (resolvedParams) => {
+		// Defensive check: middleware should have normalized URLs
+		assertNoEncodedColons(resolvedParams.subject, "lesson layout subject param")
+		assertNoEncodedColons(resolvedParams.course, "lesson layout course param")
+		assertNoEncodedColons(resolvedParams.unit, "lesson layout unit param")
+		assertNoEncodedColons(resolvedParams.lesson, "lesson layout lesson param")
+
 		// Use fetchCoursePageData to get the actual course data
 		const courseResult = await errors.try(
 			fetchCoursePageData(

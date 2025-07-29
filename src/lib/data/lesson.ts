@@ -1,7 +1,8 @@
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import type { LessonLayoutData } from "@/lib/types/page"
-import { fetchUnitPageData } from "./unit" // Import the parent data fetcher
+import { assertNoEncodedColons } from "@/lib/utils"
+import { fetchUnitPageData } from "./unit"
 
 export async function fetchLessonLayoutData(params: {
 	subject: string
@@ -9,9 +10,10 @@ export async function fetchLessonLayoutData(params: {
 	unit: string
 	lesson: string
 }): Promise<LessonLayoutData> {
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(params.lesson, "fetchLessonLayoutData lesson parameter")
 	logger.info("fetchLessonLayoutData called", { params })
-	const decodedLesson = decodeURIComponent(params.lesson)
-	logger.debug("unit page: fetching unit data", { params, decodedLesson })
+	logger.debug("unit page: fetching unit data", { params })
 
 	// 1. Call the parent data fetcher with ONLY the params it needs
 	// This ensures cache effectiveness - all lessons in the same unit share the cache
@@ -24,12 +26,12 @@ export async function fetchLessonLayoutData(params: {
 	// 2. Find the specific lesson from the already-fetched unit data.
 	// Use the decoded lesson slug to handle special characters like colons
 	const currentLesson = unitPageData.unit.children.find(
-		(child) => child.type === "Lesson" && child.slug === decodedLesson
+		(child) => child.type === "Lesson" && child.slug === params.lesson
 	)
 
 	if (!currentLesson || currentLesson.type !== "Lesson") {
 		logger.error("lesson not found or is not of type 'Lesson' within unit children", {
-			lessonSlug: decodedLesson,
+			lessonSlug: params.lesson,
 			originalLessonParam: params.lesson,
 			unitSourcedId: unitPageData.unit.id,
 			foundType: currentLesson?.type

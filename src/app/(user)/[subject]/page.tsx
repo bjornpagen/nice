@@ -4,9 +4,13 @@ import * as React from "react"
 import { Footer } from "@/components/footer"
 import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
 import type { ProfileSubject } from "@/lib/types/domain"
+import { assertNoEncodedColons } from "@/lib/utils"
 import { Content } from "./components/content"
 
 async function fetchSubjectPageData(params: { subject: string }): Promise<ProfileSubject | undefined> {
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(params.subject, "fetchSubjectPageData subject parameter")
+
 	logger.info("fetching subject page data from OneRoster", { subjectSlug: params.subject })
 
 	const allSubjectsResult = await errors.try(getOneRosterCoursesForExplore())

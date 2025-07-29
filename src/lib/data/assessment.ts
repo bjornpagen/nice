@@ -18,6 +18,7 @@ import type {
 	QuizPageData,
 	UnitTestPageData
 } from "@/lib/types/page"
+import { assertNoEncodedColons } from "@/lib/utils"
 import { findAssessmentRedirectPath } from "@/lib/utils/assessment-redirect"
 import type { AssessmentTest, TestQuestionsResponse } from "../qti"
 import { fetchCoursePageData } from "./course"
@@ -187,6 +188,10 @@ export async function fetchQuizPageData(params: {
 	const layoutData = await fetchLessonLayoutData(params)
 
 	logger.info("fetchQuizPageData called", { params })
+
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(params.quiz, "fetchQuizPageData quiz parameter")
+
 	// Pass only the params needed by fetchLessonLayoutData, not the quiz param
 	const resourcePromise = errors.try(getResourcesBySlugAndType(params.quiz, "qti", "quiz"))
 
@@ -305,6 +310,10 @@ export async function fetchUnitTestPageData(params: {
 	const layoutData = await fetchLessonLayoutData(params)
 
 	logger.info("fetchUnitTestPageData called", { params })
+
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(params.test, "fetchUnitTestPageData test parameter")
+
 	// Pass only the params needed by fetchLessonLayoutData, not the test param
 	const resourcePromise = errors.try(getResourcesBySlugAndType(params.test, "qti", "unittest"))
 
@@ -501,11 +510,10 @@ export async function fetchCourseChallengePage_TestData(params: {
 		throw errors.wrap(allResourcesResult.error, "fetch all resources")
 	}
 
-	// Decode the URL-encoded test parameter (e.g., "x2832fbb7463fe65a%3Acourse-challenge" -> "x2832fbb7463fe65a:course-challenge")
-	const decodedTestSlug = decodeURIComponent(params.test)
+	// Defensive check: middleware should have normalized URLs
+	assertNoEncodedColons(params.test, "fetchCourseChallengeTestPageData test parameter")
 	logger.info("searching for resource with slug", {
-		rawSlug: params.test,
-		decodedSlug: decodedTestSlug
+		slug: params.test
 	})
 
 	const testResource = allResourcesResult.data.find((res) => {
@@ -513,13 +521,13 @@ export async function fetchCourseChallengePage_TestData(params: {
 			return false
 		}
 		const metadataResult = ResourceMetadataSchema.safeParse(res.metadata)
-		return metadataResult.success && metadataResult.data.khanSlug === decodedTestSlug
+		return metadataResult.success && metadataResult.data.khanSlug === params.test
 	})
 
 	if (!testResource) {
 		logger.error("could not find a matching course challenge resource for slug", {
 			slug: params.test,
-			decodedSlug: decodedTestSlug,
+
 			onerosterCourseSourcedId
 		})
 		notFound()

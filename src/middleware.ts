@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
+import { NextResponse } from "next/server"
 
 // Define which routes should be protected (require authentication)
 const isProtectedRoute = createRouteMatcher([
@@ -12,6 +13,18 @@ const isAuthRoute = createRouteMatcher([
 ])
 
 export default clerkMiddleware(async (auth, req) => {
+	// Normalize URLs by replacing %3A with : (for Khan Academy IDs)
+	// This prevents cache duplication and eliminates the need for decoding throughout the codebase
+	const url = new URL(req.url)
+	if (url.pathname.includes("%3A") || url.pathname.includes("%3a")) {
+		// Only replace %3A/%3a with : (case-insensitive)
+		const normalizedPath = url.pathname.replace(/%3[Aa]/g, ":")
+
+		// Rewrite to normalized URL
+		url.pathname = normalizedPath
+		return NextResponse.rewrite(url)
+	}
+
 	const { userId } = await auth()
 
 	// If user is authenticated and trying to access auth routes (login/signup)
