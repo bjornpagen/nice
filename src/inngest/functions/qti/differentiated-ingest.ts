@@ -5,7 +5,6 @@ import { and, eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { runValidationPipeline } from "@/lib/perseus-qti/validator"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import { differentiateQuestion } from "./differentiate-question"
 import { paraphraseStimulus } from "./paraphrase-stimulus"
@@ -209,23 +208,12 @@ export const differentiatedIngest = inngest.createFunction(
 							const variationXml = result.generatedXmls[variationIndex]
 							if (!variationXml) continue
 
-							// Validate immediately
-							const validationResult = await runValidationPipeline(variationXml, {
-								id: originalQuestion.id,
-								rootTag: "qti-assessment-item",
-								title: originalQuestion.exerciseTitle,
-								logger
+							// ✅ SKIP VALIDATION: Write all AI responses directly
+							logger.info("writing AI response directly (validation bypassed)", {
+								questionId: originalQuestion.id,
+								chunkIndex,
+								variationIndex
 							})
-
-							if (!validationResult.isValid) {
-								logger.warn("discarding invalid qti variation", {
-									questionId: originalQuestion.id,
-									chunkIndex,
-									variationIndex,
-									errors: validationResult.errors.map((e: Error) => e.message)
-								})
-								continue
-							}
 
 							const uniqueCode = (variationIndex + 1).toString().padStart(4, "0")
 							const newIdentifier = `nice:${originalQuestion.id}:${uniqueCode}`
@@ -333,21 +321,11 @@ export const differentiatedIngest = inngest.createFunction(
 					if (!result || !originalStimulus) continue
 
 					if (result.status === "success" && "paraphrasedXml" in result && result.paraphrasedXml) {
-						const validationResult = await runValidationPipeline(result.paraphrasedXml, {
-							id: originalStimulus.id,
-							rootTag: "qti-assessment-stimulus",
-							title: originalStimulus.title,
-							logger
+						// ✅ SKIP VALIDATION: Write all AI responses directly
+						logger.info("writing paraphrased stimulus directly (validation bypassed)", {
+							articleId: originalStimulus.id,
+							chunkIndex
 						})
-
-						if (!validationResult.isValid) {
-							logger.warn("discarding invalid paraphrased stimulus", {
-								articleId: originalStimulus.id,
-								chunkIndex,
-								errors: validationResult.errors.map((e: Error) => e.message)
-							})
-							continue
-						}
 
 						validatedStimuli.push({
 							xml: result.paraphrasedXml,

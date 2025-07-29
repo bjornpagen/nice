@@ -80,7 +80,7 @@ async function attemptQtiVariationGeneration(
 	attempt: number,
 	startingIndex = 1
 ): Promise<string[]> {
-	const { developer, user } = produceQtiVariationsPrompt(sourceQtiXml, numberOfVariations, khanId, startingIndex)
+	const { developer, user } = await produceQtiVariationsPrompt(sourceQtiXml, numberOfVariations, khanId, startingIndex)
 
 	const result = await errors.try(
 		openai.chat.completions.create({
@@ -162,7 +162,7 @@ async function attemptQtiVariationGeneration(
  * Single attempt to paraphrase QTI stimulus using OpenAI o3
  */
 async function attemptQtiStimulusParaphrasing(sourceQtiXml: string, attempt: number): Promise<string> {
-	const { developer, user } = produceQtiParaphrasingPrompt(sourceQtiXml)
+	const { developer, user } = await produceQtiParaphrasingPrompt(sourceQtiXml)
 
 	const result = await errors.try(
 		openai.chat.completions.create({
