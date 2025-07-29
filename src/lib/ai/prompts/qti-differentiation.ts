@@ -38,7 +38,7 @@ ${sourceQtiXml}
      - Text content within tags
      - Numbers and values
      - Choice identifiers and content
-     - Image sources (following image rules below)
+     - Image sources (following image rules below, including converting external CDN URLs to inline content)
      - Mathematical expressions within existing math tags
   5. **Forbidden Structure Changes:** You MUST NOT add, remove, or rearrange:
      - QTI tags (qti-choice-interaction, qti-simple-choice, etc.)
@@ -48,16 +48,22 @@ ${sourceQtiXml}
      - The overall XML hierarchy and nesting
 
   ## Image Handling Rules
-  6. **PNG Image Replacement:** If the source contains PNG images (<img src="*.png" />), you SHOULD replace them with appropriate emojis or Unicode symbols that match the new content context. For example:
+  6. **External CDN Image References:** If the source contains external image URLs (especially Khan Academy CDN links like "https://cdn.kastatic.org/ka-perseus-graphie/*.svg" or "https://cdn.kastatic.org/*.png"), you MUST either:
+     - **Option A:** Remove the image entirely and replace with descriptive text that captures the visual information needed for the question
+     - **Option B:** Create a simple, self-contained inline SVG using data:image/svg+xml encoding that represents the essential visual elements
+     - **Never keep external URL references** - all images must be either removed or converted to inline content
+     - **CRITICAL: Never reveal the answer** - descriptive text must provide enough context for students to solve the problem but MUST NOT contain, hint at, or make obvious the correct answer
+     - Ensure any replacement preserves the educational value and accessibility of the visual information
+  7. **PNG Image Replacement:** If the source contains PNG images (<img src="*.png" />), you SHOULD replace them with appropriate emojis or Unicode symbols that match the new content context. For example:
      - Science concepts: use 🔬, ⚗️, 🧪, 🧬, ⚡, 🌍, 🌊, 🌟
      - General objects: use relevant emojis (🍎 for apple, 🏠 for house, 🚗 for car, etc.)
      - Replace the entire <img> tag with the emoji/symbol directly in the text
-  7. **SVG Image Editing:** If the source contains SVG images, you MUST modify the SVG content to match your new question variation while keeping the same SVG structure:
+  8. **SVG Image Editing:** If the source contains SVG images, you MUST modify the SVG content to match your new question variation while keeping the same SVG structure:
      - Update text labels within SVG to match new context
      - Modify numbers, dimensions, or values shown in the SVG
      - Change colors, shapes, or diagram elements as needed for the new scenario
      - Ensure the SVG remains valid and well-formed XML
-  8. **Image Content Alignment:** All image replacements or edits MUST align perfectly with the new question content and context.
+  9. **Image Content Alignment:** All image replacements or edits MUST align perfectly with the new question content and context.
 
   ## Quality Assurance Rules
   9. **Preserve Feedback Structure:** If the source includes <qti-feedback-inline> for choices, provide unique, relevant feedback for every choice in variations, explaining correctness or errors in the new context.
@@ -71,9 +77,13 @@ ${sourceQtiXml}
   For each variation, reason step-by-step in <thinking> tags before generating:
   1. Analyze core skill and misconceptions.
   2. Plan distinct variation (new elements, distractors).
-  3. Identify any images that need replacement/editing and plan appropriate substitutions.
+  3. Identify any images that need replacement/editing and plan appropriate substitutions:
+     - Check for external CDN URLs (especially Khan Academy links) and plan removal or inline SVG replacement
+     - Ensure descriptive text replacements provide context without revealing the answer
+     - Plan PNG-to-emoji replacements
+     - Plan SVG content modifications
   4. Verify structure preservation, feedback alignment, and XML validity.
-  Generate 2-3 reasoning paths if needed and select the most consistent. After all variations, critique in <self_review> tags: Check XML validity, skill alignment, distinctness, structure preservation, and image handling. Refine if issues found (but output only final JSON).
+  Generate 2-3 reasoning paths if needed and select the most consistent. After all variations, critique in <self_review> tags: Check XML validity, skill alignment, distinctness, structure preservation, image handling, and ensure no descriptive text reveals answers. Refine if issues found (but output only final JSON).
 </thinking_instructions>
 
 <examples>
@@ -160,6 +170,82 @@ ${sourceQtiXml}
         ]
       }
     </answer>
+  </positive_example>
+
+  <positive_example index="3">
+    <example_inputs>
+      <main_example_input>
+        <source_qti_xml>
+          <?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="nice:x63fb91da26c0313c:0004"
+    title="Identify the Missing Jersey Number"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>43</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <qti-prompt>Which jersey number is missing from the team lineup?</qti-prompt>
+        <div id="reference_text">
+            <img src="data:image/svg+xml,%3Csvg%20width%3D%22320%22%20height%3D%22220%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20.jersey-box%20%7B%0A%20%20%20%20%20%20%20%20fill%3A%20%23ffffff%3B%0A%20%20%20%20%20%20%20%20stroke%3A%20%23000000%3B%0A%20%20%20%20%20%20%20%20stroke-width%3A%202%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20.jersey-number%20%7B%0A%20%20%20%20%20%20%20%20font-family%3A%20Arial%2C%20sans-serif%3B%0A%20%20%20%20%20%20%20%20font-size%3A%2048px%3B%0A%20%20%20%20%20%20%20%20text-anchor%3A%20middle%3B%0A%20%20%20%20%20%20%20%20dominant-baseline%3A%20middle%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%3C/style%3E%0A%20%20%3C/defs%3E%0A%0A%20%20%3C!--%20Row%201%20--%3E%0A%20%20%3Cg%3E%0A%20%20%20%20%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%22100%22%20height%3D%22100%22%20class%3D%22jersey-box%22%20/%3E%0A%20%20%20%20%3Ctext%20x%3D%2260%22%20y%3D%2260%22%20class%3D%22jersey-number%22%3E40%3C/text%3E%0A%20%20%3C/g%3E%0A%20%20%3Cg%3E%0A%20%20%20%20%3Crect%20x%3D%22110%22%20y%3D%2210%22%20width%3D%22100%22%20height%3D%22100%22%20class%3D%22jersey-box%22%20/%3E%0A%20%20%20%20%3Ctext%20x%3D%22160%22%20y%3D%2260%22%20class%3D%22jersey-number%22%3E41%3C/text%3E%0A%20%20%3C/g%3E%0A%20%20%3Cg%3E%0A%20%20%20%20%3Crect%20x%3D%22210%22%20y%3D%2210%22%20width%3D%22100%22%20height%3D%22100%22%20class%3D%22jersey-box%22%20/%3E%0A%20%20%20%20%3Ctext%20x%3D%22260%22%20y%3D%2260%22%20class%3D%22jersey-number%22%3E42%3C/text%3E%0A%20%20%3C/g%3E%0A%0A%20%20%3C!--%20Row%202%20--%3E%0A%20%20%3Cg%3E%0A%20%20%20%20%3Crect%20x%3D%2210%22%20y%3D%22110%22%20width%3D%22100%22%20height%3D%22100%22%20class%3D%22jersey-box%22%20/%3E%0A%20%20%20%20%3Crect%20x%3D%2260%22%20y%3D%22160%22%20class%3D%22jersey-number%22%20/%3E%0A%20%20%3C/g%3E%0A%20%20%3Cg%3E%0A%20%20%20%20%3Crect%20x%3D%22110%22%20y%3D%22110%22%20width%3D%22100%22%20height%3D%22100%22%20class%3D%22jersey-box%22%20/%3E%0A%20%20%20%20%3Ctext%20x%3D%22160%22%20y%3D%22160%22%20class%3D%22jersey-number%22%3E44%3C/text%3E%0A%20%20%3C/g%3E%0A%20%20%3Cg%3E%0A%20%20%20%20%3Crect%20x%3D%22210%22%20y%3D%22110%22%20width%3D%22100%22%20height%3D%22100%22%20class%3D%22jersey-box%22%20/%3E%0A%20%20%20%20%3Ctext%20x%3D%22260%22%20y%3D%22160%22%20class%3D%22jersey-number%22%3E45%3C/text%3E%0A%20%20%3C/g%3E%0A%3C/svg%3E" alt="A grid of jersey numbers from 40 to 45 with the box for number 43 left blank." width="400" height="300"/>
+            <p><span class="qti-italic">Note: The lineup shows jersey numbers in order, except one missing number between 42 and 44.</span></p>
+        </div>
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="2"/>
+        </p>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <p><span class="qti-keyword-emphasis">Correct!</span> The missing jersey number is 43.</p>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <p><span class="qti-keyword-emphasis">Not quite.</span> Look closely at the sequence; after 42, the next number should be 43.</p>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>
+        </source_qti_xml>
+      </main_example_input>
+    </example_inputs>
   </positive_example>
 
   # Negative Examples
