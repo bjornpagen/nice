@@ -48,7 +48,7 @@ export const differentiatedIngest = inngest.createFunction(
 		}
 
 		const courseSetup = await step.run("setup-directories", async () => {
-			const courseDir = path.join(process.cwd(), "data", courseData.slug, "qti-differentiated")
+			const courseDir = path.join(process.cwd(), "data", courseData.slug, "qti")
 			const batchDir = path.join(courseDir, "batches")
 
 			await fs.mkdir(batchDir, { recursive: true })
@@ -172,27 +172,27 @@ export const differentiatedIngest = inngest.createFunction(
 				if (!q.xml) throw errors.new(`Question ${q.id} is missing XML`)
 			}
 
-			await step.run(`process-chunk-${chunkIndex}`, async () => {
-				logger.info("differentiating chunk questions with single 5-variation calls", {
-					chunkIndex,
-					questionCount: chunkQuestions.length
+			logger.info("differentiating chunk questions with single 5-variation calls", {
+				chunkIndex,
+				questionCount: chunkQuestions.length
+			})
+
+			// ✅ FIXED: step.invoke calls at main function level (no nesting)
+			const differentiationInvocations = chunkQuestions.map((question) =>
+				step.invoke(`differentiate-${question.id}-chunk-${chunkIndex}`, {
+					function: differentiateQuestion,
+					data: {
+						questionId: question.id,
+						numberOfVariations: 5,
+						startingIndex: 1
+					}
 				})
+			)
 
-				// OPTIMIZED: Single differentiation call per question for 5 variations
-				const differentiationInvocations = chunkQuestions.map((question) =>
-					step.invoke(`differentiate-${question.id}-chunk-${chunkIndex}`, {
-						function: differentiateQuestion,
-						data: {
-							questionId: question.id,
-							numberOfVariations: 5, // ✅ Single call for all 5 variations
-							startingIndex: 1
-						}
-					})
-				)
+			const differentiationResults = await Promise.all(differentiationInvocations)
 
-				const differentiationResults = await Promise.all(differentiationInvocations)
-
-				// Process and validate results immediately
+			// Process and validate results in a separate step
+			await step.run(`process-chunk-${chunkIndex}-results`, async () => {
 				const validatedItems: {
 					xml: string
 					metadata: { khanId: string; khanExerciseId: string; khanExerciseSlug: string; khanExerciseTitle: string }
@@ -263,28 +263,33 @@ export const differentiatedIngest = inngest.createFunction(
 					itemsGenerated: validatedItems.length
 				})
 
-				// Update progress
-				const updatedProgress = {
-					...existingProgress,
-					lastChunkIndex: chunkIndex,
-					chunksCompleted: [
-						...existingProgress.chunksCompleted,
-						{
-							chunkIndex,
-							questionsProcessed: chunkQuestions.length,
-							stimuliProcessed: 0, // Will be updated in stimuli processing
-							completed: true,
-							timestamp: new Date().toISOString()
-						}
-					]
-				}
-
-				await fs.writeFile(progressFile, JSON.stringify(updatedProgress, null, 2))
-
-				// Clear chunk data from memory immediately
-				validatedItems.length = 0
-				chunkQuestions.length = 0
+				return validatedItems.length
 			})
+
+			// Update progress
+			const updatedProgress = {
+				...existingProgress,
+				lastChunkIndex: chunkIndex,
+				chunksCompleted: [
+					...existingProgress.chunksCompleted,
+					{
+						chunkIndex,
+						questionsProcessed: chunkQuestions.length,
+						stimuliProcessed: 0, // Will be updated in stimuli processing
+						completed: true,
+						timestamp: new Date().toISOString()
+					}
+				]
+			}
+
+			await step.run(`update-progress-${chunkIndex}`, async () => {
+				await fs.writeFile(progressFile, JSON.stringify(updatedProgress, null, 2))
+				return true
+			})
+
+			// Update the existingProgress reference for next iteration
+			existingProgress.lastChunkIndex = chunkIndex
+			existingProgress.chunksCompleted = updatedProgress.chunksCompleted
 		}
 
 		// Step 5: Process stimuli in chunks (separate from questions for memory efficiency)
@@ -299,24 +304,26 @@ export const differentiatedIngest = inngest.createFunction(
 		const stimuliChunkSize = 25 // Smaller chunks for stimuli
 		const totalStimuliChunks = Math.ceil(allStimuli.length / stimuliChunkSize)
 
-		await step.run("process-all-stimuli", async () => {
-			logger.info("processing stimuli in chunks")
+		logger.info("processing stimuli in chunks", { totalStimuliChunks, stimuliCount: allStimuli.length })
 
-			for (let chunkIndex = 0; chunkIndex < totalStimuliChunks; chunkIndex++) {
-				const offset = chunkIndex * stimuliChunkSize
-				const chunkStimuli = allStimuli.slice(offset, offset + stimuliChunkSize)
+		for (let chunkIndex = 0; chunkIndex < totalStimuliChunks; chunkIndex++) {
+			const offset = chunkIndex * stimuliChunkSize
+			const chunkStimuli = allStimuli.slice(offset, offset + stimuliChunkSize)
 
-				logger.info("processing stimuli chunk", { chunkIndex, stimuliCount: chunkStimuli.length })
+			logger.info("processing stimuli chunk", { chunkIndex, stimuliCount: chunkStimuli.length })
 
-				const paraphrasingInvocations = chunkStimuli.map((stimulus) =>
-					step.invoke(`paraphrase-${stimulus.id}-chunk-${chunkIndex}`, {
-						function: paraphraseStimulus,
-						data: { articleId: stimulus.id }
-					})
-				)
+			// ✅ FIXED: step.invoke calls at main function level (no nesting)
+			const paraphrasingInvocations = chunkStimuli.map((stimulus) =>
+				step.invoke(`paraphrase-${stimulus.id}-chunk-${chunkIndex}`, {
+					function: paraphraseStimulus,
+					data: { articleId: stimulus.id }
+				})
+			)
 
-				const paraphrasingResults = await Promise.all(paraphrasingInvocations)
+			const paraphrasingResults = await Promise.all(paraphrasingInvocations)
 
+			// Process results in a separate step
+			await step.run(`process-stimuli-chunk-${chunkIndex}-results`, async () => {
 				const validatedStimuli: { xml: string; metadata: { khanId: string } }[] = []
 
 				for (let i = 0; i < paraphrasingResults.length; i++) {
@@ -357,8 +364,9 @@ export const differentiatedIngest = inngest.createFunction(
 				await fs.writeFile(chunkStimuliFile, JSON.stringify(validatedStimuli, null, 2))
 
 				logger.info("completed stimuli chunk", { chunkIndex, stimuliProcessed: validatedStimuli.length })
-			}
-		})
+				return validatedStimuli.length
+			})
+		}
 
 		// Step 6: Load assessment data OUTSIDE step.run
 		const [allAssessments, allExercises] = await Promise.all([
