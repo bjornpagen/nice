@@ -6,9 +6,30 @@ import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { runValidationPipeline } from "@/lib/perseus-qti/validator"
-import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
+import { escapeXmlAttribute } from "@/lib/xml-utils"
 import { differentiateQuestion } from "./differentiate-question"
 import { paraphraseStimulus } from "./paraphrase-stimulus"
+
+// Configuration for chunking and performance
+const CHUNK_SIZE = 50 // Process 50 questions per chunk for optimal memory/speed balance
+
+interface ChunkProgress {
+	chunkIndex: number
+	questionsProcessed: number
+	stimuliProcessed: number
+	completed: boolean
+	timestamp: string
+}
+
+interface ProcessingProgress {
+	courseId: string
+	totalQuestions: number
+	totalStimuli: number
+	chunksCompleted: ChunkProgress[]
+	lastChunkIndex: number
+	startedAt: string
+	completedAt?: string
+}
 
 export const differentiatedIngest = inngest.createFunction(
 	{
@@ -18,22 +39,114 @@ export const differentiatedIngest = inngest.createFunction(
 	{ event: "qti/course.differentiated-ingest" },
 	async ({ event, step, logger }) => {
 		const { courseId } = event.data
-		logger.info("starting differentiated qti json dump workflow", { courseId })
+		logger.info("starting optimized differentiated qti workflow", { courseId })
 
-		// Step 1: Fetch all course data (same as original ingest function)
+		// Step 1: Get course data and setup directories
+		const courseData = await db.query.niceCourses.findFirst({ where: eq(schema.niceCourses.id, courseId) })
+		if (!courseData) {
+			throw errors.new("course not found")
+		}
+
+		const courseSetup = await step.run("setup-directories", async () => {
+			const courseDir = path.join(process.cwd(), "data", courseData.slug, "qti-differentiated")
+			const batchDir = path.join(courseDir, "batches")
+
+			await fs.mkdir(batchDir, { recursive: true })
+
+			return { courseData, courseDir, batchDir }
+		})
+
+		// Step 2: Load course structure and create processing plan
 		const units = await db.query.niceUnits.findMany({
 			where: eq(schema.niceUnits.courseId, courseId),
 			columns: { id: true }
 		})
+
 		if (units.length === 0) {
 			logger.info("no units found for course", { courseId })
 			return { message: "No units found for course", courseId }
 		}
+
 		const unitIds = units.map((u) => u.id)
 
-		const [allQuestions, allArticles, allAssessments, allExercises] = await Promise.all([
-			// Fetch questions
+		// Get total counts for planning
+		const [questionCount, stimuliCount] = await Promise.all([
 			db
+				.select({ count: schema.niceQuestions.id })
+				.from(schema.niceQuestions)
+				.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+				.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+				.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+				.where(inArray(schema.niceLessons.unitId, unitIds)),
+			db
+				.select({ count: schema.niceArticles.id })
+				.from(schema.niceArticles)
+				.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
+				.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+				.where(inArray(schema.niceLessons.unitId, unitIds))
+		])
+
+		const totalQuestions = questionCount.length
+		const totalStimuli = stimuliCount.length
+		const totalChunks = Math.ceil(totalQuestions / CHUNK_SIZE)
+
+		logger.info("created processing plan", {
+			courseId,
+			totalQuestions,
+			totalStimuli,
+			totalChunks,
+			chunkSize: CHUNK_SIZE
+		})
+
+		// Step 3: Check for existing progress and resume if possible
+		const progressFile = path.join(courseSetup.courseDir, "progress.json")
+		const existingProgress = await step.run("check-existing-progress", async () => {
+			const progressResult = await errors.try(fs.readFile(progressFile, "utf-8"))
+			if (progressResult.error) {
+				// No existing progress, start fresh
+				const newProgress: ProcessingProgress = {
+					courseId,
+					totalQuestions,
+					totalStimuli,
+					chunksCompleted: [],
+					lastChunkIndex: -1,
+					startedAt: new Date().toISOString()
+				}
+				await fs.writeFile(progressFile, JSON.stringify(newProgress, null, 2))
+				return newProgress
+			}
+
+			const parseResult = errors.trySync(() => JSON.parse(progressResult.data))
+			if (parseResult.error) {
+				logger.warn("corrupted progress file, starting fresh", { error: parseResult.error })
+				const newProgress: ProcessingProgress = {
+					courseId,
+					totalQuestions,
+					totalStimuli,
+					chunksCompleted: [],
+					lastChunkIndex: -1,
+					startedAt: new Date().toISOString()
+				}
+				await fs.writeFile(progressFile, JSON.stringify(newProgress, null, 2))
+				return newProgress
+			}
+
+			logger.info("resuming from existing progress", {
+				lastChunkIndex: parseResult.data.lastChunkIndex,
+				chunksCompleted: parseResult.data.chunksCompleted.length
+			})
+
+			return parseResult.data
+		})
+
+		// Step 4: Process question chunks
+		for (let chunkIndex = existingProgress.lastChunkIndex + 1; chunkIndex < totalChunks; chunkIndex++) {
+			// Load chunk questions OUTSIDE of step.run
+			logger.info("loading question chunk", { chunkIndex, totalChunks })
+			const offset = chunkIndex * CHUNK_SIZE
+			const limit = CHUNK_SIZE
+
+			const chunkQuestions = await db
 				.select({
 					id: schema.niceQuestions.id,
 					xml: schema.niceQuestions.xml,
@@ -45,15 +158,210 @@ export const differentiatedIngest = inngest.createFunction(
 				.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
 				.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
 				.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-				.where(inArray(schema.niceLessons.unitId, unitIds)),
-			// Fetch articles
-			db
-				.select({ id: schema.niceArticles.id, xml: schema.niceArticles.xml, title: schema.niceArticles.title })
-				.from(schema.niceArticles)
-				.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
-				.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-				.where(inArray(schema.niceLessons.unitId, unitIds)),
-			// Fetch assessments (unit and course level)
+				.where(inArray(schema.niceLessons.unitId, unitIds))
+				.limit(limit)
+				.offset(offset)
+
+			if (chunkQuestions.length === 0) {
+				logger.info("chunk has no questions, skipping", { chunkIndex })
+				continue
+			}
+
+			// Validate chunk questions have XML
+			for (const q of chunkQuestions) {
+				if (!q.xml) throw errors.new(`Question ${q.id} is missing XML`)
+			}
+
+			await step.run(`process-chunk-${chunkIndex}`, async () => {
+				logger.info("differentiating chunk questions with single 5-variation calls", {
+					chunkIndex,
+					questionCount: chunkQuestions.length
+				})
+
+				// OPTIMIZED: Single differentiation call per question for 5 variations
+				const differentiationInvocations = chunkQuestions.map((question) =>
+					step.invoke(`differentiate-${question.id}-chunk-${chunkIndex}`, {
+						function: differentiateQuestion,
+						data: {
+							questionId: question.id,
+							numberOfVariations: 5, // ✅ Single call for all 5 variations
+							startingIndex: 1
+						}
+					})
+				)
+
+				const differentiationResults = await Promise.all(differentiationInvocations)
+
+				// Process and validate results immediately
+				const validatedItems: {
+					xml: string
+					metadata: { khanId: string; khanExerciseId: string; khanExerciseSlug: string; khanExerciseTitle: string }
+				}[] = []
+
+				for (let i = 0; i < differentiationResults.length; i++) {
+					const result = differentiationResults[i]
+					const originalQuestion = chunkQuestions[i]
+
+					if (!result || !originalQuestion) continue
+
+					if (result.status === "success" && "generatedXmls" in result && "questionId" in result) {
+						for (let variationIndex = 0; variationIndex < result.generatedXmls.length; variationIndex++) {
+							const variationXml = result.generatedXmls[variationIndex]
+							if (!variationXml) continue
+
+							// Validate immediately
+							const validationResult = await runValidationPipeline(variationXml, {
+								id: originalQuestion.id,
+								rootTag: "qti-assessment-item",
+								title: originalQuestion.exerciseTitle,
+								logger
+							})
+
+							if (!validationResult.isValid) {
+								logger.warn("discarding invalid qti variation", {
+									questionId: originalQuestion.id,
+									chunkIndex,
+									variationIndex,
+									errors: validationResult.errors.map((e: Error) => e.message)
+								})
+								continue
+							}
+
+							const uniqueCode = (variationIndex + 1).toString().padStart(4, "0")
+							const newIdentifier = `nice:${originalQuestion.id}:${uniqueCode}`
+							const newXml = variationXml.replace(/identifier="[^"]+"/, `identifier="${newIdentifier}"`)
+
+							validatedItems.push({
+								xml: newXml,
+								metadata: {
+									khanId: originalQuestion.id,
+									khanExerciseId: originalQuestion.exerciseId,
+									khanExerciseSlug: originalQuestion.exerciseSlug,
+									khanExerciseTitle: originalQuestion.exerciseTitle
+								}
+							})
+						}
+					} else {
+						logger.warn("differentiation failed for question", {
+							questionId: originalQuestion.id,
+							chunkIndex,
+							status: result?.status || "unknown"
+						})
+					}
+				}
+
+				// Write chunk results immediately to disk
+				const chunkItemsFile = path.join(
+					courseSetup.batchDir,
+					`items-chunk-${chunkIndex.toString().padStart(3, "0")}.json`
+				)
+				await fs.writeFile(chunkItemsFile, JSON.stringify(validatedItems, null, 2))
+
+				logger.info("completed chunk processing", {
+					chunkIndex,
+					questionsProcessed: chunkQuestions.length,
+					itemsGenerated: validatedItems.length
+				})
+
+				// Update progress
+				const updatedProgress = {
+					...existingProgress,
+					lastChunkIndex: chunkIndex,
+					chunksCompleted: [
+						...existingProgress.chunksCompleted,
+						{
+							chunkIndex,
+							questionsProcessed: chunkQuestions.length,
+							stimuliProcessed: 0, // Will be updated in stimuli processing
+							completed: true,
+							timestamp: new Date().toISOString()
+						}
+					]
+				}
+
+				await fs.writeFile(progressFile, JSON.stringify(updatedProgress, null, 2))
+
+				// Clear chunk data from memory immediately
+				validatedItems.length = 0
+				chunkQuestions.length = 0
+			})
+		}
+
+		// Step 5: Process stimuli in chunks (separate from questions for memory efficiency)
+		// Load all stimuli OUTSIDE of step.run
+		const allStimuli = await db
+			.select({ id: schema.niceArticles.id, xml: schema.niceArticles.xml, title: schema.niceArticles.title })
+			.from(schema.niceArticles)
+			.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
+			.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+			.where(inArray(schema.niceLessons.unitId, unitIds))
+
+		const stimuliChunkSize = 25 // Smaller chunks for stimuli
+		const totalStimuliChunks = Math.ceil(allStimuli.length / stimuliChunkSize)
+
+		await step.run("process-all-stimuli", async () => {
+			logger.info("processing stimuli in chunks")
+
+			for (let chunkIndex = 0; chunkIndex < totalStimuliChunks; chunkIndex++) {
+				const offset = chunkIndex * stimuliChunkSize
+				const chunkStimuli = allStimuli.slice(offset, offset + stimuliChunkSize)
+
+				logger.info("processing stimuli chunk", { chunkIndex, stimuliCount: chunkStimuli.length })
+
+				const paraphrasingInvocations = chunkStimuli.map((stimulus) =>
+					step.invoke(`paraphrase-${stimulus.id}-chunk-${chunkIndex}`, {
+						function: paraphraseStimulus,
+						data: { articleId: stimulus.id }
+					})
+				)
+
+				const paraphrasingResults = await Promise.all(paraphrasingInvocations)
+
+				const validatedStimuli: { xml: string; metadata: { khanId: string } }[] = []
+
+				for (let i = 0; i < paraphrasingResults.length; i++) {
+					const result = paraphrasingResults[i]
+					const originalStimulus = chunkStimuli[i]
+
+					if (!result || !originalStimulus) continue
+
+					if (result.status === "success" && "paraphrasedXml" in result && result.paraphrasedXml) {
+						const validationResult = await runValidationPipeline(result.paraphrasedXml, {
+							id: originalStimulus.id,
+							rootTag: "qti-assessment-stimulus",
+							title: originalStimulus.title,
+							logger
+						})
+
+						if (!validationResult.isValid) {
+							logger.warn("discarding invalid paraphrased stimulus", {
+								articleId: originalStimulus.id,
+								chunkIndex,
+								errors: validationResult.errors.map((e: Error) => e.message)
+							})
+							continue
+						}
+
+						validatedStimuli.push({
+							xml: result.paraphrasedXml,
+							metadata: { khanId: originalStimulus.id }
+						})
+					}
+				}
+
+				// Write stimuli chunk to disk
+				const chunkStimuliFile = path.join(
+					courseSetup.batchDir,
+					`stimuli-chunk-${chunkIndex.toString().padStart(3, "0")}.json`
+				)
+				await fs.writeFile(chunkStimuliFile, JSON.stringify(validatedStimuli, null, 2))
+
+				logger.info("completed stimuli chunk", { chunkIndex, stimuliProcessed: validatedStimuli.length })
+			}
+		})
+
+		// Step 6: Load assessment data OUTSIDE step.run
+		const [allAssessments, allExercises] = await Promise.all([
 			db
 				.select({
 					assessmentId: schema.niceAssessments.id,
@@ -71,7 +379,6 @@ export const differentiatedIngest = inngest.createFunction(
 						inArray(schema.niceAssessments.parentType, ["Unit", "Course"])
 					)
 				),
-			// Fetch exercises
 			db.query.niceExercises.findMany({
 				where: inArray(
 					schema.niceExercises.id,
@@ -86,286 +393,92 @@ export const differentiatedIngest = inngest.createFunction(
 			})
 		])
 
-		const questionsByExerciseId = new Map<string, string[]>()
-		for (const q of allQuestions) {
-			if (!q.xml) throw errors.new(`Question ${q.id} is missing XML.`)
-			if (!questionsByExerciseId.has(q.exerciseId)) questionsByExerciseId.set(q.exerciseId, [])
-			questionsByExerciseId.get(q.exerciseId)?.push(q.id)
-		}
-
-		const assessmentMap = new Map<string, { title: string; exerciseIds: string[] }>()
-		for (const row of allAssessments) {
-			if (!assessmentMap.has(row.assessmentId)) {
-				assessmentMap.set(row.assessmentId, { title: row.assessmentTitle, exerciseIds: [] })
-			}
-			assessmentMap.get(row.assessmentId)?.exerciseIds.push(row.exerciseId)
-		}
-
-		// Process course data directly in function body (not in step.run to avoid size limits)
-		const buildTestXml = (id: string, title: string, questionIds: string[]): string => {
-			const itemRefsXml = questionIds
-				.map((itemId) => `<qti-assessment-item-ref identifier="nice:${itemId}" />`)
-				.join("\n")
-			return `
-          <qti-assessment-test identifier="nice:${id}" title="${escapeXmlAttribute(title)}">
-            <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
-              <qti-assessment-section identifier="SECTION_1" title="Main Section" visible="true">
-                ${itemRefsXml}
-              </qti-assessment-section>
-            </qti-test-part>
-          </qti-assessment-test>
-        `
-		}
-
-		const originalAssessmentItems = allQuestions.map((q) => ({
-			xml: replaceRootAttributes(q.xml || "", "qti-assessment-item", `nice:${q.id}`, q.exerciseTitle),
-			metadata: {
-				khanId: q.id,
-				khanExerciseId: q.exerciseId,
-				khanExerciseSlug: q.exerciseSlug,
-				khanExerciseTitle: q.exerciseTitle
-			}
-		}))
-
-		const originalAssessmentStimuli = allArticles.map((a) => ({
-			xml: replaceRootAttributes(a.xml || "", "qti-assessment-stimulus", `nice:${a.id}`, a.title),
-			metadata: { khanId: a.id }
-		}))
-
-		const assessmentTests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => {
-			const questionIds = data.exerciseIds.flatMap((exId) => questionsByExerciseId.get(exId) || [])
-			return buildTestXml(assessmentId, data.title, questionIds)
-		})
-
-		const exerciseTests = allExercises.map((exercise) => {
-			const questionIds = questionsByExerciseId.get(exercise.id) || []
-			return buildTestXml(exercise.id, exercise.title, questionIds)
-		})
-
-		const originalAssessmentTests = [...assessmentTests, ...exerciseTests]
-
-		// Get the actual course data
-		const courseData = await db.query.niceCourses.findFirst({ where: eq(schema.niceCourses.id, courseId) })
-
-		if (!courseData) {
-			logger.info("course not found, ending workflow", { courseId })
-			return { message: "Course not found." }
-		}
-
-		logger.info("fetched course data for differentiation", {
-			courseId,
-			questionCount: originalAssessmentItems.length,
-			stimuliCount: originalAssessmentStimuli.length,
-			testCount: originalAssessmentTests.length
-		})
-
-		// Step 2: Differentiate all assessment items using batching to avoid response truncation
-		logger.info("fanning out question differentiation jobs with batching", {
-			questionCount: originalAssessmentItems.length
-		})
-
-		// Batch 1: Generate 2 variations (IDs 0001-0002) for each question
-		logger.info("starting batch 1: generating 2 variations per question")
-		const batch1Invocations = originalAssessmentItems.map((item) =>
-			step.invoke(`differentiate-${item.metadata.khanId}-batch1`, {
-				function: differentiateQuestion,
-				data: {
-					questionId: item.metadata.khanId,
-					numberOfVariations: 2,
-					startingIndex: 1
-				}
+		// Build question mapping for tests
+		const allQuestionIds = await db
+			.select({
+				id: schema.niceQuestions.id,
+				exerciseId: schema.niceQuestions.exerciseId
 			})
-		)
-		const batch1Results = await Promise.all(batch1Invocations)
-		logger.info("completed batch 1 differentiation jobs", { completedCount: batch1Results.length })
+			.from(schema.niceQuestions)
+			.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+			.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+			.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+			.where(inArray(schema.niceLessons.unitId, unitIds))
 
-		// Batch 2: Generate 3 variations (IDs 0003-0005) for each question
-		logger.info("starting batch 2: generating 3 variations per question")
-		const batch2Invocations = originalAssessmentItems.map((item) =>
-			step.invoke(`differentiate-${item.metadata.khanId}-batch2`, {
-				function: differentiateQuestion,
-				data: {
-					questionId: item.metadata.khanId,
-					numberOfVariations: 3,
-					startingIndex: 3
+		// Step 7: Merge all chunks and generate final files
+		const finalResults = await step.run("merge-chunks-and-generate-tests", async () => {
+			logger.info("merging all chunks into final files")
+
+			// Merge all item chunks
+			const allItems: {
+				xml: string
+				metadata: { khanId: string; khanExerciseId: string; khanExerciseSlug: string; khanExerciseTitle: string }
+			}[] = []
+
+			const itemChunkFiles = await fs.readdir(courseSetup.batchDir)
+			const itemFiles = itemChunkFiles.filter((f) => f.startsWith("items-chunk-")).sort()
+
+			for (const file of itemFiles) {
+				const chunkData = await fs.readFile(path.join(courseSetup.batchDir, file), "utf-8")
+				const chunkItems = JSON.parse(chunkData)
+				allItems.push(...chunkItems)
+			}
+
+			// Merge all stimuli chunks
+			const allStimuli: { xml: string; metadata: { khanId: string } }[] = []
+			const stimuliFiles = itemChunkFiles.filter((f) => f.startsWith("stimuli-chunk-")).sort()
+
+			for (const file of stimuliFiles) {
+				const chunkData = await fs.readFile(path.join(courseSetup.batchDir, file), "utf-8")
+				const chunkStimuli = JSON.parse(chunkData)
+				allStimuli.push(...chunkStimuli)
+			}
+
+			// Generate assessment tests using data loaded outside step.run
+			const questionsByExerciseId = new Map<string, string[]>()
+			for (const q of allQuestionIds) {
+				if (!questionsByExerciseId.has(q.exerciseId)) questionsByExerciseId.set(q.exerciseId, [])
+				questionsByExerciseId.get(q.exerciseId)?.push(q.id)
+			}
+
+			const buildTestXml = (id: string, title: string, questionIds: string[]): string => {
+				const itemRefsXml = questionIds
+					.map((itemId) => `<qti-assessment-item-ref identifier="nice:${itemId}" />`)
+					.join("\n")
+				return `
+              <qti-assessment-test identifier="nice:${id}" title="${escapeXmlAttribute(title)}">
+                <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
+                  <qti-assessment-section identifier="SECTION_1" title="Main Section" visible="true">
+                    ${itemRefsXml}
+                  </qti-assessment-section>
+                </qti-test-part>
+              </qti-assessment-test>
+            `
+			}
+
+			const assessmentMap = new Map<string, { title: string; exerciseIds: string[] }>()
+			for (const row of allAssessments) {
+				if (!assessmentMap.has(row.assessmentId)) {
+					assessmentMap.set(row.assessmentId, { title: row.assessmentTitle, exerciseIds: [] })
 				}
+				assessmentMap.get(row.assessmentId)?.exerciseIds.push(row.exerciseId)
+			}
+
+			const assessmentTests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => {
+				const questionIds = data.exerciseIds.flatMap((exId) => questionsByExerciseId.get(exId) || [])
+				return buildTestXml(assessmentId, data.title, questionIds)
 			})
-		)
-		const batch2Results = await Promise.all(batch2Invocations)
-		logger.info("completed batch 2 differentiation jobs", { completedCount: batch2Results.length })
 
-		// Combine batch results into a single array for downstream processing
-		const differentiationResults = originalAssessmentItems.map((item, index) => {
-			const batch1Result = batch1Results[index]
-			const batch2Result = batch2Results[index]
-
-			// Safety check - ensure results exist
-			if (!batch1Result || !batch2Result) {
-				return {
-					status: "aborted" as const,
-					reason: "missing_batch_results",
-					questionId: item.metadata.khanId
-				}
-			}
-
-			// Combine the generated XMLs from both batches
-			if (
-				batch1Result.status === "success" &&
-				batch2Result.status === "success" &&
-				"generatedXmls" in batch1Result &&
-				"generatedXmls" in batch2Result
-			) {
-				return {
-					status: "success" as const,
-					questionId: item.metadata.khanId,
-					generatedCount: batch1Result.generatedCount + batch2Result.generatedCount,
-					generatedXmls: [...batch1Result.generatedXmls, ...batch2Result.generatedXmls]
-				}
-			}
-
-			// If either batch failed, return the first error we encounter
-			if (batch1Result.status !== "success") {
-				return batch1Result
-			}
-			return batch2Result
-		})
-
-		logger.info("completed all question differentiation jobs", {
-			completedCount: differentiationResults.length,
-			totalVariationsGenerated: differentiationResults
-				.filter((r) => r.status === "success" && "generatedCount" in r)
-				.reduce((sum, r) => {
-					if (r.status === "success" && "generatedCount" in r) {
-						return sum + r.generatedCount
-					}
-					return sum
-				}, 0)
-		})
-
-		// Step 3: Paraphrase all stimuli
-		logger.info("fanning out stimulus paraphrasing jobs", { stimuliCount: originalAssessmentStimuli.length })
-		const paraphrasingInvocations = originalAssessmentStimuli.map((stimulus) =>
-			step.invoke(`paraphrase-${stimulus.metadata.khanId}`, {
-				function: paraphraseStimulus,
-				data: {
-					articleId: stimulus.metadata.khanId
-				}
+			const exerciseTests = allExercises.map((exercise) => {
+				const questionIds = questionsByExerciseId.get(exercise.id) || []
+				return buildTestXml(exercise.id, exercise.title, questionIds)
 			})
-		)
-		const paraphrasingResults = await Promise.all(paraphrasingInvocations)
-		logger.info("completed all stimulus paraphrasing jobs", { completedCount: paraphrasingResults.length })
 
-		// Step 4: Aggregate and transform the results
-		const aggregationResult = await step.run(
-			"aggregate-and-validate-differentiated-items",
-			async (): Promise<{
-				differentiatedItems: {
-					xml: string
-					metadata: { khanId: string; khanExerciseId: string; khanExerciseSlug: string; khanExerciseTitle: string }
-				}[]
-				newToOriginalMap: Map<string, string>
-			}> => {
-				const items: {
-					xml: string
-					metadata: { khanId: string; khanExerciseId: string; khanExerciseSlug: string; khanExerciseTitle: string }
-				}[] = []
-				const newToOriginalMap = new Map<string, string>()
+			const allTests = [...assessmentTests, ...exerciseTests]
 
-				for (const result of differentiationResults) {
-					if (result.status === "success" && "generatedXmls" in result && "questionId" in result) {
-						const originalKhanId = result.questionId
-
-						// Find original item metadata to preserve exercise info
-						const originalItem = originalAssessmentItems.find((item) => item.metadata.khanId === originalKhanId)
-						if (!originalItem) continue
-
-						for (let i = 0; i < result.generatedXmls.length; i++) {
-							const variationXml = result.generatedXmls[i]
-							if (!variationXml) continue
-
-							// ADD: Validate the generated XML before processing
-							const validationResult = await runValidationPipeline(variationXml, {
-								id: originalKhanId,
-								rootTag: "qti-assessment-item",
-								title: originalItem.metadata.khanExerciseTitle,
-								logger
-								// perseusContent is omitted, allowing for pure XML validation
-							})
-
-							if (!validationResult.isValid) {
-								logger.warn("discarding invalid qti variation", {
-									questionId: originalKhanId,
-									variationIndex: i,
-									errors: validationResult.errors.map((e: Error) => e.message)
-								})
-								continue // Skip this invalid variation
-							}
-
-							const uniqueCode = (i + 1).toString().padStart(4, "0")
-							const newIdentifier = `nice:${originalKhanId}:${uniqueCode}`
-
-							// Ensure the XML has the correct identifier, regardless of what AI generated
-							const newXml = variationXml.replace(/identifier="[^"]+"/, `identifier="${newIdentifier}"`)
-
-							items.push({
-								xml: newXml,
-								metadata: {
-									khanId: originalKhanId, // ✅ Keep original khanId (no suffix)
-									khanExerciseId: originalItem.metadata.khanExerciseId,
-									khanExerciseSlug: originalItem.metadata.khanExerciseSlug,
-									khanExerciseTitle: originalItem.metadata.khanExerciseTitle
-								}
-							})
-							newToOriginalMap.set(newIdentifier, `nice:${originalKhanId}`)
-						}
-					}
-				}
-				return { differentiatedItems: items, newToOriginalMap }
-			}
-		)
-
-		const paraphrasedStimuli = await step.run("aggregate-and-validate-paraphrased-stimuli", async () => {
-			const successfulResults: { xml: string; metadata: { khanId: string } }[] = []
-
-			for (const r of paraphrasingResults) {
-				if (r.status === "success" && "paraphrasedXml" in r && "articleId" in r && r.paraphrasedXml && r.articleId) {
-					const originalArticle = allArticles.find((a) => a.id === r.articleId)
-					if (!originalArticle) continue
-
-					// ADD: Validate the paraphrased XML
-					const validationResult = await runValidationPipeline(r.paraphrasedXml, {
-						id: r.articleId,
-						rootTag: "qti-assessment-stimulus",
-						title: originalArticle.title, // Use original article title for validation context
-						logger
-						// perseusContent is omitted
-					})
-
-					if (!validationResult.isValid) {
-						logger.warn("discarding invalid paraphrased stimulus", {
-							articleId: r.articleId,
-							errors: validationResult.errors.map((e: Error) => e.message)
-						})
-						continue // Skip invalid stimulus
-					}
-
-					successfulResults.push({
-						xml: r.paraphrasedXml,
-						metadata: { khanId: r.articleId }
-					})
-				}
-			}
-
-			return successfulResults
-		})
-
-		// Step 5: Update assessment tests with new item references
-		const updatedAssessmentTests = await step.run("update-assessment-tests", () => {
-			// Build mapping: original identifier -> array of new identifiers
+			// Build item mapping for test updates
 			const itemMapping = new Map<string, string[]>()
-
-			for (const item of aggregationResult.differentiatedItems) {
-				// Extract the new identifier from the XML
+			for (const item of allItems) {
 				const identifierMatch = item.xml.match(/identifier="([^"]+)"/)
 				if (!identifierMatch || !identifierMatch[1]) continue
 
@@ -375,13 +488,11 @@ export const differentiatedIngest = inngest.createFunction(
 				if (!itemMapping.has(originalIdentifier)) {
 					itemMapping.set(originalIdentifier, [])
 				}
-				const identifierArray = itemMapping.get(originalIdentifier)
-				if (identifierArray) {
-					identifierArray.push(newIdentifier)
-				}
+				itemMapping.get(originalIdentifier)?.push(newIdentifier)
 			}
 
-			return originalAssessmentTests.map((testXml) => {
+			// Update tests with new item references
+			const updatedTests = allTests.map((testXml) => {
 				const originalItemRefs = [...testXml.matchAll(/<qti-assessment-item-ref identifier="([^"]+)"/g)]
 					.map((m) => m[1])
 					.filter((ref): ref is string => !!ref)
@@ -399,31 +510,45 @@ export const differentiatedIngest = inngest.createFunction(
 				}
 				return updatedTestXml
 			})
+
+			// Write final merged files
+			await Promise.all([
+				fs.writeFile(path.join(courseSetup.courseDir, "assessmentItems.json"), JSON.stringify(allItems, null, 2)),
+				fs.writeFile(path.join(courseSetup.courseDir, "assessmentStimuli.json"), JSON.stringify(allStimuli, null, 2)),
+				fs.writeFile(path.join(courseSetup.courseDir, "assessmentTests.json"), JSON.stringify(updatedTests, null, 2))
+			])
+
+			return {
+				itemsGenerated: allItems.length,
+				stimuliGenerated: allStimuli.length,
+				testsGenerated: updatedTests.length
+			}
 		})
 
-		// Step 6: Write new files
-		await step.run("write-final-files", async () => {
-			const courseDir = path.join(process.cwd(), "data", courseData.slug, "qti-differentiated")
-			await fs.mkdir(courseDir, { recursive: true })
+		// Step 8: Cleanup and finalize
+		await step.run("cleanup-and-finalize", async () => {
+			// Update final progress
+			const finalProgress = {
+				...existingProgress,
+				completedAt: new Date().toISOString()
+			}
+			await fs.writeFile(progressFile, JSON.stringify(finalProgress, null, 2))
 
-			await fs.writeFile(
-				path.join(courseDir, "assessmentItems.json"),
-				JSON.stringify(aggregationResult.differentiatedItems, null, 2)
-			)
-			await fs.writeFile(path.join(courseDir, "assessmentStimuli.json"), JSON.stringify(paraphrasedStimuli, null, 2))
-			await fs.writeFile(path.join(courseDir, "assessmentTests.json"), JSON.stringify(updatedAssessmentTests, null, 2))
-		})
+			// Optionally clean up batch files to save disk space
+			// await fs.rm(courseSetup.batchDir, { recursive: true })
 
-		logger.info("completed differentiated QTI JSON dump workflow", {
-			courseId,
-			itemsGenerated: aggregationResult.differentiatedItems.length,
-			stimuliParaphrased: paraphrasedStimuli.length,
-			testsUpdated: updatedAssessmentTests.length
+			logger.info("differentiated ingest workflow completed successfully", {
+				courseId,
+				itemsGenerated: finalResults.itemsGenerated,
+				stimuliGenerated: finalResults.stimuliGenerated,
+				testsGenerated: finalResults.testsGenerated
+			})
 		})
 
 		return {
-			message: "Differentiated QTI JSON dump workflow completed successfully.",
-			courseId
+			message: "Optimized differentiated QTI workflow completed successfully.",
+			courseId,
+			...finalResults
 		}
 	}
 )
