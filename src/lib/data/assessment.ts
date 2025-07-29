@@ -7,11 +7,10 @@ import {
 	getAllCoursesBySlug,
 	getAllResources,
 	getCourseComponentByCourseAndSlug,
-	getCourseComponentsByParentId,
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
 import { getAllQuestionsForTest, getAssessmentTest } from "@/lib/data/fetchers/qti"
-import { ComponentMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { Question } from "@/lib/types/domain"
 import type {
 	CourseChallengeLayoutData,
@@ -19,6 +18,7 @@ import type {
 	QuizPageData,
 	UnitTestPageData
 } from "@/lib/types/page"
+import { findAssessmentRedirectPath } from "@/lib/utils/assessment-redirect"
 import type { AssessmentTest, TestQuestionsResponse } from "../qti"
 import { fetchCoursePageData } from "./course"
 import { fetchLessonLayoutData } from "./lesson"
@@ -629,140 +629,11 @@ export async function fetchQuizRedirectPath(params: {
 	unit: string
 	quiz: string
 }): Promise<string> {
-	logger.info("fetchQuizRedirectPath called", { params })
-	const decodedUnit = decodeURIComponent(params.unit)
-
-	// First, fetch the course to get its sourcedId
-	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
-	if (coursesResult.error) {
-		logger.error("failed to fetch course by slug", { error: coursesResult.error, slug: params.course })
-		throw errors.wrap(coursesResult.error, "fetch course")
-	}
-	const course = coursesResult.data[0]
-	if (!course) {
-		throw errors.new("course not found for redirect")
-	}
-	const courseSourcedId = course.sourcedId
-
-	// Look up the unit by BOTH course AND slug to avoid collisions
-	const unitResult = await errors.try(getCourseComponentByCourseAndSlug(courseSourcedId, decodedUnit))
-	if (unitResult.error) {
-		logger.error("failed to fetch unit by course and slug", {
-			error: unitResult.error,
-			courseSourcedId: courseSourcedId,
-			slug: decodedUnit
-		})
-		throw errors.wrap(unitResult.error, "failed to fetch unit by course and slug")
-	}
-
-	// Add debugging for multiple results
-	if (unitResult.data.length > 1) {
-		logger.warn("multiple units found with same slug", {
-			slug: decodedUnit,
-			courseSourcedId,
-			foundUnits: unitResult.data.map((u) => ({
-				sourcedId: u.sourcedId,
-				title: u.title,
-				courseSourcedId: u.course?.sourcedId
-			}))
-		})
-	}
-
-	const unit = unitResult.data[0]
-	if (!unit) {
-		// This will be caught by the page and result in a 404
-		throw errors.new("unit not found for redirect")
-	}
-	const unitSourcedId = unit.sourcedId
-
-	logger.debug("found unit for redirect", {
-		unitSourcedId,
-		unitTitle: unit.title,
-		unitSlug: decodedUnit
+	return findAssessmentRedirectPath({
+		...params,
+		assessment: params.quiz,
+		assessmentType: "quiz"
 	})
-
-	// Fetch all lessons for this unit to find quiz sibling
-	const lessonsResult = await errors.try(getCourseComponentsByParentId(unitSourcedId))
-	if (lessonsResult.error) {
-		logger.error("failed to get lessons for unit", { unitSourcedId, error: lessonsResult.error })
-		throw errors.wrap(lessonsResult.error, "failed to get lessons for unit")
-	}
-
-	const lessons = lessonsResult.data
-	if (lessons.length === 0) {
-		logger.warn("no lessons found in unit for redirect", { unitSourcedId })
-		throw errors.new("no lessons found in unit")
-	}
-
-	// 1. Fetch all resources for this unit and its lessons.
-	const unitAndLessonComponentSourcedIds = [unitSourcedId, ...lessons.map((l) => l.sourcedId)]
-	const allComponentResourcesInUnitResult = await errors.try(getAllComponentResources())
-	if (allComponentResourcesInUnitResult.error) {
-		logger.error("failed to fetch all component resources for unit and lessons", {
-			unitSourcedId,
-			error: allComponentResourcesInUnitResult.error
-		})
-		throw errors.wrap(allComponentResourcesInUnitResult.error, "fetch component resources for unit/lesson context")
-	}
-
-	const relevantComponentResources = allComponentResourcesInUnitResult.data.filter((cr) =>
-		unitAndLessonComponentSourcedIds.includes(cr.courseComponent.sourcedId)
-	)
-	const relevantResourceIds = relevantComponentResources.map((cr) => cr.resource.sourcedId)
-
-	const allResourcesResult = await errors.try(getAllResources())
-	if (allResourcesResult.error) {
-		logger.error("failed to fetch all resources for quiz validation", {
-			unitSourcedId,
-			error: allResourcesResult.error
-		})
-		throw errors.wrap(allResourcesResult.error, "fetch all resources for quiz validation")
-	}
-
-	const quizResource = allResourcesResult.data.find((res) => {
-		if (!relevantResourceIds.includes(res.sourcedId)) return false
-		const metadataResult = ResourceMetadataSchema.safeParse(res.metadata)
-		return (
-			metadataResult.success &&
-			metadataResult.data.khanSlug === params.quiz &&
-			metadataResult.data.type === "qti" &&
-			metadataResult.data.khanLessonType === "quiz"
-		)
-	})
-
-	if (!quizResource) {
-		logger.warn("quiz resource not found within the specified unit/lesson hierarchy", {
-			unitSourcedId,
-			quizSlug: params.quiz
-		})
-		notFound()
-	}
-
-	// Sort by ordering and get the last lesson's slug
-	lessons.sort((a, b) => a.sortOrder - b.sortOrder)
-	const lastLesson = lessons[lessons.length - 1]
-	if (!lastLesson) {
-		logger.warn("could not determine last lesson", { unitSourcedId })
-		throw errors.new("could not determine last lesson")
-	}
-
-	// Validate lesson metadata with Zod
-	const lastLessonMetadataResult = ComponentMetadataSchema.safeParse(lastLesson.metadata)
-	if (!lastLessonMetadataResult.success) {
-		logger.error("invalid last lesson metadata", {
-			lessonSourcedId: lastLesson.sourcedId,
-			error: lastLessonMetadataResult.error
-		})
-		throw errors.wrap(lastLessonMetadataResult.error, "invalid last lesson metadata")
-	}
-	const lastLessonSlug = lastLessonMetadataResult.data.khanSlug
-	if (!lastLessonSlug) {
-		logger.error("last lesson missing khanSlug", { lessonSourcedId: lastLesson.sourcedId })
-		throw errors.new("last lesson missing khanSlug")
-	}
-
-	// Construct the redirect path
-	return `/${params.subject}/${params.course}/${params.unit}/${lastLessonSlug}/quiz/${params.quiz}`
 }
 
 export async function fetchTestRedirectPath(params: {
@@ -771,138 +642,9 @@ export async function fetchTestRedirectPath(params: {
 	unit: string
 	test: string
 }): Promise<string> {
-	logger.info("fetchTestRedirectPath called", { params })
-	const decodedUnit = decodeURIComponent(params.unit)
-
-	// First, fetch the course to get its sourcedId
-	const coursesResult = await errors.try(getAllCoursesBySlug(params.course))
-	if (coursesResult.error) {
-		logger.error("failed to fetch course by slug", { error: coursesResult.error, slug: params.course })
-		throw errors.wrap(coursesResult.error, "fetch course")
-	}
-	const course = coursesResult.data[0]
-	if (!course) {
-		throw errors.new("course not found for redirect")
-	}
-	const courseSourcedId = course.sourcedId
-
-	// Look up the unit by BOTH course AND slug to avoid collisions
-	const unitResult = await errors.try(getCourseComponentByCourseAndSlug(courseSourcedId, decodedUnit))
-	if (unitResult.error) {
-		logger.error("failed to fetch unit by course and slug", {
-			error: unitResult.error,
-			courseSourcedId: courseSourcedId,
-			slug: decodedUnit
-		})
-		throw errors.wrap(unitResult.error, "failed to fetch unit by course and slug")
-	}
-
-	// Add debugging for multiple results
-	if (unitResult.data.length > 1) {
-		logger.warn("multiple units found with same slug", {
-			slug: decodedUnit,
-			courseSourcedId,
-			foundUnits: unitResult.data.map((u) => ({
-				sourcedId: u.sourcedId,
-				title: u.title,
-				courseSourcedId: u.course?.sourcedId
-			}))
-		})
-	}
-
-	const unit = unitResult.data[0]
-	if (!unit) {
-		// This will be caught by the page and result in a 404
-		throw errors.new("unit not found for redirect")
-	}
-	const unitSourcedId = unit.sourcedId
-
-	logger.debug("found unit for redirect", {
-		unitSourcedId,
-		unitTitle: unit.title,
-		unitSlug: decodedUnit
+	return findAssessmentRedirectPath({
+		...params,
+		assessment: params.test,
+		assessmentType: "unittest"
 	})
-
-	// Fetch all lessons for this unit to find test sibling
-	const lessonsResult = await errors.try(getCourseComponentsByParentId(unitSourcedId))
-	if (lessonsResult.error) {
-		logger.error("failed to get lessons for unit", { unitSourcedId, error: lessonsResult.error })
-		throw errors.wrap(lessonsResult.error, "failed to get lessons for unit")
-	}
-
-	const lessons = lessonsResult.data
-	if (lessons.length === 0) {
-		logger.warn("no lessons found in unit for redirect", { unitSourcedId })
-		throw errors.new("no lessons found in unit")
-	}
-
-	// 1. Fetch all resources for this unit and its lessons.
-	const unitAndLessonComponentSourcedIds = [unitSourcedId, ...lessons.map((l) => l.sourcedId)]
-	const allComponentResourcesInUnitResult = await errors.try(getAllComponentResources())
-	if (allComponentResourcesInUnitResult.error) {
-		logger.error("failed to fetch all component resources for unit and lessons", {
-			unitSourcedId,
-			error: allComponentResourcesInUnitResult.error
-		})
-		throw errors.wrap(allComponentResourcesInUnitResult.error, "fetch component resources for unit/lesson context")
-	}
-
-	const relevantComponentResources = allComponentResourcesInUnitResult.data.filter((cr) =>
-		unitAndLessonComponentSourcedIds.includes(cr.courseComponent.sourcedId)
-	)
-	const relevantResourceIds = relevantComponentResources.map((cr) => cr.resource.sourcedId)
-
-	const allResourcesResult = await errors.try(getAllResources())
-	if (allResourcesResult.error) {
-		logger.error("failed to fetch all resources for unit test validation", {
-			unitSourcedId,
-			error: allResourcesResult.error
-		})
-		throw errors.wrap(allResourcesResult.error, "fetch all resources for unit test validation")
-	}
-
-	const unitTestResource = allResourcesResult.data.find((res) => {
-		if (!relevantResourceIds.includes(res.sourcedId)) return false
-		const metadataResult = ResourceMetadataSchema.safeParse(res.metadata)
-		return (
-			metadataResult.success &&
-			metadataResult.data.khanSlug === params.test &&
-			metadataResult.data.type === "qti" &&
-			metadataResult.data.khanLessonType === "unittest"
-		)
-	})
-
-	if (!unitTestResource) {
-		logger.warn("unit test resource not found within the specified unit/lesson hierarchy", {
-			unitSourcedId,
-			testSlug: params.test
-		})
-		notFound()
-	}
-
-	// Sort by ordering and get the last lesson's slug
-	lessons.sort((a, b) => a.sortOrder - b.sortOrder)
-	const lastLesson = lessons[lessons.length - 1]
-	if (!lastLesson) {
-		logger.warn("could not determine last lesson", { unitSourcedId })
-		throw errors.new("could not determine last lesson")
-	}
-
-	// Validate lesson metadata with Zod
-	const lastLessonMetadataResult = ComponentMetadataSchema.safeParse(lastLesson.metadata)
-	if (!lastLessonMetadataResult.success) {
-		logger.error("invalid last lesson metadata", {
-			lessonSourcedId: lastLesson.sourcedId,
-			error: lastLessonMetadataResult.error
-		})
-		throw errors.wrap(lastLessonMetadataResult.error, "invalid last lesson metadata")
-	}
-	const lastLessonSlug = lastLessonMetadataResult.data.khanSlug
-	if (!lastLessonSlug) {
-		logger.error("last lesson missing khanSlug", { lessonSourcedId: lastLesson.sourcedId })
-		throw errors.new("last lesson missing khanSlug")
-	}
-
-	// Construct the redirect path
-	return `/${params.subject}/${params.course}/${params.unit}/${lastLessonSlug}/test/${params.test}`
 }
