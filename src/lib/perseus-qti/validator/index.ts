@@ -16,7 +16,7 @@ type ValidationContext = {
 	rootTag: string
 	title: string
 	logger: logger.Logger
-	perseusContent: unknown // UPDATED: Add perseusContent to the context.
+	perseusContent?: unknown // UPDATED: Make perseusContent optional.
 }
 
 type SyncValidationPass = (xml: string, context: ValidationContext) => void

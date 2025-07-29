@@ -10,7 +10,8 @@ type ValidationContext = {
 	rootTag: string
 	title: string // Title is required
 	logger: logger.Logger
-	perseusContent: unknown
+	// MODIFIED: Make perseusContent optional
+	perseusContent?: unknown
 }
 
 // Centralized Regex Constants
@@ -359,6 +360,11 @@ export const ErrContentUnsolvable = errors.new("qti content is not self-containe
  */
 export async function validateContentSufficiency(xml: string, context: ValidationContext): Promise<void> {
 	const { logger, perseusContent } = context
+	// ADD: Guard clause to skip this rule if perseusContent is not available.
+	if (!perseusContent) {
+		logger.info("skipping content sufficiency validation: no perseus content provided")
+		return
+	}
 	logger.info("running ai content solvability validation")
 
 	// 1. Extract all image URLs from the XML to provide them as context to the AI.

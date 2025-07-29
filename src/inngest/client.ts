@@ -52,7 +52,8 @@ const events = {
 	"qti/question.differentiate": {
 		data: z.object({
 			questionId: z.string().min(1),
-			numberOfVariations: z.number().int().positive()
+			numberOfVariations: z.number().int().positive(),
+			startingIndex: z.number().int().positive().optional()
 		})
 	},
 	// ✅ ADD: New event for paraphrasing a single stimulus
@@ -68,6 +69,12 @@ const events = {
 		})
 	},
 	"qti/course.ingest": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
+	// ✅ ADD: New event for the differentiated ingestion pipeline.
+	"qti/course.differentiated-ingest": {
 		data: z.object({
 			courseId: z.string().min(1)
 		})

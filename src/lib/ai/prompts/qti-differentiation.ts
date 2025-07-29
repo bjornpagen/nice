@@ -1,6 +1,8 @@
 export function produceQtiVariationsPrompt(
 	sourceQtiXml: string,
-	numberOfVariations: number
+	numberOfVariations: number,
+	khanId: string,
+	startingIndex = 1
 ): { developer: string; user: string } {
 	const developer =
 		"You are an expert QTI 3.0 assessment item author with 10+ years in educational assessment, specializing in creating diverse, high-quality, and valid educational questions based on a single source item. You focus on misconception-targeted distractors, skill alignment, and perfectly-formed XML that adheres to all specified constraints. Your responses mimic structured inputs for precision."
@@ -30,12 +32,38 @@ ${sourceQtiXml}
   1. **Understand the Core Skill:** Deeply analyze the <source_qti_xml> to identify the specific educational skill being tested (e.g., calculating area, identifying a verb, historical knowledge).
   2. **Generate Distinct Variations:** Create ${numberOfVariations} new questions that test the same core skill using fresh numbers, scenarios, contexts, or wording. Ensure variations are meaningfully different while preserving alignment.
   3. **Target Common Misconceptions:** For multiple-choice questions, design incorrect answers (distractors) to target common student misconceptions related to the skill. Base them on logical errors, not randomness (e.g., for area calculation, use perimeter result as a distractor).
-  4. **Preserve Image References:** If the source contains <img ... /> tags, reuse the exact src attribute in variations without creating new images.
-  5. **Maintain QTI Structure:** Follow the source's basic structure (e.g., qti-choice-interaction, qti-text-entry-interaction) unless a valid structural change enhances variation.
-  6. **Preserve Feedback Structure:** If the source includes <qti-feedback-inline> for choices, provide unique, relevant feedback for every choice in variations, explaining correctness or errors in the new context.
-  7. **Absolute XML Well-Formedness:** Prioritize perfect XML: Open tags must have matching closing tags, attributes quoted, special characters escaped (e.g., &lt; for <).
-  8. **Unique Identifiers:** Assign new, unique identifier attributes to each <qti-assessment-item> (e.g., "generated-item-1").
-  9. **Strict JSON Output:** Output only the specified JSON object without extra text.
+  
+  ## ⚠️ CRITICAL: Structure Preservation Rules
+  4. **NEVER Modify QTI XML Structure:** The QTI XML structure (tags, attributes, nesting, organization) MUST remain exactly the same as the source. You may ONLY change:
+     - Text content within tags
+     - Numbers and values
+     - Choice identifiers and content
+     - Image sources (following image rules below)
+     - Mathematical expressions within existing math tags
+  5. **Forbidden Structure Changes:** You MUST NOT add, remove, or rearrange:
+     - QTI tags (qti-choice-interaction, qti-simple-choice, etc.)
+     - XML attributes or namespaces
+     - Response declarations or outcome declarations
+     - Feedback blocks or processing templates
+     - The overall XML hierarchy and nesting
+
+  ## Image Handling Rules
+  6. **PNG Image Replacement:** If the source contains PNG images (<img src="*.png" />), you SHOULD replace them with appropriate emojis or Unicode symbols that match the new content context. For example:
+     - Science concepts: use 🔬, ⚗️, 🧪, 🧬, ⚡, 🌍, 🌊, 🌟
+     - General objects: use relevant emojis (🍎 for apple, 🏠 for house, 🚗 for car, etc.)
+     - Replace the entire <img> tag with the emoji/symbol directly in the text
+  7. **SVG Image Editing:** If the source contains SVG images, you MUST modify the SVG content to match your new question variation while keeping the same SVG structure:
+     - Update text labels within SVG to match new context
+     - Modify numbers, dimensions, or values shown in the SVG
+     - Change colors, shapes, or diagram elements as needed for the new scenario
+     - Ensure the SVG remains valid and well-formed XML
+  8. **Image Content Alignment:** All image replacements or edits MUST align perfectly with the new question content and context.
+
+  ## Quality Assurance Rules
+  9. **Preserve Feedback Structure:** If the source includes <qti-feedback-inline> for choices, provide unique, relevant feedback for every choice in variations, explaining correctness or errors in the new context.
+  10. **Absolute XML Well-Formedness:** Prioritize perfect XML: Open tags must have matching closing tags, attributes quoted, special characters escaped (e.g., &lt; for <).
+  11. **Unique Identifiers:** For each variation, assign a unique identifier in this exact format: "nice:${khanId}:XXXX" where XXXX is a 4-digit number starting from ${String(startingIndex).padStart(4, "0")} (e.g., "nice:${khanId}:${String(startingIndex).padStart(4, "0")}", "nice:${khanId}:${String(startingIndex + 1).padStart(4, "0")}", etc.).
+  12. **Strict JSON Output:** Output only the specified JSON object without extra text.
 </instructions_and_constraints>
 
 <thinking_instructions>
@@ -43,8 +71,9 @@ ${sourceQtiXml}
   For each variation, reason step-by-step in <thinking> tags before generating:
   1. Analyze core skill and misconceptions.
   2. Plan distinct variation (new elements, distractors).
-  3. Verify structure, feedback, and XML validity.
-  Generate 2-3 reasoning paths if needed and select the most consistent. After all variations, critique in <self_review> tags: Check XML validity, skill alignment, distinctness, and refine if issues found (but output only final JSON).
+  3. Identify any images that need replacement/editing and plan appropriate substitutions.
+  4. Verify structure preservation, feedback alignment, and XML validity.
+  Generate 2-3 reasoning paths if needed and select the most consistent. After all variations, critique in <self_review> tags: Check XML validity, skill alignment, distinctness, structure preservation, and image handling. Refine if issues found (but output only final JSON).
 </thinking_instructions>
 
 <examples>
@@ -87,20 +116,50 @@ ${sourceQtiXml}
       1. **Analyze Skill:** Tests rectangle area (length × width). Numbers: 8 and 5. Correct: 40.
       2. **Misconceptions:** ChoiceB: perimeter (2×(8+5)=26). ChoiceC: addition (8+5=13, wrong units).
       3. **Plan Variation:** New: rectangular field, 12m × 10m. Correct: 120 m². Distractors: perimeter (44 m²), addition (22 m), magnitude error (1200 m²).
-      4. **Construct XML:** New identifier "generated-item-1", update title/prompt/choices/correct-response. Ensure tags match.
+      4. **Structure Check:** Same XML structure, only changing text content and numbers.
+      5. **Construct XML:** New identifier "nice:${khanId}:0001", update title/prompt/choices/correct-response. Ensure tags match exactly.
     </thinking>
     <answer>
       {
         "differentiatedQuestions": [
-          "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>\\n<qti-assessment-item xmlns=\\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd\\" identifier=\\"generated-item-1\\" title=\\"Area of a Larger Rectangle\\" adaptive=\\"false\\" time-dependent=\\"false\\">\\n  <qti-response-declaration identifier=\\"RESPONSE\\" cardinality=\\"single\\" base-type=\\"identifier\\">\\n    <qti-correct-response><qti-value>ChoiceC</qti-value></qti-correct-response>\\n  </qti-response-declaration>\\n  <qti-outcome-declaration identifier=\\"SCORE\\" cardinality=\\"single\\" base-type=\\"float\\">\\n    <qti-default-value><qti-value>0.0</qti-value></qti-default-value>\\n  </qti-outcome-declaration>\\n  <qti-item-body>\\n    <p>What is the area of a rectangular field with a length of 12 meters and a width of 10 meters?</p>\\n    <qti-choice-interaction response-identifier=\\"RESPONSE\\" shuffle=\\"true\\" max-choices=\\"1\\">\\n      <qti-simple-choice identifier=\\"ChoiceA\\">44 m²</qti-simple-choice>\\n      <qti-simple-choice identifier=\\"ChoiceB\\">22 m</qti-simple-choice>\\n      <qti-simple-choice identifier=\\"ChoiceC\\">120 m²</qti-simple-choice>\\n      <qti-simple-choice identifier=\\"ChoiceD\\">1200 m²</qti-simple-choice>\\n    </qti-choice-interaction>\\n  </qti-item-body>\\n  <qti-response-processing template=\\"http://www.imsglobal.org/question/qti_v3p0/rptemplates/match_correct\\"/>\\n</qti-assessment-item>"
+          "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>\\n<qti-assessment-item xmlns=\\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xsi:schemaLocation=\\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd\\" identifier=\\"nice:${khanId}:0001\\" title=\\"Area of a Rectangular Field\\" adaptive=\\"false\\" time-dependent=\\"false\\">\\n  <qti-response-declaration identifier=\\"RESPONSE\\" cardinality=\\"single\\" base-type=\\"identifier\\">\\n    <qti-correct-response><qti-value>ChoiceA</qti-value></qti-correct-response>\\n  </qti-response-declaration>\\n  <qti-outcome-declaration identifier=\\"SCORE\\" cardinality=\\"single\\" base-type=\\"float\\">\\n    <qti-default-value><qti-value>0.0</qti-value></qti-default-value>\\n  </qti-outcome-declaration>\\n  <qti-item-body>\\n    <p>A rectangular field has a length of 12 meters and a width of 10 meters. What is its area?</p>\\n    <qti-choice-interaction response-identifier=\\"RESPONSE\\" shuffle=\\"false\\" max-choices=\\"1\\">\\n      <qti-simple-choice identifier=\\"ChoiceA\\">120 m²</qti-simple-choice>\\n      <qti-simple-choice identifier=\\"ChoiceB\\">44 m²</qti-simple-choice>\\n      <qti-simple-choice identifier=\\"ChoiceC\\">22 m</qti-simple-choice>\\n    </qti-choice-interaction>\\n  </qti-item-body>\\n  <qti-response-processing template=\\"http://www.imsglobal.org/question/qti_v3p0/rptemplates/match_correct\\"/>\\n</qti-assessment-item>"
         ]
       }
     </answer>
   </positive_example>
 
   <positive_example index="2">
-    <!-- Add a diverse example, e.g., for text-entry interaction with feedback -->
-    <!-- Omitted for brevity; include a full example here in practice -->
+    <example_inputs>
+      <main_example_input>
+        <source_qti_xml>
+          <![CDATA[
+            <?xml version="1.0" encoding="UTF-8"?>
+            <qti-assessment-item xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" identifier="counting-apples" title="Counting Apples">
+              <qti-item-body>
+                <p>Look at the picture: <img src="apple-basket.png" alt="basket of apples" /> How many apples are there?</p>
+                <qti-choice-interaction response-identifier="RESPONSE">
+                  <qti-simple-choice identifier="A">5 apples</qti-simple-choice>
+                  <qti-simple-choice identifier="B">7 apples</qti-simple-choice>
+                </qti-choice-interaction>
+              </qti-item-body>
+            </qti-assessment-item>
+          ]]>
+        </source_qti_xml>
+      </main_example_input>
+    </example_inputs>
+    <thinking>
+      1. **Analyze Skill:** Counting objects. Source uses apple image.
+      2. **Image Replacement:** PNG image should be replaced with emoji. "apple-basket.png" → use 🍎 emojis to show countable apples.
+      3. **Plan Variation:** Change to counting oranges with 🍊 emojis, different quantities.
+      4. **Structure Preservation:** Keep exact same XML structure, only change text content and replace img tag with emojis.
+    </thinking>
+    <answer>
+      {
+        "differentiatedQuestions": [
+          "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>\\n<qti-assessment-item xmlns=\\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\\" identifier=\\"nice:${khanId}:0001\\" title=\\"Counting Oranges\\">\\n  <qti-item-body>\\n    <p>Look at the oranges: 🍊🍊🍊🍊🍊🍊 How many oranges are there?</p>\\n    <qti-choice-interaction response-identifier=\\"RESPONSE\\">\\n      <qti-simple-choice identifier=\\"A\\">6 oranges</qti-simple-choice>\\n      <qti-simple-choice identifier=\\"B\\">8 oranges</qti-simple-choice>\\n    </qti-choice-interaction>\\n  </qti-item-body>\\n</qti-assessment-item>"
+        ]
+      }
+    </answer>
   </positive_example>
 
   # Negative Examples
@@ -172,7 +231,7 @@ ${sourceQtiXml}
       </example_configuration_parameters>
     </example_inputs>
     <why_this_is_bad>
-      This example demonstrates several anti-patterns: excessive MathML usage for simple numbers that could be plain text, overly complex feedback structure with both inline and block feedback, inconsistent identifier patterns (using single letters vs descriptive names), and missing context about what number Olaf started from (365 is referenced but not established). Variations should use simpler markup, clearer identifiers, and provide complete context.
+      This example demonstrates several anti-patterns: excessive MathML usage for simple numbers that could be plain text, overly complex feedback structure with both inline and block feedback, inconsistent identifier patterns (using single letters vs descriptive names), and missing context about what number Olaf started from (365 is referenced but not established). When creating variations, you must preserve ALL structural elements exactly as they appear in the source, including the complex MathML tags, all feedback blocks, and the specific identifier patterns. Do not simplify the structure - only change the content within the existing structure.
     </why_this_is_bad>
   </negative_example>
 </examples>

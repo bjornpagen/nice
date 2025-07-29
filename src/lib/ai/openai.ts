@@ -1,36 +1,38 @@
-import { type Content, GoogleGenerativeAI, HarmBlockThreshold, HarmCategory, SchemaType } from "@google/generative-ai"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import OpenAI from "openai"
 import { z } from "zod"
 import { env } from "@/env"
 import { produceQtiVariationsPrompt } from "@/lib/ai/prompts/qti-differentiation"
 import { produceQtiParaphrasingPrompt } from "@/lib/ai/prompts/qti-paraphrasing"
 
-const gemini = new GoogleGenerativeAI(env.GEMINI_API_KEY)
+const openai = new OpenAI({
+	apiKey: env.OPENAI_API_KEY
+})
 
-// Zod schema for validating the expected output from the Gemini API
+// Zod schema for validating the expected output from the OpenAI API
 const QtiVariationsOutputSchema = z.object({
 	differentiatedQuestions: z.array(z.string().min(1)).min(1)
 })
 
-// ✅ ADD: New Zod schema for the paraphrasing output
+// Zod schema for the paraphrasing output
 const QtiParaphrasingOutputSchema = z.object({
 	paraphrasedStimulus: z.string().min(1)
 })
 
-// Retry configuration
+// Retry configuration - more aggressive since o3 has better rate limits
 const RETRY_CONFIG = {
 	maxRetries: 3,
-	baseDelayMs: 1000,
-	maxDelayMs: 10000
+	baseDelayMs: 500, // Shorter delays due to better rate limits
+	maxDelayMs: 5000
 }
 
 /**
  * Custom error types for better retry logic
  */
-const ErrGeminiParsing = errors.new("gemini parsing failed")
-const ErrGeminiValidation = errors.new("gemini validation failed")
-const ErrGeminiEmpty = errors.new("gemini returned empty response")
+const ErrOpenAIParsing = errors.new("openai parsing failed")
+const ErrOpenAIValidation = errors.new("openai validation failed")
+const ErrOpenAIEmpty = errors.new("openai returned empty response")
 
 /**
  * Determines if an error is retryable
@@ -41,13 +43,15 @@ function isRetryableError(error: unknown): boolean {
 	}
 
 	return (
-		errors.is(error, ErrGeminiParsing) ||
-		errors.is(error, ErrGeminiValidation) ||
-		errors.is(error, ErrGeminiEmpty) ||
-		error.message.includes("quota") ||
-		error.message.includes("rate limit") ||
+		errors.is(error, ErrOpenAIParsing) ||
+		errors.is(error, ErrOpenAIValidation) ||
+		errors.is(error, ErrOpenAIEmpty) ||
+		error.message.includes("rate_limit") ||
 		error.message.includes("timeout") ||
-		error.message.includes("network")
+		error.message.includes("network") ||
+		error.message.includes("502") ||
+		error.message.includes("503") ||
+		error.message.includes("504")
 	)
 }
 
@@ -67,7 +71,7 @@ function calculateDelay(attempt: number): number {
 }
 
 /**
- * Single attempt to generate QTI variations (extracted for retry logic)
+ * Single attempt to generate QTI variations using OpenAI o3
  */
 async function attemptQtiVariationGeneration(
 	sourceQtiXml: string,
@@ -78,71 +82,72 @@ async function attemptQtiVariationGeneration(
 ): Promise<string[]> {
 	const { developer, user } = produceQtiVariationsPrompt(sourceQtiXml, numberOfVariations, khanId, startingIndex)
 
-	const model = gemini.getGenerativeModel({
-		model: "gemini-1.5-flash",
-		systemInstruction: developer
-	})
-
-	const contents: Content[] = [{ role: "user", parts: [{ text: user }] }]
-
-	const safetySettings = [
-		{ category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-		{ category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
-		{ category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
-		{ category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE }
-	]
-
 	const result = await errors.try(
-		model.generateContent({
-			contents,
-			generationConfig: {
-				responseMimeType: "application/json",
-				responseSchema: {
-					type: SchemaType.OBJECT,
-					properties: {
-						differentiatedQuestions: {
-							type: SchemaType.ARRAY,
-							items: {
-								type: SchemaType.STRING
-							}
-						}
-					},
-					required: ["differentiatedQuestions"]
+		openai.chat.completions.create({
+			model: "o3-mini", // Using o3-mini for better cost/performance balance
+			messages: [
+				{
+					role: "system",
+					content: developer
+				},
+				{
+					role: "user",
+					content: user
 				}
-			},
-			safetySettings
+			],
+			response_format: {
+				type: "json_schema",
+				json_schema: {
+					name: "qti_variations",
+					schema: {
+						type: "object",
+						properties: {
+							differentiatedQuestions: {
+								type: "array",
+								items: {
+									type: "string"
+								}
+							}
+						},
+						required: ["differentiatedQuestions"],
+						additionalProperties: false
+					}
+				}
+			}
+			// ✅ REMOVED: o3 models only support default temperature (1.0)
+			// ✅ REMOVED: max_completion_tokens to allow unrestricted output
 		})
 	)
 
 	if (result.error) {
-		logger.error("gemini api call for qti differentiation failed", { error: result.error, attempt })
-		throw errors.wrap(result.error, "gemini api call")
+		logger.error("openai api call for qti differentiation failed", { error: result.error, attempt })
+		throw errors.wrap(result.error, "openai api call")
 	}
 
-	const responseText = result.data.response.text()
-	if (!responseText) {
-		logger.error("gemini returned an empty response for qti differentiation", { attempt })
-		throw errors.wrap(ErrGeminiEmpty, "empty response from gemini")
+	const responseContent = result.data.choices[0]?.message?.content
+	if (!responseContent) {
+		logger.error("openai returned an empty response for qti differentiation", { attempt })
+		throw errors.wrap(ErrOpenAIEmpty, "empty response from openai")
 	}
 
-	const parsedResult = errors.trySync(() => JSON.parse(responseText))
+	const parsedResult = errors.trySync(() => JSON.parse(responseContent))
 	if (parsedResult.error) {
-		logger.error("failed to parse gemini json response for qti", {
+		logger.error("failed to parse openai json response for qti", {
 			error: parsedResult.error,
-			responseText: responseText.substring(0, 500), // Log first 500 chars only
+			responseText: responseContent.substring(0, 500), // Log first 500 chars only
 			attempt
 		})
-		throw errors.wrap(ErrGeminiParsing, "parsing gemini response for qti")
+		throw errors.wrap(ErrOpenAIParsing, "parsing openai response for qti")
 	}
 
 	const validationResult = QtiVariationsOutputSchema.safeParse(parsedResult.data)
 	if (!validationResult.success) {
-		logger.error("gemini response for qti did not match expected schema", {
+		logger.error("openai response for qti did not match expected schema", {
 			error: validationResult.error,
 			parsedData: parsedResult.data,
 			attempt
 		})
-		throw errors.wrap(ErrGeminiValidation, "gemini qti response validation failed")
+		throw errors.wrap(ErrOpenAIValidation, "openai qti response validation failed")
 	}
 
 	logger.info("successfully generated and validated qti variations", {
@@ -154,73 +159,74 @@ async function attemptQtiVariationGeneration(
 }
 
 /**
- * Single attempt to paraphrase QTI stimulus (extracted for retry logic)
+ * Single attempt to paraphrase QTI stimulus using OpenAI o3
  */
 async function attemptQtiStimulusParaphrasing(sourceQtiXml: string, attempt: number): Promise<string> {
 	const { developer, user } = produceQtiParaphrasingPrompt(sourceQtiXml)
 
-	const model = gemini.getGenerativeModel({
-		model: "gemini-1.5-flash",
-		systemInstruction: developer
-	})
-
-	const contents: Content[] = [{ role: "user", parts: [{ text: user }] }]
-
-	const safetySettings = [
-		{ category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
-		{ category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
-		{ category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
-		{ category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE }
-	]
-
 	const result = await errors.try(
-		model.generateContent({
-			contents,
-			generationConfig: {
-				responseMimeType: "application/json",
-				responseSchema: {
-					type: SchemaType.OBJECT,
-					properties: {
-						paraphrasedStimulus: {
-							type: SchemaType.STRING
-						}
-					},
-					required: ["paraphrasedStimulus"]
+		openai.chat.completions.create({
+			model: "o3",
+			messages: [
+				{
+					role: "system",
+					content: developer
+				},
+				{
+					role: "user",
+					content: user
 				}
-			},
-			safetySettings
+			],
+			response_format: {
+				type: "json_schema",
+				json_schema: {
+					name: "qti_paraphrasing",
+					schema: {
+						type: "object",
+						properties: {
+							paraphrasedStimulus: {
+								type: "string"
+							}
+						},
+						required: ["paraphrasedStimulus"],
+						additionalProperties: false
+					}
+				}
+			}
+			// ✅ REMOVED: o3 models only support default temperature (1.0)
+			// ✅ REMOVED: max_completion_tokens to allow unrestricted output
 		})
 	)
 
 	if (result.error) {
-		logger.error("gemini api call for qti paraphrasing failed", { error: result.error, attempt })
-		throw errors.wrap(result.error, "gemini api call")
+		logger.error("openai api call for qti paraphrasing failed", { error: result.error, attempt })
+		throw errors.wrap(result.error, "openai api call")
 	}
 
-	const responseText = result.data.response.text()
-	if (!responseText) {
-		logger.error("gemini returned an empty response for qti paraphrasing", { attempt })
-		throw errors.wrap(ErrGeminiEmpty, "empty response from gemini")
+	const responseContent = result.data.choices[0]?.message?.content
+	if (!responseContent) {
+		logger.error("openai returned an empty response for qti paraphrasing", { attempt })
+		throw errors.wrap(ErrOpenAIEmpty, "empty response from openai")
 	}
 
-	const parsedResult = errors.trySync(() => JSON.parse(responseText))
+	const parsedResult = errors.trySync(() => JSON.parse(responseContent))
 	if (parsedResult.error) {
-		logger.error("failed to parse gemini json response for qti", {
+		logger.error("failed to parse openai json response for qti", {
 			error: parsedResult.error,
-			responseText: responseText.substring(0, 500), // Log first 500 chars only
+			responseText: responseContent.substring(0, 500), // Log first 500 chars only
 			attempt
 		})
-		throw errors.wrap(ErrGeminiParsing, "parsing gemini response for qti")
+		throw errors.wrap(ErrOpenAIParsing, "parsing openai response for qti")
 	}
 
 	const validationResult = QtiParaphrasingOutputSchema.safeParse(parsedResult.data)
 	if (!validationResult.success) {
-		logger.error("gemini response for qti paraphrasing did not match expected schema", {
+		logger.error("openai response for qti paraphrasing did not match expected schema", {
 			error: validationResult.error,
 			parsedData: parsedResult.data,
 			attempt
 		})
-		throw errors.wrap(ErrGeminiValidation, "gemini qti paraphrasing response validation failed")
+		throw errors.wrap(ErrOpenAIValidation, "openai qti paraphrasing response validation failed")
 	}
 
 	logger.info("successfully generated and validated paraphrased qti stimulus", {
@@ -231,7 +237,9 @@ async function attemptQtiStimulusParaphrasing(sourceQtiXml: string, attempt: num
 }
 
 /**
- * Generates variations of a QTI assessment item using the Gemini AI model with retry logic.
+ * Generates variations of a QTI assessment item using OpenAI o3 with retry logic.
+ *
+ * This function has the same signature as the Gemini version for drop-in replacement.
  *
  * @param sourceQtiXml The original QTI XML string.
  * @param numberOfVariations The number of new question variations to generate.
@@ -245,7 +253,7 @@ export async function generateQtiVariations(
 	khanId: string,
 	startingIndex = 1
 ): Promise<string[]> {
-	logger.info("generating qti variations", { numberOfVariations, khanId, startingIndex })
+	logger.info("generating qti variations with openai o3", { numberOfVariations, khanId, startingIndex })
 
 	for (let attempt = 0; attempt <= RETRY_CONFIG.maxRetries; attempt++) {
 		const result = await errors.try(
@@ -288,13 +296,15 @@ export async function generateQtiVariations(
 }
 
 /**
- * Paraphrases a QTI assessment stimulus using the Gemini AI model with retry logic.
+ * Paraphrases a QTI assessment stimulus using OpenAI o3 with retry logic.
+ *
+ * This function has the same signature as the Gemini version for drop-in replacement.
  *
  * @param sourceQtiXml The original QTI stimulus XML string.
  * @returns A promise that resolves to a single string containing the paraphrased QTI XML.
  */
 export async function paraphraseQtiStimulus(sourceQtiXml: string): Promise<string> {
-	logger.info("paraphrasing qti stimulus")
+	logger.info("paraphrasing qti stimulus with openai o3")
 
 	for (let attempt = 0; attempt <= RETRY_CONFIG.maxRetries; attempt++) {
 		const result = await errors.try(attemptQtiStimulusParaphrasing(sourceQtiXml, attempt))

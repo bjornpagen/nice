@@ -26,6 +26,8 @@ import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/conv
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 // ✅ ADD: Import the new differentiate function
 import { differentiateQuestion } from "@/inngest/functions/qti/differentiate-question"
+// ✅ ADD: Import the new differentiated ingest function
+import { differentiatedIngest } from "@/inngest/functions/qti/differentiated-ingest"
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
@@ -50,6 +52,8 @@ export const { GET, POST, PUT } = serve({
 		// ADD: Register the new independent functions.
 		orchestrateHardcodedOnerosterIngestion,
 		orchestrateHardcodedQtiIngestion,
+		// ✅ ADD: Register the new differentiated ingest function
+		differentiatedIngest,
 		// OneRoster Functions
 		generateOnerosterPayloadForCourse,
 		ingestClass,
