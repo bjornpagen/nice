@@ -200,6 +200,18 @@ ${negativeExamplesBlock}
   </malformed_qti>
   <explanation>The qti-text-entry-interaction is placed directly inside qti-item-body. This structure violates QTI 3.0 schema validation. The interaction MUST be wrapped inside a block-level element like <p>. Additionally, when wrapping the interaction in a paragraph, the qti-prompt should be moved OUTSIDE the interaction as a separate <p> element.</explanation>
 </negative_example>
+<negative_example reason="qti-stimulus-body must contain only HTML, no QTI elements">
+  <malformed_qti>
+    <qti-stimulus-body>
+      <qti-prompt>Read the following passage:</qti-prompt>
+      <p>This is an informational text about photosynthesis...</p>
+      <qti-text-entry-interaction response-identifier="RESPONSE">
+        <qti-prompt>What did you learn?</qti-prompt>
+      </qti-text-entry-interaction>
+    </qti-stimulus-body>
+  </malformed_qti>
+  <explanation>The qti-stimulus-body contains QTI elements (qti-prompt and qti-text-entry-interaction). This is INVALID. The qti-stimulus-body must contain ONLY standard HTML elements. Stimulus items are purely informational and cannot contain any interactions or QTI-specific elements. Use <p>, <h2>, <ul>, <li>, <div>, <img>, <a>, <strong>, <em>, <code>, <pre>, <math>, etc., but NEVER any qti-* elements.</explanation>
+</negative_example>
 </critical_negative_examples>
 
 <instructions>
@@ -309,6 +321,48 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
 6.  **Use Full Response Processing:** Do NOT use \`<qti-response-processing template="...">\`. Always write a full \`<qti-response-condition>\` block that explicitly sets BOTH the \`SCORE\` and \`FEEDBACK\` outcome variables.
 7.  **Do Not Hallucinate Content:** Do not add extraneous text, symbols (like dollar signs), or formatting that is not present in the original Perseus JSON.
 8.  **Handle \`sorter\` Widgets Correctly:** A Perseus \`sorter\` becomes a \`<qti-order-interaction>\`. Do not use \`min-choices\` or \`max-choices\` for simple reordering tasks, as this changes the interaction behavior.
+
+### CRITICAL: STIMULUS BODY RULES (FOR qti-assessment-stimulus ONLY) ###
+
+**ABSOLUTE RULE: <qti-stimulus-body> MUST CONTAIN ONLY HTML**
+
+When generating a \`qti-assessment-stimulus\` (not \`qti-assessment-item\`), the \`<qti-stimulus-body>\` element has extremely strict content rules:
+
+1. **NO QTI ELEMENTS ALLOWED**: The stimulus body must NEVER contain any QTI-specific elements. This includes:
+   - NO \`<qti-prompt>\` elements (use \`<p>\` or \`<h2>\` instead)
+   - NO interaction elements (\`<qti-choice-interaction>\`, \`<qti-text-entry-interaction>\`, etc.)
+   - NO QTI structural elements
+   - NO elements starting with \`qti-\`
+
+2. **ONLY HTML ELEMENTS**: You may ONLY use standard HTML elements inside \`<qti-stimulus-body>\`:
+   - Text formatting: \`<p>\`, \`<h1>\`, \`<h2>\`, \`<h3>\`, \`<strong>\`, \`<em>\`, \`<span>\`, \`<code>\`, \`<pre>\`
+   - Lists: \`<ul>\`, \`<ol>\`, \`<li>\`, \`<dl>\`, \`<dt>\`, \`<dd>\`
+   - Structure: \`<div>\`, \`<section>\`, \`<article>\`, \`<aside>\`, \`<header>\`, \`<footer>\`, \`<hr>\`
+   - Media: \`<img>\`, \`<figure>\`, \`<figcaption>\`
+   - Links: \`<a>\`
+   - Tables: \`<table>\`, \`<tr>\`, \`<td>\`, \`<th>\`, \`<thead>\`, \`<tbody>\`, \`<tfoot>\`
+   - Math: \`<math>\` (MathML is allowed)
+   - Others: \`<blockquote>\`, \`<cite>\`, \`<br>\`
+
+3. **PURPOSE**: Stimulus items are purely informational. They provide context, passages, or reference material for other assessment items. They CANNOT contain questions or interactions.
+
+4. **COMMON MISTAKES TO AVOID**:
+   - Do NOT use \`<qti-prompt>\` for headings or questions in stimulus - use \`<h2>\` or \`<p>\`
+   - Do NOT include any interactive elements - stimulus is read-only
+   - Do NOT try to collect responses within a stimulus
+
+**Example of CORRECT stimulus body:**
+\`\`\`xml
+<qti-stimulus-body>
+  <h2>The Water Cycle</h2>
+  <p>Water continuously moves through different states in nature...</p>
+  <figure>
+    <img src="https://example.com/water-cycle.png" alt="Diagram of the water cycle"/>
+    <figcaption>The water cycle showing evaporation, condensation, and precipitation</figcaption>
+  </figure>
+  <p>This process is essential for all life on Earth.</p>
+</qti-stimulus-body>
+\`\`\`
 
 ### CRITICAL: NOTES SECTION FOR ACCESSIBILITY ###
 

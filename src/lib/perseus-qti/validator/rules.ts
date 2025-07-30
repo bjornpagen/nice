@@ -539,6 +539,73 @@ export async function validateWithQtiApi(xml: string, context: ValidationContext
 }
 
 /**
+ * Validates that qti-stimulus-body elements contain only HTML content, no QTI elements.
+ * This ensures that stimulus items remain purely informational without interactions.
+ */
+export function validateStimulusBodyContent(xml: string, context: ValidationContext): void {
+	// Only apply this validation to stimulus items
+	if (context.rootTag !== "qti-assessment-stimulus") {
+		return
+	}
+
+	// Extract the qti-stimulus-body content with robust named capture groups
+	// This regex captures the opening tag with attributes and the complete content until the closing tag
+	const stimulusBodyRegex =
+		/<qti-stimulus-body(?<attributes>\s+[^>]*)?(?<closeBracket>>)(?<content>[\s\S]*?)<\/qti-stimulus-body>/i
+	const stimulusBodyMatch = xml.match(stimulusBodyRegex)
+
+	if (!stimulusBodyMatch || !stimulusBodyMatch.groups) {
+		// If there's no stimulus body, other validators will catch this
+		return
+	}
+
+	const bodyContent = stimulusBodyMatch.groups.content
+	if (!bodyContent) {
+		return
+	}
+
+	// Check for any QTI elements inside the stimulus body with robust named capture groups
+	// This regex captures: opening bracket, tag name, optional attributes, and identifies self-closing tags
+	const qtiElementRegex = /<(?<tagname>qti-(?:[a-z]+(?:-[a-z]+)*))(?<attributes>\s+[^>]*)?(?<closing>\/)?>/gi
+
+	let match: RegExpExecArray | null
+	match = qtiElementRegex.exec(bodyContent)
+
+	if (match?.groups) {
+		const tagName = match.groups.tagname
+		const fullMatch = match[0]
+		const position = match.index ?? 0
+		const contextStart = Math.max(0, position - 100)
+		const contextEnd = Math.min(bodyContent.length, position + fullMatch.length + 100)
+		const errorContext = bodyContent.substring(contextStart, contextEnd).replace(/\s+/g, " ")
+
+		// Check if it's an interaction element specifically
+		const isInteraction = QTI_INTERACTION_TAGS.some((tag) => tag === tagName)
+
+		if (isInteraction) {
+			throw errors.new(
+				`invalid qti-stimulus-body content: QTI interaction elements are not allowed inside <qti-stimulus-body>. Found: <${tagName}>. Stimulus items must contain only HTML content for informational purposes. Context: "...${errorContext}..."`
+			)
+		}
+
+		// Special case for qti-prompt to provide more helpful guidance
+		if (tagName === "qti-prompt") {
+			throw errors.new(
+				`invalid qti-stimulus-body content: <qti-prompt> is not allowed inside <qti-stimulus-body>. Use standard HTML elements like <p> or <h2> instead for headings or text. Context: "...${errorContext}..."`
+			)
+		}
+
+		throw errors.new(
+			`invalid qti-stimulus-body content: QTI elements are not allowed inside <qti-stimulus-body>. Found: <${tagName}>. Stimulus body must contain only standard HTML elements. Context: "...${errorContext}..."`
+		)
+	}
+
+	context.logger.debug("validated stimulus body contains only HTML", {
+		bodyLength: bodyContent.length
+	})
+}
+
+/**
  * NEW: A custom error to be thrown when the AI validator deems the content unsolvable.
  */
 export const ErrContentUnsolvable = errors.new("qti content is not self-contained or solvable")
