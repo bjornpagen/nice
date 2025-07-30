@@ -40,7 +40,7 @@
                  height="340"/>
         </div>
         
-        <qti-prompt>How many games did the Lions win?</qti-prompt>
+        <p>How many games did the Lions win?</p>
         <p>
             <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/> games
         </p>

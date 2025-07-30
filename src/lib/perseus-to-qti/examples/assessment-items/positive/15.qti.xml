@@ -53,10 +53,10 @@
             </math></p>
         </div>
         
-        <qti-prompt>What is the center of this circle?</qti-prompt>
+        <p>What is the center of this circle?</p>
         <p>(<qti-text-entry-interaction response-identifier="RESPONSE_X" expected-length="3"/>, <qti-text-entry-interaction response-identifier="RESPONSE_Y" expected-length="3"/>)</p>
         
-        <qti-prompt>What is the radius of this circle?</qti-prompt>
+        <p>What is the radius of this circle?</p>
         <p><qti-text-entry-interaction response-identifier="RESPONSE_R" expected-length="2"/> units</p>
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">

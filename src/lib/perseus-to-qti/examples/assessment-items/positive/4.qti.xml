@@ -22,6 +22,7 @@
     <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
+        <p>Evaluate.</p>
         <div id="reference_text">
             <math xmlns="http://www.w3.org/1998/Math/MathML">
                 <mrow>
@@ -52,8 +53,6 @@
             </math>
             <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/>
         </div>
-        
-        <qti-prompt>Evaluate.</qti-prompt>
         
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>

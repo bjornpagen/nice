@@ -39,7 +39,7 @@
                  height="200"/>
         </div>
         
-        <qti-prompt>How many dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> centimeters?</qti-prompt>
+        <p>How many dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> centimeters?</p>
         <p>
             <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/> dolls
         </p>

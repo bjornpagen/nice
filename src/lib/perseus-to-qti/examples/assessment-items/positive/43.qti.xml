@@ -45,7 +45,7 @@
                  height="100"/>
         </div>
         
-        <qti-prompt>What time is shown on the number line?</qti-prompt>
+        <p>What time is shown on the number line?</p>
         <p>
             <qti-text-entry-interaction response-identifier="RESPONSE_HR" expected-length="2"/> : <qti-text-entry-interaction response-identifier="RESPONSE_MIN" expected-length="2"/>
         </p>

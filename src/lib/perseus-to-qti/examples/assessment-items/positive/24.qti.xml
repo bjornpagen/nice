@@ -24,7 +24,6 @@
     <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="single" base-type="identifier"/>
 
     <qti-item-body>
-        <qti-prompt>Is the function given below continuous/differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>?</qti-prompt>
         <div id="reference_text">
             <math xmlns="http://www.w3.org/1998/Math/MathML">
                 <mrow>
@@ -89,6 +88,7 @@
             </math>
         </div>
         <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1" min-choices="1" class="qti-orientation-vertical">
+            <qti-prompt>Is the function given below continuous/differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>?</qti-prompt>
             <qti-simple-choice identifier="A">
                 continuous, not differentiable
                 <qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">This would be the case if the function values matched at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math> but the derivatives from left and right were different. Check both the limit values and the derivatives.</qti-feedback-inline>
@@ -121,13 +121,13 @@
                 <ul>
                     <li><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>(</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><msup><mn>2</mn><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>=</mo><mo>-</mo><mn>1</mn></math></li>
                     <li><math xmlns="http://www.w3.org/1998/Math/MathML"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>-</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>-</mo></msup></mrow></munder><mo>(</mo><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>1</mn></math></li>
-                    <li><math xmlns="http://www.w3.org/1998/Math/MathML"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>+</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>+</mo></msup></mrow></munder><mo>(</mo><msup><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>)</mo><mo>=</mo><msup><mo>(</mo><mn>2</mn><mo>-</mo><mn>4</mn><mo>)</mo><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>=</mo><mn>4</mn><mo>-</mo><mn>5</mn><mo>=</mo><mo>-</mo><mn>1</mn></math></li>
+                    <li><math xmlns="http://www.w3.org/1998/Math/MathML"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>+</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>+</mo></msup></mrow></munder><mo>(</mo><msup><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>)</mo><mo>=</mo><msup><mrow><mo>(</mo><mn>2</mn><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>=</mo><mn>4</mn><mo>-</mo><mn>5</mn><mo>=</mo><mo>-</mo><mn>1</mn></math></li>
                 </ul>
                 <p>All three values equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>, so the function is continuous.</p>
                 <p><strong>Differentiability:</strong> We need the left and right derivatives to be equal.</p>
                 <ul>
                     <li>Left derivative: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>(</mo><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>2</mn><mi>x</mi></math>, so at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>: <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math></li>
-                    <li>Right derivative: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>(</mo><msup><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>)</mo><mo>=</mo><mn>2</mn><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo></math>, so at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>(</mo><mo>-</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>4</mn></math></li>
+                    <li>Right derivative: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>(</mo><msup><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>)</mo><mo>=</mo><mn>2</mn><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo></math>, so at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>(</mo><mo>-</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>4</mn></math></li>
                 </ul>
                 <p>Both derivatives equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>, so the function is differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>.</p>
             </qti-content-body>

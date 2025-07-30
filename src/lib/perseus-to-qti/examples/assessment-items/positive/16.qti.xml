@@ -52,7 +52,7 @@
             </table>
         </div>
         
-        <qti-prompt>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka's final exam score in chemistry.</qti-prompt>
+        <p>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka's final exam score in chemistry.</p>
         
         <p>
             <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/> points

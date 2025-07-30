@@ -49,7 +49,7 @@
                  height="300"/>
         </div>
         
-        <qti-prompt>How many more chestnuts did the squirrel with the most chestnuts eat than the squirrel with the fewest chestnuts?</qti-prompt>
+        <p>How many more chestnuts did the squirrel with the most chestnuts eat than the squirrel with the fewest chestnuts?</p>
         <p>
             <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/> chestnuts
         </p>

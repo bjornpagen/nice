@@ -69,7 +69,7 @@
             </math>
         </p>
 
-        <qti-prompt>Use Stokes' theorem to rewrite the surface integral as a line integral.</qti-prompt>
+        <p>Use Stokes' theorem to rewrite the surface integral as a line integral.</p>
         <p><span class="qti-italic">Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</span></p>
         
         <p>

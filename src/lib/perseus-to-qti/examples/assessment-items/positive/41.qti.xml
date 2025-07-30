@@ -56,7 +56,7 @@
             </qti-simple-choice>
         </qti-choice-interaction>
         
-        <qti-prompt>How many awards has Mrs. Bain now given?</qti-prompt>
+        <p>How many awards has Mrs. Bain now given?</p>
         <p>
             <qti-text-entry-interaction response-identifier="RESPONSE_NUMERIC" expected-length="3"/> awards
         </p>

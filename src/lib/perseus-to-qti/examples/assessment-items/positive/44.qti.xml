@@ -40,7 +40,7 @@
             <p><span class="qti-italic">Note: The shorter hour hand is just past the 2, and the longer minute hand is pointing directly at the 1.</span></p>
         </div>
         
-        <qti-prompt>What time is it?</qti-prompt>
+        <p>What time is it?</p>
         <p>
             The time is <qti-text-entry-interaction response-identifier="RESPONSE_HR" expected-length="2"/> : <qti-text-entry-interaction response-identifier="RESPONSE_MIN" expected-length="2"/>.
         </p>
