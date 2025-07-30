@@ -68,11 +68,12 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
-	"qti/course.ingest": {
-		data: z.object({
-			courseId: z.string().min(1)
-		})
-	},
+	// ❌ REMOVED: Old QTI ingestion event
+	// "qti/course.ingest": {
+	// 	data: z.object({
+	// 		courseId: z.string().min(1)
+	// 	})
+	// },
 	// ✅ ADD: New event for the differentiated ingestion pipeline.
 	"qti/course.differentiated-ingest": {
 		data: z.object({

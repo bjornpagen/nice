@@ -11,7 +11,8 @@ import { ingestComponentResources } from "@/inngest/functions/oneroster/ingest-c
 import { ingestCourse } from "@/inngest/functions/oneroster/ingest-course"
 import { ingestCourseComponents } from "@/inngest/functions/oneroster/ingest-course-components"
 import { ingestResources } from "@/inngest/functions/oneroster/ingest-resources"
-import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
+// ❌ REMOVED: Old orchestrator is now obsolete.
+// import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
 // Import orchestrators
 import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orchestrate-course-oneroster-generation"
 import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
@@ -44,7 +45,8 @@ export const { GET, POST, PUT } = serve({
 		// Orchestrators
 		orchestrateCourseOnerosterGeneration,
 		orchestrateCourseUploadToOneroster,
-		orchestrateCourseIngestionToQti,
+		// ❌ REMOVED: Old QTI orchestrator
+		// orchestrateCourseIngestionToQti,
 		orchestrateCourseXmlGeneration,
 		orchestrateCourseUploadToQti,
 		// ADD: Register the new hardcoded migration orchestrators
