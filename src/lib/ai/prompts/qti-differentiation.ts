@@ -30,7 +30,6 @@ ${example.qti}
 
 <!-- CRITICAL VALIDATION RULES FROM PROVEN SYSTEM -->
 <critical_structure_rules>
-  - NEVER use identifiers like 'nice-tmp:x...' - these fail validation
   - ALWAYS use format: 'nice_${khanId}_XXXX' where XXXX is 4-digit padded number
   - NEVER place <qti-prompt> in wrong location - study examples above
   - ALWAYS use complete closing tags: </qti-simple-choice>, never </_> or </>

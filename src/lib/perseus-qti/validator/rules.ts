@@ -423,7 +423,7 @@ async function upsertAndCleanupStimulus(identifier: string, xml: string, context
  * This serves as the ultimate "ground truth" validation pass.
  */
 export async function validateWithQtiApi(xml: string, context: ValidationContext): Promise<void> {
-	const tempIdentifier = `nice-tmp:${context.id}`
+	const tempIdentifier = `nice-tmp_${context.id}`
 
 	if (context.rootTag === "qti-assessment-item") {
 		await upsertAndCleanupItem(tempIdentifier, xml, context)

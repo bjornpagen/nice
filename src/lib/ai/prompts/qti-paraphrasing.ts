@@ -25,7 +25,6 @@ ${example.qti}
 
 <!-- CRITICAL VALIDATION RULES FROM PROVEN SYSTEM -->
 <critical_structure_rules>
-  - NEVER use identifiers like 'nice-tmp:x...' - these fail validation
   - ALWAYS preserve identifier format exactly as in source
   - NEVER place elements in wrong hierarchy positions
   - NEVER change element nesting or structure
