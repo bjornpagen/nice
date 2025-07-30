@@ -4,6 +4,7 @@ import {
 	validateContentSufficiency,
 	validateHtmlEntities,
 	validateImageUrls,
+	validateInteractionAttributes,
 	validatePerseusArtifacts,
 	validatePromptPlacement,
 	validateRootElement,
@@ -35,6 +36,7 @@ export async function runValidationPipeline(
 		validateTruncatedTags,
 		validatePerseusArtifacts,
 		validatePromptPlacement,
+		validateInteractionAttributes,
 		validateHtmlEntities
 	]
 

@@ -216,6 +216,54 @@ export function validatePromptPlacement(xml: string, _context: ValidationContext
 	}
 }
 
+/**
+ * Validates that min-choices and max-choices attributes are used together on interactions.
+ * If one is present, both must be present.
+ */
+export function validateInteractionAttributes(xml: string, _context: ValidationContext): void {
+	// Robust regex with named capture groups to find any QTI interaction tag with its attributes
+	const interactionRegex =
+		/<(?<tagname>qti-(?:choice|order|associate|match|inline-choice|gap-match|hottext|extended-text|text-entry|slider|upload|drawing|graphic-associate|graphic-gap-match|graphic-order|hotspot|media|position-object|select-point|custom|portable-custom)-interaction)(?<attributes>[^>]*)>/gi
+
+	let match: RegExpExecArray | null
+	match = interactionRegex.exec(xml)
+	while (match !== null) {
+		if (!match.groups) {
+			match = interactionRegex.exec(xml)
+			continue
+		}
+
+		const attributes = match.groups.attributes
+		if (!attributes) {
+			match = interactionRegex.exec(xml)
+			continue
+		}
+
+		// Check for presence of min-choices and max-choices with named capture groups
+		const minChoicesMatch = attributes.match(/\bmin-choices\s*=\s*(?<quote>["'])(?<value>\d+)(?<endquote>["'])/)
+		const maxChoicesMatch = attributes.match(/\bmax-choices\s*=\s*(?<quote>["'])(?<value>\d+)(?<endquote>["'])/)
+
+		const hasMinChoices = minChoicesMatch !== null
+		const hasMaxChoices = maxChoicesMatch !== null
+
+		// If one is present but not the other, throw an error
+		if (hasMinChoices && !hasMaxChoices) {
+			const tagName = match.groups.tagname
+			throw errors.new(
+				`invalid interaction attributes: min-choices is present but max-choices is missing. Both attributes must be used together. Found in: <${tagName}${attributes}>`
+			)
+		}
+		if (hasMaxChoices && !hasMinChoices) {
+			const tagName = match.groups.tagname
+			throw errors.new(
+				`invalid interaction attributes: max-choices is present but min-choices is missing. Both attributes must be used together. Found in: <${tagName}${attributes}>`
+			)
+		}
+
+		match = interactionRegex.exec(xml)
+	}
+}
+
 export function validateHtmlEntities(xml: string, context: ValidationContext): void {
 	// Check for unescaped angle brackets which are the most critical issue
 	const angleValidationError = validateXmlAngleBrackets(xml, context.logger)
