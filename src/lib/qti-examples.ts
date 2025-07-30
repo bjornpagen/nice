@@ -7,7 +7,7 @@ import * as logger from "@superbuilders/slog"
  */
 interface ConversionExample {
 	name: string
-	perseus: unknown
+	perseus: unknown | null // Can be null for negative examples without Perseus source
 	qti: string
 	type: "positive" | "negative"
 }
@@ -58,9 +58,26 @@ export async function loadConversionExamples(
 			continue
 		}
 
+		// For negative examples, we support both:
+		// 1. Perseus + QTI pairs (traditional examples)
+		// 2. Standalone QTI files (for cases where Perseus source doesn't make sense)
 		const perseusFiles = filesResult.data.filter((file) => file.endsWith(perseusExt))
-		if (perseusFiles.length === 0) {
-			logger.warn("no perseus example files found in examples directory", {
+		const qtiFiles = filesResult.data.filter((file) => file.endsWith(qtiExt))
+
+		// Get all unique base names from both perseus and qti files
+		const baseNames = new Set<string>()
+		for (const perseusFile of perseusFiles) {
+			baseNames.add(perseusFile.replace(perseusExt, ""))
+		}
+		// For negative examples, also include standalone QTI files
+		if (exampleType === "negative") {
+			for (const qtiFile of qtiFiles) {
+				baseNames.add(qtiFile.replace(qtiExt, ""))
+			}
+		}
+
+		if (baseNames.size === 0) {
+			logger.warn("no example files found in examples directory", {
 				path: exampleDir,
 				type,
 				exampleType
@@ -68,45 +85,79 @@ export async function loadConversionExamples(
 			continue
 		}
 
-		const examplePromises = perseusFiles.map(async (perseusFile): Promise<ConversionExample | null> => {
-			const baseName = perseusFile.replace(perseusExt, "")
+		const examplePromises = Array.from(baseNames).map(async (baseName): Promise<ConversionExample | null> => {
+			const perseusFile = `${baseName}${perseusExt}`
 			const qtiFile = `${baseName}${qtiExt}`
 			const perseusPath = `${exampleDir}/${perseusFile}`
 			const qtiPath = `${exampleDir}/${qtiFile}`
 
-			const [perseusContentResult, qtiContentResult] = await Promise.all([
-				errors.try(fs.readFile(perseusPath, "utf-8")),
-				errors.try(fs.readFile(qtiPath, "utf-8"))
+			// For negative examples, perseus file is optional
+			const isNegative = exampleType === "negative"
+
+			// Check if files exist
+			const [perseusExistsResult, qtiExistsResult] = await Promise.all([
+				errors.try(fs.access(perseusPath)),
+				errors.try(fs.access(qtiPath))
 			])
 
-			if (perseusContentResult.error) {
-				logger.warn("failed to read perseus file, skipping example", {
-					file: perseusFile,
-					error: perseusContentResult.error
+			const perseusExists = !perseusExistsResult.error
+			const qtiExists = !qtiExistsResult.error
+
+			// Skip if QTI doesn't exist
+			if (!qtiExists) {
+				logger.warn("qti file not found, skipping example", {
+					baseName,
+					qtiFile
 				})
 				return null
 			}
+
+			// For positive examples, perseus must exist
+			if (!isNegative && !perseusExists) {
+				logger.warn("perseus file not found for positive example, skipping", {
+					baseName,
+					perseusFile
+				})
+				return null
+			}
+
+			// Read QTI file (always required)
+			const qtiContentResult = await errors.try(fs.readFile(qtiPath, "utf-8"))
 			if (qtiContentResult.error) {
-				logger.warn("qti file not found for perseus example, skipping", {
-					perseusFile,
-					qtiFile,
+				logger.warn("failed to read qti file, skipping example", {
+					file: qtiFile,
 					error: qtiContentResult.error
 				})
 				return null
 			}
 
-			const perseusJsonResult = errors.trySync(() => JSON.parse(perseusContentResult.data))
-			if (perseusJsonResult.error) {
-				logger.warn("failed to parse perseus json, skipping example", {
-					file: perseusFile,
-					error: perseusJsonResult.error
-				})
-				return null
+			// Read and parse Perseus file if it exists
+			let perseusData: unknown = null
+			if (perseusExists) {
+				const perseusContentResult = await errors.try(fs.readFile(perseusPath, "utf-8"))
+				if (perseusContentResult.error) {
+					logger.warn("failed to read perseus file, skipping example", {
+						file: perseusFile,
+						error: perseusContentResult.error
+					})
+					return null
+				}
+
+				const perseusJsonResult = errors.trySync(() => JSON.parse(perseusContentResult.data))
+				if (perseusJsonResult.error) {
+					logger.warn("failed to parse perseus json, skipping example", {
+						file: perseusFile,
+						error: perseusJsonResult.error
+					})
+					return null
+				}
+
+				perseusData = perseusJsonResult.data
 			}
 
 			return {
 				name: baseName,
-				perseus: perseusJsonResult.data,
+				perseus: perseusData,
 				qti: qtiContentResult.data,
 				type: exampleType
 			}

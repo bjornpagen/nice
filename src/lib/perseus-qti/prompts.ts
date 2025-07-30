@@ -70,9 +70,13 @@ ${example.qti}
 			.map(
 				(example) => `
 <negative_example_from_data name="${example.name}">
-  <perseus_json>
+${
+	example.perseus !== null
+		? `  <perseus_json>
 ${JSON.stringify(example.perseus, null, 2)}
-  </perseus_json>
+  </perseus_json>`
+		: "  <!-- No Perseus source - this is a QTI-only negative example -->"
+}
   <malformed_qti_xml>
 ${example.qti}
   </malformed_qti_xml>
