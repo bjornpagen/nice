@@ -44,7 +44,7 @@ function mapToOneRosterSubjects(internalSubjectTitle: string): string[] {
 
 interface OneRosterGUIDRef {
 	sourcedId: string
-	type: "course" | "academicSession" | "org" | "courseComponent" | "resource" | "term" | "schoolYear" | "district"
+	type: "course" | "academicSession" | "org" | "courseComponent" | "resource" | "term" | "district"
 }
 
 interface OneRosterCourse {
@@ -294,7 +294,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			subjects: mapToOneRosterSubjects(subjectTitle),
 			courseCode: course.slug,
 			org: { sourcedId: ORG_SOURCED_ID, type: "district" },
-			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "schoolYear" },
+			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" },
 			metadata: {
 				khanId: course.id,
 				khanSlug: course.slug,
@@ -311,7 +311,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			classType: "scheduled",
 			course: { sourcedId: `nice_${course.id}`, type: "course" },
 			school: { sourcedId: ORG_SOURCED_ID, type: "org" },
-			terms: [{ sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "schoolYear" }]
+			terms: [{ sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" }]
 		},
 		courseComponents: [],
 		resources: [],
