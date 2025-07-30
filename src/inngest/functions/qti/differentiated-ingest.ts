@@ -5,6 +5,8 @@ import { and, eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
+import { convertHtmlEntities, stripXmlComments } from "@/lib/perseus-qti/strip"
+import { runValidationPipeline } from "@/lib/perseus-qti/validator"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import { differentiateQuestion } from "./differentiate-question"
 import { paraphraseStimulus } from "./paraphrase-stimulus"
@@ -205,11 +207,40 @@ export const differentiatedIngest = inngest.createFunction(
 
 					if (result.status === "success" && "generatedXmls" in result && "questionId" in result) {
 						for (let variationIndex = 0; variationIndex < result.generatedXmls.length; variationIndex++) {
-							const variationXml = result.generatedXmls[variationIndex]
+							let variationXml = result.generatedXmls[variationIndex]
 							if (!variationXml) continue
 
-							// ✅ SKIP VALIDATION: Write all AI responses directly
-							logger.info("writing AI response directly (validation bypassed)", {
+							// Apply XML cleanup functions first
+							variationXml = convertHtmlEntities(variationXml, logger)
+							variationXml = stripXmlComments(variationXml, logger)
+
+							const validationResult = await errors.try(
+								runValidationPipeline(
+									variationXml,
+									{
+										id: originalQuestion.id,
+										rootTag: "qti-assessment-item",
+										title: originalQuestion.exerciseTitle,
+										logger
+									},
+									// Explicitly skip the solvability check
+									{ skip: { solvability: true } }
+								)
+							)
+
+							if (validationResult.error || !validationResult.data.isValid) {
+								logger.warn("ai-generated xml failed validation and will be discarded", {
+									questionId: originalQuestion.id,
+									chunkIndex,
+									variationIndex,
+									errors: validationResult.error
+										? [validationResult.error.message]
+										: validationResult.data.errors.map((e) => e.message)
+								})
+								continue // Skip this invalid variation
+							}
+
+							logger.info("ai-generated xml passed validation", {
 								questionId: originalQuestion.id,
 								chunkIndex,
 								variationIndex
@@ -217,7 +248,7 @@ export const differentiatedIngest = inngest.createFunction(
 
 							const uniqueCode = (variationIndex + 1).toString().padStart(4, "0")
 							const newIdentifier = `nice_${originalQuestion.id}_${uniqueCode}`
-							const newXml = variationXml.replace(/identifier="[^"]+"/, `identifier="${newIdentifier}"`)
+							const newXml = validationResult.data.xml.replace(/identifier="[^"]+"/, `identifier="${newIdentifier}"`)
 
 							validatedItems.push({
 								xml: newXml,
@@ -321,14 +352,43 @@ export const differentiatedIngest = inngest.createFunction(
 					if (!result || !originalStimulus) continue
 
 					if (result.status === "success" && "paraphrasedXml" in result && result.paraphrasedXml) {
-						// ✅ SKIP VALIDATION: Write all AI responses directly
-						logger.info("writing paraphrased stimulus directly (validation bypassed)", {
+						// Apply XML cleanup functions first
+						let paraphrasedXml = result.paraphrasedXml
+						paraphrasedXml = convertHtmlEntities(paraphrasedXml, logger)
+						paraphrasedXml = stripXmlComments(paraphrasedXml, logger)
+
+						const validationResult = await errors.try(
+							runValidationPipeline(
+								paraphrasedXml,
+								{
+									id: originalStimulus.id,
+									rootTag: "qti-assessment-stimulus",
+									title: originalStimulus.title,
+									logger
+								},
+								// Explicitly skip the solvability check
+								{ skip: { solvability: true } }
+							)
+						)
+
+						if (validationResult.error || !validationResult.data.isValid) {
+							logger.warn("ai-generated stimulus xml failed validation and will be discarded", {
+								articleId: originalStimulus.id,
+								chunkIndex,
+								errors: validationResult.error
+									? [validationResult.error.message]
+									: validationResult.data.errors.map((e) => e.message)
+							})
+							continue // Skip this invalid stimulus
+						}
+
+						logger.info("ai-generated stimulus xml passed validation", {
 							articleId: originalStimulus.id,
 							chunkIndex
 						})
 
 						validatedStimuli.push({
-							xml: result.paraphrasedXml,
+							xml: validationResult.data.xml,
 							metadata: { khanId: originalStimulus.id }
 						})
 					}
