@@ -5,6 +5,7 @@ import * as React from "react"
 import { ActivityIcon } from "@/components/icons/activity"
 import { Button } from "@/components/ui/button"
 import type { Activity } from "@/lib/types/domain"
+import { normalizeString } from "@/lib/utils"
 
 export type TableProps = {
 	activities: Activity[]
@@ -17,7 +18,9 @@ export function Table({ activities }: TableProps) {
 
 	const handleActivityClick = (activity: Activity) => {
 		if (activity.url) {
-			router.push(activity.url)
+			// Normalize the URL to handle encoded colons before navigation
+			const normalizedUrl = normalizeString(activity.url)
+			router.push(normalizedUrl)
 		}
 	}
 
