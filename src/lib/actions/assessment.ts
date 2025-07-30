@@ -20,7 +20,7 @@ import { oneroster, powerpath, qti } from "@/lib/clients"
  * Processes a question response using the QTI API and optionally logs to PowerPath.
  * This server action wraps the API calls that should never be called from client components.
  *
- * @param qtiItemId - The QTI assessment item ID (e.g., nice:question123)
+ * @param qtiItemId - The QTI assessment item ID (e.g., nice_question123)
  * @param selectedResponse - The user's selected response
  * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user456)
  * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr789) - used by PowerPath
@@ -304,7 +304,7 @@ export async function finalizeAssessment(onerosterUserSourcedId: string, onerost
  * This is used for summative assessments (quizzes, tests) where skipping
  * should count as an incorrect answer.
  *
- * @param qtiItemId - The QTI assessment item ID that was skipped (e.g., nice:question123)
+ * @param qtiItemId - The QTI assessment item ID that was skipped (e.g., nice_question123)
  * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
  * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr456)
  * @param attemptNumber - The current attempt number

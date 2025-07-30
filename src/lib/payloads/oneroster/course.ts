@@ -438,7 +438,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								subType: "qti-stimulus",
 								version: "3.0",
 								language: "en-US",
-								url: `${env.TIMEBACK_QTI_SERVER_URL}/stimuli/nice:${content.id}`,
+								url: `${env.TIMEBACK_QTI_SERVER_URL}/stimuli/nice_${content.id}`,
 								xp: 2 // CHANGED: Articles are now worth 2 XP each
 							}
 						} else if (lc.contentType === "Video") {
@@ -460,7 +460,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								version: "3.0",
 								questionType: "custom",
 								language: "en-US",
-								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice:${content.id}`,
+								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${content.id}`,
 								xp: 3 // CHANGED: Exercises are now worth 3 XP each
 							}
 						}
@@ -528,7 +528,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						version: "3.0",
 						questionType: "custom",
 						language: "en-US",
-						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice:${assessment.id}`,
+						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
 						// Khan-specific data
 						khanId: assessment.id,
 						khanSlug: assessment.slug,
@@ -596,7 +596,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						version: "3.0",
 						questionType: "custom",
 						language: "en-US",
-						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice:${assessment.id}`,
+						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
 						// Khan-specific data
 						khanId: assessment.id,
 						khanSlug: assessment.slug,

@@ -31,7 +31,7 @@ ${example.qti}
 <!-- CRITICAL VALIDATION RULES FROM PROVEN SYSTEM -->
 <critical_structure_rules>
   - NEVER use identifiers like 'nice-tmp:x...' - these fail validation
-  - ALWAYS use format: 'nice:${khanId}:XXXX' where XXXX is 4-digit padded number
+  - ALWAYS use format: 'nice_${khanId}_XXXX' where XXXX is 4-digit padded number
   - NEVER place <qti-prompt> in wrong location - study examples above
   - ALWAYS use complete closing tags: </qti-simple-choice>, never </_> or </>
   - NEVER invent QTI elements like <qti-plotter-interaction> - use only standard elements
@@ -127,7 +127,7 @@ ${sourceQtiXml}
   ## Quality Assurance Rules
   9. **Preserve Feedback Structure:** If the source includes <qti-feedback-inline> for choices, provide unique, relevant feedback for every choice in variations, explaining correctness or errors in the new context.
   10. **Absolute XML Well-Formedness:** Prioritize perfect XML: Open tags must have matching closing tags, attributes quoted, special characters escaped (e.g., &lt; for <).
-  11. **Unique Identifiers:** For each variation, assign a unique identifier in this exact format: "nice:${khanId}:XXXX" where XXXX is a 4-digit number starting from ${String(startingIndex).padStart(4, "0")} (e.g., "nice:${khanId}:${String(startingIndex).padStart(4, "0")}", "nice:${khanId}:${String(startingIndex + 1).padStart(4, "0")}", etc.).
+  11. **Unique Identifiers:** For each variation, assign a unique identifier in this exact format: "nice_${khanId}_XXXX" where XXXX is a 4-digit number starting from ${String(startingIndex).padStart(4, "0")} (e.g., "nice_${khanId}_${String(startingIndex).padStart(4, "0")}", "nice_${khanId}_${String(startingIndex + 1).padStart(4, "0")}", etc.).
   12. **Strict JSON Output:** Output only the specified JSON object without extra text.
 </instructions_and_constraints>
 

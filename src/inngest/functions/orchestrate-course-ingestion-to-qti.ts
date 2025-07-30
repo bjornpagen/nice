@@ -208,7 +208,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			if (!q.xml) {
 				throw errors.new("unreachable: question should have been validated for XML")
 			}
-			const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice:${q.id}`, q.exerciseTitle)
+			const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice_${q.id}`, q.exerciseTitle)
 			return {
 				xml: finalXml,
 				metadata: {
@@ -225,7 +225,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			if (!a.xml) {
 				throw errors.new("unreachable: article should have xml after default generation")
 			}
-			const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice:${a.id}`, a.title)
+			const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice_${a.id}`, a.title)
 			return {
 				xml: finalXml,
 				metadata: {
@@ -263,7 +263,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					const itemRefsXml = questionIds
 						.map(
 							(itemId, itemIndex) =>
-								`<qti-assessment-item-ref identifier="nice:${itemId}" href="/assessment-items/nice:${itemId}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+								`<qti-assessment-item-ref identifier="nice_${itemId}" href="/assessment-items/nice_${itemId}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
 						)
 						.join("\n                ")
 
@@ -277,7 +277,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 
 			// The entire test is now constructed as a single XML string.
 			return `<?xml version="1.0" encoding="UTF-8"?>
-<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice:${id}" title="${safeTitle}">
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${id}" title="${safeTitle}">
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
     </qti-outcome-declaration>
@@ -347,7 +347,7 @@ ${sectionsXml}
 			const itemRefsXml = questionIds
 				.map(
 					(itemId, index) =>
-						`<qti-assessment-item-ref identifier="nice:${itemId}" href="/assessment-items/nice:${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
+						`<qti-assessment-item-ref identifier="nice_${itemId}" href="/assessment-items/nice_${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
 				)
 				.join("\n                ")
 
@@ -356,7 +356,7 @@ ${sectionsXml}
 
 			// For standalone exercises, we now create a test that selects a random sample of questions.
 			return `<?xml version="1.0" encoding="UTF-8"?>
-<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice:${exercise.id}" title="${safeTitle}">
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${exercise.id}" title="${safeTitle}">
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
     </qti-outcome-declaration>

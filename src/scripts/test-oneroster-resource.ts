@@ -19,7 +19,7 @@ const PROBLEM_RESOURCE = {
 		version: "3.0",
 		questionType: "custom",
 		language: "en-US",
-		url: "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice:x2832fbb7463fe65a",
+		url: "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice_x2832fbb7463fe65a",
 		khanId: "x2832fbb7463fe65a",
 		khanSlug: "x2832fbb7463fe65a:course-challenge",
 		khanTitle: "Course Challenge",

@@ -216,7 +216,7 @@ export const differentiatedIngest = inngest.createFunction(
 							})
 
 							const uniqueCode = (variationIndex + 1).toString().padStart(4, "0")
-							const newIdentifier = `nice:${originalQuestion.id}:${uniqueCode}`
+							const newIdentifier = `nice_${originalQuestion.id}_${uniqueCode}`
 							const newXml = variationXml.replace(/identifier="[^"]+"/, `identifier="${newIdentifier}"`)
 
 							validatedItems.push({
@@ -429,10 +429,10 @@ export const differentiatedIngest = inngest.createFunction(
 
 			const buildTestXml = (id: string, title: string, questionIds: string[]): string => {
 				const itemRefsXml = questionIds
-					.map((itemId) => `<qti-assessment-item-ref identifier="nice:${itemId}" />`)
+					.map((itemId) => `<qti-assessment-item-ref identifier="nice_${itemId}" />`)
 					.join("\n")
 				return `
-              <qti-assessment-test identifier="nice:${id}" title="${escapeXmlAttribute(title)}">
+              <qti-assessment-test identifier="nice_${id}" title="${escapeXmlAttribute(title)}">
                 <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
                   <qti-assessment-section identifier="SECTION_1" title="Main Section" visible="true">
                     ${itemRefsXml}
@@ -469,7 +469,7 @@ export const differentiatedIngest = inngest.createFunction(
 				if (!identifierMatch || !identifierMatch[1]) continue
 
 				const newIdentifier = identifierMatch[1]
-				const originalIdentifier = `nice:${item.metadata.khanId}`
+				const originalIdentifier = `nice_${item.metadata.khanId}`
 
 				if (!itemMapping.has(originalIdentifier)) {
 					itemMapping.set(originalIdentifier, [])
