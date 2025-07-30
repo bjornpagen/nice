@@ -351,15 +351,38 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		type: "assessmentItems",
 		name: "QTI Assessment Items",
 		fetchAll: async (prefix: string) => {
-			const items = await qti.searchAssessmentItems({ query: prefix, page: 1, limit: 1000 })
+			const allItems: Array<{ identifier: string; title: string; [key: string]: unknown }> = []
+			let page = 1
+			const limit = 1000
+			let hasMore = true
+
+			// Fetch all pages
+			while (hasMore) {
+				const result = await qti.searchAssessmentItems({ query: prefix, page, limit })
+				allItems.push(...result.items)
+
+				// Check if there are more pages
+				// Assuming the API returns fewer items than the limit when we've reached the end
+				hasMore = result.items.length === limit
+				page++
+
+				if (page > 100) {
+					// Safety limit to prevent infinite loops
+					logger.warn("reached safety limit while fetching QTI items", { page, totalFetched: allItems.length })
+					break
+				}
+			}
+
+			logger.debug("fetched all QTI assessment items", { totalPages: page - 1, totalItems: allItems.length })
+
 			// Filter by exact prefix match on identifier
-			const prefixMatchedItems = items.items.filter((item) => item.identifier.startsWith(prefix))
-			if (items.items.length !== prefixMatchedItems.length) {
+			const prefixMatchedItems = allItems.filter((item) => item.identifier.startsWith(prefix))
+			if (allItems.length !== prefixMatchedItems.length) {
 				logger.info("filtered out non-prefix-matching QTI items", {
 					prefix,
 					matchingCount: prefixMatchedItems.length,
-					filteredCount: items.items.length - prefixMatchedItems.length,
-					totalFetched: items.items.length
+					filteredCount: allItems.length - prefixMatchedItems.length,
+					totalFetched: allItems.length
 				})
 			}
 			return prefixMatchedItems.map((i) => ({
@@ -374,15 +397,37 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		type: "assessmentStimuli",
 		name: "QTI Assessment Stimuli",
 		fetchAll: async (prefix: string) => {
-			const items = await qti.searchStimuli({ query: prefix, page: 1, limit: 1000 })
+			const allItems: Array<{ identifier: string; title: string; [key: string]: unknown }> = []
+			let page = 1
+			const limit = 1000
+			let hasMore = true
+
+			// Fetch all pages
+			while (hasMore) {
+				const result = await qti.searchStimuli({ query: prefix, page, limit })
+				allItems.push(...result.items)
+
+				// Check if there are more pages
+				hasMore = result.items.length === limit
+				page++
+
+				if (page > 100) {
+					// Safety limit to prevent infinite loops
+					logger.warn("reached safety limit while fetching QTI stimuli", { page, totalFetched: allItems.length })
+					break
+				}
+			}
+
+			logger.debug("fetched all QTI stimuli", { totalPages: page - 1, totalItems: allItems.length })
+
 			// Filter by exact prefix match on identifier
-			const prefixMatchedItems = items.items.filter((item) => item.identifier.startsWith(prefix))
-			if (items.items.length !== prefixMatchedItems.length) {
+			const prefixMatchedItems = allItems.filter((item) => item.identifier.startsWith(prefix))
+			if (allItems.length !== prefixMatchedItems.length) {
 				logger.info("filtered out non-prefix-matching QTI stimuli", {
 					prefix,
 					matchingCount: prefixMatchedItems.length,
-					filteredCount: items.items.length - prefixMatchedItems.length,
-					totalFetched: items.items.length
+					filteredCount: allItems.length - prefixMatchedItems.length,
+					totalFetched: allItems.length
 				})
 			}
 			return prefixMatchedItems.map((s) => ({
@@ -397,15 +442,37 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		type: "assessmentTests",
 		name: "QTI Assessment Tests",
 		fetchAll: async (prefix: string) => {
-			const items = await qti.searchAssessmentTests({ query: prefix, page: 1, limit: 1000 })
+			const allItems: Array<{ identifier: string; title: string; [key: string]: unknown }> = []
+			let page = 1
+			const limit = 1000
+			let hasMore = true
+
+			// Fetch all pages
+			while (hasMore) {
+				const result = await qti.searchAssessmentTests({ query: prefix, page, limit })
+				allItems.push(...result.items)
+
+				// Check if there are more pages
+				hasMore = result.items.length === limit
+				page++
+
+				if (page > 100) {
+					// Safety limit to prevent infinite loops
+					logger.warn("reached safety limit while fetching QTI tests", { page, totalFetched: allItems.length })
+					break
+				}
+			}
+
+			logger.debug("fetched all QTI assessment tests", { totalPages: page - 1, totalItems: allItems.length })
+
 			// Filter by exact prefix match on identifier
-			const prefixMatchedItems = items.items.filter((item) => item.identifier.startsWith(prefix))
-			if (items.items.length !== prefixMatchedItems.length) {
+			const prefixMatchedItems = allItems.filter((item) => item.identifier.startsWith(prefix))
+			if (allItems.length !== prefixMatchedItems.length) {
 				logger.info("filtered out non-prefix-matching QTI tests", {
 					prefix,
 					matchingCount: prefixMatchedItems.length,
-					filteredCount: items.items.length - prefixMatchedItems.length,
-					totalFetched: items.items.length
+					filteredCount: allItems.length - prefixMatchedItems.length,
+					totalFetched: allItems.length
 				})
 			}
 			return prefixMatchedItems.map((t) => ({
