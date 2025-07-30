@@ -7,12 +7,13 @@
   1.  CRITICAL: Omission of Essential Visual Content - The original Perseus JSON requires the user to count images of birds and bugs to determine which group is larger. This QTI conversion completely omits all of the images from the item body, making the question impossible to answer as intended.
   2.  CRITICAL: Hallucination of Answer-Revealing Text - To compensate for the missing images, the converter has "hallucinated" text that was not present in the source: "The picture (not shown to scale here) contains four birds and five bugs in total." and "Counting the icons, you will see 4 bird images and 5 bug images." This text explicitly gives away the answer, completely invalidating the assessment.
   3.  This example demonstrates a complete failure to transfer the core components of the question, resulting in an item that is both unsolvable visually and has the answer written directly in the prompt.
+  4.  INVALID QTI-PROMPT PLACEMENT: The <qti-prompt> element on line 38 is placed as a direct child of <qti-item-body>. This violates QTI 3.0 standards. Since this item contains a <qti-choice-interaction> on line 45, the <qti-prompt> should be moved inside the interaction element. The prompt must be a direct child of the interaction, not a sibling at the body level.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
-    identifier="nice-tmp:xe97feb722571d971"
+    identifier="nice-tmp_xe97feb722571d971"
     title="Compare numbers of objects 2"
     time-dependent="false"
     xml:lang="en-US">

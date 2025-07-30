@@ -18,7 +18,7 @@
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
-    identifier="nice-tmp:x07b9a5265c40ba3a"
+    identifier="nice-tmp_x07b9a5265c40ba3a"
     title="Add 3 numbers"
     time-dependent="false"
     xml:lang="en-US">

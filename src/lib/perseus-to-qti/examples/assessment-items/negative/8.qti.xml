@@ -6,12 +6,13 @@
 
   1.  CRITICAL: Incorrect Interaction Behavior (`min-choices`/`max-choices`) - The Perseus source is a simple "sorter" widget where the user must arrange a fixed set of three cards. This QTI incorrectly uses `min-choices="3"` and `max-choices="3"` on the <qti-order-interaction>. These attributes are for tasks where the user must first *select a subset* of choices and then order them. By setting them here, the interaction's behavior is fundamentally changed, requiring the user to first select all three cards before ordering is possible. This misrepresents the original task and causes confusing validation errors, such as ("You must set the order for at least 3 choices for this question."), because the system is waiting for a selection step that the user interface may not even support for this simple arrangement. For a simple "arrange all items" task, these attributes should have been omitted.
   2.  CRITICAL: Loss of Mathematical Semantics in Feedback - The feedback blocks render the comparison "42 < 411" as plain text with a non-breaking space ("42 < 411"). This is semantically incorrect. All mathematical content, including in feedback, should be wrapped in <math> tags with proper MathML markup to ensure accessibility and correct rendering by math-aware systems.
+  3.  CRITICAL: Unescaped XML Special Characters - The less-than symbol on lines 44, 45, 55, and 60 within the <mo> (math operator) tags is not properly escaped. The raw "<" character inside <mo><</mo> breaks XML parsing. This MUST be escaped as <mo>&lt;</mo> to be valid XML. Any XML parser will fail on this document with a parsing error before it can even validate the QTI semantics. This demonstrates a fundamental failure to produce well-formed XML, which is a prerequisite for any valid QTI document.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
-    identifier="nice-tmp:xe203472ed1d4f092"
+    identifier="nice-tmp_xe203472ed1d4f092"
     title="Compare 3-digit numbers"
     time-dependent="false"
     xml:lang="en-US">

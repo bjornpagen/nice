@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   This XML is a negative example because it is semantically incorrect.
-  REASON FOR BEING BAD: The Perseus source content contained LaTeX for a mathematical equation: `$3\\text{ hundreds} = ... \\text{tens}$`.
-  The correct QTI conversion requires wrapping this content in <math> tags to preserve its mathematical meaning.
-  This output incorrectly stripped the math context and rendered it as plain text within a <p> tag: `<p>3 hundreds = ...</p>`.
-  This is a critical failure to preserve the semantic structure of the content.
+  REASON FOR BEING BAD: 
+  1. The Perseus source content contained LaTeX for a mathematical equation: `$3\\text{ hundreds} = ... \\text{tens}$`.
+     The correct QTI conversion requires wrapping this content in <math> tags to preserve its mathematical meaning.
+     This output incorrectly stripped the math context and rendered it as plain text within a <p> tag: `<p>3 hundreds = ...</p>`.
+     This is a critical failure to preserve the semantic structure of the content.
+  2. INVALID QTI-PROMPT PLACEMENT: The <qti-prompt> element on line 32 is placed as a direct child of <qti-item-body>.
+     This violates QTI 3.0 standards. Since this item contains a <qti-text-entry-interaction>, the <qti-prompt> should
+     be moved inside the interaction element. The correct structure would place the prompt as the first child of the
+     interaction, not as a sibling at the body level.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
-    identifier="nice-tmp:x2ab787a1cac3ad63"
+    identifier="nice-tmp_x2ab787a1cac3ad63"
     title="Regroup whole numbers"
     time-dependent="false"
     xml:lang="en-US">

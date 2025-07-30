@@ -5,13 +5,13 @@
   REASON FOR BEING A NEGATIVE EXAMPLE:
 
   1.  CRITICAL: Incorrect Interaction Type - The source Perseus JSON uses a 'dropdown' widget, which should be converted to an `<qti-inline-choice-interaction>` to appear correctly between the numbers. This output incorrectly uses a block-level `<qti-choice-interaction>`, which will break the intended "48 [ ] 43" layout and user experience.
-  2.  CRITICAL: Use of Undefined XML Entity - The incorrect feedback block contains the HTML entity ` ` (in "4 tens"). This is not a predefined entity in the XML 1.0 standard and will cause a strict XML parser to fail with an "entity not defined" error, making the entire item unusable.
+  2.  CRITICAL: Use of Undefined XML Entity - The incorrect feedback block contains the HTML entity `&nbsp;` (in "4 tens"). This is not a predefined entity in the XML 1.0 standard and will cause a strict XML parser to fail with an "entity not defined" error, making the entire item unusable.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
-    identifier="nice-tmp:x4f695814c2e17076"
+    identifier="nice-tmp_x4f695814c2e17076"
     title="Compare 2-digit numbers"
     time-dependent="false"
     xml:lang="en-US">

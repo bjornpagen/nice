@@ -11,7 +11,7 @@
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
-    identifier="nice-tmp:xa67fea6e7226c92b"
+    identifier="nice-tmp_xa67fea6e7226c92b"
     title="Make line plots"
     time-dependent="false"
     xml:lang="en-US">

@@ -6,12 +6,13 @@
 
   1.  CRITICAL: Incomplete Visual Representation - The original Perseus item uses a number line with arcs to show the "jumps" of addition (e.g., +400, +10, +2). The custom SVG images in this QTI output omit these crucial arcs.
   2.  CRITICAL: Unsolvable Question - Without the arcs showing the jumps, the user is presented with a series of seemingly random points on a number line. The core task—identifying the sequence of additions that correctly sums to 412—is impossible to perform. This demonstrates a failure to convert not just the visual elements, but the entire logical basis of the question.
+  3.  INVALID QTI-PROMPT PLACEMENT: The <qti-prompt> element on line 37 is placed as a direct child of <qti-item-body>. This violates QTI 3.0 standards. Since this item contains a <qti-choice-interaction> on line 39, the <qti-prompt> should be moved inside the interaction element. The prompt must be a direct child of the interaction, not a sibling at the body level.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
-    identifier="nice-tmp:x3ab7677184bd3dfe"
+    identifier="nice-tmp_x3ab7677184bd3dfe"
     title="Add on a number line"
     time-dependent="false"
     xml:lang="en-US">

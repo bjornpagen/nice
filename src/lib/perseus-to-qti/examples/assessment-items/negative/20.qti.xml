@@ -6,12 +6,13 @@
 
   1.  CRITICAL: Complete Loss of Visual Content - The original question requires the user to visually identify which circles are correctly divided into halves. This QTI conversion has destroyed the visual data, removing all `<img>` tags and replacing them with descriptive text strings (e.g., "A circle divided into three unequal parts."). This is not an acceptable substitute.
   2.  CRITICAL: Transformation of Skill Assessment - By removing the images, the question is no longer a visual identification task. It has been incorrectly transformed into a reading comprehension task that tests the user's ability to understand the text descriptions, not their ability to interpret geometric shapes. This fundamentally alters and invalidates the original assessment's intent.
+  3.  CRITICAL: Use of Undefined XML Entity - The feedback on lines 48 and 53 contains the HTML entity &mdash; (em dash). This is NOT a predefined entity in the XML 1.0 standard and WILL cause any strict XML parser to fail with an "entity not defined" error. XML only defines five entities: &lt;, &gt;, &amp;, &apos;, and &quot;. The use of &mdash; will completely break XML parsing. This must be replaced with numeric character reference &#8212; or the actual em dash character.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
-    identifier="nice-tmp:x6b4b21542dba0174"
+    identifier="nice-tmp_x6b4b21542dba0174"
     title="Equal parts of circles"
     time-dependent="false"
     xml:lang="en-US">

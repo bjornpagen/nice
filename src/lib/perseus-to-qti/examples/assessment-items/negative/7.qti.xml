@@ -14,6 +14,10 @@
   3.  CRITICAL: Broken Response Processing - Because the interactive elements are missing, the `qti-response-declaration` elements for RESPONSE_HR and
       RESPONSE_MIN are useless, as there is no way for the user to provide a value for these variables. This demonstrates a complete failure
       of the conversion process from a proprietary format to the QTI standard.
+  4.  INVALID QTI-PROMPT PLACEMENT: The <qti-prompt> element on line 47 is placed as a direct child of <qti-item-body>.
+      This violates QTI 3.0 standards. Since this item has NO properly converted interaction elements (only Perseus artifact
+      placeholders that were not converted), the <qti-prompt> should be converted to a regular <p> tag instead. Using <qti-prompt>
+      without valid QTI interactions is semantically incorrect.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"

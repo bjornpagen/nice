@@ -5,14 +5,14 @@
   REASONS FOR BEING A NEGATIVE EXAMPLE:
 
   1.  CRITICAL: Incorrect Use of HTML Namespace Prefix - The file incorrectly prefixes standard HTML tags (e.g., `<html:p>`, `<html:div>`, `<img>`) with `html:`. This is fundamentally incorrect and will cause parsing failures. QTI 3.0 is designed to natively support a subset of HTML5. These tags (`<p>`, `<div>`, `<img>`, etc.) MUST be used directly, without any namespace prefix. Using `html:` makes them unrecognizable to a standard QTI parser. This is an unacceptable error.
-  2.  CRITICAL: Hallucination of Non-Existent QTI Tags - The file uses the tag `<qti-content-body>` inside the `<qti-feedback-block>` elements. This tag does not exist in the QTI 3.0 specification. The content (like `<p>` tags) should be a direct child of the feedback block. This is a classic AI hallucination that renders the XML invalid.
+  2.  INVALID QTI-PROMPT PLACEMENT: The <qti-prompt> element on line 36 is placed as a direct child of <qti-item-body>. This violates QTI 3.0 standards. Since this item contains a <qti-text-entry-interaction> on line 45, the <qti-prompt> should be moved inside the interaction element. The prompt must be a direct child of the interaction, not a sibling at the body level.
 -->
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:html="http://www.w3.org/1999/xhtml"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
-    identifier="nice-tmp:xd6176a2bed284a83"
+    identifier="nice-tmp_xd6176a2bed284a83"
     title="Add within 100 using place value blocks"
     time-dependent="false"
     xml:lang="en-US">

@@ -8,7 +8,7 @@
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
-    identifier="nice-tmp:xebba2ef48762fd43-NEGATIVE-EXAMPLE"
+    identifier="nice-tmp_xebba2ef48762fd43-NEGATIVE-EXAMPLE"
     title="Making 5 (Negative Example)"
     time-dependent="false"
     xml:lang="en-US">
@@ -37,7 +37,12 @@
              The original Perseus item is structured as `[INPUT] + 1 = 5`. This QTI implementation incorrectly
              places the text entry box *after* the equation, resulting in the user seeing `+ 1 = 5 [BOX]`.
              This breaks the mathematical logic and makes the item nonsensical. The text entry interaction
-             should be placed before the MathML for the rest of the equation. -->
+             should be placed before the MathML for the rest of the equation. 
+             
+             INVALID QTI-PROMPT PLACEMENT: The <qti-prompt> element on line 34 is placed as a direct child 
+             of <qti-item-body>. This violates QTI 3.0 standards. Since this item contains a 
+             <qti-text-entry-interaction> on line 50, the <qti-prompt> should be moved inside the interaction 
+             element. The prompt must be a direct child of the interaction, not a sibling at the body level. -->
         <p>
             <math xmlns="http://www.w3.org/1998/Math/MathML">
                 <mrow>
