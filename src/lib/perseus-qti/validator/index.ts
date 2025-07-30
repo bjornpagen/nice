@@ -29,8 +29,7 @@ type AsyncValidationPass = (xml: string, context: ValidationContext) => Promise<
 
 export async function runValidationPipeline(
 	xml: string,
-	context: ValidationContext,
-	options?: { skip?: { solvability?: boolean } }
+	context: ValidationContext
 ): Promise<{ isValid: boolean; errors: Error[]; xml: string }> {
 	const collectedErrors: Error[] = []
 
@@ -56,11 +55,9 @@ export async function runValidationPipeline(
 
 	const asyncPasses: AsyncValidationPass[] = [validateImageUrls, validateWithQtiApi]
 
-	// Conditionally add the solvability check unless skipped
-	if (!options?.skip?.solvability) {
+	// Only run solvability validation for assessment items, not stimuli (performance optimization)
+	if (context.rootTag === "assessmentItem") {
 		asyncPasses.push(validateContentSufficiency)
-	} else {
-		context.logger.info("skipping ai content solvability validation as requested")
 	}
 
 	for (const pass of asyncPasses) {

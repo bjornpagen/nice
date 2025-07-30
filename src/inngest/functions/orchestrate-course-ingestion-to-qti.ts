@@ -210,17 +210,12 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 								variationXml = stripXmlComments(variationXml, logger)
 
 								const validationResult = await errors.try(
-									runValidationPipeline(
-										variationXml,
-										{
-											id: originalQuestion.id,
-											rootTag: "qti-assessment-item",
-											title: originalQuestion.exerciseTitle,
-											logger
-										},
-										// Explicitly skip the solvability check
-										{ skip: { solvability: true } }
-									)
+									runValidationPipeline(variationXml, {
+										id: originalQuestion.id,
+										rootTag: "qti-assessment-item",
+										title: originalQuestion.exerciseTitle,
+										logger
+									})
 								)
 
 								if (validationResult.error || !validationResult.data.isValid) {
@@ -353,17 +348,12 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 							paraphrasedXml = stripXmlComments(paraphrasedXml, logger)
 
 							const validationResult = await errors.try(
-								runValidationPipeline(
-									paraphrasedXml,
-									{
-										id: originalStimulus.id,
-										rootTag: "qti-assessment-stimulus",
-										title: originalStimulus.title,
-										logger
-									},
-									// Explicitly skip the solvability check
-									{ skip: { solvability: true } }
-								)
+								runValidationPipeline(paraphrasedXml, {
+									id: originalStimulus.id,
+									rootTag: "qti-assessment-stimulus",
+									title: originalStimulus.title,
+									logger
+								})
 							)
 
 							if (validationResult.error || !validationResult.data.isValid) {
