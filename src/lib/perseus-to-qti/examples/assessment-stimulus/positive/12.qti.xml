@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-stimulus xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+  identifier="measuring-lengths-different-units-html"
+  title="Measuring Lengths with Different Units - HTML"
+  xml:lang="en-US">
+  <qti-stimulus-body>
+    <h2>Measuring lengths with different units</h2>
+    <p>Let's measure a fence with squirrels!</p>
+    
+    <p style="font-size: 40px;" aria-label="Ten squirrels in a row">🐿️🐿️🐿️🐿️🐿️🐿️🐿️🐿️🐿️🐿️</p>
+    
+    <p>The fence is 10 squirrels long.</p>
+    <p>Now let's measure the <strong>same</strong> fence with ponies.</p>
+    
+    <p style="font-size: 80px;" aria-label="Five ponies in a row">🐴🐴🐴🐴🐴</p>
+    
+    <p>The fence is 5 ponies long.</p>
+    <p><strong>Why did it take fewer ponies to measure the length of the fence?</strong></p>
+    <ul>
+      <li>The ponies are longer than the squirrels.</li>
+      <li>The ponies are shorter than the squirrels.</li>
+    </ul>
+  </qti-stimulus-body>
+</qti-assessment-stimulus>

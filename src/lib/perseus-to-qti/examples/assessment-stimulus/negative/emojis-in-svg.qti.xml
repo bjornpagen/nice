@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is intentionally malformed to serve as a negative example.
+  REASON FOR BEING BAD: Emojis are embedded inside SVG text elements instead of using standard HTML tags.
+  SVG text elements may not render emojis properly across all systems and browsers.
+  The correct approach is to use HTML paragraph (<p>) tags with inline styles for displaying emojis,
+  which provides better cross-platform compatibility and accessibility.
+-->
+<qti-assessment-stimulus xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+  identifier="measuring-lengths-different-units"
+  title="Measuring Lengths with Different Units"
+  xml:lang="en-US">
+  <qti-stimulus-body>
+    <h2>Measuring lengths with different units</h2>
+    <p>Let's measure a fence with squirrels!</p>
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="400" height="60" aria-label="Ten squirrels in a row">
+        <text x="0" y="45" font-size="40">🐿️🐿️🐿️🐿️🐿️🐿️🐿️🐿️🐿️🐿️</text>
+      </svg>
+    </div>
+    <p>The fence is 10 squirrels long.</p>
+    <p>Now let's measure the <strong>same</strong> fence with ponies.</p>
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="400" height="60" aria-label="Five ponies in a row">
+        <text x="0" y="45" font-size="40">🐴🐴🐴🐴🐴</text>
+      </svg>
+    </div>
+    <p>The fence is 5 ponies long.</p>
+    <p><strong>Why did it take fewer ponies to measure the length of the fence?</strong></p>
+    <ul>
+      <li>The ponies are longer than the squirrels.</li>
+      <li>The ponies are shorter than the squirrels.</li>
+    </ul>
+  </qti-stimulus-body>
+</qti-assessment-stimulus>
