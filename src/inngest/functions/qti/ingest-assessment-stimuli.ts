@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
 import { ErrQtiNotFound } from "@/lib/qti"
+import { extractQtiStimulusBodyContent } from "@/lib/xml-utils"
 
 export const ingestAssessmentStimuli = inngest.createFunction(
 	{ id: "ingest-assessment-stimuli", name: "Ingest QTI Assessment Stimuli" },
@@ -43,16 +44,17 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 				throw errors.new("stimulus parsing: title extraction failed")
 			}
 
-			const contentMatch = stimulus.xml.match(/<qti-stimulus-body>([\s\S]*?)<\/qti-stimulus-body>/)
-			const content = contentMatch?.[1]?.trim()
-			if (!content) {
+			const contentResult = errors.trySync(() => extractQtiStimulusBodyContent(stimulus.xml))
+			if (contentResult.error) {
 				logger.error("CRITICAL: Could not extract content from stimulus XML", {
 					identifier,
 					title,
-					xml: stimulus.xml.substring(0, 500)
+					xml: stimulus.xml.substring(0, 500),
+					error: contentResult.error
 				})
-				throw errors.new("stimulus parsing: content extraction failed")
+				throw errors.wrap(contentResult.error, "stimulus parsing: content extraction failed")
 			}
+			const content = contentResult.data
 
 			const payload = { identifier, title, content, metadata: stimulus.metadata }
 

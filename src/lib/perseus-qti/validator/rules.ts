@@ -4,7 +4,7 @@ import { qti } from "@/lib/clients"
 import { validateXmlWithAi } from "@/lib/perseus-qti/client"
 import { ErrQtiNotFound } from "@/lib/qti"
 import { QTI_INTERACTION_TAGS } from "@/lib/qti-tags"
-import { escapeXmlAttribute } from "@/lib/xml-utils"
+import { escapeXmlAttribute, extractQtiStimulusBodyContent } from "@/lib/xml-utils"
 
 type ValidationContext = {
 	id: string
@@ -498,20 +498,24 @@ async function upsertAndCleanupStimulus(identifier: string, xml: string, context
 		throw errors.new("stimulus validation: title is required for stimuli")
 	}
 
-	// Debug log the exact XML being sent to the API
-	context.logger.debug("final stimulus xml being sent to qti api", {
+	// Extract the content from the qti-stimulus-body element
+	const contentResult = errors.trySync(() => extractQtiStimulusBodyContent(xml))
+	if (contentResult.error) {
+		throw errors.wrap(contentResult.error, "failed to extract qti-stimulus-body content for validation")
+	}
+	const content = contentResult.data
+
+	// Debug log what we're sending to the API
+	context.logger.debug("extracted stimulus content for qti api", {
 		identifier,
 		title: context.title,
-		xmlLength: xml.length,
-		fullXml: xml,
-		startsWithXmlDecl: xml.startsWith("<?xml"),
-		firstCharCode: xml.charCodeAt(0),
-		firstCharHex: xml.charCodeAt(0).toString(16)
+		originalXmlLength: xml.length,
+		extractedContentLength: content.length,
+		contentPreview: content.substring(0, 200)
 	})
 
-	// The QTI API's content field expects the entire raw QTI XML document.
-	// Do not extract the inner body.
-	const upsertResult = await errors.try(upsertStimulus(identifier, context.title, xml))
+	// The QTI API's content field expects only the inner HTML from qti-stimulus-body
+	const upsertResult = await errors.try(upsertStimulus(identifier, context.title, content))
 	if (upsertResult.error) {
 		throw errors.wrap(upsertResult.error, "qti api validation failed for stimulus")
 	}
