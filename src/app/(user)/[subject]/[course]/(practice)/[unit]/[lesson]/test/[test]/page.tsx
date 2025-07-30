@@ -1,6 +1,7 @@
 import * as React from "react"
 import { fetchUnitTestPageData } from "@/lib/data/assessment"
 import type { UnitTestPageData } from "@/lib/types/page"
+import { normalizeParams } from "@/lib/utils"
 import { Content } from "./components/content"
 
 // --- REMOVED: The local UnitTestPageData type definition ---
@@ -10,7 +11,8 @@ export default function UnitTestPage({
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; test: string }>
 }) {
-	const testPromise: Promise<UnitTestPageData> = params.then(fetchUnitTestPageData)
+	const normalizedParamsPromise = normalizeParams(params)
+	const testPromise: Promise<UnitTestPageData> = normalizedParamsPromise.then(fetchUnitTestPageData)
 
 	return (
 		<React.Suspense fallback={<div>Loading test...</div>}>

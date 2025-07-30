@@ -4,7 +4,7 @@ import * as React from "react"
 import { Footer } from "@/components/footer"
 import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
 import type { ProfileSubject } from "@/lib/types/domain"
-import { assertNoEncodedColons } from "@/lib/utils"
+import { assertNoEncodedColons, normalizeParams } from "@/lib/utils"
 import { Content } from "./components/content"
 
 async function fetchSubjectPageData(params: { subject: string }): Promise<ProfileSubject | undefined> {
@@ -35,7 +35,8 @@ async function fetchSubjectPageData(params: { subject: string }): Promise<Profil
 }
 
 export default function SubjectPage({ params }: { params: Promise<{ subject: string }> }) {
-	const subjectPromise: Promise<ProfileSubject | undefined> = params.then(fetchSubjectPageData)
+	const normalizedParamsPromise = normalizeParams(params)
+	const subjectPromise: Promise<ProfileSubject | undefined> = normalizedParamsPromise.then(fetchSubjectPageData)
 
 	return (
 		<div className="bg-gray-100">

@@ -6,12 +6,16 @@ import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progres
 import { fetchUnitPageData } from "@/lib/data/unit"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { UnitPageData } from "@/lib/types/page"
+import { normalizeParams } from "@/lib/utils"
 import { Content } from "./components/content"
 
 // ✅ CORRECT: Non-async Server Component following RSC patterns
 export default function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
+	// Normalize params to handle encoded characters
+	const normalizedParamsPromise = normalizeParams(params)
+
 	// The sidebar data is now handled by the layout, but we still need unit-specific data
-	const unitDataPromise: Promise<UnitPageData> = params.then(fetchUnitPageData)
+	const unitDataPromise: Promise<UnitPageData> = normalizedParamsPromise.then(fetchUnitPageData)
 
 	// Get user promise for progress fetching
 	const userPromise = currentUser()

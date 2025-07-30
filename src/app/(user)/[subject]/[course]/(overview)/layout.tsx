@@ -2,6 +2,7 @@ import * as React from "react"
 import { Footer } from "@/components/footer"
 import { fetchCoursePageData } from "@/lib/data/course"
 import type { CoursePageData } from "@/lib/types/page"
+import { normalizeParams } from "@/lib/utils"
 import { CourseSidebar } from "./components/sidebar"
 
 // This layout component is NOT async. It orchestrates promises and renders immediately.
@@ -12,9 +13,12 @@ export default function CourseLayout({
 	params: Promise<{ subject: string; course: string }>
 	children: React.ReactNode
 }) {
+	// Normalize params to handle encoded characters
+	const normalizedParamsPromise = normalizeParams(params)
+
 	// Initiate the data fetch for the course, which is needed by the sidebar.
 	// We do not await it here; the promise is passed down.
-	const courseDataPromise: Promise<CoursePageData> = params.then((resolvedParams) =>
+	const courseDataPromise: Promise<CoursePageData> = normalizedParamsPromise.then((resolvedParams) =>
 		fetchCoursePageData(resolvedParams, { skip: { questions: true } })
 	)
 

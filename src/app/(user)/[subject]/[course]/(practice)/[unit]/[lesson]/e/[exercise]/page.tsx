@@ -1,6 +1,7 @@
 import * as React from "react"
 import { fetchExercisePageData } from "@/lib/data/content"
 import type { ExercisePageData } from "@/lib/types/page"
+import { normalizeParams } from "@/lib/utils"
 import { Content } from "./components/content"
 
 // --- REMOVED: The local ExercisePageData type definition ---
@@ -10,7 +11,8 @@ export default function ExercisePage({
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; exercise: string }>
 }) {
-	const exercisePromise: Promise<ExercisePageData> = params.then(fetchExercisePageData)
+	const normalizedParamsPromise = normalizeParams(params)
+	const exercisePromise: Promise<ExercisePageData> = normalizedParamsPromise.then(fetchExercisePageData)
 
 	return (
 		<React.Suspense fallback={<div className="p-8">Loading exercise...</div>}>

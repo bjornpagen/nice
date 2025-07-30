@@ -8,7 +8,7 @@ import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progres
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
-import { assertNoEncodedColons } from "@/lib/utils"
+import { assertNoEncodedColons, normalizeParams } from "@/lib/utils"
 import { LessonLayout } from "./components/lesson-layout"
 
 // The layout component is NOT async. It orchestrates promises and renders immediately.
@@ -19,14 +19,17 @@ export default function Layout({
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string }>
 	children: React.ReactNode
 }) {
-	const dataPromise: Promise<LessonLayoutData> = params.then(async (resolvedParams) => {
+	// Normalize params to handle encoded characters
+	const normalizedParamsPromise = normalizeParams(params)
+
+	const dataPromise: Promise<LessonLayoutData> = normalizedParamsPromise.then(async (resolvedParams) => {
 		return fetchLessonLayoutData(resolvedParams)
 	})
 	const userPromise = currentUser()
 
 	// Create a promise for the v2 course format using real data
-	const courseV2Promise: Promise<CourseV2 | undefined> = params.then(async (resolvedParams) => {
-		// Defensive check: middleware should have normalized URLs
+	const courseV2Promise: Promise<CourseV2 | undefined> = normalizedParamsPromise.then(async (resolvedParams) => {
+		// Defensive check: normalized URLs should not have encoded colons
 		assertNoEncodedColons(resolvedParams.subject, "lesson layout subject param")
 		assertNoEncodedColons(resolvedParams.course, "lesson layout course param")
 		assertNoEncodedColons(resolvedParams.unit, "lesson layout unit param")

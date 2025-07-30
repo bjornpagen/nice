@@ -7,6 +7,7 @@ import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progres
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
+import { normalizeParams } from "@/lib/utils"
 import { ChallengeLayout } from "./components/challenge-layout"
 import { Content } from "./components/content"
 
@@ -15,8 +16,13 @@ export default function CourseChallengePage({
 }: {
 	params: Promise<{ subject: string; course: string; test: string }>
 }) {
-	const layoutDataPromise: Promise<CourseChallengeLayoutData> = params.then(fetchCourseChallengePage_LayoutData)
-	const testDataPromise: Promise<CourseChallengePageData> = params.then(fetchCourseChallengePage_TestData)
+	const normalizedParamsPromise = normalizeParams(params)
+	const layoutDataPromise: Promise<CourseChallengeLayoutData> = normalizedParamsPromise.then(
+		fetchCourseChallengePage_LayoutData
+	)
+	const testDataPromise: Promise<CourseChallengePageData> = normalizedParamsPromise.then(
+		fetchCourseChallengePage_TestData
+	)
 
 	// Transform CourseChallengeLayoutData to CourseV2 format for the practice sidebar
 	const coursePromise: Promise<CourseV2 | undefined> = layoutDataPromise.then((courseData) => {

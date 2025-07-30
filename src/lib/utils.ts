@@ -56,3 +56,32 @@ export function assertNoEncodedColons(value: string, context: string): void {
 		throw errors.new(`encoded colon detected in ${context}: ${value}. Middleware should have normalized this.`)
 	}
 }
+
+export type RemoveReadonly<T> = {
+	[K in keyof T as T[K] extends readonly unknown[] ? never : K]: T[K]
+}
+
+// Normalize a single string by replacing URL-encoded colons
+export function normalizeString(value: string): string {
+	return value.replace(/%3[Aa]/g, ":")
+}
+
+// Normalize URL-encoded colons in params (synchronous version)
+export function normalizeParamsSync<T extends Record<string, unknown>>(params: T): T {
+	const entries = Object.entries(params).map(([key, value]) => {
+		// Only normalize string values
+		if (typeof value === "string") {
+			return [key, normalizeString(value)]
+		}
+		// Keep non-string values as-is
+		return [key, value]
+	})
+
+	return Object.fromEntries(entries)
+}
+
+// Normalize URL-encoded colons in params (promise version)
+// This prevents cache duplication for Khan Academy IDs and similar encoded values
+export function normalizeParams<T extends Record<string, unknown>>(paramsPromise: Promise<T>): Promise<T> {
+	return paramsPromise.then(normalizeParamsSync)
+}

@@ -6,6 +6,7 @@ import { fetchCoursePageData } from "@/lib/data/course"
 import { type AssessmentProgress, getUserUnitProgress, type UnitProficiency } from "@/lib/data/progress"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { CoursePageData } from "@/lib/types/page"
+import { normalizeParams } from "@/lib/utils"
 import { aggregateUnitProficiencies } from "@/lib/utils/progress"
 import { Content } from "./components/content"
 
@@ -17,8 +18,11 @@ export interface CourseProgressData {
 
 // ✅ CORRECT: Non-async Server Component following RSC patterns
 export default function CoursePage({ params }: { params: Promise<{ subject: string; course: string }> }) {
+	// Normalize params to handle encoded characters
+	const normalizedParamsPromise = normalizeParams(params)
+
 	// The courseDataPromise is now handled by the layout, but we still need it for progress data
-	const courseDataPromise: Promise<CoursePageData> = params.then(fetchCoursePageData)
+	const courseDataPromise: Promise<CoursePageData> = normalizedParamsPromise.then(fetchCoursePageData)
 
 	// Get user promise for progress fetching
 	const userPromise = currentUser()
