@@ -1,0 +1,80 @@
+import * as errors from "@superbuilders/errors"
+import { db } from "@/db"
+import * as schema from "@/db/schemas"
+import { inngest } from "@/inngest/client"
+
+export const clearAllXmlData = inngest.createFunction(
+	{
+		id: "clear-all-xml-data",
+		name: "Clear All XML Data Database-Wide"
+	},
+	{ event: "qti/database.clear-all-xml" },
+	async ({ logger }) => {
+		logger.info("starting database-wide xml data clearing")
+
+		// Track clearing results
+		const results = {
+			articles: { total: 0, cleared: 0 },
+			questions: { total: 0, cleared: 0 }
+		}
+
+		// Count total articles with XML
+		const articlesCountResult = await errors.try(
+			db.query.niceArticles.findMany({
+				columns: { id: true }
+			})
+		)
+		if (articlesCountResult.error) {
+			logger.error("failed to count articles", { error: articlesCountResult.error })
+			throw errors.wrap(articlesCountResult.error, "articles count query")
+		}
+		results.articles.total = articlesCountResult.data.length
+
+		// Count total questions with XML
+		const questionsCountResult = await errors.try(
+			db.query.niceQuestions.findMany({
+				columns: { id: true }
+			})
+		)
+		if (questionsCountResult.error) {
+			logger.error("failed to count questions", { error: questionsCountResult.error })
+			throw errors.wrap(questionsCountResult.error, "questions count query")
+		}
+		results.questions.total = questionsCountResult.data.length
+
+		// Clear all XML data from articles table
+		logger.info("clearing xml from articles table", { totalArticles: results.articles.total })
+		const articlesUpdateResult = await errors.try(db.update(schema.niceArticles).set({ xml: null }))
+		if (articlesUpdateResult.error) {
+			logger.error("failed to clear articles xml", { error: articlesUpdateResult.error })
+			throw errors.wrap(articlesUpdateResult.error, "clear articles xml")
+		}
+		results.articles.cleared = results.articles.total
+		logger.info("cleared articles xml data", { count: results.articles.cleared })
+
+		// Clear all XML data from questions table
+		logger.info("clearing xml from questions table", { totalQuestions: results.questions.total })
+		const questionsUpdateResult = await errors.try(db.update(schema.niceQuestions).set({ xml: null }))
+		if (questionsUpdateResult.error) {
+			logger.error("failed to clear questions xml", { error: questionsUpdateResult.error })
+			throw errors.wrap(questionsUpdateResult.error, "clear questions xml")
+		}
+		results.questions.cleared = results.questions.total
+		logger.info("cleared questions xml data", { count: results.questions.cleared })
+
+		logger.info("completed database-wide xml clearing", {
+			articlesCleared: results.articles.cleared,
+			questionsCleared: results.questions.cleared,
+			totalCleared: results.articles.cleared + results.questions.cleared
+		})
+
+		return {
+			status: "success",
+			cleared: {
+				articles: results.articles.cleared,
+				questions: results.questions.cleared,
+				total: results.articles.cleared + results.questions.cleared
+			}
+		}
+	}
+)
