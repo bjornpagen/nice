@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
+import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
-import { differentiatedIngest } from "@/inngest/functions/qti/differentiated-ingest"
 
 const HARDCODED_COURSE_IDS = [
 	"xb5feb28c", // Early math review
@@ -21,15 +21,19 @@ export const orchestrateHardcodedQtiIngestion = inngest.createFunction(
 		name: "Orchestrate Hardcoded QTI Generation and Upload"
 	},
 	{ event: "migration/hardcoded.qti.ingest" },
-	async ({ step, logger }) => {
-		logger.info("starting hardcoded qti data generation and upload", { courseCount: HARDCODED_COURSE_IDS.length })
+	async ({ event, step, logger }) => {
+		const { differentiated } = event.data // ✅ NEW: Get the flag from the event
+		logger.info("starting hardcoded qti data generation and upload", {
+			courseCount: HARDCODED_COURSE_IDS.length,
+			differentiated
+		})
 
-		// Step 1: Generate QTI JSON data from the database for all courses
-		logger.info("fanning out differentiated qti ingestion jobs")
+		// Step 1: Generate QTI JSON data using the unified orchestrator
+		logger.info("fanning out qti ingestion jobs")
 		const qtiIngestionPromises = HARDCODED_COURSE_IDS.map((courseId) =>
-			step.invoke(`differentiated-ingest-qti-for-${courseId}`, {
-				function: differentiatedIngest,
-				data: { courseId }
+			step.invoke(`ingest-qti-for-${courseId}`, {
+				function: orchestrateCourseIngestionToQti,
+				data: { courseId, differentiated } // ✅ NEW: Pass the flag
 			})
 		)
 		const qtiIngestionResults = await errors.try(Promise.all(qtiIngestionPromises))

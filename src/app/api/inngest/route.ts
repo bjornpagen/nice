@@ -11,8 +11,8 @@ import { ingestComponentResources } from "@/inngest/functions/oneroster/ingest-c
 import { ingestCourse } from "@/inngest/functions/oneroster/ingest-course"
 import { ingestCourseComponents } from "@/inngest/functions/oneroster/ingest-course-components"
 import { ingestResources } from "@/inngest/functions/oneroster/ingest-resources"
-// ❌ REMOVED: Old orchestrator is now obsolete.
-// import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
+// ✅ MODIFIED: The old orchestrator is replaced by the new unified one.
+import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
 // Import orchestrators
 import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orchestrate-course-oneroster-generation"
 import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
@@ -27,8 +27,8 @@ import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/conv
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 // ✅ ADD: Import the new differentiate function
 import { differentiateQuestion } from "@/inngest/functions/qti/differentiate-question"
-// ✅ ADD: Import the new differentiated ingest function
-import { differentiatedIngest } from "@/inngest/functions/qti/differentiated-ingest"
+// ❌ REMOVED: The old differentiated ingest function is deleted.
+// import { differentiatedIngest } from "@/inngest/functions/qti/differentiated-ingest"
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
@@ -45,8 +45,7 @@ export const { GET, POST, PUT } = serve({
 		// Orchestrators
 		orchestrateCourseOnerosterGeneration,
 		orchestrateCourseUploadToOneroster,
-		// ❌ REMOVED: Old QTI orchestrator
-		// orchestrateCourseIngestionToQti,
+		orchestrateCourseIngestionToQti, // ✅ MODIFIED: This is now the unified orchestrator
 		orchestrateCourseXmlGeneration,
 		orchestrateCourseUploadToQti,
 		// ADD: Register the new hardcoded migration orchestrators
@@ -54,8 +53,8 @@ export const { GET, POST, PUT } = serve({
 		// ADD: Register the new independent functions.
 		orchestrateHardcodedOnerosterIngestion,
 		orchestrateHardcodedQtiIngestion,
-		// ✅ ADD: Register the new differentiated ingest function
-		differentiatedIngest,
+		// ✅ REMOVED: Old differentiated ingest is no longer registered.
+		// differentiatedIngest,
 		// OneRoster Functions
 		generateOnerosterPayloadForCourse,
 		ingestClass,

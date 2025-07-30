@@ -68,18 +68,19 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
-	// ❌ REMOVED: Old QTI ingestion event
-	// "qti/course.ingest": {
+	// ✅ REINSTATED & MODIFIED: This is now the single entry point for QTI JSON generation.
+	"qti/course.ingest": {
+		data: z.object({
+			courseId: z.string().min(1),
+			differentiated: z.boolean() // Mandatory flag to control the pipeline
+		})
+	},
+	// ❌ REMOVED: This event is now obsolete.
+	// "qti/course.differentiated-ingest": {
 	// 	data: z.object({
 	// 		courseId: z.string().min(1)
 	// 	})
 	// },
-	// ✅ ADD: New event for the differentiated ingestion pipeline.
-	"qti/course.differentiated-ingest": {
-		data: z.object({
-			courseId: z.string().min(1)
-		})
-	},
 	// ✅ ADDED: New event to trigger the upload of all generated QTI files.
 	"qti/course.upload": {
 		data: z.object({
@@ -253,8 +254,11 @@ const events = {
 		data: z.object({}) // No data needed
 	},
 	// ADD: New event to trigger QTI data generation and upload for hardcoded courses
+	// ✅ MODIFIED: Add differentiated flag for explicit control in hardcoded flows.
 	"migration/hardcoded.qti.ingest": {
-		data: z.object({}) // No data needed
+		data: z.object({
+			differentiated: z.boolean()
+		})
 	}
 }
 
