@@ -468,6 +468,17 @@ async function upsertAndCleanupItem(identifier: string, xml: string, context: Va
 		return `<qti-assessment-item${updatedAttrs}>`
 	})
 
+	// Debug log the exact XML being sent to the API
+	context.logger.debug("final assessment item xml being sent to qti api", {
+		identifier,
+		title: context.title,
+		xmlLength: finalXml.length,
+		fullXml: finalXml,
+		startsWithXmlDecl: finalXml.startsWith("<?xml"),
+		firstCharCode: finalXml.charCodeAt(0),
+		firstCharHex: finalXml.charCodeAt(0).toString(16)
+	})
+
 	const upsertResult = await errors.try(upsertItem(identifier, finalXml))
 	if (upsertResult.error) {
 		throw errors.wrap(upsertResult.error, "qti api validation failed for item")
@@ -486,6 +497,17 @@ async function upsertAndCleanupStimulus(identifier: string, xml: string, context
 	if (!context.title) {
 		throw errors.new("stimulus validation: title is required for stimuli")
 	}
+
+	// Debug log the exact XML being sent to the API
+	context.logger.debug("final stimulus xml being sent to qti api", {
+		identifier,
+		title: context.title,
+		xmlLength: xml.length,
+		fullXml: xml,
+		startsWithXmlDecl: xml.startsWith("<?xml"),
+		firstCharCode: xml.charCodeAt(0),
+		firstCharHex: xml.charCodeAt(0).toString(16)
+	})
 
 	// The QTI API's content field expects the entire raw QTI XML document.
 	// Do not extract the inner body.
