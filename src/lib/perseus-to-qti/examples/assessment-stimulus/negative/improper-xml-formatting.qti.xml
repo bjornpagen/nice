@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is intentionally malformed to serve as a negative example.
+  REASON FOR BEING BAD: The opening <qti-assessment-stimulus> tag is improperly formatted across multiple lines.
+  The proper format should have the opening tag and its namespace declarations on a single line or properly indented.
+  This formatting can cause parsing issues and is not consistent with QTI best practices.
+-->
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="improper-formatting-example"
+    title="Improper XML Formatting Example"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <h2>Sample Content</h2>
+        <p>This example demonstrates improper XML formatting in the opening tag.</p>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is intentionally malformed to serve as a negative example.
+  REASON FOR BEING BAD: Images are not wrapped in paragraph (<p>) tags.
+  In QTI, inline images should be properly wrapped within paragraph elements for better structure and compatibility.
+  Bare <img> tags at the block level can cause rendering and validation issues.
+-->
+<qti-assessment-stimulus xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="unwrapped-images-example"
+    title="Unwrapped Images Example"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <h2>Article with Images</h2>
+        <p>This is a paragraph introducing an image.</p>
+        <img src="https://cdn.kastatic.org/ka-perseus-images/e62c180706db22272718ac6bef536b738b82b503.jpg" alt="Drawing of a city" width="700" height="495"/>
+        <p>This is text after the image. Notice how the image above is not wrapped in a paragraph tag.</p>
+        <img src="https://cdn.kastatic.org/ka-perseus-images/75b5a14e8d61fd7ed434a5a7acc238469ace94e8.jpg" alt="A photo of a slab" width="400" height="377"/>
+        <p><em>Caption: This caption is properly in a paragraph, but the image above is not.</em></p>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>

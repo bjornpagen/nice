@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is intentionally malformed to serve as a negative example.
+  REASON FOR BEING BAD: This example combines multiple formatting issues:
+  1. The opening <qti-assessment-stimulus> tag is split across multiple lines with inconsistent indentation
+  2. Images are not wrapped in paragraph tags
+  3. Overall formatting is inconsistent
+  These issues were commonly found in the original conversions and needed to be fixed for proper QTI compliance.
+-->
+<qti-assessment-stimulus
+    xmlns="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/qti/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_stimulusv3p0p1_v1p0.xsd"
+    identifier="growth-of-cities-bad-example"
+    title="Growth of Cities - Bad Formatting"
+    xml:lang="en-US">
+    <qti-stimulus-body>
+        <h2>Growth of Cities</h2>
+        <img src="https://cdn.kastatic.org/ka-perseus-images/e62c180706db22272718ac6bef536b738b82b503.jpg" alt="Drawing of a city. There is one very large building, and many groups of smaller structures. The city is surrounded by a large wall." width="700" height="495"/>
+        <p><em>By Bennett Sherry</em></p>
+        <p><em>Cities forever changed the way humans lived. Cities connected the people living in them to one another, to surrounding farmland, and to people in other cities.</em></p>
+        <h2>The first cities</h2>
+        <p>Like agriculture, the world's first cities developed independently in different parts of the world at different times.</p>
+        <img src="https://cdn.kastatic.org/ka-perseus-images/75b5a14e8d61fd7ed434a5a7acc238469ace94e8.jpg" alt="A photo of a slab of rock carved with text being shown in a museum." width="400" height="377"/>
+        <p><em>Tablet V of the Epic of Gilgamesh, Sulaymaniyah Museum, Iraqi Kurdistan. By Osama Shukir Muhammed Amin, CC BY-SA 4.0.</em></p>
+        <figure>
+            <img src="https://cdn.kastatic.org/ka-perseus-images/4352dbff81daba3a8b61e7afe55e7af5c4c64a15.jpg" alt="Birds-eye view of what remains of Teotihuacan." width="700" height="405"/>
+            <figcaption><em>View of Teotihuacan from the top of the Pyramid of the Moon. By Rene Trohs, CC BY-SA 4.0.</em></figcaption>
+        </figure>
+    </qti-stimulus-body>
+</qti-assessment-stimulus>
