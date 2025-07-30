@@ -3,6 +3,7 @@ import type * as logger from "@superbuilders/slog"
 import { qti } from "@/lib/clients"
 import { validateXmlWithAi } from "@/lib/perseus-qti/client"
 import { ErrQtiNotFound } from "@/lib/qti"
+import { QTI_INTERACTION_TAGS } from "@/lib/qti-tags"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 
 type ValidationContext = {
@@ -176,6 +177,41 @@ export function validatePerseusArtifacts(xml: string, _context: ValidationContex
 	if (match) {
 		throw errors.new(
 			`invalid xml content: Perseus artifact '[[☃ ...]]' is not allowed in QTI XML and must be removed or converted. Found: ${match[0]}`
+		)
+	}
+}
+
+/**
+ * Validates that all <qti-prompt> elements are children of valid interaction tags.
+ * It does this by stripping out all valid interaction blocks and then checking if any
+ * <qti-prompt> tags remain. If they do, they were in an invalid location.
+ */
+export function validatePromptPlacement(xml: string, _context: ValidationContext): void {
+	// Create a regex that matches any valid interaction tag and its entire content.
+	const interactionTagsPattern = QTI_INTERACTION_TAGS.join("|")
+	const interactionBlockRegex = new RegExp(`<(${interactionTagsPattern})[\\s\\S]*?<\\/\\1>`, "g")
+
+	const xmlWithoutInteractions = xml.replace(interactionBlockRegex, "")
+
+	// Now, check if any <qti-prompt> tags are left.
+	const promptMatch = xmlWithoutInteractions.match(/<qti-prompt/)
+	if (promptMatch) {
+		if (promptMatch.index === undefined) {
+			throw errors.new("regex engine failure: prompt match found but index is undefined")
+		}
+		const contextIndex = promptMatch.index
+		const context = xml.substring(Math.max(0, contextIndex - 70), Math.min(xml.length, contextIndex + 70))
+
+		// Check if there are any interaction tags in the original XML to provide specific guidance
+		const hasInteractionTag = new RegExp(`<(?:${interactionTagsPattern})`).test(xml)
+
+		if (hasInteractionTag) {
+			throw errors.new(
+				`invalid qti-prompt placement: <qti-prompt> must be a direct child of an interaction element (e.g., qti-choice-interaction), not qti-item-body. Move the <qti-prompt> inside the interaction tag. Context: "...${context}..."`
+			)
+		}
+		throw errors.new(
+			`invalid qti-prompt placement: <qti-prompt> is not allowed without an interaction element. Convert the <qti-prompt> to a <p> tag instead. Context: "...${context}..."`
 		)
 	}
 }

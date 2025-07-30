@@ -192,3 +192,34 @@ export const VALID_QTI_TAGS: Readonly<string[]> = [
 	"qti-rule-system-SI",
 	"qti-stylesheet"
 ] as const
+
+/**
+ * A canonical list of all valid QTI 3.0 interaction tags that can contain a <qti-prompt>.
+ * This is used by the validation pipeline to enforce correct prompt placement.
+ */
+export const QTI_INTERACTION_TAGS: Readonly<string[]> = [
+	// Interactions (General)
+	"qti-associate-interaction",
+	"qti-choice-interaction",
+	"qti-extended-text-interaction",
+	"qti-gap-match-interaction",
+	"qti-hottext-interaction",
+	"qti-inline-choice-interaction",
+	"qti-match-interaction",
+	"qti-order-interaction",
+	"qti-slider-interaction",
+	"qti-text-entry-interaction",
+	"qti-upload-interaction",
+	// Interactions (Graphical & Object-based)
+	"qti-drawing-interaction",
+	"qti-graphic-associate-interaction",
+	"qti-graphic-gap-match-interaction",
+	"qti-graphic-order-interaction",
+	"qti-hotspot-interaction",
+	"qti-media-interaction",
+	"qti-position-object-interaction",
+	"qti-select-point-interaction",
+	// Interactions (Custom & Special Purpose)
+	"qti-custom-interaction",
+	"qti-portable-custom-interaction"
+] as const

@@ -166,6 +166,26 @@ ${negativeExamplesBlock}
   <perseus_artifact><object data-type="plotter" type="application/json"><param name="options">...</perseus_artifact>
   <explanation>This is NOT a valid QTI interaction. The object element cannot be used to create interactive assessments in QTI.</explanation>
 </negative_example>
+<negative_example reason="qti-prompt must be inside an interaction tag">
+  <malformed_qti>
+    <qti-item-body>
+      <qti-prompt>This is the question.</qti-prompt>
+      <qti-choice-interaction response-identifier="RESPONSE">
+        <qti-simple-choice identifier="A">Choice A</qti-simple-choice>
+      </qti-choice-interaction>
+    </qti-item-body>
+  </malformed_qti>
+  <explanation>The qti-prompt tag is a direct child of qti-item-body. This is INVALID. Since there IS an interaction tag (qti-choice-interaction), the qti-prompt MUST be moved inside it.</explanation>
+</negative_example>
+<negative_example reason="qti-prompt without interaction should be a p tag">
+  <malformed_qti>
+    <qti-item-body>
+      <qti-prompt>This is an informational text with no interaction.</qti-prompt>
+      <p>Some additional content.</p>
+    </qti-item-body>
+  </malformed_qti>
+  <explanation>The qti-prompt tag is used but there is NO interaction element in the item. This is INVALID. Since there is NO interaction, convert the qti-prompt to a regular p tag.</explanation>
+</negative_example>
 </critical_negative_examples>
 
 <instructions>
@@ -267,10 +287,14 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
 1.  **Preserve All Necessary Context:** Do not omit introductory sentences or setup text. The question must be fully understandable.
 2.  **Convert All LaTeX to MathML:** Any text enclosed in \`$...$\` is LaTeX and MUST be converted to \`<math>...</math>\`. This applies to prompts, choices, and feedback. Do not render math as plain text.
 3.  **Correct Interaction Placement:** Ensure interactive elements like \`<qti-text-entry-interaction>\` are placed correctly within sentences or equations to preserve their meaning.
-4.  **Avoid Leaking Answers in Multiple-Choice:** For "select all that apply" questions (\`multipleSelect: true\`), the \`max-choices\` attribute in \`<qti-choice-interaction>\` should be set to the *total number of choices*, not the number of correct answers.
-5.  **Use Full Response Processing:** Do NOT use \`<qti-response-processing template="...">\`. Always write a full \`<qti-response-condition>\` block that explicitly sets BOTH the \`SCORE\` and \`FEEDBACK\` outcome variables.
-6.  **Do Not Hallucinate Content:** Do not add extraneous text, symbols (like dollar signs), or formatting that is not present in the original Perseus JSON.
-7.  **Handle \`sorter\` Widgets Correctly:** A Perseus \`sorter\` becomes a \`<qti-order-interaction>\`. Do not use \`min-choices\` or \`max-choices\` for simple reordering tasks, as this changes the interaction behavior.
+4.  **Correct \`qti-prompt\` Placement:** The \`<qti-prompt>\` element contains the question text for an interaction and has strict placement rules:
+    - **WITH an interaction:** If the item contains an interaction element (e.g., \`<qti-choice-interaction>\`, \`<qti-text-entry-interaction>\`), the \`<qti-prompt>\` MUST be placed as a direct child of that interaction element.
+    - **WITHOUT an interaction:** If the item contains NO interaction elements (e.g., informational items, stimulus items), do NOT use \`<qti-prompt>\`. Instead, use a regular \`<p>\` tag for the question or prompt text.
+    - **NEVER** place \`<qti-prompt>\` as a direct child of \`<qti-item-body>\`.
+5.  **Avoid Leaking Answers in Multiple-Choice:** For "select all that apply" questions (\`multipleSelect: true\`), the \`max-choices\` attribute in \`<qti-choice-interaction>\` should be set to the *total number of choices*, not the number of correct answers.
+6.  **Use Full Response Processing:** Do NOT use \`<qti-response-processing template="...">\`. Always write a full \`<qti-response-condition>\` block that explicitly sets BOTH the \`SCORE\` and \`FEEDBACK\` outcome variables.
+7.  **Do Not Hallucinate Content:** Do not add extraneous text, symbols (like dollar signs), or formatting that is not present in the original Perseus JSON.
+8.  **Handle \`sorter\` Widgets Correctly:** A Perseus \`sorter\` becomes a \`<qti-order-interaction>\`. Do not use \`min-choices\` or \`max-choices\` for simple reordering tasks, as this changes the interaction behavior.
 
 ### CRITICAL: NOTES SECTION FOR ACCESSIBILITY ###
 
