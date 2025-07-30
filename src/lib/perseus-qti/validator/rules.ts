@@ -610,6 +610,48 @@ export function validateStimulusBodyContent(xml: string, context: ValidationCont
 }
 
 /**
+ * Validates that qti-stimulus-body elements do not contain any SVG elements.
+ * SVG elements are not supported by the QTI API for stimulus content.
+ */
+export function validateNoSvgInStimulusBody(xml: string, context: ValidationContext): void {
+	// Only apply this validation to stimulus items
+	if (context.rootTag !== "qti-assessment-stimulus") {
+		return
+	}
+
+	// Extract the qti-stimulus-body content
+	const stimulusBodyRegex =
+		/<qti-stimulus-body(?<attributes>\s+[^>]*)?(?<closeBracket>>)(?<content>[\s\S]*?)<\/qti-stimulus-body>/i
+	const stimulusBodyMatch = xml.match(stimulusBodyRegex)
+
+	if (!stimulusBodyMatch || !stimulusBodyMatch.groups) {
+		return
+	}
+
+	const bodyContent = stimulusBodyMatch.groups.content
+	if (!bodyContent) {
+		return
+	}
+
+	// Check for SVG elements (both namespace and non-namespace variants)
+	const svgRegex = /<svg(?:\s+[^>]*)?>/i
+	const svgMatch = bodyContent.match(svgRegex)
+
+	if (svgMatch) {
+		const position = svgMatch.index ?? 0
+		const contextStart = Math.max(0, position - 100)
+		const contextEnd = Math.min(bodyContent.length, position + 100)
+		const errorContext = bodyContent.substring(contextStart, contextEnd).replace(/\s+/g, " ")
+
+		throw errors.new(
+			`invalid qti-stimulus-body content: SVG elements are not allowed inside <qti-stimulus-body>. The QTI API does not support SVG content in stimulus items. Consider using a PNG or JPG image instead. Context: "...${errorContext}..."`
+		)
+	}
+
+	context.logger.debug("validated no svg in stimulus body")
+}
+
+/**
  * NEW: A custom error to be thrown when the AI validator deems the content unsolvable.
  */
 export const ErrContentUnsolvable = errors.new("qti content is not self-contained or solvable")
