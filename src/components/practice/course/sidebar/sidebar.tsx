@@ -2,6 +2,7 @@
 
 import * as errors from "@superbuilders/errors"
 import Image from "next/image"
+import Link from "next/link"
 import { notFound, usePathname } from "next/navigation"
 import * as React from "react"
 import { Breadcrumbs } from "@/components/practice/course/sidebar/breadcrumbs"
@@ -74,25 +75,30 @@ export function Sidebar({
 				<div className="bg-white border border-gray-200 rounded-lg max-h-full flex flex-col">
 					{/* FIXED HEADER SECTION - Course title and carousel */}
 					<div className="flex-shrink-0 px-6 pt-4 pb-0">
-						<div id="course-sidebar-course-title" className="text-lg font-bold mb-4">
-							<div className="flex items-center gap-4">
-								<div className="w-10 h-10 rounded flex items-center justify-center relative">
-									<Image
-										src={courseIconBackground}
-										alt="Course icon background"
-										fill
-										className="object-cover rounded"
-									/>
-									<Image
-										src={courseIconForeground}
-										alt="Course icon foreground"
-										className="w-6 h-6 relative z-10 brightness-0 invert"
-									/>
-								</div>
+						<Link href={course.path} className="block">
+							<div
+								id="course-sidebar-course-title"
+								className="text-lg font-bold mb-4 hover:opacity-80 transition-opacity"
+							>
+								<div className="flex items-center gap-4">
+									<div className="w-10 h-10 rounded flex items-center justify-center relative">
+										<Image
+											src={courseIconBackground}
+											alt="Course icon background"
+											fill
+											className="object-cover rounded"
+										/>
+										<Image
+											src={courseIconForeground}
+											alt="Course icon foreground"
+											className="w-6 h-6 relative z-10 brightness-0 invert"
+										/>
+									</div>
 
-								<span className="font-medium text-gray-900 text-xl capitalize">{course.title}</span>
+									<span className="font-medium text-gray-900 text-xl capitalize">{course.title}</span>
+								</div>
 							</div>
-						</div>
+						</Link>
 
 						{/* Separator */}
 						<div className="h-px my-4 bg-gray-200" />
