@@ -35,7 +35,7 @@ import { createPrefixFilter } from "@/lib/filter"
  */
 
 // Prefix filters for leveraging btree indexes
-const NICE_PREFIX_FILTER = createPrefixFilter("nice:")
+const NICE_PREFIX_FILTER = createPrefixFilter("nice_")
 
 // ⚠️ IMPORTANT: OneRoster API Filtering Limitation
 // The OneRoster API only supports a SINGLE AND operation in filter queries.
@@ -120,7 +120,7 @@ export const getClass = cache(
 export const getAllCourses = cache(
 	async () => {
 		logger.info("getAllCourses called")
-		// Use prefix filter for "nice:" to leverage btree indexes for faster queries
+		// Use prefix filter to leverage btree indexes for faster queries
 		// Filter by status='active' client-side due to OneRoster API AND limitation
 		const courses = await oneroster.getAllCourses({ filter: NICE_PREFIX_FILTER })
 
@@ -232,7 +232,7 @@ export const getUnitsForCourses = cache(
 export const getAllResources = cache(
 	async () => {
 		logger.info("getAllResources called")
-		// Use prefix filter for "nice:" to leverage btree indexes for faster queries
+		// Use prefix filter to leverage btree indexes for faster queries
 		// Filter by status='active' client-side due to OneRoster API AND limitation
 		const resources = await oneroster.getAllResources({ filter: NICE_PREFIX_FILTER })
 
@@ -287,7 +287,7 @@ export const getResourceByCourseAndSlug = cache(
 export const getAllComponentResources = cache(
 	async () => {
 		logger.info("getAllComponentResources called")
-		// Use prefix filter for "nice:" to leverage btree indexes for faster queries
+		// Use prefix filter to leverage btree indexes for faster queries
 		// Filter by status='active' client-side due to OneRoster API AND limitation
 		const resources = await oneroster.getAllComponentResources({ filter: NICE_PREFIX_FILTER })
 
@@ -336,8 +336,8 @@ export const getActiveEnrollmentsForUser = cache(
 		// ⚠️ CRITICAL: Apply client-side safety filtering first
 		const activeEnrollments = ensureActiveStatus(allEnrollments)
 
-		// Filter for Khan Academy (nice:) classes only - excludes PowerPath and other systems
-		return activeEnrollments.filter((enrollment) => enrollment.class.sourcedId.startsWith("nice:"))
+		// Filter for Khan Academy (nice_) classes only - excludes PowerPath and other systems
+		return activeEnrollments.filter((enrollment) => enrollment.class.sourcedId.startsWith("nice_"))
 	},
 	createCacheKey(["oneroster-getActiveEnrollmentsForUser"]),
 	{ revalidate: 60 } // equivalent to cacheLife("minutes")

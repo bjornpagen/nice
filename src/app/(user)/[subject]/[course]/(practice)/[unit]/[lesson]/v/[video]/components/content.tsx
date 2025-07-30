@@ -97,7 +97,7 @@ export function Content({
 				course: { name: params.course },
 				activity: {
 					name: video.title,
-					id: video.id // FIXED: video.id already contains "nice:" prefix
+					id: video.id
 				}
 			}
 
@@ -219,7 +219,7 @@ export function Content({
 					course: { name: params.course },
 					activity: {
 						name: video.title,
-						id: video.id // FIXED: video.id already contains "nice:" prefix
+						id: video.id
 					}
 				}
 

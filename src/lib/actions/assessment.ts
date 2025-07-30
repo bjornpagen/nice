@@ -22,8 +22,8 @@ import { oneroster, powerpath, qti } from "@/lib/clients"
  *
  * @param qtiItemId - The QTI assessment item ID (e.g., nice_question123)
  * @param selectedResponse - The user's selected response
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user456)
- * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr789) - used by PowerPath
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId - used by PowerPath
  * @param isInteractiveAssessment - Whether this is a quiz or test (vs exercise)
  * @param assessmentAttemptNumber - The attempt number (0 = first attempt)
  */
@@ -163,8 +163,8 @@ export async function processQuestionResponse(
  * Creates a new attempt for an assessment in PowerPath.
  * This allows users to retake assessments multiple times.
  *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
- * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr456)
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
  * @returns The new attempt information
  */
 export async function createNewAssessmentAttempt(
@@ -202,8 +202,8 @@ export async function createNewAssessmentAttempt(
  * Checks the current assessment progress and creates a new attempt if the assessment
  * is already finalized (completed). Returns the current attempt number.
  *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
- * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr456)
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
  * @returns The current attempt number to use
  */
 export async function checkAndCreateNewAttemptIfNeeded(
@@ -268,8 +268,8 @@ export async function checkAndCreateNewAttemptIfNeeded(
  * Finalizes an assessment in PowerPath to ensure all responses are graded
  * and ready for proficiency analysis.
  *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
- * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr456)
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
  */
 export async function finalizeAssessment(onerosterUserSourcedId: string, onerosterComponentResourceSourcedId: string) {
 	logger.info("finalizing assessment responses", { onerosterUserSourcedId, onerosterComponentResourceSourcedId })
@@ -305,8 +305,8 @@ export async function finalizeAssessment(onerosterUserSourcedId: string, onerost
  * should count as an incorrect answer.
  *
  * @param qtiItemId - The QTI assessment item ID that was skipped (e.g., nice_question123)
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
- * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr456)
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
  * @param attemptNumber - The current attempt number
  */
 export async function processSkippedQuestion(
@@ -360,8 +360,8 @@ export async function processSkippedQuestion(
  * Checks if a user has already achieved proficiency (80%+) on an assessment.
  * This is used to prevent XP farming by checking BEFORE saving a new result.
  *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
- * @param onerosterAssessmentSourcedId - The OneRoster assessment resource sourcedId (e.g., nice:exercise456)
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterAssessmentSourcedId - The OneRoster assessment resource sourcedId
  * @returns Whether the user is already proficient (true) or not (false)
  */
 export async function checkExistingProficiency(

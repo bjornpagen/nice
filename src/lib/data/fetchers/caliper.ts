@@ -39,21 +39,21 @@ function filterTimeSpentEventsByResources(
 	resourceIds: Set<string>
 ): z.infer<typeof CaliperEventSchema>[] {
 	// Convert OneRoster resource IDs to resource slugs for URL pattern matching
-	// OneRoster IDs like "nice:x2a55d09c" need to be converted to URL patterns
+	// OneRoster IDs need to be converted to URL patterns
 	const resourceSlugs = new Set<string>()
 
 	for (const resourceId of resourceIds) {
 		// Validate that the resource ID has the expected format
-		if (!resourceId.startsWith("nice:")) {
+		if (!resourceId.startsWith("nice_")) {
 			logger.error("CRITICAL: Invalid OneRoster resource ID format", {
 				resourceId,
-				expectedFormat: "nice:x..."
+				expectedFormat: "nice_x..."
 			})
 			throw errors.new("invalid OneRoster resource ID format")
 		}
 
-		// Extract the resource identifier part (remove "nice:" prefix)
-		const resourceSlug = resourceId.slice(5) // Remove "nice:" prefix
+		// Extract the resource identifier part (remove "nice_" prefix)
+		const resourceSlug = resourceId.slice(5) // Remove "nice_" prefix
 		if (resourceSlug.length === 0) {
 			logger.error("CRITICAL: Empty resource slug after removing prefix", { resourceId })
 			throw errors.new("empty resource slug")

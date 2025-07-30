@@ -85,7 +85,7 @@ export function Content({
 							course: { name: params.course },
 							activity: {
 								name: article.title,
-								id: article.id // FIXED: article.id already contains "nice:" prefix
+								id: article.id
 							}
 						}
 						void sendCaliperTimeSpentEvent(actorForCleanup, contextForCleanup, durationInSeconds)

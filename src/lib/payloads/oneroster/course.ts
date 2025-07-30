@@ -288,7 +288,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 	const onerosterPayload: OneRosterPayload = {
 		course: {
-			sourcedId: `nice:${course.id}`,
+			sourcedId: `nice_${course.id}`,
 			status: "active",
 			title: addNiceAcademyPrefix(course.title),
 			subjects: mapToOneRosterSubjects(subjectTitle),
@@ -305,11 +305,11 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		},
 		// ADDED: class object generation
 		class: {
-			sourcedId: `nice:${course.id}`,
+			sourcedId: `nice_${course.id}`,
 			status: "active",
 			title: addNiceAcademyPrefix(course.title),
 			classType: "scheduled",
-			course: { sourcedId: `nice:${course.id}`, type: "course" },
+			course: { sourcedId: `nice_${course.id}`, type: "course" },
 			school: { sourcedId: ORG_SOURCED_ID, type: "org" },
 			terms: [{ sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" }]
 		},
@@ -328,7 +328,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 	let courseChallengeLineItemId: string | undefined
 
 	if (courseChallenge) {
-		courseChallengeLineItemId = `nice:${courseChallenge.id}`
+		courseChallengeLineItemId = `nice_${courseChallenge.id}`
 		onerosterPayload.assessmentLineItems.push({
 			sourcedId: courseChallengeLineItemId,
 			title: courseChallenge.title,
@@ -339,10 +339,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 	for (const unit of units.sort((a, b) => a.ordering - b.ordering)) {
 		onerosterPayload.courseComponents.push({
-			sourcedId: `nice:${unit.id}`,
+			sourcedId: `nice_${unit.id}`,
 			status: "active",
 			title: unit.title,
-			course: { sourcedId: `nice:${course.id}`, type: "course" },
+			course: { sourcedId: `nice_${course.id}`, type: "course" },
 			sortOrder: unit.ordering,
 			metadata: {
 				khanId: unit.id,
@@ -356,7 +356,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		let unitTestLineItemId: string | undefined
 
 		if (unitTest) {
-			unitTestLineItemId = `nice:${unitTest.id}`
+			unitTestLineItemId = `nice_${unitTest.id}`
 			onerosterPayload.assessmentLineItems.push({
 				sourcedId: unitTestLineItemId,
 				title: unitTest.title,
@@ -370,7 +370,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 		const unitQuizzes = assessments.filter((a) => a.parentId === unit.id && a.type === "Quiz")
 		for (const quiz of unitQuizzes.sort((a, b) => a.ordering - b.ordering)) {
-			const quizLineItemId = `nice:${quiz.id}`
+			const quizLineItemId = `nice_${quiz.id}`
 			onerosterPayload.assessmentLineItems.push({
 				sourcedId: quizLineItemId,
 				title: quiz.title,
@@ -387,7 +387,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				const exercise = exercises.find((e) => e.id === exerciseId)
 				if (exercise) {
 					onerosterPayload.assessmentLineItems.push({
-						sourcedId: `nice:${exercise.id}`,
+						sourcedId: `nice_${exercise.id}`,
 						title: exercise.title,
 						status: "active",
 						category: { sourcedId: "default-category", type: "category" },
@@ -400,11 +400,11 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		const unitLessons = lessons.filter((l) => l.unitId === unit.id).sort((a, b) => a.ordering - b.ordering)
 		for (const lesson of unitLessons) {
 			onerosterPayload.courseComponents.push({
-				sourcedId: `nice:${lesson.id}`,
+				sourcedId: `nice_${lesson.id}`,
 				status: "active",
 				title: lesson.title,
-				course: { sourcedId: `nice:${course.id}`, type: "course" },
-				parent: { sourcedId: `nice:${unit.id}`, type: "courseComponent" },
+				course: { sourcedId: `nice_${course.id}`, type: "course" },
+				parent: { sourcedId: `nice_${unit.id}`, type: "courseComponent" },
 				sortOrder: lesson.ordering,
 				metadata: {
 					khanId: lesson.id,
@@ -420,7 +420,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			for (const lc of lessonContentLinks) {
 				const content = contentMap.get(lc.contentId)
 				if (content) {
-					const contentSourcedId = `nice:${content.id}`
+					const contentSourcedId = `nice_${content.id}`
 					if (!resourceSet.has(contentSourcedId)) {
 						// Construct metadata based on content type
 						let metadata: Record<string, unknown> = {
@@ -486,7 +486,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								status: "active",
 								category: { sourcedId: "default-category", type: "category" },
 								componentResource: {
-									sourcedId: `nice:${lesson.id}:${content.id}`,
+									sourcedId: `nice_${lesson.id}_${content.id}`,
 									type: "componentResource"
 								}
 							})
@@ -494,10 +494,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					}
 
 					onerosterPayload.componentResources.push({
-						sourcedId: `nice:${lesson.id}:${content.id}`,
+						sourcedId: `nice_${lesson.id}_${content.id}`,
 						status: "active",
 						title: content.title,
-						courseComponent: { sourcedId: `nice:${lesson.id}`, type: "courseComponent" },
+						courseComponent: { sourcedId: `nice_${lesson.id}`, type: "courseComponent" },
 						resource: { sourcedId: contentSourcedId, type: "resource" },
 						sortOrder: lc.ordering
 					})
@@ -507,7 +507,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 		const unitAssessments = assessments.filter((a) => a.parentId === unit.id).sort((a, b) => a.ordering - b.ordering)
 		for (const assessment of unitAssessments) {
-			const assessmentSourcedId = `nice:${assessment.id}`
+			const assessmentSourcedId = `nice_${assessment.id}`
 			if (!resourceSet.has(assessmentSourcedId)) {
 				// Calculate XP based on number of exercises in the assessment
 				const exerciseCount = exercisesByAssessmentId.get(assessment.id)?.length || 0
@@ -542,10 +542,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			}
 
 			onerosterPayload.componentResources.push({
-				sourcedId: `nice:${unit.id}:${assessment.id}`,
+				sourcedId: `nice_${unit.id}_${assessment.id}`,
 				status: "active",
 				title: assessment.title,
-				courseComponent: { sourcedId: `nice:${unit.id}`, type: "courseComponent" },
+				courseComponent: { sourcedId: `nice_${unit.id}`, type: "courseComponent" },
 				resource: { sourcedId: assessmentSourcedId, type: "resource" },
 				sortOrder: assessment.ordering
 			})
@@ -560,10 +560,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		const maxUnitOrder = units.reduce((max, u) => Math.max(max, u.ordering), -1)
 
 		onerosterPayload.courseComponents.push({
-			sourcedId: `nice:${course.id}`,
+			sourcedId: `nice_${course.id}`,
 			status: "active",
 			title: DUMMY_COMPONENT_TITLE,
-			course: { sourcedId: `nice:${course.id}`, type: "course" },
+			course: { sourcedId: `nice_${course.id}`, type: "course" },
 			sortOrder: maxUnitOrder + 1, // Place it after all units
 			metadata: {
 				khanId: `${course.id}-challenges`,
@@ -575,7 +575,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 		// Now, create resources and link them to this dummy component
 		for (const assessment of courseAssessments.sort((a, b) => a.ordering - b.ordering)) {
-			const assessmentSourcedId = `nice:${assessment.id}`
+			const assessmentSourcedId = `nice_${assessment.id}`
 			if (!resourceSet.has(assessmentSourcedId)) {
 				// Calculate XP based on number of exercises in the assessment
 				const exerciseCount = exercisesByAssessmentId.get(assessment.id)?.length || 0
@@ -610,10 +610,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			}
 
 			onerosterPayload.componentResources.push({
-				sourcedId: `nice:${course.id}:${assessment.id}`,
+				sourcedId: `nice_${course.id}_${assessment.id}`,
 				status: "active",
 				title: assessment.title,
-				courseComponent: { sourcedId: `nice:${course.id}`, type: "courseComponent" },
+				courseComponent: { sourcedId: `nice_${course.id}`, type: "courseComponent" },
 				resource: { sourcedId: assessmentSourcedId, type: "resource" },
 				sortOrder: assessment.ordering
 			})

@@ -23,8 +23,8 @@ interface QuestionResult {
  * mastery learning where performance on comprehensive assessments updates the
  * proficiency of individual skills that were tested.
  *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
- * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId (e.g., nice:cr456)
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
  * @param attemptNumber - The specific attempt number to analyze.
  * @param sessionResults - An array of question results from the client session.
  * @param onerosterCourseSourcedId - The sourcedId of the course for cache invalidation.
@@ -101,7 +101,7 @@ export async function updateProficiencyFromAssessment(
 			return null
 		}
 
-		const onerosterResourceSourcedId = `nice:${khanExerciseId}`
+		const onerosterResourceSourcedId = `nice_${khanExerciseId}`
 		logger.debug("mapped question to exercise", {
 			qtiItemId: question.id,
 			khanExerciseId,

@@ -5,7 +5,7 @@ import { Client } from "@/lib/oneroster"
 
 // The problematic resource that's not getting created
 const PROBLEM_RESOURCE = {
-	sourcedId: "nice:x2832fbb7463fe65a",
+	sourcedId: "nice_x2832fbb7463fe65a",
 	status: "active",
 	title: "Course Challenge",
 	vendorResourceId: "nice-academy-x2832fbb7463fe65a",

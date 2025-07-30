@@ -13,8 +13,8 @@ import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
  * AssessmentResult in the OneRoster gradebook.
  * This action is designed to be idempotent; it will not create duplicate results.
  *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
- * @param onerosterArticleResourceSourcedId - The OneRoster resource sourcedId for the article (e.g., nice:article456)
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterArticleResourceSourcedId - The OneRoster resource sourcedId for the article
  * @param courseInfo - Slugs to identify the course for cache invalidation.
  */
 export async function trackArticleView(
@@ -28,7 +28,7 @@ export async function trackArticleView(
 	const onerosterLineItemSourcedId = onerosterArticleResourceSourcedId
 
 	// The result sourcedId follows our pattern
-	const onerosterResultSourcedId = `nice:${onerosterUserSourcedId}:${onerosterLineItemSourcedId}`
+	const onerosterResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterLineItemSourcedId}`
 
 	const resultPayload = {
 		result: {
@@ -82,8 +82,8 @@ export async function trackArticleView(
  * This is a fire-and-forget action that tracks how much of a video has been watched.
  * It marks the video as "completed" once the user watches 95% or more of the content.
  *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
- * @param onerosterVideoResourceSourcedId - The OneRoster resource sourcedId for the video (e.g., nice:video456)
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterVideoResourceSourcedId - The OneRoster resource sourcedId for the video
  * @param currentTime - The current playback time in seconds.
  * @param duration - The total duration of the video in seconds.
  * @param courseInfo - Slugs to identify the course for cache invalidation.
@@ -140,7 +140,7 @@ export async function updateVideoProgress(
 	// The line item sourcedId is the same as the video resource sourcedId
 	const onerosterLineItemSourcedId = onerosterVideoResourceSourcedId
 	// The result sourcedId follows our pattern
-	const onerosterResultSourcedId = `nice:${onerosterUserSourcedId}:${onerosterLineItemSourcedId}`
+	const onerosterResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterLineItemSourcedId}`
 
 	const resultPayload = {
 		result: {
@@ -202,11 +202,11 @@ export async function updateVideoProgress(
  * Saves an assessment result directly to the OneRoster gradebook.
  * This is called when a user completes an assessment (exercise, quiz, or test).
  *
- * @param onerosterResourceSourcedId - The OneRoster resource sourcedId for the assessment (e.g., nice:exercise789)
+ * @param onerosterResourceSourcedId - The OneRoster resource sourcedId for the assessment
  * @param score - The score as a decimal between 0 and 1 (e.g., 0.8 for 80%)
  * @param correctAnswers - Number of questions answered correctly on first attempt
  * @param totalQuestions - Total number of questions in the assessment
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
  * @param onerosterCourseSourcedId - The sourcedId of the course this assessment belongs to, for cache invalidation.
  */
 export async function saveAssessmentResult(
@@ -233,7 +233,7 @@ export async function saveAssessmentResult(
 	const onerosterLineItemSourcedId = onerosterResourceSourcedId
 
 	// The result sourcedId follows our pattern
-	const onerosterResultSourcedId = `nice:${onerosterUserSourcedId}:${onerosterLineItemSourcedId}`
+	const onerosterResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterLineItemSourcedId}`
 
 	const resultPayload = {
 		result: {
@@ -276,8 +276,8 @@ export async function saveAssessmentResult(
  * Retrieves the saved video progress for a user.
  * Returns the last watched position in seconds, or null if no progress is saved.
  *
- * @param onerosterUserSourcedId - The user's OneRoster sourcedId (e.g., nice:user123)
- * @param onerosterVideoResourceSourcedId - The OneRoster resource sourcedId for the video (e.g., nice:video456)
+ * @param onerosterUserSourcedId - The user's OneRoster sourcedId
+ * @param onerosterVideoResourceSourcedId - The OneRoster resource sourcedId for the video
  * @returns The last watched position in seconds, or null if no progress found
  */
 export async function getVideoProgress(
@@ -290,7 +290,7 @@ export async function getVideoProgress(
 	})
 
 	// The result sourcedId follows our pattern
-	const onerosterResultSourcedId = `nice:${onerosterUserSourcedId}:${onerosterVideoResourceSourcedId}`
+	const onerosterResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterVideoResourceSourcedId}`
 
 	const result = await errors.try(oneroster.getResult(onerosterResultSourcedId))
 	if (result.error) {

@@ -45,9 +45,7 @@ export const ingestClass = inngest.createFunction(
 			termsCount: classData.terms?.length || 0
 		})
 
-		// Replace colon with dash in step ID to make it valid
-		const stepId = `ingest-class-${classData.sourcedId.replace(/:/g, "-")}`
-		const stepResult = await step.run(stepId, async () => {
+		const stepResult = await step.run(`ingest-class-${classData.sourcedId}`, async () => {
 			// Clean the class data to remove any Inngest metadata
 			// Only pass school OR org, not both - prefer school if it exists
 			const cleanClassData = {

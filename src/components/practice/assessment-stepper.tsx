@@ -146,8 +146,8 @@ interface AssessmentStepperProps {
 	questions: Question[]
 	contentType: AssessmentType
 	onComplete?: () => void
-	onerosterComponentResourceSourcedId: string // The OneRoster componentResource sourcedId (e.g., nice:cr123) - used by PowerPath
-	onerosterResourceSourcedId: string // The OneRoster resource sourcedId (e.g., nice:exercise456) - used for OneRoster assessment results
+	onerosterComponentResourceSourcedId: string // The OneRoster componentResource sourcedId - used by PowerPath
+	onerosterResourceSourcedId: string // The OneRoster resource sourcedId - used for OneRoster assessment results
 	onerosterCourseSourcedId: string // The parent course ID for cache invalidation
 	assessmentTitle: string
 	assessmentPath: string // The canonical URL path for this assessment

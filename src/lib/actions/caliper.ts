@@ -58,13 +58,13 @@ export async function sendCaliperActivityCompletedEvent(
 	}
 	let assessmentLineItemId = context.activity.id
 
-	// Handle compound componentResource IDs (format: nice:unitId:resourceId)
+	// Handle compound componentResource IDs (format: nice_unitId_resourceId)
 	// Assessment results are saved under resource ID, not componentResource ID
-	const idParts = assessmentLineItemId.split(":")
+	const idParts = assessmentLineItemId.split("_")
 	if (idParts.length === 3 && idParts[0] === "nice") {
-		// This is a compound ID like nice:x310ffe65:x82a512f747dc1208
-		// Extract just the resource ID: nice:x82a512f747dc1208
-		assessmentLineItemId = `${idParts[0]}:${idParts[2]}`
+		// This is a compound ID like nice_x310ffe65_x82a512f747dc1208
+		// Extract just the resource ID: nice_x82a512f747dc1208
+		assessmentLineItemId = `${idParts[0]}_${idParts[2]}`
 		logger.debug("extracted resource id from compound id", {
 			originalId: context.activity.id,
 			extractedResourceId: assessmentLineItemId

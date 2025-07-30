@@ -312,7 +312,7 @@ const handlers: Record<Exclude<EntityType, "all">, EntityHandler> = {
 		type: "assessmentResults",
 		name: "Assessment Results (User Progress)",
 		fetchAll: async (prefix: string) => {
-			// For AssessmentResults, we need to filter by the sourcedId which now follows pattern nice:result-{userId}-{lineItemId}
+			// For AssessmentResults, we need to filter by the sourcedId
 			const items = await oneroster.getAllResults({
 				filter: `sourcedId~'${prefix}'`,
 				sort: "sourcedId",
