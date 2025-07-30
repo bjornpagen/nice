@@ -4,6 +4,7 @@ import { BookOpen } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { Course } from "@/lib/types/domain"
+import { assertNoEncodedColons, normalizeString } from "@/lib/utils"
 
 export function CourseTab({
 	course,
@@ -14,7 +15,9 @@ export function CourseTab({
 	unitCount: number
 	lessonCount: number
 }) {
-	const pathname = usePathname()
+	const rawPathname = usePathname()
+	const pathname = normalizeString(rawPathname)
+	assertNoEncodedColons(pathname, "course-tab pathname")
 	if (pathname === course.path) {
 		return (
 			<div className="bg-blue-100 border-blue-200 border-l-4 border-l-blue-600 px-4 py-3 shadow-sm">

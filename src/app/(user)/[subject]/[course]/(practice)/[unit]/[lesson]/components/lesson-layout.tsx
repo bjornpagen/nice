@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
+import { assertNoEncodedColons, normalizeString } from "@/lib/utils"
 import { LessonFooter } from "./lesson-footer"
 
 export function LessonLayout({
@@ -24,7 +25,9 @@ export function LessonLayout({
 	React.use(dataPromise)
 	// Now we pass progressPromise to the sidebar instead of consuming it here
 
-	const pathname = usePathname()
+	const rawPathname = usePathname()
+	const pathname = normalizeString(rawPathname)
+	assertNoEncodedColons(pathname, "lesson-layout pathname")
 	const [isCollapsed, setIsCollapsed] = React.useState(false)
 
 	// Don't show Next on exercise, quiz, unit test, or course challenge pages

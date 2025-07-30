@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { assertNoEncodedColons, cn, normalizeString } from "@/lib/utils"
 
 const stuff = [
 	{
@@ -38,7 +38,9 @@ function highlight(pathname: string, href: string) {
 }
 
 export function Sidebar() {
-	const pathname = usePathname()
+	const rawPathname = usePathname()
+	const pathname = normalizeString(rawPathname)
+	assertNoEncodedColons(pathname, "profile-sidebar pathname")
 
 	return (
 		<div className="bg-white rounded-lg border border-gray-200 p-4">

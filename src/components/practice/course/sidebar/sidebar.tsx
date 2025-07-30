@@ -14,7 +14,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 // import { useSidebar } from "@/components/ui/sidebar" // Removed for relative positioning layout
 import type { AssessmentProgress } from "@/lib/data/progress"
 import { type Course, getCourseMaterials } from "@/lib/types/sidebar"
-import { assertNoEncodedColons, cn } from "@/lib/utils"
+import { assertNoEncodedColons, cn, normalizeString } from "@/lib/utils"
 
 export function Sidebar({
 	coursePromise,
@@ -25,8 +25,9 @@ export function Sidebar({
 	progressPromise: Promise<Map<string, AssessmentProgress>>
 	className?: string
 }) {
-	const pathname = usePathname()
-	// Defensive check: middleware should have normalized URLs
+	const rawPathname = usePathname()
+	const pathname = normalizeString(rawPathname)
+	// Assert on the normalized path to ensure correctness.
 	assertNoEncodedColons(pathname, "sidebar pathname")
 	// Removed useSidebar() dependency for relative positioning layout
 

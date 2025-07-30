@@ -511,7 +511,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	}
 
 	// Defensive check: middleware should have normalized URLs
-	assertNoEncodedColons(params.test, "fetchCourseChallengeTestPageData test parameter")
+	assertNoEncodedColons(params.test, "fetchCourseChallengePage_TestData test parameter")
 	logger.info("searching for resource with slug", {
 		slug: params.test
 	})

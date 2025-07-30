@@ -3,9 +3,12 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { Unit } from "@/lib/types/domain"
+import { assertNoEncodedColons, normalizeString } from "@/lib/utils"
 
 export function UnitTab({ index, unit }: { index: number; unit: Pick<Unit, "path" | "title"> }) {
-	const pathname = usePathname()
+	const rawPathname = usePathname()
+	const pathname = normalizeString(rawPathname)
+	assertNoEncodedColons(pathname, "unit-tab pathname")
 	if (pathname === unit.path) {
 		return (
 			<div className="bg-blue-100 border border-blue-200 border-l-4 border-l-blue-600 px-4 py-3 shadow-sm">
