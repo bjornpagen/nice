@@ -8,6 +8,7 @@ import {
 	validatePerseusArtifacts,
 	validatePromptPlacement,
 	validateRootElement,
+	validateTextEntryInteractionPlacement,
 	validateTitleAttribute,
 	validateTruncatedTags,
 	validateWithQtiApi
@@ -37,6 +38,7 @@ export async function runValidationPipeline(
 		validatePerseusArtifacts,
 		validatePromptPlacement,
 		validateInteractionAttributes,
+		validateTextEntryInteractionPlacement,
 		validateHtmlEntities
 	]
 

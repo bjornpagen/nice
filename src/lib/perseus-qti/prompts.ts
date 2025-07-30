@@ -186,6 +186,20 @@ ${negativeExamplesBlock}
   </malformed_qti>
   <explanation>The qti-prompt tag is used but there is NO interaction element in the item. This is INVALID. Since there is NO interaction, convert the qti-prompt to a regular p tag.</explanation>
 </negative_example>
+<negative_example reason="qti-text-entry-interaction must be wrapped in a block element">
+  <malformed_qti>
+    <qti-item-body>
+      <div id="reference_text">
+        <img src="https://example.com/image.png" alt="Example image"/>
+        <p><span class="qti-italic">Note: Description of image.</span></p>
+      </div>
+      <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3">
+        <qti-prompt>What number is missing?</qti-prompt>
+      </qti-text-entry-interaction>
+    </qti-item-body>
+  </malformed_qti>
+  <explanation>The qti-text-entry-interaction is placed directly inside qti-item-body. This structure violates QTI 3.0 schema validation. The interaction MUST be wrapped inside a block-level element like <p>. Additionally, when wrapping the interaction in a paragraph, the qti-prompt should be moved OUTSIDE the interaction as a separate <p> element.</explanation>
+</negative_example>
 </critical_negative_examples>
 
 <instructions>

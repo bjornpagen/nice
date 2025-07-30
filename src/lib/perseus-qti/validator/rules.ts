@@ -264,6 +264,88 @@ export function validateInteractionAttributes(xml: string, _context: ValidationC
 	}
 }
 
+/**
+ * Validates that qti-text-entry-interaction elements are properly wrapped in block-level elements.
+ * These interactions cannot be direct children of qti-item-body.
+ */
+export function validateTextEntryInteractionPlacement(xml: string, _context: ValidationContext): void {
+	// First, let's check if there are any text-entry-interactions at all
+	if (!xml.includes("qti-text-entry-interaction")) {
+		return
+	}
+
+	// Extract the qti-item-body content with named capture groups
+	const itemBodyRegex = /<qti-item-body(?<attributes>[^>]*)>(?<content>[\s\S]*?)<\/qti-item-body>/i
+	const itemBodyMatch = xml.match(itemBodyRegex)
+	if (!itemBodyMatch || !itemBodyMatch.groups) {
+		return // No item body found, other validators will catch this
+	}
+
+	const itemBodyContent = itemBodyMatch.groups.content
+	if (!itemBodyContent) {
+		return
+	}
+
+	// Create a simplified version by removing all content within valid wrapper elements
+	// Start by removing comments to avoid false positives
+	let simplifiedContent = itemBodyContent.replace(/<!--[\s\S]*?-->/g, "")
+
+	// Remove content of block elements that could validly contain the interaction
+	// This list includes all common block-level elements that could wrap the interaction
+	const blockElements = [
+		"p",
+		"div",
+		"li",
+		"td",
+		"th",
+		"dd",
+		"dt",
+		"blockquote",
+		"section",
+		"article",
+		"aside",
+		"nav",
+		"header",
+		"footer",
+		"main",
+		"figure",
+		"figcaption"
+	]
+
+	for (const element of blockElements) {
+		// Regex to match both regular and self-closing tags with named capture groups
+		// First, remove self-closing tags
+		const selfClosingRegex = new RegExp(`<${element}(?<attributes>[^>]*?)(?<selfClosing>\\/)>`, "gi")
+		simplifiedContent = simplifiedContent.replace(selfClosingRegex, "")
+
+		// Then remove regular tags with content
+		const elementRegex = new RegExp(`<${element}(?<attributes>[^>]*)>(?<content>[\\s\\S]*?)<\\/${element}>`, "gi")
+		// Use a loop to handle nested elements of the same type
+		let previousLength = 0
+		while (previousLength !== simplifiedContent.length) {
+			previousLength = simplifiedContent.length
+			simplifiedContent = simplifiedContent.replace(elementRegex, "")
+		}
+	}
+
+	// Now check if any qti-text-entry-interaction remains in the simplified content
+	// If it does, it means it wasn't wrapped in a valid block element
+	const interactionRegex = /<qti-text-entry-interaction(?<attributes>[^>]*?)(?<selfClosing>\/)?>(?<content>[^<]*)?/i
+	const unwrappedInteractionMatch = simplifiedContent.match(interactionRegex)
+	if (unwrappedInteractionMatch) {
+		// Find the position in the original content for better error context
+		const matchedText = unwrappedInteractionMatch[0]
+		const position = itemBodyContent.indexOf(matchedText)
+		const contextStart = Math.max(0, position - 100)
+		const contextEnd = Math.min(itemBodyContent.length, position + 100)
+		const context = itemBodyContent.substring(contextStart, contextEnd).replace(/\s+/g, " ")
+
+		throw errors.new(
+			`invalid qti-text-entry-interaction placement: qti-text-entry-interaction must be wrapped in a block-level element (e.g., <p>, <div>, <li>). It cannot be a direct child of qti-item-body. Context: "...${context}..."`
+		)
+	}
+}
+
 export function validateHtmlEntities(xml: string, context: ValidationContext): void {
 	// Check for unescaped angle brackets which are the most critical issue
 	const angleValidationError = validateXmlAngleBrackets(xml, context.logger)

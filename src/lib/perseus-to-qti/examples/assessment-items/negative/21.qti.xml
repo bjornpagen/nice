@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This XML is a negative example because it violates QTI structural rules.
+  REASON FOR BEING BAD: The qti-text-entry-interaction element is placed directly
+  inside qti-item-body with a nested qti-prompt element. This structure is invalid
+  according to QTI 3.0 schema validation. The interaction should be wrapped in a
+  paragraph (<p>) element, and when using qti-prompt, it must be inside the interaction
+  element. In this case, since the interaction is being wrapped in a paragraph,
+  the prompt should be a separate <p> element before the interaction.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="missing-number-sequence"
+    title="Find the missing number"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>93</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <div id="reference_text">
+            <img src="https://cdn.kastatic.org/ka-perseus-graphie/f8bff3dd0faa3b170f2afc668c889e8542bfd930.png"
+                 alt="A horizontal row of five squares shows the numbers 91, 92, a blank square, 94, and 95." width="400" height="300"/>
+            <p><span class="qti-italic">Note: The image shows a sequence of numbers with a blank square between 92 and 94.</span></p>
+        </div>
+        <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3">
+            <qti-prompt>What number is missing?</qti-prompt>
+        </qti-text-entry-interaction>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The missing number is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>93</mn></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> The numbers increase by one each time: 91, 92, __, 94, 95. The missing number is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>93</mn></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>
