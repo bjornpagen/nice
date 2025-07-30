@@ -3,7 +3,7 @@ import type * as logger from "@superbuilders/slog"
 import { generateXml } from "./client"
 import { runValidationPipeline } from "./validator"
 
-const MAX_CONVERSION_ATTEMPTS = 2
+const MAX_CONVERSION_ATTEMPTS = 3
 
 type ConversionOptions = {
 	id: string
