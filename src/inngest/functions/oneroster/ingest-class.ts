@@ -4,7 +4,11 @@ import { oneroster } from "@/lib/clients"
 import { ErrOneRosterNotFound, ErrOneRosterNotFoundAs422 } from "@/lib/oneroster"
 
 export const ingestClass = inngest.createFunction(
-	{ id: "ingest-class", name: "Ingest OneRoster Class" },
+	{
+		id: "ingest-class",
+		name: "Ingest OneRoster Class"
+		// No concurrency limit - unlimited parallel processing!
+	},
 	{ event: "oneroster/class.ingest" },
 	async ({ event, step, logger }) => {
 		// Immediate log to confirm function is executing

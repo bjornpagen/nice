@@ -10,7 +10,7 @@ import { ingestAssessmentStimuli } from "./qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "./qti/ingest-assessment-tests"
 
 // Universal batch size for QTI uploads
-const QTI_BATCH_SIZE = 100
+const QTI_BATCH_SIZE = 200
 
 export const orchestrateCourseUploadToQti = inngest.createFunction(
 	{

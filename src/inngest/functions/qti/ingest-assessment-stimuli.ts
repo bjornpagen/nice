@@ -5,7 +5,11 @@ import { ErrQtiNotFound } from "@/lib/qti"
 import { extractQtiStimulusBodyContent } from "@/lib/xml-utils"
 
 export const ingestAssessmentStimuli = inngest.createFunction(
-	{ id: "ingest-assessment-stimuli", name: "Ingest QTI Assessment Stimuli" },
+	{
+		id: "ingest-assessment-stimuli",
+		name: "Ingest QTI Assessment Stimuli"
+		// No concurrency limit - unlimited parallel processing!
+	},
 	{ event: "qti/assessment-stimuli.ingest" },
 	async ({ event, logger }) => {
 		const { stimuli } = event.data

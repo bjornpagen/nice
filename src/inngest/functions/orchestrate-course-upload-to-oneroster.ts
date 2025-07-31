@@ -13,7 +13,7 @@ import { ingestCourseComponents } from "./oneroster/ingest-course-components"
 import { ingestResources } from "./oneroster/ingest-resources"
 
 // Universal batch size for OneRoster uploads
-const ONEROSTER_BATCH_SIZE = 100
+const ONEROSTER_BATCH_SIZE = 200
 
 export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 	{

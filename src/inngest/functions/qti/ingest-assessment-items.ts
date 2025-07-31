@@ -4,7 +4,11 @@ import { qti } from "@/lib/clients"
 import { ErrQtiNotFound } from "@/lib/qti"
 
 export const ingestAssessmentItems = inngest.createFunction(
-	{ id: "ingest-assessment-items", name: "Ingest QTI Assessment Items" },
+	{
+		id: "ingest-assessment-items",
+		name: "Ingest QTI Assessment Items"
+		// No concurrency limit - unlimited parallel processing!
+	},
 	{ event: "qti/assessment-items.ingest" },
 	async ({ event, logger }) => {
 		const { items } = event.data

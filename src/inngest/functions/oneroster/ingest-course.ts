@@ -4,7 +4,11 @@ import { oneroster } from "@/lib/clients"
 import { ErrOneRosterNotFound } from "@/lib/oneroster"
 
 export const ingestCourse = inngest.createFunction(
-	{ id: "ingest-course", name: "Ingest OneRoster Course" },
+	{
+		id: "ingest-course",
+		name: "Ingest OneRoster Course"
+		// No concurrency limit - unlimited parallel processing!
+	},
 	{ event: "oneroster/course.upsert" },
 	async ({ event, step, logger }) => {
 		const { course } = event.data

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="inequality-number-line"
+    title="Identify an inequality from a number-line graph"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <div id="reference_text">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='100' viewBox='0 0 500 100'%3E%3Cdefs%3E%3Cstyle%3E.axis%7Bstroke:%23000;stroke-width:2%7D.tick%7Bstroke:%23000;stroke-width:1%7D.arrow%7Bfill:none;stroke:%23000;stroke-width:2;marker-end:url(%23arrowhead)%7D.open%7Bfill:%23fff;stroke:%23000;stroke-width:2%7D.label%7Bfont-family:sans-serif;font-size:12px;text-anchor:middle%7D%3C/style%3E%3Cmarker id='arrowhead' viewBox='0 0 10 10' refX='8' refY='5' markerWidth='6' markerHeight='6' orient='auto'%3E%3Cpath d='M 0 0 L 10 5 L 0 10 z' fill='%23000'/%3E%3C/marker%3E%3C/defs%3E%3Cline class='axis' x1='20' y1='50' x2='480' y2='50'/%3E%3Cline class='tick' x1='20' y1='45' x2='20' y2='55'/%3E%3Ctext class='label' x='20' y='70'%3E-5%3C/text%3E%3Cline class='tick' x1='66' y1='45' x2='66' y2='55'/%3E%3Ctext class='label' x='66' y='70'%3E-4%3C/text%3E%3Cline class='tick' x1='112' y1='45' x2='112' y2='55'/%3E%3Ctext class='label' x='112' y='70'%3E-3%3C/text%3E%3Cline class='tick' x1='158' y1='45' x2='158' y2='55'/%3E%3Ctext class='label' x='158' y='70'%3E-2%3C/text%3E%3Cline class='tick' x1='204' y1='45' x2='204' y2='55'/%3E%3Ctext class='label' x='204' y='70'%3E-1%3C/text%3E%3Cline class='tick' x1='250' y1='45' x2='250' y2='55'/%3E%3Ctext class='label' x='250' y='70'%3E0%3C/text%3E%3Cline class='tick' x1='296' y1='45' x2='296' y2='55'/%3E%3Ctext class='label' x='296' y='70'%3E1%3C/text%3E%3Cline class='tick' x1='342' y1='45' x2='342' y2='55'/%3E%3Ctext class='label' x='342' y='70'%3E2%3C/text%3E%3Cline class='tick' x1='388' y1='45' x2='388' y2='55'/%3E%3Ctext class='label' x='388' y='70'%3E3%3C/text%3E%3Cline class='tick' x1='434' y1='45' x2='434' y2='55'/%3E%3Ctext class='label' x='434' y='70'%3E4%3C/text%3E%3Cline class='tick' x1='480' y1='45' x2='480' y2='55'/%3E%3Ctext class='label' x='480' y='70'%3E5%3C/text%3E%3Ccircle class='open' cx='250' cy='50' r='6'/%3E%3Cline class='arrow' x1='256' y1='50' x2='480' y2='50'/%3E%3C/svg%3E" alt="Number line from −5 to 5 with an open circle at 0 and an arrow pointing to the right." width="500" height="100"/>
+            <p><span class="qti-italic">Note: The open circle at 0 and the arrow pointing right indicate all values greater than 0.</span></p>
+        </div>
+
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" min-choices="1" max-choices="1">
+            <qti-prompt>Choose the inequality that represents the graph.</qti-prompt>
+            <qti-simple-choice identifier="A">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&lt;</mo><mn>0</mn></math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≤</mo><mn>0</mn></math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≥</mo><mn>0</mn></math>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The graph shows an open point at 0 with an arrow to the right, representing all values strictly greater than 0, so the inequality is <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> The open point at 0 means 0 itself is not included, and the arrow pointing right indicates values greater than 0.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>

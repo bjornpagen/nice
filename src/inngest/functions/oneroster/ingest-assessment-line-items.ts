@@ -34,7 +34,11 @@ const EventDataSchema = z.object({
 })
 
 export const ingestAssessmentLineItems = inngest.createFunction(
-	{ id: "ingest-assessment-line-items", name: "Ingest Assessment Line Items Hierarchically" },
+	{
+		id: "ingest-assessment-line-items",
+		name: "Ingest Assessment Line Items Hierarchically"
+		// No concurrency limit - unlimited parallel processing!
+	},
 	{ event: "oneroster/assessment-line-items.ingest" },
 	async ({ event, step, logger }) => {
 		// Validate event data structure
