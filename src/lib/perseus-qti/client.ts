@@ -187,19 +187,22 @@ export async function generateXml(
  * @param perseusJson The source Perseus JSON.
  * @param qtiXml The generated QTI XML to validate.
  * @param imageUrls An array of image URLs extracted from the QTI XML.
+ * @param svgContents An array of SVG content objects with URL and content.
  * @returns A promise that resolves to the structured validation result.
  */
 export async function validateXmlWithAi(
 	logger: logger.Logger,
 	perseusJson: unknown,
 	qtiXml: string,
-	imageUrls: string[] // NEW: Add imageUrls parameter
+	imageUrls: string[], // NEW: Add imageUrls parameter
+	svgContents: { url: string; content: string }[] = [] // NEW: Add svgContents parameter
 ): Promise<z.infer<typeof QtiSolvabilityValidationSchema>> {
-	const { developer, user } = createQtiSufficiencyValidationPrompt(perseusJson, qtiXml)
+	const { developer, user } = createQtiSufficiencyValidationPrompt(perseusJson, qtiXml, svgContents)
 
 	logger.debug("calling openai for qti solvability validation", {
 		model: OPENAI_MODEL,
-		imageCount: imageUrls.length
+		imageCount: imageUrls.length,
+		svgCount: svgContents.length
 	})
 
 	// Construct the multimodal message payload

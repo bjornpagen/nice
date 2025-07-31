@@ -472,17 +472,43 @@ FINAL REMINDER: The examples demonstrate PERFECT QTI 3.0 XML output. Follow thei
  */
 export function createQtiSufficiencyValidationPrompt(
 	perseusJson: unknown,
-	qtiXml: string
+	qtiXml: string,
+	svgContents: { url: string; content: string }[] = []
 ): { developer: string; user: string } {
 	const developer =
 		"You are a meticulous QTI 3.0 assessment expert. Your ONLY task is to determine if a generated QTI XML assessment item is solvable, considering both its text and any accompanying images. You must respond ONLY with a valid JSON object."
+
+	// Build SVG resources block if SVGs are present
+	const svgResourcesBlock =
+		svgContents.length > 0
+			? `
+<svg_resources>
+<!-- SVG content loaded from external URLs for analysis -->
+${svgContents
+	.map(
+		(svg) => `
+<svg_resource url="${svg.url}">
+  <![CDATA[
+${svg.content}
+  ]]>
+</svg_resource>
+`
+	)
+	.join("\n")}
+</svg_resources>
+`
+			: ""
 
 	const user = `
 <task_definition>
   # Task
   Your ONLY task is to determine if the provided QTI XML is self-contained and provides sufficient information for a student to solve the question. The question is considered IMPOSSIBLE to solve if critical context, images, tables, or structural elements are missing, malformed, or altered in a way that breaks the problem's logic.
 
-  You will be provided with the source Perseus JSON, the generated QTI XML, and an array of images referenced in the QTI XML. You MUST analyze these images for any defects that would make the question unsolvable.
+  You will be provided with the source Perseus JSON, the generated QTI XML, and visual resources:
+  - Raster images (PNG, JPG) will be provided directly to your vision system
+  - SVG images will be provided as XML text in the <svg_resources> section for you to analyze
+
+  You MUST analyze these resources for any defects that would make the question unsolvable.
 
   **CRITICAL CLARIFICATION:** Your job is NOT to check if the QTI is a "faithful translation" of the Perseus interaction type. A change in format (e.g., a Perseus plotter becoming a QTI multiple-choice with static images) is ACCEPTABLE and should be considered **solvable**, as long as all necessary information from the source is present in the final QTI. The ONLY question is: "Can a student solve this with the provided text and images?"
 </task_definition>
@@ -495,13 +521,17 @@ export function createQtiSufficiencyValidationPrompt(
     <![CDATA[
       ${qtiXml}
     ]]>
-  </generated_qti_xml>
+  </generated_qti_xml>${svgResourcesBlock}
 </inputs>
 
 <instructions_and_constraints>
   # Instructions & Rules
   1.  **Compare Source and Output:** Scrutinize the Perseus \`question.content\` and compare it against the QTI \`<qti-item-body>\`.
-  2.  **Analyze Images (CRITICAL):** Carefully inspect each image provided. Check for the following unsolvable conditions:
+  2.  **Analyze Images (CRITICAL):** Carefully inspect each image resource provided:
+      - For raster images (PNG/JPG): Check the visual content directly
+      - For SVG images: Analyze the XML structure in <svg_resources> to understand the visual content
+      
+      Check for the following unsolvable conditions:
       - The image is corrupted, malformed, or fails to load.
       - The image is blank or does not display the intended content.
       - Critical information is missing from the image (e.g., a number grid is missing numbers, a diagram is missing labels, a ruler is missing markings).

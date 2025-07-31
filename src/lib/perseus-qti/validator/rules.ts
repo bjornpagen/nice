@@ -699,27 +699,45 @@ export async function validateContentSufficiency(xml: string, context: Validatio
 	// 1. Extract all image URLs from the XML to provide them as context to the AI.
 	const allImageUrls = [...new Set(Array.from(xml.matchAll(REGEX.IMAGE_URL), (m) => m.groups?.url ?? ""))]
 
-	// 2. Filter to only include supported image formats (PNG, JPG, JPEG) - SVG is not supported by multimodal AI
+	// 2. Separate SVGs from supported image formats
+	const svgUrls = allImageUrls.filter((url) => url.toLowerCase().endsWith(".svg"))
 	const supportedImageUrls = allImageUrls.filter((url) => {
 		const lowerUrl = url.toLowerCase()
 		return lowerUrl.endsWith(".png") || lowerUrl.endsWith(".jpg") || lowerUrl.endsWith(".jpeg")
 	})
 
-	if (supportedImageUrls.length > 0) {
-		logger.debug("extracted supported image urls for ai validation", {
-			count: supportedImageUrls.length,
-			urls: supportedImageUrls,
-			totalImageCount: allImageUrls.length,
-			excludedSvgCount: allImageUrls.length - supportedImageUrls.length
-		})
-	} else if (allImageUrls.length > 0) {
-		logger.debug("all extracted images were svg, skipping image analysis", {
-			svgCount: allImageUrls.length
-		})
+	logger.debug("extracted image urls for ai validation", {
+		totalImageCount: allImageUrls.length,
+		supportedImageCount: supportedImageUrls.length,
+		svgCount: svgUrls.length,
+		urls: allImageUrls
+	})
+
+	// 3. Fetch SVG content as text
+	const svgContents: { url: string; content: string }[] = []
+	for (const svgUrl of svgUrls) {
+		logger.debug("fetching svg content", { url: svgUrl })
+
+		const fetchResult = await errors.try(fetch(svgUrl))
+		if (fetchResult.error) {
+			logger.warn("failed to fetch svg content", { url: svgUrl, error: fetchResult.error })
+			continue
+		}
+
+		const textResult = await errors.try(fetchResult.data.text())
+		if (textResult.error) {
+			logger.warn("failed to read svg as text", { url: svgUrl, error: textResult.error })
+			continue
+		}
+
+		svgContents.push({ url: svgUrl, content: textResult.data })
+		logger.debug("successfully fetched svg content", { url: svgUrl, contentLength: textResult.data.length })
 	}
 
-	// 3. Call the AI validator with the XML, source JSON, and extracted image URLs.
-	const validationResult = await errors.try(validateXmlWithAi(logger, perseusContent, xml, supportedImageUrls))
+	// 4. Call the AI validator with the XML, source JSON, image URLs, and SVG content.
+	const validationResult = await errors.try(
+		validateXmlWithAi(logger, perseusContent, xml, supportedImageUrls, svgContents)
+	)
 	if (validationResult.error) {
 		throw errors.wrap(validationResult.error, "ai content solvability validation")
 	}
