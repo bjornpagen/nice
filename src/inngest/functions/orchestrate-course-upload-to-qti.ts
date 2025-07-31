@@ -57,8 +57,7 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 			testCount: tests.length
 		})
 
-		// Ingest items and stimuli in parallel, with batching
-		const promises = []
+		// Ingest items sequentially, with batching
 		if (items.length > 0) {
 			const itemBatches = []
 			for (let i = 0; i < items.length; i += QTI_BATCH_SIZE) {
@@ -74,12 +73,10 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 
 			for (let i = 0; i < itemBatches.length; i++) {
 				const batch = itemBatches[i]
-				promises.push(
-					step.invoke(`invoke-ingest-assessment-items-batch-${i + 1}`, {
-						function: ingestAssessmentItems,
-						data: { items: batch }
-					})
-				)
+				await step.invoke(`invoke-ingest-assessment-items-batch-${i + 1}`, {
+					function: ingestAssessmentItems,
+					data: { items: batch }
+				})
 				logger.info("completed assessment item batch", {
 					courseId,
 					batchNumber: i + 1,
@@ -90,6 +87,10 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 				})
 			}
 		}
+
+		logger.info("completed ingestion of items", { courseId })
+
+		// Ingest stimuli sequentially, with batching
 		if (stimuli.length > 0) {
 			const stimuliBatches = []
 			for (let i = 0; i < stimuli.length; i += QTI_BATCH_SIZE) {
@@ -105,12 +106,10 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 
 			for (let i = 0; i < stimuliBatches.length; i++) {
 				const batch = stimuliBatches[i]
-				promises.push(
-					step.invoke(`invoke-ingest-assessment-stimuli-batch-${i + 1}`, {
-						function: ingestAssessmentStimuli,
-						data: { stimuli: batch }
-					})
-				)
+				await step.invoke(`invoke-ingest-assessment-stimuli-batch-${i + 1}`, {
+					function: ingestAssessmentStimuli,
+					data: { stimuli: batch }
+				})
 				logger.info("completed assessment stimuli batch", {
 					courseId,
 					batchNumber: i + 1,
@@ -121,9 +120,8 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 				})
 			}
 		}
-		await Promise.all(promises)
 
-		logger.info("completed ingestion of items and stimuli", { courseId })
+		logger.info("completed ingestion of stimuli", { courseId })
 
 		// Ingest tests after items and stimuli are complete, with batching
 		if (tests.length > 0) {
