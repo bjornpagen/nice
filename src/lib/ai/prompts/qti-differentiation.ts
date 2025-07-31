@@ -1,4 +1,5 @@
 import { loadConversionExamples } from "@/lib/qti-examples"
+import { loadPromptAsset } from "./prompt-utils"
 
 export async function produceQtiVariationsPrompt(
 	sourceQtiXml: string,
@@ -9,6 +10,20 @@ export async function produceQtiVariationsPrompt(
 ): Promise<{ developer: string; user: string }> {
 	// ✅ ADDITION: Load proven examples for additional context
 	const provenExamples = await loadConversionExamples({ type: "assessmentItem" })
+
+	// ✅ ADDITION: Load the analysis report
+	const qualitativeAnalysisReport = await loadPromptAsset("qti_analysis_report.md")
+	const qualitativeFailureAnalysisBlock = `
+<qualitative_failure_analysis_from_previous_run>
+<!--
+CRITICAL LEARNINGS: The following is an analysis of a previous generation task.
+It contains examples that PASSED XML validation but FAILED human quality review.
+You MUST study these failures to understand what makes a question educationally "bad" even if the XML is technically "good".
+DO NOT repeat these qualitative mistakes.
+-->
+${qualitativeAnalysisReport}
+</qualitative_failure_analysis_from_previous_run>
+`
 
 	// ✅ ADDITION: Extract key structure rules from proven system for context
 	const provenStructureContext = `
@@ -116,6 +131,8 @@ ${provenStructureContext}
 
 ${criticalFailurePatternsBlock}
 
+${qualitativeFailureAnalysisBlock}
+
 ${validationErrorsBlock}<source_qti_xml><![CDATA[
 ${sourceQtiXml}
 ]]></source_qti_xml>
@@ -156,34 +173,30 @@ ${sourceQtiXml}
      - The overall XML hierarchy and nesting
 
   ## Image Handling Rules
-  6. **Khan Academy CDN Image Replacement (CRITICAL):** If the source contains Khan Academy CDN URLs like "https://cdn.kastatic.org/ka-perseus-graphie/*.png" or "https://cdn.kastatic.org/*.svg", you MUST analyze the image's educational purpose and replace contextually:
-     - **NEVER keep the external URL** - always replace with appropriate content based on what the image represents
-     - **For simple counting objects (cookies, toys, animals):** Replace with HTML-rendered emojis that students can count in span tags
-     - **For grids, charts, geometric shapes, or structured layouts:** Create simple inline SVG that represents the same visual structure and educational concept
-     - **For mathematical diagrams:** Create clean inline SVG with proper geometric elements, labels, and measurements
-     - **Be contextually intelligent:** Understand what educational purpose the original image serves and replicate that function in your replacement
-  7. **External CDN Image References (General):** For other external image URLs, you MUST either:
-     - **Option A:** Remove the image entirely and replace with descriptive text that captures the visual information needed for the question
-     - **Option B:** Create a simple, self-contained inline SVG using data:image/svg+xml encoding that represents the essential visual elements
-     - **Never keep external URL references** - all images must be either removed or converted to inline content
-     - **CRITICAL: Never reveal the answer** - descriptive text must provide enough context for students to solve the problem but MUST NOT contain, hint at, or make obvious the correct answer
-     - Ensure any replacement preserves the educational value and accessibility of the visual information
-  8. **PNG Image Replacement:** If the source contains PNG images (<img src="*.png" />), you SHOULD replace them with appropriate emojis or Unicode symbols that match the new content context. For example:
-     - Science concepts: use microscope, beaker, test tube, DNA, lightning, earth, wave, star emojis
-     - General objects: use relevant emojis (apple, house, car, etc.)
-     - Replace the entire <img> tag with the emoji/symbol directly in the text
-  9. **SVG Image Editing:** If the source contains SVG images, you MUST modify the SVG content to match your new question variation while keeping the same SVG structure:
-     - Update text labels within SVG to match new context
-     - Modify numbers, dimensions, or values shown in the SVG
-     - Change colors, shapes, or diagram elements as needed for the new scenario
-     - Ensure the SVG remains valid and well-formed XML
-  10. **Image Content Alignment:** All image replacements or edits MUST align perfectly with the new question content and context.
+  6. **Khan Academy CDN Image Replacement (CRITICAL):** If the source contains Khan Academy CDN URLs (e.g., "https://cdn.kastatic.org/..."), you MUST analyze its educational purpose and replace it. **NEVER keep the external URL.**
+     - **For simple counting objects (cookies, animals):** Replace with HTML-rendered emojis inside span tags.
+     - **For grids, charts, and geometric shapes:** Create a high-quality, educationally accurate inline SVG. Your generated SVG MUST be functional and visually clear to a 2nd grader.
+  7. **SVG Quality Standards (CRITICAL):** When you generate an SVG, it is not enough for it to be a simple placeholder. It MUST be educationally sound.
+     - **Rulers:** A ruler MUST have a main axis line, clearly marked and evenly-spaced tick marks, and corresponding numerical labels (e.g., 0, 1, 2, 3).
+     - **Place-Value Blocks:** A diagram MUST visually render distinct hundreds blocks (large squares), tens blocks (vertical rods), and ones blocks (small squares). If items are subtracted, they must be visually crossed out with a line.
+     - **Bar Graphs:** A graph MUST have clearly labeled X and Y axes, tick marks with values on the Y-axis, and bars whose heights accurately correspond to the data. Use a g transform to position elements correctly.
+     - **Number Lines:** A number line MUST show jumps as curved paths with labels (e.g., +10, -5) to indicate the operation.
+     - **Rendering:** ALL generated SVGs MUST include a viewBox attribute to ensure they scale correctly and are not cut off.
+  8. **PNG Image Replacement:** If the source contains a PNG image, you SHOULD replace it with a contextually relevant emoji, Unicode symbol, or a new, accurate SVG that matches the new question variation.
+  9. **SVG Image Editing:** If the source already contains an SVG, you MUST modify its internal elements (paths, text, values) to align with your new question variation. Preserve the SVG's structure and attributes.
+  10. **Content Alignment:** All visual replacements (SVG, emoji) MUST perfectly align with the numbers, context, and logic of the new question variation. The alt text for the image must accurately describe the new visual.
+  11. **CRITICAL: Do Not Reveal the Answer:** Image alt text and any associated p notes must provide context but MUST NOT contain the answer or make it obvious. Describe the setup, not the solution.
 
-  ## Quality Assurance Rules
-  11. **Preserve Feedback Structure:** If the source includes <qti-feedback-inline> for choices, provide unique, relevant feedback for every choice in variations, explaining correctness or errors in the new context.
-  12. **Absolute XML Well-Formedness:** Prioritize perfect XML: Open tags must have matching closing tags, attributes quoted, special characters escaped (e.g., &lt; for <).
-  13. **Unique Identifiers:** For each variation, assign a unique identifier in this exact format: "nice_${khanId}_XXXX" where XXXX is a 4-digit number starting from ${String(startingIndex).padStart(4, "0")} (e.g., "nice_${khanId}_${String(startingIndex).padStart(4, "0")}", "nice_${khanId}_${String(startingIndex + 1).padStart(4, "0")}", etc.).
-  14. **Strict JSON Output:** Output only the specified JSON object without extra text.
+  ## Quality Assurance & Solvability Rules
+  11. **Preserve Feedback Structure:** If the source includes <qti-feedback-inline>, provide unique, relevant feedback for every choice in your variations, explaining correctness or errors in the new context.
+  12. **Absolute XML Well-Formedness:** Prioritize perfect XML. Open tags must have matching closing tags, attributes must be quoted, and special characters must be escaped.
+  13. **Unique Identifiers:** For each variation, assign a unique identifier in the format: "nice_${khanId}_XXXX" starting from ${String(startingIndex).padStart(4, "0")}.
+  14. **Strict JSON Output:** Output only the specified JSON object without any extra text or explanations.
+  15. **Solvability Preservation (CRITICAL):** Your variations MUST be logically solvable.
+      - After generating a question, double-check that only the intended correct answers are actually correct.
+      - For single-choice questions (cardinality="single"), ensure exactly one choice is correct.
+      - For multiple-select questions (cardinality="multiple"), ensure the number of correct choices you create matches the number of qti-value tags in the qti-correct-response block.
+      - Check that the question provides all necessary information for a student to arrive at the answer.
 
   ## ⚠️ CRITICAL: Validation Survival Rules
   15. **MathML Operator Safety:** If your variation contains mathematical operators like < or > in <mo> elements, you MUST escape them as &lt; and &gt; respectively.
@@ -196,17 +209,20 @@ ${sourceQtiXml}
 <thinking_instructions>
   # Reasoning Process
   For each variation, reason step-by-step in <thinking> tags before generating:
-  1. Analyze core skill and misconceptions.
-  2. Plan distinct variation (new elements, distractors).
-  3. Identify any images that need replacement/editing and plan appropriate substitutions:
-     - **Analyze what the original image represents:** Is it counting objects, a grid, a chart, geometric shapes, or mathematical diagrams?
-     - **For counting objects (cookies, toys, animals):** Plan emoji replacement with span tags - choose emojis that match your new context
-     - **For grids, charts, or structured layouts:** Plan inline SVG creation that replicates the visual structure and educational purpose
-     - **For mathematical diagrams:** Plan SVG with proper geometric elements, measurements, and labels
-     - **Ensure contextual accuracy:** Your replacement must serve the same educational function as the original image
-     - Plan PNG-to-emoji/SVG replacements based on context, not just format
-  4. Verify structure preservation, feedback alignment, and XML validity.
-  Generate 2-3 reasoning paths if needed and select the most consistent. After all variations, critique in <self_review> tags: Check XML validity, skill alignment, distinctness, structure preservation, image handling, and ensure no descriptive text reveals answers. Refine if issues found (but output only final JSON).
+  1. **Analyze Core Skill:** What is the original question testing? What are the likely student misconceptions?
+  2. **Plan Variation:** Brainstorm a new scenario with new numbers and context. Plan the new correct answer and plausible incorrect distractors.
+  3. **Plan Visuals (If any):**
+     - Identify any image needing replacement.
+     - Based on the **SVG Quality Standards**, plan the exact SVG structure. Will it be a ruler, a bar graph, place-value blocks?
+     - Define the necessary SVG elements: paths for number line jumps, rectangles for bars, correct labels and values.
+     - For emoji replacements, choose a contextually appropriate emoji.
+  4. **Self-Critique before Generating:**
+     - **Visual Check:** Does my planned SVG meet all the quality standards? Is it a *functional diagram* or just a placeholder?
+     - **Logic Check:** Is my question unambiguously solvable? Have I created the correct number of correct answers for the question type?
+     - **Answer Check:** Does any text in my question prompt, choices, or notes accidentally give away the answer?
+  5. **Generate:** Create the final QTI XML based on the refined plan.
+  
+  After planning all variations, perform a final <self_review> of your entire plan. Check XML validity, skill alignment, structure preservation, and that all new rules have been followed. Refine your plan if any issues are found. Only output the final, reviewed JSON.
 </thinking_instructions>
 
 ${negativeExamplesBlock}
