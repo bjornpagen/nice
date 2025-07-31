@@ -217,10 +217,22 @@ export function validatePromptPlacement(xml: string, _context: ValidationContext
 }
 
 /**
- * Validates that min-choices and max-choices attributes are used together on interactions.
- * If one is present, both must be present.
+ * Validates that min-choices and max-choices attributes are ALWAYS present on interactions that support them.
+ * These attributes are required for safety and explicit behavior definition.
  */
 export function validateInteractionAttributes(xml: string, _context: ValidationContext): void {
+	// Define which interaction types require min-choices and max-choices attributes
+	const INTERACTIONS_REQUIRING_CHOICES = new Set([
+		"qti-choice-interaction",
+		"qti-associate-interaction",
+		"qti-match-interaction",
+		"qti-gap-match-interaction",
+		"qti-hottext-interaction",
+		"qti-graphic-associate-interaction",
+		"qti-graphic-gap-match-interaction",
+		"qti-hotspot-interaction"
+	])
+
 	// Robust regex with named capture groups to find any QTI interaction tag with its attributes
 	const interactionRegex =
 		/<(?<tagname>qti-(?:choice|order|associate|match|inline-choice|gap-match|hottext|extended-text|text-entry|slider|upload|drawing|graphic-associate|graphic-gap-match|graphic-order|hotspot|media|position-object|select-point|custom|portable-custom)-interaction)(?<attributes>[^>]*)>/gi
@@ -233,31 +245,47 @@ export function validateInteractionAttributes(xml: string, _context: ValidationC
 			continue
 		}
 
+		const tagName = match.groups.tagname
 		const attributes = match.groups.attributes
-		if (!attributes) {
+
+		// Skip if tagName is somehow undefined (shouldn't happen with our regex)
+		if (!tagName) {
 			match = interactionRegex.exec(xml)
 			continue
 		}
 
-		// Check for presence of min-choices and max-choices with named capture groups
-		const minChoicesMatch = attributes.match(/\bmin-choices\s*=\s*(?<quote>["'])(?<value>\d+)(?<endquote>["'])/)
-		const maxChoicesMatch = attributes.match(/\bmax-choices\s*=\s*(?<quote>["'])(?<value>\d+)(?<endquote>["'])/)
+		// Check if this interaction type requires min-choices and max-choices
+		if (INTERACTIONS_REQUIRING_CHOICES.has(tagName)) {
+			// If attributes is undefined, it means the tag has no attributes at all
+			if (!attributes) {
+				throw errors.new(
+					`invalid interaction attributes: <${tagName}> has no attributes. Both min-choices and max-choices attributes are required.`
+				)
+			}
 
-		const hasMinChoices = minChoicesMatch !== null
-		const hasMaxChoices = maxChoicesMatch !== null
+			// Check for presence of min-choices and max-choices with named capture groups
+			const minChoicesMatch = attributes.match(/\bmin-choices\s*=\s*(?<quote>["'])(?<value>\d+)(?<endquote>["'])/)
+			const maxChoicesMatch = attributes.match(/\bmax-choices\s*=\s*(?<quote>["'])(?<value>\d+)(?<endquote>["'])/)
 
-		// If one is present but not the other, throw an error
-		if (hasMinChoices && !hasMaxChoices) {
-			const tagName = match.groups.tagname
-			throw errors.new(
-				`invalid interaction attributes: min-choices is present but max-choices is missing. Both attributes must be used together. Found in: <${tagName}${attributes}>`
-			)
-		}
-		if (hasMaxChoices && !hasMinChoices) {
-			const tagName = match.groups.tagname
-			throw errors.new(
-				`invalid interaction attributes: max-choices is present but min-choices is missing. Both attributes must be used together. Found in: <${tagName}${attributes}>`
-			)
+			const hasMinChoices = minChoicesMatch !== null
+			const hasMaxChoices = maxChoicesMatch !== null
+
+			// Both attributes MUST be present
+			if (!hasMinChoices && !hasMaxChoices) {
+				throw errors.new(
+					`invalid interaction attributes: Both min-choices and max-choices attributes are required on <${tagName}>. Neither attribute was found. Found: <${tagName}${attributes}>`
+				)
+			}
+			if (!hasMinChoices) {
+				throw errors.new(
+					`invalid interaction attributes: min-choices attribute is required on <${tagName}>. Found: <${tagName}${attributes}>`
+				)
+			}
+			if (!hasMaxChoices) {
+				throw errors.new(
+					`invalid interaction attributes: max-choices attribute is required on <${tagName}>. Found: <${tagName}${attributes}>`
+				)
+			}
 		}
 
 		match = interactionRegex.exec(xml)
