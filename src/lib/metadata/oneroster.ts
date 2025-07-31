@@ -1,24 +1,20 @@
 import { z } from "zod"
 
-export const CourseMetadataSchema = z
-	.object({
-		khanId: z.string().min(1),
-		khanSlug: z.string().min(1),
-		khanSubjectSlug: z.string().min(1),
-		khanTitle: z.string().min(1),
-		khanDescription: z.string().default("")
-	})
-	.strict() // Enforce strict validation
+export const CourseMetadataSchema = z.object({
+	khanId: z.string().min(1),
+	khanSlug: z.string().min(1),
+	khanSubjectSlug: z.string().min(1),
+	khanTitle: z.string().min(1),
+	khanDescription: z.string().default("")
+})
 export type CourseMetadata = z.infer<typeof CourseMetadataSchema>
 
-export const ComponentMetadataSchema = z
-	.object({
-		khanId: z.string().min(1),
-		khanSlug: z.string().min(1),
-		khanTitle: z.string().min(1),
-		khanDescription: z.string().default("")
-	})
-	.strict() // Enforce strict validation
+export const ComponentMetadataSchema = z.object({
+	khanId: z.string().min(1),
+	khanSlug: z.string().min(1),
+	khanTitle: z.string().min(1),
+	khanDescription: z.string().default("")
+})
 export type ComponentMetadata = z.infer<typeof ComponentMetadataSchema>
 
 // Base schema for common resource properties
@@ -39,7 +35,7 @@ const VideoResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 	tenantId: z.string().optional(),
 	clientAppId: z.string().optional(),
 	sourcedId: z.string().optional()
-}).strict()
+})
 
 // Schema for QTI-specific metadata, with its own discriminated union
 const QtiResourceMetadataSchema = BaseResourceMetadataSchema.extend({
@@ -53,7 +49,7 @@ const QtiResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 	tenantId: z.string().optional(),
 	clientAppId: z.string().optional(),
 	sourcedId: z.string().optional()
-}).strict()
+})
 
 // The final discriminated union schema for all resources
 export const ResourceMetadataSchema = z.discriminatedUnion("type", [
