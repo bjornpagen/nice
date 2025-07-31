@@ -12,6 +12,8 @@ import { ingestComponentResources } from "@/inngest/functions/oneroster/ingest-c
 import { ingestCourse } from "@/inngest/functions/oneroster/ingest-course"
 import { ingestCourseComponents } from "@/inngest/functions/oneroster/ingest-course-components"
 import { ingestResources } from "@/inngest/functions/oneroster/ingest-resources"
+// ✅ ADD: Import the new batch orchestration function
+import { orchestrateBatchCourseIngestion } from "@/inngest/functions/orchestrate-batch-course-ingestion"
 // ✅ MODIFIED: The old orchestrator is replaced by the new unified one.
 import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
 // Import orchestrators
@@ -47,6 +49,7 @@ export const { GET, POST, PUT } = serve({
 		orchestrateCourseOnerosterGeneration,
 		orchestrateCourseUploadToOneroster,
 		orchestrateCourseIngestionToQti, // ✅ MODIFIED: This is now the unified orchestrator
+		orchestrateBatchCourseIngestion, // ✅ ADD: Register the new batch orchestration function
 		orchestrateCourseXmlGeneration,
 		orchestrateCourseUploadToQti,
 		// ADD: Register the new hardcoded migration orchestrators

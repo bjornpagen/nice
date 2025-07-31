@@ -10,7 +10,7 @@ export const paraphraseStimulus = inngest.createFunction(
 		id: "paraphrase-qti-stimulus",
 		name: "Paraphrase QTI Stimulus using AI",
 		concurrency: {
-			limit: 20 // ✅ INCREASED: OpenAI o3 has much better rate limits than Gemini
+			limit: 50 // ✅ INCREASED: Allow all stimuli in chunk to run concurrently (chunk size is 25)
 		}
 	},
 	{ event: "qti/stimulus.paraphrase" },

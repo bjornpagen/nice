@@ -11,7 +11,13 @@ import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 import { differentiateQuestion } from "./qti/differentiate-question"
 import { paraphraseStimulus } from "./qti/paraphrase-stimulus"
 
-const CHUNK_SIZE = 50
+const CHUNK_SIZE = 75
+
+interface DifferentiateQuestionEventData {
+	questionId: string
+	numberOfVariations: number
+	startingIndex?: number
+}
 
 interface ChunkProgress {
 	chunkIndex: number
@@ -65,6 +71,26 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				return { message: "No units found for course", courseId }
 			}
 			const unitIds = units.map((u) => u.id)
+
+			// CRITICAL: Validate unit scope matches standard path expectations
+			logger.info("units fetched for differentiation", {
+				unitIds: unitIds,
+				unitCount: units.length,
+				courseId
+			})
+
+			// Validate specific units that were missing in the scope mismatch investigation
+			const criticalUnits = ["x310ffe65", "xd0ae8a03"] // Counting & Addition units
+			const missingCriticalUnits = criticalUnits.filter((id) => !unitIds.includes(id))
+			if (missingCriticalUnits.length > 0) {
+				logger.error("CRITICAL: expected units missing from differentiation scope", {
+					missingCriticalUnits,
+					criticalUnits,
+					allUnits: unitIds,
+					courseId
+				})
+				throw errors.new(`scope mismatch: missing units from differentiation scope: ${missingCriticalUnits.join(", ")}`)
+			}
 
 			const [questionCount, stimuliCount] = await Promise.all([
 				db
@@ -168,95 +194,39 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					if (!q.xml) throw errors.new(`Question ${q.id} is missing XML`)
 				}
 
-				logger.info("differentiating chunk questions with single 5-variation calls", {
+				logger.info("differentiating chunk questions with self-contained retry logic", {
 					chunkIndex,
 					questionCount: chunkQuestions.length
 				})
 
-				// ✅ FIXED: step.invoke calls at main function level (no nesting)
+				// ✅ SIMPLIFIED: Each differentiate-question call handles its own retries internally
+				logger.info("starting differentiation for all questions in parallel", { chunkIndex })
 				const differentiationInvocations = chunkQuestions.map((question) =>
 					step.invoke(`differentiate-${question.id}-chunk-${chunkIndex}`, {
 						function: differentiateQuestion,
 						data: {
 							questionId: question.id,
-							numberOfVariations: 5,
-							startingIndex: 1
-						}
+							numberOfVariations: 5 // Generate 5 variations per question
+						} satisfies DifferentiateQuestionEventData
 					})
 				)
-
 				const differentiationResults = await Promise.all(differentiationInvocations)
 
-				// Process and validate results in a separate step
-				await step.run(`process-chunk-${chunkIndex}-results`, async () => {
-					const validatedItems: {
+				// Store results in a separate step
+				await step.run(`store-chunk-${chunkIndex}-results`, async () => {
+					// Collect all validated items from differentiation results
+					const allValidatedItems: {
 						xml: string
 						metadata: { khanId: string; khanExerciseId: string; khanExerciseSlug: string; khanExerciseTitle: string }
 					}[] = []
 
-					for (let i = 0; i < differentiationResults.length; i++) {
-						const result = differentiationResults[i]
-						const originalQuestion = chunkQuestions[i]
-
-						if (!result || !originalQuestion) continue
-
-						if (result.status === "success" && "generatedXmls" in result && "questionId" in result) {
-							for (let variationIndex = 0; variationIndex < result.generatedXmls.length; variationIndex++) {
-								let variationXml = result.generatedXmls[variationIndex]
-								if (!variationXml) continue
-
-								// Apply XML cleanup functions first
-								variationXml = convertHtmlEntities(variationXml, logger)
-								variationXml = stripXmlComments(variationXml, logger)
-								variationXml = fixMathMLOperators(variationXml, logger)
-
-								const validationResult = await errors.try(
-									runValidationPipeline(variationXml, {
-										id: originalQuestion.id,
-										rootTag: "qti-assessment-item",
-										title: originalQuestion.exerciseTitle,
-										logger
-									})
-								)
-
-								if (validationResult.error || !validationResult.data.isValid) {
-									logger.warn("ai-generated xml failed validation and will be discarded", {
-										questionId: originalQuestion.id,
-										chunkIndex,
-										variationIndex,
-										errors: validationResult.error
-											? [validationResult.error.message]
-											: validationResult.data.errors.map((e) => e.message)
-									})
-									continue // Skip this invalid variation
+					for (const result of differentiationResults) {
+						if (result?.status === "success" && "validatedItems" in result && Array.isArray(result.validatedItems)) {
+							for (const item of result.validatedItems) {
+								if (item?.xml && item.metadata) {
+									allValidatedItems.push(item)
 								}
-
-								logger.info("ai-generated xml passed validation", {
-									questionId: originalQuestion.id,
-									chunkIndex,
-									variationIndex
-								})
-
-								const uniqueCode = (variationIndex + 1).toString().padStart(4, "0")
-								const newIdentifier = `nice_${originalQuestion.id}_${uniqueCode}`
-								const newXml = validationResult.data.xml.replace(/identifier="[^"]+"/, `identifier="${newIdentifier}"`)
-
-								validatedItems.push({
-									xml: newXml,
-									metadata: {
-										khanId: originalQuestion.id,
-										khanExerciseId: originalQuestion.exerciseId,
-										khanExerciseSlug: originalQuestion.exerciseSlug,
-										khanExerciseTitle: originalQuestion.exerciseTitle
-									}
-								})
 							}
-						} else {
-							logger.warn("differentiation failed for question", {
-								questionId: originalQuestion.id,
-								chunkIndex,
-								status: result?.status
-							})
 						}
 					}
 
@@ -265,15 +235,22 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 						courseSetup.batchDir,
 						`items-chunk-${chunkIndex.toString().padStart(3, "0")}.json`
 					)
-					await fs.writeFile(chunkItemsFile, JSON.stringify(validatedItems, null, 2))
+					await fs.writeFile(chunkItemsFile, JSON.stringify(allValidatedItems, null, 2))
 
-					logger.info("completed chunk processing", {
+					const questionsWithTargetVariations = differentiationResults.filter(
+						(r) => r?.status === "success" && "validatedCount" in r && r.validatedCount >= 5
+					).length
+
+					logger.info("completed chunk processing with self-contained retry logic", {
 						chunkIndex,
 						questionsProcessed: chunkQuestions.length,
-						itemsGenerated: validatedItems.length
+						itemsGenerated: allValidatedItems.length,
+						targetItemsExpected: chunkQuestions.length * 5,
+						successRate: `${((allValidatedItems.length / (chunkQuestions.length * 5)) * 100).toFixed(1)}%`,
+						questionsWithTargetVariations
 					})
 
-					return validatedItems.length
+					return allValidatedItems.length
 				})
 
 				// Update progress
@@ -472,6 +449,28 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					}
 				}
 
+				// CRITICAL: Validate differentiation scope coverage
+				logger.info("differentiation mapping completed", {
+					exercisesWithDifferentiatedItems: questionsByExerciseId.size,
+					totalExercisesInScope: allExercises.length,
+					totalItemsGenerated: allItems.length
+				})
+
+				// Identify exercises missing from differentiation
+				const exercisesWithoutItems = allExercises.filter((exercise) => !questionsByExerciseId.has(exercise.id))
+				if (exercisesWithoutItems.length > 0) {
+					logger.error("CRITICAL: exercises missing from differentiation - will cause empty tests", {
+						missingExerciseCount: exercisesWithoutItems.length,
+						missingExerciseIds: exercisesWithoutItems.map((e) => e.id),
+						missingExerciseTitles: exercisesWithoutItems.map((e) => e.title),
+						totalExercises: allExercises.length,
+						processedExercises: questionsByExerciseId.size
+					})
+					throw errors.new(
+						`scope mismatch: ${exercisesWithoutItems.length} exercises missing from differentiation scope`
+					)
+				}
+
 				const buildTestXml = (id: string, title: string, questionIds: string[]): string => {
 					const safeTitle = escapeXmlAttribute(title)
 
@@ -635,6 +634,13 @@ ${sectionsXml}
 			return { message: "No units found for course", courseId }
 		}
 		const unitIds = units.map((u) => u.id)
+
+		// Log standard path units for comparison with differentiation path
+		logger.info("units fetched for standard path", {
+			unitIds: unitIds,
+			unitCount: units.length,
+			courseId
+		})
 
 		// Fetch all content entities in parallel for efficiency.
 		const [allQuestions, allArticles, unitAssessments, courseAssessments, allExercises] = await Promise.all([

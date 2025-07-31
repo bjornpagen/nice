@@ -78,9 +78,16 @@ async function attemptQtiVariationGeneration(
 	numberOfVariations: number,
 	khanId: string,
 	attempt: number,
-	startingIndex = 1
+	startingIndex = 1,
+	validationErrors?: string[]
 ): Promise<string[]> {
-	const { developer, user } = await produceQtiVariationsPrompt(sourceQtiXml, numberOfVariations, khanId, startingIndex)
+	const { developer, user } = await produceQtiVariationsPrompt(
+		sourceQtiXml,
+		numberOfVariations,
+		khanId,
+		startingIndex,
+		validationErrors
+	)
 
 	const result = await errors.try(
 		openai.chat.completions.create({
@@ -251,13 +258,14 @@ export async function generateQtiVariations(
 	sourceQtiXml: string,
 	numberOfVariations: number,
 	khanId: string,
-	startingIndex = 1
+	startingIndex = 1,
+	validationErrors?: string[]
 ): Promise<string[]> {
 	logger.info("generating qti variations with openai o3", { numberOfVariations, khanId, startingIndex })
 
 	for (let attempt = 0; attempt <= RETRY_CONFIG.maxRetries; attempt++) {
 		const result = await errors.try(
-			attemptQtiVariationGeneration(sourceQtiXml, numberOfVariations, khanId, attempt, startingIndex)
+			attemptQtiVariationGeneration(sourceQtiXml, numberOfVariations, khanId, attempt, startingIndex, validationErrors)
 		)
 
 		if (result.error) {

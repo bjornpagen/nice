@@ -75,6 +75,10 @@ const events = {
 			differentiated: z.boolean() // Mandatory flag to control the pipeline
 		})
 	},
+	// ✅ ADDED: New event for batch course processing with differentiated content
+	"qti/batch.ingest": {
+		data: z.object({}) // No additional data needed - uses hardcoded course list
+	},
 	// ❌ REMOVED: This event is now obsolete.
 	// "qti/course.differentiated-ingest": {
 	// 	data: z.object({
