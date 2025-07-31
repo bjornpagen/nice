@@ -72,25 +72,11 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			}
 			const unitIds = units.map((u) => u.id)
 
-			// CRITICAL: Validate unit scope matches standard path expectations
 			logger.info("units fetched for differentiation", {
 				unitIds: unitIds,
 				unitCount: units.length,
 				courseId
 			})
-
-			// Validate specific units that were missing in the scope mismatch investigation
-			const criticalUnits = ["x310ffe65", "xd0ae8a03"] // Counting & Addition units
-			const missingCriticalUnits = criticalUnits.filter((id) => !unitIds.includes(id))
-			if (missingCriticalUnits.length > 0) {
-				logger.error("CRITICAL: expected units missing from differentiation scope", {
-					missingCriticalUnits,
-					criticalUnits,
-					allUnits: unitIds,
-					courseId
-				})
-				throw errors.new(`scope mismatch: missing units from differentiation scope: ${missingCriticalUnits.join(", ")}`)
-			}
 
 			const [questionCount, stimuliCount] = await Promise.all([
 				db

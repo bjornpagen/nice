@@ -3,7 +3,6 @@ import { orchestrateCourseIngestionToQti } from "./orchestrate-course-ingestion-
 
 // Hardcoded course IDs for batch differentiated processing
 const COURSE_IDS = [
-	"xb5feb28c", // Early Math
 	"x3184e0ec", // 2nd grade math
 	"x3c950fa744f5f34c", // Get ready for 3rd grade math
 	"x41fbdd6301d5fded", // 3rd grade math
