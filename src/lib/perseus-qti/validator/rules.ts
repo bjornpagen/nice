@@ -22,7 +22,9 @@ const REGEX = {
 	IMAGE_URL:
 		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:svg|jpe?g|png))(?:k<quote>)/gi,
 	SUPPORTED_IMAGE_URL:
-		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:jpe?g|png))(?:k<quote>)/gi
+		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:jpe?g|png))(?:k<quote>)/gi,
+	// Simple LaTeX detection: any backslash followed by letters (commands) or LaTeX-like constructs
+	LATEX_LIKE: /\\(?:[a-zA-Z]+|[(){}[\]])/
 } as const
 
 /**
@@ -380,6 +382,29 @@ export function validateHtmlEntities(xml: string, context: ValidationContext): v
 	if (angleValidationError) {
 		throw errors.new(angleValidationError)
 	}
+}
+
+/**
+ * Validates that no LaTeX content is present in the QTI XML.
+ * LaTeX should be converted to MathML for proper QTI compliance and accessibility.
+ * This check looks for any backslash followed by letters or LaTeX-like constructs.
+ */
+export function validateNoLatex(xml: string, context: ValidationContext): void {
+	// Check for any LaTeX-like content: backslash followed by letters or brackets/parens
+	const latexMatch = xml.match(REGEX.LATEX_LIKE)
+	if (latexMatch) {
+		const contextIndex = latexMatch.index ?? 0
+		const errorContext = xml.substring(Math.max(0, contextIndex - 50), Math.min(xml.length, contextIndex + 100))
+		context.logger.error("found latex-like content", {
+			match: latexMatch[0],
+			context: errorContext
+		})
+		throw errors.new(
+			`invalid content: LaTeX-like content is not allowed in QTI. Use MathML instead. Found: "${latexMatch[0]}". Context: "...${errorContext}..."`
+		)
+	}
+
+	context.logger.debug("validated no latex content")
 }
 
 export async function validateImageUrls(xml: string, _context: ValidationContext): Promise<void> {

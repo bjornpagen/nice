@@ -5,6 +5,7 @@ import {
 	validateHtmlEntities,
 	validateImageUrls,
 	validateInteractionAttributes,
+	validateNoLatex,
 	validateNoSvgInStimulusBody,
 	validatePerseusArtifacts,
 	validatePromptPlacement,
@@ -43,7 +44,8 @@ export async function runValidationPipeline(
 		validateTextEntryInteractionPlacement,
 		validateStimulusBodyContent,
 		validateNoSvgInStimulusBody,
-		validateHtmlEntities
+		validateHtmlEntities,
+		validateNoLatex
 	]
 
 	for (const pass of syncPasses) {
