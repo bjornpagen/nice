@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  REASON FOR USING A CUSTOM SVG IMAGE:
+  The original Perseus item uses a 'graphie' asset, which is not a single static image. The asset
+  is a set of instructions for a renderer that dynamically draws the number line, ticks, and labels.
+  A standard QTI <img> tag cannot execute these instructions, and linking to the graphie URL would
+  result in an incomplete or blank image. To ensure the visual information is accurately and reliably
+  displayed in a standard QTI format, a complete, static SVG of the final number line has been generated
+  and embedded as a data URI.
+-->
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="vertical-number-line-comparison"
+    title="Compare numbers on a vertical number line"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE_POS" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>ABOVE</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    
+    <qti-response-declaration identifier="RESPONSE_COMP" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>GT</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>Use the number line to compare the numbers.</p>
+        <div id="reference_text">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='350'%3E%3Cdefs%3E%3Cstyle%3E .axis %7B stroke: black; stroke-width: 2; %7D .tick %7B stroke: black; stroke-width: 1.5; %7D .label %7B font-family: sans-serif; font-size: 14px; %7D .point-label %7B font-family: sans-serif; font-size: 14px; font-weight: bold; %7D %3C/style%3E%3C/defs%3E%3Cg transform='translate(50, 25)'%3E%3C!-- Axis Line --%3E%3Cline class='axis' x1='0' y1='0' x2='0' y2='300'/%3E%3C!-- Ticks and Labels --%3E%3Cline class='tick' x1='-5' y1='0' x2='5' y2='0'/%3E%3Ctext class='label' x='10' y='5'%3E2%3C/text%3E%3Cline class='tick' x1='-5' y1='30' x2='5' y2='30'/%3E%3Cline class='tick' x1='-5' y1='60' x2='5' y2='60'/%3E%3Ctext class='label' x='10' y='65'%3E0%3C/text%3E%3Cline class='tick' x1='-5' y1='90' x2='5' y2='90'/%3E%3Cline class='tick' x1='-5' y1='120' x2='5' y2='120'/%3E%3Ctext class='label' x='10' y='125'%3E-2%3C/text%3E%3Cline class='tick' x1='-5' y1='150' x2='5' y2='150'/%3E%3Cline class='tick' x1='-5' y1='180' x2='5' y2='180'/%3E%3Ctext class='label' x='10' y='185'%3E-4%3C/text%3E%3Cline class='tick' x1='-5' y1='210' x2='5' y2='210'/%3E%3Cline class='tick' x1='-5' y1='240' x2='5' y2='240'/%3E%3Ctext class='label' x='10' y='245'%3E-6%3C/text%3E%3Cline class='tick' x1='-5' y1='270' x2='5' y2='270'/%3E%3Cline class='tick' x1='-5' y1='300' x2='5' y2='300'/%3E%3Ctext class='label' x='10' y='305'%3E-8%3C/text%3E%3C!-- Point -1.4 --%3E%3Ccircle cx='0' cy='102' r='4' fill='purple'/%3E%3Ctext class='point-label' x='-10' y='107' text-anchor='end' fill='purple'%3E-1.4%3C/text%3E%3C!-- Point -6.4 --%3E%3Ccircle cx='0' cy='252' r='4' fill='maroon'/%3E%3Ctext class='point-label' x='-10' y='257' text-anchor='end' fill='maroon'%3E-6.4%3C/text%3E%3C/g%3E%3C/svg%3E"
+                 alt="A vertical number line from -8 at the bottom to 2 at the top. A purple dot is marked at -1.4. A maroon dot is marked at -6.4."
+                 width="120"
+                 height="350"/>
+        </div>
+        
+        <p>Complete the statements.</p>
+        <p>On the number line, 
+            <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="purple"><mo>-</mo><mn>1.4</mn></mstyle></math> is 
+            <qti-inline-choice-interaction response-identifier="RESPONSE_POS" shuffle="false">
+                <qti-inline-choice identifier="ABOVE">above</qti-inline-choice>
+                <qti-inline-choice identifier="BELOW">below</qti-inline-choice>
+            </qti-inline-choice-interaction> 
+            <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="maroon"><mo>-</mo><mn>6.4</mn></mstyle></math>.
+        </p>
+        <p>This means 
+            <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="purple"><mo>-</mo><mn>1.4</mn></mstyle></math> is 
+            <qti-inline-choice-interaction response-identifier="RESPONSE_COMP" shuffle="false">
+                <qti-inline-choice identifier="GT">greater than</qti-inline-choice>
+                <qti-inline-choice identifier="LT">less than</qti-inline-choice>
+            </qti-inline-choice-interaction> 
+            <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="maroon"><mo>-</mo><mn>6.4</mn></mstyle></math>.
+        </p>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> On a vertical number line, numbers higher up are greater. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, it is the greater number.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Look at the positions on the number line. <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is located higher up than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>. This means <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, and therefore <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_POS"/>
+                        <qti-correct identifier="RESPONSE_POS"/>
+                    </qti-match>
+                    <qti-match>
+                        <qti-variable identifier="RESPONSE_COMP"/>
+                        <qti-correct identifier="RESPONSE_COMP"/>
+                    </qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>

@@ -256,7 +256,7 @@ Perseus uses a dynamic renderer called 'graphie'. A direct conversion of a 'grap
 
 **1. REPLACE WITH CUSTOM SVG:**
 For the following types of visuals, you MUST NOT use the original 'graphie' URL. Instead, you MUST generate a complete, static, self-contained SVG representation of the final state of the visual. This is often best done with an inline data URI (\`data:image/svg+xml,...\`). This rule applies to:
-  - **Number Lines** (including time-based and multi-step number lines)
+  - **Number Lines** (including time-based, multi-step number lines, and counting sequence questions where students identify the next numbers in a pattern)
   - **Pictographs**
   - **Dot Plots** (from 'plotter' widgets)
   - **Line Plots** (graphs showing connected points to represent data trends)
@@ -284,6 +284,14 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
   - **Analog Clocks**
   - **Ruler-like visual estimations** (e.g., estimating an object's height relative to another object of known height)
   - **Measure the line/object with the number of boxes questions**
+
+**3. CRITICAL GEOMETRY RULE - NEVER CREATE CUSTOM SVG:**
+**ABSOLUTE BAN:** For geometry questions (triangles, parallelograms, circles, angles, shapes, geometric proofs, area/perimeter problems, etc.), you MUST NEVER attempt to create your own SVG representations. This is a critical pedagogical requirement:
+  - **Geometry requires precision**: Student understanding depends on exact proportions, angles, and measurements
+  - **Professional design required**: Khan Academy's graphie images are carefully designed by education experts
+  - **AI-generated geometry is harmful**: Malformed shapes, incorrect proportions, or poor visual quality will confuse students
+  - **MANDATORY**: For ALL geometry content, you MUST use the original graphie URL (converted to https://) and add descriptive text if needed
+  - **VIOLATION CONSEQUENCES**: Creating custom SVG for geometry problems is considered a critical failure that makes the content pedagogically invalid
 
 **Example of the "Supplement with Text" Strategy:**
 
@@ -617,6 +625,32 @@ ${svg.content}
   <example>
     <qti-prompt>Write a number that makes this equation true.</qti-prompt>
     <p>3 hundreds = <qti-text-entry-interaction response-identifier="RESPONSE"/> tens</p>
+  </example>
+  
+  <!-- EXAMPLE 5: Missing Problem Setup/Context -->
+  <!-- ISSUE: Asks to "Select the equation that matches this situation" but never explains what the situation is. The answers reference $42.50 and $8.50 per pizza, but this critical context is never provided in the question. -->
+  <example>
+    <div id="reference_text">
+      <img src="https://cdn.kastatic.org/ka-perseus-images/80ed2ea5ba937c3f83b0125b77808633a9959f40.svg" alt="A whole pizza in a box." width="150" height="150"/>
+    </div>
+    <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" min-choices="1" max-choices="1">
+      <qti-prompt>Select the equation that matches this situation.</qti-prompt>
+      <qti-simple-choice identifier="A">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mn>42.5</mn><mi>p</mi><mo>=</mo><mn>8.5</mn>
+        </math>
+      </qti-simple-choice>
+      <qti-simple-choice identifier="B">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mi>p</mi><mo>=</mo><mn>8.5</mn><mo>×</mo><mn>42.5</mn>
+        </math>
+      </qti-simple-choice>
+      <qti-simple-choice identifier="C">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mfrac><mn>42.5</mn><mn>8.5</mn></mfrac><mo>=</mo><mi>p</mi>
+        </math>
+      </qti-simple-choice>
+    </qti-choice-interaction>
   </example>
 </negative_examples>
 

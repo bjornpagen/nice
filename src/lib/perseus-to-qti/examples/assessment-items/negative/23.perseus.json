@@ -1,0 +1,90 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "If we add an exact copy of the triangle, we can make a parallelogram.\n\nThen we can use the parallelogram's area to figure out the triangle's area.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "[[☃ image 1]]\n\nThe original triangle has $\\dfrac{1}{2}$ the area of the parallelogram we just made.",
+			"replace": false,
+			"widgets": {
+				"image 1": {
+					"type": "image",
+					"graded": true,
+					"static": false,
+					"options": {
+						"alt": "A parallelogram. There is a dashed line that is perpendicular to the base from the base to the opposite vertex. An arrow shows the length of the base is labeled 7. The dashed line is labeled 2. The parallelogram has a line segment in diagonal corners that creates two triangles each with a base of 7 units and a height of 2 units.",
+						"box": [111, 320],
+						"range": [[0, 10], [0, 10]],
+						"title": "",
+						"labels": [],
+						"static": false,
+						"caption": "",
+						"backgroundImage": {
+							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f54d81773727f348d6636d49d9e04834ddb1bf45",
+							"width": 111,
+							"height": 320
+						}
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "block"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "$\\begin{align}\n\\text{Area of parallelogram} &= \\text{base} \\times \\text{height}\\\\\\\\\n\\text{Area of triangle} &= \\dfrac{1}{2} \\times \\text{base} \\times \\text{height}\\\\\\\\\n&= \\dfrac{1}{2} \\times 7 \\times 2\\\\\\\\\n&= \\dfrac{1}{2} \\times 2 \\times 7\\\\\\\\\n&= 1 \\times 7\\\\\\\\\n&= 7\n\\end{align}$",
+			"replace": false,
+			"widgets": {}
+		},
+		{ "images": {}, "content": "The triangle has an area of $7$ units$^2$.", "replace": false, "widgets": {} }
+	],
+	"question": {
+		"images": {},
+		"content": "Look at the image below.\n\n[[☃ image 1]]\n\n**What is the area of the triangle?**\n\n[[☃ input-number 2]] units$^2$",
+		"widgets": {
+			"image 1": {
+				"type": "image",
+				"graded": true,
+				"static": false,
+				"options": {
+					"alt": "A scalene triangle. There is a dashed line that is perpendicular to the base from the base to the opposite vertex. The dashed line creates two right triangles. An arrow shows the length of the base is labeled 7. The dashed line is labeled 2.",
+					"box": [142, 320],
+					"range": [[0, 10], [0, 10]],
+					"title": "",
+					"labels": [],
+					"static": false,
+					"caption": "",
+					"backgroundImage": {
+						"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3e855c544de37d7fcd630bd07cfcfd3fc7e717b9",
+						"width": 142,
+						"height": 320
+					}
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "block"
+			},
+			"input-number 2": {
+				"type": "input-number",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"value": 7,
+					"inexact": false,
+					"maxError": 0.1,
+					"simplify": "required",
+					"answerType": "number",
+					"rightAlign": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}

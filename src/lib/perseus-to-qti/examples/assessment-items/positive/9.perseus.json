@@ -1,0 +1,177 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "The number lines show that the ratio of $\\blueE{\\text{distance in km}}$ to  $\\maroonD{\\text{elevation in m}}$ is $\\blueE{3}:\\maroonD{120}$.\n\nWe are looking for number lines that show ratios that are equivalent to  $\\blueE{3}:\\maroonD{120}$.",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "If we divide the distance by $\\purpleE3$, we also need to divide the elevation by $\\purpleE3$.\n\n[[☃ image 1]]\n\nFor every $\\blueE{1}\\text{ km}$ Cory hikes, their elevation increases by $\\maroonD{40} \\text{ m}$. We can write the ratio as $\\blueE{1}:\\maroonD{40}$.",
+			"replace": false,
+			"widgets": {
+				"image 1": {
+					"type": "image",
+					"graded": true,
+					"static": false,
+					"options": {
+						"alt": "A double number line with 5 equally spaced tick marks. The line labeled Distance, kilometers, reads from left to right: 0, 1, an unlabeled tick mark, 3, an unlabeled tick mark.  The line labeled Elevation, meters, reads from left to right: 0, 40, an unlabeled tick mark, 120, an unlabeled tick mark. An arrow from the pair 3 to 120 to the pair 1 to 40 is labeled divided by 3.",
+						"box": [280, 200],
+						"range": [[0, 10], [0, 10]],
+						"title": "",
+						"labels": [],
+						"static": false,
+						"caption": "",
+						"backgroundImage": {
+							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/514ddb1748ff5164aae398e0ae3e484c3ec5f652",
+							"width": 280,
+							"height": 200
+						}
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "block"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "Let's multiply both parts of $\\blueE{1}:\\maroonD{40}$ by $\\purpleE{2}$ to find the elevation when Cory hikes $2\\,\\text{km}$.\n\n[[☃ image 1]]",
+			"replace": false,
+			"widgets": {
+				"image 1": {
+					"type": "image",
+					"graded": true,
+					"static": false,
+					"options": {
+						"alt": "A double number line with 5 equally spaced tick marks. The line labeled Distance, kilometers, reads from left to right: 0, 1, 2, 3, an unlabeled tick mark.  The line labeled Elevation, meters, reads from left to right: 0, 40, 80, 120, an unlabeled tick mark. An arrow from the pair 1 to 40 to the pair 2 to 80 is labeled times 2.",
+						"box": [280, 200],
+						"range": [[0, 10], [0, 10]],
+						"title": "",
+						"labels": [],
+						"static": false,
+						"caption": "",
+						"backgroundImage": {
+							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/73df0cd20b5207fcfa9e52d6e2fb6d54c47c80d9",
+							"width": 280,
+							"height": 200
+						}
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "block"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "Let's multiply both parts of $\\blueE{2}:\\maroonD{80}$ by $\\purpleE{2}$ to find the elevation when Cory hikes $4\\,\\text{km}$.\n\n[[☃ image 1]]",
+			"replace": false,
+			"widgets": {
+				"image 1": {
+					"type": "image",
+					"graded": true,
+					"static": false,
+					"options": {
+						"alt": "A double number line with 5 equally spaced tick marks. The line labeled Distance, kilometers, reads from left to right: 0, 1, 2, 3, 4.  The line labeled Elevation, meters, reads from left to right: 0, 40, 80, 120, 160. An arrow from the pair 2 to 80 to the pair 4 to 160 is labeled times 2.",
+						"box": [280, 200],
+						"range": [[0, 10], [0, 10]],
+						"title": "",
+						"labels": [],
+						"static": false,
+						"caption": "",
+						"backgroundImage": {
+							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/61163c9b3037f43adc9116ee7870808f63c8ce94",
+							"width": 280,
+							"height": 200
+						}
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "block"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "This double number line shows the other values of distance and elevation.\n\n[[☃ image 1]]",
+			"replace": false,
+			"widgets": {
+				"image 1": {
+					"type": "image",
+					"graded": true,
+					"static": false,
+					"options": {
+						"alt": "A double number line with 5 equally spaced tick marks. The line labeled Distance, kilometers, reads from left to right: 0, 1, 2, 3, 4.  The line labeled Elevation, meters, reads from left to right: 0, 40, 80, 120, 160.",
+						"box": [280, 120],
+						"range": [[0, 10], [0, 10]],
+						"title": "",
+						"labels": [],
+						"static": false,
+						"caption": "",
+						"backgroundImage": {
+							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e4bdfd23b56729130cbd113a03c5792bb8790247",
+							"width": 280,
+							"height": 120
+						}
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "block"
+				}
+			}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "Cory hikes up a hill with a constant slope. The double number line shows that after Cory hikes $3 \\text{ km}$, their elevation is $120 \\text{ m}$.\n\n[[☃ image 1]]\n\n**Select the double number line that shows the other values of distance and elevation.**\n\n[[☃ radio 1]]",
+		"widgets": {
+			"image 1": {
+				"type": "image",
+				"graded": true,
+				"static": false,
+				"options": {
+					"alt": "A double number line with 5 equally spaced tick marks. The line labeled Distance, kilometers, reads from left to right: 0, two unlabeled tick marks, 3, another unlabeled tick mark.  The line labeled Elevation, meters, reads from left to right: 0, two unlabeled tick marks, 120, another unlabeled tick mark.",
+					"box": [280, 120],
+					"range": [[0, 10], [0, 10]],
+					"title": "",
+					"labels": [],
+					"static": false,
+					"caption": "",
+					"backgroundImage": {
+						"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/669d6011774f3c0f6809553d210b4f51b7e3e4fe",
+						"width": 280,
+						"height": 120
+					}
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "block"
+			},
+			"radio 1": {
+				"type": "radio",
+				"graded": true,
+				"static": false,
+				"options": {
+					"choices": [
+						{
+							"content": "![A double number line with 5 equally spaced tick marks. The line labeled Distance, kilometers, reads from left to right: 0, 1, 2, 3, 4.  The line labeled Elevation, meters, reads from left to right: 0, 40, 80, 120, 160.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/e4bdfd23b56729130cbd113a03c5792bb8790247)",
+							"correct": true
+						},
+						{
+							"content": "![A double number line with 5 equally spaced tick marks. The line labeled Distance, kilometers, reads from left to right: 0, 1, 2, 3, 4.  The line labeled Elevation, meters, reads from left to right: 0, 80, 100, 120, 140.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/ef0bd0163c21f51752bda0a4102dc29818c75463)",
+							"correct": false,
+							"isNoneOfTheAbove": false
+						}
+					],
+					"randomize": true,
+					"countChoices": false,
+					"displayCount": null,
+					"multipleSelect": false,
+					"deselectEnabled": false,
+					"hasNoneOfTheAbove": false
+				},
+				"version": { "major": 1, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
