@@ -34,6 +34,45 @@ export function convertHtmlEntities(xml: string, logger: logger.Logger): string 
 }
 
 /**
+ * Fixes unescaped angle brackets within MathML mo elements.
+ * This handles the common case where < and > symbols are not properly escaped
+ * within mathematical operator elements.
+ *
+ * @param xml The XML string to process
+ * @param logger The logger instance
+ * @returns The XML string with properly escaped angle brackets in mo elements
+ */
+export function fixMathMLOperators(xml: string, logger: logger.Logger): string {
+	let fixCount = 0
+
+	// Fix unescaped < in mo elements
+	// This specifically looks for <mo><</mo> pattern
+	const moLessThanRegex = /<mo(?:\s+[^>]*)?>(<)<\/mo>/gi
+	let fixedXml = xml.replace(moLessThanRegex, (match) => {
+		fixCount++
+		return match.replace("<</mo>", "&lt;</mo>")
+	})
+
+	// Fix unescaped > in mo elements
+	// This specifically looks for <mo>></mo> pattern
+	const moGreaterThanRegex = /<mo(?:\s+[^>]*)?>><\/mo>/gi
+	fixedXml = fixedXml.replace(moGreaterThanRegex, (match) => {
+		fixCount++
+		return match.replace("></mo>", "&gt;</mo>")
+	})
+
+	if (fixCount > 0) {
+		logger.debug("fixed unescaped angle brackets in MathML mo elements", {
+			fixCount,
+			originalLength: xml.length,
+			fixedLength: fixedXml.length
+		})
+	}
+
+	return fixedXml
+}
+
+/**
  * Strips all XML comments from the provided XML string.
  * This prevents issues with malformed comments that could cause XML parsing errors.
  *

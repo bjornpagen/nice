@@ -6,7 +6,7 @@ import type { ChatCompletionContentPart } from "openai/resources/chat/completion
 import { z } from "zod"
 import { env } from "@/env"
 import { createQtiConversionPrompt, createQtiSufficiencyValidationPrompt } from "./prompts"
-import { convertHtmlEntities, stripXmlComments } from "./strip"
+import { convertHtmlEntities, fixMathMLOperators, stripXmlComments } from "./strip"
 
 const OPENAI_MODEL = "o3"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
@@ -91,7 +91,10 @@ function extractAndValidateXml(xml: string, rootTag: string, logger: logger.Logg
 	).trim()
 
 	// Step 5: Strip all XML comments to prevent malformed comment errors
-	const strippedXml = stripXmlComments(extractedXml, logger)
+	let strippedXml = stripXmlComments(extractedXml, logger)
+
+	// Step 6: Fix unescaped angle brackets in MathML mo elements
+	strippedXml = fixMathMLOperators(strippedXml, logger)
 
 	logger.debug("successfully generated and extracted qti xml", {
 		xmlLength: strippedXml.length,
@@ -173,7 +176,8 @@ export async function generateXml(
 		logger.error("CRITICAL: OpenAI returned an empty qti_xml string in response")
 		throw errors.new("empty ai response: qti_xml string is empty")
 	}
-	const cleanedXml = convertHtmlEntities(qtiXml, logger)
+	let cleanedXml = convertHtmlEntities(qtiXml, logger)
+	cleanedXml = fixMathMLOperators(cleanedXml, logger)
 	return extractAndValidateXml(cleanedXml, rootTag, logger)
 }
 
