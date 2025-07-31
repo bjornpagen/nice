@@ -216,6 +216,21 @@ ${negativeExamplesBlock}
   </malformed_qti>
   <explanation>The qti-stimulus-body contains QTI elements (qti-prompt and qti-text-entry-interaction). This is INVALID. The qti-stimulus-body must contain ONLY standard HTML elements. Stimulus items are purely informational and cannot contain any interactions or QTI-specific elements. Use <p>, <h2>, <ul>, <li>, <div>, <img>, <a>, <strong>, <em>, <code>, <pre>, <math>, etc., but NEVER any qti-* elements.</explanation>
 </negative_example>
+<negative_example reason="Dot plots MUST be converted to custom SVG">
+  <malformed_qti>
+    <qti-item-body>
+      <div id="reference_text">
+        <img src="https://cdn.kastatic.org/ka-perseus-graphie/eb12b7722fef5e84e20e2a94522a319714a2404c.svg"
+             alt="A dot plot showing two visible clusters: one from roughly 20 to 32 miles per gallon and another from 38 to 42 miles per gallon. There are no dots between 33 and 37 miles per gallon."/>
+      </div>
+      <qti-choice-interaction response-identifier="RESPONSE">
+        <qti-prompt>Which of these statements could Leticia use to describe the distribution of gas mileage?</qti-prompt>
+        <!-- choices omitted -->
+      </qti-choice-interaction>
+    </qti-item-body>
+  </malformed_qti>
+  <explanation>This uses a Perseus graphie URL for a dot plot. This is INVALID. Dot plots are statistical visualizations that MUST be replaced with custom SVG. The presence of keywords like "dot plot", "clusters", "gaps", "distribution" in the alt text or question REQUIRES custom SVG generation. Never use the original Perseus URL for any statistical visualization.</explanation>
+</negative_example>
 </critical_negative_examples>
 
 <instructions>
@@ -256,11 +271,23 @@ Perseus uses a dynamic renderer called 'graphie'. A direct conversion of a 'grap
 
 **1. REPLACE WITH CUSTOM SVG:**
 For the following types of visuals, you MUST NOT use the original 'graphie' URL. Instead, you MUST generate a complete, static, self-contained SVG representation of the final state of the visual. This is often best done with an inline data URI (\`data:image/svg+xml,...\`). This rule applies to:
-  - **Number Lines** (including time-based, multi-step number lines, and counting sequence questions where students identify the next numbers in a pattern)
-  - **Pictographs**
-  - **Dot Plots** (from 'plotter' widgets)
+
+**STATISTICAL VISUALIZATIONS (MANDATORY SVG REPLACEMENT):**
+  - **Dot Plots** (ANY visualization showing individual data points along a number line or axis, often used to show distributions, clusters, gaps, or peaks in data)
   - **Line Plots** (graphs showing connected points to represent data trends)
-  - **Bar Charts** (from 'plotter' widgets)
+  - **Bar Charts/Histograms** (from 'plotter' widgets or any bar-based visualization)
+  - **Box Plots** (showing quartiles and outliers)
+  - **Scatter Plots** (showing correlation between variables)
+  
+**DETECTION RULES FOR DOT PLOTS:**
+  - If the question mentions "clusters", "gaps", "peaks", "distribution", or "spread" of data
+  - If the alt text or description mentions dots along a number line or axis
+  - If the question asks about interpreting data patterns or frequencies
+  - If the Perseus JSON contains a 'plotter' widget with dot-style visualization
+  
+**NUMBER-BASED VISUALIZATIONS:**
+  - **Number Lines** (including time-based, multi-step number lines, and counting sequence questions where students identify the next numbers in a pattern)
+  - **Pictographs** (using symbols to represent quantities)
   - **Visual Grids/Dot Arrays** (grid patterns showing dots for counting or repeated addition)
   - **Line Sorting/Ordering Questions** (where students must order lines by height, length, or other attributes)
 
