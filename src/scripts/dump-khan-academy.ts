@@ -28,7 +28,7 @@ logger.setDefaultLogLevel(logger.INFO)
 // --- CONFIGURATION ---
 
 const MAX_CONCURRENCY = 10 // Increased back for faster processing within courses
-const TARGET_REGION = "US" // Region for discovering topics
+const TARGET_REGION = "US-CA" // California region for Common Core content
 
 // This cookie is required for authenticated endpoints like creating a practice task.
 // It should be kept up-to-date by copying from a logged-in browser session.
