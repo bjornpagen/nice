@@ -92,7 +92,7 @@ export function Card({ course, units }: CardProps) {
 						<div className="absolute left-5 top-5 bottom-5 w-0.5 bg-gray-300" />
 
 						<div className="space-y-4">
-							{units.slice(0, 5).map((unit: Unit) => {
+							{units.map((unit: Unit) => {
 								// Find proficiency data for this unit
 								const proficiencyData = course.unitProficiencies?.find((p) => p.unitId === unit.id)
 								const proficiencyPercent = proficiencyData?.proficiencyPercentage ?? 0
