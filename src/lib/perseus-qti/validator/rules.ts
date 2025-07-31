@@ -831,23 +831,19 @@ export function validateDecimalAnswerFormats(xml: string, context: ValidationCon
 			).test(xml)
 
 			if (hasTextEntry) {
-				// For string base types, we need to check if multiple values are accepted
-				// For numeric types (integer/float), the system should handle both formats automatically
-				if (baseType === "string") {
-					// Check if there's only one correct value defined
-					const valueCount = (valuesContent.match(/<qti-value>/g) || []).length
+				// Check if there's only one correct value defined
+				const valueCount = (valuesContent.match(/<qti-value>/g) || []).length
 
-					if (valueCount === 1) {
-						// Only one format is accepted - this is problematic for string-based decimal answers
-						context.logger.error("decimal answer only accepts one format", {
-							responseId,
-							correctValue,
-							baseType
-						})
-						throw errors.new(
-							`invalid decimal answer format: Response "${responseId}" has decimal answer "${correctValue}" but only accepts one format. For string-based decimal responses, both "0.5" and ".5" formats should be accepted. Consider adding multiple <qti-value> elements or using float base-type.`
-						)
-					}
+				if (valueCount === 1) {
+					// Only one format is accepted - this is problematic for decimal answers
+					context.logger.error("decimal answer only accepts one format", {
+						responseId,
+						correctValue,
+						baseType
+					})
+					throw errors.new(
+						`invalid decimal answer format: Response "${responseId}" has decimal answer "${correctValue}" but only accepts one format. Both "0.2" and ".2" formats should be accepted to ensure students aren't marked incorrect for valid answers. Add multiple <qti-value> elements: <qti-value>0.2</qti-value> and <qti-value>.2</qti-value>`
+					)
 				}
 			}
 		}
@@ -860,7 +856,7 @@ export function validateDecimalAnswerFormats(xml: string, context: ValidationCon
 				`<qti-text-entry-interaction[^>]+response-identifier\\s*=\\s*["']${responseId}["']`
 			).test(xml)
 
-			if (hasTextEntry && baseType === "string") {
+			if (hasTextEntry) {
 				const valueCount = (valuesContent.match(/<qti-value>/g) || []).length
 
 				if (valueCount === 1) {
@@ -870,7 +866,7 @@ export function validateDecimalAnswerFormats(xml: string, context: ValidationCon
 						baseType
 					})
 					throw errors.new(
-						`invalid decimal answer format: Response "${responseId}" has decimal answer "${correctValue}" but only accepts one format. For string-based decimal responses, both ".5" and "0.5" formats should be accepted. Consider adding multiple <qti-value> elements or using float base-type.`
+						`invalid decimal answer format: Response "${responseId}" has decimal answer "${correctValue}" but only accepts one format. Both ".2" and "0.2" formats should be accepted to ensure students aren't marked incorrect for valid answers. Add multiple <qti-value> elements: <qti-value>.2</qti-value> and <qti-value>0.2</qti-value>`
 					)
 				}
 			}

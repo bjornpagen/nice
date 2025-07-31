@@ -1,0 +1,113 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "The $>$ symbol means \"greater than and not including\".\n\nA filled circle means \"including this number\".\n\nAn open circle means \"not including this number\".",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": "$x > 0$ does *not* include $0$. We can draw an open circle at $0$.\n\n\n[[☃ image 1]]",
+			"replace": false,
+			"widgets": {
+				"image 1": {
+					"type": "image",
+					"graded": true,
+					"static": false,
+					"options": {
+						"alt": "A horizontal number line is labeled with integers from -5 to 5. An open circle is drawn at 0.",
+						"box": [460, 64],
+						"range": [[0, 10], [0, 10]],
+						"title": "",
+						"labels": [],
+						"static": false,
+						"caption": "",
+						"backgroundImage": {
+							"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ad3a6a37e4c28fe5ff17713daf2992fd91b5c6d4",
+							"width": 460,
+							"height": 64
+						}
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "block"
+				}
+			}
+		},
+		{
+			"images": {},
+			"content": "Numbers to the *right* of $0$ are greater than $0$. We can draw an arrow to the right of the circle.\n\nThe graph of $x>0$ is:\n\n[[☃ number-line 4]]",
+			"replace": false,
+			"widgets": {
+				"number-line 4": {
+					"type": "number-line",
+					"graded": true,
+					"static": true,
+					"options": {
+						"range": [-5, 5],
+						"static": false,
+						"correctX": 0,
+						"initialX": null,
+						"tickStep": 1,
+						"correctRel": "gt",
+						"labelRange": [null, null],
+						"labelStyle": "decimal",
+						"labelTicks": true,
+						"isInequality": true,
+						"numDivisions": null,
+						"showTooltips": false,
+						"divisionRange": [1, 12],
+						"snapDivisions": 1
+					},
+					"version": { "major": 0, "minor": 0 },
+					"alignment": "default"
+				}
+			}
+		}
+	],
+	"question": {
+		"images": {},
+		"content": "**Graph  $x > 0$.**\n\n[[☃ number-line 1]]\n\n[[☃ explanation 1]]",
+		"widgets": {
+			"explanation 1": {
+				"type": "explanation",
+				"graded": true,
+				"static": false,
+				"options": {
+					"static": false,
+					"widgets": {},
+					"hidePrompt": "Hide",
+					"showPrompt": "How do I graph the inequality?",
+					"explanation": "Drag the circle to values on the number line.\n\nUse the buttons to switch arrow directions and to make the circle open or filled."
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			},
+			"number-line 1": {
+				"type": "number-line",
+				"graded": true,
+				"static": false,
+				"options": {
+					"range": [-5, 5],
+					"static": false,
+					"correctX": 0,
+					"initialX": null,
+					"tickStep": 1,
+					"correctRel": "gt",
+					"labelRange": [null, null],
+					"labelStyle": "decimal",
+					"labelTicks": true,
+					"isInequality": true,
+					"numDivisions": null,
+					"showTooltips": false,
+					"divisionRange": [1, 12],
+					"snapDivisions": 1
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
