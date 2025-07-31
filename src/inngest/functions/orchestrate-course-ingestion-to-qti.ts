@@ -181,6 +181,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
 					.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
 					.where(inArray(schema.niceLessons.unitId, unitIds))
+					.orderBy(schema.niceQuestions.id)
 					.limit(limit)
 					.offset(offset)
 
