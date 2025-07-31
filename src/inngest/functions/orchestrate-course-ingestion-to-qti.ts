@@ -426,17 +426,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				})
 			])
 
-			// Build question mapping for tests
-			const allQuestionIds = await db
-				.select({
-					id: schema.niceQuestions.id,
-					exerciseId: schema.niceQuestions.exerciseId
-				})
-				.from(schema.niceQuestions)
-				.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
-				.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
-				.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-				.where(inArray(schema.niceLessons.unitId, unitIds))
+			// Note: No longer need allQuestionIds since we use allItems metadata directly
 
 			// Step 7: Merge all chunks and generate final files
 			const finalResults = await step.run("merge-chunks-and-generate-tests", async () => {
@@ -467,26 +457,108 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					allStimuli.push(...chunkStimuli)
 				}
 
-				// Generate assessment tests using data loaded outside step.run
+				// Generate assessment tests using differentiated items metadata
 				const questionsByExerciseId = new Map<string, string[]>()
-				for (const q of allQuestionIds) {
-					if (!questionsByExerciseId.has(q.exerciseId)) questionsByExerciseId.set(q.exerciseId, [])
-					questionsByExerciseId.get(q.exerciseId)?.push(q.id)
+				for (const item of allItems) {
+					const exerciseId = item.metadata.khanExerciseId
+					const itemIdMatch = item.xml.match(/identifier="nice_([^"]+)"/)
+					const itemId = itemIdMatch?.[1]
+
+					if (itemId) {
+						if (!questionsByExerciseId.has(exerciseId)) {
+							questionsByExerciseId.set(exerciseId, [])
+						}
+						questionsByExerciseId.get(exerciseId)?.push(itemId)
+					}
 				}
 
 				const buildTestXml = (id: string, title: string, questionIds: string[]): string => {
-					const itemRefsXml = questionIds
-						.map((itemId) => `<qti-assessment-item-ref identifier="nice_${itemId}" />`)
+					const safeTitle = escapeXmlAttribute(title)
+
+					// Group by exercise ID using metadata
+					const questionsByExercise = new Map<string, { title: string; questionIds: string[] }>()
+
+					for (const questionId of questionIds) {
+						// Find the item with this ID to get its exercise metadata
+						const item = allItems.find((item) => {
+							const match = item.xml.match(/identifier="nice_([^"]+)"/)
+							return match?.[1] === questionId
+						})
+
+						if (item) {
+							const exerciseId = item.metadata.khanExerciseId
+							const exerciseTitle = item.metadata.khanExerciseTitle
+
+							if (!questionsByExercise.has(exerciseId)) {
+								questionsByExercise.set(exerciseId, { title: exerciseTitle, questionIds: [] })
+							}
+							questionsByExercise.get(exerciseId)?.questionIds.push(questionId)
+						}
+					}
+
+					// Detect if this is an exercise test (single exercise) or assessment test (multiple exercises)
+					const isExerciseTest = questionsByExercise.size === 1
+
+					if (isExerciseTest) {
+						// EXERCISE TEST: Single section, select 5 questions from all differentiated versions
+						const firstEntry = Array.from(questionsByExercise.entries())[0]
+						if (!firstEntry) {
+							throw errors.new("Exercise test has no questions")
+						}
+						const [_firstExerciseId, exerciseData] = firstEntry
+						const itemRefsXml = exerciseData.questionIds
+							.map(
+								(itemId: string, index: number) =>
+									`<qti-assessment-item-ref identifier="nice_${itemId}" href="/assessment-items/nice_${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
+							)
+							.join("\n                ")
+
+						const selectCount = Math.min(5, exerciseData.questionIds.length)
+
+						return `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${id}" title="${safeTitle}">
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
+        <qti-assessment-section identifier="SECTION_${id}" title="${safeTitle}" visible="true">
+            <qti-selection select="${selectCount}" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>
+            ${itemRefsXml}
+        </qti-assessment-section>
+    </qti-test-part>
+</qti-assessment-test>`
+					}
+					// ASSESSMENT TEST: Multiple sections, 2 questions per exercise
+					const sectionsXml = Array.from(questionsByExercise.entries())
+						.map(([exerciseId, { title: exerciseTitle, questionIds: exerciseQuestionIds }]) => {
+							const safeExerciseTitle = escapeXmlAttribute(exerciseTitle)
+							const itemRefsXml = exerciseQuestionIds
+								.map(
+									(itemId: string, itemIndex: number) =>
+										`<qti-assessment-item-ref identifier="nice_${itemId}" href="/assessment-items/nice_${itemId}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+								)
+								.join("\n                ")
+
+							const selectCount = Math.min(2, exerciseQuestionIds.length)
+
+							return `        <qti-assessment-section identifier="SECTION_${exerciseId}" title="${safeExerciseTitle}" visible="false">
+            <qti-selection select="${selectCount}" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>
+            ${itemRefsXml}
+        </qti-assessment-section>`
+						})
 						.join("\n")
-					return `
-              <qti-assessment-test identifier="nice_${id}" title="${escapeXmlAttribute(title)}">
-                <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
-                  <qti-assessment-section identifier="SECTION_1" title="Main Section" visible="true">
-                    ${itemRefsXml}
-                  </qti-assessment-section>
-                </qti-test-part>
-              </qti-assessment-test>
-            `
+
+					return `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${id}" title="${safeTitle}">
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
+${sectionsXml}
+    </qti-test-part>
+</qti-assessment-test>`
 				}
 
 				const assessmentMap = new Map<string, { title: string; exerciseIds: string[] }>()
@@ -509,52 +581,17 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 
 				const allTests = [...assessmentTests, ...exerciseTests]
 
-				// Build item mapping for test updates
-				const itemMapping = new Map<string, string[]>()
-				for (const item of allItems) {
-					const identifierMatch = item.xml.match(/identifier="([^"]+)"/)
-					if (!identifierMatch || !identifierMatch[1]) continue
-
-					const newIdentifier = identifierMatch[1]
-					const originalIdentifier = `nice_${item.metadata.khanId}`
-
-					if (!itemMapping.has(originalIdentifier)) {
-						itemMapping.set(originalIdentifier, [])
-					}
-					itemMapping.get(originalIdentifier)?.push(newIdentifier)
-				}
-
-				// Update tests with new item references
-				const updatedTests = allTests.map((testXml) => {
-					const originalItemRefs = [...testXml.matchAll(/<qti-assessment-item-ref identifier="([^"]+)"/g)]
-						.map((m) => m[1])
-						.filter((ref): ref is string => !!ref)
-
-					if (originalItemRefs.length === 0) return testXml
-
-					let updatedTestXml = testXml
-					for (const originalRef of originalItemRefs) {
-						const newIdentifiers = itemMapping.get(originalRef)
-						if (newIdentifiers && newIdentifiers.length > 0) {
-							const newItemRefs = newIdentifiers.map((id) => `<qti-assessment-item-ref identifier="${id}" />`)
-							const originalRefTag = `<qti-assessment-item-ref identifier="${originalRef}" />`
-							updatedTestXml = updatedTestXml.replace(originalRefTag, newItemRefs.join("\n"))
-						}
-					}
-					return updatedTestXml
-				})
-
 				// Write final merged files
 				await Promise.all([
 					fs.writeFile(path.join(courseSetup.courseDir, "assessmentItems.json"), JSON.stringify(allItems, null, 2)),
 					fs.writeFile(path.join(courseSetup.courseDir, "assessmentStimuli.json"), JSON.stringify(allStimuli, null, 2)),
-					fs.writeFile(path.join(courseSetup.courseDir, "assessmentTests.json"), JSON.stringify(updatedTests, null, 2))
+					fs.writeFile(path.join(courseSetup.courseDir, "assessmentTests.json"), JSON.stringify(allTests, null, 2))
 				])
 
 				return {
 					itemsGenerated: allItems.length,
 					stimuliGenerated: allStimuli.length,
-					testsGenerated: updatedTests.length
+					testsGenerated: allTests.length
 				}
 			})
 
