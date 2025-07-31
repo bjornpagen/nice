@@ -2,6 +2,8 @@ import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
 import {
 	validateContentSufficiency,
+	validateDecimalAnswerFormats,
+	validateEquationAnswerReversibility,
 	validateHtmlEntities,
 	validateImageUrls,
 	validateInteractionAttributes,
@@ -45,7 +47,9 @@ export async function runValidationPipeline(
 		validateStimulusBodyContent,
 		validateNoSvgInStimulusBody,
 		validateHtmlEntities,
-		validateNoLatex
+		validateNoLatex,
+		validateDecimalAnswerFormats,
+		validateEquationAnswerReversibility
 	]
 
 	for (const pass of syncPasses) {

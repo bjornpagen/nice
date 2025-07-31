@@ -502,7 +502,12 @@ ${svg.content}
 	const user = `
 <task_definition>
   # Task
-  Your ONLY task is to determine if the provided QTI XML is self-contained and provides sufficient information for a student to solve the question. The question is considered IMPOSSIBLE to solve if critical context, images, tables, or structural elements are missing, malformed, or altered in a way that breaks the problem's logic.
+  Your ONLY task is to determine if the provided QTI XML is self-contained and provides sufficient information for a student to solve the question. The question is considered IMPOSSIBLE to solve if:
+  - Critical context, images, tables, or structural elements are missing, malformed, or altered in a way that breaks the problem's logic
+  - The question or directive is unclear, ambiguous, or lacks sufficient instructions for the student to know what to do
+  - The question lacks essential context (e.g., references "the figure" without providing it, asks about "the pattern" without showing one)
+  - Charts, graphs, or number lines lack the numerical context needed to interpret them
+  - The max-choices attribute conflicts with the question requirements (e.g., "select all" but max-choices="1", or "choose 3" but max-choices="2")
 
   You will be provided with the source Perseus JSON, the generated QTI XML, and visual resources:
   - Raster images (PNG, JPG) will be provided directly to your vision system
@@ -536,16 +541,84 @@ ${svg.content}
       - The image is blank or does not display the intended content.
       - Critical information is missing from the image (e.g., a number grid is missing numbers, a diagram is missing labels, a ruler is missing markings).
       - The text in the image is illegible.
+      - **Charts or number lines that lack numerical context** (e.g., axes without scale, number lines without values, graphs without units).
 
       **IMPORTANT:** When you identify a broken, nonsensical, or insufficient image, you MUST include in your reason a specific recommendation to:
       - Stop using the problematic image URL
       - Generate a custom SVG replacement that captures the intended visual content
       - Refer to the positive examples in the conversion prompt for guidance on creating inline SVG data URIs
 
-  3.  **Check for Critical Omissions:** Identify if any information essential to solving the problem has been dropped from the text or is missing from the images.
-  4.  **Do Not Judge Correctness:** Your task is NOT to check if the correct answer is right. You only check if the question is SOLVABLE.
-  5.  **Strict JSON Output:** Respond ONLY with a JSON object with two keys: \`"is_solvable"\` (boolean) and \`"reason"\` (a detailed explanation with actionable recommendations ONLY if not solvable, otherwise an empty string).
+  3.  **Check for Unclear Questions or Directives (BE EXTREMELY STRICT):** Questions MUST be crystal clear and unambiguous. Flag any question that:
+      - **Uses vague language** like "Fill in the blanks" without specifying what type of answer or relationship is expected
+      - **Has generic instructions** like "Enter the number that makes the equation true" when the placement of the input box is ambiguous
+      - **Missing ANY context** that would be needed to understand the question, including:
+        * Questions that reference "the figure above" or "the diagram" without providing said figure/diagram
+        * Questions asking about "the pattern" or "the sequence" without showing any pattern or sequence
+        * Questions referencing previous problems or examples not included in the current item
+        * Questions using terms like "as shown" or "given that" without providing what is shown or given
+        * Questions asking to complete or continue something without showing what needs to be completed
+        * Questions about a specific person/character (like "What does Olaf count next?") without introducing who they are or what they're doing
+      - **Using pronouns without clear antecedents** (e.g., "Find it" without defining what "it" is)
+      - **Referencing undefined terms or concepts** not explained in the question
+      - **Missing essential background information** that a student would need to understand the problem domain
+      
+      **CRITICAL:** If there is ANY doubt about what the student should do, flag it as unsolvable. The directive must be UNEQUIVOCALLY CLEAR.
+
+  4.  **Check for Response Limit Mismatches:** Verify that the max-choices attribute matches the question requirements:
+      - If the question asks to "select all that apply" or indicates multiple correct answers, max-choices should allow for all possible correct answers
+      - If the question asks for a specific number of answers (e.g., "Choose 2"), max-choices should match that number
+      - If the question text conflicts with the max-choices limit (e.g., "Select both correct answers" but max-choices="1"), flag as unsolvable
+
+  5.  **Check for Critical Omissions:** Identify if any information essential to solving the problem has been dropped from the text or is missing from the images.
+  6.  **Do Not Judge Correctness:** Your task is NOT to check if the correct answer is right. You only check if the question is SOLVABLE.
+  7.  **Strict JSON Output:** Respond ONLY with a JSON object with two keys: \`"is_solvable"\` (boolean) and \`"reason"\` (a detailed explanation with actionable recommendations ONLY if not solvable, otherwise an empty string).
 </instructions_and_constraints>
+
+<negative_examples>
+  <!-- EXAMPLE 1: Missing Critical Context -->
+  <!-- ISSUE: The question asks "What two numbers does Olaf count next?" but never explains that Olaf starts at 365 and counts by fives. -->
+  <example>
+    <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" max-choices="1">
+      <qti-prompt>What two numbers does Olaf count next?</qti-prompt>
+      <qti-simple-choice identifier="A">370 and 375</qti-simple-choice>
+      <!-- choices omitted for brevity -->
+    </qti-choice-interaction>
+  </example>
+  
+  <!-- EXAMPLE 2: Ambiguous Directive -->
+  <!-- ISSUE: "Fill in the blanks" is too vague - doesn't specify what type of answer is expected or the relationship between the blanks -->
+  <example>
+    <qti-prompt>Fill in the blanks.</qti-prompt>
+    <table>
+      <tbody>
+        <tr>
+          <td>9-5= <qti-text-entry-interaction response-identifier="RESPONSE1"/></td>
+          <td>because</td>
+          <td><qti-text-entry-interaction response-identifier="RESPONSE2"/> +5=9</td>
+        </tr>
+      </tbody>
+    </table>
+  </example>
+  
+  <!-- EXAMPLE 3: Equation Without Clear Instruction -->
+  <!-- ISSUE: Shows "+ 1 = 5 [BOX]" but doesn't clearly indicate the box should contain the missing first number -->
+  <example>
+    <qti-prompt>Enter the number that makes the equation true.</qti-prompt>
+    <p>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mrow><mo>+</mo><mn>1</mn><mo>=</mo><mn>5</mn></mrow>
+      </math>
+      <qti-text-entry-interaction response-identifier="RESPONSE"/>
+    </p>
+  </example>
+  
+  <!-- EXAMPLE 4: Generic Instruction Without Context -->
+  <!-- ISSUE: "Write a number that makes this equation true" is too generic without showing what the equation structure is -->
+  <example>
+    <qti-prompt>Write a number that makes this equation true.</qti-prompt>
+    <p>3 hundreds = <qti-text-entry-interaction response-identifier="RESPONSE"/> tens</p>
+  </example>
+</negative_examples>
 
 <output_format>
   {

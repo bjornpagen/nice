@@ -774,3 +774,241 @@ export async function validateContentSufficiency(xml: string, context: Validatio
 
 	logger.info("ai content solvability validation passed")
 }
+
+/**
+ * Validates that decimal answers accept both leading zero and no leading zero formats.
+ * For example, if the answer is 0.5, it should also accept .5
+ */
+export function validateDecimalAnswerFormats(xml: string, context: ValidationContext): void {
+	// Find all text-entry interactions with numeric/decimal correct responses
+	// This regex matches qti-response-declaration elements and captures:
+	// - id: the identifier attribute value
+	// - baseType: the base-type attribute value (only integer, float, or string)
+	// - content: everything between the opening and closing tags
+	const responseDeclarationRegex =
+		/<qti-response-declaration(?=\s)(?=(?:[^>]*)identifier\s*=\s*["'](?<id>[^"']+)["'])(?=(?:[^>]*)base-type\s*=\s*["'](?<baseType>integer|float|string)["'])[^>]*>(?<content>[\s\S]*?)<\/qti-response-declaration>/gi
+
+	let match: RegExpExecArray | null
+	match = responseDeclarationRegex.exec(xml)
+	while (match !== null) {
+		if (!match.groups) {
+			match = responseDeclarationRegex.exec(xml)
+			continue
+		}
+
+		const responseId = match.groups.id
+		const baseType = match.groups.baseType
+		const content = match.groups.content
+
+		if (!content) {
+			match = responseDeclarationRegex.exec(xml)
+			continue
+		}
+
+		// Extract the correct response section first
+		const correctResponseMatch = content.match(/<qti-correct-response>(?<values>[\s\S]*?)<\/qti-correct-response>/)
+		if (!correctResponseMatch?.groups?.values) {
+			match = responseDeclarationRegex.exec(xml)
+			continue
+		}
+
+		// Extract all values within the correct response
+		const valuesContent = correctResponseMatch.groups.values
+		const firstValueMatch = valuesContent.match(/<qti-value>(?<value>[^<]+)<\/qti-value>/)
+		if (!firstValueMatch?.groups?.value) {
+			match = responseDeclarationRegex.exec(xml)
+			continue
+		}
+
+		const correctValue = firstValueMatch.groups.value.trim()
+
+		// Check if this is a decimal value that starts with "0."
+		if (correctValue.match(/^0\.\d+$/)) {
+			// This is a decimal with leading zero (e.g., 0.5)
+			// Check if there's a corresponding text-entry-interaction
+			const hasTextEntry = new RegExp(
+				`<qti-text-entry-interaction[^>]+response-identifier\\s*=\\s*["']${responseId}["']`
+			).test(xml)
+
+			if (hasTextEntry) {
+				// For string base types, we need to check if multiple values are accepted
+				// For numeric types (integer/float), the system should handle both formats automatically
+				if (baseType === "string") {
+					// Check if there's only one correct value defined
+					const valueCount = (valuesContent.match(/<qti-value>/g) || []).length
+
+					if (valueCount === 1) {
+						// Only one format is accepted - this is problematic for string-based decimal answers
+						context.logger.error("decimal answer only accepts one format", {
+							responseId,
+							correctValue,
+							baseType
+						})
+						throw errors.new(
+							`invalid decimal answer format: Response "${responseId}" has decimal answer "${correctValue}" but only accepts one format. For string-based decimal responses, both "0.5" and ".5" formats should be accepted. Consider adding multiple <qti-value> elements or using float base-type.`
+						)
+					}
+				}
+			}
+		}
+
+		// Also check for decimals without leading zero
+		if (correctValue.match(/^\.\d+$/)) {
+			// This is a decimal without leading zero (e.g., .5)
+			// Similar check but ensure "0.5" format is also accepted
+			const hasTextEntry = new RegExp(
+				`<qti-text-entry-interaction[^>]+response-identifier\\s*=\\s*["']${responseId}["']`
+			).test(xml)
+
+			if (hasTextEntry && baseType === "string") {
+				const valueCount = (valuesContent.match(/<qti-value>/g) || []).length
+
+				if (valueCount === 1) {
+					context.logger.error("decimal answer only accepts one format", {
+						responseId,
+						correctValue,
+						baseType
+					})
+					throw errors.new(
+						`invalid decimal answer format: Response "${responseId}" has decimal answer "${correctValue}" but only accepts one format. For string-based decimal responses, both ".5" and "0.5" formats should be accepted. Consider adding multiple <qti-value> elements or using float base-type.`
+					)
+				}
+			}
+		}
+
+		match = responseDeclarationRegex.exec(xml)
+	}
+
+	context.logger.debug("validated decimal answer formats")
+}
+
+/**
+ * Validates that equation answers accept both standard and reversed forms.
+ * For example, if the answer is "2x=3", it should also accept "3=2x"
+ *
+ * This validation only applies to:
+ * - String-based responses (not numeric types)
+ * - Text-entry interactions (not multiple choice)
+ * - Values that contain mathematical elements on both sides of "="
+ *
+ * It skips non-mathematical uses of "=" like:
+ * - Programming statements: "x = 5"
+ * - Text explanations: "The symbol = means equal"
+ * - Chemical equations: "H2 + O2 = H2O"
+ */
+export function validateEquationAnswerReversibility(xml: string, context: ValidationContext): void {
+	// Find all text-entry interactions with equation answers (containing equals sign)
+	const responseDeclarationRegex =
+		/<qti-response-declaration(?=\s)(?=(?:[^>]*)identifier\s*=\s*["'](?<id>[^"']+)["'])(?=(?:[^>]*)base-type\s*=\s*["'](?<baseType>string)["'])[^>]*>(?<content>[\s\S]*?)<\/qti-response-declaration>/gi
+
+	let match: RegExpExecArray | null
+	match = responseDeclarationRegex.exec(xml)
+	while (match !== null) {
+		if (!match.groups) {
+			match = responseDeclarationRegex.exec(xml)
+			continue
+		}
+
+		const responseId = match.groups.id
+		const content = match.groups.content
+
+		if (!content) {
+			match = responseDeclarationRegex.exec(xml)
+			continue
+		}
+
+		// Extract the correct response section
+		const correctResponseMatch = content.match(/<qti-correct-response>(?<values>[\s\S]*?)<\/qti-correct-response>/)
+		if (!correctResponseMatch?.groups?.values) {
+			match = responseDeclarationRegex.exec(xml)
+			continue
+		}
+
+		// Extract all values within the correct response
+		const valuesContent = correctResponseMatch.groups.values
+		const allValues: string[] = []
+		const valueRegex = /<qti-value>(?<value>[^<]+)<\/qti-value>/g
+		let valueMatch: RegExpExecArray | null
+		valueMatch = valueRegex.exec(valuesContent)
+		while (valueMatch !== null) {
+			if (valueMatch.groups?.value) {
+				allValues.push(valueMatch.groups.value.trim())
+			}
+			valueMatch = valueRegex.exec(valuesContent)
+		}
+
+		if (allValues.length === 0) {
+			match = responseDeclarationRegex.exec(xml)
+			continue
+		}
+
+		// Check if any value contains an equals sign (indicating an equation)
+		// To avoid false positives, we look for mathematical patterns around the equals sign
+		const mathPatterns = /[0-9x+\-*/()[\]{}^√π]|\\[a-zA-Z]+|sin|cos|tan|log|ln|sqrt/
+		const equationValues = allValues.filter((val) => {
+			if (!val.includes("=")) return false
+
+			// Check if there are mathematical elements on both sides of equals
+			const parts = val.split("=")
+			if (parts.length !== 2 || !parts[0] || !parts[1]) return false
+
+			const leftHasMath = mathPatterns.test(parts[0])
+			const rightHasMath = mathPatterns.test(parts[1])
+
+			// Only consider it a mathematical equation if both sides have math elements
+			return leftHasMath && rightHasMath
+		})
+
+		if (equationValues.length === 0) {
+			match = responseDeclarationRegex.exec(xml)
+			continue
+		}
+
+		// Check if there's a corresponding text-entry-interaction
+		const hasTextEntry = new RegExp(
+			`<qti-text-entry-interaction[^>]+response-identifier\\s*=\\s*["']${responseId}["']`
+		).test(xml)
+
+		if (!hasTextEntry) {
+			match = responseDeclarationRegex.exec(xml)
+			continue
+		}
+
+		// For each equation value, check if its reversed form is also accepted
+		for (const equation of equationValues) {
+			// Split by equals sign
+			const parts = equation.split("=")
+			if (parts.length !== 2 || !parts[0] || !parts[1]) {
+				continue // Skip if not a simple equation
+			}
+
+			const leftSide = parts[0].trim()
+			const rightSide = parts[1].trim()
+			const reversedEquation = `${rightSide}=${leftSide}`
+
+			// Check if the reversed form is in the accepted values
+			// We need to check with various spacing patterns
+			const hasReversed = allValues.some((val) => {
+				const normalizedVal = val.replace(/\s+/g, "")
+				const normalizedReversed = reversedEquation.replace(/\s+/g, "")
+				return normalizedVal === normalizedReversed
+			})
+
+			if (!hasReversed) {
+				context.logger.error("equation answer not reversible", {
+					responseId,
+					equation,
+					reversedEquation,
+					acceptedValues: allValues
+				})
+				throw errors.new(
+					`invalid equation answer format: Response "${responseId}" has equation answer "${equation}" but doesn't accept the reversed form "${reversedEquation}". Mathematical equations should accept both forms for correctness. Consider adding both "<qti-value>${equation}</qti-value>" and "<qti-value>${reversedEquation}</qti-value>".`
+				)
+			}
+		}
+
+		match = responseDeclarationRegex.exec(xml)
+	}
+
+	context.logger.debug("validated equation answer reversibility")
+}
