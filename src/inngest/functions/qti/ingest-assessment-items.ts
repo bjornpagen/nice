@@ -1,7 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
-import { fixKhanGraphieUrls } from "@/lib/perseus-qti/strip"
 import { ErrQtiNotFound } from "@/lib/qti"
 
 export const ingestAssessmentItems = inngest.createFunction(
@@ -21,10 +20,9 @@ export const ingestAssessmentItems = inngest.createFunction(
 		logger.info("ingesting assessment items", { count: items.length })
 
 		const itemPromises = items.map(async (item) => {
-			// TEMPORARY FIX: Apply Khan Academy graphie URL fix until all QTI XML is regenerated
-			// This ensures all Khan Academy graphie URLs have the .svg extension appended.
-			// TODO: Remove this once all QTI XML has been regenerated with the fix applied at generation time.
-			const processedXml = fixKhanGraphieUrls(item.xml, logger)
+			// REMOVED: The temporary fix is no longer needed here.
+			// The upload function now trusts that the incoming XML is already valid.
+			const processedXml = item.xml
 
 			// Extract identifier from the root qti-assessment-item element using a robust regex.
 			// This regex specifically targets the root tag to avoid matching identifiers from nested elements.

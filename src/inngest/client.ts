@@ -109,6 +109,10 @@ const events = {
 	"qti/database.clear-all-xml": {
 		data: z.object({})
 	},
+	// ✅ ADD: New event to trigger the validation of all question XML
+	"qti/questions.validate-all": {
+		data: z.object({})
+	},
 	"qti/assessment-items.ingest": {
 		data: z.object({
 			items: z.array(CreateItemInputSchema)

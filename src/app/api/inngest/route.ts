@@ -39,6 +39,8 @@ import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment
 import { paraphraseStimulus } from "@/inngest/functions/qti/paraphrase-stimulus"
 import { requestAllItemMigrationsForCourse } from "@/inngest/functions/qti/request-all-item-migrations-for-course"
 import { requestAllStimulusMigrationsForCourse } from "@/inngest/functions/qti/request-all-stimulus-migrations-for-course"
+// ✅ ADD: Import the new validation function
+import { validateAndClearInvalidQuestionXml } from "@/inngest/functions/qti/validate-and-clear-invalid-question-xml"
 
 // Create and export the Inngest HTTP handler
 export const { GET, POST, PUT } = serve({
@@ -77,6 +79,8 @@ export const { GET, POST, PUT } = serve({
 		ingestAssessmentTests,
 		requestAllItemMigrationsForCourse,
 		requestAllStimulusMigrationsForCourse,
+		// ✅ ADD: Register the new validation function
+		validateAndClearInvalidQuestionXml,
 		// ✅ ADD: Register the new function
 		differentiateQuestion,
 		// ✅ ADD: Register the new paraphrase function
