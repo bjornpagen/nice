@@ -20,9 +20,9 @@ const REGEX = {
 	PERSEUS_ARTIFACT: /\[\[☃\s*[\s\S]*?\]\]/g,
 	TRUNCATED_TAG: /<\/(?:_|\s*>|\.\.\.)/,
 	IMAGE_URL:
-		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?(?:\.(?:svg|jpe?g|png))?)(?:k<quote>)/gi,
+		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?(?:\.(?:svg|jpe?g|png))?)k<quote>/gi,
 	SUPPORTED_IMAGE_URL:
-		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:jpe?g|png))(?:k<quote>)/gi,
+		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:jpe?g|png))k<quote>/gi,
 	// Simple LaTeX detection: any backslash followed by letters (commands) or LaTeX-like constructs
 	LATEX_LIKE: /\\(?:[a-zA-Z]+|[(){}[\]])/
 } as const
@@ -421,7 +421,30 @@ export async function validateImageUrls(xml: string, _context: ValidationContext
 			invalidUrls.push({ url, status: 0, error: `Failed to fetch: ${res.error.toString()}` })
 			continue
 		}
+
+		// Check if this is an error response (403/404 or Khan Academy XML error)
+		let isErrorResponse = false
+		let effectiveStatus = res.data.status
+
 		if (res.data.status === 403 || res.data.status === 404) {
+			isErrorResponse = true
+		} else if (res.data.status === 200) {
+			// Khan Academy CDN returns 200 with XML error body for missing resources
+			const textResult = await errors.try(res.data.text())
+			if (!textResult.error) {
+				const responseText = textResult.data
+				if (
+					responseText.includes("<?xml") &&
+					responseText.includes("<Error>") &&
+					responseText.includes("<Code>AccessDenied</Code>")
+				) {
+					isErrorResponse = true
+					effectiveStatus = 403 // Treat as 403 for error reporting
+				}
+			}
+		}
+
+		if (isErrorResponse) {
 			// Try alternative file extensions
 			const lastDotIndex = url.lastIndexOf(".")
 			const pathEnd = url.lastIndexOf("/")
@@ -446,15 +469,22 @@ export async function validateImageUrls(xml: string, _context: ValidationContext
 				const altUrl = `${baseUrl}.${ext}`
 				const altRes = await errors.try(fetch(altUrl, { signal: AbortSignal.timeout(10000) }))
 				if (!altRes.error && altRes.data.status === 200) {
-					workingUrl = altUrl
-					break
+					// Also check that the 200 response is not an XML error
+					const altTextResult = await errors.try(altRes.data.text())
+					if (!altTextResult.error) {
+						const altResponseText = altTextResult.data
+						if (!altResponseText.includes("<?xml") || !altResponseText.includes("<Error>")) {
+							workingUrl = altUrl
+							break
+						}
+					}
 				}
 			}
 
 			if (workingUrl) {
-				invalidUrls.push({ url, status: res.data.status, suggestion: workingUrl })
+				invalidUrls.push({ url, status: effectiveStatus, suggestion: workingUrl })
 			} else {
-				invalidUrls.push({ url, status: res.data.status })
+				invalidUrls.push({ url, status: effectiveStatus })
 			}
 		}
 	}
