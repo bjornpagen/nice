@@ -63,11 +63,10 @@ export const validateAndClearInvalidQuestionXml = inngest.createFunction(
 				throw errors.wrap(questionsResult.error, "database query for batch questions")
 			}
 
-			// Process validation in step.run
+			// Process validation in step.run with parallel execution
 			const batchResult = await step.run(`process-batch-${batchNumber}`, async () => {
-				const invalidQuestionIds: string[] = []
-				for (const question of questionsResult.data) {
-					if (!question.xml) continue
+				const validationPromises = questionsResult.data.map(async (question) => {
+					if (!question.xml) return null
 
 					const validationContext = {
 						id: question.id,
@@ -79,15 +78,19 @@ export const validateAndClearInvalidQuestionXml = inngest.createFunction(
 					const validationResult = await runValidationPipeline(question.xml, validationContext)
 
 					if (!validationResult.isValid) {
-						invalidQuestionIds.push(question.id)
 						logger.warn("xml validation failed", {
 							questionId: question.id,
 							exerciseTitle: validationContext.title,
 							errorCount: validationResult.errors.length,
 							errors: validationResult.errors.map((e) => e.message)
 						})
+						return question.id
 					}
-				}
+					return null
+				})
+
+				const results = await Promise.all(validationPromises)
+				const invalidQuestionIds = results.filter((id): id is string => id !== null)
 
 				return { invalidQuestionIds }
 			})
