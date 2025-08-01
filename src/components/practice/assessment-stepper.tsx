@@ -15,12 +15,13 @@ import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
+
 import {
 	checkAndCreateNewAttemptIfNeeded,
 	checkExistingProficiency,
 	createNewAssessmentAttempt,
 	finalizeAssessment,
-	flagAndReportQuestion,
+	flagQuestionAsReported,
 	processQuestionResponse,
 	processSkippedQuestion
 } from "@/lib/actions/assessment"
@@ -172,7 +173,7 @@ export function AssessmentStepper({
 	assessmentPath,
 	unitData,
 	expectedXp, // Will be used when caliper action is updated
-	layoutData
+	layoutData: _layoutData
 }: AssessmentStepperProps) {
 	const { user } = useUser()
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
@@ -189,8 +190,9 @@ export function AssessmentStepper({
 	const [attemptNumber, setAttemptNumber] = React.useState(1)
 	const [sessionResults, setSessionResults] = React.useState<{ qtiItemId: string; isCorrect: boolean }[]>([]) // NEW STATE
 	const [reportedQuestionIds, setReportedQuestionIds] = React.useState<Set<string>>(new Set()) // NEW STATE
-	const [isReportPopoverOpen, setIsReportPopoverOpen] = React.useState(false) // NEW STATE
-	const [feedbackText, setFeedbackText] = React.useState("") // NEW STATE
+	const [isReportPopoverOpen, setIsReportPopoverOpen] = React.useState(false)
+	const [reportText, setReportText] = React.useState("")
+
 	const [nextItem, setNextItem] = React.useState<{ text: string; path: string; type?: string } | null>(null)
 	const [debugClickCount, setDebugClickCount] = React.useState(0)
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
@@ -784,32 +786,32 @@ export function AssessmentStepper({
 	// OPEN REPORT POPOVER
 	const handleReportIssue = () => {
 		setIsReportPopoverOpen(true)
-		setFeedbackText("")
+		setReportText("")
 	}
 
-	// SUBMIT FEEDBACK
-	const handleSubmitFeedback = async () => {
+	// SUBMIT REPORT
+	const handleSubmitReport = async () => {
 		if (!currentQuestion) return
 
-		if (feedbackText.trim() === "") {
-			toast.error("Feedback cannot be empty.")
+		if (reportText.trim() === "") {
+			toast.error("Please describe the issue.")
 			return
 		}
 
+		// Save the report text before clearing it
+		const savedReportText = reportText.trim()
+
 		// Close popover and clear text
 		setIsReportPopoverOpen(false)
-		setFeedbackText("")
-
-		// For course-level tests without lesson context, use the assessment resource ID
-		const lessonId = layoutData?.lessonData?.id || onerosterResourceSourcedId
+		setReportText("")
 
 		// Immediately add the question ID to local state for a fast UI transition.
 		setReportedQuestionIds((prev) => new Set(prev).add(currentQuestion.id))
 
 		const toastId = toast.loading("Reporting issue...")
 
-		// Call the server action to flag the question and log feedback.
-		const result = await errors.try(flagAndReportQuestion(currentQuestion.id, feedbackText, lessonId))
+		// Call the server action to flag the question with the report message.
+		const result = await errors.try(flagQuestionAsReported(currentQuestion.id, savedReportText))
 
 		if (result.error) {
 			toast.error("Failed to report issue. Please try again.", { id: toastId })
@@ -822,7 +824,7 @@ export function AssessmentStepper({
 			return
 		}
 
-		toast.success("Issue reported. Thank you for your feedback!", { id: toastId })
+		toast.success("Issue reported. Thank you!", { id: toastId })
 
 		// Immediately advance the student.
 		goToNext()
@@ -988,14 +990,14 @@ export function AssessmentStepper({
 							</p>
 						</div>
 						<div>
-							<label htmlFor="feedback" className="block text-sm font-medium text-gray-700 mb-2">
+							<label htmlFor="report" className="block text-sm font-medium text-gray-700 mb-2">
 								What's wrong with this question?
 							</label>
 							<Textarea
-								id="feedback"
+								id="report"
 								placeholder="Please describe the issue..."
-								value={feedbackText}
-								onChange={(e) => setFeedbackText(e.target.value)}
+								value={reportText}
+								onChange={(e) => setReportText(e.target.value)}
 								rows={4}
 								className="w-full"
 							/>
@@ -1005,12 +1007,12 @@ export function AssessmentStepper({
 								variant="outline"
 								onClick={() => {
 									setIsReportPopoverOpen(false)
-									setFeedbackText("")
+									setReportText("")
 								}}
 							>
 								Cancel
 							</Button>
-							<Button onClick={handleSubmitFeedback} disabled={feedbackText.trim() === ""}>
+							<Button onClick={handleSubmitReport} disabled={reportText.trim() === ""}>
 								Submit Report
 							</Button>
 						</div>

@@ -1,11 +1,10 @@
 "use server"
 
-import { auth, currentUser } from "@clerk/nextjs/server"
+import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { createQuestionFeedback } from "@/lib/actions/feedback"
+
 import { oneroster, powerpath, qti } from "@/lib/clients"
-import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 
 /**
  * IMPORTANT NOTE ABOUT POWERPATH TERMINOLOGY:
@@ -433,39 +432,39 @@ export async function checkExistingProficiency(
 }
 
 /**
- * Flags a question as buggy in the QTI API and logs user feedback.
+ * Flags a question as reported in the QTI API by updating its metadata.
  * This is the primary server action for the "Report an issue" feature.
  * @param questionId The QTI AssessmentItem identifier (e.g., "nice_x...").
- * @param feedback The text feedback provided by the user.
- * @param lessonId The ID of the lesson containing the question, required for feedback logging.
+ * @param report The user's report message describing the issue.
  */
-export async function flagAndReportQuestion(
-	questionId: string,
-	feedback: string,
-	lessonId: string
-): Promise<{ success: boolean }> {
+export async function flagQuestionAsReported(questionId: string, report: string): Promise<{ success: boolean }> {
 	const { userId: clerkUserId } = await auth()
 	if (!clerkUserId) {
 		throw errors.new("user not authenticated")
 	}
 
-	logger.info("flagging and reporting buggy question", { clerkUserId, questionId })
+	logger.info("flagging question as reported", { clerkUserId, questionId, report })
 
-	// Step 1: Flag the question in the QTI API by updating its metadata.
-	// This is the source of truth for the question's status.
 	const flagResult = await errors.try(
 		(async () => {
 			const existingItem = await qti.getAssessmentItem(questionId)
+
 			const updatedMetadata = {
 				...existingItem.metadata,
-				status: "buggy_reported",
-				lastReported: new Date().toISOString()
+				status: "reported",
+				report: report.trim(),
+				lastReported: new Date().toISOString(),
+				reportedBy: clerkUserId
 			}
+
+			logger.info("updating question metadata", { questionId, updatedMetadata })
+
 			const updatePayload = {
 				identifier: existingItem.identifier,
 				xml: existingItem.rawXml,
 				metadata: updatedMetadata
 			}
+
 			await qti.updateAssessmentItem(updatePayload)
 		})()
 	)
@@ -475,41 +474,6 @@ export async function flagAndReportQuestion(
 		throw errors.wrap(flagResult.error, "flagging question in qti api")
 	}
 
-	// Step 2: Log the user's feedback via the new feedback action.
-	const user = await currentUser()
-	if (!user) {
-		throw errors.new("user not found after auth check")
-	}
-
-	const metadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
-	if (metadataResult.error) {
-		throw errors.wrap(metadataResult.error, "clerk user metadata validation")
-	}
-
-	const { sourceId } = metadataResult.data
-	if (!sourceId) {
-		throw errors.new("user does not have a sourceId")
-	}
-
-	const feedbackResult = await errors.try(
-		createQuestionFeedback({
-			userId: sourceId,
-			questionId,
-			feedback,
-			lessonId,
-			humanApproved: false
-		})
-	)
-
-	if (feedbackResult.error) {
-		logger.error("failed to log question feedback after successful flagging", {
-			clerkUserId,
-			questionId,
-			error: feedbackResult.error
-		})
-		// Do not throw; the primary action of flagging succeeded.
-	}
-
-	logger.info("successfully flagged and reported buggy question", { clerkUserId, questionId })
+	logger.info("successfully flagged question as reported", { clerkUserId, questionId })
 	return { success: true }
 }

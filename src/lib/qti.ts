@@ -41,29 +41,6 @@ const ProcessResponseApiRequestSchema = z.object({
 export type ProcessResponseInput = z.infer<typeof ProcessResponseInputSchema>
 export type ProcessResponseResult = z.infer<typeof ProcessResponseResultSchema>
 
-// --- Feedback Schemas (New) ---
-const CreateFeedbackInputSchema = z.object({
-	userId: z.string(),
-	feedback: z.string().min(1, "Feedback content cannot be empty"),
-	lessonId: z.string(),
-	questionId: z.string().optional(),
-	humanApproved: z.boolean().optional().default(false)
-})
-export type CreateFeedbackInput = z.infer<typeof CreateFeedbackInputSchema>
-
-const FeedbackResponseSchema = z.object({
-	id: z.string(), // The API will return the created object with an ID
-	userId: z.string(),
-	feedback: z.string(),
-	lessonId: z.string(),
-	questionId: z.string().optional(),
-	humanApproved: z.boolean(),
-	type: z.enum(["QUESTION", "LESSON"]),
-	createdAt: z.string().datetime(),
-	updatedAt: z.string().datetime()
-})
-export type FeedbackResponse = z.infer<typeof FeedbackResponseSchema>
-
 // --- Stimulus Schemas (New) ---
 
 /**
@@ -1035,42 +1012,5 @@ export class Client {
 			},
 			ValidateXmlResponseSchema
 		)
-	}
-
-	// --- Feedback Management Methods (New) ---
-
-	/**
-	 * Feedback namespace providing methods for creating feedback entries.
-	 */
-	public readonly feedback = {
-		/**
-		 * Creates a new feedback entry for a question or lesson.
-		 * @param {CreateFeedbackInput} input - The feedback data to submit.
-		 * @returns {Promise<FeedbackResponse>} The created feedback object.
-		 */
-		create: async (input: CreateFeedbackInput): Promise<FeedbackResponse> => {
-			logger.info("qti client: creating feedback", {
-				userId: input.userId,
-				questionId: input.questionId,
-				lessonId: input.lessonId
-			})
-			const validation = CreateFeedbackInputSchema.safeParse(input)
-			if (!validation.success) {
-				throw errors.wrap(validation.error, "createFeedback input validation")
-			}
-
-			// Determine the endpoint based on whether a questionId is present
-			const endpoint = input.questionId ? "/feedback/question" : "/feedback/lesson"
-
-			return this.#request(
-				endpoint,
-				{
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify(validation.data)
-				},
-				FeedbackResponseSchema
-			)
-		}
 	}
 }
