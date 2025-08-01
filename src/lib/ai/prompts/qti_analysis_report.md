@@ -2,10 +2,10 @@
 
 ## Executive Summary
 
-- **Total Questions Analyzed:** 2230
-- **Questions with Issues:** 59
-- **Total Issues Identified:** 52
-- **Failure Rate:** 2.6%
+- **Total Questions Analyzed:** 2231
+- **Questions with Issues:** 60
+- **Total Issues Identified:** 57
+- **Failure Rate:** 2.7%
 
 ## Issue Categories Analysis
 
@@ -39,13 +39,14 @@
 
 ### Educational Accuracy Problems
 **Severity:** CRITICAL  
-**Questions Affected:** 3  
+**Questions Affected:** 4  
 **Description:** Content not appropriate for 2nd grade level or mathematically incorrect
 
 **Issues:**
 - nice_xd43013615f136efc_0005: terrible number line implementation
 - nice_x8f8a5541e995fd9e_0003: terribly constructed question svg are oversimplified and its shitty this isn't ready for students
 - nice_xbf4db36c38e7515a_0003: terribly constructed question svg are oversimplified and its shitty this isn't ready for students
+- nice_x074e933f0d3ee41a_0003: problematic coordinate grid with non-standard origin and missing values, confusing for students learning coordinate geometry
 
 ### Content Quality Issues
 **Severity:** MEDIUM  
@@ -2432,6 +2433,85 @@ Proper differentiation should maintain:
         </qti-response-condition>
     </qti-response-processing>
 
+</qti-assessment-item>
+```
+
+---
+
+#### nice_x074e933f0d3ee41a_0003
+**Title:** Interpret a Retail Sales Data Point  
+**Khan Exercise:** Coordinate grid interpretation  
+**Khan Slug:** coordinate-grid-problems  
+
+**Issues Identified:**
+- Problematic coordinate grid: Y-axis starts at 10 instead of 0, creating confusing origin point
+- Missing value in Y-axis sequence (10, 20, 30, 40, 60, 70, 80) - skips 50
+- Uses categorical data (days) on X-axis instead of numerical coordinatese
+- Not suitable for standard coordinate geometry - students expecting (0,0) origin will b confused
+- Non-mathematical coordinate system makes graph interpretation unclear
+
+**Complete XML:**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd" identifier="nice_x074e933f0d3ee41a_0003" title="Interpret a Retail Sales Data Point" time-dependent="false" xml:lang="en-US">
+  <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+    <qti-correct-response>
+      <qti-value>A</qti-value>
+    </qti-correct-response>
+  </qti-response-declaration>
+  <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+    <qti-default-value>
+      <qti-value>0</qti-value>
+    </qti-default-value>
+  </qti-outcome-declaration>
+  <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+  <qti-item-body>
+    <div id="reference_text">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cdefs%3E%3Cstyle%3E.axis%7Bstroke:%23000;stroke-width:2%7D.grid%7Bstroke:%23ccc;stroke-width:1%7D.pt%7Bfill:%23007ACC%7D.lbl%7Bfont-family:sans-serif;font-size:14px;text-anchor:middle%7D%3C/style%3E%3C/defs%3E%3Cg transform='translate(40,20)'%3E%3C!-- Grid lines --%3E%3Cpath class='grid' d='M0,340 h320 M0,300 h320 M0,260 h320 M0,220 h320 M0,180 h320 M0,140 h320 M0,100 h320 M0,60 h320 M0,20 h320'/%3E%3Cpath class='grid' d='M0,20 v320 M40,20 v320 M80,20 v320 M120,20 v320 M160,20 v320 M200,20 v320 M240,20 v320 M280,20 v320 M320,20 v320'/%3E%3C!-- Axes --%3E%3Cline class='axis' x1='0' y1='180' x2='320' y2='180'/%3E%3Cline class='axis' x1='40' y1='0' x2='40' y2='360'/%3E%3C!-- X Axis Tick Labels (Days) --%3E%3Ctext class='lbl' x='40' y='195'%3EMon%3C/text%3E%3Ctext class='lbl' x='80' y='195'%3ETue%3C/text%3E%3Ctext class='lbl' x='120' y='195'%3EWed%3C/text%3E%3Ctext class='lbl' x='160' y='195'%3EThu%3C/text%3E%3Ctext class='lbl' x='200' y='195'%3EFri%3C/text%3E%3Ctext class='lbl' x='240' y='195'%3ESat%3C/text%3E%3Ctext class='lbl' x='280' y='195'%3ESun%3C/text%3E%3C!-- Y Axis Tick Labels (Sales in $1000) --%3E%3Ctext class='lbl' x='28' y='340'%3E10%3C/text%3E%3Ctext class='lbl' x='28' y='300'%3E20%3C/text%3E%3Ctext class='lbl' x='28' y='260'%3E30%3C/text%3E%3Ctext class='lbl' x='28' y='220'%3E40%3C/text%3E%3Ctext class='lbl' x='28' y='140'%3E60%3C/text%3E%3Ctext class='lbl' x='28' y='100'%3E70%3C/text%3E%3Ctext class='lbl' x='28' y='60'%3E80%3C/text%3E%3C!-- Point A --%3E%3Ccircle class='pt' cx='200' cy='100' r='6'/%3E%3Ctext class='lbl' x='212' y='92'%3EA%3C/text%3E%3C!-- Axis titles --%3E%3Ctext class='lbl' x='200' y='375'%3EDay of Week%3C/text%3E%3Ctext class='lbl' transform='rotate(-90)' x='-100' y='-15'%3ESales (in $1000)%3C/text%3E%3C/g%3E%3C/svg%3E" alt="Coordinate grid with one labelled data point A showing sales for a particular day." width="400" height="400"/>
+      <p><span class="qti-italic">Note: The x-axis lists the days of the week and the y-axis shows sales in thousands of dollars. Point A represents the sales for one of the days.</span></p>
+    </div>
+    <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" max-choices="1" min-choices="1">
+      <qti-prompt>What does point <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi></math> represent?</qti-prompt>
+      <qti-simple-choice identifier="A">On Thursday, sales were $70,000.</qti-simple-choice>
+      <qti-simple-choice identifier="B">On Thursday, sales were $80,000.</qti-simple-choice>
+      <qti-simple-choice identifier="C">On Thursday, sales were $60,000.</qti-simple-choice>
+      <qti-simple-choice identifier="D">On a day other than Thursday, sales were $70,000.</qti-simple-choice>
+    </qti-choice-interaction>
+    <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+      <qti-content-body>
+        <p><span class="qti-keyword-emphasis">Correct!</span> Point A shows that on Thursday, sales were $70,000.</p>
+      </qti-content-body>
+    </qti-feedback-block>
+    <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+      <qti-content-body>
+        <p><span class="qti-keyword-emphasis">Not quite.</span> Check the grid carefully to see which value the point corresponds to for Thursday.</p>
+      </qti-content-body>
+    </qti-feedback-block>
+  </qti-item-body>
+  <qti-response-processing>
+    <qti-response-condition>
+      <qti-response-if>
+        <qti-match>
+          <qti-variable identifier="RESPONSE"/>
+          <qti-correct identifier="RESPONSE"/>
+        </qti-match>
+        <qti-set-outcome-value identifier="SCORE">
+          <qti-base-value base-type="float">1</qti-base-value>
+        </qti-set-outcome-value>
+        <qti-set-outcome-value identifier="FEEDBACK">
+          <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+        </qti-set-outcome-value>
+      </qti-response-if>
+      <qti-response-else>
+        <qti-set-outcome-value identifier="SCORE">
+          <qti-base-value base-type="float">0</qti-base-value>
+        </qti-set-outcome-value>
+        <qti-set-outcome-value identifier="FEEDBACK">
+          <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+        </qti-set-outcome-value>
+      </qti-response-else>
+    </qti-response-condition>
+  </qti-response-processing>
 </qti-assessment-item>
 ```
 

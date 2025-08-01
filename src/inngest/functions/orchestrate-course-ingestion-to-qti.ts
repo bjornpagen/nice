@@ -199,7 +199,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 						function: differentiateQuestion,
 						data: {
 							questionId: question.id,
-							numberOfVariations: 5, // Generate 5 variations per question
+							numberOfVariations: 4, // Generate 4 variations per question
 							// Enable AI Quality Review pipeline
 							qualityReviewConfig: {
 								enabled: true // Enable the quality review pipeline
@@ -235,15 +235,15 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					await fs.writeFile(chunkItemsFile, JSON.stringify(allValidatedItems, null, 2))
 
 					const questionsWithTargetVariations = differentiationResults.filter(
-						(r) => r?.status === "success" && "validatedCount" in r && r.validatedCount >= 5
+						(r) => r?.status === "success" && "validatedCount" in r && r.validatedCount >= 4
 					).length
 
 					logger.info("completed chunk processing with self-contained retry logic", {
 						chunkIndex,
 						questionsProcessed: chunkQuestions.length,
 						itemsGenerated: allValidatedItems.length,
-						targetItemsExpected: chunkQuestions.length * 5,
-						successRate: `${((allValidatedItems.length / (chunkQuestions.length * 5)) * 100).toFixed(1)}%`,
+						targetItemsExpected: chunkQuestions.length * 4,
+						successRate: `${((allValidatedItems.length / (chunkQuestions.length * 4)) * 100).toFixed(1)}%`,
 						questionsWithTargetVariations
 					})
 

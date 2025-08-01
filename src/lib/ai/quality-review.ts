@@ -13,7 +13,6 @@ export interface QtiSourceContext {
 	exerciseId: string | null
 	exerciseSlug: string | null
 	exerciseTitle: string | null
-	gradeLevel: string
 }
 
 export interface QualityAnalysisFindings {
@@ -97,11 +96,11 @@ async function reviewSingleQti(xml: string, sourceContext: QtiSourceContext): Pr
 	logger.debug("sending qti xml to ai quality reviewer", {
 		khanId: sourceContext.khanId,
 		xmlLength: xml.length,
-		model: "o3-mini"
+		model: "o3"
 	})
 
 	const response = await openai.chat.completions.parse({
-		model: "o3-mini",
+		model: "o3",
 		messages: [
 			{ role: "system", content: systemInstruction },
 			{ role: "user", content: userContent }

@@ -55,8 +55,7 @@ export const differentiateQuestion = inngest.createFunction(
 			khanId: questionId,
 			exerciseId: sourceData.exerciseId,
 			exerciseSlug: sourceData.exerciseSlug,
-			exerciseTitle: sourceData.exerciseTitle,
-			gradeLevel: "2nd Grade" // Assuming 2nd grade for now, can be parameterized later
+			exerciseTitle: sourceData.exerciseTitle
 		}
 
 		// Step 2: Internal retry logic with 3-stage pipeline (Generate → Review → Validate)
