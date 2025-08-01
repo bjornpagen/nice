@@ -183,6 +183,38 @@ export function removeDoubleNewlines(xml: string, logger: logger.Logger): string
 }
 
 /**
+ * Fixes Khan Academy graphie URLs by appending .svg extension if missing.
+ * This handles URLs in the format: https://cdn.kastatic.org/ka-perseus-graphie/[hash]
+ *
+ * @param xml The XML string to process
+ * @param logger The logger instance
+ * @returns The XML string with properly formatted Khan graphie URLs
+ */
+export function fixKhanGraphieUrls(xml: string, logger: logger.Logger): string {
+	// Match Khan graphie URLs that don't already have a file extension
+	// Named capture groups for clarity
+	const khanGraphieRegex =
+		/(?<url>https:\/\/cdn\.kastatic\.org\/ka-perseus-graphie\/(?<hash>[a-zA-Z0-9]+))(?!\.(?:svg|png|jpg|jpeg|gif|webp))(?<after>[\s"'<>&]|$)/g
+
+	let fixCount = 0
+
+	const fixedXml = xml.replace(khanGraphieRegex, (_match, url, _hash, after) => {
+		fixCount++
+		return `${url}.svg${after}`
+	})
+
+	if (fixCount > 0) {
+		logger.debug("fixed khan graphie urls by appending .svg", {
+			fixCount,
+			originalLength: xml.length,
+			fixedLength: fixedXml.length
+		})
+	}
+
+	return fixedXml
+}
+
+/**
  * MISSION CRITICAL: Fixes unescaped inequality operators throughout the XML.
  * - For qti-value elements: Escapes to HTML entities (&lt;= and &gt;=) for ASCII input
  * - For all other content: Converts to Unicode symbols (≤ and ≥) for proper display

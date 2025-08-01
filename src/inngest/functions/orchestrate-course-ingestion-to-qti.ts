@@ -8,6 +8,7 @@ import { inngest } from "@/inngest/client"
 import {
 	convertHtmlEntities,
 	fixInequalityOperators,
+	fixKhanGraphieUrls,
 	fixMathMLOperators,
 	stripXmlComments
 } from "@/lib/perseus-qti/strip"
@@ -328,6 +329,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 							paraphrasedXml = stripXmlComments(paraphrasedXml, logger)
 							paraphrasedXml = fixMathMLOperators(paraphrasedXml, logger)
 							paraphrasedXml = fixInequalityOperators(paraphrasedXml, logger)
+							paraphrasedXml = fixKhanGraphieUrls(paraphrasedXml, logger)
 
 							const validationResult = await errors.try(
 								runValidationPipeline(paraphrasedXml, {

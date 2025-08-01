@@ -5,7 +5,7 @@ import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { generateQtiVariations } from "@/lib/ai/openai"
 import { type QtiSourceContext, reviewAndImproveQtiQuestions } from "@/lib/ai/quality-review"
-import { convertHtmlEntities, fixMathMLOperators, stripXmlComments } from "@/lib/perseus-qti/strip"
+import { convertHtmlEntities, fixKhanGraphieUrls, fixMathMLOperators, stripXmlComments } from "@/lib/perseus-qti/strip"
 import { runValidationPipeline } from "@/lib/perseus-qti/validator"
 
 export const differentiateQuestion = inngest.createFunction(
@@ -164,6 +164,7 @@ export const differentiateQuestion = inngest.createFunction(
 					variationXml = convertHtmlEntities(variationXml, logger)
 					variationXml = stripXmlComments(variationXml, logger)
 					variationXml = fixMathMLOperators(variationXml, logger)
+					variationXml = fixKhanGraphieUrls(variationXml, logger)
 
 					const validationResult = await errors.try(
 						runValidationPipeline(variationXml, {

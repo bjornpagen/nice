@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { qti } from "@/lib/clients"
+import { fixKhanGraphieUrls } from "@/lib/perseus-qti/strip"
 import { ErrQtiNotFound } from "@/lib/qti"
 
 export const ingestAssessmentItems = inngest.createFunction(
@@ -20,6 +21,11 @@ export const ingestAssessmentItems = inngest.createFunction(
 		logger.info("ingesting assessment items", { count: items.length })
 
 		const itemPromises = items.map(async (item) => {
+			// TEMPORARY FIX: Apply Khan Academy graphie URL fix until all QTI XML is regenerated
+			// This ensures all Khan Academy graphie URLs have the .svg extension appended.
+			// TODO: Remove this once all QTI XML has been regenerated with the fix applied at generation time.
+			const processedXml = fixKhanGraphieUrls(item.xml, logger)
+
 			// Extract identifier from the root qti-assessment-item element using a robust regex.
 			// This regex specifically targets the root tag to avoid matching identifiers from nested elements.
 			// - `<qti-assessment-item` : Matches the opening of the root tag
@@ -27,13 +33,13 @@ export const ingestAssessmentItems = inngest.createFunction(
 			// - `\s+identifier=` : Matches whitespace and the identifier attribute
 			// - `"([^"]+)"` : Captures the identifier value in group 1
 			// - `[^>]*>` : Matches remaining attributes and closing >
-			const idMatch = item.xml.match(/<qti-assessment-item(?:\s+[^>]*)?\s+identifier="([^"]+)"[^>]*>/)
+			const idMatch = processedXml.match(/<qti-assessment-item(?:\s+[^>]*)?\s+identifier="([^"]+)"[^>]*>/)
 			const identifier = idMatch?.[1] ?? null
 
 			if (!identifier) {
 				logger.error("could not extract identifier from item XML, skipping", {
-					xmlStart: item.xml.substring(0, 100),
-					hasQtiAssessmentItem: item.xml.includes("<qti-assessment-item")
+					xmlStart: processedXml.substring(0, 100),
+					hasQtiAssessmentItem: processedXml.includes("<qti-assessment-item")
 				})
 				return { success: false, status: "skipped_no_id" }
 			}
@@ -41,14 +47,16 @@ export const ingestAssessmentItems = inngest.createFunction(
 			// Try to update first (most common case)
 			logger.debug("attempting to update assessment item", { identifier })
 			const updateResult = await errors.try(
-				qti.updateAssessmentItem({ identifier, xml: item.xml, metadata: item.metadata })
+				qti.updateAssessmentItem({ identifier, xml: processedXml, metadata: item.metadata })
 			)
 
 			if (updateResult.error) {
 				// Check if it's a 404 error - if so, create instead
 				if (errors.is(updateResult.error, ErrQtiNotFound)) {
 					logger.info("assessment item not found, creating new", { identifier })
-					const createResult = await errors.try(qti.createAssessmentItem({ xml: item.xml, metadata: item.metadata }))
+					const createResult = await errors.try(
+						qti.createAssessmentItem({ xml: processedXml, metadata: item.metadata })
+					)
 					if (createResult.error) {
 						logger.error("failed to create assessment item", { identifier, error: createResult.error })
 						return { identifier, success: false, status: "failed", error: createResult.error }
