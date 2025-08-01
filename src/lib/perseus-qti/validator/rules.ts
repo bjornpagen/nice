@@ -19,10 +19,8 @@ type ValidationContext = {
 const REGEX = {
 	PERSEUS_ARTIFACT: /\[\[☃\s*[\s\S]*?\]\]/g,
 	TRUNCATED_TAG: /<\/(?:_|\s*>|\.\.\.)/,
-	IMAGE_URL:
-		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?(?:\.(?:svg|jpe?g|png))?)k<quote>/gi,
-	SUPPORTED_IMAGE_URL:
-		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:jpe?g|png))k<quote>/gi,
+	IMAGE_URL: /(?<attribute>src|href)\s*=\s*["'](?<url>https?:\/\/[^"']+\.(?:svg|jpe?g|png))["']/gi,
+	SUPPORTED_IMAGE_URL: /(?<attribute>src|href)\s*=\s*["'](?<url>https?:\/\/[^"']+\.(?:jpe?g|png))["']/gi,
 	// Simple LaTeX detection: any backslash followed by letters (commands) or LaTeX-like constructs
 	LATEX_LIKE: /\\(?:[a-zA-Z]+|[(){}[\]])/
 } as const
