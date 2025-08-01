@@ -472,7 +472,7 @@ export function AssessmentStepper({
 				course: { name: course },
 				activity: {
 					name: assessmentTitle,
-					id: onerosterResourceSourcedId // This is the key fix - ensures we use the proper resource ID
+					id: onerosterResourceSourcedId // Plain OneRoster ID - will be converted to URI server-side
 				}
 			}
 

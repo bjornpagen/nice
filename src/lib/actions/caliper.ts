@@ -58,6 +58,18 @@ export async function sendCaliperActivityCompletedEvent(
 	}
 	let assessmentLineItemId = context.activity.id
 
+	// Convert plain OneRoster resource ID to proper URI format for Caliper API compliance
+	// If activity.id is just a plain ID (like "nice_x3f3b1dd39647cb48"), convert to OneRoster URI
+	const onerosterBaseUrl = env.TIMEBACK_ONEROSTER_SERVER_URL || "https://api.alpha-1edtech.com"
+	if (!context.activity.id.startsWith("http")) {
+		// This is a plain OneRoster resource ID, convert to proper URI
+		context.activity.id = `${onerosterBaseUrl}/ims/oneroster/rostering/v1p2/resources/${context.activity.id}`
+		logger.debug("converted plain resource ID to OneRoster URI", {
+			originalId: assessmentLineItemId,
+			convertedUri: context.activity.id
+		})
+	}
+
 	// Handle compound componentResource IDs (format: nice_unitId_resourceId)
 	// Assessment results are saved under resource ID, not componentResource ID
 	const idParts = assessmentLineItemId.split("_")
