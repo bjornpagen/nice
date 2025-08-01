@@ -313,6 +313,18 @@ export async function sendCaliperTimeSpentEvent(
 ) {
 	logger.info("sending caliper time spent event", { actorId: actor.id, activityId: context.id, durationInSeconds })
 
+	// Convert plain OneRoster resource ID to proper URI format for Caliper API compliance
+	// This matches the logic in sendCaliperActivityCompletedEvent to ensure consistency
+	if (context.activity?.id && !context.activity.id.startsWith("http")) {
+		const onerosterBaseUrl = env.TIMEBACK_ONEROSTER_SERVER_URL || "https://api.alpha-1edtech.com"
+		const originalId = context.activity.id
+		context.activity.id = `${onerosterBaseUrl}/ims/oneroster/rostering/v1p2/resources/${context.activity.id}`
+		logger.debug("converted plain resource ID to OneRoster URI for time spent event", {
+			originalId,
+			convertedUri: context.activity.id
+		})
+	}
+
 	const now = new Date()
 	const startDate = new Date(now.getTime() - durationInSeconds * 1000)
 

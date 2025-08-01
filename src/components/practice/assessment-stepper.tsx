@@ -199,6 +199,7 @@ export function AssessmentStepper({
 	const wrongAudioRef = React.useRef<HTMLAudioElement | null>(null)
 	const currentQuestion = questions[currentQuestionIndex]
 	const assessmentStartTimeRef = React.useRef<Date | null>(null)
+	const hasSentCompletionEventRef = React.useRef(false) // Track whether completion event has been sent
 
 	const isInteractiveAssessment = contentType === "Quiz" || contentType === "Test"
 	const MAX_ATTEMPTS = 3
@@ -355,7 +356,13 @@ export function AssessmentStepper({
 
 	// MODIFIED: This useEffect now passes the attemptNumber to the server action.
 	React.useEffect(() => {
-		if (!showSummary || !onerosterResourceSourcedId || !user?.publicMetadata?.sourceId) {
+		// Guard clause to prevent repeated event sending
+		if (
+			!showSummary ||
+			hasSentCompletionEventRef.current ||
+			!onerosterResourceSourcedId ||
+			!user?.publicMetadata?.sourceId
+		) {
 			return
 		}
 
@@ -503,6 +510,8 @@ export function AssessmentStepper({
 		const executeFinalization = async () => {
 			const shouldAwardXp = await finalizeAndAnalyze()
 			sendCaliperEvents(shouldAwardXp)
+			// Set the flag to true after sending the events to prevent re-execution
+			hasSentCompletionEventRef.current = true
 		}
 
 		executeFinalization()
