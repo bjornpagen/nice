@@ -14,6 +14,7 @@ import {
 	validatePromptPlacement,
 	validateRootElement,
 	validateStimulusBodyContent,
+	validateSvgDataUris,
 	validateTextEntryInteractionPlacement,
 	validateTitleAttribute,
 	validateTruncatedTags,
@@ -50,6 +51,7 @@ export async function runValidationPipeline(
 		validateHtmlEntities,
 		validateNoLatex,
 		validateNoMfencedElements,
+		validateSvgDataUris,
 		validateDecimalAnswerFormats,
 		validateEquationAnswerReversibility
 	]

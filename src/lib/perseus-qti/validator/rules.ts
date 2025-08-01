@@ -939,6 +939,235 @@ export function validateNoMfencedElements(xml: string, context: ValidationContex
 }
 
 /**
+ * Validates that SVG content embedded in img tags as data URIs is well-formed XML.
+ * This catches malformed SVG issues like:
+ * - Mismatched tags (e.g., `</ g>` instead of `</g>`)
+ * - Extra closing tags (e.g., `</text></text>`)
+ * - Unclosed elements
+ * - Invalid tag structures
+ */
+export function validateSvgDataUris(xml: string, context: ValidationContext): void {
+	// Find all img tags with SVG data URIs
+	// This regex captures both URL-encoded and base64-encoded SVG data
+	const imgSvgRegex =
+		/<img[^>]+src\s*=\s*["']data:image\/svg\+xml(?:;base64|;charset=[\w-]+)?,(?<svgData>[^"']+)["'][^>]*>/gi
+
+	let match: RegExpExecArray | null
+	match = imgSvgRegex.exec(xml)
+	while (match !== null) {
+		if (!match.groups?.svgData) {
+			match = imgSvgRegex.exec(xml)
+			continue
+		}
+
+		// Decode the SVG content (handle both URL-encoded and base64)
+		let decodedSvg: string
+		const svgData = match.groups.svgData
+		const matchIndex = match.index ?? 0
+		const isBase64 = xml.substring(matchIndex, matchIndex + match[0].length).includes(";base64")
+
+		if (isBase64) {
+			// Handle base64-encoded SVG
+			const base64Result = errors.trySync(() => {
+				// Decode base64 to string
+				return Buffer.from(svgData, "base64").toString("utf-8")
+			})
+			if (base64Result.error) {
+				context.logger.error("failed to decode base64 svg data uri", { error: base64Result.error })
+				throw errors.new(
+					"invalid svg data uri: Failed to decode base64 SVG content in img tag. The data URI may be malformed."
+				)
+			}
+			decodedSvg = base64Result.data
+		} else {
+			// Handle URL-encoded SVG
+			const svgDataResult = errors.trySync(() => decodeURIComponent(svgData))
+			if (svgDataResult.error) {
+				context.logger.error("failed to decode svg data uri", { error: svgDataResult.error })
+				throw errors.new(
+					"invalid svg data uri: Failed to decode SVG content in img tag. The data URI may be malformed or improperly encoded."
+				)
+			}
+			decodedSvg = svgDataResult.data
+		}
+
+		// Parse the SVG as XML to check if it's well-formed
+		const parseResult = errors.trySync(() => {
+			// First, remove content that could cause false positives
+			// 1. Remove CDATA sections (they can contain anything)
+			let svgForParsing = decodedSvg.replace(/<!\[CDATA\[[\s\S]*?\]\]>/g, "<!-- CDATA -->")
+
+			// 2. Remove comments (they can contain example code)
+			svgForParsing = svgForParsing.replace(/<!--[\s\S]*?-->/g, "<!-- comment -->")
+
+			// 3. Remove processing instructions
+			svgForParsing = svgForParsing.replace(/<\?[\s\S]*?\?>/g, "")
+
+			// 4. Check for DOCTYPE (valid but we'll remove for parsing)
+			svgForParsing = svgForParsing.replace(/<!DOCTYPE[^>]*>/gi, "")
+
+			// Check for common SVG malformation patterns
+			// 1. Space before tag name in closing tags (e.g., </ g>)
+			const spacedClosingTagMatch = svgForParsing.match(/<\/\s+(\w+)/)
+			if (spacedClosingTagMatch) {
+				const tagName = spacedClosingTagMatch[1]
+				const originalPosition = decodedSvg.indexOf(spacedClosingTagMatch[0])
+				const contextStart = Math.max(0, originalPosition - 50)
+				const contextEnd = Math.min(decodedSvg.length, originalPosition + 50)
+				const errorContext = decodedSvg.substring(contextStart, contextEnd).replace(/\s+/g, " ")
+				throw errors.new(
+					`malformed svg: Invalid closing tag '</ ${tagName}>' - remove the space to make it '</${tagName}>'. Context: "...${errorContext}..."`
+				)
+			}
+
+			// 2. Extract all text content and attribute values to avoid false positives
+			// We'll validate structure on a version with text/attributes replaced
+			let structureOnlySvg = svgForParsing
+
+			// Replace attribute values with placeholders (they might contain < or >)
+			structureOnlySvg = structureOnlySvg.replace(/(\w+)\s*=\s*(["'])((?:(?!\2).)*)\2/g, '$1="ATTR_VALUE"')
+
+			// Replace text content between tags with placeholder
+			structureOnlySvg = structureOnlySvg.replace(/>([^<]+)</g, ">TEXT_CONTENT<")
+
+			// 3. Check for duplicate closing tags by tracking tag balance
+			const tagStack: Array<{ name: string; position: number }> = []
+			// Enhanced regex to handle namespaced tags and capture position
+			const tagRegex = /<\/?([a-zA-Z][\w:.-]*)((?:\s+[^>]*)?)>/g
+			let tagMatch: RegExpExecArray | null
+			tagMatch = tagRegex.exec(structureOnlySvg)
+
+			while (tagMatch !== null) {
+				const fullTag = tagMatch[0]
+				const tagName = tagMatch[1]
+				const attributes = tagMatch[2] || ""
+				const tagPosition = tagMatch.index ?? 0
+
+				// Skip XML declaration
+				if (tagName === "?xml") {
+					tagMatch = tagRegex.exec(structureOnlySvg)
+					continue
+				}
+
+				if (fullTag.startsWith("</")) {
+					// Closing tag
+					if (tagStack.length === 0) {
+						// Find position in original SVG
+						const originalPos = decodedSvg.indexOf(fullTag)
+						const contextStart = Math.max(0, originalPos - 100)
+						const contextEnd = Math.min(decodedSvg.length, originalPos + 50)
+						const errorContext = decodedSvg.substring(contextStart, contextEnd).replace(/\s+/g, " ")
+
+						// Check if this might be in a string attribute or text content
+						const beforeTag = decodedSvg.substring(0, originalPos)
+						const inAttribute = (beforeTag.match(/"/g) || []).length % 2 === 1
+						if (!inAttribute) {
+							throw errors.new(
+								`malformed svg: Extra closing tag '</${tagName}>' with no matching opening tag. Context: "...${errorContext}..."`
+							)
+						}
+					} else {
+						const expectedTag = tagStack[tagStack.length - 1]
+						if (!expectedTag || expectedTag.name !== tagName) {
+							// Find position in original SVG
+							const originalPos = decodedSvg.indexOf(fullTag, tagPosition)
+							const contextStart = Math.max(0, originalPos - 100)
+							const contextEnd = Math.min(decodedSvg.length, originalPos + 50)
+							const errorContext = decodedSvg.substring(contextStart, contextEnd).replace(/\s+/g, " ")
+
+							if (!expectedTag) {
+								throw errors.new(
+									`malformed svg: Closing tag '</${tagName}>' found but tag stack is empty. Context: "...${errorContext}..."`
+								)
+							}
+
+							throw errors.new(
+								`malformed svg: Mismatched closing tag '</${tagName}>' - expected '</${expectedTag.name}>' (opened at position ${expectedTag.position}). Context: "...${errorContext}..."`
+							)
+						}
+						tagStack.pop()
+					}
+				} else if (!fullTag.endsWith("/>") && !attributes.includes("/")) {
+					// Opening tag (not self-closing)
+					// Skip void elements that don't need closing tags
+					const voidElements = [
+						"area",
+						"base",
+						"br",
+						"col",
+						"embed",
+						"hr",
+						"img",
+						"input",
+						"link",
+						"meta",
+						"param",
+						"source",
+						"track",
+						"wbr"
+					]
+					if (tagName && !voidElements.includes(tagName.toLowerCase())) {
+						tagStack.push({ name: tagName, position: tagPosition })
+					}
+				}
+
+				tagMatch = tagRegex.exec(structureOnlySvg)
+			}
+
+			// 4. Check for unclosed tags
+			if (tagStack.length > 0) {
+				const unclosedInfo = tagStack
+					.map((t) => {
+						// Find the opening tag in original SVG for context
+						const openingTagRegex = new RegExp(`<${t.name}[^>]*>`)
+						const openingMatch = decodedSvg.match(openingTagRegex)
+						if (openingMatch && openingMatch.index !== undefined) {
+							const contextStart = Math.max(0, openingMatch.index - 20)
+							const contextEnd = Math.min(decodedSvg.length, openingMatch.index + 80)
+							const context = decodedSvg.substring(contextStart, contextEnd).replace(/\s+/g, " ")
+							return `<${t.name}> at position ${t.position} - context: "...${context}..."`
+						}
+						return `<${t.name}> at position ${t.position}`
+					})
+					.join("; ")
+
+				throw errors.new(`malformed svg: Unclosed tag(s) found: ${unclosedInfo}`)
+			}
+
+			// 5. Additional validation: Check for common SVG structure issues
+			if (!decodedSvg.includes("<svg")) {
+				throw errors.new("malformed svg: No <svg> root element found. SVG documents must have an <svg> root element.")
+			}
+
+			// Check for multiple root elements
+			const rootElementCount = (decodedSvg.match(/<svg[^>]*>/gi) || []).length
+			const rootCloseCount = (decodedSvg.match(/<\/svg>/gi) || []).length
+			if (rootElementCount > 1 && rootElementCount > rootCloseCount) {
+				throw errors.new(
+					"malformed svg: Multiple <svg> root elements found. SVG documents must have exactly one root element."
+				)
+			}
+
+			return true
+		})
+
+		if (parseResult.error) {
+			context.logger.error("svg validation failed", {
+				error: parseResult.error,
+				svgLength: decodedSvg.length,
+				svgPreview: decodedSvg.substring(0, 200),
+				isBase64
+			})
+			throw parseResult.error
+		}
+
+		match = imgSvgRegex.exec(xml)
+	}
+
+	context.logger.debug("validated svg data uris")
+}
+
+/**
  * Validates that equation answers accept both standard and reversed forms.
  * For example, if the answer is "2x=3", it should also accept "3=2x"
  *
