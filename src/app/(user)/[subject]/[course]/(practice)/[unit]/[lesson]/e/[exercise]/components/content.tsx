@@ -25,6 +25,7 @@ export function Content({ exercisePromise }: { exercisePromise: Promise<Exercise
 				assessmentPath={exercise.path}
 				unitData={layoutData.unitData}
 				expectedXp={exercise.expectedXp}
+				layoutData={layoutData}
 			/>
 		)
 	}

@@ -12,11 +12,15 @@ import spaceFriend from "@/components/practice/course/unit/lesson/exercise/image
 import quizIllustration from "@/components/practice/course/unit/quiz/images/quiz-illustration.png"
 import testIllustration from "@/components/practice/course/unit/test/images/test-illustration.png"
 import { QTIRenderer } from "@/components/qti-renderer"
+import { Button } from "@/components/ui/button"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Textarea } from "@/components/ui/textarea"
 import {
 	checkAndCreateNewAttemptIfNeeded,
 	checkExistingProficiency,
 	createNewAssessmentAttempt,
 	finalizeAssessment,
+	flagAndReportQuestion,
 	processQuestionResponse,
 	processSkippedQuestion
 } from "@/lib/actions/assessment"
@@ -24,6 +28,7 @@ import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/
 import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
 import type { Question, Unit } from "@/lib/types/domain"
+import type { LessonLayoutData } from "@/lib/types/page"
 import { AssessmentBottomNav, type AssessmentType } from "./assessment-bottom-nav"
 
 // Summary View Component
@@ -153,6 +158,7 @@ interface AssessmentStepperProps {
 	assessmentPath: string // The canonical URL path for this assessment
 	unitData?: Unit
 	expectedXp: number
+	layoutData?: LessonLayoutData
 }
 
 export function AssessmentStepper({
@@ -165,7 +171,8 @@ export function AssessmentStepper({
 	assessmentTitle,
 	assessmentPath,
 	unitData,
-	expectedXp // Will be used when caliper action is updated
+	expectedXp, // Will be used when caliper action is updated
+	layoutData
 }: AssessmentStepperProps) {
 	const { user } = useUser()
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
@@ -181,6 +188,9 @@ export function AssessmentStepper({
 	// ADDED: New state to track the current attempt number. Default to 1 for the first attempt.
 	const [attemptNumber, setAttemptNumber] = React.useState(1)
 	const [sessionResults, setSessionResults] = React.useState<{ qtiItemId: string; isCorrect: boolean }[]>([]) // NEW STATE
+	const [reportedQuestionIds, setReportedQuestionIds] = React.useState<Set<string>>(new Set()) // NEW STATE
+	const [isReportPopoverOpen, setIsReportPopoverOpen] = React.useState(false) // NEW STATE
+	const [feedbackText, setFeedbackText] = React.useState("") // NEW STATE
 	const [nextItem, setNextItem] = React.useState<{ text: string; path: string; type?: string } | null>(null)
 	const [debugClickCount, setDebugClickCount] = React.useState(0)
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
@@ -516,7 +526,10 @@ export function AssessmentStepper({
 	}
 
 	if (showSummary) {
-		const percentage = Math.round((correctAnswersCount / questions.length) * 100)
+		// CRITICAL: Calculate the final number of questions by excluding those reported as buggy.
+		const finalTotalQuestions = questions.length - reportedQuestionIds.size
+
+		const percentage = finalTotalQuestions > 0 ? Math.round((correctAnswersCount / finalTotalQuestions) * 100) : 100 // Avoid division by zero
 		const getMessage = () => {
 			// For exercises, always use blue theme with white text
 			if (contentType === "Exercise") {
@@ -585,7 +598,7 @@ export function AssessmentStepper({
 				bgClass={bgClass}
 				showCharacters={showCharacters}
 				correctAnswersCount={correctAnswersCount}
-				totalQuestions={questions.length}
+				totalQuestions={finalTotalQuestions} // USE THE ADJUSTED TOTAL
 				contentType={contentType}
 				assessmentTitle={assessmentTitle}
 				onComplete={onComplete}
@@ -768,6 +781,53 @@ export function AssessmentStepper({
 		setTimeout(goToNext, 1500)
 	}
 
+	// OPEN REPORT POPOVER
+	const handleReportIssue = () => {
+		setIsReportPopoverOpen(true)
+		setFeedbackText("")
+	}
+
+	// SUBMIT FEEDBACK
+	const handleSubmitFeedback = async () => {
+		if (!currentQuestion) return
+
+		if (feedbackText.trim() === "") {
+			toast.error("Feedback cannot be empty.")
+			return
+		}
+
+		// Close popover and clear text
+		setIsReportPopoverOpen(false)
+		setFeedbackText("")
+
+		// For course-level tests without lesson context, use the assessment resource ID
+		const lessonId = layoutData?.lessonData?.id || onerosterResourceSourcedId
+
+		// Immediately add the question ID to local state for a fast UI transition.
+		setReportedQuestionIds((prev) => new Set(prev).add(currentQuestion.id))
+
+		const toastId = toast.loading("Reporting issue...")
+
+		// Call the server action to flag the question and log feedback.
+		const result = await errors.try(flagAndReportQuestion(currentQuestion.id, feedbackText, lessonId))
+
+		if (result.error) {
+			toast.error("Failed to report issue. Please try again.", { id: toastId })
+			// Revert state if the API call fails to prevent incorrect score calculation.
+			setReportedQuestionIds((prev) => {
+				const next = new Set(prev)
+				next.delete(currentQuestion.id)
+				return next
+			})
+			return
+		}
+
+		toast.success("Issue reported. Thank you for your feedback!", { id: toastId })
+
+		// Immediately advance the student.
+		goToNext()
+	}
+
 	// MODIFIED: handleReset is now async and calls the new action
 	const handleReset = async () => {
 		// For exercises, just reset without creating a new PowerPath attempt
@@ -911,7 +971,52 @@ export function AssessmentStepper({
 				maxAttempts={MAX_ATTEMPTS}
 				onSkip={handleSkip}
 				onReset={handleReset}
+				onReportIssue={handleReportIssue} // PASS THE NEW HANDLER
 			/>
+
+			{/* Report Issue Popover */}
+			<Popover open={isReportPopoverOpen} onOpenChange={setIsReportPopoverOpen}>
+				<PopoverTrigger asChild>
+					<div />
+				</PopoverTrigger>
+				<PopoverContent className="w-96 p-6" align="end" side="top" sideOffset={10}>
+					<div className="space-y-4">
+						<div>
+							<h3 className="text-lg font-semibold text-gray-900 mb-2">Report an issue</h3>
+							<p className="text-sm text-gray-600 mb-4">
+								Help us improve by describing the problem with this question.
+							</p>
+						</div>
+						<div>
+							<label htmlFor="feedback" className="block text-sm font-medium text-gray-700 mb-2">
+								What's wrong with this question?
+							</label>
+							<Textarea
+								id="feedback"
+								placeholder="Please describe the issue..."
+								value={feedbackText}
+								onChange={(e) => setFeedbackText(e.target.value)}
+								rows={4}
+								className="w-full"
+							/>
+						</div>
+						<div className="flex justify-end gap-3">
+							<Button
+								variant="outline"
+								onClick={() => {
+									setIsReportPopoverOpen(false)
+									setFeedbackText("")
+								}}
+							>
+								Cancel
+							</Button>
+							<Button onClick={handleSubmitFeedback} disabled={feedbackText.trim() === ""}>
+								Submit Report
+							</Button>
+						</div>
+					</div>
+				</PopoverContent>
+			</Popover>
 		</div>
 	)
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { CheckCircle, PenTool, RotateCcw, X } from "lucide-react"
+import { AlertCircle, CheckCircle, PenTool, RotateCcw, X } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
 import {
@@ -39,6 +39,7 @@ interface AssessmentBottomNavProps {
 	attemptCount?: number
 	maxAttempts?: number
 	nextItem?: { text: string; path: string; type?: string } | null
+	onReportIssue?: () => void
 }
 
 export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, AssessmentBottomNavProps>(
@@ -60,7 +61,8 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 			onCorrectAnswer,
 			attemptCount = 0,
 			maxAttempts = 3,
-			nextItem
+			nextItem,
+			onReportIssue
 		},
 		ref
 	) => {
@@ -81,7 +83,12 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 				<div className="max-w-7xl mx-auto px-4 py-3">
 					<div className="flex items-center justify-between">
 						{/* Left Section - Action Buttons */}
-						<LeftSection isStartScreen={isStartScreen} isComplete={isComplete} isInProgress={isInProgress} />
+						<LeftSection
+							isStartScreen={isStartScreen}
+							isComplete={isComplete}
+							isInProgress={isInProgress}
+							onReportIssue={onReportIssue}
+						/>
 
 						{/* Center Section - Progress Dots */}
 						<CenterSection
@@ -124,35 +131,48 @@ AssessmentBottomNav.displayName = "AssessmentBottomNav"
 function LeftSection({
 	isStartScreen,
 	isComplete,
-	isInProgress
+	isInProgress,
+	onReportIssue
 }: {
 	isStartScreen?: boolean
 	isComplete?: boolean
 	isInProgress?: boolean
+	onReportIssue?: () => void
 }) {
 	const handleDrawClick = () => {
 		// TODO: Implement draw functionality
 	}
 
 	if (isStartScreen || !isInProgress || isComplete) {
-		return <div className="w-16" />
+		return <div className="w-48" />
 	}
 
 	return (
-		<HoverCard openDelay={0} closeDelay={0}>
-			<HoverCardTrigger>
-				<Button
-					variant="ghost"
-					onClick={handleDrawClick}
-					className="text-blue-600 hover:cursor-not-allowed hover:underline hover:text-blue-600 w-16"
-				>
-					<PenTool className="w-4 h-4" />
-				</Button>
-			</HoverCardTrigger>
-			<HoverCardContent side="top" className="bg-white text-black items-center justify-center w-fit" sideOffset={10}>
-				<p className="text-xs">Draw on exercise</p>
-			</HoverCardContent>
-		</HoverCard>
+		<div className="flex items-center gap-2 w-48">
+			<HoverCard openDelay={0} closeDelay={0}>
+				<HoverCardTrigger asChild>
+					<Button
+						variant="ghost"
+						onClick={handleDrawClick}
+						className="text-blue-600 hover:cursor-not-allowed hover:underline hover:text-blue-600"
+					>
+						<PenTool className="w-4 h-4" />
+					</Button>
+				</HoverCardTrigger>
+				<HoverCardContent side="top" className="bg-white text-black items-center justify-center w-fit" sideOffset={10}>
+					<p className="text-xs">Draw on exercise</p>
+				</HoverCardContent>
+			</HoverCard>
+
+			<Button
+				variant="link"
+				onClick={onReportIssue}
+				className="text-xs text-gray-500 hover:text-blue-600 hover:underline px-0 flex items-center gap-1"
+			>
+				<AlertCircle className="w-3 h-3" />
+				Report an issue
+			</Button>
+		</div>
 	)
 }
 

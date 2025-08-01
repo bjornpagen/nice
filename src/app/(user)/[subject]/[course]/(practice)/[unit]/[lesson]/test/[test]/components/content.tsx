@@ -23,6 +23,7 @@ export function Content({ testPromise }: { testPromise: Promise<UnitTestPageData
 				assessmentPath={test.path}
 				unitData={layoutData.unitData}
 				expectedXp={test.expectedXp}
+				layoutData={layoutData}
 			/>
 		)
 	}

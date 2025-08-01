@@ -23,6 +23,7 @@ export function Content({ quizPromise }: { quizPromise: Promise<QuizPageData> })
 				assessmentPath={quiz.path}
 				unitData={layoutData.unitData}
 				expectedXp={quiz.expectedXp}
+				layoutData={layoutData}
 			/>
 		)
 	}
