@@ -8,6 +8,7 @@ import {
 	validateImageUrls,
 	validateInteractionAttributes,
 	validateNoLatex,
+	validateNoMfencedElements,
 	validateNoSvgInStimulusBody,
 	validatePerseusArtifacts,
 	validatePromptPlacement,
@@ -48,6 +49,7 @@ export async function runValidationPipeline(
 		validateNoSvgInStimulusBody,
 		validateHtmlEntities,
 		validateNoLatex,
+		validateNoMfencedElements,
 		validateDecimalAnswerFormats,
 		validateEquationAnswerReversibility
 	]

@@ -879,6 +879,57 @@ export function validateDecimalAnswerFormats(xml: string, context: ValidationCon
 }
 
 /**
+ * Validates that no deprecated <mfenced> elements are used in MathML.
+ * The <mfenced> element is deprecated and non-standard. Use <mrow> with <mo> elements instead.
+ *
+ * For example, instead of:
+ *   <mfenced><mi>x</mi></mfenced>
+ * Use:
+ *   <mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow>
+ */
+export function validateNoMfencedElements(xml: string, context: ValidationContext): void {
+	// Check for any <mfenced> elements
+	const mfencedRegex = /<mfenced(?:\s+[^>]*)?>/i
+	const mfencedMatch = xml.match(mfencedRegex)
+
+	if (mfencedMatch) {
+		const position = mfencedMatch.index ?? 0
+		const contextStart = Math.max(0, position - 100)
+		const contextEnd = Math.min(xml.length, position + 200)
+		const errorContext = xml.substring(contextStart, contextEnd).replace(/\s+/g, " ")
+
+		// Extract attributes if present to provide more specific guidance
+		const openMatch = mfencedMatch[0].match(/\bopen\s*=\s*["']([^"']*)["']/)
+		const closeMatch = mfencedMatch[0].match(/\bclose\s*=\s*["']([^"']*)["']/)
+		const separatorsMatch = mfencedMatch[0].match(/\bseparators\s*=\s*["']([^"']*)["']/)
+
+		const openDelim = openMatch ? openMatch[1] : "("
+		const closeDelim = closeMatch ? closeMatch[1] : ")"
+
+		let replacementExample = `<mrow><mo>${openDelim}</mo><!-- content --><mo>${closeDelim}</mo></mrow>`
+
+		if (separatorsMatch?.[1]) {
+			const firstSeparator = separatorsMatch[1][0] || ","
+			replacementExample = `<mrow><mo>${openDelim}</mo><!-- content with <mo>${firstSeparator}</mo> as separators --><mo>${closeDelim}</mo></mrow>`
+		}
+
+		context.logger.error("found deprecated mfenced element", {
+			match: mfencedMatch[0],
+			context: errorContext,
+			openDelimiter: openDelim,
+			closeDelimiter: closeDelim,
+			separators: separatorsMatch ? separatorsMatch[1] : undefined
+		})
+
+		throw errors.new(
+			`invalid mathml: <mfenced> is a deprecated and non-standard element. Use <mrow> with <mo> elements instead. Replace ${mfencedMatch[0]} with: ${replacementExample}. Context: "...${errorContext}..."`
+		)
+	}
+
+	context.logger.debug("validated no mfenced elements")
+}
+
+/**
  * Validates that equation answers accept both standard and reversed forms.
  * For example, if the answer is "2x=3", it should also accept "3=2x"
  *
