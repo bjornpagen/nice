@@ -3,15 +3,15 @@
 ## Executive Summary
 
 - **Total Questions Analyzed:** 2230
-- **Questions with Issues:** 57
-- **Total Issues Identified:** 50
+- **Questions with Issues:** 59
+- **Total Issues Identified:** 52
 - **Failure Rate:** 2.6%
 
 ## Issue Categories Analysis
 
 ### Oversimplified SVG Generation
 **Severity:** CRITICAL  
-**Questions Affected:** 20  
+**Questions Affected:** 19  
 **Description:** AI generating basic geometric shapes instead of educationally accurate representations
 
 **Issues:**
@@ -65,6 +65,22 @@
 - nice_x3bf67409b2d2116a_0001: picture graph doesn't represent names
 - ... and 6 more issues
 
+### Differentiation Consistency Failures
+**Severity:** CRITICAL  
+**Questions Affected:** 1  
+**Description:** Differentiated questions that completely abandon the original visualization type and question concept, breaking educational consistency
+
+**Issues:**
+- nice_x9ea83288fcf4e040_0005: differentiation completely changed from dot plot to simple number line, changed question type from "typical value analysis" to "range calculation" - breaks consistency with original statistical concept
+
+### Box Plot Visualization Failures
+**Severity:** CRITICAL  
+**Questions Affected:** 1  
+**Description:** Box plots displaying as simple horizontal lines instead of proper statistical visualizations
+
+**Issues:**
+- nice_xbb16095ab6a4e921_0001: box plot shows only horizontal line instead of proper box plot with quartiles, median, and whiskers; needs proper ticks on number lines; ensure nothing gets cut off when rendered
+
 ### Rendering/Display Failures
 **Severity:** HIGH  
 **Questions Affected:** 7  
@@ -95,6 +111,211 @@
 ## Detailed Question Analysis
 
 ### CRITICAL Priority Issues
+
+#### nice_xbb16095ab6a4e921_0001
+**Title:** Range from a Box Plot: Snack Prices Variation 1  
+**Khan Exercise:** Box plot statistics  
+**Khan Slug:** box-plot-statistics  
+
+**Issues Identified:**
+- box plot shows only horizontal line instead of proper box plot with quartiles, median, and whiskers; needs proper ticks on number lines; ensure nothing gets cut off when rendered
+
+**Additional SVG Analysis:**
+- SVG displays only a horizontal line (rect with height='2') instead of a proper box plot
+- Missing quartile boxes, median line, and whiskers that define a box plot
+- Number line lacks tick marks for proper scale reading
+- Current implementation is educationally misleading for statistics instruction
+
+**Complete XML:**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="nice_xbb16095ab6a4e921_0001"
+    title="Range from a Box Plot: Snack Prices Variation 1"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="float">
+        <qti-correct-response>
+            <qti-value>1.3</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <div id="reference_text">
+            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='330'%20height='148'%20viewBox='0%200%20330%20148'%3E%3Crect%20x='0'%20y='73'%20width='330'%20height='2'%20fill='black'/%3E%3Ctext%20x='10'%20y='140'%20font-size='14'%3E0.20%3C/text%3E%3Ctext%20x='320'%20y='140'%20font-size='14'%3E1.50%3C/text%3E%3C/svg%3E"
+                 alt="A horizontal box plot showing values from 0.20 dollars to 1.50 dollars." width="330" height="148"/>
+            <p><span class="qti-italic">Note: The minimum value shown is 0.20 dollars and the maximum value is 1.50 dollars.</span></p>
+        </div>
+        <p>Find the range of the data (in dollars).</p>
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="4"/>
+            dollars
+        </p>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The range is calculated as 1.50 - 0.20 = 1.30 dollars.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Remember, the range is the difference between the largest and the smallest values.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>
+```
+
+---
+
+#### nice_x9ea83288fcf4e040_0005
+**Title:** Range of Daily Temperatures  
+**Original Source:** Typical Number of Cavities (Dot Plot Question)  
+**Differentiation Type:** FAILED - Complete Concept Change  
+
+**Issues Identified:**
+- differentiation completely changed from dot plot to simple number line, changed question type from "typical value analysis" to "range calculation" - breaks consistency with original statistical concept
+
+**Critical Problems:**
+1. **Visualization Type Abandonment:** Original used a complex dot plot with stacked data points; differentiated version uses a basic number line with only endpoints
+2. **Statistical Concept Change:** Original taught "typical value" interpretation from distributions; differentiated version teaches simple "range = max - min" calculation
+3. **Educational Inconsistency:** Students learning dot plot interpretation suddenly encounter a completely different visualization type
+4. **Assessment Mismatch:** Original required understanding of data clustering and frequency; differentiated version requires only basic subtraction
+
+**Comparison Analysis:**
+- **Original Question:** "Which of the following is a typical number of cavities?" (requires statistical reasoning about central tendency)
+- **Bad Differentiation:** "Find the range of the daily temperatures" (requires only arithmetic: max - min)
+- **Good Differentiation Example:** "Estimate the center of the quiz scores" (maintains dot plot format and statistical reasoning)
+
+**Expected Differentiation Pattern:**
+Proper differentiation should maintain:
+- Same visualization type (dot plot)
+- Same statistical concept family (central tendency, distribution analysis)
+- Same level of complexity (interpreting clustered data)
+- Different context/data only (sports scores vs. medical data vs. test scores)
+
+**Complete XML (BAD EXAMPLE):**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="nice_x9ea83288fcf4e040_0005"
+    title="Range of Daily Temperatures"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>24</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+
+    <qti-item-body>
+        <div id="reference_text">
+            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='330'%20height='148'%20viewBox='0%200%20330%20148'%3E%0A%20%20%3Cline%20x1='10'%20y1='80'%20x2='320'%20y2='80'%20stroke='black'%20stroke-width='2'/%3E%0A%20%20%3Cline%20x1='10'%20y1='75'%20x2='10'%20y2='85'%20stroke='black'%20stroke-width='1'/%3E%0A%20%20%3Cline%20x1='165'%20y1='75'%20x2='165'%20y2='85'%20stroke='black'%20stroke-width='1'/%3E%0A%20%20%3Cline%20x1='320'%20y1='75'%20x2='320'%20y2='85'%20stroke='black'%20stroke-width='1'/%3E%0A%20%20%3Ctext%20x='10'%20y='120'%20font-size='14'%20text-anchor='start'%3E54°F%3C/text%3E%0A%20%20%3Ctext%20x='320'%20y='120'%20font-size='14'%20text-anchor='end'%3E78°F%3C/text%3E%0A%3C/svg%3E" 
+                 alt="A number line with tick marks showing the endpoints 54°F and 78°F" width="330" height="148"/>
+            <p><span class="qti-italic">Note: The number line displays the lowest and highest daily temperatures.</span></p>
+        </div>
+        <p>Find the range of the daily temperatures (in °F).</p>
+        <p>
+            <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="2"/>
+            °F
+        </p>
+
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The range is 78°F - 54°F = 24°F.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Subtract the lowest temperature from the highest to get the range.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>
+```
+
+**Contrast with GOOD Differentiation Example (nice_x9ea83288fcf4e040_0004):**
+- ✅ Maintains dot plot visualization
+- ✅ Preserves statistical reasoning requirement
+- ✅ Changes only context (quiz scores vs. cavities)
+- ✅ Asks related but different question (center vs. typical value)
+- ✅ Keeps same educational learning objective
+
+---
 
 #### nice_x0baff7f9f712fb01_0002
 **Title:** Subtract using place-value blocks - Variant 3  

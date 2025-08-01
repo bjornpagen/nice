@@ -53,7 +53,15 @@ const events = {
 		data: z.object({
 			questionId: z.string().min(1),
 			numberOfVariations: z.number().int().positive(),
-			startingIndex: z.number().int().positive().optional()
+			startingIndex: z.number().int().positive().optional(),
+			// AI Quality Review configuration
+			qualityReviewConfig: z
+				.object({
+					enabled: z.boolean(),
+					maxAttempts: z.number().int().positive().optional(),
+					concurrency: z.number().int().positive().optional()
+				})
+				.optional()
 		})
 	},
 	// ✅ ADD: New event for paraphrasing a single stimulus

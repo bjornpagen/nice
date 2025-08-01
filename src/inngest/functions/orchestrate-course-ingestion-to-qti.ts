@@ -17,6 +17,12 @@ interface DifferentiateQuestionEventData {
 	questionId: string
 	numberOfVariations: number
 	startingIndex?: number
+	// AI Quality Review configuration
+	qualityReviewConfig?: {
+		enabled: boolean
+		maxAttempts?: number
+		concurrency?: number
+	}
 }
 
 interface ChunkProgress {
@@ -193,7 +199,11 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 						function: differentiateQuestion,
 						data: {
 							questionId: question.id,
-							numberOfVariations: 5 // Generate 5 variations per question
+							numberOfVariations: 5, // Generate 5 variations per question
+							// Enable AI Quality Review pipeline
+							qualityReviewConfig: {
+								enabled: true // Enable the quality review pipeline
+							}
 						} satisfies DifferentiateQuestionEventData
 					})
 				)

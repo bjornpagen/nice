@@ -158,14 +158,28 @@ ${sourceQtiXml}
   2. **Generate Meaningful Variations:** Create ${numberOfVariations} new questions that test the same core skill using fresh numbers, scenarios, contexts, or wording. Ensure variations are meaningfully different while preserving alignment.
   3. **Target Common Misconceptions:** For multiple-choice questions, design incorrect answers (distractors) to target common student misconceptions related to the skill. Base them on logical errors, not randomness (e.g., for area calculation, use perimeter result as a distractor).
   
-  ## ⚠️ CRITICAL: Structure Preservation Rules
-  4. **NEVER Modify QTI XML Structure:** The QTI XML structure (tags, attributes, nesting, organization) MUST remain exactly the same as the source. You may ONLY change:
+  ## ⚠️ CRITICAL: Perfect Concept & Complexity Consistency
+  4. **NEVER Change the Educational Concept:** All ${numberOfVariations} variations MUST test the EXACT SAME educational skill and cognitive demand as the original. You are NOT allowed to be "intelligent" or "creative" with question types.
+     - **Same Skill:** If original tests "interpreting dot plots for central tendency", ALL variations must test "interpreting dot plots for central tendency"
+     - **Same Complexity:** If original requires statistical reasoning, ALL variations must require statistical reasoning at the same level
+     - **Same Question Type:** If original asks "which is typical?", variations should ask similar analysis questions (e.g., "estimate the center", "what's most common?")
+     - **Same Visualization:** If original uses dot plots, ALL variations must use dot plots. If original uses bar graphs, ALL variations must use bar graphs
+     - **FORBIDDEN:** Changing from statistical analysis to arithmetic calculation, from geometry to algebra, from interpretation to computation
+  5. **Surface-Level Changes ONLY:** You may ONLY modify:
+     - Context/scenario (cavities → quiz scores → test results → survey data)
+     - Specific numbers and data values  
+     - Names of variables or categories
+     - Visual styling of charts/graphs (colors, labels) while maintaining the same chart type
+     - **NEVER:** The fundamental mathematical concept, cognitive demand, or question structure
+
+  ## ⚠️ CRITICAL: Structure Preservation Rules  
+  6. **NEVER Modify QTI XML Structure:** The QTI XML structure (tags, attributes, nesting, organization) MUST remain exactly the same as the source. You may ONLY change:
      - Text content within tags
      - Numbers and values
      - Choice identifiers and content
      - Image sources (following image rules below, including converting external CDN URLs to inline content)
      - Mathematical expressions within existing math tags
-  5. **Forbidden Structure Changes:** You MUST NOT add, remove, or rearrange:
+  7. **Forbidden Structure Changes:** You MUST NOT add, remove, or rearrange:
      - QTI tags (qti-choice-interaction, qti-simple-choice, etc.)
      - XML attributes or namespaces
      - Response declarations or outcome declarations
@@ -173,56 +187,72 @@ ${sourceQtiXml}
      - The overall XML hierarchy and nesting
 
   ## Image Handling Rules
-  6. **Khan Academy CDN Image Replacement (CRITICAL):** If the source contains Khan Academy CDN URLs (e.g., "https://cdn.kastatic.org/..."), you MUST analyze its educational purpose and replace it. **NEVER keep the external URL.**
+  8. **Khan Academy CDN Image Replacement (CRITICAL):** If the source contains Khan Academy CDN URLs (e.g., "https://cdn.kastatic.org/..."), you MUST analyze its educational purpose and replace it. **NEVER keep the external URL.**
      - **For simple counting objects (cookies, animals):** Replace with HTML-rendered emojis inside span tags.
      - **For grids, charts, and geometric shapes:** Create a high-quality, educationally accurate inline SVG. Your generated SVG MUST be functional and visually clear to a 2nd grader.
-  7. **SVG Quality Standards (CRITICAL):** When you generate an SVG, it is not enough for it to be a simple placeholder. It MUST be educationally sound.
+  9. **SVG Quality Standards (CRITICAL):** When you generate an SVG, it is not enough for it to be a simple placeholder. It MUST be educationally sound.
      - **Rulers:** A ruler MUST have a main axis line, clearly marked and evenly-spaced tick marks, and corresponding numerical labels (e.g., 0, 1, 2, 3).
      - **Place-Value Blocks:** A diagram MUST visually render distinct hundreds blocks (large squares), tens blocks (vertical rods), and ones blocks (small squares). If items are subtracted, they must be visually crossed out with a line.
      - **Bar Graphs:** A graph MUST have clearly labeled X and Y axes, tick marks with values on the Y-axis, and bars whose heights accurately correspond to the data. Use a g transform to position elements correctly.
      - **Number Lines:** A number line MUST show jumps as curved paths with labels (e.g., +10, -5) to indicate the operation.
      - **Rendering:** ALL generated SVGs MUST include a viewBox attribute to ensure they scale correctly and are not cut off.
-  8. **PNG Image Replacement:** If the source contains a PNG image, you SHOULD replace it with a contextually relevant emoji, Unicode symbol, or a new, accurate SVG that matches the new question variation.
-  9. **SVG Image Editing:** If the source already contains an SVG, you MUST modify its internal elements (paths, text, values) to align with your new question variation. Preserve the SVG's structure and attributes.
-  10. **Content Alignment:** All visual replacements (SVG, emoji) MUST perfectly align with the numbers, context, and logic of the new question variation. The alt text for the image must accurately describe the new visual.
-  11. **CRITICAL: Do Not Reveal the Answer:** Image alt text and any associated p notes must provide context but MUST NOT contain the answer or make it obvious. Describe the setup, not the solution.
+  10. **PNG Image Replacement:** If the source contains a PNG image, you SHOULD replace it with a contextually relevant emoji, Unicode symbol, or a new, accurate SVG that matches the new question variation.
+  11. **SVG Image Editing:** If the source already contains an SVG, you MUST modify its internal elements (paths, text, values) to align with your new question variation. Preserve the SVG's structure and attributes.
+  12. **Content Alignment:** All visual replacements (SVG, emoji) MUST perfectly align with the numbers, context, and logic of the new question variation. The alt text for the image must accurately describe the new visual.
+  13. **CRITICAL: Do Not Reveal the Answer:** Image alt text and any associated p notes must provide context but MUST NOT contain the answer or make it obvious. Describe the setup, not the solution.
 
   ## Quality Assurance & Solvability Rules
-  11. **Preserve Feedback Structure:** If the source includes <qti-feedback-inline>, provide unique, relevant feedback for every choice in your variations, explaining correctness or errors in the new context.
-  12. **Absolute XML Well-Formedness:** Prioritize perfect XML. Open tags must have matching closing tags, attributes must be quoted, and special characters must be escaped.
-  13. **Unique Identifiers:** For each variation, assign a unique identifier in the format: "nice_${khanId}_XXXX" starting from ${String(startingIndex).padStart(4, "0")}.
-  14. **Strict JSON Output:** Output only the specified JSON object without any extra text or explanations.
-  15. **Solvability Preservation (CRITICAL):** Your variations MUST be logically solvable.
+  14. **Preserve Feedback Structure:** If the source includes <qti-feedback-inline>, provide unique, relevant feedback for every choice in your variations, explaining correctness or errors in the new context.
+  15. **Absolute XML Well-Formedness:** Prioritize perfect XML. Open tags must have matching closing tags, attributes must be quoted, and special characters must be escaped.
+  16. **Unique Identifiers:** For each variation, assign a unique identifier in the format: "nice_${khanId}_XXXX" starting from ${String(startingIndex).padStart(4, "0")}.
+  17. **Strict JSON Output:** Output only the specified JSON object without any extra text or explanations.
+  18. **Solvability Preservation (CRITICAL):** Your variations MUST be logically solvable.
       - After generating a question, double-check that only the intended correct answers are actually correct.
       - For single-choice questions (cardinality="single"), ensure exactly one choice is correct.
       - For multiple-select questions (cardinality="multiple"), ensure the number of correct choices you create matches the number of qti-value tags in the qti-correct-response block.
       - Check that the question provides all necessary information for a student to arrive at the answer.
 
   ## ⚠️ CRITICAL: Validation Survival Rules
-  15. **MathML Operator Safety:** If your variation contains mathematical operators like < or > in <mo> elements, you MUST escape them as &lt; and &gt; respectively.
-  16. **Solvability Preservation:** Your variations MUST remain logically solvable. NEVER create ambiguous questions or break the logical path to the correct answer.
-  17. **API Compliance:** The generated XML will be validated by QTI API. Common rejection reasons include malformed MathML, invalid tag nesting, and structural inconsistencies.
-  18. **Content Sufficiency:** Each variation must provide enough information for a student to solve the problem without external knowledge beyond the grade level.
-  19. **Contextual Image Intelligence:** When replacing images, first understand what educational purpose the original serves (counting, spatial reasoning, measurement, etc.) and create replacements that serve the same exact purpose.
+  19. **MathML Operator Safety:** If your variation contains mathematical operators like < or > in <mo> elements, you MUST escape them as &lt; and &gt; respectively.
+  20. **Solvability Preservation:** Your variations MUST remain logically solvable. NEVER create ambiguous questions or break the logical path to the correct answer.
+  21. **API Compliance:** The generated XML will be validated by QTI API. Common rejection reasons include malformed MathML, invalid tag nesting, and structural inconsistencies.
+  22. **Content Sufficiency:** Each variation must provide enough information for a student to solve the problem without external knowledge beyond the grade level.
+  23. **Contextual Image Intelligence:** When replacing images, first understand what educational purpose the original serves (counting, spatial reasoning, measurement, etc.) and create replacements that serve the same exact purpose.
 </instructions_and_constraints>
 
 <thinking_instructions>
   # Reasoning Process
   For each variation, reason step-by-step in <thinking> tags before generating:
-  1. **Analyze Core Skill:** What is the original question testing? What are the likely student misconceptions?
-  2. **Plan Variation:** Brainstorm a new scenario with new numbers and context. Plan the new correct answer and plausible incorrect distractors.
-  3. **Plan Visuals (If any):**
+  1. **Analyze Core Skill:** What EXACT educational skill is the original question testing? What specific cognitive demand does it require (e.g., statistical interpretation vs. arithmetic calculation)?
+  2. **Verify Concept Alignment:** Before planning ANY variation, confirm:
+     - What visualization type does the original use? (dot plot, bar chart, number line, etc.)
+     - What type of reasoning does it require? (pattern recognition, data interpretation, calculation, etc.)
+     - What is the exact question format? (multiple choice asking for "typical value", text entry for "find the range", etc.)
+  3. **Plan Variation with SAME Concept:** Brainstorm a new scenario that maintains:
+     - **SAME visualization type** (if original uses dot plot, variation MUST use dot plot)
+     - **SAME cognitive demand** (if original requires statistical reasoning, variation MUST require statistical reasoning)
+     - **SAME question structure** (if original asks "which is typical?", variation should ask similar analysis question)
+     - Only change: context, numbers, specific data values
+  4. **Plan Visuals (If any):**
      - Identify any image needing replacement.
+     - **CRITICAL:** The replacement must serve the EXACT SAME educational purpose as the original
      - Based on the **SVG Quality Standards**, plan the exact SVG structure. Will it be a ruler, a bar graph, place-value blocks?
      - Define the necessary SVG elements: paths for number line jumps, rectangles for bars, correct labels and values.
      - For emoji replacements, choose a contextually appropriate emoji.
-  4. **Self-Critique before Generating:**
+  5. **Self-Critique before Generating:**
+     - **Concept Check:** Does my variation test the EXACT SAME skill as the original? Same complexity? Same type of reasoning?
      - **Visual Check:** Does my planned SVG meet all the quality standards? Is it a *functional diagram* or just a placeholder?
      - **Logic Check:** Is my question unambiguously solvable? Have I created the correct number of correct answers for the question type?
      - **Answer Check:** Does any text in my question prompt, choices, or notes accidentally give away the answer?
-  5. **Generate:** Create the final QTI XML based on the refined plan.
+  6. **Generate:** Create the final QTI XML based on the refined plan.
   
-  After planning all variations, perform a final <self_review> of your entire plan. Check XML validity, skill alignment, structure preservation, and that all new rules have been followed. Refine your plan if any issues are found. Only output the final, reviewed JSON.
+  After planning all variations, perform a final <self_review> of your entire plan:
+  - **Concept Consistency:** Do ALL ${numberOfVariations} variations test the EXACT SAME educational skill with the SAME cognitive demand as the original?
+  - **Visualization Consistency:** Do ALL variations use the SAME type of chart/graph/diagram as the original?
+  - **Question Type Consistency:** Do ALL variations ask the SAME TYPE of question (analysis vs. calculation, interpretation vs. computation)?
+  - **XML Validity:** Check XML validity, structure preservation, and that all technical rules have been followed.
+  
+  Refine your plan if any issues are found. Only output the final, reviewed JSON.
 </thinking_instructions>
 
 ${negativeExamplesBlock}
