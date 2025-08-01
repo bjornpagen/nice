@@ -20,7 +20,7 @@ const REGEX = {
 	PERSEUS_ARTIFACT: /\[\[☃\s*[\s\S]*?\]\]/g,
 	TRUNCATED_TAG: /<\/(?:_|\s*>|\.\.\.)/,
 	IMAGE_URL:
-		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:svg|jpe?g|png))(?:k<quote>)/gi,
+		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?(?:\.(?:svg|jpe?g|png))?)(?:k<quote>)/gi,
 	SUPPORTED_IMAGE_URL:
 		/(?<attribute>src|href)\s*=\s*(?<quote>["'])(?<url>https?:\/\/(?:(?!k<quote>).)+?\.(?:jpe?g|png))(?:k<quote>)/gi,
 	// Simple LaTeX detection: any backslash followed by letters (commands) or LaTeX-like constructs
@@ -424,26 +424,35 @@ export async function validateImageUrls(xml: string, _context: ValidationContext
 		if (res.data.status === 403 || res.data.status === 404) {
 			// Try alternative file extensions
 			const lastDotIndex = url.lastIndexOf(".")
-			if (lastDotIndex !== -1) {
-				const baseUrl = url.substring(0, lastDotIndex)
+			const pathEnd = url.lastIndexOf("/")
+			const hasExtension = lastDotIndex > pathEnd // Ensure the dot is after the last slash
+
+			let baseUrl: string
+			let alternativeExts: string[]
+
+			if (hasExtension) {
+				// URL has an extension - try other extensions
+				baseUrl = url.substring(0, lastDotIndex)
 				const originalExt = url.substring(lastDotIndex + 1).toLowerCase()
-				const alternativeExts = ["svg", "jpg", "png"].filter((ext) => ext !== originalExt)
+				alternativeExts = ["svg", "jpg", "jpeg", "png"].filter((ext) => ext !== originalExt)
+			} else {
+				// URL has no extension - try all supported extensions
+				baseUrl = url
+				alternativeExts = ["svg", "jpg", "jpeg", "png"]
+			}
 
-				let workingUrl: string | null = null
-				for (const ext of alternativeExts) {
-					const altUrl = `${baseUrl}.${ext}`
-					const altRes = await errors.try(fetch(altUrl, { signal: AbortSignal.timeout(10000) }))
-					if (!altRes.error && altRes.data.status === 200) {
-						workingUrl = altUrl
-						break
-					}
+			let workingUrl: string | null = null
+			for (const ext of alternativeExts) {
+				const altUrl = `${baseUrl}.${ext}`
+				const altRes = await errors.try(fetch(altUrl, { signal: AbortSignal.timeout(10000) }))
+				if (!altRes.error && altRes.data.status === 200) {
+					workingUrl = altUrl
+					break
 				}
+			}
 
-				if (workingUrl) {
-					invalidUrls.push({ url, status: res.data.status, suggestion: workingUrl })
-				} else {
-					invalidUrls.push({ url, status: res.data.status })
-				}
+			if (workingUrl) {
+				invalidUrls.push({ url, status: res.data.status, suggestion: workingUrl })
 			} else {
 				invalidUrls.push({ url, status: res.data.status })
 			}
