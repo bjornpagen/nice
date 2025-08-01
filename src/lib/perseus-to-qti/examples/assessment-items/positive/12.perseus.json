@@ -1,0 +1,129 @@
+{
+	"hints": [
+		{
+			"images": {},
+			"content": "$30$ participants did not receive cold medicine and did not have their cold for longer than $7$ days.\n\n | Received cold medicine | Did not receive cold medicine\n- | :-: | :-: | :-:\n**Cold lasted longer than $7$ days**  | $?$| $?$ \n**Cold did not last longer than $7$ days** | $?$ | $30$ \n\n",
+			"replace": false,
+			"widgets": {}
+		},
+		{
+			"images": {},
+			"content": " | Received cold medicine | Did not receive cold medicine\n- | :-: | :-: | :-:\n**Cold lasted longer than $7$ days**  | $23$| $20$ \n**Cold did not last longer than $7$ days** | $27$ | $30$ ",
+			"replace": false,
+			"widgets": {}
+		}
+	],
+	"question": {
+		"images": {
+			"https://cdn.kastatic.org/ka-perseus-graphie/1d55bdfd9493be7fba40577ed51b2f13d242ad63.png": {
+				"width": 350,
+				"height": 262
+			}
+		},
+		"content": "The Cold Be Gone Company conducted a study where $100$ participants were assigned to either receive a cold medicine or not receive a cold medicine. The Cold Be Gone Company then recorded whether the participant's cold lasted $7$ days or longer. The Venn diagram below shows their data.\n\n\n\n**Complete the following two-way frequency table.** \n\n | Received cold medicine | Did not receive cold medicine\n- | :-: | :-: | :-:\n**Cold lasted longer than $7$ days**  | [[☃ numeric-input 1]]| [[☃ numeric-input 2]] \n**Cold did not last longer than $7$ days** | [[☃ numeric-input 3]] | [[☃ numeric-input 4]] \n\n![A Venn Diagram has 2 overlapping groups, Cold Medicine, 27, and Cold Longer than 7 Days, 20. The overlapping area shared by both groups contains 23. The area not included in any group contains the number 30.](https://cdn.kastatic.org/ka-perseus-graphie/1d55bdfd9493be7fba40577ed51b2f13d242ad63.png)\n\n",
+		"widgets": {
+			"numeric-input 1": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": 23,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			},
+			"numeric-input 2": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": 20,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			},
+			"numeric-input 3": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": 27,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			},
+			"numeric-input 4": {
+				"type": "numeric-input",
+				"graded": true,
+				"static": false,
+				"options": {
+					"size": "normal",
+					"static": false,
+					"answers": [
+						{
+							"value": 30,
+							"status": "correct",
+							"strict": false,
+							"message": "",
+							"maxError": null,
+							"simplify": "required"
+						}
+					],
+					"labelText": "",
+					"rightAlign": false,
+					"coefficient": false,
+					"multipleNumberInput": false
+				},
+				"version": { "major": 0, "minor": 0 },
+				"alignment": "default"
+			}
+		}
+	},
+	"answerArea": { "tTable": false, "zTable": false, "chi2Table": false, "calculator": false, "periodicTable": false },
+	"itemDataVersion": { "major": 0, "minor": 1 }
+}
