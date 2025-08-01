@@ -1004,6 +1004,21 @@ export function validateEquationAnswerReversibility(xml: string, context: Valida
 		const equationValues = allValues.filter((val) => {
 			if (!val.includes("=")) return false
 
+			// Skip inequalities - they should not be reversible
+			// Check for <, >, ≤, ≥ or their HTML entity equivalents
+			if (
+				val.includes("<") ||
+				val.includes(">") ||
+				val.includes("≤") ||
+				val.includes("≥") ||
+				val.includes("&lt;") ||
+				val.includes("&gt;") ||
+				val.includes("&le;") ||
+				val.includes("&ge;")
+			) {
+				return false
+			}
+
 			// Check if there are mathematical elements on both sides of equals
 			const parts = val.split("=")
 			if (parts.length !== 2 || !parts[0] || !parts[1]) return false

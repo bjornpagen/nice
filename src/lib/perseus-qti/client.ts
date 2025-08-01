@@ -6,7 +6,7 @@ import type { ChatCompletionContentPart } from "openai/resources/chat/completion
 import { z } from "zod"
 import { env } from "@/env"
 import { createQtiConversionPrompt, createQtiSufficiencyValidationPrompt } from "./prompts"
-import { convertHtmlEntities, fixMathMLOperators, stripXmlComments } from "./strip"
+import { convertHtmlEntities, fixInequalityOperators, fixMathMLOperators, stripXmlComments } from "./strip"
 
 const OPENAI_MODEL = "o3"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
@@ -96,6 +96,9 @@ function extractAndValidateXml(xml: string, rootTag: string, logger: logger.Logg
 	// Step 6: Fix unescaped angle brackets in MathML mo elements
 	strippedXml = fixMathMLOperators(strippedXml, logger)
 
+	// Step 7: Fix unescaped inequality operators throughout the XML
+	strippedXml = fixInequalityOperators(strippedXml, logger)
+
 	logger.debug("successfully generated and extracted qti xml", {
 		xmlLength: strippedXml.length,
 		rootTag: extractedRootTag,
@@ -178,6 +181,7 @@ export async function generateXml(
 	}
 	let cleanedXml = convertHtmlEntities(qtiXml, logger)
 	cleanedXml = fixMathMLOperators(cleanedXml, logger)
+	cleanedXml = fixInequalityOperators(cleanedXml, logger)
 	return extractAndValidateXml(cleanedXml, rootTag, logger)
 }
 

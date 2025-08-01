@@ -5,7 +5,12 @@ import { and, eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { convertHtmlEntities, fixMathMLOperators, stripXmlComments } from "@/lib/perseus-qti/strip"
+import {
+	convertHtmlEntities,
+	fixInequalityOperators,
+	fixMathMLOperators,
+	stripXmlComments
+} from "@/lib/perseus-qti/strip"
 import { runValidationPipeline } from "@/lib/perseus-qti/validator"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 import { differentiateQuestion } from "./qti/differentiate-question"
@@ -322,6 +327,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 							paraphrasedXml = convertHtmlEntities(paraphrasedXml, logger)
 							paraphrasedXml = stripXmlComments(paraphrasedXml, logger)
 							paraphrasedXml = fixMathMLOperators(paraphrasedXml, logger)
+							paraphrasedXml = fixInequalityOperators(paraphrasedXml, logger)
 
 							const validationResult = await errors.try(
 								runValidationPipeline(paraphrasedXml, {
