@@ -949,22 +949,26 @@ export function validateNoMfencedElements(xml: string, context: ValidationContex
 export function validateSvgDataUris(xml: string, context: ValidationContext): void {
 	// Find all img tags with SVG data URIs
 	// This regex captures both URL-encoded and base64-encoded SVG data
+	// Uses alternation to handle both double and single quoted attributes
 	const imgSvgRegex =
-		/<img[^>]+src\s*=\s*["']data:image\/svg\+xml(?:;base64|;charset=[\w-]+)?,(?<svgData>[^"']+)["'][^>]*>/gi
+		/<img[^>]+src\s*=\s*(?:"(data:image\/svg\+xml(?:;base64|;charset=[\w-]+)?,([^"]+))"|'(data:image\/svg\+xml(?:;base64|;charset=[\w-]+)?,([^']+))')([^>]*)>/gi
 
 	let match: RegExpExecArray | null
 	match = imgSvgRegex.exec(xml)
+
 	while (match !== null) {
-		if (!match.groups?.svgData) {
+		// Extract SVG data from the appropriate capture group
+		// match[2] for double quotes, match[4] for single quotes
+		const svgData = match[2] || match[4]
+
+		if (!svgData) {
 			match = imgSvgRegex.exec(xml)
 			continue
 		}
 
 		// Decode the SVG content (handle both URL-encoded and base64)
 		let decodedSvg: string
-		const svgData = match.groups.svgData
-		const matchIndex = match.index ?? 0
-		const isBase64 = xml.substring(matchIndex, matchIndex + match[0].length).includes(";base64")
+		const isBase64 = match[0].includes(";base64")
 
 		if (isBase64) {
 			// Handle base64-encoded SVG
@@ -1051,6 +1055,7 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 
 				if (fullTag.startsWith("</")) {
 					// Closing tag
+
 					if (tagStack.length === 0) {
 						// Find position in original SVG
 						const originalPos = decodedSvg.indexOf(fullTag)
@@ -1061,6 +1066,7 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 						// Check if this might be in a string attribute or text content
 						const beforeTag = decodedSvg.substring(0, originalPos)
 						const inAttribute = (beforeTag.match(/"/g) || []).length % 2 === 1
+
 						if (!inAttribute) {
 							throw errors.new(
 								`malformed svg: Extra closing tag '</${tagName}>' with no matching opening tag. Context: "...${errorContext}..."`
