@@ -61,6 +61,22 @@ export function fixMathMLOperators(xml: string, logger: logger.Logger): string {
 		return match.replace("></mo>", "&gt;</mo>")
 	})
 
+	// Fix unescaped <= in mo elements by converting to Unicode ≤
+	// This specifically looks for <mo><=</mo> pattern
+	const moLessThanEqualRegex = /<mo(?:\s+[^>]*)?><=(\/mo>)/gi
+	fixedXml = fixedXml.replace(moLessThanEqualRegex, (match) => {
+		fixCount++
+		return match.replace("<=", "≤")
+	})
+
+	// Fix unescaped >= in mo elements by converting to Unicode ≥
+	// This specifically looks for <mo>>=</mo> pattern
+	const moGreaterThanEqualRegex = /<mo(?:\s+[^>]*)?>>=(<\/mo>)/gi
+	fixedXml = fixedXml.replace(moGreaterThanEqualRegex, (match) => {
+		fixCount++
+		return match.replace(">=", "≥")
+	})
+
 	if (fixCount > 0) {
 		logger.debug("fixed unescaped angle brackets in MathML mo elements", {
 			fixCount,
