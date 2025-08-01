@@ -65,9 +65,23 @@ export const ingestAssessmentTests = inngest.createFunction(
 		// Process all tests in parallel
 		const results = await Promise.all(testPromises)
 
-		const failedCount = results.filter((r) => !r.success).length
+		const failedResults = results.filter((r) => !r.success)
+		const failedCount = failedResults.length
+
 		if (failedCount > 0) {
-			throw errors.new(`failed to ingest ${failedCount} assessment tests`)
+			// Log detailed information about each failed test
+			logger.error("assessment tests ingestion failed", {
+				failedCount,
+				failedTests: failedResults.map((r) => ({
+					identifier: r.identifier,
+					status: r.status,
+					error: r.error?.message || "unknown error"
+				}))
+			})
+
+			// Include identifiers in the error message for easy debugging
+			const failedIdentifiers = failedResults.map((r) => r.identifier).filter(Boolean)
+			throw errors.new(`failed to ingest ${failedCount} assessment tests: ${failedIdentifiers.join(", ")}`)
 		}
 
 		return { status: "success", count: results.length, results }
