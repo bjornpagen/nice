@@ -317,7 +317,7 @@ For the following types of visuals, you MUST use the original 'graphie' URL (con
   - **Geometry requires precision**: Student understanding depends on exact proportions, angles, and measurements
   - **Professional design required**: Khan Academy's graphie images are carefully designed by education experts
   - **AI-generated geometry is harmful**: Malformed shapes, incorrect proportions, or poor visual quality will confuse students
-  - **MANDATORY**: For ALL geometry content, you MUST use the original graphie URL (converted to https://) and add descriptive text if needed
+  - **MANDATORY**: For ALL geometry content, you MUST use the original Perseus link (most likely an SVG link). Convert the web+graphie:// URL to https:// but preserve the original SVG file path exactly as it appears. Add descriptive text if needed
   - **VIOLATION CONSEQUENCES**: Creating custom SVG for geometry problems is considered a critical failure that makes the content pedagogically invalid
 
 **Example of the "Supplement with Text" Strategy:**
