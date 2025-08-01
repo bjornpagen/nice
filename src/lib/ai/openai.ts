@@ -20,9 +20,9 @@ const QtiParaphrasingOutputSchema = z.object({
 	paraphrasedStimulus: z.string().min(1)
 })
 
-// Retry configuration - more aggressive since o3 has better rate limits
+// Retry configuration - reduced retries to allow differentiate-question split strategy
 const RETRY_CONFIG = {
-	maxRetries: 3,
+	maxRetries: 1, // Reduced from 3 to let split strategy take over
 	baseDelayMs: 500, // Shorter delays due to better rate limits
 	maxDelayMs: 5000
 }

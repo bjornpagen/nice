@@ -14,7 +14,7 @@ export const differentiateQuestion = inngest.createFunction(
 		name: "Differentiate QTI Question using AI",
 		concurrency: {
 			// ✅ MASSIVE INCREASE: Allow all 75 questions in chunk to run concurrently
-			limit: 100
+			limit: 400
 		}
 	},
 	{ event: "qti/question.differentiate" },
@@ -60,7 +60,7 @@ export const differentiateQuestion = inngest.createFunction(
 
 		// Step 2: Internal retry logic with 3-stage pipeline (Generate → Review → Validate)
 		const validatedItems = await step.run("generate-review-and-validate-variations", async () => {
-			const MAX_ATTEMPTS = 3
+			const MAX_ATTEMPTS = 4 // Increased to 4 for progressive degradation
 			const TARGET_VARIATIONS = numberOfVariations
 			const items: {
 				xml: string
@@ -82,23 +82,126 @@ export const differentiateQuestion = inngest.createFunction(
 					accumulatedErrorCount: accumulatedErrors.length
 				})
 
-				// STAGE 1: GENERATE - Generate all variations first
-				logger.info("stage 1: generating variations", {
-					questionId,
-					attempt,
-					variationsNeeded
-				})
+				// STAGE 1: GENERATE - Progressive degradation strategy
+				let generatedXmls: string[] = []
 
-				const generatedXmls = await generateQtiVariations(
-					sourceData.xml || "",
-					variationsNeeded,
-					questionId,
-					items.length + 1, // startingIndex
-					accumulatedErrors.length > 0 ? accumulatedErrors : undefined
-				)
+				if ((attempt === 3 || attempt === 4) && variationsNeeded > 1) {
+					// Individual calls strategy for difficult questions (attempts 3 & 4)
+					logger.info("stage 1: using individual generation strategy", {
+						questionId,
+						attempt,
+						variationsNeeded
+					})
+
+					// Make individual parallel calls (1 variation each)
+					const individualCalls = Array.from({ length: variationsNeeded }, (_, i) =>
+						errors.try(
+							generateQtiVariations(
+								sourceData.xml || "",
+								1, // One variation per call
+								questionId,
+								items.length + 1 + i, // Proper identifier spacing
+								accumulatedErrors.length > 0 ? accumulatedErrors : undefined
+							)
+						)
+					)
+
+					const results = await Promise.all(individualCalls)
+
+					// Collect successful results and track failures
+					for (let i = 0; i < results.length; i++) {
+						const result = results[i]
+						if (result && !result.error && result.data.length > 0) {
+							generatedXmls.push(...result.data)
+						} else {
+							logger.warn("individual generation call failed", {
+								questionId,
+								attempt,
+								callIndex: i,
+								error: result?.error?.message
+							})
+							if (result?.error) {
+								accumulatedErrors.push(result.error.message)
+							}
+						}
+					}
+				} else if (attempt === 2 && variationsNeeded > 1) {
+					// Split strategy for difficult questions
+					const firstBatch = Math.ceil(variationsNeeded / 2)
+					const secondBatch = variationsNeeded - firstBatch
+
+					logger.info("stage 1: using split generation strategy", {
+						questionId,
+						attempt,
+						variationsNeeded,
+						firstBatch,
+						secondBatch
+					})
+
+					// Make two parallel calls with proper identifier spacing
+					const [firstResult, secondResult] = await Promise.all([
+						errors.try(
+							generateQtiVariations(
+								sourceData.xml || "",
+								firstBatch,
+								questionId,
+								items.length + 1, // Start at current position
+								accumulatedErrors.length > 0 ? accumulatedErrors : undefined
+							)
+						),
+						errors.try(
+							generateQtiVariations(
+								sourceData.xml || "",
+								secondBatch,
+								questionId,
+								items.length + 1 + firstBatch, // Start after first batch
+								accumulatedErrors.length > 0 ? accumulatedErrors : undefined
+							)
+						)
+					])
+
+					// Collect successful results
+					if (firstResult.error) {
+						logger.warn("first batch generation failed", { questionId, attempt, error: firstResult.error.message })
+						accumulatedErrors.push(firstResult.error.message)
+					} else {
+						generatedXmls.push(...firstResult.data)
+					}
+
+					if (secondResult.error) {
+						logger.warn("second batch generation failed", { questionId, attempt, error: secondResult.error.message })
+						accumulatedErrors.push(secondResult.error.message)
+					} else {
+						generatedXmls.push(...secondResult.data)
+					}
+				} else {
+					// Standard single-call strategy with error handling
+					logger.info("stage 1: generating variations", {
+						questionId,
+						attempt,
+						variationsNeeded
+					})
+
+					const result = await errors.try(
+						generateQtiVariations(
+							sourceData.xml || "",
+							variationsNeeded,
+							questionId,
+							items.length + 1, // startingIndex
+							accumulatedErrors.length > 0 ? accumulatedErrors : undefined
+						)
+					)
+
+					if (result.error) {
+						logger.warn("standard generation failed", { questionId, attempt, error: result.error.message })
+						accumulatedErrors.push(result.error.message)
+						continue // Move to next attempt
+					}
+					generatedXmls = result.data
+				}
 
 				if (generatedXmls.length === 0) {
-					logger.warn("ai returned no variations", { questionId, attempt })
+					logger.warn("no variations generated in this attempt", { questionId, attempt })
 					continue
 				}
 
@@ -219,9 +322,17 @@ export const differentiateQuestion = inngest.createFunction(
 				// Commit successful variations
 				items.push(...stagingItems)
 
+				let strategyUsed = "standard (batch)"
+				if (attempt === 3 || attempt === 4) {
+					strategyUsed = "individual (1+1+1+1)"
+				} else if (attempt === 2) {
+					strategyUsed = "split (2+2)"
+				}
+
 				logger.info("completed 3-stage pipeline attempt", {
 					questionId,
 					attempt,
+					strategy: strategyUsed,
 					generated: generatedXmls.length,
 					processed: processedXmls.length,
 					validated: stagingItems.length,

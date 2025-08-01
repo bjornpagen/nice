@@ -33,6 +33,7 @@ export async function produceQtiQualityReviewPrompt(
 	sourceContext: QtiSourceContext
 ): Promise<{ systemInstruction: string; userContent: string }> {
 	const analysisReport = await loadPromptAsset("qti_analysis_report.md")
+	const coneExample = await loadPromptAsset("cone_svg_example.md")
 
 	const systemInstruction =
 		"You are an expert QTI 3.0 educational content reviewer for all types of questions in all subject (math, science, social studies, etc.). Your task is to analyze a generated QTI XML assessment item, identify qualitative flaws based on a provided analysis report, and selectively rewrite ONLY the problematic sections to improve its quality while preserving the QTI structure perfectly. You MUST respond with a specific JSON object."
@@ -52,32 +53,18 @@ export async function produceQtiQualityReviewPrompt(
   ${analysisReport}
 </qti_analysis_report>
 
+<cone_svg_gold_standard>
+  <!-- This is the GOLD STANDARD for ALL 3D shape SVG creation. Use this EXACT approach for cones, cylinders, cubes, spheres, pyramids, prisms, and any other 3D geometric shapes. -->
+  ${coneExample}
+</cone_svg_gold_standard>
+
 <svg_quality_examples>
   <!-- These are concrete examples of EXCELLENT vs HORRIBLE SVG quality that you must internalize. -->
   
   ## EXCELLENT SVG EXAMPLE - Coordinate Grid with Point
   This is a PERFECT example of educational SVG quality:
   
-  \`\`\`xml
-  <svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'>
-    <rect x='0' y='0' width='400' height='400' fill='white'/>
-    <line x1='50' y1='350' x2='350' y2='350' stroke='black' stroke-width='2'/>
-    <line x1='50' y1='350' x2='50' y2='50' stroke='black' stroke-width='2'/>
-    <line x1='50' y1='345' x2='50' y2='355' stroke='black' stroke-width='1'/>
-    <text x='50' y='370' font-size='12' text-anchor='middle'>0</text>
-    <line x1='200' y1='345' x2='200' y2='355' stroke='black' stroke-width='1'/>
-    <text x='200' y='370' font-size='12' text-anchor='middle'>5</text>
-    <line x1='350' y1='345' x2='350' y2='355' stroke='black' stroke-width='1'/>
-    <text x='350' y='370' font-size='12' text-anchor='middle'>10</text>
-    <line x1='45' y1='350' x2='55' y2='350' stroke='black' stroke-width='1'/>
-    <text x='35' y='355' font-size='12' text-anchor='end'>0</text>
-    <line x1='45' y1='110' x2='55' y2='110' stroke='black' stroke-width='1'/>
-    <text x='35' y='115' font-size='12' text-anchor='end'>8</text>
-    <line x1='50' y1='110' x2='350' y2='110' stroke='gray' stroke-dasharray='4,2' stroke-width='1'/>
-    <line x1='200' y1='350' x2='200' y2='50' stroke='gray' stroke-dasharray='4,2' stroke-width='1'/>
-    <circle cx='200' cy='110' r='6' fill='blue'/>
-  </svg>
-  \`\`\`
+  <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='400'%20height='400'%20viewBox='0%200%20400%20400'%3E%3Crect%20x='0'%20y='0'%20width='400'%20height='400'%20fill='white'/%3E%3Cline%20x1='50'%20y1='350'%20x2='350'%20y2='350'%20stroke='black'%20stroke-width='2'/%3E%3Cline%20x1='50'%20y1='350'%20x2='50'%20y2='50'%20stroke='black'%20stroke-width='2'/%3E%3Cline%20x1='50'%20y1='345'%20x2='50'%20y2='355'%20stroke='black'%20stroke-width='1'/%3E%3Ctext%20x='50'%20y='370'%20font-size='12'%20text-anchor='middle'%3E0%3C/text%3E%3Cline%20x1='200'%20y1='345'%20x2='200'%20y2='355'%20stroke='black'%20stroke-width='1'/%3E%3Ctext%20x='200'%20y='370'%20font-size='12'%20text-anchor='middle'%3E5%3C/text%3E%3Cline%20x1='350'%20y1='345'%20x2='350'%20y2='355'%20stroke='black'%20stroke-width='1'/%3E%3Ctext%20x='350'%20y='370'%20font-size='12'%20text-anchor='middle'%3E10%3C/text%3E%3Cline%20x1='45'%20y1='350'%20x2='55'%20y2='350'%20stroke='black'%20stroke-width='1'/%3E%3Ctext%20x='35'%20y='355'%20font-size='12'%20text-anchor='end'%3E0%3C/text%3E%3Cline%20x1='45'%20y1='110'%20x2='55'%20y2='110'%20stroke='black'%20stroke-width='1'/%3E%3Ctext%20x='35'%20y='115'%20font-size='12'%20text-anchor='end'%3E8%3C/text%3E%3Cline%20x1='50'%20y1='110'%20x2='350'%20y2='110'%20stroke='gray'%20stroke-dasharray='4,2'%20stroke-width='1'/%3E%3Cline%20x1='200'%20y1='350'%20x2='200'%20y2='50'%20stroke='gray'%20stroke-dasharray='4,2'%20stroke-width='1'/%3E%3Ccircle%20cx='200'%20cy='110'%20r='6'%20fill='blue'/%3E%3C/svg%3E">
   
   **Why this is EXCELLENT:**
   - Clear, bold axes with proper stroke-width
@@ -92,18 +79,7 @@ export async function produceQtiQualityReviewPrompt(
   ## ACCEPTABLE SVG EXAMPLE - Coordinate Grid with Negative Values
   This is good enough but could be improved:
   
-  \`\`\`xml
-  <svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'>
-    <rect x='0' y='0' width='400' height='400' fill='white'/>
-    <line x1='0' y1='200' x2='400' y2='200' stroke='gray' stroke-width='2'/>
-    <line x1='200' y1='0' x2='200' y2='400' stroke='gray' stroke-width='2'/>
-    <line x1='0' y1='195' x2='0' y2='205' stroke='black' stroke-width='1'/>
-    <text x='0' y='215' font-size='12' text-anchor='middle' fill='black'>-10</text>
-    <!-- ... more tick marks and labels ... -->
-    <circle cx='320' cy='260' r='8' fill='blue'/>
-    <text x='330' y='255' font-size='12' fill='black'>A</text>
-  </svg>
-  \`\`\`
+  <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='400'%20height='400'%20viewBox='0%200%20400%20400'%3E%3Crect%20x='0'%20y='0'%20width='400'%20height='400'%20fill='white'/%3E%3Cline%20x1='0'%20y1='200'%20x2='400'%20y2='200'%20stroke='gray'%20stroke-width='2'/%3E%3Cline%20x1='200'%20y1='0'%20x2='200'%20y2='400'%20stroke='gray'%20stroke-width='2'/%3E%3Cline%20x1='0'%20y1='195'%20x2='0'%20y2='205'%20stroke='black'%20stroke-width='1'/%3E%3Ctext%20x='0'%20y='215'%20font-size='12'%20text-anchor='middle'%20fill='black'%3E-10%3C/text%3E%3C!--%20...%20more%20tick%20marks%20and%20labels%20...%20--%3E%3Ccircle%20cx='320'%20cy='260'%20r='8'%20fill='blue'/%3E%3Ctext%20x='330'%20y='255'%20font-size='12'%20fill='black'%3EA%3C/text%3E%3C/svg%3E">
   
   **What makes this acceptable:**
   - Axes are clearly drawn
@@ -118,31 +94,7 @@ export async function produceQtiQualityReviewPrompt(
   ## CONFUSING SVG EXAMPLE - AVOID THIS PATTERN
   This graph looks decent visually but has serious educational problems:
   
-  \`\`\`xml
-  <svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'>
-    <g transform='translate(40,20)'>
-      <line class='axis' x1='0' y1='180' x2='320' y2='180'/>
-      <line class='axis' x1='40' y1='0' x2='40' y2='360'/>
-      <text x='40' y='195'>Mon</text>
-      <text x='80' y='195'>Tue</text>
-      <text x='120' y='195'>Wed</text>
-      <text x='160' y='195'>Thu</text>
-      <text x='200' y='195'>Fri</text>
-      <text x='240' y='195'>Sat</text>
-      <text x='280' y='195'>Sun</text>
-      <text x='28' y='340'>10</text>
-      <text x='28' y='300'>20</text>
-      <text x='28' y='260'>30</text>
-      <text x='28' y='220'>40</text>
-      <!-- MISSING 50! -->
-      <text x='28' y='140'>60</text>
-      <text x='28' y='100'>70</text>
-      <text x='28' y='60'>80</text>
-      <circle cx='200' cy='100' r='6'/>
-      <text x='212' y='92'>A</text>
-    </g>
-  </svg>
-  \`\`\`
+  <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='400'%20height='400'%3E%3Cg%20transform='translate(40,20)'%3E%3Cline%20class='axis'%20x1='0'%20y1='180'%20x2='320'%20y2='180'/%3E%3Cline%20class='axis'%20x1='40'%20y1='0'%20x2='40'%20y2='360'/%3E%3Ctext%20x='40'%20y='195'%3EMon%3C/text%3E%3Ctext%20x='80'%20y='195'%3ETue%3C/text%3E%3Ctext%20x='120'%20y='195'%3EWed%3C/text%3E%3Ctext%20x='160'%20y='195'%3EThu%3C/text%3E%3Ctext%20x='200'%20y='195'%3EFri%3C/text%3E%3Ctext%20x='240'%20y='195'%3ESat%3C/text%3E%3Ctext%20x='280'%20y='195'%3ESun%3C/text%3E%3Ctext%20x='28'%20y='340'%3E10%3C/text%3E%3Ctext%20x='28'%20y='300'%3E20%3C/text%3E%3Ctext%20x='28'%20y='260'%3E30%3C/text%3E%3Ctext%20x='28'%20y='220'%3E40%3C/text%3E%3C!--%20MISSING%2050!%20--%3E%3Ctext%20x='28'%20y='140'%3E60%3C/text%3E%3Ctext%20x='28'%20y='100'%3E70%3C/text%3E%3Ctext%20x='28'%20y='60'%3E80%3C/text%3E%3Ccircle%20cx='200'%20cy='100'%20r='6'/%3E%3Ctext%20x='212'%20y='92'%3EA%3C/text%3E%3C/g%3E%3C/svg%3E">
   
   **Why this is EDUCATIONALLY PROBLEMATIC:**
   - Y-axis starts at 10, not 0 (confusing origin point)
@@ -155,16 +107,7 @@ export async function produceQtiQualityReviewPrompt(
   ## HORRENDOUS SVG EXAMPLE - DO NOT CREATE ANYTHING LIKE THIS
   This is what you must NEVER allow:
   
-  \`\`\`xml
-  <svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'>
-    <g transform='translate(50,350) scale(30,-30)'>
-      <text x='1' y='-0.3'>1</text>
-      <text x='2' y='-0.3'>2</text>
-      <!-- Text appears upside down due to negative scale -->
-      <circle cx='7' cy='12' r='0.3' fill='blue'/>
-    </g>
-  </svg>
-  \`\`\`
+  <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='400'%20height='400'%20viewBox='0%200%20400%20400'%3E%3Cg%20transform='translate(50,350)%20scale(30,-30)'%3E%3Ctext%20x='1'%20y='-0.3'%3E1%3C/text%3E%3Ctext%20x='2'%20y='-0.3'%3E2%3C/text%3E%3C!--%20Text%20appears%20upside%20down%20due%20to%20negative%20scale%20--%3E%3Ccircle%20cx='7'%20cy='12'%20r='0.3'%20fill='blue'/%3E%3C/g%3E%3C/svg%3E">
   
   **Why this is HORRIFIC:**
   - Text is upside down due to negative scale transform
@@ -174,6 +117,24 @@ export async function produceQtiQualityReviewPrompt(
   - Overall rendering is illegible and confusing
   - Educational value is completely destroyed
   
+  ## EXCELLENT SCATTER PLOT EXAMPLE - Perfect Educational Chart
+  This demonstrates the GOLD STANDARD for scatter plots and data visualization:
+  
+  <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='400'%20height='300'%20viewBox='0%200%20400%20300'%3E%3Crect%20x='0'%20y='0'%20width='400'%20height='300'%20fill='white'/%3E%3Cline%20x1='50'%20y1='50'%20x2='50'%20y2='250'%20stroke='black'%20stroke-width='2'/%3E%3Cline%20x1='50'%20y1='250'%20x2='350'%20y2='250'%20stroke='black'%20stroke-width='2'/%3E%3C!-- vertical%20grid%20--%3E%3Cline%20x1='100'%20y1='250'%20x2='100'%20y2='50'%20stroke='%23dddddd'%20stroke-width='1'/%3E%3Cline%20x1='150'%20y1='250'%20x2='150'%20y2='50'%20stroke='%23dddddd'%20stroke-width='1'/%3E%3Cline%20x1='200'%20y1='250'%20x2='200'%20y2='50'%20stroke='%23dddddd'%20stroke-width='1'/%3E%3Cline%20x1='250'%20y1='250'%20x2='250'%20y2='50'%20stroke='%23dddddd'%20stroke-width='1'/%3E%3Cline%20x1='300'%20y1='250'%20x2='300'%20y2='50'%20stroke='%23dddddd'%20stroke-width='1'/%3E%3C!-- horizontal%20grid%20--%3E%3Cline%20x1='50'%20y1='200'%20x2='350'%20y2='200'%20stroke='%23dddddd'%20stroke-width='1'/%3E%3Cline%20x1='50'%20y1='150'%20x2='350'%20y2='150'%20stroke='%23dddddd'%20stroke-width='1'/%3E%3Cline%20x1='50'%20y1='100'%20x2='350'%20y2='100'%20stroke='%23dddddd'%20stroke-width='1'/%3E%3Cline%20x1='50'%20y1='50'%20x2='350'%20y2='50'%20stroke='%23dddddd'%20stroke-width='1'/%3E%3C!-- x-axis%20ticks%20and%20labels%20--%3E%3Cline%20x1='50'%20y1='255'%20x2='50'%20y2='245'%20stroke='black'%20stroke-width='1'/%3E%3Cline%20x1='100'%20y1='255'%20x2='100'%20y2='245'%20stroke='black'%20stroke-width='1'/%3E%3Cline%20x1='150'%20y1='255'%20x2='150'%20y2='245'%20stroke='black'%20stroke-width='1'/%3E%3Cline%20x1='200'%20y1='255'%20x2='200'%20y2='245'%20stroke='black'%20stroke-width='1'/%3E%3Cline%20x1='250'%20y1='255'%20x2='250'%20y2='245'%20stroke='black'%20stroke-width='1'/%3E%3Cline%20x1='300'%20y1='255'%20x2='300'%20y2='245'%20stroke='black'%20stroke-width='1'/%3E%3Cline%20x1='350'%20y1='255'%20x2='350'%20y2='245'%20stroke='black'%20stroke-width='1'/%3E%3Ctext%20x='50'%20y='265'%20font-size='12'%20text-anchor='middle'%3E0%3C/text%3E%3Ctext%20x='100'%20y='265'%20font-size='12'%20text-anchor='middle'%3E2%3C/text%3E%3Ctext%20x='150'%20y='265'%20font-size='12'%20text-anchor='middle'%3E4%3C/text%3E%3Ctext%20x='200'%20y='265'%20font-size='12'%20text-anchor='middle'%3E6%3C/text%3E%3Ctext%20x='250'%20y='265'%20font-size='12'%20text-anchor='middle'%3E8%3C/text%3E%3Ctext%20x='300'%20y='265'%20font-size='12'%20text-anchor='middle'%3E10%3C/text%3E%3Ctext%20x='350'%20y='265'%20font-size='12'%20text-anchor='middle'%3E12%3C/text%3E%3C!-- y-axis%20ticks%20and%20labels%20--%3E%3Cline%20x1='45'%20y1='250'%20x2='55'%20y2='250'%20stroke='black'%20stroke-width='1'/%3E%3Cline%20x1='45'%20y1='200'%20x2='55'%20y2='200'%20stroke='black'%20stroke-width='1'/%3E%3Cline%20x1='45'%20y1='150'%20x2='55'%20y2='150'%20stroke='black'%20stroke-width='1'/%3E%3Cline%20x1='45'%20y1='100'%20x2='55'%20y2='100'%20stroke='black'%20stroke-width='1'/%3E%3Cline%20x1='45'%20y1='50'%20x2='55'%20y2='50'%20stroke='black'%20stroke-width='1'/%3E%3Ctext%20x='45'%20y='250'%20font-size='12'%20text-anchor='end'%3E60%3C/text%3E%3Ctext%20x='45'%20y='200'%20font-size='12'%20text-anchor='end'%3E70%3C/text%3E%3Ctext%20x='45'%20y='150'%20font-size='12'%20text-anchor='end'%3E80%3C/text%3E%3Ctext%20x='45'%20y='100'%20font-size='12'%20text-anchor='end'%3E90%3C/text%3E%3Ctext%20x='45'%20y='50'%20font-size='12'%20text-anchor='end'%3E100%3C/text%3E%3C!-- axis%20titles%20--%3E%3Ctext%20x='200'%20y='290'%20font-size='14'%20text-anchor='middle'%3EHours%20Studied%3C/text%3E%3Ctext%20transform='rotate(-90)'%20x='-150'%20y='15'%20font-size='14'%20text-anchor='middle'%3EExam%20Score%3C/text%3E%3C!-- data%20points%20--%3E%3Ccircle%20cx='100'%20cy='200'%20r='5'%20fill='%234285F4'/%3E%3Ccircle%20cx='150'%20cy='175'%20r='5'%20fill='%234285F4'/%3E%3Ccircle%20cx='200'%20cy='125'%20r='5'%20fill='%234285F4'/%3E%3Ccircle%20cx='250'%20cy='100'%20r='5'%20fill='%234285F4'/%3E%3Ccircle%20cx='300'%20cy='75'%20r='5'%20fill='%234285F4'/%3E%3C/svg%3E">
+  
+  **Why this scatter plot is EXCELLENT:**
+  - Bold, clear axes with proper 2px stroke-width for main lines
+  - Professional grid system with subtle #dddddd lines that aid reading without overwhelming
+  - Perfect tick marks (1px stroke-width) with consistent 10px spacing
+  - All text labels properly positioned with correct text-anchor alignment
+  - Meaningful axis titles ("Hours Studied", "Exam Score") with proper rotation for Y-axis
+  - Data points are clearly visible with 5px radius and professional blue color (#4285F4)
+  - Excellent use of whitespace and margins (50px buffer zones)
+  - Scale progresses logically (0,2,4,6,8,10,12 for X-axis; 60,70,80,90,100 for Y-axis)
+  - Shows clear positive correlation pattern that supports educational objectives
+  - All elements are precisely positioned for maximum readability
+  - Perfect example for statistics, data analysis, and correlation concepts
+
   ## QUALITY CRITERIA FOR ALL SVG TYPES
   
   ### Graphs and Plots (Bar charts, Line graphs, Scatter plots):
@@ -243,6 +204,7 @@ export async function produceQtiQualityReviewPrompt(
   # Core Rules
   -   **Structure is Sacred**: NEVER add, remove, or reorder any QTI XML tags. Only modify the content *within* them.
   -   **SVG Quality is ABSOLUTELY CRITICAL**: You must COMPREHENSIVELY analyze every SVG element and mentally visualize exactly how it will render in a browser. Picture the final visual output in your head - every line, every shape, every piece of text, every spacing element. EVERY SVG must meet the standard of the EXCELLENT example provided above - clear axes, proper spacing, readable labels, perfect alignment. If you detect ANY visual ugliness, poor spacing, misalignment, missing educational elements, or rendering issues (no matter how small), you MUST fix them immediately. NEVER allow anything that resembles the HORRENDOUS example - no upside down text, no cut off elements, no unclear visual hierarchy. Replace placeholder SVGs (e.g., text-only diagrams) with fully functional, educationally accurate SVGs that match the quality criteria provided. Use the specific technical requirements: minimum 50px margins, 2-3px stroke-width for main axes, 12px minimum font size, proper text-anchor positioning, clear visual hierarchy. Pay obsessive attention to: spacing between elements, text alignment, visual balance, educational clarity, proportional sizing, color contrast, and overall aesthetic quality. Even minor visual flaws are unacceptable.
+  -   **3D GEOMETRIC SHAPES - MANDATORY GOLD STANDARD**: For ANY 3D geometric shape (cones, cylinders, spheres, pyramids, prisms, etc.), you MUST follow the EXACT implementation standards from the cone_svg_gold_standard. This means: (1) ALWAYS use base64 encoding (data:image/svg+xml;base64,), NEVER URL encoding with %3C %3E, (2) Create proper 3D perspective with curved surfaces using SVG path arc commands, (3) Use linear and radial gradients for realistic depth and lighting effects, (4) Show hidden edges with dashed lines for proper geometric understanding, (5) Implement clean polygon arrows instead of broken marker fragments that fail in data URIs, (6) Use professional typography (Arial font family, bold weight, 16px minimum size), (7) Ensure proper proportions and educational accuracy. The cone example demonstrates the PERFECT approach - any 3D shape that doesn't meet this standard MUST be completely rewritten to match it. NO EXCEPTIONS.
   -   **Check Logic**: Ensure the question is solvable and logically sound. Fix any mismatches between question type and the number of correct answers.
   -   **Do Not Reveal Answers**: Ensure image alt text or p notes do not give away the answer.
   -   **Final Output**: The improvedXml MUST be a complete and valid QTI XML document.
@@ -275,6 +237,7 @@ export async function produceQtiQualityReviewPrompt(
        - Compare directly to EXCELLENT examples - does it meet that standard?
        - For coordinate grids: Is origin at (0,0)? Do axes start at 0? Any missing numbers in sequences?
        - For graphs: Are axes 2-3px stroke-width? Tick marks visible? Labels positioned correctly?
+       - **For 3D shapes (cones, cylinders, spheres, pyramids, prisms): Does it match the cone_svg_gold_standard? Base64 encoding? Proper 3D perspective with curved surfaces? Gradients for depth? Hidden edges shown with dashed lines? Clean polygon arrows? Professional typography? NO URL encoding allowed!**
        - Universal checks: 50px margin? 12px font-size? Any upside down elements? Cut-off text? Overlapping elements?
        
        **Educational Diagnosis Checklist**:
@@ -299,6 +262,7 @@ export async function produceQtiQualityReviewPrompt(
        - "I will replace this problematic SVG with a coordinate grid following the EXCELLENT pattern: 400x400 viewBox, 50px margins, 2px stroke-width for axes, proper tick marks with 1px stroke-width, 12px font-size labels with correct text-anchor positioning"
        - "I will correct the Y-axis sequence from (10,20,30,40,60,70,80) to (0,10,20,30,40,50,60,70,80) with proper origin at (0,0)"
        - "I will fix the question logic by changing from single-choice to multiple-choice since two answers are correct"
+       - **"For 3D shapes: I will completely rewrite this oversimplified 3D shape SVG following the cone_svg_gold_standard exactly: convert to base64 encoding, add proper curved surfaces using SVG path arc commands, implement linear and radial gradients for realistic 3D depth, show hidden edges with dashed lines, replace broken marker arrows with clean polygon shapes, use Arial font family with bold weight and 16px size, ensure professional proportions and educational accuracy"**
   
   3.2. **Execute Targeted Changes**: Make ONLY the necessary modifications:
        - **Correct** wrong values, parameters, coordinates

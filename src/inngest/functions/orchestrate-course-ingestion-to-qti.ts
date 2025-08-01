@@ -17,7 +17,7 @@ import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 import { differentiateQuestion } from "./qti/differentiate-question"
 import { paraphraseStimulus } from "./qti/paraphrase-stimulus"
 
-const CHUNK_SIZE = 75
+const CHUNK_SIZE = 400
 
 interface DifferentiateQuestionEventData {
 	questionId: string

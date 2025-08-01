@@ -3,8 +3,8 @@
 ## Executive Summary
 
 - **Total Questions Analyzed:** 2231
-- **Questions with Issues:** 60
-- **Total Issues Identified:** 57
+- **Questions with Issues:** 61
+- **Total Issues Identified:** 58
 - **Failure Rate:** 2.7%
 
 ## Issue Categories Analysis
@@ -25,6 +25,7 @@
 - nice_xb148a1e03bb5ac48_0004: oversimplified svg that does not display true place value blocks
 - nice_x9367b4d76b1c82ef_0005: oversimplified svg the ai should understand exactly what the original khan image shows and use assets like emojis + proper html to truly display the content of the question
 - nice_x1dbca00af2323dd1_0005: oversimplified svg needs proper representation
+- nice-tmp_x07dee815cde5bc2a: **CONE SVG RENDERING FAILURE** - oversimplified cone diagram that doesn't properly render 3D perspective, uses problematic URL encoding, and lacks educational accuracy. **SEE COMPLETE CORRECTED EXAMPLE** in `cone_svg_example.md` showing the GOLD STANDARD for 3D shape SVG creation with proper base64 encoding, gradients, and perspective
 - ... and 10 more issues
 
 ### Question Logic Errors
@@ -65,6 +66,14 @@
 - nice_xb1c48c11e70dbdae_0004: note gives away answer
 - nice_x3bf67409b2d2116a_0001: picture graph doesn't represent names
 - ... and 6 more issues
+
+### Graph Visualization Issues
+**Severity:** CRITICAL  
+**Questions Affected:** 1  
+**Description:** Graphs and charts lacking proper axis labels, tick marks, or reference points that make questions impossible to answer accurately
+
+**Issues:**
+- nice-tmp_x07408520b10b71bc: **MALFORMED GRAPH** - graph shows trend line asking for slope calculation but has NO axis labels, tick marks, grid, or numerical values making it completely impossible to determine accurate values. This is a prime example of a blind question that students cannot reasonably answer.
 
 ### Differentiation Consistency Failures
 **Severity:** CRITICAL  
@@ -203,6 +212,128 @@
 
 </qti-assessment-item>
 ```
+
+---
+
+#### nice-tmp_x07408520b10b71bc
+**Title:** Estimating slope of line of best fit  
+**Khan Exercise:** Linear trend analysis  
+**Issue Category:** MALFORMED GRAPH VISUALIZATION  
+
+**Issues Identified:**
+- **CRITICAL FAILURE:** Graph deliberately relies on visual data but the generated graph is completely unmarked with no ticks, grid, or numerical values
+- Students are asked to calculate "average annual increase" but the graph provides no numerical information to make this calculation possible
+- This represents a "blind question" - students cannot reasonably answer without guessing
+
+**Detailed Problem Analysis:**
+1. **Missing Axis Values:** The SVG shows axis labels ("Years since 2000" and "Electricity Bill ($)") but contains NO numerical tick marks or grid lines
+2. **Invisible Data Points:** While the feedback mentions values from $85 to $145 over 10 years, these values are completely invisible on the graph
+3. **Impossible Calculation:** Students are expected to estimate slope but have no way to determine the actual coordinates of the data points
+4. **Educational Malpractice:** This question type teaches students to guess rather than perform mathematical analysis
+
+**What the Graph Actually Shows:**
+- Two unmarked blue circles (data points with no visible coordinates)
+- A red trend line (with no scale reference)
+- Axis labels only (no numerical scale)
+- No grid, tick marks, or reference points
+
+**What Students Need to Answer:**
+- Calculate average annual increase (slope)
+- Choose between $4, $6, $8, or $12 per year
+- Perform mathematical analysis based on visual data
+
+**The Contradiction:**
+The question fundamentally relies on precise numerical reading from a graph that provides no numerical information. This is pedagogically destructive and represents a complete failure in educational assessment design.
+
+**Complete XML (MALFORMED EXAMPLE - DO NOT REPLICATE):**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
+    identifier="nice-tmp_x07408520b10b71bc"
+    title="Estimating slope of line of best fit"
+    time-dependent="false"
+    xml:lang="en-US">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>B</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value>
+            <qti-value>0</qti-value>
+        </qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    
+    <qti-item-body>
+        <div id="reference_text">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Cline x1='40' y1='260' x2='360' y2='260' stroke='black' stroke-width='2'/%3E%3Cline x1='40' y1='260' x2='40' y2='40' stroke='black' stroke-width='2'/%3E%3Ctext x='200' y='290' font-size='14' text-anchor='middle'%3EYears since 2000%3C/text%3E%3Ctext transform='rotate(-90)' x='-110' y='20' font-size='14' text-anchor='middle'%3EElectricity Bill ($)%3C/text%3E%3Ccircle cx='40' cy='240' r='4' fill='blue'/%3E%3Ccircle cx='360' cy='100' r='4' fill='blue'/%3E%3Cline x1='40' y1='240' x2='360' y2='100' stroke='red' stroke-width='2'/%3E%3C/svg%3E" 
+                 alt="Scatter plot with two data points and a red trend line showing an increasing electricity bill over time." 
+                 width="400" height="300"/>
+        </div>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" min-choices="1" max-choices="1">
+            <qti-prompt>Which of the following best estimates the average annual increase in the electricity bill?</qti-prompt>
+            <qti-simple-choice identifier="A">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>$</mo><mn>4</mn></math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="B">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>$</mo><mn>6</mn></math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="C">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>$</mo><mn>8</mn></math>
+            </qti-simple-choice>
+            <qti-simple-choice identifier="D">
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>$</mo><mn>12</mn></math>
+            </qti-simple-choice>
+        </qti-choice-interaction>
+        
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Correct!</span> The trend line from $85 to $145 over 10 years yields an average annual increase of approximately <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>$</mo><mn>6</mn></math>.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body>
+                <p><span class="qti-keyword-emphasis">Not quite.</span> Consider the overall increase shown on the graph and divide it by the number of years.</p>
+            </qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+    
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-match>
+                    <qti-variable identifier="RESPONSE"/>
+                    <qti-correct identifier="RESPONSE"/>
+                </qti-match>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">1</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">CORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE">
+                    <qti-base-value base-type="float">0</qti-base-value>
+                </qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK">
+                    <qti-base-value base-type="identifier">INCORRECT</qti-base-value>
+                </qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+
+</qti-assessment-item>
+```
+
+**Critical Insight:**
+Notice how the feedback reveals the actual values ($85 to $145 over 10 years) that are completely invisible in the graph. This exposes the fundamental flaw - the system knows the correct mathematical relationship but failed to display it visually. Students are being asked to perform mathematical analysis on a graph that provides no mathematical data.
 
 ---
 

@@ -3,14 +3,14 @@ import { orchestrateCourseIngestionToQti } from "./orchestrate-course-ingestion-
 
 // Hardcoded course IDs for batch differentiated processing
 const COURSE_IDS = [
-	"x3184e0ec", // 2nd grade math
-	"x3c950fa744f5f34c", // Get ready for 3rd grade math
-	"x41fbdd6301d5fded", // 3rd grade math
-	"xfb4fc0bf01437792", // 2nd grade reading & vocabulary
-	"xaf0c1b5d7010608e", // 3rd grade reading & vocabulary
-	"x3931b57772b927b3", // 6th grade math (TX TEKS)
-	"xa876d090ec748f45", // 7th grade math (TX TEKS)
-	"x42e41b058fcf4059" // 8th grade math (TX TEKS)
+	// "x3184e0ec", // 2nd grade math
+	// "x3c950fa744f5f34c", // Get ready for 3rd grade math
+	// "x41fbdd6301d5fded", // 3rd grade math
+	// "xfb4fc0bf01437792", // 2nd grade reading & vocabulary
+	// "xaf0c1b5d7010608e", // 3rd grade reading & vocabulary
+	"x0267d782", // 6th grade math (Common Core)
+	"x6b17ba59", // 7th grade math (Common Core)
+	"x7c7044d7" // 8th grade math (Common Core)
 ]
 
 interface BatchProgress {
