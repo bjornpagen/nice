@@ -58,7 +58,9 @@ export function UnitOverviewSection({
 			</div>
 
 			{next && (
-				<Button className="bg-blue-500 hover:bg-blue-600 text-white text-xs px-16 py-2 rounded-xs">Get started</Button>
+				<Button className="bg-blue-500 hover:bg-blue-600 text-white text-xs px-16 py-2 rounded-xs" asChild>
+					<Link href={unit.path}>Get started</Link>
+				</Button>
 			)}
 		</div>
 	)
