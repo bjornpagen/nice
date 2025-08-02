@@ -3,10 +3,12 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines a single angle segment in the diagram
 const AngleSegmentSchema = z.object({
+	id: z.string().optional().describe("An optional unique identifier for this angle segment."),
 	value: z.number().describe("The measure of the angle in degrees."),
 	label: z.string().describe('The text label for the angle measure (e.g., "35°", "x").'),
 	color: z.string().describe("The primary color for the angle arc and fill, as a CSS color string."),
-	arcRadius: z.number().describe("The radius of the arc used to denote this angle.")
+	arcRadius: z.number().describe("The radius of the arc used to denote this angle."),
+	fill: z.boolean().default(false).describe("If true, render a semi-transparent fill for the angle sector.")
 })
 
 // Defines the optional total angle that encompasses all segments

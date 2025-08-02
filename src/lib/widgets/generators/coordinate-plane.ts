@@ -19,19 +19,48 @@ const PointSchema = z.object({
 	x: z.number().describe("The value of the point on the horizontal (X) axis."),
 	y: z.number().describe("The value of the point on the vertical (Y) axis."),
 	label: z.string().optional().describe('An optional text label to display near the point (e.g., "A", "(m, n)").'),
-	color: z.string().default("#4285F4").describe("The color of the point, as a CSS color string.")
+	color: z.string().default("#4285F4").describe("The color of the point, as a CSS color string."),
+	style: z.enum(["open", "closed"]).default("closed").describe("Visual style for the point marker.")
 })
 
-// Defines a polygon to be drawn by connecting a series of points
+// Defines a linear trend line using slope and y-intercept
+const SlopeInterceptLineSchema = z.object({
+	type: z.literal("slopeIntercept").describe("Specifies a straight line in y = mx + b form."),
+	slope: z.number().describe("The slope of the line (m)."),
+	yIntercept: z.number().describe("The y-value where the line crosses the Y-axis (b).")
+})
+
+// Defines a straight line to be plotted on the plane
+const LineSchema = z.object({
+	id: z.string().describe('A unique identifier for the line (e.g., "line-a").'),
+	equation: SlopeInterceptLineSchema.describe("The mathematical definition of the line."),
+	color: z
+		.string()
+		.default("#D9534F")
+		.describe('The color of the line, as a CSS color string (e.g., "red", "#FF0000").'),
+	style: z.enum(["solid", "dashed"]).default("solid").describe("The style of the line.")
+})
+
+// Defines a polygon or polyline to be drawn by connecting a series of points
 const PolygonSchema = z.object({
 	vertices: z
 		.array(z.string())
-		.min(3)
-		.describe("An array of point `id` strings, in the order they should be connected to form a closed shape."),
+		.min(2)
+		.describe(
+			"An array of point `id` strings, in the order they should be connected. Requires at least 2 points for a line, 3 for a polygon."
+		),
+	isClosed: z
+		.boolean()
+		.default(true)
+		.describe(
+			"If true, connects the last vertex to the first to form a closed shape. If false, renders an open polyline."
+		),
 	fillColor: z
 		.string()
 		.default("rgba(66, 133, 244, 0.3)")
-		.describe("The fill color of the polygon, as a CSS color string (e.g., with alpha for transparency)."),
+		.describe(
+			"The fill color of the polygon, as a CSS color string (e.g., with alpha for transparency). Only applies if isClosed is true."
+		),
 	strokeColor: z.string().default("rgba(66, 133, 244, 1)").describe("The border color of the polygon."),
 	label: z.string().optional().describe("An optional label for the polygon itself.")
 })
@@ -48,21 +77,24 @@ export const CoordinatePlanePropsSchema = z
 			.default(false)
 			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
 		points: z.array(PointSchema).optional().describe("An optional array of points to plot on the plane."),
+		lines: z
+			.array(LineSchema)
+			.optional()
+			.describe("An optional array of infinite lines to draw on the plane, defined by their equations."),
 		polygons: z
 			.array(PolygonSchema)
 			.optional()
-			.describe("An optional array of polygons to draw on the plane by connecting the defined points.")
+			.describe("An optional array of polygons or polylines to draw on the plane by connecting the defined points.")
 	})
 	.describe(
-		"This is a powerful and versatile template designed to generate a complete, standards-compliant, two-dimensional Cartesian coordinate plane as an SVG graphic. It replaces the `coordinatePlaneWithPoints` widget and handles all use cases, from plotting simple points to drawing complex polygons. The resulting SVG is embedded within an HTML <div>, ensuring it is scalable and accessible. The generator constructs a full coordinate system with highly configurable features for axes, grid lines, quadrant labels, point plotting, and polygon drawing. This single template is sufficient to generate all diagrams found in the examples, from simple quadrant identification questions to complex problems involving the area and perimeter of polygons defined by coordinates."
+		"Generates a complete two-dimensional Cartesian coordinate plane as an SVG graphic. This versatile widget can render a feature-rich plane with configurable axes, grid lines, and quadrant labels. It supports plotting labeled points, drawing polygons by connecting vertices, rendering open polylines (e.g., for piecewise functions), and plotting infinite lines from their slope-intercept equations. This single widget is suitable for a vast range of coordinate geometry problems."
 	)
 
 export type CoordinatePlaneProps = z.infer<typeof CoordinatePlanePropsSchema>
 
 /**
- * This is a powerful and versatile template designed to generate a complete, standards-compliant,
- * two-dimensional Cartesian coordinate plane as an SVG graphic. The resulting SVG is embedded
- * within an HTML <div>, ensuring it is scalable, accessible, and ready for integration.
+ * Generates a versatile Cartesian coordinate plane for plotting points, lines, and polygons.
+ * Supports a wide range of coordinate geometry problems.
  */
 export const generateCoordinatePlane: WidgetGenerator<typeof CoordinatePlanePropsSchema> = (_data) => {
 	// TODO: Implement coordinate-plane generation

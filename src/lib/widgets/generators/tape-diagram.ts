@@ -28,16 +28,14 @@ export const TapeDiagramPropsSchema = z
 		totalLabel: z.string().default("Total").describe("The text label for the total bracket, if shown.")
 	})
 	.describe(
-		'This template generates a "tape diagram" (also known as a bar model), a visual tool used to represent part-whole relationships in mathematics, rendered as an SVG graphic inside an HTML <div>. It is exceptionally useful for helping students model and solve word problems involving addition, subtraction, multiplication, and division. The generator will render two horizontal rectangular bars, or "tapes." Each tape is composed of one or more segments, where each segment has its own label and length. The key feature is that the lengths of the segments are proportional to their numerical values. Each segment can be labeled with a number (e.g., "10"), a variable (e.g., "w"), or an expression. This allows the template to visually model equations. For example, to show 10 + w = 25, the bottom tape would be divided into two segments: one with label "10" and length 10, and another with label "w" and length 15, while the top tape would be a single segment with label "25" and length 25. The visual alignment makes the additive relationship clear. The generator can also render a total bracket and label for the combined segments. The final output is a clean, accurately scaled diagram that translates abstract numerical relationships into a concrete, geometric form.'
+		'Generates a "tape diagram" or "bar model" as an SVG graphic to represent part-whole relationships. This widget is exceptionally useful for modeling and solving word problems involving ratios or algebraic equations. It renders one or two tapes, each composed of proportionally sized segments that can be labeled with numbers or variables. By visually aligning tapes or their segments, it translates abstract numerical relationships into a concrete, geometric form, making concepts like "3x = 15" intuitive.'
 	)
 
 export type TapeDiagramProps = z.infer<typeof TapeDiagramPropsSchema>
 
 /**
- * This template generates a "tape diagram" (also known as a bar model), a visual tool
- * used to represent part-whole relationships in mathematics, rendered as an SVG graphic.
- * Each tape can have multiple segments with individual labels and lengths, making it
- * perfect for modeling equations like 10 + w = 25 where segments have different sizes.
+ * Generates a "tape diagram" (bar model) to visually represent part-whole relationships,
+ * perfect for modeling ratios and simple algebraic equations.
  */
 export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema> = (_data) => {
 	// TODO: Implement tape-diagram generation

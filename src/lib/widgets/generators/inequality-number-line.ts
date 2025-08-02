@@ -37,15 +37,14 @@ export const InequalityNumberLinePropsSchema = z
 			.describe("An array of one or more inequality ranges to be graphed on the line.")
 	})
 	.describe(
-		"This template generates a highly customizable SVG graphic of a number line for the purpose of visualizing simple inequalities. It is ideal for questions that require students to graph an inequality or interpret a graph of an inequality. The generator constructs a horizontal line axis with a configurable numerical range (minimum and maximum values). The line is marked with major tick marks at a specified interval, and each major tick is labeled with its corresponding value. The core functionality is to represent the solution set of an inequality (e.g., x < -1 or x >= 4). This is achieved by drawing two components: 1. An Endpoint Circle: A circle is placed at the boundary value of the inequality. The style of this circle is configurable as either 'open' (for strict inequalities < and >) or 'closed'/'filled' (for inclusive inequalities ≤ and ≥). 2. A Ray: An arrowed line (ray) is drawn from the endpoint circle, extending infinitely in one direction. The direction is configurable as either 'left' (for \"less than\") or 'right' (for \"greater than\"). Additionally, this template supports optional text labels placed above the line to provide context in word problems, labeling the regions to the left and right of the boundary value (e.g., \"Slower than sound,\" \"Faster than sound\"). The final SVG is a clear and mathematically precise representation of an inequality."
+		"Generates an SVG number line to graph the solution set of one or more inequalities. This widget is ideal for visualizing simple inequalities (e.g., x > 5), compound 'and' inequalities (e.g., -2 < x ≤ 3), and compound 'or' inequalities (e.g., x ≤ 0 or x > 4). It renders a number line with a configurable range and tick marks. For each specified range, it draws a highlighted segment and places circles at the boundary points. The circles can be 'open' (for <, >) or 'closed' (for ≤, ≥), providing a mathematically precise representation of the solution."
 	)
 
 export type InequalityNumberLineProps = z.infer<typeof InequalityNumberLinePropsSchema>
 
 /**
- * This template generates a highly customizable SVG graphic of a number line for
- * the purpose of visualizing simple inequalities. It is ideal for questions that
- * require students to graph an inequality or interpret a graph of an inequality.
+ * Generates an SVG number line to graph the solution set of single or compound inequalities,
+ * using open/closed circles and shaded regions to represent the solution.
  */
 export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumberLinePropsSchema> = (_data) => {
 	// TODO: Implement inequality-number-line generation

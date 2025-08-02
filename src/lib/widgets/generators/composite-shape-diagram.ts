@@ -51,16 +51,14 @@ export const CompositeShapeDiagramPropsSchema = z
 			.describe("An optional array of markers to indicate right angles.")
 	})
 	.describe(
-		"This is a powerful and flexible template for generating complex, multi-sided polygons as SVG graphics, including triangles, parallelograms, trapezoids, and other composite shapes. It replaces the specialized `triangleDiagram` and `parallelogramDiagram` widgets. It is designed for area problems where a shape is either composed of simpler shapes or can be found by subtracting one shape from another. The generator builds a shape from a list of vertices. Its main purpose is to visualize the decomposition of the shape. Key features include: Arbitrary Polygons: Can draw any simple polygon defined by a sequence of vertex coordinates. Decomposition Lines: Can draw internal, dashed lines between vertices to show how the composite shape can be split into simpler sub-regions. Region and Dimension Labeling: Supports adding text labels to any segment or internal region. Right-Angle Markers: Can place right-angle symbols at any vertex or intersection to explicitly show perpendicularity."
+		"Generates a flexible diagram of a composite polygon from a set of vertices. This widget is ideal for area and perimeter problems that involve decomposing a complex shape into simpler ones (e.g., rectangles, triangles). It supports drawing a solid outer boundary, internal dashed lines for decomposition, labels for dimensions and regions, and right-angle markers to indicate perpendicularity. This allows for the clear visualization of shapes like L-shaped polygons, trapezoids, or any multi-sided figure."
 	)
 
 export type CompositeShapeDiagramProps = z.infer<typeof CompositeShapeDiagramPropsSchema>
 
 /**
- * This is a powerful and flexible template for generating complex, multi-sided polygons,
- * often called composite shapes, as SVG graphics. It is specifically designed for area
- * problems where a shape is either composed of simpler shapes or can be found by
- * subtracting one shape from another.
+ * Generates a diagram of a composite polygon from a set of vertices. Ideal for area
+ * problems involving the decomposition of a complex shape into simpler figures.
  */
 export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShapeDiagramPropsSchema> = (_data) => {
 	// TODO: Implement composite-shape-diagram generation

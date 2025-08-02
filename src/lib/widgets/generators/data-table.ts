@@ -34,15 +34,14 @@ export const DataTablePropsSchema = z
 			)
 	})
 	.describe(
-		"This template generates a versatile, accessible, and cleanly styled HTML <table> inside a <div>. It serves as the single generator for all tabular data, including simple data lists, frequency tables, two-way tables, and tables with missing values for interactive questions. The generator can render a header row (`<thead>`), a body (`<tbody>`), and a footer (`<tfoot>`). Rows can be configured with a row header (`<th>`) by setting `isHeader: true`. Cells can contain numbers, text (including MathML), or an input specification object for interactive fields. The final output is a semantically correct, bordered table that is easy to read and accessible to screen readers."
+		"Generates a versatile and accessible HTML <table>, serving as the single generator for all tabular data displays. It is capable of creating simple data lists, frequency tables, and complex two-way tables for displaying categorical data. The widget supports an optional header, footer (for totals), and row-level headers for maximum semantic correctness. Cells can contain plain text, numbers, MathML, or interactive input fields, making it suitable for both static display and interactive questions."
 	)
 
 export type DataTableProps = z.infer<typeof DataTablePropsSchema>
 
 /**
- * This template generates a versatile, accessible, and cleanly styled HTML table inside a div.
- * It is designed to present structured data in various formats, including simple data lists,
- * two-way tables, and tables with missing values for interactive questions.
+ * Generates a versatile HTML table for all tabular data needs, including simple lists,
+ * frequency tables, and two-way tables. Supports interactive input cells.
  */
 export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (_data) => {
 	// TODO: Implement data table generation, including the new footer

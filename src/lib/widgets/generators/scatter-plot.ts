@@ -67,7 +67,8 @@ export const ScatterPlotPropsSchema = z
 export type ScatterPlotProps = z.infer<typeof ScatterPlotPropsSchema>
 
 /**
- * This template generates a two-dimensional scatter plot as an SVG graphic, with support for overlaying trend lines.
+ * Generates a two-dimensional scatter plot to visualize the relationship between two
+ * variables, with optional support for overlaying linear or nonlinear trend lines.
  */
 export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema> = (_data) => {
 	// TODO: Implement scatter-plot generation

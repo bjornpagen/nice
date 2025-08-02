@@ -35,16 +35,14 @@ export const GeometricSolidDiagramPropsSchema = z
 		labels: z.array(SolidDimensionLabelSchema).optional().describe("An array of dimension labels to display.")
 	})
 	.describe(
-		"This template is used to generate diagrams of three-dimensional geometric solids that include curved surfaces, such as cylinders, cones, and spheres. The output is a clear SVG representation suitable for questions about identifying shapes or calculating their volume and surface area. The generator will render the solid from a standard perspective view. It accurately depicts the shape's form, including the circular bases and curved lateral surfaces. To aid in three-dimensional perception, edges or outlines that would be hidden from view (like the back edge of a cylinder's base) are rendered as dashed arcs or lines. The template also supports adding dimension labels with leader lines to indicate key measurements like radius and height, which are crucial for calculation problems."
+		"Generates a 3D diagram of a geometric solid that has at least one curved surface, such as a cylinder, cone, or sphere. The output is an SVG rendering from a perspective view, with hidden edges shown as dashed lines to convey three-dimensional structure. The diagram can include labeled dimensions (e.g., radius, height) with leader lines, making it ideal for problems involving volume or surface area calculations for these specific shapes."
 	)
 
 export type GeometricSolidDiagramProps = z.infer<typeof GeometricSolidDiagramPropsSchema>
 
 /**
- * This template is used to generate diagrams of three-dimensional geometric solids that
- * include curved surfaces, such as cylinders, cones, and spheres. The output is a clear
- * SVG representation suitable for questions about identifying shapes or calculating their
- * volume and surface area.
+ * Generates a 3D diagram of a geometric solid with curved surfaces (e.g., cylinder, cone).
+ * Supports dimension labels for volume and surface area problems.
  */
 export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSolidDiagramPropsSchema> = (_data) => {
 	// TODO: Implement geometric-solid-diagram generation
