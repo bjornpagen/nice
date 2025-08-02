@@ -14,7 +14,7 @@ const HistogramAxisSchema = z.object({
 		.number()
 		.int()
 		.optional()
-		.describe("An optional maximum value for the Y-axis scale. If not provided, it will be inferred from the data."),
+		.describe("An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically."),
 	tickInterval: z.number().optional().describe("An optional numeric interval for tick marks on the Y-axis.")
 })
 

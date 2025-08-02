@@ -21,7 +21,10 @@ export const BarChartPropsSchema = z
 		yAxis: z.object({
 			label: z.string().optional().describe("An optional label for the vertical value axis."),
 			min: z.number().default(0).describe("The minimum value for the Y-axis scale."),
-			max: z.number().describe("The maximum value for the Y-axis scale."),
+			max: z
+				.number()
+				.optional()
+				.describe("The maximum value for the Y-axis scale. If omitted, it will be calculated automatically."),
 			tickInterval: z.number().describe("The numeric interval between labeled tick marks on the Y-axis.")
 		}),
 		data: z.array(BarDataSchema).describe("An array of bar data objects, one for each category."),

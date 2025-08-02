@@ -16,13 +16,17 @@ export const NumberLineForOppositesPropsSchema = z
 				"The absolute value of the number whose opposite is being illustrated (e.g., for -8.3 and 8.3, the value is 8.3)."
 			),
 		positiveLabel: z
-			.string()
-			.optional()
-			.describe('The label for the positive point (defaults to the number itself, but can be "?").'),
+			.union([z.string(), z.boolean()])
+			.default(true)
+			.describe(
+				"The label for the positive point. Can be a string, `true` (use numeric value), or `false` (hide label)."
+			),
 		negativeLabel: z
-			.string()
-			.optional()
-			.describe('The label for the negative point (defaults to the number itself, but can be "?").'),
+			.union([z.string(), z.boolean()])
+			.default(true)
+			.describe(
+				"The label for the negative point. Can be a string, `true` (use numeric value), or `false` (hide label)."
+			),
 		showArrows: z.boolean().default(true).describe("If true, shows symmetric arrows from 0 to each point.")
 	})
 	.describe(
