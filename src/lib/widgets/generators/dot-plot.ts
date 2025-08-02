@@ -1,0 +1,43 @@
+import { z } from "zod"
+import type { WidgetGenerator } from "@/lib/widgets/types"
+
+// Defines a single data category and its frequency for the dot plot
+const DotPlotDataPointSchema = z.object({
+	value: z.number().describe("The numerical value on the horizontal axis."),
+	count: z.number().int().min(1).describe("The number of dots to stack vertically above this value.")
+})
+
+// The main Zod schema for the dotPlot function
+export const DotPlotPropsSchema = z
+	.object({
+		width: z.number().default(420).describe("The total width of the output SVG container in pixels."),
+		height: z.number().default(200).describe("The total height of the output SVG container in pixels."),
+		axis: z
+			.object({
+				label: z.string().optional().describe('An optional title for the horizontal axis (e.g., "Hourly Wages").'),
+				min: z.number().describe("The minimum value displayed on the axis."),
+				max: z.number().describe("The maximum value displayed on the axis."),
+				tickInterval: z.number().describe("The numeric interval between labeled tick marks.")
+			})
+			.describe("Configuration for the horizontal number line."),
+		data: z
+			.array(DotPlotDataPointSchema)
+			.describe("An array of data points, where each object specifies a value and how many dots to render for it."),
+		dotColor: z.string().default("#4285F4").describe("A CSS color string for the dots."),
+		dotRadius: z.number().default(5).describe("The radius of each dot in pixels.")
+	})
+	.describe(
+		'This template is designed to generate a clear, accessible, and standards-compliant dot plot as an SVG graphic within an HTML <div>. Dot plots are used to visualize the distribution of a numerical data set, especially when the data consists of discrete values or has been binned. The generator will construct a horizontal number line that serves as the base axis. This axis will be fully configurable, with a specified minimum and maximum value, major tick marks at defined intervals, and corresponding numerical labels beneath each tick. The axis can also have a descriptive title (e.g., "Number of snow days," "Age in years"). Above the horizontal axis, the data points are represented as small, filled circles (dots). For each value on the number line, the generator will stack dots vertically, with each dot representing a single occurrence of that value in the data set. The vertical spacing between dots will be uniform to ensure clarity. The resulting stacks of dots visually represent the frequency of each value, making it easy to identify the shape of the distribution, including peaks (mode), clusters, gaps, and outliers. The final SVG is a self-contained, accurately scaled visual representation of the raw data.'
+	)
+
+export type DotPlotProps = z.infer<typeof DotPlotPropsSchema>
+
+/**
+ * Generates a clear, accessible, and standards-compliant dot plot as an SVG graphic.
+ * Dot plots are used to visualize the distribution of a numerical data set,
+ * especially when the data consists of discrete values or has been binned.
+ */
+export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (_data) => {
+	// TODO: Implement dot plot generation
+	return "<svg><!-- Dot plot implementation --></svg>"
+}
