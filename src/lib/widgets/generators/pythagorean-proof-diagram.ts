@@ -13,8 +13,8 @@ const SideSquareSchema = z.object({
 // The main Zod schema for the pythagoreanProofDiagram function
 export const PythagoreanProofDiagramPropsSchema = z
 	.object({
-		width: z.number().default(300).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(300).describe("The total height of the output SVG container in pixels."),
+		width: z.number().default(400).describe("The total width of the output SVG container in pixels."),
+		height: z.number().default(400).describe("The total height of the output SVG container in pixels."),
 		squareA: SideSquareSchema.describe("Properties of the square on the first leg."),
 		squareB: SideSquareSchema.describe("Properties of the square on the second leg."),
 		squareC: SideSquareSchema.describe("Properties of the square on the hypotenuse.")
@@ -36,52 +36,72 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	const b = Math.sqrt(squareB.area)
 	const c = Math.sqrt(squareC.area)
 
-	// Scale to fit inside the SVG
-	const maxDim = Math.max(a + c, b + c) * 1.2
-	const scale = Math.min(width, height) / maxDim
+	// Calculate the exact bounds needed for the entire diagram
+	// The width needs: triangle width (a) + square B width (b) = a + b
+	// The height needs: triangle height (b) + square A height (a) = a + b
+	// Plus the hypotenuse square extends diagonally, adding c to both dimensions
+	const requiredWidth = a + b + c
+	const requiredHeight = a + b + c
+	const maxDim = Math.max(requiredWidth, requiredHeight)
+	const scale = (Math.min(width, height) * 0.9) / maxDim // 0.9 for padding
 
 	const sa = a * scale
 	const sb = b * scale
+	const sc = c * scale
 
-	const centerX = width / 2
-	const centerY = height / 2
+	// Center the entire diagram
+	const totalWidth = (a + b + c) * scale
+	const totalHeight = (a + b + c) * scale
+	const offsetX = (width - totalWidth) / 2 + sc
+	const offsetY = (height - totalHeight) / 2 + sc
 
-	// Vertices of the central triangle
-	const p1 = { x: centerX - sb / 2, y: centerY + sa / 2 } // Corner between a and c
-	const p2 = { x: centerX - sb / 2, y: centerY - sa / 2 } // Right angle corner
-	const p3 = { x: centerX + sb / 2, y: centerY - sa / 2 } // Corner between b and c
+	// To make the diagram match the visual test case, we swap 'a' and 'b' sides
+	// The triangle is now oriented with side 'a' horizontal and 'b' vertical.
+	const v_right = { x: offsetX + sa, y: offsetY + sb } // Right-angle vertex
+	const v_a_end = { x: offsetX, y: offsetY + sb } // End of horizontal leg 'a'
+	const v_b_end = { x: offsetX + sa, y: offsetY } // End of vertical leg 'b'
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg +=
-		"<style>.area-label { font-size: 14px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; }</style>"
+		"<style>.area-label { font-size: 16px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; } .side-label { font-size: 14px; text-anchor: middle; dominant-baseline: middle; }</style>"
 
-	// Square on side A
-	const colorA = "rgba(217, 95, 79, 0.5)"
-	svg += `<rect x="${p1.x - sa}" y="${p1.y - sa / 2}" width="${sa}" height="${sa}" fill="${colorA}" stroke="black" transform="rotate(-90 ${p1.x} ${p1.y})"/>`
-	svg += `<text x="${p1.x - sa / 2}" y="${p2.y}" class="area-label" fill="black">${squareA.area}</text>`
-	if (squareA.sideLabel)
-		svg += `<text x="${p1.x - 5}" y="${centerY}" text-anchor="middle" dominant-baseline="middle">${squareA.sideLabel}</text>`
+	// --- Square C (Hypotenuse) ---
+	const colorC = "#F4DDBE" // tan/orange
+	const hypVec = { x: v_b_end.x - v_a_end.x, y: v_b_end.y - v_a_end.y } // vector from a_end to b_end
+	const perpVec = { x: hypVec.y, y: -hypVec.x } // outward perpendicular vector (flipped to other side)
+	const v_c1 = { x: v_b_end.x + perpVec.x, y: v_b_end.y + perpVec.y }
+	const v_c2 = { x: v_a_end.x + perpVec.x, y: v_a_end.y + perpVec.y }
+	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${colorC}" stroke="black" stroke-width="1"/>`
+	const centerC = { x: (v_a_end.x + v_c1.x) / 2, y: (v_a_end.y + v_c1.y) / 2 }
+	svg += `<text x="${centerC.x}" y="${centerC.y}" class="area-label">${squareC.area}</text>`
+	if (squareC.sideLabel) {
+		const midHyp = { x: (v_a_end.x + v_b_end.x) / 2, y: (v_a_end.y + v_b_end.y) / 2 }
+		// Place "c" label on the hypotenuse side of the triangle
+		svg += `<text x="${midHyp.x}" y="${midHyp.y - 10}" class="side-label">${squareC.sideLabel}</text>`
+	}
 
-	// Square on side B
-	const colorB = "rgba(66, 133, 244, 0.5)"
-	svg += `<rect x="${p3.x - sb / 2}" y="${p3.y - sb}" width="${sb}" height="${sb}" fill="${colorB}" stroke="black" transform="rotate(0 ${p3.x} ${p3.y})"/>`
-	svg += `<text x="${centerX}" y="${p3.y - sb / 2}" class="area-label" fill="black">${squareB.area}</text>`
-	if (squareB.sideLabel)
-		svg += `<text x="${centerX}" y="${p3.y + 5}" text-anchor="middle" dominant-baseline="middle">${squareB.sideLabel}</text>`
+	// --- Square B (on leg 'b') ---
+	const colorB = "#A7C7E7" // light blue
+	svg += `<rect x="${v_right.x}" y="${v_b_end.y}" width="${sb}" height="${sb}" fill="${colorB}" stroke="black" stroke-width="1"/>`
+	const centerB = { x: v_right.x + sb / 2, y: v_b_end.y + sb / 2 }
+	svg += `<text x="${centerB.x}" y="${centerB.y}" class="area-label">${squareB.area}</text>`
+	if (squareB.sideLabel) {
+		const midB = { x: (v_right.x + v_b_end.x) / 2, y: (v_right.y + v_b_end.y) / 2 }
+		svg += `<text x="${midB.x + 10}" y="${midB.y}" class="side-label">${squareB.sideLabel}</text>`
+	}
 
-	// Square on side C (hypotenuse)
-	const colorC = "rgba(244, 180, 0, 0.5)"
-	const angleC = Math.atan2(p1.y - p3.y, p1.x - p3.x) * (180 / Math.PI)
-	svg += `<rect x="${p3.x}" y="${p3.y}" width="${sb * (c / b)}" height="${sb * (c / b)}" fill="${colorC}" stroke="black" transform="rotate(${angleC} ${p3.x} ${p3.y})"/>`
-	const midC = { x: (p1.x + p3.x) / 2, y: (p1.y + p3.y) / 2 }
-	const normal = { x: p1.y - p3.y, y: p3.x - p1.x }
-	const mag = Math.sqrt(normal.x ** 2 + normal.y ** 2)
-	svg += `<text x="${midC.x + (normal.x / mag) * (sa * 0.6)}" y="${midC.y + (normal.y / mag) * (sa * 0.6)}" class="area-label" fill="black">${squareC.area}</text>`
-	if (squareC.sideLabel)
-		svg += `<text x="${midC.x}" y="${midC.y}" text-anchor="middle" dominant-baseline="middle">${squareC.sideLabel}</text>`
+	// --- Square A (on leg 'a') ---
+	const colorA = "#F2B5B2" // light red/pink
+	svg += `<rect x="${v_a_end.x}" y="${v_a_end.y}" width="${sa}" height="${sa}" fill="${colorA}" stroke="black" stroke-width="1"/>`
+	const centerA = { x: v_a_end.x + sa / 2, y: v_a_end.y + sa / 2 }
+	svg += `<text x="${centerA.x}" y="${centerA.y}" class="area-label">${squareA.area}</text>`
+	if (squareA.sideLabel) {
+		const midA = { x: (v_right.x + v_a_end.x) / 2, y: (v_right.y + v_a_end.y) / 2 }
+		svg += `<text x="${midA.x}" y="${midA.y + 10}" class="side-label">${squareA.sideLabel}</text>`
+	}
 
-	// Central triangle (drawn on top)
-	svg += `<polygon points="${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y}" fill="white" stroke="black" stroke-width="2"/>`
+	// --- Central Triangle (drawn on top) ---
+	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_right.x},${v_right.y} ${v_b_end.x},${v_b_end.y}" fill="white" stroke="black" stroke-width="2"/>`
 
 	svg += "</svg>"
 	return svg
