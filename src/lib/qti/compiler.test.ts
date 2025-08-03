@@ -58,9 +58,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					"<p>The ratio of distance to elevation is 3:120, which simplifies to a unit rate of 1:40. For every 1 km hiked, the elevation increases by 40 m. This matches the correct number line.</p>",
+					'<p><span class="qti-keyword-emphasis">Correct!</span> The ratio of distance to elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>:</mo><mn>120</mn></math>, which simplifies to a unit rate of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>:</mo><mn>40</mn></math>. For every <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mtext> km</mtext></math> hiked, the elevation increases by <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>40</mn><mtext> m</mtext></math>. This matches the correct number line.</p>',
 				incorrect:
-					"<p>First, find the unit rate. If Cory's elevation is 120 m after 3 km, the rate is 120m/3km = 40 meters per kilometer. Use this rate to fill in the other values on the number line.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> First, find the unit rate. If Cory\'s elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn><mtext> m</mtext></math> after <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mtext> km</mtext></math>, the rate is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mn>120</mn><mtext> m</mtext></mrow><mrow><mn>3</mn><mtext> km</mtext></mrow></mfrac><mo>=</mo><mn>40</mn></math> meters per kilometer. Use this rate to fill in the other values on the number line.</p>'
 			}
 		}
 
@@ -96,9 +96,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					'<p>The answer is 81. You successfully applied the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math></p>',
+					'<p><span class="qti-keyword-emphasis">Correct!</span> The answer is 81.</p><p>You successfully applied the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math></p>',
 				incorrect:
-					'<p>Let me help you solve this step by step. First, use the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math> So: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>2</mn><mn>54</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>1</mn><mn>27</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup></math> Then: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup><mo>=</mo><msup><mrow><mo>(</mo><mroot><mn>27</mn><mn>3</mroot><mo>)</mo></mrow><mn>4</mn></msup><mo>=</mo><msup><mn>3</mn><mn>4</mn></msup><mo>=</mo><mn>81</mn></math></p>'
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> Let me help you solve this step by step.</p><p>First, use the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math></p><p>So: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>2</mn><mn>54</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>1</mn><mn>27</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup></math></p><p>Then: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup><mo>=</mo><msup><mrow><mo>(</mo><mroot><mn>27</mn><mn>3</mroot><mo>)</mo></mrow><mn>4</mn></msup><mo>=</mo><msup><mn>3</mn><mn>4</mn></msup><mo>=</mo><mn>81</mn></math></p>'
 			}
 		}
 
@@ -131,25 +131,29 @@ describe("QTI Compiler", () => {
 						{
 							identifier: "A",
 							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn></math>',
-							feedback: "<p>Correct! 708 > 79.</p>"
+							feedback:
+								'<p>Correct! <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn><mo>&gt;</mo><mn>79</mn></math>.</p>'
 						},
 						{
 							identifier: "B",
-							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>></mo></math>',
-							feedback: "<p>That symbol belongs between 708 and 79 to make a true statement.</p>"
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>',
+							feedback:
+								'<p>That symbol belongs between <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>79</mn></math> to make a true statement.</p>'
 						},
 						{
 							identifier: "C",
 							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>79</mn></math>',
-							feedback: "<p>79 is the smaller number on the right.</p>"
+							feedback:
+								'<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>79</mn></math> is the smaller number on the right.</p>'
 						}
 					]
 				}
 			],
 			feedback: {
-				correct: "<p>You have arranged the cards as 708 > 79, which is a true comparison.</p>",
+				correct:
+					'<p><span class="qti-keyword-emphasis">Correct!</span> You have arranged the cards as <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn><mo>&gt;</mo><mn>79</mn></math>, which is a true comparison.</p>',
 				incorrect:
-					"<p>Make sure the largest number is on the left and the symbol correctly represents the relationship.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> Make sure the largest number is on the left and the symbol correctly represents the relationship.</p>'
 			}
 		}
 
@@ -215,9 +219,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					'<p>The graph shows an open point at 0 with an arrow to the right, representing all values strictly greater than 0, so the inequality is <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>.</p>',
+					'<p><span class="qti-keyword-emphasis">Correct!</span> The graph shows an open point at 0 with an arrow to the right, representing all values strictly greater than 0, so the inequality is <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>.</p>',
 				incorrect:
-					"<p>The open point at 0 means 0 itself is not included, and the arrow pointing right indicates values greater than 0.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> The open point at <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math> means <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math> itself is not included, and the arrow pointing right indicates values greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math>.</p>'
 			}
 		}
 
@@ -297,9 +301,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					'<p>On a vertical number line, numbers higher up are greater. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, it is the greater number.</p>',
+					'<p><span class="qti-keyword-emphasis">Correct!</span> On a vertical number line, numbers higher up are greater. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, it is the greater number.</p>',
 				incorrect:
-					'<p>Look at the positions on the number line. <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is located higher up than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>. This means <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, and therefore <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>.</p>'
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> Look at the positions on the number line. <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is located higher up than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>. This means <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, and therefore <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>.</p>'
 			}
 		}
 
@@ -355,9 +359,10 @@ describe("QTI Compiler", () => {
 				}
 			],
 			feedback: {
-				correct: "<p>The completed table correctly reflects the Venn diagram data.</p>",
+				correct:
+					'<p><span class="qti-keyword-emphasis">Correct!</span> The completed table is:</p><table class="qti-bordered"><thead><tr><th scope="col"></th><th scope="col" class="qti-align-center">Received cold medicine</th><th scope="col" class="qti-align-center">Did not receive cold medicine</th></tr></thead><tbody><tr><th scope="row" class="qti-align-left">Cold <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>≥</mo></math> 7 days</th><td class="qti-align-center">23</td><td class="qti-align-center">20</td></tr><tr><th scope="row" class="qti-align-left">Cold <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math> 7 days</th><td class="qti-align-center">27</td><td class="qti-align-center">30</td></tr></tbody></table>',
 				incorrect:
-					'<p>Use the numbers in the Venn diagram. The overlap (23) belongs in the "Received medicine" & "Cold ≥ 7 days" cell. Then distribute the other counts accordingly.</p>'
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> Use the numbers in the Venn diagram. The overlap (<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>23</mn></math>) belongs in the “Received medicine” & “Cold <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>≥</mo><mn>7</mn></math> days” cell. Then distribute the other counts accordingly.</p>'
 			}
 		}
 
@@ -412,7 +417,8 @@ describe("QTI Compiler", () => {
 								height: 88,
 								shapes: [{ type: "rectangle", totalParts: 8, shadedParts: 4, rows: 2, columns: 4 }]
 							},
-							feedback: "<p>Correct! This rectangle has 4 out of 8 parts shaded, which equals 4/8 = 1/2 = 3/6.</p>"
+							feedback:
+								'<p>Correct! This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>4</mn><mn>8</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math>.</p>'
 						},
 						{
 							identifier: "B",
@@ -422,7 +428,8 @@ describe("QTI Compiler", () => {
 								height: 88,
 								shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 2, rows: 2, columns: 2 }]
 							},
-							feedback: "<p>Correct! This rectangle has 2 out of 4 parts shaded, which equals 2/4 = 1/2 = 3/6.</p>"
+							feedback:
+								'<p>Correct! This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>4</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math>.</p>'
 						},
 						{
 							identifier: "C",
@@ -433,16 +440,16 @@ describe("QTI Compiler", () => {
 								shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 3, rows: 2, columns: 2 }]
 							},
 							feedback:
-								"<p>Not quite. This rectangle has 3 out of 4 parts shaded, which equals 3/4. Since 3/4 is not equal to 3/6 (which equals 1/2), this is incorrect.</p>"
+								'<p>Not quite. This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math>. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math> is not equal to <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> (which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>), this is incorrect.</p>'
 						}
 					]
 				}
 			],
 			feedback: {
 				correct:
-					"<p>Excellent! You correctly identified that 3/6 = 1/2, and found both rectangles that have exactly half of their area shaded: 4/8 and 2/4 both equal 1/2.</p>",
+					'<p><span class="qti-keyword-emphasis">Excellent!</span> You correctly identified that <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>, and found both rectangles that have exactly half of their area shaded: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>4</mn><mn>8</mn></mfrac></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>4</mn></mfrac></math> both equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>.</p>',
 				incorrect:
-					"<p>Not quite. First, simplify 3/6 to 1/2. Then count the shaded parts in each rectangle and check if that fraction equals 1/2. Remember: 4/8 = 1/2, 2/4 = 1/2, but 3/4 ≠ 1/2.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> First, simplify <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>. Then count the shaded parts in each rectangle and check if that fraction equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>. Remember: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>4</mn><mn>8</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>4</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>, but <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math> ≠ <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>.</p>'
 			}
 		}
 
@@ -487,31 +494,32 @@ describe("QTI Compiler", () => {
 						{
 							identifier: "A",
 							content:
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>×</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>4</mn><mo>×</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></math>',
 							feedback:
-								"<p>Not quite. This would mean 4 groups of 1/3 each. But we have 3 circles, each with 1/4 shaded, not 4 groups of 1/3.</p>"
+								'<p>Not quite. This would mean <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> groups of <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>3</mn></mfrac></math> each. But we have <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles, each with <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> shaded, not <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> groups of <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>3</mn></mfrac></math>.</p>'
 						},
 						{
 							identifier: "B",
 							content:
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow></math>',
 							feedback:
-								"<p>Correct! There are 3 circles and 1/4 of each circle is shaded. We can multiply: 3 × 1/4.</p>"
+								'<p>Correct! There are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles and <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> of each circle is shaded. We can multiply: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>.</p>'
 						},
 						{
 							identifier: "C",
 							content:
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>',
-							feedback: "<p>Correct! Since we have 3 circles and each has 1/4 shaded, we can add: 1/4 + 1/4 + 1/4.</p>"
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow></math>',
+							feedback:
+								'<p>Correct! Since we have <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles and each has <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> shaded, we can add: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>.</p>'
 						}
 					]
 				}
 			],
 			feedback: {
 				correct:
-					"<p>Excellent! You found both correct ways to calculate the shaded area. Since we have 3 circles with 1/4 shaded in each, we can either multiply 3 × 1/4 or add 1/4 + 1/4 + 1/4. Both give us 3/4 as the total shaded area.</p>",
+					'<p><span class="qti-keyword-emphasis">Excellent!</span> You found both correct ways to calculate the shaded area. Since we have <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles with <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> shaded in each, we can either multiply <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math> or add <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>. Both give us <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math> as the total shaded area.</p>',
 				incorrect:
-					"<p>Not quite. Look carefully at the image. There are 3 circles, and 1/4 of each circle is shaded. We can find the total shaded area by either: (1) multiplying 3 × 1/4, or (2) adding 1/4 + 1/4 + 1/4.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> Look carefully at the image. There are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> of each circle is shaded. We can find the total shaded area by either: (1) multiplying <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>, or (2) adding <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>.</p>'
 			}
 		}
 
@@ -532,7 +540,7 @@ describe("QTI Compiler", () => {
 			],
 			body: [
 				"<p>A certain circle can be represented by the following equation.</p>",
-				'<math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></math>',
+				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></mrow></math>',
 				"<p>What is the center of this circle?</p>",
 				"<p>(",
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_X", expectedLength: 3 },
@@ -540,14 +548,15 @@ describe("QTI Compiler", () => {
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_Y", expectedLength: 3 },
 				")</p>",
 				"<p>What is the radius of this circle?</p>",
+				"<p>",
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_R", expectedLength: 2 },
-				"<p> units</p>"
+				"<span> units</span></p>"
 			],
 			feedback: {
 				correct:
-					"<p>You successfully found that the circle is centered at (–9, –7) with a radius of 5 units. You correctly converted the equation to standard form: (x+9)²+(y+7)²=25</p>",
+					'<p><span class="qti-keyword-emphasis">Correct!</span> You successfully found that the circle is centered at (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>7</mn></math>) with a radius of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> units.</p><p>You correctly converted the equation to standard form: <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mi>x</mi><mo>+</mo><mn>9</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mo>(</mo><mi>y</mi><mo>+</mo><mn>7</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>=</mo><mn>25</mn></math></p>',
 				incorrect:
-					"<p>Let's complete the square to find the center and radius. Starting with: x²+y²+18x+14y+105=0. Group the x-terms and y-terms: (x²+18x)+(y²+14y)=-105. Complete the square for x: x²+18x+81=(x+9)². Complete the square for y: y²+14y+49=(y+7)². Don't forget to add 81 and 49 to both sides! Final form: (x+9)²+(y+7)²=25. Therefore: center = (–9, –7) and radius = 5</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> Let\'s complete the square to find the center and radius.</p><p>Starting with: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></math></p><ul><li>Group the x-terms and y-terms: <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>)</mo><mo>+</mo><mo>(</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>14</mn><mi>y</mi><mo>)</mo><mo>=</mo><mo>-</mo><mn>105</mn></math></li><li>Complete the square for x: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>81</mn><mo>=</mo><mo>(</mo><mi>x</mi><mo>+</mo><mn>9</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup></math></li><li>Complete the square for y: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>49</mn><mo>=</mo><mo>(</mo><mi>y</mi><mo>+</mo><mn>7</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup></math></li><li>Don\'t forget to add <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>81</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>49</mn></math> to both sides!</li><li>Final form: <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mi>x</mi><mo>+</mo><mn>9</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mo>(</mo><mi>y</mi><mo>+</mo><mn>7</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>=</mo><mn>25</mn></math></li></ul><p>Therefore: center = (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>7</mn></math>) and radius = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math></p>'
 			}
 		}
 
@@ -574,24 +583,26 @@ describe("QTI Compiler", () => {
 					type: "dataTable",
 					columnHeaders: ["Final exam", "Score on a 100-point scale"],
 					rows: [
-						{ cells: ["Astronomy", 72] },
-						{ cells: ["Biology", 85] },
-						{ cells: ["Physics", 92] },
+						{ cells: ["Astronomy", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math>'] },
+						{ cells: ["Biology", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math>'] },
+						{ cells: ["Physics", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math>'] },
 						{ cells: ["Chemistry", "?"] }
 					]
 				},
-				"<p>If the mean of the data set is 84 points, find Haruka's final exam score in chemistry.</p>",
+				'<p>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka\'s final exam score in chemistry.</p>',
+				"<p>",
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
 				},
-				"<span> points</span>"
+				"<span> points</span></p>"
 			],
 			feedback: {
-				correct: "<p>Haruka scored 87 points on her chemistry exam.</p>",
+				correct:
+					'<p><span class="qti-keyword-emphasis">Correct!</span> Haruka scored <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>87</mn></math> points on her chemistry exam.</p>',
 				incorrect:
-					"<p>To find the missing score, use the formula for mean: Mean = (Sum of all scores) ÷ (Number of scores). 1. Calculate the total points: Mean × Number of exams = 84 × 4 = 336 points. 2. Add up the known scores: 72 + 85 + 92 = 249 points. 3. Find the missing score: 336 - 249 = 87 points. Therefore, Haruka scored 87 points on her chemistry exam.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> To find the missing score, use the formula for mean:</p><p>Mean = (Sum of all scores) ÷ (Number of scores)</p><ol><li>Calculate the total points: Mean × Number of exams = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn><mo>×</mo><mn>4</mn><mo>=</mo><mn>336</mn></math> points</li><li>Add up the known scores: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn><mo>+</mo><mn>85</mn><mo>+</mo><mn>92</mn><mo>=</mo><mn>249</mn></math> points</li><li>Find the missing score: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>336</mn><mo>-</mo><mn>249</mn><mo>=</mo><mn>87</mn></math> points</li></ol><p>Therefore, Haruka scored <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>87</mn></math> points on her chemistry exam.</p>'
 			}
 		}
 
@@ -619,12 +630,48 @@ describe("QTI Compiler", () => {
 					type: "dataTable",
 					columnHeaders: ["Year", "GDP (% change)", "Unemployment (% of the labor force)"],
 					rows: [
-						{ cells: ["2014", "0%", "7%"] },
-						{ cells: ["2015", "-1%", "8%"] },
-						{ cells: ["2016", "-2%", "10%"] },
-						{ cells: ["2017", "2%", "6%"] },
-						{ cells: ["2018", "4%", "5%"] },
-						{ cells: ["2019", "1%", "6%"] }
+						{
+							cells: [
+								"2014",
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>%</mo></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn><mo>%</mo></math>'
+							]
+						},
+						{
+							cells: [
+								"2015",
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn><mo>%</mo></math>'
+							]
+						},
+						{
+							cells: [
+								"2016",
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>%</mo></math>'
+							]
+						},
+						{
+							cells: [
+								"2017",
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>%</mo></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
+							]
+						},
+						{
+							cells: [
+								"2018",
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>%</mo></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn><mo>%</mo></math>'
+							]
+						},
+						{
+							cells: [
+								"2019",
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>%</mo></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
+							]
+						}
 					]
 				},
 				{
@@ -671,9 +718,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					"<p>2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins.</p>",
+					'<p><span class="qti-keyword-emphasis">Correct!</span> 2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins.</p>',
 				incorrect:
-					"<p>A trough occurs at the bottom of a recession, when GDP stops falling and starts growing again. Notice that GDP fell in 2015 (–1%) and 2016 (–2%), then rose in 2017 (+2%). This makes 2016 the trough year.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> A trough occurs at the bottom of a recession, when GDP stops falling and starts growing again. Notice that GDP fell in 2015 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>) and 2016 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>), then rose in 2017 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>+</mo><mn>2</mn><mo>%</mo></math>). This makes 2016 the trough year.</p>'
 			}
 		}
 
@@ -696,7 +743,7 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mtd><mtd columnalign="left"><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mtd></mtr><mtr><mtd columnalign="left"><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mtd><mtd columnalign="left"><mo>,</mo><mi>x</mi><mo>></mo><mn>2</mn></mtd></mtr></mtable></mrow></math>',
+				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mrow><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mrow></mtd></mtr><mtr><mtd columnalign="left"><mrow><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>&gt;</mo><mn>2</mn></mrow></mtd></mtr></mtable></mrow></mrow></math>',
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -710,7 +757,7 @@ describe("QTI Compiler", () => {
 							identifier: "A",
 							content: "<p>continuous, not differentiable</p>",
 							feedback:
-								"<p>This would be the case if the function values matched at x=2 but the derivatives from left and right were different. Check both the limit values and the derivatives.</p>"
+								'<p>This would be the case if the function values matched at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math> but the derivatives from left and right were different. Check both the limit values and the derivatives.</p>'
 						},
 						{
 							identifier: "B",
@@ -722,22 +769,22 @@ describe("QTI Compiler", () => {
 							identifier: "C",
 							content: "<p>both continuous and differentiable</p>",
 							feedback:
-								"<p>Correct! The function values match at x=2 (both equal -1) and the derivatives from both sides equal -4, so the function is both continuous and differentiable.</p>"
+								'<p>Correct! The function values match at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math> (both equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>) and the derivatives from both sides equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>, so the function is both continuous and differentiable.</p>'
 						},
 						{
 							identifier: "D",
 							content: "<p>neither continuous nor differentiable</p>",
 							feedback:
-								"<p>Not quite. The function doesn't have a jump discontinuity at x=2. Check if the left and right limits at x=2 are equal.</p>"
+								'<p>Not quite. The function doesn\'t have a jump discontinuity at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>. Check if the left and right limits at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math> are equal.</p>'
 						}
 					]
 				}
 			],
 			feedback: {
 				correct:
-					"<p>The function is both continuous and differentiable at x=2. For continuity: f(2) = -4+3 = -1, and both one-sided limits equal -1. For differentiability: The left derivative is -2x at x=2 -> -4, and the right derivative is 2(x-4) at x=2 -> -4. Since they match, f'(2) = -4.</p>",
+					'<p><strong>Correct!</strong> The function is both continuous and differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>.</p><p>For continuity: <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>(</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>4</mn><mo>+</mo><mn>3</mn><mo>=</mo><mo>-</mo><mn>1</mn></math>, and both one-sided limits equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>.</p><p>For differentiability: The left derivative is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mi>x</mi><msub><mo>|</mo><mrow><mi>x</mi><mo>=</mo><mn>2</mn></mrow></msub><mo>=</mo><mo>-</mo><mn>4</mn></math>, and the right derivative is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo><msub><mo>|</mo><mrow><mi>x</mi><mo>=</mo><mn>2</mn></mrow></msub><mo>=</mo><mo>-</mo><mn>4</mn></math>. Since they match, <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>\'</mo><mo>(</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>4</mn></math>.</p>',
 				incorrect:
-					"<p>Check both continuity (do the limits from left and right equal the function value?) and differentiability (do the derivatives from left and right match?).</p>"
+					'<p><strong>Not quite.</strong> Let\'s check both continuity and differentiability at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>:</p><p><strong>Continuity:</strong> We need <math xmlns="http://www.w3.org/1998/Math/MathML"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>-</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>+</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>f</mi><mo>(</mo><mn>2</mn><mo>)</mo></math></p><ul><li><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>(</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><msup><mn>2</mn><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>=</mo><mo>-</mo><mn>1</mn></math></li><li><math xmlns="http://www.w3.org/1998/Math/MathML"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>-</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>-</mo></msup></mrow></munder><mo>(</mo><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>1</mn></math></li><li><math xmlns="http://www.w3.org/1998/Math/MathML"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>+</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>+</mo></msup></mrow></munder><mo>(</mo><msup><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>)</mo><mo>=</mo><msup><mrow><mo>(</mo><mn>2</mn><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>=</mo><mn>4</mn><mo>-</mo><mn>5</mn><mo>=</mo><mo>-</mo><mn>1</mn></math></li></ul><p>All three values equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>, so the function is continuous.</p><p><strong>Differentiability:</strong> We need the left and right derivatives to be equal.</p><ul><li>Left derivative: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>(</mo><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>2</mn><mi>x</mi></math>, so at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>: <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math></li><li>Right derivative: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>(</mo><msup><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>)</mo><mo>=</mo><mn>2</mn><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo></math>, so at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>(</mo><mo>-</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>4</mn></math></li></ul><p>Both derivatives equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>, so the function is differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>.</p>'
 			}
 		}
 
@@ -760,22 +807,22 @@ describe("QTI Compiler", () => {
 			],
 			body: [
 				'<p>Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.</p>',
-				'<math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mo>∬</mo><mi>S</mi></msub><mrow><mo>[</mo><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover><mo>]</mo></mrow><mo>·</mo><mi>d</mi><mi>S</mi></math>',
+				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∬</mo><mi>S</mi></msub><mrow><mo>[</mo><mrow><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow><mo>]</mo></mrow><mo>·</mo><mi>d</mi><mi>S</mi></mrow></math>',
 				"<p>Use Stokes' theorem to rewrite the surface integral as a line integral.</p>",
 				'<p><em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em></p>',
-				'<p><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mo>∮</mo><mi>C</mi></msub><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mn>2</mn><msup><mi>z</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo></math>',
+				'<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∮</mo><mi>C</mi></msub><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mn>2</mn><msup><mi>z</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo></mrow></math>',
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 20
 				},
-				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mi>k</mi><mo>^</mo></mover><mo stretchy="false">)</mo><mo>·</mo><mi>d</mi><mi>r</mi></math></p>'
+				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mover><mi>k</mi><mo>^</mo></mover><mo stretchy="false">)</mo><mo>·</mo><mi>d</mi><mi>r</mi></mrow></math></p>'
 			],
 			feedback: {
 				correct:
-					'<p>The missing component is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>2</mn></mfrac><mo>-</mo><mi>x</mi><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow></math>.</p>',
+					'<p><span class="qti-keyword-emphasis">Correct!</span> The missing component is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>2</mn></mfrac><mo>-</mo><mi>x</mi><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow></math>.</p>',
 				incorrect:
-					"<p>Let curl(F) = -[integral]. Given F = 2y i + 2z^2 j + P k, calculate curl(F) and set its components equal to the integrand's components. Solve the resulting partial differential equations for P.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> Let\'s use Stokes\' theorem to solve this.</p><p>Stokes\' theorem states: <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∮</mo><mi>C</mi></msub><mi>F</mi><mo>·</mo><mi>d</mi><mi>r</mi><mo>=</mo><msub><mo>∬</mo><mi>S</mi></msub><mi>curl</mi><mo stretchy="false">(</mo><mi>F</mi><mo stretchy="false">)</mo><mo>·</mo><mi>d</mi><mi>S</mi></mrow></math></p><p>Since the curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> is negatively oriented, we must have:</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>curl</mi><mo stretchy="false">(</mo><mi>F</mi><mo stretchy="false">)</mo><mo>=</mo><mo>-</mo><mrow><mo>[</mo><mrow><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow><mo>]</mo></mrow><mo>=</mo><mo stretchy="false">(</mo><mo>-</mo><mn>4</mn><mi>z</mi><mo stretchy="false">)</mo><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>-</mo><mi>x</mi><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>-</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow></math></p><p>Let the unknown component of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>F</mi></math> be <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>P</mi></math>. We are given <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>F</mi><mo>=</mo><mn>2</mn><mi>y</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><msup><mi>z</mi><mn>2</mn></msup><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mi>P</mi><mover><mi>k</mi><mo>^</mo></mover></math>. Calculating its curl:</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>curl</mi><mo stretchy="false">(</mo><mi>F</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>(</mo><mrow><mfrac><mrow><mo>∂</mo><mi>P</mi></mrow><mrow><mo>∂</mo><mi>y</mi></mrow></mfrac><mo>-</mo><mn>4</mn><mi>z</mi></mrow><mo>)</mo></mrow><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mrow><mo>(</mo><mrow><mo>-</mo><mfrac><mrow><mo>∂</mo><mi>P</mi></mrow><mrow><mo>∂</mo><mi>x</mi></mrow></mfrac></mrow><mo>)</mo></mrow><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mo>-</mo><mn>2</mn><mo stretchy="false">)</mo><mover><mi>k</mi><mo>^</mo></mover></mrow></math></p><p>By comparing components, we get:</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mrow><mo>∂</mo><mi>P</mi></mrow><mrow><mo>∂</mo><mi>y</mi></mrow></mfrac><mo>-</mo><mn>4</mn><mi>z</mi><mo>=</mo><mo>-</mo><mn>4</mn><mi>z</mi><mspace width="1em"/><mo>⇒</mo><mspace width="1em"/><mfrac><mrow><mo>∂</mo><mi>P</mi></mrow><mrow><mo>∂</mo><mi>y</mi></mrow></mfrac><mo>=</mo><mn>0</mn></mrow></math></p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mfrac><mrow><mo>∂</mo><mi>P</mi></mrow><mrow><mo>∂</mo><mi>x</mi></mrow></mfrac><mo>=</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>-</mo><mi>x</mi></mrow></math></p><p>Integrating the second equation with respect to <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math> gives a solution for <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>P</mi></math> (ignoring extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math>):</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mo>=</mo><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>2</mn></mfrac><mo>-</mo><mi>x</mi><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow></math></p>'
 			}
 		}
 
@@ -800,7 +847,30 @@ describe("QTI Compiler", () => {
 				'This table gives select values of the differentiable function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>.',
 				{
 					type: "dataTable",
-					rows: [{ cells: ["x", -9, -8, -6, -3, -2, -1] }, { cells: ["h(x)", -30, -29, -36, -20, -35, -47] }]
+					rows: [
+						{
+							cells: [
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>8</mn></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6</mn></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>3</mn></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>'
+							]
+						},
+						{
+							cells: [
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>30</mn></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>29</mn></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>36</mn></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>20</mn></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>35</mn></math>',
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>47</mn></math>'
+							]
+						}
+					]
 				},
 				{
 					type: "choiceInteraction",
@@ -813,28 +883,36 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>28</mn></math>'
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>28</mn></math>',
+							feedback:
+								'Were you trying to pick a value between <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>36</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>20</mn></math>? This can be an estimate for <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math>, but we are looking for <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math>.'
 						},
 						{
 							identifier: "B",
-							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>13.5</mn></math>'
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>13.5</mn></math>',
+							feedback:
+								'Were you trying to find <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>1</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>1</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo></mrow></mfrac></math>? This is the average rate of change, or the slope of a secant line, of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math> over the interval <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>3</mn><mo>,</mo><mo>-</mo><mn>1</mn><mo>]</mo></math>. We should pick an interval that includes <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>4</mn></math>.'
 						},
 						{
 							identifier: "C",
-							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2.125</mn></math>'
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2.125</mn></math>',
+							feedback:
+								'Were you trying to find <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>1</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>9</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>1</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>9</mn><mo>)</mo></mrow></mfrac></math>? This is the average rate of change, or the slope of a secant line, of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math> over the entire interval <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>9</mn><mo>,</mo><mo>-</mo><mn>1</mn><mo>]</mo></math>. We can pick a closer interval to estimate <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup></math> specifically at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>4</mn></math>.'
 						},
 						{
 							identifier: "D",
-							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5.33</mn></math>'
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5.33</mn></math>',
+							feedback:
+								'Correct! The best estimate for <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math> is the average rate of change over the narrowest interval available that contains <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>, which is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>6</mn><mo>,</mo><mo>-</mo><mn>3</mn><mo>]</mo></math>.'
 						}
 					]
 				}
 			],
 			feedback: {
 				correct:
-					"<p>The best estimate for h'(-4) is the average rate of change over the narrowest interval available that contains -4, which is [-6, -3]. The average rate of change is (h(-3) - h(-6)) / (-3 - (-6)) = (-20 - (-36)) / 3 = 16/3 ≈ 5.33.</p>",
+					'<p><span class="qti-keyword-emphasis">Correct!</span> The best estimate for <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math> is the average rate of change of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math> over the narrowest interval containing <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math> that can be formed from the table. This interval is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>6</mn><mo>,</mo><mo>-</mo><mn>3</mn><mo>]</mo></math>. The average rate of change is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>3</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>20</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>36</mn><mo>)</mo></mrow><mn>3</mn></mfrac><mo>=</mo><mfrac><mn>16</mn><mn>3</mn></mfrac><mo>≈</mo><mn>5.33</mn></math>.</p>',
 				incorrect:
-					"<p>To estimate the derivative h'(-4), calculate the average rate of change over the smallest interval that contains -4. The closest points are x=-6 and x=-3. The average rate of change is (h(-3) - h(-6)) / (-3 - (-6)) = (-20 - (-36)) / 3 = 16/3 ≈ 5.33.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> To estimate the derivative <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math>, you should calculate the average rate of change over the smallest interval that contains <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>. Looking at the table, the points closest to <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>4</mn></math> are <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>6</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>3</mn></math>. The average rate of change is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>3</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>20</mo><mo>-</mo><mo>(</mo><mo>-</mo><mn>36</mn><mo>)</mo></mrow><mn>3</mn></mfrac><mo>=</mo><mfrac><mn>16</mn><mn>3</mn></mfrac><mo>≈</mo><mn>5.33</mn></math>.</p>'
 			}
 		}
 
@@ -863,7 +941,7 @@ describe("QTI Compiler", () => {
 					shuffle: true,
 					minChoices: 1,
 					maxChoices: 1,
-					prompt: "<p>Which box has 5 apples?</p>",
+					prompt: '<p>Which box has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> apples?</p>',
 					choices: [
 						{
 							identifier: "CHOICE_3",
@@ -921,8 +999,9 @@ describe("QTI Compiler", () => {
 				}
 			],
 			feedback: {
-				correct: "<p>Great job! That box has exactly five apples.</p>",
-				incorrect: "<p>Try again. Count the apples in each box to find the one with exactly five.</p>"
+				correct: '<p><span class="qti-keyword-emphasis">Great job!</span> That box has exactly five apples.</p>',
+				incorrect:
+					'<p><span class="qti-keyword-emphasis">Try again.</span> Count the apples in each box to find the one with exactly five.</p>'
 			}
 		}
 
@@ -950,10 +1029,10 @@ describe("QTI Compiler", () => {
 					type: "dataTable",
 					columnHeaders: ["Type of shape", "Number of shapes"],
 					rows: [
-						{ cells: ["Triangles", 8] },
-						{ cells: ["Circles", 5] },
-						{ cells: ["Rectangles", 3] },
-						{ cells: ["Squares", 9] }
+						{ cells: ["Triangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>'] },
+						{ cells: ["Circles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>'] },
+						{ cells: ["Rectangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>'] },
+						{ cells: ["Squares", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>'] }
 					]
 				},
 				{
@@ -1011,15 +1090,31 @@ describe("QTI Compiler", () => {
 									{ label: "Squares", value: 10 }
 								]
 							}
+						},
+						{
+							identifier: "D",
+							content: {
+								type: "barChart",
+								width: 400,
+								height: 300,
+								xAxisLabel: "Type of shape",
+								yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
+								data: [
+									{ label: "Triangles", value: 4 },
+									{ label: "Circles", value: 8 },
+									{ label: "Rectangles", value: 9 },
+									{ label: "Squares", value: 3 }
+								]
+							}
 						}
 					]
 				}
 			],
 			feedback: {
 				correct:
-					"<p>The chosen graph perfectly matches the data provided in the table: 8 Triangles, 5 Circles, 3 Rectangles, and 9 Squares.</p>",
+					'<p><span class="qti-keyword-emphasis">Correct!</span> The chosen graph perfectly matches the data provided in the table: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> Triangles, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> Circles, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> Rectangles, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math> Squares.</p>',
 				incorrect:
-					'<p>Match the number of shapes from the table to the height of the bar for each shape type. For example, the table says there are 8 Triangles, so the "Triangles" bar should reach the line for the number 8 on the vertical axis.</p>'
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> Match the number of shapes from the table to the height of the bar for each shape type. For example, the table says there are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> Triangles, so the "Triangles" bar should reach the line for the number <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> on the vertical axis.</p>'
 			}
 		}
 
@@ -1065,7 +1160,9 @@ describe("QTI Compiler", () => {
 								],
 								dotColor: "#0074c8",
 								dotRadius: 8
-							}
+							},
+							feedback:
+								"<p>This plot correctly shows a dot for each of the 4 pencils at its measured length. There is one dot at 3, two dots at 8, and one dot at 11.</p>"
 						},
 						{
 							identifier: "B",
@@ -1081,7 +1178,9 @@ describe("QTI Compiler", () => {
 								],
 								dotColor: "#0074c8",
 								dotRadius: 8
-							}
+							},
+							feedback:
+								'<p>This plot only shows one dot for the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm. Remember, there were two pencils with this length, so there should be two dots above the number <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>.</p>'
 						},
 						{
 							identifier: "C",
@@ -1093,16 +1192,36 @@ describe("QTI Compiler", () => {
 								data: [{ value: 4, count: 4 }],
 								dotColor: "#0074c8",
 								dotRadius: 8
-							}
+							},
+							feedback:
+								'<p>This plot shows four dots above the number <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math>. This represents the total number of pencils, not their individual lengths.</p>'
+						},
+						{
+							identifier: "D",
+							content: {
+								type: "dotPlot",
+								width: 450,
+								height: 150,
+								axis: { min: 0, max: 12, tickInterval: 2 },
+								data: [
+									{ value: 4, count: 1 },
+									{ value: 9, count: 2 },
+									{ value: 12, count: 1 }
+								],
+								dotColor: "#0074c8",
+								dotRadius: 8
+							},
+							feedback:
+								"<p>This plot shows lengths of 4 cm, 9 cm, and 12 cm. Check the data again carefully to make sure the dots are placed above the correct numbers on the line plot.</p>"
 						}
 					]
 				}
 			],
 			feedback: {
 				correct:
-					"<p>The data set {11, 8, 8, 3} has one pencil of length 3 cm, two pencils of length 8 cm, and one pencil of length 11 cm. The chosen plot correctly displays a dot for each of these measurements.</p>",
+					'<p><span class="qti-keyword-emphasis">Correct!</span> The data set {11, 8, 8, 3} has one pencil of length <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm, two pencils of length <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and one pencil of length <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm. The chosen plot correctly displays a dot for each of these measurements.</p>',
 				incorrect:
-					"<p>To create the line plot, place one dot above the correct number on the line for each pencil measured. The lengths are 3 cm, 8 cm, 8 cm, and 11 cm. This means there should be one dot above 3, two dots above 8, and one dot above 11.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> To create the line plot, place one dot above the correct number on the line for each pencil measured. The lengths are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm. This means there should be one dot above <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>, two dots above <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>, and one dot above <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math>.</p>'
 			}
 		}
 
@@ -1145,17 +1264,19 @@ describe("QTI Compiler", () => {
 					]
 				},
 				"<p>How many games did the Lions win?</p>",
+				"<p>",
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
 				},
-				"<span> games</span>"
+				"<span> games</span></p>"
 			],
 			feedback: {
-				correct: "<p>The bar for the Lions goes up to the line for 14, so they won 14 games.</p>",
+				correct:
+					'<p><span class="qti-keyword-emphasis">Correct!</span> The bar for the Lions goes up to the line for <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>14</mn></math>, so they won <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>14</mn></math> games.</p>',
 				incorrect:
-					"<p>To find the number of games the Lions won, first find the 'Lions' label on the horizontal axis. Then, follow that bar up to the top. The number on the vertical axis that aligns with the top of the bar is the answer. The Lions' bar reaches the line for 14 games.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> To find the number of games the Lions won, first find the "Lions" label on the horizontal axis. Then, follow that bar up to the top. The number on the vertical axis that aligns with the top of the bar is the answer. The Lions\' bar reaches the line for <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>14</mn></math> games.</p>'
 			}
 		}
 
@@ -1197,19 +1318,20 @@ describe("QTI Compiler", () => {
 					],
 					dotRadius: 6
 				},
-				"<p>How many dolls are taller than 22 centimeters?</p>",
+				'<p>How many dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> centimeters?</p>',
+				"<p>",
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
 				},
-				"<span> dolls</span>"
+				"<span> dolls</span></p>"
 			],
 			feedback: {
 				correct:
-					"<p>There are 3 dolls that are 23 cm tall and 2 dolls that are 24 cm tall. In total, 3 + 2 = 5 dolls are taller than 22 cm.</p>",
+					'<p><span class="qti-keyword-emphasis">Correct!</span> There are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> dolls that are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>23</mn></math> cm tall and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> dolls that are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>24</mn></math> cm tall. In total, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>+</mo><mn>2</mn><mo>=</mo><mn>5</mn></math> dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> cm.</p>',
 				incorrect:
-					"<p>To find the number of dolls taller than 22 cm, count all the dots that are to the right of 22 on the line plot. There are 3 dots above 23 and 2 dots above 24. That makes a total of 5 dolls.</p>"
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> To find the number of dolls taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> cm, count all the dots that are to the right of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> on the line plot. There are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> dots above <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>23</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> dots above <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>24</mn></math>. That makes a total of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> dolls.</p>'
 			}
 		}
 
@@ -1254,9 +1376,9 @@ describe("QTI Compiler", () => {
 				"</p>"
 			],
 			feedback: {
-				correct: "<p>The time shown is 12:55.</p>",
+				correct: '<p><span class="qti-keyword-emphasis">Correct!</span> The time shown is 12:55.</p>',
 				incorrect:
-					"<p>The point 'A' is located after the 12:00 mark but before the 1:00 mark, so the hour is 12. The mark for 12:45 is shown. The next medium tick represents 5 minutes later, which is 12:50. The next medium tick represents another 5 minutes, which is 12:55. Point 'A' is on that mark. The time is 12:55.</p>"
+					"<p><span class=\"qti-keyword-emphasis\">Not quite.</span> The point 'A' is located after the 12:00 mark but before the 1:00 mark, so the hour is 12. The mark for 12:45 is shown. The next medium tick represents 5 minutes later, which is 12:50. The next medium tick represents another 5 minutes, which is 12:55. Point 'A' is on that mark. The time is 12:55.</p>"
 			}
 		}
 
@@ -1304,9 +1426,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					'83 is greater than 58, so the correct symbol is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>.',
+					'<p><span class="qti-keyword-emphasis">Correct!</span> <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math> is greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math>, so the correct symbol is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>.</p>',
 				incorrect:
-					'Remember, when comparing two numbers, the symbol <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math> points to the smaller number. Since 83 is larger than 58, the correct comparison is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn><mo>&gt;</mo><mn>58</mn></math>.'
+					'<p><span class="qti-keyword-emphasis">Not quite.</span> Remember, when comparing two numbers, the symbol <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math> points to the smaller number. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math> is larger than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math>, the correct comparison is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn><mo>&gt;</mo><mn>58</mn></math>.</p>'
 			}
 		}
 
