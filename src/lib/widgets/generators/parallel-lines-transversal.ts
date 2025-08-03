@@ -96,7 +96,7 @@ export const generateParallelLinesTransversal: WidgetGenerator<typeof ParallelLi
 
 		const midAngleRad = toRad((start + end) / 2)
 		const radius = 25
-		const labelRadius = radius + 12
+		const labelRadius = radius + 18
 
 		// Arc
 		const startRad = toRad(start)

@@ -31,10 +31,14 @@ export type VennDiagramProps = z.infer<typeof VennDiagramPropsSchema>
  */
 export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema> = (data) => {
 	const { width, height, circleA, circleB, intersectionCount, outsideCount } = data
-	const r = width / 4
-	const cxA = width / 2 - r / 2
-	const cxB = width / 2 + r / 2
-	const cy = height / 2
+	const padding = { top: 40, bottom: 40, horizontal: 10 }
+	const chartHeight = height - padding.top - padding.bottom
+
+	const r = Math.min(width / 4, chartHeight / 2.5) // Reduced radius for better spacing
+	const overlap = r * 0.45 // 45% overlap for balanced spacing
+	const cxA = width / 2 - r + overlap
+	const cxB = width / 2 + r - overlap
+	const cy = padding.top + chartHeight / 2
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg +=
@@ -47,9 +51,9 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	svg += `<circle cx="${cxA}" cy="${cy}" r="${r}" fill="${circleA.color}" fill-opacity="0.6" stroke="black"/>`
 	svg += `<circle cx="${cxB}" cy="${cy}" r="${r}" fill="${circleB.color}" fill-opacity="0.6" stroke="black"/>`
 
-	// Labels for circles
-	svg += `<text x="${cxA}" y="${cy - r - 10}" class="label">${circleA.label}</text>`
-	svg += `<text x="${cxB}" y="${cy - r - 10}" class="label">${circleB.label}</text>`
+	// Labels for circles - positioned farther apart to use side space
+	svg += `<text x="${cxA - r * 0.5}" y="${padding.top - 5}" class="label">${circleA.label}</text>` // Moved left
+	svg += `<text x="${cxB + r * 0.5}" y="${padding.top - 5}" class="label">${circleB.label}</text>` // Moved right
 
 	// Counts
 	// A only
@@ -59,7 +63,7 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	// Intersection
 	svg += `<text x="${(cxA + cxB) / 2}" y="${cy}" class="count" dominant-baseline="middle">${intersectionCount}</text>`
 	// Outside
-	svg += `<text x="${width / 2}" y="${height - 20}" class="count">${outsideCount}</text>`
+	svg += `<text x="${width / 2}" y="${height - padding.bottom / 2}" class="count">${outsideCount}</text>` // Adjusted y position based on padding
 
 	svg += "</svg>"
 	return svg

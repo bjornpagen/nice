@@ -39,7 +39,7 @@ export type DotPlotProps = z.infer<typeof DotPlotPropsSchema>
  */
 export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data) => {
 	const { width, height, axis, data: plotData, dotColor, dotRadius } = data
-	const margin = { top: 20, right: 20, bottom: 50, left: 20 }
+	const margin = { top: 20, right: 20, bottom: 60, left: 20 }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 	const axisY = height - margin.bottom
@@ -58,7 +58,7 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 
 	// Axis label
 	if (axis.label) {
-		svg += `<text x="${width / 2}" y="${height - 10}" fill="black" text-anchor="middle" font-size="14">${axis.label}</text>`
+		svg += `<text x="${width / 2}" y="${height - 15}" fill="black" text-anchor="middle" font-size="14">${axis.label}</text>`
 	}
 
 	// Ticks and tick labels
@@ -71,10 +71,11 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	// Dots
 	const dotDiameter = dotRadius * 2
 	const dotSpacing = 2 // Vertical space between dots
+	const baseOffset = 5 // Additional space between axis and first dot
 	for (const dp of plotData) {
 		const x = toSvgX(dp.value)
 		for (let i = 0; i < dp.count; i++) {
-			const y = axisY - dotRadius - i * (dotDiameter + dotSpacing)
+			const y = axisY - dotRadius - baseOffset - i * (dotDiameter + dotSpacing)
 			svg += `<circle cx="${x}" cy="${y}" r="${dotRadius}" fill="${dotColor}"/>`
 		}
 	}

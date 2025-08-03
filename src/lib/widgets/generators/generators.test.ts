@@ -149,6 +149,14 @@ describe("Widget Generators", () => {
 			})
 			expect(generateBarChart(props)).toMatchSnapshot()
 		})
+
+		test("should handle empty data array", () => {
+			const props = BarChartPropsSchema.parse({
+				data: [],
+				yAxis: { tickInterval: 10 }
+			})
+			expect(generateBarChart(props)).toMatchSnapshot()
+		})
 	})
 
 	describe("generateBoxPlot", () => {
@@ -181,6 +189,29 @@ describe("Widget Generators", () => {
 			const props = BoxPlotPropsSchema.parse({
 				axis: { min: 100, max: 0 },
 				summary: { min: 10, q1: 25, median: 50, q3: 75, max: 95 }
+			})
+			expect(generateBoxPlot(props)).toMatchSnapshot()
+		})
+
+		test("should render with custom colors", () => {
+			const props = BoxPlotPropsSchema.parse({
+				axis: { min: 0, max: 50 },
+				summary: { min: 5, q1: 15, median: 25, q3: 35, max: 45 },
+				boxColor: "#90EE90",
+				medianColor: "#FF1493"
+			})
+			expect(generateBoxPlot(props)).toMatchSnapshot()
+		})
+
+		test("should have sufficient padding for long axis labels", () => {
+			const props = BoxPlotPropsSchema.parse({
+				axis: {
+					min: 0,
+					max: 100,
+					label: "A very long and descriptive label for the horizontal axis to test spacing",
+					tickLabels: [0, 20, 40, 60, 80, 100]
+				},
+				summary: { min: 5, q1: 30, median: 45, q3: 80, max: 100 }
 			})
 			expect(generateBoxPlot(props)).toMatchSnapshot()
 		})
@@ -242,6 +273,16 @@ describe("Widget Generators", () => {
 			})
 			expect(generateCoordinatePlane(props)).toMatchSnapshot()
 		})
+
+		test("should handle error case with invalid dimensions", () => {
+			const props = CoordinatePlanePropsSchema.parse({
+				width: 10,
+				height: 10,
+				xAxis: { min: 10, max: 0, tickInterval: 1 },
+				yAxis: { min: 10, max: 0, tickInterval: 1 }
+			})
+			expect(generateCoordinatePlane(props)).toMatchSnapshot()
+		})
 	})
 
 	describe("generateDataTable", () => {
@@ -261,7 +302,7 @@ describe("Widget Generators", () => {
 						cells: ["Bob", { type: "input", responseIdentifier: "BOB_SCORE", expectedLength: 3 }, "Needs improvement"]
 					}
 				],
-				footer: ["Total", 1685, ""]
+				footer: ["Total", { type: "input", responseIdentifier: "TOTAL", expectedLength: 5 }, "Summary"]
 			})
 			expect(generateDataTable(props)).toMatchSnapshot()
 		})
@@ -290,6 +331,19 @@ describe("Widget Generators", () => {
 			})
 			expect(generateDiscreteObjectRatioDiagram(props)).toMatchSnapshot()
 		})
+
+		test("should wrap to new row in grid layout when exceeding width", () => {
+			const props = DiscreteObjectRatioDiagramPropsSchema.parse({
+				width: 200,
+				objects: [
+					{ count: 15, icon: "circle", color: "blue" },
+					{ count: 5, icon: "square", color: "red" }
+				],
+				layout: "grid",
+				iconSize: 30
+			})
+			expect(generateDiscreteObjectRatioDiagram(props)).toMatchSnapshot()
+		})
 	})
 
 	describe("generateDotPlot", () => {
@@ -305,6 +359,16 @@ describe("Widget Generators", () => {
 				],
 				dotColor: "teal",
 				dotRadius: 6
+			})
+			expect(generateDotPlot(props)).toMatchSnapshot()
+		})
+
+		test("should handle error case with invalid dimensions", () => {
+			const props = DotPlotPropsSchema.parse({
+				width: 50,
+				height: 20,
+				axis: { min: 10, max: 0, tickInterval: 1 },
+				data: []
 			})
 			expect(generateDotPlot(props)).toMatchSnapshot()
 		})
@@ -325,6 +389,20 @@ describe("Widget Generators", () => {
 			})
 			expect(generateDoubleNumberLine(props)).toMatchSnapshot()
 		})
+
+		test("should handle minimal props", () => {
+			const props = DoubleNumberLinePropsSchema.parse({
+				topLine: {
+					label: "Top",
+					ticks: [0, 5, 10]
+				},
+				bottomLine: {
+					label: "Bottom",
+					ticks: [0, 1, 2]
+				}
+			})
+			expect(generateDoubleNumberLine(props)).toMatchSnapshot()
+		})
 	})
 
 	describe("generateGeometricSolidDiagram", () => {
@@ -337,6 +415,24 @@ describe("Widget Generators", () => {
 					{ target: "radius", text: "r = 5" },
 					{ target: "height", text: "h = 10" }
 				]
+			})
+			expect(generateGeometricSolidDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render cylinder without labels", () => {
+			const props = GeometricSolidDiagramPropsSchema.parse({
+				shape: { type: "cylinder", radius: 8, height: 15 },
+				labels: []
+			})
+			expect(generateGeometricSolidDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render cone shape", () => {
+			const props = GeometricSolidDiagramPropsSchema.parse({
+				width: 200,
+				height: 250,
+				shape: { type: "cone", radius: 6, height: 12 },
+				labels: []
 			})
 			expect(generateGeometricSolidDiagram(props)).toMatchSnapshot()
 		})
@@ -356,6 +452,19 @@ describe("Widget Generators", () => {
 			})
 			expect(generateHangerDiagram(props)).toMatchSnapshot()
 		})
+
+		test("should render hanger with triangles", () => {
+			const props = HangerDiagramPropsSchema.parse({
+				width: 350,
+				height: 250,
+				leftSide: [
+					{ label: 3, shape: "triangle", color: "#ff6b6b" },
+					{ label: 3, shape: "triangle", color: "#ff6b6b" }
+				],
+				rightSide: [{ label: "y", shape: "triangle", color: "#4ecdc4" }]
+			})
+			expect(generateHangerDiagram(props)).toMatchSnapshot()
+		})
 	})
 
 	describe("generateHistogram", () => {
@@ -372,6 +481,29 @@ describe("Widget Generators", () => {
 					{ label: "70-80", frequency: 12 },
 					{ label: "80-90", frequency: 8 },
 					{ label: "90-100", frequency: 3 }
+				]
+			})
+			expect(generateHistogram(props)).toMatchSnapshot()
+		})
+
+		test("should handle error case with invalid dimensions", () => {
+			const props = HistogramPropsSchema.parse({
+				width: 50,
+				height: 50,
+				xAxis: { label: "X" },
+				yAxis: { label: "Y" },
+				bins: []
+			})
+			expect(generateHistogram(props)).toMatchSnapshot()
+		})
+
+		test("should handle histogram without title or custom y-axis settings", () => {
+			const props = HistogramPropsSchema.parse({
+				xAxis: { label: "Values" },
+				yAxis: { label: "Count" },
+				bins: [
+					{ label: "A", frequency: 10 },
+					{ label: "B", frequency: 5 }
 				]
 			})
 			expect(generateHistogram(props)).toMatchSnapshot()
@@ -445,6 +577,43 @@ describe("Widget Generators", () => {
 			})
 			expect(generateNumberLine(props)).toMatchSnapshot()
 		})
+
+		test("should render horizontal number line with left/right point labels", () => {
+			const props = NumberLinePropsSchema.parse({
+				width: 500,
+				orientation: "horizontal",
+				min: 0,
+				max: 20,
+				majorTickInterval: 5,
+				minorTicksPerInterval: 4,
+				points: [
+					{ value: 5, label: "Left", color: "red", labelPosition: "left" },
+					{ value: 15, label: "Right", color: "blue", labelPosition: "right" }
+				]
+			})
+			expect(generateNumberLine(props)).toMatchSnapshot()
+		})
+
+		test("should render vertical number line with special labels and left-positioned points", () => {
+			const props = NumberLinePropsSchema.parse({
+				height: 300,
+				orientation: "vertical",
+				min: -50,
+				max: 50,
+				majorTickInterval: 25,
+				minorTicksPerInterval: 4,
+				specialTickLabels: [
+					{ value: 0, label: "Zero" },
+					{ value: -25, label: "Cold" },
+					{ value: 25, label: "Warm" }
+				],
+				points: [
+					{ value: -30, label: "Freezing", color: "lightblue", labelPosition: "left" },
+					{ value: 40, label: "Hot", color: "red", labelPosition: "above" }
+				]
+			})
+			expect(generateNumberLine(props)).toMatchSnapshot()
+		})
 	})
 
 	describe("generateNumberLineForOpposites", () => {
@@ -473,6 +642,33 @@ describe("Widget Generators", () => {
 					{ value: 13, text: "?°C" }
 				],
 				action: { startValue: -11, change: 24, label: "+24°C" }
+			})
+			expect(generateNumberLineWithAction(props)).toMatchSnapshot()
+		})
+
+		test("should render a horizontal number line with action", () => {
+			const props = NumberLineWithActionPropsSchema.parse({
+				orientation: "horizontal",
+				min: 0,
+				max: 50,
+				tickInterval: 10,
+				customLabels: [
+					{ value: 15, text: "Start" },
+					{ value: 35, text: "End" }
+				],
+				action: { startValue: 15, change: 20, label: "+20" }
+			})
+			expect(generateNumberLineWithAction(props)).toMatchSnapshot()
+		})
+
+		test("should handle error case where min >= max", () => {
+			const props = NumberLineWithActionPropsSchema.parse({
+				orientation: "horizontal",
+				min: 50,
+				max: 0,
+				tickInterval: 10,
+				customLabels: [],
+				action: { startValue: 10, change: 5, label: "+5" }
 			})
 			expect(generateNumberLineWithAction(props)).toMatchSnapshot()
 		})
@@ -596,6 +792,17 @@ describe("Widget Generators", () => {
 			})
 			expect(generatePolyhedronNetDiagram(props)).toMatchSnapshot()
 		})
+
+		test("should handle error case for cube with non-square base", () => {
+			const props = PolyhedronNetDiagramPropsSchema.parse({
+				polyhedronType: "cube",
+				dimensions: {
+					base: { type: "rectangle", length: 5, width: 3 }
+				},
+				showLabels: false
+			})
+			expect(generatePolyhedronNetDiagram(props)).toMatchSnapshot()
+		})
 	})
 
 	describe("generatePythagoreanProofDiagram", () => {
@@ -638,6 +845,30 @@ describe("Widget Generators", () => {
 			})
 			expect(generateScatterPlot(props)).toMatchSnapshot()
 		})
+
+		test("should render with both x and y grid lines", () => {
+			const props = ScatterPlotPropsSchema.parse({
+				xAxis: { label: "X", min: 0, max: 10, tickInterval: 2, gridLines: true },
+				yAxis: { label: "Y", min: 0, max: 50, tickInterval: 10, gridLines: true },
+				points: [
+					{ x: 2, y: 10, label: "A" },
+					{ x: 5, y: 25 },
+					{ x: 8, y: 40, label: "B" }
+				]
+			})
+			expect(generateScatterPlot(props)).toMatchSnapshot()
+		})
+
+		test("should handle error case with invalid dimensions", () => {
+			const props = ScatterPlotPropsSchema.parse({
+				width: 50,
+				height: 50,
+				xAxis: { label: "X", min: 10, max: 0, tickInterval: 1 },
+				yAxis: { label: "Y", min: 0, max: 10, tickInterval: 2 },
+				points: []
+			})
+			expect(generateScatterPlot(props)).toMatchSnapshot()
+		})
 	})
 
 	describe("generateStackedItemsDiagram", () => {
@@ -661,6 +892,30 @@ describe("Widget Generators", () => {
 				count: 3,
 				orientation: "vertical",
 				overlap: 0.6
+			})
+			expect(generateStackedItemsDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render a horizontal stack of items", () => {
+			const props = StackedItemsDiagramPropsSchema.parse({
+				width: 300,
+				height: 100,
+				altText: "A row of 4 coins",
+				baseItem: {
+					src: "https://via.placeholder.com/50x50.png/FFD700/000000?text=Base",
+					width: 50,
+					height: 50,
+					alt: "base coin"
+				},
+				stackedItem: {
+					src: "https://via.placeholder.com/50x50.png/C0C0C0/000000?text=Coin",
+					width: 50,
+					height: 50,
+					alt: "silver coin"
+				},
+				count: 4,
+				orientation: "horizontal",
+				overlap: 0.3
 			})
 			expect(generateStackedItemsDiagram(props)).toMatchSnapshot()
 		})
@@ -712,6 +967,18 @@ describe("Widget Generators", () => {
 				circleB: { label: "Have a Cat", count: 8, color: "rgba(66, 133, 244, 0.5)" },
 				intersectionCount: 5,
 				outsideCount: 3
+			})
+			expect(generateVennDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render with custom dimensions", () => {
+			const props = VennDiagramPropsSchema.parse({
+				width: 500,
+				height: 400,
+				circleA: { label: "Group A", count: 15 },
+				circleB: { label: "Group B", count: 20 },
+				intersectionCount: 8,
+				outsideCount: 5
 			})
 			expect(generateVennDiagram(props)).toMatchSnapshot()
 		})

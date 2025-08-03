@@ -41,7 +41,7 @@ export type HistogramProps = z.infer<typeof HistogramPropsSchema>
  */
 export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (data) => {
 	const { width, height, title, xAxis, yAxis, bins } = data
-	const margin = { top: 40, right: 20, bottom: 60, left: 50 }
+	const margin = { top: 40, right: 20, bottom: 70, left: 50 }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -65,7 +65,7 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>` // X-axis
 
 	// Axis Labels
-	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 15}" class="axis-label">${xAxis.label}</text>`
+	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${xAxis.label}</text>`
 	svg += `<text x="${margin.left - 35}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 35}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
 
 	// Y ticks and labels

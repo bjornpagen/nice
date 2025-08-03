@@ -73,7 +73,7 @@ export type ScatterPlotProps = z.infer<typeof ScatterPlotPropsSchema>
 export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema> = (data) => {
 	const { width, height, title, xAxis, yAxis, points, trendLines } = data
 	// Use the same robust coordinate plane logic from generateCoordinatePlane
-	const pad = { top: 40, right: 30, bottom: 50, left: 50 }
+	const pad = { top: 40, right: 30, bottom: 60, left: 50 }
 	const chartWidth = width - pad.left - pad.right
 	const chartHeight = height - pad.top - pad.bottom
 
@@ -110,7 +110,7 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		svg += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${pad.left - 5}" y2="${toSvgY(t)}" stroke="black"/><text x="${pad.left - 10}" y="${toSvgY(t) + 4}" text-anchor="end">${t}</text>`
 	}
 	if (xAxis.label)
-		svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 10}" class="axis-label">${xAxis.label}</text>`
+		svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${xAxis.label}</text>`
 	if (yAxis.label)
 		svg += `<text x="${pad.left - 35}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 35}, ${pad.top + chartHeight / 2})">${yAxis.label}</text>`
 

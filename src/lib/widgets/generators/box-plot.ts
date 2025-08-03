@@ -42,7 +42,7 @@ export type BoxPlotProps = z.infer<typeof BoxPlotPropsSchema>
  */
 export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data) => {
 	const { width, height, axis, summary, boxColor, medianColor } = data
-	const margin = { top: 20, right: 20, bottom: 40, left: 20 }
+	const margin = { top: 20, right: 20, bottom: 65, left: 20 }
 	const plotHeight = height - margin.top - margin.bottom
 	const chartWidth = width - margin.left - margin.right
 	const yCenter = margin.top + plotHeight / 2

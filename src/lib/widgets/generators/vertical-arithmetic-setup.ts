@@ -29,7 +29,7 @@ export const generateVerticalArithmeticSetup: WidgetGenerator<typeof VerticalAri
 
 	let html = `<div style="display: inline-block; font-family: 'Courier New', monospace; font-size: 1.2em; text-align: right;">`
 	if (title) {
-		html += `<div style="text-align: center; margin-bottom: 5px;">${title}</div>`
+		html += `<div style="text-align: center; margin-bottom: 5px; font-family: sans-serif;">${title}</div>`
 	}
 	html += `<table style="border-collapse: collapse;">`
 	html += `<tr><td></td><td style="padding: 2px 5px;">${operand1}</td></tr>`

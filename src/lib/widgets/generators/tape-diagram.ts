@@ -18,7 +18,7 @@ const TapeSchema = z.object({
 export const TapeDiagramPropsSchema = z
 	.object({
 		width: z.number().default(320).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(170).describe("The total height of the output SVG container in pixels."),
+		height: z.number().default(200).describe("The total height of the output SVG container in pixels."),
 		topTape: TapeSchema.describe("Configuration for the upper tape."),
 		bottomTape: TapeSchema.describe("Configuration for the lower tape."),
 		showTotalBracket: z

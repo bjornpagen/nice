@@ -64,6 +64,7 @@ export const generateAdjacentAngles: WidgetGenerator<typeof AdjacentAnglesPropsS
 	const rayLength = Math.min(width, height) / 2 - 40
 	const toRad = (deg: number) => (deg * Math.PI) / 180
 	const ySign = -1 // SVG y-axis is inverted
+	const round = (num: number) => Number.parseFloat(num.toFixed(2))
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
 
@@ -76,8 +77,8 @@ export const generateAdjacentAngles: WidgetGenerator<typeof AdjacentAnglesPropsS
 
 	// Draw first ray and its label
 	const firstRayRad = toRad(currentAngleDeg)
-	svg += `<line x1="${centerX}" y1="${centerY}" x2="${centerX + rayLength * Math.cos(firstRayRad)}" y2="${centerY + ySign * rayLength * Math.sin(firstRayRad)}" stroke="black" />`
-	svg += `<text x="${centerX + (rayLength + 15) * Math.cos(firstRayRad)}" y="${centerY + ySign * (rayLength + 15) * Math.sin(firstRayRad)}" fill="black" text-anchor="middle" dominant-baseline="middle">${rayLabels[0]}</text>`
+	svg += `<line x1="${centerX}" y1="${centerY}" x2="${round(centerX + rayLength * Math.cos(firstRayRad))}" y2="${round(centerY + ySign * rayLength * Math.sin(firstRayRad))}" stroke="black" />`
+	svg += `<text x="${round(centerX + (rayLength + 15) * Math.cos(firstRayRad))}" y="${round(centerY + ySign * (rayLength + 15) * Math.sin(firstRayRad))}" fill="black" text-anchor="middle" dominant-baseline="middle">${rayLabels[0]}</text>`
 
 	// Draw angle segments and subsequent rays
 	for (let i = 0; i < angles.length; i++) {
@@ -91,16 +92,16 @@ export const generateAdjacentAngles: WidgetGenerator<typeof AdjacentAnglesPropsS
 		const endRad = toRad(endAngleDeg)
 
 		// Draw ray
-		const rayX = centerX + rayLength * Math.cos(endRad)
-		const rayY = centerY + ySign * rayLength * Math.sin(endRad)
+		const rayX = round(centerX + rayLength * Math.cos(endRad))
+		const rayY = round(centerY + ySign * rayLength * Math.sin(endRad))
 		svg += `<line x1="${centerX}" y1="${centerY}" x2="${rayX}" y2="${rayY}" stroke="black" />`
-		svg += `<text x="${rayX + 15 * Math.cos(endRad)}" y="${rayY + ySign * 15 * Math.sin(endRad)}" fill="black" text-anchor="middle" dominant-baseline="middle">${rayLabels[i + 1]}</text>`
+		svg += `<text x="${round(rayX + 15 * Math.cos(endRad))}" y="${round(rayY + ySign * 15 * Math.sin(endRad))}" fill="black" text-anchor="middle" dominant-baseline="middle">${rayLabels[i + 1]}</text>`
 
 		// Draw arc
-		const arcStartX = centerX + angle.arcRadius * Math.cos(startRad)
-		const arcStartY = centerY + ySign * angle.arcRadius * Math.sin(startRad)
-		const arcEndX = centerX + angle.arcRadius * Math.cos(endRad)
-		const arcEndY = centerY + ySign * angle.arcRadius * Math.sin(endRad)
+		const arcStartX = round(centerX + angle.arcRadius * Math.cos(startRad))
+		const arcStartY = round(centerY + ySign * angle.arcRadius * Math.sin(startRad))
+		const arcEndX = round(centerX + angle.arcRadius * Math.cos(endRad))
+		const arcEndY = round(centerY + ySign * angle.arcRadius * Math.sin(endRad))
 		const largeArcFlag = angle.value > 180 ? 1 : 0
 		svg += `<path d="M ${arcStartX} ${arcStartY} A ${angle.arcRadius} ${angle.arcRadius} 0 ${largeArcFlag} 1 ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="2" />`
 
@@ -112,7 +113,7 @@ export const generateAdjacentAngles: WidgetGenerator<typeof AdjacentAnglesPropsS
 		// Draw angle label
 		const labelAngleRad = toRad(startAngleDeg + angle.value / 2)
 		const labelRadius = angle.arcRadius + 15
-		svg += `<text x="${centerX + labelRadius * Math.cos(labelAngleRad)}" y="${centerY + ySign * labelRadius * Math.sin(labelAngleRad)}" fill="black" text-anchor="middle" dominant-baseline="middle">${angle.label}</text>`
+		svg += `<text x="${round(centerX + labelRadius * Math.cos(labelAngleRad))}" y="${round(centerY + ySign * labelRadius * Math.sin(labelAngleRad))}" fill="black" text-anchor="middle" dominant-baseline="middle">${angle.label}</text>`
 	}
 
 	// Draw total angle if specified
@@ -121,17 +122,17 @@ export const generateAdjacentAngles: WidgetGenerator<typeof AdjacentAnglesPropsS
 		const startRad = toRad(baselineAngle)
 		const endRad = toRad(baselineAngle + totalAngleValue)
 
-		const arcStartX = centerX + totalAngle.arcRadius * Math.cos(startRad)
-		const arcStartY = centerY + ySign * totalAngle.arcRadius * Math.sin(startRad)
-		const arcEndX = centerX + totalAngle.arcRadius * Math.cos(endRad)
-		const arcEndY = centerY + ySign * totalAngle.arcRadius * Math.sin(endRad)
+		const arcStartX = round(centerX + totalAngle.arcRadius * Math.cos(startRad))
+		const arcStartY = round(centerY + ySign * totalAngle.arcRadius * Math.sin(startRad))
+		const arcEndX = round(centerX + totalAngle.arcRadius * Math.cos(endRad))
+		const arcEndY = round(centerY + ySign * totalAngle.arcRadius * Math.sin(endRad))
 		const largeArcFlag = totalAngleValue > 180 ? 1 : 0
 
 		svg += `<path d="M ${arcStartX} ${arcStartY} A ${totalAngle.arcRadius} ${totalAngle.arcRadius} 0 ${largeArcFlag} 1 ${arcEndX} ${arcEndY}" fill="none" stroke="${totalAngle.color}" stroke-width="2" />`
 
 		const labelAngleRad = toRad(baselineAngle + totalAngleValue / 2)
 		const labelRadius = totalAngle.arcRadius + 15
-		svg += `<text x="${centerX + labelRadius * Math.cos(labelAngleRad)}" y="${centerY + ySign * labelRadius * Math.sin(labelAngleRad)}" fill="black" text-anchor="middle" dominant-baseline="middle">${totalAngle.label}</text>`
+		svg += `<text x="${round(centerX + labelRadius * Math.cos(labelAngleRad))}" y="${round(centerY + ySign * labelRadius * Math.sin(labelAngleRad))}" fill="black" text-anchor="middle" dominant-baseline="middle">${totalAngle.label}</text>`
 	}
 
 	svg += "</svg>"

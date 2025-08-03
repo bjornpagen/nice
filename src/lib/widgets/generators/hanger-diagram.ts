@@ -83,7 +83,21 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 		return shapeSvg + textSvg
 	}
 
-	const renderSide = (weights: typeof leftSide, isLeft: boolean) => {
+	// First, draw all the lines
+	const renderLines = (weights: typeof leftSide, isLeft: boolean) => {
+		const sideCenterX = isLeft ? beamStartX + beamWidth / 4 : beamEndX - beamWidth / 4
+		const stringY = beamY + 15
+		const weightYStart = stringY + 10
+		const weightHeight = 35 // size + padding
+
+		weights.forEach((_w, i) => {
+			const weightY = weightYStart + i * weightHeight
+			svg += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + 5}" x2="${sideCenterX}" y2="${weightY}" stroke="black"/>`
+		})
+	}
+
+	// Then, draw all the shapes on top
+	const renderShapes = (weights: typeof leftSide, isLeft: boolean) => {
 		const sideCenterX = isLeft ? beamStartX + beamWidth / 4 : beamEndX - beamWidth / 4
 		const stringY = beamY + 15
 		const weightYStart = stringY + 10
@@ -91,13 +105,17 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 
 		weights.forEach((w, i) => {
 			const weightY = weightYStart + i * weightHeight
-			svg += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + 5}" x2="${sideCenterX}" y2="${weightY}" stroke="black"/>`
 			svg += drawWeight(sideCenterX, weightY, w)
 		})
 	}
 
-	renderSide(leftSide, true)
-	renderSide(rightSide, false)
+	// Draw all lines first
+	renderLines(leftSide, true)
+	renderLines(rightSide, false)
+
+	// Then draw all shapes on top
+	renderShapes(leftSide, true)
+	renderShapes(rightSide, false)
 
 	svg += "</svg>"
 	return svg

@@ -56,7 +56,7 @@ export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPr
 	const integerRx = rationalRx * 0.7
 	const integerRy = rationalRy * 0.7
 	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${integerRx}" ry="${integerRy}" fill="${sets.integer.color}" stroke="black" />`
-	svg += `<text x="${mainCenterX}" y="${mainCenterY - integerRy + 15}" class="set-label">${sets.integer.label}</text>`
+	svg += `<text x="${mainCenterX}" y="${mainCenterY - integerRy + (rationalRy - integerRy) / 2}" class="set-label">${sets.integer.label}</text>`
 
 	// Whole Numbers
 	const wholeRx = integerRx * 0.6
