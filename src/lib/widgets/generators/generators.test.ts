@@ -312,8 +312,8 @@ describe("Widget Generators", () => {
 		test("should render a grid layout", () => {
 			const props = DiscreteObjectRatioDiagramPropsSchema.parse({
 				objects: [
-					{ count: 5, icon: "square", color: "blue" },
-					{ count: 3, icon: "circle", color: "red" }
+					{ count: 5, emoji: "⭐" },
+					{ count: 3, emoji: "🍎" }
 				],
 				layout: "grid",
 				title: "Shapes"
@@ -324,8 +324,8 @@ describe("Widget Generators", () => {
 		test("should render a cluster layout", () => {
 			const props = DiscreteObjectRatioDiagramPropsSchema.parse({
 				objects: [
-					{ count: 6, icon: "triangle", color: "green" },
-					{ count: 4, icon: "square", color: "orange" }
+					{ count: 6, emoji: "🐶" },
+					{ count: 4, emoji: "🍎" }
 				],
 				layout: "cluster"
 			})
@@ -336,11 +336,10 @@ describe("Widget Generators", () => {
 			const props = DiscreteObjectRatioDiagramPropsSchema.parse({
 				width: 200,
 				objects: [
-					{ count: 15, icon: "circle", color: "blue" },
-					{ count: 5, icon: "square", color: "red" }
+					{ count: 15, emoji: "🍎" },
+					{ count: 5, emoji: "⭐" }
 				],
-				layout: "grid",
-				iconSize: 30
+				layout: "grid"
 			})
 			expect(generateDiscreteObjectRatioDiagram(props)).toMatchSnapshot()
 		})

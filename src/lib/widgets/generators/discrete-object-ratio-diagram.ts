@@ -4,9 +4,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // Defines a type of object to be rendered
 const ObjectTypeSchema = z.object({
 	count: z.number().int().min(0).describe("The number of this type of object to render."),
-	// In a real implementation, this could be an enum of available icons or an SVG path string.
-	icon: z.string().describe('An identifier for the icon to use (e.g., "largeFish", "penguin", "smallBall").'),
-	color: z.string().optional().default("gray").describe("An optional CSS color to apply to the icon.")
+	emoji: z.string().describe("The emoji character to use as the object icon (e.g., '🍎', '⭐').")
 })
 
 // The main Zod schema for the discreteObjectRatioDiagram function
@@ -14,7 +12,7 @@ export const DiscreteObjectRatioDiagramPropsSchema = z
 	.object({
 		width: z.number().optional().default(320).describe("The total width of the output SVG container in pixels."),
 		height: z.number().optional().default(240).describe("The total height of the output SVG container in pixels."),
-		objects: z.array(ObjectTypeSchema).min(2).describe("An array defining the types and counts of objects to display."),
+		objects: z.array(ObjectTypeSchema).min(1).describe("An array defining the types and counts of objects to display."),
 		layout: z
 			.enum(["grid", "cluster"])
 			.optional()
@@ -39,29 +37,31 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 	const { width, height, objects, layout, title } = data
 	const padding = { top: 40, right: 20, bottom: 20, left: 20 }
 	const chartWidth = width - padding.left - padding.right
-	const _chartHeight = height - padding.top - padding.bottom
+	const chartHeight = height - padding.top - padding.bottom
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+
+	// Add a clean background container with rounded corners and subtle border
+	const containerPadding = 10
+	const containerX = padding.left - containerPadding
+	const containerY = padding.top - containerPadding
+	const containerWidth = chartWidth + 2 * containerPadding
+	const containerHeight = chartHeight + 2 * containerPadding
+
+	svg += `<rect x="${containerX}" y="${containerY}" width="${containerWidth}" height="${containerHeight}" fill="#fafafa" stroke="#e0e0e0" stroke-width="2" rx="8" ry="8"/>`
+
 	if (title) {
 		svg += `<text x="${width / 2}" y="${padding.top / 2}" fill="#333333" text-anchor="middle" font-weight="bold">${title}</text>`
 	}
 
-	const iconSize = 20
-	const iconPadding = 5
+	const iconSize = 28 // Larger for better emoji visibility
+	const iconPadding = 8 // More breathing room
 	const step = iconSize + iconPadding
 
-	// Function to draw a specific shape based on the icon identifier
-	const drawIcon = (x: number, y: number, icon: string, color: string) => {
-		switch (icon) {
-			case "square":
-				return `<rect x="${x}" y="${y}" width="${iconSize}" height="${iconSize}" fill="${color}" />`
-			case "triangle": {
-				const points = `${x + iconSize / 2},${y} ${x},${y + iconSize} ${x + iconSize},${y + iconSize}`
-				return `<polygon points="${points}" fill="${color}" />`
-			}
-			default:
-				return `<circle cx="${x + iconSize / 2}" cy="${y + iconSize / 2}" r="${iconSize / 2}" fill="${color}" />`
-		}
+	// Function to draw emojis with better positioning
+	const drawIcon = (x: number, y: number, emoji: string) => {
+		const fontSize = iconSize * 0.9 // Better emoji sizing
+		return `<text x="${x + iconSize / 2}" y="${y + iconSize / 2}" font-size="${fontSize}" text-anchor="middle" dominant-baseline="central">${emoji}</text>`
 	}
 
 	let currentX = padding.left
@@ -74,7 +74,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 					currentX = padding.left
 					currentY += step
 				}
-				svg += drawIcon(currentX, currentY, obj.icon, obj.color)
+				svg += drawIcon(currentX, currentY, obj.emoji)
 				currentX += step
 			}
 		}
@@ -92,7 +92,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 					currentX = startX
 					currentY += step
 				}
-				svg += drawIcon(currentX, currentY, obj.icon, obj.color)
+				svg += drawIcon(currentX, currentY, obj.emoji)
 				currentX += step
 			}
 		}

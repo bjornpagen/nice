@@ -924,7 +924,7 @@ describe("QTI Compiler", () => {
 
 	test("should correctly compile count the apples with discrete object diagrams", () => {
 		const itemDefinition: AssessmentItemInput = {
-			identifier: "count-apples-mc-div-version",
+			identifier: "count-apples-emoji",
 			title: "Count the apples",
 			responseDeclarations: [
 				{
@@ -950,10 +950,7 @@ describe("QTI Compiler", () => {
 								width: 250,
 								height: 120,
 								layout: "grid",
-								objects: [
-									{ count: 3, icon: "circle", color: "#DC143C" },
-									{ count: 0, icon: "square", color: "#228B22" }
-								]
+								objects: [{ count: 3, emoji: "🍎" }]
 							}
 						},
 						{
@@ -963,10 +960,7 @@ describe("QTI Compiler", () => {
 								width: 250,
 								height: 120,
 								layout: "grid",
-								objects: [
-									{ count: 4, icon: "circle", color: "#DC143C" },
-									{ count: 0, icon: "square", color: "#228B22" }
-								]
+								objects: [{ count: 4, emoji: "🍎" }]
 							}
 						},
 						{
@@ -976,10 +970,7 @@ describe("QTI Compiler", () => {
 								width: 250,
 								height: 120,
 								layout: "grid",
-								objects: [
-									{ count: 5, icon: "circle", color: "#DC143C" },
-									{ count: 0, icon: "square", color: "#228B22" }
-								]
+								objects: [{ count: 5, emoji: "🍎" }]
 							}
 						},
 						{
@@ -989,10 +980,7 @@ describe("QTI Compiler", () => {
 								width: 250,
 								height: 120,
 								layout: "grid",
-								objects: [
-									{ count: 6, icon: "circle", color: "#DC143C" },
-									{ count: 0, icon: "square", color: "#228B22" }
-								]
+								objects: [{ count: 6, emoji: "🍎" }]
 							}
 						}
 					]
@@ -1007,7 +995,7 @@ describe("QTI Compiler", () => {
 
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
-		expect(compiledXml).toContain('identifier="count-apples-mc-div-version"')
+		expect(compiledXml).toContain('identifier="count-apples-emoji"')
 		expect(compiledXml).toContain("discreteObjectRatioDiagram")
 	})
 
