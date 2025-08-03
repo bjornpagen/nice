@@ -250,14 +250,14 @@ exports[`QTI Compiler should correctly compile a vertical number line comparison
         <p>Complete the statements.</p>
         <p>On the number line, <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="purple"><mo>-</mo><mn>1.4</mn></mstyle></math> is 
         <qti-inline-choice-interaction response-identifier="RESPONSE_POS" shuffle="false">
-                <qti-inline-choice identifier="ABOVE"><p>above</p></qti-inline-choice>
-                <qti-inline-choice identifier="BELOW"><p>below</p></qti-inline-choice>
+                <qti-inline-choice identifier="ABOVE">above</qti-inline-choice>
+                <qti-inline-choice identifier="BELOW">below</qti-inline-choice>
             </qti-inline-choice-interaction>
          <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="maroon"><mo>-</mo><mn>6.4</mn></mstyle></math>.</p>
         <p>This means <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="purple"><mo>-</mo><mn>1.4</mn></mstyle></math> is 
         <qti-inline-choice-interaction response-identifier="RESPONSE_COMP" shuffle="false">
-                <qti-inline-choice identifier="GT"><p>greater than</p></qti-inline-choice>
-                <qti-inline-choice identifier="LT"><p>less than</p></qti-inline-choice>
+                <qti-inline-choice identifier="GT">greater than</qti-inline-choice>
+                <qti-inline-choice identifier="LT">less than</qti-inline-choice>
             </qti-inline-choice-interaction>
          <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="maroon"><mo>-</mo><mn>6.4</mn></mstyle></math>.</p>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
@@ -1183,9 +1183,9 @@ exports[`QTI Compiler should correctly compile compare 2-digit numbers 1`] = `
         <p>Compare using <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>, or <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>.</p>
         <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math>
         <qti-inline-choice-interaction response-identifier="RESPONSE" shuffle="false">
-                <qti-inline-choice identifier="GT"><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math></p></qti-inline-choice>
-                <qti-inline-choice identifier="LT"><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math></p></qti-inline-choice>
-                <qti-inline-choice identifier="EQ"><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math></p></qti-inline-choice>
+                <qti-inline-choice identifier="GT"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math></qti-inline-choice>
+                <qti-inline-choice identifier="LT"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math></qti-inline-choice>
+                <qti-inline-choice identifier="EQ"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math></qti-inline-choice>
             </qti-inline-choice-interaction>
         <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math></p>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">

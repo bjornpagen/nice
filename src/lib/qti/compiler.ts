@@ -125,9 +125,7 @@ function compileInteraction(interaction: AnyInteraction): string {
 			const choices = interaction.choices
 				.map(
 					(c) =>
-						// Since content is now just a string, we ensure it's wrapped in a <p> tag for block context,
-						// which is how it was effectively handled before, but now without escaping.
-						`<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}"><p>${renderContent(c.content)}</p></qti-inline-choice>`
+						`<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderContent(c.content)}</qti-inline-choice>`
 				)
 				.join("\n                ")
 
