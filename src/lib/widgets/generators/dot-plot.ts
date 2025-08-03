@@ -1,5 +1,8 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
 // Defines a single data category and its frequency for the dot plot
 const DotPlotDataPointSchema = z.object({
@@ -45,7 +48,7 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	const axisY = height - margin.bottom
 
 	if (chartWidth <= 0 || chartHeight <= 0 || axis.min >= axis.max) {
-		return `<svg width="${width}" height="${height}"></svg>`
+		throw errors.wrap(ErrInvalidDimensions, `width: ${width}, height: ${height}, axis range: ${axis.min}-${axis.max}`)
 	}
 
 	const scale = chartWidth / (axis.max - axis.min)
@@ -71,7 +74,7 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	// Dots
 	const dotDiameter = dotRadius * 2
 	const dotSpacing = 2 // Vertical space between dots
-	const baseOffset = 5 // Additional space between axis and first dot
+	const baseOffset = 10 // Additional space between axis and first dot
 	for (const dp of plotData) {
 		const x = toSvgX(dp.value)
 		for (let i = 0; i < dp.count; i++) {

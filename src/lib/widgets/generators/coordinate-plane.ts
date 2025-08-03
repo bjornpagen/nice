@@ -1,5 +1,8 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
 // Defines the properties of an axis (X or Y)
 const AxisSchema = z.object({
@@ -103,7 +106,10 @@ export const generateCoordinatePlane: WidgetGenerator<typeof CoordinatePlaneProp
 	const chartHeight = height - pad.top - pad.bottom
 
 	if (chartWidth <= 0 || chartHeight <= 0 || xAxis.min >= xAxis.max || yAxis.min >= yAxis.max) {
-		return `<svg width="${width}" height="${height}"></svg>`
+		throw errors.wrap(
+			ErrInvalidDimensions,
+			`width: ${width}, height: ${height}, xAxis range: ${xAxis.min}-${xAxis.max}, yAxis range: ${yAxis.min}-${yAxis.max}`
+		)
 	}
 
 	const scaleX = chartWidth / (xAxis.max - xAxis.min)

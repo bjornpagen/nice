@@ -8,11 +8,17 @@ const CylinderDataSchema = z.object({
 	height: z.number().describe("The perpendicular distance between the two bases.")
 })
 
-// Defines the properties for a cone (future support)
+// Defines the properties for a cone
 const ConeDataSchema = z.object({
 	type: z.literal("cone"),
 	radius: z.number().describe("The radius of the circular base."),
 	height: z.number().describe("The perpendicular height from the base to the apex.")
+})
+
+// Defines the properties for a sphere
+const SphereDataSchema = z.object({
+	type: z.literal("sphere"),
+	radius: z.number().describe("The radius of the sphere.")
 })
 
 // Defines a label for a dimension like radius or height
@@ -27,10 +33,7 @@ export const GeometricSolidDiagramPropsSchema = z
 		width: z.number().default(150).describe("The total width of the output SVG container in pixels."),
 		height: z.number().default(200).describe("The total height of the output SVG container in pixels."),
 		shape: z
-			.union([
-				CylinderDataSchema,
-				ConeDataSchema // Example for future extension
-			])
+			.union([CylinderDataSchema, ConeDataSchema, SphereDataSchema])
 			.describe("The geometric data defining the solid shape."),
 		labels: z.array(SolidDimensionLabelSchema).optional().describe("An array of dimension labels to display.")
 	})
@@ -85,8 +88,67 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 
 		svg += `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black" /></marker></defs>`
 	} else if (shape.type === "cone") {
-		// Cone implementation would go here if needed.
-		svg += `<text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Cone not implemented.</text>`
+		const r = shape.radius * 4
+		const h = shape.height * 8
+		const ry = r * 0.3 // Ellipse perspective ratio
+		const cx = width / 2
+		const apexY = (height - h) / 2
+		const baseY = apexY + h
+
+		// Generator lines
+		svg += `<line x1="${cx - r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="black" stroke-width="1.5"/>`
+		svg += `<line x1="${cx + r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="black" stroke-width="1.5"/>`
+
+		// Base (draw back dashed part first)
+		svg += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 0 ${cx + r} ${baseY}" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
+		// Base (front solid part)
+		svg += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 1 ${cx + r} ${baseY}" fill="rgba(200, 200, 200, 0.3)" stroke="black" stroke-width="1.5"/>`
+
+		// Labels
+		if (labels) {
+			for (const l of labels) {
+				if (l.target === "radius") {
+					svg += `<line x1="${cx}" y1="${baseY}" x2="${cx + r}" y2="${baseY}" stroke="black" stroke-width="1"/>`
+					svg += `<text x="${cx + r / 2}" y="${baseY + 15}" fill="black" text-anchor="middle">${l.text ?? shape.radius}</text>`
+				}
+				if (l.target === "height") {
+					svg += `<line x1="${cx + r + 10}" y1="${apexY}" x2="${cx + r + 10}" y2="${baseY}" stroke="black" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
+					svg += `<text x="${cx + r + 20}" y="${(apexY + baseY) / 2}" fill="black" dominant-baseline="middle">${l.text ?? shape.height}</text>`
+				}
+			}
+		}
+
+		svg += `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black" /></marker></defs>`
+	} else if (shape.type === "sphere") {
+		const r = shape.radius * 4
+		const ry = r * 0.3 // Ellipse perspective ratio for internal equator
+		const cx = width / 2
+		const cy = height / 2
+
+		// Main sphere outline
+		svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(220, 220, 220, 0.5)" stroke="black" stroke-width="1.5"/>`
+
+		// Internal equator for 3D effect (front solid, back dashed)
+		svg += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 1 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5"/>`
+		svg += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 0 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
+
+		// Labels
+		if (labels) {
+			for (const l of labels) {
+				if (l.target === "radius") {
+					// Draw radius line at an angle to avoid overlapping with the sphere
+					const angle = -Math.PI / 4 // 45 degrees up-right
+					const endX = cx + r * Math.cos(angle)
+					const endY = cy + r * Math.sin(angle)
+					svg += `<line x1="${cx}" y1="${cy}" x2="${endX}" y2="${endY}" stroke="black" stroke-width="1"/>`
+					// Position text outside the sphere
+					const textX = cx + (r + 20) * Math.cos(angle)
+					const textY = cy + (r + 20) * Math.sin(angle)
+					svg += `<text x="${textX}" y="${textY}" fill="black" text-anchor="middle" dominant-baseline="middle">${l.text ?? shape.radius}</text>`
+				}
+				// Skip height for sphere
+			}
+		}
 	}
 
 	svg += "</svg>"

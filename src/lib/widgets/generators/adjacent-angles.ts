@@ -1,5 +1,8 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+export const ErrMismatchedRaysAndAngles = errors.new("must be one more ray label than angles")
 
 // Defines a single angle segment in the diagram
 const AngleSegmentSchema = z.object({
@@ -56,7 +59,7 @@ export const generateAdjacentAngles: WidgetGenerator<typeof AdjacentAnglesPropsS
 	const { width, height, vertexLabel, rayLabels, angles, totalAngle, baselineAngle } = data
 
 	if (rayLabels.length !== angles.length + 1) {
-		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg"><text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Error: There must be one more ray label than angles.</text></svg>`
+		throw errors.wrap(ErrMismatchedRaysAndAngles, `received ${rayLabels.length} ray labels and ${angles.length} angles`)
 	}
 
 	const centerX = width / 2

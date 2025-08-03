@@ -1,5 +1,8 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
 // Defines the data and state for a single bar in the chart
 const BarDataSchema = z.object({
@@ -48,7 +51,10 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 	const chartHeight = height - margin.top - margin.bottom
 
 	if (chartHeight <= 0 || chartWidth <= 0 || chartData.length === 0) {
-		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" />`
+		throw errors.wrap(
+			ErrInvalidDimensions,
+			`chart dimensions must be positive and data must not be empty. width: ${chartWidth}, height: ${chartHeight}, data length: ${chartData.length}`
+		)
 	}
 
 	const maxValue = yAxis.max ?? Math.max(...chartData.map((d) => d.value))

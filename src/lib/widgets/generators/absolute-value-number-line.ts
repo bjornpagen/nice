@@ -1,5 +1,8 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+export const ErrInvalidRange = errors.new("min must be less than max")
 
 export const AbsoluteValueNumberLinePropsSchema = z
 	.object({
@@ -34,9 +37,8 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	const padding = { top: 30, right: 20, bottom: 30, left: 20 }
 	const chartWidth = width - padding.left - padding.right
 
-	// Handle edge case of min >= max
 	if (min >= max) {
-		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg"><text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Error: min must be less than max.</text></svg>`
+		throw errors.wrap(ErrInvalidRange, `min (${min}) must be less than max (${max})`)
 	}
 
 	const scale = chartWidth / (max - min)

@@ -1,18 +1,31 @@
 import { describe, expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
 
 // Import all generators and their props schemas
-import { AbsoluteValueNumberLinePropsSchema, generateAbsoluteValueNumberLine } from "./absolute-value-number-line"
-import { AdjacentAnglesPropsSchema, generateAdjacentAngles } from "./adjacent-angles"
-import { BarChartPropsSchema, generateBarChart } from "./bar-chart"
-import { BoxPlotPropsSchema, generateBoxPlot } from "./box-plot"
+import {
+	AbsoluteValueNumberLinePropsSchema,
+	ErrInvalidRange as ErrAVNLInvalidRange,
+	generateAbsoluteValueNumberLine
+} from "./absolute-value-number-line"
+import { AdjacentAnglesPropsSchema, ErrMismatchedRaysAndAngles, generateAdjacentAngles } from "./adjacent-angles"
+import {
+	BarChartPropsSchema,
+	ErrInvalidDimensions as ErrBarChartInvalidDimensions,
+	generateBarChart
+} from "./bar-chart"
+import { BoxPlotPropsSchema, ErrInvalidRange as ErrBoxPlotInvalidRange, generateBoxPlot } from "./box-plot"
 import { CompositeShapeDiagramPropsSchema, generateCompositeShapeDiagram } from "./composite-shape-diagram"
-import { CoordinatePlanePropsSchema, generateCoordinatePlane } from "./coordinate-plane"
+import {
+	CoordinatePlanePropsSchema,
+	ErrInvalidDimensions as ErrCoordinatePlaneInvalidDimensions,
+	generateCoordinatePlane
+} from "./coordinate-plane"
 import { DataTablePropsSchema, generateDataTable } from "./data-table"
 import {
 	DiscreteObjectRatioDiagramPropsSchema,
 	generateDiscreteObjectRatioDiagram
 } from "./discrete-object-ratio-diagram"
-import { DotPlotPropsSchema, generateDotPlot } from "./dot-plot"
+import { DotPlotPropsSchema, ErrInvalidDimensions as ErrDotPlotInvalidDimensions, generateDotPlot } from "./dot-plot"
 import { DoubleNumberLinePropsSchema, generateDoubleNumberLine } from "./double-number-line"
 import { GeometricSolidDiagramPropsSchema, generateGeometricSolidDiagram } from "./geometric-solid-diagram"
 import { generateHangerDiagram, HangerDiagramPropsSchema } from "./hanger-diagram"
@@ -30,7 +43,11 @@ import { generateParallelLinesTransversal, ParallelLinesTransversalPropsSchema }
 import { generatePartitionedShape, PartitionedShapePropsSchema } from "./partitioned-shape"
 import { generatePictograph, PictographPropsSchema } from "./pictograph"
 import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "./polyhedron-diagram"
-import { generatePolyhedronNetDiagram, PolyhedronNetDiagramPropsSchema } from "./polyhedron-net-diagram"
+import {
+	ErrInvalidBaseShape,
+	generatePolyhedronNetDiagram,
+	PolyhedronNetDiagramPropsSchema
+} from "./polyhedron-net-diagram"
 import { generatePythagoreanProofDiagram, PythagoreanProofDiagramPropsSchema } from "./pythagorean-proof-diagram"
 import { generateScatterPlot, ScatterPlotPropsSchema } from "./scatter-plot"
 import { generateStackedItemsDiagram, StackedItemsDiagramPropsSchema } from "./stacked-items-diagram"
@@ -72,7 +89,13 @@ describe("Widget Generators", () => {
 				tickInterval: 1,
 				value: 5
 			})
-			expect(generateAbsoluteValueNumberLine(props)).toMatchSnapshot()
+			const result = errors.trySync(() => generateAbsoluteValueNumberLine(props))
+			if (result.error) {
+				expect(errors.is(result.error, ErrAVNLInvalidRange)).toBe(true)
+				expect(result.error.message).toMatchSnapshot()
+			} else {
+				throw errors.new("expected an error to be thrown")
+			}
 		})
 	})
 
@@ -112,7 +135,13 @@ describe("Widget Generators", () => {
 					{ value: 45, label: "45°", color: "blue", arcRadius: 40 }
 				]
 			})
-			expect(generateAdjacentAngles(props)).toMatchSnapshot()
+			const result = errors.trySync(() => generateAdjacentAngles(props))
+			if (result.error) {
+				expect(errors.is(result.error, ErrMismatchedRaysAndAngles)).toBe(true)
+				expect(result.error.message).toMatchSnapshot()
+			} else {
+				throw errors.new("expected an error to be thrown")
+			}
 		})
 	})
 
@@ -155,7 +184,13 @@ describe("Widget Generators", () => {
 				data: [],
 				yAxis: { tickInterval: 10 }
 			})
-			expect(generateBarChart(props)).toMatchSnapshot()
+			const result = errors.trySync(() => generateBarChart(props))
+			if (result.error) {
+				expect(errors.is(result.error, ErrBarChartInvalidDimensions)).toBe(true)
+				expect(result.error.message).toMatchSnapshot()
+			} else {
+				throw errors.new("expected an error to be thrown")
+			}
 		})
 	})
 
@@ -190,7 +225,13 @@ describe("Widget Generators", () => {
 				axis: { min: 100, max: 0 },
 				summary: { min: 10, q1: 25, median: 50, q3: 75, max: 95 }
 			})
-			expect(generateBoxPlot(props)).toMatchSnapshot()
+			const result = errors.trySync(() => generateBoxPlot(props))
+			if (result.error) {
+				expect(errors.is(result.error, ErrBoxPlotInvalidRange)).toBe(true)
+				expect(result.error.message).toMatchSnapshot()
+			} else {
+				throw errors.new("expected an error to be thrown")
+			}
 		})
 
 		test("should render with custom colors", () => {
@@ -281,7 +322,13 @@ describe("Widget Generators", () => {
 				xAxis: { min: 10, max: 0, tickInterval: 1 },
 				yAxis: { min: 10, max: 0, tickInterval: 1 }
 			})
-			expect(generateCoordinatePlane(props)).toMatchSnapshot()
+			const result = errors.trySync(() => generateCoordinatePlane(props))
+			if (result.error) {
+				expect(errors.is(result.error, ErrCoordinatePlaneInvalidDimensions)).toBe(true)
+				expect(result.error.message).toMatchSnapshot()
+			} else {
+				throw errors.new("expected an error to be thrown")
+			}
 		})
 	})
 
@@ -370,7 +417,13 @@ describe("Widget Generators", () => {
 				axis: { min: 10, max: 0, tickInterval: 1 },
 				data: []
 			})
-			expect(generateDotPlot(props)).toMatchSnapshot()
+			const result = errors.trySync(() => generateDotPlot(props))
+			if (result.error) {
+				expect(errors.is(result.error, ErrDotPlotInvalidDimensions)).toBe(true)
+				expect(result.error.message).toMatchSnapshot()
+			} else {
+				throw errors.new("expected an error to be thrown")
+			}
 		})
 	})
 
@@ -433,6 +486,39 @@ describe("Widget Generators", () => {
 				height: 250,
 				shape: { type: "cone", radius: 6, height: 12 },
 				labels: []
+			})
+			expect(generateGeometricSolidDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render cone with labels", () => {
+			const props = GeometricSolidDiagramPropsSchema.parse({
+				width: 200,
+				height: 250,
+				shape: { type: "cone", radius: 5, height: 8 },
+				labels: [
+					{ target: "radius", text: "r = 5" },
+					{ target: "height", text: "h = 8" }
+				]
+			})
+			expect(generateGeometricSolidDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render sphere without labels", () => {
+			const props = GeometricSolidDiagramPropsSchema.parse({
+				width: 200,
+				height: 200,
+				shape: { type: "sphere", radius: 7 },
+				labels: []
+			})
+			expect(generateGeometricSolidDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render sphere with radius label", () => {
+			const props = GeometricSolidDiagramPropsSchema.parse({
+				width: 200,
+				height: 200,
+				shape: { type: "sphere", radius: 6 },
+				labels: [{ target: "radius", text: "r = 6" }]
 			})
 			expect(generateGeometricSolidDiagram(props)).toMatchSnapshot()
 		})
@@ -801,7 +887,13 @@ describe("Widget Generators", () => {
 				},
 				showLabels: false
 			})
-			expect(generatePolyhedronNetDiagram(props)).toMatchSnapshot()
+			const result = errors.trySync(() => generatePolyhedronNetDiagram(props))
+			if (result.error) {
+				expect(errors.is(result.error, ErrInvalidBaseShape)).toBe(true)
+				expect(result.error.message).toMatchSnapshot()
+			} else {
+				throw errors.new("expected an error to be thrown")
+			}
 		})
 	})
 

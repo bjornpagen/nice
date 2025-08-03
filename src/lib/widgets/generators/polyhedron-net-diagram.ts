@@ -1,5 +1,8 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+export const ErrInvalidBaseShape = errors.new("invalid base shape for polyhedron type")
 
 // Defines the dimensions for the faces of the net.
 const FaceDimensionsSchema = z.object({
@@ -51,7 +54,10 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 
 	if (polyhedronType === "cube") {
 		if (dimensions.base.type !== "square") {
-			return `<svg ...><text fill="red">Cube must have a square base.</text></svg>`
+			throw errors.wrap(
+				ErrInvalidBaseShape,
+				`cube must have a square base, but received type '${dimensions.base.type}'`
+			)
 		}
 		const side = dimensions.base.side * 5
 		const totalW = 4 * side

@@ -1,5 +1,8 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+export const ErrInvalidRange = errors.new("axis min must be less than axis max")
 
 // The main Zod schema for the boxPlot function
 export const BoxPlotPropsSchema = z
@@ -48,7 +51,7 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	const yCenter = margin.top + plotHeight / 2
 
 	if (axis.min >= axis.max) {
-		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg"><text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Error: axis.min must be less than axis.max.</text></svg>`
+		throw errors.wrap(ErrInvalidRange, `axis.min (${axis.min}) must be less than axis.max (${axis.max})`)
 	}
 
 	const scale = chartWidth / (axis.max - axis.min)

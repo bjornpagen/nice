@@ -1,5 +1,8 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+export const ErrInvalidRange = errors.new("min must be less than max")
 
 // Defines a boundary point for an inequality range
 const InequalityBoundarySchema = z.object({
@@ -17,10 +20,7 @@ const InequalityRangeSchema = z.object({
 	end: InequalityBoundarySchema.optional().describe(
 		"The ending boundary of the range. If omitted, the range extends to positive infinity."
 	),
-	color: z
-		.string()
-		.default("rgba(66, 133, 244, 0.7)")
-		.describe("The color of the shaded range and its boundary points.")
+	color: z.string().default("#4285F4").describe("The color of the shaded range and its boundary points.")
 })
 
 // The main Zod schema for the inequalityNumberLine function
@@ -53,7 +53,7 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	const yPos = height / 2
 
 	if (min >= max) {
-		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg"><text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Error: min must be less than max.</text></svg>`
+		throw errors.wrap(ErrInvalidRange, `min (${min}) must be less than max (${max})`)
 	}
 
 	const scale = chartWidth / (max - min)
@@ -63,7 +63,18 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 
 	// Axis and Ticks
 	svg += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
-	svg += `<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
+
+	// Define markers for arrows
+	svg += "<defs>"
+	svg += `<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker>`
+
+	// Add colored arrow markers for ranges
+	const uniqueColors = new Set(ranges.map((r) => r.color))
+	for (const color of uniqueColors) {
+		const colorId = color.replace(/[^a-zA-Z0-9]/g, "")
+		svg += `<marker id="arrow-${colorId}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3" markerHeight="3" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="${color}"/></marker>`
+	}
+	svg += "</defs>"
 
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
@@ -75,7 +86,19 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	for (const r of ranges) {
 		const startPos = r.start ? toSvgX(r.start.value) : padding.horizontal
 		const endPos = r.end ? toSvgX(r.end.value) : width - padding.horizontal
-		svg += `<line x1="${startPos}" y1="${yPos}" x2="${endPos}" y2="${yPos}" stroke="${r.color}" stroke-width="5" stroke-linecap="butt"/>`
+		const colorId = r.color.replace(/[^a-zA-Z0-9]/g, "")
+
+		// Add markers for unbounded cases
+		let markerStart = ""
+		let markerEnd = ""
+		if (!r.start) {
+			markerStart = `marker-start="url(#arrow-${colorId})"`
+		}
+		if (!r.end) {
+			markerEnd = `marker-end="url(#arrow-${colorId})"`
+		}
+
+		svg += `<line x1="${startPos}" y1="${yPos}" x2="${endPos}" y2="${yPos}" stroke="${r.color}" stroke-width="5" stroke-linecap="butt" ${markerStart} ${markerEnd}/>`
 
 		// Boundary circles
 		if (r.start) {
