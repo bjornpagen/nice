@@ -47,19 +47,19 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
 	// Hook and beam
-	svg += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="black" stroke-width="2"/>`
-	svg += `<path d="M ${centerX - 5} 10 L ${centerX} 5 L ${centerX + 5} 10 Z" fill="black" />` // Triangle at top of hook
-	svg += `<line x1="${beamStartX}" y1="${beamY}" x2="${beamEndX}" y2="${beamY}" stroke="black" stroke-width="3"/>`
+	svg += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="#333333" stroke-width="2"/>`
+	svg += `<path d="M ${centerX - 5} 10 L ${centerX} 5 L ${centerX + 5} 10 Z" fill="#333333" />` // Triangle at top of hook
+	svg += `<line x1="${beamStartX}" y1="${beamY}" x2="${beamEndX}" y2="${beamY}" stroke="#333333" stroke-width="3"/>`
 
 	const drawWeight = (x: number, y: number, weight: (typeof leftSide)[0]) => {
 		const size = 30
 		let shapeSvg = ""
 		switch (weight.shape) {
 			case "circle":
-				shapeSvg = `<circle cx="${x}" cy="${y + size / 2}" r="${size / 2}" fill="${weight.color || "#e0e0e0"}" stroke="black"/>`
+				shapeSvg = `<circle cx="${x}" cy="${y + size / 2}" r="${size / 2}" fill="${weight.color || "#e0e0e0"}" stroke="#333333"/>`
 				break
 			case "triangle":
-				shapeSvg = `<polygon points="${x - size / 2},${y + size} ${x + size / 2},${y + size} ${x},${y}" fill="${weight.color || "#e0e0e0"}" stroke="black"/>`
+				shapeSvg = `<polygon points="${x - size / 2},${y + size} ${x + size / 2},${y + size} ${x},${y}" fill="${weight.color || "#e0e0e0"}" stroke="#333333"/>`
 				break
 			case "pentagon": {
 				// Simplified pentagon
@@ -72,14 +72,14 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 				]
 					.map((pt) => pt.join(","))
 					.join(" ")
-				shapeSvg = `<polygon points="${p_pts}" fill="${weight.color || "#e0e0e0"}" stroke="black"/>`
+				shapeSvg = `<polygon points="${p_pts}" fill="${weight.color || "#e0e0e0"}" stroke="#333333"/>`
 				break
 			}
 			default:
-				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color || "#e0e0e0"}" stroke="black"/>`
+				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color || "#e0e0e0"}" stroke="#333333"/>`
 				break
 		}
-		const textSvg = `<text x="${x}" y="${y + size / 2 + 4}" fill="black" text-anchor="middle" font-weight="bold">${weight.label}</text>`
+		const textSvg = `<text x="${x}" y="${y + size / 2 + 4}" fill="#333333" text-anchor="middle" font-weight="bold">${weight.label}</text>`
 		return shapeSvg + textSvg
 	}
 
@@ -92,7 +92,7 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 
 		weights.forEach((_w, i) => {
 			const weightY = weightYStart + i * weightHeight
-			svg += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + 5}" x2="${sideCenterX}" y2="${weightY}" stroke="black"/>`
+			svg += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + 5}" x2="${sideCenterX}" y2="${weightY}" stroke="#333333"/>`
 		})
 	}
 

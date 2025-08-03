@@ -71,8 +71,8 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 	if (title) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
 
 	// Axes
-	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>` // Y-axis
-	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>` // X-axis
+	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="#333333"/>` // Y-axis
+	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#333333"/>` // X-axis
 
 	// Axis Labels
 	if (xAxisLabel)
@@ -83,8 +83,8 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 	// Y ticks and grid lines
 	for (let t = yAxis.min; t <= maxValue; t += yAxis.tickInterval) {
 		const y = height - margin.bottom - (t - yAxis.min) * scaleY
-		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
-		svg += `<text x="${margin.left - 10}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="#333333"/>`
+		svg += `<text x="${margin.left - 10}" y="${y + 4}" fill="#333333" text-anchor="end">${t}</text>`
 		svg += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
 	}
 
@@ -101,7 +101,7 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 		} else {
 			svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="2" stroke-dasharray="4"/>`
 		}
-		svg += `<text x="${x + barWidth / 2}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${d.label}</text>`
+		svg += `<text x="${x + barWidth / 2}" y="${height - margin.bottom + 15}" fill="#333333" text-anchor="middle">${d.label}</text>`
 	})
 
 	svg += "</svg>"

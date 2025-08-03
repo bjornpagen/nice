@@ -62,11 +62,11 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
 	// Axis and Ticks
-	svg += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
+	svg += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="#333333" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
 
 	// Define markers for arrows
 	svg += "<defs>"
-	svg += `<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker>`
+	svg += `<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333333"/></marker>`
 
 	// Add colored arrow markers for ranges
 	const uniqueColors = new Set(ranges.map((r) => r.color))
@@ -78,8 +78,8 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
-		svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="black"/>`
-		svg += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle">${t}</text>`
+		svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="#333333"/>`
+		svg += `<text x="${x}" y="${yPos + 20}" fill="#333333" text-anchor="middle">${t}</text>`
 	}
 
 	// Ranges
@@ -102,7 +102,7 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 
 		// Boundary circles
 		if (r.start) {
-			const fill = r.start.type === "closed" ? r.color : "white"
+			const fill = r.start.type === "closed" ? r.color : "#FAFAFA"
 			svg += `<circle cx="${startPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
 		}
 		if (r.end) {

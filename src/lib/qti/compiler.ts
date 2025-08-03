@@ -47,25 +47,15 @@ function encodeDataUri(content: string): string {
 	return `${isSvg ? "data:image/svg+xml" : "data:text/html"},${encoded}`
 }
 
-function escapeTextContent(text: string): string {
-	return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-}
-
 function renderContent(content: unknown): string {
 	if (typeof content === "string") {
-		// If it contains MathML, return as-is (it's already XML)
-		if (content.includes("<math")) {
-			return content
-		}
-		// Otherwise wrap in paragraph and escape
-		return `<p>${escapeTextContent(content)}</p>`
+		// Pass strings through directly. Authors are responsible for providing
+		// necessary wrapping tags like <p>.
+		return content
 	}
 
 	if (typeof content === "object" && content !== null && "type" in content) {
-		if (content.type === "mathml" && "xml" in content && typeof content.xml === "string") {
-			return content.xml
-		}
-
+		// NOTE: The `{type: "mathml"}` check is implicitly removed because it's no longer in the schema.
 		const parseResult = WidgetSchema.safeParse(content)
 		if (parseResult.success) {
 			const widget = parseResult.data
@@ -85,7 +75,7 @@ function compileInteraction(interaction: AnyInteraction): string {
 				.map((c) => {
 					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderContent(c.content)}`
 					if (c.feedback) {
-						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${escapeTextContent(c.feedback)}</qti-feedback-inline>`
+						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${c.feedback}</qti-feedback-inline>`
 					}
 					choiceXml += "</qti-simple-choice>"
 					return choiceXml
@@ -93,7 +83,7 @@ function compileInteraction(interaction: AnyInteraction): string {
 				.join("\n            ")
 
 			return `<qti-choice-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" min-choices="${interaction.minChoices}" max-choices="${interaction.maxChoices}">
-            <qti-prompt>${escapeTextContent(interaction.prompt)}</qti-prompt>
+            <qti-prompt>${interaction.prompt}</qti-prompt>
             ${choices}
         </qti-choice-interaction>`
 		}
@@ -102,7 +92,7 @@ function compileInteraction(interaction: AnyInteraction): string {
 				.map((c) => {
 					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderContent(c.content)}`
 					if (c.feedback) {
-						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${escapeTextContent(c.feedback)}</qti-feedback-inline>`
+						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${c.feedback}</qti-feedback-inline>`
 					}
 					choiceXml += "</qti-simple-choice>"
 					return choiceXml
@@ -110,7 +100,7 @@ function compileInteraction(interaction: AnyInteraction): string {
 				.join("\n            ")
 
 			return `<qti-order-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" orientation="${escapeXmlAttribute(interaction.orientation)}">
-            <qti-prompt>${escapeTextContent(interaction.prompt)}</qti-prompt>
+            <qti-prompt>${interaction.prompt}</qti-prompt>
             ${choices}
         </qti-order-interaction>`
 		}
@@ -126,7 +116,9 @@ function compileInteraction(interaction: AnyInteraction): string {
 			const choices = interaction.choices
 				.map(
 					(c) =>
-						`<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderContent(c.content)}</qti-inline-choice>`
+						// Since content is now just a string, we ensure it's wrapped in a <p> tag for block context,
+						// which is how it was effectively handled before, but now without escaping.
+						`<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}"><p>${renderContent(c.content)}</p></qti-inline-choice>`
 				)
 				.join("\n                ")
 
@@ -222,9 +214,7 @@ function compileResponseDeclarations(decls: AssessmentItem["responseDeclarations
 	return decls
 		.map((decl) => {
 			const correctValues = Array.isArray(decl.correct) ? decl.correct : [decl.correct]
-			const correctXml = correctValues
-				.map((v) => `<qti-value>${escapeTextContent(String(v))}</qti-value>`)
-				.join("\n            ")
+			const correctXml = correctValues.map((v) => `<qti-value>${String(v)}</qti-value>`).join("\n            ")
 
 			let xml = `\n    <qti-response-declaration identifier="${escapeXmlAttribute(decl.identifier)}" cardinality="${escapeXmlAttribute(decl.cardinality)}" base-type="${escapeXmlAttribute(decl.baseType)}">
         <qti-correct-response>
@@ -301,10 +291,10 @@ ${responseDeclarations}
     <qti-item-body>
         ${itemBody}
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
-            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> ${escapeTextContent(item.feedback.correct)}</p></qti-content-body>
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> ${item.feedback.correct}</p></qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
-            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> ${escapeTextContent(item.feedback.incorrect)}</p></qti-content-body>
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> ${item.feedback.incorrect}</p></qti-content-body>
         </qti-feedback-block>
     </qti-item-body>
 ${responseProcessing}

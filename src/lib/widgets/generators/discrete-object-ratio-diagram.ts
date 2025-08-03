@@ -39,7 +39,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
 	if (title) {
-		svg += `<text x="${width / 2}" y="${padding.top / 2}" fill="black" text-anchor="middle" font-weight="bold">${title}</text>`
+		svg += `<text x="${width / 2}" y="${padding.top / 2}" fill="#333333" text-anchor="middle" font-weight="bold">${title}</text>`
 	}
 
 	const iconSize = 20

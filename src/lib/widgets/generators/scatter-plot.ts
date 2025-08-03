@@ -38,7 +38,7 @@ const TrendLineStyleSchema = z.object({
 	label: z.string().optional().describe('An optional label to display next to the line (e.g., "A", "B").'),
 	color: z
 		.string()
-		.default("#D9534F")
+		.default("#EA4335")
 		.describe('The color of the line, as a CSS color string (e.g., "red", "#FF0000").'),
 	style: z.enum(["solid", "dashed"]).default("solid").describe("The style of the line."),
 	data: z

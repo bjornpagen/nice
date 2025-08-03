@@ -9,12 +9,12 @@ export const VennDiagramPropsSchema = z
 		circleA: z.object({
 			label: z.string().describe('The label for the first circle (e.g., "Have a Dog").'),
 			count: z.number().describe("The numerical count for the region unique to this circle (non-overlapping part)."),
-			color: z.string().default("rgba(217, 95, 79, 0.5)").describe("The fill color for this circle.").optional()
+			color: z.string().default("rgba(66, 133, 244, 0.5)").describe("The fill color for this circle.").optional()
 		}),
 		circleB: z.object({
 			label: z.string().describe('The label for the second circle (e.g., "Have a Cat").'),
 			count: z.number().describe("The numerical count for the region unique to this circle (non-overlapping part)."),
-			color: z.string().default("rgba(66, 133, 244, 0.5)").describe("The fill color for this circle.").optional()
+			color: z.string().default("rgba(52, 168, 83, 0.5)").describe("The fill color for this circle.").optional()
 		}),
 		intersectionCount: z.number().describe("The numerical count for the overlapping region of the two circles."),
 		outsideCount: z.number().describe("The numerical count for the region outside of both circles.")
@@ -45,11 +45,11 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 		"<style>.label { font-size: 16px; font-weight: bold; text-anchor: middle; } .count { font-size: 18px; text-anchor: middle; }</style>"
 
 	// Draw containing box
-	svg += `<rect x="1" y="1" width="${width - 2}" height="${height - 2}" fill="none" stroke="black" />`
+	svg += `<rect x="1" y="1" width="${width - 2}" height="${height - 2}" fill="none" stroke="#333333" />`
 
 	// Circles (semi-transparent for overlap visibility)
-	svg += `<circle cx="${cxA}" cy="${cy}" r="${r}" fill="${circleA.color}" fill-opacity="0.6" stroke="black"/>`
-	svg += `<circle cx="${cxB}" cy="${cy}" r="${r}" fill="${circleB.color}" fill-opacity="0.6" stroke="black"/>`
+	svg += `<circle cx="${cxA}" cy="${cy}" r="${r}" fill="${circleA.color}" fill-opacity="0.6" stroke="#333333"/>`
+	svg += `<circle cx="${cxB}" cy="${cy}" r="${r}" fill="${circleB.color}" fill-opacity="0.6" stroke="#333333"/>`
 
 	// Labels for circles - positioned farther apart to use side space
 	svg += `<text x="${cxA - r * 0.5}" y="${padding.top - 5}" class="label">${circleA.label}</text>` // Moved left

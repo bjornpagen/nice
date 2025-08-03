@@ -66,12 +66,12 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 		"<style>.area-label { font-size: 16px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; } .side-label { font-size: 14px; text-anchor: middle; dominant-baseline: middle; }</style>"
 
 	// --- Square C (Hypotenuse) ---
-	const colorC = "#F4DDBE" // tan/orange
+	const colorC = "#FFE082" // amber light
 	const hypVec = { x: v_b_end.x - v_a_end.x, y: v_b_end.y - v_a_end.y } // vector from a_end to b_end
 	const perpVec = { x: hypVec.y, y: -hypVec.x } // outward perpendicular vector (flipped to other side)
 	const v_c1 = { x: v_b_end.x + perpVec.x, y: v_b_end.y + perpVec.y }
 	const v_c2 = { x: v_a_end.x + perpVec.x, y: v_a_end.y + perpVec.y }
-	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${colorC}" stroke="black" stroke-width="1"/>`
+	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_b_end.x},${v_b_end.y} ${v_c1.x},${v_c1.y} ${v_c2.x},${v_c2.y}" fill="${colorC}" stroke="#333333" stroke-width="1"/>`
 	const centerC = { x: (v_a_end.x + v_c1.x) / 2, y: (v_a_end.y + v_c1.y) / 2 }
 	svg += `<text x="${centerC.x}" y="${centerC.y}" class="area-label">${squareC.area}</text>`
 	if (squareC.sideLabel) {
@@ -81,8 +81,8 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	}
 
 	// --- Square B (on leg 'b') ---
-	const colorB = "#A7C7E7" // light blue
-	svg += `<rect x="${v_right.x}" y="${v_b_end.y}" width="${sb}" height="${sb}" fill="${colorB}" stroke="black" stroke-width="1"/>`
+	const colorB = "#90CAF9" // blue light
+	svg += `<rect x="${v_right.x}" y="${v_b_end.y}" width="${sb}" height="${sb}" fill="${colorB}" stroke="#333333" stroke-width="1"/>`
 	const centerB = { x: v_right.x + sb / 2, y: v_b_end.y + sb / 2 }
 	svg += `<text x="${centerB.x}" y="${centerB.y}" class="area-label">${squareB.area}</text>`
 	if (squareB.sideLabel) {
@@ -91,8 +91,8 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	}
 
 	// --- Square A (on leg 'a') ---
-	const colorA = "#F2B5B2" // light red/pink
-	svg += `<rect x="${v_a_end.x}" y="${v_a_end.y}" width="${sa}" height="${sa}" fill="${colorA}" stroke="black" stroke-width="1"/>`
+	const colorA = "#F48FB1" // pink light
+	svg += `<rect x="${v_a_end.x}" y="${v_a_end.y}" width="${sa}" height="${sa}" fill="${colorA}" stroke="#333333" stroke-width="1"/>`
 	const centerA = { x: v_a_end.x + sa / 2, y: v_a_end.y + sa / 2 }
 	svg += `<text x="${centerA.x}" y="${centerA.y}" class="area-label">${squareA.area}</text>`
 	if (squareA.sideLabel) {
@@ -101,7 +101,7 @@ export const generatePythagoreanProofDiagram: WidgetGenerator<typeof Pythagorean
 	}
 
 	// --- Central Triangle (drawn on top) ---
-	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_right.x},${v_right.y} ${v_b_end.x},${v_b_end.y}" fill="white" stroke="black" stroke-width="2"/>`
+	svg += `<polygon points="${v_a_end.x},${v_a_end.y} ${v_right.x},${v_right.y} ${v_b_end.x},${v_b_end.y}" fill="#FAFAFA" stroke="#333333" stroke-width="2"/>`
 
 	svg += "</svg>"
 	return svg

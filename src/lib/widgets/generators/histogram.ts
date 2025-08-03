@@ -61,8 +61,8 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	if (title) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
 
 	// Axes
-	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>` // Y-axis
-	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>` // X-axis
+	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="#333333"/>` // Y-axis
+	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#333333"/>` // X-axis
 
 	// Axis Labels
 	svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 20}" class="axis-label">${xAxis.label}</text>`
@@ -72,8 +72,8 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	const yTickInterval = yAxis.tickInterval || Math.ceil(maxFreq / 5)
 	for (let t = 0; t <= maxFreq; t += yTickInterval) {
 		const y = height - margin.bottom - t * scaleY
-		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
-		svg += `<text x="${margin.left - 10}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="#333333"/>`
+		svg += `<text x="${margin.left - 10}" y="${y + 4}" fill="#333333" text-anchor="end">${t}</text>`
 	}
 
 	// Bins and X-axis labels
@@ -81,16 +81,16 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		const barHeight = b.frequency * scaleY
 		const x = margin.left + i * binWidth
 		const y = height - margin.bottom - barHeight
-		svg += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="#6495ED" stroke="black"/>`
+		svg += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="#6495ED" stroke="#333333"/>`
 		// Label bins at the tick marks between them
 		if (i < bins.length) {
-			svg += `<text x="${x + binWidth}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${b.label.split("-")[1] ?? b.label}</text>`
+			svg += `<text x="${x + binWidth}" y="${height - margin.bottom + 15}" fill="#333333" text-anchor="middle">${b.label.split("-")[1] ?? b.label}</text>`
 		}
 	})
 	// Add first label for the start of the axis
 	const firstLabel = bins[0]?.label.split("-")[0]
 	if (firstLabel) {
-		svg += `<text x="${margin.left}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${firstLabel}</text>`
+		svg += `<text x="${margin.left}" y="${height - margin.bottom + 15}" fill="#333333" text-anchor="middle">${firstLabel}</text>`
 	}
 
 	svg += "</svg>"

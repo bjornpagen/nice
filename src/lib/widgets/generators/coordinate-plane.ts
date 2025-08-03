@@ -39,7 +39,7 @@ const LineSchema = z.object({
 	equation: SlopeInterceptLineSchema.describe("The mathematical definition of the line."),
 	color: z
 		.string()
-		.default("#D9534F")
+		.default("#EA4335")
 		.describe('The color of the line, as a CSS color string (e.g., "red", "#FF0000").'),
 	style: z.enum(["solid", "dashed"]).default("solid").describe("The style of the line.")
 })

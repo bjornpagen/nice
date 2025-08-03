@@ -57,18 +57,18 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
 	// Axis line
-	svg += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="black"/>`
+	svg += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="#333333"/>`
 
 	// Axis label
 	if (axis.label) {
-		svg += `<text x="${width / 2}" y="${height - 15}" fill="black" text-anchor="middle" font-size="14">${axis.label}</text>`
+		svg += `<text x="${width / 2}" y="${height - 15}" fill="#333333" text-anchor="middle" font-size="14">${axis.label}</text>`
 	}
 
 	// Ticks and tick labels
 	for (let t = axis.min; t <= axis.max; t += axis.tickInterval) {
 		const x = toSvgX(t)
-		svg += `<line x1="${x}" y1="${axisY - 5}" x2="${x}" y2="${axisY + 5}" stroke="black"/>`
-		svg += `<text x="${x}" y="${axisY + 20}" fill="black" text-anchor="middle">${t}</text>`
+		svg += `<line x1="${x}" y1="${axisY - 5}" x2="${x}" y2="${axisY + 5}" stroke="#333333"/>`
+		svg += `<text x="${x}" y="${axisY + 20}" fill="#333333" text-anchor="middle">${t}</text>`
 	}
 
 	// Dots

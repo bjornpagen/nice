@@ -16,7 +16,7 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				'Cory hikes up a hill with a constant slope. The double number line shows that after Cory hikes <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mtext> km</mtext></math>, their elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn><mtext> m</mtext></math>.',
+				'<p>Cory hikes up a hill with a constant slope. The double number line shows that after Cory hikes <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mtext> km</mtext></math>, their elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn><mtext> m</mtext></math>.</p>',
 				{
 					type: "doubleNumberLine",
 					width: 400,
@@ -85,11 +85,8 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				"Evaluate.",
-				{
-					type: "mathml",
-					xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math>'
-				},
+				"<p>Evaluate.</p>",
+				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math>',
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
@@ -132,17 +129,17 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: { type: "mathml", xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn></math>' },
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn></math>',
 							feedback: "Correct! 708 > 79."
 						},
 						{
 							identifier: "B",
-							content: { type: "mathml", xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>></mo></math>' },
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>></mo></math>',
 							feedback: "That symbol belongs between 708 and 79 to make a true statement."
 						},
 						{
 							identifier: "C",
-							content: { type: "mathml", xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>79</mn></math>' },
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>79</mn></math>',
 							feedback: "79 is the smaller number on the right."
 						}
 					]
@@ -187,7 +184,6 @@ describe("QTI Compiler", () => {
 						}
 					]
 				},
-				"Note: The open circle at 0 and the arrow pointing right indicate all values greater than 0.",
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -198,31 +194,19 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: {
-								type: "mathml",
-								xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&lt;</mo><mn>0</mn></math>'
-							}
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&lt;</mo><mn>0</mn></math>'
 						},
 						{
 							identifier: "B",
-							content: {
-								type: "mathml",
-								xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≤</mo><mn>0</mn></math>'
-							}
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≤</mo><mn>0</mn></math>'
 						},
 						{
 							identifier: "C",
-							content: {
-								type: "mathml",
-								xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>'
-							}
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>'
 						},
 						{
 							identifier: "D",
-							content: {
-								type: "mathml",
-								xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≥</mo><mn>0</mn></math>'
-							}
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≥</mo><mn>0</mn></math>'
 						}
 					]
 				}
@@ -260,7 +244,7 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				"Use the number line to compare the numbers.",
+				"<p>Use the number line to compare the numbers.</p>",
 				{
 					type: "numberLine",
 					width: 120,
@@ -285,7 +269,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				},
-				"Complete the statements.",
+				"<p>Complete the statements.</p>",
 				'<p>On the number line, <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="purple"><mo>-</mo><mn>1.4</mn></mstyle></math> is ',
 				{
 					type: "inlineChoiceInteraction",
@@ -334,7 +318,7 @@ describe("QTI Compiler", () => {
 				{ identifier: "RESP_D", cardinality: "single", baseType: "integer", correct: 30 }
 			],
 			body: [
-				'The Cold Be Gone Company conducted a study with <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math> participants. Each participant either <em>received</em> cold medicine or <em>did not receive</em> cold medicine, and the company recorded whether the participant\'s cold lasted <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math> days or longer.',
+				'<p>The Cold Be Gone Company conducted a study with <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math> participants. Each participant either <em>received</em> cold medicine or <em>did not receive</em> cold medicine, and the company recorded whether the participant\'s cold lasted <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math> days or longer.</p>',
 				{
 					type: "vennDiagram",
 					width: 350,
@@ -344,8 +328,7 @@ describe("QTI Compiler", () => {
 					intersectionCount: 23,
 					outsideCount: 30
 				},
-				"Note: The diagram shows 23 participants who both received cold medicine and had colds lasting at least 7 days. There are 27 who received medicine but had shorter colds, 20 who did not receive medicine but had longer colds, and 30 who neither received medicine nor had colds lasting longer than 7 days.",
-				"Complete the following two-way frequency table.",
+				"<p>Complete the following two-way frequency table.</p>",
 				{
 					type: "dataTable",
 					columnHeaders: ["", "Received cold medicine", "Did not receive cold medicine"],
@@ -501,27 +484,21 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: {
-								type: "mathml",
-								xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>×</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></math>'
-							},
+							content:
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>×</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></math>',
 							feedback:
 								"Not quite. This would mean 4 groups of 1/3 each. But we have 3 circles, each with 1/4 shaded, not 4 groups of 1/3."
 						},
 						{
 							identifier: "B",
-							content: {
-								type: "mathml",
-								xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>'
-							},
+							content:
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>',
 							feedback: "Correct! There are 3 circles and 1/4 of each circle is shaded. We can multiply: 3 × 1/4."
 						},
 						{
 							identifier: "C",
-							content: {
-								type: "mathml",
-								xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>'
-							},
+							content:
+								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>',
 							feedback: "Correct! Since we have 3 circles and each has 1/4 shaded, we can add: 1/4 + 1/4 + 1/4."
 						}
 					]
@@ -551,20 +528,17 @@ describe("QTI Compiler", () => {
 				{ identifier: "RESPONSE_R", cardinality: "single", baseType: "integer", correct: 5 }
 			],
 			body: [
-				"A certain circle can be represented by the following equation.",
-				{
-					type: "mathml",
-					xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></math>'
-				},
-				"What is the center of this circle?",
-				"(",
+				"<p>A certain circle can be represented by the following equation.</p>",
+				'<math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></math>',
+				"<p>What is the center of this circle?</p>",
+				"<p>(",
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_X", expectedLength: 3 },
 				", ",
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_Y", expectedLength: 3 },
-				")",
-				"What is the radius of this circle?",
+				")</p>",
+				"<p>What is the radius of this circle?</p>",
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_R", expectedLength: 2 },
-				" units"
+				"<p> units</p>"
 			],
 			feedback: {
 				correct:
@@ -718,10 +692,7 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				{
-					type: "mathml",
-					xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mtd><mtd columnalign="left"><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mtd></mtr><mtr><mtd columnalign="left"><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mtd><mtd columnalign="left"><mo>,</mo><mi>x</mi><mo>></mo><mn>2</mn></mtd></mtr></mtable></mrow></math>'
-				},
+				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mtd><mtd columnalign="left"><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mtd></mtr><mtr><mtd columnalign="left"><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mtd><mtd columnalign="left"><mo>,</mo><mi>x</mi><mo>></mo><mn>2</mn></mtd></mtr></mtable></mrow></math>',
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -733,24 +704,24 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: "continuous, not differentiable",
+							content: "<p>continuous, not differentiable</p>",
 							feedback:
 								"This would be the case if the function values matched at x=2 but the derivatives from left and right were different. Check both the limit values and the derivatives."
 						},
 						{
 							identifier: "B",
-							content: "differentiable, not continuous",
+							content: "<p>differentiable, not continuous</p>",
 							feedback: "This is impossible! A function must be continuous at a point to be differentiable there."
 						},
 						{
 							identifier: "C",
-							content: "both continuous and differentiable",
+							content: "<p>both continuous and differentiable</p>",
 							feedback:
 								"Correct! The function values match at x=2 (both equal -1) and the derivatives from both sides equal -4, so the function is both continuous and differentiable."
 						},
 						{
 							identifier: "D",
-							content: "neither continuous nor differentiable",
+							content: "<p>neither continuous nor differentiable</p>",
 							feedback:
 								"Not quite. The function doesn't have a jump discontinuity at x=2. Check if the left and right limits at x=2 are equal."
 						}
@@ -783,10 +754,10 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				'Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.',
+				'<p>Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.</p>',
 				'<math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mo>∬</mo><mi>S</mi></msub><mrow><mo>[</mo><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover><mo>]</mo></mrow><mo>·</mo><mi>d</mi><mi>S</mi></math>',
-				"Use Stokes' theorem to rewrite the surface integral as a line integral.",
-				'<em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em>',
+				"<p>Use Stokes' theorem to rewrite the surface integral as a line integral.</p>",
+				'<p><em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em></p>',
 				'<p><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mo>∮</mo><mi>C</mi></msub><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mn>2</mn><msup><mi>z</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo></math>',
 				{
 					type: "textEntryInteraction",
@@ -837,28 +808,19 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: {
-								type: "mathml",
-								xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>28</mn></math>'
-							}
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>28</mn></math>'
 						},
 						{
 							identifier: "B",
-							content: {
-								type: "mathml",
-								xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>13.5</mn></math>'
-							}
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>13.5</mn></math>'
 						},
 						{
 							identifier: "C",
-							content: {
-								type: "mathml",
-								xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2.125</mn></math>'
-							}
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2.125</mn></math>'
 						},
 						{
 							identifier: "D",
-							content: { type: "mathml", xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5.33</mn></math>' }
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5.33</mn></math>'
 						}
 					]
 				}
@@ -1312,7 +1274,7 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				'Compare using <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>, or <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>.',
+				'<p>Compare using <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>, or <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>.</p>',
 				'<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math>',
 				{
 					type: "inlineChoiceInteraction",
@@ -1321,15 +1283,15 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "GT",
-							content: { type: "mathml", xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>' }
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>'
 						},
 						{
 							identifier: "LT",
-							content: { type: "mathml", xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>' }
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>'
 						},
 						{
 							identifier: "EQ",
-							content: { type: "mathml", xml: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>' }
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>'
 						}
 					]
 				},

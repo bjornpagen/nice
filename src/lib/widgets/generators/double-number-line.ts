@@ -58,21 +58,21 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	svg += "<style>.line-label { font-size: 14px; font-weight: bold; text-anchor: middle; }</style>"
 
 	// Top line
-	svg += `<line x1="${padding.horizontal}" y1="${topY}" x2="${width - padding.horizontal}" y2="${topY}" stroke="black"/>`
+	svg += `<line x1="${padding.horizontal}" y1="${topY}" x2="${width - padding.horizontal}" y2="${topY}" stroke="#333333"/>`
 	svg += `<text x="${width / 2}" y="${topY - 20}" class="line-label">${topLine.label}</text>`
 	topLine.ticks.forEach((t, i) => {
 		const x = padding.horizontal + i * tickSpacing
-		svg += `<line x1="${x}" y1="${topY - 5}" x2="${x}" y2="${topY + 5}" stroke="black"/>`
-		svg += `<text x="${x}" y="${topY + 20}" fill="black" text-anchor="middle">${t}</text>`
+		svg += `<line x1="${x}" y1="${topY - 5}" x2="${x}" y2="${topY + 5}" stroke="#333333"/>`
+		svg += `<text x="${x}" y="${topY + 20}" fill="#333333" text-anchor="middle">${t}</text>`
 	})
 
 	// Bottom line
-	svg += `<line x1="${padding.horizontal}" y1="${bottomY}" x2="${width - padding.horizontal}" y2="${bottomY}" stroke="black"/>`
+	svg += `<line x1="${padding.horizontal}" y1="${bottomY}" x2="${width - padding.horizontal}" y2="${bottomY}" stroke="#333333"/>`
 	svg += `<text x="${width / 2}" y="${bottomY + 30}" class="line-label">${bottomLine.label}</text>`
 	bottomLine.ticks.forEach((t, i) => {
 		const x = padding.horizontal + i * tickSpacing
-		svg += `<line x1="${x}" y1="${bottomY - 5}" x2="${x}" y2="${bottomY + 5}" stroke="black"/>`
-		svg += `<text x="${x}" y="${bottomY - 15}" fill="black" text-anchor="middle">${t}</text>`
+		svg += `<line x1="${x}" y1="${bottomY - 5}" x2="${x}" y2="${bottomY + 5}" stroke="#333333"/>`
+		svg += `<text x="${x}" y="${bottomY - 15}" fill="#333333" text-anchor="middle">${t}</text>`
 	})
 
 	// Alignment lines (optional, but good for clarity)

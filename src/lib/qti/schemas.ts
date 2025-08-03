@@ -2,11 +2,7 @@ import { z } from "zod"
 import { WidgetSchema } from "@/lib/widgets/generators"
 
 // 1. Schemas for various content types and interactions
-const MathMLSchema = z.object({
-	type: z.literal("mathml"),
-	xml: z.string().describe("A string containing valid MathML XML.")
-})
-const SimpleContentSchema = z.union([z.string(), WidgetSchema, MathMLSchema])
+const SimpleContentSchema = z.union([z.string(), WidgetSchema])
 
 const SimpleChoiceSchema = z.object({
 	identifier: z.string(),
@@ -16,7 +12,7 @@ const SimpleChoiceSchema = z.object({
 
 const InlineChoiceSchema = z.object({
 	identifier: z.string(),
-	content: z.union([z.string(), MathMLSchema])
+	content: z.string()
 })
 
 const ChoiceInteractionSchema = z.object({

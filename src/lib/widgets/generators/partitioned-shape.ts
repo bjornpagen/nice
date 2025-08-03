@@ -89,7 +89,7 @@ export const generatePartitionedShape: WidgetGenerator<typeof PartitionedShapePr
 				const row = Math.floor(i / cols)
 				const col = i % cols
 				const fill = i < s.shadedParts ? s.shadeColor : "none"
-				svg += `<rect x="${xOffset + col * cellW}" y="${yOffset + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" stroke="black" stroke-width="1"/>`
+				svg += `<rect x="${xOffset + col * cellW}" y="${yOffset + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" stroke="#333333" stroke-width="1"/>`
 			}
 		} else if (s.type === "circle") {
 			const cx = xOffset + shapeWidth / 2
@@ -110,7 +110,7 @@ export const generatePartitionedShape: WidgetGenerator<typeof PartitionedShapePr
 				const x2 = cx + r * Math.cos(endRad)
 				const y2 = cy + r * Math.sin(endRad)
 
-				svg += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" stroke="black" stroke-width="1"/>`
+				svg += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" stroke="#333333" stroke-width="1"/>`
 			}
 		}
 	})
