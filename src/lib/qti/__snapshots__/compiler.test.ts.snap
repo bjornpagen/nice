@@ -1,0 +1,1217 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QTI Compiler should correctly compile a choice interaction item with widgets 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="double-number-line-ratio"
+    title="Equivalent Ratios on a Double Number Line"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        Cory hikes up a hill with a constant slope. The double number line shows that after Cory hikes <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mtext> km</mtext></math>, their elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn><mtext> m</mtext></math>.
+        <img src="data:image/svg+xml,%3Csvg%20width%3D%22400%22%20height%3D%22150%22%20viewBox%3D%220%200%20400%20150%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cstyle%3E.line-label%20%7B%20font-size%3A%2014px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%3C%2Fstyle%3E%3Cline%20x1%3D%2220%22%20y1%3D%2240%22%20x2%3D%22380%22%20y2%3D%2240%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2220%22%20class%3D%22line-label%22%3EDistance%2C%20kilometers%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%2235%22%20x2%3D%2220%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%22110%22%20y1%3D%2235%22%20x2%3D%22110%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22110%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E%3C%2Ftext%3E%3Cline%20x1%3D%22200%22%20y1%3D%2235%22%20x2%3D%22200%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E%3C%2Ftext%3E%3Cline%20x1%3D%22290%22%20y1%3D%2235%22%20x2%3D%22290%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22290%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E3%3C%2Ftext%3E%3Cline%20x1%3D%22380%22%20y1%3D%2235%22%20x2%3D%22380%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22380%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%22110%22%20x2%3D%22380%22%20y2%3D%22110%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%22140%22%20class%3D%22line-label%22%3EElevation%2C%20meters%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%22105%22%20x2%3D%2220%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%22110%22%20y1%3D%22105%22%20x2%3D%22110%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22110%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E%3C%2Ftext%3E%3Cline%20x1%3D%22200%22%20y1%3D%22105%22%20x2%3D%22200%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E%3C%2Ftext%3E%3Cline%20x1%3D%22290%22%20y1%3D%22105%22%20x2%3D%22290%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22290%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E120%3C%2Ftext%3E%3Cline%20x1%3D%22380%22%20y1%3D%22105%22%20x2%3D%22380%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22380%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%2245%22%20x2%3D%2220%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22110%22%20y1%3D%2245%22%20x2%3D%22110%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22200%22%20y1%3D%2245%22%20x2%3D%22200%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22290%22%20y1%3D%2245%22%20x2%3D%22290%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22380%22%20y1%3D%2245%22%20x2%3D%22380%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type doubleNumberLine." />
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" min-choices="1" max-choices="1">
+            <qti-prompt>Select the double number line that shows the other values of distance and elevation.</qti-prompt>
+            <qti-simple-choice identifier="A"><img src="data:image/svg+xml,%3Csvg%20width%3D%22400%22%20height%3D%22150%22%20viewBox%3D%220%200%20400%20150%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cstyle%3E.line-label%20%7B%20font-size%3A%2014px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%3C%2Fstyle%3E%3Cline%20x1%3D%2220%22%20y1%3D%2240%22%20x2%3D%22380%22%20y2%3D%2240%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2220%22%20class%3D%22line-label%22%3EDistance%2C%20kilometers%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%2235%22%20x2%3D%2220%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%22110%22%20y1%3D%2235%22%20x2%3D%22110%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22110%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E1%3C%2Ftext%3E%3Cline%20x1%3D%22200%22%20y1%3D%2235%22%20x2%3D%22200%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E2%3C%2Ftext%3E%3Cline%20x1%3D%22290%22%20y1%3D%2235%22%20x2%3D%22290%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22290%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E3%3C%2Ftext%3E%3Cline%20x1%3D%22380%22%20y1%3D%2235%22%20x2%3D%22380%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22380%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E4%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%22110%22%20x2%3D%22380%22%20y2%3D%22110%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%22140%22%20class%3D%22line-label%22%3EElevation%2C%20meters%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%22105%22%20x2%3D%2220%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%22110%22%20y1%3D%22105%22%20x2%3D%22110%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22110%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E40%3C%2Ftext%3E%3Cline%20x1%3D%22200%22%20y1%3D%22105%22%20x2%3D%22200%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E80%3C%2Ftext%3E%3Cline%20x1%3D%22290%22%20y1%3D%22105%22%20x2%3D%22290%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22290%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E120%3C%2Ftext%3E%3Cline%20x1%3D%22380%22%20y1%3D%22105%22%20x2%3D%22380%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22380%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E160%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%2245%22%20x2%3D%2220%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22110%22%20y1%3D%2245%22%20x2%3D%22110%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22200%22%20y1%3D%2245%22%20x2%3D%22200%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22290%22%20y1%3D%2245%22%20x2%3D%22290%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22380%22%20y1%3D%2245%22%20x2%3D%22380%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type doubleNumberLine." /></qti-simple-choice>
+            <qti-simple-choice identifier="B"><img src="data:image/svg+xml,%3Csvg%20width%3D%22400%22%20height%3D%22150%22%20viewBox%3D%220%200%20400%20150%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cstyle%3E.line-label%20%7B%20font-size%3A%2014px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%3C%2Fstyle%3E%3Cline%20x1%3D%2220%22%20y1%3D%2240%22%20x2%3D%22380%22%20y2%3D%2240%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2220%22%20class%3D%22line-label%22%3EDistance%2C%20kilometers%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%2235%22%20x2%3D%2220%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%22110%22%20y1%3D%2235%22%20x2%3D%22110%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22110%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E1%3C%2Ftext%3E%3Cline%20x1%3D%22200%22%20y1%3D%2235%22%20x2%3D%22200%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E2%3C%2Ftext%3E%3Cline%20x1%3D%22290%22%20y1%3D%2235%22%20x2%3D%22290%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22290%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E3%3C%2Ftext%3E%3Cline%20x1%3D%22380%22%20y1%3D%2235%22%20x2%3D%22380%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22380%22%20y%3D%2260%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E4%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%22110%22%20x2%3D%22380%22%20y2%3D%22110%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%22140%22%20class%3D%22line-label%22%3EElevation%2C%20meters%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%22105%22%20x2%3D%2220%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%22110%22%20y1%3D%22105%22%20x2%3D%22110%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22110%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E80%3C%2Ftext%3E%3Cline%20x1%3D%22200%22%20y1%3D%22105%22%20x2%3D%22200%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E100%3C%2Ftext%3E%3Cline%20x1%3D%22290%22%20y1%3D%22105%22%20x2%3D%22290%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22290%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E120%3C%2Ftext%3E%3Cline%20x1%3D%22380%22%20y1%3D%22105%22%20x2%3D%22380%22%20y2%3D%22115%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22380%22%20y%3D%2295%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E140%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%2245%22%20x2%3D%2220%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22110%22%20y1%3D%2245%22%20x2%3D%22110%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22200%22%20y1%3D%2245%22%20x2%3D%22200%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22290%22%20y1%3D%2245%22%20x2%3D%22290%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%22380%22%20y1%3D%2245%22%20x2%3D%22380%22%20y2%3D%22105%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type doubleNumberLine." /></qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The ratio of distance to elevation is 3:120, which simplifies to a unit rate of 1:40. For every 1 km hiked, the elevation increases by 40 m. This matches the correct number line.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> First, find the unit rate. If Cory's elevation is 120 m after 3 km, the rate is 120m/3km = 40 meters per kilometer. Use this rate to fill in the other values on the number line.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile a text entry interaction for fractional exponents 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="eval-fractional-exponents"
+    title="Evaluate an expression with negative fractional exponents"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>81</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>Evaluate.</p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math>
+        <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The answer is 81. You successfully applied the rule: &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mfrac&gt;&lt;msup&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msup&gt;&lt;msup&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msup&gt;&lt;/mfrac&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mfrac&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;/mfrac&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msup&gt;&lt;/math&gt;</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Let me help you solve this step by step. First, use the rule: &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mfrac&gt;&lt;msup&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msup&gt;&lt;msup&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msup&gt;&lt;/mfrac&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mfrac&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;/mfrac&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/msup&gt;&lt;/math&gt; So: &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mfrac&gt;&lt;msup&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mrow&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;msup&gt;&lt;mn&gt;54&lt;/mn&gt;&lt;mrow&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;/mfrac&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mn&gt;54&lt;/mn&gt;&lt;/mfrac&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;27&lt;/mn&gt;&lt;/mfrac&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mn&gt;27&lt;/mn&gt;&lt;mfrac&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;/msup&gt;&lt;/math&gt; Then: &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;msup&gt;&lt;mn&gt;27&lt;/mn&gt;&lt;mfrac&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mfrac&gt;&lt;/msup&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mroot&gt;&lt;mn&gt;27&lt;/mn&gt;&lt;mn&gt;3&lt;/mroot&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;81&lt;/mn&gt;&lt;/math&gt;</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile an order interaction for comparing numbers 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="compare-3-digit-numbers"
+    title="Compare 3-digit numbers"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="ordered" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+            <qti-value>B</qti-value>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <qti-order-interaction response-identifier="RESPONSE" shuffle="true" orientation="horizontal">
+            <qti-prompt>Arrange the cards to make a true comparison.</qti-prompt>
+            <qti-simple-choice identifier="A"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn></math><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">Correct! 708 &gt; 79.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="B"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>></mo></math><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">That symbol belongs between 708 and 79 to make a true statement.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="C"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>79</mn></math><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">79 is the smaller number on the right.</qti-feedback-inline></qti-simple-choice>
+        </qti-order-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> You have arranged the cards as 708 &gt; 79, which is a true comparison.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Make sure the largest number is on the left and the symbol correctly represents the relationship.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile a choice interaction with inequality number line 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="inequality-number-line"
+    title="Identify an inequality from a number-line graph"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <img src="data:image/svg+xml,%3Csvg%20width%3D%22500%22%20height%3D%22100%22%20viewBox%3D%220%200%20500%20100%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cline%20x1%3D%2220%22%20y1%3D%2250%22%20x2%3D%22480%22%20y2%3D%2250%22%20stroke%3D%22black%22%20stroke-width%3D%221.5%22%20marker-start%3D%22url(%23arrow)%22%20marker-end%3D%22url(%23arrow)%22%2F%3E%3Cdefs%3E%3Cmarker%20id%3D%22arrow%22%20viewBox%3D%220%200%2010%2010%22%20refX%3D%228%22%20refY%3D%225%22%20markerWidth%3D%226%22%20markerHeight%3D%226%22%20orient%3D%22auto-start-reverse%22%3E%3Cpath%20d%3D%22M%200%200%20L%2010%205%20L%200%2010%20z%22%20fill%3D%22black%22%2F%3E%3C%2Fmarker%3E%3Cmarker%20id%3D%22arrow-4285F4%22%20viewBox%3D%220%200%2010%2010%22%20refX%3D%226%22%20refY%3D%225%22%20markerWidth%3D%223%22%20markerHeight%3D%223%22%20orient%3D%22auto-start-reverse%22%3E%3Cpath%20d%3D%22M%200%200%20L%2010%205%20L%200%2010%20z%22%20fill%3D%22%234285F4%22%2F%3E%3C%2Fmarker%3E%3C%2Fdefs%3E%3Cline%20x1%3D%2220%22%20y1%3D%2245%22%20x2%3D%2220%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E-5%3C%2Ftext%3E%3Cline%20x1%3D%2266%22%20y1%3D%2245%22%20x2%3D%2266%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2266%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E-4%3C%2Ftext%3E%3Cline%20x1%3D%22112%22%20y1%3D%2245%22%20x2%3D%22112%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22112%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E-3%3C%2Ftext%3E%3Cline%20x1%3D%22158%22%20y1%3D%2245%22%20x2%3D%22158%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22158%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E-2%3C%2Ftext%3E%3Cline%20x1%3D%22204%22%20y1%3D%2245%22%20x2%3D%22204%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22204%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E-1%3C%2Ftext%3E%3Cline%20x1%3D%22250%22%20y1%3D%2245%22%20x2%3D%22250%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22250%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%22296%22%20y1%3D%2245%22%20x2%3D%22296%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22296%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E1%3C%2Ftext%3E%3Cline%20x1%3D%22342%22%20y1%3D%2245%22%20x2%3D%22342%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22342%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E2%3C%2Ftext%3E%3Cline%20x1%3D%22388%22%20y1%3D%2245%22%20x2%3D%22388%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22388%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E3%3C%2Ftext%3E%3Cline%20x1%3D%22434%22%20y1%3D%2245%22%20x2%3D%22434%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22434%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E4%3C%2Ftext%3E%3Cline%20x1%3D%22480%22%20y1%3D%2245%22%20x2%3D%22480%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22480%22%20y%3D%2270%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E5%3C%2Ftext%3E%3Cline%20x1%3D%22250%22%20y1%3D%2250%22%20x2%3D%22480%22%20y2%3D%2250%22%20stroke%3D%22%234285F4%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22butt%22%20%20marker-end%3D%22url(%23arrow-4285F4)%22%2F%3E%3Ccircle%20cx%3D%22250%22%20cy%3D%2250%22%20r%3D%225%22%20fill%3D%22white%22%20stroke%3D%22%234285F4%22%20stroke-width%3D%221.5%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type inequalityNumberLine." />
+        <p>Note: The open circle at 0 and the arrow pointing right indicate all values greater than 0.</p>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="false" min-choices="1" max-choices="1">
+            <qti-prompt>Choose the inequality that represents the graph.</qti-prompt>
+            <qti-simple-choice identifier="A"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&lt;</mo><mn>0</mn></math></qti-simple-choice>
+            <qti-simple-choice identifier="B"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≤</mo><mn>0</mn></math></qti-simple-choice>
+            <qti-simple-choice identifier="C"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math></qti-simple-choice>
+            <qti-simple-choice identifier="D"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≥</mo><mn>0</mn></math></qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The graph shows an open point at 0 with an arrow to the right, representing all values strictly greater than 0, so the inequality is &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;&amp;gt;&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/math&gt;.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> The open point at 0 means 0 itself is not included, and the arrow pointing right indicates values greater than 0.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile a vertical number line comparison 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="vertical-number-line-comparison"
+    title="Compare numbers on a vertical number line"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE_POS" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>ABOVE</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESPONSE_COMP" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>GT</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>Use the number line to compare the numbers.</p>
+        <img src="data:image/svg+xml,%3Csvg%20width%3D%22120%22%20height%3D%22350%22%20viewBox%3D%220%200%20120%20350%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cline%20x1%3D%2260%22%20y1%3D%2240%22%20x2%3D%2260%22%20y2%3D%22310%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2252%22%20y1%3D%22310%22%20x2%3D%2268%22%20y2%3D%22310%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2245%22%20y%3D%22314%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E-8%3C%2Ftext%3E%3Cline%20x1%3D%2256%22%20y1%3D%22283%22%20x2%3D%2264%22%20y2%3D%22283%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2252%22%20y1%3D%22256%22%20x2%3D%2268%22%20y2%3D%22256%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2245%22%20y%3D%22260%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E-6%3C%2Ftext%3E%3Cline%20x1%3D%2256%22%20y1%3D%22229%22%20x2%3D%2264%22%20y2%3D%22229%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2252%22%20y1%3D%22202%22%20x2%3D%2268%22%20y2%3D%22202%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2245%22%20y%3D%22206%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E-4%3C%2Ftext%3E%3Cline%20x1%3D%2256%22%20y1%3D%22175%22%20x2%3D%2264%22%20y2%3D%22175%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2252%22%20y1%3D%22148%22%20x2%3D%2268%22%20y2%3D%22148%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2245%22%20y%3D%22152%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E-2%3C%2Ftext%3E%3Cline%20x1%3D%2256%22%20y1%3D%22121%22%20x2%3D%2264%22%20y2%3D%22121%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2252%22%20y1%3D%2294%22%20x2%3D%2268%22%20y2%3D%2294%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2245%22%20y%3D%2298%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%2256%22%20y1%3D%2267%22%20x2%3D%2264%22%20y2%3D%2267%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2252%22%20y1%3D%2240%22%20x2%3D%2268%22%20y2%3D%2240%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2245%22%20y%3D%2244%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E2%3C%2Ftext%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%22131.8%22%20r%3D%225%22%20fill%3D%22purple%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Ctext%20x%3D%2245%22%20y%3D%22131.8%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%20dominant-baseline%3D%22middle%22%3E-1.4%3C%2Ftext%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%22266.8%22%20r%3D%225%22%20fill%3D%22maroon%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Ctext%20x%3D%2245%22%20y%3D%22266.8%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%20dominant-baseline%3D%22middle%22%3E-6.4%3C%2Ftext%3E%3C%2Fsvg%3E" alt="A visual element of type numberLine." />
+        <p>Complete the statements.</p>
+        <p>On the number line, <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="purple"><mo>-</mo><mn>1.4</mn></mstyle></math> is 
+        <qti-inline-choice-interaction response-identifier="RESPONSE_POS" shuffle="false">
+                <qti-inline-choice identifier="ABOVE"><p>above</p></qti-inline-choice>
+                <qti-inline-choice identifier="BELOW"><p>below</p></qti-inline-choice>
+            </qti-inline-choice-interaction>
+         <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="maroon"><mo>-</mo><mn>6.4</mn></mstyle></math>.</p>
+        <p>This means <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="purple"><mo>-</mo><mn>1.4</mn></mstyle></math> is 
+        <qti-inline-choice-interaction response-identifier="RESPONSE_COMP" shuffle="false">
+                <qti-inline-choice identifier="GT"><p>greater than</p></qti-inline-choice>
+                <qti-inline-choice identifier="LT"><p>less than</p></qti-inline-choice>
+            </qti-inline-choice-interaction>
+         <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="maroon"><mo>-</mo><mn>6.4</mn></mstyle></math>.</p>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> On a vertical number line, numbers higher up are greater. Since &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;1.4&lt;/mn&gt;&lt;/math&gt; is above &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;6.4&lt;/mn&gt;&lt;/math&gt;, it is the greater number.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Look at the positions on the number line. &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;1.4&lt;/mn&gt;&lt;/math&gt; is located higher up than &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;6.4&lt;/mn&gt;&lt;/math&gt;. This means &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;1.4&lt;/mn&gt;&lt;/math&gt; is above &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;6.4&lt;/mn&gt;&lt;/math&gt;, and therefore &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;1.4&lt;/mn&gt;&lt;/math&gt; is greater than &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;6.4&lt;/mn&gt;&lt;/math&gt;.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE_POS"/><qti-correct identifier="RESPONSE_POS"/></qti-match>
+                    <qti-match><qti-variable identifier="RESPONSE_COMP"/><qti-correct identifier="RESPONSE_COMP"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile a two-way frequency table with Venn diagram 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="two-way-frequency-table-cold-study"
+    title="Complete a Two-Way Frequency Table"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESP_A" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>23</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESP_B" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>20</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESP_C" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>27</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESP_D" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>30</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        The Cold Be Gone Company conducted a study with <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math> participants. Each participant either <em>received</em> cold medicine or <em>did not receive</em> cold medicine, and the company recorded whether the participant's cold lasted <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math> days or longer.
+        <img src="data:image/svg+xml,%3Csvg%20width%3D%22350%22%20height%3D%22262%22%20viewBox%3D%220%200%20350%20262%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%3E%3Cstyle%3E.label%20%7B%20font-size%3A%2016px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%20.count%20%7B%20font-size%3A%2018px%3B%20text-anchor%3A%20middle%3B%20%7D%3C%2Fstyle%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%22348%22%20height%3D%22260%22%20fill%3D%22none%22%20stroke%3D%22black%22%20%2F%3E%3Ccircle%20cx%3D%22134.96%22%20cy%3D%22131%22%20r%3D%2272.8%22%20fill%3D%22undefined%22%20fill-opacity%3D%220.6%22%20stroke%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22215.04000000000002%22%20cy%3D%22131%22%20r%3D%2272.8%22%20fill%3D%22undefined%22%20fill-opacity%3D%220.6%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2298.56%22%20y%3D%2235%22%20class%3D%22label%22%3ECold%20Medicine%3C%2Ftext%3E%3Ctext%20x%3D%22251.44000000000003%22%20y%3D%2235%22%20class%3D%22label%22%3ECold%20longer%20than%207%20days%3C%2Ftext%3E%3Ctext%20x%3D%2298.56%22%20y%3D%22131%22%20class%3D%22count%22%20dominant-baseline%3D%22middle%22%3E27%3C%2Ftext%3E%3Ctext%20x%3D%22251.44000000000003%22%20y%3D%22131%22%20class%3D%22count%22%20dominant-baseline%3D%22middle%22%3E20%3C%2Ftext%3E%3Ctext%20x%3D%22175%22%20y%3D%22131%22%20class%3D%22count%22%20dominant-baseline%3D%22middle%22%3E23%3C%2Ftext%3E%3Ctext%20x%3D%22175%22%20y%3D%22242%22%20class%3D%22count%22%3E30%3C%2Ftext%3E%3C%2Fsvg%3E" alt="A visual element of type vennDiagram." />
+        <p>Note: The diagram shows 23 participants who both received cold medicine and had colds lasting at least 7 days. There are 27 who received medicine but had shorter colds, 20 who did not receive medicine but had longer colds, and 30 who neither received medicine nor had colds lasting longer than 7 days.</p>
+        <p>Complete the following two-way frequency table.</p>
+        <img src="data:text/html,%3Cdiv%20style%3D%22font-family%3A%20sans-serif%3B%20width%3A%20100%25%3B%22%3E%3Ctable%20style%3D%22border-collapse%3A%20collapse%3B%20width%3A%20100%25%3B%20border%3A%201px%20solid%20black%3B%22%3E%3Cthead%3E%3Ctr%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3E%3C%2Fth%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3EReceived%20cold%20medicine%3C%2Fth%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3EDid%20not%20receive%20cold%20medicine%3C%2Fth%3E%3C%2Ftr%3E%3C%2Fthead%3E%3Ctbody%3E%3Ctr%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3ECold%20lasted%20longer%20than%207%20days%3C%2Fth%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E%3Cinput%20type%3D%22text%22%20response-identifier%3D%22RESP_A%22%20size%3D%223%22%20style%3D%22width%3A%2080px%3B%20padding%3A%204px%3B%20border%3A%201px%20solid%20%23ccc%3B%22%2F%3E%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E%3Cinput%20type%3D%22text%22%20response-identifier%3D%22RESP_B%22%20size%3D%223%22%20style%3D%22width%3A%2080px%3B%20padding%3A%204px%3B%20border%3A%201px%20solid%20%23ccc%3B%22%2F%3E%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3ECold%20did%20%3Cem%3Enot%3C%2Fem%3E%20last%20longer%20than%207%20days%3C%2Fth%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E%3Cinput%20type%3D%22text%22%20response-identifier%3D%22RESP_C%22%20size%3D%223%22%20style%3D%22width%3A%2080px%3B%20padding%3A%204px%3B%20border%3A%201px%20solid%20%23ccc%3B%22%2F%3E%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E%3Cinput%20type%3D%22text%22%20response-identifier%3D%22RESP_D%22%20size%3D%223%22%20style%3D%22width%3A%2080px%3B%20padding%3A%204px%3B%20border%3A%201px%20solid%20%23ccc%3B%22%2F%3E%3C%2Ftd%3E%3C%2Ftr%3E%3C%2Ftbody%3E%3C%2Ftable%3E%3C%2Fdiv%3E" alt="A visual element of type dataTable." />
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The completed table correctly reflects the Venn diagram data.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Use the numbers in the Venn diagram. The overlap (23) belongs in the "Received medicine" &amp; "Cold ≥ 7 days" cell. Then distribute the other counts accordingly.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESP_A"/><qti-correct identifier="RESP_A"/></qti-match>
+                    <qti-match><qti-variable identifier="RESP_B"/><qti-correct identifier="RESP_B"/></qti-match>
+                    <qti-match><qti-variable identifier="RESP_C"/><qti-correct identifier="RESP_C"/></qti-match>
+                    <qti-match><qti-variable identifier="RESP_D"/><qti-correct identifier="RESP_D"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile equivalent fractions with partitioned shapes 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="equivalent-fraction-images"
+    title="Identifying Equivalent Fractions with Images"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="multiple" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+            <qti-value>B</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of the following rectangle is shaded.</p>
+        <img src="data:image/svg+xml,%3Csvg%20width%3D%22180%22%20height%3D%2288%22%20viewBox%3D%220%200%20180%2088%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2230%22%20height%3D%2288%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2230%22%20y%3D%220%22%20width%3D%2230%22%20height%3D%2288%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2260%22%20y%3D%220%22%20width%3D%2230%22%20height%3D%2288%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2290%22%20y%3D%220%22%20width%3D%2230%22%20height%3D%2288%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%22120%22%20y%3D%220%22%20width%3D%2230%22%20height%3D%2288%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%22150%22%20y%3D%220%22%20width%3D%2230%22%20height%3D%2288%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type partitionedShape." />
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" min-choices="0" max-choices="3">
+            <qti-prompt>Which of the following rectangles have exactly &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mfrac&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;/mfrac&gt;&lt;/math&gt; of their area shaded?</qti-prompt>
+            <qti-simple-choice identifier="A"><img src="data:image/svg+xml,%3Csvg%20width%3D%22180%22%20height%3D%2288%22%20viewBox%3D%220%200%20180%2088%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2245%22%20height%3D%2244%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2245%22%20y%3D%220%22%20width%3D%2245%22%20height%3D%2244%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2290%22%20y%3D%220%22%20width%3D%2245%22%20height%3D%2244%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%22135%22%20y%3D%220%22%20width%3D%2245%22%20height%3D%2244%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%2244%22%20width%3D%2245%22%20height%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2245%22%20y%3D%2244%22%20width%3D%2245%22%20height%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2290%22%20y%3D%2244%22%20width%3D%2245%22%20height%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%22135%22%20y%3D%2244%22%20width%3D%2245%22%20height%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type partitionedShape." /><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">Correct! This rectangle has 4 out of 8 parts shaded, which equals 4/8 = 1/2 = 3/6.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="B"><img src="data:image/svg+xml,%3Csvg%20width%3D%22180%22%20height%3D%2288%22%20viewBox%3D%220%200%20180%2088%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2290%22%20height%3D%2244%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2290%22%20y%3D%220%22%20width%3D%2290%22%20height%3D%2244%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%2244%22%20width%3D%2290%22%20height%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2290%22%20y%3D%2244%22%20width%3D%2290%22%20height%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type partitionedShape." /><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">Correct! This rectangle has 2 out of 4 parts shaded, which equals 2/4 = 1/2 = 3/6.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="C"><img src="data:image/svg+xml,%3Csvg%20width%3D%22180%22%20height%3D%2288%22%20viewBox%3D%220%200%20180%2088%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2290%22%20height%3D%2244%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2290%22%20y%3D%220%22%20width%3D%2290%22%20height%3D%2244%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%2244%22%20width%3D%2290%22%20height%3D%2244%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Crect%20x%3D%2290%22%20y%3D%2244%22%20width%3D%2290%22%20height%3D%2244%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type partitionedShape." /><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">Not quite. This rectangle has 3 out of 4 parts shaded, which equals 3/4. Since 3/4 is not equal to 3/6 (which equals 1/2), this is incorrect.</qti-feedback-inline></qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> Excellent! You correctly identified that 3/6 = 1/2, and found both rectangles that have exactly half of their area shaded: 4/8 and 2/4 both equal 1/2.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Not quite. First, simplify 3/6 to 1/2. Then count the shaded parts in each rectangle and check if that fraction equals 1/2. Remember: 4/8 = 1/2, 2/4 = 1/2, but 3/4 ≠ 1/2.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile calculating shaded area of multiple shapes 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="calculate-shaded-area"
+    title="Calculating Shaded Area of Multiple Shapes"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="multiple" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>B</qti-value>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <img src="data:image/svg+xml,%3Csvg%20width%3D%221000%22%20height%3D%22103%22%20viewBox%3D%220%200%201000%20103%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M%20160%2051.5%20L%20160%205%20A%2046.5%2046.5%200%200%201%20206.5%2051.5%20Z%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20160%2051.5%20L%20206.5%2051.5%20A%2046.5%2046.5%200%200%201%20160%2098%20Z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20160%2051.5%20L%20160%2098%20A%2046.5%2046.5%200%200%201%20113.5%2051.50000000000001%20Z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20160%2051.5%20L%20113.5%2051.50000000000001%20A%2046.5%2046.5%200%200%201%20160%205%20Z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20500%2051.5%20L%20500%205%20A%2046.5%2046.5%200%200%201%20546.5%2051.5%20Z%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20500%2051.5%20L%20546.5%2051.5%20A%2046.5%2046.5%200%200%201%20500%2098%20Z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20500%2051.5%20L%20500%2098%20A%2046.5%2046.5%200%200%201%20453.5%2051.50000000000001%20Z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20500%2051.5%20L%20453.5%2051.50000000000001%20A%2046.5%2046.5%200%200%201%20500%205%20Z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20840%2051.5%20L%20840%205%20A%2046.5%2046.5%200%200%201%20886.5%2051.5%20Z%22%20fill%3D%22undefined%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20840%2051.5%20L%20886.5%2051.5%20A%2046.5%2046.5%200%200%201%20840%2098%20Z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20840%2051.5%20L%20840%2098%20A%2046.5%2046.5%200%200%201%20793.5%2051.50000000000001%20Z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Cpath%20d%3D%22M%20840%2051.5%20L%20793.5%2051.50000000000001%20A%2046.5%2046.5%200%200%201%20840%205%20Z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type partitionedShape." />
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" min-choices="0" max-choices="3">
+            <qti-prompt>How can we calculate the shaded area?</qti-prompt>
+            <qti-simple-choice identifier="A"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>×</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></math><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">Not quite. This would mean 4 groups of 1/3 each. But we have 3 circles, each with 1/4 shaded, not 4 groups of 1/3.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="B"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">Correct! There are 3 circles and 1/4 of each circle is shaded. We can multiply: 3 × 1/4.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="C"><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">Correct! Since we have 3 circles and each has 1/4 shaded, we can add: 1/4 + 1/4 + 1/4.</qti-feedback-inline></qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> Excellent! You found both correct ways to calculate the shaded area. Since we have 3 circles with 1/4 shaded in each, we can either multiply 3 × 1/4 or add 1/4 + 1/4 + 1/4. Both give us 3/4 as the total shaded area.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Not quite. Look carefully at the image. There are 3 circles, and 1/4 of each circle is shaded. We can find the total shaded area by either: (1) multiplying 3 × 1/4, or (2) adding 1/4 + 1/4 + 1/4.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile circle equation center and radius problem 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="circle-equation-center-radius"
+    title="Find the center and radius of a circle from its equation"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE_X" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>-9</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESPONSE_Y" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>-7</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESPONSE_R" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>5</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>A certain circle can be represented by the following equation.</p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></math>
+        <p>What is the center of this circle?</p>
+        <p>(</p>
+        <qti-text-entry-interaction response-identifier="RESPONSE_X" expected-length="3"/>
+        <p>, </p>
+        <qti-text-entry-interaction response-identifier="RESPONSE_Y" expected-length="3"/>
+        <p>)</p>
+        <p>What is the radius of this circle?</p>
+        <qti-text-entry-interaction response-identifier="RESPONSE_R" expected-length="2"/>
+        <p> units</p>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> You successfully found that the circle is centered at (–9, –7) with a radius of 5 units. You correctly converted the equation to standard form: (x+9)²+(y+7)²=25</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Let's complete the square to find the center and radius. Starting with: x²+y²+18x+14y+105=0. Group the x-terms and y-terms: (x²+18x)+(y²+14y)=-105. Complete the square for x: x²+18x+81=(x+9)². Complete the square for y: y²+14y+49=(y+7)². Don't forget to add 81 and 49 to both sides! Final form: (x+9)²+(y+7)²=25. Therefore: center = (–9, –7) and radius = 5</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE_X"/><qti-correct identifier="RESPONSE_X"/></qti-match>
+                    <qti-match><qti-variable identifier="RESPONSE_Y"/><qti-correct identifier="RESPONSE_Y"/></qti-match>
+                    <qti-match><qti-variable identifier="RESPONSE_R"/><qti-correct identifier="RESPONSE_R"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile find missing data point given mean 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="haruka-exam-score"
+    title="Find a missing data point given the mean"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>87</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>The following table shows each of Haruka's final exam scores last semester.</p>
+        <img src="data:text/html,%3Cdiv%20style%3D%22font-family%3A%20sans-serif%3B%20width%3A%20100%25%3B%22%3E%3Ctable%20style%3D%22border-collapse%3A%20collapse%3B%20width%3A%20100%25%3B%20border%3A%201px%20solid%20black%3B%22%3E%3Cthead%3E%3Ctr%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3EFinal%20exam%3C%2Fth%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3EScore%20on%20a%20100-point%20scale%3C%2Fth%3E%3C%2Ftr%3E%3C%2Fthead%3E%3Ctbody%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3EAstronomy%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E72%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3EBiology%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E85%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3EPhysics%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E92%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3EChemistry%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E%3F%3C%2Ftd%3E%3C%2Ftr%3E%3C%2Ftbody%3E%3C%2Ftable%3E%3C%2Fdiv%3E" alt="A visual element of type dataTable." />
+        <p>If the mean of the data set is 84 points, find Haruka's final exam score in chemistry.</p>
+        <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/>
+        <p> points</p>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> Haruka scored 87 points on her chemistry exam.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> To find the missing score, use the formula for mean: Mean = (Sum of all scores) ÷ (Number of scores). 1. Calculate the total points: Mean × Number of exams = 84 × 4 = 336 points. 2. Add up the known scores: 72 + 85 + 92 = 249 points. 3. Find the missing score: 336 - 249 = 87 points. Therefore, Haruka scored 87 points on her chemistry exam.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile business cycle trough identification 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="libertyville-business-cycle"
+    title="Business Cycle Trough Identification"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>&lt;em&gt;The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years&lt;/em&gt;</p>
+        <img src="data:text/html,%3Cdiv%20style%3D%22font-family%3A%20sans-serif%3B%20width%3A%20100%25%3B%22%3E%3Ctable%20style%3D%22border-collapse%3A%20collapse%3B%20width%3A%20100%25%3B%20border%3A%201px%20solid%20black%3B%22%3E%3Cthead%3E%3Ctr%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3EYear%3C%2Fth%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3EGDP%20(%25%20change)%3C%2Fth%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3EUnemployment%20(%25%20of%20the%20labor%20force)%3C%2Fth%3E%3C%2Ftr%3E%3C%2Fthead%3E%3Ctbody%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E2014%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E0%25%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E7%25%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E2015%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-1%25%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E8%25%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E2016%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-2%25%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E10%25%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E2017%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E2%25%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E6%25%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E2018%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E4%25%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E5%25%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E2019%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E1%25%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E6%25%3C%2Ftd%3E%3C%2Ftr%3E%3C%2Ftbody%3E%3C%2Ftable%3E%3C%2Fdiv%3E" alt="A visual element of type dataTable." />
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" min-choices="1" max-choices="1">
+            <qti-prompt>In which of the years was Libertyville most likely experiencing a trough in its business cycle?</qti-prompt>
+            <qti-simple-choice identifier="A"><p>2014</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">GDP fell for the two years following 2014, indicating that Libertyville entered the recession phase of its business cycle in 2014. A trough is the turning point at which a recession ends and an expansion begins.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="B"><p>2015</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">GDP fell in 2015, indicating that Libertyville was in the recession phase of its business cycle in 2015. However the economy still had further to fall before it started to turn around. A trough is the turning point at which a recession ends and an expansion begins.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="C"><p>2016</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">GDP fell in 2016 but increased in 2017, indicating that 2016 was the turning point at which Libertyville's two year recession ended and the economy entered the recovery/expansion phase of its business cycle.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="D"><p>2017</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">GDP increased in 2017, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="E"><p>2018</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="E">GDP increased in 2018, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins.</qti-feedback-inline></qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> 2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> A trough occurs at the bottom of a recession, when GDP stops falling and starts growing again. Notice that GDP fell in 2015 (–1%) and 2016 (–2%), then rose in 2017 (+2%). This makes 2016 the trough year.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile continuity and differentiability of piecewise function 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="continuity-differentiability-piecewise"
+    title="Continuity and Differentiability of a Piecewise Function"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>C</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mtd><mtd columnalign="left"><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mtd></mtr><mtr><mtd columnalign="left"><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mtd><mtd columnalign="left"><mo>,</mo><mi>x</mi><mo>></mo><mn>2</mn></mtd></mtr></mtable></mrow></math>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" min-choices="1" max-choices="1">
+            <qti-prompt>Is the function given below continuous/differentiable at &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/math&gt;?</qti-prompt>
+            <qti-simple-choice identifier="A"><p>continuous, not differentiable</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="A">This would be the case if the function values matched at x=2 but the derivatives from left and right were different. Check both the limit values and the derivatives.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="B"><p>differentiable, not continuous</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="B">This is impossible! A function must be continuous at a point to be differentiable there.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="C"><p>both continuous and differentiable</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="C">Correct! The function values match at x=2 (both equal -1) and the derivatives from both sides equal -4, so the function is both continuous and differentiable.</qti-feedback-inline></qti-simple-choice>
+            <qti-simple-choice identifier="D"><p>neither continuous nor differentiable</p><qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="D">Not quite. The function doesn't have a jump discontinuity at x=2. Check if the left and right limits at x=2 are equal.</qti-feedback-inline></qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The function is both continuous and differentiable at x=2. For continuity: f(2) = -4+3 = -1, and both one-sided limits equal -1. For differentiability: The left derivative is -2x at x=2 -&gt; -4, and the right derivative is 2(x-4) at x=2 -&gt; -4. Since they match, f'(2) = -4.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Check both continuity (do the limits from left and right equal the function value?) and differentiability (do the derivatives from left and right match?).</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile Stokes' theorem surface integral rewrite 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="stokes-theorem-rewrite"
+    title="Rewrite Surface Integral using Stokes&apos; Theorem"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="string">
+        <qti-correct-response>
+            <qti-value>x^2/2-x*cos(z)</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mo>∬</mo><mi>S</mi></msub><mrow><mo>[</mo><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover><mo>]</mo></mrow><mo>·</mo><mi>d</mi><mi>S</mi></math>
+        <p>Use Stokes' theorem to rewrite the surface integral as a line integral.</p>
+        <em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em>
+        <p><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mo>∮</mo><mi>C</mi></msub><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mn>2</mn><msup><mi>z</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo></math>
+        <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="20"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mover><mi>k</mi><mo>^</mo></mover><mo stretchy="false">)</mo><mo>·</mo><mi>d</mi><mi>r</mi></math></p>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The missing component is &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mrow&gt;&lt;mfrac&gt;&lt;msup&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mfrac&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mi&gt;cos&lt;/mi&gt;&lt;mo stretchy="false"&gt;(&lt;/mo&gt;&lt;mi&gt;z&lt;/mi&gt;&lt;mo stretchy="false"&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/math&gt;.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Let curl(F) = -[integral]. Given F = 2y i + 2z^2 j + P k, calculate curl(F) and set its components equal to the integrand's components. Solve the resulting partial differential equations for P.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile estimate derivative from table 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="estimate-derivative-from-table"
+    title="Estimate derivative from a table of values"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>D</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        This table gives select values of the differentiable function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>.
+        <img src="data:text/html,%3Cdiv%20style%3D%22font-family%3A%20sans-serif%3B%20width%3A%20100%25%3B%22%3E%3Ctable%20style%3D%22border-collapse%3A%20collapse%3B%20width%3A%20100%25%3B%20border%3A%201px%20solid%20black%3B%22%3E%3Ctbody%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3Ex%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-9%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-8%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-6%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-3%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-2%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-1%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3Eh(x)%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-30%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-29%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-36%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-20%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-35%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E-47%3C%2Ftd%3E%3C%2Ftr%3E%3C%2Ftbody%3E%3C%2Ftable%3E%3C%2Fdiv%3E" alt="A visual element of type dataTable." />
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" min-choices="1" max-choices="1">
+            <qti-prompt>What is the best estimate for &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;mo&gt;'&lt;/mo&gt;&lt;/msup&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/math&gt; we can make based on this table?</qti-prompt>
+            <qti-simple-choice identifier="A"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>28</mn></math></qti-simple-choice>
+            <qti-simple-choice identifier="B"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>13.5</mn></math></qti-simple-choice>
+            <qti-simple-choice identifier="C"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2.125</mn></math></qti-simple-choice>
+            <qti-simple-choice identifier="D"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5.33</mn></math></qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The best estimate for h'(-4) is the average rate of change over the narrowest interval available that contains -4, which is [-6, -3]. The average rate of change is (h(-3) - h(-6)) / (-3 - (-6)) = (-20 - (-36)) / 3 = 16/3 ≈ 5.33.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> To estimate the derivative h'(-4), calculate the average rate of change over the smallest interval that contains -4. The closest points are x=-6 and x=-3. The average rate of change is (h(-3) - h(-6)) / (-3 - (-6)) = (-20 - (-36)) / 3 = 16/3 ≈ 5.33.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile count the apples with discrete object diagrams 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="count-apples-mc-div-version"
+    title="Count the apples"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>CHOICE_5</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" min-choices="1" max-choices="1">
+            <qti-prompt>Which box has 5 apples?</qti-prompt>
+            <qti-simple-choice identifier="CHOICE_3"><img src="data:image/svg+xml,%3Csvg%20width%3D%22250%22%20height%3D%22120%22%20viewBox%3D%220%200%20250%20120%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%2255%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3C%2Fsvg%3E" alt="A visual element of type discreteObjectRatioDiagram." /></qti-simple-choice>
+            <qti-simple-choice identifier="CHOICE_4"><img src="data:image/svg+xml,%3Csvg%20width%3D%22250%22%20height%3D%22120%22%20viewBox%3D%220%200%20250%20120%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%2255%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%22105%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3C%2Fsvg%3E" alt="A visual element of type discreteObjectRatioDiagram." /></qti-simple-choice>
+            <qti-simple-choice identifier="CHOICE_5"><img src="data:image/svg+xml,%3Csvg%20width%3D%22250%22%20height%3D%22120%22%20viewBox%3D%220%200%20250%20120%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%2255%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%22105%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%22130%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3C%2Fsvg%3E" alt="A visual element of type discreteObjectRatioDiagram." /></qti-simple-choice>
+            <qti-simple-choice identifier="CHOICE_6"><img src="data:image/svg+xml,%3Csvg%20width%3D%22250%22%20height%3D%22120%22%20viewBox%3D%220%200%20250%20120%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2214%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%2255%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%22105%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%22130%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3Ccircle%20cx%3D%22155%22%20cy%3D%2250%22%20r%3D%2210%22%20fill%3D%22%23DC143C%22%20%2F%3E%3C%2Fsvg%3E" alt="A visual element of type discreteObjectRatioDiagram." /></qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> Great job! That box has exactly five apples.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Try again. Count the apples in each box to find the one with exactly five.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile bar graph for shapes in a bin 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="shape-bin-barchart-choice"
+    title="Create a bar graph for shapes in a bin"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>A second grade classroom has a bin of shapes.</p>
+        <img src="data:text/html,%3Cdiv%20style%3D%22font-family%3A%20sans-serif%3B%20width%3A%20100%25%3B%22%3E%3Ctable%20style%3D%22border-collapse%3A%20collapse%3B%20width%3A%20100%25%3B%20border%3A%201px%20solid%20black%3B%22%3E%3Cthead%3E%3Ctr%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3EType%20of%20shape%3C%2Fth%3E%3Cth%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%20font-weight%3A%20bold%3B%20background-color%3A%20%23f2f2f2%3B%22%3ENumber%20of%20shapes%3C%2Fth%3E%3C%2Ftr%3E%3C%2Fthead%3E%3Ctbody%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3ETriangles%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E8%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3ECircles%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E5%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3ERectangles%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E3%3C%2Ftd%3E%3C%2Ftr%3E%3Ctr%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3ESquares%3C%2Ftd%3E%3Ctd%20style%3D%22border%3A%201px%20solid%20black%3B%20padding%3A%208px%3B%20text-align%3A%20left%3B%22%3E9%3C%2Ftd%3E%3C%2Ftr%3E%3C%2Ftbody%3E%3C%2Ftable%3E%3C%2Fdiv%3E" alt="A visual element of type dataTable." />
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" min-choices="1" max-choices="1">
+            <qti-prompt>Which bar graph correctly shows the number of shapes in the bin?</qti-prompt>
+            <qti-simple-choice identifier="A"><img src="data:image/svg+xml,%3Csvg%20width%3D%22400%22%20height%3D%22300%22%20viewBox%3D%220%200%20400%20300%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cstyle%3E.axis-label%20%7B%20font-size%3A%2014px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%20.title%20%7B%20font-size%3A%2016px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%3C%2Fstyle%3E%3Cline%20x1%3D%2250%22%20y1%3D%2240%22%20x2%3D%2250%22%20y2%3D%22250%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2250%22%20y1%3D%22250%22%20x2%3D%22380%22%20y2%3D%22250%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22215%22%20y%3D%22290%22%20class%3D%22axis-label%22%3EType%20of%20shape%3C%2Ftext%3E%3Ctext%20x%3D%2220%22%20y%3D%22145%22%20class%3D%22axis-label%22%20transform%3D%22rotate(-90%2C%2020%2C%20145)%22%3ENumber%20of%20shape%3C%2Ftext%3E%3Cline%20x1%3D%2245%22%20y1%3D%22250%22%20x2%3D%2250%22%20y2%3D%22250%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22254%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22250%22%20x2%3D%22380%22%20y2%3D%22250%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22208%22%20x2%3D%2250%22%20y2%3D%22208%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22212%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E2%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22208%22%20x2%3D%22380%22%20y2%3D%22208%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22166%22%20x2%3D%2250%22%20y2%3D%22166%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22170%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E4%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22166%22%20x2%3D%22380%22%20y2%3D%22166%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22124%22%20x2%3D%2250%22%20y2%3D%22124%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22128%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E6%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22124%22%20x2%3D%22380%22%20y2%3D%22124%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%2282%22%20x2%3D%2250%22%20y2%3D%2282%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%2286%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E8%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%2282%22%20x2%3D%22380%22%20y2%3D%2282%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%2240%22%20x2%3D%2250%22%20y2%3D%2240%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%2244%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E10%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%2240%22%20x2%3D%22380%22%20y2%3D%2240%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Crect%20x%3D%2258.25%22%20y%3D%2282%22%20width%3D%2266%22%20height%3D%22168%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%2291.25%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ETriangles%3C%2Ftext%3E%3Crect%20x%3D%22140.75%22%20y%3D%22145%22%20width%3D%2266%22%20height%3D%22105%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22173.75%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ECircles%3C%2Ftext%3E%3Crect%20x%3D%22223.25%22%20y%3D%22187%22%20width%3D%2266%22%20height%3D%2263%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22256.25%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ERectangles%3C%2Ftext%3E%3Crect%20x%3D%22305.75%22%20y%3D%2261%22%20width%3D%2266%22%20height%3D%22189%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22338.75%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ESquares%3C%2Ftext%3E%3C%2Fsvg%3E" alt="A visual element of type barChart." /></qti-simple-choice>
+            <qti-simple-choice identifier="B"><img src="data:image/svg+xml,%3Csvg%20width%3D%22400%22%20height%3D%22300%22%20viewBox%3D%220%200%20400%20300%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cstyle%3E.axis-label%20%7B%20font-size%3A%2014px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%20.title%20%7B%20font-size%3A%2016px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%3C%2Fstyle%3E%3Cline%20x1%3D%2250%22%20y1%3D%2240%22%20x2%3D%2250%22%20y2%3D%22250%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2250%22%20y1%3D%22250%22%20x2%3D%22380%22%20y2%3D%22250%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22215%22%20y%3D%22290%22%20class%3D%22axis-label%22%3EType%20of%20shape%3C%2Ftext%3E%3Ctext%20x%3D%2220%22%20y%3D%22145%22%20class%3D%22axis-label%22%20transform%3D%22rotate(-90%2C%2020%2C%20145)%22%3ENumber%20of%20shape%3C%2Ftext%3E%3Cline%20x1%3D%2245%22%20y1%3D%22250%22%20x2%3D%2250%22%20y2%3D%22250%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22254%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22250%22%20x2%3D%22380%22%20y2%3D%22250%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22208%22%20x2%3D%2250%22%20y2%3D%22208%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22212%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E2%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22208%22%20x2%3D%22380%22%20y2%3D%22208%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22166%22%20x2%3D%2250%22%20y2%3D%22166%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22170%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E4%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22166%22%20x2%3D%22380%22%20y2%3D%22166%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22124%22%20x2%3D%2250%22%20y2%3D%22124%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22128%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E6%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22124%22%20x2%3D%22380%22%20y2%3D%22124%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%2282%22%20x2%3D%2250%22%20y2%3D%2282%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%2286%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E8%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%2282%22%20x2%3D%22380%22%20y2%3D%2282%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%2240%22%20x2%3D%2250%22%20y2%3D%2240%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%2244%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E10%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%2240%22%20x2%3D%22380%22%20y2%3D%2240%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Crect%20x%3D%2258.25%22%20y%3D%2261%22%20width%3D%2266%22%20height%3D%22189%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%2291.25%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ETriangles%3C%2Ftext%3E%3Crect%20x%3D%22140.75%22%20y%3D%22145%22%20width%3D%2266%22%20height%3D%22105%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22173.75%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ECircles%3C%2Ftext%3E%3Crect%20x%3D%22223.25%22%20y%3D%22187%22%20width%3D%2266%22%20height%3D%2263%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22256.25%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ERectangles%3C%2Ftext%3E%3Crect%20x%3D%22305.75%22%20y%3D%2282%22%20width%3D%2266%22%20height%3D%22168%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22338.75%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ESquares%3C%2Ftext%3E%3C%2Fsvg%3E" alt="A visual element of type barChart." /></qti-simple-choice>
+            <qti-simple-choice identifier="C"><img src="data:image/svg+xml,%3Csvg%20width%3D%22400%22%20height%3D%22300%22%20viewBox%3D%220%200%20400%20300%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cstyle%3E.axis-label%20%7B%20font-size%3A%2014px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%20.title%20%7B%20font-size%3A%2016px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%3C%2Fstyle%3E%3Cline%20x1%3D%2250%22%20y1%3D%2240%22%20x2%3D%2250%22%20y2%3D%22250%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2250%22%20y1%3D%22250%22%20x2%3D%22380%22%20y2%3D%22250%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22215%22%20y%3D%22290%22%20class%3D%22axis-label%22%3EType%20of%20shape%3C%2Ftext%3E%3Ctext%20x%3D%2220%22%20y%3D%22145%22%20class%3D%22axis-label%22%20transform%3D%22rotate(-90%2C%2020%2C%20145)%22%3ENumber%20of%20shape%3C%2Ftext%3E%3Cline%20x1%3D%2245%22%20y1%3D%22250%22%20x2%3D%2250%22%20y2%3D%22250%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22254%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22250%22%20x2%3D%22380%22%20y2%3D%22250%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22208%22%20x2%3D%2250%22%20y2%3D%22208%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22212%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E2%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22208%22%20x2%3D%22380%22%20y2%3D%22208%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22166%22%20x2%3D%2250%22%20y2%3D%22166%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22170%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E4%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22166%22%20x2%3D%22380%22%20y2%3D%22166%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22124%22%20x2%3D%2250%22%20y2%3D%22124%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22128%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E6%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22124%22%20x2%3D%22380%22%20y2%3D%22124%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%2282%22%20x2%3D%2250%22%20y2%3D%2282%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%2286%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E8%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%2282%22%20x2%3D%22380%22%20y2%3D%2282%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%2240%22%20x2%3D%2250%22%20y2%3D%2240%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%2244%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E10%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%2240%22%20x2%3D%22380%22%20y2%3D%2240%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Crect%20x%3D%2258.25%22%20y%3D%22103%22%20width%3D%2266%22%20height%3D%22147%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%2291.25%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ETriangles%3C%2Ftext%3E%3Crect%20x%3D%22140.75%22%20y%3D%22166%22%20width%3D%2266%22%20height%3D%2284%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22173.75%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ECircles%3C%2Ftext%3E%3Crect%20x%3D%22223.25%22%20y%3D%22208%22%20width%3D%2266%22%20height%3D%2242%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22256.25%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ERectangles%3C%2Ftext%3E%3Crect%20x%3D%22305.75%22%20y%3D%2240%22%20width%3D%2266%22%20height%3D%22210%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22338.75%22%20y%3D%22265%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ESquares%3C%2Ftext%3E%3C%2Fsvg%3E" alt="A visual element of type barChart." /></qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The chosen graph perfectly matches the data provided in the table: 8 Triangles, 5 Circles, 3 Rectangles, and 9 Squares.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Match the number of shapes from the table to the height of the bar for each shape type. For example, the table says there are 8 Triangles, so the "Triangles" bar should reach the line for the number 8 on the vertical axis.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile pencil lengths line plot 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="pencil-length-line-plot-choice"
+    title="Represent Pencil Lengths on a Line Plot"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>A</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        The lengths of 4 pencils were measured. The lengths are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm.
+        <qti-choice-interaction response-identifier="RESPONSE" shuffle="true" min-choices="1" max-choices="1">
+            <qti-prompt>Which line plot correctly shows the length of each pencil?</qti-prompt>
+            <qti-simple-choice identifier="A"><img src="data:image/svg+xml,%3Csvg%20width%3D%22450%22%20height%3D%22150%22%20viewBox%3D%220%200%20450%20150%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cline%20x1%3D%2220%22%20y1%3D%2290%22%20x2%3D%22430%22%20y2%3D%2290%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2220%22%20y1%3D%2285%22%20x2%3D%2220%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%2288.33333333333333%22%20y1%3D%2285%22%20x2%3D%2288.33333333333333%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2288.33333333333333%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E2%3C%2Ftext%3E%3Cline%20x1%3D%22156.66666666666666%22%20y1%3D%2285%22%20x2%3D%22156.66666666666666%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22156.66666666666666%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E4%3C%2Ftext%3E%3Cline%20x1%3D%22225%22%20y1%3D%2285%22%20x2%3D%22225%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22225%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E6%3C%2Ftext%3E%3Cline%20x1%3D%22293.3333333333333%22%20y1%3D%2285%22%20x2%3D%22293.3333333333333%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22293.3333333333333%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E8%3C%2Ftext%3E%3Cline%20x1%3D%22361.66666666666663%22%20y1%3D%2285%22%20x2%3D%22361.66666666666663%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22361.66666666666663%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E10%3C%2Ftext%3E%3Cline%20x1%3D%22430%22%20y1%3D%2285%22%20x2%3D%22430%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22430%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E12%3C%2Ftext%3E%3Ccircle%20cx%3D%22122.5%22%20cy%3D%2272%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3Ccircle%20cx%3D%22293.3333333333333%22%20cy%3D%2272%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3Ccircle%20cx%3D%22293.3333333333333%22%20cy%3D%2254%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3Ccircle%20cx%3D%22395.8333333333333%22%20cy%3D%2272%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type dotPlot." /></qti-simple-choice>
+            <qti-simple-choice identifier="B"><img src="data:image/svg+xml,%3Csvg%20width%3D%22450%22%20height%3D%22150%22%20viewBox%3D%220%200%20450%20150%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cline%20x1%3D%2220%22%20y1%3D%2290%22%20x2%3D%22430%22%20y2%3D%2290%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2220%22%20y1%3D%2285%22%20x2%3D%2220%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%2288.33333333333333%22%20y1%3D%2285%22%20x2%3D%2288.33333333333333%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2288.33333333333333%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E2%3C%2Ftext%3E%3Cline%20x1%3D%22156.66666666666666%22%20y1%3D%2285%22%20x2%3D%22156.66666666666666%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22156.66666666666666%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E4%3C%2Ftext%3E%3Cline%20x1%3D%22225%22%20y1%3D%2285%22%20x2%3D%22225%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22225%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E6%3C%2Ftext%3E%3Cline%20x1%3D%22293.3333333333333%22%20y1%3D%2285%22%20x2%3D%22293.3333333333333%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22293.3333333333333%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E8%3C%2Ftext%3E%3Cline%20x1%3D%22361.66666666666663%22%20y1%3D%2285%22%20x2%3D%22361.66666666666663%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22361.66666666666663%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E10%3C%2Ftext%3E%3Cline%20x1%3D%22430%22%20y1%3D%2285%22%20x2%3D%22430%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22430%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E12%3C%2Ftext%3E%3Ccircle%20cx%3D%22122.5%22%20cy%3D%2272%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3Ccircle%20cx%3D%22293.3333333333333%22%20cy%3D%2272%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3Ccircle%20cx%3D%22395.8333333333333%22%20cy%3D%2272%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type dotPlot." /></qti-simple-choice>
+            <qti-simple-choice identifier="C"><img src="data:image/svg+xml,%3Csvg%20width%3D%22450%22%20height%3D%22150%22%20viewBox%3D%220%200%20450%20150%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cline%20x1%3D%2220%22%20y1%3D%2290%22%20x2%3D%22430%22%20y2%3D%2290%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2220%22%20y1%3D%2285%22%20x2%3D%2220%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%2288.33333333333333%22%20y1%3D%2285%22%20x2%3D%2288.33333333333333%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2288.33333333333333%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E2%3C%2Ftext%3E%3Cline%20x1%3D%22156.66666666666666%22%20y1%3D%2285%22%20x2%3D%22156.66666666666666%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22156.66666666666666%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E4%3C%2Ftext%3E%3Cline%20x1%3D%22225%22%20y1%3D%2285%22%20x2%3D%22225%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22225%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E6%3C%2Ftext%3E%3Cline%20x1%3D%22293.3333333333333%22%20y1%3D%2285%22%20x2%3D%22293.3333333333333%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22293.3333333333333%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E8%3C%2Ftext%3E%3Cline%20x1%3D%22361.66666666666663%22%20y1%3D%2285%22%20x2%3D%22361.66666666666663%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22361.66666666666663%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E10%3C%2Ftext%3E%3Cline%20x1%3D%22430%22%20y1%3D%2285%22%20x2%3D%22430%22%20y2%3D%2295%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22430%22%20y%3D%22110%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E12%3C%2Ftext%3E%3Ccircle%20cx%3D%22156.66666666666666%22%20cy%3D%2272%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3Ccircle%20cx%3D%22156.66666666666666%22%20cy%3D%2254%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3Ccircle%20cx%3D%22156.66666666666666%22%20cy%3D%2236%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3Ccircle%20cx%3D%22156.66666666666666%22%20cy%3D%2218%22%20r%3D%228%22%20fill%3D%22%230074c8%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type dotPlot." /></qti-simple-choice>
+        </qti-choice-interaction>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The data set {11, 8, 8, 3} has one pencil of length 3 cm, two pencils of length 8 cm, and one pencil of length 11 cm. The chosen plot correctly displays a dot for each of these measurements.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> To create the line plot, place one dot above the correct number on the line for each pencil measured. The lengths are 3 cm, 8 cm, 8 cm, and 11 cm. This means there should be one dot above 3, two dots above 8, and one dot above 11.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile reading a bar chart 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="games-won-barchart"
+    title="Reading a bar chart"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>14</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>The Lions, Tigers, and Bears won baseball games last summer.</p>
+        <p>This bar graph shows how many games each team won.</p>
+        <img src="data:image/svg+xml,%3Csvg%20width%3D%22480%22%20height%3D%22340%22%20viewBox%3D%220%200%20480%20340%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cstyle%3E.axis-label%20%7B%20font-size%3A%2014px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%20.title%20%7B%20font-size%3A%2016px%3B%20font-weight%3A%20bold%3B%20text-anchor%3A%20middle%3B%20%7D%3C%2Fstyle%3E%3Cline%20x1%3D%2250%22%20y1%3D%2240%22%20x2%3D%2250%22%20y2%3D%22290%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%2250%22%20y1%3D%22290%22%20x2%3D%22460%22%20y2%3D%22290%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22255%22%20y%3D%22330%22%20class%3D%22axis-label%22%3ETeam%3C%2Ftext%3E%3Ctext%20x%3D%2220%22%20y%3D%22165%22%20class%3D%22axis-label%22%20transform%3D%22rotate(-90%2C%2020%2C%20165)%22%3EGames%20Won%3C%2Ftext%3E%3Cline%20x1%3D%2245%22%20y1%3D%22290%22%20x2%3D%2250%22%20y2%3D%22290%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22294%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E0%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22290%22%20x2%3D%22460%22%20y2%3D%22290%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22258.75%22%20x2%3D%2250%22%20y2%3D%22258.75%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22262.75%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E2%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22258.75%22%20x2%3D%22460%22%20y2%3D%22258.75%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22227.5%22%20x2%3D%2250%22%20y2%3D%22227.5%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22231.5%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E4%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22227.5%22%20x2%3D%22460%22%20y2%3D%22227.5%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22196.25%22%20x2%3D%2250%22%20y2%3D%22196.25%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22200.25%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E6%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22196.25%22%20x2%3D%22460%22%20y2%3D%22196.25%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22165%22%20x2%3D%2250%22%20y2%3D%22165%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22169%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E8%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22165%22%20x2%3D%22460%22%20y2%3D%22165%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22133.75%22%20x2%3D%2250%22%20y2%3D%22133.75%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22137.75%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E10%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22133.75%22%20x2%3D%22460%22%20y2%3D%22133.75%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%22102.5%22%20x2%3D%2250%22%20y2%3D%22102.5%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%22106.5%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E12%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%22102.5%22%20x2%3D%22460%22%20y2%3D%22102.5%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%2271.25%22%20x2%3D%2250%22%20y2%3D%2271.25%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%2275.25%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E14%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%2271.25%22%20x2%3D%22460%22%20y2%3D%2271.25%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Cline%20x1%3D%2245%22%20y1%3D%2240%22%20x2%3D%2250%22%20y2%3D%2240%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2240%22%20y%3D%2244%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%3E16%3C%2Ftext%3E%3Cline%20x1%3D%2250%22%20y1%3D%2240%22%20x2%3D%22460%22%20y2%3D%2240%22%20stroke%3D%22%23ccc%22%20stroke-dasharray%3D%222%22%2F%3E%3Crect%20x%3D%2263.666666666666664%22%20y%3D%2271.25%22%20width%3D%22109.33333333333333%22%20height%3D%22218.75%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22118.33333333333333%22%20y%3D%22305%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ELions%3C%2Ftext%3E%3Crect%20x%3D%22200.33333333333331%22%20y%3D%22258.75%22%20width%3D%22109.33333333333333%22%20height%3D%2231.25%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22255%22%20y%3D%22305%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3ETigers%3C%2Ftext%3E%3Crect%20x%3D%22337%22%20y%3D%22180.625%22%20width%3D%22109.33333333333333%22%20height%3D%22109.375%22%20fill%3D%22none%22%20stroke%3D%22undefined%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%22%2F%3E%3Ctext%20x%3D%22391.66666666666663%22%20y%3D%22305%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3EBears%3C%2Ftext%3E%3C%2Fsvg%3E" alt="A visual element of type barChart." />
+        <p>How many games did the Lions win?</p>
+        <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/>
+        <p> games</p>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The bar for the Lions goes up to the line for 14, so they won 14 games.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> To find the number of games the Lions won, first find the 'Lions' label on the horizontal axis. Then, follow that bar up to the top. The number on the vertical axis that aligns with the top of the bar is the answer. The Lions' bar reaches the line for 14 games.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile interpreting a line plot 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="doll-height-line-plot"
+    title="Interpreting a line plot"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>5</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>The heights of Sabrina's dolls are shown below.</p>
+        <img src="data:image/svg+xml,%3Csvg%20width%3D%22350%22%20height%3D%22200%22%20viewBox%3D%220%200%20350%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cline%20x1%3D%2220%22%20y1%3D%22140%22%20x2%3D%22330%22%20y2%3D%22140%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22175%22%20y%3D%22185%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%20font-size%3D%2214%22%3EDoll%20Height%20(centimeters)%3C%2Ftext%3E%3Cline%20x1%3D%2220%22%20y1%3D%22135%22%20x2%3D%2220%22%20y2%3D%22145%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2220%22%20y%3D%22160%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E20%3C%2Ftext%3E%3Cline%20x1%3D%2282%22%20y1%3D%22135%22%20x2%3D%2282%22%20y2%3D%22145%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%2282%22%20y%3D%22160%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E21%3C%2Ftext%3E%3Cline%20x1%3D%22144%22%20y1%3D%22135%22%20x2%3D%22144%22%20y2%3D%22145%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22144%22%20y%3D%22160%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E22%3C%2Ftext%3E%3Cline%20x1%3D%22206%22%20y1%3D%22135%22%20x2%3D%22206%22%20y2%3D%22145%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22206%22%20y%3D%22160%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E23%3C%2Ftext%3E%3Cline%20x1%3D%22268%22%20y1%3D%22135%22%20x2%3D%22268%22%20y2%3D%22145%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22268%22%20y%3D%22160%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E24%3C%2Ftext%3E%3Cline%20x1%3D%22330%22%20y1%3D%22135%22%20x2%3D%22330%22%20y2%3D%22145%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22330%22%20y%3D%22160%22%20fill%3D%22black%22%20text-anchor%3D%22middle%22%3E25%3C%2Ftext%3E%3Ccircle%20cx%3D%2282%22%20cy%3D%22124%22%20r%3D%226%22%20fill%3D%22undefined%22%2F%3E%3Ccircle%20cx%3D%22144%22%20cy%3D%22124%22%20r%3D%226%22%20fill%3D%22undefined%22%2F%3E%3Ccircle%20cx%3D%22144%22%20cy%3D%22110%22%20r%3D%226%22%20fill%3D%22undefined%22%2F%3E%3Ccircle%20cx%3D%22206%22%20cy%3D%22124%22%20r%3D%226%22%20fill%3D%22undefined%22%2F%3E%3Ccircle%20cx%3D%22206%22%20cy%3D%22110%22%20r%3D%226%22%20fill%3D%22undefined%22%2F%3E%3Ccircle%20cx%3D%22206%22%20cy%3D%2296%22%20r%3D%226%22%20fill%3D%22undefined%22%2F%3E%3Ccircle%20cx%3D%22268%22%20cy%3D%22124%22%20r%3D%226%22%20fill%3D%22undefined%22%2F%3E%3Ccircle%20cx%3D%22268%22%20cy%3D%22110%22%20r%3D%226%22%20fill%3D%22undefined%22%2F%3E%3C%2Fsvg%3E" alt="A visual element of type dotPlot." />
+        <p>How many dolls are taller than 22 centimeters?</p>
+        <qti-text-entry-interaction response-identifier="RESPONSE" expected-length="3"/>
+        <p> dolls</p>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> There are 3 dolls that are 23 cm tall and 2 dolls that are 24 cm tall. In total, 3 + 2 = 5 dolls are taller than 22 cm.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> To find the number of dolls taller than 22 cm, count all the dots that are to the right of 22 on the line plot. There are 3 dots above 23 and 2 dots above 24. That makes a total of 5 dolls.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile time on number line 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="time-on-number-line-detailed-final"
+    title="What time is shown on the number line?"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE_HR" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>12</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-response-declaration identifier="RESPONSE_MIN" cardinality="single" base-type="integer">
+        <qti-correct-response>
+            <qti-value>55</qti-value>
+        </qti-correct-response>
+        <qti-mapping>
+            <qti-map-entry map-key="05" mapped-value="5"/>
+        </qti-mapping>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        <p>Look at the following number line.</p>
+        <img src="data:image/svg+xml,%3Csvg%20width%3D%22700%22%20height%3D%22100%22%20viewBox%3D%220%200%20700%20100%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20font-family%3D%22sans-serif%22%20font-size%3D%2212%22%3E%3Cline%20x1%3D%22350%22%20y1%3D%2240%22%20x2%3D%22350%22%20y2%3D%2260%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22342%22%20y1%3D%2260%22%20x2%3D%22358%22%20y2%3D%2260%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2259.666666666666664%22%20x2%3D%22354%22%20y2%3D%2259.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2259.333333333333336%22%20x2%3D%22354%22%20y2%3D%2259.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2259%22%20x2%3D%22354%22%20y2%3D%2259%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2258.666666666666664%22%20x2%3D%22354%22%20y2%3D%2258.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2258.333333333333336%22%20x2%3D%22354%22%20y2%3D%2258.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2258%22%20x2%3D%22354%22%20y2%3D%2258%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2257.666666666666664%22%20x2%3D%22354%22%20y2%3D%2257.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2257.333333333333336%22%20x2%3D%22354%22%20y2%3D%2257.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2257%22%20x2%3D%22354%22%20y2%3D%2257%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2256.666666666666664%22%20x2%3D%22354%22%20y2%3D%2256.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2256.333333333333336%22%20x2%3D%22354%22%20y2%3D%2256.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2256%22%20x2%3D%22354%22%20y2%3D%2256%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2255.666666666666664%22%20x2%3D%22354%22%20y2%3D%2255.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2255.333333333333336%22%20x2%3D%22354%22%20y2%3D%2255.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22342%22%20y1%3D%2255%22%20x2%3D%22358%22%20y2%3D%2255%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2254.666666666666664%22%20x2%3D%22354%22%20y2%3D%2254.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2254.333333333333336%22%20x2%3D%22354%22%20y2%3D%2254.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2254%22%20x2%3D%22354%22%20y2%3D%2254%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2253.666666666666664%22%20x2%3D%22354%22%20y2%3D%2253.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2253.333333333333336%22%20x2%3D%22354%22%20y2%3D%2253.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2253%22%20x2%3D%22354%22%20y2%3D%2253%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2252.666666666666664%22%20x2%3D%22354%22%20y2%3D%2252.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2252.333333333333336%22%20x2%3D%22354%22%20y2%3D%2252.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2252%22%20x2%3D%22354%22%20y2%3D%2252%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2251.666666666666664%22%20x2%3D%22354%22%20y2%3D%2251.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2251.333333333333336%22%20x2%3D%22354%22%20y2%3D%2251.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2251%22%20x2%3D%22354%22%20y2%3D%2251%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2250.666666666666664%22%20x2%3D%22354%22%20y2%3D%2250.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2250.333333333333336%22%20x2%3D%22354%22%20y2%3D%2250.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22342%22%20y1%3D%2250%22%20x2%3D%22358%22%20y2%3D%2250%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2249.666666666666664%22%20x2%3D%22354%22%20y2%3D%2249.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2249.333333333333336%22%20x2%3D%22354%22%20y2%3D%2249.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2249%22%20x2%3D%22354%22%20y2%3D%2249%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2248.666666666666664%22%20x2%3D%22354%22%20y2%3D%2248.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2248.333333333333336%22%20x2%3D%22354%22%20y2%3D%2248.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2248%22%20x2%3D%22354%22%20y2%3D%2248%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2247.666666666666664%22%20x2%3D%22354%22%20y2%3D%2247.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2247.333333333333336%22%20x2%3D%22354%22%20y2%3D%2247.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2247%22%20x2%3D%22354%22%20y2%3D%2247%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2246.666666666666664%22%20x2%3D%22354%22%20y2%3D%2246.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2246.333333333333336%22%20x2%3D%22354%22%20y2%3D%2246.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2246%22%20x2%3D%22354%22%20y2%3D%2246%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2245.666666666666664%22%20x2%3D%22354%22%20y2%3D%2245.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2245.333333333333336%22%20x2%3D%22354%22%20y2%3D%2245.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22342%22%20y1%3D%2245%22%20x2%3D%22358%22%20y2%3D%2245%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2244.666666666666664%22%20x2%3D%22354%22%20y2%3D%2244.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2244.333333333333336%22%20x2%3D%22354%22%20y2%3D%2244.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2244%22%20x2%3D%22354%22%20y2%3D%2244%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2243.666666666666664%22%20x2%3D%22354%22%20y2%3D%2243.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2243.333333333333336%22%20x2%3D%22354%22%20y2%3D%2243.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2243%22%20x2%3D%22354%22%20y2%3D%2243%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2242.666666666666664%22%20x2%3D%22354%22%20y2%3D%2242.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2242.333333333333336%22%20x2%3D%22354%22%20y2%3D%2242.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2242%22%20x2%3D%22354%22%20y2%3D%2242%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2241.666666666666664%22%20x2%3D%22354%22%20y2%3D%2241.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2241.333333333333336%22%20x2%3D%22354%22%20y2%3D%2241.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2241%22%20x2%3D%22354%22%20y2%3D%2241%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2240.666666666666664%22%20x2%3D%22354%22%20y2%3D%2240.666666666666664%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22346%22%20y1%3D%2240.333333333333336%22%20x2%3D%22354%22%20y2%3D%2240.333333333333336%22%20stroke%3D%22black%22%2F%3E%3Cline%20x1%3D%22342%22%20y1%3D%2240%22%20x2%3D%22358%22%20y2%3D%2240%22%20stroke%3D%22black%22%2F%3E%3Ctext%20x%3D%22335%22%20y%3D%2264%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%20font-weight%3D%22bold%22%3E12%3A00%3C%2Ftext%3E%3Ctext%20x%3D%22335%22%20y%3D%2259%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%20font-weight%3D%22bold%22%3E12%3A15%3C%2Ftext%3E%3Ctext%20x%3D%22335%22%20y%3D%2254%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%20font-weight%3D%22bold%22%3E12%3A30%3C%2Ftext%3E%3Ctext%20x%3D%22335%22%20y%3D%2249%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%20font-weight%3D%22bold%22%3E12%3A45%3C%2Ftext%3E%3Ctext%20x%3D%22335%22%20y%3D%2244%22%20fill%3D%22black%22%20text-anchor%3D%22end%22%20font-weight%3D%22bold%22%3E1%3A00%3C%2Ftext%3E%3Ccircle%20cx%3D%22350%22%20cy%3D%2241.66666666666667%22%20r%3D%225%22%20fill%3D%22%23A0522D%22%20stroke%3D%22black%22%20stroke-width%3D%221%22%2F%3E%3Ctext%20x%3D%22365%22%20y%3D%2241.66666666666667%22%20fill%3D%22black%22%20text-anchor%3D%22start%22%20dominant-baseline%3D%22middle%22%3EA%3C%2Ftext%3E%3C%2Fsvg%3E" alt="A visual element of type numberLine." />
+        <p>What time is shown on the number line?</p>
+        <p>&lt;p&gt;</p>
+        <qti-text-entry-interaction response-identifier="RESPONSE_HR" expected-length="2"/>
+        <p> : </p>
+        <qti-text-entry-interaction response-identifier="RESPONSE_MIN" expected-length="2"/>
+        <p>&lt;/p&gt;</p>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> The time shown is 12:55.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> The point 'A' is located after the 12:00 mark but before the 1:00 mark, so the hour is 12. The mark for 12:45 is shown. The next medium tick represents 5 minutes later, which is 12:50. The next medium tick represents another 5 minutes, which is 12:55. Point 'A' is on that mark. The time is 12:55.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE_HR"/><qti-correct identifier="RESPONSE_HR"/></qti-match>
+                    <qti-match><qti-variable identifier="RESPONSE_MIN"/><qti-correct identifier="RESPONSE_MIN"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;
+
+exports[`QTI Compiler should correctly compile compare 2-digit numbers 1`] = `
+"<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item
+    xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    identifier="nice-tmp_x754a72ff9e868e57"
+    title="Compare 2-digit numbers"
+    time-dependent="false">
+
+    <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
+        <qti-correct-response>
+            <qti-value>GT</qti-value>
+        </qti-correct-response>
+    </qti-response-declaration>
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+    <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
+
+    <qti-item-body>
+        Compare using <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>, or <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>.
+        <p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math>
+        <qti-inline-choice-interaction response-identifier="RESPONSE" shuffle="false">
+                <qti-inline-choice identifier="GT"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math></qti-inline-choice>
+                <qti-inline-choice identifier="LT"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math></qti-inline-choice>
+                <qti-inline-choice identifier="EQ"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math></qti-inline-choice>
+            </qti-inline-choice-interaction>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math></p>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> 83 is greater than 58, so the correct symbol is &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mo&gt;&amp;gt;&lt;/mo&gt;&lt;/math&gt;.</p></qti-content-body>
+        </qti-feedback-block>
+        <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
+            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> Remember, when comparing two numbers, the symbol &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mo&gt;&amp;gt;&lt;/mo&gt;&lt;/math&gt; points to the smaller number. Since 83 is larger than 58, the correct comparison is &lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mn&gt;83&lt;/mn&gt;&lt;mo&gt;&amp;gt;&lt;/mo&gt;&lt;mn&gt;58&lt;/mn&gt;&lt;/math&gt;.</p></qti-content-body>
+        </qti-feedback-block>
+    </qti-item-body>
+
+    <qti-response-processing>
+        <qti-response-condition>
+            <qti-response-if>
+                <qti-and>
+                    <qti-match><qti-variable identifier="RESPONSE"/><qti-correct identifier="RESPONSE"/></qti-match>
+                </qti-and>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">1</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-if>
+            <qti-response-else>
+                <qti-set-outcome-value identifier="SCORE"><qti-base-value base-type="float">0</qti-base-value></qti-set-outcome-value>
+                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>
+            </qti-response-else>
+        </qti-response-condition>
+    </qti-response-processing>
+</qti-assessment-item>"
+`;

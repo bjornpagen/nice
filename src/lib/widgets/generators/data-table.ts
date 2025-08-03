@@ -15,7 +15,11 @@ const TableCellSchema = z
 
 // Defines a single row in the table
 const TableRowSchema = z.object({
-	isHeader: z.boolean().default(false).describe("If true, the first cell of this row is a row header (<th>)."),
+	isHeader: z
+		.boolean()
+		.default(false)
+		.describe("If true, the first cell of this row is a row header (<th>).")
+		.optional(),
 	cells: z.array(TableCellSchema).describe("An array of cell data for this row.")
 })
 

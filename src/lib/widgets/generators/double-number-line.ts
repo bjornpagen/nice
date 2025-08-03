@@ -1,5 +1,8 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+export const ErrMismatchedTickCounts = errors.new("top and bottom lines must have the same number of ticks")
 
 // Defines one of the two number lines in the diagram
 const LineSchema = z.object({
@@ -19,10 +22,6 @@ export const DoubleNumberLinePropsSchema = z
 			"Configuration for the lower number line. Must have the same number of ticks as the top line."
 		)
 	})
-	.refine((data) => data.topLine.ticks.length === data.bottomLine.ticks.length, {
-		message: "Top and bottom lines must have the same number of tick values.",
-		path: ["bottomLine", "ticks"]
-	})
 	.describe(
 		'This template generates a double number line diagram as a clear and accurate SVG graphic. This visualization tool is excellent for illustrating the relationship between two different quantities that share a constant ratio. The generator will render two parallel horizontal lines, one above the other. Each line represents a different quantity and will have a text label (e.g., "Time (minutes)", "Items"). Both lines are marked with a configurable number of equally spaced tick marks. The core of the template is the array of corresponding values for the tick marks on each line. For example, the top line might have values [0, 1, 2, 3, 4] while the bottom line has [0, 50, 100, 150, 200]. The generator will place these labels at the correct tick marks, visually aligning the proportional pairs. Some labels can be omitted to create "fill-in-the-blank" style questions where the student must deduce the missing value. The resulting SVG is a powerful visual aid for solving ratio problems.'
 	)
@@ -40,6 +39,13 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	const lineLength = width - 2 * padding.horizontal
 	const topY = padding.vertical
 	const bottomY = height - padding.vertical
+
+	if (topLine.ticks.length !== bottomLine.ticks.length) {
+		throw errors.wrap(
+			ErrMismatchedTickCounts,
+			`top line has ${topLine.ticks.length} ticks, bottom line has ${bottomLine.ticks.length} ticks`
+		)
+	}
 
 	const numTicks = topLine.ticks.length
 	if (numTicks < 2) {

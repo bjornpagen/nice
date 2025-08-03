@@ -26,7 +26,7 @@ export const DotPlotPropsSchema = z
 		data: z
 			.array(DotPlotDataPointSchema)
 			.describe("An array of data points, where each object specifies a value and how many dots to render for it."),
-		dotColor: z.string().default("#4285F4").describe("A CSS color string for the dots."),
+		dotColor: z.string().default("#4285F4").describe("A CSS color string for the dots.").optional(),
 		dotRadius: z.number().default(5).describe("The radius of each dot in pixels.")
 	})
 	.describe(

@@ -29,7 +29,8 @@ export const NumberLinePropsSchema = z
 		orientation: z
 			.enum(["horizontal", "vertical"])
 			.default("horizontal")
-			.describe("The orientation of the number line."),
+			.describe("The orientation of the number line.")
+			.optional(),
 		min: z.number().describe("The minimum value displayed on the line."),
 		max: z.number().describe("The maximum value displayed on the line."),
 		majorTickInterval: z.number().describe("The numeric interval between labeled tick marks."),

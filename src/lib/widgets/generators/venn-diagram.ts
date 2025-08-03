@@ -9,12 +9,12 @@ export const VennDiagramPropsSchema = z
 		circleA: z.object({
 			label: z.string().describe('The label for the first circle (e.g., "Have a Dog").'),
 			count: z.number().describe("The numerical count for the region unique to this circle (non-overlapping part)."),
-			color: z.string().default("rgba(217, 95, 79, 0.5)").describe("The fill color for this circle.")
+			color: z.string().default("rgba(217, 95, 79, 0.5)").describe("The fill color for this circle.").optional()
 		}),
 		circleB: z.object({
 			label: z.string().describe('The label for the second circle (e.g., "Have a Cat").'),
 			count: z.number().describe("The numerical count for the region unique to this circle (non-overlapping part)."),
-			color: z.string().default("rgba(66, 133, 244, 0.5)").describe("The fill color for this circle.")
+			color: z.string().default("rgba(66, 133, 244, 0.5)").describe("The fill color for this circle.").optional()
 		}),
 		intersectionCount: z.number().describe("The numerical count for the overlapping region of the two circles."),
 		outsideCount: z.number().describe("The numerical count for the region outside of both circles.")
