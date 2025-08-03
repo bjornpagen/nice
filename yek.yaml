@@ -7,6 +7,7 @@ ignore_patterns:
   - "postcss.config.js"
   - "prd.md"
   - "README.md"
+  - "qti-grouping-analysis/**"
   - "patches/*"
   - "bun.lock"
   - "package.json"
