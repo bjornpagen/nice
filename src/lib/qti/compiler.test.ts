@@ -28,7 +28,7 @@ describe("QTI Compiler", () => {
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
-					prompt: "Select the double number line that shows the other values of distance and elevation.",
+					prompt: "<p>Select the double number line that shows the other values of distance and elevation.</p>",
 					minChoices: 1,
 					maxChoices: 1,
 					shuffle: true,
@@ -58,9 +58,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					"The ratio of distance to elevation is 3:120, which simplifies to a unit rate of 1:40. For every 1 km hiked, the elevation increases by 40 m. This matches the correct number line.",
+					"<p>The ratio of distance to elevation is 3:120, which simplifies to a unit rate of 1:40. For every 1 km hiked, the elevation increases by 40 m. This matches the correct number line.</p>",
 				incorrect:
-					"First, find the unit rate. If Cory's elevation is 120 m after 3 km, the rate is 120m/3km = 40 meters per kilometer. Use this rate to fill in the other values on the number line."
+					"<p>First, find the unit rate. If Cory's elevation is 120 m after 3 km, the rate is 120m/3km = 40 meters per kilometer. Use this rate to fill in the other values on the number line.</p>"
 			}
 		}
 
@@ -96,9 +96,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					'The answer is 81. You successfully applied the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math>',
+					'<p>The answer is 81. You successfully applied the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math></p>',
 				incorrect:
-					'Let me help you solve this step by step. First, use the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math> So: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>2</mn><mn>54</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>1</mn><mn>27</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup></math> Then: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup><mo>=</mo><msup><mrow><mo>(</mo><mroot><mn>27</mn><mn>3</mroot><mo>)</mo></mrow><mn>4</mn></msup><mo>=</mo><msup><mn>3</mn><mn>4</mn></msup><mo>=</mo><mn>81</mn></math>'
+					'<p>Let me help you solve this step by step. First, use the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math> So: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>2</mn><mn>54</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>1</mn><mn>27</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup></math> Then: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup><mo>=</mo><msup><mrow><mo>(</mo><mroot><mn>27</mn><mn>3</mroot><mo>)</mo></mrow><mn>4</mn></msup><mo>=</mo><msup><mn>3</mn><mn>4</mn></msup><mo>=</mo><mn>81</mn></math></p>'
 			}
 		}
 
@@ -126,29 +126,30 @@ describe("QTI Compiler", () => {
 					responseIdentifier: "RESPONSE",
 					shuffle: true,
 					orientation: "horizontal",
-					prompt: "Arrange the cards to make a true comparison.",
+					prompt: "<p>Arrange the cards to make a true comparison.</p>",
 					choices: [
 						{
 							identifier: "A",
 							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn></math>',
-							feedback: "Correct! 708 > 79."
+							feedback: "<p>Correct! 708 > 79.</p>"
 						},
 						{
 							identifier: "B",
 							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>></mo></math>',
-							feedback: "That symbol belongs between 708 and 79 to make a true statement."
+							feedback: "<p>That symbol belongs between 708 and 79 to make a true statement.</p>"
 						},
 						{
 							identifier: "C",
 							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>79</mn></math>',
-							feedback: "79 is the smaller number on the right."
+							feedback: "<p>79 is the smaller number on the right.</p>"
 						}
 					]
 				}
 			],
 			feedback: {
-				correct: "You have arranged the cards as 708 > 79, which is a true comparison.",
-				incorrect: "Make sure the largest number is on the left and the symbol correctly represents the relationship."
+				correct: "<p>You have arranged the cards as 708 > 79, which is a true comparison.</p>",
+				incorrect:
+					"<p>Make sure the largest number is on the left and the symbol correctly represents the relationship.</p>"
 			}
 		}
 
@@ -191,7 +192,7 @@ describe("QTI Compiler", () => {
 					shuffle: false,
 					minChoices: 1,
 					maxChoices: 1,
-					prompt: "Choose the inequality that represents the graph.",
+					prompt: "<p>Choose the inequality that represents the graph.</p>",
 					choices: [
 						{
 							identifier: "A",
@@ -214,9 +215,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					'The graph shows an open point at 0 with an arrow to the right, representing all values strictly greater than 0, so the inequality is <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>.',
+					'<p>The graph shows an open point at 0 with an arrow to the right, representing all values strictly greater than 0, so the inequality is <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>.</p>',
 				incorrect:
-					"The open point at 0 means 0 itself is not included, and the arrow pointing right indicates values greater than 0."
+					"<p>The open point at 0 means 0 itself is not included, and the arrow pointing right indicates values greater than 0.</p>"
 			}
 		}
 
@@ -277,8 +278,8 @@ describe("QTI Compiler", () => {
 					responseIdentifier: "RESPONSE_POS",
 					shuffle: false,
 					choices: [
-						{ identifier: "ABOVE", content: "above" },
-						{ identifier: "BELOW", content: "below" }
+						{ identifier: "ABOVE", content: "<p>above</p>" },
+						{ identifier: "BELOW", content: "<p>below</p>" }
 					]
 				},
 				' <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="maroon"><mo>-</mo><mn>6.4</mn></mstyle></math>.</p>',
@@ -288,17 +289,17 @@ describe("QTI Compiler", () => {
 					responseIdentifier: "RESPONSE_COMP",
 					shuffle: false,
 					choices: [
-						{ identifier: "GT", content: "greater than" },
-						{ identifier: "LT", content: "less than" }
+						{ identifier: "GT", content: "<p>greater than</p>" },
+						{ identifier: "LT", content: "<p>less than</p>" }
 					]
 				},
 				' <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="maroon"><mo>-</mo><mn>6.4</mn></mstyle></math>.</p>'
 			],
 			feedback: {
 				correct:
-					'On a vertical number line, numbers higher up are greater. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, it is the greater number.',
+					'<p>On a vertical number line, numbers higher up are greater. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, it is the greater number.</p>',
 				incorrect:
-					'Look at the positions on the number line. <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is located higher up than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>. This means <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, and therefore <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>.'
+					'<p>Look at the positions on the number line. <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is located higher up than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>. This means <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, and therefore <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>.</p>'
 			}
 		}
 
@@ -354,9 +355,9 @@ describe("QTI Compiler", () => {
 				}
 			],
 			feedback: {
-				correct: "The completed table correctly reflects the Venn diagram data.",
+				correct: "<p>The completed table correctly reflects the Venn diagram data.</p>",
 				incorrect:
-					'Use the numbers in the Venn diagram. The overlap (23) belongs in the "Received medicine" & "Cold ≥ 7 days" cell. Then distribute the other counts accordingly.'
+					'<p>Use the numbers in the Venn diagram. The overlap (23) belongs in the "Received medicine" & "Cold ≥ 7 days" cell. Then distribute the other counts accordingly.</p>'
 			}
 		}
 
@@ -401,7 +402,7 @@ describe("QTI Compiler", () => {
 					minChoices: 0,
 					maxChoices: 3,
 					prompt:
-						'Which of the following rectangles have exactly <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of their area shaded?',
+						'<p>Which of the following rectangles have exactly <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of their area shaded?</p>',
 					choices: [
 						{
 							identifier: "A",
@@ -411,7 +412,7 @@ describe("QTI Compiler", () => {
 								height: 88,
 								shapes: [{ type: "rectangle", totalParts: 8, shadedParts: 4, rows: 2, columns: 4 }]
 							},
-							feedback: "Correct! This rectangle has 4 out of 8 parts shaded, which equals 4/8 = 1/2 = 3/6."
+							feedback: "<p>Correct! This rectangle has 4 out of 8 parts shaded, which equals 4/8 = 1/2 = 3/6.</p>"
 						},
 						{
 							identifier: "B",
@@ -421,7 +422,7 @@ describe("QTI Compiler", () => {
 								height: 88,
 								shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 2, rows: 2, columns: 2 }]
 							},
-							feedback: "Correct! This rectangle has 2 out of 4 parts shaded, which equals 2/4 = 1/2 = 3/6."
+							feedback: "<p>Correct! This rectangle has 2 out of 4 parts shaded, which equals 2/4 = 1/2 = 3/6.</p>"
 						},
 						{
 							identifier: "C",
@@ -432,16 +433,16 @@ describe("QTI Compiler", () => {
 								shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 3, rows: 2, columns: 2 }]
 							},
 							feedback:
-								"Not quite. This rectangle has 3 out of 4 parts shaded, which equals 3/4. Since 3/4 is not equal to 3/6 (which equals 1/2), this is incorrect."
+								"<p>Not quite. This rectangle has 3 out of 4 parts shaded, which equals 3/4. Since 3/4 is not equal to 3/6 (which equals 1/2), this is incorrect.</p>"
 						}
 					]
 				}
 			],
 			feedback: {
 				correct:
-					"Excellent! You correctly identified that 3/6 = 1/2, and found both rectangles that have exactly half of their area shaded: 4/8 and 2/4 both equal 1/2.",
+					"<p>Excellent! You correctly identified that 3/6 = 1/2, and found both rectangles that have exactly half of their area shaded: 4/8 and 2/4 both equal 1/2.</p>",
 				incorrect:
-					"Not quite. First, simplify 3/6 to 1/2. Then count the shaded parts in each rectangle and check if that fraction equals 1/2. Remember: 4/8 = 1/2, 2/4 = 1/2, but 3/4 ≠ 1/2."
+					"<p>Not quite. First, simplify 3/6 to 1/2. Then count the shaded parts in each rectangle and check if that fraction equals 1/2. Remember: 4/8 = 1/2, 2/4 = 1/2, but 3/4 ≠ 1/2.</p>"
 			}
 		}
 
@@ -481,35 +482,36 @@ describe("QTI Compiler", () => {
 					shuffle: true,
 					minChoices: 0,
 					maxChoices: 3,
-					prompt: "How can we calculate the shaded area?",
+					prompt: "<p>How can we calculate the shaded area?</p>",
 					choices: [
 						{
 							identifier: "A",
 							content:
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>×</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></math>',
 							feedback:
-								"Not quite. This would mean 4 groups of 1/3 each. But we have 3 circles, each with 1/4 shaded, not 4 groups of 1/3."
+								"<p>Not quite. This would mean 4 groups of 1/3 each. But we have 3 circles, each with 1/4 shaded, not 4 groups of 1/3.</p>"
 						},
 						{
 							identifier: "B",
 							content:
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>',
-							feedback: "Correct! There are 3 circles and 1/4 of each circle is shaded. We can multiply: 3 × 1/4."
+							feedback:
+								"<p>Correct! There are 3 circles and 1/4 of each circle is shaded. We can multiply: 3 × 1/4.</p>"
 						},
 						{
 							identifier: "C",
 							content:
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>',
-							feedback: "Correct! Since we have 3 circles and each has 1/4 shaded, we can add: 1/4 + 1/4 + 1/4."
+							feedback: "<p>Correct! Since we have 3 circles and each has 1/4 shaded, we can add: 1/4 + 1/4 + 1/4.</p>"
 						}
 					]
 				}
 			],
 			feedback: {
 				correct:
-					"Excellent! You found both correct ways to calculate the shaded area. Since we have 3 circles with 1/4 shaded in each, we can either multiply 3 × 1/4 or add 1/4 + 1/4 + 1/4. Both give us 3/4 as the total shaded area.",
+					"<p>Excellent! You found both correct ways to calculate the shaded area. Since we have 3 circles with 1/4 shaded in each, we can either multiply 3 × 1/4 or add 1/4 + 1/4 + 1/4. Both give us 3/4 as the total shaded area.</p>",
 				incorrect:
-					"Not quite. Look carefully at the image. There are 3 circles, and 1/4 of each circle is shaded. We can find the total shaded area by either: (1) multiplying 3 × 1/4, or (2) adding 1/4 + 1/4 + 1/4."
+					"<p>Not quite. Look carefully at the image. There are 3 circles, and 1/4 of each circle is shaded. We can find the total shaded area by either: (1) multiplying 3 × 1/4, or (2) adding 1/4 + 1/4 + 1/4.</p>"
 			}
 		}
 
@@ -534,7 +536,7 @@ describe("QTI Compiler", () => {
 				"<p>What is the center of this circle?</p>",
 				"<p>(",
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_X", expectedLength: 3 },
-				", ",
+				"<span>, </span>",
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_Y", expectedLength: 3 },
 				")</p>",
 				"<p>What is the radius of this circle?</p>",
@@ -543,9 +545,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					"You successfully found that the circle is centered at (–9, –7) with a radius of 5 units. You correctly converted the equation to standard form: (x+9)²+(y+7)²=25",
+					"<p>You successfully found that the circle is centered at (–9, –7) with a radius of 5 units. You correctly converted the equation to standard form: (x+9)²+(y+7)²=25</p>",
 				incorrect:
-					"Let's complete the square to find the center and radius. Starting with: x²+y²+18x+14y+105=0. Group the x-terms and y-terms: (x²+18x)+(y²+14y)=-105. Complete the square for x: x²+18x+81=(x+9)². Complete the square for y: y²+14y+49=(y+7)². Don't forget to add 81 and 49 to both sides! Final form: (x+9)²+(y+7)²=25. Therefore: center = (–9, –7) and radius = 5"
+					"<p>Let's complete the square to find the center and radius. Starting with: x²+y²+18x+14y+105=0. Group the x-terms and y-terms: (x²+18x)+(y²+14y)=-105. Complete the square for x: x²+18x+81=(x+9)². Complete the square for y: y²+14y+49=(y+7)². Don't forget to add 81 and 49 to both sides! Final form: (x+9)²+(y+7)²=25. Therefore: center = (–9, –7) and radius = 5</p>"
 			}
 		}
 
@@ -567,7 +569,7 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				"The following table shows each of Haruka's final exam scores last semester.",
+				"<p>The following table shows each of Haruka's final exam scores last semester.</p>",
 				{
 					type: "dataTable",
 					columnHeaders: ["Final exam", "Score on a 100-point scale"],
@@ -578,18 +580,18 @@ describe("QTI Compiler", () => {
 						{ cells: ["Chemistry", "?"] }
 					]
 				},
-				"If the mean of the data set is 84 points, find Haruka's final exam score in chemistry.",
+				"<p>If the mean of the data set is 84 points, find Haruka's final exam score in chemistry.</p>",
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
 				},
-				" points"
+				"<span> points</span>"
 			],
 			feedback: {
-				correct: "Haruka scored 87 points on her chemistry exam.",
+				correct: "<p>Haruka scored 87 points on her chemistry exam.</p>",
 				incorrect:
-					"To find the missing score, use the formula for mean: Mean = (Sum of all scores) ÷ (Number of scores). 1. Calculate the total points: Mean × Number of exams = 84 × 4 = 336 points. 2. Add up the known scores: 72 + 85 + 92 = 249 points. 3. Find the missing score: 336 - 249 = 87 points. Therefore, Haruka scored 87 points on her chemistry exam."
+					"<p>To find the missing score, use the formula for mean: Mean = (Sum of all scores) ÷ (Number of scores). 1. Calculate the total points: Mean × Number of exams = 84 × 4 = 336 points. 2. Add up the known scores: 72 + 85 + 92 = 249 points. 3. Find the missing score: 336 - 249 = 87 points. Therefore, Haruka scored 87 points on her chemistry exam.</p>"
 			}
 		}
 
@@ -631,46 +633,47 @@ describe("QTI Compiler", () => {
 					shuffle: true,
 					minChoices: 1,
 					maxChoices: 1,
-					prompt: "In which of the years was Libertyville most likely experiencing a trough in its business cycle?",
+					prompt:
+						"<p>In which of the years was Libertyville most likely experiencing a trough in its business cycle?</p>",
 					choices: [
 						{
 							identifier: "A",
-							content: "2014",
+							content: "<p>2014</p>",
 							feedback:
-								"GDP fell for the two years following 2014, indicating that Libertyville entered the recession phase of its business cycle in 2014. A trough is the turning point at which a recession ends and an expansion begins."
+								"<p>GDP fell for the two years following 2014, indicating that Libertyville entered the recession phase of its business cycle in 2014. A trough is the turning point at which a recession ends and an expansion begins.</p>"
 						},
 						{
 							identifier: "B",
-							content: "2015",
+							content: "<p>2015</p>",
 							feedback:
-								"GDP fell in 2015, indicating that Libertyville was in the recession phase of its business cycle in 2015. However the economy still had further to fall before it started to turn around. A trough is the turning point at which a recession ends and an expansion begins."
+								"<p>GDP fell in 2015, indicating that Libertyville was in the recession phase of its business cycle in 2015. However the economy still had further to fall before it started to turn around. A trough is the turning point at which a recession ends and an expansion begins.</p>"
 						},
 						{
 							identifier: "C",
-							content: "2016",
+							content: "<p>2016</p>",
 							feedback:
-								"GDP fell in 2016 but increased in 2017, indicating that 2016 was the turning point at which Libertyville's two year recession ended and the economy entered the recovery/expansion phase of its business cycle."
+								"<p>GDP fell in 2016 but increased in 2017, indicating that 2016 was the turning point at which Libertyville's two year recession ended and the economy entered the recovery/expansion phase of its business cycle.</p>"
 						},
 						{
 							identifier: "D",
-							content: "2017",
+							content: "<p>2017</p>",
 							feedback:
-								"GDP increased in 2017, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins."
+								"<p>GDP increased in 2017, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins.</p>"
 						},
 						{
 							identifier: "E",
-							content: "2018",
+							content: "<p>2018</p>",
 							feedback:
-								"GDP increased in 2018, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins."
+								"<p>GDP increased in 2018, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins.</p>"
 						}
 					]
 				}
 			],
 			feedback: {
 				correct:
-					"2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins.",
+					"<p>2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins.</p>",
 				incorrect:
-					"A trough occurs at the bottom of a recession, when GDP stops falling and starts growing again. Notice that GDP fell in 2015 (–1%) and 2016 (–2%), then rose in 2017 (+2%). This makes 2016 the trough year."
+					"<p>A trough occurs at the bottom of a recession, when GDP stops falling and starts growing again. Notice that GDP fell in 2015 (–1%) and 2016 (–2%), then rose in 2017 (+2%). This makes 2016 the trough year.</p>"
 			}
 		}
 
@@ -707,33 +710,34 @@ describe("QTI Compiler", () => {
 							identifier: "A",
 							content: "<p>continuous, not differentiable</p>",
 							feedback:
-								"This would be the case if the function values matched at x=2 but the derivatives from left and right were different. Check both the limit values and the derivatives."
+								"<p>This would be the case if the function values matched at x=2 but the derivatives from left and right were different. Check both the limit values and the derivatives.</p>"
 						},
 						{
 							identifier: "B",
 							content: "<p>differentiable, not continuous</p>",
-							feedback: "This is impossible! A function must be continuous at a point to be differentiable there."
+							feedback:
+								"<p>This is impossible! A function must be continuous at a point to be differentiable there.</p>"
 						},
 						{
 							identifier: "C",
 							content: "<p>both continuous and differentiable</p>",
 							feedback:
-								"Correct! The function values match at x=2 (both equal -1) and the derivatives from both sides equal -4, so the function is both continuous and differentiable."
+								"<p>Correct! The function values match at x=2 (both equal -1) and the derivatives from both sides equal -4, so the function is both continuous and differentiable.</p>"
 						},
 						{
 							identifier: "D",
 							content: "<p>neither continuous nor differentiable</p>",
 							feedback:
-								"Not quite. The function doesn't have a jump discontinuity at x=2. Check if the left and right limits at x=2 are equal."
+								"<p>Not quite. The function doesn't have a jump discontinuity at x=2. Check if the left and right limits at x=2 are equal.</p>"
 						}
 					]
 				}
 			],
 			feedback: {
 				correct:
-					"The function is both continuous and differentiable at x=2. For continuity: f(2) = -4+3 = -1, and both one-sided limits equal -1. For differentiability: The left derivative is -2x at x=2 -> -4, and the right derivative is 2(x-4) at x=2 -> -4. Since they match, f'(2) = -4.",
+					"<p>The function is both continuous and differentiable at x=2. For continuity: f(2) = -4+3 = -1, and both one-sided limits equal -1. For differentiability: The left derivative is -2x at x=2 -> -4, and the right derivative is 2(x-4) at x=2 -> -4. Since they match, f'(2) = -4.</p>",
 				incorrect:
-					"Check both continuity (do the limits from left and right equal the function value?) and differentiability (do the derivatives from left and right match?)."
+					"<p>Check both continuity (do the limits from left and right equal the function value?) and differentiability (do the derivatives from left and right match?).</p>"
 			}
 		}
 
@@ -769,9 +773,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					'The missing component is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>2</mn></mfrac><mo>-</mo><mi>x</mi><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow></math>.',
+					'<p>The missing component is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>2</mn></mfrac><mo>-</mo><mi>x</mi><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow></math>.</p>',
 				incorrect:
-					"Let curl(F) = -[integral]. Given F = 2y i + 2z^2 j + P k, calculate curl(F) and set its components equal to the integrand's components. Solve the resulting partial differential equations for P."
+					"<p>Let curl(F) = -[integral]. Given F = 2y i + 2z^2 j + P k, calculate curl(F) and set its components equal to the integrand's components. Solve the resulting partial differential equations for P.</p>"
 			}
 		}
 
@@ -828,9 +832,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					"The best estimate for h'(-4) is the average rate of change over the narrowest interval available that contains -4, which is [-6, -3]. The average rate of change is (h(-3) - h(-6)) / (-3 - (-6)) = (-20 - (-36)) / 3 = 16/3 ≈ 5.33.",
+					"<p>The best estimate for h'(-4) is the average rate of change over the narrowest interval available that contains -4, which is [-6, -3]. The average rate of change is (h(-3) - h(-6)) / (-3 - (-6)) = (-20 - (-36)) / 3 = 16/3 ≈ 5.33.</p>",
 				incorrect:
-					"To estimate the derivative h'(-4), calculate the average rate of change over the smallest interval that contains -4. The closest points are x=-6 and x=-3. The average rate of change is (h(-3) - h(-6)) / (-3 - (-6)) = (-20 - (-36)) / 3 = 16/3 ≈ 5.33."
+					"<p>To estimate the derivative h'(-4), calculate the average rate of change over the smallest interval that contains -4. The closest points are x=-6 and x=-3. The average rate of change is (h(-3) - h(-6)) / (-3 - (-6)) = (-20 - (-36)) / 3 = 16/3 ≈ 5.33.</p>"
 			}
 		}
 
@@ -859,7 +863,7 @@ describe("QTI Compiler", () => {
 					shuffle: true,
 					minChoices: 1,
 					maxChoices: 1,
-					prompt: "Which box has 5 apples?",
+					prompt: "<p>Which box has 5 apples?</p>",
 					choices: [
 						{
 							identifier: "CHOICE_3",
@@ -917,8 +921,8 @@ describe("QTI Compiler", () => {
 				}
 			],
 			feedback: {
-				correct: "Great job! That box has exactly five apples.",
-				incorrect: "Try again. Count the apples in each box to find the one with exactly five."
+				correct: "<p>Great job! That box has exactly five apples.</p>",
+				incorrect: "<p>Try again. Count the apples in each box to find the one with exactly five.</p>"
 			}
 		}
 
@@ -941,7 +945,7 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				"A second grade classroom has a bin of shapes.",
+				"<p>A second grade classroom has a bin of shapes.</p>",
 				{
 					type: "dataTable",
 					columnHeaders: ["Type of shape", "Number of shapes"],
@@ -958,7 +962,7 @@ describe("QTI Compiler", () => {
 					shuffle: true,
 					minChoices: 1,
 					maxChoices: 1,
-					prompt: "Which bar graph correctly shows the number of shapes in the bin?",
+					prompt: "<p>Which bar graph correctly shows the number of shapes in the bin?</p>",
 					choices: [
 						{
 							identifier: "A",
@@ -1013,9 +1017,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					"The chosen graph perfectly matches the data provided in the table: 8 Triangles, 5 Circles, 3 Rectangles, and 9 Squares.",
+					"<p>The chosen graph perfectly matches the data provided in the table: 8 Triangles, 5 Circles, 3 Rectangles, and 9 Squares.</p>",
 				incorrect:
-					'Match the number of shapes from the table to the height of the bar for each shape type. For example, the table says there are 8 Triangles, so the "Triangles" bar should reach the line for the number 8 on the vertical axis.'
+					'<p>Match the number of shapes from the table to the height of the bar for each shape type. For example, the table says there are 8 Triangles, so the "Triangles" bar should reach the line for the number 8 on the vertical axis.</p>'
 			}
 		}
 
@@ -1045,7 +1049,7 @@ describe("QTI Compiler", () => {
 					shuffle: true,
 					minChoices: 1,
 					maxChoices: 1,
-					prompt: "Which line plot correctly shows the length of each pencil?",
+					prompt: "<p>Which line plot correctly shows the length of each pencil?</p>",
 					choices: [
 						{
 							identifier: "A",
@@ -1096,9 +1100,9 @@ describe("QTI Compiler", () => {
 			],
 			feedback: {
 				correct:
-					"The data set {11, 8, 8, 3} has one pencil of length 3 cm, two pencils of length 8 cm, and one pencil of length 11 cm. The chosen plot correctly displays a dot for each of these measurements.",
+					"<p>The data set {11, 8, 8, 3} has one pencil of length 3 cm, two pencils of length 8 cm, and one pencil of length 11 cm. The chosen plot correctly displays a dot for each of these measurements.</p>",
 				incorrect:
-					"To create the line plot, place one dot above the correct number on the line for each pencil measured. The lengths are 3 cm, 8 cm, 8 cm, and 11 cm. This means there should be one dot above 3, two dots above 8, and one dot above 11."
+					"<p>To create the line plot, place one dot above the correct number on the line for each pencil measured. The lengths are 3 cm, 8 cm, 8 cm, and 11 cm. This means there should be one dot above 3, two dots above 8, and one dot above 11.</p>"
 			}
 		}
 
@@ -1121,8 +1125,8 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				"The Lions, Tigers, and Bears won baseball games last summer.",
-				"This bar graph shows how many games each team won.",
+				"<p>The Lions, Tigers, and Bears won baseball games last summer.</p>",
+				"<p>This bar graph shows how many games each team won.</p>",
 				{
 					type: "barChart",
 					width: 480,
@@ -1140,18 +1144,18 @@ describe("QTI Compiler", () => {
 						{ label: "Bears", value: 7 }
 					]
 				},
-				"How many games did the Lions win?",
+				"<p>How many games did the Lions win?</p>",
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
 				},
-				" games"
+				"<span> games</span>"
 			],
 			feedback: {
-				correct: "The bar for the Lions goes up to the line for 14, so they won 14 games.",
+				correct: "<p>The bar for the Lions goes up to the line for 14, so they won 14 games.</p>",
 				incorrect:
-					"To find the number of games the Lions won, first find the 'Lions' label on the horizontal axis. Then, follow that bar up to the top. The number on the vertical axis that aligns with the top of the bar is the answer. The Lions' bar reaches the line for 14 games."
+					"<p>To find the number of games the Lions won, first find the 'Lions' label on the horizontal axis. Then, follow that bar up to the top. The number on the vertical axis that aligns with the top of the bar is the answer. The Lions' bar reaches the line for 14 games.</p>"
 			}
 		}
 
@@ -1174,7 +1178,7 @@ describe("QTI Compiler", () => {
 				}
 			],
 			body: [
-				"The heights of Sabrina's dolls are shown below.",
+				"<p>The heights of Sabrina's dolls are shown below.</p>",
 				{
 					type: "dotPlot",
 					width: 350,
@@ -1193,19 +1197,19 @@ describe("QTI Compiler", () => {
 					],
 					dotRadius: 6
 				},
-				"How many dolls are taller than 22 centimeters?",
+				"<p>How many dolls are taller than 22 centimeters?</p>",
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
 				},
-				" dolls"
+				"<span> dolls</span>"
 			],
 			feedback: {
 				correct:
-					"There are 3 dolls that are 23 cm tall and 2 dolls that are 24 cm tall. In total, 3 + 2 = 5 dolls are taller than 22 cm.",
+					"<p>There are 3 dolls that are 23 cm tall and 2 dolls that are 24 cm tall. In total, 3 + 2 = 5 dolls are taller than 22 cm.</p>",
 				incorrect:
-					"To find the number of dolls taller than 22 cm, count all the dots that are to the right of 22 on the line plot. There are 3 dots above 23 and 2 dots above 24. That makes a total of 5 dolls."
+					"<p>To find the number of dolls taller than 22 cm, count all the dots that are to the right of 22 on the line plot. There are 3 dots above 23 and 2 dots above 24. That makes a total of 5 dolls.</p>"
 			}
 		}
 
@@ -1224,7 +1228,7 @@ describe("QTI Compiler", () => {
 				{ identifier: "RESPONSE_MIN", cardinality: "single", baseType: "integer", correct: 55, mapping: { "05": 5 } }
 			],
 			body: [
-				"Look at the following number line.",
+				"<p>Look at the following number line.</p>",
 				{
 					type: "numberLine",
 					width: 700,
@@ -1242,17 +1246,17 @@ describe("QTI Compiler", () => {
 					],
 					points: [{ value: 55, label: "A", color: "#A0522D", labelPosition: "below" }]
 				},
-				"What time is shown on the number line?",
+				"<p>What time is shown on the number line?</p>",
 				"<p>",
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_HR", expectedLength: 2 },
-				" : ",
+				"<span> : </span>",
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_MIN", expectedLength: 2 },
 				"</p>"
 			],
 			feedback: {
-				correct: "The time shown is 12:55.",
+				correct: "<p>The time shown is 12:55.</p>",
 				incorrect:
-					"The point 'A' is located after the 12:00 mark but before the 1:00 mark, so the hour is 12. The mark for 12:45 is shown. The next medium tick represents 5 minutes later, which is 12:50. The next medium tick represents another 5 minutes, which is 12:55. Point 'A' is on that mark. The time is 12:55."
+					"<p>The point 'A' is located after the 12:00 mark but before the 1:00 mark, so the hour is 12. The mark for 12:45 is shown. The next medium tick represents 5 minutes later, which is 12:50. The next medium tick represents another 5 minutes, which is 12:55. Point 'A' is on that mark. The time is 12:55.</p>"
 			}
 		}
 
