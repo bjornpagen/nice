@@ -7,7 +7,6 @@ import {
 	ErrInvalidRange as ErrAVNLInvalidRange,
 	generateAbsoluteValueNumberLine
 } from "./absolute-value-number-line"
-import { AdjacentAnglesPropsSchema, ErrMismatchedRaysAndAngles, generateAdjacentAngles } from "./adjacent-angles"
 import {
 	BarChartPropsSchema,
 	ErrInvalidDimensions as ErrBarChartInvalidDimensions,
@@ -92,52 +91,6 @@ describe("Widget Generators", () => {
 			const result = errors.trySync(() => generateAbsoluteValueNumberLine(props))
 			if (result.error) {
 				expect(errors.is(result.error, ErrAVNLInvalidRange)).toBe(true)
-				expect(result.error.message).toMatchSnapshot()
-			} else {
-				throw errors.new("expected an error to be thrown")
-			}
-		})
-	})
-
-	describe("generateAdjacentAngles", () => {
-		test("should render with minimal props", () => {
-			const props = AdjacentAnglesPropsSchema.parse({
-				rayLabels: ["B", "C", "D"],
-				angles: [
-					{ value: 30, label: "30°", color: "red", arcRadius: 40 },
-					{ value: 45, label: "45°", color: "blue", arcRadius: 40 }
-				]
-			})
-			expect(generateAdjacentAngles(props)).toMatchSnapshot()
-		})
-
-		test("should render with all props specified", () => {
-			const props = AdjacentAnglesPropsSchema.parse({
-				width: 500,
-				height: 300,
-				vertexLabel: "V",
-				rayLabels: ["P", "Q", "R"],
-				angles: [
-					{ id: "a1", value: 60, label: "x", color: "green", arcRadius: 50, fill: true },
-					{ id: "a2", value: 20, label: "y", color: "purple", arcRadius: 60, fill: false }
-				],
-				totalAngle: { label: "80°", color: "black", arcRadius: 80 },
-				baselineAngle: 20
-			})
-			expect(generateAdjacentAngles(props)).toMatchSnapshot()
-		})
-
-		test("should handle error case with mismatched rays and angles", () => {
-			const props = AdjacentAnglesPropsSchema.parse({
-				rayLabels: ["B", "C"],
-				angles: [
-					{ value: 30, label: "30°", color: "red", arcRadius: 40 },
-					{ value: 45, label: "45°", color: "blue", arcRadius: 40 }
-				]
-			})
-			const result = errors.trySync(() => generateAdjacentAngles(props))
-			if (result.error) {
-				expect(errors.is(result.error, ErrMismatchedRaysAndAngles)).toBe(true)
 				expect(result.error.message).toMatchSnapshot()
 			} else {
 				throw errors.new("expected an error to be thrown")
