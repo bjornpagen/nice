@@ -596,7 +596,7 @@ describe("QTI Compiler", () => {
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
 		expect(compiledXml).toContain('identifier="haruka-exam-score"')
-		expect(compiledXml).toContain("dataTable")
+		expect(compiledXml).toContain("<table")
 	})
 
 	test("should correctly compile business cycle trough identification", () => {
@@ -677,7 +677,7 @@ describe("QTI Compiler", () => {
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
 		expect(compiledXml).toContain('identifier="libertyville-business-cycle"')
-		expect(compiledXml).toContain("dataTable")
+		expect(compiledXml).toContain("<table")
 	})
 
 	test("should correctly compile continuity and differentiability of piecewise function", () => {
@@ -837,7 +837,7 @@ describe("QTI Compiler", () => {
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
 		expect(compiledXml).toContain('identifier="estimate-derivative-from-table"')
-		expect(compiledXml).toContain("dataTable")
+		expect(compiledXml).toContain("<table")
 	})
 
 	test("should correctly compile count the apples with discrete object diagrams", () => {

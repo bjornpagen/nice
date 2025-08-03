@@ -59,9 +59,19 @@ function renderContent(content: unknown): string {
 		if (parseResult.success) {
 			const widget = parseResult.data
 			const generatedHtml = generateWidget(widget)
-			const dataUri = encodeDataUri(generatedHtml)
-			const altText = escapeXmlAttribute(`A visual element of type ${widget.type}.`)
-			return `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`
+
+			// Check if the generated content is SVG
+			const isSvg = generatedHtml.trim().startsWith("<svg")
+
+			if (isSvg) {
+				// For SVG content, embed it in an img tag with data URI
+				const dataUri = encodeDataUri(generatedHtml)
+				const altText = escapeXmlAttribute(`A visual element of type ${widget.type}.`)
+				return `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`
+			}
+
+			// For HTML content, return it directly
+			return generatedHtml
 		}
 	}
 	throw errors.new(`Invalid content block provided: ${JSON.stringify(content)}`)
