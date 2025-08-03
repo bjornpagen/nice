@@ -40,7 +40,57 @@ export type BoxPlotProps = z.infer<typeof BoxPlotPropsSchema>
  * This type of plot is a powerful tool for summarizing the distribution of a numerical
  * data set through its five-number summary.
  */
-export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (_data) => {
-	// TODO: Implement box plot generation
-	return "<svg><!-- Box plot implementation --></svg>"
+export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data) => {
+	const { width, height, axis, summary, boxColor, medianColor } = data
+	const margin = { top: 20, right: 20, bottom: 40, left: 20 }
+	const plotHeight = height - margin.top - margin.bottom
+	const chartWidth = width - margin.left - margin.right
+	const yCenter = margin.top + plotHeight / 2
+
+	if (axis.min >= axis.max) {
+		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg"><text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Error: axis.min must be less than axis.max.</text></svg>`
+	}
+
+	const scale = chartWidth / (axis.max - axis.min)
+	const toSvgX = (val: number) => margin.left + (val - axis.min) * scale
+
+	const minPos = toSvgX(summary.min)
+	const q1Pos = toSvgX(summary.q1)
+	const medianPos = toSvgX(summary.median)
+	const q3Pos = toSvgX(summary.q3)
+	const maxPos = toSvgX(summary.max)
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+
+	// Axis
+	const axisY = margin.top + plotHeight + 20
+	svg += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="black"/>`
+	if (axis.label) {
+		svg += `<text x="${width / 2}" y="${height - 5}" fill="black" text-anchor="middle" font-size="14">${axis.label}</text>`
+	}
+	// Use tickLabels if provided, otherwise generate from min/max/interval if possible
+	const ticks = axis.tickLabels ?? []
+	for (const t of ticks) {
+		const pos = toSvgX(t)
+		svg += `<line x1="${pos}" y1="${axisY - 5}" x2="${pos}" y2="${axisY + 5}" stroke="black"/>`
+		svg += `<text x="${pos}" y="${axisY + 20}" fill="black" text-anchor="middle">${t}</text>`
+	}
+
+	// Box plot elements
+	// Whiskers
+	svg += `<line x1="${minPos}" y1="${yCenter}" x2="${q1Pos}" y2="${yCenter}" stroke="black"/>`
+	svg += `<line x1="${q3Pos}" y1="${yCenter}" x2="${maxPos}" y2="${yCenter}" stroke="black"/>`
+
+	// Caps
+	svg += `<line x1="${minPos}" y1="${yCenter - 10}" x2="${minPos}" y2="${yCenter + 10}" stroke="black"/>`
+	svg += `<line x1="${maxPos}" y1="${yCenter - 10}" x2="${maxPos}" y2="${yCenter + 10}" stroke="black"/>`
+
+	// Box
+	svg += `<rect x="${q1Pos}" y="${yCenter - plotHeight / 2}" width="${q3Pos - q1Pos}" height="${plotHeight}" fill="${boxColor}" stroke="black"/>`
+
+	// Median
+	svg += `<line x1="${medianPos}" y1="${yCenter - plotHeight / 2}" x2="${medianPos}" y2="${yCenter + plotHeight / 2}" stroke="${medianColor}" stroke-width="2"/>`
+
+	svg += "</svg>"
+	return svg
 }

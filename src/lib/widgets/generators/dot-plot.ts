@@ -37,7 +37,48 @@ export type DotPlotProps = z.infer<typeof DotPlotPropsSchema>
  * Dot plots are used to visualize the distribution of a numerical data set,
  * especially when the data consists of discrete values or has been binned.
  */
-export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (_data) => {
-	// TODO: Implement dot plot generation
-	return "<svg><!-- Dot plot implementation --></svg>"
+export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data) => {
+	const { width, height, axis, data: plotData, dotColor, dotRadius } = data
+	const margin = { top: 20, right: 20, bottom: 50, left: 20 }
+	const chartWidth = width - margin.left - margin.right
+	const chartHeight = height - margin.top - margin.bottom
+	const axisY = height - margin.bottom
+
+	if (chartWidth <= 0 || chartHeight <= 0 || axis.min >= axis.max) {
+		return `<svg width="${width}" height="${height}"></svg>`
+	}
+
+	const scale = chartWidth / (axis.max - axis.min)
+	const toSvgX = (val: number) => margin.left + (val - axis.min) * scale
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+
+	// Axis line
+	svg += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="black"/>`
+
+	// Axis label
+	if (axis.label) {
+		svg += `<text x="${width / 2}" y="${height - 10}" fill="black" text-anchor="middle" font-size="14">${axis.label}</text>`
+	}
+
+	// Ticks and tick labels
+	for (let t = axis.min; t <= axis.max; t += axis.tickInterval) {
+		const x = toSvgX(t)
+		svg += `<line x1="${x}" y1="${axisY - 5}" x2="${x}" y2="${axisY + 5}" stroke="black"/>`
+		svg += `<text x="${x}" y="${axisY + 20}" fill="black" text-anchor="middle">${t}</text>`
+	}
+
+	// Dots
+	const dotDiameter = dotRadius * 2
+	const dotSpacing = 2 // Vertical space between dots
+	for (const dp of plotData) {
+		const x = toSvgX(dp.value)
+		for (let i = 0; i < dp.count; i++) {
+			const y = axisY - dotRadius - i * (dotDiameter + dotSpacing)
+			svg += `<circle cx="${x}" cy="${y}" r="${dotRadius}" fill="${dotColor}"/>`
+		}
+	}
+
+	svg += "</svg>"
+	return svg
 }

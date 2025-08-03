@@ -44,8 +44,48 @@ export type NumberLineWithFractionGroupsProps = z.infer<typeof NumberLineWithFra
  * It visually answers the question, "How many groups of a certain fraction fit into a whole number?"
  */
 export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof NumberLineWithFractionGroupsPropsSchema> = (
-	_data
+	data
 ) => {
-	// TODO: Implement number-line-with-fraction-groups generation
-	return "<svg><!-- NumberLineWithFractionGroups implementation --></svg>"
+	const { width, height, min, max, ticks, segments } = data
+	const padding = { horizontal: 20, vertical: 40 }
+	const chartWidth = width - 2 * padding.horizontal
+	const yPos = height / 2
+
+	if (min >= max) return `<svg width="${width}" height="${height}"></svg>`
+	const scale = chartWidth / (max - min)
+	const toSvgX = (val: number) => padding.horizontal + (val - min) * scale
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+
+	// Axis
+	svg += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
+
+	// Ticks
+	for (const t of ticks) {
+		const x = toSvgX(t.value)
+		const tickHeight = t.isMajor ? 8 : 4
+		svg += `<line x1="${x}" y1="${yPos - tickHeight}" x2="${x}" y2="${yPos + tickHeight}" stroke="black"/>`
+		if (t.label) {
+			svg += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle">${t.label}</text>`
+		}
+	}
+
+	// Segments
+	segments?.forEach((s, i) => {
+		const startPos = toSvgX(s.start)
+		const endPos = toSvgX(s.end)
+		const segmentWidth = endPos - startPos
+		const segmentHeight = 20
+		// Stagger segments vertically to avoid overlap if needed
+		const segmentY = yPos - segmentHeight / 2 - (i % 2) * (segmentHeight + 2)
+
+		svg += `<rect x="${startPos}" y="${segmentY}" width="${segmentWidth}" height="${segmentHeight}" fill="${s.color}" fill-opacity="0.7" stroke="black" stroke-width="0.5"/>`
+		if (s.label) {
+			const textColor = "white" // Assuming dark segment colors
+			svg += `<text x="${startPos + segmentWidth / 2}" y="${segmentY + segmentHeight / 2}" fill="${textColor}" text-anchor="middle" dominant-baseline="middle" font-weight="bold">${s.label}</text>`
+		}
+	})
+
+	svg += "</svg>"
+	return svg
 }

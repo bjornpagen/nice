@@ -41,7 +41,62 @@ export type BarChartProps = z.infer<typeof BarChartPropsSchema>
  * Bar charts are used to compare numerical values across a set of discrete categories.
  * Supports rendering bars in an "unknown" state for missing value problems.
  */
-export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (_data) => {
-	// TODO: Implement bar chart generation
-	return "<svg><!-- Bar chart implementation --></svg>"
+export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (data) => {
+	const { width, height, title, xAxisLabel, yAxis, data: chartData, barColor } = data
+	const margin = { top: 40, right: 20, bottom: 50, left: 50 }
+	const chartWidth = width - margin.left - margin.right
+	const chartHeight = height - margin.top - margin.bottom
+
+	if (chartHeight <= 0 || chartWidth <= 0 || chartData.length === 0) {
+		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" />`
+	}
+
+	const maxValue = yAxis.max ?? Math.max(...chartData.map((d) => d.value))
+	const scaleY = chartHeight / (maxValue - yAxis.min)
+	const barWidth = chartWidth / chartData.length
+	const barPadding = 0.2 // 20% of bar width is padding
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	svg +=
+		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
+
+	// Title
+	if (title) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
+
+	// Axes
+	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>` // Y-axis
+	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>` // X-axis
+
+	// Axis Labels
+	if (xAxisLabel)
+		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - 10}" class="axis-label">${xAxisLabel}</text>`
+	if (yAxis.label)
+		svg += `<text x="${margin.left - 30}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 30}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
+
+	// Y ticks and grid lines
+	for (let t = yAxis.min; t <= maxValue; t += yAxis.tickInterval) {
+		const y = height - margin.bottom - (t - yAxis.min) * scaleY
+		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
+		svg += `<text x="${margin.left - 10}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+		svg += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
+	}
+
+	// Bars and X-axis labels
+	chartData.forEach((d, i) => {
+		const barHeight = d.value * scaleY
+		const x = margin.left + i * barWidth
+		const y = height - margin.bottom - barHeight
+		const innerBarWidth = barWidth * (1 - barPadding)
+		const xOffset = (barWidth - innerBarWidth) / 2
+
+		if (d.state === "normal") {
+			svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="${barColor}"/>`
+		} else {
+			svg += `<rect x="${x + xOffset}" y="${y}" width="${innerBarWidth}" height="${barHeight}" fill="none" stroke="${barColor}" stroke-width="2" stroke-dasharray="4"/>`
+		}
+		svg += `<text x="${x + barWidth / 2}" y="${height - margin.bottom + 15}" fill="black" text-anchor="middle">${d.label}</text>`
+	})
+
+	svg += "</svg>"
+	return svg
 }

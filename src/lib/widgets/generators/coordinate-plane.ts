@@ -96,7 +96,118 @@ export type CoordinatePlaneProps = z.infer<typeof CoordinatePlanePropsSchema>
  * Generates a versatile Cartesian coordinate plane for plotting points, lines, and polygons.
  * Supports a wide range of coordinate geometry problems.
  */
-export const generateCoordinatePlane: WidgetGenerator<typeof CoordinatePlanePropsSchema> = (_data) => {
-	// TODO: Implement coordinate-plane generation
-	return "<svg><!-- CoordinatePlane implementation --></svg>"
+export const generateCoordinatePlane: WidgetGenerator<typeof CoordinatePlanePropsSchema> = (data) => {
+	const { width, height, xAxis, yAxis, showQuadrantLabels, points, lines, polygons } = data
+	const pad = { top: 30, right: 30, bottom: 40, left: 40 }
+	const chartWidth = width - pad.left - pad.right
+	const chartHeight = height - pad.top - pad.bottom
+
+	if (chartWidth <= 0 || chartHeight <= 0 || xAxis.min >= xAxis.max || yAxis.min >= yAxis.max) {
+		return `<svg width="${width}" height="${height}"></svg>`
+	}
+
+	const scaleX = chartWidth / (xAxis.max - xAxis.min)
+	const scaleY = chartHeight / (yAxis.max - yAxis.min)
+
+	const toSvgX = (val: number) => pad.left + (val - xAxis.min) * scaleX
+	const toSvgY = (val: number) => height - pad.bottom - (val - yAxis.min) * scaleY
+
+	const zeroX = toSvgX(0)
+	const zeroY = toSvgY(0)
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	svg +=
+		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .quadrant-label { font-size: 18px; fill: #ccc; text-anchor: middle; dominant-baseline: middle; }</style>"
+
+	// Grid lines
+	if (xAxis.showGridLines) {
+		for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
+			if (t === 0) continue
+			const x = toSvgX(t)
+			svg += `<line x1="${x}" y1="${pad.top}" x2="${x}" y2="${height - pad.bottom}" stroke="#eee" stroke-width="1"/>`
+		}
+	}
+	if (yAxis.showGridLines) {
+		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
+			if (t === 0) continue
+			const y = toSvgY(t)
+			svg += `<line x1="${pad.left}" y1="${y}" x2="${width - pad.right}" y2="${y}" stroke="#eee" stroke-width="1"/>`
+		}
+	}
+
+	// Axes
+	svg += `<line x1="${pad.left}" y1="${zeroY}" x2="${width - pad.right}" y2="${zeroY}" stroke="black" stroke-width="1.5"/>`
+	svg += `<line x1="${zeroX}" y1="${pad.top}" x2="${zeroX}" y2="${height - pad.bottom}" stroke="black" stroke-width="1.5"/>`
+
+	// Ticks and labels
+	for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
+		if (t === 0) continue
+		const x = toSvgX(t)
+		svg += `<line x1="${x}" y1="${zeroY - 4}" x2="${x}" y2="${zeroY + 4}" stroke="black"/>`
+		svg += `<text x="${x}" y="${zeroY + 15}" fill="black" text-anchor="middle">${t}</text>`
+	}
+	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
+		if (t === 0) continue
+		const y = toSvgY(t)
+		svg += `<line x1="${zeroX - 4}" y1="${y}" x2="${zeroX + 4}" y2="${y}" stroke="black"/>`
+		svg += `<text x="${zeroX - 8}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+	}
+	if (xAxis.label)
+		svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 5}" class="axis-label">${xAxis.label}</text>`
+	if (yAxis.label)
+		svg += `<text x="${pad.left - 25}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 25}, ${pad.top + chartHeight / 2})">${yAxis.label}</text>`
+
+	// Quadrant labels
+	if (showQuadrantLabels) {
+		svg += `<text x="${zeroX + chartWidth / 4}" y="${zeroY - chartHeight / 4}" class="quadrant-label">I</text>`
+		svg += `<text x="${zeroX - chartWidth / 4}" y="${zeroY - chartHeight / 4}" class="quadrant-label">II</text>`
+		svg += `<text x="${zeroX - chartWidth / 4}" y="${zeroY + chartHeight / 4}" class="quadrant-label">III</text>`
+		svg += `<text x="${zeroX + chartWidth / 4}" y="${zeroY + chartHeight / 4}" class="quadrant-label">IV</text>`
+	}
+
+	// Polygons (drawn first to be in the background)
+	const pointMap = new Map(points?.map((pt) => [pt.id, pt]) || [])
+	if (polygons) {
+		for (const poly of polygons) {
+			const polyPointsStr = poly.vertices
+				.map((id) => {
+					const pt = pointMap.get(id)
+					return pt ? `${toSvgX(pt.x)},${toSvgY(pt.y)}` : ""
+				})
+				.filter(Boolean)
+				.join(" ")
+
+			if (polyPointsStr) {
+				const tag = poly.isClosed ? "polygon" : "polyline"
+				const fill = poly.isClosed ? poly.fillColor : "none"
+				svg += `<${tag} points="${polyPointsStr}" fill="${fill}" stroke="${poly.strokeColor}" stroke-width="2"/>`
+			}
+		}
+	}
+
+	// Lines
+	if (lines) {
+		for (const l of lines) {
+			const { slope, yIntercept } = l.equation
+			const y1 = slope * xAxis.min + yIntercept
+			const y2 = slope * xAxis.max + yIntercept
+			const dash = l.style === "dashed" ? ' stroke-dasharray="5 3"' : ""
+			svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}" stroke="${l.color}" stroke-width="2"${dash}/>`
+		}
+	}
+
+	// Points (drawn last to be on top)
+	if (points) {
+		for (const p of points) {
+			const px = toSvgX(p.x)
+			const py = toSvgY(p.y)
+			const fill = p.style === "open" ? "none" : p.color
+			const stroke = p.color
+			svg += `<circle cx="${px}" cy="${py}" r="4" fill="${fill}" stroke="${stroke}" stroke-width="1.5"/>`
+			if (p.label) svg += `<text x="${px + 6}" y="${py - 6}" fill="black">${p.label}</text>`
+		}
+	}
+
+	svg += "</svg>"
+	return svg
 }

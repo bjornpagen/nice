@@ -63,7 +63,54 @@ export type PartitionedShapeProps = z.infer<typeof PartitionedShapePropsSchema>
  * represent fractions, decimals, and percentages. It renders one or more geometric shapes
  * (rectangles or circles) that are divided into a set number of equal parts.
  */
-export const generatePartitionedShape: WidgetGenerator<typeof PartitionedShapePropsSchema> = (_data) => {
-	// TODO: Implement partitioned-shape generation
-	return "<svg><!-- PartitionedShape implementation --></svg>"
+export const generatePartitionedShape: WidgetGenerator<typeof PartitionedShapePropsSchema> = (data) => {
+	const { shapes, width: shapeWidth, height: shapeHeight, layout } = data
+	const rad = (deg: number) => (deg * Math.PI) / 180
+	const gap = 20
+	const totalWidth = layout === "horizontal" ? shapes.length * shapeWidth + (shapes.length - 1) * gap : shapeWidth
+	const totalHeight = layout === "vertical" ? shapes.length * shapeHeight + (shapes.length - 1) * gap : shapeHeight
+
+	let svg = `<svg width="${totalWidth}" height="${totalHeight}" viewBox="0 0 ${totalWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg">`
+
+	shapes.forEach((s, idx) => {
+		const xOffset = layout === "horizontal" ? idx * (shapeWidth + gap) : 0
+		const yOffset = layout === "vertical" ? idx * (shapeHeight + gap) : 0
+
+		if (s.type === "rectangle") {
+			const rows = s.rows || 1
+			const cols = s.columns || s.totalParts
+			const cellW = shapeWidth / cols
+			const cellH = shapeHeight / rows
+			for (let i = 0; i < s.totalParts; i++) {
+				const row = Math.floor(i / cols)
+				const col = i % cols
+				const fill = i < s.shadedParts ? s.shadeColor : "none"
+				svg += `<rect x="${xOffset + col * cellW}" y="${yOffset + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" stroke="black" stroke-width="1"/>`
+			}
+		} else if (s.type === "circle") {
+			const cx = xOffset + shapeWidth / 2
+			const cy = yOffset + shapeHeight / 2
+			const r = Math.min(shapeWidth, shapeHeight) / 2 - 5
+			const angleStep = 360 / s.totalParts
+
+			for (let i = 0; i < s.totalParts; i++) {
+				const startAngle = i * angleStep - 90 // Start from top
+				const endAngle = (i + 1) * angleStep - 90
+				const startRad = rad(startAngle)
+				const endRad = rad(endAngle)
+				const largeArc = angleStep > 180 ? 1 : 0
+				const fill = i < s.shadedParts ? s.shadeColor : "none"
+
+				const x1 = cx + r * Math.cos(startRad)
+				const y1 = cy + r * Math.sin(startRad)
+				const x2 = cx + r * Math.cos(endRad)
+				const y2 = cy + r * Math.sin(endRad)
+
+				svg += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" stroke="black" stroke-width="1"/>`
+			}
+		}
+	})
+
+	svg += "</svg>"
+	return svg
 }

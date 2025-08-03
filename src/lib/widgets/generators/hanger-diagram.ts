@@ -36,7 +36,69 @@ export type HangerDiagramProps = z.infer<typeof HangerDiagramPropsSchema>
  * algebraic equation, rendered as an SVG graphic. This diagram is ideal for introducing
  * students to the concept of solving equations by maintaining balance.
  */
-export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSchema> = (_data) => {
-	// TODO: Implement hanger-diagram generation
-	return "<svg><!-- HangerDiagram implementation --></svg>"
+export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSchema> = (data) => {
+	const { width, height, leftSide, rightSide } = data
+	const centerX = width / 2
+	const beamY = 50
+	const beamWidth = width * 0.8
+	const beamStartX = centerX - beamWidth / 2
+	const beamEndX = centerX + beamWidth / 2
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+
+	// Hook and beam
+	svg += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="black" stroke-width="2"/>`
+	svg += `<path d="M ${centerX - 5} 10 L ${centerX} 5 L ${centerX + 5} 10 Z" fill="black" />` // Triangle at top of hook
+	svg += `<line x1="${beamStartX}" y1="${beamY}" x2="${beamEndX}" y2="${beamY}" stroke="black" stroke-width="3"/>`
+
+	const drawWeight = (x: number, y: number, weight: (typeof leftSide)[0]) => {
+		const size = 30
+		let shapeSvg = ""
+		switch (weight.shape) {
+			case "circle":
+				shapeSvg = `<circle cx="${x}" cy="${y + size / 2}" r="${size / 2}" fill="${weight.color || "#e0e0e0"}" stroke="black"/>`
+				break
+			case "triangle":
+				shapeSvg = `<polygon points="${x - size / 2},${y + size} ${x + size / 2},${y + size} ${x},${y}" fill="${weight.color || "#e0e0e0"}" stroke="black"/>`
+				break
+			case "pentagon": {
+				// Simplified pentagon
+				const p_pts = [
+					[x, y],
+					[x + size / 2, y + size * 0.4],
+					[x + size * 0.3, y + size],
+					[x - size * 0.3, y + size],
+					[x - size / 2, y + size * 0.4]
+				]
+					.map((pt) => pt.join(","))
+					.join(" ")
+				shapeSvg = `<polygon points="${p_pts}" fill="${weight.color || "#e0e0e0"}" stroke="black"/>`
+				break
+			}
+			default:
+				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color || "#e0e0e0"}" stroke="black"/>`
+				break
+		}
+		const textSvg = `<text x="${x}" y="${y + size / 2 + 4}" fill="black" text-anchor="middle" font-weight="bold">${weight.label}</text>`
+		return shapeSvg + textSvg
+	}
+
+	const renderSide = (weights: typeof leftSide, isLeft: boolean) => {
+		const sideCenterX = isLeft ? beamStartX + beamWidth / 4 : beamEndX - beamWidth / 4
+		const stringY = beamY + 15
+		const weightYStart = stringY + 10
+		const weightHeight = 35 // size + padding
+
+		weights.forEach((w, i) => {
+			const weightY = weightYStart + i * weightHeight
+			svg += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + 5}" x2="${sideCenterX}" y2="${weightY}" stroke="black"/>`
+			svg += drawWeight(sideCenterX, weightY, w)
+		})
+	}
+
+	renderSide(leftSide, true)
+	renderSide(rightSide, false)
+
+	svg += "</svg>"
+	return svg
 }

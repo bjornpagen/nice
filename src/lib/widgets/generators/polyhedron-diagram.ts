@@ -64,7 +64,73 @@ export type PolyhedronDiagramProps = z.infer<typeof PolyhedronDiagramPropsSchema
  * polyhedra with flat faces, such as prisms and pyramids. It renders the polyhedron
  * in a standard isometric or perspective view to provide depth perception.
  */
-export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagramPropsSchema> = (_data) => {
-	// TODO: Implement polyhedron-diagram generation
-	return "<svg><!-- PolyhedronDiagram implementation --></svg>"
+export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagramPropsSchema> = (data) => {
+	const { width, height, shape, labels, shadedFace, showHiddenEdges } = data
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+
+	if (shape.type === "rectangularPrism") {
+		const w = shape.width * 5
+		const h = shape.height * 5
+		const l = shape.length * 3 // depth
+		const x_offset = (width - w - l) / 2
+		const y_offset = (height + h - l * 0.5) / 2
+
+		// 8 vertices of the prism
+		const p = [
+			{ x: x_offset, y: y_offset }, // 0: front bottom left
+			{ x: x_offset + w, y: y_offset }, // 1: front bottom right
+			{ x: x_offset + w, y: y_offset - h }, // 2: front top right
+			{ x: x_offset, y: y_offset - h }, // 3: front top left
+			{ x: x_offset + l, y: y_offset - l * 0.5 }, // 4: back bottom left
+			{ x: x_offset + w + l, y: y_offset - l * 0.5 }, // 5: back bottom right
+			{ x: x_offset + w + l, y: y_offset - h - l * 0.5 }, // 6: back top right
+			{ x: x_offset + l, y: y_offset - h - l * 0.5 } // 7: back top left
+		]
+
+		const faces = {
+			front_face: { points: [p[0], p[1], p[2], p[3]], color: "rgba(255,0,0,0.2)" },
+			top_face: { points: [p[3], p[2], p[6], p[7]], color: "rgba(0,0,255,0.2)" },
+			side_face: { points: [p[1], p[5], p[6], p[2]], color: "rgba(0,255,0,0.2)" },
+			bottom_face: { points: [p[0], p[4], p[5], p[1]], color: "rgba(255,255,0,0.2)" }
+		}
+
+		const getFaceSvg = (faceName: keyof typeof faces) => {
+			const face = faces[faceName]
+			const pointsStr = face.points
+				.map((pt) => (pt ? `${pt.x},${pt.y}` : ""))
+				.filter(Boolean)
+				.join(" ")
+			return `<polygon points="${pointsStr}" fill="${shadedFace === faceName ? face.color : "none"}" stroke="black" stroke-width="1.5" />`
+		}
+
+		const hidden = 'stroke="black" stroke-width="1.5" stroke-dasharray="4 2"'
+		const _solid = 'stroke="black" stroke-width="1.5"'
+
+		// Draw hidden elements first
+		if (showHiddenEdges) {
+			if (p[0] && p[4]) svg += `<line x1="${p[0].x}" y1="${p[0].y}" x2="${p[4].x}" y2="${p[4].y}" ${hidden} />`
+			if (p[4] && p[5]) svg += `<line x1="${p[4].x}" y1="${p[4].y}" x2="${p[5].x}" y2="${p[5].y}" ${hidden} />`
+			if (p[4] && p[7]) svg += `<line x1="${p[4].x}" y1="${p[4].y}" x2="${p[7].x}" y2="${p[7].y}" ${hidden} />`
+		}
+		// Draw visible faces and edges
+		svg += getFaceSvg("front_face")
+		svg += getFaceSvg("top_face")
+		svg += getFaceSvg("side_face")
+
+		if (labels) {
+			for (const lab of labels) {
+				if (lab.target === "height" && p[0])
+					svg += `<text x="${p[0].x - 10}" y="${p[0].y - h / 2}" text-anchor="end" dominant-baseline="middle">${lab.text}</text>`
+				if (lab.target === "width" && p[0])
+					svg += `<text x="${p[0].x + w / 2}" y="${p[0].y + 15}" text-anchor="middle">${lab.text}</text>`
+				if (lab.target === "length" && p[1])
+					svg += `<text x="${p[1].x + l / 2}" y="${p[1].y - l * 0.25 + 10}" text-anchor="middle" transform="skewX(-25)">${lab.text}</text>`
+			}
+		}
+	} else {
+		svg += `<text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Shape type not implemented.</text>`
+	}
+	svg += "</svg>"
+	return svg
 }

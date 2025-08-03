@@ -40,7 +40,65 @@ export type NumberLineWithActionProps = z.infer<typeof NumberLineWithActionProps
  * This template extends the basic number line to visually represent a dynamic process or operation,
  * such as addition or subtraction.
  */
-export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWithActionPropsSchema> = (_data) => {
-	// TODO: Implement number-line-with-action generation
-	return "<svg><!-- NumberLineWithAction implementation --></svg>"
+export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWithActionPropsSchema> = (data) => {
+	const { width, height, orientation, min, max, tickInterval, customLabels, action } = data
+	const isHorizontal = orientation === "horizontal"
+	const padding = 30
+	const lineLength = (isHorizontal ? width : height) - 2 * padding
+
+	if (min >= max) return `<svg width="${width}" height="${height}"></svg>`
+	const scale = lineLength / (max - min)
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	svg += `<defs><marker id="action-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="black"/></marker></defs>`
+
+	if (isHorizontal) {
+		const yPos = height / 2
+		const toSvgX = (val: number) => padding + (val - min) * scale
+		// Axis and Ticks
+		svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="black"/>`
+		for (let t = min; t <= max; t += tickInterval) {
+			const x = toSvgX(t)
+			svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="black"/>`
+		}
+		// Custom Labels
+		for (const l of customLabels) {
+			const x = toSvgX(l.value)
+			svg += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle" font-weight="bold">${l.text}</text>`
+		}
+		// Action arrow
+		const startX = toSvgX(action.startValue)
+		const endX = toSvgX(action.startValue + action.change)
+		const midX = (startX + endX) / 2
+		const arrowY = yPos - 15
+		const controlY = arrowY - 30 * Math.sign(action.change)
+		svg += `<path d="M ${startX} ${arrowY} Q ${midX} ${controlY} ${endX} ${arrowY}" fill="none" stroke="black" stroke-width="1.5" marker-end="url(#action-arrow)"/>`
+		svg += `<text x="${midX}" y="${controlY}" fill="black" text-anchor="middle" dominant-baseline="middle">${action.label}</text>`
+	} else {
+		// Vertical
+		const xPos = width / 2
+		const toSvgY = (val: number) => height - padding - (val - min) * scale
+		// Axis and Ticks
+		svg += `<line x1="${xPos}" y1="${padding}" x2="${xPos}" y2="${height - padding}" stroke="black"/>`
+		for (let t = min; t <= max; t += tickInterval) {
+			const y = toSvgY(t)
+			svg += `<line x1="${xPos - 5}" y1="${y}" x2="${xPos + 5}" y2="${y}" stroke="black"/>`
+		}
+		// Custom Labels
+		for (const l of customLabels) {
+			const y = toSvgY(l.value)
+			svg += `<text x="${xPos - 10}" y="${y + 4}" fill="black" text-anchor="end" font-weight="bold">${l.text}</text>`
+		}
+		// Action arrow
+		const startY = toSvgY(action.startValue)
+		const endY = toSvgY(action.startValue + action.change)
+		const midY = (startY + endY) / 2
+		const arrowX = xPos + 15
+		const controlX = arrowX + 30
+		svg += `<path d="M ${arrowX} ${startY} Q ${controlX} ${midY} ${arrowX} ${endY}" fill="none" stroke="black" stroke-width="1.5" marker-end="url(#action-arrow)"/>`
+		svg += `<text x="${controlX}" y="${midY}" fill="black" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90, ${controlX}, ${midY})">${action.label}</text>`
+	}
+
+	svg += "</svg>"
+	return svg
 }

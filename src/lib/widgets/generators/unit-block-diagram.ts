@@ -32,7 +32,34 @@ export type UnitBlockDiagramProps = z.infer<typeof UnitBlockDiagramPropsSchema>
  * place value and percentages of large numbers that are multiples of 100.
  * It is particularly effective for explaining concepts like "1% of 800" in a concrete, countable manner.
  */
-export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPropsSchema> = (_data) => {
-	// TODO: Implement unit-block-diagram generation
-	return "<svg><!-- UnitBlockDiagram implementation --></svg>"
+export const generateUnitBlockDiagram: WidgetGenerator<typeof UnitBlockDiagramPropsSchema> = (data) => {
+	const { totalBlocks, shadedUnitsPerBlock, blocksPerRow, blockWidth, blockHeight, shadeColor } = data
+	const gap = 10
+	const numRows = Math.ceil(totalBlocks / blocksPerRow)
+	const svgWidth = blocksPerRow * blockWidth + (blocksPerRow - 1) * gap
+	const svgHeight = numRows * blockHeight + (numRows - 1) * gap
+
+	let svg = `<svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg">`
+
+	for (let b = 0; b < totalBlocks; b++) {
+		const blockRow = Math.floor(b / blocksPerRow)
+		const blockCol = b % blocksPerRow
+		const bx = blockCol * (blockWidth + gap)
+		const by = blockRow * (blockHeight + gap)
+
+		const cellW = blockWidth / 10
+		const cellH = blockHeight / 10
+
+		for (let i = 0; i < 100; i++) {
+			const row = Math.floor(i / 10)
+			const col = i % 10
+			const fill = i < shadedUnitsPerBlock ? shadeColor : "none"
+			svg += `<rect x="${bx + col * cellW}" y="${by + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" stroke="#ccc" stroke-width="0.5"/>`
+		}
+		// Add a border around the whole block
+		svg += `<rect x="${bx}" y="${by}" width="${blockWidth}" height="${blockHeight}" fill="none" stroke="black" stroke-width="1"/>`
+	}
+
+	svg += "</svg>"
+	return svg
 }

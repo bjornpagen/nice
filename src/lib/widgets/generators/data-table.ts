@@ -43,7 +43,67 @@ export type DataTableProps = z.infer<typeof DataTablePropsSchema>
  * Generates a versatile HTML table for all tabular data needs, including simple lists,
  * frequency tables, and two-way tables. Supports interactive input cells.
  */
-export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (_data) => {
-	// TODO: Implement data table generation, including the new footer
-	return "<div><!-- Data table implementation --></div>"
+export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (data) => {
+	const { title, columnHeaders, rows, footer } = data
+
+	const commonCellStyle = "border: 1px solid black; padding: 8px; text-align: left;"
+	const headerCellStyle = `${commonCellStyle} font-weight: bold; background-color: #f2f2f2;`
+
+	let html = `<div style="font-family: sans-serif; width: 100%;">`
+	html += `<table style="border-collapse: collapse; width: 100%; border: 1px solid black;">`
+
+	if (title) {
+		html += `<caption style="padding: 8px; font-size: 1.2em; font-weight: bold; caption-side: top;">${title}</caption>`
+	}
+
+	if (columnHeaders && columnHeaders.length > 0) {
+		html += "<thead><tr>"
+		for (const h of columnHeaders) {
+			html += `<th style="${headerCellStyle}">${h}</th>`
+		}
+		html += "</tr></thead>"
+	}
+
+	if (rows && rows.length > 0) {
+		html += "<tbody>"
+		for (const r of rows) {
+			html += "<tr>"
+			for (let i = 0; i < r.cells.length; i++) {
+				const c = r.cells[i]
+				const isRowHeader = r.isHeader && i === 0
+				const tag = isRowHeader ? "th" : "td"
+				const style = isRowHeader ? headerCellStyle : commonCellStyle
+
+				let content: string
+				if (typeof c === "object" && c.type === "input") {
+					const sizeAttr = c.expectedLength ? ` size="${c.expectedLength}"` : ""
+					content = `<input type="text" response-identifier="${c.responseIdentifier}"${sizeAttr} style="width: 80px; padding: 4px; border: 1px solid #ccc;"/>`
+				} else {
+					content = String(c)
+				}
+				html += `<${tag} style="${style}">${content}</${tag}>`
+			}
+			html += "</tr>"
+		}
+		html += "</tbody>"
+	}
+
+	if (footer && footer.length > 0) {
+		html += `<tfoot><tr style="background-color: #f2f2f2;">`
+		for (const f of footer) {
+			let content: string
+			if (typeof f === "object" && f.type === "input") {
+				const sizeAttr = f.expectedLength ? ` size="${f.expectedLength}"` : ""
+				content = `<input type="text" response-identifier="${f.responseIdentifier}"${sizeAttr} style="width: 80px; padding: 4px; border: 1px solid #ccc;"/>`
+			} else {
+				content = String(f)
+			}
+			// Footer cells are often bold
+			html += `<td style="${commonCellStyle} font-weight: bold;">${content}</td>`
+		}
+		html += "</tr></tfoot>"
+	}
+
+	html += "</table></div>"
+	return html
 }

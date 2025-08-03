@@ -44,7 +44,51 @@ export type GeometricSolidDiagramProps = z.infer<typeof GeometricSolidDiagramPro
  * Generates a 3D diagram of a geometric solid with curved surfaces (e.g., cylinder, cone).
  * Supports dimension labels for volume and surface area problems.
  */
-export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSolidDiagramPropsSchema> = (_data) => {
-	// TODO: Implement geometric-solid-diagram generation
-	return "<svg><!-- GeometricSolidDiagram implementation --></svg>"
+export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSolidDiagramPropsSchema> = (data) => {
+	const { width, height, shape, labels } = data
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+
+	if (shape.type === "cylinder") {
+		const r = shape.radius * 4
+		const h = shape.height * 8
+		const ry = r * 0.3 // Ellipse perspective ratio
+		const cx = width / 2
+		const topY = (height - h) / 2
+		const bottomY = topY + h
+
+		// Side lines
+		svg += `<line x1="${cx - r}" y1="${topY}" x2="${cx - r}" y2="${bottomY}" stroke="black" stroke-width="1.5"/>`
+		svg += `<line x1="${cx + r}" y1="${topY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="1.5"/>`
+
+		// Bottom base (draw back dashed part first)
+		svg += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 0 ${cx + r} ${bottomY}" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
+		// Bottom base (front solid part)
+		svg += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 1 ${cx + r} ${bottomY}" fill="rgba(200, 200, 200, 0.3)" stroke="black" stroke-width="1.5"/>`
+
+		// Top base
+		svg += `<ellipse cx="${cx}" cy="${topY}" rx="${r}" ry="${ry}" fill="rgba(220, 220, 220, 0.5)" stroke="black" stroke-width="1.5"/>`
+
+		// Labels
+		if (labels) {
+			for (const l of labels) {
+				if (l.target === "radius") {
+					svg += `<line x1="${cx}" y1="${bottomY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="1"/>`
+					svg += `<text x="${cx + r / 2}" y="${bottomY + 15}" fill="black" text-anchor="middle">${l.text ?? shape.radius}</text>`
+				}
+				if (l.target === "height") {
+					svg += `<line x1="${cx + r + 10}" y1="${topY}" x2="${cx + r + 10}" y2="${bottomY}" stroke="black" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
+					svg += `<text x="${cx + r + 20}" y="${(topY + bottomY) / 2}" fill="black" dominant-baseline="middle">${l.text ?? shape.height}</text>`
+				}
+			}
+		}
+
+		svg += `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black" /></marker></defs>`
+	} else if (shape.type === "cone") {
+		// Cone implementation would go here if needed.
+		svg += `<text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Cone not implemented.</text>`
+	}
+
+	svg += "</svg>"
+	return svg
 }

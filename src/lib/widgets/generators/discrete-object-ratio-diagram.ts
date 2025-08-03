@@ -30,8 +30,70 @@ export type DiscreteObjectRatioDiagramProps = z.infer<typeof DiscreteObjectRatio
  * students can directly count the items to understand the relationship.
  */
 export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof DiscreteObjectRatioDiagramPropsSchema> = (
-	_data
+	data
 ) => {
-	// TODO: Implement discrete-object-ratio-diagram generation
-	return "<svg><!-- DiscreteObjectRatioDiagram implementation --></svg>"
+	const { width, height, objects, layout, title } = data
+	const padding = { top: 40, right: 20, bottom: 20, left: 20 }
+	const chartWidth = width - padding.left - padding.right
+	const _chartHeight = height - padding.top - padding.bottom
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+	if (title) {
+		svg += `<text x="${width / 2}" y="${padding.top / 2}" fill="black" text-anchor="middle" font-weight="bold">${title}</text>`
+	}
+
+	const iconSize = 20
+	const iconPadding = 5
+	const step = iconSize + iconPadding
+
+	// Function to draw a specific shape based on the icon identifier
+	const drawIcon = (x: number, y: number, icon: string, color: string) => {
+		switch (icon) {
+			case "square":
+				return `<rect x="${x}" y="${y}" width="${iconSize}" height="${iconSize}" fill="${color}" />`
+			case "triangle": {
+				const points = `${x + iconSize / 2},${y} ${x},${y + iconSize} ${x + iconSize},${y + iconSize}`
+				return `<polygon points="${points}" fill="${color}" />`
+			}
+			default:
+				return `<circle cx="${x + iconSize / 2}" cy="${y + iconSize / 2}" r="${iconSize / 2}" fill="${color}" />`
+		}
+	}
+
+	let currentX = padding.left
+	let currentY = padding.top
+
+	if (layout === "grid") {
+		for (const obj of objects) {
+			for (let i = 0; i < obj.count; i++) {
+				if (currentX + iconSize > width - padding.right) {
+					currentX = padding.left
+					currentY += step
+				}
+				svg += drawIcon(currentX, currentY, obj.icon, obj.color || "gray")
+				currentX += step
+			}
+		}
+	} else {
+		// Cluster layout: group objects by type
+		for (let groupIndex = 0; groupIndex < objects.length; groupIndex++) {
+			const obj = objects[groupIndex]
+			if (!obj) continue
+			const groupWidth = chartWidth / objects.length
+			const startX = padding.left + groupIndex * groupWidth
+			currentX = startX
+			currentY = padding.top
+			for (let i = 0; i < obj.count; i++) {
+				if (currentX + step > startX + groupWidth) {
+					currentX = startX
+					currentY += step
+				}
+				svg += drawIcon(currentX, currentY, obj.icon, obj.color || "gray")
+				currentX += step
+			}
+		}
+	}
+
+	svg += "</svg>"
+	return svg
 }

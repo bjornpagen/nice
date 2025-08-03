@@ -39,7 +39,29 @@ export type StackedItemsDiagramProps = z.infer<typeof StackedItemsDiagramPropsSc
  * by stacking items on top of a base. It is particularly useful for word problems where
  * a count of items (like scoops of ice cream, pancakes, or blocks) is central to the problem.
  */
-export const generateStackedItemsDiagram: WidgetGenerator<typeof StackedItemsDiagramPropsSchema> = (_data) => {
-	// TODO: Implement stacked-items-diagram generation
-	return "<div><!-- StackedItemsDiagram implementation --></div>"
+export const generateStackedItemsDiagram: WidgetGenerator<typeof StackedItemsDiagramPropsSchema> = (data) => {
+	const { width, height, altText, baseItem, stackedItem, count, orientation, overlap } = data
+	let html = `<div style="position: relative; width: ${width}px; height: ${height}px;" role="img" aria-label="${altText}">`
+
+	// Base item is aligned to the bottom-left corner of the container
+	html += `<img src="${baseItem.src}" width="${baseItem.width}" height="${baseItem.height}" alt="${baseItem.alt}" style="position: absolute; bottom: 0; left: 0; z-index: 1;"/>`
+
+	// Stacked items
+	for (let i = 0; i < count; i++) {
+		let posStyle = ""
+		if (orientation === "vertical") {
+			// Each new item is placed higher than the last.
+			// Overlap of 1 means they are at the same spot. Overlap of 0 means they touch.
+			const step = stackedItem.height * (1 - overlap)
+			posStyle = `bottom: ${i * step}px; left: 0;`
+		} else {
+			// Horizontal stacking
+			const step = stackedItem.width * (1 - overlap)
+			posStyle = `left: ${i * step}px; bottom: 0;`
+		}
+		html += `<img src="${stackedItem.src}" width="${stackedItem.width}" height="${stackedItem.height}" alt="${stackedItem.alt}" style="position: absolute; ${posStyle} z-index: ${i + 2};"/>`
+	}
+
+	html += "</div>"
+	return html
 }

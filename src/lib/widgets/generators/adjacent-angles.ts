@@ -52,7 +52,88 @@ export type AdjacentAnglesProps = z.infer<typeof AdjacentAnglesPropsSchema>
  * This template generates a precise geometric diagram of multiple adjacent angles sharing a common vertex.
  * It is ideal for questions based on the Angle Addition Postulate.
  */
-export const generateAdjacentAngles: WidgetGenerator<typeof AdjacentAnglesPropsSchema> = (_data) => {
-	// TODO: Implement adjacent-angles generation
-	return "<svg><!-- AdjacentAngles implementation --></svg>"
+export const generateAdjacentAngles: WidgetGenerator<typeof AdjacentAnglesPropsSchema> = (data) => {
+	const { width, height, vertexLabel, rayLabels, angles, totalAngle, baselineAngle } = data
+
+	if (rayLabels.length !== angles.length + 1) {
+		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg"><text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Error: There must be one more ray label than angles.</text></svg>`
+	}
+
+	const centerX = width / 2
+	const centerY = height / 2
+	const rayLength = Math.min(width, height) / 2 - 40
+	const toRad = (deg: number) => (deg * Math.PI) / 180
+	const ySign = -1 // SVG y-axis is inverted
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+
+	// Draw vertex and its label
+	svg += `<circle cx="${centerX}" cy="${centerY}" r="3" fill="black" />`
+	svg += `<text x="${centerX - 12}" y="${centerY + 12}" fill="black" font-weight="bold">${vertexLabel}</text>`
+
+	let currentAngleDeg = baselineAngle
+	let accumulatedAngleDeg = baselineAngle
+
+	// Draw first ray and its label
+	const firstRayRad = toRad(currentAngleDeg)
+	svg += `<line x1="${centerX}" y1="${centerY}" x2="${centerX + rayLength * Math.cos(firstRayRad)}" y2="${centerY + ySign * rayLength * Math.sin(firstRayRad)}" stroke="black" />`
+	svg += `<text x="${centerX + (rayLength + 15) * Math.cos(firstRayRad)}" y="${centerY + ySign * (rayLength + 15) * Math.sin(firstRayRad)}" fill="black" text-anchor="middle" dominant-baseline="middle">${rayLabels[0]}</text>`
+
+	// Draw angle segments and subsequent rays
+	for (let i = 0; i < angles.length; i++) {
+		const angle = angles[i]
+		if (!angle) continue
+		const startAngleDeg = accumulatedAngleDeg
+		accumulatedAngleDeg += angle.value
+		const endAngleDeg = accumulatedAngleDeg
+
+		const startRad = toRad(startAngleDeg)
+		const endRad = toRad(endAngleDeg)
+
+		// Draw ray
+		const rayX = centerX + rayLength * Math.cos(endRad)
+		const rayY = centerY + ySign * rayLength * Math.sin(endRad)
+		svg += `<line x1="${centerX}" y1="${centerY}" x2="${rayX}" y2="${rayY}" stroke="black" />`
+		svg += `<text x="${rayX + 15 * Math.cos(endRad)}" y="${rayY + ySign * 15 * Math.sin(endRad)}" fill="black" text-anchor="middle" dominant-baseline="middle">${rayLabels[i + 1]}</text>`
+
+		// Draw arc
+		const arcStartX = centerX + angle.arcRadius * Math.cos(startRad)
+		const arcStartY = centerY + ySign * angle.arcRadius * Math.sin(startRad)
+		const arcEndX = centerX + angle.arcRadius * Math.cos(endRad)
+		const arcEndY = centerY + ySign * angle.arcRadius * Math.sin(endRad)
+		const largeArcFlag = angle.value > 180 ? 1 : 0
+		svg += `<path d="M ${arcStartX} ${arcStartY} A ${angle.arcRadius} ${angle.arcRadius} 0 ${largeArcFlag} 1 ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="2" />`
+
+		// Draw fill if requested
+		if (angle.fill) {
+			svg += `<path d="M ${centerX} ${centerY} L ${arcStartX} ${arcStartY} A ${angle.arcRadius} ${angle.arcRadius} 0 ${largeArcFlag} 1 ${arcEndX} ${arcEndY} Z" fill="${angle.color}" opacity="0.2" />`
+		}
+
+		// Draw angle label
+		const labelAngleRad = toRad(startAngleDeg + angle.value / 2)
+		const labelRadius = angle.arcRadius + 15
+		svg += `<text x="${centerX + labelRadius * Math.cos(labelAngleRad)}" y="${centerY + ySign * labelRadius * Math.sin(labelAngleRad)}" fill="black" text-anchor="middle" dominant-baseline="middle">${angle.label}</text>`
+	}
+
+	// Draw total angle if specified
+	if (totalAngle) {
+		const totalAngleValue = angles.reduce((sum, a) => sum + a.value, 0)
+		const startRad = toRad(baselineAngle)
+		const endRad = toRad(baselineAngle + totalAngleValue)
+
+		const arcStartX = centerX + totalAngle.arcRadius * Math.cos(startRad)
+		const arcStartY = centerY + ySign * totalAngle.arcRadius * Math.sin(startRad)
+		const arcEndX = centerX + totalAngle.arcRadius * Math.cos(endRad)
+		const arcEndY = centerY + ySign * totalAngle.arcRadius * Math.sin(endRad)
+		const largeArcFlag = totalAngleValue > 180 ? 1 : 0
+
+		svg += `<path d="M ${arcStartX} ${arcStartY} A ${totalAngle.arcRadius} ${totalAngle.arcRadius} 0 ${largeArcFlag} 1 ${arcEndX} ${arcEndY}" fill="none" stroke="${totalAngle.color}" stroke-width="2" />`
+
+		const labelAngleRad = toRad(baselineAngle + totalAngleValue / 2)
+		const labelRadius = totalAngle.arcRadius + 15
+		svg += `<text x="${centerX + labelRadius * Math.cos(labelAngleRad)}" y="${centerY + ySign * labelRadius * Math.sin(labelAngleRad)}" fill="black" text-anchor="middle" dominant-baseline="middle">${totalAngle.label}</text>`
+	}
+
+	svg += "</svg>"
+	return svg
 }

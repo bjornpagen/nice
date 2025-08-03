@@ -31,7 +31,43 @@ export type NumberSetDiagramProps = z.infer<typeof NumberSetDiagramPropsSchema>
  * Generates a static SVG Euler diagram that visually represents the hierarchical
  * relationship between different sets of numbers (whole, integer, rational, irrational).
  */
-export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPropsSchema> = (_data) => {
-	// TODO: Implement number-set-diagram generation
-	return "<svg><!-- NumberSetDiagram implementation --></svg>"
+export const generateNumberSetDiagram: WidgetGenerator<typeof NumberSetDiagramPropsSchema> = (data) => {
+	const { width, height, sets } = data
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	svg +=
+		"<style>.set-label { font-size: 14px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; fill: black; }</style>"
+
+	const mainCenterX = width * 0.4
+	const mainCenterY = height / 2
+	const rationalRx = width * 0.35
+	const rationalRy = height * 0.45
+
+	const irrationalCenterX = width * 0.8
+	const irrationalCenterY = height / 2
+	const irrationalRx = width * 0.15
+	const irrationalRy = height * 0.3
+
+	// Rational Numbers (outermost of the nested set)
+	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${rationalRx}" ry="${rationalRy}" fill="${sets.rational.color}" stroke="black" />`
+	svg += `<text x="${mainCenterX}" y="${mainCenterY - rationalRy + 20}" class="set-label">${sets.rational.label}</text>`
+
+	// Integer Numbers
+	const integerRx = rationalRx * 0.7
+	const integerRy = rationalRy * 0.7
+	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${integerRx}" ry="${integerRy}" fill="${sets.integer.color}" stroke="black" />`
+	svg += `<text x="${mainCenterX}" y="${mainCenterY - integerRy + 15}" class="set-label">${sets.integer.label}</text>`
+
+	// Whole Numbers
+	const wholeRx = integerRx * 0.6
+	const wholeRy = integerRy * 0.6
+	svg += `<ellipse cx="${mainCenterX}" cy="${mainCenterY}" rx="${wholeRx}" ry="${wholeRy}" fill="${sets.whole.color}" stroke="black" />`
+	svg += `<text x="${mainCenterX}" y="${mainCenterY}" class="set-label">${sets.whole.label}</text>`
+
+	// Irrational Numbers (separate)
+	svg += `<ellipse cx="${irrationalCenterX}" cy="${irrationalCenterY}" rx="${irrationalRx}" ry="${irrationalRy}" fill="${sets.irrational.color}" stroke="black" />`
+	svg += `<text x="${irrationalCenterX}" y="${irrationalCenterY}" class="set-label">${sets.irrational.label}</text>`
+
+	svg += "</svg>"
+	return svg
 }

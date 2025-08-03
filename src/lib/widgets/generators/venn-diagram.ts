@@ -29,7 +29,38 @@ export type VennDiagramProps = z.infer<typeof VennDiagramPropsSchema>
  * This template generates a classic two-circle Venn diagram as an SVG graphic
  * to visually represent the relationship between two sets of data.
  */
-export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema> = (_data) => {
-	// TODO: Implement venn-diagram generation
-	return "<svg><!-- VennDiagram implementation --></svg>"
+export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema> = (data) => {
+	const { width, height, circleA, circleB, intersectionCount, outsideCount } = data
+	const r = width / 4
+	const cxA = width / 2 - r / 2
+	const cxB = width / 2 + r / 2
+	const cy = height / 2
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	svg +=
+		"<style>.label { font-size: 16px; font-weight: bold; text-anchor: middle; } .count { font-size: 18px; text-anchor: middle; }</style>"
+
+	// Draw containing box
+	svg += `<rect x="1" y="1" width="${width - 2}" height="${height - 2}" fill="none" stroke="black" />`
+
+	// Circles (semi-transparent for overlap visibility)
+	svg += `<circle cx="${cxA}" cy="${cy}" r="${r}" fill="${circleA.color}" fill-opacity="0.6" stroke="black"/>`
+	svg += `<circle cx="${cxB}" cy="${cy}" r="${r}" fill="${circleB.color}" fill-opacity="0.6" stroke="black"/>`
+
+	// Labels for circles
+	svg += `<text x="${cxA}" y="${cy - r - 10}" class="label">${circleA.label}</text>`
+	svg += `<text x="${cxB}" y="${cy - r - 10}" class="label">${circleB.label}</text>`
+
+	// Counts
+	// A only
+	svg += `<text x="${cxA - r / 2}" y="${cy}" class="count" dominant-baseline="middle">${circleA.count}</text>`
+	// B only
+	svg += `<text x="${cxB + r / 2}" y="${cy}" class="count" dominant-baseline="middle">${circleB.count}</text>`
+	// Intersection
+	svg += `<text x="${(cxA + cxB) / 2}" y="${cy}" class="count" dominant-baseline="middle">${intersectionCount}</text>`
+	// Outside
+	svg += `<text x="${width / 2}" y="${height - 20}" class="count">${outsideCount}</text>`
+
+	svg += "</svg>"
+	return svg
 }

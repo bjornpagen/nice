@@ -33,7 +33,29 @@ export type PictographProps = z.infer<typeof PictographPropsSchema>
  * (often emojis) to represent data quantities, making it visually engaging and
  * easy to understand at a glance.
  */
-export const generatePictograph: WidgetGenerator<typeof PictographPropsSchema> = (_data) => {
-	// TODO: Implement pictograph generation
-	return "<div><!-- Pictograph implementation --></div>"
+export const generatePictograph: WidgetGenerator<typeof PictographPropsSchema> = (data) => {
+	const { title, key, data: pictographData } = data
+	let html = `<div style="font-family: sans-serif; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">`
+	if (title) {
+		html += `<h3 style="text-align: center; margin-top: 0;">${title}</h3>`
+	}
+	html += `<table style="width: 100%; border-collapse: collapse;">`
+	html += "<tbody>"
+	for (const d of pictographData) {
+		html += "<tr>"
+		html += `<td style="padding: 8px; width: 30%; font-weight: bold; text-align: right; border-right: 1px solid #eee;">${d.category}</td>`
+		html += `<td style="padding: 8px; font-size: 1.5em; letter-spacing: 0.2em;">`
+		for (let i = 0; i < d.iconCount; i++) {
+			html += key.icon
+		}
+		html += "</td>"
+		html += "</tr>"
+	}
+	html += "</tbody>"
+	html += "</table>"
+	html += `<div style="text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #ccc;">`
+	html += `<span style="font-size: 1.5em;">${key.icon}</span> ${key.label}`
+	html += "</div>"
+	html += "</div>"
+	return html
 }

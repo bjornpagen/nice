@@ -70,7 +70,85 @@ export type ScatterPlotProps = z.infer<typeof ScatterPlotPropsSchema>
  * Generates a two-dimensional scatter plot to visualize the relationship between two
  * variables, with optional support for overlaying linear or nonlinear trend lines.
  */
-export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema> = (_data) => {
-	// TODO: Implement scatter-plot generation
-	return "<svg><!-- ScatterPlot implementation --></svg>"
+export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema> = (data) => {
+	const { width, height, title, xAxis, yAxis, points, trendLines } = data
+	// Use the same robust coordinate plane logic from generateCoordinatePlane
+	const pad = { top: 40, right: 30, bottom: 50, left: 50 }
+	const chartWidth = width - pad.left - pad.right
+	const chartHeight = height - pad.top - pad.bottom
+
+	if (chartWidth <= 0 || chartHeight <= 0 || xAxis.min >= xAxis.max || yAxis.min >= yAxis.max) {
+		return `<svg width="${width}" height="${height}"></svg>`
+	}
+
+	const scaleX = chartWidth / (xAxis.max - xAxis.min)
+	const scaleY = chartHeight / (yAxis.max - yAxis.min)
+	const toSvgX = (val: number) => pad.left + (val - xAxis.min) * scaleX
+	const toSvgY = (val: number) => height - pad.bottom - (val - yAxis.min) * scaleY
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	svg +=
+		"<style>.axis-label { font-size: 14px; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
+
+	if (title) svg += `<text x="${width / 2}" y="${pad.top / 2}" class="title">${title}</text>`
+
+	// Grid lines, Axes, Ticks, Labels
+	if (xAxis.gridLines)
+		for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
+			svg += `<line x1="${toSvgX(t)}" y1="${pad.top}" x2="${toSvgX(t)}" y2="${height - pad.bottom}" stroke="#eee"/>`
+		}
+	if (yAxis.gridLines)
+		for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
+			svg += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${width - pad.right}" y2="${toSvgY(t)}" stroke="#eee"/>`
+		}
+	svg += `<line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="black"/>`
+	svg += `<line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="black"/>`
+	for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
+		svg += `<line x1="${toSvgX(t)}" y1="${height - pad.bottom}" x2="${toSvgX(t)}" y2="${height - pad.bottom + 5}" stroke="black"/><text x="${toSvgX(t)}" y="${height - pad.bottom + 20}" text-anchor="middle">${t}</text>`
+	}
+	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
+		svg += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${pad.left - 5}" y2="${toSvgY(t)}" stroke="black"/><text x="${pad.left - 10}" y="${toSvgY(t) + 4}" text-anchor="end">${t}</text>`
+	}
+	if (xAxis.label)
+		svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 10}" class="axis-label">${xAxis.label}</text>`
+	if (yAxis.label)
+		svg += `<text x="${pad.left - 35}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 35}, ${pad.top + chartHeight / 2})">${yAxis.label}</text>`
+
+	// Trend lines
+	if (trendLines) {
+		for (const tl of trendLines) {
+			const dash = tl.style === "dashed" ? ` stroke-dasharray="5 3"` : ""
+			if (tl.data.type === "linear") {
+				const { slope, yIntercept } = tl.data
+				const y1 = slope * xAxis.min + yIntercept
+				const y2 = slope * xAxis.max + yIntercept
+				svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}" stroke="${tl.color}" stroke-width="2"${dash} />`
+			} else if (tl.data.type === "quadratic") {
+				const { a, b, c } = tl.data
+				const steps = 100
+				let path = ""
+				for (let i = 0; i <= steps; i++) {
+					const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
+					const yVal = a * xVal ** 2 + b * xVal + c
+					const px = toSvgX(xVal)
+					const py = toSvgY(yVal)
+					path += `${i === 0 ? "M" : "L"} ${px} ${py} `
+				}
+				svg += `<path d="${path}" fill="none" stroke="${tl.color}" stroke-width="2"${dash} />`
+			}
+		}
+	}
+
+	// Points
+	for (const p of points) {
+		const px = toSvgX(p.x)
+		const py = toSvgY(p.y)
+		svg += `<circle cx="${px}" cy="${py}" r="3.5" fill="black" fill-opacity="0.7"/>`
+		if (p.label) {
+			svg += `<text x="${px + 5}" y="${py - 5}" fill="black">${p.label}</text>`
+		}
+	}
+
+	svg += "</svg>"
+	return svg
 }

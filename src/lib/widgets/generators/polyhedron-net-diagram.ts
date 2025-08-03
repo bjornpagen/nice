@@ -44,7 +44,45 @@ export type PolyhedronNetDiagramProps = z.infer<typeof PolyhedronNetDiagramProps
  * A net is a 2D pattern that can be folded to form the 3D shape, and this template is
  * essential for questions about surface area and the relationship between 2D and 3D geometry.
  */
-export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetDiagramPropsSchema> = (_data) => {
-	// TODO: Implement polyhedron-net-diagram generation
-	return "<svg><!-- PolyhedronNetDiagram implementation --></svg>"
+export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetDiagramPropsSchema> = (data) => {
+	const { width, height, polyhedronType, dimensions, showLabels } = data
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+
+	if (polyhedronType === "cube") {
+		if (dimensions.base.type !== "square") {
+			return `<svg ...><text fill="red">Cube must have a square base.</text></svg>`
+		}
+		const side = dimensions.base.side * 5
+		const totalW = 4 * side
+		const totalH = 3 * side
+		const scale = Math.min(width / totalW, height / totalH) * 0.9
+		const s = side * scale
+		const x_offset = (width - 4 * s) / 2
+		const y_offset = (height - 3 * s) / 2
+
+		const face = (x: number, y: number) =>
+			`<rect x="${x}" y="${y}" width="${s}" height="${s}" fill="rgba(200,200,200,0.3)" stroke="black"/>`
+
+		// Cross layout:
+		//   [ ]
+		// [ ][ ][ ]
+		//   [ ]
+		svg += face(x_offset + s, y_offset) // Top
+		svg += face(x_offset, y_offset + s) // Left
+		svg += face(x_offset + s, y_offset + s) // Center (Front)
+		svg += face(x_offset + 2 * s, y_offset + s) // Right
+		svg += face(x_offset + 3 * s, y_offset + s) // Back
+		svg += face(x_offset + s, y_offset + 2 * s) // Bottom
+
+		if (showLabels) {
+			const label = dimensions.base.side
+			svg += `<text x="${x_offset + 1.5 * s}" y="${y_offset + 1.5 * s}" text-anchor="middle" dominant-baseline="middle">${label}</text>`
+			svg += `<text x="${x_offset + 1.5 * s}" y="${y_offset + 2.5 * s}" text-anchor="middle" dominant-baseline="middle">${label}</text>`
+		}
+	} else {
+		svg += `<text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Net type not implemented.</text>`
+	}
+	svg += "</svg>"
+	return svg
 }

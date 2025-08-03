@@ -34,7 +34,47 @@ export type DoubleNumberLineProps = z.infer<typeof DoubleNumberLinePropsSchema>
  * This visualization tool is excellent for illustrating the relationship between two
  * different quantities that share a constant ratio.
  */
-export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePropsSchema> = (_data) => {
-	// TODO: Implement double-number-line generation
-	return "<svg><!-- DoubleNumberLine implementation --></svg>"
+export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePropsSchema> = (data) => {
+	const { width, height, topLine, bottomLine } = data
+	const padding = { horizontal: 20, vertical: 40 }
+	const lineLength = width - 2 * padding.horizontal
+	const topY = padding.vertical
+	const bottomY = height - padding.vertical
+
+	const numTicks = topLine.ticks.length
+	if (numTicks < 2) {
+		return `<svg width="${width}" height="${height}"></svg>` // Not enough ticks to draw a line
+	}
+
+	const tickSpacing = lineLength / (numTicks - 1)
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	svg += "<style>.line-label { font-size: 14px; font-weight: bold; text-anchor: middle; }</style>"
+
+	// Top line
+	svg += `<line x1="${padding.horizontal}" y1="${topY}" x2="${width - padding.horizontal}" y2="${topY}" stroke="black"/>`
+	svg += `<text x="${width / 2}" y="${topY - 20}" class="line-label">${topLine.label}</text>`
+	topLine.ticks.forEach((t, i) => {
+		const x = padding.horizontal + i * tickSpacing
+		svg += `<line x1="${x}" y1="${topY - 5}" x2="${x}" y2="${topY + 5}" stroke="black"/>`
+		svg += `<text x="${x}" y="${topY + 20}" fill="black" text-anchor="middle">${t}</text>`
+	})
+
+	// Bottom line
+	svg += `<line x1="${padding.horizontal}" y1="${bottomY}" x2="${width - padding.horizontal}" y2="${bottomY}" stroke="black"/>`
+	svg += `<text x="${width / 2}" y="${bottomY + 30}" class="line-label">${bottomLine.label}</text>`
+	bottomLine.ticks.forEach((t, i) => {
+		const x = padding.horizontal + i * tickSpacing
+		svg += `<line x1="${x}" y1="${bottomY - 5}" x2="${x}" y2="${bottomY + 5}" stroke="black"/>`
+		svg += `<text x="${x}" y="${bottomY - 15}" fill="black" text-anchor="middle">${t}</text>`
+	})
+
+	// Alignment lines (optional, but good for clarity)
+	for (let i = 0; i < numTicks; i++) {
+		const x = padding.horizontal + i * tickSpacing
+		svg += `<line x1="${x}" y1="${topY + 5}" x2="${x}" y2="${bottomY - 5}" stroke="#ccc" stroke-dasharray="2"/>`
+	}
+
+	svg += "</svg>"
+	return svg
 }

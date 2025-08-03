@@ -57,7 +57,125 @@ export type NumberLineProps = z.infer<typeof NumberLinePropsSchema>
  * number line as an SVG graphic. It can be rendered horizontally (for general number
  * comparisons) or vertically (often used for temperature, elevation, or financial contexts).
  */
-export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> = (_data) => {
-	// TODO: Implement number-line generation
-	return "<svg><!-- NumberLine implementation --></svg>"
+export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> = (data) => {
+	const { width, height, orientation, min, max, majorTickInterval, minorTicksPerInterval, points, specialTickLabels } =
+		data
+	const isHorizontal = orientation === "horizontal"
+	const padding = 40
+	const lineLength = (isHorizontal ? width : height) - 2 * padding
+
+	if (min >= max || lineLength <= 0) return `<svg width="${width}" height="${height}"></svg>`
+	const scale = lineLength / (max - min)
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	const _pointMap = new Map<number, { count: number; current: number }>()
+
+	if (isHorizontal) {
+		const yPos = height / 2
+		const toSvgX = (val: number) => padding + (val - min) * scale
+		// Axis
+		svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="black"/>`
+		// Ticks
+		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
+		for (let t = min; t <= max; t += majorTickInterval) {
+			const x = toSvgX(t)
+			svg += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="black"/>`
+			if (!specialTickLabels?.some((stl) => stl.value === t)) {
+				svg += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle">${t}</text>`
+			}
+			for (let m = 1; m <= minorTicksPerInterval; m++) {
+				const mPos = x + m * minorTickSpacing
+				if (mPos < width - padding)
+					svg += `<line x1="${mPos}" y1="${yPos - 4}" x2="${mPos}" y2="${yPos + 4}" stroke="black"/>`
+			}
+		}
+		// Special Labels
+		if (specialTickLabels) {
+			for (const s of specialTickLabels) {
+				svg += `<text x="${toSvgX(s.value)}" y="${yPos + 25}" fill="black" text-anchor="middle" font-weight="bold">${s.label}</text>`
+			}
+		}
+		// Points
+		if (points) {
+			for (const p of points) {
+				const cx = toSvgX(p.value)
+				let labelX = cx
+				let labelY = yPos
+				let anchor = "middle"
+				switch (p.labelPosition) {
+					case "above":
+						labelY -= 15
+						break
+					case "below":
+						labelY += 15
+						break
+					case "left":
+						labelX -= 8
+						anchor = "end"
+						break
+					case "right":
+						labelX += 8
+						anchor = "start"
+						break
+					default:
+						labelY -= 15 // default to above
+				}
+				svg += `<circle cx="${cx}" cy="${yPos}" r="5" fill="${p.color}" stroke="black" stroke-width="1"/>`
+				if (p.label)
+					svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
+			}
+		}
+	} else {
+		// Vertical
+		const xPos = width / 2
+		const toSvgY = (val: number) => height - padding - (val - min) * scale
+		// Axis
+		svg += `<line x1="${xPos}" y1="${padding}" x2="${xPos}" y2="${height - padding}" stroke="black"/>`
+		// Ticks
+		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
+		for (let t = min; t <= max; t += majorTickInterval) {
+			const y = toSvgY(t)
+			svg += `<line x1="${xPos - 8}" y1="${y}" x2="${xPos + 8}" y2="${y}" stroke="black"/>`
+			if (!specialTickLabels?.some((stl) => stl.value === t)) {
+				svg += `<text x="${xPos - 15}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+			}
+			for (let m = 1; m <= minorTicksPerInterval; m++) {
+				const mPos = y - m * minorTickSpacing
+				if (mPos > padding) svg += `<line x1="${xPos - 4}" y1="${mPos}" x2="${xPos + 4}" y2="${mPos}" stroke="black"/>`
+			}
+		}
+		// Special Labels
+		if (specialTickLabels) {
+			for (const s of specialTickLabels) {
+				svg += `<text x="${xPos - 15}" y="${toSvgY(s.value) + 4}" fill="black" text-anchor="end" font-weight="bold">${s.label}</text>`
+			}
+		}
+		// Points
+		if (points) {
+			for (const p of points) {
+				const cy = toSvgY(p.value)
+				let labelX = xPos
+				let labelY = cy
+				let anchor = "middle"
+				switch (p.labelPosition) {
+					case "left":
+						labelX -= 15
+						anchor = "end"
+						break
+					case "right":
+						labelX += 15
+						anchor = "start"
+						break
+					default:
+						labelX += 15
+						anchor = "start" // default to right
+				}
+				svg += `<circle cx="${xPos}" cy="${cy}" r="5" fill="${p.color}" stroke="black" stroke-width="1"/>`
+				if (p.label)
+					svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="${anchor}" dominant-baseline="middle">${p.label}</text>`
+			}
+		}
+	}
+	svg += "</svg>"
+	return svg
 }

@@ -28,7 +28,46 @@ export type AbsoluteValueNumberLineProps = z.infer<typeof AbsoluteValueNumberLin
  * Generates an SVG number line to visually demonstrate the concept of absolute value as
  * a distance from zero, perfect for introductory questions on the topic.
  */
-export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteValueNumberLinePropsSchema> = (_data) => {
-	// TODO: Implement absolute-value-number-line generation
-	return "<svg><!-- AbsoluteValueNumberLine implementation --></svg>"
+export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteValueNumberLinePropsSchema> = (data) => {
+	const { width, height, min, max, tickInterval, value, highlightColor, showDistanceLabel } = data
+	const absValue = Math.abs(value)
+	const padding = { top: 30, right: 20, bottom: 30, left: 20 }
+	const chartWidth = width - padding.left - padding.right
+
+	// Handle edge case of min >= max
+	if (min >= max) {
+		return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg"><text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Error: min must be less than max.</text></svg>`
+	}
+
+	const scale = chartWidth / (max - min)
+	const toSvgX = (val: number) => padding.left + (val - min) * scale
+	const yPos = height - padding.bottom
+
+	const zeroPos = toSvgX(0)
+	const valuePos = toSvgX(value)
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	svg += `<line x1="${padding.left}" y1="${yPos}" x2="${width - padding.right}" y2="${yPos}" stroke="black" stroke-width="1.5"/>`
+
+	// Ticks and labels
+	for (let t = min; t <= max; t += tickInterval) {
+		const x = toSvgX(t)
+		svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="black" stroke-width="1"/>`
+		svg += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle">${t}</text>`
+	}
+
+	// Distance highlight
+	svg += `<line x1="${zeroPos}" y1="${yPos}" x2="${valuePos}" y2="${yPos}" stroke="${highlightColor}" stroke-width="4" stroke-linecap="round"/>`
+
+	// Distance label
+	if (showDistanceLabel) {
+		const labelX = (zeroPos + valuePos) / 2
+		svg += `<text x="${labelX}" y="${yPos - 15}" fill="black" text-anchor="middle" font-weight="bold">|${value}| = ${absValue}</text>`
+	}
+
+	// Point
+	svg += `<circle cx="${valuePos}" cy="${yPos}" r="5" fill="${highlightColor}" stroke="black" stroke-width="1"/>`
+
+	svg += "</svg>"
+	return svg
 }

@@ -60,7 +60,95 @@ export type CompositeShapeDiagramProps = z.infer<typeof CompositeShapeDiagramPro
  * Generates a diagram of a composite polygon from a set of vertices. Ideal for area
  * problems involving the decomposition of a complex shape into simpler figures.
  */
-export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShapeDiagramPropsSchema> = (_data) => {
-	// TODO: Implement composite-shape-diagram generation
-	return "<svg><!-- CompositeShapeDiagram implementation --></svg>"
+export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShapeDiagramPropsSchema> = (data) => {
+	const { width, height, vertices, outerBoundary, internalSegments, regionLabels, rightAngleMarkers } = data
+
+	if (vertices.length === 0) return `<svg width="${width}" height="${height}" />`
+
+	const padding = 20
+	const minX = Math.min(...vertices.map((v) => v.x))
+	const maxX = Math.max(...vertices.map((v) => v.x))
+	const minY = Math.min(...vertices.map((v) => v.y))
+	const maxY = Math.max(...vertices.map((v) => v.y))
+
+	const vbX = minX - padding
+	const vbY = minY - padding
+	const vbWidth = maxX - minX + 2 * padding
+	const vbHeight = maxY - minY + 2 * padding
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="${vbX} ${vbY} ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">`
+
+	// Outer boundary
+	const outerPoints = outerBoundary
+		.map((i) => {
+			const vertex = vertices[i]
+			if (!vertex) return ""
+			return `${vertex.x},${vertex.y}`
+		})
+		.filter(Boolean)
+		.join(" ")
+	svg += `<polygon points="${outerPoints}" fill="#f0f0f0" stroke="black" stroke-width="2"/>`
+
+	// Internal segments
+	if (internalSegments) {
+		for (const s of internalSegments) {
+			const from = vertices[s.fromVertexIndex]
+			const to = vertices[s.toVertexIndex]
+			if (!from || !to) continue
+			const dash = s.style === "dashed" ? ' stroke-dasharray="4 2"' : ""
+			svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="black" stroke-width="1.5"${dash}/>`
+			if (s.label) {
+				const midX = (from.x + to.x) / 2
+				const midY = (from.y + to.y) / 2
+				// Add a small offset perpendicular to the line for better label placement
+				const angle = Math.atan2(to.y - from.y, to.x - from.x)
+				const offsetX = -Math.sin(angle) * 5
+				const offsetY = Math.cos(angle) * 5
+				svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #f0f0f0; stroke-width: 3px; stroke-linejoin: round;">${s.label}</text>`
+			}
+		}
+	}
+
+	// Region labels
+	if (regionLabels) {
+		for (const l of regionLabels) {
+			svg += `<text x="${l.position.x}" y="${l.position.y}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="bold">${l.text}</text>`
+		}
+	}
+
+	// Right-angle markers
+	if (rightAngleMarkers) {
+		for (const m of rightAngleMarkers) {
+			const corner = vertices[m.cornerVertexIndex]
+			const adj1 = vertices[m.adjacentVertex1Index]
+			const adj2 = vertices[m.adjacentVertex2Index]
+			if (!corner || !adj1 || !adj2) continue
+
+			// Create unit vectors from corner to adjacent points
+			const v1x = adj1.x - corner.x
+			const v1y = adj1.y - corner.y
+			const mag1 = Math.sqrt(v1x * v1x + v1y * v1y)
+			const u1x = v1x / mag1
+			const u1y = v1y / mag1
+
+			const v2x = adj2.x - corner.x
+			const v2y = adj2.y - corner.y
+			const mag2 = Math.sqrt(v2x * v2x + v2y * v2y)
+			const u2x = v2x / mag2
+			const u2y = v2y / mag2
+
+			const markerSize = Math.min(vbWidth, vbHeight) * 0.05 // Relative size
+			const p1x = corner.x + u1x * markerSize
+			const p1y = corner.y + u1y * markerSize
+			const p2x = corner.x + u2x * markerSize
+			const p2y = corner.y + u2y * markerSize
+			const p3x = corner.x + (u1x + u2x) * markerSize
+			const p3y = corner.y + (u1y + u2y) * markerSize
+
+			svg += `<path d="M ${p1x} ${p1y} L ${p3x} ${p3y} L ${p2x} ${p2y}" fill="none" stroke="black" stroke-width="1.5"/>`
+		}
+	}
+
+	svg += "</svg>"
+	return svg
 }
