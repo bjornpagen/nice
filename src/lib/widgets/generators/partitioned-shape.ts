@@ -13,9 +13,9 @@ const ShapeDefinitionSchema = z
 				"The total number of equal parts the shape is divided into. For a rectangle, this is rows * columns. For a circle, this is segments."
 			),
 		shadedParts: z.number().int().min(0).describe("The number of parts that should be shaded."),
-		rows: z.number().int().positive().optional().describe("For rectangles, the number of rows in the grid."),
+		rows: z.number().int().positive().optional().default(1).describe("For rectangles, the number of rows in the grid."),
 		columns: z.number().int().positive().optional().describe("For rectangles, the number of columns in the grid."),
-		shadeColor: z.string().default("#6495ED").describe("A CSS color string for the shaded portions.").optional()
+		shadeColor: z.string().optional().default("#6495ED").describe("A CSS color string for the shaded portions.")
 	})
 	.refine(
 		(data) => {
@@ -48,13 +48,13 @@ export const PartitionedShapePropsSchema = z
 			.describe(
 				"An array of one or more shape definitions. Multiple shapes are used to represent values greater than 100%."
 			),
-		width: z.number().default(200).describe("The width of the SVG container for each shape in pixels."),
-		height: z.number().default(200).describe("The height of the SVG container for each shape in pixels."),
+		width: z.number().optional().default(200).describe("The width of the SVG container for each shape in pixels."),
+		height: z.number().optional().default(200).describe("The height of the SVG container for each shape in pixels."),
 		layout: z
 			.enum(["horizontal", "vertical"])
+			.optional()
 			.default("horizontal")
 			.describe("The arrangement of multiple shapes.")
-			.optional()
 	})
 	.describe(
 		"This template is a highly versatile tool for generating SVG diagrams that visually represent fractions, decimals, and percentages. It replaces the `fractionBar` widget. It renders one or more geometric shapes (rectangles or circles) that are divided into a set number of equal parts, with a specified number of those parts shaded to illustrate a part-to-whole relationship. The generator is capable of creating: Grids and Bars: Rectangles can be partitioned into grids or single-row/column bars (fraction bars). Pie Charts: Circles can be divided into equal segments. Values Greater Than 100%: The template can render an array of shapes to model improper fractions or percentages over 100. The output is a clear, precise, and accessible SVG graphic ideal for questions requiring students to interpret visual models of proportions."
@@ -81,8 +81,8 @@ export const generatePartitionedShape: WidgetGenerator<typeof PartitionedShapePr
 		const yOffset = layout === "vertical" ? idx * (shapeHeight + gap) : 0
 
 		if (s.type === "rectangle") {
-			const rows = s.rows || 1
-			const cols = s.columns || s.totalParts
+			const rows = s.rows
+			const cols = s.columns ?? s.totalParts
 			const cellW = shapeWidth / cols
 			const cellH = shapeHeight / rows
 			for (let i = 0; i < s.totalParts; i++) {

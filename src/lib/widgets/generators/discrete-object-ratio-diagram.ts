@@ -6,16 +6,20 @@ const ObjectTypeSchema = z.object({
 	count: z.number().int().min(0).describe("The number of this type of object to render."),
 	// In a real implementation, this could be an enum of available icons or an SVG path string.
 	icon: z.string().describe('An identifier for the icon to use (e.g., "largeFish", "penguin", "smallBall").'),
-	color: z.string().optional().describe("An optional CSS color to apply to the icon.")
+	color: z.string().optional().default("gray").describe("An optional CSS color to apply to the icon.")
 })
 
 // The main Zod schema for the discreteObjectRatioDiagram function
 export const DiscreteObjectRatioDiagramPropsSchema = z
 	.object({
-		width: z.number().default(320).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(240).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(320).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(240).describe("The total height of the output SVG container in pixels."),
 		objects: z.array(ObjectTypeSchema).min(2).describe("An array defining the types and counts of objects to display."),
-		layout: z.enum(["grid", "cluster"]).default("cluster").describe("The arrangement of the rendered objects."),
+		layout: z
+			.enum(["grid", "cluster"])
+			.optional()
+			.default("cluster")
+			.describe("The arrangement of the rendered objects."),
 		title: z.string().optional().describe('An optional title for the diagram (e.g., "Fish in Aquarium").')
 	})
 	.describe(
@@ -70,7 +74,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 					currentX = padding.left
 					currentY += step
 				}
-				svg += drawIcon(currentX, currentY, obj.icon, obj.color || "gray")
+				svg += drawIcon(currentX, currentY, obj.icon, obj.color)
 				currentX += step
 			}
 		}
@@ -88,7 +92,7 @@ export const generateDiscreteObjectRatioDiagram: WidgetGenerator<typeof Discrete
 					currentX = startX
 					currentY += step
 				}
-				svg += drawIcon(currentX, currentY, obj.icon, obj.color || "gray")
+				svg += drawIcon(currentX, currentY, obj.icon, obj.color)
 				currentX += step
 			}
 		}

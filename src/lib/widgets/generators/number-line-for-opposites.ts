@@ -4,8 +4,8 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // The main Zod schema for the numberLineForOpposites function
 export const NumberLineForOppositesPropsSchema = z
 	.object({
-		width: z.number().default(460).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(90).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(460).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(90).describe("The total height of the output SVG container in pixels."),
 		maxAbsValue: z
 			.number()
 			.describe("The maximum absolute value for the number line bounds (e.g., 10 for a value of 8.3)."),
@@ -17,17 +17,19 @@ export const NumberLineForOppositesPropsSchema = z
 			),
 		positiveLabel: z
 			.union([z.string(), z.boolean()])
+			.optional()
 			.default(true)
 			.describe(
 				"The label for the positive point. Can be a string, `true` (use numeric value), or `false` (hide label)."
 			),
 		negativeLabel: z
 			.union([z.string(), z.boolean()])
+			.optional()
 			.default(true)
 			.describe(
 				"The label for the negative point. Can be a string, `true` (use numeric value), or `false` (hide label)."
 			),
-		showArrows: z.boolean().default(true).describe("If true, shows symmetric arrows from 0 to each point.")
+		showArrows: z.boolean().optional().default(true).describe("If true, shows symmetric arrows from 0 to each point.")
 	})
 	.describe(
 		'This template is specifically designed to generate an SVG diagram that illustrates the concept of opposite numbers. The diagram\'s purpose is to visually reinforce that opposite numbers are equidistant from zero. The generator will create a horizontal number line that is always centered on 0. Based on a single input value, it will automatically plot two points: one at the negative value (-value) and one at the positive value (+value). To emphasize the relationship, the template will draw two symmetric arrows originating from 0 and pointing to each of the two points. The points can be labeled differently; for example, one can show its numerical value (e.g., "8.3") while its opposite is labeled with a question mark, prompting the student to identify it. This creates a clear, pedagogical diagram for questions about number opposites.'
@@ -77,8 +79,8 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 	svg += `<circle cx="${negPos}" cy="${yPos}" r="5" fill="black"/>`
 
 	// Labels
-	const posLab = positiveLabel === true ? String(value) : positiveLabel || ""
-	const negLab = negativeLabel === true ? String(-value) : negativeLabel || ""
+	const posLab = positiveLabel === true ? String(value) : (positiveLabel ?? "")
+	const negLab = negativeLabel === true ? String(-value) : (negativeLabel ?? "")
 	if (posLab)
 		svg += `<text x="${posPos}" y="${yPos - 25}" fill="black" text-anchor="middle" font-weight="bold">${posLab}</text>`
 	if (negLab)

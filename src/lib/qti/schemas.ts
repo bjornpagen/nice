@@ -1,7 +1,9 @@
 import { z } from "zod"
-import { WidgetSchema } from "@/lib/widgets/generators"
+import { WidgetSchema } from "@/lib/widgets/generators" // Note: We don't need WidgetInput here anymore
 
 // 1. Schemas for various content types and interactions
+
+// Replace z.custom with the actual WidgetSchema. This is the correct foundation.
 const SimpleContentSchema = z.union([z.string(), WidgetSchema])
 
 const SimpleChoiceSchema = z.object({
@@ -78,4 +80,7 @@ export const AssessmentItemSchema = z.object({
 		incorrect: z.string()
 	})
 })
-export type AssessmentItem = z.infer<typeof AssessmentItemSchema>
+
+// EXPORT BOTH THE INPUT AND OUTPUT TYPES
+export type AssessmentItem = z.infer<typeof AssessmentItemSchema> // The parsed data with defaults
+export type AssessmentItemInput = z.input<typeof AssessmentItemSchema> // The raw data before parsing

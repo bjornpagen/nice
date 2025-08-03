@@ -1,10 +1,11 @@
 import { describe, expect, test } from "bun:test"
 import { compile } from "./compiler"
-import type { AssessmentItem } from "./schemas"
+// Import the new Input type
+import type { AssessmentItemInput } from "./schemas"
 
 describe("QTI Compiler", () => {
 	test("should correctly compile a choice interaction item with widgets", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "double-number-line-ratio",
 			title: "Equivalent Ratios on a Double Number Line",
 			responseDeclarations: [
@@ -73,7 +74,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile a text entry interaction for fractional exponents", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "eval-fractional-exponents",
 			title: "Evaluate an expression with negative fractional exponents",
 			responseDeclarations: [
@@ -108,7 +109,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile an order interaction for comparing numbers", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "compare-3-digit-numbers",
 			title: "Compare 3-digit numbers",
 			responseDeclarations: [
@@ -158,7 +159,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile a choice interaction with inequality number line", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "inequality-number-line",
 			title: "Identify an inequality from a number-line graph",
 			responseDeclarations: [
@@ -226,7 +227,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile a vertical number line comparison", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "vertical-number-line-comparison",
 			title: "Compare numbers on a vertical number line",
 			responseDeclarations: [
@@ -308,7 +309,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile a two-way frequency table with Venn diagram", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "two-way-frequency-table-cold-study",
 			title: "Complete a Two-Way Frequency Table",
 			responseDeclarations: [
@@ -366,7 +367,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile equivalent fractions with partitioned shapes", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "equivalent-fraction-images",
 			title: "Identifying Equivalent Fractions with Images",
 			responseDeclarations: [
@@ -451,7 +452,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile calculating shaded area of multiple shapes", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "calculate-shaded-area",
 			title: "Calculating Shaded Area of Multiple Shapes",
 			responseDeclarations: [
@@ -519,7 +520,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile circle equation center and radius problem", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "circle-equation-center-radius",
 			title: "Find the center and radius of a circle from its equation",
 			responseDeclarations: [
@@ -554,7 +555,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile find missing data point given mean", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "haruka-exam-score",
 			title: "Find a missing data point given the mean",
 			responseDeclarations: [
@@ -599,7 +600,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile business cycle trough identification", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "libertyville-business-cycle",
 			title: "Business Cycle Trough Identification",
 			responseDeclarations: [
@@ -680,7 +681,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile continuity and differentiability of piecewise function", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "continuity-differentiability-piecewise",
 			title: "Continuity and Differentiability of a Piecewise Function",
 			responseDeclarations: [
@@ -742,7 +743,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile Stokes' theorem surface integral rewrite", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "stokes-theorem-rewrite",
 			title: "Rewrite Surface Integral using Stokes' Theorem",
 			responseDeclarations: [
@@ -780,7 +781,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile estimate derivative from table", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "estimate-derivative-from-table",
 			title: "Estimate derivative from a table of values",
 			responseDeclarations: [
@@ -840,7 +841,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile count the apples with discrete object diagrams", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "count-apples-mc-div-version",
 			title: "Count the apples",
 			responseDeclarations: [
@@ -928,7 +929,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile bar graph for shapes in a bin", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "shape-bin-barchart-choice",
 			title: "Create a bar graph for shapes in a bin",
 			responseDeclarations: [
@@ -1025,7 +1026,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile pencil lengths line plot", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "pencil-length-line-plot-choice",
 			title: "Represent Pencil Lengths on a Line Plot",
 			responseDeclarations: [
@@ -1108,7 +1109,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile reading a bar chart", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "games-won-barchart",
 			title: "Reading a bar chart",
 			responseDeclarations: [
@@ -1161,7 +1162,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile interpreting a line plot", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "doll-height-line-plot",
 			title: "Interpreting a line plot",
 			responseDeclarations: [
@@ -1215,7 +1216,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile time on number line", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "time-on-number-line-detailed-final",
 			title: "What time is shown on the number line?",
 			responseDeclarations: [
@@ -1262,7 +1263,7 @@ describe("QTI Compiler", () => {
 	})
 
 	test("should correctly compile compare 2-digit numbers", () => {
-		const itemDefinition: AssessmentItem = {
+		const itemDefinition: AssessmentItemInput = {
 			identifier: "nice-tmp_x754a72ff9e868e57",
 			title: "Compare 2-digit numbers",
 			responseDeclarations: [

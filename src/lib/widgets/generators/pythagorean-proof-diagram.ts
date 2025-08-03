@@ -13,8 +13,8 @@ const SideSquareSchema = z.object({
 // The main Zod schema for the pythagoreanProofDiagram function
 export const PythagoreanProofDiagramPropsSchema = z
 	.object({
-		width: z.number().default(400).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(400).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(400).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(400).describe("The total height of the output SVG container in pixels."),
 		squareA: SideSquareSchema.describe("Properties of the square on the first leg."),
 		squareB: SideSquareSchema.describe("Properties of the square on the second leg."),
 		squareC: SideSquareSchema.describe("Properties of the square on the hypotenuse.")

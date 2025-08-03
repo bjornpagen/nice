@@ -9,20 +9,26 @@ const AngleLabelSchema = z.object({
 	intersection: z.enum(["top", "bottom"]).describe("Which of the two intersections the angle is at."),
 	position: AnglePositionSchema.describe("The position of the angle within that intersection."),
 	label: z.string().describe('The text or mathematical label for the angle (e.g., "x", "34°", "2x + 10").'),
-	color: z.string().optional().describe('An optional CSS color for the angle\'s highlighting arc (e.g., "#1E90FF").')
+	color: z
+		.string()
+		.optional()
+		.default("blue")
+		.describe('An optional CSS color for the angle\'s highlighting arc (e.g., "#1E90FF").')
 })
 
 // The main Zod schema for the parallelLinesTransversal function
 export const ParallelLinesTransversalPropsSchema = z
 	.object({
-		width: z.number().default(320).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(280).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(320).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(280).describe("The total height of the output SVG container in pixels."),
 		linesAngle: z
 			.number()
+			.optional()
 			.default(0)
 			.describe("The rotation angle of the two parallel lines in degrees (0 is horizontal)."),
 		transversalAngle: z
 			.number()
+			.optional()
 			.default(60)
 			.describe("The angle of the transversal line in degrees, relative to the horizontal."),
 		labels: z.array(AngleLabelSchema).describe("An array of angle labels to be drawn on the diagram.")
@@ -106,7 +112,7 @@ export const generateParallelLinesTransversal: WidgetGenerator<typeof ParallelLi
 		const arcEndX = int.x + radius * Math.cos(endRad)
 		const arcEndY = int.y - radius * Math.sin(endRad)
 		const largeArcFlag = Math.abs(end - start) > 180 ? 1 : 0
-		svg += `<path d="M ${arcStartX} ${arcStartY} A ${radius} ${radius} 0 ${largeArcFlag} 0 ${arcEndX} ${arcEndY}" fill="none" stroke="${l.color || "blue"}" stroke-width="2"/>`
+		svg += `<path d="M ${arcStartX} ${arcStartY} A ${radius} ${radius} 0 ${largeArcFlag} 0 ${arcEndX} ${arcEndY}" fill="none" stroke="${l.color}" stroke-width="2"/>`
 
 		// Label
 		const labelX = int.x + labelRadius * Math.cos(midAngleRad)

@@ -19,9 +19,13 @@ const ActionArrowSchema = z.object({
 // The main Zod schema for the numberLineWithAction function
 export const NumberLineWithActionPropsSchema = z
 	.object({
-		width: z.number().default(260).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(325).describe("The total height of the output SVG container in pixels."),
-		orientation: z.enum(["horizontal", "vertical"]).default("vertical").describe("The orientation of the number line."),
+		width: z.number().optional().default(260).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(325).describe("The total height of the output SVG container in pixels."),
+		orientation: z
+			.enum(["horizontal", "vertical"])
+			.optional()
+			.default("vertical")
+			.describe("The orientation of the number line."),
 		min: z.number().describe("The minimum value displayed on the number line."),
 		max: z.number().describe("The maximum value displayed on the number line."),
 		tickInterval: z.number().describe("The numeric interval between tick marks."),

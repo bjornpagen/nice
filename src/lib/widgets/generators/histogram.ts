@@ -21,8 +21,8 @@ const HistogramAxisSchema = z.object({
 // The main Zod schema for the histogram function
 export const HistogramPropsSchema = z
 	.object({
-		width: z.number().default(400).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(300).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(400).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(300).describe("The total height of the output SVG container in pixels."),
 		title: z.string().optional().describe("An optional title displayed above the histogram."),
 		xAxis: HistogramAxisSchema.describe("Configuration for the horizontal (X) axis."),
 		yAxis: HistogramAxisSchema.describe("Configuration for the vertical (Y) axis."),

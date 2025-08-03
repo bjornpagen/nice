@@ -41,8 +41,8 @@ const RectangularPyramidDataSchema = z.object({
 // The main Zod schema for the polyhedronDiagram function
 export const PolyhedronDiagramPropsSchema = z
 	.object({
-		width: z.number().default(300).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(200).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(300).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(200).describe("The total height of the output SVG container in pixels."),
 		shape: z
 			.union([RectangularPrismDataSchema, TriangularPrismDataSchema, RectangularPyramidDataSchema])
 			.describe("The geometric data defining the shape of the polyhedron."),
@@ -50,6 +50,7 @@ export const PolyhedronDiagramPropsSchema = z
 		shadedFace: z.string().optional().describe('The identifier of a face to shade (e.g., "top_face", "front_face").'),
 		showHiddenEdges: z
 			.boolean()
+			.optional()
 			.default(true)
 			.describe("If true, render edges hidden from the camera view as dashed lines.")
 	})

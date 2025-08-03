@@ -8,7 +8,7 @@ const TickMarkSchema = z.object({
 		.string()
 		.optional()
 		.describe('The text label for the tick mark (e.g., "0", "1", "3/8"). If omitted, no label is shown.'),
-	isMajor: z.boolean().default(false).describe("If true, render as a larger, more prominent tick mark.")
+	isMajor: z.boolean().optional().default(false).describe("If true, render as a larger, more prominent tick mark.")
 })
 
 // Defines a single labeled, colored segment on the number line
@@ -22,8 +22,8 @@ const NumberLineSegmentSchema = z.object({
 // The main Zod schema for the numberLineWithFractionGroups function
 export const NumberLineWithFractionGroupsPropsSchema = z
 	.object({
-		width: z.number().default(500).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(140).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(500).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(140).describe("The total height of the output SVG container in pixels."),
 		min: z.number().describe("The minimum value displayed on the number line."),
 		max: z.number().describe("The maximum value displayed on the number line."),
 		ticks: z.array(TickMarkSchema).describe("An array of tick mark objects defining their position, label, and style."),

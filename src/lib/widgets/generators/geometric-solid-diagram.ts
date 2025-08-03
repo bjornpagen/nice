@@ -30,8 +30,8 @@ const SolidDimensionLabelSchema = z.object({
 // The main Zod schema for the geometricSolidDiagram function
 export const GeometricSolidDiagramPropsSchema = z
 	.object({
-		width: z.number().default(150).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(200).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(150).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(200).describe("The total height of the output SVG container in pixels."),
 		shape: z
 			.union([CylinderDataSchema, ConeDataSchema, SphereDataSchema])
 			.describe("The geometric data defining the solid shape."),

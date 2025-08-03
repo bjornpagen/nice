@@ -7,8 +7,8 @@ export const ErrInvalidRange = errors.new("axis min must be less than axis max")
 // The main Zod schema for the boxPlot function
 export const BoxPlotPropsSchema = z
 	.object({
-		width: z.number().default(400).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(120).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(400).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(120).describe("The total height of the output SVG container in pixels."),
 		axis: z
 			.object({
 				min: z.number().describe("The minimum value displayed on the axis scale."),
@@ -29,8 +29,8 @@ export const BoxPlotPropsSchema = z
 				max: z.number().describe("The maximum value of the data set (right whisker endpoint).")
 			})
 			.describe("The five-number summary used to draw the plot."),
-		boxColor: z.string().default("#E3F2FD").describe("A CSS color string for the fill of the box."),
-		medianColor: z.string().default("#1976D2").describe("A CSS color string for the median line.")
+		boxColor: z.string().optional().default("#E3F2FD").describe("A CSS color string for the fill of the box."),
+		medianColor: z.string().optional().default("#1976D2").describe("A CSS color string for the median line.")
 	})
 	.describe(
 		'This template generates a standard horizontal box-and-whisker plot as an SVG graphic. This type of plot is a powerful tool for summarizing the distribution of a numerical data set through its five-number summary: minimum, first quartile (Q1), median, third quartile (Q3), and maximum. The generator will render a horizontal number line with labeled tick marks to provide scale. Above this axis, the box plot is constructed. A central rectangle (the "box") is drawn, with its left edge at the first quartile (Q1) and its right edge at the third quartile (Q3). The length of this box thus represents the Interquartile Range (IQR). A vertical line is drawn inside the box to mark the median (the 50th percentile). From the left side of the box, a horizontal line (the "whisker") extends to the minimum value of the data set. From the right side of the box, another whisker extends to the maximum value. These whiskers can be capped with small vertical lines. The entire plot provides a concise visual summary of the data\'s center (median), spread (IQR and range), and skewness. The generator allows for customization of colors for the box and median line to enhance readability.'

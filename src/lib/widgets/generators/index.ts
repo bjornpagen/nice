@@ -110,6 +110,7 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.verticalArithmeticSetup
 ])
 export type Widget = z.infer<typeof WidgetSchema>
+export type WidgetInput = z.input<typeof WidgetSchema>
 
 // Export the individual generators for direct use
 export {

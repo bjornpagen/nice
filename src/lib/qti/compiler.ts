@@ -34,7 +34,7 @@ import {
 	WidgetSchema
 } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
-import type { AnyInteraction, AssessmentItem } from "./schemas"
+import type { AnyInteraction, AssessmentItem, AssessmentItemInput } from "./schemas"
 import { AnyInteractionSchema, AssessmentItemSchema } from "./schemas"
 
 function encodeDataUri(content: string): string {
@@ -55,14 +55,13 @@ function renderContent(content: unknown): string {
 	}
 
 	if (typeof content === "object" && content !== null && "type" in content) {
-		// NOTE: The `{type: "mathml"}` check is implicitly removed because it's no longer in the schema.
 		const parseResult = WidgetSchema.safeParse(content)
 		if (parseResult.success) {
 			const widget = parseResult.data
 			const generatedHtml = generateWidget(widget)
 			const dataUri = encodeDataUri(generatedHtml)
 			const altText = escapeXmlAttribute(`A visual element of type ${widget.type}.`)
-			return `<img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" />`
+			return `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`
 		}
 	}
 	throw errors.new(`Invalid content block provided: ${JSON.stringify(content)}`)
@@ -266,8 +265,11 @@ function compileResponseProcessing(decls: AssessmentItem["responseDeclarations"]
     </qti-response-processing>`
 }
 
-export function compile(itemData: AssessmentItem): string {
-	const item = AssessmentItemSchema.parse(itemData)
+// Update the function signature to accept the raw INPUT type
+export function compile(itemData: AssessmentItemInput): string {
+	// The `item` variable now holds the parsed data with defaults applied.
+	// It is of type `AssessmentItem` (the output type).
+	const item: AssessmentItem = AssessmentItemSchema.parse(itemData)
 
 	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)
 	const itemBody = compileItemBody(item.body)

@@ -14,7 +14,7 @@ const AxisSchema = z.object({
 	min: z.number().describe("The minimum value displayed on the axis."),
 	max: z.number().describe("The maximum value displayed on the axis."),
 	tickInterval: z.number().describe("The numeric interval between tick marks on the axis."),
-	gridLines: z.boolean().default(false).describe("If true, display grid lines for this axis.")
+	gridLines: z.boolean().optional().default(false).describe("If true, display grid lines for this axis.")
 })
 
 // Defines a linear trend line using slope and y-intercept
@@ -38,9 +38,10 @@ const TrendLineStyleSchema = z.object({
 	label: z.string().optional().describe('An optional label to display next to the line (e.g., "A", "B").'),
 	color: z
 		.string()
+		.optional()
 		.default("#EA4335")
 		.describe('The color of the line, as a CSS color string (e.g., "red", "#FF0000").'),
-	style: z.enum(["solid", "dashed"]).default("solid").describe("The style of the line."),
+	style: z.enum(["solid", "dashed"]).optional().default("solid").describe("The style of the line."),
 	data: z
 		.union([LinearTrendLineSchema, QuadraticTrendLineSchema])
 		.describe("The mathematical definition of the line or curve.")
@@ -49,8 +50,8 @@ const TrendLineStyleSchema = z.object({
 // The main Zod schema for the scatterPlot function
 export const ScatterPlotPropsSchema = z
 	.object({
-		width: z.number().default(400).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(400).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(400).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(400).describe("The total height of the output SVG container in pixels."),
 		title: z.string().optional().describe("An optional title displayed above or below the plot."),
 		xAxis: AxisSchema.describe("Configuration for the horizontal (X) axis."),
 		yAxis: AxisSchema.describe("Configuration for the vertical (Y) axis."),

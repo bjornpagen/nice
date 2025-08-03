@@ -17,9 +17,9 @@ const TableCellSchema = z
 const TableRowSchema = z.object({
 	isHeader: z
 		.boolean()
+		.optional()
 		.default(false)
-		.describe("If true, the first cell of this row is a row header (<th>).")
-		.optional(),
+		.describe("If true, the first cell of this row is a row header (<th>)."),
 	cells: z.array(TableCellSchema).describe("An array of cell data for this row.")
 })
 
@@ -53,25 +53,24 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 	const commonCellStyle = "border: 1px solid black; padding: 8px; text-align: left;"
 	const headerCellStyle = `${commonCellStyle} font-weight: bold; background-color: #f2f2f2;`
 
-	let html = `<div style="font-family: sans-serif; width: 100%;">`
-	html += `<table style="border-collapse: collapse; width: 100%; border: 1px solid black;">`
+	let xml = `<table style="border-collapse: collapse; width: 100%; border: 1px solid black;">`
 
 	if (title) {
-		html += `<caption style="padding: 8px; font-size: 1.2em; font-weight: bold; caption-side: top;">${title}</caption>`
+		xml += `<caption style="padding: 8px; font-size: 1.2em; font-weight: bold; caption-side: top;">${title}</caption>`
 	}
 
 	if (columnHeaders && columnHeaders.length > 0) {
-		html += "<thead><tr>"
+		xml += "<thead><tr>"
 		for (const h of columnHeaders) {
-			html += `<th style="${headerCellStyle}">${h}</th>`
+			xml += `<th style="${headerCellStyle}">${h}</th>`
 		}
-		html += "</tr></thead>"
+		xml += "</tr></thead>"
 	}
 
 	if (rows && rows.length > 0) {
-		html += "<tbody>"
+		xml += "<tbody>"
 		for (const r of rows) {
-			html += "<tr>"
+			xml += "<tr>"
 			for (let i = 0; i < r.cells.length; i++) {
 				const c = r.cells[i]
 				const isRowHeader = r.isHeader && i === 0
@@ -79,35 +78,39 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 				const style = isRowHeader ? headerCellStyle : commonCellStyle
 
 				let content: string
-				if (typeof c === "object" && c.type === "input") {
-					const sizeAttr = c.expectedLength ? ` size="${c.expectedLength}"` : ""
-					content = `<input type="text" response-identifier="${c.responseIdentifier}"${sizeAttr} style="width: 80px; padding: 4px; border: 1px solid #ccc;"/>`
+				if (typeof c === "object" && "type" in c && c.type === "input") {
+					const expectedLengthAttr = c.expectedLength ? ` expected-length="${c.expectedLength}"` : ""
+					content = `<qti-text-entry-interaction response-identifier="${c.responseIdentifier}"${expectedLengthAttr}/>`
 				} else {
 					content = String(c)
 				}
-				html += `<${tag} style="${style}">${content}</${tag}>`
+				xml += `<${tag} style="${style}">${content}</${tag}>`
 			}
-			html += "</tr>"
+			xml += "</tr>"
 		}
-		html += "</tbody>"
+		xml += "</tbody>"
 	}
 
 	if (footer && footer.length > 0) {
-		html += `<tfoot><tr style="background-color: #f2f2f2;">`
-		for (const f of footer) {
+		xml += `<tfoot><tr style="background-color: #f2f2f2;">`
+		for (let i = 0; i < footer.length; i++) {
+			const f = footer[i]
+			const isFooterHeader = i === 0
+			const tag = isFooterHeader ? "th" : "td"
+			const style = `${commonCellStyle} font-weight: bold;`
+
 			let content: string
-			if (typeof f === "object" && f.type === "input") {
-				const sizeAttr = f.expectedLength ? ` size="${f.expectedLength}"` : ""
-				content = `<input type="text" response-identifier="${f.responseIdentifier}"${sizeAttr} style="width: 80px; padding: 4px; border: 1px solid #ccc;"/>`
+			if (typeof f === "object" && "type" in f && f.type === "input") {
+				const expectedLengthAttr = f.expectedLength ? ` expected-length="${f.expectedLength}"` : ""
+				content = `<qti-text-entry-interaction response-identifier="${f.responseIdentifier}"${expectedLengthAttr}/>`
 			} else {
 				content = String(f)
 			}
-			// Footer cells are often bold
-			html += `<td style="${commonCellStyle} font-weight: bold;">${content}</td>`
+			xml += `<${tag} style="${style}">${content}</${tag}>`
 		}
-		html += "</tr></tfoot>"
+		xml += "</tr></tfoot>"
 	}
 
-	html += "</table></div>"
-	return html
+	xml += "</table>"
+	return xml
 }

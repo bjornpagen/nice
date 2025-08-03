@@ -11,21 +11,22 @@ const TapeSegmentSchema = z.object({
 const TapeSchema = z.object({
 	label: z.string().describe('The text label for this tape (e.g., "Teeth per larger gear").'),
 	segments: z.array(TapeSegmentSchema).min(1).describe("An array of segment objects that make up this tape."),
-	color: z.string().default("rgba(66, 133, 244, 0.6)").describe("The CSS fill color for the tape segments.")
+	color: z.string().optional().default("rgba(66, 133, 244, 0.6)").describe("The CSS fill color for the tape segments.")
 })
 
 // The main Zod schema for the tapeDiagram function
 export const TapeDiagramPropsSchema = z
 	.object({
-		width: z.number().default(320).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(200).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(320).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(200).describe("The total height of the output SVG container in pixels."),
 		topTape: TapeSchema.describe("Configuration for the upper tape."),
 		bottomTape: TapeSchema.describe("Configuration for the lower tape."),
 		showTotalBracket: z
 			.boolean()
+			.optional()
 			.default(false)
 			.describe("If true, displays a bracket and label for the total number of segments."),
-		totalLabel: z.string().default("Total").describe("The text label for the total bracket, if shown.")
+		totalLabel: z.string().optional().default("Total").describe("The text label for the total bracket, if shown.")
 	})
 	.describe(
 		'Generates a "tape diagram" or "bar model" as an SVG graphic to represent part-whole relationships. This widget is exceptionally useful for modeling and solving word problems involving ratios or algebraic equations. It renders one or two tapes, each composed of proportionally sized segments that can be labeled with numbers or variables. By visually aligning tapes or their segments, it translates abstract numerical relationships into a concrete, geometric form, making concepts like "3x = 15" intuitive.'

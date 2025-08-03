@@ -8,16 +8,17 @@ const HangerWeightSchema = z.object({
 		.describe('The text label displayed inside the weight (e.g., "c", 12, "1/2").'),
 	shape: z
 		.enum(["square", "circle", "pentagon", "hexagon", "triangle"])
+		.optional()
 		.default("square")
 		.describe("The geometric shape of the weight."),
-	color: z.string().optional().describe("An optional CSS fill color for the shape.")
+	color: z.string().optional().default("#e0e0e0").describe("An optional CSS fill color for the shape.")
 })
 
 // The main Zod schema for the hangerDiagram function
 export const HangerDiagramPropsSchema = z
 	.object({
-		width: z.number().default(320).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(240).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(320).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(240).describe("The total height of the output SVG container in pixels."),
 		leftSide: z
 			.array(HangerWeightSchema)
 			.describe("An array of weight objects to be rendered on the left side of the hanger."),
@@ -56,10 +57,10 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 		let shapeSvg = ""
 		switch (weight.shape) {
 			case "circle":
-				shapeSvg = `<circle cx="${x}" cy="${y + size / 2}" r="${size / 2}" fill="${weight.color || "#e0e0e0"}" stroke="#333333"/>`
+				shapeSvg = `<circle cx="${x}" cy="${y + size / 2}" r="${size / 2}" fill="${weight.color}" stroke="#333333"/>`
 				break
 			case "triangle":
-				shapeSvg = `<polygon points="${x - size / 2},${y + size} ${x + size / 2},${y + size} ${x},${y}" fill="${weight.color || "#e0e0e0"}" stroke="#333333"/>`
+				shapeSvg = `<polygon points="${x - size / 2},${y + size} ${x + size / 2},${y + size} ${x},${y}" fill="${weight.color}" stroke="#333333"/>`
 				break
 			case "pentagon": {
 				// Simplified pentagon
@@ -72,11 +73,11 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 				]
 					.map((pt) => pt.join(","))
 					.join(" ")
-				shapeSvg = `<polygon points="${p_pts}" fill="${weight.color || "#e0e0e0"}" stroke="#333333"/>`
+				shapeSvg = `<polygon points="${p_pts}" fill="${weight.color}" stroke="#333333"/>`
 				break
 			}
 			default:
-				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color || "#e0e0e0"}" stroke="#333333"/>`
+				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color}" stroke="#333333"/>`
 				break
 		}
 		const textSvg = `<text x="${x}" y="${y + size / 2 + 4}" fill="#333333" text-anchor="middle" font-weight="bold">${weight.label}</text>`

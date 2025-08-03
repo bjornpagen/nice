@@ -8,7 +8,7 @@ const NumberLinePointSchema = z.object({
 		.string()
 		.optional()
 		.describe('An optional text label to display next to the point (e.g., "A", "Minnesota").'),
-	color: z.string().default("#4285F4").describe("The CSS color of the point."),
+	color: z.string().optional().default("#4285F4").describe("The CSS color of the point."),
 	labelPosition: z
 		.enum(["above", "below", "left", "right"])
 		.optional()
@@ -24,18 +24,19 @@ const SpecialTickLabelSchema = z.object({
 // The main Zod schema for the numberLine function
 export const NumberLinePropsSchema = z
 	.object({
-		width: z.number().default(460).describe("The total width of the output SVG container in pixels."),
-		height: z.number().default(100).describe("The total height of the output SVG container in pixels."),
+		width: z.number().optional().default(460).describe("The total width of the output SVG container in pixels."),
+		height: z.number().optional().default(100).describe("The total height of the output SVG container in pixels."),
 		orientation: z
 			.enum(["horizontal", "vertical"])
+			.optional()
 			.default("horizontal")
-			.describe("The orientation of the number line.")
-			.optional(),
+			.describe("The orientation of the number line."),
 		min: z.number().describe("The minimum value displayed on the line."),
 		max: z.number().describe("The maximum value displayed on the line."),
 		majorTickInterval: z.number().describe("The numeric interval between labeled tick marks."),
 		minorTicksPerInterval: z
 			.number()
+			.optional()
 			.default(0)
 			.describe("The number of unlabeled minor ticks to draw between each major tick."),
 		points: z
