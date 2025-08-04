@@ -30,11 +30,12 @@ import {
 	generateTapeDiagram,
 	generateUnitBlockDiagram,
 	generateVennDiagram,
-	generateVerticalArithmeticSetup
+	generateVerticalArithmeticSetup,
+	typedSchemas
 } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import type { AnyInteraction, AssessmentItem, AssessmentItemInput } from "./schemas"
-import { AssessmentItemSchema } from "./schemas"
+import { createDynamicSchemas } from "./schemas"
 
 function encodeDataUri(content: string): string {
 	const encoded = encodeURIComponent(content)
@@ -259,8 +260,29 @@ function compileResponseProcessing(decls: AssessmentItem["responseDeclarations"]
     </qti-response-processing>`
 }
 
+// Helper function to check if a string is a valid widget type
+function isValidWidgetType(type: string): type is keyof typeof typedSchemas {
+	return type in typedSchemas
+}
+
 // Update the function signature to accept the raw INPUT type
 export function compile(itemData: AssessmentItemInput): string {
+	// First, analyze the widgets to create the appropriate schema
+	const widgetMapping: Record<string, keyof typeof typedSchemas> = {}
+	if (itemData.widgets) {
+		for (const [slotName, widget] of Object.entries(itemData.widgets)) {
+			if (widget && typeof widget === "object" && "type" in widget && typeof widget.type === "string") {
+				const widgetType = widget.type
+				// Use type guard function for type-safe check
+				if (isValidWidgetType(widgetType)) {
+					widgetMapping[slotName] = widgetType
+				}
+			}
+		}
+	}
+
+	// Create a dynamic schema based on the widgets present
+	const { AssessmentItemSchema } = createDynamicSchemas(widgetMapping)
 	const item: AssessmentItem = AssessmentItemSchema.parse(itemData)
 
 	// Start with the body string containing placeholders.
