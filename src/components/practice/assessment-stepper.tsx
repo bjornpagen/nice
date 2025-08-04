@@ -905,6 +905,15 @@ export function AssessmentStepper({
 		assessmentStartTimeRef.current = new Date() // Reset the timer for the new attempt
 	}
 
+	// Handle try again for wrong answers
+	const handleTryAgain = () => {
+		setSelectedResponses({})
+		setExpectedResponses([])
+		setIsAnswerChecked(false)
+		setShowFeedback(false)
+		// Note: We keep attemptCount as is, since we're continuing with the same question
+	}
+
 	// Determine button text and action
 	const getButtonConfig = () => {
 		if (isAnswerCorrect) {
@@ -914,7 +923,7 @@ export function AssessmentStepper({
 			return { text: "Next question", action: goToNext }
 		}
 		if (isAnswerChecked && !isAnswerCorrect) {
-			return { text: "Try again", action: handleCheckAnswer }
+			return { text: "Try again", action: handleTryAgain }
 		}
 		return { text: "Check", action: handleCheckAnswer }
 	}
@@ -960,6 +969,7 @@ export function AssessmentStepper({
 					width="100%"
 					className="h-full w-full"
 					onResponseChange={handleResponseChange}
+					displayFeedback={isAnswerChecked}
 				/>
 				{isAnswerChecked && (isAnswerCorrect || hasExhaustedAttempts) && (
 					<div className="absolute inset-0 z-10" aria-hidden="true" />

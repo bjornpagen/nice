@@ -27,6 +27,7 @@ interface QTIRendererProps {
 	className?: string
 	height?: string | number
 	width?: string | number
+	displayFeedback?: boolean
 }
 
 export function QTIRenderer({
@@ -37,7 +38,8 @@ export function QTIRenderer({
 	onRawMessage,
 	className = "",
 	height = "600px",
-	width = "100%"
+	width = "100%",
+	displayFeedback = false
 }: QTIRendererProps) {
 	const iframeRef = React.useRef<HTMLIFrameElement>(null)
 
@@ -92,6 +94,18 @@ export function QTIRenderer({
 			window.removeEventListener("message", handleMessage)
 		}
 	}, [onResponseChange, onMessage, onRawMessage, expectedOrigin])
+
+	React.useEffect(() => {
+		if (iframeRef.current?.contentWindow) {
+			iframeRef.current.contentWindow.postMessage(
+				{
+					type: "QTI_DISPLAY_FEEDBACK",
+					displayResponseFeedback: displayFeedback
+				},
+				"*"
+			)
+		}
+	}, [displayFeedback])
 
 	// Use 100% for both dimensions when they are percentage values
 	const iframeStyle: React.CSSProperties = {
