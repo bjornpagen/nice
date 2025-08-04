@@ -5,10 +5,11 @@ exports[`QTI Compiler should correctly compile a choice interaction item with wi
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="double-number-line-ratio"
     title="Equivalent Ratios on a Double Number Line"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
         <qti-correct-response>
@@ -58,10 +59,11 @@ exports[`QTI Compiler should correctly compile a text entry interaction for frac
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="eval-fractional-exponents"
     title="Evaluate an expression with negative fractional exponents"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
         <qti-correct-response>
@@ -107,10 +109,11 @@ exports[`QTI Compiler should correctly compile an order interaction for comparin
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="compare-3-digit-numbers"
     title="Compare 3-digit numbers"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="ordered" base-type="identifier">
         <qti-correct-response>
@@ -163,10 +166,11 @@ exports[`QTI Compiler should correctly compile a choice interaction with inequal
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="inequality-number-line"
     title="Identify an inequality from a number-line graph"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
         <qti-correct-response>
@@ -218,10 +222,11 @@ exports[`QTI Compiler should correctly compile a vertical number line comparison
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="vertical-number-line-comparison"
     title="Compare numbers on a vertical number line"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE_POS" cardinality="single" base-type="identifier">
         <qti-correct-response>
@@ -279,10 +284,11 @@ exports[`QTI Compiler should correctly compile a two-way frequency table with Ve
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="two-way-frequency-table-cold-study"
     title="Complete a Two-Way Frequency Table"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESP_A" cardinality="single" base-type="integer">
         <qti-correct-response>
@@ -346,10 +352,11 @@ exports[`QTI Compiler should correctly compile equivalent fractions with partiti
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="equivalent-fraction-images"
     title="Identifying Equivalent Fractions with Images"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="multiple" base-type="identifier">
         <qti-correct-response>
@@ -401,10 +408,11 @@ exports[`QTI Compiler should correctly compile calculating shaded area of multip
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="calculate-shaded-area"
     title="Calculating Shaded Area of Multiple Shapes"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="multiple" base-type="identifier">
         <qti-correct-response>
@@ -456,10 +464,11 @@ exports[`QTI Compiler should correctly compile circle equation center and radius
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="circle-equation-center-radius"
     title="Find the center and radius of a circle from its equation"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE_X" cardinality="single" base-type="integer">
         <qti-correct-response>
@@ -517,10 +526,11 @@ exports[`QTI Compiler should correctly compile find missing data point given mea
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="haruka-exam-score"
     title="Find a missing data point given the mean"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
         <qti-correct-response>
@@ -566,10 +576,11 @@ exports[`QTI Compiler should correctly compile business cycle trough identificat
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="libertyville-business-cycle"
     title="Business Cycle Trough Identification"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
         <qti-correct-response>
@@ -622,10 +633,11 @@ exports[`QTI Compiler should correctly compile continuity and differentiability 
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="continuity-differentiability-piecewise"
     title="Continuity and Differentiability of a Piecewise Function"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
         <qti-correct-response>
@@ -677,10 +689,11 @@ exports[`QTI Compiler should correctly compile Stokes' theorem surface integral 
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="stokes-theorem-rewrite"
     title="Rewrite Surface Integral using Stokes&apos; Theorem"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="string">
         <qti-correct-response>
@@ -726,10 +739,11 @@ exports[`QTI Compiler should correctly compile estimate derivative from table 1`
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="estimate-derivative-from-table"
     title="Estimate derivative from a table of values"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
         <qti-correct-response>
@@ -781,10 +795,11 @@ exports[`QTI Compiler should correctly compile count the apples with discrete ob
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="count-apples-emoji"
     title="Count the apples"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
         <qti-correct-response>
@@ -836,10 +851,11 @@ exports[`QTI Compiler should correctly compile bar graph for shapes in a bin 1`]
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="shape-bin-barchart-choice"
     title="Create a bar graph for shapes in a bin"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
         <qti-correct-response>
@@ -891,10 +907,11 @@ exports[`QTI Compiler should correctly compile pencil lengths line plot 1`] = `
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="pencil-length-line-plot-choice"
     title="Represent Pencil Lengths on a Line Plot"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
         <qti-correct-response>
@@ -946,10 +963,11 @@ exports[`QTI Compiler should correctly compile reading a bar chart 1`] = `
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="games-won-barchart"
     title="Reading a bar chart"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
         <qti-correct-response>
@@ -995,10 +1013,11 @@ exports[`QTI Compiler should correctly compile interpreting a line plot 1`] = `
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="doll-height-line-plot"
     title="Interpreting a line plot"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer">
         <qti-correct-response>
@@ -1044,10 +1063,11 @@ exports[`QTI Compiler should correctly compile time on number line 1`] = `
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="time-on-number-line-detailed-final"
     title="What time is shown on the number line?"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE_HR" cardinality="single" base-type="integer">
         <qti-correct-response>
@@ -1102,10 +1122,11 @@ exports[`QTI Compiler should correctly compile compare 2-digit numbers 1`] = `
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="nice-tmp_x754a72ff9e868e57"
     title="Compare 2-digit numbers"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 
     <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier">
         <qti-correct-response>
