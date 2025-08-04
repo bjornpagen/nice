@@ -17,15 +17,32 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				'<p>Cory hikes up a hill with a constant slope. The double number line shows that after Cory hikes <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mtext> km</mtext></math>, their elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn><mtext> m</mtext></math>.</p>',
-				{
+			widgets: {
+				stimulus_dnl: {
 					type: "doubleNumberLine",
 					width: 400,
 					height: 150,
 					topLine: { label: "Distance, kilometers", ticks: [0, "", "", 3, ""] },
 					bottomLine: { label: "Elevation, meters", ticks: [0, "", "", 120, ""] }
 				},
+				choice_a_dnl: {
+					type: "doubleNumberLine",
+					width: 400,
+					height: 150,
+					topLine: { label: "Distance, kilometers", ticks: [0, 1, 2, 3, 4] },
+					bottomLine: { label: "Elevation, meters", ticks: [0, 40, 80, 120, 160] }
+				},
+				choice_b_dnl: {
+					type: "doubleNumberLine",
+					width: 400,
+					height: 150,
+					topLine: { label: "Distance, kilometers", ticks: [0, 1, 2, 3, 4] },
+					bottomLine: { label: "Elevation, meters", ticks: [0, 80, 100, 120, 140] }
+				}
+			},
+			stimulus:
+				'<p>Cory hikes up a hill with a constant slope. The double number line shows that after Cory hikes <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mtext> km</mtext></math>, their elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn><mtext> m</mtext></math>.</p><slot name="stimulus_dnl" />',
+			interactions: [
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -36,24 +53,12 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: {
-								type: "doubleNumberLine",
-								width: 400,
-								height: 150,
-								topLine: { label: "Distance, kilometers", ticks: [0, 1, 2, 3, 4] },
-								bottomLine: { label: "Elevation, meters", ticks: [0, 40, 80, 120, 160] }
-							},
+							content: '<slot name="choice_a_dnl" />',
 							feedback: null
 						},
 						{
 							identifier: "B",
-							content: {
-								type: "doubleNumberLine",
-								width: 400,
-								height: 150,
-								topLine: { label: "Distance, kilometers", ticks: [0, 1, 2, 3, 4] },
-								bottomLine: { label: "Elevation, meters", ticks: [0, 80, 100, 120, 140] }
-							},
+							content: '<slot name="choice_b_dnl" />',
 							feedback: null
 						}
 					]
@@ -89,9 +94,9 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				"<p>Evaluate.</p>",
-				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math>',
+			stimulus:
+				'<p>Evaluate.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math>',
+			interactions: [
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
@@ -125,7 +130,8 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
+			stimulus: "",
+			interactions: [
 				{
 					type: "orderInteraction",
 					responseIdentifier: "RESPONSE",
@@ -181,8 +187,8 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				{
+			widgets: {
+				inequality_widget: {
 					type: "inequalityNumberLine",
 					width: 500,
 					height: 100,
@@ -196,7 +202,10 @@ describe("QTI Compiler", () => {
 							color: "#4285F4"
 						}
 					]
-				},
+				}
+			},
+			stimulus: '<slot name="inequality_widget" />',
+			interactions: [
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -262,9 +271,8 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				"<p>Use the number line to compare the numbers.</p>",
-				{
+			widgets: {
+				vertical_nl: {
 					type: "numberLine",
 					width: 120,
 					height: 350,
@@ -288,9 +296,10 @@ describe("QTI Compiler", () => {
 							labelPosition: "left"
 						}
 					]
-				},
-				"<p>Complete the statements.</p>",
-				'<p>On the number line, <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="purple"><mo>-</mo><mn>1.4</mn></mstyle></math> is ',
+				}
+			},
+			stimulus: '<p>Use the number line to compare the numbers.</p><slot name="vertical_nl" />',
+			interactions: [
 				{
 					type: "inlineChoiceInteraction",
 					responseIdentifier: "RESPONSE_POS",
@@ -300,8 +309,6 @@ describe("QTI Compiler", () => {
 						{ identifier: "BELOW", content: "<p>below</p>" }
 					]
 				},
-				' <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="maroon"><mo>-</mo><mn>6.4</mn></mstyle></math>.</p>',
-				'<p>This means <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="purple"><mo>-</mo><mn>1.4</mn></mstyle></math> is ',
 				{
 					type: "inlineChoiceInteraction",
 					responseIdentifier: "RESPONSE_COMP",
@@ -310,8 +317,7 @@ describe("QTI Compiler", () => {
 						{ identifier: "GT", content: "<p>greater than</p>" },
 						{ identifier: "LT", content: "<p>less than</p>" }
 					]
-				},
-				' <math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathcolor="maroon"><mo>-</mo><mn>6.4</mn></mstyle></math>.</p>'
+				}
 			],
 			feedback: {
 				correct:
@@ -337,9 +343,8 @@ describe("QTI Compiler", () => {
 				{ identifier: "RESP_C", cardinality: "single", baseType: "integer", correct: 27, mapping: null },
 				{ identifier: "RESP_D", cardinality: "single", baseType: "integer", correct: 30, mapping: null }
 			],
-			body: [
-				'<p>The Cold Be Gone Company conducted a study with <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math> participants. Each participant either <em>received</em> cold medicine or <em>did not receive</em> cold medicine, and the company recorded whether the participant\'s cold lasted <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math> days or longer.</p>',
-				{
+			widgets: {
+				venn_widget: {
 					type: "vennDiagram",
 					width: 350,
 					height: 262,
@@ -348,8 +353,7 @@ describe("QTI Compiler", () => {
 					intersectionCount: 23,
 					outsideCount: 30
 				},
-				"<p>Complete the following two-way frequency table.</p>",
-				{
+				table_widget: {
 					type: "dataTable",
 					title: null,
 					columns: [
@@ -372,7 +376,10 @@ describe("QTI Compiler", () => {
 					],
 					footer: null
 				}
-			],
+			},
+			stimulus:
+				'<p>The Cold Be Gone Company conducted a study with <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math> participants. Each participant either <em>received</em> cold medicine or <em>did not receive</em> cold medicine, and the company recorded whether the participant\'s cold lasted <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math> days or longer.</p><slot name="venn_widget" /><p>Complete the following two-way frequency table.</p><slot name="table_widget" />',
+			interactions: [],
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> The completed table is:</p><table class="qti-bordered"><thead><tr><th scope="col"></th><th scope="col" class="qti-align-center">Received cold medicine</th><th scope="col" class="qti-align-center">Did not receive cold medicine</th></tr></thead><tbody><tr><th scope="row" class="qti-align-left">Cold <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>≥</mo></math> 7 days</th><td class="qti-align-center">23</td><td class="qti-align-center">20</td></tr><tr><th scope="row" class="qti-align-left">Cold <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math> 7 days</th><td class="qti-align-center">27</td><td class="qti-align-center">30</td></tr></tbody></table>',
@@ -400,24 +407,39 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				'<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of the following rectangle is shaded.</p>',
-				{
+			widgets: {
+				stimulus_shape: {
 					type: "partitionedShape",
 					width: 180,
 					height: 88,
 					layout: null,
-					shapes: [
-						{
-							type: "rectangle",
-							totalParts: 6,
-							shadedParts: 3,
-							rows: 1,
-							columns: 6,
-							shadeColor: null
-						}
-					]
+					shapes: [{ type: "rectangle", totalParts: 6, shadedParts: 3, rows: 1, columns: 6, shadeColor: null }]
 				},
+				choice_a_shape: {
+					type: "partitionedShape",
+					width: 180,
+					height: 88,
+					layout: null,
+					shapes: [{ type: "rectangle", totalParts: 8, shadedParts: 4, rows: 2, columns: 4, shadeColor: null }]
+				},
+				choice_b_shape: {
+					type: "partitionedShape",
+					width: 180,
+					height: 88,
+					layout: null,
+					shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 2, rows: 2, columns: 2, shadeColor: null }]
+				},
+				choice_c_shape: {
+					type: "partitionedShape",
+					width: 180,
+					height: 88,
+					layout: null,
+					shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 3, rows: 2, columns: 2, shadeColor: null }]
+				}
+			},
+			stimulus:
+				'<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of the following rectangle is shaded.</p><slot name="stimulus_shape" />',
+			interactions: [
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -429,37 +451,19 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: {
-								type: "partitionedShape",
-								width: 180,
-								height: 88,
-								layout: null,
-								shapes: [{ type: "rectangle", totalParts: 8, shadedParts: 4, rows: 2, columns: 4, shadeColor: null }]
-							},
+							content: '<slot name="choice_a_shape" />',
 							feedback:
 								'<p>Correct! This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>4</mn><mn>8</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math>.</p>'
 						},
 						{
 							identifier: "B",
-							content: {
-								type: "partitionedShape",
-								width: 180,
-								height: 88,
-								layout: null,
-								shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 2, rows: 2, columns: 2, shadeColor: null }]
-							},
+							content: '<slot name="choice_b_shape" />',
 							feedback:
 								'<p>Correct! This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>4</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math>.</p>'
 						},
 						{
 							identifier: "C",
-							content: {
-								type: "partitionedShape",
-								width: 180,
-								height: 88,
-								layout: null,
-								shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 3, rows: 2, columns: 2, shadeColor: null }]
-							},
+							content: '<slot name="choice_c_shape" />',
 							feedback:
 								'<p>Not quite. This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math>. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math> is not equal to <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> (which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>), this is incorrect.</p>'
 						}
@@ -493,8 +497,8 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				{
+			widgets: {
+				multi_shape: {
 					type: "partitionedShape",
 					width: 320,
 					height: 103,
@@ -504,7 +508,10 @@ describe("QTI Compiler", () => {
 						{ type: "circle", totalParts: 4, shadedParts: 1, rows: null, columns: null, shadeColor: null },
 						{ type: "circle", totalParts: 4, shadedParts: 1, rows: null, columns: null, shadeColor: null }
 					]
-				},
+				}
+			},
+			stimulus: '<slot name="multi_shape" />',
+			interactions: [
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -560,19 +567,12 @@ describe("QTI Compiler", () => {
 				{ identifier: "RESPONSE_Y", cardinality: "single", baseType: "integer", correct: -7, mapping: null },
 				{ identifier: "RESPONSE_R", cardinality: "single", baseType: "integer", correct: 5, mapping: null }
 			],
-			body: [
-				"<p>A certain circle can be represented by the following equation.</p>",
-				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></mrow></math>',
-				"<p>What is the center of this circle?</p>",
-				"<p>(",
+			stimulus:
+				'<p>A certain circle can be represented by the following equation.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></mrow></math><p>What is the center of this circle?</p>',
+			interactions: [
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_X", expectedLength: 3 },
-				"<span>, </span>",
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_Y", expectedLength: 3 },
-				")</p>",
-				"<p>What is the radius of this circle?</p>",
-				"<p>",
-				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_R", expectedLength: 2 },
-				"<span> units</span></p>"
+				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_R", expectedLength: 2 }
 			],
 			feedback: {
 				correct:
@@ -600,9 +600,8 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				"<p>The following table shows each of Haruka's final exam scores last semester.</p>",
-				{
+			widgets: {
+				score_table: {
 					type: "dataTable",
 					title: null,
 					columns: [
@@ -617,15 +616,16 @@ describe("QTI Compiler", () => {
 						{ exam: "Chemistry", score: "?" }
 					],
 					footer: null
-				},
-				'<p>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka\'s final exam score in chemistry.</p>',
-				"<p>",
+				}
+			},
+			stimulus:
+				'<p>The following table shows each of Haruka\'s final exam scores last semester.</p><slot name="score_table" /><p>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka\'s final exam score in chemistry.</p>',
+			interactions: [
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
-				},
-				"<span> points</span></p>"
+				}
 			],
 			feedback: {
 				correct:
@@ -654,9 +654,8 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				"<em>The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</em>",
-				{
+			widgets: {
+				gdp_table: {
 					type: "dataTable",
 					title: null,
 					columns: [
@@ -698,7 +697,11 @@ describe("QTI Compiler", () => {
 						}
 					],
 					footer: null
-				},
+				}
+			},
+			stimulus:
+				'<p><em>The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</em></p><slot name="gdp_table" />',
+			interactions: [
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -768,8 +771,9 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
+			stimulus:
 				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mrow><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mrow></mtd></mtr><mtr><mtd columnalign="left"><mrow><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>&gt;</mo><mn>2</mn></mrow></mtd></mtr></mtable></mrow></mrow></math>',
+			interactions: [
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -777,7 +781,7 @@ describe("QTI Compiler", () => {
 					minChoices: 1,
 					maxChoices: 1,
 					prompt:
-						'Is the function given below continuous/differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>?',
+						'<p>Is the function given below continuous/differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>?</p>',
 					choices: [
 						{
 							identifier: "A",
@@ -832,18 +836,14 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				'<p>Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.</p>',
-				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∬</mo><mi>S</mi></msub><mrow><mo>[</mo><mrow><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow><mo>]</mo></mrow><mo>·</mo><mi>d</mi><mi>S</mi></mrow></math>',
-				"<p>Use Stokes' theorem to rewrite the surface integral as a line integral.</p>",
-				'<p><em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em></p>',
-				'<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∮</mo><mi>C</mi></msub><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mn>2</mn><mi>y</mi><mo stretchy="false">)</mo><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mn>2</mn><msup><mi>z</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo></mrow></math>',
+			stimulus:
+				'<p>Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∬</mo><mi>S</mi></msub><mrow><mo>[</mo><mrow><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow><mo>]</mo></mrow><mo>·</mo><mi>d</mi><mi>S</mi></mrow></math><p>Use Stokes\' theorem to rewrite the surface integral as a line integral.</p><p><em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em></p>',
+			interactions: [
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 20
-				},
-				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mover><mi>k</mi><mo>^</mo></mover><mo stretchy="false">)</mo><mo>·</mo><mi>d</mi><mi>r</mi></mrow></math></p>'
+				}
 			],
 			feedback: {
 				correct:
@@ -871,9 +871,8 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				'This table gives select values of the differentiable function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>.',
-				{
+			widgets: {
+				h_table: {
 					type: "dataTable",
 					title: null,
 					columns: [
@@ -907,7 +906,11 @@ describe("QTI Compiler", () => {
 						}
 					],
 					footer: null
-				},
+				}
+			},
+			stimulus:
+				'This table gives select values of the differentiable function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>.<slot name="h_table" />',
+			interactions: [
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -971,7 +974,42 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
+			widgets: {
+				choice_3_apples: {
+					type: "discreteObjectRatioDiagram",
+					title: null,
+					width: 250,
+					height: 120,
+					layout: "grid",
+					objects: [{ count: 3, emoji: "🍎" }]
+				},
+				choice_4_apples: {
+					type: "discreteObjectRatioDiagram",
+					title: null,
+					width: 250,
+					height: 120,
+					layout: "grid",
+					objects: [{ count: 4, emoji: "🍎" }]
+				},
+				choice_5_apples: {
+					type: "discreteObjectRatioDiagram",
+					title: null,
+					width: 250,
+					height: 120,
+					layout: "grid",
+					objects: [{ count: 5, emoji: "🍎" }]
+				},
+				choice_6_apples: {
+					type: "discreteObjectRatioDiagram",
+					title: null,
+					width: 250,
+					height: 120,
+					layout: "grid",
+					objects: [{ count: 6, emoji: "🍎" }]
+				}
+			},
+			stimulus: "",
+			interactions: [
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -982,50 +1020,22 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "CHOICE_3",
-							content: {
-								type: "discreteObjectRatioDiagram",
-								title: null,
-								width: 250,
-								height: 120,
-								layout: "grid",
-								objects: [{ count: 3, emoji: "🍎" }]
-							},
+							content: '<slot name="choice_3_apples" />',
 							feedback: null
 						},
 						{
 							identifier: "CHOICE_4",
-							content: {
-								type: "discreteObjectRatioDiagram",
-								title: null,
-								width: 250,
-								height: 120,
-								layout: "grid",
-								objects: [{ count: 4, emoji: "🍎" }]
-							},
+							content: '<slot name="choice_4_apples" />',
 							feedback: null
 						},
 						{
 							identifier: "CHOICE_5",
-							content: {
-								type: "discreteObjectRatioDiagram",
-								title: null,
-								width: 250,
-								height: 120,
-								layout: "grid",
-								objects: [{ count: 5, emoji: "🍎" }]
-							},
+							content: '<slot name="choice_5_apples" />',
 							feedback: null
 						},
 						{
 							identifier: "CHOICE_6",
-							content: {
-								type: "discreteObjectRatioDiagram",
-								title: null,
-								width: 250,
-								height: 120,
-								layout: "grid",
-								objects: [{ count: 6, emoji: "🍎" }]
-							},
+							content: '<slot name="choice_6_apples" />',
 							feedback: null
 						}
 					]
@@ -1057,9 +1067,8 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				"<p>A second grade classroom has a bin of shapes.</p>",
-				{
+			widgets: {
+				shapes_table: {
 					type: "dataTable",
 					title: null,
 					columns: [
@@ -1075,6 +1084,69 @@ describe("QTI Compiler", () => {
 					],
 					footer: null
 				},
+				chart_a: {
+					type: "barChart",
+					title: null,
+					width: 400,
+					height: 300,
+					xAxisLabel: "Type of shape",
+					yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
+					data: [
+						{ label: "Triangles", value: 8, state: null },
+						{ label: "Circles", value: 5, state: null },
+						{ label: "Rectangles", value: 3, state: null },
+						{ label: "Squares", value: 9, state: null }
+					],
+					barColor: null
+				},
+				chart_b: {
+					type: "barChart",
+					title: null,
+					width: 400,
+					height: 300,
+					xAxisLabel: "Type of shape",
+					yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
+					data: [
+						{ label: "Triangles", value: 9, state: null },
+						{ label: "Circles", value: 5, state: null },
+						{ label: "Rectangles", value: 3, state: null },
+						{ label: "Squares", value: 8, state: null }
+					],
+					barColor: null
+				},
+				chart_c: {
+					type: "barChart",
+					title: null,
+					width: 400,
+					height: 300,
+					xAxisLabel: "Type of shape",
+					yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
+					data: [
+						{ label: "Triangles", value: 7, state: null },
+						{ label: "Circles", value: 4, state: null },
+						{ label: "Rectangles", value: 2, state: null },
+						{ label: "Squares", value: 10, state: null }
+					],
+					barColor: null
+				},
+				chart_d: {
+					type: "barChart",
+					title: null,
+					width: 400,
+					height: 300,
+					xAxisLabel: "Type of shape",
+					yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
+					data: [
+						{ label: "Triangles", value: 4, state: null },
+						{ label: "Circles", value: 8, state: null },
+						{ label: "Rectangles", value: 9, state: null },
+						{ label: "Squares", value: 3, state: null }
+					],
+					barColor: null
+				}
+			},
+			stimulus: '<p>A second grade classroom has a bin of shapes.</p><slot name="shapes_table" />',
+			interactions: [
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -1085,78 +1157,22 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: {
-								type: "barChart",
-								title: null,
-								width: 400,
-								height: 300,
-								xAxisLabel: "Type of shape",
-								yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
-								data: [
-									{ label: "Triangles", value: 8, state: null },
-									{ label: "Circles", value: 5, state: null },
-									{ label: "Rectangles", value: 3, state: null },
-									{ label: "Squares", value: 9, state: null }
-								],
-								barColor: null
-							},
+							content: '<slot name="chart_a" />',
 							feedback: null
 						},
 						{
 							identifier: "B",
-							content: {
-								type: "barChart",
-								title: null,
-								width: 400,
-								height: 300,
-								xAxisLabel: "Type of shape",
-								yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
-								data: [
-									{ label: "Triangles", value: 9, state: null },
-									{ label: "Circles", value: 5, state: null },
-									{ label: "Rectangles", value: 3, state: null },
-									{ label: "Squares", value: 8, state: null }
-								],
-								barColor: null
-							},
+							content: '<slot name="chart_b" />',
 							feedback: null
 						},
 						{
 							identifier: "C",
-							content: {
-								type: "barChart",
-								title: null,
-								width: 400,
-								height: 300,
-								xAxisLabel: "Type of shape",
-								yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
-								data: [
-									{ label: "Triangles", value: 7, state: null },
-									{ label: "Circles", value: 4, state: null },
-									{ label: "Rectangles", value: 2, state: null },
-									{ label: "Squares", value: 10, state: null }
-								],
-								barColor: null
-							},
+							content: '<slot name="chart_c" />',
 							feedback: null
 						},
 						{
 							identifier: "D",
-							content: {
-								type: "barChart",
-								title: null,
-								width: 400,
-								height: 300,
-								xAxisLabel: "Type of shape",
-								yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
-								data: [
-									{ label: "Triangles", value: 4, state: null },
-									{ label: "Circles", value: 8, state: null },
-									{ label: "Rectangles", value: 9, state: null },
-									{ label: "Squares", value: 3, state: null }
-								],
-								barColor: null
-							},
+							content: '<slot name="chart_d" />',
 							feedback: null
 						}
 					]
@@ -1189,8 +1205,59 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
+			widgets: {
+				plot_a: {
+					type: "dotPlot",
+					width: 450,
+					height: 150,
+					axis: { min: 0, max: 12, tickInterval: 2, label: null },
+					data: [
+						{ value: 3, count: 1 },
+						{ value: 8, count: 2 },
+						{ value: 11, count: 1 }
+					],
+					dotColor: "#0074c8",
+					dotRadius: 8
+				},
+				plot_b: {
+					type: "dotPlot",
+					width: 450,
+					height: 150,
+					axis: { min: 0, max: 12, tickInterval: 2, label: null },
+					data: [
+						{ value: 3, count: 1 },
+						{ value: 8, count: 1 },
+						{ value: 11, count: 1 }
+					],
+					dotColor: "#0074c8",
+					dotRadius: 8
+				},
+				plot_c: {
+					type: "dotPlot",
+					width: 450,
+					height: 150,
+					axis: { min: 0, max: 12, tickInterval: 2, label: null },
+					data: [{ value: 4, count: 4 }],
+					dotColor: "#0074c8",
+					dotRadius: 8
+				},
+				plot_d: {
+					type: "dotPlot",
+					width: 450,
+					height: 150,
+					axis: { min: 0, max: 12, tickInterval: 2, label: null },
+					data: [
+						{ value: 4, count: 1 },
+						{ value: 9, count: 2 },
+						{ value: 12, count: 1 }
+					],
+					dotColor: "#0074c8",
+					dotRadius: 8
+				}
+			},
+			stimulus:
 				'The lengths of 4 pencils were measured. The lengths are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm.',
+			interactions: [
 				{
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -1201,69 +1268,25 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: {
-								type: "dotPlot",
-								width: 450,
-								height: 150,
-								axis: { min: 0, max: 12, tickInterval: 2, label: null },
-								data: [
-									{ value: 3, count: 1 },
-									{ value: 8, count: 2 },
-									{ value: 11, count: 1 }
-								],
-								dotColor: "#0074c8",
-								dotRadius: 8
-							},
+							content: '<slot name="plot_a" />',
 							feedback:
 								"<p>This plot correctly shows a dot for each of the 4 pencils at its measured length. There is one dot at 3, two dots at 8, and one dot at 11.</p>"
 						},
 						{
 							identifier: "B",
-							content: {
-								type: "dotPlot",
-								width: 450,
-								height: 150,
-								axis: { min: 0, max: 12, tickInterval: 2, label: null },
-								data: [
-									{ value: 3, count: 1 },
-									{ value: 8, count: 1 },
-									{ value: 11, count: 1 }
-								],
-								dotColor: "#0074c8",
-								dotRadius: 8
-							},
+							content: '<slot name="plot_b" />',
 							feedback:
 								'<p>This plot only shows one dot for the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm. Remember, there were two pencils with this length, so there should be two dots above the number <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>.</p>'
 						},
 						{
 							identifier: "C",
-							content: {
-								type: "dotPlot",
-								width: 450,
-								height: 150,
-								axis: { min: 0, max: 12, tickInterval: 2, label: null },
-								data: [{ value: 4, count: 4 }],
-								dotColor: "#0074c8",
-								dotRadius: 8
-							},
+							content: '<slot name="plot_c" />',
 							feedback:
 								'<p>This plot shows four dots above the number <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math>. This represents the total number of pencils, not their individual lengths.</p>'
 						},
 						{
 							identifier: "D",
-							content: {
-								type: "dotPlot",
-								width: 450,
-								height: 150,
-								axis: { min: 0, max: 12, tickInterval: 2, label: null },
-								data: [
-									{ value: 4, count: 1 },
-									{ value: 9, count: 2 },
-									{ value: 12, count: 1 }
-								],
-								dotColor: "#0074c8",
-								dotRadius: 8
-							},
+							content: '<slot name="plot_d" />',
 							feedback:
 								"<p>This plot shows lengths of 4 cm, 9 cm, and 12 cm. Check the data again carefully to make sure the dots are placed above the correct numbers on the line plot.</p>"
 						}
@@ -1297,10 +1320,8 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				"<p>The Lions, Tigers, and Bears won baseball games last summer.</p>",
-				"<p>This bar graph shows how many games each team won.</p>",
-				{
+			widgets: {
+				games_chart: {
 					type: "barChart",
 					title: null,
 					width: 480,
@@ -1318,15 +1339,16 @@ describe("QTI Compiler", () => {
 						{ label: "Bears", value: 7, state: null }
 					],
 					barColor: null
-				},
-				"<p>How many games did the Lions win?</p>",
-				"<p>",
+				}
+			},
+			stimulus:
+				'<p>The Lions, Tigers, and Bears won baseball games last summer.</p><p>This bar graph shows how many games each team won.</p><slot name="games_chart" /><p>How many games did the Lions win?</p>',
+			interactions: [
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
-				},
-				"<span> games</span></p>"
+				}
 			],
 			feedback: {
 				correct:
@@ -1355,9 +1377,8 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				"<p>The heights of Sabrina's dolls are shown below.</p>",
-				{
+			widgets: {
+				doll_plot: {
 					type: "dotPlot",
 					width: 350,
 					height: 200,
@@ -1375,15 +1396,16 @@ describe("QTI Compiler", () => {
 					],
 					dotColor: null,
 					dotRadius: 6
-				},
-				'<p>How many dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> centimeters?</p>',
-				"<p>",
+				}
+			},
+			stimulus:
+				'<p>The heights of Sabrina\'s dolls are shown below.</p><slot name="doll_plot" /><p>How many dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> centimeters?</p>',
+			interactions: [
 				{
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
-				},
-				"<span> dolls</span></p>"
+				}
 			],
 			feedback: {
 				correct:
@@ -1407,9 +1429,8 @@ describe("QTI Compiler", () => {
 				{ identifier: "RESPONSE_HR", cardinality: "single", baseType: "integer", correct: 12, mapping: null },
 				{ identifier: "RESPONSE_MIN", cardinality: "single", baseType: "integer", correct: 55, mapping: { "05": 5 } }
 			],
-			body: [
-				"<p>Look at the following number line.</p>",
-				{
+			widgets: {
+				time_line: {
 					type: "numberLine",
 					width: 700,
 					height: 100,
@@ -1426,13 +1447,13 @@ describe("QTI Compiler", () => {
 						{ value: 60, label: "1:00" }
 					],
 					points: [{ value: 55, label: "A", color: "#A0522D", labelPosition: "below" }]
-				},
-				"<p>What time is shown on the number line?</p>",
-				"<p>",
+				}
+			},
+			stimulus:
+				'<p>Look at the following number line.</p><slot name="time_line" /><p>What time is shown on the number line?</p>',
+			interactions: [
 				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_HR", expectedLength: 2 },
-				"<span> : </span>",
-				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_MIN", expectedLength: 2 },
-				"</p>"
+				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_MIN", expectedLength: 2 }
 			],
 			feedback: {
 				correct: '<p><span class="qti-keyword-emphasis">Correct!</span> The time shown is 12:55.</p>',
@@ -1460,9 +1481,9 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			body: [
-				'<p>Compare using <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>, or <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>.</p>',
-				'<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math>',
+			stimulus:
+				'<p>Compare using <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>, or <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>.</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math> ___ <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math></p>',
+			interactions: [
 				{
 					type: "inlineChoiceInteraction",
 					responseIdentifier: "RESPONSE",
@@ -1481,8 +1502,7 @@ describe("QTI Compiler", () => {
 							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>'
 						}
 					]
-				},
-				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math></p>'
+				}
 			],
 			feedback: {
 				correct:

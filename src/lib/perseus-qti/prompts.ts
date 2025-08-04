@@ -569,11 +569,18 @@ ${perseusJsonString}
 
 ## Instructions & Mapping Guidelines
 - **identifier & title:** Use the 'id' and 'exercise title' from the source data.
-- **body:** The Perseus 'question.content' and 'question.widgets' must be converted into an array of strings (for HTML/MathML) and widget objects for the 'body' field.
-- **Widgets:** Map Perseus widget info (e.g., 'double-number-line 1') to the corresponding widget object in the 'WidgetSchema' (e.g., \`{ "type": "doubleNumberLine", ... }\`). Ensure all required properties for that widget type are populated from the Perseus widget definition.
-- **Interactions:** Perseus question types like 'radio', 'order', or 'text-input' must be mapped to the correct QTI interaction object (\`choiceInteraction\`, \`orderInteraction\`, \`textEntryInteraction\`).
+- **stimulus:** The main content/prompt text from Perseus 'question.content' goes in the 'stimulus' field as a single HTML string. Any Perseus widgets (e.g., [[☃ double-number-line 1]]) should be replaced with \`<slot name="widget_id" />\` tags.
+- **widgets:** Create a map of widget identifiers to widget objects. Map Perseus widget info (e.g., 'double-number-line 1') to the corresponding widget object in the 'WidgetSchema' (e.g., \`{ "type": "doubleNumberLine", ... }\`). Ensure all required properties for that widget type are populated from the Perseus widget definition. The widget ID used in the map should match the name attribute in the corresponding \`<slot>\` tag.
+- **interactions:** Perseus question types like 'radio', 'order', or 'text-input' must be mapped to the correct QTI interaction object (\`choiceInteraction\`, \`orderInteraction\`, \`textEntryInteraction\`) and placed in the 'interactions' array. Choice content and prompts can also contain \`<slot>\` tags to reference widgets.
 - **Response Declarations:** The 'question.answers' from Perseus must be used to create the \`responseDeclarations\`, including the correct answer value.
 - **Feedback:** Map the 'hints' or answer explanations to the 'feedback.correct' and 'feedback.incorrect' fields.
+
+## Critical Schema Structure
+The new schema has a flat structure with these key fields:
+- \`stimulus\`: A single HTML string for the main content
+- \`interactions\`: An array of interaction objects
+- \`widgets\`: A map of widget IDs to widget definitions
+- NO \`body\` array - this has been removed!
 
 Your output must be a single, complete JSON object.
 `

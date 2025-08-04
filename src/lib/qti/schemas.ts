@@ -46,8 +46,8 @@ export function createDynamicSchemas(widgetKeys: (keyof typeof typedSchemas)[]) 
 	}
 
 	const SimpleContentSchema = z
-		.union([z.string(), DynamicWidgetSchema])
-		.describe("Content that can be either plain text/MathML or a structured widget visualization.")
+		.string()
+		.describe("Content that is plain text/MathML. Rich visualizations are referenced via <slot name='...'> elements.")
 
 	// All dependent schemas must be defined *inside* this factory to use the dynamic SimpleContentSchema
 	const SimpleChoiceSchema = z
@@ -136,10 +136,6 @@ export function createDynamicSchemas(widgetKeys: (keyof typeof typedSchemas)[]) 
 		OrderInteractionSchema
 	])
 
-	const ItemBodyElementSchema = z
-		.union([SimpleContentSchema, AnyInteractionSchema])
-		.describe("A flexible element that can be either static content or an interactive component.")
-
 	const ResponseDeclarationSchema = z
 		.object({
 			identifier: z.string().describe("Unique ID linking an interaction to this response declaration."),
@@ -175,7 +171,12 @@ export function createDynamicSchemas(widgetKeys: (keyof typeof typedSchemas)[]) 
 			responseDeclarations: z
 				.array(ResponseDeclarationSchema)
 				.describe("Defines correct answers and scoring for all interactions in this item."),
-			body: z.array(ItemBodyElementSchema).describe("The item content: mix of text, media, and interactive elements."),
+			widgets: z
+				.record(DynamicWidgetSchema)
+				.optional()
+				.describe("A map of widget identifiers to their full widget object definitions."),
+			stimulus: z.string().describe("The main content of the item body, with slots for widgets."),
+			interactions: z.array(AnyInteractionSchema).describe("An array of interactions that appear after the stimulus."),
 			feedback: FeedbackSchema.describe("Global feedback messages for the entire assessment item.")
 		})
 		.strict()

@@ -30,12 +30,11 @@ import {
 	generateTapeDiagram,
 	generateUnitBlockDiagram,
 	generateVennDiagram,
-	generateVerticalArithmeticSetup,
-	WidgetSchema
+	generateVerticalArithmeticSetup
 } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import type { AnyInteraction, AssessmentItem, AssessmentItemInput } from "./schemas"
-import { AnyInteractionSchema, AssessmentItemSchema } from "./schemas"
+import { AssessmentItemSchema } from "./schemas"
 
 function validateHtmlContent(content: string, context: string): void {
 	// Basic validation to ensure the content looks like HTML
@@ -118,47 +117,44 @@ function encodeDataUri(content: string): string {
 	return `${isSvg ? "data:image/svg+xml" : "data:text/html"},${encoded}`
 }
 
-function renderContent(content: unknown): string {
-	if (typeof content === "string") {
-		// Validate that the string is well-formed HTML
-		validateHtmlContent(content, "content block")
-		// Pass strings through directly. Authors are responsible for providing
-		// necessary wrapping tags like <p>.
+function processSlots(content: string, widgets?: AssessmentItem["widgets"]): string {
+	if (!widgets && content.includes("<slot")) {
+		throw errors.new(`content contains a <slot> but no widgets map was provided: "${content.substring(0, 50)}..."`)
+	}
+	if (!widgets) {
 		return content
 	}
 
-	if (typeof content === "object" && content !== null && "type" in content) {
-		const parseResult = WidgetSchema.safeParse(content)
-		if (parseResult.success) {
-			const widget = parseResult.data
-			const generatedHtml = generateWidget(widget)
-
-			// Check if the generated content is SVG
-			const isSvg = generatedHtml.trim().startsWith("<svg")
-
-			if (isSvg) {
-				// For SVG content, embed it in an img tag with data URI
-				const dataUri = encodeDataUri(generatedHtml)
-				const altText = escapeXmlAttribute(`A visual element of type ${widget.type}.`)
-				return `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`
-			}
-
-			// For HTML content, return it directly
-			return generatedHtml
+	return content.replace(/<slot\s+name="([^"]+)"\s*\/>/g, (_match, widgetName) => {
+		const widget = widgets[widgetName]
+		if (!widget) {
+			// CRITICAL: Fail loudly on missing widget as per no-fallbacks-save-human-lives.mdc
+			throw errors.new(`missing widget definition for slot: '${widgetName}'`)
 		}
-	}
-	throw errors.new(`Invalid content block provided: ${JSON.stringify(content)}`)
+
+		const generatedHtml = generateWidget(widget)
+		const isSvg = generatedHtml.trim().startsWith("<svg")
+
+		if (isSvg) {
+			const dataUri = encodeDataUri(generatedHtml)
+			const altText = escapeXmlAttribute(`A visual element of type ${widget.type}.`)
+			return `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`
+		}
+		return generatedHtml
+	})
 }
 
-function compileInteraction(interaction: AnyInteraction): string {
+function compileInteraction(interaction: AnyInteraction, widgets?: AssessmentItem["widgets"]): string {
 	switch (interaction.type) {
 		case "choiceInteraction": {
 			// Validate prompt HTML
 			validateHtmlContent(interaction.prompt, "choiceInteraction prompt")
 
+			const processedPrompt = processSlots(interaction.prompt, widgets)
 			const choices = interaction.choices
 				.map((c) => {
-					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderContent(c.content)}`
+					const processedContent = processSlots(c.content, widgets)
+					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
 					if (c.feedback) {
 						validateHtmlContent(c.feedback, `choiceInteraction feedback for choice ${c.identifier}`)
 						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${c.feedback}</qti-feedback-inline>`
@@ -169,7 +165,7 @@ function compileInteraction(interaction: AnyInteraction): string {
 				.join("\n            ")
 
 			return `<qti-choice-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" min-choices="${interaction.minChoices}" max-choices="${interaction.maxChoices}">
-            <qti-prompt>${interaction.prompt}</qti-prompt>
+            <qti-prompt>${processedPrompt}</qti-prompt>
             ${choices}
         </qti-choice-interaction>`
 		}
@@ -177,9 +173,11 @@ function compileInteraction(interaction: AnyInteraction): string {
 			// Validate prompt HTML
 			validateHtmlContent(interaction.prompt, "orderInteraction prompt")
 
+			const processedPrompt = processSlots(interaction.prompt, widgets)
 			const choices = interaction.choices
 				.map((c) => {
-					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderContent(c.content)}`
+					const processedContent = processSlots(c.content, widgets)
+					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
 					if (c.feedback) {
 						validateHtmlContent(c.feedback, `orderInteraction feedback for choice ${c.identifier}`)
 						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${c.feedback}</qti-feedback-inline>`
@@ -190,7 +188,7 @@ function compileInteraction(interaction: AnyInteraction): string {
 				.join("\n            ")
 
 			return `<qti-order-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" orientation="${escapeXmlAttribute(interaction.orientation)}">
-            <qti-prompt>${interaction.prompt}</qti-prompt>
+            <qti-prompt>${processedPrompt}</qti-prompt>
             ${choices}
         </qti-order-interaction>`
 		}
@@ -206,7 +204,7 @@ function compileInteraction(interaction: AnyInteraction): string {
 			const choices = interaction.choices
 				.map(
 					(c) =>
-						`<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderContent(c.content)}</qti-inline-choice>`
+						`<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}">${processSlots(c.content, widgets)}</qti-inline-choice>`
 				)
 				.join("\n                ")
 
@@ -217,20 +215,6 @@ function compileInteraction(interaction: AnyInteraction): string {
 		default:
 			throw errors.new("Unknown interaction type")
 	}
-}
-
-function compileItemBody(body: AssessmentItem["body"]): string {
-	return body
-		.map((element) => {
-			// Use Zod to determine if it's an interaction
-			const interactionResult = AnyInteractionSchema.safeParse(element)
-			if (interactionResult.success) {
-				return compileInteraction(interactionResult.data)
-			}
-			// Otherwise it's content
-			return renderContent(element)
-		})
-		.join("\n        ")
 }
 
 function generateWidget(widget: Widget): string {
@@ -365,7 +349,15 @@ export function compile(itemData: AssessmentItemInput): string {
 	validateHtmlContent(item.feedback.incorrect, "incorrect feedback")
 
 	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)
-	const itemBody = compileItemBody(item.body)
+
+	// REFACTORED: Body compilation logic
+	const stimulusHtml = processSlots(item.stimulus, item.widgets)
+	const interactionsHtml = item.interactions
+		.map((interaction) => compileInteraction(interaction, item.widgets))
+		.join("\n        ")
+
+	const itemBody = `${stimulusHtml}\n        ${interactionsHtml}`.trim()
+
 	const responseProcessing = compileResponseProcessing(item.responseDeclarations)
 
 	return `<?xml version="1.0" encoding="UTF-8"?>
@@ -386,10 +378,10 @@ ${responseDeclarations}
     <qti-item-body>
         ${itemBody}
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
-            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> ${item.feedback.correct}</p></qti-content-body>
+            <qti-content-body>${item.feedback.correct}</qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
-            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> ${item.feedback.incorrect}</p></qti-content-body>
+            <qti-content-body>${item.feedback.incorrect}</qti-content-body>
         </qti-feedback-block>
     </qti-item-body>
 ${responseProcessing}
