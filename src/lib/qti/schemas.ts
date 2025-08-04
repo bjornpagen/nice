@@ -18,17 +18,15 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 
 	const DynamicWidgetsSchema = z.object(widgetShape)
 
-	const SimpleContentSchema = z
-		.string()
-		.describe("Content that is plain text/MathML. Rich visualizations are referenced via <slot name='...'> elements.")
-
 	// All dependent schemas must be defined *inside* this factory to use the dynamic SimpleContentSchema
 	const SimpleChoiceSchema = z
 		.object({
 			identifier: z.string().describe("Unique identifier for this choice option, used for response matching."),
-			content: SimpleContentSchema.describe(
-				"The visible content of this choice, supporting text/MathML or rich widgets."
-			),
+			content: z
+				.string()
+				.describe(
+					"Content that is plain text/MathML. Rich visualizations are referenced via <slot name='...'> elements."
+				),
 			feedback: z.string().nullable().describe("Optional feedback text shown when this choice is selected.")
 		})
 		.strict()
