@@ -1,13 +1,13 @@
 "use client"
 
 import * as React from "react"
+import { CourseChallenge } from "@/app/(user)/[subject]/[course]/(overview)/components/course-challenge"
+import { CourseTab } from "@/app/(user)/[subject]/[course]/(overview)/components/course-tab"
+import { UnitTab } from "@/app/(user)/[subject]/[course]/(overview)/components/unit-tab"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import type { Course, CourseChallenge as CourseChallengeType } from "@/lib/types/domain"
-import { CourseChallenge as CourseChallengeComponent } from "./course-challenge"
-import { CourseTab } from "./course-tab"
-import { UnitTab } from "./unit-tab"
 
-export function CourseSidebar({
+export function Sidebar({
 	course,
 	lessonCount,
 	challenges
@@ -42,7 +42,7 @@ export function CourseSidebar({
 					{challengesData.length > 0 && (
 						<div className="mt-8">
 							{challengesData.map((challenge) => (
-								<CourseChallengeComponent key={challenge.id} path={challenge.path} />
+								<CourseChallenge key={challenge.id} path={challenge.path} />
 							))}
 						</div>
 					)}

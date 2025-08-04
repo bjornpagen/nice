@@ -2,6 +2,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type * as React from "react"
+import { LessonLayout } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[lesson]/components/lesson-layout"
 import { fetchCoursePageData } from "@/lib/data/course"
 import { fetchLessonLayoutData } from "@/lib/data/lesson"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
@@ -9,7 +10,6 @@ import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { assertNoEncodedColons, normalizeParams } from "@/lib/utils"
-import { LessonLayout } from "./components/lesson-layout"
 
 // The layout component is NOT async. It orchestrates promises and renders immediately.
 export default function Layout({
@@ -48,7 +48,7 @@ export default function Layout({
 
 		if (courseResult.error) {
 			logger.error("failed to fetch course data for sidebar", { error: courseResult.error })
-			return undefined
+			throw errors.wrap(courseResult.error, "sidebar course data fetch")
 		}
 
 		// Make sure the courseData exists
@@ -256,12 +256,14 @@ export default function Layout({
 						userId: user.id,
 						error: publicMetadataResult.error
 					})
-					return new Map<string, AssessmentProgress>()
+					throw errors.wrap(publicMetadataResult.error, "clerk user metadata validation")
 				}
 				if (publicMetadataResult.data.sourceId) {
 					return getUserUnitProgress(publicMetadataResult.data.sourceId, data.courseData.id)
 				}
 			}
+			// For unauthenticated users or users without a sourceId, an empty map is acceptable.
+			// This is not a fallback for an error state, but a valid state for the user.
 			return new Map<string, AssessmentProgress>()
 		}
 	)

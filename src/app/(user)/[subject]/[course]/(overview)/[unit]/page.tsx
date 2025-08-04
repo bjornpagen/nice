@@ -2,12 +2,12 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
+import { Content } from "@/app/(user)/[subject]/[course]/(overview)/[unit]/components/content"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
 import { fetchUnitPageData } from "@/lib/data/unit"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { UnitPageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
-import { Content } from "./components/content"
 
 // ✅ CORRECT: Non-async Server Component following RSC patterns
 export default function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
@@ -29,12 +29,14 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 						userId: user.id,
 						error: publicMetadataResult.error
 					})
-					return new Map<string, AssessmentProgress>()
+					throw errors.wrap(publicMetadataResult.error, "clerk user metadata validation")
 				}
 				if (publicMetadataResult.data.sourceId) {
 					return getUserUnitProgress(publicMetadataResult.data.sourceId, unitData.course.id)
 				}
 			}
+			// For unauthenticated users or users without a sourceId, an empty map is acceptable.
+			// This is not a fallback for an error state, but a valid state for the user.
 			return new Map<string, AssessmentProgress>()
 		}
 	)

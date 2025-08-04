@@ -2,16 +2,16 @@
 
 import { Info } from "lucide-react"
 import * as React from "react"
+import { Header } from "@/app/(user)/[subject]/[course]/(overview)/components/header"
+import { Legend } from "@/app/(user)/[subject]/[course]/(overview)/components/legend"
+import { LessonSection } from "@/app/(user)/[subject]/[course]/(overview)/components/lesson"
+import { Progress } from "@/app/(user)/[subject]/[course]/(overview)/components/progress"
+import { QuizSection } from "@/app/(user)/[subject]/[course]/(overview)/components/quiz"
+import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/section"
+import { UnitTestSection } from "@/app/(user)/[subject]/[course]/(overview)/components/unit-test"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { UnitChild } from "@/lib/types/domain"
 import type { UnitPageData } from "@/lib/types/page"
-import { Header } from "../../components/header"
-import { Legend } from "../../components/legend"
-import { LessonSection } from "../../components/lesson"
-import { Progress } from "../../components/progress"
-import { QuizSection } from "../../components/quiz"
-import { Section } from "../../components/section"
-import { UnitTestSection } from "../../components/unit-test"
 
 export function Content({
 	dataPromise,

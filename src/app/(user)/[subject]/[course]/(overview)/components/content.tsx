@@ -3,17 +3,17 @@
 import { Info } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
-import { Button } from "@/components/ui/button"
-import type { CoursePageData } from "@/lib/types/page"
-import type { CourseProgressData } from "../page"
-import { CourseChallenge } from "./course-challenge"
-import { Header } from "./header"
-import { Legend } from "./legend"
-import { ProgressOverview } from "./progress-overview"
-import { Section } from "./section"
+import { CourseChallenge } from "@/app/(user)/[subject]/[course]/(overview)/components/course-challenge"
+import { Header } from "@/app/(user)/[subject]/[course]/(overview)/components/header"
+import { Legend } from "@/app/(user)/[subject]/[course]/(overview)/components/legend"
+import { ProgressOverview } from "@/app/(user)/[subject]/[course]/(overview)/components/progress-overview"
+import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/section"
 // REMOVED: The sidebar is no longer imported or rendered here.
 // import { CourseSidebar } from "./sidebar"
-import { UnitOverviewSection } from "./unit-overview-section"
+import { UnitOverviewSection } from "@/app/(user)/[subject]/[course]/(overview)/components/unit-overview-section"
+import type { CourseProgressData } from "@/app/(user)/[subject]/[course]/(overview)/page"
+import { Button } from "@/components/ui/button"
+import type { CoursePageData } from "@/lib/types/page"
 
 export function Content({
 	dataPromise,
@@ -35,9 +35,9 @@ export function Content({
 			if (!currentUnit) continue
 
 			const currentUnitProficiency = unitProficiencies.find((up) => up.unitId === currentUnit.id)
-			const currentMasteryPercentage = currentUnitProficiency?.proficiencyPercentage ?? 0
+			const currentMasteryPercentage = currentUnitProficiency?.proficiencyPercentage
 
-			if (currentMasteryPercentage < 90) {
+			if (currentMasteryPercentage !== undefined && currentMasteryPercentage < 90) {
 				nextUnitIndex = i
 				break
 			}

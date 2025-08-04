@@ -22,8 +22,8 @@ export function UnitOverviewSection({
 			lesson.children.filter((c) => c.type === "Video").map((video) => ({ ...video, lessonId: lesson.id }))
 		)
 
-	// Get the proficiency percentage, defaulting to 0% if no data available
-	const masteryPercentage = unitProficiency?.proficiencyPercentage ?? 0
+	// Get the proficiency percentage, handling potentially missing values explicitly
+	const masteryPercentage = unitProficiency?.proficiencyPercentage
 
 	return (
 		<div
@@ -40,7 +40,7 @@ export function UnitOverviewSection({
 					</h2>
 				</div>
 				<div className="ml-auto text-right flex items-center gap-2">
-					<div className="text-xs text-gray-600">Unit mastery: {masteryPercentage}%</div>
+					<div className="text-xs text-gray-600">Unit mastery: {masteryPercentage ?? 0}%</div>
 					<Info className="w-4 h-4 text-gray-500 cursor-not-allowed" />
 				</div>
 			</div>

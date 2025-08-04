@@ -1,9 +1,9 @@
 import { Sparkles } from "lucide-react"
 import Link from "next/link"
+import { Progress } from "@/app/(user)/[subject]/[course]/(overview)/components/progress"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { UnitChild } from "@/lib/types/domain"
 import { cn } from "@/lib/utils"
-import { Progress } from "./progress"
 
 export function ProgressOverview({
 	index,

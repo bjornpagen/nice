@@ -1,11 +1,11 @@
 import Link from "next/link"
+import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/section"
 import { ActivityIcon } from "@/components/icons/activity"
 import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
 import { Button } from "@/components/ui/button"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { Article, ExerciseInfo, Lesson, Video } from "@/lib/types/domain"
 import { capitalize } from "@/lib/utils"
-import { Section } from "./section"
 
 export function LessonSection({
 	lesson,
@@ -73,7 +73,7 @@ export function LessonSection({
 function LessonVideo({ video, progress }: { video: Pick<Video, "title" | "path">; progress?: AssessmentProgress }) {
 	return (
 		<div className="bg-white flex items-center gap-2">
-			<ActivityIcon variant="video" completed={progress?.completed || false} progress={progress?.score} />
+			<ActivityIcon variant="video" completed={progress?.completed} progress={progress?.score} />
 			<Link href={video.path} className="text-gray-800 text-sm hover:underline">
 				{video.title}
 			</Link>
@@ -90,7 +90,7 @@ function LessonArticle({
 }) {
 	return (
 		<div className="bg-white flex items-center gap-2">
-			<ActivityIcon variant="article" completed={progress?.completed || false} progress={progress?.score} />
+			<ActivityIcon variant="article" completed={progress?.completed} progress={progress?.score} />
 			<Link href={article.path} className="text-gray-800 text-sm hover:underline">
 				{article.title}
 			</Link>

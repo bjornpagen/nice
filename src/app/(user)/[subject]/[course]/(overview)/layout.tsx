@@ -1,9 +1,9 @@
 import * as React from "react"
+import { Sidebar } from "@/app/(user)/[subject]/[course]/(overview)/components/sidebar"
 import { Footer } from "@/components/footer"
 import { fetchCoursePageData } from "@/lib/data/course"
 import type { CoursePageData } from "@/lib/types/page"
 import { normalizeParams } from "@/lib/utils"
-import { CourseSidebar } from "./components/sidebar"
 
 // This layout component is NOT async. It orchestrates promises and renders immediately.
 export default function CourseLayout({
@@ -38,7 +38,7 @@ export default function CourseLayout({
 							  Pass the promise directly to the sidebar component. The sidebar will
 							  need to be updated to use React.use() to consume the promise.
 							*/}
-							<CourseSidebar
+							<Sidebar
 								course={courseDataPromise.then((data) => data.course)}
 								lessonCount={courseDataPromise.then((data) => data.lessonCount)}
 								challenges={courseDataPromise.then((data) => data.course.challenges)}
