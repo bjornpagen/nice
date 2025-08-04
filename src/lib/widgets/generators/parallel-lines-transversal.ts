@@ -76,56 +76,96 @@ export const generateParallelLinesTransversal: WidgetGenerator<typeof ParallelLi
 	svg += `<line x1="${centerX - transversalLength / 2}" y1="${centerY}" x2="${centerX + transversalLength / 2}" y2="${centerY}" stroke="black" stroke-width="2"/>`
 	svg += "</g>"
 
-	// Helper to find intersection points
-	const findIntersection = (lineY: number) => {
-		const m1 = Math.tan(toRad(linesAngle))
-		const c1 = lineY - m1 * centerX
-		const m2 = Math.tan(toRad(transversalAngle))
-		const c2 = centerY - m2 * centerX
-		if (Math.abs(m1 - m2) < 1e-9) return { x: centerX, y: lineY } // Parallel, should not happen with transversal
-		const x = (c2 - c1) / (m1 - m2)
-		const y = m1 * x + c1
+	// Helper to find intersection points using correct geometric transformation
+	const findIntersection = (intersectionType: "top" | "bottom") => {
+		const linesAngleRad = toRad(linesAngle)
+		const transAngleRad = toRad(transversalAngle)
+
+		// Handle vertical lines where tan() is undefined
+		const isLinesVertical = Math.abs(Math.cos(linesAngleRad)) < 1e-9
+		const isTransVertical = Math.abs(Math.cos(transAngleRad)) < 1e-9
+
+		// The transversal always passes through the center
+		const m2 = isTransVertical ? Number.POSITIVE_INFINITY : Math.tan(transAngleRad)
+		const c2 = isTransVertical ? centerX : centerY - m2 * centerX
+
+		// Calculate a point on the rotated parallel line
+		const separation = intersectionType === "top" ? -lineSeparation / 2 : lineSeparation / 2
+		const pointOnLine = {
+			x: centerX - separation * Math.sin(linesAngleRad),
+			y: centerY + separation * Math.cos(linesAngleRad)
+		}
+
+		const m1 = isLinesVertical ? Number.POSITIVE_INFINITY : Math.tan(linesAngleRad)
+		const c1 = isLinesVertical ? pointOnLine.x : pointOnLine.y - m1 * pointOnLine.x
+
+		// Solve for intersection
+		let x: number
+		let y: number
+		if (isLinesVertical) {
+			x = c1
+			y = m2 * x + c2
+		} else if (isTransVertical) {
+			x = c2
+			y = m1 * x + c1
+		} else {
+			if (Math.abs(m1 - m2) < 1e-9) return { x: centerX, y: centerY } // Parallel case
+			x = (c2 - c1) / (m1 - m2)
+			y = m1 * x + c1
+		}
 		return { x, y }
 	}
 
-	const topIntersection = findIntersection(centerY - (lineSeparation / 2) * Math.cos(toRad(linesAngle)))
-	const bottomIntersection = findIntersection(centerY + (lineSeparation / 2) * Math.cos(toRad(linesAngle)))
+	const topIntersection = findIntersection("top")
+	const bottomIntersection = findIntersection("bottom")
 
-	const anglePositions = {
-		topLeft: { start: transversalAngle + 180, end: linesAngle + 180 },
+	// Define explicit angle ranges for each position to ensure interior angles
+	const positionAngles = {
 		topRight: { start: linesAngle, end: transversalAngle },
+		topLeft: { start: transversalAngle, end: linesAngle + 180 },
 		bottomLeft: { start: linesAngle + 180, end: transversalAngle + 180 },
-		bottomRight: { start: transversalAngle, end: linesAngle }
+		bottomRight: { start: transversalAngle + 180, end: linesAngle + 360 }
 	}
 
 	for (const l of labels) {
 		const int = l.intersection === "top" ? topIntersection : bottomIntersection
-		const angles = anglePositions[l.position]
+		const angles = positionAngles[l.position]
 		if (!angles) continue
 
-		let start = Math.min(angles.start, angles.end)
-		let end = Math.max(angles.start, angles.end)
-		if (l.position.includes("Right")) {
-			;[start, end] = [Math.min(angles.start, angles.end), Math.max(angles.start, angles.end)]
-		} else {
-			;[start, end] = [Math.max(angles.start, angles.end), Math.min(angles.start, angles.end) + 360]
+		let startDeg = angles.start
+		let endDeg = angles.end
+
+		// Normalize angles to ensure we draw the interior angle (< 180°)
+		if (endDeg < startDeg) {
+			endDeg += 360
+		}
+		if (endDeg - startDeg > 180) {
+			// Swap to get the interior angle
+			const temp = startDeg + 360
+			startDeg = endDeg
+			endDeg = temp
 		}
 
-		const midAngleRad = toRad((start + end) / 2)
+		const startRad = toRad(startDeg)
+		const endRad = toRad(endDeg)
+		const midAngleRad = (startRad + endRad) / 2
+
 		const radius = 25
 		const labelRadius = radius + 18
 
-		const startRad = toRad(start)
-		const endRad = toRad(end)
 		const arcStartX = int.x + radius * Math.cos(startRad)
-		const arcStartY = int.y - radius * Math.sin(startRad) // Y is inverted in SVG
+		const arcStartY = int.y + radius * Math.sin(startRad)
 		const arcEndX = int.x + radius * Math.cos(endRad)
-		const arcEndY = int.y - radius * Math.sin(endRad)
-		const largeArcFlag = Math.abs(end - start) > 180 ? 1 : 0
-		svg += `<path d="M ${arcStartX} ${arcStartY} A ${radius} ${radius} 0 ${largeArcFlag} 0 ${arcEndX} ${arcEndY}" fill="none" stroke="${l.color}" stroke-width="2"/>`
+		const arcEndY = int.y + radius * Math.sin(endRad)
+
+		// Always use interior angle (large-arc-flag = 0)
+		const sweepFlag = 1
+		const largeArcFlag = 0
+
+		svg += `<path d="M ${arcStartX} ${arcStartY} A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${l.color}" stroke-width="2"/>`
 
 		const labelX = int.x + labelRadius * Math.cos(midAngleRad)
-		const labelY = int.y - labelRadius * Math.sin(midAngleRad)
+		const labelY = int.y + labelRadius * Math.sin(midAngleRad)
 		svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle">${l.label}</text>`
 	}
 
