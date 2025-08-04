@@ -153,6 +153,13 @@ export async function generateXml(
 		regenerationContext
 	)
 
+	const responseFormat = zodResponseFormat(QtiGenerationSchema, "qti_generator")
+	logger.debug("generated json schema for openai", {
+		functionName: "generateXml",
+		generatorName: "qti_generator",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
+
 	logger.debug("calling openai for qti generation", { model: OPENAI_MODEL, rootTag })
 	const response = await errors.try(
 		openai.chat.completions.parse({
@@ -161,7 +168,7 @@ export async function generateXml(
 				{ role: "system", content: systemInstruction },
 				{ role: "user", content: userContent }
 			],
-			response_format: zodResponseFormat(QtiGenerationSchema, "qti_generator"),
+			response_format: responseFormat,
 			reasoning_effort: "high"
 		})
 	)
@@ -227,6 +234,13 @@ async function mapSlotsToWidgets(
 		slotNames
 	)
 
+	const responseFormat = zodResponseFormat(WidgetMappingSchema, "widget_mapper")
+	logger.debug("generated json schema for openai", {
+		functionName: "mapSlotsToWidgets",
+		generatorName: "widget_mapper",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
+
 	logger.debug("calling openai for slot-to-widget mapping", { slotNames })
 	const response = await errors.try(
 		openai.chat.completions.parse({
@@ -236,7 +250,7 @@ async function mapSlotsToWidgets(
 				{ role: "user", content: userContent }
 			],
 			// ✅ The dynamically generated, constrained schema is used here.
-			response_format: zodResponseFormat(WidgetMappingSchema, "widget_mapper")
+			response_format: responseFormat
 		})
 	)
 	if (response.error) {
@@ -283,6 +297,13 @@ async function generateAssessmentShell(logger: logger.Logger, perseusJson: strin
 	// Assumes a new prompt function is created for this shot.
 	const { systemInstruction, userContent } = createAssessmentShellPrompt(perseusJson)
 
+	const responseFormat = zodResponseFormat(AssessmentShellSchema, "assessment_shell_generator")
+	logger.debug("generated json schema for openai", {
+		functionName: "generateAssessmentShell",
+		generatorName: "assessment_shell_generator",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
+
 	logger.debug("calling openai for assessment shell generation")
 	const response = await errors.try(
 		openai.chat.completions.parse({
@@ -291,7 +312,7 @@ async function generateAssessmentShell(logger: logger.Logger, perseusJson: strin
 				{ role: "system", content: systemInstruction },
 				{ role: "user", content: userContent }
 			],
-			response_format: zodResponseFormat(AssessmentShellSchema, "assessment_shell_generator")
+			response_format: responseFormat
 		})
 	)
 	if (response.error) {
@@ -331,6 +352,13 @@ async function generateFullAssessmentItem(
 	// ✅ Use the mapping to create the precise schema for Shot 3.
 	const { AssessmentItemSchema: dynamicSchema } = createDynamicAssessmentItemSchema(widgetMapping)
 
+	const responseFormat = zodResponseFormat(dynamicSchema, "assessment_item_generator")
+	logger.debug("generated json schema for openai", {
+		functionName: "generateFullAssessmentItem",
+		generatorName: "assessment_item_generator",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
+
 	logger.debug("calling openai for structured qti completion", {
 		widgetMapping,
 		widgetCount: Object.keys(widgetMapping).length
@@ -342,7 +370,7 @@ async function generateFullAssessmentItem(
 				{ role: "system", content: systemInstruction },
 				{ role: "user", content: userContent }
 			],
-			response_format: zodResponseFormat(dynamicSchema, "assessment_item_generator")
+			response_format: responseFormat
 		})
 	)
 	if (result.error) {
@@ -438,6 +466,13 @@ export async function validateXmlWithAi(
 ): Promise<z.infer<typeof QtiSolvabilityValidationSchema>> {
 	const { developer, user } = createQtiSufficiencyValidationPrompt(perseusJson, qtiXml, svgContents)
 
+	const responseFormat = zodResponseFormat(QtiSolvabilityValidationSchema, "qti_validator")
+	logger.debug("generated json schema for openai", {
+		functionName: "validateXmlWithAi",
+		generatorName: "qti_validator",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
+
 	logger.debug("calling openai for qti solvability validation", {
 		model: OPENAI_MODEL,
 		imageCount: imageUrls.length,
@@ -460,7 +495,7 @@ export async function validateXmlWithAi(
 				{ role: "system", content: developer },
 				{ role: "user", content: userMessageContent } // CHANGED: Send multimodal content
 			],
-			response_format: zodResponseFormat(QtiSolvabilityValidationSchema, "qti_validator")
+			response_format: responseFormat
 		})
 	)
 
