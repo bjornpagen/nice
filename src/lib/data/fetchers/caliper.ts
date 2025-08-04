@@ -1,8 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { unstable_cache as cache } from "next/cache"
 import type { z } from "zod"
-import { createCacheKey } from "@/lib/cache"
+import { redisCache } from "@/lib/cache"
 import type { CaliperEventSchema } from "@/lib/caliper"
 import { caliper } from "@/lib/clients"
 
@@ -162,14 +161,11 @@ function aggregateTimeSpentByResource(timeSpentEvents: z.infer<typeof CaliperEve
  * Fetches ALL events for a user - primarily used by progress page
  * ⚠️ CRITICAL: This is expensive and should only be called when you genuinely need all events
  */
-export const getAllEventsForUser = cache(
-	async (actorId: string) => {
-		logger.info("getAllEventsForUser called", { actorId })
-		return caliper.getEvents(actorId)
-	},
-	createCacheKey(["caliper-getAllEventsForUser"]),
-	{ revalidate: 60 } // Cache for 1 minute to balance freshness with performance
-)
+export async function getAllEventsForUser(actorId: string) {
+	logger.info("getAllEventsForUser called", { actorId })
+	const operation = () => caliper.getEvents(actorId)
+	return redisCache(operation, ["caliper-getAllEventsForUser", actorId], { revalidate: 60 }) // 1 minute cache
+}
 
 // --- Specialized Filtered Fetchers ---
 
@@ -178,13 +174,13 @@ export const getAllEventsForUser = cache(
  * Used by banked XP calculation - filters client-side to ensure we never miss content
  * regardless of when the student engaged with it
  */
-export const getTimeSpentEventsForResources = cache(
-	async (actorId: string, resourceIds: string[]) => {
-		logger.info("getTimeSpentEventsForResources called", {
-			actorId,
-			resourceCount: resourceIds.length
-		})
+export async function getTimeSpentEventsForResources(actorId: string, resourceIds: string[]) {
+	logger.info("getTimeSpentEventsForResources called", {
+		actorId,
+		resourceCount: resourceIds.length
+	})
 
+	const operation = async () => {
 		// Get all events and filter client-side to ensure we don't miss any content
 		const allEvents = await getAllEventsForUser(actorId)
 		const resourceIdSet = new Set(resourceIds)
@@ -199,22 +195,24 @@ export const getTimeSpentEventsForResources = cache(
 		})
 
 		return filteredEvents
-	},
-	createCacheKey(["caliper-getTimeSpentEventsForResources"]),
-	{ revalidate: 60 } // Cache for 1 minute
-)
+	}
+
+	// Include a hash of resourceIds in the cache key for uniqueness
+	const resourceIdsHash = resourceIds.sort().join(",")
+	return redisCache(operation, ["caliper-getTimeSpentEventsForResources", actorId, resourceIdsHash], { revalidate: 60 }) // 1 minute cache
+}
 
 /**
  * Gets aggregated time spent (in seconds) per resource for banked XP calculation
  * Returns a Map of resourceId -> totalSecondsSpent
  */
-export const getAggregatedTimeSpentByResource = cache(
-	async (actorId: string, resourceIds: string[]) => {
-		logger.info("getAggregatedTimeSpentByResource called", {
-			actorId,
-			resourceCount: resourceIds.length
-		})
+export async function getAggregatedTimeSpentByResource(actorId: string, resourceIds: string[]) {
+	logger.info("getAggregatedTimeSpentByResource called", {
+		actorId,
+		resourceCount: resourceIds.length
+	})
 
+	const operation = async () => {
 		const timeSpentEvents = await getTimeSpentEventsForResources(actorId, resourceIds)
 		const aggregatedTime = aggregateTimeSpentByResource(timeSpentEvents)
 
@@ -234,19 +232,23 @@ export const getAggregatedTimeSpentByResource = cache(
 		})
 
 		return aggregatedTime
-	},
-	createCacheKey(["caliper-getAggregatedTimeSpentByResource"]),
-	{ revalidate: 60 } // Cache for 1 minute
-)
+	}
+
+	// Include a hash of resourceIds in the cache key for uniqueness
+	const resourceIdsHash = resourceIds.sort().join(",")
+	return redisCache(operation, ["caliper-getAggregatedTimeSpentByResource", actorId, resourceIdsHash], {
+		revalidate: 60
+	}) // 1 minute cache
+}
 
 /**
  * Gets completed events from Nice Academy for progress page calculations
  * Pre-filtered to only include relevant events
  */
-export const getCompletedEventsFromNiceAcademy = cache(
-	async (actorId: string) => {
-		logger.info("getCompletedEventsFromNiceAcademy called", { actorId })
+export async function getCompletedEventsFromNiceAcademy(actorId: string) {
+	logger.info("getCompletedEventsFromNiceAcademy called", { actorId })
 
+	const operation = async () => {
 		const allEvents = await getAllEventsForUser(actorId)
 		const completedEvents = filterCompletedEventsFromNiceAcademy(allEvents)
 
@@ -257,22 +259,25 @@ export const getCompletedEventsFromNiceAcademy = cache(
 		})
 
 		return completedEvents
-	},
-	createCacheKey(["caliper-getCompletedEventsFromNiceAcademy"]),
-	{ revalidate: 60 } // Cache for 1 minute
-)
+	}
+
+	return redisCache(operation, ["caliper-getCompletedEventsFromNiceAcademy", actorId], { revalidate: 60 }) // 1 minute cache
+}
 
 /**
  * Specialized function for banked XP calculation
  * Takes passive resource IDs and returns XP calculations based on time spent
  */
-export const calculateBankedXpForResources = cache(
-	async (actorId: string, passiveResources: Array<{ sourcedId: string; expectedXp: number }>) => {
-		logger.info("calculateBankedXpForResources called", {
-			actorId,
-			resourceCount: passiveResources.length
-		})
+export async function calculateBankedXpForResources(
+	actorId: string,
+	passiveResources: Array<{ sourcedId: string; expectedXp: number }>
+) {
+	logger.info("calculateBankedXpForResources called", {
+		actorId,
+		resourceCount: passiveResources.length
+	})
 
+	const operation = async () => {
 		const resourceIds = passiveResources.map((r) => r.sourcedId)
 		const timeSpentMap = await getAggregatedTimeSpentByResource(actorId, resourceIds)
 
@@ -329,7 +334,13 @@ export const calculateBankedXpForResources = cache(
 			awardedResourceIds,
 			detailedResults
 		}
-	},
-	createCacheKey(["caliper-calculateBankedXpForResources"]),
-	{ revalidate: 60 } // Cache for 1 minute
-)
+	}
+
+	// Create a hash of the passive resources for cache key uniqueness
+	const resourcesHash = passiveResources
+		.map((r) => `${r.sourcedId}:${r.expectedXp}`)
+		.sort()
+		.join(",")
+
+	return redisCache(operation, ["caliper-calculateBankedXpForResources", actorId, resourcesHash], { revalidate: 60 }) // 1 minute cache
+}

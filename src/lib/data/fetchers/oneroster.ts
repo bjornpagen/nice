@@ -1,6 +1,5 @@
 import * as logger from "@superbuilders/slog"
-import { unstable_cache as cache } from "next/cache"
-import { createCacheKey } from "@/lib/cache"
+import { redisCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
 import { createPrefixFilter } from "@/lib/filter"
 
@@ -82,108 +81,100 @@ function ensureActiveResource<T extends { status: string }>(resource: T | null |
 
 // --- Single Entity Fetchers ---
 
-export const getCourse = cache(
-	async (sourcedId: string) => {
-		logger.info("getCourse called", { sourcedId })
+export async function getCourse(sourcedId: string) {
+	logger.info("getCourse called", { sourcedId })
+	const operation = async () => {
 		const course = await oneroster.getCourse(sourcedId)
 		// ⚠️ CRITICAL: Apply client-side safety filtering
 		return ensureActiveCourse(course)
-	},
-	createCacheKey(["oneroster-getCourse"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getCourse", sourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getResource = cache(
-	async (sourcedId: string) => {
-		logger.info("getResource called", { sourcedId })
+export async function getResource(sourcedId: string) {
+	logger.info("getResource called", { sourcedId })
+	const operation = async () => {
 		const resource = await oneroster.getResource(sourcedId)
 		// ⚠️ CRITICAL: Apply client-side safety filtering
 		return ensureActiveResource(resource)
-	},
-	createCacheKey(["oneroster-getResource"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getResource", sourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getClass = cache(
-	async (classSourcedId: string) => {
-		logger.info("getClass called", { classSourcedId })
+export async function getClass(classSourcedId: string) {
+	logger.info("getClass called", { classSourcedId })
+	const operation = async () => {
 		const classEntity = await oneroster.getClass(classSourcedId)
 		// ⚠️ CRITICAL: Apply client-side safety filtering
 		return ensureActiveClass(classEntity)
-	},
-	createCacheKey(["oneroster-getClass"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getClass", classSourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
 // --- Collection Fetchers (Encapsulating Filters) ---
 
-export const getAllCourses = cache(
-	async () => {
-		logger.info("getAllCourses called")
+export async function getAllCourses() {
+	logger.info("getAllCourses called")
+	const operation = async () => {
 		// Use prefix filter to leverage btree indexes for faster queries
 		// Filter by status='active' client-side due to OneRoster API AND limitation
 		const courses = await oneroster.getAllCourses({ filter: NICE_PREFIX_FILTER })
 
 		// ⚠️ CRITICAL: Apply universal client-side safety filtering
 		return ensureActiveStatus(courses)
-	},
-	createCacheKey(["oneroster-getAllCourses"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getAllCourses"], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getAllCoursesBySlug = cache(
-	async (slug: string) => {
-		logger.info("getAllCoursesBySlug called", { slug })
+export async function getAllCoursesBySlug(slug: string) {
+	logger.info("getAllCoursesBySlug called", { slug })
+	const operation = async () => {
 		const courses = await oneroster.getAllCourses({ filter: `metadata.khanSlug='${slug}' AND status='active'` })
 		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
 		return ensureActiveStatus(courses)
-	},
-	createCacheKey(["oneroster-getAllCoursesBySlug"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getAllCoursesBySlug", slug], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getCourseComponentsByCourseId = cache(
-	async (courseSourcedId: string) => {
-		logger.info("getCourseComponentsByCourseId called", { courseSourcedId })
+export async function getCourseComponentsByCourseId(courseSourcedId: string) {
+	logger.info("getCourseComponentsByCourseId called", { courseSourcedId })
+	const operation = async () => {
 		const components = await oneroster.getCourseComponents({
 			filter: `course.sourcedId='${courseSourcedId}' AND status='active'`
 		})
 		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
 		return ensureActiveStatus(components)
-	},
-	createCacheKey(["oneroster-getCourseComponentsByCourseId"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getCourseComponentsByCourseId", courseSourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getCourseComponentsByParentId = cache(
-	async (parentSourcedId: string) => {
-		logger.info("getCourseComponentsByParentId called", { parentSourcedId })
+export async function getCourseComponentsByParentId(parentSourcedId: string) {
+	logger.info("getCourseComponentsByParentId called", { parentSourcedId })
+	const operation = async () => {
 		const components = await oneroster.getCourseComponents({
 			filter: `parent.sourcedId='${parentSourcedId}' AND status='active'`
 		})
 		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
 		return ensureActiveStatus(components)
-	},
-	createCacheKey(["oneroster-getCourseComponentsByParentId"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getCourseComponentsByParentId", parentSourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getCourseComponentBySlug = cache(
-	async (slug: string) => {
-		logger.info("getCourseComponentBySlug called", { slug })
+export async function getCourseComponentBySlug(slug: string) {
+	logger.info("getCourseComponentBySlug called", { slug })
+	const operation = async () => {
 		const components = await oneroster.getCourseComponents({
 			filter: `metadata.khanSlug='${slug}' AND status='active'`
 		})
 		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
 		return ensureActiveStatus(components)
-	},
-	createCacheKey(["oneroster-getCourseComponentBySlug"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getCourseComponentBySlug", slug], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getCourseComponentByCourseAndSlug = cache(
-	async (courseSourcedId: string, slug: string) => {
-		logger.info("getCourseComponentByCourseAndSlug called", { courseSourcedId, slug })
+export async function getCourseComponentByCourseAndSlug(courseSourcedId: string, slug: string) {
+	logger.info("getCourseComponentByCourseAndSlug called", { courseSourcedId, slug })
+	const operation = async () => {
 		// Due to OneRoster API limitation, we can only use one AND operation
 		// Filter by slug in API (more selective - slugs are unique), then filter by courseSourcedId client-side
 		const components = await oneroster.getCourseComponents({
@@ -193,14 +184,15 @@ export const getCourseComponentByCourseAndSlug = cache(
 		// ⚠️ CRITICAL: Apply client-side safety filtering and course filtering
 		const activeComponents = ensureActiveStatus(components)
 		return activeComponents.filter((c) => c.course.sourcedId === courseSourcedId)
-	},
-	createCacheKey(["oneroster-getCourseComponentByCourseAndSlug"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getCourseComponentByCourseAndSlug", courseSourcedId, slug], {
+		revalidate: 3600 * 24
+	}) // 24-hour cache
+}
 
-export const getCourseComponentByParentAndSlug = cache(
-	async (parentSourcedId: string, slug: string) => {
-		logger.info("getCourseComponentByParentAndSlug called", { parentSourcedId, slug })
+export async function getCourseComponentByParentAndSlug(parentSourcedId: string, slug: string) {
+	logger.info("getCourseComponentByParentAndSlug called", { parentSourcedId, slug })
+	const operation = async () => {
 		// Due to OneRoster API limitation, we can only use one AND operation
 		// Filter by slug in API (more selective - slugs are unique), then filter by parentSourcedId client-side
 		const components = await oneroster.getCourseComponents({
@@ -210,42 +202,41 @@ export const getCourseComponentByParentAndSlug = cache(
 		// ⚠️ CRITICAL: Apply client-side safety filtering and parent filtering
 		const activeComponents = ensureActiveStatus(components)
 		return activeComponents.filter((c) => c.parent?.sourcedId === parentSourcedId)
-	},
-	createCacheKey(["oneroster-getCourseComponentByParentAndSlug"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getCourseComponentByParentAndSlug", parentSourcedId, slug], {
+		revalidate: 3600 * 24
+	}) // 24-hour cache
+}
 
-export const getUnitsForCourses = cache(
-	async (courseSourcedIds: string[]) => {
-		logger.info("getUnitsForCourses called", { courseSourcedIds })
+export async function getUnitsForCourses(courseSourcedIds: string[]) {
+	logger.info("getUnitsForCourses called", { courseSourcedIds })
+	const operation = async () => {
 		if (courseSourcedIds.length === 0) return []
 		// Encapsulates the `@` filter logic for OneRoster IN operator
 		const filter = `course.sourcedId@'${courseSourcedIds.join(",")}' AND status='active'`
 		const components = await oneroster.getCourseComponents({ filter })
 		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
 		return ensureActiveStatus(components)
-	},
-	createCacheKey(["oneroster-getUnitsForCourses"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getUnitsForCourses", ...courseSourcedIds], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getAllResources = cache(
-	async () => {
-		logger.info("getAllResources called")
+export async function getAllResources() {
+	logger.info("getAllResources called")
+	const operation = async () => {
 		// Use prefix filter to leverage btree indexes for faster queries
 		// Filter by status='active' client-side due to OneRoster API AND limitation
 		const resources = await oneroster.getAllResources({ filter: NICE_PREFIX_FILTER })
 
 		// ⚠️ CRITICAL: Apply universal client-side safety filtering
 		return ensureActiveStatus(resources)
-	},
-	createCacheKey(["oneroster-getAllResources"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getAllResources"], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getResourcesBySlugAndType = cache(
-	async (slug: string, type: "qti" | "video", lessonType?: "quiz" | "unittest") => {
-		logger.info("getResourcesBySlugAndType called", { slug, type, lessonType })
+export async function getResourcesBySlugAndType(slug: string, type: "qti" | "video", lessonType?: "quiz" | "unittest") {
+	logger.info("getResourcesBySlugAndType called", { slug, type, lessonType })
+	const operation = async () => {
 		// Due to OneRoster API limitation, we can only use one AND operation
 		// Keep filtering by slug as it's reasonably selective, type filter is quick client-side
 		const filter = `metadata.khanSlug='${slug}' AND status='active'`
@@ -263,14 +254,16 @@ export const getResourcesBySlugAndType = cache(
 		}
 
 		return filtered
-	},
-	createCacheKey(["oneroster-getResourcesBySlugAndType"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	const keyParts = lessonType
+		? ["oneroster-getResourcesBySlugAndType", slug, type, lessonType]
+		: ["oneroster-getResourcesBySlugAndType", slug, type]
+	return redisCache(operation, keyParts, { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getResourceByCourseAndSlug = cache(
-	async (courseSourcedId: string, slug: string, type: "qti") => {
-		logger.info("getResourceByCourseAndSlug called", { courseSourcedId, slug, type })
+export async function getResourceByCourseAndSlug(courseSourcedId: string, slug: string, type: "qti") {
+	logger.info("getResourceByCourseAndSlug called", { courseSourcedId, slug, type })
+	const operation = async () => {
 		// Due to OneRoster API limitation, we can only use one AND operation
 		// Keep filtering by slug as it's the most selective publicly queryable field
 		const filter = `metadata.khanSlug='${slug}' AND status='active'`
@@ -279,54 +272,51 @@ export const getResourceByCourseAndSlug = cache(
 		// ⚠️ CRITICAL: Apply client-side safety filtering first
 		const activeResources = ensureActiveStatus(resources)
 		return activeResources.filter((r) => r.metadata?.type === type && r.metadata?.courseSourcedId === courseSourcedId)
-	},
-	createCacheKey(["oneroster-getResourceByCourseAndSlug"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getResourceByCourseAndSlug", courseSourcedId, slug, type], {
+		revalidate: 3600 * 24
+	}) // 24-hour cache
+}
 
-export const getAllComponentResources = cache(
-	async () => {
-		logger.info("getAllComponentResources called")
+export async function getAllComponentResources() {
+	logger.info("getAllComponentResources called")
+	const operation = async () => {
 		// Use prefix filter to leverage btree indexes for faster queries
 		// Filter by status='active' client-side due to OneRoster API AND limitation
 		const resources = await oneroster.getAllComponentResources({ filter: NICE_PREFIX_FILTER })
 
 		// ⚠️ CRITICAL: Apply universal client-side safety filtering
 		return ensureActiveStatus(resources)
-	},
-	createCacheKey(["oneroster-getAllComponentResources"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getAllComponentResources"], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getClassesForSchool = cache(
-	async (schoolSourcedId: string) => {
-		logger.info("getClassesForSchool called", { schoolSourcedId })
+export async function getClassesForSchool(schoolSourcedId: string) {
+	logger.info("getClassesForSchool called", { schoolSourcedId })
+	const operation = async () => {
 		const classes = await oneroster.getAllClasses({
 			filter: `school.sourcedId='${schoolSourcedId}' AND status='active'`
 		})
 		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
 		return ensureActiveStatus(classes)
-	},
-	createCacheKey(["oneroster-getClassesForSchool"]),
-	{ revalidate: false } // equivalent to cacheLife("max")
-)
+	}
+	return redisCache(operation, ["oneroster-getClassesForSchool", schoolSourcedId], { revalidate: 3600 * 24 }) // 24-hour cache
+}
 
-export const getEnrollmentsForUser = cache(
-	async (userSourcedId: string) => {
-		logger.info("getEnrollmentsForUser called", { userSourcedId })
+export async function getEnrollmentsForUser(userSourcedId: string) {
+	logger.info("getEnrollmentsForUser called", { userSourcedId })
+	const operation = async () => {
 		const enrollments = await oneroster.getEnrollmentsForUser(userSourcedId)
 		// ⚠️ CRITICAL: Apply client-side safety filtering as defensive measure
 		return ensureActiveStatus(enrollments)
-	},
-	createCacheKey(["oneroster-getEnrollmentsForUser"]),
-	{ revalidate: 60 } // equivalent to cacheLife("minutes")
-)
+	}
+	// User data is more volatile, so use a shorter cache duration
+	return redisCache(operation, ["oneroster-getEnrollmentsForUser", userSourcedId], { revalidate: 60 }) // 1 minute cache
+}
 
-export const getActiveEnrollmentsForUser = cache(
-	async (userSourcedId: string) => {
-		// User data is more volatile, so we'll use a shorter default profile.
-		logger.info("getActiveEnrollmentsForUser called", { userSourcedId })
-
+export async function getActiveEnrollmentsForUser(userSourcedId: string) {
+	logger.info("getActiveEnrollmentsForUser called", { userSourcedId })
+	const operation = async () => {
 		// Due to OneRoster API limitation, we can only use one AND operation for complex filters
 		// Fetch all active enrollments for user, then filter for Khan Academy classes client-side
 		const allEnrollments = await oneroster.getAllEnrollments({
@@ -338,7 +328,7 @@ export const getActiveEnrollmentsForUser = cache(
 
 		// Filter for Khan Academy (nice_) classes only - excludes PowerPath and other systems
 		return activeEnrollments.filter((enrollment) => enrollment.class.sourcedId.startsWith("nice_"))
-	},
-	createCacheKey(["oneroster-getActiveEnrollmentsForUser"]),
-	{ revalidate: 60 } // equivalent to cacheLife("minutes")
-)
+	}
+	// User data is more volatile, so use a shorter cache duration
+	return redisCache(operation, ["oneroster-getActiveEnrollmentsForUser", userSourcedId], { revalidate: 60 }) // 1 minute cache
+}

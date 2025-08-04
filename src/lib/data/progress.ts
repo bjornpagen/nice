@@ -4,9 +4,8 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { format } from "date-fns"
-import { unstable_cache as cache } from "next/cache"
 import type { z } from "zod"
-import * as cacheUtils from "@/lib/cache"
+import { redisCache } from "@/lib/cache"
 import type { CaliperEventSchema } from "@/lib/caliper"
 import { oneroster } from "@/lib/clients"
 // CHANGED: Import the new fetcher instead of using caliper client directly
@@ -41,14 +40,9 @@ export async function getUserUnitProgress(
 	userId: string,
 	onerosterCourseSourcedId: string
 ): Promise<Map<string, AssessmentProgress>> {
-	// Generate cache keys and tags from the centralized utility.
-	const { keyParts, tag } = cacheUtils.userProgressByCourse(userId, onerosterCourseSourcedId)
-
-	// Wrap the data fetching logic with Next.js's unstable_cache.
-	// Note: We cache as an array since Maps don't survive JSON serialization
-	const cachedArray = await cache(
+	const cachedArray = await redisCache(
 		async () => {
-			logger.info("CACHE MISS: fetching user unit progress from API", { userId, onerosterCourseSourcedId })
+			logger.info("fetching user unit progress from API", { userId, onerosterCourseSourcedId })
 
 			const progressMap = new Map<string, AssessmentProgress>()
 
@@ -113,12 +107,11 @@ export async function getUserUnitProgress(
 			// Convert Map to array for caching (Maps don't survive JSON serialization)
 			return Array.from(progressMap.entries())
 		},
-		keyParts,
+		["user-progress", userId, onerosterCourseSourcedId], // keyParts array
 		{
-			tags: [tag],
 			revalidate: 3600 // 1 hour
 		}
-	)()
+	)
 
 	// Convert array back to Map
 	return new Map(cachedArray)

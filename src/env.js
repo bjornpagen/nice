@@ -36,6 +36,7 @@ export const env = createEnv({
 		BROWSERBASE_PROJECT_ID: z.string().min(1),
 		// Vercel deployment variable (optional, only present in deployed environments)
 		VERCEL_DEPLOYMENT_ID: z.string().optional(),
+		// Redis connection URL (optional for local development)
 		REDIS_URL: z.string().url().optional()
 	},
 
