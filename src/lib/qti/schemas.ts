@@ -155,7 +155,7 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 					"The main content of the item, with <slot name='...'/> placeholders for both widgets and interactions."
 				),
 			// The 'widgets' property now uses our precisely generated schema
-			widgets: DynamicWidgetsSchema.optional().describe(
+			widgets: DynamicWidgetsSchema.nullable().describe(
 				"A map of widget identifiers to their full widget object definitions."
 			),
 			interactions: z
