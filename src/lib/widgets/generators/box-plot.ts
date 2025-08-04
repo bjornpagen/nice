@@ -4,6 +4,30 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrInvalidRange = errors.new("axis min must be less than axis max")
 
+// Defines the configuration for the horizontal axis
+const BoxPlotAxisSchema = z
+	.object({
+		min: z.number().describe("The minimum value displayed on the axis scale."),
+		max: z.number().describe("The maximum value displayed on the axis scale."),
+		label: z.string().nullable().describe('An optional title for the horizontal axis (e.g., "Number of cookies").'),
+		tickLabels: z
+			.array(z.number())
+			.nullable()
+			.describe("An optional array of numbers to display as tick labels on the axis.")
+	})
+	.strict()
+
+// Defines the five-number summary for the box plot
+const BoxPlotSummarySchema = z
+	.object({
+		min: z.number().describe("The minimum value of the data set (left whisker endpoint)."),
+		q1: z.number().describe("The first quartile (left edge of the box)."),
+		median: z.number().describe("The median value (line inside the box)."),
+		q3: z.number().describe("The third quartile (right edge of the box)."),
+		max: z.number().describe("The maximum value of the data set (right whisker endpoint).")
+	})
+	.strict()
+
 // The main Zod schema for the boxPlot function
 export const BoxPlotPropsSchema = z
 	.object({
@@ -17,28 +41,8 @@ export const BoxPlotPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 120)
 			.describe("The total height of the output SVG container in pixels."),
-		axis: z
-			.object({
-				min: z.number().describe("The minimum value displayed on the axis scale."),
-				max: z.number().describe("The maximum value displayed on the axis scale."),
-				label: z.string().nullable().describe('An optional title for the horizontal axis (e.g., "Number of cookies").'),
-				tickLabels: z
-					.array(z.number())
-					.nullable()
-					.describe("An optional array of numbers to display as tick labels on the axis.")
-			})
-			.strict()
-			.describe("Configuration for the horizontal number line."),
-		summary: z
-			.object({
-				min: z.number().describe("The minimum value of the data set (left whisker endpoint)."),
-				q1: z.number().describe("The first quartile (left edge of the box)."),
-				median: z.number().describe("The median value (line inside the box)."),
-				q3: z.number().describe("The third quartile (right edge of the box)."),
-				max: z.number().describe("The maximum value of the data set (right whisker endpoint).")
-			})
-			.strict()
-			.describe("The five-number summary used to draw the plot."),
+		axis: BoxPlotAxisSchema.describe("Configuration for the horizontal number line."),
+		summary: BoxPlotSummarySchema.describe("The five-number summary used to draw the plot."),
 		boxColor: z
 			.string()
 			.nullable()

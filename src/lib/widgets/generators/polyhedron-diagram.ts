@@ -21,18 +21,20 @@ const RectangularPrismDataSchema = z
 	})
 	.strict()
 
+// Defines the triangular base dimensions
+const TriangularBaseSchema = z
+	.object({
+		b: z.number().describe("The base length of the triangular face."),
+		h: z.number().describe("The height of the triangular face."),
+		hypotenuse: z.number().nullable().describe("The hypotenuse for a right-triangle base. Calculated if omitted.")
+	})
+	.strict()
+
 // Defines the properties for a triangular prism
 const TriangularPrismDataSchema = z
 	.object({
 		type: z.literal("triangularPrism"),
-		base: z
-			.object({
-				b: z.number().describe("The base length of the triangular face."),
-				h: z.number().describe("The height of the triangular face."),
-				hypotenuse: z.number().nullable().describe("The hypotenuse for a right-triangle base. Calculated if omitted.")
-			})
-			.strict()
-			.describe("The dimensions of the triangular base."),
+		base: TriangularBaseSchema.describe("The dimensions of the triangular base."),
 		length: z.number().describe("The length (depth) of the prism, connecting the two triangular bases.")
 	})
 	.strict()
@@ -61,7 +63,7 @@ export const PolyhedronDiagramPropsSchema = z
 			.transform((val) => val ?? 200)
 			.describe("The total height of the output SVG container in pixels."),
 		shape: z
-			.union([RectangularPrismDataSchema, TriangularPrismDataSchema, RectangularPyramidDataSchema])
+			.discriminatedUnion("type", [RectangularPrismDataSchema, TriangularPrismDataSchema, RectangularPyramidDataSchema])
 			.describe("The geometric data defining the shape of the polyhedron."),
 		labels: z.array(DimensionLabelSchema).nullable().describe("An array of labels for edge lengths or face areas."),
 		shadedFace: z.string().nullable().describe('The identifier of a face to shade (e.g., "top_face", "front_face").'),

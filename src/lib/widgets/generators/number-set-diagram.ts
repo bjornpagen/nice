@@ -9,6 +9,16 @@ const NumberSetStyleSchema = z
 	})
 	.strict()
 
+// Defines the collection of number set styles
+const NumberSetCollectionSchema = z
+	.object({
+		whole: NumberSetStyleSchema,
+		integer: NumberSetStyleSchema,
+		rational: NumberSetStyleSchema,
+		irrational: NumberSetStyleSchema
+	})
+	.strict()
+
 // The main Zod schema for the numberSetDiagram function
 export const NumberSetDiagramPropsSchema = z
 	.object({
@@ -22,15 +32,7 @@ export const NumberSetDiagramPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 180)
 			.describe("The total height of the output SVG container in pixels."),
-		sets: z
-			.object({
-				whole: NumberSetStyleSchema,
-				integer: NumberSetStyleSchema,
-				rational: NumberSetStyleSchema,
-				irrational: NumberSetStyleSchema
-			})
-			.strict()
-			.describe("An object containing the labels and colors for each number set region.")
+		sets: NumberSetCollectionSchema.describe("An object containing the labels and colors for each number set region.")
 	})
 	.strict()
 	.describe(

@@ -4,23 +4,39 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrInvalidBaseShape = errors.new("invalid base shape for polyhedron type")
 
+// Defines a square base shape
+const SquareBaseSchema = z
+	.object({
+		type: z.literal("square"),
+		side: z.number()
+	})
+	.strict()
+
+// Defines a rectangle base shape
+const RectangleBaseSchema = z
+	.object({
+		type: z.literal("rectangle"),
+		length: z.number(),
+		width: z.number()
+	})
+	.strict()
+
+// Defines a triangle base shape
+const TriangleBaseSchema = z
+	.object({
+		type: z.literal("triangle"),
+		base: z.number(),
+		height: z.number(),
+		side1: z.number(),
+		side2: z.number()
+	})
+	.strict()
+
 // Defines the dimensions for the faces of the net.
 const FaceDimensionsSchema = z
 	.object({
 		base: z
-			.union([
-				z.object({ type: z.literal("square"), side: z.number() }).strict(),
-				z.object({ type: z.literal("rectangle"), length: z.number(), width: z.number() }).strict(),
-				z
-					.object({
-						type: z.literal("triangle"),
-						base: z.number(),
-						height: z.number(),
-						side1: z.number(),
-						side2: z.number()
-					})
-					.strict()
-			])
+			.discriminatedUnion("type", [SquareBaseSchema, RectangleBaseSchema, TriangleBaseSchema])
 			.describe("The primary base shape of the polyhedron."),
 		lateralHeight: z
 			.number()

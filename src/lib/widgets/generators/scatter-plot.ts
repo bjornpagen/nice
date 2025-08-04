@@ -60,7 +60,7 @@ const TrendLineStyleSchema = z
 			.transform((val) => val ?? "solid")
 			.describe("The style of the line."),
 		data: z
-			.union([LinearTrendLineSchema, QuadraticTrendLineSchema])
+			.discriminatedUnion("type", [LinearTrendLineSchema, QuadraticTrendLineSchema])
 			.describe("The mathematical definition of the line or curve.")
 	})
 	.strict()

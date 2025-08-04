@@ -49,7 +49,7 @@ export const GeometricSolidDiagramPropsSchema = z
 			.transform((val) => val ?? 200)
 			.describe("The total height of the output SVG container in pixels."),
 		shape: z
-			.union([CylinderDataSchema, ConeDataSchema, SphereDataSchema])
+			.discriminatedUnion("type", [CylinderDataSchema, ConeDataSchema, SphereDataSchema])
 			.describe("The geometric data defining the solid shape."),
 		labels: z.array(SolidDimensionLabelSchema).nullable().describe("An array of dimension labels to display.")
 	})
