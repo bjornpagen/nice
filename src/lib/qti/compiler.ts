@@ -50,19 +50,116 @@ function encodeDataUri(content: string): string {
 /**
  * Processes a string containing <slot /> placeholders and replaces them with
  * the corresponding content from the provided slots map.
+ *
+ * Supports multiple slot tag formats:
+ * - Self-closing: <slot name="example" />
+ * - Self-closing without space: <slot name="example"/>
+ * - With attributes: <slot name="example" class="widget" data-type="graph" />
+ * - Various whitespace: <slot   name="example"   />
+ *
+ * The function performs recursive replacement to handle nested slot references,
+ * where slot content may itself contain slot tags.
+ *
  * @param content The HTML content string with placeholders.
  * @param slots A map where keys are slot names and values are the HTML/XML to inject.
  * @returns The content string with all placeholders filled.
  */
 function processAndFillSlots(content: string, slots: Map<string, string>): string {
-	return content.replace(/<slot\s+name="([^"]+)"\s*\/>/g, (_match, slotName) => {
-		const slotContent = slots.get(slotName)
-		if (slotContent === undefined) {
-			// CRITICAL: Fail loudly on missing slot content.
-			throw errors.new(`missing content for slot: '${slotName}'`)
+	// Enhanced regex with named capture groups for robust slot matching
+	// This regex matches:
+	// - Opening <slot tag
+	// - Any attributes (captured in named group)
+	// - Self-closing /> or just > (captured in named group)
+	const slotRegex = /<slot(?<attributes>(?:\s+(?:[\w-]+(?:\s*=\s*"[^"]*")?))*)(?<whitespace>\s*)(?<selfClose>\/?)>/g
+
+	// Track processed slots to detect circular references
+	const processedSlots = new Set<string>()
+
+	// Recursive function to process content
+	function processContent(text: string, depth = 0): string {
+		// Prevent infinite recursion
+		if (depth > 10) {
+			throw errors.new("maximum slot nesting depth exceeded (10 levels)")
 		}
-		return slotContent
-	})
+
+		// Find all slot matches in current content
+		const matches = Array.from(text.matchAll(slotRegex))
+
+		// If no slots found, return content as-is
+		if (matches.length === 0) {
+			return text
+		}
+
+		// Process slots from end to beginning to maintain correct indices
+		let result = text
+		for (let i = matches.length - 1; i >= 0; i--) {
+			const match = matches[i]
+			if (!match || match.index === undefined) {
+				continue
+			}
+
+			const fullMatch = match[0]
+			const attributes = match.groups?.attributes || ""
+
+			// Extract name attribute using a more specific regex
+			const nameMatch = attributes.match(/\bname\s*=\s*"(?<name>[^"]+)"/i)
+
+			if (!nameMatch || !nameMatch.groups?.name) {
+				throw errors.new(`slot tag missing required 'name' attribute: ${fullMatch}`)
+			}
+
+			const slotName = nameMatch.groups.name.trim()
+
+			if (slotName === "") {
+				throw errors.new(`slot tag has empty name attribute: ${fullMatch}`)
+			}
+
+			// Check for circular reference
+			const slotKey = `${slotName}_${depth}`
+			if (processedSlots.has(slotKey)) {
+				throw errors.new(`circular slot reference detected: '${slotName}'`)
+			}
+
+			// Get slot content
+			const slotContent = slots.get(slotName)
+			if (slotContent === undefined) {
+				// CRITICAL: Fail loudly on missing slot content.
+				throw errors.new(`missing content for slot: '${slotName}'`)
+			}
+
+			// Mark slot as being processed
+			processedSlots.add(slotKey)
+
+			// Recursively process the slot content
+			const processedSlotContent = processContent(slotContent, depth + 1)
+
+			// Replace the slot tag with processed content
+			const startIndex = match.index
+			const endIndex = startIndex + fullMatch.length
+			result = result.slice(0, startIndex) + processedSlotContent + result.slice(endIndex)
+
+			// Unmark slot after processing
+			processedSlots.delete(slotKey)
+		}
+
+		return result
+	}
+
+	// Process the content
+	const processedContent = processContent(content)
+
+	// Final validation: Ensure no slot tags remain
+	const remainingSlots = processedContent.match(/<slot\s+[^>]*>/g)
+	if (remainingSlots) {
+		// Extract slot names for better error message
+		const remainingNames = remainingSlots.map((tag) => {
+			const nameMatch = tag.match(/name\s*=\s*"([^"]+)"/i)
+			return nameMatch ? nameMatch[1] : "unknown"
+		})
+		throw errors.new(`unprocessed slot tags remain after replacement: ${remainingNames.join(", ")}`)
+	}
+
+	return processedContent
 }
 
 function compileInteraction(interaction: AnyInteraction): string {
