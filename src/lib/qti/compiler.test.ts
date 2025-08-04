@@ -40,10 +40,9 @@ describe("QTI Compiler", () => {
 					bottomLine: { label: "Elevation, meters", ticks: [0, 80, 100, 120, 140] }
 				}
 			},
-			stimulus:
-				'<p>Cory hikes up a hill with a constant slope. The double number line shows that after Cory hikes <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mtext> km</mtext></math>, their elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn><mtext> m</mtext></math>.</p><slot name="stimulus_dnl" />',
-			interactions: [
-				{
+			body: '<p>Cory hikes up a hill with a constant slope. The double number line shows that after Cory hikes <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mtext> km</mtext></math>, their elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn><mtext> m</mtext></math>.</p><slot name="stimulus_dnl" /><slot name="choice_interaction" />',
+			interactions: {
+				choice_interaction: {
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
 					prompt: "<p>Select the double number line that shows the other values of distance and elevation.</p>",
@@ -63,7 +62,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> The ratio of distance to elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>:</mo><mn>120</mn></math>, which simplifies to a unit rate of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>:</mo><mn>40</mn></math>. For every <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mtext> km</mtext></math> hiked, the elevation increases by <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>40</mn><mtext> m</mtext></math>. This matches the correct number line.</p>',
@@ -94,15 +93,14 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			stimulus:
-				'<p>Evaluate.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math>',
-			interactions: [
-				{
+			body: '<p>Evaluate.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math><slot name="text_entry" />',
+			interactions: {
+				text_entry: {
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> The answer is 81.</p><p>You successfully applied the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math></p>',
@@ -130,9 +128,9 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			stimulus: "",
-			interactions: [
-				{
+			body: '<slot name="order_interaction" />',
+			interactions: {
+				order_interaction: {
 					type: "orderInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: true,
@@ -159,7 +157,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> You have arranged the cards as <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn><mo>&gt;</mo><mn>79</mn></math>, which is a true comparison.</p>',
@@ -204,9 +202,9 @@ describe("QTI Compiler", () => {
 					]
 				}
 			},
-			stimulus: '<slot name="inequality_widget" />',
-			interactions: [
-				{
+			body: '<slot name="inequality_widget" /><slot name="choice_interaction" />',
+			interactions: {
+				choice_interaction: {
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: false,
@@ -236,7 +234,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> The graph shows an open point at 0 with an arrow to the right, representing all values strictly greater than 0, so the inequality is <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>.</p>',
@@ -248,7 +246,7 @@ describe("QTI Compiler", () => {
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
 		expect(compiledXml).toContain('identifier="inequality-number-line"')
-		expect(compiledXml).toContain("inequalityNumberLine")
+		expect(compiledXml).toContain('<img src="data:image/svg+xml,')
 	})
 
 	test("should correctly compile a vertical number line comparison", () => {
@@ -298,27 +296,27 @@ describe("QTI Compiler", () => {
 					]
 				}
 			},
-			stimulus: '<p>Use the number line to compare the numbers.</p><slot name="vertical_nl" />',
-			interactions: [
-				{
+			body: '<p>Use the number line to compare the numbers.</p><slot name="vertical_nl" /><p>-1.4 is <slot name="pos_choice" /> -6.4, so -1.4 is <slot name="comp_choice" /> -6.4.</p>',
+			interactions: {
+				pos_choice: {
 					type: "inlineChoiceInteraction",
 					responseIdentifier: "RESPONSE_POS",
 					shuffle: false,
 					choices: [
-						{ identifier: "ABOVE", content: "<p>above</p>" },
-						{ identifier: "BELOW", content: "<p>below</p>" }
+						{ identifier: "ABOVE", content: "above" },
+						{ identifier: "BELOW", content: "below" }
 					]
 				},
-				{
+				comp_choice: {
 					type: "inlineChoiceInteraction",
 					responseIdentifier: "RESPONSE_COMP",
 					shuffle: false,
 					choices: [
-						{ identifier: "GT", content: "<p>greater than</p>" },
-						{ identifier: "LT", content: "<p>less than</p>" }
+						{ identifier: "GT", content: "greater than" },
+						{ identifier: "LT", content: "less than" }
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> On a vertical number line, numbers higher up are greater. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, it is the greater number.</p>',
@@ -330,7 +328,7 @@ describe("QTI Compiler", () => {
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
 		expect(compiledXml).toContain('identifier="vertical-number-line-comparison"')
-		expect(compiledXml).toContain("numberLine")
+		expect(compiledXml).toContain('<img src="data:image/svg+xml,')
 	})
 
 	test("should correctly compile a two-way frequency table with Venn diagram", () => {
@@ -377,9 +375,8 @@ describe("QTI Compiler", () => {
 					footer: null
 				}
 			},
-			stimulus:
-				'<p>The Cold Be Gone Company conducted a study with <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math> participants. Each participant either <em>received</em> cold medicine or <em>did not receive</em> cold medicine, and the company recorded whether the participant\'s cold lasted <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math> days or longer.</p><slot name="venn_widget" /><p>Complete the following two-way frequency table.</p><slot name="table_widget" />',
-			interactions: [],
+			body: '<p>The Cold Be Gone Company conducted a study with <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math> participants. Each participant either <em>received</em> cold medicine or <em>did not receive</em> cold medicine, and the company recorded whether the participant\'s cold lasted <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math> days or longer.</p><slot name="venn_widget" /><p>Complete the following two-way frequency table.</p><slot name="table_widget" />',
+			interactions: {},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> The completed table is:</p><table class="qti-bordered"><thead><tr><th scope="col"></th><th scope="col" class="qti-align-center">Received cold medicine</th><th scope="col" class="qti-align-center">Did not receive cold medicine</th></tr></thead><tbody><tr><th scope="row" class="qti-align-left">Cold <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>≥</mo></math> 7 days</th><td class="qti-align-center">23</td><td class="qti-align-center">20</td></tr><tr><th scope="row" class="qti-align-left">Cold <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math> 7 days</th><td class="qti-align-center">27</td><td class="qti-align-center">30</td></tr></tbody></table>',
@@ -391,7 +388,7 @@ describe("QTI Compiler", () => {
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
 		expect(compiledXml).toContain('identifier="two-way-frequency-table-cold-study"')
-		expect(compiledXml).toContain("vennDiagram")
+		expect(compiledXml).toContain('<img src="data:image/svg+xml,')
 	})
 
 	test("should correctly compile equivalent fractions with partitioned shapes", () => {
@@ -437,10 +434,9 @@ describe("QTI Compiler", () => {
 					shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 3, rows: 2, columns: 2, shadeColor: null }]
 				}
 			},
-			stimulus:
-				'<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of the following rectangle is shaded.</p><slot name="stimulus_shape" />',
-			interactions: [
-				{
+			body: '<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of the following rectangle is shaded.</p><slot name="stimulus_shape" /><slot name="choice_interaction" />',
+			interactions: {
+				choice_interaction: {
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: true,
@@ -469,7 +465,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Excellent!</span> You correctly identified that <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>, and found both rectangles that have exactly half of their area shaded: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>4</mn><mn>8</mn></mfrac></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>4</mn></mfrac></math> both equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>.</p>',
@@ -510,9 +506,9 @@ describe("QTI Compiler", () => {
 					]
 				}
 			},
-			stimulus: '<slot name="multi_shape" />',
-			interactions: [
-				{
+			body: '<slot name="multi_shape" /><slot name="choice_interaction" />',
+			interactions: {
+				choice_interaction: {
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: true,
@@ -543,7 +539,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Excellent!</span> You found both correct ways to calculate the shaded area. Since we have <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles with <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> shaded in each, we can either multiply <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math> or add <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>. Both give us <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math> as the total shaded area.</p>',
@@ -555,7 +551,7 @@ describe("QTI Compiler", () => {
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
 		expect(compiledXml).toContain('identifier="calculate-shaded-area"')
-		expect(compiledXml).toContain("partitionedShape")
+		expect(compiledXml).toContain('<img src="data:image/svg+xml,')
 	})
 
 	test("should correctly compile circle equation center and radius problem", () => {
@@ -567,13 +563,12 @@ describe("QTI Compiler", () => {
 				{ identifier: "RESPONSE_Y", cardinality: "single", baseType: "integer", correct: -7, mapping: null },
 				{ identifier: "RESPONSE_R", cardinality: "single", baseType: "integer", correct: 5, mapping: null }
 			],
-			stimulus:
-				'<p>A certain circle can be represented by the following equation.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></mrow></math><p>What is the center of this circle?</p>',
-			interactions: [
-				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_X", expectedLength: 3 },
-				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_Y", expectedLength: 3 },
-				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_R", expectedLength: 2 }
-			],
+			body: '<p>A certain circle can be represented by the following equation.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></mrow></math><p>What is the center of this circle? (<slot name="x_entry" />, <slot name="y_entry" />) and radius <slot name="r_entry" />?</p>',
+			interactions: {
+				x_entry: { type: "textEntryInteraction", responseIdentifier: "RESPONSE_X", expectedLength: 3 },
+				y_entry: { type: "textEntryInteraction", responseIdentifier: "RESPONSE_Y", expectedLength: 3 },
+				r_entry: { type: "textEntryInteraction", responseIdentifier: "RESPONSE_R", expectedLength: 2 }
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> You successfully found that the circle is centered at (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>7</mn></math>) with a radius of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> units.</p><p>You correctly converted the equation to standard form: <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mi>x</mi><mo>+</mo><mn>9</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mo>(</mo><mi>y</mi><mo>+</mo><mn>7</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>=</mo><mn>25</mn></math></p>',
@@ -618,15 +613,14 @@ describe("QTI Compiler", () => {
 					footer: null
 				}
 			},
-			stimulus:
-				'<p>The following table shows each of Haruka\'s final exam scores last semester.</p><slot name="score_table" /><p>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka\'s final exam score in chemistry.</p>',
-			interactions: [
-				{
+			body: '<p>The following table shows each of Haruka\'s final exam scores last semester.</p><slot name="score_table" /><p>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka\'s final exam score in chemistry.</p><slot name="text_entry" />',
+			interactions: {
+				text_entry: {
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> Haruka scored <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>87</mn></math> points on her chemistry exam.</p>',
@@ -699,10 +693,9 @@ describe("QTI Compiler", () => {
 					footer: null
 				}
 			},
-			stimulus:
-				'<p><em>The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</em></p><slot name="gdp_table" />',
-			interactions: [
-				{
+			body: '<p><em>The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</em></p><slot name="gdp_table" /><slot name="choice_interaction" />',
+			interactions: {
+				choice_interaction: {
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: true,
@@ -743,7 +736,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> 2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins.</p>',
@@ -771,10 +764,9 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			stimulus:
-				'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mrow><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mrow></mtd></mtr><mtr><mtd columnalign="left"><mrow><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>&gt;</mo><mn>2</mn></mrow></mtd></mtr></mtable></mrow></mrow></math>',
-			interactions: [
-				{
+			body: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mrow><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mrow></mtd></mtr><mtr><mtd columnalign="left"><mrow><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>&gt;</mo><mn>2</mn></mrow></mtd></mtr></mtable></mrow></mrow></math><slot name="choice_interaction" />',
+			interactions: {
+				choice_interaction: {
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: true,
@@ -809,7 +801,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><strong>Correct!</strong> The function is both continuous and differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>.</p><p>For continuity: <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>(</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>4</mn><mo>+</mo><mn>3</mn><mo>=</mo><mo>-</mo><mn>1</mn></math>, and both one-sided limits equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>.</p><p>For differentiability: The left derivative is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mi>x</mi><msub><mo>|</mo><mrow><mi>x</mi><mo>=</mo><mn>2</mn></mrow></msub><mo>=</mo><mo>-</mo><mn>4</mn></math>, and the right derivative is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo><msub><mo>|</mo><mrow><mi>x</mi><mo>=</mo><mn>2</mn></mrow></msub><mo>=</mo><mo>-</mo><mn>4</mn></math>. Since they match, <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>\'</mo><mo>(</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>4</mn></math>.</p>',
@@ -836,15 +828,14 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			stimulus:
-				'<p>Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∬</mo><mi>S</mi></msub><mrow><mo>[</mo><mrow><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow><mo>]</mo></mrow><mo>·</mo><mi>d</mi><mi>S</mi></mrow></math><p>Use Stokes\' theorem to rewrite the surface integral as a line integral.</p><p><em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em></p>',
-			interactions: [
-				{
+			body: '<p>Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∬</mo><mi>S</mi></msub><mrow><mo>[</mo><mrow><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow><mo>]</mo></mrow><mo>·</mo><mi>d</mi><mi>S</mi></mrow></math><p>Use Stokes\' theorem to rewrite the surface integral as a line integral.</p><p><em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em></p><slot name="text_entry" />',
+			interactions: {
+				text_entry: {
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 20
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> The missing component is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>2</mn></mfrac><mo>-</mo><mi>x</mi><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow></math>.</p>',
@@ -908,10 +899,9 @@ describe("QTI Compiler", () => {
 					footer: null
 				}
 			},
-			stimulus:
-				'This table gives select values of the differentiable function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>.<slot name="h_table" />',
-			interactions: [
-				{
+			body: 'This table gives select values of the differentiable function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>.<slot name="h_table" /><slot name="choice_interaction" />',
+			interactions: {
+				choice_interaction: {
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: true,
@@ -946,7 +936,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> The best estimate for <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math> is the average rate of change of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math> over the narrowest interval containing <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math> that can be formed from the table. This interval is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>6</mn><mo>,</mo><mo>-</mo><mn>3</mn><mo>]</mo></math>. The average rate of change is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>3</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>20</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>36</mn><mo>)</mo></mrow><mn>3</mn></mfrac><mo>=</mo><mfrac><mn>16</mn><mn>3</mn></mfrac><mo>≈</mo><mn>5.33</mn></math>.</p>',
@@ -1008,9 +998,9 @@ describe("QTI Compiler", () => {
 					objects: [{ count: 6, emoji: "🍎" }]
 				}
 			},
-			stimulus: "",
-			interactions: [
-				{
+			body: '<slot name="choice_interaction" />',
+			interactions: {
+				choice_interaction: {
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: true,
@@ -1040,7 +1030,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct: '<p><span class="qti-keyword-emphasis">Great job!</span> That box has exactly five apples.</p>',
 				incorrect:
@@ -1145,9 +1135,9 @@ describe("QTI Compiler", () => {
 					barColor: null
 				}
 			},
-			stimulus: '<p>A second grade classroom has a bin of shapes.</p><slot name="shapes_table" />',
-			interactions: [
-				{
+			body: '<p>A second grade classroom has a bin of shapes.</p><slot name="shapes_table" /><slot name="choice_interaction" />',
+			interactions: {
+				choice_interaction: {
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: true,
@@ -1177,7 +1167,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> The chosen graph perfectly matches the data provided in the table: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> Triangles, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> Circles, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> Rectangles, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math> Squares.</p>',
@@ -1255,10 +1245,9 @@ describe("QTI Compiler", () => {
 					dotRadius: 8
 				}
 			},
-			stimulus:
-				'The lengths of 4 pencils were measured. The lengths are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm.',
-			interactions: [
-				{
+			body: 'The lengths of 4 pencils were measured. The lengths are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm.<slot name="choice_interaction" />',
+			interactions: {
+				choice_interaction: {
 					type: "choiceInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: true,
@@ -1292,7 +1281,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> The data set {11, 8, 8, 3} has one pencil of length <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm, two pencils of length <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and one pencil of length <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm. The chosen plot correctly displays a dot for each of these measurements.</p>',
@@ -1341,15 +1330,14 @@ describe("QTI Compiler", () => {
 					barColor: null
 				}
 			},
-			stimulus:
-				'<p>The Lions, Tigers, and Bears won baseball games last summer.</p><p>This bar graph shows how many games each team won.</p><slot name="games_chart" /><p>How many games did the Lions win?</p>',
-			interactions: [
-				{
+			body: '<p>The Lions, Tigers, and Bears won baseball games last summer.</p><p>This bar graph shows how many games each team won.</p><slot name="games_chart" /><p>How many games did the Lions win?</p><slot name="text_entry" />',
+			interactions: {
+				text_entry: {
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> The bar for the Lions goes up to the line for <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>14</mn></math>, so they won <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>14</mn></math> games.</p>',
@@ -1361,7 +1349,7 @@ describe("QTI Compiler", () => {
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
 		expect(compiledXml).toContain('identifier="games-won-barchart"')
-		expect(compiledXml).toContain("barChart")
+		expect(compiledXml).toContain('<img src="data:image/svg+xml,')
 	})
 
 	test("should correctly compile interpreting a line plot", () => {
@@ -1398,15 +1386,14 @@ describe("QTI Compiler", () => {
 					dotRadius: 6
 				}
 			},
-			stimulus:
-				'<p>The heights of Sabrina\'s dolls are shown below.</p><slot name="doll_plot" /><p>How many dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> centimeters?</p>',
-			interactions: [
-				{
+			body: '<p>The heights of Sabrina\'s dolls are shown below.</p><slot name="doll_plot" /><p>How many dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> centimeters?</p><slot name="text_entry" />',
+			interactions: {
+				text_entry: {
 					type: "textEntryInteraction",
 					responseIdentifier: "RESPONSE",
 					expectedLength: 3
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> There are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> dolls that are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>23</mn></math> cm tall and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> dolls that are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>24</mn></math> cm tall. In total, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>+</mo><mn>2</mn><mo>=</mo><mn>5</mn></math> dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> cm.</p>',
@@ -1418,7 +1405,7 @@ describe("QTI Compiler", () => {
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
 		expect(compiledXml).toContain('identifier="doll-height-line-plot"')
-		expect(compiledXml).toContain("dotPlot")
+		expect(compiledXml).toContain('<img src="data:image/svg+xml,')
 	})
 
 	test("should correctly compile time on number line", () => {
@@ -1449,12 +1436,11 @@ describe("QTI Compiler", () => {
 					points: [{ value: 55, label: "A", color: "#A0522D", labelPosition: "below" }]
 				}
 			},
-			stimulus:
-				'<p>Look at the following number line.</p><slot name="time_line" /><p>What time is shown on the number line?</p>',
-			interactions: [
-				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_HR", expectedLength: 2 },
-				{ type: "textEntryInteraction", responseIdentifier: "RESPONSE_MIN", expectedLength: 2 }
-			],
+			body: '<p>Look at the following number line.</p><slot name="time_line" /><p>What time is shown on the number line? <slot name="hour_entry" />:<slot name="minute_entry" /></p>',
+			interactions: {
+				hour_entry: { type: "textEntryInteraction", responseIdentifier: "RESPONSE_HR", expectedLength: 2 },
+				minute_entry: { type: "textEntryInteraction", responseIdentifier: "RESPONSE_MIN", expectedLength: 2 }
+			},
 			feedback: {
 				correct: '<p><span class="qti-keyword-emphasis">Correct!</span> The time shown is 12:55.</p>',
 				incorrect:
@@ -1465,7 +1451,7 @@ describe("QTI Compiler", () => {
 		const compiledXml = compile(itemDefinition)
 		expect(compiledXml).toMatchSnapshot()
 		expect(compiledXml).toContain('identifier="time-on-number-line-detailed-final"')
-		expect(compiledXml).toContain("numberLine")
+		expect(compiledXml).toContain('<img src="data:image/svg+xml,')
 	})
 
 	test("should correctly compile compare 2-digit numbers", () => {
@@ -1481,10 +1467,9 @@ describe("QTI Compiler", () => {
 					mapping: null
 				}
 			],
-			stimulus:
-				'<p>Compare using <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>, or <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>.</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math> ___ <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math></p>',
-			interactions: [
-				{
+			body: '<p>Compare using <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>, or <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>.</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math> <slot name="comparison" /> <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math></p>',
+			interactions: {
+				comparison: {
 					type: "inlineChoiceInteraction",
 					responseIdentifier: "RESPONSE",
 					shuffle: false,
@@ -1503,7 +1488,7 @@ describe("QTI Compiler", () => {
 						}
 					]
 				}
-			],
+			},
 			feedback: {
 				correct:
 					'<p><span class="qti-keyword-emphasis">Correct!</span> <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math> is greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math>, so the correct symbol is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>.</p>',

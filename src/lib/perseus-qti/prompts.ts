@@ -835,3 +835,68 @@ The only valid QTI tags for this application are:
 Return a single JSON object with the final corrected XML.
 `
 }
+
+export function createAssessmentShellPrompt(perseusJson: string): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction = `You are an expert in educational content conversion. Your task is to analyze a Perseus JSON object and create a structured assessment shell that outlines the content organization with placeholder references for widgets and interactions. You will output a JSON object conforming to the AssessmentShell schema.
+
+The shell should:
+1. Convert Perseus content into a single 'body' string with <slot name="..."/> placeholders
+2. Map out all widgets and interactions as empty objects in their respective maps
+3. Preserve the logical flow and structure of the original content
+
+Your output MUST be a valid JSON object that conforms to the provided schema.`
+
+	const userContent = `Convert the following Perseus JSON into an assessment shell with placeholders:
+
+${perseusJson}
+
+## Instructions:
+- Create a 'body' field containing the main content as HTML with <slot name="widget_id"/> or <slot name="interaction_id"/> placeholders
+- For each Perseus widget (e.g., [[☃ widget-name 1]]), create an entry in the 'widgets' map with key "widget_1" (or similar) and value {}
+- For each Perseus interaction (radio, text-input, etc.), create an entry in the 'interactions' map with key "interaction_1" (or similar) and value {}
+- Ensure all placeholder names in the body match the keys in the widgets/interactions maps
+- Include all required assessment metadata (identifier, title, responseDeclarations, feedback)
+
+Return ONLY the JSON object.`
+
+	return { systemInstruction, userContent }
+}
+
+export function createStructuredQtiCompletionPrompt(
+	perseusJson: string,
+	assessmentShell: unknown
+): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction =
+		"You are an expert in educational content conversion. Your task is to complete an assessment shell by filling in the detailed properties for all widgets and interactions. You have been provided with the original Perseus JSON and a shell containing placeholders. You must populate all the empty objects in the widgets and interactions maps with their full definitions according to the appropriate schemas."
+
+	const userContent = `Complete the following assessment shell with full widget and interaction definitions:
+
+## Original Perseus JSON:
+\`\`\`json
+${perseusJson}
+\`\`\`
+
+## Assessment Shell to Complete:
+\`\`\`json
+${JSON.stringify(assessmentShell, null, 2)}
+\`\`\`
+
+## Instructions:
+- For each widget in the widgets map, replace the empty {} with a complete widget definition matching the Perseus data
+- For each interaction in the interactions map, replace the empty {} with a complete interaction definition
+- Ensure all widget types match available schemas (e.g., "type": "doubleNumberLine", "type": "barChart", etc.)
+- Ensure all interaction types are valid QTI types (choiceInteraction, textEntryInteraction, etc.)
+- Map Perseus answer data to proper response declarations
+- DO NOT modify the body content or placeholder names
+- DO NOT add or remove widgets/interactions from the maps
+
+Return ONLY the completed JSON object with all empty objects filled.`
+
+	return { systemInstruction, userContent }
+}

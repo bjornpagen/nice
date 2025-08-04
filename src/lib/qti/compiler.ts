@@ -36,6 +36,12 @@ import { escapeXmlAttribute } from "@/lib/xml-utils"
 import type { AnyInteraction, AssessmentItem, AssessmentItemInput } from "./schemas"
 import { AssessmentItemSchema } from "./schemas"
 
+// This helper must be added to fix the feedback compilation regression.
+const createFeedbackHtml = (content: string) => {
+	// This restores the required wrapper for feedback blocks.
+	return `<p><span class="qti-keyword-emphasis">Feedback</span>: ${content}</p>`
+}
+
 function validateHtmlContent(content: string, context: string): void {
 	// Basic validation to ensure the content looks like HTML
 	// Check if it contains HTML tags or is wrapped in tags
@@ -340,25 +346,49 @@ function compileResponseProcessing(decls: AssessmentItem["responseDeclarations"]
 
 // Update the function signature to accept the raw INPUT type
 export function compile(itemData: AssessmentItemInput): string {
-	// The `item` variable now holds the parsed data with defaults applied.
-	// It is of type `AssessmentItem` (the output type).
 	const item: AssessmentItem = AssessmentItemSchema.parse(itemData)
 
-	// Validate feedback HTML
-	validateHtmlContent(item.feedback.correct, "correct feedback")
-	validateHtmlContent(item.feedback.incorrect, "incorrect feedback")
+	// Start with the body string containing placeholders.
+	let processedBody = item.body
+
+	// 1. Replace widget placeholders
+	if (item.widgets) {
+		for (const [widgetId, widgetDef] of Object.entries(item.widgets)) {
+			const placeholder = `<slot name="${widgetId}" />`
+			const widgetHtml = generateWidget(widgetDef)
+			const isSvg = widgetHtml.trim().startsWith("<svg")
+
+			let finalHtml: string
+			if (isSvg) {
+				// For SVG content, embed it in an img tag with a data URI.
+				// This restores the original, correct behavior.
+				const dataUri = encodeDataUri(widgetHtml)
+				const altText = escapeXmlAttribute(`A visual element of type ${widgetDef.type}.`)
+				finalHtml = `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`
+			} else {
+				// For non-SVG widgets (like dataTable), insert the HTML directly.
+				finalHtml = widgetHtml
+			}
+			processedBody = processedBody.replaceAll(placeholder, finalHtml)
+		}
+	}
+
+	// 2. Replace interaction placeholders
+	if (item.interactions) {
+		for (const [interactionId, interactionDef] of Object.entries(item.interactions)) {
+			const placeholder = `<slot name="${interactionId}" />`
+			// compileInteraction MUST return raw, unwrapped XML to preserve inline/block context.
+			const interactionXml = compileInteraction(interactionDef, item.widgets)
+			processedBody = processedBody.replaceAll(placeholder, interactionXml)
+		}
+	}
 
 	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)
-
-	// REFACTORED: Body compilation logic
-	const stimulusHtml = processSlots(item.stimulus, item.widgets)
-	const interactionsHtml = item.interactions
-		.map((interaction) => compileInteraction(interaction, item.widgets))
-		.join("\n        ")
-
-	const itemBody = `${stimulusHtml}\n        ${interactionsHtml}`.trim()
-
 	const responseProcessing = compileResponseProcessing(item.responseDeclarations)
+
+	// 3. Fix feedback compilation by using the new helper.
+	const correctFeedback = createFeedbackHtml(item.feedback.correct)
+	const incorrectFeedback = createFeedbackHtml(item.feedback.incorrect)
 
 	return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-item
@@ -376,12 +406,12 @@ ${responseDeclarations}
     <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
 
     <qti-item-body>
-        ${itemBody}
+        ${processedBody.trim()}
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
-            <qti-content-body>${item.feedback.correct}</qti-content-body>
+            <qti-content-body>${correctFeedback}</qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
-            <qti-content-body>${item.feedback.incorrect}</qti-content-body>
+            <qti-content-body>${incorrectFeedback}</qti-content-body>
         </qti-feedback-block>
     </qti-item-body>
 ${responseProcessing}

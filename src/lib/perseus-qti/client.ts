@@ -5,12 +5,13 @@ import { zodResponseFormat } from "openai/helpers/zod"
 import type { ChatCompletionContentPart } from "openai/resources/chat/completions"
 import { z } from "zod"
 import { env } from "@/env"
-import { type AssessmentItemInput, createDynamicSchemas } from "@/lib/qti/schemas"
+import { type AssessmentItemInput, AssessmentItemSchema, createDynamicSchemas } from "@/lib/qti/schemas"
 import type { typedSchemas } from "@/lib/widgets/generators"
 import {
+	createAssessmentShellPrompt,
 	createQtiConversionPrompt,
 	createQtiSufficiencyValidationPrompt,
-	createStructuredQtiConversionPrompt,
+	createStructuredQtiCompletionPrompt,
 	createWidgetSelectionPrompt,
 	WidgetSelectionSchema
 } from "./prompts"
@@ -34,6 +35,14 @@ const QtiSolvabilityValidationSchema = z.object({
 	is_solvable: z.boolean(),
 	reason: z.string()
 })
+
+// A new schema is needed for the shell from Shot 1.
+// It defines widgets and interactions as maps of empty objects.
+const AssessmentShellSchema = AssessmentItemSchema.extend({
+	widgets: z.record(z.string(), z.object({})).optional(),
+	interactions: z.record(z.string(), z.object({}))
+})
+type AssessmentShell = z.infer<typeof AssessmentShellSchema>
 
 /**
  * Extracts and validates the XML from the AI response
@@ -243,22 +252,13 @@ async function selectRelevantWidgets(
 }
 
 /**
- * Second pass. Generates the structured item using a dynamic schema.
+ * NEW - Shot 1: Generate Content Shell & Plan.
  */
-async function generateStructuredQtiItemWithDynamicSchema(
-	logger: logger.Logger,
-	perseusData: unknown,
-	widgetKeys: (keyof typeof typedSchemas)[]
-): Promise<AssessmentItemInput> {
-	const perseusJsonString = JSON.stringify(perseusData, null, 2)
-	const { systemInstruction, userContent } = createStructuredQtiConversionPrompt(perseusJsonString)
-	const { AssessmentItemSchema: dynamicSchema } = createDynamicSchemas(widgetKeys)
+async function generateAssessmentShell(logger: logger.Logger, perseusJson: string): Promise<AssessmentShell> {
+	// Assumes a new prompt function is created for this shot.
+	const { systemInstruction, userContent } = createAssessmentShellPrompt(perseusJson)
 
-	logger.debug("calling openai for structured qti generation with dynamic schema", {
-		model: OPENAI_MODEL,
-		widgetCount: widgetKeys.length
-	})
-
+	logger.debug("calling openai for assessment shell generation")
 	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
@@ -266,13 +266,12 @@ async function generateStructuredQtiItemWithDynamicSchema(
 				{ role: "system", content: systemInstruction },
 				{ role: "user", content: userContent }
 			],
-			response_format: zodResponseFormat(dynamicSchema, "qti_assessment_item_generator")
+			response_format: zodResponseFormat(AssessmentShellSchema, "assessment_shell_generator")
 		})
 	)
-
 	if (response.error) {
-		logger.error("failed to generate structured qti item from perseus via openai", { error: response.error })
-		throw errors.wrap(response.error, "ai structured qti generation")
+		logger.error("failed to generate assessment shell", { error: response.error })
+		throw errors.wrap(response.error, "ai shell generation")
 	}
 
 	const choice = response.data.choices[0]
@@ -282,13 +281,8 @@ async function generateStructuredQtiItemWithDynamicSchema(
 	}
 
 	const message = choice.message
-	if (message.refusal) {
-		logger.error("openai refused to generate structured qti item", { refusal: message.refusal })
-		throw errors.new(`ai refused request: ${message.refusal}`)
-	}
-
 	if (!message.parsed) {
-		logger.error("CRITICAL: OpenAI returned no parsed content for structured conversion")
+		logger.error("CRITICAL: OpenAI returned no parsed content for shell generation")
 		throw errors.new("empty ai response: no parsed content")
 	}
 
@@ -296,8 +290,59 @@ async function generateStructuredQtiItemWithDynamicSchema(
 }
 
 /**
- * REFACTORED: This is now the main public orchestrator function.
- * It encapsulates the entire two-shot process.
+ * MODIFIED - Shot 3: Generate Full Widget Definitions.
+ * The function now takes the shell from Shot 1 and the original Perseus data.
+ */
+async function generateStructuredQtiItemWithDynamicSchema(
+	logger: logger.Logger,
+	perseusData: unknown, // Keep original data for context
+	assessmentShell: AssessmentShell, // Pass in the shell
+	widgetKeys: (keyof typeof typedSchemas)[]
+): Promise<AssessmentItemInput> {
+	// Assumes a new prompt function is created that instructs the AI to fill in the shell.
+	const { systemInstruction, userContent } = createStructuredQtiCompletionPrompt(
+		JSON.stringify(perseusData, null, 2),
+		assessmentShell
+	)
+	const { AssessmentItemSchema: dynamicSchema } = createDynamicSchemas(widgetKeys)
+	// ... (rest of the function is similar to the original)
+	logger.debug("calling openai for structured qti generation with dynamic schema", {
+		widgetKeys,
+		widgetCount: widgetKeys.length
+	})
+	const result = await errors.try(
+		openai.chat.completions.parse({
+			model: OPENAI_MODEL,
+			messages: [
+				{ role: "system", content: systemInstruction },
+				{ role: "user", content: userContent }
+			],
+			response_format: zodResponseFormat(dynamicSchema, "assessment_item_generator")
+		})
+	)
+	if (result.error) {
+		logger.error("openai request failed for structured qti generation", { error: result.error })
+		throw errors.wrap(result.error, "ai qti item generation")
+	}
+
+	const message = result.data.choices[0]?.message
+	if (!message) {
+		throw errors.new("openai response missing choices or message")
+	}
+
+	if (!message.parsed) {
+		logger.error("openai parsing failed for structured qti generation", {
+			refusal: message.refusal,
+			finishReason: result.data.choices[0]?.finish_reason
+		})
+		throw errors.new("ai qti item generation: parsing failed")
+	}
+
+	return message.parsed
+}
+
+/**
+ * REFACTORED: The main public orchestrator for the new 3-shot flow.
  */
 export async function generateStructuredQtiItem(
 	logger: logger.Logger,
@@ -305,16 +350,23 @@ export async function generateStructuredQtiItem(
 ): Promise<AssessmentItemInput> {
 	const perseusJsonString = JSON.stringify(perseusData, null, 2)
 
-	// Shot 1: Select widgets
+	// Shot 1: Generate the content shell and plan.
+	const shellResult = await errors.try(generateAssessmentShell(logger, perseusJsonString))
+	if (shellResult.error) {
+		logger.error("shell generation pass failed", { error: shellResult.error })
+		throw shellResult.error
+	}
+
+	// Shot 2: Select widgets to build the dynamic schema.
 	const selectedWidgetsResult = await errors.try(selectRelevantWidgets(logger, perseusJsonString))
 	if (selectedWidgetsResult.error) {
 		logger.error("widget selection pass failed", { error: selectedWidgetsResult.error })
 		throw selectedWidgetsResult.error
 	}
 
-	// Shot 2: Generate item with a simplified, dynamic schema
+	// Shot 3: Generate the full item by filling in the shell.
 	const structuredItemResult = await errors.try(
-		generateStructuredQtiItemWithDynamicSchema(logger, perseusData, selectedWidgetsResult.data)
+		generateStructuredQtiItemWithDynamicSchema(logger, perseusData, shellResult.data, selectedWidgetsResult.data)
 	)
 	if (structuredItemResult.error) {
 		logger.error("structured generation pass failed", { error: structuredItemResult.error })

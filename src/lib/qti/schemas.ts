@@ -171,12 +171,22 @@ export function createDynamicSchemas(widgetKeys: (keyof typeof typedSchemas)[]) 
 			responseDeclarations: z
 				.array(ResponseDeclarationSchema)
 				.describe("Defines correct answers and scoring for all interactions in this item."),
+
+			// REPLACES stimulus: string and interactions: array[]
+			body: z
+				.string()
+				.default("")
+				.describe(
+					"The main content of the item, with <slot name='...'/> placeholders for both widgets and interactions."
+				),
 			widgets: z
 				.record(DynamicWidgetSchema)
 				.optional()
 				.describe("A map of widget identifiers to their full widget object definitions."),
-			stimulus: z.string().describe("The main content of the item body, with slots for widgets."),
-			interactions: z.array(AnyInteractionSchema).describe("An array of interactions that appear after the stimulus."),
+			interactions: z
+				.record(AnyInteractionSchema)
+				.describe("A map of interaction identifiers to their full interaction object definitions."),
+
 			feedback: FeedbackSchema.describe("Global feedback messages for the entire assessment item.")
 		})
 		.strict()
