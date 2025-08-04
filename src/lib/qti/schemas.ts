@@ -2,48 +2,21 @@ import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import { typedSchemas } from "@/lib/widgets/generators"
 
-// NEW: Define a type alias for any possible widget schema for clarity and reuse.
-type AnyWidgetSchema = (typeof typedSchemas)[keyof typeof typedSchemas]
-
-// A factory function to dynamically create the schema with a subset of widgets.
-// It's renamed to createDynamicSchemas to reflect that it creates multiple related schemas.
-export function createDynamicSchemas(widgetKeys: (keyof typeof typedSchemas)[]) {
-	// REFACTORED: Use .reduce() for a more robust and correctly typed filter.
-	// This replaces the faulty .map().filter() chain.
-	const selectedWidgetSchemas = widgetKeys.reduce<AnyWidgetSchema[]>((acc, key) => {
-		const schema = typedSchemas[key]
+// ✅ REFACTOR createDynamicSchemas to accept the mapping object for type safety.
+export function createDynamicSchemas(widgetMapping: Record<string, keyof typeof typedSchemas>) {
+	// Dynamically build the Zod shape for the 'widgets' property.
+	const widgetShape: Record<string, z.ZodType> = {}
+	for (const [slotName, widgetType] of Object.entries(widgetMapping)) {
+		const schema = typedSchemas[widgetType]
 		if (schema) {
-			acc.push(schema)
+			widgetShape[slotName] = schema
+		} else {
+			// Safeguard against invalid widget types.
+			throw errors.new(`unknown widget type specified in mapping: ${widgetType}`)
 		}
-		return acc
-	}, [])
-
-	// Safely construct the discriminated union for widgets.
-	// This now correctly handles cases for 0, 1, or 2+ selected widgets without non-null assertions.
-	let DynamicWidgetSchema: z.ZodType
-	if (selectedWidgetSchemas.length === 0) {
-		// If no widgets, create a schema that will always fail for widget objects
-		DynamicWidgetSchema = z
-			.object({ type: z.string() })
-			.refine(() => false, "No widgets were selected for this dynamic schema")
-	} else if (selectedWidgetSchemas.length === 1) {
-		// If one widget, it's just that widget's schema
-		const schema = selectedWidgetSchemas[0]
-		// This explicit check satisfies the compiler that the schema is not undefined.
-		if (!schema) {
-			throw errors.new("Impossible state: schema is undefined despite length check.")
-		}
-		DynamicWidgetSchema = schema
-	} else {
-		// If 2+ widgets, create the discriminated union.
-		const [first, second, ...rest] = selectedWidgetSchemas
-		// This explicit check is required to satisfy TypeScript's strict type requirements
-		// for z.discriminatedUnion, which expects a tuple of at least two elements.
-		if (!first || !second) {
-			throw errors.new("Impossible state: schemas are undefined despite length check.")
-		}
-		DynamicWidgetSchema = z.discriminatedUnion("type", [first, second, ...rest])
 	}
+
+	const DynamicWidgetsSchema = z.object(widgetShape)
 
 	const SimpleContentSchema = z
 		.string()
@@ -179,10 +152,10 @@ export function createDynamicSchemas(widgetKeys: (keyof typeof typedSchemas)[]) 
 				.describe(
 					"The main content of the item, with <slot name='...'/> placeholders for both widgets and interactions."
 				),
-			widgets: z
-				.record(DynamicWidgetSchema)
-				.optional()
-				.describe("A map of widget identifiers to their full widget object definitions."),
+			// The 'widgets' property now uses our precisely generated schema
+			widgets: DynamicWidgetsSchema.optional().describe(
+				"A map of widget identifiers to their full widget object definitions."
+			),
 			interactions: z
 				.record(AnyInteractionSchema)
 				.describe("A map of interaction identifiers to their full interaction object definitions."),
@@ -195,46 +168,13 @@ export function createDynamicSchemas(widgetKeys: (keyof typeof typedSchemas)[]) 
 	return { AssessmentItemSchema, AnyInteractionSchema }
 }
 
-// Create the default schemas using all available widgets.
-// Get the widget keys with proper typing
-const allWidgetKeys: (keyof typeof typedSchemas)[] = [
-	"absoluteValueNumberLine",
-	"barChart",
-	"boxPlot",
-	"compositeShapeDiagram",
-	"coordinatePlane",
-	"dataTable",
-	"discreteObjectRatioDiagram",
-	"dotPlot",
-	"doubleNumberLine",
-	"geometricSolidDiagram",
-	"hangerDiagram",
-	"histogram",
-	"inequalityNumberLine",
-	"numberLine",
-	"numberLineForOpposites",
-	"numberLineWithAction",
-	"numberLineWithFractionGroups",
-	"numberSetDiagram",
-	"parallelLinesTransversal",
-	"partitionedShape",
-	"pictograph",
-	"polyhedronDiagram",
-	"polyhedronNetDiagram",
-	"pythagoreanProofDiagram",
-	"scatterPlot",
-	"stackedItemsDiagram",
-	"tapeDiagram",
-	"unitBlockDiagram",
-	"vennDiagram",
-	"verticalArithmeticSetup"
-]
-const { AssessmentItemSchema: DefaultAssessmentItemSchema, AnyInteractionSchema: DefaultAnyInteractionSchema } =
-	createDynamicSchemas(allWidgetKeys)
+// ✅ REPLACE the old default export logic with a new, type-safe baseline.
+// This creates and exports a valid schema for an item that contains NO widgets.
+const { AssessmentItemSchema: BaseAssessmentItemSchema, AnyInteractionSchema: BaseAnyInteractionSchema } =
+	createDynamicSchemas({})
 
-// Export the default schemas and their derived types.
-export const AssessmentItemSchema = DefaultAssessmentItemSchema
-export const AnyInteractionSchema = DefaultAnyInteractionSchema
+export const AssessmentItemSchema = BaseAssessmentItemSchema
+export const AnyInteractionSchema = BaseAnyInteractionSchema
 export type AnyInteraction = z.infer<typeof AnyInteractionSchema>
 export type AssessmentItem = z.infer<typeof AssessmentItemSchema>
 export type AssessmentItemInput = z.input<typeof AssessmentItemSchema>

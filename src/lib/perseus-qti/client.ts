@@ -12,8 +12,8 @@ import {
 	createQtiConversionPrompt,
 	createQtiSufficiencyValidationPrompt,
 	createStructuredQtiCompletionPrompt,
-	createWidgetSelectionPrompt,
-	WidgetSelectionSchema
+	createWidgetMappingPrompt, // NEW
+	WidgetMappingSchema // NEW
 } from "./prompts"
 import {
 	convertHtmlEntities,
@@ -213,15 +213,16 @@ export async function generateXml(
 }
 
 /**
- * First pass of the two-shot generation. Selects relevant widgets.
+ * ✅ REFACTORED: This is the new Shot 2 function.
  */
-async function selectRelevantWidgets(
+async function mapSlotsToWidgets(
 	logger: logger.Logger,
-	perseusJson: string
-): Promise<(keyof typeof typedSchemas)[]> {
-	const { systemInstruction, userContent } = createWidgetSelectionPrompt(perseusJson)
+	perseusJson: string,
+	assessmentBody: string // ✅ Takes the body from Shot 1 as input.
+): Promise<Record<string, keyof typeof typedSchemas>> {
+	const { systemInstruction, userContent } = createWidgetMappingPrompt(perseusJson, assessmentBody)
 
-	logger.debug("calling openai for widget selection")
+	logger.debug("calling openai for slot-to-widget mapping")
 	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
@@ -229,26 +230,27 @@ async function selectRelevantWidgets(
 				{ role: "system", content: systemInstruction },
 				{ role: "user", content: userContent }
 			],
-			response_format: zodResponseFormat(WidgetSelectionSchema, "widget_selector")
+			response_format: zodResponseFormat(WidgetMappingSchema, "widget_mapper")
 		})
 	)
 	if (response.error) {
-		logger.error("failed to select relevant widgets via openai", { error: response.error })
-		throw errors.wrap(response.error, "ai widget selection")
+		logger.error("failed to map slots to widgets via openai", { error: response.error })
+		throw errors.wrap(response.error, "ai widget mapping")
 	}
 
 	const choice = response.data.choices[0]
 	if (!choice?.message?.parsed) {
-		logger.error("CRITICAL: OpenAI widget selection returned no parsed content")
-		throw errors.new("empty ai response: no parsed content for widget selection")
+		logger.error("CRITICAL: OpenAI widget mapping returned no parsed content")
+		throw errors.new("empty ai response: no parsed content for widget mapping")
 	}
 	if (choice.message.refusal) {
-		logger.error("openai refused widget selection request", { refusal: choice.message.refusal })
+		logger.error("openai refused widget mapping request", { refusal: choice.message.refusal })
 		throw errors.new(`ai refused request: ${choice.message.refusal}`)
 	}
 
-	logger.info("successfully selected widgets", { count: choice.message.parsed.selected_widgets.length })
-	return choice.message.parsed.selected_widgets
+	const mapping = choice.message.parsed.widget_mapping
+	logger.info("successfully mapped slots to widgets", { mapping, count: Object.keys(mapping).length })
+	return mapping
 }
 
 /**
@@ -290,25 +292,24 @@ async function generateAssessmentShell(logger: logger.Logger, perseusJson: strin
 }
 
 /**
- * MODIFIED - Shot 3: Generate Full Widget Definitions.
- * The function now takes the shell from Shot 1 and the original Perseus data.
+ * ✅ REFACTORED: This is the new Shot 3 function.
  */
 async function generateStructuredQtiItemWithDynamicSchema(
 	logger: logger.Logger,
-	perseusData: unknown, // Keep original data for context
-	assessmentShell: AssessmentShell, // Pass in the shell
-	widgetKeys: (keyof typeof typedSchemas)[]
+	perseusData: unknown,
+	assessmentShell: AssessmentShell,
+	widgetMapping: Record<string, keyof typeof typedSchemas> // ✅ Receives the type-safe mapping.
 ): Promise<AssessmentItemInput> {
-	// Assumes a new prompt function is created that instructs the AI to fill in the shell.
 	const { systemInstruction, userContent } = createStructuredQtiCompletionPrompt(
 		JSON.stringify(perseusData, null, 2),
 		assessmentShell
 	)
-	const { AssessmentItemSchema: dynamicSchema } = createDynamicSchemas(widgetKeys)
-	// ... (rest of the function is similar to the original)
-	logger.debug("calling openai for structured qti generation with dynamic schema", {
-		widgetKeys,
-		widgetCount: widgetKeys.length
+	// Use the mapping to create the precise schema
+	const { AssessmentItemSchema: dynamicSchema } = createDynamicSchemas(widgetMapping)
+
+	logger.debug("calling openai for structured qti completion", {
+		widgetMapping,
+		widgetCount: Object.keys(widgetMapping).length
 	})
 	const result = await errors.try(
 		openai.chat.completions.parse({
@@ -342,37 +343,46 @@ async function generateStructuredQtiItemWithDynamicSchema(
 }
 
 /**
- * REFACTORED: The main public orchestrator for the new 3-shot flow.
+ * ✅ REFACTORED: The main orchestrator implements the new, robust, and type-safe 3-shot flow.
  */
 export async function generateStructuredQtiItem(
 	logger: logger.Logger,
 	perseusData: unknown
 ): Promise<AssessmentItemInput> {
 	const perseusJsonString = JSON.stringify(perseusData, null, 2)
+	logger.info("starting structured qti generation process")
 
 	// Shot 1: Generate the content shell and plan.
+	logger.debug("shot 1: generating assessment shell")
 	const shellResult = await errors.try(generateAssessmentShell(logger, perseusJsonString))
 	if (shellResult.error) {
-		logger.error("shell generation pass failed", { error: shellResult.error })
+		logger.error("shot 1 failed: shell generation pass failed", { error: shellResult.error })
 		throw shellResult.error
 	}
+	const assessmentShell = shellResult.data
+	logger.debug("shot 1 complete: assessment shell generated", { identifier: assessmentShell.identifier })
 
-	// Shot 2: Select widgets to build the dynamic schema.
-	const selectedWidgetsResult = await errors.try(selectRelevantWidgets(logger, perseusJsonString))
-	if (selectedWidgetsResult.error) {
-		logger.error("widget selection pass failed", { error: selectedWidgetsResult.error })
-		throw selectedWidgetsResult.error
+	// Shot 2: Map widget slots in the shell to widget types.
+	logger.debug("shot 2: mapping slots to widgets", { body: assessmentShell.body })
+	const widgetMappingResult = await errors.try(mapSlotsToWidgets(logger, perseusJsonString, assessmentShell.body))
+	if (widgetMappingResult.error) {
+		logger.error("shot 2 failed: widget mapping pass failed", { error: widgetMappingResult.error })
+		throw widgetMappingResult.error
 	}
+	const widgetMapping = widgetMappingResult.data
+	logger.debug("shot 2 complete: slot mapping created", { mapping: widgetMapping })
 
-	// Shot 3: Generate the full item by filling in the shell.
+	// Shot 3: Generate the full item by filling in the shell using a precise schema.
+	logger.debug("shot 3: generating final structured item")
 	const structuredItemResult = await errors.try(
-		generateStructuredQtiItemWithDynamicSchema(logger, perseusData, shellResult.data, selectedWidgetsResult.data)
+		generateStructuredQtiItemWithDynamicSchema(logger, perseusData, assessmentShell, widgetMapping)
 	)
 	if (structuredItemResult.error) {
-		logger.error("structured generation pass failed", { error: structuredItemResult.error })
+		logger.error("shot 3 failed: structured generation pass failed", { error: structuredItemResult.error })
 		throw structuredItemResult.error
 	}
 
+	logger.info("structured qti generation process successful", { identifier: structuredItemResult.data.identifier })
 	return structuredItemResult.data
 }
 

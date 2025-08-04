@@ -1,18 +1,18 @@
 import type * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { zodToJsonSchema } from "zod-to-json-schema"
 import { loadConversionExamples } from "@/lib/qti-examples"
 import { VALID_QTI_TAGS } from "@/lib/qti-tags"
-import { typedSchemas } from "@/lib/widgets/generators"
+import type { typedSchemas } from "@/lib/widgets/generators"
 
 interface RegenerationContext {
 	flawedXml: string
 	errorReason: string
 }
 
-// NEW: Zod schema for the widget selection response
-// Define all widget keys explicitly to avoid type assertion
-const widgetKeysTuple = [
+// ✅ ADD: Create a statically-typed, non-empty array of widget keys.
+// This is the 100% type-safe way to create a list for z.enum, avoiding `as` assertions.
+// The `[T, ...T[]]` syntax ensures TypeScript knows the array is not empty.
+const widgetTypeKeys: [keyof typeof typedSchemas, ...(keyof typeof typedSchemas)[]] = [
 	"absoluteValueNumberLine",
 	"barChart",
 	"boxPlot",
@@ -43,12 +43,15 @@ const widgetKeysTuple = [
 	"unitBlockDiagram",
 	"vennDiagram",
 	"verticalArithmeticSetup"
-] as const
+]
 
-export const WidgetSelectionSchema = z.object({
-	selected_widgets: z
-		.array(z.enum(widgetKeysTuple))
-		.describe("An array of string keys for the widgets most relevant to the provided Perseus JSON.")
+// ✅ REPLACE with the new, more explicit WidgetMappingSchema.
+export const WidgetMappingSchema = z.object({
+	widget_mapping: z
+		.record(z.string(), z.enum(widgetTypeKeys))
+		.describe(
+			"A JSON object mapping each widget slot name found in the item body to its corresponding widget type from the provided enum."
+		)
 })
 
 /**
@@ -777,28 +780,27 @@ ${svg.content}
 	return { developer, user }
 }
 
-export function createWidgetSelectionPrompt(perseusJson: string) {
-	const widgetList = Object.entries(typedSchemas)
-		.map(([key, schema]) => {
-			const jsonSchema = zodToJsonSchema(schema)
-			return `### Widget: "${key}"\nDescription: ${jsonSchema.description || "No description available"}\nSchema:\n\`\`\`json\n${JSON.stringify(jsonSchema, null, 2)}\n\`\`\``
-		})
-		.join("\n\n")
+// REFACTORED: createWidgetSelectionPrompt to createWidgetMappingPrompt
+export function createWidgetMappingPrompt(perseusJson: string, assessmentBody: string) {
+	const systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content to identify all widget slots and map them to the most appropriate widget type from a given list. The output must be a JSON object that strictly adheres to the provided schema.
 
-	const systemInstruction = `You are an expert in educational technology content conversion. Your task is to analyze a given Perseus JSON object and determine which interactive widgets are required to accurately represent its content. You will be provided with a full list of available widgets, their descriptions, and their JSON schemas.
+Widget Type Options:
+${widgetTypeKeys.join("\n")}`
 
-Your response MUST be a JSON object that strictly adheres to the provided schema, containing only the string keys of the widgets you select.`
+	const userContent = `Based on the Perseus JSON provided below, and the following assessment item body containing <slot> placeholders, create a JSON object that maps each widget slot name to the most appropriate widget type from the list.
 
-	const userContent = `Based on the Perseus JSON below, please select the most relevant widgets from the list I have provided in the system prompt. Only select widgets that are explicitly needed to render the interactions or visuals in the content.
-
-## Perseus JSON Content:
+Perseus JSON:
 \`\`\`json
 ${perseusJson}
 \`\`\`
 
-## Available Widgets:
-${widgetList}
-`
+Assessment Item Body:
+\`\`\`html
+${assessmentBody}
+\`\`\`
+
+Map every \`<slot name="..." />\` that corresponds to a widget to its type.`
+
 	return { systemInstruction, userContent }
 }
 
