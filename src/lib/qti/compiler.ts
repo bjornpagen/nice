@@ -35,7 +35,7 @@ import {
 } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import type { AnyInteraction, AssessmentItem, AssessmentItemInput } from "./schemas"
-import { createDynamicSchemas } from "./schemas"
+import { createDynamicAssessmentItemSchema } from "./schemas"
 
 function encodeDataUri(content: string): string {
 	const encoded = encodeURIComponent(content)
@@ -282,7 +282,7 @@ export function compile(itemData: AssessmentItemInput): string {
 	}
 
 	// Create a dynamic schema based on the widgets present
-	const { AssessmentItemSchema } = createDynamicSchemas(widgetMapping)
+	const { AssessmentItemSchema } = createDynamicAssessmentItemSchema(widgetMapping)
 	const item: AssessmentItem = AssessmentItemSchema.parse(itemData)
 
 	// Start with the body string containing placeholders.

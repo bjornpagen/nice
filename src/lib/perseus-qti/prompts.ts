@@ -45,14 +45,22 @@ const widgetTypeKeys: [keyof typeof typedSchemas, ...(keyof typeof typedSchemas)
 	"verticalArithmeticSetup"
 ]
 
-// ✅ REPLACE with the new, more explicit WidgetMappingSchema.
-export const WidgetMappingSchema = z.object({
-	widget_mapping: z
-		.record(z.string(), z.enum(widgetTypeKeys))
-		.describe(
-			"A JSON object mapping each widget slot name found in the item body to its corresponding widget type from the provided enum."
-		)
-})
+// ❌ REMOVE the static WidgetMappingSchema export.
+
+// ✅ ADD a factory function to dynamically create the mapping schema for Shot 2.
+function createWidgetMappingSchema(slotNames: string[]) {
+	// Programmatically build a Zod object shape where keys are the actual slot names.
+	const mappingShape: Record<string, z.ZodEnum<[string, ...string[]]>> = {}
+	for (const slotName of slotNames) {
+		mappingShape[slotName] = z.enum(widgetTypeKeys)
+	}
+
+	return z.object({
+		widget_mapping: z
+			.object(mappingShape)
+			.describe("A JSON object mapping each provided widget slot name to its corresponding widget type.")
+	})
+}
 
 /**
  * Creates the structured prompt for the AI model to convert Perseus JSON to QTI XML,
@@ -780,8 +788,8 @@ ${svg.content}
 	return { developer, user }
 }
 
-// REFACTORED: createWidgetSelectionPrompt to createWidgetMappingPrompt
-export function createWidgetMappingPrompt(perseusJson: string, assessmentBody: string) {
+// ✅ REFACTOR createWidgetMappingPrompt to generate and return the dynamic schema.
+export function createWidgetMappingPrompt(perseusJson: string, assessmentBody: string, slotNames: string[]) {
 	const systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content to identify all widget slots and map them to the most appropriate widget type from a given list. The output must be a JSON object that strictly adheres to the provided schema.
 
 Widget Type Options:
@@ -799,9 +807,15 @@ Assessment Item Body:
 ${assessmentBody}
 \`\`\`
 
-Map every \`<slot name="..." />\` that corresponds to a widget to its type.`
+Your response must be a JSON object with a single key "widget_mapping", where the value is another object that maps every widget slot name from the provided list to its corresponding type.
 
-	return { systemInstruction, userContent }
+Slot Names to Map:
+${slotNames.join("\n")}`
+
+	// ✅ The function now returns the dynamically created schema along with the prompts.
+	const WidgetMappingSchema = createWidgetMappingSchema(slotNames)
+
+	return { systemInstruction, userContent, WidgetMappingSchema }
 }
 
 export function createQtiCorrectionPrompt(

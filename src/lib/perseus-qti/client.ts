@@ -5,15 +5,14 @@ import { zodResponseFormat } from "openai/helpers/zod"
 import type { ChatCompletionContentPart } from "openai/resources/chat/completions"
 import { z } from "zod"
 import { env } from "@/env"
-import { type AssessmentItemInput, AssessmentItemSchema, createDynamicSchemas } from "@/lib/qti/schemas"
-import type { typedSchemas } from "@/lib/widgets/generators"
+import { type AssessmentItemInput, AssessmentItemSchema, createDynamicAssessmentItemSchema } from "@/lib/qti/schemas"
+import { typedSchemas } from "@/lib/widgets/generators"
 import {
 	createAssessmentShellPrompt,
 	createQtiConversionPrompt,
 	createQtiSufficiencyValidationPrompt,
 	createStructuredQtiCompletionPrompt,
-	createWidgetMappingPrompt, // NEW
-	WidgetMappingSchema // NEW
+	createWidgetMappingPrompt
 } from "./prompts"
 import {
 	convertHtmlEntities,
@@ -218,11 +217,17 @@ export async function generateXml(
 async function mapSlotsToWidgets(
 	logger: logger.Logger,
 	perseusJson: string,
-	assessmentBody: string // ✅ Takes the body from Shot 1 as input.
+	assessmentBody: string,
+	slotNames: string[] // ✅ Takes the parsed slot names to generate the prompt.
 ): Promise<Record<string, keyof typeof typedSchemas>> {
-	const { systemInstruction, userContent } = createWidgetMappingPrompt(perseusJson, assessmentBody)
+	// ✅ The prompt and the schema are now generated together dynamically.
+	const { systemInstruction, userContent, WidgetMappingSchema } = createWidgetMappingPrompt(
+		perseusJson,
+		assessmentBody,
+		slotNames
+	)
 
-	logger.debug("calling openai for slot-to-widget mapping")
+	logger.debug("calling openai for slot-to-widget mapping", { slotNames })
 	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
@@ -230,6 +235,7 @@ async function mapSlotsToWidgets(
 				{ role: "system", content: systemInstruction },
 				{ role: "user", content: userContent }
 			],
+			// ✅ The dynamically generated, constrained schema is used here.
 			response_format: zodResponseFormat(WidgetMappingSchema, "widget_mapper")
 		})
 	)
@@ -248,7 +254,24 @@ async function mapSlotsToWidgets(
 		throw errors.new(`ai refused request: ${choice.message.refusal}`)
 	}
 
-	const mapping = choice.message.parsed.widget_mapping
+	const rawMapping = choice.message.parsed.widget_mapping
+
+	// Type guard to check if a value is a valid widget type
+	const isValidWidgetType = (val: unknown): val is keyof typeof typedSchemas => {
+		return typeof val === "string" && val in typedSchemas
+	}
+
+	// Validate and build the properly typed mapping
+	const mapping: Record<string, keyof typeof typedSchemas> = {}
+	for (const [key, value] of Object.entries(rawMapping)) {
+		if (isValidWidgetType(value)) {
+			mapping[key] = value
+		} else {
+			logger.error("invalid widget type in mapping", { slot: key, type: value })
+			throw errors.new(`invalid widget type "${value}" for slot "${key}"`)
+		}
+	}
+
 	logger.info("successfully mapped slots to widgets", { mapping, count: Object.keys(mapping).length })
 	return mapping
 }
@@ -294,7 +317,7 @@ async function generateAssessmentShell(logger: logger.Logger, perseusJson: strin
 /**
  * ✅ REFACTORED: This is the new Shot 3 function.
  */
-async function generateStructuredQtiItemWithDynamicSchema(
+async function generateFullAssessmentItem(
 	logger: logger.Logger,
 	perseusData: unknown,
 	assessmentShell: AssessmentShell,
@@ -305,7 +328,8 @@ async function generateStructuredQtiItemWithDynamicSchema(
 		assessmentShell
 	)
 	// Use the mapping to create the precise schema
-	const { AssessmentItemSchema: dynamicSchema } = createDynamicSchemas(widgetMapping)
+	// ✅ Use the mapping to create the precise schema for Shot 3.
+	const { AssessmentItemSchema: dynamicSchema } = createDynamicAssessmentItemSchema(widgetMapping)
 
 	logger.debug("calling openai for structured qti completion", {
 		widgetMapping,
@@ -360,22 +384,32 @@ export async function generateStructuredQtiItem(
 		throw shellResult.error
 	}
 	const assessmentShell = shellResult.data
-	logger.debug("shot 1 complete: assessment shell generated", { identifier: assessmentShell.identifier })
+	logger.debug("shot 1 complete", { identifier: assessmentShell.identifier })
 
-	// Shot 2: Map widget slots in the shell to widget types.
-	logger.debug("shot 2: mapping slots to widgets", { body: assessmentShell.body })
-	const widgetMappingResult = await errors.try(mapSlotsToWidgets(logger, perseusJsonString, assessmentShell.body))
+	// Step 1.5 (Deterministic): Extract widget slot names directly from the shell object keys.
+	// This is the robust replacement for the fragile string parsing.
+	const widgetSlotNames = Object.keys(assessmentShell.widgets || {})
+	logger.debug("extracted widget slot names from shell object", {
+		count: widgetSlotNames.length,
+		slotNames: widgetSlotNames
+	})
+
+	// Shot 2: Map the extracted slot names to widget types using a constrained schema.
+	logger.debug("shot 2: mapping slots to widgets")
+	const widgetMappingResult = await errors.try(
+		mapSlotsToWidgets(logger, perseusJsonString, assessmentShell.body, widgetSlotNames)
+	)
 	if (widgetMappingResult.error) {
 		logger.error("shot 2 failed: widget mapping pass failed", { error: widgetMappingResult.error })
 		throw widgetMappingResult.error
 	}
 	const widgetMapping = widgetMappingResult.data
-	logger.debug("shot 2 complete: slot mapping created", { mapping: widgetMapping })
+	logger.debug("shot 2 complete", { mapping: widgetMapping })
 
-	// Shot 3: Generate the full item by filling in the shell using a precise schema.
+	// Shot 3: Generate the full item by filling in the shell.
 	logger.debug("shot 3: generating final structured item")
 	const structuredItemResult = await errors.try(
-		generateStructuredQtiItemWithDynamicSchema(logger, perseusData, assessmentShell, widgetMapping)
+		generateFullAssessmentItem(logger, perseusData, assessmentShell, widgetMapping)
 	)
 	if (structuredItemResult.error) {
 		logger.error("shot 3 failed: structured generation pass failed", { error: structuredItemResult.error })

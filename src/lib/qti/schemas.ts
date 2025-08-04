@@ -2,8 +2,8 @@ import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import { typedSchemas } from "@/lib/widgets/generators"
 
-// ✅ REFACTOR createDynamicSchemas to accept the mapping object for type safety.
-export function createDynamicSchemas(widgetMapping: Record<string, keyof typeof typedSchemas>) {
+// ✅ REFACTOR: The function is now correctly named to reflect its role for Shot 3.
+export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, keyof typeof typedSchemas>) {
 	// Dynamically build the Zod shape for the 'widgets' property.
 	const widgetShape: Record<string, z.ZodType> = {}
 	for (const [slotName, widgetType] of Object.entries(widgetMapping)) {
@@ -168,10 +168,10 @@ export function createDynamicSchemas(widgetMapping: Record<string, keyof typeof 
 	return { AssessmentItemSchema, AnyInteractionSchema }
 }
 
-// ✅ REPLACE the old default export logic with a new, type-safe baseline.
-// This creates and exports a valid schema for an item that contains NO widgets.
+// ✅ FIX: The base AssessmentItemSchema is now correctly generated with an empty widget mapping.
+// This resolves the previous type errors and provides a valid, usable base schema.
 const { AssessmentItemSchema: BaseAssessmentItemSchema, AnyInteractionSchema: BaseAnyInteractionSchema } =
-	createDynamicSchemas({})
+	createDynamicAssessmentItemSchema({})
 
 export const AssessmentItemSchema = BaseAssessmentItemSchema
 export const AnyInteractionSchema = BaseAnyInteractionSchema
