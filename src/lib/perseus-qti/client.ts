@@ -5,11 +5,14 @@ import { zodResponseFormat } from "openai/helpers/zod"
 import type { ChatCompletionContentPart } from "openai/resources/chat/completions"
 import { z } from "zod"
 import { env } from "@/env"
-import { type AssessmentItemInput, AssessmentItemSchema } from "@/lib/qti/schemas" // ADD: Import schema and type
+import { type AssessmentItemInput, AssessmentItemSchema, createDynamicAssessmentItemSchema } from "@/lib/qti/schemas"
+import { typedSchemas } from "@/lib/widgets/generators"
 import {
+	createAssessmentShellPrompt,
 	createQtiConversionPrompt,
 	createQtiSufficiencyValidationPrompt,
-	createStructuredQtiConversionPrompt // ADD: Import the new prompt function
+	createStructuredQtiCompletionPrompt,
+	createWidgetMappingPrompt
 } from "./prompts"
 import {
 	convertHtmlEntities,
@@ -31,6 +34,14 @@ const QtiSolvabilityValidationSchema = z.object({
 	is_solvable: z.boolean(),
 	reason: z.string()
 })
+
+// A new schema is needed for the shell from Shot 1.
+// It defines widgets and interactions as maps of empty objects.
+const AssessmentShellSchema = AssessmentItemSchema.extend({
+	widgets: z.array(z.string()).describe("A list of unique identifiers for widget slots that must be filled."),
+	interactions: z.array(z.string()).describe("A list of unique identifiers for interaction slots that must be filled.")
+})
+type AssessmentShell = z.infer<typeof AssessmentShellSchema>
 
 /**
  * Extracts and validates the XML from the AI response
@@ -142,6 +153,13 @@ export async function generateXml(
 		regenerationContext
 	)
 
+	const responseFormat = zodResponseFormat(QtiGenerationSchema, "qti_generator")
+	logger.debug("generated json schema for openai", {
+		functionName: "generateXml",
+		generatorName: "qti_generator",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
+
 	logger.debug("calling openai for qti generation", { model: OPENAI_MODEL, rootTag })
 	const response = await errors.try(
 		openai.chat.completions.parse({
@@ -150,7 +168,7 @@ export async function generateXml(
 				{ role: "system", content: systemInstruction },
 				{ role: "user", content: userContent }
 			],
-			response_format: zodResponseFormat(QtiGenerationSchema, "qti_generator"),
+			response_format: responseFormat,
 			reasoning_effort: "high"
 		})
 	)
@@ -201,22 +219,29 @@ export async function generateXml(
 }
 
 /**
- * NEW: Generates a structured QTI AssessmentItemInput object from Perseus JSON using
- * OpenAI's Structured Outputs feature. This is the core of the new, reliable pipeline.
- *
- * @param logger The logger instance.
- * @param perseusData The source Perseus content object.
- * @returns A promise that resolves to a valid AssessmentItemInput object.
+ * ✅ REFACTORED: This is the new Shot 2 function.
  */
-export async function generateStructuredQtiItem(
+async function mapSlotsToWidgets(
 	logger: logger.Logger,
-	perseusData: unknown
-): Promise<AssessmentItemInput> {
-	const perseusJsonString = JSON.stringify(perseusData, null, 2)
-	const { systemInstruction, userContent } = createStructuredQtiConversionPrompt(perseusJsonString)
+	perseusJson: string,
+	assessmentBody: string,
+	slotNames: string[] // ✅ Takes the parsed slot names to generate the prompt.
+): Promise<Record<string, keyof typeof typedSchemas>> {
+	// ✅ The prompt and the schema are now generated together dynamically.
+	const { systemInstruction, userContent, WidgetMappingSchema } = createWidgetMappingPrompt(
+		perseusJson,
+		assessmentBody,
+		slotNames
+	)
 
-	logger.debug("calling openai for structured qti generation", { model: OPENAI_MODEL })
+	const responseFormat = zodResponseFormat(WidgetMappingSchema, "widget_mapper")
+	logger.debug("generated json schema for openai", {
+		functionName: "mapSlotsToWidgets",
+		generatorName: "widget_mapper",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
 
+	logger.debug("calling openai for slot-to-widget mapping", { slotNames })
 	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
@@ -224,14 +249,75 @@ export async function generateStructuredQtiItem(
 				{ role: "system", content: systemInstruction },
 				{ role: "user", content: userContent }
 			],
-			// CRITICAL: This enforces the output matches our Zod schema.
-			response_format: zodResponseFormat(AssessmentItemSchema, "qti_assessment_item_generator")
+			// ✅ The dynamically generated, constrained schema is used here.
+			response_format: responseFormat
 		})
 	)
-
 	if (response.error) {
-		logger.error("failed to generate structured qti item from perseus via openai", { error: response.error })
-		throw errors.wrap(response.error, "ai structured qti generation")
+		logger.error("failed to map slots to widgets via openai", { error: response.error })
+		throw errors.wrap(response.error, "ai widget mapping")
+	}
+
+	const choice = response.data.choices[0]
+	if (!choice?.message?.parsed) {
+		logger.error("CRITICAL: OpenAI widget mapping returned no parsed content")
+		throw errors.new("empty ai response: no parsed content for widget mapping")
+	}
+	if (choice.message.refusal) {
+		logger.error("openai refused widget mapping request", { refusal: choice.message.refusal })
+		throw errors.new(`ai refused request: ${choice.message.refusal}`)
+	}
+
+	const rawMapping = choice.message.parsed.widget_mapping
+
+	// Type guard to check if a value is a valid widget type
+	const isValidWidgetType = (val: unknown): val is keyof typeof typedSchemas => {
+		return typeof val === "string" && val in typedSchemas
+	}
+
+	// Validate and build the properly typed mapping
+	const mapping: Record<string, keyof typeof typedSchemas> = {}
+	for (const [key, value] of Object.entries(rawMapping)) {
+		if (isValidWidgetType(value)) {
+			mapping[key] = value
+		} else {
+			logger.error("invalid widget type in mapping", { slot: key, type: value })
+			throw errors.new(`invalid widget type "${value}" for slot "${key}"`)
+		}
+	}
+
+	logger.info("successfully mapped slots to widgets", { mapping, count: Object.keys(mapping).length })
+	return mapping
+}
+
+/**
+ * NEW - Shot 1: Generate Content Shell & Plan.
+ */
+async function generateAssessmentShell(logger: logger.Logger, perseusJson: string): Promise<AssessmentShell> {
+	// Assumes a new prompt function is created for this shot.
+	const { systemInstruction, userContent } = createAssessmentShellPrompt(perseusJson)
+
+	const responseFormat = zodResponseFormat(AssessmentShellSchema, "assessment_shell_generator")
+	logger.debug("generated json schema for openai", {
+		functionName: "generateAssessmentShell",
+		generatorName: "assessment_shell_generator",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
+
+	logger.debug("calling openai for assessment shell generation")
+	const response = await errors.try(
+		openai.chat.completions.parse({
+			model: OPENAI_MODEL,
+			messages: [
+				{ role: "system", content: systemInstruction },
+				{ role: "user", content: userContent }
+			],
+			response_format: responseFormat
+		})
+	)
+	if (response.error) {
+		logger.error("failed to generate assessment shell", { error: response.error })
+		throw errors.wrap(response.error, "ai shell generation")
 	}
 
 	const choice = response.data.choices[0]
@@ -241,18 +327,125 @@ export async function generateStructuredQtiItem(
 	}
 
 	const message = choice.message
-	if (message.refusal) {
-		logger.error("openai refused to generate structured qti item", { refusal: message.refusal })
-		throw errors.new(`ai refused request: ${message.refusal}`)
-	}
-
 	if (!message.parsed) {
-		logger.error("CRITICAL: OpenAI returned no parsed content for structured conversion")
+		logger.error("CRITICAL: OpenAI returned no parsed content for shell generation")
 		throw errors.new("empty ai response: no parsed content")
 	}
 
-	// The 'parsed' property is guaranteed by the SDK to be a valid AssessmentItemInput object
 	return message.parsed
+}
+
+/**
+ * ✅ REFACTORED: This is the new Shot 3 function.
+ */
+async function generateFullAssessmentItem(
+	logger: logger.Logger,
+	perseusData: unknown,
+	assessmentShell: AssessmentShell,
+	widgetMapping: Record<string, keyof typeof typedSchemas> // ✅ Receives the type-safe mapping.
+): Promise<AssessmentItemInput> {
+	const { systemInstruction, userContent } = createStructuredQtiCompletionPrompt(
+		JSON.stringify(perseusData, null, 2),
+		assessmentShell
+	)
+	// Use the mapping to create the precise schema
+	// ✅ Use the mapping to create the precise schema for Shot 3.
+	const { AssessmentItemSchema: dynamicSchema } = createDynamicAssessmentItemSchema(widgetMapping)
+
+	const responseFormat = zodResponseFormat(dynamicSchema, "assessment_item_generator")
+	logger.debug("generated json schema for openai", {
+		functionName: "generateFullAssessmentItem",
+		generatorName: "assessment_item_generator",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
+
+	logger.debug("calling openai for structured qti completion", {
+		widgetMapping,
+		widgetCount: Object.keys(widgetMapping).length
+	})
+	const result = await errors.try(
+		openai.chat.completions.parse({
+			model: OPENAI_MODEL,
+			messages: [
+				{ role: "system", content: systemInstruction },
+				{ role: "user", content: userContent }
+			],
+			response_format: responseFormat
+		})
+	)
+	if (result.error) {
+		logger.error("openai request failed for structured qti generation", { error: result.error })
+		throw errors.wrap(result.error, "ai qti item generation")
+	}
+
+	const message = result.data.choices[0]?.message
+	if (!message) {
+		throw errors.new("openai response missing choices or message")
+	}
+
+	if (!message.parsed) {
+		logger.error("openai parsing failed for structured qti generation", {
+			refusal: message.refusal,
+			finishReason: result.data.choices[0]?.finish_reason
+		})
+		throw errors.new("ai qti item generation: parsing failed")
+	}
+
+	return message.parsed
+}
+
+/**
+ * ✅ REFACTORED: The main orchestrator implements the new, robust, and type-safe 3-shot flow.
+ */
+export async function generateStructuredQtiItem(
+	logger: logger.Logger,
+	perseusData: unknown
+): Promise<AssessmentItemInput> {
+	const perseusJsonString = JSON.stringify(perseusData, null, 2)
+	logger.info("starting structured qti generation process")
+
+	// Shot 1: Generate the content shell and plan.
+	logger.debug("shot 1: generating assessment shell")
+	const shellResult = await errors.try(generateAssessmentShell(logger, perseusJsonString))
+	if (shellResult.error) {
+		logger.error("shot 1 failed: shell generation pass failed", { error: shellResult.error })
+		throw shellResult.error
+	}
+	const assessmentShell = shellResult.data
+	logger.debug("shot 1 complete", { identifier: assessmentShell.identifier })
+
+	// Step 1.5 (Deterministic): Extract widget slot names directly from the shell object keys.
+	// This is the robust replacement for the fragile string parsing.
+	const widgetSlotNames = assessmentShell.widgets
+	logger.debug("extracted widget slot names from shell object", {
+		count: widgetSlotNames.length,
+		slotNames: widgetSlotNames
+	})
+
+	// Shot 2: Map the extracted slot names to widget types using a constrained schema.
+	logger.debug("shot 2: mapping slots to widgets")
+	const widgetMappingResult = await errors.try(
+		mapSlotsToWidgets(logger, perseusJsonString, assessmentShell.body, widgetSlotNames)
+	)
+	if (widgetMappingResult.error) {
+		logger.error("shot 2 failed: widget mapping pass failed", { error: widgetMappingResult.error })
+		throw widgetMappingResult.error
+	}
+	const widgetMapping = widgetMappingResult.data
+	logger.debug("shot 2 complete", { mapping: widgetMapping })
+
+	// Shot 3: Generate the full item by filling in the shell.
+	logger.debug("shot 3: generating final structured item")
+	const structuredItemResult = await errors.try(
+		generateFullAssessmentItem(logger, perseusData, assessmentShell, widgetMapping)
+	)
+	if (structuredItemResult.error) {
+		logger.error("shot 3 failed: structured generation pass failed", { error: structuredItemResult.error })
+		throw structuredItemResult.error
+	}
+
+	logger.info("structured qti generation process successful", { identifier: structuredItemResult.data.identifier })
+	return structuredItemResult.data
 }
 
 /**
@@ -272,6 +465,13 @@ export async function validateXmlWithAi(
 	svgContents: { url: string; content: string }[] = [] // NEW: Add svgContents parameter
 ): Promise<z.infer<typeof QtiSolvabilityValidationSchema>> {
 	const { developer, user } = createQtiSufficiencyValidationPrompt(perseusJson, qtiXml, svgContents)
+
+	const responseFormat = zodResponseFormat(QtiSolvabilityValidationSchema, "qti_validator")
+	logger.debug("generated json schema for openai", {
+		functionName: "validateXmlWithAi",
+		generatorName: "qti_validator",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
 
 	logger.debug("calling openai for qti solvability validation", {
 		model: OPENAI_MODEL,
@@ -295,7 +495,7 @@ export async function validateXmlWithAi(
 				{ role: "system", content: developer },
 				{ role: "user", content: userMessageContent } // CHANGED: Send multimodal content
 			],
-			response_format: zodResponseFormat(QtiSolvabilityValidationSchema, "qti_validator")
+			response_format: responseFormat
 		})
 	)
 

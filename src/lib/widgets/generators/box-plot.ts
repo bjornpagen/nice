@@ -16,6 +16,7 @@ const BoxPlotAxisSchema = z
 			.describe("An optional array of numbers to display as tick labels on the axis.")
 	})
 	.strict()
+	.describe("Configuration for the horizontal number line of the box plot.")
 
 // Defines the five-number summary for the box plot
 const BoxPlotSummarySchema = z
@@ -27,6 +28,7 @@ const BoxPlotSummarySchema = z
 		max: z.number().describe("The maximum value of the data set (right whisker endpoint).")
 	})
 	.strict()
+	.describe("The five-number summary used to construct the box-and-whisker plot.")
 
 // The main Zod schema for the boxPlot function
 export const BoxPlotPropsSchema = z

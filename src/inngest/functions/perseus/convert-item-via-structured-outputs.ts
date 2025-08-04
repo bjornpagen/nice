@@ -21,9 +21,11 @@ export const convertPerseusItemViaStructuredOutputs = inngest.createFunction(
 	{ event: "perseus/item.structured-convert-to-qti" },
 	async ({ event, logger }) => {
 		const { questionId } = event.data
-		logger.info("starting perseus to qti conversion via structured outputs", { questionId })
+		// ✅ Enhanced logging at every step, using the provided logger.
+		logger.info("starting perseus to qti conversion", { questionId })
 
-		// Step 1: Fetch the source Perseus data from the database.
+		// Step 1: Fetch Perseus data.
+		logger.debug("fetching perseus data from db", { questionId })
 		const questionResult = await errors.try(
 			db
 				.select({
@@ -37,47 +39,54 @@ export const convertPerseusItemViaStructuredOutputs = inngest.createFunction(
 				.limit(1)
 		)
 		if (questionResult.error) {
-			logger.error("failed to fetch question for conversion", { questionId, error: questionResult.error })
+			logger.error("db query for question failed", { questionId, error: questionResult.error })
 			throw errors.wrap(questionResult.error, "db query for question")
 		}
 		const question = questionResult.data[0]
 		if (!question?.parsedData) {
-			logger.warn("question has no parsed data, skipping conversion", { questionId })
+			logger.warn("skipping conversion: no perseus data", { questionId })
 			return { status: "skipped", reason: "no_perseus_data" }
 		}
+		logger.debug("db fetch successful", { questionId, exerciseTitle: question.exerciseTitle })
 
-		// Step 2: Call the AI client to get a structured AssessmentItemInput object.
-		// This step replaces direct XML generation with reliable JSON generation.
+		// Step 2: Generate structured JSON from Perseus data.
+		logger.debug("invoking structured item generation pipeline", { questionId })
 		const structuredItemResult = await errors.try(generateStructuredQtiItem(logger, question.parsedData))
 		if (structuredItemResult.error) {
-			logger.error("failed to generate structured item from perseus", {
+			logger.error("structured item generation failed", {
 				questionId,
 				error: structuredItemResult.error
 			})
 			throw errors.wrap(structuredItemResult.error, "structured item generation")
 		}
 		const assessmentItemInput = structuredItemResult.data
+		logger.debug("structured item generation successful", {
+			questionId,
+			identifier: assessmentItemInput.identifier
+		})
 
-		// Step 3: Pass the structured JSON object to the compiler to generate the final XML.
-		// This step is deterministic and leverages our existing, robust compiler.
+		// Step 3: Compile structured JSON to QTI XML.
+		logger.debug("compiling structured item to xml", { questionId })
 		const compileResult = errors.trySync(() => compile(assessmentItemInput))
 		if (compileResult.error) {
-			logger.error("failed to compile structured item to qti xml", {
+			logger.error("qti compilation failed", {
 				questionId,
 				error: compileResult.error
 			})
 			throw errors.wrap(compileResult.error, "qti compilation")
 		}
 		const xml = compileResult.data
+		logger.debug("compilation successful", { questionId, xmlLength: xml.length })
 
-		// Step 4: Update the database with the new, validated QTI XML.
+		// Step 4: Update database.
+		logger.debug("updating database with generated xml", { questionId })
 		const updateResult = await errors.try(db.update(niceQuestions).set({ xml }).where(eq(niceQuestions.id, questionId)))
 		if (updateResult.error) {
-			logger.error("failed to update question with new qti xml", { questionId, error: updateResult.error })
+			logger.error("db update failed", { questionId, error: updateResult.error })
 			throw errors.wrap(updateResult.error, "db update")
 		}
 
-		logger.info("successfully converted perseus item to qti via structured outputs", { questionId })
+		logger.info("conversion successful", { questionId })
 		return { status: "success", questionId: question.id }
 	}
 )

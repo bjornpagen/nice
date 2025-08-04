@@ -20,9 +20,10 @@ const ColumnDefinitionSchema = z
 	.object({
 		key: z.string().describe("A unique identifier for this column."),
 		label: z.string().nullable().describe("The display text for the column header."),
-		isNumeric: z.boolean().describe("If true, content will be right-aligned.")
+		isNumeric: z.boolean().describe("If true, content in this column will be right-aligned for readability.")
 	})
 	.strict()
+	.describe("Defines the metadata and display properties for a single column in the data table.")
 
 // The main Zod schema for the dataTable function
 export const DataTablePropsSchema = z

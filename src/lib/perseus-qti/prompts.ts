@@ -1,10 +1,65 @@
 import type * as logger from "@superbuilders/slog"
+import { z } from "zod"
 import { loadConversionExamples } from "@/lib/qti-examples"
 import { VALID_QTI_TAGS } from "@/lib/qti-tags"
+import type { typedSchemas } from "@/lib/widgets/generators"
 
 interface RegenerationContext {
 	flawedXml: string
 	errorReason: string
+}
+
+// ✅ ADD: Create a statically-typed, non-empty array of widget keys.
+// This is the 100% type-safe way to create a list for z.enum, avoiding `as` assertions.
+// The `[T, ...T[]]` syntax ensures TypeScript knows the array is not empty.
+const widgetTypeKeys: [keyof typeof typedSchemas, ...(keyof typeof typedSchemas)[]] = [
+	"absoluteValueNumberLine",
+	"barChart",
+	"boxPlot",
+	"compositeShapeDiagram",
+	"coordinatePlane",
+	"dataTable",
+	"discreteObjectRatioDiagram",
+	"dotPlot",
+	"doubleNumberLine",
+	"geometricSolidDiagram",
+	"hangerDiagram",
+	"histogram",
+	"inequalityNumberLine",
+	"numberLine",
+	"numberLineForOpposites",
+	"numberLineWithAction",
+	"numberLineWithFractionGroups",
+	"numberSetDiagram",
+	"parallelLinesTransversal",
+	"partitionedShape",
+	"pictograph",
+	"polyhedronDiagram",
+	"polyhedronNetDiagram",
+	"pythagoreanProofDiagram",
+	"scatterPlot",
+	"stackedItemsDiagram",
+	"tapeDiagram",
+	"unitBlockDiagram",
+	"vennDiagram",
+	"verticalArithmeticSetup"
+]
+
+// ❌ REMOVE the static WidgetMappingSchema export.
+
+// ✅ ADD a factory function to dynamically create the mapping schema for Shot 2.
+function createWidgetMappingSchema(slotNames: string[]) {
+	// Programmatically build a Zod object shape where keys are the actual slot names.
+	const mappingShape: Record<string, z.ZodEnum<[string, ...string[]]>> = {}
+	for (const slotName of slotNames) {
+		mappingShape[slotName] = z.enum(widgetTypeKeys)
+	}
+
+	return z.object({
+		widget_mapping: z
+			.object(mappingShape)
+			.describe("A JSON object mapping each provided widget slot name to its corresponding widget type.")
+	})
 }
 
 /**
@@ -525,11 +580,18 @@ ${perseusJsonString}
 
 ## Instructions & Mapping Guidelines
 - **identifier & title:** Use the 'id' and 'exercise title' from the source data.
-- **body:** The Perseus 'question.content' and 'question.widgets' must be converted into an array of strings (for HTML/MathML) and widget objects for the 'body' field.
-- **Widgets:** Map Perseus widget info (e.g., 'double-number-line 1') to the corresponding widget object in the 'WidgetSchema' (e.g., \`{ "type": "doubleNumberLine", ... }\`). Ensure all required properties for that widget type are populated from the Perseus widget definition.
-- **Interactions:** Perseus question types like 'radio', 'order', or 'text-input' must be mapped to the correct QTI interaction object (\`choiceInteraction\`, \`orderInteraction\`, \`textEntryInteraction\`).
+- **stimulus:** The main content/prompt text from Perseus 'question.content' goes in the 'stimulus' field as a single HTML string. Any Perseus widgets (e.g., [[☃ double-number-line 1]]) should be replaced with \`<slot name="widget_id" />\` tags.
+- **widgets:** Create a map of widget identifiers to widget objects. Map Perseus widget info (e.g., 'double-number-line 1') to the corresponding widget object in the 'WidgetSchema' (e.g., \`{ "type": "doubleNumberLine", ... }\`). Ensure all required properties for that widget type are populated from the Perseus widget definition. The widget ID used in the map should match the name attribute in the corresponding \`<slot>\` tag.
+- **interactions:** Perseus question types like 'radio', 'order', or 'text-input' must be mapped to the correct QTI interaction object (\`choiceInteraction\`, \`orderInteraction\`, \`textEntryInteraction\`) and placed in the 'interactions' array. Choice content and prompts can also contain \`<slot>\` tags to reference widgets.
 - **Response Declarations:** The 'question.answers' from Perseus must be used to create the \`responseDeclarations\`, including the correct answer value.
 - **Feedback:** Map the 'hints' or answer explanations to the 'feedback.correct' and 'feedback.incorrect' fields.
+
+## Critical Schema Structure
+The new schema has a flat structure with these key fields:
+- \`stimulus\`: A single HTML string for the main content
+- \`interactions\`: An array of interaction objects
+- \`widgets\`: A map of widget IDs to widget definitions
+- NO \`body\` array - this has been removed!
 
 Your output must be a single, complete JSON object.
 `
@@ -726,6 +788,36 @@ ${svg.content}
 	return { developer, user }
 }
 
+// ✅ REFACTOR createWidgetMappingPrompt to generate and return the dynamic schema.
+export function createWidgetMappingPrompt(perseusJson: string, assessmentBody: string, slotNames: string[]) {
+	const systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content to identify all widget slots and map them to the most appropriate widget type from a given list. The output must be a JSON object that strictly adheres to the provided schema.
+
+Widget Type Options:
+${widgetTypeKeys.join("\n")}`
+
+	const userContent = `Based on the Perseus JSON provided below, and the following assessment item body containing <slot> placeholders, create a JSON object that maps each widget slot name to the most appropriate widget type from the list.
+
+Perseus JSON:
+\`\`\`json
+${perseusJson}
+\`\`\`
+
+Assessment Item Body:
+\`\`\`html
+${assessmentBody}
+\`\`\`
+
+Your response must be a JSON object with a single key "widget_mapping", where the value is another object that maps every widget slot name from the provided list to its corresponding type.
+
+Slot Names to Map:
+${slotNames.join("\n")}`
+
+	// ✅ The function now returns the dynamically created schema along with the prompts.
+	const WidgetMappingSchema = createWidgetMappingSchema(slotNames)
+
+	return { systemInstruction, userContent, WidgetMappingSchema }
+}
+
 export function createQtiCorrectionPrompt(
 	invalidXml: string,
 	errorMessage: string,
@@ -758,4 +850,71 @@ The only valid QTI tags for this application are:
 # FINAL OUTPUT
 Return a single JSON object with the final corrected XML.
 `
+}
+
+export function createAssessmentShellPrompt(perseusJson: string): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction = `You are an expert in educational content conversion. Your task is to analyze a Perseus JSON object and create a structured assessment shell that outlines the content organization with placeholder references for widgets and interactions. You will output a JSON object conforming to the AssessmentShell schema.
+
+The shell should:
+1. Convert Perseus content into a single 'body' string with <slot name="..."/> placeholders
+2. Map out all widgets and interactions as empty objects in their respective maps
+3. Preserve the logical flow and structure of the original content
+
+Your output MUST be a valid JSON object that conforms to the provided schema.`
+
+	const userContent = `Convert the following Perseus JSON into an assessment shell with placeholders:
+
+${perseusJson}
+
+## Instructions:
+- Create a 'body' field containing the main content as HTML with <slot name="widget_id"/> or <slot name="interaction_id"/> placeholders
+- For each Perseus widget (e.g., [[☃ widget-name 1]]), create an entry in the 'widgets' map with key "widget_1" (or similar) and value {}
+- For each Perseus interaction (radio, text-input, etc.), create an entry in the 'interactions' map with key "interaction_1" (or similar) and value {}
+- Ensure all placeholder names in the body match the keys in the widgets/interactions maps
+- Include all required assessment metadata (identifier, title, responseDeclarations, feedback)
+
+Return ONLY the JSON object.`
+
+	return { systemInstruction, userContent }
+}
+
+export function createStructuredQtiCompletionPrompt(
+	perseusJson: string,
+	assessmentShell: unknown
+): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction =
+		"You are an expert in educational content conversion. Your task is to complete an assessment shell by filling in the detailed properties for all widgets and interactions. You have been provided with the original Perseus JSON and a shell containing placeholders. You must transform the interaction identifiers array into a full interactions object map and populate all widget and interaction definitions according to the appropriate schemas."
+
+	const userContent = `Complete the following assessment shell with full widget and interaction definitions:
+
+## Original Perseus JSON:
+\`\`\`json
+${perseusJson}
+\`\`\`
+
+## Assessment Shell to Complete:
+\`\`\`json
+${JSON.stringify(assessmentShell, null, 2)}
+\`\`\`
+
+## Instructions:
+- The widgets array (if present) will be handled separately by another process - DO NOT modify it
+- Transform the interactions array into an object map where:
+  - Each string identifier from the interactions array becomes a key in the new interactions object
+  - The value for each key is the complete interaction definition (e.g., choiceInteraction, textEntryInteraction)
+  - Example: ["choice1", "text1"] becomes {"choice1": {type: "choiceInteraction", ...}, "text1": {type: "textEntryInteraction", ...}}
+- Ensure all interaction types are valid QTI types (choiceInteraction, textEntryInteraction, inlineChoiceInteraction, orderInteraction)
+- Map Perseus answer data to proper response declarations
+- DO NOT modify the body content or placeholder names
+- DO NOT add or remove interaction identifiers from the original array
+
+Return ONLY the completed JSON object with the interactions array transformed into a populated interactions object map.`
+
+	return { systemInstruction, userContent }
 }

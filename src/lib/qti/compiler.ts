@@ -31,82 +31,11 @@ import {
 	generateUnitBlockDiagram,
 	generateVennDiagram,
 	generateVerticalArithmeticSetup,
-	WidgetSchema
+	typedSchemas
 } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import type { AnyInteraction, AssessmentItem, AssessmentItemInput } from "./schemas"
-import { AnyInteractionSchema, AssessmentItemSchema } from "./schemas"
-
-function validateHtmlContent(content: string, context: string): void {
-	// Basic validation to ensure the content looks like HTML
-	// Check if it contains HTML tags or is wrapped in tags
-	const trimmed = content.trim()
-
-	// Check for common HTML patterns
-	const hasHtmlTags = /<[^>]+>/.test(trimmed)
-
-	if (!hasHtmlTags) {
-		throw errors.new(`Content in ${context} must be well-formed HTML but got plain text: "${content}"`)
-	}
-
-	// For partial content (starts with opening tag but no closing, or vice versa)
-	// This is valid in QTI when content is split across multiple elements
-	const startsWithOpeningTag = /^<p[^>]*>/.test(trimmed)
-	const endsWithClosingTag = /<\/p>$/.test(trimmed)
-
-	// If it's a partial fragment (starts OR ends with tag but not both), it's valid
-	if ((startsWithOpeningTag && !endsWithClosingTag) || (!startsWithOpeningTag && endsWithClosingTag)) {
-		return // Valid partial content
-	}
-
-	// Basic check for unclosed tags (only for complete content)
-	const openTags = trimmed.match(/<([^/\s>]+)[^>]*>/g) || []
-	const closeTags = trimmed.match(/<\/([^>]+)>/g) || []
-
-	// Simple validation - this won't catch all cases but will catch obvious issues
-	const openTagNames = openTags
-		.map((tag) => {
-			const match = tag.match(/<([^/\s>]+)/)
-			return match ? match[1] : null
-		})
-		.filter((tag): tag is string => tag !== null)
-
-	const closeTagNames = closeTags
-		.map((tag) => {
-			const match = tag.match(/<\/([^>]+)>/)
-			return match ? match[1] : null
-		})
-		.filter((tag): tag is string => tag !== null)
-
-	// Check for self-closing tags and void elements
-	const selfClosingTags = [
-		"img",
-		"br",
-		"hr",
-		"input",
-		"meta",
-		"link",
-		"area",
-		"base",
-		"col",
-		"embed",
-		"source",
-		"track",
-		"wbr"
-	]
-	const nonSelfClosingOpenTags = openTagNames.filter((tag) => !selfClosingTags.includes(tag))
-
-	// Special handling for MathML elements like mroot which has different validation rules
-	const hasMathML = content.includes('xmlns="http://www.w3.org/1998/Math/MathML"')
-	if (hasMathML) {
-		// Skip strict tag matching for MathML content as it has complex nesting rules
-		return
-	}
-
-	if (nonSelfClosingOpenTags.length !== closeTagNames.length) {
-		throw errors.new(`Content in ${context} has mismatched HTML tags: "${content}"`)
-	}
-}
+import { createDynamicAssessmentItemSchema } from "./schemas"
 
 function encodeDataUri(content: string): string {
 	const encoded = encodeURIComponent(content)
@@ -118,49 +47,130 @@ function encodeDataUri(content: string): string {
 	return `${isSvg ? "data:image/svg+xml" : "data:text/html"},${encoded}`
 }
 
-function renderContent(content: unknown): string {
-	if (typeof content === "string") {
-		// Validate that the string is well-formed HTML
-		validateHtmlContent(content, "content block")
-		// Pass strings through directly. Authors are responsible for providing
-		// necessary wrapping tags like <p>.
-		return content
-	}
+/**
+ * Processes a string containing <slot /> placeholders and replaces them with
+ * the corresponding content from the provided slots map.
+ *
+ * Supports multiple slot tag formats:
+ * - Self-closing: <slot name="example" />
+ * - Self-closing without space: <slot name="example"/>
+ * - With attributes: <slot name="example" class="widget" data-type="graph" />
+ * - Various whitespace: <slot   name="example"   />
+ *
+ * The function performs recursive replacement to handle nested slot references,
+ * where slot content may itself contain slot tags.
+ *
+ * @param content The HTML content string with placeholders.
+ * @param slots A map where keys are slot names and values are the HTML/XML to inject.
+ * @returns The content string with all placeholders filled.
+ */
+function processAndFillSlots(content: string, slots: Map<string, string>): string {
+	// Enhanced regex with named capture groups for robust slot matching
+	// This regex matches:
+	// - Opening <slot tag
+	// - Any attributes (captured in named group)
+	// - Self-closing /> or just > (captured in named group)
+	const slotRegex = /<slot(?<attributes>(?:\s+(?:[\w-]+(?:\s*=\s*"[^"]*")?))*)(?<whitespace>\s*)(?<selfClose>\/?)>/g
 
-	if (typeof content === "object" && content !== null && "type" in content) {
-		const parseResult = WidgetSchema.safeParse(content)
-		if (parseResult.success) {
-			const widget = parseResult.data
-			const generatedHtml = generateWidget(widget)
+	// Track processed slots to detect circular references
+	const processedSlots = new Set<string>()
 
-			// Check if the generated content is SVG
-			const isSvg = generatedHtml.trim().startsWith("<svg")
+	// Recursive function to process content
+	function processContent(text: string, depth = 0): string {
+		// Prevent infinite recursion
+		if (depth > 10) {
+			throw errors.new("maximum slot nesting depth exceeded (10 levels)")
+		}
 
-			if (isSvg) {
-				// For SVG content, embed it in an img tag with data URI
-				const dataUri = encodeDataUri(generatedHtml)
-				const altText = escapeXmlAttribute(`A visual element of type ${widget.type}.`)
-				return `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`
+		// Find all slot matches in current content
+		const matches = Array.from(text.matchAll(slotRegex))
+
+		// If no slots found, return content as-is
+		if (matches.length === 0) {
+			return text
+		}
+
+		// Process slots from end to beginning to maintain correct indices
+		let result = text
+		for (let i = matches.length - 1; i >= 0; i--) {
+			const match = matches[i]
+			if (!match || match.index === undefined) {
+				continue
 			}
 
-			// For HTML content, return it directly
-			return generatedHtml
+			const fullMatch = match[0]
+			const attributes = match.groups?.attributes || ""
+
+			// Extract name attribute using a more specific regex
+			const nameMatch = attributes.match(/\bname\s*=\s*"(?<name>[^"]+)"/i)
+
+			if (!nameMatch || !nameMatch.groups?.name) {
+				throw errors.new(`slot tag missing required 'name' attribute: ${fullMatch}`)
+			}
+
+			const slotName = nameMatch.groups.name.trim()
+
+			if (slotName === "") {
+				throw errors.new(`slot tag has empty name attribute: ${fullMatch}`)
+			}
+
+			// Check for circular reference
+			const slotKey = `${slotName}_${depth}`
+			if (processedSlots.has(slotKey)) {
+				throw errors.new(`circular slot reference detected: '${slotName}'`)
+			}
+
+			// Get slot content
+			const slotContent = slots.get(slotName)
+			if (slotContent === undefined) {
+				// CRITICAL: Fail loudly on missing slot content.
+				throw errors.new(`missing content for slot: '${slotName}'`)
+			}
+
+			// Mark slot as being processed
+			processedSlots.add(slotKey)
+
+			// Recursively process the slot content
+			const processedSlotContent = processContent(slotContent, depth + 1)
+
+			// Replace the slot tag with processed content
+			const startIndex = match.index
+			const endIndex = startIndex + fullMatch.length
+			result = result.slice(0, startIndex) + processedSlotContent + result.slice(endIndex)
+
+			// Unmark slot after processing
+			processedSlots.delete(slotKey)
 		}
+
+		return result
 	}
-	throw errors.new(`Invalid content block provided: ${JSON.stringify(content)}`)
+
+	// Process the content
+	const processedContent = processContent(content)
+
+	// Final validation: Ensure no slot tags remain
+	const remainingSlots = processedContent.match(/<slot\s+[^>]*>/g)
+	if (remainingSlots) {
+		// Extract slot names for better error message
+		const remainingNames = remainingSlots.map((tag) => {
+			const nameMatch = tag.match(/name\s*=\s*"([^"]+)"/i)
+			return nameMatch ? nameMatch[1] : "unknown"
+		})
+		throw errors.new(`unprocessed slot tags remain after replacement: ${remainingNames.join(", ")}`)
+	}
+
+	return processedContent
 }
 
 function compileInteraction(interaction: AnyInteraction): string {
 	switch (interaction.type) {
 		case "choiceInteraction": {
-			// Validate prompt HTML
-			validateHtmlContent(interaction.prompt, "choiceInteraction prompt")
-
+			const processedPrompt = interaction.prompt
 			const choices = interaction.choices
 				.map((c) => {
-					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderContent(c.content)}`
+					const processedContent = c.content
+					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
 					if (c.feedback) {
-						validateHtmlContent(c.feedback, `choiceInteraction feedback for choice ${c.identifier}`)
 						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${c.feedback}</qti-feedback-inline>`
 					}
 					choiceXml += "</qti-simple-choice>"
@@ -169,19 +179,17 @@ function compileInteraction(interaction: AnyInteraction): string {
 				.join("\n            ")
 
 			return `<qti-choice-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" min-choices="${interaction.minChoices}" max-choices="${interaction.maxChoices}">
-            <qti-prompt>${interaction.prompt}</qti-prompt>
+            <qti-prompt>${processedPrompt}</qti-prompt>
             ${choices}
         </qti-choice-interaction>`
 		}
 		case "orderInteraction": {
-			// Validate prompt HTML
-			validateHtmlContent(interaction.prompt, "orderInteraction prompt")
-
+			const processedPrompt = interaction.prompt
 			const choices = interaction.choices
 				.map((c) => {
-					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderContent(c.content)}`
+					const processedContent = c.content
+					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
 					if (c.feedback) {
-						validateHtmlContent(c.feedback, `orderInteraction feedback for choice ${c.identifier}`)
 						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${c.feedback}</qti-feedback-inline>`
 					}
 					choiceXml += "</qti-simple-choice>"
@@ -190,7 +198,7 @@ function compileInteraction(interaction: AnyInteraction): string {
 				.join("\n            ")
 
 			return `<qti-order-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" orientation="${escapeXmlAttribute(interaction.orientation)}">
-            <qti-prompt>${interaction.prompt}</qti-prompt>
+            <qti-prompt>${processedPrompt}</qti-prompt>
             ${choices}
         </qti-order-interaction>`
 		}
@@ -205,8 +213,7 @@ function compileInteraction(interaction: AnyInteraction): string {
 		case "inlineChoiceInteraction": {
 			const choices = interaction.choices
 				.map(
-					(c) =>
-						`<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderContent(c.content)}</qti-inline-choice>`
+					(c) => `<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}">${c.content}</qti-inline-choice>`
 				)
 				.join("\n                ")
 
@@ -217,20 +224,6 @@ function compileInteraction(interaction: AnyInteraction): string {
 		default:
 			throw errors.new("Unknown interaction type")
 	}
-}
-
-function compileItemBody(body: AssessmentItem["body"]): string {
-	return body
-		.map((element) => {
-			// Use Zod to determine if it's an interaction
-			const interactionResult = AnyInteractionSchema.safeParse(element)
-			if (interactionResult.success) {
-				return compileInteraction(interactionResult.data)
-			}
-			// Otherwise it's content
-			return renderContent(element)
-		})
-		.join("\n        ")
 }
 
 function generateWidget(widget: Widget): string {
@@ -354,28 +347,79 @@ function compileResponseProcessing(decls: AssessmentItem["responseDeclarations"]
     </qti-response-processing>`
 }
 
+// Helper function to check if a string is a valid widget type
+function isValidWidgetType(type: string): type is keyof typeof typedSchemas {
+	return type in typedSchemas
+}
+
 // Update the function signature to accept the raw INPUT type
 export function compile(itemData: AssessmentItemInput): string {
-	// The `item` variable now holds the parsed data with defaults applied.
-	// It is of type `AssessmentItem` (the output type).
+	// First, analyze the widgets to create the appropriate schema
+	const widgetMapping: Record<string, keyof typeof typedSchemas> = {}
+	if (itemData.widgets) {
+		for (const [slotName, widget] of Object.entries(itemData.widgets)) {
+			if (widget && typeof widget === "object" && "type" in widget && typeof widget.type === "string") {
+				const widgetType = widget.type
+				// Use type guard function for type-safe check
+				if (isValidWidgetType(widgetType)) {
+					widgetMapping[slotName] = widgetType
+				}
+			}
+		}
+	}
+
+	// Create a dynamic schema based on the widgets present
+	const { AssessmentItemSchema } = createDynamicAssessmentItemSchema(widgetMapping)
 	const item: AssessmentItem = AssessmentItemSchema.parse(itemData)
 
-	// Validate feedback HTML
-	validateHtmlContent(item.feedback.correct, "correct feedback")
-	validateHtmlContent(item.feedback.incorrect, "incorrect feedback")
+	// Create a single map to hold all slot content (widgets and interactions).
+	const slots = new Map<string, string>()
+
+	// 1. Generate and add all widget content to the map.
+	if (item.widgets) {
+		for (const [widgetId, widgetDef] of Object.entries(item.widgets)) {
+			const widgetHtml = generateWidget(widgetDef)
+			const isSvg = widgetHtml.trim().startsWith("<svg")
+
+			if (isSvg) {
+				const dataUri = encodeDataUri(widgetHtml)
+				const altText = escapeXmlAttribute(`A visual element of type ${widgetDef.type}.`)
+				slots.set(widgetId, `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`)
+			} else {
+				slots.set(widgetId, widgetHtml)
+			}
+		}
+	}
+
+	// 2. Compile and add all interaction XML to the map.
+	if (item.interactions) {
+		for (const [interactionId, interactionDef] of Object.entries(item.interactions)) {
+			// The compileInteraction function now returns raw XML without processing internal slots.
+			const interactionXml = compileInteraction(interactionDef)
+			slots.set(interactionId, interactionXml)
+		}
+	}
+
+	// 3. Process the entire body at once using the unified slot filler.
+	const processedBody = processAndFillSlots(item.body, slots)
 
 	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)
-	const itemBody = compileItemBody(item.body)
 	const responseProcessing = compileResponseProcessing(item.responseDeclarations)
+
+	// 3. Use pre-validated feedback content directly from the item data.
+	// The content is now guaranteed by the schema to be well-formed HTML.
+	const correctFeedback = item.feedback.correct
+	const incorrectFeedback = item.feedback.incorrect
 
 	return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
     identifier="${escapeXmlAttribute(item.identifier)}"
     title="${escapeXmlAttribute(item.title)}"
-    time-dependent="false">
+    time-dependent="false"
+    xml:lang="en-US">
 ${responseDeclarations}
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value><qti-value>0</qti-value></qti-default-value>
@@ -384,12 +428,12 @@ ${responseDeclarations}
     <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
 
     <qti-item-body>
-        ${itemBody}
+        ${processedBody.trim()}
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
-            <qti-content-body><p><span class="qti-keyword-emphasis">Correct!</span> ${item.feedback.correct}</p></qti-content-body>
+            <qti-content-body>${correctFeedback}</qti-content-body>
         </qti-feedback-block>
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="INCORRECT" show-hide="show">
-            <qti-content-body><p><span class="qti-keyword-emphasis">Not quite.</span> ${item.feedback.incorrect}</p></qti-content-body>
+            <qti-content-body>${incorrectFeedback}</qti-content-body>
         </qti-feedback-block>
     </qti-item-body>
 ${responseProcessing}
