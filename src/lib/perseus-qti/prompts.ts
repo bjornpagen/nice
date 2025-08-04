@@ -1,11 +1,55 @@
 import type * as logger from "@superbuilders/slog"
+import { z } from "zod"
+import { zodToJsonSchema } from "zod-to-json-schema"
 import { loadConversionExamples } from "@/lib/qti-examples"
 import { VALID_QTI_TAGS } from "@/lib/qti-tags"
+import { typedSchemas } from "@/lib/widgets/generators"
 
 interface RegenerationContext {
 	flawedXml: string
 	errorReason: string
 }
+
+// NEW: Zod schema for the widget selection response
+// Define all widget keys explicitly to avoid type assertion
+const widgetKeysTuple = [
+	"absoluteValueNumberLine",
+	"barChart",
+	"boxPlot",
+	"compositeShapeDiagram",
+	"coordinatePlane",
+	"dataTable",
+	"discreteObjectRatioDiagram",
+	"dotPlot",
+	"doubleNumberLine",
+	"geometricSolidDiagram",
+	"hangerDiagram",
+	"histogram",
+	"inequalityNumberLine",
+	"numberLine",
+	"numberLineForOpposites",
+	"numberLineWithAction",
+	"numberLineWithFractionGroups",
+	"numberSetDiagram",
+	"parallelLinesTransversal",
+	"partitionedShape",
+	"pictograph",
+	"polyhedronDiagram",
+	"polyhedronNetDiagram",
+	"pythagoreanProofDiagram",
+	"scatterPlot",
+	"stackedItemsDiagram",
+	"tapeDiagram",
+	"unitBlockDiagram",
+	"vennDiagram",
+	"verticalArithmeticSetup"
+] as const
+
+export const WidgetSelectionSchema = z.object({
+	selected_widgets: z
+		.array(z.enum(widgetKeysTuple))
+		.describe("An array of string keys for the widgets most relevant to the provided Perseus JSON.")
+})
 
 /**
  * Creates the structured prompt for the AI model to convert Perseus JSON to QTI XML,
@@ -724,6 +768,31 @@ ${svg.content}
 </output_format>
 `
 	return { developer, user }
+}
+
+export function createWidgetSelectionPrompt(perseusJson: string) {
+	const widgetList = Object.entries(typedSchemas)
+		.map(([key, schema]) => {
+			const jsonSchema = zodToJsonSchema(schema)
+			return `### Widget: "${key}"\nDescription: ${jsonSchema.description || "No description available"}\nSchema:\n\`\`\`json\n${JSON.stringify(jsonSchema, null, 2)}\n\`\`\``
+		})
+		.join("\n\n")
+
+	const systemInstruction = `You are an expert in educational technology content conversion. Your task is to analyze a given Perseus JSON object and determine which interactive widgets are required to accurately represent its content. You will be provided with a full list of available widgets, their descriptions, and their JSON schemas.
+
+Your response MUST be a JSON object that strictly adheres to the provided schema, containing only the string keys of the widgets you select.`
+
+	const userContent = `Based on the Perseus JSON below, please select the most relevant widgets from the list I have provided in the system prompt. Only select widgets that are explicitly needed to render the interactions or visuals in the content.
+
+## Perseus JSON Content:
+\`\`\`json
+${perseusJson}
+\`\`\`
+
+## Available Widgets:
+${widgetList}
+`
+	return { systemInstruction, userContent }
 }
 
 export function createQtiCorrectionPrompt(

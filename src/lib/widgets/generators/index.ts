@@ -39,7 +39,7 @@ import { generateVennDiagram, VennDiagramPropsSchema } from "./venn-diagram"
 import { generateVerticalArithmeticSetup, VerticalArithmeticSetupPropsSchema } from "./vertical-arithmetic-setup"
 
 // Extend each schema with a unique `type` literal for the discriminated union
-const typedSchemas = {
+export const typedSchemas = {
 	absoluteValueNumberLine: AbsoluteValueNumberLinePropsSchema.extend({ type: z.literal("absoluteValueNumberLine") }),
 	barChart: BarChartPropsSchema.extend({ type: z.literal("barChart") }),
 	boxPlot: BoxPlotPropsSchema.extend({ type: z.literal("boxPlot") }),

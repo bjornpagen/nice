@@ -5,11 +5,14 @@ import { zodResponseFormat } from "openai/helpers/zod"
 import type { ChatCompletionContentPart } from "openai/resources/chat/completions"
 import { z } from "zod"
 import { env } from "@/env"
-import { type AssessmentItemInput, AssessmentItemSchema } from "@/lib/qti/schemas" // ADD: Import schema and type
+import { type AssessmentItemInput, createDynamicSchemas } from "@/lib/qti/schemas"
+import type { typedSchemas } from "@/lib/widgets/generators"
 import {
 	createQtiConversionPrompt,
 	createQtiSufficiencyValidationPrompt,
-	createStructuredQtiConversionPrompt // ADD: Import the new prompt function
+	createStructuredQtiConversionPrompt,
+	createWidgetSelectionPrompt,
+	WidgetSelectionSchema
 } from "./prompts"
 import {
 	convertHtmlEntities,
@@ -201,21 +204,60 @@ export async function generateXml(
 }
 
 /**
- * NEW: Generates a structured QTI AssessmentItemInput object from Perseus JSON using
- * OpenAI's Structured Outputs feature. This is the core of the new, reliable pipeline.
- *
- * @param logger The logger instance.
- * @param perseusData The source Perseus content object.
- * @returns A promise that resolves to a valid AssessmentItemInput object.
+ * First pass of the two-shot generation. Selects relevant widgets.
  */
-export async function generateStructuredQtiItem(
+async function selectRelevantWidgets(
 	logger: logger.Logger,
-	perseusData: unknown
+	perseusJson: string
+): Promise<(keyof typeof typedSchemas)[]> {
+	const { systemInstruction, userContent } = createWidgetSelectionPrompt(perseusJson)
+
+	logger.debug("calling openai for widget selection")
+	const response = await errors.try(
+		openai.chat.completions.parse({
+			model: OPENAI_MODEL,
+			messages: [
+				{ role: "system", content: systemInstruction },
+				{ role: "user", content: userContent }
+			],
+			response_format: zodResponseFormat(WidgetSelectionSchema, "widget_selector")
+		})
+	)
+	if (response.error) {
+		logger.error("failed to select relevant widgets via openai", { error: response.error })
+		throw errors.wrap(response.error, "ai widget selection")
+	}
+
+	const choice = response.data.choices[0]
+	if (!choice?.message?.parsed) {
+		logger.error("CRITICAL: OpenAI widget selection returned no parsed content")
+		throw errors.new("empty ai response: no parsed content for widget selection")
+	}
+	if (choice.message.refusal) {
+		logger.error("openai refused widget selection request", { refusal: choice.message.refusal })
+		throw errors.new(`ai refused request: ${choice.message.refusal}`)
+	}
+
+	logger.info("successfully selected widgets", { count: choice.message.parsed.selected_widgets.length })
+	return choice.message.parsed.selected_widgets
+}
+
+/**
+ * Second pass. Generates the structured item using a dynamic schema.
+ */
+async function generateStructuredQtiItemWithDynamicSchema(
+	logger: logger.Logger,
+	perseusData: unknown,
+	widgetKeys: (keyof typeof typedSchemas)[]
 ): Promise<AssessmentItemInput> {
 	const perseusJsonString = JSON.stringify(perseusData, null, 2)
 	const { systemInstruction, userContent } = createStructuredQtiConversionPrompt(perseusJsonString)
+	const { AssessmentItemSchema: dynamicSchema } = createDynamicSchemas(widgetKeys)
 
-	logger.debug("calling openai for structured qti generation", { model: OPENAI_MODEL })
+	logger.debug("calling openai for structured qti generation with dynamic schema", {
+		model: OPENAI_MODEL,
+		widgetCount: widgetKeys.length
+	})
 
 	const response = await errors.try(
 		openai.chat.completions.parse({
@@ -224,8 +266,7 @@ export async function generateStructuredQtiItem(
 				{ role: "system", content: systemInstruction },
 				{ role: "user", content: userContent }
 			],
-			// CRITICAL: This enforces the output matches our Zod schema.
-			response_format: zodResponseFormat(AssessmentItemSchema, "qti_assessment_item_generator")
+			response_format: zodResponseFormat(dynamicSchema, "qti_assessment_item_generator")
 		})
 	)
 
@@ -251,8 +292,36 @@ export async function generateStructuredQtiItem(
 		throw errors.new("empty ai response: no parsed content")
 	}
 
-	// The 'parsed' property is guaranteed by the SDK to be a valid AssessmentItemInput object
 	return message.parsed
+}
+
+/**
+ * REFACTORED: This is now the main public orchestrator function.
+ * It encapsulates the entire two-shot process.
+ */
+export async function generateStructuredQtiItem(
+	logger: logger.Logger,
+	perseusData: unknown
+): Promise<AssessmentItemInput> {
+	const perseusJsonString = JSON.stringify(perseusData, null, 2)
+
+	// Shot 1: Select widgets
+	const selectedWidgetsResult = await errors.try(selectRelevantWidgets(logger, perseusJsonString))
+	if (selectedWidgetsResult.error) {
+		logger.error("widget selection pass failed", { error: selectedWidgetsResult.error })
+		throw selectedWidgetsResult.error
+	}
+
+	// Shot 2: Generate item with a simplified, dynamic schema
+	const structuredItemResult = await errors.try(
+		generateStructuredQtiItemWithDynamicSchema(logger, perseusData, selectedWidgetsResult.data)
+	)
+	if (structuredItemResult.error) {
+		logger.error("structured generation pass failed", { error: structuredItemResult.error })
+		throw structuredItemResult.error
+	}
+
+	return structuredItemResult.data
 }
 
 /**
