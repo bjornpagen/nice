@@ -2,13 +2,15 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines properties for one of the squares attached to the central triangle
-const SideSquareSchema = z.object({
-	area: z.number().describe("The area of the square, used for labeling."),
-	sideLabel: z
-		.string()
-		.nullable()
-		.describe('An optional label for the corresponding triangle side (e.g., "a", "b", "c").')
-})
+const SideSquareSchema = z
+	.object({
+		area: z.number().describe("The area of the square, used for labeling."),
+		sideLabel: z
+			.string()
+			.nullable()
+			.describe('An optional label for the corresponding triangle side (e.g., "a", "b", "c").')
+	})
+	.strict()
 
 // The main Zod schema for the pythagoreanProofDiagram function
 export const PythagoreanProofDiagramPropsSchema = z
@@ -27,6 +29,7 @@ export const PythagoreanProofDiagramPropsSchema = z
 		squareB: SideSquareSchema.describe("Properties of the square on the second leg."),
 		squareC: SideSquareSchema.describe("Properties of the square on the hypotenuse.")
 	})
+	.strict()
 	.describe(
 		"Generates a classic visual proof of the Pythagorean theorem. This SVG diagram renders a central right-angled triangle. A square is constructed on each of the triangle's three sides (the two legs 'a' and 'b', and the hypotenuse 'c'). Each square is labeled with its area, allowing students to visually confirm the relationship a² + b² = c². This provides a powerful, intuitive illustration of the theorem beyond the formula itself."
 	)

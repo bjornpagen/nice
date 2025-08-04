@@ -5,25 +5,29 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 export const ErrInvalidBaseShape = errors.new("invalid base shape for polyhedron type")
 
 // Defines the dimensions for the faces of the net.
-const FaceDimensionsSchema = z.object({
-	base: z
-		.union([
-			z.object({ type: z.literal("square"), side: z.number() }),
-			z.object({ type: z.literal("rectangle"), length: z.number(), width: z.number() }),
-			z.object({
-				type: z.literal("triangle"),
-				base: z.number(),
-				height: z.number(),
-				side1: z.number(),
-				side2: z.number()
-			})
-		])
-		.describe("The primary base shape of the polyhedron."),
-	lateralHeight: z
-		.number()
-		.nullable()
-		.describe("The height of the lateral rectangular faces (for prisms) or triangular faces (for pyramids).")
-})
+const FaceDimensionsSchema = z
+	.object({
+		base: z
+			.union([
+				z.object({ type: z.literal("square"), side: z.number() }).strict(),
+				z.object({ type: z.literal("rectangle"), length: z.number(), width: z.number() }).strict(),
+				z
+					.object({
+						type: z.literal("triangle"),
+						base: z.number(),
+						height: z.number(),
+						side1: z.number(),
+						side2: z.number()
+					})
+					.strict()
+			])
+			.describe("The primary base shape of the polyhedron."),
+		lateralHeight: z
+			.number()
+			.nullable()
+			.describe("The height of the lateral rectangular faces (for prisms) or triangular faces (for pyramids).")
+	})
+	.strict()
 
 // The main Zod schema for the polyhedronNetDiagram function
 export const PolyhedronNetDiagramPropsSchema = z
@@ -48,6 +52,7 @@ export const PolyhedronNetDiagramPropsSchema = z
 			.transform((val) => val ?? true)
 			.describe("If true, display the dimension labels on the net.")
 	})
+	.strict()
 	.describe(
 		'This template generates a two-dimensional "net" of a 3D polyhedron as an SVG graphic. A net is a 2D pattern that can be folded to form the 3D shape, and this template is essential for questions about surface area and the relationship between 2D and 3D geometry. The generator will render a specific, standard layout for the net of a given polyhedron. It programmatically arranges the component faces (squares, rectangles, triangles) in a connected pattern. This template is designed to create nets for various shapes: Cube: A cross-shaped layout of six identical squares. Rectangular Prism: A layout of six rectangles, typically with four in a row and two attached as "lids". Triangular Prism: A layout of three rectangles in a row with two triangular bases attached. Square Pyramid: A central square base with four triangles attached to its sides. Triangular Pyramid (Tetrahedron): A central triangular base with three other triangles attached to its sides. The diagram can be customized with dimension labels on the edges of the faces, allowing students to calculate the area of each component part. The final SVG is a clear and accurate representation of the unfolded solid.'
 	)

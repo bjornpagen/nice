@@ -27,6 +27,7 @@ export const BoxPlotPropsSchema = z
 					.nullable()
 					.describe("An optional array of numbers to display as tick labels on the axis.")
 			})
+			.strict()
 			.describe("Configuration for the horizontal number line."),
 		summary: z
 			.object({
@@ -36,6 +37,7 @@ export const BoxPlotPropsSchema = z
 				q3: z.number().describe("The third quartile (right edge of the box)."),
 				max: z.number().describe("The maximum value of the data set (right whisker endpoint).")
 			})
+			.strict()
 			.describe("The five-number summary used to draw the plot."),
 		boxColor: z
 			.string()
@@ -48,6 +50,7 @@ export const BoxPlotPropsSchema = z
 			.transform((val) => val ?? "#1976D2")
 			.describe("A CSS color string for the median line.")
 	})
+	.strict()
 	.describe(
 		'This template generates a standard horizontal box-and-whisker plot as an SVG graphic. This type of plot is a powerful tool for summarizing the distribution of a numerical data set through its five-number summary: minimum, first quartile (Q1), median, third quartile (Q3), and maximum. The generator will render a horizontal number line with labeled tick marks to provide scale. Above this axis, the box plot is constructed. A central rectangle (the "box") is drawn, with its left edge at the first quartile (Q1) and its right edge at the third quartile (Q3). The length of this box thus represents the Interquartile Range (IQR). A vertical line is drawn inside the box to mark the median (the 50th percentile). From the left side of the box, a horizontal line (the "whisker") extends to the minimum value of the data set. From the right side of the box, another whisker extends to the maximum value. These whiskers can be capped with small vertical lines. The entire plot provides a concise visual summary of the data\'s center (median), spread (IQR and range), and skewness. The generator allows for customization of colors for the box and median line to enhance readability.'
 	)

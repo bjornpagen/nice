@@ -31,6 +31,7 @@ export const AbsoluteValueNumberLinePropsSchema = z
 			.transform((val) => val ?? true)
 			.describe("If true, shows a text label indicating the distance from zero.")
 	})
+	.strict()
 	.describe(
 		"Generates an SVG number line to visually demonstrate the concept of absolute value as a distance from zero. The diagram renders a number line with a specified range, plots a point at a given value, and highlights the segment from zero to that point. This creates an unambiguous illustration that connects the abstract concept of |x| to the concrete idea of measuring a length from the origin, regardless of direction, making it ideal for introductory problems on the topic."
 	)

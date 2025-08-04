@@ -2,10 +2,12 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines a type of object to be rendered
-const ObjectTypeSchema = z.object({
-	count: z.number().int().min(0).describe("The number of this type of object to render."),
-	emoji: z.string().describe("The emoji character to use as the object icon (e.g., '🍎', '⭐').")
-})
+const ObjectTypeSchema = z
+	.object({
+		count: z.number().int().min(0).describe("The number of this type of object to render."),
+		emoji: z.string().describe("The emoji character to use as the object icon (e.g., '🍎', '⭐').")
+	})
+	.strict()
 
 // The main Zod schema for the discreteObjectRatioDiagram function
 export const DiscreteObjectRatioDiagramPropsSchema = z
@@ -28,6 +30,7 @@ export const DiscreteObjectRatioDiagramPropsSchema = z
 			.describe("The arrangement of the rendered objects."),
 		title: z.string().nullable().describe('An optional title for the diagram (e.g., "Fish in Aquarium").')
 	})
+	.strict()
 	.describe(
 		'This template generates an SVG graphic that visually represents a ratio using a collection of discrete, countable objects. It is perfect for introductory ratio problems where students can directly count the items to understand the relationship. The generator will render a specified number of two or more distinct types of objects. Each object type is defined by an SVG icon or shape and a count. For example, to show a ratio of 8 large fish to 10 small fish, the generator would render 8 instances of a "large fish" icon and 10 instances of a "small fish" icon. The objects will be arranged in a visually appealing and easy-to-count layout, such as a grid or a loose cluster. The colors and designs of the objects are configurable. This template provides a simple, concrete way to introduce the concept of ratios before moving to more abstract representations like tables or tape diagrams.'
 	)

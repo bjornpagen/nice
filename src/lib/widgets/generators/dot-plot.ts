@@ -5,10 +5,12 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
 // Defines a single data category and its frequency for the dot plot
-const DotPlotDataPointSchema = z.object({
-	value: z.number().describe("The numerical value on the horizontal axis."),
-	count: z.number().int().min(1).describe("The number of dots to stack vertically above this value.")
-})
+const DotPlotDataPointSchema = z
+	.object({
+		value: z.number().describe("The numerical value on the horizontal axis."),
+		count: z.number().int().min(1).describe("The number of dots to stack vertically above this value.")
+	})
+	.strict()
 
 // The main Zod schema for the dotPlot function
 export const DotPlotPropsSchema = z
@@ -30,6 +32,7 @@ export const DotPlotPropsSchema = z
 				max: z.number().describe("The maximum value displayed on the axis."),
 				tickInterval: z.number().describe("The numeric interval between labeled tick marks.")
 			})
+			.strict()
 			.describe("Configuration for the horizontal number line."),
 		data: z
 			.array(DotPlotDataPointSchema)
@@ -45,6 +48,7 @@ export const DotPlotPropsSchema = z
 			.transform((val) => val ?? 5)
 			.describe("The radius of each dot in pixels.")
 	})
+	.strict()
 	.describe(
 		'This template is designed to generate a clear, accessible, and standards-compliant dot plot as an SVG graphic within an HTML <div>. Dot plots are used to visualize the distribution of a numerical data set, especially when the data consists of discrete values or has been binned. The generator will construct a horizontal number line that serves as the base axis. This axis will be fully configurable, with a specified minimum and maximum value, major tick marks at defined intervals, and corresponding numerical labels beneath each tick. The axis can also have a descriptive title (e.g., "Number of snow days," "Age in years"). Above the horizontal axis, the data points are represented as small, filled circles (dots). For each value on the number line, the generator will stack dots vertically, with each dot representing a single occurrence of that value in the data set. The vertical spacing between dots will be uniform to ensure clarity. The resulting stacks of dots visually represent the frequency of each value, making it easy to identify the shape of the distribution, including peaks (mode), clusters, gaps, and outliers. The final SVG is a self-contained, accurately scaled visual representation of the raw data.'
 	)

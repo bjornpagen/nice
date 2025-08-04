@@ -2,10 +2,12 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines the labels and colors for the regions in the diagram
-const NumberSetStyleSchema = z.object({
-	label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
-	color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
-})
+const NumberSetStyleSchema = z
+	.object({
+		label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
+		color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
+	})
+	.strict()
 
 // The main Zod schema for the numberSetDiagram function
 export const NumberSetDiagramPropsSchema = z
@@ -27,8 +29,10 @@ export const NumberSetDiagramPropsSchema = z
 				rational: NumberSetStyleSchema,
 				irrational: NumberSetStyleSchema
 			})
+			.strict()
 			.describe("An object containing the labels and colors for each number set region.")
 	})
+	.strict()
 	.describe(
 		"Generates a static SVG Euler diagram that visually represents the hierarchical relationship between the sets of whole, integer, rational, and irrational numbers. It renders nested ovals for the first three sets and a separate oval for irrational numbers, with each region clearly labeled and colored. This provides a classic visual aid for classifying numbers."
 	)

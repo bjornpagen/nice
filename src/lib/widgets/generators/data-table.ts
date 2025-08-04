@@ -2,11 +2,13 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines an input cell that will render as a QTI text entry interaction
-const InputCellSchema = z.object({
-	type: z.literal("input"),
-	responseIdentifier: z.string().describe("The QTI response identifier for this input field."),
-	expectedLength: z.number().nullable().describe("The expected character length for the input field.")
-})
+const InputCellSchema = z
+	.object({
+		type: z.literal("input"),
+		responseIdentifier: z.string().describe("The QTI response identifier for this input field."),
+		expectedLength: z.number().nullable().describe("The expected character length for the input field.")
+	})
+	.strict()
 
 // Defines the content of a single data cell
 const TableCellSchema = z
@@ -14,11 +16,13 @@ const TableCellSchema = z
 	.describe("Content for a cell. Can be text/MathML, a number, or an input field specification.")
 
 // Defines a single column's properties
-const ColumnDefinitionSchema = z.object({
-	key: z.string().describe("A unique identifier for this column."),
-	label: z.string().nullable().describe("The display text for the column header."),
-	isNumeric: z.boolean().describe("If true, content will be right-aligned.")
-})
+const ColumnDefinitionSchema = z
+	.object({
+		key: z.string().describe("A unique identifier for this column."),
+		label: z.string().nullable().describe("The display text for the column header."),
+		isNumeric: z.boolean().describe("If true, content will be right-aligned.")
+	})
+	.strict()
 
 // The main Zod schema for the dataTable function
 export const DataTablePropsSchema = z
@@ -34,6 +38,7 @@ export const DataTablePropsSchema = z
 			.describe("The 'key' of the column that should be treated as the row header (<th>)."),
 		footer: z.record(TableCellSchema).nullable().describe("An optional footer object, often for totals.")
 	})
+	.strict()
 	.describe(
 		"Generates a versatile and accessible HTML <table>, serving as the single generator for all tabular data displays. It is capable of creating simple data lists, frequency tables, and complex two-way tables for displaying categorical data. The widget supports an optional header, footer (for totals), and row-level headers for maximum semantic correctness. Cells can contain plain text, numbers, MathML, or interactive input fields, making it suitable for both static display and interactive questions."
 	)

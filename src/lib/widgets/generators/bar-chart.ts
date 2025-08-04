@@ -5,30 +5,34 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
 
 // Defines the data and state for a single bar in the chart
-const BarDataSchema = z.object({
-	label: z.string().describe("The label for this category, displayed on the X-axis."),
-	value: z.number().describe("The numerical value of the bar, determining its height."),
-	state: z
-		.enum(["normal", "unknown"])
-		.nullable()
-		.transform((val) => val ?? "normal")
-		.describe('The visual state of the bar. "unknown" bars are styled as placeholders.')
-})
+const BarDataSchema = z
+	.object({
+		label: z.string().describe("The label for this category, displayed on the X-axis."),
+		value: z.number().describe("The numerical value of the bar, determining its height."),
+		state: z
+			.enum(["normal", "unknown"])
+			.nullable()
+			.transform((val) => val ?? "normal")
+			.describe('The visual state of the bar. "unknown" bars are styled as placeholders.')
+	})
+	.strict()
 
 // Define Y-axis schema separately to avoid inline object issues with o3 model
-const YAxisSchema = z.object({
-	label: z.string().nullable().describe("An optional label for the vertical value axis."),
-	min: z
-		.number()
-		.nullable()
-		.transform((val) => val ?? 0)
-		.describe("The minimum value for the Y-axis scale."),
-	max: z
-		.number()
-		.nullable()
-		.describe("The maximum value for the Y-axis scale. If omitted, it will be calculated automatically."),
-	tickInterval: z.number().describe("The numeric interval between labeled tick marks on the Y-axis.")
-})
+const YAxisSchema = z
+	.object({
+		label: z.string().nullable().describe("An optional label for the vertical value axis."),
+		min: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 0)
+			.describe("The minimum value for the Y-axis scale."),
+		max: z
+			.number()
+			.nullable()
+			.describe("The maximum value for the Y-axis scale. If omitted, it will be calculated automatically."),
+		tickInterval: z.number().describe("The numeric interval between labeled tick marks on the Y-axis.")
+	})
+	.strict()
 
 // The main Zod schema for the barChart function
 export const BarChartPropsSchema = z
@@ -53,6 +57,7 @@ export const BarChartPropsSchema = z
 			.transform((val) => val ?? "#4285F4")
 			.describe('The fill color for bars in the "normal" state.')
 	})
+	.strict()
 	.describe(
 		'This template generates a standard vertical bar chart as an SVG graphic. Bar charts are used to compare numerical values across a set of discrete categories. The output is highly customizable and suitable for questions involving data comparison or finding missing values. The generator will construct a complete Cartesian coordinate system with a vertical (Y) axis for numerical values and a horizontal (X) axis for categories. Both axes are configurable with titles (e.g., "Number of puppets," "Puppeteer"). The Y-axis will have labeled tick marks and optional horizontal grid lines to help read values. For each category provided, a rectangular bar is rendered. The height of the bar corresponds to its numerical value. A key feature of this template is its ability to render a bar in a distinct "unknown" or "placeholder" state. This is ideal for "missing value given the mean" problems, where the bar can be rendered as a dashed outline or a different color to indicate that its value is what the student needs to find. Regular bars have a standard fill color. All bars are clearly labeled with their category name on the X-axis.'
 	)

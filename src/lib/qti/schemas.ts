@@ -16,6 +16,7 @@ const SimpleChoiceSchema = z
 		),
 		feedback: z.string().nullable().describe("Optional feedback text shown when this choice is selected.")
 	})
+	.strict() // ADD: Enforce strict schema
 	.describe("Represents a single choice option in a multiple choice or ordering question.")
 
 const InlineChoiceSchema = z
@@ -23,6 +24,7 @@ const InlineChoiceSchema = z
 		identifier: z.string().describe("Unique identifier for this inline choice option."),
 		content: z.string().describe("The text content displayed in the dropdown menu.")
 	})
+	.strict() // ADD: Enforce strict schema
 	.describe("Represents a single option within an inline dropdown choice interaction.")
 
 const ChoiceInteractionSchema = z
@@ -39,6 +41,7 @@ const ChoiceInteractionSchema = z
 		minChoices: z.number().int().min(0).describe("The minimum number of choices the user must select."),
 		maxChoices: z.number().int().min(1).describe("The maximum number of choices the user can select.")
 	})
+	.strict() // ADD: Enforce strict schema
 	.describe("A multiple choice question where users select one or more options from a list.")
 
 const InlineChoiceInteractionSchema = z
@@ -52,6 +55,7 @@ const InlineChoiceInteractionSchema = z
 			.transform((val) => val ?? false)
 			.describe("Whether to randomize dropdown options. Defaults to false for consistency.")
 	})
+	.strict() // ADD: Enforce strict schema
 	.describe("An inline dropdown menu embedded within text, ideal for fill-in-the-blank questions.")
 
 const TextEntryInteractionSchema = z
@@ -60,6 +64,7 @@ const TextEntryInteractionSchema = z
 		responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
 		expectedLength: z.number().int().nullable().describe("Optional hint for expected answer length in characters.")
 	})
+	.strict() // ADD: Enforce strict schema
 	.describe("A text input field where users type their answer, supporting both short and long responses.")
 
 const OrderInteractionSchema = z
@@ -79,6 +84,7 @@ const OrderInteractionSchema = z
 			.transform((val) => val ?? "horizontal")
 			.describe("Visual layout direction for the orderable items.")
 	})
+	.strict() // ADD: Enforce strict schema
 	.describe("An interaction where users arrange items in a specific sequence or order.")
 
 export const AnyInteractionSchema = z.discriminatedUnion("type", [
@@ -112,6 +118,7 @@ const ResponseDeclarationSchema = z
 			.nullable()
 			.describe("Optional score mapping for partial credit, mapping responses to point values.")
 	})
+	.strict() // ADD: Enforce strict schema
 	.describe("Defines correct answers and scoring rules for an interaction.")
 
 // Define feedback schema separately to avoid inline object issues with o3 model
@@ -120,6 +127,7 @@ const FeedbackSchema = z
 		correct: z.string().describe("Encouraging message shown when the user answers correctly."),
 		incorrect: z.string().describe("Helpful feedback shown when the user answers incorrectly.")
 	})
+	.strict() // ADD: Enforce strict schema
 	.describe("Feedback messages displayed based on answer correctness.")
 
 // 3. Top-level schema for a complete QTI Assessment Item
@@ -133,6 +141,7 @@ export const AssessmentItemSchema = z
 		body: z.array(ItemBodyElementSchema).describe("The item content: mix of text, media, and interactive elements."),
 		feedback: FeedbackSchema.describe("Global feedback messages for the entire assessment item.")
 	})
+	.strict() // ADD: Enforce strict schema
 	.describe("A complete QTI 3.0 assessment item with content, interactions, and scoring rules.")
 
 // EXPORT BOTH THE INPUT AND OUTPUT TYPES

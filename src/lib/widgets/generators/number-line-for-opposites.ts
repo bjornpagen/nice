@@ -43,6 +43,7 @@ export const NumberLineForOppositesPropsSchema = z
 			.transform((val) => val ?? true)
 			.describe("If true, shows symmetric arrows from 0 to each point.")
 	})
+	.strict()
 	.describe(
 		'This template is specifically designed to generate an SVG diagram that illustrates the concept of opposite numbers. The diagram\'s purpose is to visually reinforce that opposite numbers are equidistant from zero. The generator will create a horizontal number line that is always centered on 0. Based on a single input value, it will automatically plot two points: one at the negative value (-value) and one at the positive value (+value). To emphasize the relationship, the template will draw two symmetric arrows originating from 0 and pointing to each of the two points. The points can be labeled differently; for example, one can show its numerical value (e.g., "8.3") while its opposite is labeled with a question mark, prompting the student to identify it. This creates a clear, pedagogical diagram for questions about number opposites.'
 	)

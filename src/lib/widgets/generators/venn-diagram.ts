@@ -2,25 +2,29 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Define circle schemas separately to avoid inline object issues with o3 model
-const CircleASchema = z.object({
-	label: z.string().describe('The label for the first circle (e.g., "Have a Dog").'),
-	count: z.number().describe("The numerical count for the region unique to this circle (non-overlapping part)."),
-	color: z
-		.string()
-		.nullable()
-		.transform((val) => val ?? "rgba(66, 133, 244, 0.5)")
-		.describe("The fill color for this circle.")
-})
+const CircleASchema = z
+	.object({
+		label: z.string().describe('The label for the first circle (e.g., "Have a Dog").'),
+		count: z.number().describe("The numerical count for the region unique to this circle (non-overlapping part)."),
+		color: z
+			.string()
+			.nullable()
+			.transform((val) => val ?? "rgba(66, 133, 244, 0.5)")
+			.describe("The fill color for this circle.")
+	})
+	.strict()
 
-const CircleBSchema = z.object({
-	label: z.string().describe('The label for the second circle (e.g., "Have a Cat").'),
-	count: z.number().describe("The numerical count for the region unique to this circle (non-overlapping part)."),
-	color: z
-		.string()
-		.nullable()
-		.transform((val) => val ?? "rgba(52, 168, 83, 0.5)")
-		.describe("The fill color for this circle.")
-})
+const CircleBSchema = z
+	.object({
+		label: z.string().describe('The label for the second circle (e.g., "Have a Cat").'),
+		count: z.number().describe("The numerical count for the region unique to this circle (non-overlapping part)."),
+		color: z
+			.string()
+			.nullable()
+			.transform((val) => val ?? "rgba(52, 168, 83, 0.5)")
+			.describe("The fill color for this circle.")
+	})
+	.strict()
 
 // The main Zod schema for the vennDiagram function
 export const VennDiagramPropsSchema = z
@@ -40,6 +44,7 @@ export const VennDiagramPropsSchema = z
 		intersectionCount: z.number().describe("The numerical count for the overlapping region of the two circles."),
 		outsideCount: z.number().describe("The numerical count for the region outside of both circles.")
 	})
+	.strict()
 	.describe(
 		"This template generates a classic two-circle Venn diagram as an SVG graphic. It is designed to visually represent the relationship between two sets of data. It renders two labeled, overlapping circles and displays the numerical counts for each of the four distinct regions: Circle A only, Circle B only, the intersection, and the region outside both circles. This is ideal for translating set information into a two-way table or for calculating probabilities."
 	)

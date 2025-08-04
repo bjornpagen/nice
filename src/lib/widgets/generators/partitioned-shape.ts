@@ -27,6 +27,7 @@ const ShapeDefinitionSchema = z
 			.transform((val) => val ?? "#6495ED")
 			.describe("A CSS color string for the shaded portions.")
 	})
+	.strict()
 	.refine(
 		(data) => {
 			// Ensure shadedParts is not greater than totalParts
@@ -74,6 +75,7 @@ export const PartitionedShapePropsSchema = z
 			.transform((val) => val ?? "horizontal")
 			.describe("The arrangement of multiple shapes.")
 	})
+	.strict()
 	.describe(
 		"This template is a highly versatile tool for generating SVG diagrams that visually represent fractions, decimals, and percentages. It replaces the `fractionBar` widget. It renders one or more geometric shapes (rectangles or circles) that are divided into a set number of equal parts, with a specified number of those parts shaded to illustrate a part-to-whole relationship. The generator is capable of creating: Grids and Bars: Rectangles can be partitioned into grids or single-row/column bars (fraction bars). Pie Charts: Circles can be divided into equal segments. Values Greater Than 100%: The template can render an array of shapes to model improper fractions or percentages over 100. The output is a clear, precise, and accessible SVG graphic ideal for questions requiring students to interpret visual models of proportions."
 	)

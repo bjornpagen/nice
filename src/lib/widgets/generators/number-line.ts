@@ -2,28 +2,32 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines a single point to be plotted on the number line
-const NumberLinePointSchema = z.object({
-	value: z.number().describe("The numerical value where the point is located on the line."),
-	label: z
-		.string()
-		.nullable()
-		.describe('An optional text label to display next to the point (e.g., "A", "Minnesota").'),
-	color: z
-		.string()
-		.nullable()
-		.transform((val) => val ?? "#4285F4")
-		.describe("The CSS color of the point."),
-	labelPosition: z
-		.enum(["above", "below", "left", "right"])
-		.nullable()
-		.describe("Specifies the position of the label relative to the point.")
-})
+const NumberLinePointSchema = z
+	.object({
+		value: z.number().describe("The numerical value where the point is located on the line."),
+		label: z
+			.string()
+			.nullable()
+			.describe('An optional text label to display next to the point (e.g., "A", "Minnesota").'),
+		color: z
+			.string()
+			.nullable()
+			.transform((val) => val ?? "#4285F4")
+			.describe("The CSS color of the point."),
+		labelPosition: z
+			.enum(["above", "below", "left", "right"])
+			.nullable()
+			.describe("Specifies the position of the label relative to the point.")
+	})
+	.strict()
 
 // Defines a custom label for a specific tick mark (e.g., "sea level" at 0)
-const SpecialTickLabelSchema = z.object({
-	value: z.number().describe("The value on the number line to label."),
-	label: z.string().describe("The custom text for the label.")
-})
+const SpecialTickLabelSchema = z
+	.object({
+		value: z.number().describe("The value on the number line to label."),
+		label: z.string().describe("The custom text for the label.")
+	})
+	.strict()
 
 // The main Zod schema for the numberLine function
 export const NumberLinePropsSchema = z
@@ -60,6 +64,7 @@ export const NumberLinePropsSchema = z
 			.nullable()
 			.describe('Optional custom labels for specific values on the line (e.g., labeling 0 as "sea level").')
 	})
+	.strict()
 	.describe(
 		'This is a highly versatile template designed to generate a precise and customizable number line as an SVG graphic. It can be rendered horizontally (for general number comparisons) or vertically (often used for temperature, elevation, or financial contexts). The generator will construct a line representing a specified numerical range (minimum and maximum values). The line will be marked with labeled major tick marks at a configurable interval. It also supports rendering smaller, unlabeled minor tick marks between the major ones to show finer gradations (e.g., quarters, tenths). This is crucial for questions involving fractions and decimals. A key feature is the ability to plot multiple points on the line. Each point is defined by its numerical value and can be styled with a specific color. An accompanying text label (e.g., a letter like "A", a name like "Minnesota", or a value like "−78 °C") can be positioned above, below, or next to each point. Special labels, such as "sea level" or "Zero balance," can be associated with specific values like 0. The final output is a clean, accurately scaled, and accessible SVG graphic ready for embedding in a QTI item, suitable for a wide range of questions from identifying points to comparing rational numbers.'
 	)

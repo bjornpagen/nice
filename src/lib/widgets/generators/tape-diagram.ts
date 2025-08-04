@@ -2,21 +2,25 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines a single segment within a tape
-const TapeSegmentSchema = z.object({
-	label: z.string().describe('The text label to display inside this segment (e.g., "10", "w").'),
-	length: z.number().positive().describe("The numerical length of the segment for proportional rendering.")
-})
+const TapeSegmentSchema = z
+	.object({
+		label: z.string().describe('The text label to display inside this segment (e.g., "10", "w").'),
+		length: z.number().positive().describe("The numerical length of the segment for proportional rendering.")
+	})
+	.strict()
 
 // Defines one of the two tapes in the diagram
-const TapeSchema = z.object({
-	label: z.string().describe('The text label for this tape (e.g., "Teeth per larger gear").'),
-	segments: z.array(TapeSegmentSchema).min(1).describe("An array of segment objects that make up this tape."),
-	color: z
-		.string()
-		.nullable()
-		.transform((val) => val ?? "rgba(66, 133, 244, 0.6)")
-		.describe("The CSS fill color for the tape segments.")
-})
+const TapeSchema = z
+	.object({
+		label: z.string().describe('The text label for this tape (e.g., "Teeth per larger gear").'),
+		segments: z.array(TapeSegmentSchema).min(1).describe("An array of segment objects that make up this tape."),
+		color: z
+			.string()
+			.nullable()
+			.transform((val) => val ?? "rgba(66, 133, 244, 0.6)")
+			.describe("The CSS fill color for the tape segments.")
+	})
+	.strict()
 
 // The main Zod schema for the tapeDiagram function
 export const TapeDiagramPropsSchema = z
@@ -44,6 +48,7 @@ export const TapeDiagramPropsSchema = z
 			.transform((val) => val ?? "Total")
 			.describe("The text label for the total bracket, if shown.")
 	})
+	.strict()
 	.describe(
 		'Generates a "tape diagram" or "bar model" as an SVG graphic to represent part-whole relationships. This widget is exceptionally useful for modeling and solving word problems involving ratios or algebraic equations. It renders one or two tapes, each composed of proportionally sized segments that can be labeled with numbers or variables. By visually aligning tapes or their segments, it translates abstract numerical relationships into a concrete, geometric form, making concepts like "3x = 15" intuitive.'
 	)

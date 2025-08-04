@@ -5,16 +5,18 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 const AnglePositionSchema = z.enum(["topLeft", "topRight", "bottomLeft", "bottomRight"])
 
 // Defines a label for a specific angle in the diagram
-const AngleLabelSchema = z.object({
-	intersection: z.enum(["top", "bottom"]).describe("Which of the two intersections the angle is at."),
-	position: AnglePositionSchema.describe("The position of the angle within that intersection."),
-	label: z.string().describe('The text or mathematical label for the angle (e.g., "x", "34°", "2x + 10").'),
-	color: z
-		.string()
-		.nullable()
-		.transform((val) => val ?? "blue")
-		.describe('An optional CSS color for the angle\'s highlighting arc (e.g., "#1E90FF").')
-})
+const AngleLabelSchema = z
+	.object({
+		intersection: z.enum(["top", "bottom"]).describe("Which of the two intersections the angle is at."),
+		position: AnglePositionSchema.describe("The position of the angle within that intersection."),
+		label: z.string().describe('The text or mathematical label for the angle (e.g., "x", "34°", "2x + 10").'),
+		color: z
+			.string()
+			.nullable()
+			.transform((val) => val ?? "blue")
+			.describe('An optional CSS color for the angle\'s highlighting arc (e.g., "#1E90FF").')
+	})
+	.strict()
 
 // The main Zod schema for the parallelLinesTransversal function
 export const ParallelLinesTransversalPropsSchema = z
@@ -41,6 +43,7 @@ export const ParallelLinesTransversalPropsSchema = z
 			.describe("The angle of the transversal line in degrees, relative to the horizontal."),
 		labels: z.array(AngleLabelSchema).describe("An array of angle labels to be drawn on the diagram.")
 	})
+	.strict()
 	.describe(
 		"This template generates an SVG diagram depicting two parallel lines being intersected by a transversal line. It creates eight distinct angles, any of which can be labeled with a value, variable, or expression. This is ideal for problems involving corresponding, alternate interior, and other angle relationships."
 	)

@@ -2,11 +2,13 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines the properties of an emoji icon used in the diagram
-const DiagramEmojiSchema = z.object({
-	emoji: z.string().describe("The emoji character to use as the icon (e.g., '🍦', '🥞', '📚')."),
-	size: z.number().describe("The size of the emoji in pixels."),
-	label: z.string().describe("Alternative text describing the emoji for accessibility.")
-})
+const DiagramEmojiSchema = z
+	.object({
+		emoji: z.string().describe("The emoji character to use as the icon (e.g., '🍦', '🥞', '📚')."),
+		size: z.number().describe("The size of the emoji in pixels."),
+		label: z.string().describe("Alternative text describing the emoji for accessibility.")
+	})
+	.strict()
 
 // The main Zod schema for the stackedItemsDiagram function
 export const StackedItemsDiagramPropsSchema = z
@@ -32,6 +34,7 @@ export const StackedItemsDiagramPropsSchema = z
 				"The proportion of the stacked item's size to overlap. E.g., 0.75 means each new item overlaps 75% of the previous one. A value of 0 means they touch at the edges. A negative value would create space."
 			)
 	})
+	.strict()
 	.describe(
 		"This template is designed to generate a simple, clear visual representation of a quantity by stacking emoji items on top of a base emoji. It is particularly useful for word problems where a count of items (like scoops of ice cream, pancakes, or blocks) is central to the problem. The output is a self-contained <div> containing absolutely positioned emoji text elements to create a clean, layered visual. The generator will render a single baseItem emoji (e.g., an ice cream cone '🍦', a plate '🍽️'). It will then render a stackedItem emoji a specified number of times (count), creating a vertical or horizontal stack. The degree of overlap or spacing between the stacked items is configurable, allowing for a tight stack or a more spaced-out list. This template's purpose is purely illustrative, helping students visualize the number mentioned in the problem's text. All visual parameters, including the emoji characters, dimensions, and count, are fully configurable to adapt to various scenarios."
 	)

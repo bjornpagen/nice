@@ -5,27 +5,31 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 export const ErrInvalidRange = errors.new("min must be less than max")
 
 // Defines a boundary point for an inequality range
-const InequalityBoundarySchema = z.object({
-	value: z.number().describe("The numerical value of the boundary point."),
-	type: z
-		.enum(["open", "closed"])
-		.describe('The type of circle at the boundary: "open" for < or >, "closed" for ≤ or ≥.')
-})
+const InequalityBoundarySchema = z
+	.object({
+		value: z.number().describe("The numerical value of the boundary point."),
+		type: z
+			.enum(["open", "closed"])
+			.describe('The type of circle at the boundary: "open" for < or >, "closed" for ≤ or ≥.')
+	})
+	.strict()
 
 // Defines a single continuous range to be graphed on the number line
-const InequalityRangeSchema = z.object({
-	start: InequalityBoundarySchema.nullable().describe(
-		"The starting boundary of the range. If omitted, the range extends to negative infinity."
-	),
-	end: InequalityBoundarySchema.nullable().describe(
-		"The ending boundary of the range. If omitted, the range extends to positive infinity."
-	),
-	color: z
-		.string()
-		.nullable()
-		.transform((val) => val ?? "#4285F4")
-		.describe("The color of the shaded range and its boundary points.")
-})
+const InequalityRangeSchema = z
+	.object({
+		start: InequalityBoundarySchema.nullable().describe(
+			"The starting boundary of the range. If omitted, the range extends to negative infinity."
+		),
+		end: InequalityBoundarySchema.nullable().describe(
+			"The ending boundary of the range. If omitted, the range extends to positive infinity."
+		),
+		color: z
+			.string()
+			.nullable()
+			.transform((val) => val ?? "#4285F4")
+			.describe("The color of the shaded range and its boundary points.")
+	})
+	.strict()
 
 // The main Zod schema for the inequalityNumberLine function
 export const InequalityNumberLinePropsSchema = z
@@ -48,6 +52,7 @@ export const InequalityNumberLinePropsSchema = z
 			.min(1)
 			.describe("An array of one or more inequality ranges to be graphed on the line.")
 	})
+	.strict()
 	.describe(
 		"Generates an SVG number line to graph the solution set of one or more inequalities. This widget is ideal for visualizing simple inequalities (e.g., x > 5), compound 'and' inequalities (e.g., -2 < x ≤ 3), and compound 'or' inequalities (e.g., x ≤ 0 or x > 4). It renders a number line with a configurable range and tick marks. For each specified range, it draws a highlighted segment and places circles at the boundary points. The circles can be 'open' (for <, >) or 'closed' (for ≤, ≥), providing a mathematically precise representation of the solution."
 	)

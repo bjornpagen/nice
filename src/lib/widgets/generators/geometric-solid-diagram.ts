@@ -2,30 +2,38 @@ import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines the properties for a cylinder
-const CylinderDataSchema = z.object({
-	type: z.literal("cylinder"),
-	radius: z.number().describe("The radius of the circular bases."),
-	height: z.number().describe("The perpendicular distance between the two bases.")
-})
+const CylinderDataSchema = z
+	.object({
+		type: z.literal("cylinder"),
+		radius: z.number().describe("The radius of the circular bases."),
+		height: z.number().describe("The perpendicular distance between the two bases.")
+	})
+	.strict()
 
 // Defines the properties for a cone
-const ConeDataSchema = z.object({
-	type: z.literal("cone"),
-	radius: z.number().describe("The radius of the circular base."),
-	height: z.number().describe("The perpendicular height from the base to the apex.")
-})
+const ConeDataSchema = z
+	.object({
+		type: z.literal("cone"),
+		radius: z.number().describe("The radius of the circular base."),
+		height: z.number().describe("The perpendicular height from the base to the apex.")
+	})
+	.strict()
 
 // Defines the properties for a sphere
-const SphereDataSchema = z.object({
-	type: z.literal("sphere"),
-	radius: z.number().describe("The radius of the sphere.")
-})
+const SphereDataSchema = z
+	.object({
+		type: z.literal("sphere"),
+		radius: z.number().describe("The radius of the sphere.")
+	})
+	.strict()
 
 // Defines a label for a dimension like radius or height
-const SolidDimensionLabelSchema = z.object({
-	target: z.enum(["radius", "height"]).describe("The dimension to label."),
-	text: z.string().nullable().describe("The text for the label. If omitted, the numerical value will be used.")
-})
+const SolidDimensionLabelSchema = z
+	.object({
+		target: z.enum(["radius", "height"]).describe("The dimension to label."),
+		text: z.string().nullable().describe("The text for the label. If omitted, the numerical value will be used.")
+	})
+	.strict()
 
 // The main Zod schema for the geometricSolidDiagram function
 export const GeometricSolidDiagramPropsSchema = z
@@ -45,6 +53,7 @@ export const GeometricSolidDiagramPropsSchema = z
 			.describe("The geometric data defining the solid shape."),
 		labels: z.array(SolidDimensionLabelSchema).nullable().describe("An array of dimension labels to display.")
 	})
+	.strict()
 	.describe(
 		"Generates a 3D diagram of a geometric solid that has at least one curved surface, such as a cylinder, cone, or sphere. The output is an SVG rendering from a perspective view, with hidden edges shown as dashed lines to convey three-dimensional structure. The diagram can include labeled dimensions (e.g., radius, height) with leader lines, making it ideal for problems involving volume or surface area calculations for these specific shapes."
 	)
