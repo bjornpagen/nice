@@ -3,8 +3,8 @@
 import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { revalidateTag } from "next/cache"
 import * as cacheUtils from "@/lib/cache"
+import { invalidateCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
 import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
 
@@ -63,9 +63,9 @@ export async function trackArticleView(
 		})
 	} else {
 		const onerosterCourseSourcedId = courseResult.data[0].sourcedId
-		const { tag } = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
-		revalidateTag(tag)
-		logger.info("invalidated user progress cache", { cacheTag: tag })
+		const cacheKey = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
+		await invalidateCache(cacheKey)
+		logger.info("invalidated user progress cache", { cacheKey })
 	}
 
 	logger.info("successfully tracked article view", {
@@ -183,9 +183,9 @@ export async function updateVideoProgress(
 		})
 	} else {
 		const onerosterCourseSourcedId = courseResult.data[0].sourcedId
-		const { tag } = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
-		revalidateTag(tag)
-		logger.info("invalidated user progress cache", { cacheTag: tag })
+		const cacheKey = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
+		await invalidateCache(cacheKey)
+		logger.info("invalidated user progress cache", { cacheKey })
 	}
 
 	logger.info("video progress saved successfully", {
@@ -258,9 +258,9 @@ export async function saveAssessmentResult(
 	}
 
 	// Invalidate the user progress cache for this course.
-	const { tag } = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
-	revalidateTag(tag)
-	logger.info("invalidated user progress cache", { cacheTag: tag })
+	const cacheKey = cacheUtils.userProgressByCourse(onerosterUserSourcedId, onerosterCourseSourcedId)
+	await invalidateCache(cacheKey)
+	logger.info("invalidated user progress cache", { cacheKey })
 
 	logger.info("successfully saved assessment result", {
 		clerkUserId,
