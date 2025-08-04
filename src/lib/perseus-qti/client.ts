@@ -5,7 +5,12 @@ import { zodResponseFormat } from "openai/helpers/zod"
 import type { ChatCompletionContentPart } from "openai/resources/chat/completions"
 import { z } from "zod"
 import { env } from "@/env"
-import { createQtiConversionPrompt, createQtiSufficiencyValidationPrompt } from "./prompts"
+import { type AssessmentItemInput, AssessmentItemSchema } from "@/lib/qti/schemas" // ADD: Import schema and type
+import {
+	createQtiConversionPrompt,
+	createQtiSufficiencyValidationPrompt,
+	createStructuredQtiConversionPrompt // ADD: Import the new prompt function
+} from "./prompts"
 import {
 	convertHtmlEntities,
 	fixInequalityOperators,
@@ -193,6 +198,61 @@ export async function generateXml(
 	cleanedXml = fixInequalityOperators(cleanedXml, logger)
 	cleanedXml = fixKhanGraphieUrls(cleanedXml, logger)
 	return extractAndValidateXml(cleanedXml, rootTag, logger)
+}
+
+/**
+ * NEW: Generates a structured QTI AssessmentItemInput object from Perseus JSON using
+ * OpenAI's Structured Outputs feature. This is the core of the new, reliable pipeline.
+ *
+ * @param logger The logger instance.
+ * @param perseusData The source Perseus content object.
+ * @returns A promise that resolves to a valid AssessmentItemInput object.
+ */
+export async function generateStructuredQtiItem(
+	logger: logger.Logger,
+	perseusData: unknown
+): Promise<AssessmentItemInput> {
+	const perseusJsonString = JSON.stringify(perseusData, null, 2)
+	const { systemInstruction, userContent } = createStructuredQtiConversionPrompt(perseusJsonString)
+
+	logger.debug("calling openai for structured qti generation", { model: OPENAI_MODEL })
+
+	const response = await errors.try(
+		openai.chat.completions.parse({
+			model: OPENAI_MODEL,
+			messages: [
+				{ role: "system", content: systemInstruction },
+				{ role: "user", content: userContent }
+			],
+			// CRITICAL: This enforces the output matches our Zod schema.
+			response_format: zodResponseFormat(AssessmentItemSchema, "qti_assessment_item_generator")
+		})
+	)
+
+	if (response.error) {
+		logger.error("failed to generate structured qti item from perseus via openai", { error: response.error })
+		throw errors.wrap(response.error, "ai structured qti generation")
+	}
+
+	const choice = response.data.choices[0]
+	if (!choice) {
+		logger.error("CRITICAL: OpenAI response contained no choices")
+		throw errors.new("openai returned no choices")
+	}
+
+	const message = choice.message
+	if (message.refusal) {
+		logger.error("openai refused to generate structured qti item", { refusal: message.refusal })
+		throw errors.new(`ai refused request: ${message.refusal}`)
+	}
+
+	if (!message.parsed) {
+		logger.error("CRITICAL: OpenAI returned no parsed content for structured conversion")
+		throw errors.new("empty ai response: no parsed content")
+	}
+
+	// The 'parsed' property is guaranteed by the SDK to be a valid AssessmentItemInput object
+	return message.parsed
 }
 
 /**

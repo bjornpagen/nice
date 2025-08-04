@@ -26,6 +26,8 @@ import { orchestrateHardcodedOnerosterIngestion } from "@/inngest/functions/orch
 // ADD: Import the two new hardcoded migration orchestrators
 import { orchestrateHardcodedPerseusMigration } from "@/inngest/functions/orchestrate-hardcoded-perseus-migration"
 import { orchestrateHardcodedQtiIngestion } from "@/inngest/functions/orchestrate-hardcoded-qti-ingestion"
+// ✅ ADD: Import the new structured outputs conversion function
+import { convertPerseusItemViaStructuredOutputs } from "@/inngest/functions/perseus/convert-item-via-structured-outputs"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 // ✅ ADD: Import the new differentiate function
@@ -74,6 +76,8 @@ export const { GET, POST, PUT } = serve({
 		clearCourseXmlData,
 		convertPerseusArticleToQtiStimulus,
 		convertPerseusQuestionToQtiItem,
+		// ✅ ADD: Register the new structured outputs conversion function
+		convertPerseusItemViaStructuredOutputs,
 		ingestAssessmentItems,
 		ingestAssessmentStimuli,
 		ingestAssessmentTests,

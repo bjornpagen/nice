@@ -265,6 +265,13 @@ const events = {
 			})
 		})
 	},
+	// ADD: New event to trigger the structured outputs-based conversion pipeline.
+	// This will replace the old `qti/item.migrate` event for new workflows.
+	"perseus/item.structured-convert-to-qti": {
+		data: z.object({
+			questionId: z.string().min(1)
+		})
+	},
 	// ADD: New event to trigger Perseus to QTI XML generation for hardcoded courses
 	"migration/hardcoded.perseus-to-qti": {
 		data: z.object({}) // No data needed

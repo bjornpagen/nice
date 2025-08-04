@@ -503,6 +503,41 @@ FINAL REMINDER: The examples demonstrate PERFECT QTI 3.0 XML output. Follow thei
 }
 
 /**
+ * NEW: Creates the structured prompt for the AI model to convert Perseus JSON to a structured
+ * AssessmentItemInput object. This prompt focuses on data mapping rather than XML syntax.
+ * @param perseusJsonString The stringified Perseus JSON data.
+ * @returns The system instruction and user content for the AI prompt.
+ */
+export function createStructuredQtiConversionPrompt(perseusJsonString: string): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction = `You are an expert in educational content conversion. Your sole task is to analyze the provided Perseus JSON object and accurately represent it as a structured JSON object that conforms to the 'AssessmentItemInput' schema. You must map Perseus concepts, widgets, and content to their corresponding fields in the provided schema. Pay close attention to the descriptions within the schema to understand the purpose of each field. Your output MUST be a single, valid JSON object.`
+
+	const userContent = `
+# Task
+Convert the following Perseus JSON object into a valid JSON object that adheres to the 'AssessmentItemInput' schema.
+
+## Perseus JSON Source
+\`\`\`json
+${perseusJsonString}
+\`\`\`
+
+## Instructions & Mapping Guidelines
+- **identifier & title:** Use the 'id' and 'exercise title' from the source data.
+- **body:** The Perseus 'question.content' and 'question.widgets' must be converted into an array of strings (for HTML/MathML) and widget objects for the 'body' field.
+- **Widgets:** Map Perseus widget info (e.g., 'double-number-line 1') to the corresponding widget object in the 'WidgetSchema' (e.g., \`{ "type": "doubleNumberLine", ... }\`). Ensure all required properties for that widget type are populated from the Perseus widget definition.
+- **Interactions:** Perseus question types like 'radio', 'order', or 'text-input' must be mapped to the correct QTI interaction object (\`choiceInteraction\`, \`orderInteraction\`, \`textEntryInteraction\`).
+- **Response Declarations:** The 'question.answers' from Perseus must be used to create the \`responseDeclarations\`, including the correct answer value.
+- **Feedback:** Map the 'hints' or answer explanations to the 'feedback.correct' and 'feedback.incorrect' fields.
+
+Your output must be a single, complete JSON object.
+`
+
+	return { systemInstruction, userContent }
+}
+
+/**
  * NEW: Creates the prompt for the AI-powered Content Solvability Validator.
  */
 export function createQtiSufficiencyValidationPrompt(
