@@ -1062,16 +1062,14 @@ describe("Widget Generators", () => {
 				height: 250,
 				altText: "An ice cream cone with 3 scoops.",
 				baseItem: {
-					src: "https://via.placeholder.com/80x120.png/F2D2BD/000000?text=Cone",
-					width: 80,
-					height: 120,
-					alt: "ice cream cone"
+					emoji: "🍦",
+					size: 40,
+					label: "ice cream cone"
 				},
 				stackedItem: {
-					src: "https://via.placeholder.com/80x50.png/FFC0CB/000000?text=Scoop",
-					width: 80,
-					height: 50,
-					alt: "scoop of ice cream"
+					emoji: "🍨",
+					size: 32,
+					label: "scoop of ice cream"
 				},
 				count: 3,
 				orientation: "vertical" as const,
@@ -1086,16 +1084,14 @@ describe("Widget Generators", () => {
 				height: 100,
 				altText: "A row of 4 coins",
 				baseItem: {
-					src: "https://via.placeholder.com/50x50.png/FFD700/000000?text=Base",
-					width: 50,
-					height: 50,
-					alt: "base coin"
+					emoji: "🪙",
+					size: 32,
+					label: "base coin"
 				},
 				stackedItem: {
-					src: "https://via.placeholder.com/50x50.png/C0C0C0/000000?text=Coin",
-					width: 50,
-					height: 50,
-					alt: "silver coin"
+					emoji: "🪙",
+					size: 32,
+					label: "silver coin"
 				},
 				count: 4,
 				orientation: "horizontal" as const,
