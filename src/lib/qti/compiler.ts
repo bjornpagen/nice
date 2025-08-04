@@ -36,83 +36,6 @@ import { escapeXmlAttribute } from "@/lib/xml-utils"
 import type { AnyInteraction, AssessmentItem, AssessmentItemInput } from "./schemas"
 import { AssessmentItemSchema } from "./schemas"
 
-// This helper must be added to fix the feedback compilation regression.
-const createFeedbackHtml = (content: string) => {
-	// This restores the required wrapper for feedback blocks.
-	return `<p><span class="qti-keyword-emphasis">Feedback</span>: ${content}</p>`
-}
-
-function validateHtmlContent(content: string, context: string): void {
-	// Basic validation to ensure the content looks like HTML
-	// Check if it contains HTML tags or is wrapped in tags
-	const trimmed = content.trim()
-
-	// Check for common HTML patterns
-	const hasHtmlTags = /<[^>]+>/.test(trimmed)
-
-	if (!hasHtmlTags) {
-		throw errors.new(`Content in ${context} must be well-formed HTML but got plain text: "${content}"`)
-	}
-
-	// For partial content (starts with opening tag but no closing, or vice versa)
-	// This is valid in QTI when content is split across multiple elements
-	const startsWithOpeningTag = /^<p[^>]*>/.test(trimmed)
-	const endsWithClosingTag = /<\/p>$/.test(trimmed)
-
-	// If it's a partial fragment (starts OR ends with tag but not both), it's valid
-	if ((startsWithOpeningTag && !endsWithClosingTag) || (!startsWithOpeningTag && endsWithClosingTag)) {
-		return // Valid partial content
-	}
-
-	// Basic check for unclosed tags (only for complete content)
-	const openTags = trimmed.match(/<([^/\s>]+)[^>]*>/g) || []
-	const closeTags = trimmed.match(/<\/([^>]+)>/g) || []
-
-	// Simple validation - this won't catch all cases but will catch obvious issues
-	const openTagNames = openTags
-		.map((tag) => {
-			const match = tag.match(/<([^/\s>]+)/)
-			return match ? match[1] : null
-		})
-		.filter((tag): tag is string => tag !== null)
-
-	const closeTagNames = closeTags
-		.map((tag) => {
-			const match = tag.match(/<\/([^>]+)>/)
-			return match ? match[1] : null
-		})
-		.filter((tag): tag is string => tag !== null)
-
-	// Check for self-closing tags and void elements
-	const selfClosingTags = [
-		"img",
-		"br",
-		"hr",
-		"input",
-		"meta",
-		"link",
-		"area",
-		"base",
-		"col",
-		"embed",
-		"source",
-		"track",
-		"wbr"
-	]
-	const nonSelfClosingOpenTags = openTagNames.filter((tag) => !selfClosingTags.includes(tag))
-
-	// Special handling for MathML elements like mroot which has different validation rules
-	const hasMathML = content.includes('xmlns="http://www.w3.org/1998/Math/MathML"')
-	if (hasMathML) {
-		// Skip strict tag matching for MathML content as it has complex nesting rules
-		return
-	}
-
-	if (nonSelfClosingOpenTags.length !== closeTagNames.length) {
-		throw errors.new(`Content in ${context} has mismatched HTML tags: "${content}"`)
-	}
-}
-
 function encodeDataUri(content: string): string {
 	const encoded = encodeURIComponent(content)
 		.replace(/'/g, "%27")
@@ -153,16 +76,12 @@ function processSlots(content: string, widgets?: AssessmentItem["widgets"]): str
 function compileInteraction(interaction: AnyInteraction, widgets?: AssessmentItem["widgets"]): string {
 	switch (interaction.type) {
 		case "choiceInteraction": {
-			// Validate prompt HTML
-			validateHtmlContent(interaction.prompt, "choiceInteraction prompt")
-
 			const processedPrompt = processSlots(interaction.prompt, widgets)
 			const choices = interaction.choices
 				.map((c) => {
 					const processedContent = processSlots(c.content, widgets)
 					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
 					if (c.feedback) {
-						validateHtmlContent(c.feedback, `choiceInteraction feedback for choice ${c.identifier}`)
 						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${c.feedback}</qti-feedback-inline>`
 					}
 					choiceXml += "</qti-simple-choice>"
@@ -176,16 +95,12 @@ function compileInteraction(interaction: AnyInteraction, widgets?: AssessmentIte
         </qti-choice-interaction>`
 		}
 		case "orderInteraction": {
-			// Validate prompt HTML
-			validateHtmlContent(interaction.prompt, "orderInteraction prompt")
-
 			const processedPrompt = processSlots(interaction.prompt, widgets)
 			const choices = interaction.choices
 				.map((c) => {
 					const processedContent = processSlots(c.content, widgets)
 					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
 					if (c.feedback) {
-						validateHtmlContent(c.feedback, `orderInteraction feedback for choice ${c.identifier}`)
 						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${c.feedback}</qti-feedback-inline>`
 					}
 					choiceXml += "</qti-simple-choice>"
@@ -386,9 +301,10 @@ export function compile(itemData: AssessmentItemInput): string {
 	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)
 	const responseProcessing = compileResponseProcessing(item.responseDeclarations)
 
-	// 3. Fix feedback compilation by using the new helper.
-	const correctFeedback = createFeedbackHtml(item.feedback.correct)
-	const incorrectFeedback = createFeedbackHtml(item.feedback.incorrect)
+	// 3. Use pre-validated feedback content directly from the item data.
+	// The content is now guaranteed by the schema to be well-formed HTML.
+	const correctFeedback = item.feedback.correct
+	const incorrectFeedback = item.feedback.incorrect
 
 	return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-item
