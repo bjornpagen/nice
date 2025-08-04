@@ -13,29 +13,26 @@ const TableCellSchema = z
 	.union([z.string(), z.number(), InputCellSchema])
 	.describe("Content for a cell. Can be text/MathML, a number, or an input field specification.")
 
-// Defines a single row in the table
-const TableRowSchema = z.object({
-	isHeader: z
-		.boolean()
-		.nullable()
-		.transform((val) => val ?? false)
-		.describe("If true, the first cell of this row is a row header (<th>)."),
-	cells: z.array(TableCellSchema).describe("An array of cell data for this row.")
+// Defines a single column's properties
+const ColumnDefinitionSchema = z.object({
+	key: z.string().describe("A unique identifier for this column."),
+	label: z.string().nullable().describe("The display text for the column header."),
+	isNumeric: z.boolean().describe("If true, content will be right-aligned.")
 })
 
 // The main Zod schema for the dataTable function
 export const DataTablePropsSchema = z
 	.object({
 		title: z.string().nullable().describe("An optional caption for the table."),
-		columnHeaders: z.array(z.string()).nullable().describe("An optional array of labels for the table header row."),
-		rows: z.array(TableRowSchema).describe("An array of row objects that make up the table body."),
-		// Add the 'footer' property to explicitly support column totals
-		footer: z
-			.array(TableCellSchema)
+		columns: z.array(ColumnDefinitionSchema).describe("An array of column definitions."),
+		data: z
+			.array(z.record(TableCellSchema))
+			.describe("An array of data objects for each row, where keys must match column keys."),
+		rowHeaderKey: z
+			.string()
 			.nullable()
-			.describe(
-				'An optional footer row (rendered in <tfoot>), often used for column totals. The first cell is typically the label (e.g., "Total").'
-			)
+			.describe("The 'key' of the column that should be treated as the row header (<th>)."),
+		footer: z.record(TableCellSchema).nullable().describe("An optional footer object, often for totals.")
 	})
 	.describe(
 		"Generates a versatile and accessible HTML <table>, serving as the single generator for all tabular data displays. It is capable of creating simple data lists, frequency tables, and complex two-way tables for displaying categorical data. The widget supports an optional header, footer (for totals), and row-level headers for maximum semantic correctness. Cells can contain plain text, numbers, MathML, or interactive input fields, making it suitable for both static display and interactive questions."
@@ -44,11 +41,23 @@ export const DataTablePropsSchema = z
 export type DataTableProps = z.infer<typeof DataTablePropsSchema>
 
 /**
+ * Renders the content of a single table cell, handling strings, numbers, and input objects.
+ */
+const renderCellContent = (c: z.infer<typeof TableCellSchema> | undefined): string => {
+	if (c === undefined || c === null) return ""
+	if (typeof c === "object" && "type" in c && c.type === "input") {
+		const expectedLengthAttr = c.expectedLength ? ` expected-length="${c.expectedLength}"` : ""
+		return `<qti-text-entry-interaction response-identifier="${c.responseIdentifier}"${expectedLengthAttr}/>`
+	}
+	return String(c)
+}
+
+/**
  * Generates a versatile HTML table for all tabular data needs, including simple lists,
  * frequency tables, and two-way tables. Supports interactive input cells.
  */
-export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (data) => {
-	const { title, columnHeaders, rows, footer } = data
+export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (props) => {
+	const { title, columns, data, rowHeaderKey, footer } = props
 
 	const commonCellStyle = "border: 1px solid black; padding: 8px; text-align: left;"
 	const headerCellStyle = `${commonCellStyle} font-weight: bold; background-color: #f2f2f2;`
@@ -59,54 +68,46 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 		xml += `<caption style="padding: 8px; font-size: 1.2em; font-weight: bold; caption-side: top;">${title}</caption>`
 	}
 
-	if (columnHeaders && columnHeaders.length > 0) {
+	// THEAD
+	if (columns && columns.length > 0) {
 		xml += "<thead><tr>"
-		for (const h of columnHeaders) {
-			xml += `<th style="${headerCellStyle}">${h}</th>`
+		for (const col of columns) {
+			const style = col.key === rowHeaderKey ? `${headerCellStyle} text-align: left;` : headerCellStyle
+			// Accessibility: Add scope="col" to column headers
+			xml += `<th scope="col" style="${style}">${col.label || ""}</th>`
 		}
 		xml += "</tr></thead>"
 	}
 
-	if (rows && rows.length > 0) {
+	// TBODY
+	if (data && data.length > 0) {
 		xml += "<tbody>"
-		for (const r of rows) {
+		for (const rowData of data) {
 			xml += "<tr>"
-			for (let i = 0; i < r.cells.length; i++) {
-				const c = r.cells[i]
-				const isRowHeader = r.isHeader && i === 0
+			for (const col of columns) {
+				const isRowHeader = col.key === rowHeaderKey
 				const tag = isRowHeader ? "th" : "td"
+				const scope = isRowHeader ? ' scope="row"' : ""
 				const style = isRowHeader ? headerCellStyle : commonCellStyle
+				const content = renderCellContent(rowData[col.key])
 
-				let content: string
-				if (typeof c === "object" && "type" in c && c.type === "input") {
-					const expectedLengthAttr = c.expectedLength ? ` expected-length="${c.expectedLength}"` : ""
-					content = `<qti-text-entry-interaction response-identifier="${c.responseIdentifier}"${expectedLengthAttr}/>`
-				} else {
-					content = String(c)
-				}
-				xml += `<${tag} style="${style}">${content}</${tag}>`
+				xml += `<${tag}${scope} style="${style}">${content}</${tag}>`
 			}
 			xml += "</tr>"
 		}
 		xml += "</tbody>"
 	}
 
-	if (footer && footer.length > 0) {
+	// TFOOT
+	if (footer && columns.length > 0) {
 		xml += `<tfoot><tr style="background-color: #f2f2f2;">`
-		for (let i = 0; i < footer.length; i++) {
-			const f = footer[i]
-			const isFooterHeader = i === 0
-			const tag = isFooterHeader ? "th" : "td"
+		for (const col of columns) {
+			const isRowHeader = col.key === rowHeaderKey
+			const tag = isRowHeader ? "th" : "td"
+			const scope = isRowHeader ? ' scope="row"' : ""
 			const style = `${commonCellStyle} font-weight: bold;`
-
-			let content: string
-			if (typeof f === "object" && "type" in f && f.type === "input") {
-				const expectedLengthAttr = f.expectedLength ? ` expected-length="${f.expectedLength}"` : ""
-				content = `<qti-text-entry-interaction response-identifier="${f.responseIdentifier}"${expectedLengthAttr}/>`
-			} else {
-				content = String(f)
-			}
-			xml += `<${tag} style="${style}">${content}</${tag}>`
+			const content = renderCellContent(footer[col.key])
+			xml += `<${tag}${scope} style="${style}">${content}</${tag}>`
 		}
 		xml += "</tr></tfoot>"
 	}

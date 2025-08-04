@@ -352,23 +352,22 @@ describe("QTI Compiler", () => {
 				{
 					type: "dataTable",
 					title: null,
-					columnHeaders: ["", "Received cold medicine", "Did not receive cold medicine"],
-					rows: [
+					columns: [
+						{ key: "condition", label: "", isNumeric: false },
+						{ key: "received", label: "Received cold medicine", isNumeric: false },
+						{ key: "notReceived", label: "Did not receive cold medicine", isNumeric: false }
+					],
+					rowHeaderKey: "condition",
+					data: [
 						{
-							isHeader: true,
-							cells: [
-								"Cold lasted longer than 7 days",
-								{ type: "input", responseIdentifier: "RESP_A", expectedLength: 3 },
-								{ type: "input", responseIdentifier: "RESP_B", expectedLength: 3 }
-							]
+							condition: "Cold lasted longer than 7 days",
+							received: { type: "input", responseIdentifier: "RESP_A", expectedLength: 3 },
+							notReceived: { type: "input", responseIdentifier: "RESP_B", expectedLength: 3 }
 						},
 						{
-							isHeader: true,
-							cells: [
-								"Cold did <em>not</em> last longer than 7 days",
-								{ type: "input", responseIdentifier: "RESP_C", expectedLength: 3 },
-								{ type: "input", responseIdentifier: "RESP_D", expectedLength: 3 }
-							]
+							condition: "Cold did <em>not</em> last longer than 7 days",
+							received: { type: "input", responseIdentifier: "RESP_C", expectedLength: 3 },
+							notReceived: { type: "input", responseIdentifier: "RESP_D", expectedLength: 3 }
 						}
 					],
 					footer: null
@@ -606,21 +605,16 @@ describe("QTI Compiler", () => {
 				{
 					type: "dataTable",
 					title: null,
-					columnHeaders: ["Final exam", "Score on a 100-point scale"],
-					rows: [
-						{
-							isHeader: null,
-							cells: ["Astronomy", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math>']
-						},
-						{
-							isHeader: null,
-							cells: ["Biology", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math>']
-						},
-						{
-							isHeader: null,
-							cells: ["Physics", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math>']
-						},
-						{ isHeader: null, cells: ["Chemistry", "?"] }
+					columns: [
+						{ key: "exam", label: "Final exam", isNumeric: false },
+						{ key: "score", label: "Score on a 100-point scale", isNumeric: true }
+					],
+					rowHeaderKey: null,
+					data: [
+						{ exam: "Astronomy", score: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math>' },
+						{ exam: "Biology", score: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math>' },
+						{ exam: "Physics", score: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math>' },
+						{ exam: "Chemistry", score: "?" }
 					],
 					footer: null
 				},
@@ -665,55 +659,42 @@ describe("QTI Compiler", () => {
 				{
 					type: "dataTable",
 					title: null,
-					columnHeaders: ["Year", "GDP (% change)", "Unemployment (% of the labor force)"],
-					rows: [
+					columns: [
+						{ key: "year", label: "Year", isNumeric: false },
+						{ key: "gdp", label: "GDP (% change)", isNumeric: true },
+						{ key: "unemployment", label: "Unemployment (% of the labor force)", isNumeric: true }
+					],
+					rowHeaderKey: null,
+					data: [
 						{
-							isHeader: null,
-							cells: [
-								"2014",
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>%</mo></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn><mo>%</mo></math>'
-							]
+							year: "2014",
+							gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>%</mo></math>',
+							unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn><mo>%</mo></math>'
 						},
 						{
-							isHeader: null,
-							cells: [
-								"2015",
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn><mo>%</mo></math>'
-							]
+							year: "2015",
+							gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>',
+							unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn><mo>%</mo></math>'
 						},
 						{
-							isHeader: null,
-							cells: [
-								"2016",
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>%</mo></math>'
-							]
+							year: "2016",
+							gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>',
+							unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>%</mo></math>'
 						},
 						{
-							isHeader: null,
-							cells: [
-								"2017",
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>%</mo></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
-							]
+							year: "2017",
+							gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>%</mo></math>',
+							unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
 						},
 						{
-							isHeader: null,
-							cells: [
-								"2018",
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>%</mo></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn><mo>%</mo></math>'
-							]
+							year: "2018",
+							gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>%</mo></math>',
+							unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn><mo>%</mo></math>'
 						},
 						{
-							isHeader: null,
-							cells: [
-								"2019",
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>%</mo></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
-							]
+							year: "2019",
+							gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>%</mo></math>',
+							unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
 						}
 					],
 					footer: null
@@ -895,31 +876,34 @@ describe("QTI Compiler", () => {
 				{
 					type: "dataTable",
 					title: null,
-					columnHeaders: null,
-					rows: [
+					columns: [
+						{ key: "x", label: null, isNumeric: false },
+						{ key: "minus9", label: null, isNumeric: true },
+						{ key: "minus8", label: null, isNumeric: true },
+						{ key: "minus6", label: null, isNumeric: true },
+						{ key: "minus3", label: null, isNumeric: true },
+						{ key: "minus2", label: null, isNumeric: true },
+						{ key: "minus1", label: null, isNumeric: true }
+					],
+					rowHeaderKey: "x",
+					data: [
 						{
-							isHeader: null,
-							cells: [
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>8</mn></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6</mn></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>3</mn></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>'
-							]
+							x: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>',
+							minus9: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>',
+							minus8: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>8</mn></math>',
+							minus6: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6</mn></math>',
+							minus3: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>3</mn></math>',
+							minus2: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn></math>',
+							minus1: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>'
 						},
 						{
-							isHeader: null,
-							cells: [
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>30</mn></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>29</mn></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>36</mn></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>20</mn></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>35</mn></math>',
-								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>47</mn></math>'
-							]
+							x: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>',
+							minus9: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>30</mn></math>',
+							minus8: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>29</mn></math>',
+							minus6: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>36</mn></math>',
+							minus3: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>20</mn></math>',
+							minus2: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>35</mn></math>',
+							minus1: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>47</mn></math>'
 						}
 					],
 					footer: null
@@ -1078,21 +1062,16 @@ describe("QTI Compiler", () => {
 				{
 					type: "dataTable",
 					title: null,
-					columnHeaders: ["Type of shape", "Number of shapes"],
-					rows: [
-						{
-							isHeader: null,
-							cells: ["Triangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>']
-						},
-						{
-							isHeader: null,
-							cells: ["Circles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>']
-						},
-						{
-							isHeader: null,
-							cells: ["Rectangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>']
-						},
-						{ isHeader: null, cells: ["Squares", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>'] }
+					columns: [
+						{ key: "shape", label: "Type of shape", isNumeric: false },
+						{ key: "count", label: "Number of shapes", isNumeric: true }
+					],
+					rowHeaderKey: null,
+					data: [
+						{ shape: "Triangles", count: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>' },
+						{ shape: "Circles", count: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>' },
+						{ shape: "Rectangles", count: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>' },
+						{ shape: "Squares", count: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>' }
 					],
 					footer: null
 				},

@@ -339,26 +339,34 @@ describe("Widget Generators", () => {
 		test("should render a table with all features", () => {
 			const props = {
 				title: "Student Scores",
-				columnHeaders: ["Name", "Score", "Notes"],
-				rows: [
+				columns: [
+					{ key: "name", label: "Name", isNumeric: false },
+					{ key: "score", label: "Score", isNumeric: true },
+					{ key: "notes", label: "Notes", isNumeric: false }
+				],
+				rowHeaderKey: "name",
+				data: [
 					{
-						isHeader: true,
-						cells: ["Class A", 1600, "Excellent"]
+						name: "Class A",
+						score: 1600,
+						notes: "Excellent"
 					},
 					{
-						isHeader: false,
-						cells: ["Alice", 85, "Good"]
+						name: "Alice",
+						score: 85,
+						notes: "Good"
 					},
 					{
-						isHeader: false,
-						cells: [
-							"Bob",
-							{ type: "input" as const, responseIdentifier: "BOB_SCORE", expectedLength: 3 },
-							"Needs improvement"
-						]
+						name: "Bob",
+						score: { type: "input" as const, responseIdentifier: "BOB_SCORE", expectedLength: 3 },
+						notes: "Needs improvement"
 					}
 				],
-				footer: ["Total", { type: "input" as const, responseIdentifier: "TOTAL", expectedLength: 5 }, "Summary"]
+				footer: {
+					name: "Total",
+					score: { type: "input" as const, responseIdentifier: "TOTAL", expectedLength: 5 },
+					notes: "Summary"
+				}
 			}
 			expect(generateDataTable(props)).toMatchSnapshot()
 		})
