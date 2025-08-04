@@ -47,40 +47,31 @@ function encodeDataUri(content: string): string {
 	return `${isSvg ? "data:image/svg+xml" : "data:text/html"},${encoded}`
 }
 
-function processSlots(content: string, widgets?: AssessmentItem["widgets"]): string {
-	if (!widgets && content.includes("<slot")) {
-		throw errors.new(`content contains a <slot> but no widgets map was provided: "${content.substring(0, 50)}..."`)
-	}
-	if (!widgets) {
-		return content
-	}
-
-	return content.replace(/<slot\s+name="([^"]+)"\s*\/>/g, (_match, widgetName) => {
-		const widget = widgets[widgetName]
-		if (!widget) {
-			// CRITICAL: Fail loudly on missing widget as per no-fallbacks-save-human-lives.mdc
-			throw errors.new(`missing widget definition for slot: '${widgetName}'`)
+/**
+ * Processes a string containing <slot /> placeholders and replaces them with
+ * the corresponding content from the provided slots map.
+ * @param content The HTML content string with placeholders.
+ * @param slots A map where keys are slot names and values are the HTML/XML to inject.
+ * @returns The content string with all placeholders filled.
+ */
+function processAndFillSlots(content: string, slots: Map<string, string>): string {
+	return content.replace(/<slot\s+name="([^"]+)"\s*\/>/g, (_match, slotName) => {
+		const slotContent = slots.get(slotName)
+		if (slotContent === undefined) {
+			// CRITICAL: Fail loudly on missing slot content.
+			throw errors.new(`missing content for slot: '${slotName}'`)
 		}
-
-		const generatedHtml = generateWidget(widget)
-		const isSvg = generatedHtml.trim().startsWith("<svg")
-
-		if (isSvg) {
-			const dataUri = encodeDataUri(generatedHtml)
-			const altText = escapeXmlAttribute(`A visual element of type ${widget.type}.`)
-			return `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`
-		}
-		return generatedHtml
+		return slotContent
 	})
 }
 
-function compileInteraction(interaction: AnyInteraction, widgets?: AssessmentItem["widgets"]): string {
+function compileInteraction(interaction: AnyInteraction): string {
 	switch (interaction.type) {
 		case "choiceInteraction": {
-			const processedPrompt = processSlots(interaction.prompt, widgets)
+			const processedPrompt = interaction.prompt
 			const choices = interaction.choices
 				.map((c) => {
-					const processedContent = processSlots(c.content, widgets)
+					const processedContent = c.content
 					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
 					if (c.feedback) {
 						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${c.feedback}</qti-feedback-inline>`
@@ -96,10 +87,10 @@ function compileInteraction(interaction: AnyInteraction, widgets?: AssessmentIte
         </qti-choice-interaction>`
 		}
 		case "orderInteraction": {
-			const processedPrompt = processSlots(interaction.prompt, widgets)
+			const processedPrompt = interaction.prompt
 			const choices = interaction.choices
 				.map((c) => {
-					const processedContent = processSlots(c.content, widgets)
+					const processedContent = c.content
 					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
 					if (c.feedback) {
 						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${c.feedback}</qti-feedback-inline>`
@@ -125,8 +116,7 @@ function compileInteraction(interaction: AnyInteraction, widgets?: AssessmentIte
 		case "inlineChoiceInteraction": {
 			const choices = interaction.choices
 				.map(
-					(c) =>
-						`<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}">${processSlots(c.content, widgets)}</qti-inline-choice>`
+					(c) => `<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}">${c.content}</qti-inline-choice>`
 				)
 				.join("\n                ")
 
@@ -285,40 +275,36 @@ export function compile(itemData: AssessmentItemInput): string {
 	const { AssessmentItemSchema } = createDynamicAssessmentItemSchema(widgetMapping)
 	const item: AssessmentItem = AssessmentItemSchema.parse(itemData)
 
-	// Start with the body string containing placeholders.
-	let processedBody = item.body
+	// Create a single map to hold all slot content (widgets and interactions).
+	const slots = new Map<string, string>()
 
-	// 1. Replace widget placeholders
+	// 1. Generate and add all widget content to the map.
 	if (item.widgets) {
 		for (const [widgetId, widgetDef] of Object.entries(item.widgets)) {
-			const placeholder = `<slot name="${widgetId}" />`
 			const widgetHtml = generateWidget(widgetDef)
 			const isSvg = widgetHtml.trim().startsWith("<svg")
 
-			let finalHtml: string
 			if (isSvg) {
-				// For SVG content, embed it in an img tag with a data URI.
-				// This restores the original, correct behavior.
 				const dataUri = encodeDataUri(widgetHtml)
 				const altText = escapeXmlAttribute(`A visual element of type ${widgetDef.type}.`)
-				finalHtml = `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`
+				slots.set(widgetId, `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`)
 			} else {
-				// For non-SVG widgets (like dataTable), insert the HTML directly.
-				finalHtml = widgetHtml
+				slots.set(widgetId, widgetHtml)
 			}
-			processedBody = processedBody.replaceAll(placeholder, finalHtml)
 		}
 	}
 
-	// 2. Replace interaction placeholders
+	// 2. Compile and add all interaction XML to the map.
 	if (item.interactions) {
 		for (const [interactionId, interactionDef] of Object.entries(item.interactions)) {
-			const placeholder = `<slot name="${interactionId}" />`
-			// compileInteraction MUST return raw, unwrapped XML to preserve inline/block context.
-			const interactionXml = compileInteraction(interactionDef, item.widgets)
-			processedBody = processedBody.replaceAll(placeholder, interactionXml)
+			// The compileInteraction function now returns raw XML without processing internal slots.
+			const interactionXml = compileInteraction(interactionDef)
+			slots.set(interactionId, interactionXml)
 		}
 	}
+
+	// 3. Process the entire body at once using the unified slot filler.
+	const processedBody = processAndFillSlots(item.body, slots)
 
 	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)
 	const responseProcessing = compileResponseProcessing(item.responseDeclarations)

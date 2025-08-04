@@ -38,8 +38,11 @@ const QtiSolvabilityValidationSchema = z.object({
 // A new schema is needed for the shell from Shot 1.
 // It defines widgets and interactions as maps of empty objects.
 const AssessmentShellSchema = AssessmentItemSchema.extend({
-	widgets: z.record(z.string(), z.object({})).optional(),
-	interactions: z.record(z.string(), z.object({}))
+	widgets: z
+		.array(z.string())
+		.optional()
+		.describe("A list of unique identifiers for widget slots that must be filled."),
+	interactions: z.array(z.string()).describe("A list of unique identifiers for interaction slots that must be filled.")
 })
 type AssessmentShell = z.infer<typeof AssessmentShellSchema>
 
@@ -388,7 +391,7 @@ export async function generateStructuredQtiItem(
 
 	// Step 1.5 (Deterministic): Extract widget slot names directly from the shell object keys.
 	// This is the robust replacement for the fragile string parsing.
-	const widgetSlotNames = Object.keys(assessmentShell.widgets || {})
+	const widgetSlotNames = assessmentShell.widgets || []
 	logger.debug("extracted widget slot names from shell object", {
 		count: widgetSlotNames.length,
 		slotNames: widgetSlotNames

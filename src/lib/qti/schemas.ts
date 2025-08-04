@@ -102,12 +102,14 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 		.strict()
 		.describe("An interaction where users arrange items in a specific sequence or order.")
 
-	const AnyInteractionSchema = z.discriminatedUnion("type", [
-		ChoiceInteractionSchema,
-		InlineChoiceInteractionSchema,
-		TextEntryInteractionSchema,
-		OrderInteractionSchema
-	])
+	const AnyInteractionSchema = z
+		.discriminatedUnion("type", [
+			ChoiceInteractionSchema,
+			InlineChoiceInteractionSchema,
+			TextEntryInteractionSchema,
+			OrderInteractionSchema
+		])
+		.describe("A discriminated union representing any possible QTI interaction type supported by the system.")
 
 	const ResponseDeclarationSchema = z
 		.object({

@@ -889,7 +889,7 @@ export function createStructuredQtiCompletionPrompt(
 	userContent: string
 } {
 	const systemInstruction =
-		"You are an expert in educational content conversion. Your task is to complete an assessment shell by filling in the detailed properties for all widgets and interactions. You have been provided with the original Perseus JSON and a shell containing placeholders. You must populate all the empty objects in the widgets and interactions maps with their full definitions according to the appropriate schemas."
+		"You are an expert in educational content conversion. Your task is to complete an assessment shell by filling in the detailed properties for all widgets and interactions. You have been provided with the original Perseus JSON and a shell containing placeholders. You must transform the interaction identifiers array into a full interactions object map and populate all widget and interaction definitions according to the appropriate schemas."
 
 	const userContent = `Complete the following assessment shell with full widget and interaction definitions:
 
@@ -904,15 +904,17 @@ ${JSON.stringify(assessmentShell, null, 2)}
 \`\`\`
 
 ## Instructions:
-- For each widget in the widgets map, replace the empty {} with a complete widget definition matching the Perseus data
-- For each interaction in the interactions map, replace the empty {} with a complete interaction definition
-- Ensure all widget types match available schemas (e.g., "type": "doubleNumberLine", "type": "barChart", etc.)
-- Ensure all interaction types are valid QTI types (choiceInteraction, textEntryInteraction, etc.)
+- The widgets array (if present) will be handled separately by another process - DO NOT modify it
+- Transform the interactions array into an object map where:
+  - Each string identifier from the interactions array becomes a key in the new interactions object
+  - The value for each key is the complete interaction definition (e.g., choiceInteraction, textEntryInteraction)
+  - Example: ["choice1", "text1"] becomes {"choice1": {type: "choiceInteraction", ...}, "text1": {type: "textEntryInteraction", ...}}
+- Ensure all interaction types are valid QTI types (choiceInteraction, textEntryInteraction, inlineChoiceInteraction, orderInteraction)
 - Map Perseus answer data to proper response declarations
 - DO NOT modify the body content or placeholder names
-- DO NOT add or remove widgets/interactions from the maps
+- DO NOT add or remove interaction identifiers from the original array
 
-Return ONLY the completed JSON object with all empty objects filled.`
+Return ONLY the completed JSON object with the interactions array transformed into a populated interactions object map.`
 
 	return { systemInstruction, userContent }
 }
