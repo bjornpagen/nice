@@ -11,25 +11,33 @@ const AngleLabelSchema = z.object({
 	label: z.string().describe('The text or mathematical label for the angle (e.g., "x", "34°", "2x + 10").'),
 	color: z
 		.string()
-		.optional()
-		.default("blue")
+		.nullable()
+		.transform((val) => val ?? "blue")
 		.describe('An optional CSS color for the angle\'s highlighting arc (e.g., "#1E90FF").')
 })
 
 // The main Zod schema for the parallelLinesTransversal function
 export const ParallelLinesTransversalPropsSchema = z
 	.object({
-		width: z.number().optional().default(320).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(280).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 320)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 280)
+			.describe("The total height of the output SVG container in pixels."),
 		linesAngle: z
 			.number()
-			.optional()
-			.default(0)
+			.nullable()
+			.transform((val) => val ?? 0)
 			.describe("The rotation angle of the two parallel lines in degrees (0 is horizontal)."),
 		transversalAngle: z
 			.number()
-			.optional()
-			.default(60)
+			.nullable()
+			.transform((val) => val ?? 60)
 			.describe("The angle of the transversal line in degrees, relative to the horizontal."),
 		labels: z.array(AngleLabelSchema).describe("An array of angle labels to be drawn on the diagram.")
 	})

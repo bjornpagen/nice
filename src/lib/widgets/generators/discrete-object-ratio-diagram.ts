@@ -10,15 +10,23 @@ const ObjectTypeSchema = z.object({
 // The main Zod schema for the discreteObjectRatioDiagram function
 export const DiscreteObjectRatioDiagramPropsSchema = z
 	.object({
-		width: z.number().optional().default(320).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(240).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 320)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 240)
+			.describe("The total height of the output SVG container in pixels."),
 		objects: z.array(ObjectTypeSchema).min(1).describe("An array defining the types and counts of objects to display."),
 		layout: z
 			.enum(["grid", "cluster"])
-			.optional()
-			.default("cluster")
+			.nullable()
+			.transform((val) => val ?? "cluster")
 			.describe("The arrangement of the rendered objects."),
-		title: z.string().optional().describe('An optional title for the diagram (e.g., "Fish in Aquarium").')
+		title: z.string().nullable().describe('An optional title for the diagram (e.g., "Fish in Aquarium").')
 	})
 	.describe(
 		'This template generates an SVG graphic that visually represents a ratio using a collection of discrete, countable objects. It is perfect for introductory ratio problems where students can directly count the items to understand the relationship. The generator will render a specified number of two or more distinct types of objects. Each object type is defined by an SVG icon or shape and a count. For example, to show a ratio of 8 large fish to 10 small fish, the generator would render 8 instances of a "large fish" icon and 10 instances of a "small fish" icon. The objects will be arranged in a visually appealing and easy-to-count layout, such as a grid or a loose cluster. The colors and designs of the objects are configurable. This template provides a simple, concrete way to introduce the concept of ratios before moving to more abstract representations like tables or tape diagrams.'

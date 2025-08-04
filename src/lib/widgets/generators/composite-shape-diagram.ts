@@ -17,8 +17,12 @@ const LabelSchema = z.object({
 const SegmentSchema = z.object({
 	fromVertexIndex: z.number().int().describe("The starting vertex index from the main vertices array."),
 	toVertexIndex: z.number().int().describe("The ending vertex index from the main vertices array."),
-	style: z.enum(["solid", "dashed"]).optional().default("solid").describe("The style of the line."),
-	label: z.string().optional().describe("An optional text label for this segment's length.")
+	style: z
+		.enum(["solid", "dashed"])
+		.nullable()
+		.transform((val) => val ?? "solid")
+		.describe("The style of the line."),
+	label: z.string().nullable().describe("An optional text label for this segment's length.")
 })
 
 // Defines a right-angle marker, positioned by the vertex at its corner
@@ -31,23 +35,31 @@ const RightAngleMarkerSchema = z.object({
 // The main Zod schema for the compositeShapeDiagram function
 export const CompositeShapeDiagramPropsSchema = z
 	.object({
-		width: z.number().optional().default(320).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(260).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 320)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 260)
+			.describe("The total height of the output SVG container in pixels."),
 		vertices: z.array(PointSchema).describe("An array of {x, y} coordinates defining all points in the diagram."),
 		outerBoundary: z
 			.array(z.number().int())
 			.describe("An ordered array of vertex indices that defines the solid outline of the shape."),
 		internalSegments: z
 			.array(SegmentSchema)
-			.optional()
+			.nullable()
 			.describe("An optional array of internal lines, typically dashed, to show decomposition."),
 		regionLabels: z
 			.array(LabelSchema)
-			.optional()
+			.nullable()
 			.describe('An optional array of labels to be placed inside sub-regions (e.g., "Triangle A").'),
 		rightAngleMarkers: z
 			.array(RightAngleMarkerSchema)
-			.optional()
+			.nullable()
 			.describe("An optional array of markers to indicate right angles.")
 	})
 	.describe(

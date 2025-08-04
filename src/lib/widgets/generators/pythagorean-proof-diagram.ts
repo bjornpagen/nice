@@ -6,15 +6,23 @@ const SideSquareSchema = z.object({
 	area: z.number().describe("The area of the square, used for labeling."),
 	sideLabel: z
 		.string()
-		.optional()
+		.nullable()
 		.describe('An optional label for the corresponding triangle side (e.g., "a", "b", "c").')
 })
 
 // The main Zod schema for the pythagoreanProofDiagram function
 export const PythagoreanProofDiagramPropsSchema = z
 	.object({
-		width: z.number().optional().default(400).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(400).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 400)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 400)
+			.describe("The total height of the output SVG container in pixels."),
 		squareA: SideSquareSchema.describe("Properties of the square on the first leg."),
 		squareB: SideSquareSchema.describe("Properties of the square on the second leg."),
 		squareC: SideSquareSchema.describe("Properties of the square on the hypotenuse.")

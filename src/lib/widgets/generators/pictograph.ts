@@ -16,7 +16,7 @@ const PictographDataRowSchema = z.object({
 // The main Zod schema for the pictograph function
 export const PictographPropsSchema = z
 	.object({
-		title: z.string().optional().describe("An optional title displayed above the pictograph."),
+		title: z.string().nullable().describe("An optional title displayed above the pictograph."),
 		key: PictographKeySchema.describe("The key that explains the value of a single icon."),
 		data: z
 			.array(PictographDataRowSchema)

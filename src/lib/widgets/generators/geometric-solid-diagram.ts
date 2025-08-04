@@ -24,18 +24,26 @@ const SphereDataSchema = z.object({
 // Defines a label for a dimension like radius or height
 const SolidDimensionLabelSchema = z.object({
 	target: z.enum(["radius", "height"]).describe("The dimension to label."),
-	text: z.string().optional().describe("The text for the label. If omitted, the numerical value will be used.")
+	text: z.string().nullable().describe("The text for the label. If omitted, the numerical value will be used.")
 })
 
 // The main Zod schema for the geometricSolidDiagram function
 export const GeometricSolidDiagramPropsSchema = z
 	.object({
-		width: z.number().optional().default(150).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(200).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 150)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 200)
+			.describe("The total height of the output SVG container in pixels."),
 		shape: z
 			.union([CylinderDataSchema, ConeDataSchema, SphereDataSchema])
 			.describe("The geometric data defining the solid shape."),
-		labels: z.array(SolidDimensionLabelSchema).optional().describe("An array of dimension labels to display.")
+		labels: z.array(SolidDimensionLabelSchema).nullable().describe("An array of dimension labels to display.")
 	})
 	.describe(
 		"Generates a 3D diagram of a geometric solid that has at least one curved surface, such as a cylinder, cone, or sphere. The output is an SVG rendering from a perspective view, with hidden edges shown as dashed lines to convey three-dimensional structure. The diagram can include labeled dimensions (e.g., radius, height) with leader lines, making it ideal for problems involving volume or surface area calculations for these specific shapes."

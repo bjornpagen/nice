@@ -4,17 +4,33 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // The main Zod schema for the vennDiagram function
 export const VennDiagramPropsSchema = z
 	.object({
-		width: z.number().optional().default(350).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(250).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 350)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 250)
+			.describe("The total height of the output SVG container in pixels."),
 		circleA: z.object({
 			label: z.string().describe('The label for the first circle (e.g., "Have a Dog").'),
 			count: z.number().describe("The numerical count for the region unique to this circle (non-overlapping part)."),
-			color: z.string().optional().default("rgba(66, 133, 244, 0.5)").describe("The fill color for this circle.")
+			color: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "rgba(66, 133, 244, 0.5)")
+				.describe("The fill color for this circle.")
 		}),
 		circleB: z.object({
 			label: z.string().describe('The label for the second circle (e.g., "Have a Cat").'),
 			count: z.number().describe("The numerical count for the region unique to this circle (non-overlapping part)."),
-			color: z.string().optional().default("rgba(52, 168, 83, 0.5)").describe("The fill color for this circle.")
+			color: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "rgba(52, 168, 83, 0.5)")
+				.describe("The fill color for this circle.")
 		}),
 		intersectionCount: z.number().describe("The numerical count for the overlapping region of the two circles."),
 		outsideCount: z.number().describe("The numerical count for the region outside of both circles.")

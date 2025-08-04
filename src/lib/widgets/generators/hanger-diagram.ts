@@ -8,17 +8,29 @@ const HangerWeightSchema = z.object({
 		.describe('The text label displayed inside the weight (e.g., "c", 12, "1/2").'),
 	shape: z
 		.enum(["square", "circle", "pentagon", "hexagon", "triangle"])
-		.optional()
-		.default("square")
+		.nullable()
+		.transform((val) => val ?? "square")
 		.describe("The geometric shape of the weight."),
-	color: z.string().optional().default("#e0e0e0").describe("An optional CSS fill color for the shape.")
+	color: z
+		.string()
+		.nullable()
+		.transform((val) => val ?? "#e0e0e0")
+		.describe("An optional CSS fill color for the shape.")
 })
 
 // The main Zod schema for the hangerDiagram function
 export const HangerDiagramPropsSchema = z
 	.object({
-		width: z.number().optional().default(320).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(240).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 320)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 240)
+			.describe("The total height of the output SVG container in pixels."),
 		leftSide: z
 			.array(HangerWeightSchema)
 			.describe("An array of weight objects to be rendered on the left side of the hanger."),

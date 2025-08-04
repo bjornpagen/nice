@@ -10,8 +10,16 @@ const NumberSetStyleSchema = z.object({
 // The main Zod schema for the numberSetDiagram function
 export const NumberSetDiagramPropsSchema = z
 	.object({
-		width: z.number().optional().default(475).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(180).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 475)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 180)
+			.describe("The total height of the output SVG container in pixels."),
 		sets: z
 			.object({
 				whole: NumberSetStyleSchema,

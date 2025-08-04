@@ -14,20 +14,32 @@ const InequalityBoundarySchema = z.object({
 
 // Defines a single continuous range to be graphed on the number line
 const InequalityRangeSchema = z.object({
-	start: InequalityBoundarySchema.optional().describe(
+	start: InequalityBoundarySchema.nullable().describe(
 		"The starting boundary of the range. If omitted, the range extends to negative infinity."
 	),
-	end: InequalityBoundarySchema.optional().describe(
+	end: InequalityBoundarySchema.nullable().describe(
 		"The ending boundary of the range. If omitted, the range extends to positive infinity."
 	),
-	color: z.string().optional().default("#4285F4").describe("The color of the shaded range and its boundary points.")
+	color: z
+		.string()
+		.nullable()
+		.transform((val) => val ?? "#4285F4")
+		.describe("The color of the shaded range and its boundary points.")
 })
 
 // The main Zod schema for the inequalityNumberLine function
 export const InequalityNumberLinePropsSchema = z
 	.object({
-		width: z.number().optional().default(460).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(80).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 460)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 80)
+			.describe("The total height of the output SVG container in pixels."),
 		min: z.number().describe("The minimum value displayed on the line."),
 		max: z.number().describe("The maximum value displayed on the line."),
 		tickInterval: z.number().describe("The numeric interval between labeled tick marks."),

@@ -22,13 +22,13 @@ export const StackedItemsDiagramPropsSchema = z
 		count: z.number().int().min(0).describe("The number of times the stackedItem should be rendered."),
 		orientation: z
 			.enum(["vertical", "horizontal"])
-			.optional()
-			.default("vertical")
+			.nullable()
+			.transform((val) => val ?? "vertical")
 			.describe("The direction of the stack."),
 		overlap: z
 			.number()
-			.optional()
-			.default(0.75)
+			.nullable()
+			.transform((val) => val ?? 0.75)
 			.describe(
 				"The proportion of the stacked item's height (for vertical) or width (for horizontal) to overlap. E.g., 0.75 means each new item overlaps 75% of the previous one. A value of 0 means they touch at the edges. A negative value would create space."
 			)

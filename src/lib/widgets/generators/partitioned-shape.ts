@@ -13,9 +13,19 @@ const ShapeDefinitionSchema = z
 				"The total number of equal parts the shape is divided into. For a rectangle, this is rows * columns. For a circle, this is segments."
 			),
 		shadedParts: z.number().int().min(0).describe("The number of parts that should be shaded."),
-		rows: z.number().int().positive().optional().default(1).describe("For rectangles, the number of rows in the grid."),
-		columns: z.number().int().positive().optional().describe("For rectangles, the number of columns in the grid."),
-		shadeColor: z.string().optional().default("#6495ED").describe("A CSS color string for the shaded portions.")
+		rows: z
+			.number()
+			.int()
+			.positive()
+			.nullable()
+			.transform((val) => val ?? 1)
+			.describe("For rectangles, the number of rows in the grid."),
+		columns: z.number().int().positive().nullable().describe("For rectangles, the number of columns in the grid."),
+		shadeColor: z
+			.string()
+			.nullable()
+			.transform((val) => val ?? "#6495ED")
+			.describe("A CSS color string for the shaded portions.")
 	})
 	.refine(
 		(data) => {
@@ -48,12 +58,20 @@ export const PartitionedShapePropsSchema = z
 			.describe(
 				"An array of one or more shape definitions. Multiple shapes are used to represent values greater than 100%."
 			),
-		width: z.number().optional().default(200).describe("The width of the SVG container for each shape in pixels."),
-		height: z.number().optional().default(200).describe("The height of the SVG container for each shape in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 200)
+			.describe("The width of the SVG container for each shape in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 200)
+			.describe("The height of the SVG container for each shape in pixels."),
 		layout: z
 			.enum(["horizontal", "vertical"])
-			.optional()
-			.default("horizontal")
+			.nullable()
+			.transform((val) => val ?? "horizontal")
 			.describe("The arrangement of multiple shapes.")
 	})
 	.describe(

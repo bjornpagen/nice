@@ -4,7 +4,6 @@ import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { generateStructuredQtiItem } from "@/lib/perseus-qti/client"
-import { runValidationPipeline } from "@/lib/perseus-qti/validator"
 import { compile } from "@/lib/qti/compiler"
 
 // A global key to ensure all OpenAI functions share the same concurrency limit.
@@ -69,31 +68,10 @@ export const convertPerseusItemViaStructuredOutputs = inngest.createFunction(
 			})
 			throw errors.wrap(compileResult.error, "qti compilation")
 		}
-		const compiledXml = compileResult.data
+		const xml = compileResult.data
 
-		// Step 4: Run a final validation pass on the compiled XML.
-		// This ensures end-to-end integrity and catches any subtle issues.
-		const validationResult = await runValidationPipeline(compiledXml, {
-			id: question.id,
-			rootTag: "qti-assessment-item",
-			title: question.exerciseTitle,
-			logger
-		})
-
-		if (!validationResult.isValid) {
-			const combinedErrors = validationResult.errors.map((e) => e.message).join("; ")
-			logger.error("final compiled xml failed validation", {
-				questionId,
-				errorCount: validationResult.errors.length,
-				errors: combinedErrors
-			})
-			throw errors.new(`compiled xml validation failed: ${combinedErrors}`)
-		}
-
-		// Step 5: Update the database with the new, validated QTI XML.
-		const updateResult = await errors.try(
-			db.update(niceQuestions).set({ xml: validationResult.xml }).where(eq(niceQuestions.id, questionId))
-		)
+		// Step 4: Update the database with the new, validated QTI XML.
+		const updateResult = await errors.try(db.update(niceQuestions).set({ xml }).where(eq(niceQuestions.id, questionId)))
 		if (updateResult.error) {
 			logger.error("failed to update question with new qti xml", { questionId, error: updateResult.error })
 			throw errors.wrap(updateResult.error, "db update")

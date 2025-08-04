@@ -9,7 +9,7 @@ const SimpleContentSchema = z.union([z.string(), WidgetSchema])
 const SimpleChoiceSchema = z.object({
 	identifier: z.string(),
 	content: SimpleContentSchema,
-	feedback: z.string().optional()
+	feedback: z.string().nullable()
 })
 
 const InlineChoiceSchema = z.object({
@@ -22,7 +22,10 @@ const ChoiceInteractionSchema = z.object({
 	responseIdentifier: z.string(),
 	prompt: z.string(),
 	choices: z.array(SimpleChoiceSchema),
-	shuffle: z.boolean().default(true),
+	shuffle: z
+		.boolean()
+		.nullable()
+		.transform((val) => val ?? true),
 	minChoices: z.number().int().min(0).describe("The minimum number of choices the user must select."),
 	maxChoices: z.number().int().min(1).describe("The maximum number of choices the user can select.")
 })
@@ -31,13 +34,16 @@ const InlineChoiceInteractionSchema = z.object({
 	type: z.literal("inlineChoiceInteraction"),
 	responseIdentifier: z.string(),
 	choices: z.array(InlineChoiceSchema),
-	shuffle: z.boolean().default(false)
+	shuffle: z
+		.boolean()
+		.nullable()
+		.transform((val) => val ?? false)
 })
 
 const TextEntryInteractionSchema = z.object({
 	type: z.literal("textEntryInteraction"),
 	responseIdentifier: z.string(),
-	expectedLength: z.number().int().optional()
+	expectedLength: z.number().int().nullable()
 })
 
 const OrderInteractionSchema = z.object({
@@ -45,8 +51,14 @@ const OrderInteractionSchema = z.object({
 	responseIdentifier: z.string(),
 	prompt: z.string(),
 	choices: z.array(SimpleChoiceSchema),
-	shuffle: z.boolean().default(true),
-	orientation: z.enum(["horizontal", "vertical"]).default("horizontal")
+	shuffle: z
+		.boolean()
+		.nullable()
+		.transform((val) => val ?? true),
+	orientation: z
+		.enum(["horizontal", "vertical"])
+		.nullable()
+		.transform((val) => val ?? "horizontal")
 })
 
 export const AnyInteractionSchema = z.discriminatedUnion("type", [
@@ -66,7 +78,7 @@ const ResponseDeclarationSchema = z.object({
 	cardinality: z.enum(["single", "multiple", "ordered"]),
 	baseType: z.enum(["identifier", "string", "integer", "float"]),
 	correct: z.union([z.string(), z.number(), z.array(z.string()), z.array(z.number())]),
-	mapping: z.record(z.string(), z.union([z.string(), z.number()])).optional()
+	mapping: z.record(z.string(), z.union([z.string(), z.number()])).nullable()
 })
 
 // 3. Top-level schema for a complete QTI Assessment Item

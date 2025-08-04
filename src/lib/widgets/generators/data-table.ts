@@ -5,7 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 const InputCellSchema = z.object({
 	type: z.literal("input"),
 	responseIdentifier: z.string().describe("The QTI response identifier for this input field."),
-	expectedLength: z.number().optional().describe("The expected character length for the input field.")
+	expectedLength: z.number().nullable().describe("The expected character length for the input field.")
 })
 
 // Defines the content of a single data cell
@@ -17,8 +17,8 @@ const TableCellSchema = z
 const TableRowSchema = z.object({
 	isHeader: z
 		.boolean()
-		.optional()
-		.default(false)
+		.nullable()
+		.transform((val) => val ?? false)
 		.describe("If true, the first cell of this row is a row header (<th>)."),
 	cells: z.array(TableCellSchema).describe("An array of cell data for this row.")
 })
@@ -26,13 +26,13 @@ const TableRowSchema = z.object({
 // The main Zod schema for the dataTable function
 export const DataTablePropsSchema = z
 	.object({
-		title: z.string().optional().describe("An optional caption for the table."),
-		columnHeaders: z.array(z.string()).optional().describe("An optional array of labels for the table header row."),
+		title: z.string().nullable().describe("An optional caption for the table."),
+		columnHeaders: z.array(z.string()).nullable().describe("An optional array of labels for the table header row."),
 		rows: z.array(TableRowSchema).describe("An array of row objects that make up the table body."),
 		// Add the 'footer' property to explicitly support column totals
 		footer: z
 			.array(TableCellSchema)
-			.optional()
+			.nullable()
 			.describe(
 				'An optional footer row (rendered in <tfoot>), often used for column totals. The first cell is typically the label (e.g., "Total").'
 			)

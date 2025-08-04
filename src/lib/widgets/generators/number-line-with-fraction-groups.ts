@@ -6,9 +6,13 @@ const TickMarkSchema = z.object({
 	value: z.number().describe("The numerical position of the tick mark."),
 	label: z
 		.string()
-		.optional()
+		.nullable()
 		.describe('The text label for the tick mark (e.g., "0", "1", "3/8"). If omitted, no label is shown.'),
-	isMajor: z.boolean().optional().default(false).describe("If true, render as a larger, more prominent tick mark.")
+	isMajor: z
+		.boolean()
+		.nullable()
+		.transform((val) => val ?? false)
+		.describe("If true, render as a larger, more prominent tick mark.")
 })
 
 // Defines a single labeled, colored segment on the number line
@@ -16,20 +20,28 @@ const NumberLineSegmentSchema = z.object({
 	start: z.number().describe("The numerical starting value of the segment on the line."),
 	end: z.number().describe("The numerical ending value of the segment on the line."),
 	color: z.string().describe('A CSS color for the segment (e.g., "#008B8B", "orange").'),
-	label: z.string().optional().describe("An optional text label to display with the segment.")
+	label: z.string().nullable().describe("An optional text label to display with the segment.")
 })
 
 // The main Zod schema for the numberLineWithFractionGroups function
 export const NumberLineWithFractionGroupsPropsSchema = z
 	.object({
-		width: z.number().optional().default(500).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(140).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 500)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 140)
+			.describe("The total height of the output SVG container in pixels."),
 		min: z.number().describe("The minimum value displayed on the number line."),
 		max: z.number().describe("The maximum value displayed on the number line."),
 		ticks: z.array(TickMarkSchema).describe("An array of tick mark objects defining their position, label, and style."),
 		segments: z
 			.array(NumberLineSegmentSchema)
-			.optional()
+			.nullable()
 			.describe("An optional array of colored segments to overlay on the number line to represent fractional groups.")
 	})
 	.describe(

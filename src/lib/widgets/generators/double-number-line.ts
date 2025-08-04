@@ -15,8 +15,16 @@ const LineSchema = z.object({
 // The main Zod schema for the doubleNumberLine function
 export const DoubleNumberLinePropsSchema = z
 	.object({
-		width: z.number().optional().default(400).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(150).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 400)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 150)
+			.describe("The total height of the output SVG container in pixels."),
 		topLine: LineSchema.describe("Configuration for the upper number line."),
 		bottomLine: LineSchema.describe(
 			"Configuration for the lower number line. Must have the same number of ticks as the top line."

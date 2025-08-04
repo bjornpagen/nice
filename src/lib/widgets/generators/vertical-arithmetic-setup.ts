@@ -4,7 +4,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // The main Zod schema for the verticalArithmeticSetup function
 export const VerticalArithmeticSetupPropsSchema = z
 	.object({
-		title: z.string().optional().describe("An optional title or instruction to display above the arithmetic problem."),
+		title: z.string().nullable().describe("An optional title or instruction to display above the arithmetic problem."),
 		operand1: z
 			.string()
 			.describe(

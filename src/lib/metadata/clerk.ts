@@ -15,7 +15,7 @@ export const ClerkUserPublicMetadataSchema = z
 			streak: z
 				.object({
 					count: z.number().default(0),
-					lastActivityDate: z.string().datetime().nullable().default(null)
+					lastActivityDate: z.string().datetime().nullable()
 				})
 				.default({ count: 0, lastActivityDate: null }),
 			// sourceId is used for OneRoster integration

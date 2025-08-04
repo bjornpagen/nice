@@ -13,7 +13,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "A"
+					correct: "A",
+					mapping: null
 				}
 			],
 			body: [
@@ -41,7 +42,8 @@ describe("QTI Compiler", () => {
 								height: 150,
 								topLine: { label: "Distance, kilometers", ticks: [0, 1, 2, 3, 4] },
 								bottomLine: { label: "Elevation, meters", ticks: [0, 40, 80, 120, 160] }
-							}
+							},
+							feedback: null
 						},
 						{
 							identifier: "B",
@@ -51,7 +53,8 @@ describe("QTI Compiler", () => {
 								height: 150,
 								topLine: { label: "Distance, kilometers", ticks: [0, 1, 2, 3, 4] },
 								bottomLine: { label: "Elevation, meters", ticks: [0, 80, 100, 120, 140] }
-							}
+							},
+							feedback: null
 						}
 					]
 				}
@@ -82,7 +85,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "integer",
-					correct: 81
+					correct: 81,
+					mapping: null
 				}
 			],
 			body: [
@@ -117,7 +121,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "ordered",
 					baseType: "identifier",
-					correct: ["A", "B", "C"]
+					correct: ["A", "B", "C"],
+					mapping: null
 				}
 			],
 			body: [
@@ -172,7 +177,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "C"
+					correct: "C",
+					mapping: null
 				}
 			],
 			body: [
@@ -186,6 +192,7 @@ describe("QTI Compiler", () => {
 					ranges: [
 						{
 							start: { value: 0, type: "open" },
+							end: null,
 							color: "#4285F4"
 						}
 					]
@@ -200,19 +207,23 @@ describe("QTI Compiler", () => {
 					choices: [
 						{
 							identifier: "A",
-							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&lt;</mo><mn>0</mn></math>'
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&lt;</mo><mn>0</mn></math>',
+							feedback: null
 						},
 						{
 							identifier: "B",
-							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≤</mo><mn>0</mn></math>'
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≤</mo><mn>0</mn></math>',
+							feedback: null
 						},
 						{
 							identifier: "C",
-							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>'
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>',
+							feedback: null
 						},
 						{
 							identifier: "D",
-							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≥</mo><mn>0</mn></math>'
+							content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≥</mo><mn>0</mn></math>',
+							feedback: null
 						}
 					]
 				}
@@ -240,13 +251,15 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE_POS",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "ABOVE"
+					correct: "ABOVE",
+					mapping: null
 				},
 				{
 					identifier: "RESPONSE_COMP",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "GT"
+					correct: "GT",
+					mapping: null
 				}
 			],
 			body: [
@@ -260,6 +273,7 @@ describe("QTI Compiler", () => {
 					max: 2,
 					majorTickInterval: 2,
 					minorTicksPerInterval: 1,
+					specialTickLabels: null,
 					points: [
 						{
 							value: -1.4,
@@ -318,10 +332,10 @@ describe("QTI Compiler", () => {
 			identifier: "two-way-frequency-table-cold-study",
 			title: "Complete a Two-Way Frequency Table",
 			responseDeclarations: [
-				{ identifier: "RESP_A", cardinality: "single", baseType: "integer", correct: 23 },
-				{ identifier: "RESP_B", cardinality: "single", baseType: "integer", correct: 20 },
-				{ identifier: "RESP_C", cardinality: "single", baseType: "integer", correct: 27 },
-				{ identifier: "RESP_D", cardinality: "single", baseType: "integer", correct: 30 }
+				{ identifier: "RESP_A", cardinality: "single", baseType: "integer", correct: 23, mapping: null },
+				{ identifier: "RESP_B", cardinality: "single", baseType: "integer", correct: 20, mapping: null },
+				{ identifier: "RESP_C", cardinality: "single", baseType: "integer", correct: 27, mapping: null },
+				{ identifier: "RESP_D", cardinality: "single", baseType: "integer", correct: 30, mapping: null }
 			],
 			body: [
 				'<p>The Cold Be Gone Company conducted a study with <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math> participants. Each participant either <em>received</em> cold medicine or <em>did not receive</em> cold medicine, and the company recorded whether the participant\'s cold lasted <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math> days or longer.</p>',
@@ -329,14 +343,15 @@ describe("QTI Compiler", () => {
 					type: "vennDiagram",
 					width: 350,
 					height: 262,
-					circleA: { label: "Cold Medicine", count: 27 },
-					circleB: { label: "Cold longer than 7 days", count: 20 },
+					circleA: { label: "Cold Medicine", count: 27, color: null },
+					circleB: { label: "Cold longer than 7 days", count: 20, color: null },
 					intersectionCount: 23,
 					outsideCount: 30
 				},
 				"<p>Complete the following two-way frequency table.</p>",
 				{
 					type: "dataTable",
+					title: null,
 					columnHeaders: ["", "Received cold medicine", "Did not receive cold medicine"],
 					rows: [
 						{
@@ -355,7 +370,8 @@ describe("QTI Compiler", () => {
 								{ type: "input", responseIdentifier: "RESP_D", expectedLength: 3 }
 							]
 						}
-					]
+					],
+					footer: null
 				}
 			],
 			feedback: {
@@ -381,7 +397,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "multiple",
 					baseType: "identifier",
-					correct: ["A", "B"]
+					correct: ["A", "B"],
+					mapping: null
 				}
 			],
 			body: [
@@ -390,13 +407,15 @@ describe("QTI Compiler", () => {
 					type: "partitionedShape",
 					width: 180,
 					height: 88,
+					layout: null,
 					shapes: [
 						{
 							type: "rectangle",
 							totalParts: 6,
 							shadedParts: 3,
 							rows: 1,
-							columns: 6
+							columns: 6,
+							shadeColor: null
 						}
 					]
 				},
@@ -415,7 +434,8 @@ describe("QTI Compiler", () => {
 								type: "partitionedShape",
 								width: 180,
 								height: 88,
-								shapes: [{ type: "rectangle", totalParts: 8, shadedParts: 4, rows: 2, columns: 4 }]
+								layout: null,
+								shapes: [{ type: "rectangle", totalParts: 8, shadedParts: 4, rows: 2, columns: 4, shadeColor: null }]
 							},
 							feedback:
 								'<p>Correct! This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>4</mn><mn>8</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math>.</p>'
@@ -426,7 +446,8 @@ describe("QTI Compiler", () => {
 								type: "partitionedShape",
 								width: 180,
 								height: 88,
-								shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 2, rows: 2, columns: 2 }]
+								layout: null,
+								shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 2, rows: 2, columns: 2, shadeColor: null }]
 							},
 							feedback:
 								'<p>Correct! This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>4</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math>.</p>'
@@ -437,7 +458,8 @@ describe("QTI Compiler", () => {
 								type: "partitionedShape",
 								width: 180,
 								height: 88,
-								shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 3, rows: 2, columns: 2 }]
+								layout: null,
+								shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 3, rows: 2, columns: 2, shadeColor: null }]
 							},
 							feedback:
 								'<p>Not quite. This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math>. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math> is not equal to <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> (which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>), this is incorrect.</p>'
@@ -468,7 +490,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "multiple",
 					baseType: "identifier",
-					correct: ["B", "C"]
+					correct: ["B", "C"],
+					mapping: null
 				}
 			],
 			body: [
@@ -478,9 +501,9 @@ describe("QTI Compiler", () => {
 					height: 103,
 					layout: "horizontal",
 					shapes: [
-						{ type: "circle", totalParts: 4, shadedParts: 1 },
-						{ type: "circle", totalParts: 4, shadedParts: 1 },
-						{ type: "circle", totalParts: 4, shadedParts: 1 }
+						{ type: "circle", totalParts: 4, shadedParts: 1, rows: null, columns: null, shadeColor: null },
+						{ type: "circle", totalParts: 4, shadedParts: 1, rows: null, columns: null, shadeColor: null },
+						{ type: "circle", totalParts: 4, shadedParts: 1, rows: null, columns: null, shadeColor: null }
 					]
 				},
 				{
@@ -534,9 +557,9 @@ describe("QTI Compiler", () => {
 			identifier: "circle-equation-center-radius",
 			title: "Find the center and radius of a circle from its equation",
 			responseDeclarations: [
-				{ identifier: "RESPONSE_X", cardinality: "single", baseType: "integer", correct: -9 },
-				{ identifier: "RESPONSE_Y", cardinality: "single", baseType: "integer", correct: -7 },
-				{ identifier: "RESPONSE_R", cardinality: "single", baseType: "integer", correct: 5 }
+				{ identifier: "RESPONSE_X", cardinality: "single", baseType: "integer", correct: -9, mapping: null },
+				{ identifier: "RESPONSE_Y", cardinality: "single", baseType: "integer", correct: -7, mapping: null },
+				{ identifier: "RESPONSE_R", cardinality: "single", baseType: "integer", correct: 5, mapping: null }
 			],
 			body: [
 				"<p>A certain circle can be represented by the following equation.</p>",
@@ -574,20 +597,32 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "integer",
-					correct: 87
+					correct: 87,
+					mapping: null
 				}
 			],
 			body: [
 				"<p>The following table shows each of Haruka's final exam scores last semester.</p>",
 				{
 					type: "dataTable",
+					title: null,
 					columnHeaders: ["Final exam", "Score on a 100-point scale"],
 					rows: [
-						{ cells: ["Astronomy", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math>'] },
-						{ cells: ["Biology", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math>'] },
-						{ cells: ["Physics", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math>'] },
-						{ cells: ["Chemistry", "?"] }
-					]
+						{
+							isHeader: null,
+							cells: ["Astronomy", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math>']
+						},
+						{
+							isHeader: null,
+							cells: ["Biology", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math>']
+						},
+						{
+							isHeader: null,
+							cells: ["Physics", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math>']
+						},
+						{ isHeader: null, cells: ["Chemistry", "?"] }
+					],
+					footer: null
 				},
 				'<p>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka\'s final exam score in chemistry.</p>',
 				"<p>",
@@ -621,16 +656,19 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "C"
+					correct: "C",
+					mapping: null
 				}
 			],
 			body: [
 				"<em>The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</em>",
 				{
 					type: "dataTable",
+					title: null,
 					columnHeaders: ["Year", "GDP (% change)", "Unemployment (% of the labor force)"],
 					rows: [
 						{
+							isHeader: null,
 							cells: [
 								"2014",
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>%</mo></math>',
@@ -638,6 +676,7 @@ describe("QTI Compiler", () => {
 							]
 						},
 						{
+							isHeader: null,
 							cells: [
 								"2015",
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>',
@@ -645,6 +684,7 @@ describe("QTI Compiler", () => {
 							]
 						},
 						{
+							isHeader: null,
 							cells: [
 								"2016",
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>',
@@ -652,6 +692,7 @@ describe("QTI Compiler", () => {
 							]
 						},
 						{
+							isHeader: null,
 							cells: [
 								"2017",
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>%</mo></math>',
@@ -659,6 +700,7 @@ describe("QTI Compiler", () => {
 							]
 						},
 						{
+							isHeader: null,
 							cells: [
 								"2018",
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>%</mo></math>',
@@ -666,13 +708,15 @@ describe("QTI Compiler", () => {
 							]
 						},
 						{
+							isHeader: null,
 							cells: [
 								"2019",
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>%</mo></math>',
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
 							]
 						}
-					]
+					],
+					footer: null
 				},
 				{
 					type: "choiceInteraction",
@@ -739,7 +783,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "C"
+					correct: "C",
+					mapping: null
 				}
 			],
 			body: [
@@ -802,7 +847,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "string",
-					correct: "x^2/2-x*cos(z)"
+					correct: "x^2/2-x*cos(z)",
+					mapping: null
 				}
 			],
 			body: [
@@ -840,15 +886,19 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "D"
+					correct: "D",
+					mapping: null
 				}
 			],
 			body: [
 				'This table gives select values of the differentiable function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>.',
 				{
 					type: "dataTable",
+					title: null,
+					columnHeaders: null,
 					rows: [
 						{
+							isHeader: null,
 							cells: [
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>',
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>',
@@ -860,6 +910,7 @@ describe("QTI Compiler", () => {
 							]
 						},
 						{
+							isHeader: null,
 							cells: [
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>',
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>30</mn></math>',
@@ -870,7 +921,8 @@ describe("QTI Compiler", () => {
 								'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>47</mn></math>'
 							]
 						}
-					]
+					],
+					footer: null
 				},
 				{
 					type: "choiceInteraction",
@@ -931,7 +983,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "CHOICE_5"
+					correct: "CHOICE_5",
+					mapping: null
 				}
 			],
 			body: [
@@ -947,41 +1000,49 @@ describe("QTI Compiler", () => {
 							identifier: "CHOICE_3",
 							content: {
 								type: "discreteObjectRatioDiagram",
+								title: null,
 								width: 250,
 								height: 120,
 								layout: "grid",
 								objects: [{ count: 3, emoji: "🍎" }]
-							}
+							},
+							feedback: null
 						},
 						{
 							identifier: "CHOICE_4",
 							content: {
 								type: "discreteObjectRatioDiagram",
+								title: null,
 								width: 250,
 								height: 120,
 								layout: "grid",
 								objects: [{ count: 4, emoji: "🍎" }]
-							}
+							},
+							feedback: null
 						},
 						{
 							identifier: "CHOICE_5",
 							content: {
 								type: "discreteObjectRatioDiagram",
+								title: null,
 								width: 250,
 								height: 120,
 								layout: "grid",
 								objects: [{ count: 5, emoji: "🍎" }]
-							}
+							},
+							feedback: null
 						},
 						{
 							identifier: "CHOICE_6",
 							content: {
 								type: "discreteObjectRatioDiagram",
+								title: null,
 								width: 250,
 								height: 120,
 								layout: "grid",
 								objects: [{ count: 6, emoji: "🍎" }]
-							}
+							},
+							feedback: null
 						}
 					]
 				}
@@ -1008,20 +1069,32 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "A"
+					correct: "A",
+					mapping: null
 				}
 			],
 			body: [
 				"<p>A second grade classroom has a bin of shapes.</p>",
 				{
 					type: "dataTable",
+					title: null,
 					columnHeaders: ["Type of shape", "Number of shapes"],
 					rows: [
-						{ cells: ["Triangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>'] },
-						{ cells: ["Circles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>'] },
-						{ cells: ["Rectangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>'] },
-						{ cells: ["Squares", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>'] }
-					]
+						{
+							isHeader: null,
+							cells: ["Triangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>']
+						},
+						{
+							isHeader: null,
+							cells: ["Circles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>']
+						},
+						{
+							isHeader: null,
+							cells: ["Rectangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>']
+						},
+						{ isHeader: null, cells: ["Squares", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>'] }
+					],
+					footer: null
 				},
 				{
 					type: "choiceInteraction",
@@ -1035,65 +1108,77 @@ describe("QTI Compiler", () => {
 							identifier: "A",
 							content: {
 								type: "barChart",
+								title: null,
 								width: 400,
 								height: 300,
 								xAxisLabel: "Type of shape",
 								yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
 								data: [
-									{ label: "Triangles", value: 8 },
-									{ label: "Circles", value: 5 },
-									{ label: "Rectangles", value: 3 },
-									{ label: "Squares", value: 9 }
-								]
-							}
+									{ label: "Triangles", value: 8, state: null },
+									{ label: "Circles", value: 5, state: null },
+									{ label: "Rectangles", value: 3, state: null },
+									{ label: "Squares", value: 9, state: null }
+								],
+								barColor: null
+							},
+							feedback: null
 						},
 						{
 							identifier: "B",
 							content: {
 								type: "barChart",
+								title: null,
 								width: 400,
 								height: 300,
 								xAxisLabel: "Type of shape",
 								yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
 								data: [
-									{ label: "Triangles", value: 9 },
-									{ label: "Circles", value: 5 },
-									{ label: "Rectangles", value: 3 },
-									{ label: "Squares", value: 8 }
-								]
-							}
+									{ label: "Triangles", value: 9, state: null },
+									{ label: "Circles", value: 5, state: null },
+									{ label: "Rectangles", value: 3, state: null },
+									{ label: "Squares", value: 8, state: null }
+								],
+								barColor: null
+							},
+							feedback: null
 						},
 						{
 							identifier: "C",
 							content: {
 								type: "barChart",
+								title: null,
 								width: 400,
 								height: 300,
 								xAxisLabel: "Type of shape",
 								yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
 								data: [
-									{ label: "Triangles", value: 7 },
-									{ label: "Circles", value: 4 },
-									{ label: "Rectangles", value: 2 },
-									{ label: "Squares", value: 10 }
-								]
-							}
+									{ label: "Triangles", value: 7, state: null },
+									{ label: "Circles", value: 4, state: null },
+									{ label: "Rectangles", value: 2, state: null },
+									{ label: "Squares", value: 10, state: null }
+								],
+								barColor: null
+							},
+							feedback: null
 						},
 						{
 							identifier: "D",
 							content: {
 								type: "barChart",
+								title: null,
 								width: 400,
 								height: 300,
 								xAxisLabel: "Type of shape",
 								yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
 								data: [
-									{ label: "Triangles", value: 4 },
-									{ label: "Circles", value: 8 },
-									{ label: "Rectangles", value: 9 },
-									{ label: "Squares", value: 3 }
-								]
-							}
+									{ label: "Triangles", value: 4, state: null },
+									{ label: "Circles", value: 8, state: null },
+									{ label: "Rectangles", value: 9, state: null },
+									{ label: "Squares", value: 3, state: null }
+								],
+								barColor: null
+							},
+							feedback: null
 						}
 					]
 				}
@@ -1121,7 +1206,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "A"
+					correct: "A",
+					mapping: null
 				}
 			],
 			body: [
@@ -1140,7 +1226,7 @@ describe("QTI Compiler", () => {
 								type: "dotPlot",
 								width: 450,
 								height: 150,
-								axis: { min: 0, max: 12, tickInterval: 2 },
+								axis: { min: 0, max: 12, tickInterval: 2, label: null },
 								data: [
 									{ value: 3, count: 1 },
 									{ value: 8, count: 2 },
@@ -1158,7 +1244,7 @@ describe("QTI Compiler", () => {
 								type: "dotPlot",
 								width: 450,
 								height: 150,
-								axis: { min: 0, max: 12, tickInterval: 2 },
+								axis: { min: 0, max: 12, tickInterval: 2, label: null },
 								data: [
 									{ value: 3, count: 1 },
 									{ value: 8, count: 1 },
@@ -1176,7 +1262,7 @@ describe("QTI Compiler", () => {
 								type: "dotPlot",
 								width: 450,
 								height: 150,
-								axis: { min: 0, max: 12, tickInterval: 2 },
+								axis: { min: 0, max: 12, tickInterval: 2, label: null },
 								data: [{ value: 4, count: 4 }],
 								dotColor: "#0074c8",
 								dotRadius: 8
@@ -1190,7 +1276,7 @@ describe("QTI Compiler", () => {
 								type: "dotPlot",
 								width: 450,
 								height: 150,
-								axis: { min: 0, max: 12, tickInterval: 2 },
+								axis: { min: 0, max: 12, tickInterval: 2, label: null },
 								data: [
 									{ value: 4, count: 1 },
 									{ value: 9, count: 2 },
@@ -1228,7 +1314,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "integer",
-					correct: 14
+					correct: 14,
+					mapping: null
 				}
 			],
 			body: [
@@ -1236,6 +1323,7 @@ describe("QTI Compiler", () => {
 				"<p>This bar graph shows how many games each team won.</p>",
 				{
 					type: "barChart",
+					title: null,
 					width: 480,
 					height: 340,
 					xAxisLabel: "Team",
@@ -1246,10 +1334,11 @@ describe("QTI Compiler", () => {
 						tickInterval: 2
 					},
 					data: [
-						{ label: "Lions", value: 14 },
-						{ label: "Tigers", value: 2 },
-						{ label: "Bears", value: 7 }
-					]
+						{ label: "Lions", value: 14, state: null },
+						{ label: "Tigers", value: 2, state: null },
+						{ label: "Bears", value: 7, state: null }
+					],
+					barColor: null
 				},
 				"<p>How many games did the Lions win?</p>",
 				"<p>",
@@ -1283,7 +1372,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "integer",
-					correct: 5
+					correct: 5,
+					mapping: null
 				}
 			],
 			body: [
@@ -1304,6 +1394,7 @@ describe("QTI Compiler", () => {
 						{ value: 23, count: 3 },
 						{ value: 24, count: 2 }
 					],
+					dotColor: null,
 					dotRadius: 6
 				},
 				'<p>How many dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> centimeters?</p>',
@@ -1334,7 +1425,7 @@ describe("QTI Compiler", () => {
 			identifier: "time-on-number-line-detailed-final",
 			title: "What time is shown on the number line?",
 			responseDeclarations: [
-				{ identifier: "RESPONSE_HR", cardinality: "single", baseType: "integer", correct: 12 },
+				{ identifier: "RESPONSE_HR", cardinality: "single", baseType: "integer", correct: 12, mapping: null },
 				{ identifier: "RESPONSE_MIN", cardinality: "single", baseType: "integer", correct: 55, mapping: { "05": 5 } }
 			],
 			body: [
@@ -1343,6 +1434,7 @@ describe("QTI Compiler", () => {
 					type: "numberLine",
 					width: 700,
 					height: 100,
+					orientation: null,
 					min: 0,
 					max: 60,
 					majorTickInterval: 15,
@@ -1385,7 +1477,8 @@ describe("QTI Compiler", () => {
 					identifier: "RESPONSE",
 					cardinality: "single",
 					baseType: "identifier",
-					correct: "GT"
+					correct: "GT",
+					mapping: null
 				}
 			],
 			body: [

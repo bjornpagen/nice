@@ -24,7 +24,7 @@ const TriangularPrismDataSchema = z.object({
 		.object({
 			b: z.number().describe("The base length of the triangular face."),
 			h: z.number().describe("The height of the triangular face."),
-			hypotenuse: z.number().optional().describe("The hypotenuse for a right-triangle base. Calculated if omitted.")
+			hypotenuse: z.number().nullable().describe("The hypotenuse for a right-triangle base. Calculated if omitted.")
 		})
 		.describe("The dimensions of the triangular base."),
 	length: z.number().describe("The length (depth) of the prism, connecting the two triangular bases.")
@@ -41,17 +41,25 @@ const RectangularPyramidDataSchema = z.object({
 // The main Zod schema for the polyhedronDiagram function
 export const PolyhedronDiagramPropsSchema = z
 	.object({
-		width: z.number().optional().default(300).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(200).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 300)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 200)
+			.describe("The total height of the output SVG container in pixels."),
 		shape: z
 			.union([RectangularPrismDataSchema, TriangularPrismDataSchema, RectangularPyramidDataSchema])
 			.describe("The geometric data defining the shape of the polyhedron."),
-		labels: z.array(DimensionLabelSchema).optional().describe("An array of labels for edge lengths or face areas."),
-		shadedFace: z.string().optional().describe('The identifier of a face to shade (e.g., "top_face", "front_face").'),
+		labels: z.array(DimensionLabelSchema).nullable().describe("An array of labels for edge lengths or face areas."),
+		shadedFace: z.string().nullable().describe('The identifier of a face to shade (e.g., "top_face", "front_face").'),
 		showHiddenEdges: z
 			.boolean()
-			.optional()
-			.default(true)
+			.nullable()
+			.transform((val) => val ?? true)
 			.describe("If true, render edges hidden from the camera view as dashed lines.")
 	})
 	.describe(

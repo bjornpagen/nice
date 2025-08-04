@@ -6,12 +6,16 @@ const NumberLinePointSchema = z.object({
 	value: z.number().describe("The numerical value where the point is located on the line."),
 	label: z
 		.string()
-		.optional()
+		.nullable()
 		.describe('An optional text label to display next to the point (e.g., "A", "Minnesota").'),
-	color: z.string().optional().default("#4285F4").describe("The CSS color of the point."),
+	color: z
+		.string()
+		.nullable()
+		.transform((val) => val ?? "#4285F4")
+		.describe("The CSS color of the point."),
 	labelPosition: z
 		.enum(["above", "below", "left", "right"])
-		.optional()
+		.nullable()
 		.describe("Specifies the position of the label relative to the point.")
 })
 
@@ -24,28 +28,36 @@ const SpecialTickLabelSchema = z.object({
 // The main Zod schema for the numberLine function
 export const NumberLinePropsSchema = z
 	.object({
-		width: z.number().optional().default(460).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(100).describe("The total height of the output SVG container in pixels."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 460)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 100)
+			.describe("The total height of the output SVG container in pixels."),
 		orientation: z
 			.enum(["horizontal", "vertical"])
-			.optional()
-			.default("horizontal")
+			.nullable()
+			.transform((val) => val ?? "horizontal")
 			.describe("The orientation of the number line."),
 		min: z.number().describe("The minimum value displayed on the line."),
 		max: z.number().describe("The maximum value displayed on the line."),
 		majorTickInterval: z.number().describe("The numeric interval between labeled tick marks."),
 		minorTicksPerInterval: z
 			.number()
-			.optional()
-			.default(0)
+			.nullable()
+			.transform((val) => val ?? 0)
 			.describe("The number of unlabeled minor ticks to draw between each major tick."),
 		points: z
 			.array(NumberLinePointSchema)
-			.optional()
+			.nullable()
 			.describe("An optional array of point objects to be plotted on the line."),
 		specialTickLabels: z
 			.array(SpecialTickLabelSchema)
-			.optional()
+			.nullable()
 			.describe('Optional custom labels for specific values on the line (e.g., labeling 0 as "sea level").')
 	})
 	.describe(

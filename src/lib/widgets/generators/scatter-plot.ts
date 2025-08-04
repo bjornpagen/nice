@@ -5,7 +5,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 const ScatterPointSchema = z.object({
 	x: z.number().describe("The value of the point on the horizontal (X) axis."),
 	y: z.number().describe("The value of the point on the vertical (Y) axis."),
-	label: z.string().optional().describe("An optional text label to display near the point.")
+	label: z.string().nullable().describe("An optional text label to display near the point.")
 })
 
 // Defines the properties of an axis (X or Y)
@@ -14,7 +14,11 @@ const AxisSchema = z.object({
 	min: z.number().describe("The minimum value displayed on the axis."),
 	max: z.number().describe("The maximum value displayed on the axis."),
 	tickInterval: z.number().describe("The numeric interval between tick marks on the axis."),
-	gridLines: z.boolean().optional().default(false).describe("If true, display grid lines for this axis.")
+	gridLines: z
+		.boolean()
+		.nullable()
+		.transform((val) => val ?? false)
+		.describe("If true, display grid lines for this axis.")
 })
 
 // Defines a linear trend line using slope and y-intercept
@@ -35,13 +39,17 @@ const QuadraticTrendLineSchema = z.object({
 // Defines the visual styling and labeling for any trend line
 const TrendLineStyleSchema = z.object({
 	id: z.string().describe('A unique identifier for the line (e.g., "line-a").'),
-	label: z.string().optional().describe('An optional label to display next to the line (e.g., "A", "B").'),
+	label: z.string().nullable().describe('An optional label to display next to the line (e.g., "A", "B").'),
 	color: z
 		.string()
-		.optional()
-		.default("#EA4335")
+		.nullable()
+		.transform((val) => val ?? "#EA4335")
 		.describe('The color of the line, as a CSS color string (e.g., "red", "#FF0000").'),
-	style: z.enum(["solid", "dashed"]).optional().default("solid").describe("The style of the line."),
+	style: z
+		.enum(["solid", "dashed"])
+		.nullable()
+		.transform((val) => val ?? "solid")
+		.describe("The style of the line."),
 	data: z
 		.union([LinearTrendLineSchema, QuadraticTrendLineSchema])
 		.describe("The mathematical definition of the line or curve.")
@@ -50,15 +58,23 @@ const TrendLineStyleSchema = z.object({
 // The main Zod schema for the scatterPlot function
 export const ScatterPlotPropsSchema = z
 	.object({
-		width: z.number().optional().default(400).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(400).describe("The total height of the output SVG container in pixels."),
-		title: z.string().optional().describe("An optional title displayed above or below the plot."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 400)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 400)
+			.describe("The total height of the output SVG container in pixels."),
+		title: z.string().nullable().describe("An optional title displayed above or below the plot."),
 		xAxis: AxisSchema.describe("Configuration for the horizontal (X) axis."),
 		yAxis: AxisSchema.describe("Configuration for the vertical (Y) axis."),
 		points: z.array(ScatterPointSchema).describe("An array of data points to be plotted."),
 		trendLines: z
 			.array(TrendLineStyleSchema)
-			.optional()
+			.nullable()
 			.describe("An optional array of one or more trend lines or curves to overlay on the plot.")
 	})
 	.describe(

@@ -13,17 +13,25 @@ const HistogramAxisSchema = z.object({
 	max: z
 		.number()
 		.int()
-		.optional()
+		.nullable()
 		.describe("An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically."),
-	tickInterval: z.number().optional().describe("An optional numeric interval for tick marks on the Y-axis.")
+	tickInterval: z.number().nullable().describe("An optional numeric interval for tick marks on the Y-axis.")
 })
 
 // The main Zod schema for the histogram function
 export const HistogramPropsSchema = z
 	.object({
-		width: z.number().optional().default(400).describe("The total width of the output SVG container in pixels."),
-		height: z.number().optional().default(300).describe("The total height of the output SVG container in pixels."),
-		title: z.string().optional().describe("An optional title displayed above the histogram."),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 400)
+			.describe("The total width of the output SVG container in pixels."),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 300)
+			.describe("The total height of the output SVG container in pixels."),
+		title: z.string().nullable().describe("An optional title displayed above the histogram."),
 		xAxis: HistogramAxisSchema.describe("Configuration for the horizontal (X) axis."),
 		yAxis: HistogramAxisSchema.describe("Configuration for the vertical (Y) axis."),
 		bins: z.array(HistogramBinSchema).describe("An array of bin objects, each defining its label and frequency.")
