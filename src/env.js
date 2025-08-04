@@ -35,7 +35,9 @@ export const env = createEnv({
 		BROWSERBASE_API_KEY: z.string().min(1),
 		BROWSERBASE_PROJECT_ID: z.string().min(1),
 		// Vercel deployment variable (optional, only present in deployed environments)
-		VERCEL_DEPLOYMENT_ID: z.string().optional()
+		VERCEL_DEPLOYMENT_ID: z.string().optional(),
+		// Redis connection URL (optional for local development)
+		REDIS_URL: z.string().url().optional()
 	},
 
 	/**
@@ -80,7 +82,8 @@ export const env = createEnv({
 		TIMEBACK_CALIPER_SERVER_URL: process.env.TIMEBACK_CALIPER_SERVER_URL,
 		BROWSERBASE_API_KEY: process.env.BROWSERBASE_API_KEY,
 		BROWSERBASE_PROJECT_ID: process.env.BROWSERBASE_PROJECT_ID,
-		VERCEL_DEPLOYMENT_ID: process.env.VERCEL_DEPLOYMENT_ID
+		VERCEL_DEPLOYMENT_ID: process.env.VERCEL_DEPLOYMENT_ID,
+		REDIS_URL: process.env.REDIS_URL
 	},
 	/**
 	 * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
