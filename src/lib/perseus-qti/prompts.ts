@@ -860,8 +860,9 @@ export function createAssessmentShellPrompt(perseusJson: string): {
 
 The shell should:
 1. Convert Perseus content into a single 'body' string with <slot name="..."/> placeholders
-2. Map out all widgets and interactions as empty objects in their respective maps
+2. List all widget and interaction identifiers as arrays of strings
 3. Preserve the logical flow and structure of the original content
+4. NEVER create HTML tables directly - ALL tables must be converted to widget slots
 
 Your output MUST be a valid JSON object that conforms to the provided schema.`
 
@@ -871,9 +872,11 @@ ${perseusJson}
 
 ## Instructions:
 - Create a 'body' field containing the main content as HTML with <slot name="widget_id"/> or <slot name="interaction_id"/> placeholders
-- For each Perseus widget (e.g., [[☃ widget-name 1]]), create an entry in the 'widgets' map with key "widget_1" (or similar) and value {}
-- For each Perseus interaction (radio, text-input, etc.), create an entry in the 'interactions' map with key "interaction_1" (or similar) and value {}
-- Ensure all placeholder names in the body match the keys in the widgets/interactions maps
+- For each Perseus widget (e.g., [[☃ widget-name 1]]), add its identifier (e.g., "widget_1") to the 'widgets' array
+- For each Perseus interaction (radio, text-input, etc.), add its identifier (e.g., "interaction_1") to the 'interactions' array
+- CRITICAL: Tables must NEVER be created as HTML <table> elements. Instead, create a widget slot for every table (e.g., <slot name="table_widget_1"/> and add "table_widget_1" to the widgets array)
+- This applies to ALL tables, whether they come from Perseus table widgets, formatted content, or any other source
+- Ensure all placeholder names in the body match the identifiers in the widgets/interactions arrays
 - Include all required assessment metadata (identifier, title, responseDeclarations, feedback)
 
 Return ONLY the JSON object.`
@@ -915,6 +918,113 @@ ${JSON.stringify(assessmentShell, null, 2)}
 - DO NOT add or remove interaction identifiers from the original array
 
 Return ONLY the completed JSON object with the interactions array transformed into a populated interactions object map.`
+
+	return { systemInstruction, userContent }
+}
+
+/**
+ * Creates a prompt for generating only widget content based on a shell and mapping.
+ * This is the new Shot 3 prompt that focuses exclusively on widget generation.
+ */
+export function createWidgetContentPrompt(
+	perseusJson: string,
+	assessmentShell: unknown,
+	widgetMapping: Record<string, keyof typeof typedSchemas>
+): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction = `You are an expert in educational content conversion, specifically focused on generating widget content for QTI assessments. Your task is to generate ONLY the widget content objects based on:
+1. The original Perseus JSON data
+2. An assessment shell that shows where widgets should be placed
+3. A mapping that specifies the exact widget type for each slot
+
+You must generate a JSON object where:
+- Each key is a widget slot name from the mapping
+- Each value is a fully-formed widget object of the specified type
+- All widget properties must conform to their respective schemas
+
+IMPORTANT: You are ONLY generating the widget content. Do not include any assessment metadata, body content, interactions, or other properties.`
+
+	const userContent = `Generate widget content based on the following inputs:
+
+## Original Perseus JSON:
+\`\`\`json
+${perseusJson}
+\`\`\`
+
+## Assessment Shell (for context):
+\`\`\`json
+${JSON.stringify(assessmentShell, null, 2)}
+\`\`\`
+
+## Widget Mapping:
+\`\`\`json
+${JSON.stringify(widgetMapping, null, 2)}
+\`\`\`
+
+## Instructions:
+- For each entry in the widget mapping, generate a fully-formed widget object of the specified type
+- Extract all relevant data from the Perseus JSON to populate the widget properties
+- Ensure all required properties for each widget type are included
+- Use the assessment shell's body content to understand the context of where each widget appears
+- Return ONLY a JSON object with widget slot names as keys and widget objects as values
+
+Example output structure:
+{
+  "widget_1": { /* full widget object of the mapped type */ },
+  "widget_2": { /* full widget object of the mapped type */ }
+}`
+
+	return { systemInstruction, userContent }
+}
+
+/**
+ * Creates a prompt for generating only interaction content based on a shell.
+ * This is the new Shot 3 prompt that focuses exclusively on interaction generation.
+ */
+export function createInteractionContentPrompt(
+	perseusJson: string,
+	assessmentShell: unknown
+): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction = `You are an expert in educational content conversion, specifically focused on generating QTI interaction objects for assessments. Your task is to generate ONLY the interaction content objects based on:
+1. The original Perseus JSON data
+2. An assessment shell that shows where interactions should be placed
+
+You must generate a JSON object where:
+- Each key is an interaction slot name from the shell
+- Each value is a fully-formed QTI interaction object
+- All interaction properties must conform to the QTI interaction schemas
+
+IMPORTANT: You are ONLY generating the interaction content. Do not include any assessment metadata, body content, widgets, or other properties.`
+
+	const userContent = `Generate interaction content based on the following inputs:
+
+## Original Perseus JSON:
+\`\`\`json
+${perseusJson}
+\`\`\`
+
+## Assessment Shell (for context):
+\`\`\`json
+${JSON.stringify(assessmentShell, null, 2)}
+\`\`\`
+
+## Instructions:
+- For each interaction slot name in the shell's interactions array, generate a fully-formed QTI interaction object
+- Extract all relevant data from the Perseus JSON to populate the interaction properties
+- Ensure all required properties for each interaction type are included
+- Use the assessment shell's body content to understand the context of where each interaction appears
+- Return ONLY a JSON object with interaction slot names as keys and interaction objects as values
+
+Example output structure:
+{
+  "interaction_1": { /* full QTI interaction object */ },
+  "interaction_2": { /* full QTI interaction object */ }
+}`
 
 	return { systemInstruction, userContent }
 }

@@ -5,13 +5,20 @@ import { zodResponseFormat } from "openai/helpers/zod"
 import type { ChatCompletionContentPart } from "openai/resources/chat/completions"
 import { z } from "zod"
 import { env } from "@/env"
-import { type AssessmentItemInput, AssessmentItemSchema, createDynamicAssessmentItemSchema } from "@/lib/qti/schemas"
-import { typedSchemas } from "@/lib/widgets/generators"
+import {
+	type AnyInteraction,
+	AnyInteractionSchema,
+	type AssessmentItemInput,
+	AssessmentItemSchema
+} from "@/lib/qti/schemas"
+import { typedSchemas, type WidgetInput } from "@/lib/widgets/generators"
 import {
 	createAssessmentShellPrompt,
+	createInteractionContentPrompt,
 	createQtiConversionPrompt,
 	createQtiSufficiencyValidationPrompt,
-	createStructuredQtiCompletionPrompt,
+	// NEW: A new prompt function is required for the widget-only generation shot.
+	createWidgetContentPrompt,
 	createWidgetMappingPrompt
 } from "./prompts"
 import {
@@ -42,6 +49,38 @@ const AssessmentShellSchema = AssessmentItemSchema.extend({
 	interactions: z.array(z.string()).describe("A list of unique identifiers for interaction slots that must be filled.")
 })
 type AssessmentShell = z.infer<typeof AssessmentShellSchema>
+
+/**
+ * Dynamically creates a Zod schema for a collection of widgets based on a mapping.
+ * @param widgetMapping A map of slot names to widget type names.
+ * @returns A Zod object schema for the widget collection.
+ */
+function createWidgetCollectionSchema(widgetMapping: Record<string, keyof typeof typedSchemas>) {
+	const shape: Record<string, z.ZodType> = {}
+	for (const [slotName, widgetType] of Object.entries(widgetMapping)) {
+		const schema = typedSchemas[widgetType]
+		if (!schema) {
+			// This check ensures we don't proceed with an invalid type from the mapping.
+			throw errors.new(`unknown widget type in mapping: ${widgetType}`)
+		}
+		shape[slotName] = schema
+	}
+	return z.object(shape).describe("A collection of fully-defined widget objects corresponding to the provided slots.")
+}
+
+/**
+ * NEW: Dynamically creates a Zod schema for a collection of interactions.
+ * @param interactionSlotNames A list of interaction slot names from the shell.
+ * @returns A Zod object schema for the interaction collection.
+ */
+function createInteractionCollectionSchema(interactionSlotNames: string[]) {
+	const shape: Record<string, z.ZodType> = {}
+	for (const slotName of interactionSlotNames) {
+		// All interactions must conform to the AnyInteractionSchema.
+		shape[slotName] = AnyInteractionSchema
+	}
+	return z.object(shape).describe("A collection of fully-defined QTI interaction objects.")
+}
 
 /**
  * Extracts and validates the XML from the AI response
@@ -336,30 +375,91 @@ async function generateAssessmentShell(logger: logger.Logger, perseusJson: strin
 }
 
 /**
- * ✅ REFACTORED: This is the new Shot 3 function.
+ * ✅ NEW: This is Shot 3. It generates ONLY the interaction content.
  */
-async function generateFullAssessmentItem(
+async function generateInteractionContent(
 	logger: logger.Logger,
-	perseusData: unknown,
-	assessmentShell: AssessmentShell,
-	widgetMapping: Record<string, keyof typeof typedSchemas> // ✅ Receives the type-safe mapping.
-): Promise<AssessmentItemInput> {
-	const { systemInstruction, userContent } = createStructuredQtiCompletionPrompt(
-		JSON.stringify(perseusData, null, 2),
-		assessmentShell
-	)
-	// Use the mapping to create the precise schema
-	// ✅ Use the mapping to create the precise schema for Shot 3.
-	const { AssessmentItemSchema: dynamicSchema } = createDynamicAssessmentItemSchema(widgetMapping)
+	perseusJson: string,
+	assessmentShell: AssessmentShell
+): Promise<Record<string, AnyInteraction>> {
+	const interactionSlotNames = assessmentShell.interactions
+	if (interactionSlotNames.length === 0) {
+		logger.debug("no interactions to generate, skipping shot 3")
+		return {}
+	}
 
-	const responseFormat = zodResponseFormat(dynamicSchema, "assessment_item_generator")
+	// This new prompt function instructs the AI to generate the interaction objects.
+	const { systemInstruction, userContent } = createInteractionContentPrompt(perseusJson, assessmentShell)
+
+	// Create a precise schema asking ONLY for the interactions.
+	const InteractionCollectionSchema = createInteractionCollectionSchema(interactionSlotNames)
+	const responseFormat = zodResponseFormat(InteractionCollectionSchema, "interaction_content_generator")
+
 	logger.debug("generated json schema for openai", {
-		functionName: "generateFullAssessmentItem",
-		generatorName: "assessment_item_generator",
+		functionName: "generateInteractionContent",
+		generatorName: "interaction_content_generator",
 		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
 	})
 
-	logger.debug("calling openai for structured qti completion", {
+	logger.debug("calling openai for interaction content generation", {
+		interactionSlotNames,
+		interactionCount: interactionSlotNames.length
+	})
+
+	const result = await errors.try(
+		openai.chat.completions.parse({
+			model: OPENAI_MODEL,
+			messages: [
+				{ role: "system", content: systemInstruction },
+				{ role: "user", content: userContent }
+			],
+			response_format: responseFormat
+		})
+	)
+	if (result.error) {
+		logger.error("openai request failed for interaction content generation", { error: result.error })
+		throw errors.wrap(result.error, "ai interaction content generation")
+	}
+
+	const message = result.data.choices[0]?.message
+	if (!message) {
+		throw errors.new("openai response missing choices or message")
+	}
+
+	if (!message.parsed) {
+		logger.error("openai parsing failed for interaction content generation", {
+			refusal: message.refusal,
+			finishReason: result.data.choices[0]?.finish_reason
+		})
+		throw errors.new("ai interaction content generation: parsing failed")
+	}
+
+	return message.parsed
+}
+
+/**
+ * ✅ REFACTORED: This is the new Shot 4. It ONLY generates the widget content.
+ */
+async function generateWidgetContent(
+	logger: logger.Logger,
+	perseusJson: string,
+	assessmentShell: AssessmentShell,
+	widgetMapping: Record<string, keyof typeof typedSchemas>
+): Promise<Record<string, WidgetInput>> {
+	// A new prompt function is needed that instructs the AI to only generate widget content.
+	const { systemInstruction, userContent } = createWidgetContentPrompt(perseusJson, assessmentShell, widgetMapping)
+
+	// Create a precise schema asking ONLY for the widgets.
+	const WidgetCollectionSchema = createWidgetCollectionSchema(widgetMapping)
+
+	const responseFormat = zodResponseFormat(WidgetCollectionSchema, "widget_content_generator")
+	logger.debug("generated json schema for openai", {
+		functionName: "generateWidgetContent",
+		generatorName: "widget_content_generator",
+		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
+	})
+
+	logger.debug("calling openai for widget content generation", {
 		widgetMapping,
 		widgetCount: Object.keys(widgetMapping).length
 	})
@@ -374,8 +474,8 @@ async function generateFullAssessmentItem(
 		})
 	)
 	if (result.error) {
-		logger.error("openai request failed for structured qti generation", { error: result.error })
-		throw errors.wrap(result.error, "ai qti item generation")
+		logger.error("openai request failed for widget content generation", { error: result.error })
+		throw errors.wrap(result.error, "ai widget content generation")
 	}
 
 	const message = result.data.choices[0]?.message
@@ -384,18 +484,18 @@ async function generateFullAssessmentItem(
 	}
 
 	if (!message.parsed) {
-		logger.error("openai parsing failed for structured qti generation", {
+		logger.error("openai parsing failed for widget content generation", {
 			refusal: message.refusal,
 			finishReason: result.data.choices[0]?.finish_reason
 		})
-		throw errors.new("ai qti item generation: parsing failed")
+		throw errors.new("ai widget content generation: parsing failed")
 	}
 
 	return message.parsed
 }
 
 /**
- * ✅ REFACTORED: The main orchestrator implements the new, robust, and type-safe 3-shot flow.
+ * ✅ REFACTORED: The main orchestrator implements the new, complete 4-shot flow.
  */
 export async function generateStructuredQtiItem(
 	logger: logger.Logger,
@@ -412,17 +512,14 @@ export async function generateStructuredQtiItem(
 		throw shellResult.error
 	}
 	const assessmentShell = shellResult.data
-	logger.debug("shot 1 complete", { identifier: assessmentShell.identifier })
-
-	// Step 1.5 (Deterministic): Extract widget slot names directly from the shell object keys.
-	// This is the robust replacement for the fragile string parsing.
-	const widgetSlotNames = assessmentShell.widgets
-	logger.debug("extracted widget slot names from shell object", {
-		count: widgetSlotNames.length,
-		slotNames: widgetSlotNames
+	logger.debug("shot 1 complete", {
+		identifier: assessmentShell.identifier,
+		widgetSlots: assessmentShell.widgets,
+		interactionSlots: assessmentShell.interactions
 	})
 
-	// Shot 2: Map the extracted slot names to widget types using a constrained schema.
+	// Step 2: Map widget slot names to widget types.
+	const widgetSlotNames = assessmentShell.widgets
 	logger.debug("shot 2: mapping slots to widgets")
 	const widgetMappingResult = await errors.try(
 		mapSlotsToWidgets(logger, perseusJsonString, assessmentShell.body, widgetSlotNames)
@@ -434,18 +531,40 @@ export async function generateStructuredQtiItem(
 	const widgetMapping = widgetMappingResult.data
 	logger.debug("shot 2 complete", { mapping: widgetMapping })
 
-	// Shot 3: Generate the full item by filling in the shell.
-	logger.debug("shot 3: generating final structured item")
-	const structuredItemResult = await errors.try(
-		generateFullAssessmentItem(logger, perseusData, assessmentShell, widgetMapping)
+	// ✅ NEW - Shot 3: Generate the full interaction objects.
+	logger.debug("shot 3: generating interaction content")
+	const interactionContentResult = await errors.try(
+		generateInteractionContent(logger, perseusJsonString, assessmentShell)
 	)
-	if (structuredItemResult.error) {
-		logger.error("shot 3 failed: structured generation pass failed", { error: structuredItemResult.error })
-		throw structuredItemResult.error
+	if (interactionContentResult.error) {
+		logger.error("shot 3 failed: interaction content generation failed", { error: interactionContentResult.error })
+		throw interactionContentResult.error
+	}
+	const generatedInteractions = interactionContentResult.data
+	logger.debug("shot 3 complete", { generatedInteractionKeys: Object.keys(generatedInteractions) })
+
+	// Shot 4: Generate ONLY the widget content based on the mapping.
+	logger.debug("shot 4: generating widget content")
+	const widgetContentResult = await errors.try(
+		generateWidgetContent(logger, perseusJsonString, assessmentShell, widgetMapping)
+	)
+	if (widgetContentResult.error) {
+		logger.error("shot 4 failed: widget content generation failed", { error: widgetContentResult.error })
+		throw widgetContentResult.error
+	}
+	const generatedWidgets = widgetContentResult.data
+	logger.debug("shot 4 complete", { generatedWidgetKeys: Object.keys(generatedWidgets) })
+
+	// Final Step: Deterministically merge the shell, interactions, and widgets.
+	const finalAssessmentItem: AssessmentItemInput = {
+		...assessmentShell,
+		// Replace the string arrays from the shell with the generated objects.
+		interactions: generatedInteractions,
+		widgets: generatedWidgets
 	}
 
-	logger.info("structured qti generation process successful", { identifier: structuredItemResult.data.identifier })
-	return structuredItemResult.data
+	logger.info("structured qti generation process successful", { identifier: finalAssessmentItem.identifier })
+	return finalAssessmentItem
 }
 
 /**
