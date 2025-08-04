@@ -18,20 +18,6 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 
 	const DynamicWidgetsSchema = z.object(widgetShape)
 
-	// All dependent schemas must be defined *inside* this factory to use the dynamic SimpleContentSchema
-	const SimpleChoiceSchema = z
-		.object({
-			identifier: z.string().describe("Unique identifier for this choice option, used for response matching."),
-			content: z
-				.string()
-				.describe(
-					"Content that is plain text/MathML. Rich visualizations are referenced via <slot name='...'> elements."
-				),
-			feedback: z.string().nullable().describe("Optional feedback text shown when this choice is selected.")
-		})
-		.strict()
-		.describe("Represents a single choice option in a multiple choice or ordering question.")
-
 	const InlineChoiceSchema = z
 		.object({
 			identifier: z.string().describe("Unique identifier for this inline choice option."),
@@ -45,7 +31,21 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			type: z.literal("choiceInteraction").describe("Identifies this as a multiple choice interaction."),
 			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
 			prompt: z.string().describe("The question or instruction text presented to the user."),
-			choices: z.array(SimpleChoiceSchema).describe("Array of selectable choice options."),
+			choices: z
+				.array(
+					z
+						.object({
+							identifier: z.string().describe("Unique identifier for this choice option, used for response matching."),
+							content: z
+								.string()
+								.describe(
+									"Content that is plain text/MathML. Rich visualizations are referenced via <slot name='...'> elements."
+								),
+							feedback: z.string().nullable().describe("Optional feedback text shown when this choice is selected.")
+						})
+						.strict()
+				)
+				.describe("Array of selectable choice options."),
 			shuffle: z
 				.boolean()
 				.nullable()
@@ -85,7 +85,21 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			type: z.literal("orderInteraction").describe("Identifies this as an ordering/sequencing interaction."),
 			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
 			prompt: z.string().describe("Instructions asking the user to arrange items in correct order."),
-			choices: z.array(SimpleChoiceSchema).describe("Array of items to be arranged in order."),
+			choices: z
+				.array(
+					z
+						.object({
+							identifier: z.string().describe("Unique identifier for this choice option, used for response matching."),
+							content: z
+								.string()
+								.describe(
+									"Content that is plain text/MathML. Rich visualizations are referenced via <slot name='...'> elements."
+								),
+							feedback: z.string().nullable().describe("Optional feedback text shown when this choice is selected.")
+						})
+						.strict()
+				)
+				.describe("Array of items to be arranged in order."),
 			shuffle: z
 				.boolean()
 				.nullable()
