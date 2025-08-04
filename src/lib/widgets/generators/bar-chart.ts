@@ -15,6 +15,21 @@ const BarDataSchema = z.object({
 		.describe('The visual state of the bar. "unknown" bars are styled as placeholders.')
 })
 
+// Define Y-axis schema separately to avoid inline object issues with o3 model
+const YAxisSchema = z.object({
+	label: z.string().nullable().describe("An optional label for the vertical value axis."),
+	min: z
+		.number()
+		.nullable()
+		.transform((val) => val ?? 0)
+		.describe("The minimum value for the Y-axis scale."),
+	max: z
+		.number()
+		.nullable()
+		.describe("The maximum value for the Y-axis scale. If omitted, it will be calculated automatically."),
+	tickInterval: z.number().describe("The numeric interval between labeled tick marks on the Y-axis.")
+})
+
 // The main Zod schema for the barChart function
 export const BarChartPropsSchema = z
 	.object({
@@ -30,19 +45,7 @@ export const BarChartPropsSchema = z
 			.describe("The total height of the output SVG container in pixels."),
 		title: z.string().nullable().describe("An optional title displayed above the chart."),
 		xAxisLabel: z.string().nullable().describe("An optional label for the horizontal category axis."),
-		yAxis: z.object({
-			label: z.string().nullable().describe("An optional label for the vertical value axis."),
-			min: z
-				.number()
-				.nullable()
-				.transform((val) => val ?? 0)
-				.describe("The minimum value for the Y-axis scale."),
-			max: z
-				.number()
-				.nullable()
-				.describe("The maximum value for the Y-axis scale. If omitted, it will be calculated automatically."),
-			tickInterval: z.number().describe("The numeric interval between labeled tick marks on the Y-axis.")
-		}),
+		yAxis: YAxisSchema,
 		data: z.array(BarDataSchema).describe("An array of bar data objects, one for each category."),
 		barColor: z
 			.string()
