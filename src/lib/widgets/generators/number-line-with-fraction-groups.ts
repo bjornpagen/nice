@@ -57,10 +57,8 @@ export const generateNumberLineWithFractionGroups: WidgetGenerator<typeof Number
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
-	// Axis
 	svg += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="#333333" stroke-width="1.5"/>`
 
-	// Ticks
 	for (const t of ticks) {
 		const x = toSvgX(t.value)
 		const tickHeight = t.isMajor ? 8 : 4

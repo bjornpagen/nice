@@ -65,7 +65,6 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
-	// Axis
 	const axisY = margin.top + plotHeight + 20
 	svg += `<line x1="${margin.left}" y1="${axisY}" x2="${width - margin.right}" y2="${axisY}" stroke="black"/>`
 	if (axis.label) {
@@ -84,14 +83,11 @@ export const generateBoxPlot: WidgetGenerator<typeof BoxPlotPropsSchema> = (data
 	svg += `<line x1="${minPos}" y1="${yCenter}" x2="${q1Pos}" y2="${yCenter}" stroke="black"/>`
 	svg += `<line x1="${q3Pos}" y1="${yCenter}" x2="${maxPos}" y2="${yCenter}" stroke="black"/>`
 
-	// Caps
 	svg += `<line x1="${minPos}" y1="${yCenter - 10}" x2="${minPos}" y2="${yCenter + 10}" stroke="black"/>`
 	svg += `<line x1="${maxPos}" y1="${yCenter - 10}" x2="${maxPos}" y2="${yCenter + 10}" stroke="black"/>`
 
-	// Box
 	svg += `<rect x="${q1Pos}" y="${yCenter - plotHeight / 2}" width="${q3Pos - q1Pos}" height="${plotHeight}" fill="${boxColor}" stroke="black"/>`
 
-	// Median
 	svg += `<line x1="${medianPos}" y1="${yCenter - plotHeight / 2}" x2="${medianPos}" y2="${yCenter + plotHeight / 2}" stroke="${medianColor}" stroke-width="2"/>`
 
 	svg += "</svg>"

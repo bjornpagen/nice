@@ -75,9 +75,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 	if (isHorizontal) {
 		const yPos = height / 2
 		const toSvgX = (val: number) => padding + (val - min) * scale
-		// Axis
 		svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="black"/>`
-		// Ticks
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const x = toSvgX(t)
@@ -97,7 +95,6 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 				svg += `<text x="${toSvgX(s.value)}" y="${yPos + 25}" fill="black" text-anchor="middle" font-weight="bold">${s.label}</text>`
 			}
 		}
-		// Points
 		if (points) {
 			for (const p of points) {
 				const cx = toSvgX(p.value)
@@ -131,9 +128,7 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 		// Vertical
 		const xPos = width / 2
 		const toSvgY = (val: number) => height - padding - (val - min) * scale
-		// Axis
 		svg += `<line x1="${xPos}" y1="${padding}" x2="${xPos}" y2="${height - padding}" stroke="black"/>`
-		// Ticks
 		const minorTickSpacing = (majorTickInterval / (minorTicksPerInterval + 1)) * scale
 		for (let t = min; t <= max; t += majorTickInterval) {
 			const y = toSvgY(t)
@@ -152,7 +147,6 @@ export const generateNumberLine: WidgetGenerator<typeof NumberLinePropsSchema> =
 				svg += `<text x="${xPos - 15}" y="${toSvgY(s.value) + 4}" fill="black" text-anchor="end" font-weight="bold">${s.label}</text>`
 			}
 		}
-		// Points
 		if (points) {
 			for (const p of points) {
 				const cy = toSvgY(p.value)

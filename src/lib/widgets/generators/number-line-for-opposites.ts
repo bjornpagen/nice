@@ -68,17 +68,14 @@ export const generateNumberLineForOpposites: WidgetGenerator<typeof NumberLineFo
 		svg += `<text x="${x}" y="${yPos + 20}" fill="black" text-anchor="middle">${t}</text>`
 	}
 
-	// Arrows
 	if (showArrows) {
 		svg += `<line x1="${zeroPos}" y1="${yPos - 10}" x2="${posPos}" y2="${yPos - 10}" stroke="black" marker-end="url(#arrowhead)"/>`
 		svg += `<line x1="${zeroPos}" y1="${yPos - 10}" x2="${negPos}" y2="${yPos - 10}" stroke="black" marker-end="url(#arrowhead)"/>`
 	}
 
-	// Points
 	svg += `<circle cx="${posPos}" cy="${yPos}" r="5" fill="black"/>`
 	svg += `<circle cx="${negPos}" cy="${yPos}" r="5" fill="black"/>`
 
-	// Labels
 	const posLab = positiveLabel === true ? String(value) : (positiveLabel ?? "")
 	const negLab = negativeLabel === true ? String(-value) : (negativeLabel ?? "")
 	if (posLab)

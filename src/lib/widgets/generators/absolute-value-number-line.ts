@@ -69,7 +69,6 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 		svg += `<text x="${labelX}" y="${yPos - 15}" fill="black" text-anchor="middle" font-weight="bold">|${value}| = ${absValue}</text>`
 	}
 
-	// Point
 	svg += `<circle cx="${valuePos}" cy="${yPos}" r="5" fill="${highlightColor}" stroke="black" stroke-width="1"/>`
 
 	svg += "</svg>"

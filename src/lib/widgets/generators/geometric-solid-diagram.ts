@@ -72,7 +72,6 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		// Top base
 		svg += `<ellipse cx="${cx}" cy="${topY}" rx="${r}" ry="${ry}" fill="rgba(220, 220, 220, 0.5)" stroke="black" stroke-width="1.5"/>`
 
-		// Labels
 		if (labels) {
 			for (const l of labels) {
 				if (l.target === "radius") {
@@ -104,7 +103,6 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		// Base (front solid part)
 		svg += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 1 ${cx + r} ${baseY}" fill="rgba(200, 200, 200, 0.3)" stroke="black" stroke-width="1.5"/>`
 
-		// Labels
 		if (labels) {
 			for (const l of labels) {
 				if (l.target === "radius") {
@@ -132,7 +130,6 @@ export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSoli
 		svg += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 1 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5"/>`
 		svg += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 0 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
 
-		// Labels
 		if (labels) {
 			for (const l of labels) {
 				if (l.target === "radius") {

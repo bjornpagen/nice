@@ -55,14 +55,12 @@ export const generateVennDiagram: WidgetGenerator<typeof VennDiagramPropsSchema>
 	svg += `<text x="${cxA - r * 0.5}" y="${padding.top - 5}" class="label">${circleA.label}</text>` // Moved left
 	svg += `<text x="${cxB + r * 0.5}" y="${padding.top - 5}" class="label">${circleB.label}</text>` // Moved right
 
-	// Counts
 	// A only
 	svg += `<text x="${cxA - r / 2}" y="${cy}" class="count" dominant-baseline="middle">${circleA.count}</text>`
 	// B only
 	svg += `<text x="${cxB + r / 2}" y="${cy}" class="count" dominant-baseline="middle">${circleB.count}</text>`
 	// Intersection
 	svg += `<text x="${(cxA + cxB) / 2}" y="${cy}" class="count" dominant-baseline="middle">${intersectionCount}</text>`
-	// Outside
 	svg += `<text x="${width / 2}" y="${height - padding.bottom / 2}" class="count">${outsideCount}</text>` // Adjusted y position based on padding
 
 	svg += "</svg>"

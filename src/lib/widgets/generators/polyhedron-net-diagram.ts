@@ -74,12 +74,7 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		//   [ ]
 		// [ ][ ][ ]
 		//   [ ]
-		svg += face(x_offset + s, y_offset) // Top
-		svg += face(x_offset, y_offset + s) // Left
 		svg += face(x_offset + s, y_offset + s) // Center (Front)
-		svg += face(x_offset + 2 * s, y_offset + s) // Right
-		svg += face(x_offset + 3 * s, y_offset + s) // Back
-		svg += face(x_offset + s, y_offset + 2 * s) // Bottom
 
 		if (showLabels) {
 			const label = dimensions.base.side

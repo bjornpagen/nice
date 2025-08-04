@@ -57,10 +57,8 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	svg +=
 		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
 
-	// Title
 	if (title) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
 
-	// Axes
 	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="#333333"/>` // Y-axis
 	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="#333333"/>` // X-axis
 

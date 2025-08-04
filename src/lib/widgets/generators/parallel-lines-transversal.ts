@@ -104,7 +104,6 @@ export const generateParallelLinesTransversal: WidgetGenerator<typeof ParallelLi
 		const radius = 25
 		const labelRadius = radius + 18
 
-		// Arc
 		const startRad = toRad(start)
 		const endRad = toRad(end)
 		const arcStartX = int.x + radius * Math.cos(startRad)
@@ -114,7 +113,6 @@ export const generateParallelLinesTransversal: WidgetGenerator<typeof ParallelLi
 		const largeArcFlag = Math.abs(end - start) > 180 ? 1 : 0
 		svg += `<path d="M ${arcStartX} ${arcStartY} A ${radius} ${radius} 0 ${largeArcFlag} 0 ${arcEndX} ${arcEndY}" fill="none" stroke="${l.color}" stroke-width="2"/>`
 
-		// Label
 		const labelX = int.x + labelRadius * Math.cos(midAngleRad)
 		const labelY = int.y - labelRadius * Math.sin(midAngleRad)
 		svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle">${l.label}</text>`

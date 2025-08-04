@@ -140,7 +140,6 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		}
 	}
 
-	// Points
 	for (const p of points) {
 		const px = toSvgX(p.x)
 		const py = toSvgY(p.y)

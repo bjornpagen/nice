@@ -145,7 +145,6 @@ export const generateCoordinatePlane: WidgetGenerator<typeof CoordinatePlaneProp
 		}
 	}
 
-	// Axes
 	svg += `<line x1="${pad.left}" y1="${zeroY}" x2="${width - pad.right}" y2="${zeroY}" stroke="black" stroke-width="1.5"/>`
 	svg += `<line x1="${zeroX}" y1="${pad.top}" x2="${zeroX}" y2="${height - pad.bottom}" stroke="black" stroke-width="1.5"/>`
 
@@ -195,7 +194,6 @@ export const generateCoordinatePlane: WidgetGenerator<typeof CoordinatePlaneProp
 		}
 	}
 
-	// Lines
 	if (lines) {
 		for (const l of lines) {
 			const { slope, yIntercept } = l.equation

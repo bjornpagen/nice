@@ -82,7 +82,6 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 		svg += `<text x="${x}" y="${yPos + 20}" fill="#333333" text-anchor="middle">${t}</text>`
 	}
 
-	// Ranges
 	for (const r of ranges) {
 		const startPos = r.start ? toSvgX(r.start.value) : padding.horizontal
 		const endPos = r.end ? toSvgX(r.end.value) : width - padding.horizontal

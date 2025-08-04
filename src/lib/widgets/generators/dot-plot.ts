@@ -71,7 +71,6 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 		svg += `<text x="${x}" y="${axisY + 20}" fill="black" text-anchor="middle">${t}</text>`
 	}
 
-	// Dots
 	const dotDiameter = dotRadius * 2
 	const dotSpacing = 2 // Vertical space between dots
 	const baseOffset = 10 // Additional space between axis and first dot

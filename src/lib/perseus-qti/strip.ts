@@ -126,7 +126,6 @@ export function stripXmlComments(xml: string, logger: logger.Logger): string {
 
 	// Replace all comments with empty string
 	const strippedXml = xml.replace(commentRegex, "")
-	// test
 
 	if (commentCount > 0) {
 		logger.debug("xml comments stripped", {
