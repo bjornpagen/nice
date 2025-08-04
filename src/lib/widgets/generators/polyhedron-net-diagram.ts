@@ -60,29 +60,56 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 			)
 		}
 		const side = dimensions.base.side * 5
-		const totalW = 4 * side
-		const totalH = 3 * side
+		const totalW = 4 * side // 4 faces wide in middle row
+		const totalH = 3 * side // 3 faces tall
 		const scale = Math.min(width / totalW, height / totalH) * 0.9
 		const s = side * scale
-		const x_offset = (width - 4 * s) / 2
+		const x_offset = (width - 4 * s) / 2 // Center the 4-wide layout
 		const y_offset = (height - 3 * s) / 2
 
 		const face = (x: number, y: number) =>
-			`<rect x="${x}" y="${y}" width="${s}" height="${s}" fill="rgba(200,200,200,0.3)" stroke="black"/>`
+			`<rect x="${x}" y="${y}" width="${s}" height="${s}" fill="rgba(200,200,200,0.3)" stroke="black" stroke-width="2"/>`
 
-		// Cross layout:
-		//   [ ]
-		// [ ][ ][ ]
-		//   [ ]
-		svg += face(x_offset + s, y_offset + s) // Center (Front)
+		// Cross layout with 6 faces:
+		//     [1]
+		// [2][3][4][5]
+		//     [6]
+
+		// Top face
+		svg += face(x_offset + s, y_offset)
+		// Middle row: left, center, right, far right faces
+		svg += face(x_offset, y_offset + s)
+		svg += face(x_offset + s, y_offset + s)
+		svg += face(x_offset + 2 * s, y_offset + s)
+		svg += face(x_offset + 3 * s, y_offset + s)
+		// Bottom face
+		svg += face(x_offset + s, y_offset + 2 * s)
 
 		if (showLabels) {
-			const label = dimensions.base.side
-			svg += `<text x="${x_offset + 1.5 * s}" y="${y_offset + 1.5 * s}" text-anchor="middle" dominant-baseline="middle">${label}</text>`
-			svg += `<text x="${x_offset + 1.5 * s}" y="${y_offset + 2.5 * s}" text-anchor="middle" dominant-baseline="middle">${label}</text>`
+			const gridSize = dimensions.base.side
+			const cellSize = s / gridSize
+
+			// Helper function to draw grid in a face
+			const drawGrid = (faceX: number, faceY: number) => {
+				for (let row = 0; row < gridSize; row++) {
+					for (let col = 0; col < gridSize; col++) {
+						const cellX = faceX + col * cellSize
+						const cellY = faceY + row * cellSize
+						svg += `<rect x="${cellX}" y="${cellY}" width="${cellSize}" height="${cellSize}" fill="none" stroke="black" stroke-width="0.5"/>`
+					}
+				}
+			}
+
+			// Draw grids on all 6 faces
+			drawGrid(x_offset + s, y_offset) // Top
+			drawGrid(x_offset, y_offset + s) // Left
+			drawGrid(x_offset + s, y_offset + s) // Center
+			drawGrid(x_offset + 2 * s, y_offset + s) // Right
+			drawGrid(x_offset + 3 * s, y_offset + s) // Far right
+			drawGrid(x_offset + s, y_offset + 2 * s) // Bottom
 		}
 	} else {
-		svg += `<text x="${width / 2}" y="${height / 2}" text-anchor="middle" fill="red">Net type not implemented.</text>`
+		throw errors.new(`polyhedron type '${polyhedronType}' is not implemented`)
 	}
 	svg += "</svg>"
 	return svg
