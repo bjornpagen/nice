@@ -42,7 +42,7 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 	)
 
 	return (
-		<React.Suspense fallback={<div className="p-8">Loading unit...</div>}>
+		<React.Suspense>
 			<Content dataPromise={unitDataPromise} progressPromise={progressPromise} />
 		</React.Suspense>
 	)

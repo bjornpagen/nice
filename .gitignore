@@ -51,3 +51,7 @@ prd.md
 
 # Data files
 /data
+
+# Snapshots
+src/lib/qti-generation/__snapshots__
+src/lib/widgets/generators/__snapshots__

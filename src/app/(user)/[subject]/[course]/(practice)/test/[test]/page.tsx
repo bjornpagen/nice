@@ -155,7 +155,7 @@ export default function CourseChallengePage({
 
 	return (
 		<ChallengeLayout coursePromise={coursePromise} progressPromise={progressPromise}>
-			<React.Suspense fallback={<div className="p-8">Loading course challenge...</div>}>
+			<React.Suspense>
 				<Content testDataPromise={testDataPromise} />
 			</React.Suspense>
 		</ChallengeLayout>

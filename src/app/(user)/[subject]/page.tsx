@@ -40,7 +40,7 @@ export default function SubjectPage({ params }: { params: Promise<{ subject: str
 
 	return (
 		<div className="bg-gray-100">
-			<React.Suspense fallback={<div>Loading subject...</div>}>
+			<React.Suspense>
 				<Content subjectPromise={subjectPromise} />
 			</React.Suspense>
 

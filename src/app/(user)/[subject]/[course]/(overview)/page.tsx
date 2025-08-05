@@ -61,7 +61,7 @@ export default function CoursePage({ params }: { params: Promise<{ subject: stri
 	)
 
 	return (
-		<React.Suspense fallback={<div className="p-8">Loading course...</div>}>
+		<React.Suspense>
 			<Content dataPromise={courseDataPromise} progressPromise={progressPromise} />
 		</React.Suspense>
 	)
