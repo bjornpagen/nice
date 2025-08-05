@@ -55,6 +55,13 @@ const events = {
 			articleId: z.string().min(1)
 		})
 	},
+	// ADD: New event for generating 'n' differentiated versions of a single assessment item.
+	"qti/item.differentiate": {
+		data: z.object({
+			questionId: z.string().min(1),
+			n: z.number().int().positive().describe("The number of differentiated questions to generate.")
+		})
+	},
 	// QTI Ingestion Events
 	"qti/course.payload.generate": {
 		data: z.object({
