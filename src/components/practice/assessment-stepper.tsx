@@ -971,9 +971,6 @@ export function AssessmentStepper({
 					onResponseChange={handleResponseChange}
 					displayFeedback={isAnswerChecked}
 				/>
-				{isAnswerChecked && (isAnswerCorrect || hasExhaustedAttempts) && (
-					<div className="absolute inset-0 z-10" aria-hidden="true" />
-				)}
 			</div>
 
 			<AssessmentBottomNav
