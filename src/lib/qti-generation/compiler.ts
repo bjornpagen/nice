@@ -79,13 +79,9 @@ function isTerminatingFraction(numerator: number, denominator: number): boolean 
 }
 
 function encodeDataUri(content: string): string {
-	const encoded = encodeURIComponent(content)
-		.replace(/'/g, "%27")
-		.replace(/"/g, "%22")
-		.replace(/</g, "%3C")
-		.replace(/>/g, "%3E")
+	const base64 = btoa(unescape(encodeURIComponent(content)))
 	const isSvg = content.trim().startsWith("<svg")
-	return `${isSvg ? "data:image/svg+xml" : "data:text/html"},${encoded}`
+	return `${isSvg ? "data:image/svg+xml" : "data:text/html"};base64,${base64}`
 }
 
 /**
