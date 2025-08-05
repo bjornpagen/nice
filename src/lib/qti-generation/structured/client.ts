@@ -19,7 +19,7 @@ import {
 	createWidgetMappingPrompt
 } from "./prompts"
 
-const OPENAI_MODEL = "o4-mini"
+const OPENAI_MODEL = "o3"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
 // A new schema is needed for the shell from Shot 1.
