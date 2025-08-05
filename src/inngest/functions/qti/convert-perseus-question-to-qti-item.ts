@@ -17,7 +17,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		id: "convert-perseus-question-to-qti-item",
 		name: "Convert Perseus Question to QTI Item",
 		concurrency: {
-			limit: 800,
+			limit: 1600,
 			key: OPENAI_CONCURRENCY_KEY
 		}
 	},
