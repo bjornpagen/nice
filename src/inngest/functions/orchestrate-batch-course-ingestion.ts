@@ -1,7 +1,7 @@
 import { inngest } from "@/inngest/client"
 import { orchestrateCourseIngestionToQti } from "./orchestrate-course-ingestion-to-qti"
 
-// Hardcoded course IDs for batch differentiated processing
+// Hardcoded course IDs for batch processing
 const COURSE_IDS = [
 	// "x3184e0ec", // 2nd grade math
 	// "x3c950fa744f5f34c", // Get ready for 3rd grade math
@@ -25,11 +25,11 @@ interface BatchProgress {
 export const orchestrateBatchCourseIngestion = inngest.createFunction(
 	{
 		id: "orchestrate-batch-course-ingestion",
-		name: "Orchestrate Batch Course Ingestion to QTI (Differentiated)"
+		name: "Orchestrate Batch Course Ingestion to QTI"
 	},
 	{ event: "qti/batch.ingest" },
 	async ({ step, logger }) => {
-		logger.info("starting batch differentiated qti generation workflow", {
+		logger.info("starting batch qti generation workflow", {
 			totalCourses: COURSE_IDS.length,
 			courseIds: COURSE_IDS
 		})
@@ -65,12 +65,11 @@ export const orchestrateBatchCourseIngestion = inngest.createFunction(
 				progress: `${index + 1}/${COURSE_IDS.length}`
 			})
 
-			// Invoke the existing orchestration function with differentiated=true
+			// Invoke the existing orchestration function
 			const courseResult = await step.invoke(`process-course-${courseId}`, {
 				function: orchestrateCourseIngestionToQti,
 				data: {
-					courseId,
-					differentiated: true
+					courseId
 				}
 			})
 
@@ -108,7 +107,7 @@ export const orchestrateBatchCourseIngestion = inngest.createFunction(
 			const failedCourses = batchProgress.errors.length
 			const totalProcessed = successfulCourses + failedCourses
 
-			logger.info("batch differentiated qti generation completed", {
+			logger.info("batch qti generation completed", {
 				totalCourses: COURSE_IDS.length,
 				successfulCourses,
 				failedCourses,
@@ -131,7 +130,7 @@ export const orchestrateBatchCourseIngestion = inngest.createFunction(
 		})
 
 		return {
-			message: "Batch differentiated QTI generation workflow completed",
+			message: "Batch QTI generation workflow completed",
 			...finalResults
 		}
 	}

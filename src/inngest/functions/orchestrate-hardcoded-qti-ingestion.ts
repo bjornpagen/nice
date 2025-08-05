@@ -21,11 +21,9 @@ export const orchestrateHardcodedQtiIngestion = inngest.createFunction(
 		name: "Orchestrate Hardcoded QTI Generation and Upload"
 	},
 	{ event: "migration/hardcoded.qti.ingest" },
-	async ({ event, step, logger }) => {
-		const { differentiated } = event.data // ✅ NEW: Get the flag from the event
+	async ({ step, logger }) => {
 		logger.info("starting hardcoded qti data generation and upload", {
-			courseCount: HARDCODED_COURSE_IDS.length,
-			differentiated
+			courseCount: HARDCODED_COURSE_IDS.length
 		})
 
 		// Step 1: Generate QTI JSON data using the unified orchestrator
@@ -33,7 +31,7 @@ export const orchestrateHardcodedQtiIngestion = inngest.createFunction(
 		const qtiIngestionPromises = HARDCODED_COURSE_IDS.map((courseId) =>
 			step.invoke(`ingest-qti-for-${courseId}`, {
 				function: orchestrateCourseIngestionToQti,
-				data: { courseId, differentiated } // ✅ NEW: Pass the flag
+				data: { courseId }
 			})
 		)
 		const qtiIngestionResults = await errors.try(Promise.all(qtiIngestionPromises))

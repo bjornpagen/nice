@@ -218,7 +218,7 @@ async function createStimulusConversionPrompt(
 	const systemInstruction = `You are an expert XML generator for educational content. Your primary and most critical function is to convert a Perseus JSON article object into a single, well-formed QTI 3.0 XML \`${rootTag}\`. Your output MUST be only the raw XML. The XML MUST be perfect and parseable. The most common and catastrophic failure is an incomplete or malformed closing tag. You are STRICTLY FORBIDDEN from using partial or lazy closing tags like \`</_>\` or \`</>\`. Every single XML element, such as \`<p>\`, must have a corresponding full closing tag, \`</p>\`. This rule is absolute and cannot be violated.`
 
 	logger.debug("loading conversion examples", { type: "stimulus" })
-	const examples = await loadConversionExamples({ type: "stimulus" })
+	const examples = await loadConversionExamples()
 	logger.debug("loaded conversion examples", {
 		exampleCount: examples.length,
 		exampleNames: examples.map((e) => e.name),

@@ -48,22 +48,7 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
-	// ✅ ADD: New event for differentiating a single question
-	"qti/question.differentiate": {
-		data: z.object({
-			questionId: z.string().min(1),
-			numberOfVariations: z.number().int().positive(),
-			startingIndex: z.number().int().positive().optional(),
-			// AI Quality Review configuration
-			qualityReviewConfig: z
-				.object({
-					enabled: z.boolean(),
-					maxAttempts: z.number().int().positive().optional(),
-					concurrency: z.number().int().positive().optional()
-				})
-				.optional()
-		})
-	},
+
 	// ✅ ADD: New event for paraphrasing a single stimulus
 	"qti/stimulus.paraphrase": {
 		data: z.object({
@@ -79,8 +64,7 @@ const events = {
 	// ✅ REINSTATED & MODIFIED: This is now the single entry point for QTI JSON generation.
 	"qti/course.ingest": {
 		data: z.object({
-			courseId: z.string().min(1),
-			differentiated: z.boolean() // Mandatory flag to control the pipeline
+			courseId: z.string().min(1)
 		})
 	},
 	// ✅ ADDED: New event for batch course processing with differentiated content
@@ -274,11 +258,8 @@ const events = {
 		data: z.object({}) // No data needed
 	},
 	// ADD: New event to trigger QTI data generation and upload for hardcoded courses
-	// ✅ MODIFIED: Add differentiated flag for explicit control in hardcoded flows.
 	"migration/hardcoded.qti.ingest": {
-		data: z.object({
-			differentiated: z.boolean()
-		})
+		data: z.object({})
 	}
 }
 

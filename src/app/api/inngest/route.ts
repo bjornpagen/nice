@@ -28,10 +28,7 @@ import { orchestrateHardcodedPerseusMigration } from "@/inngest/functions/orches
 import { orchestrateHardcodedQtiIngestion } from "@/inngest/functions/orchestrate-hardcoded-qti-ingestion"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
-// ✅ ADD: Import the new differentiate function
-import { differentiateQuestion } from "@/inngest/functions/qti/differentiate-question"
-// ❌ REMOVED: The old differentiated ingest function is deleted.
-// import { differentiatedIngest } from "@/inngest/functions/qti/differentiated-ingest"
+
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
@@ -81,8 +78,6 @@ export const { GET, POST, PUT } = serve({
 		ingestAssessmentTests,
 		// ✅ ADD: Register the new validation function
 		validateAndClearInvalidQuestionXml,
-		// ✅ ADD: Register the new function
-		differentiateQuestion,
 		// ✅ ADD: Register the new paraphrase function
 		paraphraseStimulus
 	]

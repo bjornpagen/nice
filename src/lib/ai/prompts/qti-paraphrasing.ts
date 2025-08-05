@@ -2,7 +2,7 @@ import { loadConversionExamples } from "@/lib/qti-generation/examples-loader"
 
 export async function produceQtiParaphrasingPrompt(sourceQtiXml: string): Promise<{ developer: string; user: string }> {
 	// ✅ ADDITION: Load proven examples for additional context
-	const provenExamples = await loadConversionExamples({ type: "stimulus" })
+	const provenExamples = await loadConversionExamples()
 
 	// ✅ ADDITION: Extract key structure rules from proven system for context
 	const provenStructureContext = `

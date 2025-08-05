@@ -19,24 +19,7 @@ import {
 	createWidgetMappingPrompt
 } from "./prompts"
 
-// ❌ REMOVE: Old prompt imports are no longer needed.
-// import {
-// 	createQtiConversionPrompt,
-// 	createQtiSufficiencyValidationPrompt,
-// } from "@/lib/perseus-qti/prompts"
-// ❌ REMOVE: Strip functions are not used in the structured generation flow.
-// import {
-// 	convertHtmlEntities,
-// 	fixInequalityOperators,
-// 	fixKhanGraphieUrls,
-// 	fixMathMLOperators,
-// 	stripXmlComments
-// } from "@/lib/perseus-qti/strip"
-
-// ... (The rest of the file content remains the same, as its logic is sound)
-// ... (generateXml and validateXmlWithAi functions are removed as they belong to the old flow)
-
-const OPENAI_MODEL = "o3"
+const OPENAI_MODEL = "o4-mini"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
 // A new schema is needed for the shell from Shot 1.

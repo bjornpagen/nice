@@ -13,33 +13,25 @@ interface ConversionExample {
 }
 
 // Cache for loaded examples to avoid re-reading files on every request
-let cachedAssessmentItemExamples: ConversionExample[] | null = null
 let cachedStimulusExamples: ConversionExample[] | null = null
 
 /**
- * Loads all Perseus-to-QTI examples from the filesystem.
+ * Loads all Perseus-to-QTI stimulus examples from the filesystem.
  * This function is lazy and will cache results after the first load.
  *
- * @param options An object to specify the conversion type. Defaults to 'assessmentItem'.
  * @returns A promise that resolves to an array of conversion examples.
  */
-export async function loadConversionExamples(
-	options: { type: "assessmentItem" | "stimulus" } = { type: "assessmentItem" }
-): Promise<ConversionExample[]> {
-	const { type } = options
-	const isStimulus = type === "stimulus"
-	const cached = isStimulus ? cachedStimulusExamples : cachedAssessmentItemExamples
-	if (cached !== null) {
-		return cached
+export async function loadConversionExamples(): Promise<ConversionExample[]> {
+	if (cachedStimulusExamples !== null) {
+		return cachedStimulusExamples
 	}
 
-	logger.info("loading perseus-to-qti conversion examples from filesystem", { type })
+	logger.info("loading perseus-to-qti stimulus conversion examples from filesystem")
 
 	const EXAMPLES_DIR = `${process.cwd()}/src/lib/qti-generation/examples`
-	// Both "assessmentItem" and "stimulus" examples use the same extensions
 	const perseusExt = ".perseus.json"
 	const qtiExt = ".qti.xml"
-	const baseDir = isStimulus ? `${EXAMPLES_DIR}/assessment-stimulus` : `${EXAMPLES_DIR}/assessment-items`
+	const baseDir = `${EXAMPLES_DIR}/assessment-stimulus`
 
 	// Load examples from both positive and negative directories
 	const allExamples: ConversionExample[] = []
@@ -49,10 +41,9 @@ export async function loadConversionExamples(
 
 		const filesResult = await errors.try(fs.readdir(exampleDir))
 		if (filesResult.error) {
-			logger.warn("failed to read examples directory, skipping", {
+			logger.warn("failed to read stimulus examples directory, skipping", {
 				error: filesResult.error,
 				path: exampleDir,
-				type,
 				exampleType
 			})
 			continue
@@ -77,9 +68,8 @@ export async function loadConversionExamples(
 		}
 
 		if (baseNames.size === 0) {
-			logger.warn("no example files found in examples directory", {
+			logger.warn("no stimulus example files found in examples directory", {
 				path: exampleDir,
-				type,
 				exampleType
 			})
 			continue
@@ -167,26 +157,20 @@ export async function loadConversionExamples(
 		const validExamples = results.filter((e): e is ConversionExample => e !== null)
 		allExamples.push(...validExamples)
 
-		logger.info("loaded examples from directory", {
-			type,
+		logger.info("loaded stimulus examples from directory", {
 			exampleType,
 			loaded: validExamples.length,
 			total: perseusFiles.length
 		})
 	}
 
-	logger.info("successfully loaded all qti conversion examples", {
-		type,
+	logger.info("successfully loaded all qti stimulus conversion examples", {
 		totalLoaded: allExamples.length,
 		positiveCount: allExamples.filter((e) => e.type === "positive").length,
 		negativeCount: allExamples.filter((e) => e.type === "negative").length
 	})
 
 	// Cache the results
-	if (isStimulus) {
-		cachedStimulusExamples = allExamples
-	} else {
-		cachedAssessmentItemExamples = allExamples
-	}
+	cachedStimulusExamples = allExamples
 	return allExamples
 }
