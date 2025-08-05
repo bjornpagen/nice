@@ -8,8 +8,7 @@ export const doubleNumberLineRatio: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "A",
-			mapping: null
+			correct: "A"
 		}
 	],
 	widgets: {
@@ -74,8 +73,7 @@ export const evalFractionalExponents: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "integer",
-			correct: 81,
-			mapping: null
+			correct: 81
 		}
 	],
 	body: '<p>Evaluate.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math><slot name="text_entry" />',
@@ -103,8 +101,7 @@ export const compare3DigitNumbers: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "ordered",
 			baseType: "identifier",
-			correct: ["A", "B", "C"],
-			mapping: null
+			correct: ["A", "B", "C"]
 		}
 	],
 	body: '<slot name="order_interaction" />',
@@ -154,8 +151,7 @@ export const inequalityNumberLine: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "C",
-			mapping: null
+			correct: "C"
 		}
 	],
 	widgets: {
@@ -224,15 +220,13 @@ export const verticalNumberLineComparison: AssessmentItemInput = {
 			identifier: "RESPONSE_POS",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "ABOVE",
-			mapping: null
+			correct: "ABOVE"
 		},
 		{
 			identifier: "RESPONSE_COMP",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "GT",
-			mapping: null
+			correct: "GT"
 		}
 	],
 	widgets: {
@@ -295,10 +289,10 @@ export const twoWayFrequencyTable: AssessmentItemInput = {
 	identifier: "two-way-frequency-table-cold-study",
 	title: "Complete a Two-Way Frequency Table",
 	responseDeclarations: [
-		{ identifier: "RESP_A", cardinality: "single", baseType: "integer", correct: 23, mapping: null },
-		{ identifier: "RESP_B", cardinality: "single", baseType: "integer", correct: 20, mapping: null },
-		{ identifier: "RESP_C", cardinality: "single", baseType: "integer", correct: 27, mapping: null },
-		{ identifier: "RESP_D", cardinality: "single", baseType: "integer", correct: 30, mapping: null }
+		{ identifier: "RESP_A", cardinality: "single", baseType: "integer", correct: 23 },
+		{ identifier: "RESP_B", cardinality: "single", baseType: "integer", correct: 20 },
+		{ identifier: "RESP_C", cardinality: "single", baseType: "integer", correct: 27 },
+		{ identifier: "RESP_D", cardinality: "single", baseType: "integer", correct: 30 }
 	],
 	widgets: {
 		venn_widget: {
@@ -352,8 +346,7 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "multiple",
 			baseType: "identifier",
-			correct: ["A", "B"],
-			mapping: null
+			correct: ["A", "B"]
 		}
 	],
 	widgets: {
@@ -434,8 +427,7 @@ export const calculateShadedArea: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "multiple",
 			baseType: "identifier",
-			correct: ["B", "C"],
-			mapping: null
+			correct: ["B", "C"]
 		}
 	],
 	widgets: {
@@ -497,9 +489,9 @@ export const circleEquationCenterRadius: AssessmentItemInput = {
 	identifier: "circle-equation-center-radius",
 	title: "Find the center and radius of a circle from its equation",
 	responseDeclarations: [
-		{ identifier: "RESPONSE_X", cardinality: "single", baseType: "integer", correct: -9, mapping: null },
-		{ identifier: "RESPONSE_Y", cardinality: "single", baseType: "integer", correct: -7, mapping: null },
-		{ identifier: "RESPONSE_R", cardinality: "single", baseType: "integer", correct: 5, mapping: null }
+		{ identifier: "RESPONSE_X", cardinality: "single", baseType: "integer", correct: -9 },
+		{ identifier: "RESPONSE_Y", cardinality: "single", baseType: "integer", correct: -7 },
+		{ identifier: "RESPONSE_R", cardinality: "single", baseType: "integer", correct: 5 }
 	],
 	body: '<p>A certain circle can be represented by the following equation.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></mrow></math><p>What is the center of this circle? (<slot name="x_entry" />, <slot name="y_entry" />) and radius <slot name="r_entry" />?</p>',
 	interactions: {
@@ -524,8 +516,7 @@ export const harukaExamScore: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "integer",
-			correct: 87,
-			mapping: null
+			correct: 87
 		}
 	],
 	widgets: {
@@ -570,8 +561,7 @@ export const libertyvilleBusinessCycle: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "C",
-			mapping: null
+			correct: "C"
 		}
 	],
 	widgets: {
@@ -678,8 +668,7 @@ export const continuityDifferentiabilityPiecewise: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "C",
-			mapping: null
+			correct: "C"
 		}
 	],
 	body: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mrow><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mrow></mtd></mtr><mtr><mtd columnalign="left"><mrow><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>&gt;</mo><mn>2</mn></mrow></mtd></mtr></mtable></mrow></mrow></math><slot name="choice_interaction" />',
@@ -736,8 +725,7 @@ export const stokesTheoremRewrite: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "string",
-			correct: "x^2/2-x*cos(z)",
-			mapping: null
+			correct: "x^2/2-x*cos(z)"
 		}
 	],
 	body: '<p>Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∬</mo><mi>S</mi></msub><mrow><mo>[</mo><mrow><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow><mo>]</mo></mrow><mo>·</mo><mi>d</mi><mi>S</mi></mrow></math><p>Use Stokes\' theorem to rewrite the surface integral as a line integral.</p><p><em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em></p><slot name="text_entry" />',
@@ -765,8 +753,7 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "D",
-			mapping: null
+			correct: "D"
 		}
 	],
 	widgets: {
@@ -860,8 +847,7 @@ export const countApplesEmoji: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "CHOICE_5",
-			mapping: null
+			correct: "CHOICE_5"
 		}
 	],
 	widgets: {
@@ -946,8 +932,7 @@ export const shapeBinBarChart: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "A",
-			mapping: null
+			correct: "A"
 		}
 	],
 	widgets: {
@@ -1077,8 +1062,7 @@ export const pencilLengthLinePlot: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "A",
-			mapping: null
+			correct: "A"
 		}
 	],
 	widgets: {
@@ -1184,8 +1168,7 @@ export const gamesWonBarChart: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "integer",
-			correct: 14,
-			mapping: null
+			correct: 14
 		}
 	],
 	widgets: {
@@ -1233,8 +1216,7 @@ export const dollHeightLinePlot: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "integer",
-			correct: 5,
-			mapping: null
+			correct: 5
 		}
 	],
 	widgets: {
@@ -1278,8 +1260,8 @@ export const timeOnNumberLine: AssessmentItemInput = {
 	identifier: "time-on-number-line-detailed-final",
 	title: "What time is shown on the number line?",
 	responseDeclarations: [
-		{ identifier: "RESPONSE_HR", cardinality: "single", baseType: "integer", correct: 12, mapping: null },
-		{ identifier: "RESPONSE_MIN", cardinality: "single", baseType: "integer", correct: 55, mapping: { "05": 5 } }
+		{ identifier: "RESPONSE_HR", cardinality: "single", baseType: "integer", correct: 12 },
+		{ identifier: "RESPONSE_MIN", cardinality: "single", baseType: "integer", correct: 55 }
 	],
 	widgets: {
 		time_line: {
@@ -1321,8 +1303,7 @@ export const compare2DigitNumbers: AssessmentItemInput = {
 			identifier: "RESPONSE",
 			cardinality: "single",
 			baseType: "identifier",
-			correct: "GT",
-			mapping: null
+			correct: "GT"
 		}
 	],
 	body: '<p>Compare using <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>, or <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>.</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math> <slot name="comparison" /> <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math></p>',

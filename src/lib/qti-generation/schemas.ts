@@ -134,14 +134,10 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 				.describe("Data type of the response values for validation and scoring."),
 			correct: z
 				.union([z.string(), z.number(), z.array(z.string()), z.array(z.number())])
-				.describe("The correct answer(s). Format depends on cardinality: single value or array."),
-			mapping: z
-				.record(z.string(), z.union([z.string(), z.number()]))
-				.nullable()
-				.describe("Optional score mapping for partial credit, mapping responses to point values.")
+				.describe("The correct answer(s). For multiple correct answers, provide an array of values.")
 		})
 		.strict()
-		.describe("Defines correct answers and scoring rules for an interaction.")
+		.describe("Defines the correct answer(s) for an interaction.")
 
 	const FeedbackSchema = z
 		.object({

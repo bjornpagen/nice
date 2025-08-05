@@ -335,8 +335,6 @@ function compileResponseDeclarations(decls: AssessmentItem["responseDeclarations
 			// Create a Set to hold all correct values, including the original ones.
 			const correctValues = Array.isArray(decl.correct) ? decl.correct : [decl.correct]
 			const allCorrectValues = new Set<string | number>(correctValues)
-			const newMapping: Record<string, number | string> = { ...(decl.mapping || {}) }
-			const mappedValue = 1.0 // By default, equivalent answers are worth full points.
 
 			for (const val of correctValues) {
 				if (typeof val !== "string") {
@@ -371,14 +369,6 @@ function compileResponseDeclarations(decls: AssessmentItem["responseDeclarations
 				}
 			}
 
-			// Add all newly found correct values to the mapping as well, ensuring consistency.
-			for (const value of allCorrectValues) {
-				const key = String(value)
-				if (!(key in newMapping) && !correctValues.includes(value)) {
-					newMapping[key] = mappedValue
-				}
-			}
-
 			// Generate the <qti-value> tags from the comprehensive set of all correct values.
 			const correctXml = Array.from(allCorrectValues)
 				.map((v) => `<qti-value>${String(v)}</qti-value>`)
@@ -390,20 +380,6 @@ function compileResponseDeclarations(decls: AssessmentItem["responseDeclarations
         <qti-correct-response>
             ${correctXml}
         </qti-correct-response>`
-
-			// Only add the mapping block if there are entries to add.
-			if (Object.keys(newMapping).length > 0) {
-				const mapEntries = Object.entries(newMapping)
-					.map(
-						([key, val]) =>
-							`<qti-map-entry map-key="${escapeXmlAttribute(key)}" mapped-value="${escapeXmlAttribute(String(val))}"/>`
-					)
-					.join("\n            ")
-				xml += `
-        <qti-mapping>
-            ${mapEntries}
-        </qti-mapping>`
-			}
 
 			xml += "\n    </qti-response-declaration>"
 			return xml
