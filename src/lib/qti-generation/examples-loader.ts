@@ -28,7 +28,7 @@ export async function loadConversionExamples(): Promise<ConversionExample[]> {
 
 	logger.info("loading perseus-to-qti stimulus conversion examples from filesystem")
 
-	const EXAMPLES_DIR = `${process.cwd()}/src/lib/qti-generation/examples`
+	const EXAMPLES_DIR = `${process.cwd()}/examples/qti-generation`
 	const perseusExt = ".perseus.json"
 	const qtiExt = ".qti.xml"
 	const baseDir = `${EXAMPLES_DIR}/assessment-stimulus`
