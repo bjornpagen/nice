@@ -1,6 +1,6 @@
 import type { typedSchemas } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
-import { encodeDataUri, isValidWidgetType } from "./helpers"
+import { isValidWidgetType } from "./helpers"
 import { compileInteraction } from "./interaction-compiler"
 import { compileResponseDeclarations, compileResponseProcessing } from "./response-processor"
 import type { AssessmentItem, AssessmentItemInput } from "./schemas"
@@ -31,9 +31,8 @@ export function compile(itemData: AssessmentItemInput): string {
 			const widgetHtml = generateWidget(widgetDef)
 			const isSvg = widgetHtml.trim().startsWith("<svg")
 			if (isSvg) {
-				const dataUri = encodeDataUri(widgetHtml)
-				const altText = escapeXmlAttribute(`A visual element of type ${widgetDef.type}.`)
-				slots.set(widgetId, `<p><img src="${escapeXmlAttribute(dataUri)}" alt="${altText}" /></p>`)
+				// Skip SVG widgets - QTI schema doesn't allow img tags in many contexts
+				slots.set(widgetId, "")
 			} else {
 				slots.set(widgetId, widgetHtml)
 			}
