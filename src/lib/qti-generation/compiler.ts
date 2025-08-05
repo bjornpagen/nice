@@ -37,6 +37,44 @@ import { escapeXmlAttribute } from "@/lib/xml-utils"
 import type { AnyInteraction, AssessmentItem, AssessmentItemInput } from "./schemas"
 import { createDynamicAssessmentItemSchema } from "./schemas"
 
+/**
+ * Calculates the greatest common divisor (GCD) of two numbers using the Euclidean algorithm.
+ * @param a The first number.
+ * @param b The second number.
+ * @returns The GCD of a and b.
+ */
+function gcd(a: number, b: number): number {
+	return b === 0 ? a : gcd(b, a % b)
+}
+
+/**
+ * Determines if a fraction results in a terminating decimal.
+ * A fraction terminates if and only if the prime factors of its simplified denominator are only 2s and 5s.
+ * @param numerator The numerator of the fraction.
+ * @param denominator The denominator of the fraction.
+ * @returns True if the fraction terminates, false otherwise.
+ */
+function isTerminatingFraction(numerator: number, denominator: number): boolean {
+	if (denominator === 0) {
+		return false
+	}
+	// Simplify the fraction by dividing by the GCD.
+	const commonDivisor = gcd(Math.abs(numerator), Math.abs(denominator))
+	let simplifiedDen = Math.abs(denominator) / commonDivisor
+
+	// The fraction terminates if the simplified denominator's prime factors are only 2 and 5.
+	// We can check this by repeatedly dividing by 2 and 5 until we can't anymore.
+	// If the result is 1, it has no other prime factors.
+	while (simplifiedDen % 2 === 0) {
+		simplifiedDen /= 2
+	}
+	while (simplifiedDen % 5 === 0) {
+		simplifiedDen /= 5
+	}
+
+	return simplifiedDen === 1
+}
+
 function encodeDataUri(content: string): string {
 	const encoded = encodeURIComponent(content)
 		.replace(/'/g, "%27")
@@ -292,17 +330,72 @@ function generateWidget(widget: Widget): string {
 }
 
 function compileResponseDeclarations(decls: AssessmentItem["responseDeclarations"]): string {
-	return decls
+	// Pre-process declarations to add equivalent numeric mappings.
+	const processedDecls = decls.map((decl) => {
+		const newMapping: Record<string, number | string> = { ...(decl.mapping || {}) }
+		const correctValues = Array.isArray(decl.correct) ? decl.correct : [decl.correct]
+		const mappedValue = 1.0 // By default, equivalent answers are worth full points.
+
+		for (const val of correctValues) {
+			if (typeof val !== "string") {
+				continue
+			}
+
+			// Rule 1: Handle leading zero decimals (e.g., .5 vs 0.5)
+			if (val.startsWith(".")) {
+				const withLeadingZero = `0${val}`
+				if (!(withLeadingZero in newMapping)) {
+					newMapping[withLeadingZero] = mappedValue
+				}
+			} else if (val.startsWith("0.")) {
+				const withoutLeadingZero = val.substring(1)
+				if (!(withoutLeadingZero in newMapping)) {
+					newMapping[withoutLeadingZero] = mappedValue
+				}
+			}
+
+			// Rule 2: Handle fractions that convert to terminating decimals
+			if (val.includes("/") && !val.startsWith(".")) {
+				const parts = val.split("/")
+				if (parts.length === 2 && parts[0] && parts[1]) {
+					const num = Number.parseInt(parts[0], 10)
+					const den = Number.parseInt(parts[1], 10)
+
+					if (!Number.isNaN(num) && !Number.isNaN(den) && isTerminatingFraction(num, den)) {
+						const decimalValue = (num / den).toString()
+						if (!(decimalValue in newMapping)) {
+							newMapping[decimalValue] = mappedValue
+
+							// Also handle the leading-zero case for the newly generated decimal
+							if (decimalValue.startsWith("0.")) {
+								const withoutLeadingZero = decimalValue.substring(1)
+								if (!(withoutLeadingZero in newMapping)) {
+									newMapping[withoutLeadingZero] = mappedValue
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return { ...decl, mapping: newMapping }
+	})
+
+	return processedDecls
 		.map((decl) => {
 			const correctValues = Array.isArray(decl.correct) ? decl.correct : [decl.correct]
 			const correctXml = correctValues.map((v) => `<qti-value>${String(v)}</qti-value>`).join("\n            ")
 
-			let xml = `\n    <qti-response-declaration identifier="${escapeXmlAttribute(decl.identifier)}" cardinality="${escapeXmlAttribute(decl.cardinality)}" base-type="${escapeXmlAttribute(decl.baseType)}">
+			let xml = `\n    <qti-response-declaration identifier="${escapeXmlAttribute(decl.identifier)}" cardinality="${escapeXmlAttribute(
+				decl.cardinality
+			)}" base-type="${escapeXmlAttribute(decl.baseType)}">
         <qti-correct-response>
             ${correctXml}
         </qti-correct-response>`
 
-			if (decl.mapping) {
+			// Only add the mapping block if there are entries to add.
+			if (decl.mapping && Object.keys(decl.mapping).length > 0) {
 				const mapEntries = Object.entries(decl.mapping)
 					.map(
 						([key, val]) =>
