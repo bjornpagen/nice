@@ -32,6 +32,7 @@ import { generatePartitionedShape } from "./partitioned-shape"
 import { generatePictograph } from "./pictograph"
 import { generatePolyhedronDiagram } from "./polyhedron-diagram"
 import { ErrInvalidBaseShape, generatePolyhedronNetDiagram } from "./polyhedron-net-diagram"
+import { generateProbabilitySpinner, ProbabilitySpinnerPropsSchema } from "./probability-spinner"
 import { generatePythagoreanProofDiagram } from "./pythagorean-proof-diagram"
 import { generateScatterPlot } from "./scatter-plot"
 import { generateStackedItemsDiagram } from "./stacked-items-diagram"
@@ -1269,6 +1270,42 @@ describe("Widget Generators", () => {
 				]
 			}
 			expect(generatePictograph(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("generateProbabilitySpinner", () => {
+		test("should render a basic spinner with emoji sectors", () => {
+			const props = {
+				type: "probabilitySpinner" as const,
+				width: 300,
+				height: 300,
+				groups: [
+					{ count: 2, emoji: "🍎", color: "#FF5722" },
+					{ count: 3, emoji: "🍌", color: "#FFC107" },
+					{ count: 1, emoji: "🍇", color: "#9C27B0" }
+				],
+				pointerAngle: 45,
+				title: "Fruit Spinner"
+			}
+			const parsedProps = ProbabilitySpinnerPropsSchema.parse(props)
+			expect(generateProbabilitySpinner(parsedProps)).toMatchSnapshot()
+		})
+
+		test("should render a spinner with color-only sectors and custom pointer angle", () => {
+			const props = {
+				type: "probabilitySpinner" as const,
+				width: 400,
+				height: 400,
+				groups: [
+					{ count: 4, emoji: null, color: "#4CAF50" },
+					{ count: 2, emoji: null, color: "#2196F3" },
+					{ count: 2, emoji: null, color: "#FF9800" }
+				],
+				pointerAngle: 90,
+				title: null
+			}
+			const parsedProps = ProbabilitySpinnerPropsSchema.parse(props)
+			expect(generateProbabilitySpinner(parsedProps)).toMatchSnapshot()
 		})
 	})
 
