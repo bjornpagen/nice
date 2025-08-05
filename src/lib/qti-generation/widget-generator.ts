@@ -1,3 +1,4 @@
+import * as errors from "@superbuilders/errors"
 import type { Widget } from "@/lib/widgets/generators"
 import {
 	generateAbsoluteValueNumberLine,
@@ -28,6 +29,7 @@ import {
 	generateScatterPlot,
 	generateStackedItemsDiagram,
 	generateTapeDiagram,
+	generateThreeDIntersectionDiagram,
 	generateUnitBlockDiagram,
 	generateVennDiagram,
 	generateVerticalArithmeticSetup
@@ -35,6 +37,8 @@ import {
 
 export function generateWidget(widget: Widget): string {
 	switch (widget.type) {
+		case "3dIntersectionDiagram":
+			return generateThreeDIntersectionDiagram(widget)
 		case "absoluteValueNumberLine":
 			return generateAbsoluteValueNumberLine(widget)
 		case "barChart":
@@ -97,5 +101,7 @@ export function generateWidget(widget: Widget): string {
 			return generateVerticalArithmeticSetup(widget)
 		case "emojiImage":
 			return generateEmojiImage(widget)
+		default:
+			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
 	}
 }

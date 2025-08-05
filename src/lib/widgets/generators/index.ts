@@ -1,6 +1,7 @@
 import { z } from "zod"
 
 // Import all individual schemas and generators
+import { generateThreeDIntersectionDiagram, ThreeDIntersectionDiagramPropsSchema } from "./3d-intersection-diagram"
 import { AbsoluteValueNumberLinePropsSchema, generateAbsoluteValueNumberLine } from "./absolute-value-number-line"
 import { BarChartPropsSchema, generateBarChart } from "./bar-chart"
 import { BoxPlotPropsSchema, generateBoxPlot } from "./box-plot"
@@ -41,6 +42,7 @@ import { generateVerticalArithmeticSetup, VerticalArithmeticSetupPropsSchema } f
 
 // The `type` field is now included in the base schemas, so we remove .extend()
 export const typedSchemas = {
+	"3dIntersectionDiagram": ThreeDIntersectionDiagramPropsSchema,
 	absoluteValueNumberLine: AbsoluteValueNumberLinePropsSchema,
 	barChart: BarChartPropsSchema,
 	boxPlot: BoxPlotPropsSchema,
@@ -76,6 +78,7 @@ export const typedSchemas = {
 
 // Create the discriminated union schema from the schemas (each now contains its type field)
 export const WidgetSchema = z.discriminatedUnion("type", [
+	typedSchemas["3dIntersectionDiagram"],
 	typedSchemas.absoluteValueNumberLine,
 	typedSchemas.barChart,
 	typedSchemas.boxPlot,
@@ -113,6 +116,7 @@ export type WidgetInput = z.input<typeof WidgetSchema>
 
 // Export the individual generators for direct use
 export {
+	generateThreeDIntersectionDiagram,
 	generateAbsoluteValueNumberLine,
 	generateBarChart,
 	generateBoxPlot,

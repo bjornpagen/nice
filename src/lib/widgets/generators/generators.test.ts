@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
 
 // Import all generators and error constants
+import { generateThreeDIntersectionDiagram, ThreeDIntersectionDiagramPropsSchema } from "./3d-intersection-diagram"
 import { ErrInvalidRange as ErrAVNLInvalidRange, generateAbsoluteValueNumberLine } from "./absolute-value-number-line"
 import { ErrInvalidDimensions as ErrBarChartInvalidDimensions, generateBarChart } from "./bar-chart"
 import { ErrInvalidRange as ErrBoxPlotInvalidRange, generateBoxPlot } from "./box-plot"
@@ -37,6 +38,53 @@ import { generateVennDiagram } from "./venn-diagram"
 import { generateVerticalArithmeticSetup } from "./vertical-arithmetic-setup"
 
 describe("Widget Generators", () => {
+	describe("generateThreeDIntersectionDiagram", () => {
+		test("should render rectangular prism with horizontal plane", () => {
+			const props = {
+				type: "3dIntersectionDiagram" as const,
+				width: 400,
+				height: 400,
+				solid: {
+					type: "rectangularPrism" as const,
+					length: 100,
+					width: 80,
+					height: 60
+				},
+				plane: {
+					orientation: "horizontal" as const,
+					position: 0.5
+				},
+				viewOptions: null
+			}
+			const parsedProps = ThreeDIntersectionDiagramPropsSchema.parse(props)
+			expect(generateThreeDIntersectionDiagram(parsedProps)).toMatchSnapshot()
+		})
+
+		test("should render square pyramid with vertical plane", () => {
+			const props = {
+				type: "3dIntersectionDiagram" as const,
+				width: 400,
+				height: 400,
+				solid: {
+					type: "squarePyramid" as const,
+					baseSide: 100,
+					height: 80
+				},
+				plane: {
+					orientation: "vertical" as const,
+					position: 0.3
+				},
+				viewOptions: {
+					projectionAngle: 30,
+					intersectionColor: "rgba(66, 133, 244, 0.7)",
+					showHiddenEdges: false
+				}
+			}
+			const parsedProps = ThreeDIntersectionDiagramPropsSchema.parse(props)
+			expect(generateThreeDIntersectionDiagram(parsedProps)).toMatchSnapshot()
+		})
+	})
+
 	describe("generateAbsoluteValueNumberLine", () => {
 		test("should render with minimal props", () => {
 			const props = {
