@@ -71,20 +71,20 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 				totalBatches: itemBatches.length
 			})
 
-			for (let i = 0; i < itemBatches.length; i++) {
-				const batch = itemBatches[i]
-				await step.invoke(`invoke-ingest-assessment-items-batch-${i + 1}`, {
+			const itemPromises = itemBatches.map((batch, i) =>
+				step.invoke(`invoke-ingest-assessment-items-batch-${i + 1}`, {
 					function: ingestAssessmentItems,
 					data: { items: batch }
 				})
-				logger.info("completed assessment item batch", {
+			)
+
+			const itemResults = await errors.try(Promise.all(itemPromises))
+			if (itemResults.error) {
+				logger.error("one or more assessment item ingestion steps failed", {
 					courseId,
-					batchNumber: i + 1,
-					totalBatches: itemBatches.length,
-					batchSize: batch.length,
-					totalProcessed: (i + 1) * QTI_BATCH_SIZE,
-					remaining: Math.max(0, items.length - (i + 1) * QTI_BATCH_SIZE)
+					error: itemResults.error
 				})
+				throw errors.wrap(itemResults.error, "assessment item ingestion fan-out")
 			}
 		}
 
@@ -104,20 +104,20 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 				totalBatches: stimuliBatches.length
 			})
 
-			for (let i = 0; i < stimuliBatches.length; i++) {
-				const batch = stimuliBatches[i]
-				await step.invoke(`invoke-ingest-assessment-stimuli-batch-${i + 1}`, {
+			const stimuliPromises = stimuliBatches.map((batch, i) =>
+				step.invoke(`invoke-ingest-assessment-stimuli-batch-${i + 1}`, {
 					function: ingestAssessmentStimuli,
 					data: { stimuli: batch }
 				})
-				logger.info("completed assessment stimuli batch", {
+			)
+
+			const stimuliResults = await errors.try(Promise.all(stimuliPromises))
+			if (stimuliResults.error) {
+				logger.error("one or more assessment stimuli ingestion steps failed", {
 					courseId,
-					batchNumber: i + 1,
-					totalBatches: stimuliBatches.length,
-					batchSize: batch.length,
-					totalProcessed: (i + 1) * QTI_BATCH_SIZE,
-					remaining: Math.max(0, stimuli.length - (i + 1) * QTI_BATCH_SIZE)
+					error: stimuliResults.error
 				})
+				throw errors.wrap(stimuliResults.error, "assessment stimuli ingestion fan-out")
 			}
 		}
 
@@ -137,20 +137,20 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 				totalBatches: testBatches.length
 			})
 
-			for (let i = 0; i < testBatches.length; i++) {
-				const batch = testBatches[i]
-				await step.invoke(`invoke-ingest-assessment-tests-batch-${i + 1}`, {
+			const testPromises = testBatches.map((batch, i) =>
+				step.invoke(`invoke-ingest-assessment-tests-batch-${i + 1}`, {
 					function: ingestAssessmentTests,
 					data: { tests: batch }
 				})
-				logger.info("completed assessment test batch", {
+			)
+
+			const testResults = await errors.try(Promise.all(testPromises))
+			if (testResults.error) {
+				logger.error("one or more assessment test ingestion steps failed", {
 					courseId,
-					batchNumber: i + 1,
-					totalBatches: testBatches.length,
-					batchSize: batch.length,
-					totalProcessed: (i + 1) * QTI_BATCH_SIZE,
-					remaining: Math.max(0, tests.length - (i + 1) * QTI_BATCH_SIZE)
+					error: testResults.error
 				})
+				throw errors.wrap(testResults.error, "assessment test ingestion fan-out")
 			}
 		}
 

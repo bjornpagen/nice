@@ -75,27 +75,24 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 				resourceBatches.push(payload.resources.slice(i, i + ONEROSTER_BATCH_SIZE))
 			}
 
-			logger.info("processing resources in batches", {
+			logger.info("processing resources in parallel batches", {
 				courseId,
 				totalResources: payload.resources.length,
 				batchSize: ONEROSTER_BATCH_SIZE,
 				totalBatches: resourceBatches.length
 			})
 
-			for (let i = 0; i < resourceBatches.length; i++) {
-				const batch = resourceBatches[i]
-				await step.invoke(`invoke-ingest-resources-batch-${i + 1}`, {
+			const resourcePromises = resourceBatches.map((batch, i) =>
+				step.invoke(`invoke-ingest-resources-batch-${i + 1}`, {
 					function: ingestResources,
 					data: { resources: batch }
 				})
-				logger.info("completed resource batch", {
-					courseId,
-					batchNumber: i + 1,
-					totalBatches: resourceBatches.length,
-					batchSize: batch.length,
-					totalProcessed: (i + 1) * ONEROSTER_BATCH_SIZE,
-					remaining: Math.max(0, payload.resources.length - (i + 1) * ONEROSTER_BATCH_SIZE)
-				})
+			)
+
+			const resourceResults = await errors.try(Promise.all(resourcePromises))
+			if (resourceResults.error) {
+				logger.error("one or more resource ingestion steps failed", { courseId, error: resourceResults.error })
+				throw errors.wrap(resourceResults.error, "resource ingestion fan-out")
 			}
 
 			logger.info("completed all resource batches", { courseId, totalResources: payload.resources.length })
@@ -133,27 +130,27 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 				componentResourceBatches.push(payload.componentResources.slice(i, i + ONEROSTER_BATCH_SIZE))
 			}
 
-			logger.info("processing component resources in batches", {
+			logger.info("processing component resources in parallel batches", {
 				courseId,
 				totalComponentResources: payload.componentResources.length,
 				batchSize: ONEROSTER_BATCH_SIZE,
 				totalBatches: componentResourceBatches.length
 			})
 
-			for (let i = 0; i < componentResourceBatches.length; i++) {
-				const batch = componentResourceBatches[i]
-				await step.invoke(`invoke-ingest-component-resources-batch-${i + 1}`, {
+			const componentResourcePromises = componentResourceBatches.map((batch, i) =>
+				step.invoke(`invoke-ingest-component-resources-batch-${i + 1}`, {
 					function: ingestComponentResources,
 					data: { componentResources: batch }
 				})
-				logger.info("completed component resource batch", {
+			)
+
+			const componentResourceResults = await errors.try(Promise.all(componentResourcePromises))
+			if (componentResourceResults.error) {
+				logger.error("one or more component resource ingestion steps failed", {
 					courseId,
-					batchNumber: i + 1,
-					totalBatches: componentResourceBatches.length,
-					batchSize: batch.length,
-					totalProcessed: (i + 1) * ONEROSTER_BATCH_SIZE,
-					remaining: Math.max(0, payload.componentResources.length - (i + 1) * ONEROSTER_BATCH_SIZE)
+					error: componentResourceResults.error
 				})
+				throw errors.wrap(componentResourceResults.error, "component resource ingestion fan-out")
 			}
 
 			logger.info("completed all component resource batches", {
@@ -176,27 +173,27 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 				assessmentBatches.push(payload.assessmentLineItems.slice(i, i + ONEROSTER_BATCH_SIZE))
 			}
 
-			logger.info("processing assessment line items in batches", {
+			logger.info("processing assessment line items in parallel batches", {
 				courseId,
 				totalAssessmentLineItems: payload.assessmentLineItems.length,
 				batchSize: ONEROSTER_BATCH_SIZE,
 				totalBatches: assessmentBatches.length
 			})
 
-			for (let i = 0; i < assessmentBatches.length; i++) {
-				const batch = assessmentBatches[i]
-				await step.invoke(`invoke-ingest-assessment-line-items-batch-${i + 1}`, {
+			const assessmentPromises = assessmentBatches.map((batch, i) =>
+				step.invoke(`invoke-ingest-assessment-line-items-batch-${i + 1}`, {
 					function: ingestAssessmentLineItems,
 					data: { assessmentLineItems: batch }
 				})
-				logger.info("completed assessment line item batch", {
+			)
+
+			const assessmentResults = await errors.try(Promise.all(assessmentPromises))
+			if (assessmentResults.error) {
+				logger.error("one or more assessment line item ingestion steps failed", {
 					courseId,
-					batchNumber: i + 1,
-					totalBatches: assessmentBatches.length,
-					batchSize: batch.length,
-					totalProcessed: (i + 1) * ONEROSTER_BATCH_SIZE,
-					remaining: Math.max(0, payload.assessmentLineItems.length - (i + 1) * ONEROSTER_BATCH_SIZE)
+					error: assessmentResults.error
 				})
+				throw errors.wrap(assessmentResults.error, "assessment line item ingestion fan-out")
 			}
 
 			logger.info("completed all assessment line item batches", {

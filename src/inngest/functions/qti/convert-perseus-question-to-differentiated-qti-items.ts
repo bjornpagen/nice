@@ -15,7 +15,7 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 		id: "convert-perseus-question-to-differentiated-qti-items",
 		name: "Convert Perseus Question to Differentiated QTI Items",
 		concurrency: {
-			limit: 1600,
+			limit: 400,
 			key: OPENAI_CONCURRENCY_KEY
 		}
 	},
