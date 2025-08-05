@@ -352,10 +352,13 @@ export async function generateStructuredQtiItem(
 	// NEW: Strict validation of slot consistency.
 	logger.debug("validating consistency between declared slots and body content")
 	const allDeclaredSlots = new Set([...assessmentShell.widgets, ...assessmentShell.interactions])
-	const slotNameRegex = /<slot\s+name="([^"]+)"/g
+	// FIX: Use a more robust regex that handles both single and double quotes,
+	// as well as potential whitespace variations. This prevents false positives.
+	const slotNameRegex = /<slot\s+name\s*=\s*(["'])(.*?)\1/g
 	const slotsUsedInBody = new Set(
+		// The match index is changed from 1 to 2 to capture the slot name correctly.
 		[...assessmentShell.body.matchAll(slotNameRegex)]
-			.map((match) => match[1])
+			.map((match) => match[2])
 			.filter((slot): slot is string => slot !== undefined)
 	)
 

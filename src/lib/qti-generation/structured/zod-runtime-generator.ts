@@ -66,10 +66,10 @@ export function generateZodSchemaFromObject(
 					throw errors.new("zod schema generation: cannot infer type from empty array")
 				}
 
-				// Handle heterogeneous arrays by creating a union of all possible element types.
+				// FIX: Handle heterogeneous arrays by creating a union of all possible element types.
 				const elementTypes = obj.map((element) => generateZodSchemaFromObject(element, visited, processing))
 				const uniqueElementSchemas = Array.from(
-					// Corrected from `schema.describe` to `schema.description` for a more reliable key
+					// Use a reliable property like JSON stringified description for the uniqueness key
 					new Map(elementTypes.map((schema) => [JSON.stringify(schema.description), schema])).values()
 				)
 

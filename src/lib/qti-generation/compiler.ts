@@ -74,7 +74,7 @@ ${responseDeclarations}
     <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
     <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
     <qti-item-body>
-        ${processedBody.trim()}
+        ${processedBody}
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>${correctFeedback}</qti-content-body>
         </qti-feedback-block>
