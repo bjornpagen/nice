@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { validateNoLatex } from "@/lib/qti-generation/validate-latex"
 // New imports for XML cleanup
 import { convertHtmlEntities, fixInequalityOperators, fixMathMLOperators } from "@/lib/qti-generation/xml-fixes"
 import type { Widget } from "@/lib/widgets/generators"
@@ -596,6 +597,9 @@ ${responseProcessing}
 	finalXml = convertHtmlEntities(finalXml, logger)
 	finalXml = fixMathMLOperators(finalXml, logger)
 	finalXml = fixInequalityOperators(finalXml, logger)
+
+	// Validate that no LaTeX content is present
+	validateNoLatex(finalXml, logger)
 
 	return finalXml
 }
