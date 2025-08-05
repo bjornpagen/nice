@@ -320,16 +320,16 @@ export const twoWayFrequencyTable: AssessmentItemInput = {
 			],
 			rowHeaderKey: "condition",
 			data: [
-				{
-					condition: "Cold lasted longer than 7 days",
-					received: { type: "input", responseIdentifier: "RESP_A", expectedLength: 3 },
-					notReceived: { type: "input", responseIdentifier: "RESP_B", expectedLength: 3 }
-				},
-				{
-					condition: "Cold did <em>not</em> last longer than 7 days",
-					received: { type: "input", responseIdentifier: "RESP_C", expectedLength: 3 },
-					notReceived: { type: "input", responseIdentifier: "RESP_D", expectedLength: 3 }
-				}
+				[
+					"Cold lasted longer than 7 days",
+					{ type: "input", responseIdentifier: "RESP_A", expectedLength: 3 },
+					{ type: "input", responseIdentifier: "RESP_B", expectedLength: 3 }
+				],
+				[
+					"Cold did <em>not</em> last longer than 7 days",
+					{ type: "input", responseIdentifier: "RESP_C", expectedLength: 3 },
+					{ type: "input", responseIdentifier: "RESP_D", expectedLength: 3 }
+				]
 			],
 			footer: null
 		}
@@ -538,10 +538,10 @@ export const harukaExamScore: AssessmentItemInput = {
 			],
 			rowHeaderKey: null,
 			data: [
-				{ exam: "Astronomy", score: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math>' },
-				{ exam: "Biology", score: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math>' },
-				{ exam: "Physics", score: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math>' },
-				{ exam: "Chemistry", score: "?" }
+				["Astronomy", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math>'],
+				["Biology", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math>'],
+				["Physics", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math>'],
+				["Chemistry", "?"]
 			],
 			footer: null
 		}
@@ -585,36 +585,36 @@ export const libertyvilleBusinessCycle: AssessmentItemInput = {
 			],
 			rowHeaderKey: null,
 			data: [
-				{
-					year: "2014",
-					gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>%</mo></math>',
-					unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn><mo>%</mo></math>'
-				},
-				{
-					year: "2015",
-					gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>',
-					unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn><mo>%</mo></math>'
-				},
-				{
-					year: "2016",
-					gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>',
-					unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>%</mo></math>'
-				},
-				{
-					year: "2017",
-					gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>%</mo></math>',
-					unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
-				},
-				{
-					year: "2018",
-					gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>%</mo></math>',
-					unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn><mo>%</mo></math>'
-				},
-				{
-					year: "2019",
-					gdp: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>%</mo></math>',
-					unemployment: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
-				}
+				[
+					"2014",
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>%</mo></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn><mo>%</mo></math>'
+				],
+				[
+					"2015",
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn><mo>%</mo></math>'
+				],
+				[
+					"2016",
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>%</mo></math>'
+				],
+				[
+					"2017",
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>%</mo></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
+				],
+				[
+					"2018",
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>%</mo></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn><mo>%</mo></math>'
+				],
+				[
+					"2019",
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>%</mo></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
+				]
 			],
 			footer: null
 		}
@@ -784,24 +784,24 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 			],
 			rowHeaderKey: "x",
 			data: [
-				{
-					x: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>',
-					minus9: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>',
-					minus8: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>8</mn></math>',
-					minus6: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6</mn></math>',
-					minus3: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>3</mn></math>',
-					minus2: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn></math>',
-					minus1: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>'
-				},
-				{
-					x: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>',
-					minus9: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>30</mn></math>',
-					minus8: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>29</mn></math>',
-					minus6: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>36</mn></math>',
-					minus3: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>20</mn></math>',
-					minus2: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>35</mn></math>',
-					minus1: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>47</mn></math>'
-				}
+				[
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>8</mn></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6</mn></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>3</mn></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>'
+				],
+				[
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>30</mn></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>29</mn></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>36</mn></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>20</mn></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>35</mn></math>',
+					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>47</mn></math>'
+				]
 			],
 			footer: null
 		}
@@ -960,10 +960,10 @@ export const shapeBinBarChart: AssessmentItemInput = {
 			],
 			rowHeaderKey: null,
 			data: [
-				{ shape: "Triangles", count: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>' },
-				{ shape: "Circles", count: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>' },
-				{ shape: "Rectangles", count: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>' },
-				{ shape: "Squares", count: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>' }
+				["Triangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>'],
+				["Circles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>'],
+				["Rectangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>'],
+				["Squares", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>']
 			],
 			footer: null
 		},

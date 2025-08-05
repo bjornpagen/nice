@@ -1,4 +1,12 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+// New imports for XML cleanup
+import {
+	convertHtmlEntities,
+	fixInequalityOperators,
+	fixKhanGraphieUrls,
+	fixMathMLOperators
+} from "@/lib/qti-generation/xml-fixes"
 import type { Widget } from "@/lib/widgets/generators"
 import {
 	generateAbsoluteValueNumberLine,
@@ -504,7 +512,8 @@ export function compile(itemData: AssessmentItemInput): string {
 	const correctFeedback = item.feedback.correct
 	const incorrectFeedback = item.feedback.incorrect
 
-	return `<?xml version="1.0" encoding="UTF-8"?>
+	// Generate the initial XML string
+	let finalXml = `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -531,4 +540,12 @@ ${responseDeclarations}
     </qti-item-body>
 ${responseProcessing}
 </qti-assessment-item>`
+
+	// Apply standard XML cleanup and fixes to ensure API compliance
+	finalXml = convertHtmlEntities(finalXml, logger)
+	finalXml = fixMathMLOperators(finalXml, logger)
+	finalXml = fixInequalityOperators(finalXml, logger)
+	finalXml = fixKhanGraphieUrls(finalXml, logger)
+
+	return finalXml
 }
