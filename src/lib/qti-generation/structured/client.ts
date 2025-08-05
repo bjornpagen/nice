@@ -23,6 +23,9 @@ import {
 const OPENAI_MODEL = "o3"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
+// ADD: New exported constant error for standardized identification.
+export const ErrWidgetNotFound = errors.new("widget not found")
+
 // A new schema is needed for the shell from Shot 1.
 // It defines widgets and interactions as maps of empty objects.
 const AssessmentShellSchema = AssessmentItemSchema.extend({
@@ -123,6 +126,14 @@ async function mapSlotsToWidgets(
 	// Validate and build the properly typed mapping
 	const mapping: Record<string, keyof typeof typedSchemas> = {}
 	for (const [key, value] of Object.entries(rawMapping)) {
+		// ADD: Check for the WIDGET_NOT_FOUND signal from the AI.
+		if (value === "WIDGET_NOT_FOUND") {
+			const errorMessage = `AI determined no suitable widget exists for slot: '${key}'. This item is not migratable.`
+			logger.error("ai determined no suitable widget exists", { slot: key, value, errorMessage })
+			// Throw our new constant error, wrapping it to add context.
+			throw errors.wrap(ErrWidgetNotFound, errorMessage)
+		}
+
 		if (isValidWidgetType(value)) {
 			mapping[key] = value
 		} else {
