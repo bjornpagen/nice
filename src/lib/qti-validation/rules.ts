@@ -384,21 +384,85 @@ export function validateHtmlEntities(xml: string, context: ValidationContext): v
 /**
  * Validates that no LaTeX content is present in the QTI XML.
  * LaTeX should be converted to MathML for proper QTI compliance and accessibility.
- * This check looks for any backslash followed by letters or LaTeX-like constructs.
+ * This check looks for any backslash followed by letters or LaTeX-like constructs,
+ * and for expressions enclosed in dollar signs (e.g., `$x^2$`).
  */
 export function validateNoLatex(xml: string, context: ValidationContext): void {
-	// Check for any LaTeX-like content: backslash followed by letters or brackets/parens
-	const latexMatch = xml.match(REGEX.LATEX_LIKE)
-	if (latexMatch) {
-		const contextIndex = latexMatch.index ?? 0
+	// Check #1: Look for command-like LaTeX (e.g., \frac, \sqrt)
+	const latexCommandMatch = xml.match(REGEX.LATEX_LIKE)
+	if (latexCommandMatch) {
+		const contextIndex = latexCommandMatch.index ?? 0
 		const errorContext = xml.substring(Math.max(0, contextIndex - 50), Math.min(xml.length, contextIndex + 100))
-		context.logger.error("found latex-like content", {
-			match: latexMatch[0],
+		context.logger.error("found latex command-like content", {
+			match: latexCommandMatch[0],
 			context: errorContext
 		})
 		throw errors.new(
-			`invalid content: LaTeX-like content is not allowed in QTI. Use MathML instead. Found: "${latexMatch[0]}". Context: "...${errorContext}..."`
+			`invalid content: LaTeX command-like content is not allowed in QTI. Use MathML instead. Found: "${latexCommandMatch[0]}". Context: "...${errorContext}..."`
 		)
+	}
+
+	// Check #2: Look for dollar-sign delimited LaTeX (e.g., $x^2$)
+	// First find all potential dollar-sign pairs, then check if they contain math
+	let match: RegExpExecArray | null
+	const dollarPairRegex = /\$(?<content>[^$]+)\$/g
+
+	match = dollarPairRegex.exec(xml)
+	while (match !== null) {
+		if (match.groups?.content) {
+			const content = match.groups.content
+
+			// Check if this looks like a mathematical expression rather than currency
+			// Mathematical indicators:
+			// - Contains LaTeX commands (backslash followed by letters)
+			// - Contains math operators with variables (x^2, a_n, etc.)
+			// - Contains variables mixed with operators (+, -, *, /, =)
+			// - Contains mathematical symbols or Greek letters
+
+			// Currency patterns to exclude:
+			// - Pure numbers with optional commas and decimal: 100, 5.99, 1,000.50
+			// - Numbers with currency symbols or words nearby
+
+			const isCurrency = /^[0-9]{1,3}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?$/.test(content.trim())
+
+			if (!isCurrency) {
+				// Check for mathematical indicators
+				const hasMathIndicators =
+					// LaTeX commands
+					/\\[a-zA-Z]+/.test(content) ||
+					// Superscript or subscript notation
+					/[a-zA-Z0-9][_^]/.test(content) ||
+					// Variables with operators
+					/[a-zA-Z]\s*[+\-*/=]\s*[a-zA-Z0-9]/.test(content) ||
+					// Numbers followed by variables (like 2x, 3y)
+					/\d+[a-zA-Z]/.test(content) ||
+					// Mathematical functions
+					/(?:sin|cos|tan|log|ln|sqrt|lim|sum|int)\s*\(/.test(content) ||
+					// Fractions or mathematical structures
+					/[a-zA-Z0-9]\s*\/\s*[a-zA-Z0-9]/.test(content) ||
+					// Greek letters or special math symbols in the content
+					/[αβγδεζηθικλμνξοπρστυφχψω]/.test(content) ||
+					// Common math patterns
+					/[xy]\s*=/.test(content) ||
+					// Parentheses with mathematical content
+					/\([^)]*[a-zA-Z+\-*/^][^)]*\)/.test(content)
+
+				if (hasMathIndicators) {
+					const contextIndex = match.index ?? 0
+					const errorContext = xml.substring(Math.max(0, contextIndex - 50), Math.min(xml.length, contextIndex + 100))
+					context.logger.error("found dollar-sign delimited latex content", {
+						match: match[0],
+						content: content,
+						context: errorContext
+					})
+					throw errors.new(
+						`invalid content: Dollar-sign delimited LaTeX ('$...$') is not allowed in QTI. All math must be converted to MathML. Found: "${match[0]}". Context: "...${errorContext}..."`
+					)
+				}
+			}
+		}
+
+		match = dollarPairRegex.exec(xml)
 	}
 
 	context.logger.debug("validated no latex content")

@@ -370,6 +370,89 @@ function compileResponseDeclarations(decls: AssessmentItem["responseDeclarations
 						}
 					}
 				}
+
+				// Rule 3: Handle inequality operators - both ASCII and Unicode versions
+				const inequalityOperators = [">=", "≥", "<=", "≤", ">", "<"]
+				const hasInequality = inequalityOperators.some((op) => val.includes(op))
+
+				if (hasInequality) {
+					// Add both ASCII and Unicode versions of the same inequality
+					const withAscii = val.replace(/≥/g, ">=").replace(/≤/g, "<=")
+					const withUnicode = val.replace(/>=/g, "≥").replace(/<=/g, "≤")
+
+					allCorrectValues.add(withAscii)
+					allCorrectValues.add(withUnicode)
+
+					// Rule 4: Handle flipped inequalities (e.g., x>3 vs 3<x)
+					// Match pattern: (left operand)(operator)(right operand)
+					const inequalityPattern = /^([^><=≥≤]+?)\s*(>=|≥|<=|≤|>|<)\s*([^><=≥≤]+)$/
+					const match = val.trim().match(inequalityPattern)
+
+					if (match?.[1] && match?.[2] && match?.[3]) {
+						const leftOperand = match[1].trim()
+						const operator = match[2]
+						const rightOperand = match[3].trim()
+
+						// Define operator reversal mapping
+						const reverseOperatorMap: Record<string, string> = {
+							">": "<",
+							"<": ">",
+							">=": "<=",
+							"≥": "≤",
+							"<=": ">=",
+							"≤": "≥"
+						}
+
+						const reversedOp = reverseOperatorMap[operator]
+						if (reversedOp) {
+							// Create flipped version with operands swapped
+							const flipped = `${rightOperand}${reversedOp}${leftOperand}`
+
+							// Add both ASCII and Unicode versions of the flipped inequality
+							const flippedAscii = flipped.replace(/≥/g, ">=").replace(/≤/g, "<=")
+							const flippedUnicode = flipped.replace(/>=/g, "≥").replace(/<=/g, "≤")
+
+							allCorrectValues.add(flippedAscii)
+							allCorrectValues.add(flippedUnicode)
+
+							// Also add versions with spaces around operators for better flexibility
+							const spacedFlippedAscii = `${rightOperand} ${reversedOp.replace(/≥/g, ">=").replace(/≤/g, "<=")} ${leftOperand}`
+							const spacedFlippedUnicode = `${rightOperand} ${reversedOp.replace(/>=/g, "≥").replace(/<=/g, "≤")} ${leftOperand}`
+
+							allCorrectValues.add(spacedFlippedAscii)
+							allCorrectValues.add(spacedFlippedUnicode)
+						}
+					}
+				}
+
+				// Rule 5: Handle equations with equal signs - make them reversible
+				if (
+					val.includes("=") &&
+					!val.includes(">=") &&
+					!val.includes("<=") &&
+					!val.includes("≥") &&
+					!val.includes("≤")
+				) {
+					// Match pattern: (left side)=(right side)
+					const equationPattern = /^([^=]+)=([^=]+)$/
+					const eqMatch = val.trim().match(equationPattern)
+
+					if (eqMatch?.[1] && eqMatch?.[2]) {
+						const leftSide = eqMatch[1].trim()
+						const rightSide = eqMatch[2].trim()
+
+						// Create flipped version
+						const flipped = `${rightSide}=${leftSide}`
+						allCorrectValues.add(flipped)
+
+						// Also add versions with spaces around equals sign for flexibility
+						const spacedOriginal = `${leftSide} = ${rightSide}`
+						const spacedFlipped = `${rightSide} = ${leftSide}`
+
+						allCorrectValues.add(spacedOriginal)
+						allCorrectValues.add(spacedFlipped)
+					}
+				}
 			}
 
 			// Generate the <qti-value> tags from the comprehensive set of all correct values.
