@@ -330,72 +330,70 @@ function generateWidget(widget: Widget): string {
 
 function compileResponseDeclarations(decls: AssessmentItem["responseDeclarations"]): string {
 	// Pre-process declarations to add equivalent numeric mappings.
-	const processedDecls = decls.map((decl) => {
-		const newMapping: Record<string, number | string> = { ...(decl.mapping || {}) }
-		const correctValues = Array.isArray(decl.correct) ? decl.correct : [decl.correct]
-		const mappedValue = 1.0 // By default, equivalent answers are worth full points.
+	return decls
+		.map((decl) => {
+			// Create a Set to hold all correct values, including the original ones.
+			const correctValues = Array.isArray(decl.correct) ? decl.correct : [decl.correct]
+			const allCorrectValues = new Set<string | number>(correctValues)
+			const newMapping: Record<string, number | string> = { ...(decl.mapping || {}) }
+			const mappedValue = 1.0 // By default, equivalent answers are worth full points.
 
-		for (const val of correctValues) {
-			if (typeof val !== "string") {
-				continue
-			}
-
-			// Rule 1: Handle leading zero decimals (e.g., .5 vs 0.5)
-			if (val.startsWith(".")) {
-				const withLeadingZero = `0${val}`
-				if (!(withLeadingZero in newMapping)) {
-					newMapping[withLeadingZero] = mappedValue
+			for (const val of correctValues) {
+				if (typeof val !== "string") {
+					continue
 				}
-			} else if (val.startsWith("0.")) {
-				const withoutLeadingZero = val.substring(1)
-				if (!(withoutLeadingZero in newMapping)) {
-					newMapping[withoutLeadingZero] = mappedValue
+
+				// Rule 1: Handle leading zero decimals (e.g., .5 vs 0.5)
+				if (val.startsWith(".")) {
+					allCorrectValues.add(`0${val}`)
+				} else if (val.startsWith("0.")) {
+					allCorrectValues.add(val.substring(1))
 				}
-			}
 
-			// Rule 2: Handle fractions that convert to terminating decimals
-			if (val.includes("/") && !val.startsWith(".")) {
-				const parts = val.split("/")
-				if (parts.length === 2 && parts[0] && parts[1]) {
-					const num = Number.parseInt(parts[0], 10)
-					const den = Number.parseInt(parts[1], 10)
+				// Rule 2: Handle fractions that convert to terminating decimals
+				if (val.includes("/") && !val.startsWith(".")) {
+					const parts = val.split("/")
+					if (parts.length === 2 && parts[0] && parts[1]) {
+						const num = Number.parseInt(parts[0], 10)
+						const den = Number.parseInt(parts[1], 10)
 
-					if (!Number.isNaN(num) && !Number.isNaN(den) && isTerminatingFraction(num, den)) {
-						const decimalValue = (num / den).toString()
-						if (!(decimalValue in newMapping)) {
-							newMapping[decimalValue] = mappedValue
+						if (!Number.isNaN(num) && !Number.isNaN(den) && isTerminatingFraction(num, den)) {
+							const decimalValue = (num / den).toString()
+							// FIX: Add the decimal equivalent to the set of correct values.
+							allCorrectValues.add(decimalValue)
 
 							// Also handle the leading-zero case for the newly generated decimal
 							if (decimalValue.startsWith("0.")) {
-								const withoutLeadingZero = decimalValue.substring(1)
-								if (!(withoutLeadingZero in newMapping)) {
-									newMapping[withoutLeadingZero] = mappedValue
-								}
+								allCorrectValues.add(decimalValue.substring(1))
 							}
 						}
 					}
 				}
 			}
-		}
 
-		return { ...decl, mapping: newMapping }
-	})
+			// Add all newly found correct values to the mapping as well, ensuring consistency.
+			for (const value of allCorrectValues) {
+				const key = String(value)
+				if (!(key in newMapping) && !correctValues.includes(value)) {
+					newMapping[key] = mappedValue
+				}
+			}
 
-	return processedDecls
-		.map((decl) => {
-			const correctValues = Array.isArray(decl.correct) ? decl.correct : [decl.correct]
-			const correctXml = correctValues.map((v) => `<qti-value>${String(v)}</qti-value>`).join("\n            ")
+			// Generate the <qti-value> tags from the comprehensive set of all correct values.
+			const correctXml = Array.from(allCorrectValues)
+				.map((v) => `<qti-value>${String(v)}</qti-value>`)
+				.join("\n            ")
 
-			let xml = `\n    <qti-response-declaration identifier="${escapeXmlAttribute(decl.identifier)}" cardinality="${escapeXmlAttribute(
-				decl.cardinality
-			)}" base-type="${escapeXmlAttribute(decl.baseType)}">
+			let xml = `\n    <qti-response-declaration identifier="${escapeXmlAttribute(
+				decl.identifier
+			)}" cardinality="${escapeXmlAttribute(decl.cardinality)}" base-type="${escapeXmlAttribute(decl.baseType)}">
         <qti-correct-response>
             ${correctXml}
         </qti-correct-response>`
 
 			// Only add the mapping block if there are entries to add.
-			if (decl.mapping && Object.keys(decl.mapping).length > 0) {
-				const mapEntries = Object.entries(decl.mapping)
+			if (Object.keys(newMapping).length > 0) {
+				const mapEntries = Object.entries(newMapping)
 					.map(
 						([key, val]) =>
 							`<qti-map-entry map-key="${escapeXmlAttribute(key)}" mapped-value="${escapeXmlAttribute(String(val))}"/>`
