@@ -31,6 +31,7 @@ const widgetTypeKeys: [WidgetTypeOrNotFound, ...WidgetTypeOrNotFound[]] = [
 	"discreteObjectRatioDiagram",
 	"dotPlot",
 	"doubleNumberLine",
+	"emojiImage",
 	"geometricSolidDiagram",
 	"hangerDiagram",
 	"histogram",
@@ -84,9 +85,12 @@ The shell should:
 1. Convert Perseus content into a single 'body' string with <slot name="..."/> placeholders.
 2. List all widget and interaction identifiers as arrays of strings in the 'widgets' and 'interactions' properties.
 3. Faithfully translate all mathematical content from LaTeX to MathML.
+4. NEVER generate <img> or <svg> tags in the body - all visual elements must be widget slots.
 
 ABSOLUTE REQUIREMENT: SLOT CONSISTENCY.
 This is the most critical rule. Any \`<slot name="..."/>\` tag you include in the 'body' string MUST have its name listed in either the 'widgets' array or the 'interactions' array. Conversely, every name in the 'widgets' and 'interactions' arrays MUST correspond to a \`<slot>\` tag in the 'body'. There must be a perfect, one-to-one mapping.
+
+CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, MathML, and slot placeholders.
 
 Any discrepancy will cause your output to be rejected. Review your work carefully to ensure the body's slots and the declaration arrays are perfectly synchronized.`
 
@@ -120,7 +124,7 @@ ${perseusJson}
 - **Placeholders**:
   - For ALL Perseus widgets (including 'image' widgets), create a \`<slot name="..." />\` placeholder in the 'body' and add its identifier to the 'widgets' string array.
   - For each Perseus interaction (e.g., 'radio', 'text-input'), create a placeholder like \`<slot name="interaction_1" />\` and add its identifier (e.g., "interaction_1") to the 'interactions' string array.
-- **DO NOT EMBED IMAGES**: You MUST NOT generate \`<img>\` tags or data URIs in the 'body' string. All images must be handled as widgets referenced by slots.
+- **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
 - **MathML Conversion (MANDATORY)**:
   - You MUST convert ALL LaTeX expressions (text enclosed in \`$...\`) to standard MathML (\`<math>...</math>\`).
   - PRESERVE all mathematical structures: fractions (\`<mfrac>\`), exponents (\`<msup>\`), roots (\`<mroot>\`), operators (\`<mo>\`), and inequalities (\`&lt;\`, \`&gt;\`).
@@ -146,6 +150,10 @@ export function createWidgetMappingPrompt(perseusJson: string, assessmentBody: s
 	const systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content and the original Perseus JSON to map widget slots to the most appropriate widget type from a given list.
 
 **CRITICAL RULE**: If you analyze the Perseus JSON for a given slot and determine that NONE of the available widget types are a perfect match, you MUST use the type "WIDGET_NOT_FOUND". This is a bailout signal that the content cannot be migrated. Use this option if the widget cannot be perfectly represented by any of the available types.
+
+**SPECIAL WIDGET GUIDANCE**:
+- Use "emojiImage" for generic image widgets that display simple objects (trucks, horses, cookies, etc.) that can be represented as emojis
+- The "emojiImage" widget is versatile and can replace many Perseus image widgets by using appropriate emoji representations
 
 Widget Type Options:
 ${widgetTypeKeys.join("\n")}`

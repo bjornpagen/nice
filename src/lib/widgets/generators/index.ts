@@ -13,6 +13,7 @@ import {
 } from "./discrete-object-ratio-diagram"
 import { DotPlotPropsSchema, generateDotPlot } from "./dot-plot"
 import { DoubleNumberLinePropsSchema, generateDoubleNumberLine } from "./double-number-line"
+import { EmojiImagePropsSchema, generateEmojiImage } from "./emoji-image"
 import { GeometricSolidDiagramPropsSchema, generateGeometricSolidDiagram } from "./geometric-solid-diagram"
 import { generateHangerDiagram, HangerDiagramPropsSchema } from "./hanger-diagram"
 import { generateHistogram, HistogramPropsSchema } from "./histogram"
@@ -49,6 +50,7 @@ export const typedSchemas = {
 	discreteObjectRatioDiagram: DiscreteObjectRatioDiagramPropsSchema,
 	dotPlot: DotPlotPropsSchema,
 	doubleNumberLine: DoubleNumberLinePropsSchema,
+	emojiImage: EmojiImagePropsSchema,
 	geometricSolidDiagram: GeometricSolidDiagramPropsSchema,
 	hangerDiagram: HangerDiagramPropsSchema,
 	histogram: HistogramPropsSchema,
@@ -83,6 +85,7 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.discreteObjectRatioDiagram,
 	typedSchemas.dotPlot,
 	typedSchemas.doubleNumberLine,
+	typedSchemas.emojiImage,
 	typedSchemas.geometricSolidDiagram,
 	typedSchemas.hangerDiagram,
 	typedSchemas.histogram,
@@ -119,6 +122,7 @@ export {
 	generateDiscreteObjectRatioDiagram,
 	generateDotPlot,
 	generateDoubleNumberLine,
+	generateEmojiImage,
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,

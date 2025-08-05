@@ -13,6 +13,7 @@ import {
 	generateDiscreteObjectRatioDiagram,
 	generateDotPlot,
 	generateDoubleNumberLine,
+	generateEmojiImage,
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
@@ -325,6 +326,8 @@ function generateWidget(widget: Widget): string {
 			return generateVennDiagram(widget)
 		case "verticalArithmeticSetup":
 			return generateVerticalArithmeticSetup(widget)
+		case "emojiImage":
+			return generateEmojiImage(widget)
 	}
 }
 
