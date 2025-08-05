@@ -43,6 +43,7 @@ const RightAngleMarkerSchema = z
 // The main Zod schema for the compositeShapeDiagram function
 export const CompositeShapeDiagramPropsSchema = z
 	.object({
+		type: z.literal("compositeShapeDiagram"),
 		width: z
 			.number()
 			.nullable()

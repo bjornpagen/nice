@@ -28,6 +28,7 @@ const ColumnDefinitionSchema = z
 // The main Zod schema for the dataTable function
 export const DataTablePropsSchema = z
 	.object({
+		type: z.literal("dataTable"),
 		title: z.string().nullable().describe("An optional caption for the table."),
 		columns: z.array(ColumnDefinitionSchema).describe("An array of column definitions."),
 		data: z

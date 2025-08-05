@@ -31,6 +31,7 @@ const HistogramAxisSchema = z
 // The main Zod schema for the histogram function
 export const HistogramPropsSchema = z
 	.object({
+		type: z.literal("histogram"),
 		width: z
 			.number()
 			.nullable()

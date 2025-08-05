@@ -48,6 +48,7 @@ const FaceDimensionsSchema = z
 // The main Zod schema for the polyhedronNetDiagram function
 export const PolyhedronNetDiagramPropsSchema = z
 	.object({
+		type: z.literal("polyhedronNetDiagram"),
 		width: z
 			.number()
 			.nullable()

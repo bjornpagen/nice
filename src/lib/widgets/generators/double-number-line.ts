@@ -17,6 +17,7 @@ const LineSchema = z
 // The main Zod schema for the doubleNumberLine function
 export const DoubleNumberLinePropsSchema = z
 	.object({
+		type: z.literal("doubleNumberLine"),
 		width: z
 			.number()
 			.nullable()

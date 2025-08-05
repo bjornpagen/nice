@@ -15,6 +15,7 @@ const SideSquareSchema = z
 // The main Zod schema for the pythagoreanProofDiagram function
 export const PythagoreanProofDiagramPropsSchema = z
 	.object({
+		type: z.literal("pythagoreanProofDiagram"),
 		width: z
 			.number()
 			.nullable()

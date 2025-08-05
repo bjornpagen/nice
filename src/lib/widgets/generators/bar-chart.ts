@@ -37,6 +37,7 @@ const YAxisSchema = z
 // The main Zod schema for the barChart function
 export const BarChartPropsSchema = z
 	.object({
+		type: z.literal("barChart"),
 		width: z
 			.number()
 			.nullable()

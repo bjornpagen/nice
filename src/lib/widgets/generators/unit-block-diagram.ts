@@ -4,6 +4,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // The main Zod schema for the unitBlockDiagram function
 export const UnitBlockDiagramPropsSchema = z
 	.object({
+		type: z.literal("unitBlockDiagram"),
 		totalBlocks: z.number().int().positive().describe('The total number of 10x10 "hundreds blocks" to display.'),
 		shadedUnitsPerBlock: z
 			.number()

@@ -30,6 +30,7 @@ const NumberLineSegmentSchema = z
 // The main Zod schema for the numberLineWithFractionGroups function
 export const NumberLineWithFractionGroupsPropsSchema = z
 	.object({
+		type: z.literal("numberLineWithFractionGroups"),
 		width: z
 			.number()
 			.nullable()

@@ -23,6 +23,7 @@ const ActionArrowSchema = z
 // The main Zod schema for the numberLineWithAction function
 export const NumberLineWithActionPropsSchema = z
 	.object({
+		type: z.literal("numberLineWithAction"),
 		width: z
 			.number()
 			.nullable()

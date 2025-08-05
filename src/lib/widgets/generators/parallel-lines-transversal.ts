@@ -21,6 +21,7 @@ const AngleLabelSchema = z
 // The main Zod schema for the parallelLinesTransversal function
 export const ParallelLinesTransversalPropsSchema = z
 	.object({
+		type: z.literal("parallelLinesTransversal"),
 		width: z
 			.number()
 			.nullable()

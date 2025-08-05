@@ -15,6 +15,7 @@ const DotPlotDataPointSchema = z
 // The main Zod schema for the dotPlot function
 export const DotPlotPropsSchema = z
 	.object({
+		type: z.literal("dotPlot"),
 		width: z
 			.number()
 			.nullable()

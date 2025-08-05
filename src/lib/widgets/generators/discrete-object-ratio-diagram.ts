@@ -12,6 +12,7 @@ const ObjectTypeSchema = z
 // The main Zod schema for the discreteObjectRatioDiagram function
 export const DiscreteObjectRatioDiagramPropsSchema = z
 	.object({
+		type: z.literal("discreteObjectRatioDiagram"),
 		width: z
 			.number()
 			.nullable()

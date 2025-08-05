@@ -34,6 +34,7 @@ const InequalityRangeSchema = z
 // The main Zod schema for the inequalityNumberLine function
 export const InequalityNumberLinePropsSchema = z
 	.object({
+		type: z.literal("inequalityNumberLine"),
 		width: z
 			.number()
 			.nullable()

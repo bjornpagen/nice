@@ -32,6 +32,7 @@ const SpecialTickLabelSchema = z
 // The main Zod schema for the numberLine function
 export const NumberLinePropsSchema = z
 	.object({
+		type: z.literal("numberLine"),
 		width: z
 			.number()
 			.nullable()

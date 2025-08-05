@@ -6,6 +6,7 @@ export const ErrInvalidRange = errors.new("min must be less than max")
 
 export const AbsoluteValueNumberLinePropsSchema = z
 	.object({
+		type: z.literal("absoluteValueNumberLine"),
 		width: z
 			.number()
 			.nullable()

@@ -40,6 +40,7 @@ describe("Widget Generators", () => {
 	describe("generateAbsoluteValueNumberLine", () => {
 		test("should render with minimal props", () => {
 			const props = {
+				type: "absoluteValueNumberLine" as const,
 				width: 500,
 				height: 80,
 				min: -10,
@@ -54,6 +55,7 @@ describe("Widget Generators", () => {
 
 		test("should render with all props specified", () => {
 			const props = {
+				type: "absoluteValueNumberLine" as const,
 				width: 600,
 				height: 100,
 				min: -20,
@@ -68,6 +70,7 @@ describe("Widget Generators", () => {
 
 		test("should handle error case where min >= max", () => {
 			const props = {
+				type: "absoluteValueNumberLine" as const,
 				width: 500,
 				height: 80,
 				min: 10,
@@ -90,6 +93,7 @@ describe("Widget Generators", () => {
 	describe("generateBarChart", () => {
 		test("should render with minimal props", () => {
 			const props = {
+				type: "barChart" as const,
 				width: 400,
 				height: 300,
 				title: null,
@@ -111,6 +115,7 @@ describe("Widget Generators", () => {
 
 		test("should render with all props specified", () => {
 			const props = {
+				type: "barChart" as const,
 				width: 500,
 				height: 350,
 				title: "Puppet Count",
@@ -133,6 +138,7 @@ describe("Widget Generators", () => {
 
 		test("should handle empty data array", () => {
 			const props = {
+				type: "barChart" as const,
 				width: 400,
 				height: 300,
 				title: null,
@@ -159,6 +165,7 @@ describe("Widget Generators", () => {
 	describe("generateBoxPlot", () => {
 		test("should render with minimal props", () => {
 			const props = {
+				type: "boxPlot" as const,
 				width: 400,
 				height: 150,
 				axis: {
@@ -176,6 +183,7 @@ describe("Widget Generators", () => {
 
 		test("should render with all props specified", () => {
 			const props = {
+				type: "boxPlot" as const,
 				width: 500,
 				height: 150,
 				axis: {
@@ -193,6 +201,7 @@ describe("Widget Generators", () => {
 
 		test("should handle error case where axis.min >= axis.max", () => {
 			const props = {
+				type: "boxPlot" as const,
 				width: 400,
 				height: 150,
 				axis: {
@@ -216,6 +225,7 @@ describe("Widget Generators", () => {
 
 		test("should render with custom colors", () => {
 			const props = {
+				type: "boxPlot" as const,
 				width: 400,
 				height: 150,
 				axis: {
@@ -233,6 +243,7 @@ describe("Widget Generators", () => {
 
 		test("should have sufficient padding for long axis labels", () => {
 			const props = {
+				type: "boxPlot" as const,
 				width: 400,
 				height: 150,
 				axis: {
@@ -252,6 +263,7 @@ describe("Widget Generators", () => {
 	describe("generateCompositeShapeDiagram", () => {
 		test("should render an L-shape with all features", () => {
 			const props = {
+				type: "compositeShapeDiagram" as const,
 				width: 350,
 				height: 300,
 				vertices: [
@@ -283,6 +295,7 @@ describe("Widget Generators", () => {
 	describe("generateCoordinatePlane", () => {
 		test("should render a full-featured coordinate plane", () => {
 			const props = {
+				type: "coordinatePlane" as const,
 				width: 500,
 				height: 500,
 				xAxis: { label: "X-Axis", min: -10, max: 10, tickInterval: 2, showGridLines: true },
@@ -316,6 +329,7 @@ describe("Widget Generators", () => {
 
 		test("should handle error case with invalid dimensions", () => {
 			const props = {
+				type: "coordinatePlane" as const,
 				width: 10,
 				height: 10,
 				xAxis: { min: 10, max: 0, tickInterval: 1, label: null, showGridLines: false },
@@ -338,6 +352,7 @@ describe("Widget Generators", () => {
 	describe("generateDataTable", () => {
 		test("should render a table with all features", () => {
 			const props = {
+				type: "dataTable" as const,
 				title: "Student Scores",
 				columns: [
 					{ key: "name", label: "Name", isNumeric: false },
@@ -375,6 +390,7 @@ describe("Widget Generators", () => {
 	describe("generateDiscreteObjectRatioDiagram", () => {
 		test("should render a grid layout", () => {
 			const props = {
+				type: "discreteObjectRatioDiagram" as const,
 				width: 400,
 				height: 300,
 				objects: [
@@ -389,6 +405,7 @@ describe("Widget Generators", () => {
 
 		test("should render a cluster layout", () => {
 			const props = {
+				type: "discreteObjectRatioDiagram" as const,
 				width: 400,
 				height: 300,
 				objects: [
@@ -403,6 +420,7 @@ describe("Widget Generators", () => {
 
 		test("should wrap to new row in grid layout when exceeding width", () => {
 			const props = {
+				type: "discreteObjectRatioDiagram" as const,
 				width: 200,
 				height: 300,
 				objects: [
@@ -419,6 +437,7 @@ describe("Widget Generators", () => {
 	describe("generateDotPlot", () => {
 		test("should render a basic dot plot", () => {
 			const props = {
+				type: "dotPlot" as const,
 				width: 500,
 				height: 300,
 				axis: { label: "Number of Pets", min: 0, max: 5, tickInterval: 1 },
@@ -436,6 +455,7 @@ describe("Widget Generators", () => {
 
 		test("should handle error case with invalid dimensions", () => {
 			const props = {
+				type: "dotPlot" as const,
 				width: 50,
 				height: 20,
 				axis: { min: 10, max: 0, tickInterval: 1, label: null },
@@ -456,6 +476,7 @@ describe("Widget Generators", () => {
 	describe("generateDoubleNumberLine", () => {
 		test("should render a double number line for ratios", () => {
 			const props = {
+				type: "doubleNumberLine" as const,
 				width: 500,
 				height: 150,
 				topLine: {
@@ -472,6 +493,7 @@ describe("Widget Generators", () => {
 
 		test("should handle minimal props", () => {
 			const props = {
+				type: "doubleNumberLine" as const,
 				width: 400,
 				height: 150,
 				topLine: {
@@ -490,6 +512,7 @@ describe("Widget Generators", () => {
 	describe("generateGeometricSolidDiagram", () => {
 		test("should render a labeled cylinder", () => {
 			const props = {
+				type: "geometricSolidDiagram" as const,
 				width: 200,
 				height: 250,
 				shape: { type: "cylinder" as const, radius: 5, height: 10 },
@@ -503,6 +526,7 @@ describe("Widget Generators", () => {
 
 		test("should render cylinder without labels", () => {
 			const props = {
+				type: "geometricSolidDiagram" as const,
 				width: 200,
 				height: 250,
 				shape: { type: "cylinder" as const, radius: 8, height: 15 },
@@ -513,6 +537,7 @@ describe("Widget Generators", () => {
 
 		test("should render cone shape", () => {
 			const props = {
+				type: "geometricSolidDiagram" as const,
 				width: 200,
 				height: 250,
 				shape: { type: "cone" as const, radius: 6, height: 12 },
@@ -523,6 +548,7 @@ describe("Widget Generators", () => {
 
 		test("should render cone with labels", () => {
 			const props = {
+				type: "geometricSolidDiagram" as const,
 				width: 200,
 				height: 250,
 				shape: { type: "cone" as const, radius: 5, height: 8 },
@@ -536,6 +562,7 @@ describe("Widget Generators", () => {
 
 		test("should render sphere without labels", () => {
 			const props = {
+				type: "geometricSolidDiagram" as const,
 				width: 200,
 				height: 200,
 				shape: { type: "sphere" as const, radius: 7 },
@@ -546,6 +573,7 @@ describe("Widget Generators", () => {
 
 		test("should render sphere with radius label", () => {
 			const props = {
+				type: "geometricSolidDiagram" as const,
 				width: 200,
 				height: 200,
 				shape: { type: "sphere" as const, radius: 6 },
@@ -558,6 +586,7 @@ describe("Widget Generators", () => {
 	describe("generateHangerDiagram", () => {
 		test("should render a complex hanger diagram", () => {
 			const props = {
+				type: "hangerDiagram" as const,
 				width: 400,
 				height: 300,
 				leftSide: [
@@ -572,6 +601,7 @@ describe("Widget Generators", () => {
 
 		test("should render hanger with triangles", () => {
 			const props = {
+				type: "hangerDiagram" as const,
 				width: 350,
 				height: 250,
 				leftSide: [
@@ -587,6 +617,7 @@ describe("Widget Generators", () => {
 	describe("generateHistogram", () => {
 		test("should render a histogram with all features", () => {
 			const props = {
+				type: "histogram" as const,
 				width: 500,
 				height: 350,
 				title: "Exam Scores",
@@ -605,6 +636,7 @@ describe("Widget Generators", () => {
 
 		test("should handle error case with invalid dimensions", () => {
 			const props = {
+				type: "histogram" as const,
 				width: 50,
 				height: 50,
 				title: null,
@@ -617,6 +649,7 @@ describe("Widget Generators", () => {
 
 		test("should handle histogram without title or custom y-axis settings", () => {
 			const props = {
+				type: "histogram" as const,
 				width: 400,
 				height: 300,
 				title: null,
@@ -634,6 +667,7 @@ describe("Widget Generators", () => {
 	describe("generateInequalityNumberLine", () => {
 		test("should render a simple inequality (x > 5)", () => {
 			const props = {
+				type: "inequalityNumberLine" as const,
 				width: 500,
 				height: 80,
 				min: 0,
@@ -646,6 +680,7 @@ describe("Widget Generators", () => {
 
 		test("should render a compound 'and' inequality (-2 <= x < 3)", () => {
 			const props = {
+				type: "inequalityNumberLine" as const,
 				width: 500,
 				height: 80,
 				min: -5,
@@ -664,6 +699,7 @@ describe("Widget Generators", () => {
 
 		test("should render a compound 'or' inequality (x < -1 or x >= 4)", () => {
 			const props = {
+				type: "inequalityNumberLine" as const,
 				width: 500,
 				height: 80,
 				min: -5,
@@ -681,6 +717,7 @@ describe("Widget Generators", () => {
 	describe("generateNumberLine", () => {
 		test("should render a horizontal number line with all features", () => {
 			const props = {
+				type: "numberLine" as const,
 				width: 600,
 				height: 100,
 				orientation: "horizontal" as const,
@@ -699,6 +736,7 @@ describe("Widget Generators", () => {
 
 		test("should render a vertical number line", () => {
 			const props = {
+				type: "numberLine" as const,
 				width: 100,
 				height: 400,
 				orientation: "vertical" as const,
@@ -714,6 +752,7 @@ describe("Widget Generators", () => {
 
 		test("should render horizontal number line with left/right point labels", () => {
 			const props = {
+				type: "numberLine" as const,
 				width: 500,
 				height: 100,
 				orientation: "horizontal" as const,
@@ -732,6 +771,7 @@ describe("Widget Generators", () => {
 
 		test("should render vertical number line with special labels and left-positioned points", () => {
 			const props = {
+				type: "numberLine" as const,
 				width: 100,
 				height: 300,
 				orientation: "vertical" as const,
@@ -756,6 +796,7 @@ describe("Widget Generators", () => {
 	describe("generateNumberLineForOpposites", () => {
 		test("should render opposites with custom labels", () => {
 			const props = {
+				type: "numberLineForOpposites" as const,
 				width: 500,
 				height: 100,
 				maxAbsValue: 10,
@@ -772,6 +813,7 @@ describe("Widget Generators", () => {
 	describe("generateNumberLineWithAction", () => {
 		test("should render a vertical thermometer with action", () => {
 			const props = {
+				type: "numberLineWithAction" as const,
 				width: 100,
 				height: 400,
 				orientation: "vertical" as const,
@@ -789,6 +831,7 @@ describe("Widget Generators", () => {
 
 		test("should render a horizontal number line with action", () => {
 			const props = {
+				type: "numberLineWithAction" as const,
 				width: 500,
 				height: 100,
 				orientation: "horizontal" as const,
@@ -806,6 +849,7 @@ describe("Widget Generators", () => {
 
 		test("should handle error case where min >= max", () => {
 			const props = {
+				type: "numberLineWithAction" as const,
 				width: 500,
 				height: 100,
 				orientation: "horizontal" as const,
@@ -822,6 +866,7 @@ describe("Widget Generators", () => {
 	describe("generateNumberLineWithFractionGroups", () => {
 		test("should render fraction groups on a number line", () => {
 			const props = {
+				type: "numberLineWithFractionGroups" as const,
 				width: 500,
 				height: 150,
 				min: 0,
@@ -844,6 +889,7 @@ describe("Widget Generators", () => {
 	describe("generateNumberSetDiagram", () => {
 		test("should render the number set diagram", () => {
 			const props = {
+				type: "numberSetDiagram" as const,
 				width: 600,
 				height: 400,
 				sets: {
@@ -860,6 +906,7 @@ describe("Widget Generators", () => {
 	describe("generateParallelLinesTransversal", () => {
 		test("should render with labels and rotations", () => {
 			const props = {
+				type: "parallelLinesTransversal" as const,
 				width: 400,
 				height: 350,
 				linesAngle: 20,
@@ -876,6 +923,7 @@ describe("Widget Generators", () => {
 	describe("generatePartitionedShape", () => {
 		test("should render multiple shapes to show > 100%", () => {
 			const props = {
+				type: "partitionedShape" as const,
 				width: 400,
 				height: 200,
 				shapes: [
@@ -896,6 +944,7 @@ describe("Widget Generators", () => {
 
 		test("should render a partitioned circle", () => {
 			const props = {
+				type: "partitionedShape" as const,
 				width: 300,
 				height: 300,
 				layout: "horizontal" as const,
@@ -910,6 +959,7 @@ describe("Widget Generators", () => {
 	describe("generatePictograph", () => {
 		test("should render a full pictograph", () => {
 			const props = {
+				type: "pictograph" as const,
 				title: "Home Runs Hit",
 				key: { icon: "⚾", label: "= 1 home run" },
 				data: [
@@ -925,6 +975,7 @@ describe("Widget Generators", () => {
 	describe("generatePolyhedronDiagram", () => {
 		test("should render a labeled rectangular prism", () => {
 			const props = {
+				type: "polyhedronDiagram" as const,
 				width: 400,
 				height: 300,
 				shape: { type: "rectangularPrism" as const, length: 10, width: 8, height: 6 },
@@ -943,6 +994,7 @@ describe("Widget Generators", () => {
 	describe("generatePolyhedronNetDiagram", () => {
 		test("should render a labeled cube net", () => {
 			const props = {
+				type: "polyhedronNetDiagram" as const,
 				width: 400,
 				height: 300,
 				polyhedronType: "cube" as const,
@@ -957,6 +1009,7 @@ describe("Widget Generators", () => {
 
 		test("should handle error case for cube with non-square base", () => {
 			const props = {
+				type: "polyhedronNetDiagram" as const,
 				width: 400,
 				height: 300,
 				polyhedronType: "cube" as const,
@@ -979,6 +1032,7 @@ describe("Widget Generators", () => {
 	describe("generatePythagoreanProofDiagram", () => {
 		test("should render a 3-4-5 pythagorean proof diagram", () => {
 			const props = {
+				type: "pythagoreanProofDiagram" as const,
 				width: 400,
 				height: 400,
 				squareA: { area: 9, sideLabel: "a" },
@@ -992,6 +1046,7 @@ describe("Widget Generators", () => {
 	describe("generateScatterPlot", () => {
 		test("should render a scatter plot with linear and quadratic trend lines", () => {
 			const props = {
+				type: "scatterPlot" as const,
 				width: 500,
 				height: 400,
 				title: "Data Trends",
@@ -1026,6 +1081,7 @@ describe("Widget Generators", () => {
 
 		test("should render with both x and y grid lines", () => {
 			const props = {
+				type: "scatterPlot" as const,
 				width: 400,
 				height: 300,
 				title: null,
@@ -1043,6 +1099,7 @@ describe("Widget Generators", () => {
 
 		test("should handle error case with invalid dimensions", () => {
 			const props = {
+				type: "scatterPlot" as const,
 				width: 50,
 				height: 50,
 				title: null,
@@ -1058,6 +1115,7 @@ describe("Widget Generators", () => {
 	describe("generateStackedItemsDiagram", () => {
 		test("should render a vertical stack of items", () => {
 			const props = {
+				type: "stackedItemsDiagram" as const,
 				width: 100,
 				height: 250,
 				altText: "An ice cream cone with 3 scoops.",
@@ -1080,6 +1138,7 @@ describe("Widget Generators", () => {
 
 		test("should render a horizontal stack of items", () => {
 			const props = {
+				type: "stackedItemsDiagram" as const,
 				width: 300,
 				height: 100,
 				altText: "A row of 4 coins",
@@ -1104,6 +1163,7 @@ describe("Widget Generators", () => {
 	describe("generateTapeDiagram", () => {
 		test("should render a full tape diagram with bracket", () => {
 			const props = {
+				type: "tapeDiagram" as const,
 				width: 400,
 				height: 200,
 				topTape: {
@@ -1133,6 +1193,7 @@ describe("Widget Generators", () => {
 	describe("generateUnitBlockDiagram", () => {
 		test("should render multiple hundred blocks", () => {
 			const props = {
+				type: "unitBlockDiagram" as const,
 				totalBlocks: 8,
 				shadedUnitsPerBlock: 1,
 				blocksPerRow: 4,
@@ -1147,6 +1208,7 @@ describe("Widget Generators", () => {
 	describe("generateVennDiagram", () => {
 		test("should render a complete Venn diagram", () => {
 			const props = {
+				type: "vennDiagram" as const,
 				width: 400,
 				height: 300,
 				circleA: { label: "Have a Dog", count: 12, color: "rgba(217, 95, 79, 0.5)" },
@@ -1159,6 +1221,7 @@ describe("Widget Generators", () => {
 
 		test("should render with custom dimensions", () => {
 			const props = {
+				type: "vennDiagram" as const,
 				width: 500,
 				height: 400,
 				circleA: { label: "Group A", count: 15, color: "rgba(255, 182, 193, 0.5)" },
@@ -1173,6 +1236,7 @@ describe("Widget Generators", () => {
 	describe("generateVerticalArithmeticSetup", () => {
 		test("should render a multiplication problem", () => {
 			const props = {
+				type: "verticalArithmeticSetup" as const,
 				title: "Calculate the product:",
 				operand1: "1.84",
 				operand2: "7.2",
@@ -1183,6 +1247,7 @@ describe("Widget Generators", () => {
 
 		test("should render an addition problem", () => {
 			const props = {
+				type: "verticalArithmeticSetup" as const,
 				title: null,
 				operand1: "503",
 				operand2: "29",

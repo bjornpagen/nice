@@ -22,6 +22,7 @@ const NumberSetCollectionSchema = z
 // The main Zod schema for the numberSetDiagram function
 export const NumberSetDiagramPropsSchema = z
 	.object({
+		type: z.literal("numberSetDiagram"),
 		width: z
 			.number()
 			.nullable()

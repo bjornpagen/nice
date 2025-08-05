@@ -53,6 +53,7 @@ const ShapeDefinitionSchema = z
 // The main Zod schema for the partitionedShape function
 export const PartitionedShapePropsSchema = z
 	.object({
+		type: z.literal("partitionedShape"),
 		shapes: z
 			.array(ShapeDefinitionSchema)
 			.min(1)

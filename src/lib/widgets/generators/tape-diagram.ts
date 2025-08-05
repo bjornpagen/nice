@@ -25,6 +25,7 @@ const TapeSchema = z
 // The main Zod schema for the tapeDiagram function
 export const TapeDiagramPropsSchema = z
 	.object({
+		type: z.literal("tapeDiagram"),
 		width: z
 			.number()
 			.nullable()

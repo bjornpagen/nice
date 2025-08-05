@@ -13,6 +13,7 @@ const DiagramEmojiSchema = z
 // The main Zod schema for the stackedItemsDiagram function
 export const StackedItemsDiagramPropsSchema = z
 	.object({
+		type: z.literal("stackedItemsDiagram"),
 		width: z.number().describe("The total width of the output container div in pixels."),
 		height: z.number().describe("The total height of the output container div in pixels."),
 		altText: z.string().describe("A comprehensive alt text describing the final composite image for accessibility."),

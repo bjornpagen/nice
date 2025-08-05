@@ -33,6 +33,7 @@ const BoxPlotSummarySchema = z
 // The main Zod schema for the boxPlot function
 export const BoxPlotPropsSchema = z
 	.object({
+		type: z.literal("boxPlot"),
 		width: z
 			.number()
 			.nullable()

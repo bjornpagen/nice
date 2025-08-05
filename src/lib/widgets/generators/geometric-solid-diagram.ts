@@ -38,6 +38,7 @@ const SolidDimensionLabelSchema = z
 // The main Zod schema for the geometricSolidDiagram function
 export const GeometricSolidDiagramPropsSchema = z
 	.object({
+		type: z.literal("geometricSolidDiagram"),
 		width: z
 			.number()
 			.nullable()

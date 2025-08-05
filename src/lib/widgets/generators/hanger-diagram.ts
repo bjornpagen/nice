@@ -23,6 +23,7 @@ const HangerWeightSchema = z
 // The main Zod schema for the hangerDiagram function
 export const HangerDiagramPropsSchema = z
 	.object({
+		type: z.literal("hangerDiagram"),
 		width: z
 			.number()
 			.nullable()

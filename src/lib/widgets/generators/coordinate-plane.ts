@@ -104,6 +104,7 @@ const PolygonSchema = z
 // The main Zod schema for the coordinatePlane function
 export const CoordinatePlanePropsSchema = z
 	.object({
+		type: z.literal("coordinatePlane"),
 		width: z
 			.number()
 			.nullable()

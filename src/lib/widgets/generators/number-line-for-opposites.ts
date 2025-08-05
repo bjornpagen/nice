@@ -4,6 +4,7 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // The main Zod schema for the numberLineForOpposites function
 export const NumberLineForOppositesPropsSchema = z
 	.object({
+		type: z.literal("numberLineForOpposites"),
 		width: z
 			.number()
 			.nullable()

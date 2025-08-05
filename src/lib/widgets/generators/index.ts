@@ -38,45 +38,41 @@ import { generateUnitBlockDiagram, UnitBlockDiagramPropsSchema } from "./unit-bl
 import { generateVennDiagram, VennDiagramPropsSchema } from "./venn-diagram"
 import { generateVerticalArithmeticSetup, VerticalArithmeticSetupPropsSchema } from "./vertical-arithmetic-setup"
 
-// Extend each schema with a unique `type` literal for the discriminated union
+// The `type` field is now included in the base schemas, so we remove .extend()
 export const typedSchemas = {
-	absoluteValueNumberLine: AbsoluteValueNumberLinePropsSchema.extend({ type: z.literal("absoluteValueNumberLine") }),
-	barChart: BarChartPropsSchema.extend({ type: z.literal("barChart") }),
-	boxPlot: BoxPlotPropsSchema.extend({ type: z.literal("boxPlot") }),
-	compositeShapeDiagram: CompositeShapeDiagramPropsSchema.extend({ type: z.literal("compositeShapeDiagram") }),
-	coordinatePlane: CoordinatePlanePropsSchema.extend({ type: z.literal("coordinatePlane") }),
-	dataTable: DataTablePropsSchema.extend({ type: z.literal("dataTable") }),
-	discreteObjectRatioDiagram: DiscreteObjectRatioDiagramPropsSchema.extend({
-		type: z.literal("discreteObjectRatioDiagram")
-	}),
-	dotPlot: DotPlotPropsSchema.extend({ type: z.literal("dotPlot") }),
-	doubleNumberLine: DoubleNumberLinePropsSchema.extend({ type: z.literal("doubleNumberLine") }),
-	geometricSolidDiagram: GeometricSolidDiagramPropsSchema.extend({ type: z.literal("geometricSolidDiagram") }),
-	hangerDiagram: HangerDiagramPropsSchema.extend({ type: z.literal("hangerDiagram") }),
-	histogram: HistogramPropsSchema.extend({ type: z.literal("histogram") }),
-	inequalityNumberLine: InequalityNumberLinePropsSchema.extend({ type: z.literal("inequalityNumberLine") }),
-	numberLine: NumberLinePropsSchema.extend({ type: z.literal("numberLine") }),
-	numberLineForOpposites: NumberLineForOppositesPropsSchema.extend({ type: z.literal("numberLineForOpposites") }),
-	numberLineWithAction: NumberLineWithActionPropsSchema.extend({ type: z.literal("numberLineWithAction") }),
-	numberLineWithFractionGroups: NumberLineWithFractionGroupsPropsSchema.extend({
-		type: z.literal("numberLineWithFractionGroups")
-	}),
-	numberSetDiagram: NumberSetDiagramPropsSchema.extend({ type: z.literal("numberSetDiagram") }),
-	parallelLinesTransversal: ParallelLinesTransversalPropsSchema.extend({ type: z.literal("parallelLinesTransversal") }),
-	partitionedShape: PartitionedShapePropsSchema.extend({ type: z.literal("partitionedShape") }),
-	pictograph: PictographPropsSchema.extend({ type: z.literal("pictograph") }),
-	polyhedronDiagram: PolyhedronDiagramPropsSchema.extend({ type: z.literal("polyhedronDiagram") }),
-	polyhedronNetDiagram: PolyhedronNetDiagramPropsSchema.extend({ type: z.literal("polyhedronNetDiagram") }),
-	pythagoreanProofDiagram: PythagoreanProofDiagramPropsSchema.extend({ type: z.literal("pythagoreanProofDiagram") }),
-	scatterPlot: ScatterPlotPropsSchema.extend({ type: z.literal("scatterPlot") }),
-	stackedItemsDiagram: StackedItemsDiagramPropsSchema.extend({ type: z.literal("stackedItemsDiagram") }),
-	tapeDiagram: TapeDiagramPropsSchema.extend({ type: z.literal("tapeDiagram") }),
-	unitBlockDiagram: UnitBlockDiagramPropsSchema.extend({ type: z.literal("unitBlockDiagram") }),
-	vennDiagram: VennDiagramPropsSchema.extend({ type: z.literal("vennDiagram") }),
-	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema.extend({ type: z.literal("verticalArithmeticSetup") })
+	absoluteValueNumberLine: AbsoluteValueNumberLinePropsSchema,
+	barChart: BarChartPropsSchema,
+	boxPlot: BoxPlotPropsSchema,
+	compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
+	coordinatePlane: CoordinatePlanePropsSchema,
+	dataTable: DataTablePropsSchema,
+	discreteObjectRatioDiagram: DiscreteObjectRatioDiagramPropsSchema,
+	dotPlot: DotPlotPropsSchema,
+	doubleNumberLine: DoubleNumberLinePropsSchema,
+	geometricSolidDiagram: GeometricSolidDiagramPropsSchema,
+	hangerDiagram: HangerDiagramPropsSchema,
+	histogram: HistogramPropsSchema,
+	inequalityNumberLine: InequalityNumberLinePropsSchema,
+	numberLine: NumberLinePropsSchema,
+	numberLineForOpposites: NumberLineForOppositesPropsSchema,
+	numberLineWithAction: NumberLineWithActionPropsSchema,
+	numberLineWithFractionGroups: NumberLineWithFractionGroupsPropsSchema,
+	numberSetDiagram: NumberSetDiagramPropsSchema,
+	parallelLinesTransversal: ParallelLinesTransversalPropsSchema,
+	partitionedShape: PartitionedShapePropsSchema,
+	pictograph: PictographPropsSchema,
+	polyhedronDiagram: PolyhedronDiagramPropsSchema,
+	polyhedronNetDiagram: PolyhedronNetDiagramPropsSchema,
+	pythagoreanProofDiagram: PythagoreanProofDiagramPropsSchema,
+	scatterPlot: ScatterPlotPropsSchema,
+	stackedItemsDiagram: StackedItemsDiagramPropsSchema,
+	tapeDiagram: TapeDiagramPropsSchema,
+	unitBlockDiagram: UnitBlockDiagramPropsSchema,
+	vennDiagram: VennDiagramPropsSchema,
+	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema
 }
 
-// Create the discriminated union schema from the extended schemas
+// Create the discriminated union schema from the schemas (each now contains its type field)
 export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.absoluteValueNumberLine,
 	typedSchemas.barChart,

@@ -68,6 +68,7 @@ const TrendLineStyleSchema = z
 // The main Zod schema for the scatterPlot function
 export const ScatterPlotPropsSchema = z
 	.object({
+		type: z.literal("scatterPlot"),
 		width: z
 			.number()
 			.nullable()

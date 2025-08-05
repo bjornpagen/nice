@@ -52,6 +52,7 @@ const RectangularPyramidDataSchema = z
 // The main Zod schema for the polyhedronDiagram function
 export const PolyhedronDiagramPropsSchema = z
 	.object({
+		type: z.literal("polyhedronDiagram"),
 		width: z
 			.number()
 			.nullable()

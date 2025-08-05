@@ -29,6 +29,7 @@ const CircleBSchema = z
 // The main Zod schema for the vennDiagram function
 export const VennDiagramPropsSchema = z
 	.object({
+		type: z.literal("vennDiagram"),
 		width: z
 			.number()
 			.nullable()
