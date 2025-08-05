@@ -4,25 +4,31 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
 
-// Defines a boundary point for an inequality range
-const InequalityBoundarySchema = z
-	.object({
-		value: z.number().describe("The numerical value of the boundary point."),
-		type: z
-			.enum(["open", "closed"])
-			.describe('The type of circle at the boundary: "open" for < or >, "closed" for ≤ or ≥.')
-	})
-	.strict()
-
 // Defines a single continuous range to be graphed on the number line
 const InequalityRangeSchema = z
 	.object({
-		start: InequalityBoundarySchema.nullable().describe(
-			"The starting boundary of the range. If omitted, the range extends to negative infinity."
-		),
-		end: InequalityBoundarySchema.nullable().describe(
-			"The ending boundary of the range. If omitted, the range extends to positive infinity."
-		),
+		// INLINED: The InequalityBoundarySchema is now defined directly inside the start property.
+		start: z
+			.object({
+				value: z.number().describe("The numerical value of the boundary point."),
+				type: z
+					.enum(["open", "closed"])
+					.describe('The type of circle at the boundary: "open" for < or >, "closed" for ≤ or ≥.')
+			})
+			.strict()
+			.nullable()
+			.describe("The starting boundary of the range. If omitted, the range extends to negative infinity."),
+		// INLINED: The InequalityBoundarySchema is now defined directly inside the end property.
+		end: z
+			.object({
+				value: z.number().describe("The numerical value of the boundary point."),
+				type: z
+					.enum(["open", "closed"])
+					.describe('The type of circle at the boundary: "open" for < or >, "closed" for ≤ or ≥.')
+			})
+			.strict()
+			.nullable()
+			.describe("The ending boundary of the range. If omitted, the range extends to positive infinity."),
 		color: z
 			.string()
 			.nullable()

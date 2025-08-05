@@ -1,15 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines the properties of an emoji icon used in the diagram
-const DiagramEmojiSchema = z
-	.object({
-		emoji: z.string().describe("The emoji character to use as the icon (e.g., '🍦', '🥞', '📚')."),
-		size: z.number().describe("The size of the emoji in pixels."),
-		label: z.string().describe("Alternative text describing the emoji for accessibility.")
-	})
-	.strict()
-
 // The main Zod schema for the stackedItemsDiagram function
 export const StackedItemsDiagramPropsSchema = z
 	.object({
@@ -17,10 +8,24 @@ export const StackedItemsDiagramPropsSchema = z
 		width: z.number().describe("The total width of the output container div in pixels."),
 		height: z.number().describe("The total height of the output container div in pixels."),
 		altText: z.string().describe("A comprehensive alt text describing the final composite image for accessibility."),
-		baseItem: DiagramEmojiSchema.describe("The emoji for the non-repeated base item (e.g., the cone '🍦')."),
-		stackedItem: DiagramEmojiSchema.describe(
-			"The emoji for the item that will be repeated and stacked (e.g., the scoop '🍨')."
-		),
+		// INLINED: The DiagramEmojiSchema definition is now directly inside the baseItem property.
+		baseItem: z
+			.object({
+				emoji: z.string().describe("The emoji character to use as the icon (e.g., '🍦', '🥞', '📚')."),
+				size: z.number().describe("The size of the emoji in pixels."),
+				label: z.string().describe("Alternative text describing the emoji for accessibility.")
+			})
+			.strict()
+			.describe("The emoji for the non-repeated base item (e.g., the cone '🍦')."),
+		// INLINED: The DiagramEmojiSchema definition is now directly inside the stackedItem property.
+		stackedItem: z
+			.object({
+				emoji: z.string().describe("The emoji character to use as the icon (e.g., '🍦', '🥞', '📚')."),
+				size: z.number().describe("The size of the emoji in pixels."),
+				label: z.string().describe("Alternative text describing the emoji for accessibility.")
+			})
+			.strict()
+			.describe("The emoji for the item that will be repeated and stacked (e.g., the scoop '🍨')."),
 		count: z.number().int().min(0).describe("The number of times the stackedItem should be rendered."),
 		orientation: z
 			.enum(["vertical", "horizontal"])

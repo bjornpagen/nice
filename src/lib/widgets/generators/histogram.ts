@@ -13,21 +13,6 @@ const HistogramBinSchema = z
 	})
 	.strict()
 
-// Defines the properties of an axis
-const HistogramAxisSchema = z
-	.object({
-		label: z.string().describe('The text title for the axis (e.g., "Number of Guests" or "Frequency").'),
-		max: z
-			.number()
-			.int()
-			.nullable()
-			.describe(
-				"An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically."
-			),
-		tickInterval: z.number().nullable().describe("An optional numeric interval for tick marks on the Y-axis.")
-	})
-	.strict()
-
 // The main Zod schema for the histogram function
 export const HistogramPropsSchema = z
 	.object({
@@ -43,8 +28,36 @@ export const HistogramPropsSchema = z
 			.transform((val) => val ?? 300)
 			.describe("The total height of the output SVG container in pixels."),
 		title: z.string().nullable().describe("An optional title displayed above the histogram."),
-		xAxis: HistogramAxisSchema.describe("Configuration for the horizontal (X) axis."),
-		yAxis: HistogramAxisSchema.describe("Configuration for the vertical (Y) axis."),
+		// INLINED: The HistogramAxisSchema definition is now directly inside the xAxis property.
+		xAxis: z
+			.object({
+				label: z.string().describe('The text title for the axis (e.g., "Number of Guests" or "Frequency").'),
+				max: z
+					.number()
+					.int()
+					.nullable()
+					.describe(
+						"An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically."
+					),
+				tickInterval: z.number().nullable().describe("An optional numeric interval for tick marks on the Y-axis.")
+			})
+			.strict()
+			.describe("Configuration for the horizontal (X) axis."),
+		// INLINED: The HistogramAxisSchema definition is now directly inside the yAxis property.
+		yAxis: z
+			.object({
+				label: z.string().describe('The text title for the axis (e.g., "Number of Guests" or "Frequency").'),
+				max: z
+					.number()
+					.int()
+					.nullable()
+					.describe(
+						"An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically."
+					),
+				tickInterval: z.number().nullable().describe("An optional numeric interval for tick marks on the Y-axis.")
+			})
+			.strict()
+			.describe("Configuration for the vertical (Y) axis."),
 		bins: z.array(HistogramBinSchema).describe("An array of bin objects, each defining its label and frequency.")
 	})
 	.strict()

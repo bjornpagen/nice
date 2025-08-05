@@ -4,24 +4,6 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
-// Defines the properties of an axis (X or Y)
-const AxisSchema = z
-	.object({
-		label: z
-			.string()
-			.nullable()
-			.describe('The text title for the axis (e.g., "Number of Days"). If omitted, a simple "x" or "y" may be used.'),
-		min: z.number().describe("The minimum value displayed on the axis."),
-		max: z.number().describe("The maximum value displayed on the axis."),
-		tickInterval: z.number().describe("The numeric interval between labeled tick marks on the axis."),
-		showGridLines: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? true)
-			.describe("If true, display grid lines for this axis.")
-	})
-	.strict()
-
 // Defines a single point to be plotted on the coordinate plane
 const PointSchema = z
 	.object({
@@ -115,8 +97,46 @@ export const CoordinatePlanePropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
-		xAxis: AxisSchema.describe("Configuration for the horizontal (X) axis."),
-		yAxis: AxisSchema.describe("Configuration for the vertical (Y) axis."),
+		// INLINED: The AxisSchema definition is now directly inside the xAxis property.
+		xAxis: z
+			.object({
+				label: z
+					.string()
+					.nullable()
+					.describe(
+						'The text title for the axis (e.g., "Number of Days"). If omitted, a simple "x" or "y" may be used.'
+					),
+				min: z.number().describe("The minimum value displayed on the axis."),
+				max: z.number().describe("The maximum value displayed on the axis."),
+				tickInterval: z.number().describe("The numeric interval between labeled tick marks on the axis."),
+				showGridLines: z
+					.boolean()
+					.nullable()
+					.transform((val) => val ?? true)
+					.describe("If true, display grid lines for this axis.")
+			})
+			.strict()
+			.describe("Configuration for the horizontal (X) axis."),
+		// INLINED: The AxisSchema definition is now directly inside the yAxis property.
+		yAxis: z
+			.object({
+				label: z
+					.string()
+					.nullable()
+					.describe(
+						'The text title for the axis (e.g., "Number of Days"). If omitted, a simple "x" or "y" may be used.'
+					),
+				min: z.number().describe("The minimum value displayed on the axis."),
+				max: z.number().describe("The maximum value displayed on the axis."),
+				tickInterval: z.number().describe("The numeric interval between labeled tick marks on the axis."),
+				showGridLines: z
+					.boolean()
+					.nullable()
+					.transform((val) => val ?? true)
+					.describe("If true, display grid lines for this axis.")
+			})
+			.strict()
+			.describe("Configuration for the vertical (Y) axis."),
 		showQuadrantLabels: z
 			.boolean()
 			.nullable()

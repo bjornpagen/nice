@@ -4,16 +4,6 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrMismatchedTickCounts = errors.new("top and bottom lines must have the same number of ticks")
 
-// Defines one of the two number lines in the diagram
-const LineSchema = z
-	.object({
-		label: z.string().describe('The text label for this quantity (e.g., "Time (seconds)").'),
-		ticks: z
-			.array(z.union([z.string(), z.number()]))
-			.describe("An array of values to label the tick marks in order from left to right.")
-	})
-	.strict()
-
 // The main Zod schema for the doubleNumberLine function
 export const DoubleNumberLinePropsSchema = z
 	.object({
@@ -28,10 +18,26 @@ export const DoubleNumberLinePropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 150)
 			.describe("The total height of the output SVG container in pixels."),
-		topLine: LineSchema.describe("Configuration for the upper number line."),
-		bottomLine: LineSchema.describe(
-			"Configuration for the lower number line. Must have the same number of ticks as the top line."
-		)
+		// INLINED: The LineSchema definition is now directly inside the topLine property.
+		topLine: z
+			.object({
+				label: z.string().describe('The text label for this quantity (e.g., "Time (seconds)").'),
+				ticks: z
+					.array(z.union([z.string(), z.number()]))
+					.describe("An array of values to label the tick marks in order from left to right.")
+			})
+			.strict()
+			.describe("Configuration for the upper number line."),
+		// INLINED: The LineSchema definition is now directly inside the bottomLine property.
+		bottomLine: z
+			.object({
+				label: z.string().describe('The text label for this quantity (e.g., "Time (seconds)").'),
+				ticks: z
+					.array(z.union([z.string(), z.number()]))
+					.describe("An array of values to label the tick marks in order from left to right.")
+			})
+			.strict()
+			.describe("Configuration for the lower number line. Must have the same number of ticks as the top line.")
 	})
 	.strict()
 	.describe(

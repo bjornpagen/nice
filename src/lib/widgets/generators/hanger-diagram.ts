@@ -1,25 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines a single weight hanging from one side of the diagram
-const HangerWeightSchema = z
-	.object({
-		label: z
-			.union([z.string(), z.number()])
-			.describe('The text label displayed inside the weight (e.g., "c", 12, "1/2").'),
-		shape: z
-			.enum(["square", "circle", "pentagon", "hexagon", "triangle"])
-			.nullable()
-			.transform((val) => val ?? "square")
-			.describe("The geometric shape of the weight."),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#e0e0e0")
-			.describe("An optional CSS fill color for the shape.")
-	})
-	.strict()
-
 // The main Zod schema for the hangerDiagram function
 export const HangerDiagramPropsSchema = z
 	.object({
@@ -34,11 +15,49 @@ export const HangerDiagramPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 240)
 			.describe("The total height of the output SVG container in pixels."),
+		// INLINED: The HangerWeightSchema is now defined directly inside the leftSide property.
 		leftSide: z
-			.array(HangerWeightSchema)
+			.array(
+				z
+					.object({
+						label: z
+							.union([z.string(), z.number()])
+							.describe('The text label displayed inside the weight (e.g., "c", 12, "1/2").'),
+						shape: z
+							.enum(["square", "circle", "pentagon", "hexagon", "triangle"])
+							.nullable()
+							.transform((val) => val ?? "square")
+							.describe("The geometric shape of the weight."),
+						color: z
+							.string()
+							.nullable()
+							.transform((val) => val ?? "#e0e0e0")
+							.describe("An optional CSS fill color for the shape.")
+					})
+					.strict()
+			)
 			.describe("An array of weight objects to be rendered on the left side of the hanger."),
+		// INLINED: The HangerWeightSchema is now defined directly inside the rightSide property.
 		rightSide: z
-			.array(HangerWeightSchema)
+			.array(
+				z
+					.object({
+						label: z
+							.union([z.string(), z.number()])
+							.describe('The text label displayed inside the weight (e.g., "c", 12, "1/2").'),
+						shape: z
+							.enum(["square", "circle", "pentagon", "hexagon", "triangle"])
+							.nullable()
+							.transform((val) => val ?? "square")
+							.describe("The geometric shape of the weight."),
+						color: z
+							.string()
+							.nullable()
+							.transform((val) => val ?? "#e0e0e0")
+							.describe("An optional CSS fill color for the shape.")
+					})
+					.strict()
+			)
 			.describe("An array of weight objects to be rendered on the right side of the hanger.")
 	})
 	.strict()

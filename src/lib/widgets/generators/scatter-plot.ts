@@ -10,21 +10,6 @@ const ScatterPointSchema = z
 	})
 	.strict()
 
-// Defines the properties of an axis (X or Y)
-const AxisSchema = z
-	.object({
-		label: z.string().describe('The text title for the axis (e.g., "Driver Age").'),
-		min: z.number().describe("The minimum value displayed on the axis."),
-		max: z.number().describe("The maximum value displayed on the axis."),
-		tickInterval: z.number().describe("The numeric interval between tick marks on the axis."),
-		gridLines: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true, display grid lines for this axis.")
-	})
-	.strict()
-
 // Defines a linear trend line using slope and y-intercept
 const LinearTrendLineSchema = z
 	.object({
@@ -80,8 +65,36 @@ export const ScatterPlotPropsSchema = z
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
 		title: z.string().nullable().describe("An optional title displayed above or below the plot."),
-		xAxis: AxisSchema.describe("Configuration for the horizontal (X) axis."),
-		yAxis: AxisSchema.describe("Configuration for the vertical (Y) axis."),
+		// INLINED: The AxisSchema definition is now directly inside the xAxis property.
+		xAxis: z
+			.object({
+				label: z.string().describe('The text title for the axis (e.g., "Driver Age").'),
+				min: z.number().describe("The minimum value displayed on the axis."),
+				max: z.number().describe("The maximum value displayed on the axis."),
+				tickInterval: z.number().describe("The numeric interval between tick marks on the axis."),
+				gridLines: z
+					.boolean()
+					.nullable()
+					.transform((val) => val ?? false)
+					.describe("If true, display grid lines for this axis.")
+			})
+			.strict()
+			.describe("Configuration for the horizontal (X) axis."),
+		// INLINED: The AxisSchema definition is now directly inside the yAxis property.
+		yAxis: z
+			.object({
+				label: z.string().describe('The text title for the axis (e.g., "Driver Age").'),
+				min: z.number().describe("The minimum value displayed on the axis."),
+				max: z.number().describe("The maximum value displayed on the axis."),
+				tickInterval: z.number().describe("The numeric interval between tick marks on the axis."),
+				gridLines: z
+					.boolean()
+					.nullable()
+					.transform((val) => val ?? false)
+					.describe("If true, display grid lines for this axis.")
+			})
+			.strict()
+			.describe("Configuration for the vertical (Y) axis."),
 		points: z.array(ScatterPointSchema).describe("An array of data points to be plotted."),
 		trendLines: z
 			.array(TrendLineStyleSchema)

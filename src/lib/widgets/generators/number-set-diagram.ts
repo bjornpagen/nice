@@ -1,21 +1,37 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines the labels and colors for the regions in the diagram
-const NumberSetStyleSchema = z
-	.object({
-		label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
-		color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
-	})
-	.strict()
-
 // Defines the collection of number set styles
 const NumberSetCollectionSchema = z
 	.object({
-		whole: NumberSetStyleSchema,
-		integer: NumberSetStyleSchema,
-		rational: NumberSetStyleSchema,
-		irrational: NumberSetStyleSchema
+		// INLINED: The NumberSetStyleSchema definition is now directly inside the whole property.
+		whole: z
+			.object({
+				label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
+				color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
+			})
+			.strict(),
+		// INLINED: The NumberSetStyleSchema definition is now directly inside the integer property.
+		integer: z
+			.object({
+				label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
+				color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
+			})
+			.strict(),
+		// INLINED: The NumberSetStyleSchema definition is now directly inside the rational property.
+		rational: z
+			.object({
+				label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
+				color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
+			})
+			.strict(),
+		// INLINED: The NumberSetStyleSchema definition is now directly inside the irrational property.
+		irrational: z
+			.object({
+				label: z.string().describe('The text label for the number set (e.g., "Whole numbers").'),
+				color: z.string().describe('The CSS fill color for the region (e.g., "#E8F0FE").')
+			})
+			.strict()
 	})
 	.strict()
 

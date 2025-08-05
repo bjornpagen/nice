@@ -1,27 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines a single segment within a tape
-const TapeSegmentSchema = z
-	.object({
-		label: z.string().describe('The text label to display inside this segment (e.g., "10", "w").'),
-		length: z.number().positive().describe("The numerical length of the segment for proportional rendering.")
-	})
-	.strict()
-
-// Defines one of the two tapes in the diagram
-const TapeSchema = z
-	.object({
-		label: z.string().describe('The text label for this tape (e.g., "Teeth per larger gear").'),
-		segments: z.array(TapeSegmentSchema).min(1).describe("An array of segment objects that make up this tape."),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "rgba(66, 133, 244, 0.6)")
-			.describe("The CSS fill color for the tape segments.")
-	})
-	.strict()
-
 // The main Zod schema for the tapeDiagram function
 export const TapeDiagramPropsSchema = z
 	.object({
@@ -36,8 +15,58 @@ export const TapeDiagramPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 200)
 			.describe("The total height of the output SVG container in pixels."),
-		topTape: TapeSchema.describe("Configuration for the upper tape."),
-		bottomTape: TapeSchema.describe("Configuration for the lower tape."),
+		// INLINED: The TapeSchema definition is now directly inside the topTape property.
+		topTape: z
+			.object({
+				label: z.string().describe('The text label for this tape (e.g., "Teeth per larger gear").'),
+				segments: z
+					.array(
+						z
+							.object({
+								label: z.string().describe('The text label to display inside this segment (e.g., "10", "w").'),
+								length: z
+									.number()
+									.positive()
+									.describe("The numerical length of the segment for proportional rendering.")
+							})
+							.strict()
+					)
+					.min(1)
+					.describe("An array of segment objects that make up this tape."),
+				color: z
+					.string()
+					.nullable()
+					.transform((val) => val ?? "rgba(66, 133, 244, 0.6)")
+					.describe("The CSS fill color for the tape segments.")
+			})
+			.strict()
+			.describe("Configuration for the upper tape."),
+		// INLINED: The TapeSchema definition is now directly inside the bottomTape property.
+		bottomTape: z
+			.object({
+				label: z.string().describe('The text label for this tape (e.g., "Teeth per larger gear").'),
+				segments: z
+					.array(
+						z
+							.object({
+								label: z.string().describe('The text label to display inside this segment (e.g., "10", "w").'),
+								length: z
+									.number()
+									.positive()
+									.describe("The numerical length of the segment for proportional rendering.")
+							})
+							.strict()
+					)
+					.min(1)
+					.describe("An array of segment objects that make up this tape."),
+				color: z
+					.string()
+					.nullable()
+					.transform((val) => val ?? "rgba(66, 133, 244, 0.6)")
+					.describe("The CSS fill color for the tape segments.")
+			})
+			.strict()
+			.describe("Configuration for the lower tape."),
 		showTotalBracket: z
 			.boolean()
 			.nullable()

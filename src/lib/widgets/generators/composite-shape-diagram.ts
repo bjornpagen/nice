@@ -13,7 +13,14 @@ const PointSchema = z
 const LabelSchema = z
 	.object({
 		text: z.string().describe('The text content of the label (e.g., "9 units", "A").'),
-		position: PointSchema.describe("An explicit {x, y} coordinate for placing the label.")
+		// INLINED: The PointSchema definition is now directly inside the position property.
+		position: z
+			.object({
+				x: z.number().describe("The horizontal coordinate of the vertex."),
+				y: z.number().describe("The vertical coordinate of the vertex.")
+			})
+			.strict()
+			.describe("An explicit {x, y} coordinate for placing the label.")
 	})
 	.strict()
 

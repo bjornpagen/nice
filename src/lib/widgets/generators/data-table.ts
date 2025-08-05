@@ -40,8 +40,23 @@ export const DataTablePropsSchema = z
 			.string()
 			.nullable()
 			.describe("The 'key' of the column that should be treated as the row header (<th>)."),
+		// INLINED: The TableCellSchema definition is now directly inside the footer property.
 		footer: z
-			.array(TableCellSchema)
+			.array(
+				z
+					.union([
+						z.string(),
+						z.number(),
+						z
+							.object({
+								type: z.literal("input"),
+								responseIdentifier: z.string().describe("The QTI response identifier for this input field."),
+								expectedLength: z.number().nullable().describe("The expected character length for the input field.")
+							})
+							.strict()
+					])
+					.describe("Content for a cell. Can be text/MathML, a number, or an input field specification.")
+			)
 			.nullable()
 			.describe("An optional array of footer cells, in the same order as columns.")
 	})

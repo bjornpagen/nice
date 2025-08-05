@@ -1,17 +1,6 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines properties for one of the squares attached to the central triangle
-const SideSquareSchema = z
-	.object({
-		area: z.number().describe("The area of the square, used for labeling."),
-		sideLabel: z
-			.string()
-			.nullable()
-			.describe('An optional label for the corresponding triangle side (e.g., "a", "b", "c").')
-	})
-	.strict()
-
 // The main Zod schema for the pythagoreanProofDiagram function
 export const PythagoreanProofDiagramPropsSchema = z
 	.object({
@@ -26,9 +15,39 @@ export const PythagoreanProofDiagramPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
-		squareA: SideSquareSchema.describe("Properties of the square on the first leg."),
-		squareB: SideSquareSchema.describe("Properties of the square on the second leg."),
-		squareC: SideSquareSchema.describe("Properties of the square on the hypotenuse.")
+		// INLINED: The SideSquareSchema definition is now directly inside the squareA property.
+		squareA: z
+			.object({
+				area: z.number().describe("The area of the square, used for labeling."),
+				sideLabel: z
+					.string()
+					.nullable()
+					.describe('An optional label for the corresponding triangle side (e.g., "a", "b", "c").')
+			})
+			.strict()
+			.describe("Properties of the square on the first leg."),
+		// INLINED: The SideSquareSchema definition is now directly inside the squareB property.
+		squareB: z
+			.object({
+				area: z.number().describe("The area of the square, used for labeling."),
+				sideLabel: z
+					.string()
+					.nullable()
+					.describe('An optional label for the corresponding triangle side (e.g., "a", "b", "c").')
+			})
+			.strict()
+			.describe("Properties of the square on the second leg."),
+		// INLINED: The SideSquareSchema definition is now directly inside the squareC property.
+		squareC: z
+			.object({
+				area: z.number().describe("The area of the square, used for labeling."),
+				sideLabel: z
+					.string()
+					.nullable()
+					.describe('An optional label for the corresponding triangle side (e.g., "a", "b", "c").')
+			})
+			.strict()
+			.describe("Properties of the square on the hypotenuse.")
 	})
 	.strict()
 	.describe(
