@@ -17,6 +17,7 @@ import { generateDataTable } from "./data-table"
 import { generateDiscreteObjectRatioDiagram } from "./discrete-object-ratio-diagram"
 import { ErrInvalidDimensions as ErrDotPlotInvalidDimensions, generateDotPlot } from "./dot-plot"
 import { generateDoubleNumberLine } from "./double-number-line"
+import { FractionNumberLinePropsSchema, generateFractionNumberLine } from "./fraction-number-line"
 import { generateGeometricSolidDiagram } from "./geometric-solid-diagram"
 import { generateHangerDiagram } from "./hanger-diagram"
 import { generateHistogram } from "./histogram"
@@ -206,6 +207,149 @@ describe("Widget Generators", () => {
 			}
 			const parsedProps = CircleDiagramPropsSchema.parse(props)
 			expect(generateCircleDiagram(parsedProps)).toMatchSnapshot()
+		})
+	})
+
+	describe("generateFractionNumberLine", () => {
+		test("should render basic fraction number line with segments and model", () => {
+			const props = {
+				type: "fractionNumberLine" as const,
+				width: 600,
+				height: 200,
+				min: 0,
+				max: 1,
+				ticks: [
+					{
+						value: 0,
+						topLabel: null,
+						bottomLabel: "0",
+						isMajor: true
+					},
+					{
+						value: 0.25,
+						topLabel: "1/4",
+						bottomLabel: null,
+						isMajor: false
+					},
+					{
+						value: 0.5,
+						topLabel: "2/4",
+						bottomLabel: null,
+						isMajor: false
+					},
+					{
+						value: 0.75,
+						topLabel: "3/4",
+						bottomLabel: null,
+						isMajor: false
+					},
+					{
+						value: 1,
+						topLabel: null,
+						bottomLabel: "1",
+						isMajor: true
+					}
+				],
+				segments: [
+					{
+						start: 0,
+						end: 0.75,
+						color: "#4CAF50"
+					}
+				],
+				model: {
+					totalCells: 4,
+					cellGroups: [
+						{
+							count: 3,
+							color: "#4CAF50"
+						}
+					],
+					bracketLabel: "3/4"
+				}
+			}
+			const parsedProps = FractionNumberLinePropsSchema.parse(props)
+			expect(generateFractionNumberLine(parsedProps)).toMatchSnapshot()
+		})
+
+		test("should render fraction number line with eighths and multiple segments", () => {
+			const props = {
+				type: "fractionNumberLine" as const,
+				width: 700,
+				height: 200,
+				min: 0,
+				max: 1,
+				ticks: [
+					{
+						value: 0,
+						topLabel: "0/8",
+						bottomLabel: "0",
+						isMajor: true
+					},
+					{
+						value: 0.125,
+						topLabel: "1/8",
+						bottomLabel: null,
+						isMajor: false
+					},
+					{
+						value: 0.375,
+						topLabel: "3/8",
+						bottomLabel: null,
+						isMajor: false
+					},
+					{
+						value: 0.625,
+						topLabel: "5/8",
+						bottomLabel: null,
+						isMajor: false
+					},
+					{
+						value: 0.875,
+						topLabel: "7/8",
+						bottomLabel: null,
+						isMajor: false
+					},
+					{
+						value: 1,
+						topLabel: "8/8",
+						bottomLabel: "1",
+						isMajor: true
+					}
+				],
+				segments: [
+					{
+						start: 0,
+						end: 0.375,
+						color: "#FF5722"
+					},
+					{
+						start: 0.5,
+						end: 0.875,
+						color: "#2196F3"
+					}
+				],
+				model: {
+					totalCells: 8,
+					cellGroups: [
+						{
+							count: 3,
+							color: "#FF5722"
+						},
+						{
+							count: 1,
+							color: "transparent"
+						},
+						{
+							count: 3,
+							color: "#2196F3"
+						}
+					],
+					bracketLabel: "Compare fractions"
+				}
+			}
+			const parsedProps = FractionNumberLinePropsSchema.parse(props)
+			expect(generateFractionNumberLine(parsedProps)).toMatchSnapshot()
 		})
 	})
 

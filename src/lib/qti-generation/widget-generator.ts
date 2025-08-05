@@ -13,6 +13,7 @@ import {
 	generateDotPlot,
 	generateDoubleNumberLine,
 	generateEmojiImage,
+	generateFractionNumberLine,
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
@@ -107,6 +108,8 @@ export function generateWidget(widget: Widget): string {
 			return generateVerticalArithmeticSetup(widget)
 		case "emojiImage":
 			return generateEmojiImage(widget)
+		case "fractionNumberLine":
+			return generateFractionNumberLine(widget)
 		default:
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
 	}

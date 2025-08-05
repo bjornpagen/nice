@@ -17,6 +17,7 @@ import {
 import { DotPlotPropsSchema, generateDotPlot } from "./dot-plot"
 import { DoubleNumberLinePropsSchema, generateDoubleNumberLine } from "./double-number-line"
 import { EmojiImagePropsSchema, generateEmojiImage } from "./emoji-image"
+import { FractionNumberLinePropsSchema, generateFractionNumberLine } from "./fraction-number-line"
 import { GeometricSolidDiagramPropsSchema, generateGeometricSolidDiagram } from "./geometric-solid-diagram"
 import { generateHangerDiagram, HangerDiagramPropsSchema } from "./hanger-diagram"
 import { generateHistogram, HistogramPropsSchema } from "./histogram"
@@ -57,6 +58,7 @@ export const typedSchemas = {
 	dotPlot: DotPlotPropsSchema,
 	doubleNumberLine: DoubleNumberLinePropsSchema,
 	emojiImage: EmojiImagePropsSchema,
+	fractionNumberLine: FractionNumberLinePropsSchema,
 	geometricSolidDiagram: GeometricSolidDiagramPropsSchema,
 	hangerDiagram: HangerDiagramPropsSchema,
 	histogram: HistogramPropsSchema,
@@ -95,6 +97,7 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.dotPlot,
 	typedSchemas.doubleNumberLine,
 	typedSchemas.emojiImage,
+	typedSchemas.fractionNumberLine,
 	typedSchemas.geometricSolidDiagram,
 	typedSchemas.hangerDiagram,
 	typedSchemas.histogram,
@@ -135,6 +138,7 @@ export {
 	generateDotPlot,
 	generateDoubleNumberLine,
 	generateEmojiImage,
+	generateFractionNumberLine,
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
