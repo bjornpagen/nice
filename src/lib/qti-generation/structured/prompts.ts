@@ -1,10 +1,10 @@
 import { z } from "zod"
+import { allExamples } from "@/lib/qti-generation/examples"
 import { AssessmentItemSchema } from "@/lib/qti-generation/schemas"
-import * as examples from "@/lib/qti-generation/structured/examples"
 import type { typedSchemas } from "@/lib/widgets/generators"
 
 // Helper to convert a full AssessmentItemInput into a shell for prompt examples
-function createShellFromExample(item: (typeof examples.allExamples)[0]) {
+function createShellFromExample(item: (typeof allExamples)[0]) {
 	const shell = {
 		...item,
 		widgets: item.widgets ? Object.keys(item.widgets) : [],
@@ -80,7 +80,7 @@ The shell should:
 
 Your output MUST be a valid JSON object.`
 
-	const exampleShells = examples.allExamples.map(createShellFromExample)
+	const exampleShells = allExamples.map(createShellFromExample)
 
 	const userContent = `Convert the following Perseus JSON into an assessment shell with placeholders.
 
