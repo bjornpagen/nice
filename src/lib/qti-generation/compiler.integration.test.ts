@@ -1,22 +1,7 @@
 import { describe, expect, test } from "bun:test"
-import { Client as QtiClient } from "@/lib/qti"
+import { qti } from "@/lib/clients"
 import { compile } from "./compiler"
 import { allExamples } from "./examples"
-
-// Load environment variables manually for testing
-if (!process.env.NEXT_RUNTIME && typeof window === "undefined") {
-	const { loadEnvConfig } = require("@next/env")
-	const projectDir = process.cwd()
-	loadEnvConfig(projectDir)
-}
-
-// Create QTI client instance for integration testing
-const qti = new QtiClient({
-	serverUrl: process.env.TIMEBACK_QTI_SERVER_URL ?? "",
-	tokenUrl: process.env.TIMEBACK_TOKEN_URL ?? "",
-	clientId: process.env.TIMEBACK_CLIENT_ID ?? "",
-	clientSecret: process.env.TIMEBACK_CLIENT_SECRET ?? ""
-})
 
 // This test suite is an integration test. It requires a running QTI API
 // and valid credentials configured in the environment variables.
