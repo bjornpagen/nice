@@ -3,6 +3,7 @@ import { z } from "zod"
 // Import all individual schemas and generators
 import { generateThreeDIntersectionDiagram, ThreeDIntersectionDiagramPropsSchema } from "./3d-intersection-diagram"
 import { AbsoluteValueNumberLinePropsSchema, generateAbsoluteValueNumberLine } from "./absolute-value-number-line"
+import { AngleDiagramPropsSchema, generateAngleDiagram } from "./angle-diagram"
 import { BarChartPropsSchema, generateBarChart } from "./bar-chart"
 import { BoxPlotPropsSchema, generateBoxPlot } from "./box-plot"
 import { CompositeShapeDiagramPropsSchema, generateCompositeShapeDiagram } from "./composite-shape-diagram"
@@ -44,6 +45,7 @@ import { generateVerticalArithmeticSetup, VerticalArithmeticSetupPropsSchema } f
 export const typedSchemas = {
 	"3dIntersectionDiagram": ThreeDIntersectionDiagramPropsSchema,
 	absoluteValueNumberLine: AbsoluteValueNumberLinePropsSchema,
+	angleDiagram: AngleDiagramPropsSchema,
 	barChart: BarChartPropsSchema,
 	boxPlot: BoxPlotPropsSchema,
 	compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
@@ -80,6 +82,7 @@ export const typedSchemas = {
 export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas["3dIntersectionDiagram"],
 	typedSchemas.absoluteValueNumberLine,
+	typedSchemas.angleDiagram,
 	typedSchemas.barChart,
 	typedSchemas.boxPlot,
 	typedSchemas.compositeShapeDiagram,
@@ -118,6 +121,7 @@ export type WidgetInput = z.input<typeof WidgetSchema>
 export {
 	generateThreeDIntersectionDiagram,
 	generateAbsoluteValueNumberLine,
+	generateAngleDiagram,
 	generateBarChart,
 	generateBoxPlot,
 	generateCompositeShapeDiagram,

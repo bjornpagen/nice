@@ -4,6 +4,7 @@ import * as errors from "@superbuilders/errors"
 // Import all generators and error constants
 import { generateThreeDIntersectionDiagram, ThreeDIntersectionDiagramPropsSchema } from "./3d-intersection-diagram"
 import { ErrInvalidRange as ErrAVNLInvalidRange, generateAbsoluteValueNumberLine } from "./absolute-value-number-line"
+import { AngleDiagramPropsSchema, generateAngleDiagram } from "./angle-diagram"
 import { ErrInvalidDimensions as ErrBarChartInvalidDimensions, generateBarChart } from "./bar-chart"
 import { ErrInvalidRange as ErrBoxPlotInvalidRange, generateBoxPlot } from "./box-plot"
 import { generateCompositeShapeDiagram } from "./composite-shape-diagram"
@@ -82,6 +83,64 @@ describe("Widget Generators", () => {
 			}
 			const parsedProps = ThreeDIntersectionDiagramPropsSchema.parse(props)
 			expect(generateThreeDIntersectionDiagram(parsedProps)).toMatchSnapshot()
+		})
+	})
+
+	describe("generateAngleDiagram", () => {
+		test("should render single angle with three points", () => {
+			const props = {
+				type: "angleDiagram" as const,
+				width: 400,
+				height: 300,
+				points: [
+					{ id: "A", x: 50, y: 150, label: "A" },
+					{ id: "B", x: 150, y: 150, label: "B" },
+					{ id: "C", x: 250, y: 100, label: "C" }
+				],
+				rays: [
+					{ from: "B", to: "A" },
+					{ from: "B", to: "C" }
+				],
+				angles: [
+					{
+						vertices: ["A", "B", "C"],
+						label: "∠ABC",
+						color: null,
+						radius: null,
+						isRightAngle: null
+					}
+				]
+			}
+			const parsedProps = AngleDiagramPropsSchema.parse(props)
+			expect(generateAngleDiagram(parsedProps)).toMatchSnapshot()
+		})
+
+		test("should render right angle with square marker", () => {
+			const props = {
+				type: "angleDiagram" as const,
+				width: 400,
+				height: 300,
+				points: [
+					{ id: "P", x: 100, y: 200, label: "P" },
+					{ id: "Q", x: 200, y: 200, label: "Q" },
+					{ id: "R", x: 200, y: 100, label: "R" }
+				],
+				rays: [
+					{ from: "Q", to: "P" },
+					{ from: "Q", to: "R" }
+				],
+				angles: [
+					{
+						vertices: ["P", "Q", "R"],
+						label: "90°",
+						color: null,
+						radius: null,
+						isRightAngle: true
+					}
+				]
+			}
+			const parsedProps = AngleDiagramPropsSchema.parse(props)
+			expect(generateAngleDiagram(parsedProps)).toMatchSnapshot()
 		})
 	})
 

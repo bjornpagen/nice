@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import type { Widget } from "@/lib/widgets/generators"
 import {
 	generateAbsoluteValueNumberLine,
+	generateAngleDiagram,
 	generateBarChart,
 	generateBoxPlot,
 	generateCompositeShapeDiagram,
@@ -41,6 +42,8 @@ export function generateWidget(widget: Widget): string {
 			return generateThreeDIntersectionDiagram(widget)
 		case "absoluteValueNumberLine":
 			return generateAbsoluteValueNumberLine(widget)
+		case "angleDiagram":
+			return generateAngleDiagram(widget)
 		case "barChart":
 			return generateBarChart(widget)
 		case "boxPlot":
