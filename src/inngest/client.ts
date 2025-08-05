@@ -249,8 +249,18 @@ const events = {
 			})
 		})
 	},
-	// ADD: New event to trigger Perseus to QTI XML generation for hardcoded courses
-	"migration/hardcoded.perseus-to-qti": {
+	// ❌ REMOVED: This event is now obsolete and replaced by the two events below.
+	// "migration/hardcoded.perseus-to-qti": {
+	// 	data: z.object({}) // No data needed
+	// },
+
+	// ✅ ADDED: New event to trigger Perseus to QTI XML generation for ONLY assessment items in hardcoded courses.
+	"migration/hardcoded.items.perseus-to-qti": {
+		data: z.object({}) // No data needed
+	},
+
+	// ✅ ADDED: New event to trigger Perseus to QTI XML generation for ONLY stimuli in hardcoded courses.
+	"migration/hardcoded.stimuli.perseus-to-qti": {
 		data: z.object({}) // No data needed
 	},
 	// ADD: New event to trigger OneRoster data generation and upload for hardcoded courses

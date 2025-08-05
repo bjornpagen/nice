@@ -146,7 +146,7 @@ Return ONLY the JSON object for the assessment shell.`
 export function createWidgetMappingPrompt(perseusJson: string, assessmentBody: string, slotNames: string[]) {
 	const systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content and the original Perseus JSON to map widget slots to the most appropriate widget type from a given list.
 
-**CRITICAL RULE**: If you analyze the Perseus JSON for a given slot and determine that NONE of the available widget types are a suitable match, you MUST use the type "WIDGET_NOT_FOUND". This is a bailout signal that the content cannot be migrated. Use this option only when you are certain no other widget type fits.
+**CRITICAL RULE**: If you analyze the Perseus JSON for a given slot and determine that NONE of the available widget types are a perfect match, you MUST use the type "WIDGET_NOT_FOUND". This is a bailout signal that the content cannot be migrated. Use this option if the widget cannot be perfectly represented by any of the available types.
 
 Widget Type Options:
 ${widgetTypeKeys.join("\n")}`

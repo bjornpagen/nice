@@ -21,11 +21,12 @@ import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orches
 import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
+// ADD: Import the two new hardcoded migration orchestrators for items and stimuli separately
+import { orchestrateHardcodedItemMigration } from "@/inngest/functions/orchestrate-hardcoded-item-migration"
 // ADD: Import the new independent functions.
 import { orchestrateHardcodedOnerosterIngestion } from "@/inngest/functions/orchestrate-hardcoded-oneroster-ingestion"
-// ADD: Import the two new hardcoded migration orchestrators
-import { orchestrateHardcodedPerseusMigration } from "@/inngest/functions/orchestrate-hardcoded-perseus-migration"
 import { orchestrateHardcodedQtiIngestion } from "@/inngest/functions/orchestrate-hardcoded-qti-ingestion"
+import { orchestrateHardcodedStimulusMigration } from "@/inngest/functions/orchestrate-hardcoded-stimulus-migration"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 
@@ -51,8 +52,9 @@ export const { GET, POST, PUT } = serve({
 		orchestrateBatchCourseIngestion, // ✅ ADD: Register the new batch orchestration function
 		orchestrateCourseXmlGeneration,
 		orchestrateCourseUploadToQti,
-		// ADD: Register the new hardcoded migration orchestrators
-		orchestrateHardcodedPerseusMigration,
+		// ADD: Register the new hardcoded migration orchestrators for items and stimuli separately
+		orchestrateHardcodedItemMigration,
+		orchestrateHardcodedStimulusMigration,
 		// ADD: Register the new independent functions.
 		orchestrateHardcodedOnerosterIngestion,
 		orchestrateHardcodedQtiIngestion,
