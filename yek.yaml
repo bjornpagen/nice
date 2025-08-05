@@ -14,6 +14,7 @@ ignore_patterns:
   - "src/components/ui/**"
   - "examples/**"
   - "src/db/**"
+  - "**/__snapshots__/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"
