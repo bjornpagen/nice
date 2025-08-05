@@ -361,27 +361,11 @@ describe("Widget Generators", () => {
 				],
 				rowHeaderKey: "name",
 				data: [
-					{
-						name: "Class A",
-						score: 1600,
-						notes: "Excellent"
-					},
-					{
-						name: "Alice",
-						score: 85,
-						notes: "Good"
-					},
-					{
-						name: "Bob",
-						score: { type: "input" as const, responseIdentifier: "BOB_SCORE", expectedLength: 3 },
-						notes: "Needs improvement"
-					}
+					["Class A", 1600, "Excellent"],
+					["Alice", 85, "Good"],
+					["Bob", { type: "input" as const, responseIdentifier: "BOB_SCORE", expectedLength: 3 }, "Needs improvement"]
 				],
-				footer: {
-					name: "Total",
-					score: { type: "input" as const, responseIdentifier: "TOTAL", expectedLength: 5 },
-					notes: "Summary"
-				}
+				footer: ["Total", { type: "input" as const, responseIdentifier: "TOTAL", expectedLength: 5 }, "Summary"]
 			}
 			expect(generateDataTable(props)).toMatchSnapshot()
 		})

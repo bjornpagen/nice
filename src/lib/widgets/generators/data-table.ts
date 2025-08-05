@@ -32,13 +32,18 @@ export const DataTablePropsSchema = z
 		title: z.string().nullable().describe("An optional caption for the table."),
 		columns: z.array(ColumnDefinitionSchema).describe("An array of column definitions."),
 		data: z
-			.array(z.record(TableCellSchema))
-			.describe("An array of data objects for each row, where keys must match column keys."),
+			.array(z.array(TableCellSchema))
+			.describe(
+				"An array of arrays representing table rows. Each inner array contains cell values in the same order as columns."
+			),
 		rowHeaderKey: z
 			.string()
 			.nullable()
 			.describe("The 'key' of the column that should be treated as the row header (<th>)."),
-		footer: z.record(TableCellSchema).nullable().describe("An optional footer object, often for totals.")
+		footer: z
+			.array(TableCellSchema)
+			.nullable()
+			.describe("An optional array of footer cells, in the same order as columns.")
 	})
 	.strict()
 	.describe(
@@ -91,12 +96,14 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 		xml += "<tbody>"
 		for (const rowData of data) {
 			xml += "<tr>"
-			for (const col of columns) {
+			for (let i = 0; i < columns.length; i++) {
+				const col = columns[i]
+				if (!col) continue // Should never happen, but satisfies type checker
 				const isRowHeader = col.key === rowHeaderKey
 				const tag = isRowHeader ? "th" : "td"
 				const scope = isRowHeader ? ' scope="row"' : ""
 				const style = isRowHeader ? headerCellStyle : commonCellStyle
-				const content = renderCellContent(rowData[col.key])
+				const content = renderCellContent(rowData[i])
 
 				xml += `<${tag}${scope} style="${style}">${content}</${tag}>`
 			}
@@ -108,12 +115,14 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 	// TFOOT
 	if (footer && columns.length > 0) {
 		xml += `<tfoot><tr style="background-color: #f2f2f2;">`
-		for (const col of columns) {
+		for (let i = 0; i < columns.length; i++) {
+			const col = columns[i]
+			if (!col) continue // Should never happen, but satisfies type checker
 			const isRowHeader = col.key === rowHeaderKey
 			const tag = isRowHeader ? "th" : "td"
 			const scope = isRowHeader ? ' scope="row"' : ""
 			const style = `${commonCellStyle} font-weight: bold;`
-			const content = renderCellContent(footer[col.key])
+			const content = renderCellContent(footer[i])
 			xml += `<${tag}${scope} style="${style}">${content}</${tag}>`
 		}
 		xml += "</tr></tfoot>"
