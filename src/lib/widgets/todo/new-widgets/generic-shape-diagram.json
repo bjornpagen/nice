@@ -1,0 +1,1003 @@
+{
+	"widgetName": "generic-shape-diagram",
+	"type": "new",
+	"description": "Generic Shape Diagram",
+	"requirements": ["Miscellaneous Shapes"],
+	"sampleQuestions": [
+		{
+			"questionId": "x7a1aff151bb13cf8",
+			"exerciseId": "x5315ceb6",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's break up the extension into rectangles so we can determine its area.\n\n[[☃ image 1]]\n\nThere are $3$ rectangles that are $6.25\\,\\text{m}$ by $1.5\\,\\text{m}$ and $2$ squares with a side length of $1.5\\,\\text{m}$.\n\n$3\\cdot6.25 \\cdot 1.5 + 2 \\cdot 1.5^2=32.625$\n\nTo build the extension, Ellis needs $32.625\\,\\text{m}^2$ of tile.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A square with a smaller square inside it. The squares share a common top side. The outer square is shaded. The distance between the right side of the inner square and the right side of the outer square is labeled as 1.5 m. The side of the inner square is labeled as 6.25 m. The distance between the bottom of the inner square and the bottom of the outer square is labeled as 1.5 m. The inner square is centered horizontally to the outer square.\n",
+									"box": [320, 264],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e79017ae49241ccd19d87f1a97defbd7ec7093a0",
+										"width": 320,
+										"height": 264
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Each tile is $0.25\\,\\text{m}$ wide and $0.25\\,\\text{m}$ long. So Ellis needs $16$ tiles to build $1\\,\\text{m}^2$ of the extension.\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A rectangle on a grid. The vertical side of the rectangle is labeled 1 meter, and a small horizontal segment at the top right is labeled 0.25 meters.\n",
+									"box": [195, 195],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/515e9ae4a4386681072e37ec2a8013bf066eb964",
+										"width": 195,
+										"height": 195
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "We can multiply the total area by the number of tiles to cover a square meter to find the total number of tiles Ellis needs.\n\n$32.625\\,\\cancel{\\text{m}^2} \\cdot 16\\,\\dfrac{\\text{tiles}}{\\cancel{\\text{m}^2}}=522\\,\\text{tiles}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Ellis buys the tiles in packages of $25$ tiles per package.\n\n$\\dfrac{522}{25}=20.88$\n\nSince Ellis cannot buy part of a package, she will need $21$ packages to have enough tiles.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Ellis needs to buy $21$ packages of tiles to build the extension.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Ellis's backyard has a $6.25\\,\\text{m}$ by $6.25\\,\\text{m}$ patio. She would like to build a $1.5\\,\\text{m}$ wide  extension around $3$ sides of the patio, as the figure shows. She will buy $0.25\\,\\text{m}$ by $0.25\\,\\text{m}$ tiles that come $25$ to a package.\n\n[[☃ image 1]]\n\n**How many packages does Ellis need to buy to build the extension?**\n\n[[☃ numeric-input 1]] packages",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A square with a smaller square inside it. The squares share a common top side. The inner square is labeled Patio. The outer square is labeled Extension and is shaded. The inner square is centered horizontally to the outer square.\n",
+								"box": [320, 264],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/35752a55d7e47b3b0c81ab6ff83f6bf0d7ae0a74",
+									"width": 320,
+									"height": 264
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 21,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									},
+									{
+										"value": 20.88,
+										"status": "wrong",
+										"strict": false,
+										"message": "Ellis cannot buy a fraction of a package.",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "number of packages",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xd1e2406bfd5f928a",
+			"exerciseId": "265340597",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "**Vertical angles** are angles opposite each other where two lines cross.\n\nAre the angles shown vertical angles?\n\n",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "No, the angles are not vertical angles, because the upper and lower segments are not a single line. \n[[☃ explanation 1]]\n\n[[☃ image 1]]\n\nThe angles are not equivalent.  ",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Two rays extend from a common point on a line, forming 4 angles. The upper ray points top right and the lower ray points bottom left. The upper right angle is labeled X degrees. The lower left angle is labeled 46 degrees. The rays are shaded.\n\n",
+									"box": [252, 180],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/94c6243a37ad9271695d8fc5d0de94dccadd68a8",
+										"width": 252,
+										"height": 180
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Okay, got it!",
+									"showPrompt": "Why not?",
+									"explanation": "A line must be straight, and the upper and lower segments do not form a straight line."
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Angle $x$ does not open as wide as the $46^\\circ$ angle.  So, the measure of angle $x$ is less than $46^\\circ$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$x<46^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Is $x$ greater than, less than, or equal to $46^\\circ$?**\n\n[[☃ image 1]]\n\n\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Two rays extend from a common point on a line, forming 4 angles. The upper ray points top right and the lower ray points bottom left. The upper right angle is labeled X degrees. The lower left angle is labeled 46 degrees.\n\n",
+								"box": [252, 180],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3d035353ef2ef6547a44efc87ea567ff635daff4",
+									"width": 252,
+									"height": 180
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$x>46^\\circ$",
+										"correct": false
+									},
+									{
+										"content": "$x<46^\\circ$",
+										"correct": true
+									},
+									{
+										"content": "$x=46^\\circ$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x286708e3421d8daa",
+			"exerciseId": "265340597",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The two angles are opposite each other where two lines cross.\n\nThis means the angles are vertical angles.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Vertical angles are equivalent.  [[☃ explanation 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {
+										"image 1": {
+											"type": "image",
+											"graded": true,
+											"static": false,
+											"options": {
+												"alt": "A slant line intersects a horizontal line, forming four angles. The top-left, top-right, and bottom-right angles are 110, 70, and 110 degrees, respectively.\n",
+												"box": [264, 156],
+												"range": [[0, 10], [0, 10]],
+												"title": "",
+												"labels": [],
+												"static": false,
+												"caption": "",
+												"backgroundImage": {
+													"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/16e64afa9d5375cdbdfabc588f40982be30bf94d",
+													"width": 264,
+													"height": 156
+												}
+											},
+											"version": {
+												"major": 0,
+												"minor": 0
+											},
+											"alignment": "block"
+										},
+										"image 2": {
+											"type": "image",
+											"graded": true,
+											"static": false,
+											"options": {
+												"alt": "A slant line intersects a horizontal line, forming four angles. The top-left, top-right, and bottom-right angles are x, 70, and 110 degrees, respectively.\n",
+												"box": [264, 156],
+												"range": [[0, 10], [0, 10]],
+												"title": "",
+												"labels": [],
+												"static": false,
+												"caption": "",
+												"backgroundImage": {
+													"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/6cc9556ff2e82f6d3ed9fd8a5d3cd034c150c200",
+													"width": 264,
+													"height": 156
+												}
+											},
+											"version": {
+												"major": 0,
+												"minor": 0
+											},
+											"alignment": "block"
+										}
+									},
+									"hidePrompt": "Okay, got it.",
+									"showPrompt": "Show me why.",
+									"explanation": "The upper right and lower right angles add up to $180^\\circ$ because they are adjacent and form a straight line.\n\n $ \\pink{\\text{upper right angle}} = 180^{\\circ} - \\blue{110^{\\circ}} = \\pink{70^{\\circ}} $\n\n[[☃ image 2]]\n\nThe upper right and upper left angles also add up to $180^\\circ$ because they are adjacent and form a straight line too.\n\n $ \\green{\\text{upper left angle}}= 180^{\\circ} - \\pink{70^{\\circ}} = \\green{110^{\\circ}}$\n\n[[☃ image 1]]\n\n"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$x=110^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Is $x$ greater than, less than, or equal to $110^\\circ$?**\n\n\n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A slant line intersects a horizontal line, forming four angles. The top-left, and bottom right angles are X and 110 degrees, respectively.\n",
+								"box": [264, 156],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c356198028e2534e315c18220c7b8eb4896c3749",
+									"width": 264,
+									"height": 156
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$x>110^\\circ$",
+										"correct": false
+									},
+									{
+										"content": "$x<110^\\circ$",
+										"correct": false
+									},
+									{
+										"content": "$x=110^\\circ$",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x7ea5dabc820a7c9a",
+			"exerciseId": "265340597",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "**Vertical angles** are angles opposite each other where two lines cross.\n\nAre the angles shown vertical angles?\n\n",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "No, the angles are not vertical angles, because the left and right segments are not a single line. \n[[☃ explanation 1]]\n\n[[☃ image 1]]\n\nThe angles are not equivalent.  ",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Two rays extend from a common point on a line, forming 4 angles. The upper ray points top right and the lower ray points bottom left. The upper right angle is labeled X degrees. The lower left angle is labeled 43 degrees. The rays are shaded.\n",
+									"box": [252, 210],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0cb1974e49b36c66c566d6739e04d6d0df2cf263",
+										"width": 252,
+										"height": 210
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Okay, got it!",
+									"showPrompt": "Why not?",
+									"explanation": "A line must be straight, and the left and right segments do not form a straight line."
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Angle $x$ opens wider than the $43^\\circ$ angle.  So, the measure of angle $x$ is greater than $43^\\circ$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$x>43^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Is $x$ greater than, less than, or equal to $43^\\circ$?**\n \n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Two rays extend from a common point on a line, forming 4 angles. The upper ray points top right and the lower ray points bottom left. The upper right angle is labeled X degrees. The lower left angle is labeled 43 degrees.\n",
+								"box": [252, 210],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3cfdaeecd13241432a0f4d31df9aa9918daeaa26",
+									"width": 252,
+									"height": 210
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$x>43^\\circ$",
+										"correct": true
+									},
+									{
+										"content": "$x<43^\\circ$",
+										"correct": false
+									},
+									{
+										"content": "$x=43^\\circ$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x817b66bb18caf75b",
+			"exerciseId": "920312137",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "If we add an exact copy of the triangle, we can make a parallelogram.\n\nThen we can use the parallelogram's area to figure out the triangle's area.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "[[☃ image 1]]\n\nThe original triangle has $\\dfrac{1}{2}$ the area of the parallelogram we just made.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A parallelogram. There is a dashed line that is perpendicular to the base from the base to the opposite vertex. An arrow shows the length of the base is labeled 4. The dashed line is labeled 2. The parallelogram has a line segment in diagonal corners that creates two triangles each with a base of 4 units and a height of 2 units.",
+									"box": [150, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fe7b1c7f2f6ec50ac7cf3fb80192d9ad388d8ae4",
+										"width": 150,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$\\begin{align}\n\\text{Area of parallelogram} &= \\text{base} \\times \\text{height}\\\\\\\\\n\\text{Area of triangle} &= \\dfrac{1}{2} \\times \\text{base} \\times \\text{height}\\\\\\\\\n&= \\dfrac{1}{2} \\times 4 \\times 2\\\\\\\\\n&= 2 \\times 2\\\\\\\\\n&= 4\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The triangle has an area of $4$ units$^2$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Look at the image below.\n\n[[☃ image 1]]\n\n**What is the area of the triangle?**\n\n[[☃ input-number 2]] units$^2$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A right triangle. There is a dashed line that is perpendicular to the base from the base to the opposite vertex. The dashed line creates two right triangles. An arrow shows the length of the base is labeled 4. The dashed line is labeled 2.",
+								"box": [198, 320],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/38aad66ac919c15c641bacd0c31dd371cec87956",
+									"width": 198,
+									"height": 320
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"input-number 2": {
+							"type": "input-number",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"value": 4,
+								"inexact": false,
+								"maxError": 0.1,
+								"simplify": "required",
+								"answerType": "number",
+								"rightAlign": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xc9cdb5fd57efcf6e",
+			"exerciseId": "920312137",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "If we add an exact copy of the triangle, we can make a parallelogram.\n\nThen we can use the parallelogram's area to figure out the triangle's area.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "[[☃ image 1]]\n\nThe original triangle has $\\dfrac{1}{2}$ the area of the parallelogram we just made.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A parallelogram. There is a dashed line that is perpendicular to the base from the base to the opposite vertex. An arrow shows the length of the base is labeled 6. The dashed line is labeled 5. The parallelogram has a line segment in diagonal corners that creates two triangles each with a base of 6 units and a height of 5 units.",
+									"box": [320, 242],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/4153e2045b1dbc3abb365e2082aaf2224869217f",
+										"width": 320,
+										"height": 242
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$\\begin{align}\n\\text{Area of parallelogram} &= \\text{base} \\times \\text{height}\\\\\\\\\n\\text{Area of triangle} &= \\dfrac{1}{2} \\times \\text{base} \\times \\text{height}\\\\\\\\\n&= \\dfrac{1}{2} \\times 6 \\times 5\\\\\\\\\n&= 3 \\times 5\\\\\\\\\n&= 15\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The triangle has an area of $15$ units$^2$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Look at the image below.\n\n[[☃ image 1]]\n\n**What is the area of the triangle?**\n\n[[☃ input-number 1]] units$^2$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A scalene triangle. There is a dashed line that is perpendicular to the base from the base to the opposite vertex. An arrow shows the length of the base is labeled 6. The dashed line is labeled 5.",
+								"box": [320, 242],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/4ceb40cb9c7a2475ec19f3c7c7abb5a847ecdbe4",
+									"width": 320,
+									"height": 242
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"input-number 1": {
+							"type": "input-number",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"value": 15,
+								"inexact": false,
+								"maxError": 0.1,
+								"simplify": "required",
+								"answerType": "number",
+								"rightAlign": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xb494c962ede911a8",
+			"exerciseId": "920312137",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "If we add an exact copy of the triangle, we can make a parallelogram.\n\nThen we can use the parallelogram's area to figure out the triangle's area.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "[[☃ image 1]]\n\nThe original triangle has $\\dfrac{1}{2}$ the area of the parallelogram we just made.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A parallelogram. There is a dashed line that is perpendicular to the base from the base to the opposite vertex. An arrow shows the length of the base is labeled 18. The dashed line is labeled 6. The parallelogram has a line segment in diagonal corners that creates two triangles each with a base of 18 units and a height of 6 units.",
+									"box": [320, 110],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c3d6c28867799a094eb7c7f47d8b65f4318314b6",
+										"width": 320,
+										"height": 110
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$\\begin{align}\n\\text{Area of parallelogram} &= \\text{base} \\times \\text{height}\\\\\\\\\n\\text{Area of triangle} &= \\dfrac{1}{2} \\times \\text{base} \\times \\text{height}\\\\\\\\\n&= \\dfrac{1}{2} \\times 18 \\times 6\\\\\\\\\n&= 9 \\times 6\\\\\\\\\n&= 54\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The triangle has an area of $54$ units$^2$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Look at the image below.\n\n[[☃ image 1]]\n\n**What is the area of the triangle?**\n\n[[☃ input-number 2]] units$^2$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A scalene triangle. There is a dashed line that is perpendicular to the base from the base to the opposite vertex. The dashed line creates two right triangles. An arrow shows the length of the base is labeled 18. The dashed line is labeled 6.",
+								"box": [320, 151],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/dfb4c33237a054a3a9a2ee34a9276d0e21bcdeec",
+									"width": 320,
+									"height": 151
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"input-number 2": {
+							"type": "input-number",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"value": 54,
+								"inexact": false,
+								"maxError": 0.1,
+								"simplify": "required",
+								"answerType": "number",
+								"rightAlign": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		}
+	]
+}

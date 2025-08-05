@@ -1,0 +1,967 @@
+{
+	"widgetName": "circle-diagram",
+	"type": "new",
+	"description": "Circle Diagram",
+	"requirements": ["Radius and Diameter Visualization"],
+	"sampleQuestions": [
+		{
+			"questionId": "x8247062b42ebdde6",
+			"exerciseId": "720782619",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A circle with a line segment, labelled as r equals 8, connects the centre of the circle to the boundary of the circle.\n",
+									"box": [220, 220],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/01ac98f02a183c89591ff61d01330de2f55b3ed8",
+										"width": 220,
+										"height": 220
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$d = 2\\color{purple}{r}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\phantom{d} = 2 \\cdot \\color{purple}{8}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\phantom{d} = \\color{green}{16}$ units\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A circle with a line segment passing through the centre, labelled as d equals 16, connects two opposite points on the boundary of the circle. The part of the line segment from the centre to the boundary is labelled as r equals 8.\n",
+									"box": [220, 220],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/71275d14458ffffbed746d6a81d7f5de21dadb26",
+										"width": 220,
+										"height": 220
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The radius of a circle is $8$ units. \n\n**What is the diameter of the circle?**\n\n[[☃ numeric-input 1]] units",
+					"widgets": {
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 16,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": "optional"
+									}
+								],
+								"labelText": "diameter",
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x8d3bac83c8697585",
+			"exerciseId": "898809023",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "First, calculate the area of the whole figure, including the unshaded area.\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A circle with a smaller circle inside it. The circles share a common centre. The radius of the smaller circle is 3 cm and the radius of the bigger circle is 11 cm. The region between both the circles is shaded.\n",
+									"box": [360, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/15cf7e02a128fa235980b7d51e289328ee35a055",
+										"width": 360,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "The area of a circle is $\\pi r^2$.\n \n$\\blueD{\\pi \\times 11\\,\\text{cm} \\times 11\\,\\text{cm} = 121\\pi\\,\\text{cm}^2}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Next, calculate the area of the inner figure.\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A circle with a smaller circle inside it. The circles share a common centre. The radius of the smaller circle is 3 cm and the radius of the bigger circle is 11 cm. The region between both the circles is shaded.\n",
+									"box": [360, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d7b69528eaff0d8b39a41b5e1891fd683019e603",
+										"width": 360,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$\\greenD{\\pi \\times 3\\,\\text{cm} \\times 3 \\,\\text{cm}= 9\\pi\\,\\text{cm}^2}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Finally, subtract the area of the inner circle from the area of the outer circle.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\begin{align}\n&\\phantom{=}\\blueD{121\\pi\\,\\text{cm}^2} - \\greenD{9\\pi\\,\\text{cm}^2} \\\\\\\\\n&= 112\\pi\\,\\text{cm}^2 \\\\\\\\\n&\\approx 351.86\\,\\text{cm}^2\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "A circle with radius of $\\greenD{3\\,\\text{cm}}$ sits inside a circle with radius of $\\blueD{11\\,\\text{cm}}$. \n\n** What is the area of the shaded region? **  \n*Round your final answer to the nearest hundredth.* \n\n[[☃ image 1]]\n\n[[☃ numeric-input 1]] $\\text{cm}^2$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A circle with a smaller circle inside it. The circles share a common centre. The radius of the smaller circle is 3 cm and the radius of the bigger circle is 11 cm. The region between both the circles is shaded.\n",
+								"box": [360, 360],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1b6b608f87204bd72a2aae674dff7c2ebb2defc5",
+									"width": 360,
+									"height": 360
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 351.85837720205683,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0.05,
+										"simplify": true
+									},
+									{
+										"value": 351.68,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area",
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xb6a6310a58f2acf8",
+			"exerciseId": "x1090062bbdce1b2d",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Getting started\n\nWe want to find the arc length of $\\dfrac34$ of a circle. Let's start by finding the circumference of the circle.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Step 1: Find the circumference of the circle\n\n$\\begin{align} \\text{Circumference of the circle} &=  2\\pi r \\\\\\\\ &= 2\\pi\\cdot 5 \\\\\\\\\n&= 5 \\cdot2\\pi \\\\\\\\\n&= \\goldD{10\\pi} \\\\\\\\\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Step 2: Find the arc length of $\\dfrac34$ of the circle\n\nThe arc length is $\\dfrac34$ of the circumference of the circle.  \n\n$\\begin{align} \\text{Circumference of } \\dfrac34  \\text{ of the circle} &=  \\dfrac34 \\cdot \\goldD{10\\pi} \\\\\\\\ \n&= \\dfrac{30}{4}\\pi \\\\\\\\\n&= 7.5\\pi \\\\\\\\\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\nThe arc length of the partial circle is $7.5\\pi$ units.\n\n*(Note that we could also multiply $7.5$ by $3.14$ to get $23.55$ units.)*",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "[[☃ image 1]]\n\n**Find the arc length of the partial circle.**  \n*Either enter an exact answer in terms of $\\pi$ or use $3.14$ for $\\pi$ and enter your answer as a decimal.*\n\n[[☃ expression 1]] units\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Three-fourths of a circle with a radius of 5 units. The center of this circle is marked by a solid dot, and a right angle is indicated at the corner where the radius and a segment of the circle's boundary meet. The radius extends vertically upwards and horizontally to the left, forming the right angle. The length of the radius is labeled as 5. The segment of the boundary forming the 3/4th circle is labeled with a question mark.\n",
+								"box": [250, 250],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/787179a9c53acc36d9e0d55ec3b4ff4378024fe6",
+									"width": 250,
+									"height": 250
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"expression 1": {
+							"type": "expression",
+							"graded": true,
+							"static": false,
+							"options": {
+								"times": false,
+								"functions": ["f", "g", "h"],
+								"buttonSets": ["basic", "prealgebra"],
+								"answerForms": [
+									{
+										"key": 0,
+										"form": false,
+										"value": "7.5\\pi",
+										"simplify": false,
+										"considered": "correct"
+									},
+									{
+										"key": 1,
+										"form": false,
+										"value": "23.55",
+										"simplify": false,
+										"considered": "correct"
+									}
+								]
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xbe5b87ef9dba93e2",
+			"exerciseId": "x1090062bbdce1b2d",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Getting started\n\nWe want to find the arc length of $\\dfrac14$ of a circle. Let's start by finding the circumference of the circle.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Step 1: Find the circumference of the circle\n\n$\\begin{align} \\text{Circumference of the circle} &=  2\\pi r \\\\\\\\ &= 2\\pi\\cdot 8 \\\\\\\\\n&= 8 \\cdot2\\pi \\\\\\\\\n&= \\goldD{16\\pi} \\\\\\\\\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Step 2: Find the arc length of $\\dfrac14$ of the circle\n\nThe arc length is $\\dfrac14$ of the circumference of the circle.  \n\n$\\begin{align} \\text{Circumference of } \\dfrac14  \\text{ of the circle} &=  \\dfrac14 \\cdot \\goldD{16\\pi} \\\\\\\\ \n&= \\dfrac{16}{4}\\pi \\\\\\\\\n&= 4\\pi \\\\\\\\\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\nThe arc length of the partial circle is $4\\pi$ units.\n\n*(Note that we could also multiply $4$ by $3.14$ to get $12.56$ units.)*",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "[[☃ image 1]]\n\n**Find the arc length of the partial circle.**  \n*Either enter an exact answer in terms of $\\pi$ or use $3.14$ for $\\pi$ and enter your answer as a decimal.*\n\n[[☃ expression 1]] units\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "One-fourth part of a circle with a filled point center. This figure is having 2 line segment forming right angle, from the center to the boundary of the circle. One line segment is labeled as 8. And the circumference part is marked with question mark.\n\n",
+								"box": [250, 250],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/99cb24f138e4db5b2e8a072b57a6c8a9008758b6",
+									"width": 250,
+									"height": 250
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"expression 1": {
+							"type": "expression",
+							"graded": true,
+							"static": false,
+							"options": {
+								"times": false,
+								"functions": ["f", "g", "h"],
+								"buttonSets": ["basic", "prealgebra"],
+								"answerForms": [
+									{
+										"key": 0,
+										"form": false,
+										"value": "4\\pi",
+										"simplify": false,
+										"considered": "correct"
+									},
+									{
+										"key": 1,
+										"form": false,
+										"value": "12.56",
+										"simplify": false,
+										"considered": "correct"
+									}
+								]
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xc64648bad5943f42",
+			"exerciseId": "720935156",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The equation for the area of a circle is:\n\n $A = \\pi r^2$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$A = \\pi \\cdot \\purpleD{4}^2$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$A = \\redE{16\\pi}$\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A circle with a line segment, labeled as r equals 4, connects the center of the circle to the boundary of the circle. The area of the circle is labeled as A equals 16 pi.\n\n\n",
+									"box": [198, 220],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/219f7eb919a92fa69e7dd6f1417e231520d9571b",
+										"width": 198,
+										"height": 220
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What is the area of the following circle?**  \n*Either enter an exact answer in terms of $\\pi$ or use $3.14$ for $\\pi$ and enter your answer as a decimal.*\n\n\n[[☃ image 1]]\n\n[[☃ expression 1]] units$^2$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A circle with a line segment, labelled as r equals 4, connects the centre of the circle to the boundary of the circle.\n",
+								"box": [220, 220],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/bf9b228630bdc8435876815dd2a80e02372b01f1",
+									"width": 220,
+									"height": 220
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"expression 1": {
+							"type": "expression",
+							"graded": true,
+							"static": false,
+							"options": {
+								"times": false,
+								"functions": ["f", "g", "h"],
+								"buttonSets": ["basic", "prealgebra", "logarithms"],
+								"answerForms": [
+									{
+										"key": 0,
+										"form": false,
+										"value": "16\\pi",
+										"simplify": false,
+										"considered": "correct"
+									},
+									{
+										"key": 1,
+										"form": false,
+										"value": "50.24",
+										"simplify": false,
+										"considered": "correct"
+									}
+								]
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x1de9ca02493bae17",
+			"exerciseId": "x54c05716",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Getting started\n\nWe want to find the area of $\\dfrac14$ of a circle. Let's start by finding the area of the full circle.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Step 1: Find the area of the full circle\n\n\n$\\begin{align} \\text{Area of the circle} &=  \\pi  r^2 \\\\\\\\  &= \\pi 8^2 \\\\\\\\\n&=\\blueD{ 64\\pi} \\\\\\\\\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "### Step 2: Find the area of $\\dfrac14$ of the circle\n\n$\\begin{align} \\text{Area of } \\dfrac14 \\text{ of the circle} &=  \\dfrac14 \\cdot \\blueD{64\\pi} \\\\\\\\\n  &= \\dfrac{64}4 \\pi \\\\\\\\\n&= 16\\pi \\\\\\\\\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\nThe area of the shape is $16\\pi$ units$^2$.\n\n*(Note that we could also multiply $16$ by $3.14$ to get  $50.24$ units$^2$.)*",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "[[☃ image 1]]\n\n**Find the area of the shape.**  \n*Either enter an exact answer in terms of $\\pi$ or use $3.14$ for $\\pi$ and enter your answer as a decimal.*\n\n[[☃ expression 1]] units$^2$\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "One-fourth part of a circle with a filled point center. This figure is having 2 line segment forming right angle, from the center to the boundary of the circle. One line segment is labeled as 8.\n\n",
+								"box": [250, 250],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fefba2b97f9c042941ce0f6e407841895b371ec2",
+									"width": 250,
+									"height": 250
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"expression 1": {
+							"type": "expression",
+							"graded": true,
+							"static": false,
+							"options": {
+								"times": false,
+								"functions": ["f", "g", "h"],
+								"buttonSets": ["basic", "prealgebra"],
+								"answerForms": [
+									{
+										"key": 0,
+										"form": false,
+										"value": "16\\pi",
+										"simplify": false,
+										"considered": "correct"
+									},
+									{
+										"key": 1,
+										"form": false,
+										"value": "50.24",
+										"simplify": false,
+										"considered": "correct"
+									}
+								]
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xd10ccb78f63d32da",
+			"exerciseId": "x54c05716",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Getting started\n\nWe want to find the area of $\\dfrac12$ of a circle. Let's start by finding the area of the full circle.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Step 1: Find the area of the full circle\n\n$\\begin{align}\\text{Area of the circle} &=  \\pi r^2\\\\\\\\  &= \\pi 4^2 \\\\\\\\\n&= \\blueD{16\\pi} \\\\\\\\\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "### Step 2: Find the area of $\\dfrac12$ of the circle\n\n$\\begin{align} \\text{Area of } \\dfrac12 \\text{ of the circle} &=  \\dfrac12 \\cdot \\blueD{16\\pi} \\\\\\\\\n  &= \\dfrac{16}2 \\pi \\\\\\\\\n&= 8\\pi \\\\\\\\\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\n\nThe area of the semicircle is $8\\pi$ units$^2$.\n\n*(Note that we could also multiply $8$ by $3.14$ to get $25.12$ units$^2$.)*",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "[[☃ image 1]]\n\n**Find the area of the semicircle.**  \n*Either enter an exact answer in terms of $\\pi$ or use $3.14$ for $\\pi$ and enter your answer as a decimal.*\n\n[[☃ expression 1]] units$^2$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A semi-circle with a filled point at its center. A line segment is passing horizontally through its center. The line segment connects two opposite points on the boundary of the circle. The distance from the center to the boundary is labeled as 4.\n\n",
+								"box": [250, 175],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/9622f2470dd3f8cf33cfd256a8e7bbfb9417c325",
+									"width": 250,
+									"height": 175
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"expression 1": {
+							"type": "expression",
+							"graded": true,
+							"static": false,
+							"options": {
+								"times": false,
+								"functions": ["f", "g", "h"],
+								"buttonSets": ["basic", "prealgebra"],
+								"answerForms": [
+									{
+										"key": 0,
+										"form": false,
+										"value": "8\\pi",
+										"simplify": false,
+										"considered": "correct"
+									},
+									{
+										"key": 1,
+										"form": false,
+										"value": "25.12",
+										"simplify": false,
+										"considered": "correct"
+									}
+								]
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xab2d6f389a133f2a",
+			"exerciseId": "x54c05716",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "### Getting started\n\nWe want to find the area of $\\dfrac12$ of a circle. Let's start by finding the area of the full circle.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "### Step 1: Find the area of the full circle\n\n$\\begin{align} \\text{Area of the circle} &=  \\pi r^2 \\\\\\\\\n&= \\pi 2^2 \\\\\\\\\n&= \\blueD{4\\pi} \\\\\\\\\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "### Step 2: Find the area of $\\dfrac12$ of the circle\n\n$\\begin{align} \\text{Area of } \\dfrac12 \\text{ of the circle} &=  \\dfrac12 \\cdot \\blueD{4\\pi} \\\\\\\\\n  &= \\dfrac42 \\pi \\\\\\\\\n&= 2\\pi \\\\\\\\\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "### The answer\n\nThe area of the semicircle is $2\\pi$ units$^2$.\n\n*(Note that we could also multiply $2$ by $3.14$ to get $6.28$ units$^2$.)*",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "[[☃ image 1]]\n\n**Find the area of the semicircle.**  \n*Either enter an exact answer in terms of $\\pi$ or use $3.14$ for $\\pi$ and enter your answer as a decimal.*\n\n[[☃ expression 1]] units$^2$ ",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A semi-circle with a filled point at its center. A line segment is passing horizontally through its center. The line segment connects two opposite points on the boundary of the circle. The distance from the center to the boundary is labeled as 2.\n\n",
+								"box": [250, 175],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a45378288bfe22969c9a6dd99861c18930688756",
+									"width": 250,
+									"height": 175
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"expression 1": {
+							"type": "expression",
+							"graded": true,
+							"static": false,
+							"options": {
+								"times": false,
+								"functions": ["f", "g", "h"],
+								"buttonSets": ["basic", "prealgebra"],
+								"answerForms": [
+									{
+										"key": 0,
+										"form": false,
+										"value": "2\\pi",
+										"simplify": false,
+										"considered": "correct"
+									},
+									{
+										"key": 1,
+										"form": false,
+										"value": "6.28",
+										"simplify": false,
+										"considered": "correct"
+									}
+								]
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		}
+	]
+}

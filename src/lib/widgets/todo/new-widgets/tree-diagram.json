@@ -1,0 +1,1500 @@
+{
+	"widgetName": "tree-diagram",
+	"type": "new",
+	"description": "Tree Diagram",
+	"requirements": ["Square Root Trees"],
+	"sampleQuestions": [
+		{
+			"questionId": "x1155a8872be5ea58",
+			"exerciseId": "720948123",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "$\\sqrt{144}$ is the number that, when multiplied by itself, equals $144$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "If you can't think of that number, you can break down $144$ into its prime factorization and look for equal groups of numbers.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Let's draw a factor tree.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred forty-four. It starts with just the number one hundred forty-four.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/2370dee0b9132daf833e9150aa4c760c9bf46bc1",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred forty-four. One hundred forty-four is the product of two and seventy-two. The two is circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/615f72473a018010ec9ca78b0a1db48b0b67e3c9",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred forty-four. One hundred forty-four is the product of two and seventy-two. The two is circled. Seventy-two is a product of two and thirty-six. The two is circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/4f7b63dcd9fb12eb52998f813990bca989502406",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred forty-four. One hundred forty-four is the product of two and seventy-two. The two is circled. Seventy-two is the product of two and thirty-six. The two is circled. Thirty-six is the product of two and eighteen. The two is circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/71459e8f202301a86ef91c9cc625ae4ed7e3498f",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred forty-four. One hundred forty-four is the product of two and seventy-two. The two is circled. Seventy-two is the product of two and thirty-six. The two is circled. Thirty-six is the product of two and eighteen. The two is circled. Eighteen is the product of two and nine. The two is circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f5fe02966a180cd9c900f92c76dd7c8b99c1c896",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred forty-four. One hundred forty-four is the product of two and seventy-two. The two is circled. Seventy-two is the product of two and thirty-six. The two is circled. Thirty-six is the product of two and eighteen. The two is circled. Eighteen is the product of two and nine. The two is circled. Nine is the product of three and three. The first three is circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ccb3e9de3773fd27df260efc853711e0727c300a",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred forty-four. One hundred forty-four is the product of two and seventy-two. The two is circled. Seventy-two is the product of two and thirty-six. The two is circled. Thirty-six is the product of two and eighteen. The two is circled. Eighteen is the product of two and nine. The two is circled. Nine is the product of three and three. Both threes are circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/af7f0a56f47aa5a8cf411ef4e659f6e45778a73b",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "So the prime factorization of $144$ is $2\\times 2\\times 2\\times 2\\times 3\\times 3$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We're looking for $\\sqrt{144}$, so we want to split the prime factors into two identical groups.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Notice that we can rearrange the factors like so:\n\n $144 = 2 \\times 2 \\times 2 \\times 2 \\times 3 \\times 3 = \\left(2\\times 2\\times 3\\right) \\times \\left(2 \\times 2 \\times 3\\right)$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $\\left(2\\times 2\\times 3\\right)^2 = 12^2 = 144$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $\\sqrt{144}$ is $12$.\n\n[[☃ explanation 1]]",
+						"replace": false,
+						"widgets": {
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Got it, thanks!",
+									"showPrompt": "What about -12?",
+									"explanation": "Since $(-12)\\cdot(-12)=144$, it's reasonable to say that $-12$ is also the square root of $144$. However, when we see notation like \"$\\sqrt{144}$\", it's customary to only take the principal (positive) square root."
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the square root.**\n\n**$\\sqrt{144} =$** [[☃ numeric-input 1]]",
+					"widgets": {
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 12,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": true
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x4e4d30f2348ce46a",
+			"exerciseId": "720948123",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "$\\sqrt{121}$ is the number that, when multiplied by itself, equals $121$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "If you can't think of that number, you can break down $121$ into its prime factorization and look for equal groups of numbers.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Let's draw a factor tree.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred twenty-one. It starts with just the number one hundred twenty-one.",
+									"box": [120, 120],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a444c0923315862a13e9bf303ab41dd711a5226c",
+										"width": 120,
+										"height": 120
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred twenty-one. One hundred twenty-one is the product of eleven and eleven. The first eleven is circled.",
+									"box": [120, 120],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/055c844bba8c54d2981c17389733c56fea028689",
+										"width": 120,
+										"height": 120
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred twenty-one. One hundred twenty-one is the product of eleven and eleven. Both elevens are circled.",
+									"box": [120, 120],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/7ed91c4542c1910d0f7c534d90cff7608cc868c6",
+										"width": 120,
+										"height": 120
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "So the prime factorization of $121$ is $11\\times 11$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We're looking for $\\sqrt{121}$, so we want to split the prime factors into two identical groups.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We only have two prime factors, and we want to split them into two groups, so this is easy.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$121 = 11\\times 11$, so $11^2 = 121$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $\\sqrt{121}$ is $11$.\n\n[[☃ explanation 1]]",
+						"replace": false,
+						"widgets": {
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Got it, thanks!",
+									"showPrompt": "What about -11?",
+									"explanation": "Since $(-11)\\cdot(-11)=121$, it's reasonable to say that $-11$ is also the square root of $121$. However, when we see notation like \"$\\sqrt{121}$\", it's customary to only take the principal (positive) square root."
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the square root.**\n\n**$\\sqrt{121} =$** [[☃ numeric-input 1]]",
+					"widgets": {
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 11,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": true
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x843b52d9cc56cbb9",
+			"exerciseId": "720948123",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "$\\sqrt{9}$ is the number that, when multiplied by itself, equals $9$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "If you can't think of that number, you can break down $9$ into its prime factorization and look for equal groups of numbers.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Let's draw a factor tree.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for nine. It starts with just the number nine.",
+									"box": [120, 120],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/421e111441078f87503eeb2ac4a6fba10ad98bfc",
+										"width": 120,
+										"height": 120
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for nine. The number nine is the product of three and three. The first three is circled.",
+									"box": [120, 120],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/2831169ecaa541c300943bd1af1093fb75f3b80d",
+										"width": 120,
+										"height": 120
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for nine. The number nine is the product of three and three. Both threes are circled.",
+									"box": [120, 120],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/111a920b37558f371df99a0991d577e4c5541760",
+										"width": 120,
+										"height": 120
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "So the prime factorization of $9$ is $3\\times 3$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We're looking for $\\sqrt{9}$, so we want to split the prime factors into two identical groups.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We only have two prime factors, and we want to split them into two groups, so this is easy.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$9 = 3\\times 3$, so $3^2 = 9$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $\\sqrt{9}$ is $3$.\n\n[[☃ explanation 1]]",
+						"replace": false,
+						"widgets": {
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Got it, thanks!",
+									"showPrompt": "What about -3?",
+									"explanation": "Since $(-3)\\cdot(-3)=9$, it's reasonable to say that $-3$ is also the square root of $9$. However, when we see notation like \"$\\sqrt{9}$\", it's customary to only take the principal (positive) square root."
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the square root.**\n\n**$\\sqrt{9} =$** [[☃ numeric-input 1]]",
+					"widgets": {
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 3,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": true
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xb000f43270f13184",
+			"exerciseId": "720817477",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "$\\sqrt[3]{125}$ is the number that, when multiplied by itself three times, equals $125$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "If you can't think of that number, you can break down $125$ into its prime factorization and look for equal groups of numbers.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Let's draw a factor tree.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred twenty-five. It starts with just the number one hundred twenty-five.",
+									"box": [150, 180],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/151d18dbc16fb30c12e596a1a91d030d2f8c820b",
+										"width": 150,
+										"height": 180
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred twenty-five. On hundred twenty-five is the product of five and twenty-five. The five is circled. ",
+									"box": [150, 180],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1cd674aa24bca18916254c74be5bfae83984e56c",
+										"width": 150,
+										"height": 180
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred twenty-five. On hundred twenty-five is the product of five and twenty-five. The five is circled. Twenty-five is the product of five and five. The first five is circled.",
+									"box": [150, 180],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/bec239ea858f723da18b244fd6cd1fe44f04f6cc",
+										"width": 150,
+										"height": 180
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one hundred twenty-five. On hundred twenty-five is the product of five and twenty-five. The five is circled. Twenty-five is the product of five and five. Both fives are circled.",
+									"box": [150, 180],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3d9f39d236088a3f44b82ebea60456c150cba643",
+										"width": 150,
+										"height": 180
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "So the prime factorization of $125$ is $5\\times 5\\times 5$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We're looking for $\\sqrt[3]{125}$, so we want to split the prime factors into three identical groups.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We only have three prime factors, and we want to split them into three groups, so this is easy.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$125 = 5\\times 5\\times 5$, so $5^3 = 125$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $\\sqrt[3]{125}$ is $5$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**$\\sqrt[3]{125} =$** [[☃ numeric-input 1]]",
+					"widgets": {
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 5,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": true
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xce7afc05bbc9ca52",
+			"exerciseId": "720817477",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "$\\sqrt[3]{1331}$ is the number that, when multiplied by itself three times, equals $1331$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "If you can't think of that number, you can break down $1331$ into its prime factorization and look for equal groups of numbers.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Let's draw a factor tree.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one thousand three hundred thirty-one. It starts with just the number one thousand three hundred thirty-one.",
+									"box": [150, 180],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f94bd98e20999a0ece3590a8efa5cff4930b04f4",
+										"width": 150,
+										"height": 180
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one thousand three hundred thirty-one. One thousand three hundred thirty-one is the product of eleven and one hundred twenty-one. The eleven is circled.",
+									"box": [150, 180],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/78b010a9cc06f147a86cb50c8de45643c7108642",
+										"width": 150,
+										"height": 180
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one thousand three hundred thirty-one. One thousand three hundred thirty-one is the product of eleven and one hundred twenty-one. The eleven is circled. One hundred twenty-one is the product of eleven and eleven. The first eleven is circled.",
+									"box": [150, 180],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/2a26c1c400e09b0c6f6ddaa51913932f094a3b3d",
+										"width": 150,
+										"height": 180
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for one thousand three hundred thirty-one. One thousand three hundred thirty-one is the product of eleven and one hundred twenty-one. The eleven is circled. One hundred twenty-one is the product of eleven and eleven. Both elevens are circled.",
+									"box": [150, 180],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c84d82be2576728f8d34a4e026dc94394ad0a9ef",
+										"width": 150,
+										"height": 180
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "So the prime factorization of $1331$ is $11\\times 11\\times 11$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We're looking for $\\sqrt[3]{1331}$, so we want to split the prime factors into three identical groups.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We only have three prime factors, and we want to split them into three groups, so this is easy.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$1331 = 11\\times 11\\times 11$, so $11^3 = 1331$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $\\sqrt[3]{1331}$ is $11$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**$\\sqrt[3]{1331} =$** [[☃ numeric-input 1]]",
+					"widgets": {
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 11,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": true
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x68a7c6690007ecac",
+			"exerciseId": "720817477",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "$\\sqrt[3]{64}$ is the number that, when multiplied by itself three times, equals $64$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "If you can't think of that number, you can break down $64$ into its prime factorization and look for equal groups of numbers.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Let's draw a factor tree.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for sixty-four. It starts with just the number sixty-four.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3afa26fb9fe865b402669534f89458ff062e6b57",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for sixty-four. Sixty-four is the product of two and thirty-two. The two is circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e9045341052037dd501476357b2015c900603751",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for sixty-four. Sixty-four is the product of two and thirty-two. The two is circled. Thirty-two is a product of two and sixteen. The two is circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/dc07c89a328e6238c3eb64eaa19ff25c50246af8",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for sixty-four. Sixty-four is the product of two and thirty-two. The two is circled. Thirty-two is a product of two and sixteen. The two is circled. Sixteen is a product of two and eight. The two is circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d77296b575919bed03e049a74bdfb02d827f3d31",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for sixty-four. Sixty-four is the product of two and thirty-two. The two is circled. Thirty-two is a product of two and sixteen. The two is circled. Sixteen is a product of two and eight. The two is circled. Eight is the product of two and four. The two is circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/abec24010e0ad393a8b60b74162f36820b6393f5",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for sixty-four. Sixty-four is the product of two and thirty-two. The two is circled. Thirty-two is a product of two and sixteen. The two is circled. Sixteen is a product of two and eight. The two is circled. Eight is the product of two and four. The two is circled. Four is the product of two and two. The first two is circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/43c181955fe7e383ea1bad52f38ef6a0d22ed66b",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "\n\n[[☃ image 1]]\n\n",
+						"replace": true,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A factor tree for sixty-four. Sixty-four is the product of two and thirty-two. The two is circled. Thirty-two is a product of two and sixteen. The two is circled. Sixteen is a product of two and eight. The two is circled. Eight is the product of two and four. The two is circled. Four is the product of two and two. Both twos are circled.",
+									"box": [240, 360],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/05bab47d4cc1b133bcb48a8efd1b33a83afd3455",
+										"width": 240,
+										"height": 360
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "So the prime factorization of $64$ is $2\\times 2\\times 2\\times 2\\times 2\\times 2$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We're looking for $\\sqrt[3]{64}$, so we want to split the prime factors into three identical groups.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Notice that we can rearrange the factors like so:\n\n $64 = 2\\times 2\\times 2\\times 2\\times 2\\times 2 = \\left(2\\times 2\\right)\\times\\left(2\\times 2\\right)\\times\\left(2\\times 2\\right)$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $\\left(2\\times 2\\right)^3 = 4^3 = 64$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $\\sqrt[3]{64}$ is $4$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**$\\sqrt[3]{64} =$** [[☃ numeric-input 1]]",
+					"widgets": {
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 4,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": true
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		}
+	]
+}

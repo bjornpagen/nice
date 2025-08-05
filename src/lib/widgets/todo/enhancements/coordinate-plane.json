@@ -1,0 +1,5042 @@
+{
+	"widgetName": "coordinate-plane",
+	"type": "enhancement",
+	"description": "Enhancements to Coordinate Plane",
+	"requirements": [
+		"Quadrant Labeling",
+		"System of Equations Graphing",
+		"Distance Between Points Visualization",
+		"Shape Transformations",
+		"Enhanced Graphing"
+	],
+	"sampleQuestions": [
+		{
+			"questionId": "x1e7b56e6d23627f2",
+			"exerciseId": "x3741c9bc9f80dbcb",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "We should look for the point on the graph whose $x$-coordinate is $-9$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The point on the graph whose $x$-coordinate is $-9$ is the point $(-9,1)$.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A graph made up of connected line segments. From left to right the graph passes through the points (negative 10, 0), (negative 9, 1), (negative 8, 0), (negative 7, 1), (negative 6, 1), (negative 5, 0), (negative 4, 1), (negative 3, 0), (negative 2, 0), (negative 1, negative 1), (0, negative 2), (1, negative 1), (2, 0), (3, 1), (4, 2), (5, 3), (6, 4), (7, 3), (8, 4), (9, 5), and (10, 3). A closed point labeled (negative 9, 1) is plotted.",
+									"box": [345, 345],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fa8c022980f5134b9e3c64488e549771fe293018",
+										"width": 345,
+										"height": 345
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "When the input is $-9$, the output is $1$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the output, $y$, when the input, $x$, is $-9$.**\n\n$y=$ [[☃ input-number 1]]\n\n\n[[☃ image 1]]\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A graph made up of connected line segments. From left to right the graph passes through the points (negative 10, 0), (negative 9, 1), (negative 8, 0), (negative 7, 1), (negative 6, 1), (negative 5, 0), (negative 4, 1), (negative 3, 0), (negative 2, 0), (negative 1, negative 1), (0, negative 2), (1, negative 1), (2, 0), (3, 1), (4, 2), (5, 3), (6, 4), (7, 3), (8, 4), (9, 5), and (10, 3).",
+								"box": [345, 345],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/babf52372a0062f0f15a74a896708250fe6dbf43",
+									"width": 345,
+									"height": 345
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"input-number 1": {
+							"type": "input-number",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"value": 1,
+								"inexact": false,
+								"maxError": 0.1,
+								"simplify": "required",
+								"answerType": "number"
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xd9211f703bc95073",
+			"exerciseId": "342773513",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The $x$- and $y$-axes divide the coordinate plane into four quadrants.\n\nAny point on the coordinate plane is in one of the quadrants or on an axis. The $\\blueE{\\text{origin}}$, $(0, 0)$, is at the intersection of the two axes.\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "An XY coordinate plane divided into four quadrants. The x axis runs from left to right.  The y axis runs up and down. Quadrant 1 is the top right quadrant. The x coordinate is positive and the y coordinate is positive.  Quadrant 2 is the top left quadrant. The x coordinate is negative and the y coordinate is positive.  Quadrant 3 is the bottom left quadrant.  The x coordinate is negative and the y coordinate is negative. Quadrant 4 is the bottom right quadrant. The x coordinate is positive and the y coordinate is negative. A solid point labeled origin is plotted where the x and y axis intersect.",
+									"box": [275, 275],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/04703823e0a9e48dd980ad529b20b7296ba44c6d",
+										"width": 275,
+										"height": 275
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's graph $(\\maroonD{2}, \\tealE{-6})$ by starting at the $\\blueE{\\text{origin}}$, $(0, 0)$. \n\nThe $\\maroonD{2}$ in the ordered pair  tells us that our point is $\\maroonD{2}$ units $\\maroonD{\\text{to the right}}$  of the origin.\n\n[[☃ image 1]]\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate grid is labeled from negative 8 to 8 from the origin in both the x and y axis. A solid point labeled origin is plotted where the x and y axis intersect. An arrow moves 2 ticks to the right from the origin out to a point aligned with the number 0 on the y axis. ",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/954e9bb9f698d38184a4266f63053d8469851fb4",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "The $\\tealE{-6}$ in the ordered pair  tells us that our point is $\\tealE{6}$ units $\\tealE{\\text{below}}$ the $x$-axis.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate grid is labeled from negative 8 to 8 from the origin in both the x and y axis. A solid point labeled origin is plotted where the x and y axis intersect. An arrow moves 2 ticks to the right from the origin out to a point aligned with the number 0 on the y axis. An arrow moves down from the second tick mark on the x axis out to a point aligned with the number negative 6 on the y axis.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c2fc4db5371928319fdada9556e32eb46114a5c8",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Since the $x$-coordinate is positive and the $y$-coordinate is negative, our point is located in Quadrant $\\mathrm{IV}$.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate grid is labeled from negative 8 to 8 from the origin in both the x and y axis. Quadrant 1 is the top right quadrant. The x coordinate is positive and the y coordinate is positive.  Quadrant 2 is the top left quadrant. The x coordinate is negative and the y coordinate is positive.  Quadrant 3 is the bottom left quadrant.  The x coordinate is negative and the y coordinate is negative. Quadrant 4 is the bottom right quadrant. The x coordinate is positive and the y coordinate is negative. A solid point is 2 units to the right of and 6 units down from the origin.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/61621942e51e3153cd2afb6833821beeb0b4acb0",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$(\\maroonD{2}, \\tealE{-6})$ is located in Quadrant $\\mathrm{IV}$.\n",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The graph shows the four quadrants of the coordinate plane.\n\n[[☃ image 1]]\n\n**Where is $(2,-6)$ located on the coordinate plane?**\n\n[[☃ radio 1]]\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "An XY coordinate plane divided into four quadrants. The x axis runs from left to right.  The y axis runs up and down. Quadrant 1 is the top right quadrant. Quadrant 2 is the top left quadrant. Quadrant 3 is the bottom left quadrant. Quadrant 4 is the bottom right quadrant. ",
+								"box": [275, 275],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5b9646357f8af86eb1ec25bc0baf6620465223ff",
+									"width": 275,
+									"height": 275
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Quadrant $\\mathrm{I}$",
+										"correct": false
+									},
+									{
+										"content": "Quadrant $\\mathrm{II}$",
+										"correct": false
+									},
+									{
+										"content": "Quadrant $\\mathrm{III}$",
+										"correct": false
+									},
+									{
+										"content": "Quadrant $\\mathrm{IV}$",
+										"correct": true
+									},
+									{
+										"content": "$x$-axis",
+										"correct": false
+									},
+									{
+										"content": "$y$-axis",
+										"correct": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xb18b699f7769e711",
+			"exerciseId": "342773513",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The $x$- and $y$-axes divide the coordinate plane into four quadrants.\n\nAny point on the coordinate plane is in one of the quadrants or on an axis. The $\\blueE{\\text{origin}}$, $(0, 0)$, is at the intersection of the two axes.\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "An XY coordinate plane divided into four quadrants. The x axis runs from left to right.  The y axis runs up and down. Quadrant 1 is the top right quadrant. The x coordinate is positive and the y coordinate is positive.  Quadrant 2 is the top left quadrant. The x coordinate is negative and the y coordinate is positive.  Quadrant 3 is the bottom left quadrant.  The x coordinate is negative and the y coordinate is negative. Quadrant 4 is the bottom right quadrant. The x coordinate is positive and the y coordinate is negative. A solid point labeled origin is plotted where the x and y axis intersect.",
+									"box": [275, 275],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/04703823e0a9e48dd980ad529b20b7296ba44c6d",
+										"width": 275,
+										"height": 275
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's graph $(\\maroonD{-5}, \\tealE{-9})$ by starting at the $\\blueE{\\text{origin}}$, $(0, 0)$. \n\nThe $\\maroonD{- 5}$ in the ordered pair  tells us that our point is $\\maroonD{5}$ units $\\maroonD{\\text{to the left}}$  of the origin.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate grid is labeled from negative 10 to 10 from the origin in both the x and y axis. A solid point labeled origin is plotted where the x and y axis intersect. An arrow moves 5 ticks to the left from the origin out to a point aligned with the number 0 on the y axis. ",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f79696af0828ccbc4f17a95be7f44d86a4357161",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "The $\\tealE{-9}$ in the ordered pair  tells us that our point is $\\tealE{9}$ units $\\tealE{\\text{below}}$ the $x$-axis.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate grid is labeled from negative 10 to 10 from the origin in both the x and y axis. A solid point labeled origin is plotted where the x and y axis intersect. An arrow moves 5 ticks to the left from the origin out to a point aligned with the number 0 on the y axis. An arrow moves down from the fifth tick mark on the x axis out to a point aligned with the number negative 9 on the y axis.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/73a3d0129bc8edfeaf7f09040260d99653b16455",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Since the $x$-coordinate is negative and the $y$-coordinate is negative, our point is located in Quadrant $\\mathrm{III}$.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate grid is labeled from negative 10 to 10 from the origin in both the x and y axis. Quadrant 1 is the top right quadrant. The x coordinate is positive and the y coordinate is positive.  Quadrant 2 is the top left quadrant. The x coordinate is negative and the y coordinate is positive.  Quadrant 3 is the bottom left quadrant.  The x coordinate is negative and the y coordinate is negative. Quadrant 4 is the bottom right quadrant. The x coordinate is positive and the y coordinate is negative. A solid point is 5 units to the left of and 9 units down from the origin.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/2066820ad801970f8cbde0e49ac32771b8909411",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$(\\maroonD{-5}, \\tealE{-9})$ is located in Quadrant $\\mathrm{III}$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The graph shows the four quadrants of the coordinate plane.\n\n[[☃ image 1]]\n\n**Where is $(-5,-9)$ located on the coordinate plane?**\n\n[[☃ radio 2]]\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "An XY coordinate plane divided into four quadrants. The x axis runs from left to right.  The y axis runs up and down. Quadrant 1 is the top right quadrant. Quadrant 2 is the top left quadrant. Quadrant 3 is the bottom left quadrant. Quadrant 4 is the bottom right quadrant. ",
+								"box": [275, 275],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5b9646357f8af86eb1ec25bc0baf6620465223ff",
+									"width": 275,
+									"height": 275
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 2": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Quadrant $\\mathrm{I}$",
+										"correct": false
+									},
+									{
+										"content": "Quadrant $\\mathrm{II}$",
+										"correct": false
+									},
+									{
+										"content": "Quadrant $\\mathrm{III}$",
+										"correct": true
+									},
+									{
+										"content": "Quadrant $\\mathrm{IV}$",
+										"correct": false
+									},
+									{
+										"content": "$x$-axis",
+										"correct": false
+									},
+									{
+										"content": "$y$-axis",
+										"correct": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x052bdb6e56052cdb",
+			"exerciseId": "342773513",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The $x$- and $y$-axes divide the coordinate plane into four quadrants.\n\nAny point on the coordinate plane is in one of the quadrants or on an axis. The $\\blueE{\\text{origin}}$, $(0, 0)$, is at the intersection of the two axes.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "An XY coordinate plane divided into four quadrants. The x axis runs from left to right.  The y axis runs up and down. Quadrant 1 is the top right quadrant. The x coordinate is positive and the y coordinate is positive.  Quadrant 2 is the top left quadrant. The x coordinate is negative and the y coordinate is positive.  Quadrant 3 is the bottom left quadrant.  The x coordinate is negative and the y coordinate is negative. Quadrant 4 is the bottom right quadrant. The x coordinate is positive and the y coordinate is negative. A solid point labeled origin is plotted where the x and y axis intersect.",
+									"box": [275, 275],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/04703823e0a9e48dd980ad529b20b7296ba44c6d",
+										"width": 275,
+										"height": 275
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's graph $(\\maroonD{6}, \\tealE{0})$ by starting at the $\\blueE{\\text{origin}}$, $(0, 0)$. \n\nThe $\\maroonD{6}$ in the ordered pair  tells us that our point is $\\maroonD{6}$ units $\\maroonD{\\text{to the right}}$  of the origin.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate grid is labeled from negative 10 to 10 from the origin in both the x and y axis. A solid point labeled origin is plotted where the x and y axis intersect. An arrow moves 6 ticks to the right from the origin out to a point aligned with the number 0 on the y axis. ",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/28355ec041ae047883892ce2e93d3bd03dfb4b1f",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "The $\\tealE{0}$ in the ordered pair  tells us that our point is on the $x$-axis.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate grid is labeled from negative 10 to 10 from the origin in both the x and y axis. A solid point is plotted at the origin. An arrow moves 6 ticks to the right from the origin out to a point aligned with the number 0 on the y axis. ",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/70627b562884c5f64e00eac47bd7891b80ef3098",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Since the $x$-coordinate is positive and the $y$-coordinate is $0$, our point is located on the $x$-axis.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate grid is labeled from negative 10 to 10 from the origin in both the x and y axis. Quadrant 1 is the top right quadrant. The x coordinate is positive and the y coordinate is positive.  Quadrant 2 is the top left quadrant. The x coordinate is negative and the y coordinate is positive.  Quadrant 3 is the bottom left quadrant.  The x coordinate is negative and the y coordinate is negative. Quadrant 4 is the bottom right quadrant. The x coordinate is positive and the y coordinate is negative. A solid point is 6 units to the right of and 0 units down from the origin.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f7039c0bc81c9d3f4a37c624709f29611f17ee3e",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$(\\maroonD{6}, \\tealE{0})$ is located on the $x$-axis.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The graph shows the four quadrants of the coordinate plane.\n\n[[☃ image 1]]\n\n**Where is $(6,0)$ located on the coordinate plane?**\n\n[[☃ radio 2]]\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "An XY coordinate plane divided into four quadrants. The x axis runs from left to right.  The y axis runs up and down. Quadrant 1 is the top right quadrant. Quadrant 2 is the top left quadrant. Quadrant 3 is the bottom left quadrant. Quadrant 4 is the bottom right quadrant. ",
+								"box": [275, 275],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5b9646357f8af86eb1ec25bc0baf6620465223ff",
+									"width": 275,
+									"height": 275
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 2": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Quadrant $\\mathrm{I}$",
+										"correct": false
+									},
+									{
+										"content": "Quadrant $\\mathrm{II}$",
+										"correct": false
+									},
+									{
+										"content": "Quadrant $\\mathrm{III}$",
+										"correct": false
+									},
+									{
+										"content": "Quadrant $\\mathrm{IV}$",
+										"correct": false
+									},
+									{
+										"content": "$x$-axis",
+										"correct": true
+									},
+									{
+										"content": "$y$-axis",
+										"correct": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x6ea3c789c94de7b3",
+			"exerciseId": "357485849",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Graphing the equations\n\nThe equations are both in *standard form*: $Ax+By=C$. A common way of graphing equations in this form is to find the $x$- and $y$-intercepts.\n\nLet's find the intercepts for $-8x+4y=24$:\n\n$y$-intercept (substitute $x=0$)  | $x$-intercept (substitute $y=0$)\n:-: | :-:\n$\\begin{align}-8\\blueD x+4y&=24\\\\\\\\ -8 \\cdot \\blueD 0+4y&=24\\\\\\\\4y&=24\\\\\\\\y&=6\\end{align}$ | $\\begin{align}-8x+4\\maroonD y&=24\\\\\\\\-8x+4\\cdot\\maroonD 0&=24\\\\\\\\-8x&=24\\\\\\\\x&=-3\\end{align}$\n\nWe can use a similar strategy to find that the intercepts for $-7x+7y=28$ are $(0,4)$ and $(-4,0)$.\n\n[[☃ explanation 1]]\n\nWe can graph the lines using these intercepts:\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. The equation negative eight x plus four y equals twenty-four is graphed with the points negative three, zero and zero, six plotted on the line. The equation negative seven x plus seven y equals twenty-eight is graphed with the points negative four, zero and zero, four plotted on the line.",
+									"box": [345, 345],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/933faf8353f74fdef7e37a76b3dc2aee061ed51e",
+										"width": 345,
+										"height": 345
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Hide explanation",
+									"showPrompt": "Show me how to find those intercepts",
+									"explanation": "Let's find the intercepts for $-7x+7y=28$:\n\n$y$-intercept (substitute $x=0$)  | $x$-intercept (substitute $y=0$)\n:-: | :-:\n$\\begin{align}-7\\blueD x+7y&=28\\\\\\\\-7\\cdot\\blueD 0+7y&=28\\\\\\\\7y&=28\\\\\\\\y&=4\\end{align}$ | $\\begin{align}-7x+7\\maroonD y&=28\\\\\\\\-7x+7\\cdot\\maroonD 0&=28\\\\\\\\-7x&=28\\\\\\\\x&=-4\\end{align}$"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Solving the system\n\nWhen we graph the two lines, we can see that they intersect at $(-2,2)$. Therefore, this is the solution of the system:\n\n$\\begin{align}\n&x=-2\n\\\\\\\\\n&y=2\n\\end{align}$\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. The equation negative eight x plus four y equals twenty-four is graphed with the points negative three, zero and zero, six plotted on the line. The equation negative seven x plus seven y equals twenty-eight is graphed with the points negative four, zero and zero, four plotted on the line. The intersection of these two lines is plotted and labeled at negative two, two.",
+									"box": [345, 345],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a5d2ca52aad4f674d4496a6e97bcb65b8658458a",
+										"width": 345,
+										"height": 345
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the solution to the system of equations.**  \n*You can use the interactive graph below to find the solution.*\n\n$\\begin{cases}\n-8x+4y=24\n\\\\\\\\\n-7x+7y=28\n\\end{cases}$\n\n$x= $  [[☃ numeric-input 1]]\n\n$y= $  [[☃ numeric-input 2]]\n\n[[☃ interaction 1]]",
+					"widgets": {
+						"interaction 1": {
+							"type": "interaction",
+							"graded": true,
+							"static": false,
+							"options": {
+								"graph": {
+									"box": [280, 280],
+									"range": [[-8, 8], [-8, 8]],
+									"valid": true,
+									"labels": ["x", "y"],
+									"gridStep": [1, 1],
+									"markings": "graph",
+									"snapStep": [1, 1],
+									"tickStep": [1, 1],
+									"showRuler": false,
+									"rulerLabel": "",
+									"rulerTicks": 10,
+									"showTooltips": false,
+									"showProtractor": false,
+									"backgroundImage": {
+										"url": null,
+										"width": 0,
+										"height": 0
+									},
+									"editableSettings": ["canvas", "graph"]
+								},
+								"static": false,
+								"elements": [
+									{
+										"key": "movable-point-b71473",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "-1",
+											"startY": "4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 0,
+											"constraintXMax": "10",
+											"constraintXMin": "-10",
+											"constraintYMax": "10",
+											"constraintYMin": "-10"
+										}
+									},
+									{
+										"key": "movable-point-56a42a",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "1",
+											"startY": "4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 1,
+											"constraintXMax": "10",
+											"constraintXMin": "-10",
+											"constraintYMax": "10",
+											"constraintYMin": "-10"
+										}
+									},
+									{
+										"key": "movable-point-a8848f",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "-1",
+											"startY": "-4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 2,
+											"constraintXMax": "10",
+											"constraintXMin": "-10",
+											"constraintYMax": "10",
+											"constraintYMin": "-10"
+										}
+									},
+									{
+										"key": "movable-point-97acf7",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "1",
+											"startY": "-4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 3,
+											"constraintXMax": "10",
+											"constraintXMin": "-10",
+											"constraintYMax": "10",
+											"constraintYMin": "-10"
+										}
+									},
+									{
+										"key": "line-c115d6",
+										"type": "line",
+										"options": {
+											"endX": "8",
+											"endY": "\\frac{y_1-y_0}{x_1-x_0}\\left(8-x_0\\right)+y_0",
+											"color": "#6495ED",
+											"arrows": "",
+											"startX": "-8",
+											"startY": "\\frac{y_1-y_0}{x_1-x_0}\\left(-8-x_0\\right)+y_0",
+											"strokeWidth": 2,
+											"strokeDasharray": ""
+										}
+									},
+									{
+										"key": "line-1b605a",
+										"type": "line",
+										"options": {
+											"endX": "8",
+											"endY": "\\frac{y_3-y_2}{x_3-x_2}\\left(8-x_2\\right)+y_2",
+											"color": "#FF00AF",
+											"arrows": "",
+											"startX": "-8",
+											"startY": "\\frac{y_3-y_2}{x_3-x_2}\\left(-8-x_2\\right)+y_2",
+											"strokeWidth": 2,
+											"strokeDasharray": ""
+										}
+									}
+								]
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": -2,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "input answer",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 2,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "input answer",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xcd14c41979f4e20a",
+			"exerciseId": "357485849",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Graphing the equations\n\nThe equations are both in *standard form*: $Ax+By=C$. A common way of graphing equations in this form is to find the $x$- and $y$-intercepts.\n\nLet's find the intercepts for $-2x+2y=-4$:\n\n$y$-intercept (substitute $x=0$)  | $x$-intercept (substitute $y=0$)\n:-: | :-:\n$\\begin{align}-2\\blueD x+2y&=-4\\\\\\\\ -2 \\cdot \\blueD 0+2y&=-4\\\\\\\\2y&=-4\\\\\\\\y&=-2\\end{align}$ | $\\begin{align}-2x+2\\maroonD y&=-4\\\\\\\\-2x+2\\cdot\\maroonD 0&=-4\\\\\\\\-2x&=-4\\\\\\\\x&=2\\end{align}$\n\nWe can use a similar strategy to find that the intercepts for $3x+3y=-18$ are $(0,-6)$ and $(-6,0)$.\n\n[[☃ explanation 2]]\n\nWe can graph the lines using these intercepts:\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. The equation negative two x plus two y equals negative four is graphed with the points zero, negative two and two, zero plotted on the line. The equation three x plus three y equals negative eighteen is graphed with the points zero, negative six and negative six, zero plotted on the line.",
+									"box": [345, 345],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/4c57d24ca82ccf2f18e0fbce64277b8291955ae8",
+										"width": 345,
+										"height": 345
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"explanation 2": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Hide explanation",
+									"showPrompt": "Show me how to find those intercepts",
+									"explanation": "Let's find the intercepts for $3x+3y=-18$:\n\n$y$-intercept (substitute $x=0$)  | $x$-intercept (substitute $y=0$)\n:-: | :-:\n$\\begin{align}3\\blueD x+3y&=-18\\\\\\\\3\\cdot\\blueD 0+3y&=-18\\\\\\\\3y&=-18\\\\\\\\y&=-6\\end{align}$ | $\\begin{align}3x+3\\maroonD y&=-18\\\\\\\\3x+3\\cdot\\maroonD 0&=-18\\\\\\\\3x&=-18\\\\\\\\x&=-6\\end{align}$"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Solving the system\n\nWhen we graph the two lines, we can see that they intersect at $(-2,-4)$. Therefore, this is the solution of the system:\n\n$\\begin{align}\n&x=-2\n\\\\\\\\\n&y=-4\n\\end{align}$\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. The equation negative two x plus two y equals negative four is graphed with the points zero, negative two and two, zero plotted on the line. The equation three x plus three y equals negative eighteen is graphed with the points zero, negative six and negative six, zero plotted on the line. The intersection of these two lines is plotted and labeled at negative two, negative four.",
+									"box": [345, 345],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ea4d7339713e048bf855c27ff87fa0d32664c094",
+										"width": 345,
+										"height": 345
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the solution to the system of equations.**  \n*You can use the interactive graph below to find the solution.*\n\n$\\begin{cases}\n-2x+2y=-4\n\\\\\\\\\n3x+3y=-18\n\\end{cases}$\n\n$x= $  [[☃ numeric-input 1]]\n\n$y= $  [[☃ numeric-input 2]]\n\n[[☃ interaction 1]]",
+					"widgets": {
+						"interaction 1": {
+							"type": "interaction",
+							"graded": true,
+							"static": false,
+							"options": {
+								"graph": {
+									"box": [280, 280],
+									"range": [[-8, 8], [-8, 8]],
+									"valid": true,
+									"labels": ["x", "y"],
+									"gridStep": [1, 1],
+									"markings": "graph",
+									"snapStep": [1, 1],
+									"tickStep": [1, 1],
+									"showRuler": false,
+									"rulerLabel": "",
+									"rulerTicks": 10,
+									"showTooltips": false,
+									"showProtractor": false,
+									"backgroundImage": {
+										"url": null,
+										"width": 0,
+										"height": 0
+									},
+									"editableSettings": ["canvas", "graph"]
+								},
+								"static": false,
+								"elements": [
+									{
+										"key": "movable-point-b71473",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "-1",
+											"startY": "4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 0,
+											"constraintXMax": "10",
+											"constraintXMin": "-10",
+											"constraintYMax": "10",
+											"constraintYMin": "-10"
+										}
+									},
+									{
+										"key": "movable-point-56a42a",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "1",
+											"startY": "4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 1,
+											"constraintXMax": "10",
+											"constraintXMin": "-10",
+											"constraintYMax": "10",
+											"constraintYMin": "-10"
+										}
+									},
+									{
+										"key": "movable-point-a8848f",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "-1",
+											"startY": "-4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 2,
+											"constraintXMax": "10",
+											"constraintXMin": "-10",
+											"constraintYMax": "10",
+											"constraintYMin": "-10"
+										}
+									},
+									{
+										"key": "movable-point-97acf7",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "1",
+											"startY": "-4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 3,
+											"constraintXMax": "10",
+											"constraintXMin": "-10",
+											"constraintYMax": "10",
+											"constraintYMin": "-10"
+										}
+									},
+									{
+										"key": "line-c115d6",
+										"type": "line",
+										"options": {
+											"endX": "8",
+											"endY": "\\frac{y_1-y_0}{x_1-x_0}\\left(8-x_0\\right)+y_0",
+											"color": "#6495ED",
+											"arrows": "",
+											"startX": "-8",
+											"startY": "\\frac{y_1-y_0}{x_1-x_0}\\left(-8-x_0\\right)+y_0",
+											"strokeWidth": 2,
+											"strokeDasharray": ""
+										}
+									},
+									{
+										"key": "line-1b605a",
+										"type": "line",
+										"options": {
+											"endX": "8",
+											"endY": "\\frac{y_3-y_2}{x_3-x_2}\\left(8-x_2\\right)+y_2",
+											"color": "#FF00AF",
+											"arrows": "",
+											"startX": "-8",
+											"startY": "\\frac{y_3-y_2}{x_3-x_2}\\left(-8-x_2\\right)+y_2",
+											"strokeWidth": 2,
+											"strokeDasharray": ""
+										}
+									}
+								]
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": -2,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "input answer",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": -4,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "input answer",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x42f372d87e77f20c",
+			"exerciseId": "357485849",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Graphing the equations\n\nThe equations are both in *standard form*: $Ax+By=C$. A common way of graphing equations in this form is to find the $x$- and $y$-intercepts.\n\nLet's find the intercepts for $8x-4y=16$:\n\n$y$-intercept (substitute $x=0$)  | $x$-intercept (substitute $y=0$)\n:-: | :-:\n$\\begin{align}8\\blueD x-4y&=16\\\\\\\\8 \\cdot \\blueD 0-4y&=16\\\\\\\\-4y&=16\\\\\\\\y&=-4\\end{align}$ | $\\begin{align}8x-4\\maroonD y&=16\\\\\\\\8x-4\\cdot\\maroonD 0&=16\\\\\\\\8x&=16\\\\\\\\x&=2\\end{align}$\n\nWe can use a similar strategy to find that the intercepts for $8x+4y=16$ are $(0,4)$ and $(2,0)$.\n\n[[☃ explanation 1]]\n\nWe can graph the lines using these intercepts:\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes each scale by one. The equation eight x minus four y equals sixteen is graphed with the points zero, negative four and two, zero plotted on the line. The equation eight x plus four y equals sixteen is graphed with the points zero, four and two, zero plotted.",
+									"box": [345, 345],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b7d4c3b29e166bced51f7d27de6805971f76f4f7",
+										"width": 345,
+										"height": 345
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Hide explanation",
+									"showPrompt": "Show me how to find those intercepts",
+									"explanation": "Let's find the intercepts for $8x+4y=16$:\n\n$y$-intercept (substitute $x=0$)  | $x$-intercept (substitute $y=0$)\n:-: | :-:\n$\\begin{align}8\\blueD x+4y&=16\\\\\\\\8\\cdot\\blueD 0+4y&=16\\\\\\\\4y&=16\\\\\\\\y&=4\\end{align}$ | $\\begin{align}8x+4\\maroonD y&=16\\\\\\\\8x+4\\cdot\\maroonD 0&=16\\\\\\\\8x&=16\\\\\\\\x&=2\\end{align}$"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Solving the system\n\nWhen we graph the two lines, we can see that they intersect at $(2,0)$. Therefore, this is the solution of the system:\n\n$\\begin{align}\n&x=2\n\\\\\\\\\n&y=0\n\\end{align}$\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes each scale by one. The equation eight x minus four y equals sixteen is graphed with the points zero, negative four and two, zero plotted on the line. The equation eight x plus four y equals sixteen is graphed with the points zero, four and two, zero plotted. The intersection of these two lines is plotted and labeled at two, zero.",
+									"box": [345, 345],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c1936929fd1829ad931bc4c501603607018e55c7",
+										"width": 345,
+										"height": 345
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the solution to the system of equations.**  \n*You can use the interactive graph below to find the solution.*\n\n$\\begin{cases}\n8x-4y=16\n\\\\\\\\\n8x+4y=16\n\\end{cases}$\n\n$x= $  [[☃ numeric-input 1]]\n\n$y= $  [[☃ numeric-input 2]]\n\n[[☃ interaction 1]]",
+					"widgets": {
+						"interaction 1": {
+							"type": "interaction",
+							"graded": true,
+							"static": false,
+							"options": {
+								"graph": {
+									"box": [280, 280],
+									"range": [[-8, 8], [-8, 8]],
+									"valid": true,
+									"labels": ["x", "y"],
+									"gridStep": [1, 1],
+									"markings": "graph",
+									"snapStep": [1, 1],
+									"tickStep": [1, 1],
+									"showRuler": false,
+									"rulerLabel": "",
+									"rulerTicks": 10,
+									"showTooltips": false,
+									"showProtractor": false,
+									"backgroundImage": {
+										"url": null,
+										"width": 0,
+										"height": 0
+									},
+									"editableSettings": ["canvas", "graph"]
+								},
+								"static": false,
+								"elements": [
+									{
+										"key": "movable-point-b71473",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "-1",
+											"startY": "4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 0,
+											"constraintXMax": "8",
+											"constraintXMin": "-8",
+											"constraintYMax": "8",
+											"constraintYMin": "-8"
+										}
+									},
+									{
+										"key": "movable-point-56a42a",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "1",
+											"startY": "4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 1,
+											"constraintXMax": "8",
+											"constraintXMin": "-8",
+											"constraintYMax": "8",
+											"constraintYMin": "-8"
+										}
+									},
+									{
+										"key": "movable-point-a8848f",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "-1",
+											"startY": "-4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 2,
+											"constraintXMax": "8",
+											"constraintXMin": "-8",
+											"constraintYMax": "8",
+											"constraintYMin": "-8"
+										}
+									},
+									{
+										"key": "movable-point-97acf7",
+										"type": "movable-point",
+										"options": {
+											"snap": 1,
+											"startX": "1",
+											"startY": "-4",
+											"constraint": "snap",
+											"constraintFn": "0",
+											"varSubscript": 3,
+											"constraintXMax": "8",
+											"constraintXMin": "-8",
+											"constraintYMax": "8",
+											"constraintYMin": "-8"
+										}
+									},
+									{
+										"key": "line-c115d6",
+										"type": "line",
+										"options": {
+											"endX": "8",
+											"endY": "\\frac{y_1-y_0}{x_1-x_0}\\left(8-x_0\\right)+y_0",
+											"color": "#6495ED",
+											"arrows": "",
+											"startX": "-8",
+											"startY": "\\frac{y_1-y_0}{x_1-x_0}\\left(-8-x_0\\right)+y_0",
+											"strokeWidth": 2,
+											"strokeDasharray": ""
+										}
+									},
+									{
+										"key": "line-1b605a",
+										"type": "line",
+										"options": {
+											"endX": "8",
+											"endY": "\\frac{y_3-y_2}{x_3-x_2}\\left(8-x_2\\right)+y_2",
+											"color": "#FF00AF",
+											"arrows": "",
+											"startX": "-8",
+											"startY": "\\frac{y_3-y_2}{x_3-x_2}\\left(-8-x_2\\right)+y_2",
+											"strokeWidth": 2,
+											"strokeDasharray": ""
+										}
+									}
+								]
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 2,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "input answer",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 0,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "input answer",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x18769b10cec1fb72",
+			"exerciseId": "xb99abb79",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The equations are in slope-intercept form. Let's think about the slopes and the $y$-intercepts of the lines represented by each equation.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The first equation is $y = -7x+8$, so the slope of its line is $-7$ and the $y$-intercept is $(0,8)$.\n\nThe second equation is $y = -7x-8$, so the slope of its line is $-7$ and the $y$-intercept is $(0,-8)$.\n\nSince both lines have the same slopes but different $y$-intercepts, they are distinct parallel lines.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Since distinct parallel lines don't intersect, we conclude that the system has **no solutions**.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. The equation y equals negative seven x plus eight is graphed going through the points zero, eight and one, one. The equation y equals negative seven x minus six is graphed going through the points negative one, negative one and zero, negative eight.",
+									"box": [345, 345],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/99a851ea1d0575314e249c70ded5a8bcbbb8bd7b",
+										"width": 345,
+										"height": 345
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**How many solutions does the system have?**\n\n$\\begin{cases}\ny = -7x+8\n\\\\\\\\\ny = -7x-8\n\\end{cases}$\n\n[[☃ radio 1]]",
+					"widgets": {
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Exactly one solution",
+										"correct": false
+									},
+									{
+										"content": "No solutions",
+										"correct": true
+									},
+									{
+										"content": "Infinitely many solutions",
+										"correct": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xca79f79c956b52b0",
+			"exerciseId": "xb99abb79",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's bring both equations to slope-intercept form. Then we can think about the slopes and the $y$-intercepts of the lines represented by each equation.\n\nThe slope-intercept form of the first equation $5x-y=2$ is $y=5x-2$.\n\nThe slope-intercept form of the second equation $5x-y=-2$ is $y=5x+2$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The first equation is $y = 5x-2$, so the slope of its line is $5$ and the $y$-intercept is $(0,-2)$.\n\nThe second equation is $y = 5x+2$, so the slope of its line is $5$ and the $y$-intercept is $(0,2)$.\n\nSince both lines have the same slopes but different $y$-intercepts, they are distinct parallel lines.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Since distinct parallel lines don't intersect, we conclude that the system has **no solutions**.\n\nThis makes sense: if $5x-y$ equals $2$, then it would be impossible for $5x-y$ to also be equal to $-2$.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. The equation y equals five x minus two is graphed going through the points zero, negative two and one, three. The equation y equals five x plus two is graphed going through the points zero, two and one, seven.",
+									"box": [345, 345],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0d6d972cdaedcd578eb32717453d8fccc9599059",
+										"width": 345,
+										"height": 345
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**How many solutions does the system have?**\n\n$\\begin{cases}\n5x-y=2\n\\\\\\\\\n5x-y=-2\n\\end{cases}$\n\n[[☃ radio 1]]",
+					"widgets": {
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Exactly one solution",
+										"correct": false
+									},
+									{
+										"content": "No solutions",
+										"correct": true
+									},
+									{
+										"content": "Infinitely many solutions",
+										"correct": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x4ad21594e43692d0",
+			"exerciseId": "xb99abb79",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The equations are in slope-intercept form. Let's think about the slopes and the $y$-intercepts of the lines represented by each equation.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The first equation is $y = 9x-5$, so the slope of its line is $9$ and the $y$-intercept is $(0,-5)$.\n\nThe second equation is $y = 9x+6$, so the slope of its line is $9$ and the $y$-intercept is $(0,6)$.\n\nSince both lines have the same slopes but different $y$-intercepts, they are distinct parallel lines.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Since distinct parallel lines don't intersect, we conclude that the system has **no solutions**.\n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. The equation y equals nine x minus five is graphed going through the points zero, negative five and one, four. The equation y equals nine x plus six is graphed going through the points negative one, negative three and zero, six.",
+									"box": [345, 345],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/946eb7ba262e06d70d8616fe10e52b831d4d1b02",
+										"width": 345,
+										"height": 345
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**How many solutions does the system have?**\n\n$\\begin{cases}\ny = 9x-5\n\\\\\\\\\ny = 9x+6\n\\end{cases}$\n\n[[☃ radio 1]]",
+					"widgets": {
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Exactly one solution",
+										"correct": false
+									},
+									{
+										"content": "No solutions",
+										"correct": true
+									},
+									{
+										"content": "Infinitely many solutions",
+										"correct": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x3655a9298adc15cd",
+			"exerciseId": "4514693",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "When we make a right triangle with the two points, the distance is the hypotenuse which we can represent with $\\greenD x$:\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane with two points on it. The x- and y- axes scale by one. The first point is at negative two, seven. The second point is at seven, nine. A vertical line starts at the first point two units and a horizontal line nine units to the second point. A third line connects both points and is x units making a right triangle. The hypotenuse is x. ",
+									"box": [260, 270],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f3168f2f751c0a286855cc2695e5032413a443e7",
+										"width": 260,
+										"height": 270
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Now we can use the Pythagorean theorem to find the distance $\\greenD x$:\n\n$\\begin{align} \\maroonD a^2 + \\maroonD b^2 &= \\greenD x^2 ~~~~~~~~\\small\\gray{\\text{The Pythagorean theorem}}\\\\\\\\\n\\maroonD{9}^2 + \\maroonD{2}^2 &= \\greenD{x}^2 ~~~~~~~~\\small\\gray{\\text{Plug in the side lengths}}\\\\\\\\\n81 + 4 &= \\greenD x^2 ~~~~~~~~\\small\\gray{\\text{Evaluate } 9^2 \\text{ and }  2^2}\\\\\\\\\n85 &= \\greenD x^2~~~~~~~~\\small\\gray{\\text{Add 81 and 4}}\\\\\\\\\n\\greenD x &= \\sqrt{85} ~~~~~~~~\\small\\gray{\\text{Take the square root of each side}}\\\\\\\\ \\\\\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\nThe distance between the points is $\\sqrt{85}$. ",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What is the distance between the following points?**\n\n\n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A coordinate plane with two points on it. The x- and y- axes scale by one. The first point is at negative two, seven. The second point is at seven, nine.",
+								"box": [260, 270],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/2b3ae1023bab8bfa7c6e961d84505d1ad8d151d6",
+									"width": 260,
+									"height": 270
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$\\sqrt{63}$",
+										"correct": false
+									},
+									{
+										"content": "$\\sqrt{77}$",
+										"correct": false
+									},
+									{
+										"content": "$\\sqrt{79}$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "$\\sqrt{85}$",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x36fe74d2210a22d5",
+			"exerciseId": "4514693",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "When we make a right triangle with the two points, the distance is the hypotenuse which we can represent with $\\greenD x$:\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane with two points on it. The x- and y- axes scale by one. The first point is at two, negative three. The second point is at eight, negative nine. A vertical line starts at the first point six units beneath it. The horizontal line then is six units to the second point. A third line connects both points and is x units making a right triangle. The hypotenuse is x. ",
+									"box": [250, 240],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f3ce40b588205481d37d182d797329a994e70485",
+										"width": 250,
+										"height": 240
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Now we can use the Pythagorean theorem to find the distance $\\greenD x$:\n\n$\\begin{align} \\maroonD a^2 + \\maroonD b^2 &= \\greenD x^2 ~~~~~~~~\\small\\gray{\\text{The Pythagorean theorem}}\\\\\\\\\n\\maroonD{6}^2 + \\maroonD{6}^2 &= \\greenD{x}^2 ~~~~~~~~\\small\\gray{\\text{Plug in the side lengths}}\\\\\\\\\n36 + 36 &= \\greenD x^2 ~~~~~~~~\\small\\gray{\\text{Evaluate } 6^2 \\text{ and }  6^2}\\\\\\\\\n72 &= \\greenD x^2~~~~~~~~\\small\\gray{\\text{Add 36 and 36}}\\\\\\\\\n\\greenD x &= \\sqrt{72} ~~~~~~~~\\small\\gray{\\text{Take the square root of each side}}\\\\\\\\ \\\\\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\nThe distance between the points is $\\sqrt{72}$. ",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What is the distance between the following points?**\n\n\n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A coordinate plane with two points on it. The x- and y- axes scale by one. The first point is at two, negative three. The second point is at eight, negative nine.",
+								"box": [250, 240],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c3f9f42a6bb7b4b27032348f19ab95fa29bf5ddf",
+									"width": 250,
+									"height": 240
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$6$",
+										"correct": false
+									},
+									{
+										"content": "$8$",
+										"correct": false
+									},
+									{
+										"content": "$\\sqrt{72}$",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "$\\sqrt{79}$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xe2970c38eb61ed9e",
+			"exerciseId": "4514693",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "When we make a right triangle with the two points, the distance is the hypotenuse which we can represent with $\\greenD x$:\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane with two points on it. The x- and y- axes scale by one. The first point is at two, four. The second point is at six, negative five. The horizontal line starts at the first point four units and vertical line nine units to the second point. A third line connects both points and is x units making a right triangle. The hypotenuse is x. ",
+									"box": [230, 280],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/093688a52af01a9c7b1ce233f74f11804edcdd81",
+										"width": 230,
+										"height": 280
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Now we can use the Pythagorean theorem to find the distance $\\greenD x$:\n\n$\\begin{align} \\maroonD a^2 + \\maroonD b^2 &= \\greenD x^2 ~~~~~~~~\\small\\gray{\\text{The Pythagorean theorem}}\\\\\\\\\n\\maroonD{4}^2 + \\maroonD{9}^2 &= \\greenD{x}^2 ~~~~~~~~\\small\\gray{\\text{Plug in the side lengths}}\\\\\\\\\n16 + 81 &= \\greenD x^2 ~~~~~~~~\\small\\gray{\\text{Evaluate } 4^2 \\text{ and }  9^2}\\\\\\\\\n97 &= \\greenD x^2~~~~~~~~\\small\\gray{\\text{Add 16 and 81}}\\\\\\\\\n\\greenD x &= \\sqrt{97} ~~~~~~~~\\small\\gray{\\text{Take the square root of each side}}\\\\\\\\ \\\\\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\nThe distance between the points is $\\sqrt{97}$. ",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What is the distance between the following points?**\n\n\n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A coordinate plane with two points on it. The x- and y- axes scale by one. The first point is at two, four. The second point is at six, negative five.",
+								"box": [230, 280],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ddf65b8637bcd60589c2a5a420ba21dca592ba34",
+									"width": 230,
+									"height": 280
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$12$",
+										"correct": false
+									},
+									{
+										"content": "$13$",
+										"correct": false
+									},
+									{
+										"content": "$\\sqrt{36}$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "$\\sqrt{97}$",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x04ef364b331fe4c7",
+			"exerciseId": "x53e22195",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "A reflection moves a point perpendicularly across a line, so that the [[☃ definition 1]] is the same distance from the line as the [[☃ definition 2]], but on the other side.\n\n\n[[☃ image 1]]\n\nIn other words, the line of reflection is the perpendicular bisector between any pair of corresponding points in the image and the pre-image.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Point R is reflected across a line to form point R prime. Segment R R prime is perpendicular to the line.",
+									"box": [149, 170],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fb6f2a256ffa7c13a7d13924c1f960a57fd7be6a",
+										"width": 149,
+										"height": 170
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The figure *after* one or more transformations",
+									"togglePrompt": "image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							},
+							"definition 2": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The original figure *before* any transformations",
+									"togglePrompt": "pre-image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Since the $y$-axis is *vertical*, the reflection will move each point of $\\triangle ABC$ *horizontally* across the axis.\n\nFor example, point $A$ is $3$ units to the left of the $y$-axis, so $A'$ will be $3$ units to the right of the axis.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. Triangle A B C with point A at negative three, six, point B at negative six, two, and point C at negative three, four. A dashed arrow points at both point A prime at three, six and point A.",
+									"box": [425, 425],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f43408c255d34b52856b46efc1bfc8e6379fac51",
+										"width": 425,
+										"height": 425
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "We can reflect each of the other vertices in the same way.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. Triangle A B C with point A at negative three, six, point B at negative six, two, and point C at negative three, four. A dashed arrow points at both point A prime at three, six to point A.  A dashed arrow points at both point B prime at six, two and point B. A dashed arrow points at both point C prime at three, four and point C.",
+									"box": [425, 425],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/9df98a5b58d56c80a609ca082c9005c174f1d47a",
+										"width": 425,
+										"height": 425
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "This is the image of $\\triangle ABC$ under the reflection.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. Triangle A B C with point A at negative three, six, point B at negative six, two, and point C at negative three, four. The image of another triangle has vertices A prime B prime and C prime with point A prime at three, six, point B prime at six, two and point C prime at three, four.",
+									"box": [425, 425],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/8371537739accd092aeba3ad1bc75019548e0e98",
+										"width": 425,
+										"height": 425
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Plot the image of triangle $\\triangle ABC$ under a reflection across the $y$-axis.**\n\n[[☃ interactive-graph 1]]",
+					"widgets": {
+						"interactive-graph 1": {
+							"type": "interactive-graph",
+							"graded": true,
+							"static": false,
+							"options": {
+								"step": [1, 1],
+								"graph": {
+									"type": "polygon"
+								},
+								"range": [[-8, 8], [-8, 8]],
+								"labels": ["x", "y"],
+								"correct": {
+									"type": "polygon",
+									"coords": [[6, 2], [3, 6], [3, 4]]
+								},
+								"gridStep": [1, 1],
+								"markings": "none",
+								"snapStep": [1, 1],
+								"showRuler": false,
+								"rulerLabel": "",
+								"rulerTicks": 10,
+								"showTooltips": false,
+								"showProtractor": false,
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/9a35c2a13ef3eec1ba77ab7d0f8af7f021e2e223",
+									"width": 425,
+									"height": 425
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xbda9b252b05d78e0",
+			"exerciseId": "x53e22195",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "A reflection moves a point perpendicularly across a line, so that the [[☃ definition 1]] is the same distance from the line as the [[☃ definition 2]], but on the other side.\n\n\n\n[[☃ image 1]]\n\nIn other words, the line of reflection is the perpendicular bisector between any pair of corresponding points in the image and the pre-image.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Point R is reflected across a line to form point R prime. Segment R R prime is perpendicular to the line.",
+									"box": [149, 170],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fb6f2a256ffa7c13a7d13924c1f960a57fd7be6a",
+										"width": 149,
+										"height": 170
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The figure *after* one or more transformations",
+									"togglePrompt": "image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							},
+							"definition 2": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The original figure *before* any transformations",
+									"togglePrompt": "pre-image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Since the $y$-axis is *vertical*, the reflection will move each point of $\\triangle ABC$ *horizontally* across the axis.\n\nFor example, point $A$ is $2$ units to the right of the $y$-axis, so $A'$ will be $2$ units to the left of the axis.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. Triangle A B C with point A at two, two, point B at two, four, and point C at five, three. A dashed arrow points from point A to point A prime at negative two, two.",
+									"box": [425, 425],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/8586236c77827c64d829ab9f18c6768530dfb63c",
+										"width": 425,
+										"height": 425
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "We can reflect each of the other vertices in the same way.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. Triangle A B C with point A at two, two, point B at two, four, and point C at five, three. A dashed arrow points from point A to point A prime at negative two, two. A dashed arrow points from point B to point B prime at negative two, four. A dashed arrow points from point C to point C prime at negative five, three.",
+									"box": [425, 425],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a0184fd7e7682c855f60bb70ce3251fe771eb31f",
+										"width": 425,
+										"height": 425
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "This is the image of $\\triangle ABC$ under the reflection.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. Triangle A B C with point A at two, two, point B at two, four, and point C at five, three. The image formed is Triangle A prime B prime C prime with point A prime at negative two, two, point B prime at negative two, four, and point C prime at negative five, three.",
+									"box": [425, 425],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d496d55b4f59c2889cf89b717283dc6701f9872e",
+										"width": 425,
+										"height": 425
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Plot the image of triangle $\\triangle ABC$ under a reflection across the $y$-axis.**\n\n[[☃ interactive-graph 1]]",
+					"widgets": {
+						"interactive-graph 1": {
+							"type": "interactive-graph",
+							"graded": true,
+							"static": false,
+							"options": {
+								"step": [1, 1],
+								"graph": {
+									"type": "polygon"
+								},
+								"range": [[-8, 8], [-8, 8]],
+								"labels": ["x", "y"],
+								"correct": {
+									"type": "polygon",
+									"coords": [[-2, 2], [-2, 4], [-5, 3]]
+								},
+								"gridStep": [1, 1],
+								"markings": "none",
+								"snapStep": [1, 1],
+								"showRuler": false,
+								"rulerLabel": "",
+								"rulerTicks": 10,
+								"showTooltips": false,
+								"showProtractor": false,
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/627679bd8f17701f0bb377ad49543dafc3ef4d14",
+									"width": 425,
+									"height": 425
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xe6cacb86284df85d",
+			"exerciseId": "x53e22195",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "A reflection moves a point perpendicularly across a line, so that the [[☃ definition 3]] is the same distance from the line as the [[☃ definition 4]], but on the other side.\n\n\n\n[[☃ image 1]]\n\nIn other words, the line of reflection is the perpendicular bisector between any pair of corresponding points in the image and the pre-image.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Point R is reflected across a line to form point R prime. Segment R R prime is perpendicular to the line.",
+									"box": [149, 170],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fb6f2a256ffa7c13a7d13924c1f960a57fd7be6a",
+										"width": 149,
+										"height": 170
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"definition 3": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The figure *after* one or more transformations",
+									"togglePrompt": "image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							},
+							"definition 4": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The original figure *before* any transformations",
+									"togglePrompt": "pre-image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Since the $y$-axis is *vertical*, the reflection will move each point of quadrilateral $ABCD$ *horizontally* across the axis.\n\nFor example, point $B$ is $3$ units to the right of the $y$-axis, so $B'$ will be $3$ units to the left of the axis.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. Quadrilateral A B C D with point A at two, negative three, point B at three, negative six, point C at five, negative four, and point D at four, negative two. A dashed arrow points at both point B prime at negative three, negative six and point B.",
+									"box": [425, 425],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a867fa3acaeeb84be622e5c13127a284f7d67356",
+										"width": 425,
+										"height": 425
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "We can reflect each of the other vertices in the same way.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. Quadrilateral A B C D with point A at two, negative three, point B at three, negative six, point C at five, negative four, and point D at four, negative two. A dashed arrow points at both point B prime at negative three, negative six and point B. A dashed arrow points at both point A prime at negative two, negative three and point A. A dashed arrow points at both point C prime at negative five, negative four and point C. A dashed arrow points at both point D prime at negative four, negative two and point D.",
+									"box": [425, 425],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/87e21ffa3cd77a3c6b92fe7b87e291df9ef4383b",
+										"width": 425,
+										"height": 425
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "This is the image of quadrilateral $ABCD$ under the reflection.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. Quadrilateral A B C D with point A at two, negative three, point B at three, negative six, point C at five, negative four, and point D at four, negative two. The image of Quadrilateral A prime B prime C prime and D prime with point B prime at negative three, negative six, point A prime at negative two, negative three point C prime at negative five, negative four, and point D prime at negative four, negative two.",
+									"box": [425, 425],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d4235a9f256698dc27bb8bf7c553deeb387636be",
+										"width": 425,
+										"height": 425
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Plot the image of quadrilateral $ABCD$ under a reflection across the $y$-axis.**\n\n[[☃ interactive-graph 1]]",
+					"widgets": {
+						"interactive-graph 1": {
+							"type": "interactive-graph",
+							"graded": true,
+							"static": false,
+							"options": {
+								"step": [1, 1],
+								"graph": {
+									"type": "polygon",
+									"snapTo": "grid",
+									"numSides": 4
+								},
+								"range": [[-8, 8], [-8, 8]],
+								"labels": ["x", "y"],
+								"correct": {
+									"type": "polygon",
+									"coords": [[-3, -6], [-2, -3], [-4, -2], [-5, -4]],
+									"snapTo": "grid",
+									"numSides": 4
+								},
+								"gridStep": [1, 1],
+								"markings": "none",
+								"snapStep": [1, 1],
+								"showRuler": false,
+								"rulerLabel": "",
+								"rulerTicks": 10,
+								"showTooltips": false,
+								"showProtractor": false,
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/42d82e5f734e964a977bb1c3a4973a71d2c0205f",
+									"width": 425,
+									"height": 425
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x3e70fea369768126",
+			"exerciseId": "x70bbe456",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's see if a sequence of [[☃ definition 1]] (translations, reflections, and rotations) can map $ABCD$ onto $GFEH$. If it is possible, then the quadrilaterals are congruent.",
+						"replace": false,
+						"widgets": {
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "Transformations that do not change the figure's angles or distances",
+									"togglePrompt": "rigid transformations"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "There are many possible sequences of transformations that may map one figure onto another.\n\nAdam translated point $A$ onto point $G$.\n\n\n\n[[☃ image 1]]\n\nIs there another rigid transformation we could now use to complete the mapping?",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. A pre-image quadrilateral A B C D has point A at ten, eight, point B at fourteen, eight, and Point C at fourteen, six, and Point D at eleven, six. Another quadrilateral E F G H has point E at six, fourteen, point F at six, twelve, point G at two twelve, and point H at three, fourteen. Quadrilateral A B C D is translated eight units to the left and four units up to form the image Quadrilateral A prime B prime C prime D prime has point A prime at two, twelve, point B prime at six, twelve, and Point C prime at six, ten, and Point D prime at three, ten.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c48938943ee4bbaedc753bbfc05e4b362e9c5d12",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's try reflecting over side $\\overline{GF}$.\n\n\n\n[[☃ image 1]]\n\nThe pre-image $ABCD$ maps exactly onto $GFEH$.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. A quadrilateral A B C D has point A at ten, eight, point B at fourteen, eight, and Point C at fourteen, six, and Point D at eleven, six. A pre-image quadrilateral E F G H has point E at six, fourteen, point F at six, twelve, point G at two twelve, and point H at three, fourteen. Quadrilateral E F G H is reflected across a horizontal line that passes through points G and F to form the image Quadrilateral E prime F prime G prime H prime has point E prime at six, ten, point F prime at six, twelve, Point G prime at two, ten, and Point H prime at three, ten.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fd2613f6e131d299157afe1d39e2cf835c3f24ff",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Adam concluded, \"It's not possible to map $ABCD$ onto $GFEH$ using a sequence of rigid transformations, so the quadrilaterals are **not** congruent,\" but he made an error.\n\n**One more transformation — a reflection — would map $ABCD$ onto $GFEH$. So the quadrilaterals are congruent.**",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Adam was curious if quadrilaterals $ABCD$ and $GFEH$ were congruent, so he tried to map one figure onto the other using transformations:\n\n\n\n[[☃ image 1]]\n\nAdam concluded:  \n\n\"It's not possible to map $ABCD$ onto $GFEH$ using a sequence of rigid transformations, so the quadrilaterals are **not** congruent.\"\n\n**What error did Adam make in his conclusion?**\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A coordinate plane. The x- and y-axes both scale by one. A pre-image quadrilateral A B C D has point A at ten, eight, point B at fourteen, eight, and Point C at fourteen, six, and Point D at eleven, six. Another quadrilateral E F G H has point E at six, fourteen, point F at six, twelve, point G at two twelve, and point H at three, fourteen. Quadrilateral A B C D is translated eight units to the left and four units up to form the image Quadrilateral A prime B prime C prime D prime has point A prime at two, twelve, point B prime at six, twelve, and Point C prime at six, ten, and Point D prime at three, ten.",
+								"box": [300, 300],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c48938943ee4bbaedc753bbfc05e4b362e9c5d12",
+									"width": 300,
+									"height": 300
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "One more transformation — a rotation — would map $ABCD$ onto $GFEH$. So the quadrilaterals **are** congruent.",
+										"correct": false
+									},
+									{
+										"content": "One more transformation — a reflection — would map $ABCD$ onto $GFEH$. So the quadrilaterals **are** congruent.",
+										"correct": true
+									},
+									{
+										"content": "There is no error. This is a correct conclusion.",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xcc1979e181c52e92",
+			"exerciseId": "x70bbe456",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's see if a sequence of [[☃ definition 1]] (translations, reflections, and rotations) can map $\\overline{JK}$ onto $\\overline{NM}$. If it is possible, then the segments are congruent.",
+						"replace": false,
+						"widgets": {
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "Transformations that do not change the figure's angles or distances",
+									"togglePrompt": "rigid transformations"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "There are many possible sequences of transformations that may map one figure onto another.\n\nAlon translated point $J$ onto point $N$.\n\n\n\n[[☃ image 1]]\n\nIs there another rigid transformation we could now use to complete the mapping?",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. A pre-image line segment J K has endpoint J at seven, three and endpoint K at twelve, eight.  Another line segment has endpoints M at three, fourteen and N at eight, nine.  Segment J K is translated one unit to the right and six units up to form the image Segment J prime K prime with J prime at eight, nine and K prime at thirteen, fourteen.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e858c441516dc82880bf8e411af0e29d89f94379",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's try rotating $90\\degree$ about point $N$.\n\n\n\n[[☃ image 1]]\n\nThe pre-image $\\overline{JK}$ maps exactly onto $\\overline{NM}$.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. A pre-image line segment J K has endpoint J at seven, three and endpoint K at twelve, eight.  Another line segment has endpoints M at three, fourteen and N at eight, nine.   Segment J prime K prime has J prime at eight, nine and K prime at twelve, eight. It is rotated ninety degrees so that the image J prime is at three, fourteen and K prime is at eight, nine.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/147d06957f81f36743ea9637fe56283e9a9a809d",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Alon concluded, \"It's not possible to map $\\overline{JK}$ onto $\\overline{NM}$ using a sequence of rigid transformations, so the segments are **not** congruent,\" but he made an error.\n\n**One more transformation — a rotation — would map $\\overline{JK}$ onto $\\overline{NM}$. So the segments are congruent.**",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Alon was curious if segments $\\overline{JK}$ and $\\overline{NM}$ were congruent, so he tried to map one figure onto the other using transformations:\n\n\n\n[[☃ image 1]]\n\nAlon concluded:  \n\n\"It's not possible to map $\\overline{JK}$ onto $\\overline{NM}$ using a sequence of rigid transformations, so the segments are **not** congruent.\"\n\n**What error did Alon make in his conclusion?**\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A coordinate plane. The x- and y-axes both scale by one. A pre-image line segment J K has endpoint J at seven, three and endpoint K at twelve, eight.  Another line segment has endpoints M at three, fourteen and N at eight, nine.  Segment J K is translated one unit to the right and six units up to form the image Segment J prime K prime with J prime at eight, nine and K prime at thirteen, fourteen.",
+								"box": [300, 300],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e858c441516dc82880bf8e411af0e29d89f94379",
+									"width": 300,
+									"height": 300
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "One more transformation — a rotation — would map $\\overline{JK}$ onto $\\overline{NM}$. So the segments **are** congruent.",
+										"correct": true
+									},
+									{
+										"content": "One more transformation — a translation — would map $\\overline{JK}$ onto $\\overline{NM}$. So the segments **are** congruent.",
+										"correct": false
+									},
+									{
+										"content": "There is no error. This is a correct conclusion.",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x2883558fd4a3b76b",
+			"exerciseId": "x70bbe456",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's see if a sequence of [[☃ definition 1]] (translations, reflections, and rotations) can map $\\triangle ABC$ onto $\\triangle FED$. If it is possible, then the triangles are congruent.",
+						"replace": false,
+						"widgets": {
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "Transformations that do not change the figure's angles or distances",
+									"togglePrompt": "rigid transformations"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "There are many possible sequences of transformations that may map one figure onto another.\n\nYuki translated point $B$ onto point $E$.\n\n\n\n[[☃ image 1]]\n\nIs there another rigid transformation we could now use to complete the mapping?",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. A pre-image Triangle A B C has point A at two, two, point B at five, four, and Point C at eleven, two. Another triangle D E F has point D at three, twelve, point E at nine, ten, and point F at twelve twelve. Triangle A B C is translated four units to the right and six units up to form the image Triangle A prime at six, eight, B prime at nine, ten, and C prime at fifteen, eight.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e0f7aca64e21c50a98ed8b4014f8bd059e64fa60",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's try rotating by $180^\\circ$ about point $E$.\n\n\n\n[[☃ image 1]]\n\nThe pre-image $\\triangle ABC$ maps exactly onto $\\triangle FED$.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane. The x- and y-axes both scale by one. Triangle A B C has point A at two, two, point B at five, four, and Point C at eleven, two.  A pre-image triangle D E F has point D at three, twelve, point E at nine, ten, and point F at twelve twelve. Triangle D E F is rotated at point E to form the image Triangle F prime at six, eight, E prime at nine, ten, and D prime at fifteen, eight.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/cae8165b57f9bb23c601c2150055d11bfaae9919",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Yuki concluded, \"It's not possible to map $\\triangle ABC$ onto $\\triangle FED$ using a sequence of rigid transformations, so the triangles are **not** congruent,\" but she made an error.\n\n**One more transformation — a rotation — would map $\\triangle ABC$ onto $\\triangle FED$. So the triangles are congruent.**",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Yuki was curious if $\\triangle ABC$ was congruent to $\\triangle FED$, so she tried to map one triangle onto the other using transformations:\n\n\n\n[[☃ image 1]]\n\nYuki concluded:  \n\n\"It's not possible to map $\\triangle ABC$ onto $\\triangle FED$ using a sequence of rigid transformations, so the triangles are **not** congruent.\"\n\n**What error did Yuki make in her conclusion?**\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A coordinate plane. The x- and y-axes both scale by one. A pre-image Triangle A B C has point A at two, two, point B at five, four, and Point C at eleven, two. Another triangle D E F has point D at three, twelve, point E at nine, ten, and point F at twelve twelve. Triangle A B C is translated four units to the right and six units up to form the image Triangle A prime at six, eight, B prime at nine, ten, and C prime at fifteen, eight.",
+								"box": [300, 300],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e0f7aca64e21c50a98ed8b4014f8bd059e64fa60",
+									"width": 300,
+									"height": 300
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "One more transformation — a rotation — would map $\\triangle ABC$ onto $\\triangle FED$. So the triangles **are** congruent.",
+										"correct": true
+									},
+									{
+										"content": "One more transformation — a reflection — would map $\\triangle ABC$ onto $\\triangle FED$. So the triangles **are** congruent.",
+										"correct": false
+									},
+									{
+										"content": "There is no error. This is a correct conclusion.",
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xc1f5b98db014905e",
+			"exerciseId": "x9801d788",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "To find the image of $\\triangle ABC$ under the dilation, we can dilate all of $\\triangle ABC$'s vertices and connect them.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "For example, point $\\blueD B$ is $2$ units to the left of $P$, so its image is $\\goldD4\\cdot2=8$ units to the left from $P$.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Triangle A B C. Point B is two units to the left of point P, Point C is two units up from point P, and Point A is one unit right of point P. There is a dashed horizontal line to highlight the eight units left from point P. There is another plotted point that is eight units to the left of point P.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/be97f922d7a1a14a4b63d573b75ddb138105779b",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's do the same thing with the remaining vertices.\n\nSince our scale factor is $\\goldD 4$, every side length in $\\triangle A'B'C'$ will be $4$ times the length of the corresponding side in $\\triangle ABC$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Connecting the vertices of the image, we get the following mapping:\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Triangle A B C. Point B is two units to the left of point P, Point C is two units up from point P, and Point A is one unit right of point P. There is another triangle graphed that is triangle A B C with a scale factor of four out from point P. The new triangle the point C prime is eight units up from point P, the point B prime is eight units to the left of point P, and the point A prime is four units right of point P. The distance between C prime and B prime is approximately eleven point three units. The distance between C prime and A prime is approximately eight point nine units. The distance between A prime and B prime is twelve units.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/11a605a462434e94494b8d23b8c5e2d80d2c6e0d",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Draw the image of $\\triangle ABC$ under a dilation whose center is $P$ and scale factor is $4$.** \n  \n[[☃ interactive-graph 1]]",
+					"widgets": {
+						"interactive-graph 1": {
+							"type": "interactive-graph",
+							"graded": true,
+							"static": false,
+							"options": {
+								"step": [1, 1],
+								"graph": {
+									"type": "polygon",
+									"snapTo": "grid",
+									"numSides": 3,
+									"showSides": true,
+									"showAngles": false
+								},
+								"range": [[-8, 8], [-8, 8]],
+								"labels": ["x", "y"],
+								"correct": {
+									"type": "polygon",
+									"coords": [[6, -6], [2, 2], [-6, -6]],
+									"snapTo": "grid",
+									"numSides": 3,
+									"showSides": true,
+									"showAngles": false
+								},
+								"gridStep": [1, 1],
+								"markings": "none",
+								"snapStep": [1, 1],
+								"showRuler": false,
+								"rulerLabel": "",
+								"rulerTicks": 10,
+								"showTooltips": false,
+								"showProtractor": false,
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/efed7f04c5c3a476c7104de8a758b17d4f9ea9dc",
+									"left": 0,
+									"scale": 1,
+									"width": 400,
+									"bottom": 0,
+									"height": 400
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x0719781bab05e601",
+			"exerciseId": "x9801d788",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "To find the image of $\\triangle ABC$ under the dilation, we can dilate all of $\\triangle ABC$'s vertices and connect them.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "For example, point $\\blueD A$ is $4$ units to the left of $P$, so its image is $\\goldD3\\cdot4=12$ units to the left from $P$.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Triangle A B C. Point A is four units to the left of point P. Point B is three units down from point P. Point C is four units to the left of point P and three units down. There is a dashed horizontal line to highlight the twelve units left. There is another plotted point that is twelve units left of point P.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ede889bef4c63d57d93ab29631b7616c5eb50e97",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's do the same thing with the remaining vertices.\n\nSince our scale factor is $\\goldD 3$, every side length in $\\triangle A'B'C'$ will be $3$ times the length of the corresponding side in $\\triangle ABC$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Connecting the vertices of the image, we get the following mapping:\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Triangle A B C. Point A is four units to the left of point P. Point B is three units down from point P. Point C is four units to the left of point P and three units down. There is another triangle graphed that is triangle A B C with a scale factor of three from point P. The new triangle the point C prime at twelve units left of Point P and nine units down, the point B prime is nine units down from point P, and the point A prime is twelve units left of point P. The distance between C prime and B prime is twelve units. The distance between C prime and A prime is nine units. The distance between A prime and B prime is fifteen units.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1b06ed31cbec9d68aa2d191fc2d3ffb79f686b3e",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Draw the image of $\\triangle ABC$ under a dilation whose center is $P$ and scale factor is $3$.**\n  \n[[☃ interactive-graph 1]]",
+					"widgets": {
+						"interactive-graph 1": {
+							"type": "interactive-graph",
+							"graded": true,
+							"static": false,
+							"options": {
+								"step": [1, 1],
+								"graph": {
+									"type": "polygon",
+									"snapTo": "grid",
+									"numSides": 3,
+									"showSides": true,
+									"showAngles": false
+								},
+								"range": [[-8, 8], [-8, 8]],
+								"labels": ["x", "y"],
+								"correct": {
+									"type": "polygon",
+									"coords": [[6, -4], [-6, 5], [-6, -4]],
+									"snapTo": "grid",
+									"numSides": 3,
+									"showSides": true,
+									"showAngles": false
+								},
+								"gridStep": [1, 1],
+								"markings": "none",
+								"snapStep": [1, 1],
+								"showRuler": false,
+								"rulerLabel": "",
+								"rulerTicks": 10,
+								"showTooltips": false,
+								"showProtractor": false,
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f13715756be7e317009f2c22196703e973384976",
+									"left": 0,
+									"scale": 1,
+									"width": 400,
+									"bottom": 0,
+									"height": 400
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xd42b7764d3ba9f30",
+			"exerciseId": "x9801d788",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "To find the image of $\\triangle ABC$ under the dilation, we can dilate all of $\\triangle ABC$'s vertices and connect them.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "For example, point $\\blueD B$ is $4$ units to the right of $C$ and $5$ units up, so its image is $\\goldD2\\cdot4=8$ units to the right and $\\goldD2\\cdot 5=10$ units up from $C$.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Triangle A B C. Point B is four units to the right of point C and five units up. There is a dashed horizontal line to highlight the four units right and a dashed vertical line to highlight the five units up. There is another plotted point that is eight units to the right of point C and ten units up. There is a dashed horizontal line to highlight the eight units right and a dashed vertical line to highlight the ten units up.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1bec1b2a6305673f40e6d455e428c33d2885d6cf",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's do the same thing with the remaining vertices.\n\nSince our scale factor is $\\goldD 2$, every side length in $\\triangle A'B'C'$ will be $2$ times the length of the corresponding side in $\\triangle ABC$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Connecting the vertices of the image, we get the following mapping:\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Triangle A B C. Point B is four units to the right of point C and five units up, and point A is one unit left of point C and four units up. There is another triangle graphed that is triangle A B C with a scale factor of two from point C. The new triangle the point C prime at Point C, the point B prime that is eight units to the right of point C and ten units up, and the point A prime that is two units left of point C and eight units up. The distance between C prime and B prime is approximately twelve point eight units. The distance between C prime and A prime is approximately eight point two units. The distance between A prime and B prime is approximately ten point two units.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a91982669d74ea4359005829e5b65c6e7bd1ed2a",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Draw the image of $\\triangle ABC$ under a dilation whose center is $C$ and scale factor is $2$.**\n  \n[[☃ interactive-graph 1]]",
+					"widgets": {
+						"interactive-graph 1": {
+							"type": "interactive-graph",
+							"graded": true,
+							"static": false,
+							"options": {
+								"step": [1, 1],
+								"graph": {
+									"type": "polygon",
+									"snapTo": "grid",
+									"numSides": 3,
+									"showSides": true,
+									"showAngles": false
+								},
+								"range": [[-8, 8], [-8, 8]],
+								"labels": ["x", "y"],
+								"correct": {
+									"type": "polygon",
+									"coords": [[6, 7], [-4, 5], [-2, -3]],
+									"snapTo": "grid",
+									"numSides": 3,
+									"showSides": true,
+									"showAngles": false
+								},
+								"gridStep": [1, 1],
+								"markings": "none",
+								"snapStep": [1, 1],
+								"showRuler": false,
+								"rulerLabel": "",
+								"rulerTicks": 10,
+								"showTooltips": false,
+								"showProtractor": false,
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/79a9b47e5708e71cf1a92f65fc31657efd585125",
+									"left": 0,
+									"scale": 1,
+									"width": 400,
+									"bottom": 0,
+									"height": 400
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x26d626e7ed56808d",
+			"exerciseId": "xd977e63d",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "If a sequence of [[☃ definition 1]] (translations, reflections, and rotations) and dilations can map line segment $\\overline{UV}$ onto line segment $\\overline{ST}$, then the figures are **similar**.",
+						"replace": false,
+						"widgets": {
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "Transformations that do not change the figure's angles or distances",
+									"togglePrompt": "rigid transformations"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Casey successfully mapped line segment $\\overline{UV}$ onto line segment $\\overline{ST}$. Most importantly, she did this using a translation and a rotation, which are rigid transformations. So the figures are similar. [[☃ explanation 1]]\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Line segments U V and S T are in the first quadrant of a coordinate plane. In line segment U V, point U is at five, four. Point V is at seven, seven. In line segment S T, point S is at one, three and point T is at four, one. There is also an dashed image of segment U V after a translation which has a point at one, three and another point at three, six. There are arrows connecting the points from U and V to the points of the image after it's been translated. The image is them rotated to overlay segment S T.",
+									"box": [320, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ae23a2d22d780c2f10272c0848078ae1d3bfdf1c",
+										"width": 320,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Got it, thanks!",
+									"showPrompt": "But she didn't use a dilation!",
+									"explanation": "As long as we are able to map one figure onto another using transformations that are either rigid or a dilation, the figures are similar. We don't *have* to use a dilation."
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Casey concluded:  \n\n\"I was able to map line segment $\\overline{UV}$ onto line segment $\\overline{ST}$ using a sequence of rigid transformations without a dilation, so the figures are congruent but they are **not** similar.\"\n\n**The correct conclusion is that the segments are congruent *and* similar.**",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Casey was able to map line segment $\\overline{UV}$ onto line segment $\\overline{ST}$ using a translation and a rotation.\n\n\n\n[[☃ image 1]]\n\nCasey concluded:  \n\n\"I was able to map line segment $\\overline{UV}$ onto line segment $\\overline{ST}$ using a sequence of rigid transformations without a dilation, so the figures are congruent but they are **not** similar.\"\n\n**What error did Casey make in her conclusion?**\n\n[[☃ radio 3]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Line segments U V and S T are in the first quadrant of a coordinate plane. In line segment U V, point U is at five, four. Point V is at seven, seven. In line segment S T, point S is at one, three and point T is at four, one. There is also an dashed image of segment U V after a translation which has a point at one, three and another point at three, six. There are arrows connecting the points from U and V to the points of the image after it's been translated. The image is them rotated to overlay segment S T.",
+								"box": [320, 320],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ae23a2d22d780c2f10272c0848078ae1d3bfdf1c",
+									"width": 320,
+									"height": 320
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 3": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "The correct conclusion is that the segments are congruent *and* similar.",
+										"correct": true
+									},
+									{
+										"clue": "Casey mapped $\\overline{UV}$ onto $\\overline{ST}$ using rigid transformations, so they are indeed congruent.",
+										"content": "The correct conclusion is that the segments are *neither* congruent, *nor* similar.",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"clue": "As long as we are able to map one figure onto another using transformations that are either rigid or a dilation, the figures are similar. We don't *have* to use a dilation.",
+										"content": "There is no error. This is a correct conclusion.",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x6055d1dc136681e5",
+			"exerciseId": "xd977e63d",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "If a sequence of [[☃ definition 1]] (translations, reflections, and rotations) and dilations can map line segment $\\overline{AB}$ onto line segment $\\overline{CB}$, then the figures are **similar**.",
+						"replace": false,
+						"widgets": {
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "Transformations that do not change the figure's angles or distances",
+									"togglePrompt": "rigid transformations"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Erin successfully mapped line segment $\\overline{AB}$ onto line segment $\\overline{CB}$. Most importantly, she did this using a rotation, which is a rigid transformation, and a dilation. So the figures are similar.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Quadrilateral O N M L and quadrilateral O P Q R in the first quadrant of a coordinate plane. In quadrilateral O N M L, point O is at seven, five, point N is at five, nine, point M is at one, three, and point L is at three, one. In quadrilateral O P Q R, point O is at seven. five, point P is at eight, seven, point Q is at ten, four, and point R is at nine, three. There is a dashed outline for quadrilateral O P Q R to show its image after a reflection over a vertical line that goes through point O. There are rays from the dashed outline for quadrilateral O P Q R to highlight that a dilation makes the new quadrilateral O P Q R coincide with quadrilateral O N M L.",
+									"box": [320, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e6fee953c24f3c2b82832978941e5bbb31b2b00a",
+										"width": 320,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Erin concluded:  \n\n\"I was able to map line segment $\\overline{AB}$ onto line segment $\\overline{CB}$ using a sequence of rigid transformations and dilations, so the figures **are** similar.\"\n\n**There is no error. This is a correct conclusion.**",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Erin was able to map line segment $\\overline{AB}$ onto line segment $\\overline{CB}$ using a rotation and a dilation.\n\n\n\n[[☃ image 1]]\n\nErin concluded:  \n\n\"I was able to map line segment $\\overline{AB}$ onto line segment $\\overline{CB}$ using a sequence of rigid transformations and dilations, so the figures **are** similar.\"\n\n**What error did Erin make in her conclusion?**\n\n[[☃ radio 3]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Quadrilateral O N M L and quadrilateral O P Q R in the first quadrant of a coordinate plane. In quadrilateral O N M L, point O is at seven, five, point N is at five, nine, point M is at one, three, and point L is at three, one. In quadrilateral O P Q R, point O is at seven. five, point P is at eight, seven, point Q is at ten, four, and point R is at nine, three. There is a dashed outline for quadrilateral O P Q R to show its image after a reflection over a vertical line that goes through point O. There are rays from the dashed outline for quadrilateral O P Q R to highlight that a dilation makes the new quadrilateral O P Q R coincide with quadrilateral O N M L.",
+								"box": [320, 320],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e6fee953c24f3c2b82832978941e5bbb31b2b00a",
+									"width": 320,
+									"height": 320
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 3": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"clue": "Dilations are fine to use to establish similarity.",
+										"content": "Erin used a dilation, so the segments *aren't* similar.",
+										"correct": false
+									},
+									{
+										"clue": "The segments are not congruent because a dilation was used.",
+										"content": "The segments are *congruent*, not similar.",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "There is no error. This is a correct conclusion.",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x8940139038c0cd45",
+			"exerciseId": "xd977e63d",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "If a sequence of [[☃ definition 1]] (translations, reflections, and rotations) and dilations can map $\\triangle DEF$ onto $\\triangle GHI$, then the figures are **similar**.",
+						"replace": false,
+						"widgets": {
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "Transformations that do not change the figure's angles or distances",
+									"togglePrompt": "rigid transformations"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "There are many possible sequences of transformations that may map one figure onto another.\n\nEleanor translated point $D$ onto point $G$.\n\n\n\n[[☃ image 1]]\n\nIs there another transformation (rigid or dilation) we could now use to complete the mapping?",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Triangle D E F and triangle G H I in the first quadrant of a coordinate plane. In triangle D E F, point D is at zero, zero, point E is at two, four, and point F is at six, zero. In triangle G H I, point G is at four, five, point H is are five, seven, and point I is at seven, five. There is also an image of triangle D E G after a translation which has a point at four, five, another point at six, nine, and another point at ten, five. There are arrows connecting the points from D E F to the points of the image after it's been translated. ",
+									"box": [320, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a97dd91e4906308c7c5eefadb39387b01f4ca17e",
+										"width": 320,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's try dilating by a factor of $\\dfrac12$ about point $G$.\n\n\n\n[[☃ image 1]]\n\nThe pre-image $\\triangle DEF$ maps exactly onto $\\triangle GHI$.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Triangle D E F and triangle G H I in the first quadrant of a coordinate plane. In triangle D E F, point D is at zero, zero, point E is at two, four, and point F is at six, zero. In triangle G H I, point G is at four, five, point H is are five, seven, and point I is at seven, five. There is also an image of triangle D E G after a translation which has a point at four, five, another point at six, nine, and another point at ten, five.  The translated triangle D E F also gets dilated so that it maps onto triangle G H I. Arrows show the paths of each point on triangle D E F after the dilation. Point D maps onto point G. Point E maps onto point H. Point F maps onto point I.",
+									"box": [320, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/18bdf01d0e66b3d3a92e4108f770ba495523975a",
+										"width": 320,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Eleanor concluded:  \n\n\"It's not possible to map $\\triangle DEF$ onto $\\triangle GHI$ using a sequence of rigid transformations, so the triangles are **not** similar.\"\n\n**One more transformation — a dilation — would map $\\triangle DEF$ onto $\\triangle GHI$. So the triangles *are* similar.**",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Eleanor was curious if triangles $\\triangle DEF$ and $\\triangle GHI$ were similar, so she tried to map one figure onto the other using rigid transformations.\n\n\n\n[[☃ image 1]]\n\nEleanor concluded:  \n\n\"It's not possible to map $\\triangle DEF$ onto $\\triangle GHI$ using a sequence of rigid transformations, so the triangles are **not** similar.\"\n\n**What error did Eleanor make in her conclusion?**\n\n[[☃ radio 3]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Triangle D E F and triangle G H I in the first quadrant of a coordinate plane. In triangle D E F, point D is at zero, zero, point E is at two, four, and point F is at six, zero. In triangle G H I, point G is at four, five, point H is are five, seven, and point I is at seven, five. There is also an image of triangle D E G after a translation which has a point at four, five, another point at six, nine, and another point at ten, five. There are arrows connecting the points from D E F to the points of the image after it's been translated. ",
+								"box": [320, 320],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a97dd91e4906308c7c5eefadb39387b01f4ca17e",
+									"width": 320,
+									"height": 320
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 3": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"clue": "It's not possible to map $\\triangle DEF$ onto $\\triangle GHI$ using a rotation.",
+										"content": "One more transformation — a rotation — would map $\\triangle DEF$ onto $\\triangle GHI$. So the triangles *are* similar.",
+										"correct": false
+									},
+									{
+										"content": "One more transformation — a dilation — would map $\\triangle DEF$ onto $\\triangle GHI$. So the triangles *are* similar.",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"clue": "To establish similarity, we can also use dilations to map $\\triangle DEF$ onto $\\triangle GHI$.",
+										"content": "There is no error. This is a correct conclusion.",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x4f2e024eee40c5ab",
+			"exerciseId": "xdf41b006",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Every point in a translated figure moves the same distance and direction. Let's select a point to examine.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We see that point $A$ moved $3$ units to the *right* to form the image $A'$.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane with a triangle with vertices A at negative one, five, B at two, four, and C at negative three, negative two. The x- and y- axes scale by one. A congruent triangle has vertices A prime at two, five, B prime at five, four, and C prime at zero, negative two. A dashed line starts at vertex A and moves 3 units to the right to vertex A prime.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b3b679dcc0ecce3d0f77720a34f49c803c36507a",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$\\triangle A'B'C'$ is the image of $\\triangle ABC$ under a translation by $3$ units to the *right*.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane with a triangle with vertices A at negative one, five, B at two, four, and C at negative three, negative two. The x- and y- axes scale by one. A congruent triangle has vertices A prime at two, five, B prime at five, four, and C prime at zero, negative two. A dashed line starts at vertex A and moves 3 units to the right to vertex A prime. A dashed line starts at vertex B and moves 3 units to the right to vertex B prime. A dashed line starts at vertex C and moves 3 units to the right to vertex C prime.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ef9fceb88d6841d193b73243778a4a03a286938b",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "$\\triangle A'B'C'$ is the image of $\\triangle ABC$ under a translation.\n\n\n\n[[☃ image 1]]\n\n**Determine the translation.**  \n*Use non-negative numbers.*\n\nA translation by [[☃ numeric-input 2]] units [[☃ dropdown 2]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A coordinate plane with a triangle with vertices A at negative one, five, B at two, four, and C at negative three, negative two. The x- and y- axes scale by one. A congruent triangle has vertices A prime at two, five, B prime at five, four, and C prime at zero, negative two.",
+								"box": [325, 325],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3d38473dbf8d19984f232f918e003d97a2533ddb",
+									"width": 325,
+									"height": 325
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"dropdown 2": {
+							"type": "dropdown",
+							"graded": true,
+							"static": false,
+							"options": {
+								"static": false,
+								"choices": [
+									{
+										"content": "right",
+										"correct": true
+									},
+									{
+										"content": "left",
+										"correct": false
+									},
+									{
+										"content": "up",
+										"correct": false
+									},
+									{
+										"content": "down",
+										"correct": false
+									}
+								],
+								"placeholder": "right/left/up/down"
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 3,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "translation distance",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x8d2b25ce24b1b73a",
+			"exerciseId": "xdf41b006",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Every point in a translated figure moves the same distance and direction. Let's select a point to examine.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We see that point $B$ moved $4$ units to the *right* and $2$ units *up* to form the image $B'$.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane with a triangle with vertices A at three, five, B at negative five, negative four, and C at negative six, negative one. The x- and y- axes scale by one. A congruent triangle has vertices A prime at seven, seven, B prime at negative one, negative two, and C prime at negative two, one. A dashed line starts at vertex B and moves 4 units to the right and up 2 units to vertex B prime.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3e6fe8cea963bc453a1310811703beb4bc152178",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$\\triangle A'B'C'$ is the image of $\\triangle ABC$ under a translation by $4$ units to the *right* and $2$ units *up*.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane with a triangle with vertices A at three, five, B at negative five, negative four, and C at negative six, negative one. The x- and y- axes scale by one. A congruent triangle has vertices A prime at seven, seven, B prime at negative one, negative two, and C prime at negative two, one. A dashed line starts at vertex B and moves 4 units to the right and up 2 units to vertex B prime. A dashed line starts at vertex A and moves 4 units to the right and up 2 units to vertex A prime. A dashed line starts at vertex C and moves 4 units to the right and up 2 units to vertex C prime.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/7b66044f721645f5c4dc684fa253f9cff6d7173d",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "$\\triangle A'B'C'$ is the image of $\\triangle ABC$ under a translation.\n\n\n\n[[☃ image 1]]\n\n**Determine the translation.**  \n*Use non-negative numbers.*\n\nA translation by [[☃ numeric-input 1]] units to the [[☃ dropdown 1]] and [[☃ numeric-input 2]] units [[☃ dropdown 2]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A coordinate plane with a triangle with vertices A at three, five, B at negative five, negative four, and C at negative six, negative one. The x- and y- axes scale by one. A congruent triangle has vertices A prime at seven, seven, B prime at negative one, negative two, and C prime at negative two, one.",
+								"box": [325, 325],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e7835d49b72ead3c4efaa602c5bf26d11ef40fd8",
+									"width": 325,
+									"height": 325
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"dropdown 1": {
+							"type": "dropdown",
+							"graded": true,
+							"static": false,
+							"options": {
+								"static": false,
+								"choices": [
+									{
+										"content": "right",
+										"correct": true
+									},
+									{
+										"content": "left",
+										"correct": false
+									}
+								],
+								"placeholder": "right/left"
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"dropdown 2": {
+							"type": "dropdown",
+							"graded": true,
+							"static": false,
+							"options": {
+								"static": false,
+								"choices": [
+									{
+										"content": "up",
+										"correct": true
+									},
+									{
+										"content": "down",
+										"correct": false
+									}
+								],
+								"placeholder": "up/down"
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 4,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "horizontal translation distance",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 2,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "vertical translation distance",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x29c0f77964873fe8",
+			"exerciseId": "xdf41b006",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Every point in a translated figure moves the same distance and direction. Let's select a point to examine.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We see that point $C$ moved $8$ units to the *left* and $5$ units *up* to form the image $C'$.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane with a triangle with vertices A at three, negative four, B at five, negative two, and C at six, negative six. The x- and y- axes scale by one. A congruent triangle has vertices A prime at negative five, one, B prime at negative 3, three, and C prime at negative two, negative one. A dashed line moves left 8 units from vertex C and up five units to vertex C prime.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c23fbef1f530d41f3a2a01a19d25ea3288264650",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$\\triangle A'B'C'$ is the image of $\\triangle ABC$ under a translation by $8$ units to the *left* and $5$ units *up*.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A coordinate plane with a triangle with vertices A at three, negative four, B at five, negative two, and C at six, negative six. The x- and y- axes scale by one. A congruent triangle has vertices A prime at negative five, one, B prime at negative 3, three, and C prime at negative two, negative one. A dashed line moves left 8 units from vertex C and up five units to vertex C prime. A dashed line moves left 8 units from vertex A and up five units to vertex A prime. A dashed line moves left 8 units from vertex B and up five units to vertex B prime.",
+									"box": [325, 325],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/97a9680cb0719fb361ecc4dae17b3b1f6f8300b2",
+										"width": 325,
+										"height": 325
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "$\\triangle A'B'C'$ is the image of $\\triangle ABC$ under a translation.\n\n\n\n[[☃ image 1]]\n\n**Determine the translation.**  \n*Use non-negative numbers.*\n\nA translation by [[☃ numeric-input 1]] units to the [[☃ dropdown 1]] and [[☃ numeric-input 2]] units [[☃ dropdown 2]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A coordinate plane with a triangle with vertices A at three, negative four, B at five, negative two, and C at six, negative six. The x- and y- axes scale by one. A congruent triangle has vertices A prime at negative five, one, B prime at negative 3, three, and C prime at negative two, negative one.",
+								"box": [325, 325],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/2820fbef296f3bc603ac4791d39c13be47c69ca9",
+									"width": 325,
+									"height": 325
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"dropdown 1": {
+							"type": "dropdown",
+							"graded": true,
+							"static": false,
+							"options": {
+								"static": false,
+								"choices": [
+									{
+										"content": "right",
+										"correct": false
+									},
+									{
+										"content": "left",
+										"correct": true
+									}
+								],
+								"placeholder": "right/left"
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"dropdown 2": {
+							"type": "dropdown",
+							"graded": true,
+							"static": false,
+							"options": {
+								"static": false,
+								"choices": [
+									{
+										"content": "up",
+										"correct": true
+									},
+									{
+										"content": "down",
+										"correct": false
+									}
+								],
+								"placeholder": "up/down"
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 8,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "horizontal translation distance",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 5,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "vertical translation distance",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		}
+	]
+}

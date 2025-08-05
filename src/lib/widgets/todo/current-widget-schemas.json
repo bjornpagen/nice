@@ -1,0 +1,3410 @@
+{
+	"absoluteValueNumberLine": {
+		"$ref": "#/definitions/absoluteValueNumberLine",
+		"definitions": {
+			"absoluteValueNumberLine": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "absoluteValueNumberLine"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"min": {
+						"type": "number",
+						"description": "The minimum value displayed on the line.",
+						"markdownDescription": "The minimum value displayed on the line."
+					},
+					"max": {
+						"type": "number",
+						"description": "The maximum value displayed on the line.",
+						"markdownDescription": "The maximum value displayed on the line."
+					},
+					"tickInterval": {
+						"type": "number",
+						"description": "The numeric interval between labeled tick marks.",
+						"markdownDescription": "The numeric interval between labeled tick marks."
+					},
+					"value": {
+						"type": "number",
+						"description": "The number whose absolute value is being illustrated.",
+						"markdownDescription": "The number whose absolute value is being illustrated."
+					},
+					"highlightColor": {
+						"type": ["string", "null"],
+						"description": "The CSS color for the highlighted distance segment and the point.",
+						"markdownDescription": "The CSS color for the highlighted distance segment and the point."
+					},
+					"showDistanceLabel": {
+						"type": ["boolean", "null"],
+						"description": "If true, shows a text label indicating the distance from zero.",
+						"markdownDescription": "If true, shows a text label indicating the distance from zero."
+					}
+				},
+				"required": [
+					"type",
+					"width",
+					"height",
+					"min",
+					"max",
+					"tickInterval",
+					"value",
+					"highlightColor",
+					"showDistanceLabel"
+				],
+				"additionalProperties": false,
+				"description": "Generates an SVG number line to visually demonstrate the concept of absolute value as a distance from zero. The diagram renders a number line with a specified range, plots a point at a given value, and highlights the segment from zero to that point. This creates an unambiguous illustration that connects the abstract concept of |x| to the concrete idea of measuring a length from the origin, regardless of direction, making it ideal for introductory problems on the topic.",
+				"markdownDescription": "Generates an SVG number line to visually demonstrate the concept of absolute value as a distance from zero. The diagram renders a number line with a specified range, plots a point at a given value, and highlights the segment from zero to that point. This creates an unambiguous illustration that connects the abstract concept of |x| to the concrete idea of measuring a length from the origin, regardless of direction, making it ideal for introductory problems on the topic."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"barChart": {
+		"$ref": "#/definitions/barChart",
+		"definitions": {
+			"barChart": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "barChart"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"title": {
+						"type": ["string", "null"],
+						"description": "An optional title displayed above the chart.",
+						"markdownDescription": "An optional title displayed above the chart."
+					},
+					"xAxisLabel": {
+						"type": ["string", "null"],
+						"description": "An optional label for the horizontal category axis.",
+						"markdownDescription": "An optional label for the horizontal category axis."
+					},
+					"yAxis": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": ["string", "null"],
+								"description": "An optional label for the vertical value axis.",
+								"markdownDescription": "An optional label for the vertical value axis."
+							},
+							"min": {
+								"type": ["number", "null"],
+								"description": "The minimum value for the Y-axis scale.",
+								"markdownDescription": "The minimum value for the Y-axis scale."
+							},
+							"max": {
+								"type": ["number", "null"],
+								"description": "The maximum value for the Y-axis scale. If omitted, it will be calculated automatically.",
+								"markdownDescription": "The maximum value for the Y-axis scale. If omitted, it will be calculated automatically."
+							},
+							"tickInterval": {
+								"type": "number",
+								"description": "The numeric interval between labeled tick marks on the Y-axis.",
+								"markdownDescription": "The numeric interval between labeled tick marks on the Y-axis."
+							}
+						},
+						"required": ["label", "min", "max", "tickInterval"],
+						"additionalProperties": false
+					},
+					"data": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"label": {
+									"type": "string",
+									"description": "The label for this category, displayed on the X-axis.",
+									"markdownDescription": "The label for this category, displayed on the X-axis."
+								},
+								"value": {
+									"type": "number",
+									"description": "The numerical value of the bar, determining its height.",
+									"markdownDescription": "The numerical value of the bar, determining its height."
+								},
+								"state": {
+									"anyOf": [
+										{
+											"type": "string",
+											"enum": ["normal", "unknown"]
+										},
+										{
+											"type": "null"
+										}
+									],
+									"description": "The visual state of the bar. \"unknown\" bars are styled as placeholders.",
+									"markdownDescription": "The visual state of the bar. \"unknown\" bars are styled as placeholders."
+								}
+							},
+							"required": ["label", "value", "state"],
+							"additionalProperties": false
+						},
+						"description": "An array of bar data objects, one for each category.",
+						"markdownDescription": "An array of bar data objects, one for each category."
+					},
+					"barColor": {
+						"type": ["string", "null"],
+						"description": "The fill color for bars in the \"normal\" state.",
+						"markdownDescription": "The fill color for bars in the \"normal\" state."
+					}
+				},
+				"required": ["type", "width", "height", "title", "xAxisLabel", "yAxis", "data", "barColor"],
+				"additionalProperties": false,
+				"description": "This template generates a standard vertical bar chart as an SVG graphic. Bar charts are used to compare numerical values across a set of discrete categories. The output is highly customizable and suitable for questions involving data comparison or finding missing values. The generator will construct a complete Cartesian coordinate system with a vertical (Y) axis for numerical values and a horizontal (X) axis for categories. Both axes are configurable with titles (e.g., \"Number of puppets,\" \"Puppeteer\"). The Y-axis will have labeled tick marks and optional horizontal grid lines to help read values. For each category provided, a rectangular bar is rendered. The height of the bar corresponds to its numerical value. A key feature of this template is its ability to render a bar in a distinct \"unknown\" or \"placeholder\" state. This is ideal for \"missing value given the mean\" problems, where the bar can be rendered as a dashed outline or a different color to indicate that its value is what the student needs to find. Regular bars have a standard fill color. All bars are clearly labeled with their category name on the X-axis.",
+				"markdownDescription": "This template generates a standard vertical bar chart as an SVG graphic. Bar charts are used to compare numerical values across a set of discrete categories. The output is highly customizable and suitable for questions involving data comparison or finding missing values. The generator will construct a complete Cartesian coordinate system with a vertical (Y) axis for numerical values and a horizontal (X) axis for categories. Both axes are configurable with titles (e.g., \"Number of puppets,\" \"Puppeteer\"). The Y-axis will have labeled tick marks and optional horizontal grid lines to help read values. For each category provided, a rectangular bar is rendered. The height of the bar corresponds to its numerical value. A key feature of this template is its ability to render a bar in a distinct \"unknown\" or \"placeholder\" state. This is ideal for \"missing value given the mean\" problems, where the bar can be rendered as a dashed outline or a different color to indicate that its value is what the student needs to find. Regular bars have a standard fill color. All bars are clearly labeled with their category name on the X-axis."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"boxPlot": {
+		"$ref": "#/definitions/boxPlot",
+		"definitions": {
+			"boxPlot": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "boxPlot"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"axis": {
+						"type": "object",
+						"properties": {
+							"min": {
+								"type": "number",
+								"description": "The minimum value displayed on the axis scale.",
+								"markdownDescription": "The minimum value displayed on the axis scale."
+							},
+							"max": {
+								"type": "number",
+								"description": "The maximum value displayed on the axis scale.",
+								"markdownDescription": "The maximum value displayed on the axis scale."
+							},
+							"label": {
+								"type": ["string", "null"],
+								"description": "An optional title for the horizontal axis (e.g., \"Number of cookies\").",
+								"markdownDescription": "An optional title for the horizontal axis (e.g., \"Number of cookies\")."
+							},
+							"tickLabels": {
+								"anyOf": [
+									{
+										"type": "array",
+										"items": {
+											"type": "number"
+										}
+									},
+									{
+										"type": "null"
+									}
+								],
+								"description": "An optional array of numbers to display as tick labels on the axis.",
+								"markdownDescription": "An optional array of numbers to display as tick labels on the axis."
+							}
+						},
+						"required": ["min", "max", "label", "tickLabels"],
+						"additionalProperties": false,
+						"description": "Configuration for the horizontal number line.",
+						"markdownDescription": "Configuration for the horizontal number line."
+					},
+					"summary": {
+						"type": "object",
+						"properties": {
+							"min": {
+								"type": "number",
+								"description": "The minimum value of the data set (left whisker endpoint).",
+								"markdownDescription": "The minimum value of the data set (left whisker endpoint)."
+							},
+							"q1": {
+								"type": "number",
+								"description": "The first quartile (left edge of the box).",
+								"markdownDescription": "The first quartile (left edge of the box)."
+							},
+							"median": {
+								"type": "number",
+								"description": "The median value (line inside the box).",
+								"markdownDescription": "The median value (line inside the box)."
+							},
+							"q3": {
+								"type": "number",
+								"description": "The third quartile (right edge of the box).",
+								"markdownDescription": "The third quartile (right edge of the box)."
+							},
+							"max": {
+								"type": "number",
+								"description": "The maximum value of the data set (right whisker endpoint).",
+								"markdownDescription": "The maximum value of the data set (right whisker endpoint)."
+							}
+						},
+						"required": ["min", "q1", "median", "q3", "max"],
+						"additionalProperties": false,
+						"description": "The five-number summary used to draw the plot.",
+						"markdownDescription": "The five-number summary used to draw the plot."
+					},
+					"boxColor": {
+						"type": ["string", "null"],
+						"description": "A CSS color string for the fill of the box.",
+						"markdownDescription": "A CSS color string for the fill of the box."
+					},
+					"medianColor": {
+						"type": ["string", "null"],
+						"description": "A CSS color string for the median line.",
+						"markdownDescription": "A CSS color string for the median line."
+					}
+				},
+				"required": ["type", "width", "height", "axis", "summary", "boxColor", "medianColor"],
+				"additionalProperties": false,
+				"description": "This template generates a standard horizontal box-and-whisker plot as an SVG graphic. This type of plot is a powerful tool for summarizing the distribution of a numerical data set through its five-number summary: minimum, first quartile (Q1), median, third quartile (Q3), and maximum. The generator will render a horizontal number line with labeled tick marks to provide scale. Above this axis, the box plot is constructed. A central rectangle (the \"box\") is drawn, with its left edge at the first quartile (Q1) and its right edge at the third quartile (Q3). The length of this box thus represents the Interquartile Range (IQR). A vertical line is drawn inside the box to mark the median (the 50th percentile). From the left side of the box, a horizontal line (the \"whisker\") extends to the minimum value of the data set. From the right side of the box, another whisker extends to the maximum value. These whiskers can be capped with small vertical lines. The entire plot provides a concise visual summary of the data's center (median), spread (IQR and range), and skewness. The generator allows for customization of colors for the box and median line to enhance readability.",
+				"markdownDescription": "This template generates a standard horizontal box-and-whisker plot as an SVG graphic. This type of plot is a powerful tool for summarizing the distribution of a numerical data set through its five-number summary: minimum, first quartile (Q1), median, third quartile (Q3), and maximum. The generator will render a horizontal number line with labeled tick marks to provide scale. Above this axis, the box plot is constructed. A central rectangle (the \"box\") is drawn, with its left edge at the first quartile (Q1) and its right edge at the third quartile (Q3). The length of this box thus represents the Interquartile Range (IQR). A vertical line is drawn inside the box to mark the median (the 50th percentile). From the left side of the box, a horizontal line (the \"whisker\") extends to the minimum value of the data set. From the right side of the box, another whisker extends to the maximum value. These whiskers can be capped with small vertical lines. The entire plot provides a concise visual summary of the data's center (median), spread (IQR and range), and skewness. The generator allows for customization of colors for the box and median line to enhance readability."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"compositeShapeDiagram": {
+		"$ref": "#/definitions/compositeShapeDiagram",
+		"definitions": {
+			"compositeShapeDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "compositeShapeDiagram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"vertices": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"x": {
+									"type": "number",
+									"description": "The horizontal coordinate of the vertex.",
+									"markdownDescription": "The horizontal coordinate of the vertex."
+								},
+								"y": {
+									"type": "number",
+									"description": "The vertical coordinate of the vertex.",
+									"markdownDescription": "The vertical coordinate of the vertex."
+								}
+							},
+							"required": ["x", "y"],
+							"additionalProperties": false
+						},
+						"description": "An array of {x, y} coordinates defining all points in the diagram.",
+						"markdownDescription": "An array of {x, y} coordinates defining all points in the diagram."
+					},
+					"outerBoundary": {
+						"type": "array",
+						"items": {
+							"type": "integer"
+						},
+						"description": "An ordered array of vertex indices that defines the solid outline of the shape.",
+						"markdownDescription": "An ordered array of vertex indices that defines the solid outline of the shape."
+					},
+					"internalSegments": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"fromVertexIndex": {
+											"type": "integer",
+											"description": "The starting vertex index from the main vertices array.",
+											"markdownDescription": "The starting vertex index from the main vertices array."
+										},
+										"toVertexIndex": {
+											"type": "integer",
+											"description": "The ending vertex index from the main vertices array.",
+											"markdownDescription": "The ending vertex index from the main vertices array."
+										},
+										"style": {
+											"anyOf": [
+												{
+													"type": "string",
+													"enum": ["solid", "dashed"]
+												},
+												{
+													"type": "null"
+												}
+											],
+											"description": "The style of the line.",
+											"markdownDescription": "The style of the line."
+										},
+										"label": {
+											"type": ["string", "null"],
+											"description": "An optional text label for this segment's length.",
+											"markdownDescription": "An optional text label for this segment's length."
+										}
+									},
+									"required": ["fromVertexIndex", "toVertexIndex", "style", "label"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An optional array of internal lines, typically dashed, to show decomposition.",
+						"markdownDescription": "An optional array of internal lines, typically dashed, to show decomposition."
+					},
+					"regionLabels": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"text": {
+											"type": "string",
+											"description": "The text content of the label (e.g., \"9 units\", \"A\").",
+											"markdownDescription": "The text content of the label (e.g., \"9 units\", \"A\")."
+										},
+										"position": {
+											"type": "object",
+											"properties": {
+												"x": {
+													"type": "number",
+													"description": "The horizontal coordinate of the vertex.",
+													"markdownDescription": "The horizontal coordinate of the vertex."
+												},
+												"y": {
+													"type": "number",
+													"description": "The vertical coordinate of the vertex.",
+													"markdownDescription": "The vertical coordinate of the vertex."
+												}
+											},
+											"required": ["x", "y"],
+											"additionalProperties": false,
+											"description": "An explicit {x, y} coordinate for placing the label.",
+											"markdownDescription": "An explicit {x, y} coordinate for placing the label."
+										}
+									},
+									"required": ["text", "position"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An optional array of labels to be placed inside sub-regions (e.g., \"Triangle A\").",
+						"markdownDescription": "An optional array of labels to be placed inside sub-regions (e.g., \"Triangle A\")."
+					},
+					"rightAngleMarkers": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"cornerVertexIndex": {
+											"type": "integer",
+											"description": "The index of the vertex where the right angle corner is located.",
+											"markdownDescription": "The index of the vertex where the right angle corner is located."
+										},
+										"adjacentVertex1Index": {
+											"type": "integer",
+											"description": "Index of the first adjacent vertex forming the angle.",
+											"markdownDescription": "Index of the first adjacent vertex forming the angle."
+										},
+										"adjacentVertex2Index": {
+											"type": "integer",
+											"description": "Index of the second adjacent vertex forming the angle.",
+											"markdownDescription": "Index of the second adjacent vertex forming the angle."
+										}
+									},
+									"required": ["cornerVertexIndex", "adjacentVertex1Index", "adjacentVertex2Index"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An optional array of markers to indicate right angles.",
+						"markdownDescription": "An optional array of markers to indicate right angles."
+					}
+				},
+				"required": [
+					"type",
+					"width",
+					"height",
+					"vertices",
+					"outerBoundary",
+					"internalSegments",
+					"regionLabels",
+					"rightAngleMarkers"
+				],
+				"additionalProperties": false,
+				"description": "Generates a flexible diagram of a composite polygon from a set of vertices. This widget is ideal for area and perimeter problems that involve decomposing a complex shape into simpler ones (e.g., rectangles, triangles). It supports drawing a solid outer boundary, internal dashed lines for decomposition, labels for dimensions and regions, and right-angle markers to indicate perpendicularity. This allows for the clear visualization of shapes like L-shaped polygons, trapezoids, or any multi-sided figure.",
+				"markdownDescription": "Generates a flexible diagram of a composite polygon from a set of vertices. This widget is ideal for area and perimeter problems that involve decomposing a complex shape into simpler ones (e.g., rectangles, triangles). It supports drawing a solid outer boundary, internal dashed lines for decomposition, labels for dimensions and regions, and right-angle markers to indicate perpendicularity. This allows for the clear visualization of shapes like L-shaped polygons, trapezoids, or any multi-sided figure."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"coordinatePlane": {
+		"$ref": "#/definitions/coordinatePlane",
+		"definitions": {
+			"coordinatePlane": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "coordinatePlane"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"xAxis": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": ["string", "null"],
+								"description": "The text title for the axis (e.g., \"Number of Days\"). If omitted, a simple \"x\" or \"y\" may be used.",
+								"markdownDescription": "The text title for the axis (e.g., \"Number of Days\"). If omitted, a simple \"x\" or \"y\" may be used."
+							},
+							"min": {
+								"type": "number",
+								"description": "The minimum value displayed on the axis.",
+								"markdownDescription": "The minimum value displayed on the axis."
+							},
+							"max": {
+								"type": "number",
+								"description": "The maximum value displayed on the axis.",
+								"markdownDescription": "The maximum value displayed on the axis."
+							},
+							"tickInterval": {
+								"type": "number",
+								"description": "The numeric interval between labeled tick marks on the axis.",
+								"markdownDescription": "The numeric interval between labeled tick marks on the axis."
+							},
+							"showGridLines": {
+								"type": ["boolean", "null"],
+								"description": "If true, display grid lines for this axis.",
+								"markdownDescription": "If true, display grid lines for this axis."
+							}
+						},
+						"required": ["label", "min", "max", "tickInterval", "showGridLines"],
+						"additionalProperties": false,
+						"description": "Configuration for the horizontal (X) axis.",
+						"markdownDescription": "Configuration for the horizontal (X) axis."
+					},
+					"yAxis": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": ["string", "null"],
+								"description": "The text title for the axis (e.g., \"Number of Days\"). If omitted, a simple \"x\" or \"y\" may be used.",
+								"markdownDescription": "The text title for the axis (e.g., \"Number of Days\"). If omitted, a simple \"x\" or \"y\" may be used."
+							},
+							"min": {
+								"type": "number",
+								"description": "The minimum value displayed on the axis.",
+								"markdownDescription": "The minimum value displayed on the axis."
+							},
+							"max": {
+								"type": "number",
+								"description": "The maximum value displayed on the axis.",
+								"markdownDescription": "The maximum value displayed on the axis."
+							},
+							"tickInterval": {
+								"type": "number",
+								"description": "The numeric interval between labeled tick marks on the axis.",
+								"markdownDescription": "The numeric interval between labeled tick marks on the axis."
+							},
+							"showGridLines": {
+								"type": ["boolean", "null"],
+								"description": "If true, display grid lines for this axis.",
+								"markdownDescription": "If true, display grid lines for this axis."
+							}
+						},
+						"required": ["label", "min", "max", "tickInterval", "showGridLines"],
+						"additionalProperties": false,
+						"description": "Configuration for the vertical (Y) axis.",
+						"markdownDescription": "Configuration for the vertical (Y) axis."
+					},
+					"showQuadrantLabels": {
+						"type": ["boolean", "null"],
+						"description": "If true, displays the labels \"I\", \"II\", \"III\", and \"IV\" in the appropriate quadrants.",
+						"markdownDescription": "If true, displays the labels \"I\", \"II\", \"III\", and \"IV\" in the appropriate quadrants."
+					},
+					"points": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"description": "A unique identifier for this point, used to reference it when creating polygons.",
+											"markdownDescription": "A unique identifier for this point, used to reference it when creating polygons."
+										},
+										"x": {
+											"type": "number",
+											"description": "The value of the point on the horizontal (X) axis.",
+											"markdownDescription": "The value of the point on the horizontal (X) axis."
+										},
+										"y": {
+											"type": "number",
+											"description": "The value of the point on the vertical (Y) axis.",
+											"markdownDescription": "The value of the point on the vertical (Y) axis."
+										},
+										"label": {
+											"type": ["string", "null"],
+											"description": "An optional text label to display near the point (e.g., \"A\", \"(m, n)\").",
+											"markdownDescription": "An optional text label to display near the point (e.g., \"A\", \"(m, n)\")."
+										},
+										"color": {
+											"type": ["string", "null"],
+											"description": "The color of the point, as a CSS color string.",
+											"markdownDescription": "The color of the point, as a CSS color string."
+										},
+										"style": {
+											"anyOf": [
+												{
+													"type": "string",
+													"enum": ["open", "closed"]
+												},
+												{
+													"type": "null"
+												}
+											],
+											"description": "Visual style for the point marker.",
+											"markdownDescription": "Visual style for the point marker."
+										}
+									},
+									"required": ["id", "x", "y", "label", "color", "style"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An optional array of points to plot on the plane.",
+						"markdownDescription": "An optional array of points to plot on the plane."
+					},
+					"lines": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"description": "A unique identifier for the line (e.g., \"line-a\").",
+											"markdownDescription": "A unique identifier for the line (e.g., \"line-a\")."
+										},
+										"equation": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string",
+													"const": "slopeIntercept",
+													"description": "Specifies a straight line in y = mx + b form.",
+													"markdownDescription": "Specifies a straight line in y = mx + b form."
+												},
+												"slope": {
+													"type": "number",
+													"description": "The slope of the line (m).",
+													"markdownDescription": "The slope of the line (m)."
+												},
+												"yIntercept": {
+													"type": "number",
+													"description": "The y-value where the line crosses the Y-axis (b).",
+													"markdownDescription": "The y-value where the line crosses the Y-axis (b)."
+												}
+											},
+											"required": ["type", "slope", "yIntercept"],
+											"additionalProperties": false,
+											"description": "The mathematical definition of the line.",
+											"markdownDescription": "The mathematical definition of the line."
+										},
+										"color": {
+											"type": ["string", "null"],
+											"description": "The color of the line, as a CSS color string (e.g., \"red\", \"#FF0000\").",
+											"markdownDescription": "The color of the line, as a CSS color string (e.g., \"red\", \"#FF0000\")."
+										},
+										"style": {
+											"anyOf": [
+												{
+													"type": "string",
+													"enum": ["solid", "dashed"]
+												},
+												{
+													"type": "null"
+												}
+											],
+											"description": "The style of the line.",
+											"markdownDescription": "The style of the line."
+										}
+									},
+									"required": ["id", "equation", "color", "style"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An optional array of infinite lines to draw on the plane, defined by their equations.",
+						"markdownDescription": "An optional array of infinite lines to draw on the plane, defined by their equations."
+					},
+					"polygons": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"vertices": {
+											"type": "array",
+											"items": {
+												"type": "string"
+											},
+											"minItems": 2,
+											"description": "An array of point `id` strings, in the order they should be connected. Requires at least 2 points for a line, 3 for a polygon.",
+											"markdownDescription": "An array of point `id` strings, in the order they should be connected. Requires at least 2 points for a line, 3 for a polygon."
+										},
+										"isClosed": {
+											"type": ["boolean", "null"],
+											"description": "If true, connects the last vertex to the first to form a closed shape. If false, renders an open polyline.",
+											"markdownDescription": "If true, connects the last vertex to the first to form a closed shape. If false, renders an open polyline."
+										},
+										"fillColor": {
+											"type": ["string", "null"],
+											"description": "The fill color of the polygon, as a CSS color string (e.g., with alpha for transparency). Only applies if isClosed is true.",
+											"markdownDescription": "The fill color of the polygon, as a CSS color string (e.g., with alpha for transparency). Only applies if isClosed is true."
+										},
+										"strokeColor": {
+											"type": ["string", "null"],
+											"description": "The border color of the polygon.",
+											"markdownDescription": "The border color of the polygon."
+										},
+										"label": {
+											"type": ["string", "null"],
+											"description": "An optional label for the polygon itself.",
+											"markdownDescription": "An optional label for the polygon itself."
+										}
+									},
+									"required": ["vertices", "isClosed", "fillColor", "strokeColor", "label"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An optional array of polygons or polylines to draw on the plane by connecting the defined points.",
+						"markdownDescription": "An optional array of polygons or polylines to draw on the plane by connecting the defined points."
+					}
+				},
+				"required": ["type", "width", "height", "xAxis", "yAxis", "showQuadrantLabels", "points", "lines", "polygons"],
+				"additionalProperties": false,
+				"description": "Generates a complete two-dimensional Cartesian coordinate plane as an SVG graphic. This versatile widget can render a feature-rich plane with configurable axes, grid lines, and quadrant labels. It supports plotting labeled points, drawing polygons by connecting vertices, rendering open polylines (e.g., for piecewise functions), and plotting infinite lines from their slope-intercept equations. This single widget is suitable for a vast range of coordinate geometry problems.",
+				"markdownDescription": "Generates a complete two-dimensional Cartesian coordinate plane as an SVG graphic. This versatile widget can render a feature-rich plane with configurable axes, grid lines, and quadrant labels. It supports plotting labeled points, drawing polygons by connecting vertices, rendering open polylines (e.g., for piecewise functions), and plotting infinite lines from their slope-intercept equations. This single widget is suitable for a vast range of coordinate geometry problems."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"dataTable": {
+		"$ref": "#/definitions/dataTable",
+		"definitions": {
+			"dataTable": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "dataTable"
+					},
+					"title": {
+						"type": ["string", "null"],
+						"description": "An optional caption for the table.",
+						"markdownDescription": "An optional caption for the table."
+					},
+					"columns": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"key": {
+									"type": "string",
+									"description": "A unique identifier for this column.",
+									"markdownDescription": "A unique identifier for this column."
+								},
+								"label": {
+									"type": ["string", "null"],
+									"description": "The display text for the column header.",
+									"markdownDescription": "The display text for the column header."
+								},
+								"isNumeric": {
+									"type": "boolean",
+									"description": "If true, content in this column will be right-aligned for readability.",
+									"markdownDescription": "If true, content in this column will be right-aligned for readability."
+								}
+							},
+							"required": ["key", "label", "isNumeric"],
+							"additionalProperties": false,
+							"description": "Defines the metadata and display properties for a single column in the data table.",
+							"markdownDescription": "Defines the metadata and display properties for a single column in the data table."
+						},
+						"description": "An array of column definitions.",
+						"markdownDescription": "An array of column definitions."
+					},
+					"data": {
+						"type": "array",
+						"items": {
+							"type": "array",
+							"items": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "number"
+									},
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "input"
+											},
+											"responseIdentifier": {
+												"type": "string",
+												"description": "The QTI response identifier for this input field.",
+												"markdownDescription": "The QTI response identifier for this input field."
+											},
+											"expectedLength": {
+												"type": ["number", "null"],
+												"description": "The expected character length for the input field.",
+												"markdownDescription": "The expected character length for the input field."
+											}
+										},
+										"required": ["type", "responseIdentifier", "expectedLength"],
+										"additionalProperties": false
+									}
+								],
+								"description": "Content for a cell. Can be text/MathML, a number, or an input field specification.",
+								"markdownDescription": "Content for a cell. Can be text/MathML, a number, or an input field specification."
+							}
+						},
+						"description": "An array of arrays representing table rows. Each inner array contains cell values in the same order as columns.",
+						"markdownDescription": "An array of arrays representing table rows. Each inner array contains cell values in the same order as columns."
+					},
+					"rowHeaderKey": {
+						"type": ["string", "null"],
+						"description": "The 'key' of the column that should be treated as the row header (<th>).",
+						"markdownDescription": "The 'key' of the column that should be treated as the row header (<th>)."
+					},
+					"footer": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"anyOf": [
+										{
+											"type": "string"
+										},
+										{
+											"type": "number"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string",
+													"const": "input"
+												},
+												"responseIdentifier": {
+													"type": "string",
+													"description": "The QTI response identifier for this input field.",
+													"markdownDescription": "The QTI response identifier for this input field."
+												},
+												"expectedLength": {
+													"type": ["number", "null"],
+													"description": "The expected character length for the input field.",
+													"markdownDescription": "The expected character length for the input field."
+												}
+											},
+											"required": ["type", "responseIdentifier", "expectedLength"],
+											"additionalProperties": false
+										}
+									],
+									"description": "Content for a cell. Can be text/MathML, a number, or an input field specification.",
+									"markdownDescription": "Content for a cell. Can be text/MathML, a number, or an input field specification."
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An optional array of footer cells, in the same order as columns.",
+						"markdownDescription": "An optional array of footer cells, in the same order as columns."
+					}
+				},
+				"required": ["type", "title", "columns", "data", "rowHeaderKey", "footer"],
+				"additionalProperties": false,
+				"description": "Generates a versatile and accessible HTML <table>, serving as the single generator for all tabular data displays. It is capable of creating simple data lists, frequency tables, and complex two-way tables for displaying categorical data. The widget supports an optional header, footer (for totals), and row-level headers for maximum semantic correctness. Cells can contain plain text, numbers, MathML, or interactive input fields, making it suitable for both static display and interactive questions.",
+				"markdownDescription": "Generates a versatile and accessible HTML <table>, serving as the single generator for all tabular data displays. It is capable of creating simple data lists, frequency tables, and complex two-way tables for displaying categorical data. The widget supports an optional header, footer (for totals), and row-level headers for maximum semantic correctness. Cells can contain plain text, numbers, MathML, or interactive input fields, making it suitable for both static display and interactive questions."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"discreteObjectRatioDiagram": {
+		"$ref": "#/definitions/discreteObjectRatioDiagram",
+		"definitions": {
+			"discreteObjectRatioDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "discreteObjectRatioDiagram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"objects": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"count": {
+									"type": "integer",
+									"minimum": 0,
+									"description": "The number of this type of object to render.",
+									"markdownDescription": "The number of this type of object to render."
+								},
+								"emoji": {
+									"type": "string",
+									"description": "The emoji character to use as the object icon (e.g., '🍎', '⭐').",
+									"markdownDescription": "The emoji character to use as the object icon (e.g., '🍎', '⭐')."
+								}
+							},
+							"required": ["count", "emoji"],
+							"additionalProperties": false
+						},
+						"minItems": 1,
+						"description": "An array defining the types and counts of objects to display.",
+						"markdownDescription": "An array defining the types and counts of objects to display."
+					},
+					"layout": {
+						"anyOf": [
+							{
+								"type": "string",
+								"enum": ["grid", "cluster"]
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "The arrangement of the rendered objects.",
+						"markdownDescription": "The arrangement of the rendered objects."
+					},
+					"title": {
+						"type": ["string", "null"],
+						"description": "An optional title for the diagram (e.g., \"Fish in Aquarium\").",
+						"markdownDescription": "An optional title for the diagram (e.g., \"Fish in Aquarium\")."
+					}
+				},
+				"required": ["type", "width", "height", "objects", "layout", "title"],
+				"additionalProperties": false,
+				"description": "This template generates an SVG graphic that visually represents a ratio using a collection of discrete, countable objects. It is perfect for introductory ratio problems where students can directly count the items to understand the relationship. The generator will render a specified number of two or more distinct types of objects. Each object type is defined by an SVG icon or shape and a count. For example, to show a ratio of 8 large fish to 10 small fish, the generator would render 8 instances of a \"large fish\" icon and 10 instances of a \"small fish\" icon. The objects will be arranged in a visually appealing and easy-to-count layout, such as a grid or a loose cluster. The colors and designs of the objects are configurable. This template provides a simple, concrete way to introduce the concept of ratios before moving to more abstract representations like tables or tape diagrams.",
+				"markdownDescription": "This template generates an SVG graphic that visually represents a ratio using a collection of discrete, countable objects. It is perfect for introductory ratio problems where students can directly count the items to understand the relationship. The generator will render a specified number of two or more distinct types of objects. Each object type is defined by an SVG icon or shape and a count. For example, to show a ratio of 8 large fish to 10 small fish, the generator would render 8 instances of a \"large fish\" icon and 10 instances of a \"small fish\" icon. The objects will be arranged in a visually appealing and easy-to-count layout, such as a grid or a loose cluster. The colors and designs of the objects are configurable. This template provides a simple, concrete way to introduce the concept of ratios before moving to more abstract representations like tables or tape diagrams."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"dotPlot": {
+		"$ref": "#/definitions/dotPlot",
+		"definitions": {
+			"dotPlot": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "dotPlot"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"axis": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": ["string", "null"],
+								"description": "An optional title for the horizontal axis (e.g., \"Hourly Wages\").",
+								"markdownDescription": "An optional title for the horizontal axis (e.g., \"Hourly Wages\")."
+							},
+							"min": {
+								"type": "number",
+								"description": "The minimum value displayed on the axis.",
+								"markdownDescription": "The minimum value displayed on the axis."
+							},
+							"max": {
+								"type": "number",
+								"description": "The maximum value displayed on the axis.",
+								"markdownDescription": "The maximum value displayed on the axis."
+							},
+							"tickInterval": {
+								"type": "number",
+								"description": "The numeric interval between labeled tick marks.",
+								"markdownDescription": "The numeric interval between labeled tick marks."
+							}
+						},
+						"required": ["label", "min", "max", "tickInterval"],
+						"additionalProperties": false,
+						"description": "Configuration for the horizontal number line.",
+						"markdownDescription": "Configuration for the horizontal number line."
+					},
+					"data": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"value": {
+									"type": "number",
+									"description": "The numerical value on the horizontal axis.",
+									"markdownDescription": "The numerical value on the horizontal axis."
+								},
+								"count": {
+									"type": "integer",
+									"minimum": 1,
+									"description": "The number of dots to stack vertically above this value.",
+									"markdownDescription": "The number of dots to stack vertically above this value."
+								}
+							},
+							"required": ["value", "count"],
+							"additionalProperties": false
+						},
+						"description": "An array of data points, where each object specifies a value and how many dots to render for it.",
+						"markdownDescription": "An array of data points, where each object specifies a value and how many dots to render for it."
+					},
+					"dotColor": {
+						"type": ["string", "null"],
+						"description": "A CSS color string for the dots.",
+						"markdownDescription": "A CSS color string for the dots."
+					},
+					"dotRadius": {
+						"type": ["number", "null"],
+						"description": "The radius of each dot in pixels.",
+						"markdownDescription": "The radius of each dot in pixels."
+					}
+				},
+				"required": ["type", "width", "height", "axis", "data", "dotColor", "dotRadius"],
+				"additionalProperties": false,
+				"description": "This template is designed to generate a clear, accessible, and standards-compliant dot plot as an SVG graphic within an HTML <div>. Dot plots are used to visualize the distribution of a numerical data set, especially when the data consists of discrete values or has been binned. The generator will construct a horizontal number line that serves as the base axis. This axis will be fully configurable, with a specified minimum and maximum value, major tick marks at defined intervals, and corresponding numerical labels beneath each tick. The axis can also have a descriptive title (e.g., \"Number of snow days,\" \"Age in years\"). Above the horizontal axis, the data points are represented as small, filled circles (dots). For each value on the number line, the generator will stack dots vertically, with each dot representing a single occurrence of that value in the data set. The vertical spacing between dots will be uniform to ensure clarity. The resulting stacks of dots visually represent the frequency of each value, making it easy to identify the shape of the distribution, including peaks (mode), clusters, gaps, and outliers. The final SVG is a self-contained, accurately scaled visual representation of the raw data.",
+				"markdownDescription": "This template is designed to generate a clear, accessible, and standards-compliant dot plot as an SVG graphic within an HTML <div>. Dot plots are used to visualize the distribution of a numerical data set, especially when the data consists of discrete values or has been binned. The generator will construct a horizontal number line that serves as the base axis. This axis will be fully configurable, with a specified minimum and maximum value, major tick marks at defined intervals, and corresponding numerical labels beneath each tick. The axis can also have a descriptive title (e.g., \"Number of snow days,\" \"Age in years\"). Above the horizontal axis, the data points are represented as small, filled circles (dots). For each value on the number line, the generator will stack dots vertically, with each dot representing a single occurrence of that value in the data set. The vertical spacing between dots will be uniform to ensure clarity. The resulting stacks of dots visually represent the frequency of each value, making it easy to identify the shape of the distribution, including peaks (mode), clusters, gaps, and outliers. The final SVG is a self-contained, accurately scaled visual representation of the raw data."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"doubleNumberLine": {
+		"$ref": "#/definitions/doubleNumberLine",
+		"definitions": {
+			"doubleNumberLine": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "doubleNumberLine"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"topLine": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": "string",
+								"description": "The text label for this quantity (e.g., \"Time (seconds)\").",
+								"markdownDescription": "The text label for this quantity (e.g., \"Time (seconds)\")."
+							},
+							"ticks": {
+								"type": "array",
+								"items": {
+									"type": ["string", "number"]
+								},
+								"description": "An array of values to label the tick marks in order from left to right.",
+								"markdownDescription": "An array of values to label the tick marks in order from left to right."
+							}
+						},
+						"required": ["label", "ticks"],
+						"additionalProperties": false,
+						"description": "Configuration for the upper number line.",
+						"markdownDescription": "Configuration for the upper number line."
+					},
+					"bottomLine": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": "string",
+								"description": "The text label for this quantity (e.g., \"Time (seconds)\").",
+								"markdownDescription": "The text label for this quantity (e.g., \"Time (seconds)\")."
+							},
+							"ticks": {
+								"type": "array",
+								"items": {
+									"type": ["string", "number"]
+								},
+								"description": "An array of values to label the tick marks in order from left to right.",
+								"markdownDescription": "An array of values to label the tick marks in order from left to right."
+							}
+						},
+						"required": ["label", "ticks"],
+						"additionalProperties": false,
+						"description": "Configuration for the lower number line. Must have the same number of ticks as the top line.",
+						"markdownDescription": "Configuration for the lower number line. Must have the same number of ticks as the top line."
+					}
+				},
+				"required": ["type", "width", "height", "topLine", "bottomLine"],
+				"additionalProperties": false,
+				"description": "This template generates a double number line diagram as a clear and accurate SVG graphic. This visualization tool is excellent for illustrating the relationship between two different quantities that share a constant ratio. The generator will render two parallel horizontal lines, one above the other. Each line represents a different quantity and will have a text label (e.g., \"Time (minutes)\", \"Items\"). Both lines are marked with a configurable number of equally spaced tick marks. The core of the template is the array of corresponding values for the tick marks on each line. For example, the top line might have values [0, 1, 2, 3, 4] while the bottom line has [0, 50, 100, 150, 200]. The generator will place these labels at the correct tick marks, visually aligning the proportional pairs. Some labels can be omitted to create \"fill-in-the-blank\" style questions where the student must deduce the missing value. The resulting SVG is a powerful visual aid for solving ratio problems.",
+				"markdownDescription": "This template generates a double number line diagram as a clear and accurate SVG graphic. This visualization tool is excellent for illustrating the relationship between two different quantities that share a constant ratio. The generator will render two parallel horizontal lines, one above the other. Each line represents a different quantity and will have a text label (e.g., \"Time (minutes)\", \"Items\"). Both lines are marked with a configurable number of equally spaced tick marks. The core of the template is the array of corresponding values for the tick marks on each line. For example, the top line might have values [0, 1, 2, 3, 4] while the bottom line has [0, 50, 100, 150, 200]. The generator will place these labels at the correct tick marks, visually aligning the proportional pairs. Some labels can be omitted to create \"fill-in-the-blank\" style questions where the student must deduce the missing value. The resulting SVG is a powerful visual aid for solving ratio problems."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"geometricSolidDiagram": {
+		"$ref": "#/definitions/geometricSolidDiagram",
+		"definitions": {
+			"geometricSolidDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "geometricSolidDiagram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"shape": {
+						"anyOf": [
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "cylinder"
+									},
+									"radius": {
+										"type": "number",
+										"description": "The radius of the circular bases.",
+										"markdownDescription": "The radius of the circular bases."
+									},
+									"height": {
+										"type": "number",
+										"description": "The perpendicular distance between the two bases.",
+										"markdownDescription": "The perpendicular distance between the two bases."
+									}
+								},
+								"required": ["type", "radius", "height"],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "cone"
+									},
+									"radius": {
+										"type": "number",
+										"description": "The radius of the circular base.",
+										"markdownDescription": "The radius of the circular base."
+									},
+									"height": {
+										"type": "number",
+										"description": "The perpendicular height from the base to the apex.",
+										"markdownDescription": "The perpendicular height from the base to the apex."
+									}
+								},
+								"required": ["type", "radius", "height"],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "sphere"
+									},
+									"radius": {
+										"type": "number",
+										"description": "The radius of the sphere.",
+										"markdownDescription": "The radius of the sphere."
+									}
+								},
+								"required": ["type", "radius"],
+								"additionalProperties": false
+							}
+						],
+						"description": "The geometric data defining the solid shape.",
+						"markdownDescription": "The geometric data defining the solid shape."
+					},
+					"labels": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"target": {
+											"type": "string",
+											"enum": ["radius", "height"],
+											"description": "The dimension to label.",
+											"markdownDescription": "The dimension to label."
+										},
+										"text": {
+											"type": ["string", "null"],
+											"description": "The text for the label. If omitted, the numerical value will be used.",
+											"markdownDescription": "The text for the label. If omitted, the numerical value will be used."
+										}
+									},
+									"required": ["target", "text"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An array of dimension labels to display.",
+						"markdownDescription": "An array of dimension labels to display."
+					}
+				},
+				"required": ["type", "width", "height", "shape", "labels"],
+				"additionalProperties": false,
+				"description": "Generates a 3D diagram of a geometric solid that has at least one curved surface, such as a cylinder, cone, or sphere. The output is an SVG rendering from a perspective view, with hidden edges shown as dashed lines to convey three-dimensional structure. The diagram can include labeled dimensions (e.g., radius, height) with leader lines, making it ideal for problems involving volume or surface area calculations for these specific shapes.",
+				"markdownDescription": "Generates a 3D diagram of a geometric solid that has at least one curved surface, such as a cylinder, cone, or sphere. The output is an SVG rendering from a perspective view, with hidden edges shown as dashed lines to convey three-dimensional structure. The diagram can include labeled dimensions (e.g., radius, height) with leader lines, making it ideal for problems involving volume or surface area calculations for these specific shapes."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"hangerDiagram": {
+		"$ref": "#/definitions/hangerDiagram",
+		"definitions": {
+			"hangerDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "hangerDiagram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"leftSide": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"label": {
+									"type": ["string", "number"],
+									"description": "The text label displayed inside the weight (e.g., \"c\", 12, \"1/2\").",
+									"markdownDescription": "The text label displayed inside the weight (e.g., \"c\", 12, \"1/2\")."
+								},
+								"shape": {
+									"anyOf": [
+										{
+											"type": "string",
+											"enum": ["square", "circle", "pentagon", "hexagon", "triangle"]
+										},
+										{
+											"type": "null"
+										}
+									],
+									"description": "The geometric shape of the weight.",
+									"markdownDescription": "The geometric shape of the weight."
+								},
+								"color": {
+									"type": ["string", "null"],
+									"description": "An optional CSS fill color for the shape.",
+									"markdownDescription": "An optional CSS fill color for the shape."
+								}
+							},
+							"required": ["label", "shape", "color"],
+							"additionalProperties": false
+						},
+						"description": "An array of weight objects to be rendered on the left side of the hanger.",
+						"markdownDescription": "An array of weight objects to be rendered on the left side of the hanger."
+					},
+					"rightSide": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"label": {
+									"type": ["string", "number"],
+									"description": "The text label displayed inside the weight (e.g., \"c\", 12, \"1/2\").",
+									"markdownDescription": "The text label displayed inside the weight (e.g., \"c\", 12, \"1/2\")."
+								},
+								"shape": {
+									"anyOf": [
+										{
+											"type": "string",
+											"enum": ["square", "circle", "pentagon", "hexagon", "triangle"]
+										},
+										{
+											"type": "null"
+										}
+									],
+									"description": "The geometric shape of the weight.",
+									"markdownDescription": "The geometric shape of the weight."
+								},
+								"color": {
+									"type": ["string", "null"],
+									"description": "An optional CSS fill color for the shape.",
+									"markdownDescription": "An optional CSS fill color for the shape."
+								}
+							},
+							"required": ["label", "shape", "color"],
+							"additionalProperties": false
+						},
+						"description": "An array of weight objects to be rendered on the right side of the hanger.",
+						"markdownDescription": "An array of weight objects to be rendered on the right side of the hanger."
+					}
+				},
+				"required": ["type", "width", "height", "leftSide", "rightSide"],
+				"additionalProperties": false,
+				"description": "This template generates a \"hanger diagram,\" a powerful visual metaphor for a balanced algebraic equation, rendered as an SVG graphic within an HTML <div>. This diagram is ideal for introducing students to the concept of solving equations by maintaining balance. The generator will construct a central balanced beam suspended from a hook. Two sides, left and right, hang from the beam, each capable of holding multiple \"weights.\" The core principle is that the total weight on the left side must equal the total weight on the right for the hanger to be balanced. Each weight is a distinct visual element, configurable by shape (e.g., square, circle, pentagon, hexagon) and an internal label (e.g., a number like \"12\" or a variable like \"c\"). The generator will intelligently and aesthetically arrange multiple weights on each side, stacking or grouping them as needed for clarity. This allows for the visual representation of equations like 12 = 4c (a single 12-unit weight on the left balances four c-unit weights on the right) or d + 6 = 21 (a d-unit weight and a 6-unit weight on the left balance a 21-unit weight on the right). The final output is a clean, self-contained SVG that intuitively communicates the principle of equality in an equation, making abstract algebraic concepts more concrete and accessible.",
+				"markdownDescription": "This template generates a \"hanger diagram,\" a powerful visual metaphor for a balanced algebraic equation, rendered as an SVG graphic within an HTML <div>. This diagram is ideal for introducing students to the concept of solving equations by maintaining balance. The generator will construct a central balanced beam suspended from a hook. Two sides, left and right, hang from the beam, each capable of holding multiple \"weights.\" The core principle is that the total weight on the left side must equal the total weight on the right for the hanger to be balanced. Each weight is a distinct visual element, configurable by shape (e.g., square, circle, pentagon, hexagon) and an internal label (e.g., a number like \"12\" or a variable like \"c\"). The generator will intelligently and aesthetically arrange multiple weights on each side, stacking or grouping them as needed for clarity. This allows for the visual representation of equations like 12 = 4c (a single 12-unit weight on the left balances four c-unit weights on the right) or d + 6 = 21 (a d-unit weight and a 6-unit weight on the left balance a 21-unit weight on the right). The final output is a clean, self-contained SVG that intuitively communicates the principle of equality in an equation, making abstract algebraic concepts more concrete and accessible."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"histogram": {
+		"$ref": "#/definitions/histogram",
+		"definitions": {
+			"histogram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "histogram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"title": {
+						"type": ["string", "null"],
+						"description": "An optional title displayed above the histogram.",
+						"markdownDescription": "An optional title displayed above the histogram."
+					},
+					"xAxis": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": "string",
+								"description": "The text title for the axis (e.g., \"Number of Guests\" or \"Frequency\").",
+								"markdownDescription": "The text title for the axis (e.g., \"Number of Guests\" or \"Frequency\")."
+							},
+							"max": {
+								"anyOf": [
+									{
+										"type": "integer"
+									},
+									{
+										"type": "null"
+									}
+								],
+								"description": "An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically.",
+								"markdownDescription": "An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically."
+							},
+							"tickInterval": {
+								"type": ["number", "null"],
+								"description": "An optional numeric interval for tick marks on the Y-axis.",
+								"markdownDescription": "An optional numeric interval for tick marks on the Y-axis."
+							}
+						},
+						"required": ["label", "max", "tickInterval"],
+						"additionalProperties": false,
+						"description": "Configuration for the horizontal (X) axis.",
+						"markdownDescription": "Configuration for the horizontal (X) axis."
+					},
+					"yAxis": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": "string",
+								"description": "The text title for the axis (e.g., \"Number of Guests\" or \"Frequency\").",
+								"markdownDescription": "The text title for the axis (e.g., \"Number of Guests\" or \"Frequency\")."
+							},
+							"max": {
+								"anyOf": [
+									{
+										"type": "integer"
+									},
+									{
+										"type": "null"
+									}
+								],
+								"description": "An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically.",
+								"markdownDescription": "An optional maximum value for the Y-axis scale. If not provided, it will be calculated automatically."
+							},
+							"tickInterval": {
+								"type": ["number", "null"],
+								"description": "An optional numeric interval for tick marks on the Y-axis.",
+								"markdownDescription": "An optional numeric interval for tick marks on the Y-axis."
+							}
+						},
+						"required": ["label", "max", "tickInterval"],
+						"additionalProperties": false,
+						"description": "Configuration for the vertical (Y) axis.",
+						"markdownDescription": "Configuration for the vertical (Y) axis."
+					},
+					"bins": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"label": {
+									"type": "string",
+									"description": "The label for the bin, displayed on the X-axis (e.g., \"0-10\", \"10-20\").",
+									"markdownDescription": "The label for the bin, displayed on the X-axis (e.g., \"0-10\", \"10-20\")."
+								},
+								"frequency": {
+									"type": "integer",
+									"minimum": 0,
+									"description": "The count of data points in this bin, which determines the bar height.",
+									"markdownDescription": "The count of data points in this bin, which determines the bar height."
+								}
+							},
+							"required": ["label", "frequency"],
+							"additionalProperties": false
+						},
+						"description": "An array of bin objects, each defining its label and frequency.",
+						"markdownDescription": "An array of bin objects, each defining its label and frequency."
+					}
+				},
+				"required": ["type", "width", "height", "title", "xAxis", "yAxis", "bins"],
+				"additionalProperties": false,
+				"description": "This template generates a standards-compliant histogram as an SVG graphic inside a <div>. A histogram is a bar chart that displays the frequency distribution of numerical data by grouping it into a series of consecutive, non-overlapping intervals (or \"bins\"). The generator constructs a complete Cartesian coordinate system with a horizontal X-axis and a vertical Y-axis. The X-axis represents the data intervals (e.g., \"0-10\", \"10-20\") and is labeled accordingly. The Y-axis represents the frequency (count) of data points within each interval and will have labeled tick marks to indicate the scale. Both axes can have titles (e.g., \"Number of Guests\", \"Frequency\"). For each specified bin, a rectangular bar is rendered. The width of the bar corresponds to the interval range, and the bars are drawn adjacent to one another to show the continuous nature of the data. The height of each bar is proportional to the frequency of data points falling into that bin. The final output is a clean and accurate visualization, essential for questions about the shape, center, and spread of continuous data.",
+				"markdownDescription": "This template generates a standards-compliant histogram as an SVG graphic inside a <div>. A histogram is a bar chart that displays the frequency distribution of numerical data by grouping it into a series of consecutive, non-overlapping intervals (or \"bins\"). The generator constructs a complete Cartesian coordinate system with a horizontal X-axis and a vertical Y-axis. The X-axis represents the data intervals (e.g., \"0-10\", \"10-20\") and is labeled accordingly. The Y-axis represents the frequency (count) of data points within each interval and will have labeled tick marks to indicate the scale. Both axes can have titles (e.g., \"Number of Guests\", \"Frequency\"). For each specified bin, a rectangular bar is rendered. The width of the bar corresponds to the interval range, and the bars are drawn adjacent to one another to show the continuous nature of the data. The height of each bar is proportional to the frequency of data points falling into that bin. The final output is a clean and accurate visualization, essential for questions about the shape, center, and spread of continuous data."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"inequalityNumberLine": {
+		"$ref": "#/definitions/inequalityNumberLine",
+		"definitions": {
+			"inequalityNumberLine": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "inequalityNumberLine"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"min": {
+						"type": "number",
+						"description": "The minimum value displayed on the line.",
+						"markdownDescription": "The minimum value displayed on the line."
+					},
+					"max": {
+						"type": "number",
+						"description": "The maximum value displayed on the line.",
+						"markdownDescription": "The maximum value displayed on the line."
+					},
+					"tickInterval": {
+						"type": "number",
+						"description": "The numeric interval between labeled tick marks.",
+						"markdownDescription": "The numeric interval between labeled tick marks."
+					},
+					"ranges": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"start": {
+									"anyOf": [
+										{
+											"type": "object",
+											"properties": {
+												"value": {
+													"type": "number",
+													"description": "The numerical value of the boundary point.",
+													"markdownDescription": "The numerical value of the boundary point."
+												},
+												"type": {
+													"type": "string",
+													"enum": ["open", "closed"],
+													"description": "The type of circle at the boundary: \"open\" for < or >, \"closed\" for ≤ or ≥.",
+													"markdownDescription": "The type of circle at the boundary: \"open\" for < or >, \"closed\" for ≤ or ≥."
+												}
+											},
+											"required": ["value", "type"],
+											"additionalProperties": false
+										},
+										{
+											"type": "null"
+										}
+									],
+									"description": "The starting boundary of the range. If omitted, the range extends to negative infinity.",
+									"markdownDescription": "The starting boundary of the range. If omitted, the range extends to negative infinity."
+								},
+								"end": {
+									"anyOf": [
+										{
+											"type": "object",
+											"properties": {
+												"value": {
+													"type": "number",
+													"description": "The numerical value of the boundary point.",
+													"markdownDescription": "The numerical value of the boundary point."
+												},
+												"type": {
+													"type": "string",
+													"enum": ["open", "closed"],
+													"description": "The type of circle at the boundary: \"open\" for < or >, \"closed\" for ≤ or ≥.",
+													"markdownDescription": "The type of circle at the boundary: \"open\" for < or >, \"closed\" for ≤ or ≥."
+												}
+											},
+											"required": ["value", "type"],
+											"additionalProperties": false
+										},
+										{
+											"type": "null"
+										}
+									],
+									"description": "The ending boundary of the range. If omitted, the range extends to positive infinity.",
+									"markdownDescription": "The ending boundary of the range. If omitted, the range extends to positive infinity."
+								},
+								"color": {
+									"type": ["string", "null"],
+									"description": "The color of the shaded range and its boundary points.",
+									"markdownDescription": "The color of the shaded range and its boundary points."
+								}
+							},
+							"required": ["start", "end", "color"],
+							"additionalProperties": false
+						},
+						"minItems": 1,
+						"description": "An array of one or more inequality ranges to be graphed on the line.",
+						"markdownDescription": "An array of one or more inequality ranges to be graphed on the line."
+					}
+				},
+				"required": ["type", "width", "height", "min", "max", "tickInterval", "ranges"],
+				"additionalProperties": false,
+				"description": "Generates an SVG number line to graph the solution set of one or more inequalities. This widget is ideal for visualizing simple inequalities (e.g., x > 5), compound 'and' inequalities (e.g., -2 < x ≤ 3), and compound 'or' inequalities (e.g., x ≤ 0 or x > 4). It renders a number line with a configurable range and tick marks. For each specified range, it draws a highlighted segment and places circles at the boundary points. The circles can be 'open' (for <, >) or 'closed' (for ≤, ≥), providing a mathematically precise representation of the solution.",
+				"markdownDescription": "Generates an SVG number line to graph the solution set of one or more inequalities. This widget is ideal for visualizing simple inequalities (e.g., x > 5), compound 'and' inequalities (e.g., -2 < x ≤ 3), and compound 'or' inequalities (e.g., x ≤ 0 or x > 4). It renders a number line with a configurable range and tick marks. For each specified range, it draws a highlighted segment and places circles at the boundary points. The circles can be 'open' (for <, >) or 'closed' (for ≤, ≥), providing a mathematically precise representation of the solution."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"numberLine": {
+		"$ref": "#/definitions/numberLine",
+		"definitions": {
+			"numberLine": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "numberLine"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"orientation": {
+						"anyOf": [
+							{
+								"type": "string",
+								"enum": ["horizontal", "vertical"]
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "The orientation of the number line.",
+						"markdownDescription": "The orientation of the number line."
+					},
+					"min": {
+						"type": "number",
+						"description": "The minimum value displayed on the line.",
+						"markdownDescription": "The minimum value displayed on the line."
+					},
+					"max": {
+						"type": "number",
+						"description": "The maximum value displayed on the line.",
+						"markdownDescription": "The maximum value displayed on the line."
+					},
+					"majorTickInterval": {
+						"type": "number",
+						"description": "The numeric interval between labeled tick marks.",
+						"markdownDescription": "The numeric interval between labeled tick marks."
+					},
+					"minorTicksPerInterval": {
+						"type": ["number", "null"],
+						"description": "The number of unlabeled minor ticks to draw between each major tick.",
+						"markdownDescription": "The number of unlabeled minor ticks to draw between each major tick."
+					},
+					"points": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"value": {
+											"type": "number",
+											"description": "The numerical value where the point is located on the line.",
+											"markdownDescription": "The numerical value where the point is located on the line."
+										},
+										"label": {
+											"type": ["string", "null"],
+											"description": "An optional text label to display next to the point (e.g., \"A\", \"Minnesota\").",
+											"markdownDescription": "An optional text label to display next to the point (e.g., \"A\", \"Minnesota\")."
+										},
+										"color": {
+											"type": ["string", "null"],
+											"description": "The CSS color of the point.",
+											"markdownDescription": "The CSS color of the point."
+										},
+										"labelPosition": {
+											"anyOf": [
+												{
+													"type": "string",
+													"enum": ["above", "below", "left", "right"]
+												},
+												{
+													"type": "null"
+												}
+											],
+											"description": "Specifies the position of the label relative to the point.",
+											"markdownDescription": "Specifies the position of the label relative to the point."
+										}
+									},
+									"required": ["value", "label", "color", "labelPosition"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An optional array of point objects to be plotted on the line.",
+						"markdownDescription": "An optional array of point objects to be plotted on the line."
+					},
+					"specialTickLabels": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"value": {
+											"type": "number",
+											"description": "The value on the number line to label.",
+											"markdownDescription": "The value on the number line to label."
+										},
+										"label": {
+											"type": "string",
+											"description": "The custom text for the label.",
+											"markdownDescription": "The custom text for the label."
+										}
+									},
+									"required": ["value", "label"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "Optional custom labels for specific values on the line (e.g., labeling 0 as \"sea level\").",
+						"markdownDescription": "Optional custom labels for specific values on the line (e.g., labeling 0 as \"sea level\")."
+					}
+				},
+				"required": [
+					"type",
+					"width",
+					"height",
+					"orientation",
+					"min",
+					"max",
+					"majorTickInterval",
+					"minorTicksPerInterval",
+					"points",
+					"specialTickLabels"
+				],
+				"additionalProperties": false,
+				"description": "This is a highly versatile template designed to generate a precise and customizable number line as an SVG graphic. It can be rendered horizontally (for general number comparisons) or vertically (often used for temperature, elevation, or financial contexts). The generator will construct a line representing a specified numerical range (minimum and maximum values). The line will be marked with labeled major tick marks at a configurable interval. It also supports rendering smaller, unlabeled minor tick marks between the major ones to show finer gradations (e.g., quarters, tenths). This is crucial for questions involving fractions and decimals. A key feature is the ability to plot multiple points on the line. Each point is defined by its numerical value and can be styled with a specific color. An accompanying text label (e.g., a letter like \"A\", a name like \"Minnesota\", or a value like \"−78 °C\") can be positioned above, below, or next to each point. Special labels, such as \"sea level\" or \"Zero balance,\" can be associated with specific values like 0. The final output is a clean, accurately scaled, and accessible SVG graphic ready for embedding in a QTI item, suitable for a wide range of questions from identifying points to comparing rational numbers.",
+				"markdownDescription": "This is a highly versatile template designed to generate a precise and customizable number line as an SVG graphic. It can be rendered horizontally (for general number comparisons) or vertically (often used for temperature, elevation, or financial contexts). The generator will construct a line representing a specified numerical range (minimum and maximum values). The line will be marked with labeled major tick marks at a configurable interval. It also supports rendering smaller, unlabeled minor tick marks between the major ones to show finer gradations (e.g., quarters, tenths). This is crucial for questions involving fractions and decimals. A key feature is the ability to plot multiple points on the line. Each point is defined by its numerical value and can be styled with a specific color. An accompanying text label (e.g., a letter like \"A\", a name like \"Minnesota\", or a value like \"−78 °C\") can be positioned above, below, or next to each point. Special labels, such as \"sea level\" or \"Zero balance,\" can be associated with specific values like 0. The final output is a clean, accurately scaled, and accessible SVG graphic ready for embedding in a QTI item, suitable for a wide range of questions from identifying points to comparing rational numbers."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"numberLineForOpposites": {
+		"$ref": "#/definitions/numberLineForOpposites",
+		"definitions": {
+			"numberLineForOpposites": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "numberLineForOpposites"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"maxAbsValue": {
+						"type": "number",
+						"description": "The maximum absolute value for the number line bounds (e.g., 10 for a value of 8.3).",
+						"markdownDescription": "The maximum absolute value for the number line bounds (e.g., 10 for a value of 8.3)."
+					},
+					"tickInterval": {
+						"type": "number",
+						"description": "The numeric interval between labeled tick marks.",
+						"markdownDescription": "The numeric interval between labeled tick marks."
+					},
+					"value": {
+						"type": "number",
+						"description": "The absolute value of the number whose opposite is being illustrated (e.g., for -8.3 and 8.3, the value is 8.3).",
+						"markdownDescription": "The absolute value of the number whose opposite is being illustrated (e.g., for -8.3 and 8.3, the value is 8.3)."
+					},
+					"positiveLabel": {
+						"anyOf": [
+							{
+								"type": ["string", "boolean"]
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "The label for the positive point. Can be a string, `true` (use numeric value), or `false` (hide label).",
+						"markdownDescription": "The label for the positive point. Can be a string, `true` (use numeric value), or `false` (hide label)."
+					},
+					"negativeLabel": {
+						"anyOf": [
+							{
+								"type": ["string", "boolean"]
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "The label for the negative point. Can be a string, `true` (use numeric value), or `false` (hide label).",
+						"markdownDescription": "The label for the negative point. Can be a string, `true` (use numeric value), or `false` (hide label)."
+					},
+					"showArrows": {
+						"type": ["boolean", "null"],
+						"description": "If true, shows symmetric arrows from 0 to each point.",
+						"markdownDescription": "If true, shows symmetric arrows from 0 to each point."
+					}
+				},
+				"required": [
+					"type",
+					"width",
+					"height",
+					"maxAbsValue",
+					"tickInterval",
+					"value",
+					"positiveLabel",
+					"negativeLabel",
+					"showArrows"
+				],
+				"additionalProperties": false,
+				"description": "This template is specifically designed to generate an SVG diagram that illustrates the concept of opposite numbers. The diagram's purpose is to visually reinforce that opposite numbers are equidistant from zero. The generator will create a horizontal number line that is always centered on 0. Based on a single input value, it will automatically plot two points: one at the negative value (-value) and one at the positive value (+value). To emphasize the relationship, the template will draw two symmetric arrows originating from 0 and pointing to each of the two points. The points can be labeled differently; for example, one can show its numerical value (e.g., \"8.3\") while its opposite is labeled with a question mark, prompting the student to identify it. This creates a clear, pedagogical diagram for questions about number opposites.",
+				"markdownDescription": "This template is specifically designed to generate an SVG diagram that illustrates the concept of opposite numbers. The diagram's purpose is to visually reinforce that opposite numbers are equidistant from zero. The generator will create a horizontal number line that is always centered on 0. Based on a single input value, it will automatically plot two points: one at the negative value (-value) and one at the positive value (+value). To emphasize the relationship, the template will draw two symmetric arrows originating from 0 and pointing to each of the two points. The points can be labeled differently; for example, one can show its numerical value (e.g., \"8.3\") while its opposite is labeled with a question mark, prompting the student to identify it. This creates a clear, pedagogical diagram for questions about number opposites."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"numberLineWithAction": {
+		"$ref": "#/definitions/numberLineWithAction",
+		"definitions": {
+			"numberLineWithAction": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "numberLineWithAction"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"orientation": {
+						"anyOf": [
+							{
+								"type": "string",
+								"enum": ["horizontal", "vertical"]
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "The orientation of the number line.",
+						"markdownDescription": "The orientation of the number line."
+					},
+					"min": {
+						"type": "number",
+						"description": "The minimum value displayed on the number line.",
+						"markdownDescription": "The minimum value displayed on the number line."
+					},
+					"max": {
+						"type": "number",
+						"description": "The maximum value displayed on the number line.",
+						"markdownDescription": "The maximum value displayed on the number line."
+					},
+					"tickInterval": {
+						"type": "number",
+						"description": "The numeric interval between tick marks.",
+						"markdownDescription": "The numeric interval between tick marks."
+					},
+					"customLabels": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"value": {
+									"type": "number",
+									"description": "The numeric position of the label.",
+									"markdownDescription": "The numeric position of the label."
+								},
+								"text": {
+									"type": "string",
+									"description": "The text to display for the label (e.g., \"-11°C\", \"?°C\").",
+									"markdownDescription": "The text to display for the label (e.g., \"-11°C\", \"?°C\")."
+								}
+							},
+							"required": ["value", "text"],
+							"additionalProperties": false
+						},
+						"description": "An array providing text labels for key points, such as the start value and the unknown end value.",
+						"markdownDescription": "An array providing text labels for key points, such as the start value and the unknown end value."
+					},
+					"action": {
+						"type": "object",
+						"properties": {
+							"startValue": {
+								"type": "number",
+								"description": "The numeric value where the action arrow begins.",
+								"markdownDescription": "The numeric value where the action arrow begins."
+							},
+							"change": {
+								"type": "number",
+								"description": "The amount of change. A positive value moves right/up, a negative value moves left/down.",
+								"markdownDescription": "The amount of change. A positive value moves right/up, a negative value moves left/down."
+							},
+							"label": {
+								"type": "string",
+								"description": "The text label to display alongside the arrow (e.g., \"+5°C\", \"-24\").",
+								"markdownDescription": "The text label to display alongside the arrow (e.g., \"+5°C\", \"-24\")."
+							}
+						},
+						"required": ["startValue", "change", "label"],
+						"additionalProperties": false,
+						"description": "Configuration for the action arrow representing the change.",
+						"markdownDescription": "Configuration for the action arrow representing the change."
+					}
+				},
+				"required": ["type", "width", "height", "orientation", "min", "max", "tickInterval", "customLabels", "action"],
+				"additionalProperties": false,
+				"description": "This template extends the basic number line to visually represent a dynamic process or operation, such as addition or subtraction. It is perfect for illustrating word problems that involve a change from a starting value. The generator will render a number line, mark a starting point, and draw a curved arrow to visually represent an \"action\" or change (e.g., \"+5°C\"). The destination of the arrow can be labeled with a question mark (\"?\"), making it ideal for problems where the student must calculate the result.",
+				"markdownDescription": "This template extends the basic number line to visually represent a dynamic process or operation, such as addition or subtraction. It is perfect for illustrating word problems that involve a change from a starting value. The generator will render a number line, mark a starting point, and draw a curved arrow to visually represent an \"action\" or change (e.g., \"+5°C\"). The destination of the arrow can be labeled with a question mark (\"?\"), making it ideal for problems where the student must calculate the result."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"numberLineWithFractionGroups": {
+		"$ref": "#/definitions/numberLineWithFractionGroups",
+		"definitions": {
+			"numberLineWithFractionGroups": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "numberLineWithFractionGroups"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"min": {
+						"type": "number",
+						"description": "The minimum value displayed on the number line.",
+						"markdownDescription": "The minimum value displayed on the number line."
+					},
+					"max": {
+						"type": "number",
+						"description": "The maximum value displayed on the number line.",
+						"markdownDescription": "The maximum value displayed on the number line."
+					},
+					"ticks": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"value": {
+									"type": "number",
+									"description": "The numerical position of the tick mark.",
+									"markdownDescription": "The numerical position of the tick mark."
+								},
+								"label": {
+									"type": ["string", "null"],
+									"description": "The text label for the tick mark (e.g., \"0\", \"1\", \"3/8\"). If omitted, no label is shown.",
+									"markdownDescription": "The text label for the tick mark (e.g., \"0\", \"1\", \"3/8\"). If omitted, no label is shown."
+								},
+								"isMajor": {
+									"type": ["boolean", "null"],
+									"description": "If true, render as a larger, more prominent tick mark.",
+									"markdownDescription": "If true, render as a larger, more prominent tick mark."
+								}
+							},
+							"required": ["value", "label", "isMajor"],
+							"additionalProperties": false
+						},
+						"description": "An array of tick mark objects defining their position, label, and style.",
+						"markdownDescription": "An array of tick mark objects defining their position, label, and style."
+					},
+					"segments": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"start": {
+											"type": "number",
+											"description": "The numerical starting value of the segment on the line.",
+											"markdownDescription": "The numerical starting value of the segment on the line."
+										},
+										"end": {
+											"type": "number",
+											"description": "The numerical ending value of the segment on the line.",
+											"markdownDescription": "The numerical ending value of the segment on the line."
+										},
+										"color": {
+											"type": "string",
+											"description": "A CSS color for the segment (e.g., \"#008B8B\", \"orange\").",
+											"markdownDescription": "A CSS color for the segment (e.g., \"#008B8B\", \"orange\")."
+										},
+										"label": {
+											"type": ["string", "null"],
+											"description": "An optional text label to display with the segment.",
+											"markdownDescription": "An optional text label to display with the segment."
+										}
+									},
+									"required": ["start", "end", "color", "label"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An optional array of colored segments to overlay on the number line to represent fractional groups.",
+						"markdownDescription": "An optional array of colored segments to overlay on the number line to represent fractional groups."
+					}
+				},
+				"required": ["type", "width", "height", "min", "max", "ticks", "segments"],
+				"additionalProperties": false,
+				"description": "This template generates a highly illustrative number line as an SVG graphic, specifically designed to build conceptual understanding of fraction division. It visually answers the question, \"How many groups of a certain fraction fit into a whole number?\" The generator will render a horizontal number line with a specified range (e.g., 0 to 2). The line is marked with ticks at intervals that can be defined as fractions (e.g., every 1/8). Major ticks are labeled with their values (e.g., \"0\", \"1\", \"3/8\"). The core feature is its ability to overlay distinctly colored segments to represent fractional lengths. For example, it can show one or more segments of length 3/8 starting from zero. This allows a student to see how many \"full groups\" of a fraction fit within a whole number and to visualize the remainder as a fraction of a group. This template is perfect for questions that bridge the gap between visual models and the abstract algorithm of dividing by a fraction (multiplying by the reciprocal).",
+				"markdownDescription": "This template generates a highly illustrative number line as an SVG graphic, specifically designed to build conceptual understanding of fraction division. It visually answers the question, \"How many groups of a certain fraction fit into a whole number?\" The generator will render a horizontal number line with a specified range (e.g., 0 to 2). The line is marked with ticks at intervals that can be defined as fractions (e.g., every 1/8). Major ticks are labeled with their values (e.g., \"0\", \"1\", \"3/8\"). The core feature is its ability to overlay distinctly colored segments to represent fractional lengths. For example, it can show one or more segments of length 3/8 starting from zero. This allows a student to see how many \"full groups\" of a fraction fit within a whole number and to visualize the remainder as a fraction of a group. This template is perfect for questions that bridge the gap between visual models and the abstract algorithm of dividing by a fraction (multiplying by the reciprocal)."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"numberSetDiagram": {
+		"$ref": "#/definitions/numberSetDiagram",
+		"definitions": {
+			"numberSetDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "numberSetDiagram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"sets": {
+						"type": "object",
+						"properties": {
+							"whole": {
+								"type": "object",
+								"properties": {
+									"label": {
+										"type": "string",
+										"description": "The text label for the number set (e.g., \"Whole numbers\").",
+										"markdownDescription": "The text label for the number set (e.g., \"Whole numbers\")."
+									},
+									"color": {
+										"type": "string",
+										"description": "The CSS fill color for the region (e.g., \"#E8F0FE\").",
+										"markdownDescription": "The CSS fill color for the region (e.g., \"#E8F0FE\")."
+									}
+								},
+								"required": ["label", "color"],
+								"additionalProperties": false
+							},
+							"integer": {
+								"type": "object",
+								"properties": {
+									"label": {
+										"type": "string",
+										"description": "The text label for the number set (e.g., \"Whole numbers\").",
+										"markdownDescription": "The text label for the number set (e.g., \"Whole numbers\")."
+									},
+									"color": {
+										"type": "string",
+										"description": "The CSS fill color for the region (e.g., \"#E8F0FE\").",
+										"markdownDescription": "The CSS fill color for the region (e.g., \"#E8F0FE\")."
+									}
+								},
+								"required": ["label", "color"],
+								"additionalProperties": false
+							},
+							"rational": {
+								"type": "object",
+								"properties": {
+									"label": {
+										"type": "string",
+										"description": "The text label for the number set (e.g., \"Whole numbers\").",
+										"markdownDescription": "The text label for the number set (e.g., \"Whole numbers\")."
+									},
+									"color": {
+										"type": "string",
+										"description": "The CSS fill color for the region (e.g., \"#E8F0FE\").",
+										"markdownDescription": "The CSS fill color for the region (e.g., \"#E8F0FE\")."
+									}
+								},
+								"required": ["label", "color"],
+								"additionalProperties": false
+							},
+							"irrational": {
+								"type": "object",
+								"properties": {
+									"label": {
+										"type": "string",
+										"description": "The text label for the number set (e.g., \"Whole numbers\").",
+										"markdownDescription": "The text label for the number set (e.g., \"Whole numbers\")."
+									},
+									"color": {
+										"type": "string",
+										"description": "The CSS fill color for the region (e.g., \"#E8F0FE\").",
+										"markdownDescription": "The CSS fill color for the region (e.g., \"#E8F0FE\")."
+									}
+								},
+								"required": ["label", "color"],
+								"additionalProperties": false
+							}
+						},
+						"required": ["whole", "integer", "rational", "irrational"],
+						"additionalProperties": false,
+						"description": "An object containing the labels and colors for each number set region.",
+						"markdownDescription": "An object containing the labels and colors for each number set region."
+					}
+				},
+				"required": ["type", "width", "height", "sets"],
+				"additionalProperties": false,
+				"description": "Generates a static SVG Euler diagram that visually represents the hierarchical relationship between the sets of whole, integer, rational, and irrational numbers. It renders nested ovals for the first three sets and a separate oval for irrational numbers, with each region clearly labeled and colored. This provides a classic visual aid for classifying numbers.",
+				"markdownDescription": "Generates a static SVG Euler diagram that visually represents the hierarchical relationship between the sets of whole, integer, rational, and irrational numbers. It renders nested ovals for the first three sets and a separate oval for irrational numbers, with each region clearly labeled and colored. This provides a classic visual aid for classifying numbers."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"parallelLinesTransversal": {
+		"$ref": "#/definitions/parallelLinesTransversal",
+		"definitions": {
+			"parallelLinesTransversal": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "parallelLinesTransversal"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"linesAngle": {
+						"type": ["number", "null"],
+						"description": "The rotation angle of the two parallel lines in degrees (0 is horizontal).",
+						"markdownDescription": "The rotation angle of the two parallel lines in degrees (0 is horizontal)."
+					},
+					"transversalAngle": {
+						"type": ["number", "null"],
+						"description": "The angle of the transversal line in degrees, relative to the horizontal.",
+						"markdownDescription": "The angle of the transversal line in degrees, relative to the horizontal."
+					},
+					"labels": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"intersection": {
+									"type": "string",
+									"enum": ["top", "bottom"],
+									"description": "Which of the two intersections the angle is at.",
+									"markdownDescription": "Which of the two intersections the angle is at."
+								},
+								"position": {
+									"type": "string",
+									"enum": ["topLeft", "topRight", "bottomLeft", "bottomRight"],
+									"description": "The position of the angle within that intersection.",
+									"markdownDescription": "The position of the angle within that intersection."
+								},
+								"label": {
+									"type": "string",
+									"description": "The text or mathematical label for the angle (e.g., \"x\", \"34°\", \"2x + 10\").",
+									"markdownDescription": "The text or mathematical label for the angle (e.g., \"x\", \"34°\", \"2x + 10\")."
+								},
+								"color": {
+									"type": ["string", "null"],
+									"description": "An optional CSS color for the angle's highlighting arc (e.g., \"#1E90FF\").",
+									"markdownDescription": "An optional CSS color for the angle's highlighting arc (e.g., \"#1E90FF\")."
+								}
+							},
+							"required": ["intersection", "position", "label", "color"],
+							"additionalProperties": false
+						},
+						"description": "An array of angle labels to be drawn on the diagram.",
+						"markdownDescription": "An array of angle labels to be drawn on the diagram."
+					}
+				},
+				"required": ["type", "width", "height", "linesAngle", "transversalAngle", "labels"],
+				"additionalProperties": false,
+				"description": "This template generates an SVG diagram depicting two parallel lines being intersected by a transversal line. It creates eight distinct angles, any of which can be labeled with a value, variable, or expression. This is ideal for problems involving corresponding, alternate interior, and other angle relationships.",
+				"markdownDescription": "This template generates an SVG diagram depicting two parallel lines being intersected by a transversal line. It creates eight distinct angles, any of which can be labeled with a value, variable, or expression. This is ideal for problems involving corresponding, alternate interior, and other angle relationships."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"partitionedShape": {
+		"$ref": "#/definitions/partitionedShape",
+		"definitions": {
+			"partitionedShape": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "partitionedShape"
+					},
+					"shapes": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"enum": ["rectangle", "circle"],
+									"description": "The type of geometric shape to render.",
+									"markdownDescription": "The type of geometric shape to render."
+								},
+								"totalParts": {
+									"type": "integer",
+									"exclusiveMinimum": 0,
+									"description": "The total number of equal parts the shape is divided into. For a rectangle, this is rows * columns. For a circle, this is segments.",
+									"markdownDescription": "The total number of equal parts the shape is divided into. For a rectangle, this is rows * columns. For a circle, this is segments."
+								},
+								"shadedParts": {
+									"type": "integer",
+									"minimum": 0,
+									"description": "The number of parts that should be shaded.",
+									"markdownDescription": "The number of parts that should be shaded."
+								},
+								"rows": {
+									"anyOf": [
+										{
+											"type": "integer",
+											"exclusiveMinimum": 0
+										},
+										{
+											"type": "null"
+										}
+									],
+									"description": "For rectangles, the number of rows in the grid.",
+									"markdownDescription": "For rectangles, the number of rows in the grid."
+								},
+								"columns": {
+									"anyOf": [
+										{
+											"type": "integer",
+											"exclusiveMinimum": 0
+										},
+										{
+											"type": "null"
+										}
+									],
+									"description": "For rectangles, the number of columns in the grid.",
+									"markdownDescription": "For rectangles, the number of columns in the grid."
+								},
+								"shadeColor": {
+									"type": ["string", "null"],
+									"description": "A CSS color string for the shaded portions.",
+									"markdownDescription": "A CSS color string for the shaded portions."
+								}
+							},
+							"required": ["type", "totalParts", "shadedParts", "rows", "columns", "shadeColor"],
+							"additionalProperties": false
+						},
+						"minItems": 1,
+						"description": "An array of one or more shape definitions. Multiple shapes are used to represent values greater than 100%.",
+						"markdownDescription": "An array of one or more shape definitions. Multiple shapes are used to represent values greater than 100%."
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The width of the SVG container for each shape in pixels.",
+						"markdownDescription": "The width of the SVG container for each shape in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The height of the SVG container for each shape in pixels.",
+						"markdownDescription": "The height of the SVG container for each shape in pixels."
+					},
+					"layout": {
+						"anyOf": [
+							{
+								"type": "string",
+								"enum": ["horizontal", "vertical"]
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "The arrangement of multiple shapes.",
+						"markdownDescription": "The arrangement of multiple shapes."
+					}
+				},
+				"required": ["type", "shapes", "width", "height", "layout"],
+				"additionalProperties": false,
+				"description": "This template is a highly versatile tool for generating SVG diagrams that visually represent fractions, decimals, and percentages. It replaces the `fractionBar` widget. It renders one or more geometric shapes (rectangles or circles) that are divided into a set number of equal parts, with a specified number of those parts shaded to illustrate a part-to-whole relationship. The generator is capable of creating: Grids and Bars: Rectangles can be partitioned into grids or single-row/column bars (fraction bars). Pie Charts: Circles can be divided into equal segments. Values Greater Than 100%: The template can render an array of shapes to model improper fractions or percentages over 100. The output is a clear, precise, and accessible SVG graphic ideal for questions requiring students to interpret visual models of proportions.",
+				"markdownDescription": "This template is a highly versatile tool for generating SVG diagrams that visually represent fractions, decimals, and percentages. It replaces the `fractionBar` widget. It renders one or more geometric shapes (rectangles or circles) that are divided into a set number of equal parts, with a specified number of those parts shaded to illustrate a part-to-whole relationship. The generator is capable of creating: Grids and Bars: Rectangles can be partitioned into grids or single-row/column bars (fraction bars). Pie Charts: Circles can be divided into equal segments. Values Greater Than 100%: The template can render an array of shapes to model improper fractions or percentages over 100. The output is a clear, precise, and accessible SVG graphic ideal for questions requiring students to interpret visual models of proportions."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"pictograph": {
+		"$ref": "#/definitions/pictograph",
+		"definitions": {
+			"pictograph": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "pictograph"
+					},
+					"title": {
+						"type": ["string", "null"],
+						"description": "An optional title displayed above the pictograph.",
+						"markdownDescription": "An optional title displayed above the pictograph."
+					},
+					"key": {
+						"type": "object",
+						"properties": {
+							"icon": {
+								"type": "string",
+								"description": "The icon to be used, which can be an emoji or an SVG string/URL.",
+								"markdownDescription": "The icon to be used, which can be an emoji or an SVG string/URL."
+							},
+							"label": {
+								"type": "string",
+								"description": "The full text label explaining the key (e.g., \"= 1 home run\").",
+								"markdownDescription": "The full text label explaining the key (e.g., \"= 1 home run\")."
+							}
+						},
+						"required": ["icon", "label"],
+						"additionalProperties": false,
+						"description": "The key that explains the value of a single icon.",
+						"markdownDescription": "The key that explains the value of a single icon."
+					},
+					"data": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"category": {
+									"type": "string",
+									"description": "The text label for the data row (e.g., \"Lancers\", \"Glenda\").",
+									"markdownDescription": "The text label for the data row (e.g., \"Lancers\", \"Glenda\")."
+								},
+								"iconCount": {
+									"type": "number",
+									"description": "The number of icons to display for this category.",
+									"markdownDescription": "The number of icons to display for this category."
+								}
+							},
+							"required": ["category", "iconCount"],
+							"additionalProperties": false
+						},
+						"description": "An array of data objects, each specifying a category label and the number of icons to render.",
+						"markdownDescription": "An array of data objects, each specifying a category label and the number of icons to render."
+					}
+				},
+				"required": ["type", "title", "key", "data"],
+				"additionalProperties": false,
+				"description": "This template generates a pictograph, a type of chart that uses icons or images (often emojis) to represent data quantities, making it visually engaging and easy to understand at a glance. The generator will create a layout with category labels aligned on one side (e.g., vertically down the left) and corresponding rows of icons on the other. The number of icons in each row is proportional to the value of that category. A crucial component of the pictograph is the key, which will be displayed prominently (usually at the bottom) to explain the numerical value represented by a single icon (e.g., \"⚾ = 1 home run\" or \"🪄 = 2 wands\"). The template allows for full customization of the category labels, the icon to be used, and the value represented by the icon.",
+				"markdownDescription": "This template generates a pictograph, a type of chart that uses icons or images (often emojis) to represent data quantities, making it visually engaging and easy to understand at a glance. The generator will create a layout with category labels aligned on one side (e.g., vertically down the left) and corresponding rows of icons on the other. The number of icons in each row is proportional to the value of that category. A crucial component of the pictograph is the key, which will be displayed prominently (usually at the bottom) to explain the numerical value represented by a single icon (e.g., \"⚾ = 1 home run\" or \"🪄 = 2 wands\"). The template allows for full customization of the category labels, the icon to be used, and the value represented by the icon."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"polyhedronDiagram": {
+		"$ref": "#/definitions/polyhedronDiagram",
+		"definitions": {
+			"polyhedronDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "polyhedronDiagram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"shape": {
+						"anyOf": [
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "rectangularPrism"
+									},
+									"length": {
+										"type": "number",
+										"description": "The length of the prism (depth).",
+										"markdownDescription": "The length of the prism (depth)."
+									},
+									"width": {
+										"type": "number",
+										"description": "The width of the prism (front-facing dimension).",
+										"markdownDescription": "The width of the prism (front-facing dimension)."
+									},
+									"height": {
+										"type": "number",
+										"description": "The height of the prism.",
+										"markdownDescription": "The height of the prism."
+									}
+								},
+								"required": ["type", "length", "width", "height"],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "triangularPrism"
+									},
+									"base": {
+										"type": "object",
+										"properties": {
+											"b": {
+												"type": "number",
+												"description": "The base length of the triangular face.",
+												"markdownDescription": "The base length of the triangular face."
+											},
+											"h": {
+												"type": "number",
+												"description": "The height of the triangular face.",
+												"markdownDescription": "The height of the triangular face."
+											},
+											"hypotenuse": {
+												"type": ["number", "null"],
+												"description": "The hypotenuse for a right-triangle base. Calculated if omitted.",
+												"markdownDescription": "The hypotenuse for a right-triangle base. Calculated if omitted."
+											}
+										},
+										"required": ["b", "h", "hypotenuse"],
+										"additionalProperties": false,
+										"description": "The dimensions of the triangular base.",
+										"markdownDescription": "The dimensions of the triangular base."
+									},
+									"length": {
+										"type": "number",
+										"description": "The length (depth) of the prism, connecting the two triangular bases.",
+										"markdownDescription": "The length (depth) of the prism, connecting the two triangular bases."
+									}
+								},
+								"required": ["type", "base", "length"],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "rectangularPyramid"
+									},
+									"baseLength": {
+										"type": "number",
+										"description": "The length of the rectangular base.",
+										"markdownDescription": "The length of the rectangular base."
+									},
+									"baseWidth": {
+										"type": "number",
+										"description": "The width of the rectangular base.",
+										"markdownDescription": "The width of the rectangular base."
+									},
+									"height": {
+										"type": "number",
+										"description": "The perpendicular height from the base to the apex.",
+										"markdownDescription": "The perpendicular height from the base to the apex."
+									}
+								},
+								"required": ["type", "baseLength", "baseWidth", "height"],
+								"additionalProperties": false
+							}
+						],
+						"description": "The geometric data defining the shape of the polyhedron.",
+						"markdownDescription": "The geometric data defining the shape of the polyhedron."
+					},
+					"labels": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"text": {
+											"type": "string",
+											"description": "The text for the label (e.g., \"10 cm\", \"Area = 9 units²\").",
+											"markdownDescription": "The text for the label (e.g., \"10 cm\", \"Area = 9 units²\")."
+										},
+										"target": {
+											"type": "string",
+											"description": "The specific edge or face to label (e.g., \"length\", \"width\", \"height\", \"top_face\", \"front_face\").",
+											"markdownDescription": "The specific edge or face to label (e.g., \"length\", \"width\", \"height\", \"top_face\", \"front_face\")."
+										}
+									},
+									"required": ["text", "target"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An array of labels for edge lengths or face areas.",
+						"markdownDescription": "An array of labels for edge lengths or face areas."
+					},
+					"shadedFace": {
+						"type": ["string", "null"],
+						"description": "The identifier of a face to shade (e.g., \"top_face\", \"front_face\").",
+						"markdownDescription": "The identifier of a face to shade (e.g., \"top_face\", \"front_face\")."
+					},
+					"showHiddenEdges": {
+						"type": ["boolean", "null"],
+						"description": "If true, render edges hidden from the camera view as dashed lines.",
+						"markdownDescription": "If true, render edges hidden from the camera view as dashed lines."
+					}
+				},
+				"required": ["type", "width", "height", "shape", "labels", "shadedFace", "showHiddenEdges"],
+				"additionalProperties": false,
+				"description": "This template is a versatile tool for generating SVG diagrams of three-dimensional polyhedra with flat faces, such as prisms and pyramids. It renders the polyhedron in a standard isometric or perspective view to provide depth perception. The generator supports several types of polyhedra, currently: Rectangular Prisms (including cubes): Defined by length, width, and height dimensions. Triangular Prisms: Defined by a triangular base (with base, height, and optionally hypotenuse) and a length. Rectangular Pyramids: Defined by a rectangular base (length and width) and a height. The template provides: Accurate 3D Representation: The polyhedron is drawn with all visible edges as solid lines. Edges that would be hidden from the current viewpoint are drawn as dashed lines to aid in understanding the 3D structure. This dashed representation can be toggled on/off. Dimension Labeling: It can label the lengths of edges (like \"length,\" \"width,\" \"height\") with custom text or numerical values. Leader lines connect the labels to the appropriate edges for clarity. Face Highlighting: It supports shading or coloring specific faces (e.g., the 'top', 'bottom', 'front' base) to draw attention to them. This is particularly useful for problems where the area of a base is given. A label can also be placed on a face to denote its area directly. The final output is a clean, mathematically accurate, and easy-to-interpret SVG diagram, ready to be embedded in a QTI item body.",
+				"markdownDescription": "This template is a versatile tool for generating SVG diagrams of three-dimensional polyhedra with flat faces, such as prisms and pyramids. It renders the polyhedron in a standard isometric or perspective view to provide depth perception. The generator supports several types of polyhedra, currently: Rectangular Prisms (including cubes): Defined by length, width, and height dimensions. Triangular Prisms: Defined by a triangular base (with base, height, and optionally hypotenuse) and a length. Rectangular Pyramids: Defined by a rectangular base (length and width) and a height. The template provides: Accurate 3D Representation: The polyhedron is drawn with all visible edges as solid lines. Edges that would be hidden from the current viewpoint are drawn as dashed lines to aid in understanding the 3D structure. This dashed representation can be toggled on/off. Dimension Labeling: It can label the lengths of edges (like \"length,\" \"width,\" \"height\") with custom text or numerical values. Leader lines connect the labels to the appropriate edges for clarity. Face Highlighting: It supports shading or coloring specific faces (e.g., the 'top', 'bottom', 'front' base) to draw attention to them. This is particularly useful for problems where the area of a base is given. A label can also be placed on a face to denote its area directly. The final output is a clean, mathematically accurate, and easy-to-interpret SVG diagram, ready to be embedded in a QTI item body."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"polyhedronNetDiagram": {
+		"$ref": "#/definitions/polyhedronNetDiagram",
+		"definitions": {
+			"polyhedronNetDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "polyhedronNetDiagram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"polyhedronType": {
+						"type": "string",
+						"enum": ["cube", "rectangularPrism", "triangularPrism", "squarePyramid", "triangularPyramid"],
+						"description": "The type of polyhedron for which to generate a net.",
+						"markdownDescription": "The type of polyhedron for which to generate a net."
+					},
+					"dimensions": {
+						"type": "object",
+						"properties": {
+							"base": {
+								"anyOf": [
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "square"
+											},
+											"side": {
+												"type": "number"
+											}
+										},
+										"required": ["type", "side"],
+										"additionalProperties": false
+									},
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "rectangle"
+											},
+											"length": {
+												"type": "number"
+											},
+											"width": {
+												"type": "number"
+											}
+										},
+										"required": ["type", "length", "width"],
+										"additionalProperties": false
+									},
+									{
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "triangle"
+											},
+											"base": {
+												"type": "number"
+											},
+											"height": {
+												"type": "number"
+											},
+											"side1": {
+												"type": "number"
+											},
+											"side2": {
+												"type": "number"
+											}
+										},
+										"required": ["type", "base", "height", "side1", "side2"],
+										"additionalProperties": false
+									}
+								],
+								"description": "The primary base shape of the polyhedron.",
+								"markdownDescription": "The primary base shape of the polyhedron."
+							},
+							"lateralHeight": {
+								"type": ["number", "null"],
+								"description": "The height of the lateral rectangular faces (for prisms) or triangular faces (for pyramids).",
+								"markdownDescription": "The height of the lateral rectangular faces (for prisms) or triangular faces (for pyramids)."
+							}
+						},
+						"required": ["base", "lateralHeight"],
+						"additionalProperties": false,
+						"description": "An object specifying the dimensions of the faces.",
+						"markdownDescription": "An object specifying the dimensions of the faces."
+					},
+					"showLabels": {
+						"type": ["boolean", "null"],
+						"description": "If true, display the dimension labels on the net.",
+						"markdownDescription": "If true, display the dimension labels on the net."
+					}
+				},
+				"required": ["type", "width", "height", "polyhedronType", "dimensions", "showLabels"],
+				"additionalProperties": false,
+				"description": "This template generates a two-dimensional \"net\" of a 3D polyhedron as an SVG graphic. A net is a 2D pattern that can be folded to form the 3D shape, and this template is essential for questions about surface area and the relationship between 2D and 3D geometry. The generator will render a specific, standard layout for the net of a given polyhedron. It programmatically arranges the component faces (squares, rectangles, triangles) in a connected pattern. This template is designed to create nets for various shapes: Cube: A cross-shaped layout of six identical squares. Rectangular Prism: A layout of six rectangles, typically with four in a row and two attached as \"lids\". Triangular Prism: A layout of three rectangles in a row with two triangular bases attached. Square Pyramid: A central square base with four triangles attached to its sides. Triangular Pyramid (Tetrahedron): A central triangular base with three other triangles attached to its sides. The diagram can be customized with dimension labels on the edges of the faces, allowing students to calculate the area of each component part. The final SVG is a clear and accurate representation of the unfolded solid.",
+				"markdownDescription": "This template generates a two-dimensional \"net\" of a 3D polyhedron as an SVG graphic. A net is a 2D pattern that can be folded to form the 3D shape, and this template is essential for questions about surface area and the relationship between 2D and 3D geometry. The generator will render a specific, standard layout for the net of a given polyhedron. It programmatically arranges the component faces (squares, rectangles, triangles) in a connected pattern. This template is designed to create nets for various shapes: Cube: A cross-shaped layout of six identical squares. Rectangular Prism: A layout of six rectangles, typically with four in a row and two attached as \"lids\". Triangular Prism: A layout of three rectangles in a row with two triangular bases attached. Square Pyramid: A central square base with four triangles attached to its sides. Triangular Pyramid (Tetrahedron): A central triangular base with three other triangles attached to its sides. The diagram can be customized with dimension labels on the edges of the faces, allowing students to calculate the area of each component part. The final SVG is a clear and accurate representation of the unfolded solid."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"pythagoreanProofDiagram": {
+		"$ref": "#/definitions/pythagoreanProofDiagram",
+		"definitions": {
+			"pythagoreanProofDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "pythagoreanProofDiagram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"squareA": {
+						"type": "object",
+						"properties": {
+							"area": {
+								"type": "number",
+								"description": "The area of the square, used for labeling.",
+								"markdownDescription": "The area of the square, used for labeling."
+							},
+							"sideLabel": {
+								"type": ["string", "null"],
+								"description": "An optional label for the corresponding triangle side (e.g., \"a\", \"b\", \"c\").",
+								"markdownDescription": "An optional label for the corresponding triangle side (e.g., \"a\", \"b\", \"c\")."
+							}
+						},
+						"required": ["area", "sideLabel"],
+						"additionalProperties": false,
+						"description": "Properties of the square on the first leg.",
+						"markdownDescription": "Properties of the square on the first leg."
+					},
+					"squareB": {
+						"type": "object",
+						"properties": {
+							"area": {
+								"type": "number",
+								"description": "The area of the square, used for labeling.",
+								"markdownDescription": "The area of the square, used for labeling."
+							},
+							"sideLabel": {
+								"type": ["string", "null"],
+								"description": "An optional label for the corresponding triangle side (e.g., \"a\", \"b\", \"c\").",
+								"markdownDescription": "An optional label for the corresponding triangle side (e.g., \"a\", \"b\", \"c\")."
+							}
+						},
+						"required": ["area", "sideLabel"],
+						"additionalProperties": false,
+						"description": "Properties of the square on the second leg.",
+						"markdownDescription": "Properties of the square on the second leg."
+					},
+					"squareC": {
+						"type": "object",
+						"properties": {
+							"area": {
+								"type": "number",
+								"description": "The area of the square, used for labeling.",
+								"markdownDescription": "The area of the square, used for labeling."
+							},
+							"sideLabel": {
+								"type": ["string", "null"],
+								"description": "An optional label for the corresponding triangle side (e.g., \"a\", \"b\", \"c\").",
+								"markdownDescription": "An optional label for the corresponding triangle side (e.g., \"a\", \"b\", \"c\")."
+							}
+						},
+						"required": ["area", "sideLabel"],
+						"additionalProperties": false,
+						"description": "Properties of the square on the hypotenuse.",
+						"markdownDescription": "Properties of the square on the hypotenuse."
+					}
+				},
+				"required": ["type", "width", "height", "squareA", "squareB", "squareC"],
+				"additionalProperties": false,
+				"description": "Generates a classic visual proof of the Pythagorean theorem. This SVG diagram renders a central right-angled triangle. A square is constructed on each of the triangle's three sides (the two legs 'a' and 'b', and the hypotenuse 'c'). Each square is labeled with its area, allowing students to visually confirm the relationship a² + b² = c². This provides a powerful, intuitive illustration of the theorem beyond the formula itself.",
+				"markdownDescription": "Generates a classic visual proof of the Pythagorean theorem. This SVG diagram renders a central right-angled triangle. A square is constructed on each of the triangle's three sides (the two legs 'a' and 'b', and the hypotenuse 'c'). Each square is labeled with its area, allowing students to visually confirm the relationship a² + b² = c². This provides a powerful, intuitive illustration of the theorem beyond the formula itself."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"scatterPlot": {
+		"$ref": "#/definitions/scatterPlot",
+		"definitions": {
+			"scatterPlot": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "scatterPlot"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"title": {
+						"type": ["string", "null"],
+						"description": "An optional title displayed above or below the plot.",
+						"markdownDescription": "An optional title displayed above or below the plot."
+					},
+					"xAxis": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": "string",
+								"description": "The text title for the axis (e.g., \"Driver Age\").",
+								"markdownDescription": "The text title for the axis (e.g., \"Driver Age\")."
+							},
+							"min": {
+								"type": "number",
+								"description": "The minimum value displayed on the axis.",
+								"markdownDescription": "The minimum value displayed on the axis."
+							},
+							"max": {
+								"type": "number",
+								"description": "The maximum value displayed on the axis.",
+								"markdownDescription": "The maximum value displayed on the axis."
+							},
+							"tickInterval": {
+								"type": "number",
+								"description": "The numeric interval between tick marks on the axis.",
+								"markdownDescription": "The numeric interval between tick marks on the axis."
+							},
+							"gridLines": {
+								"type": ["boolean", "null"],
+								"description": "If true, display grid lines for this axis.",
+								"markdownDescription": "If true, display grid lines for this axis."
+							}
+						},
+						"required": ["label", "min", "max", "tickInterval", "gridLines"],
+						"additionalProperties": false,
+						"description": "Configuration for the horizontal (X) axis.",
+						"markdownDescription": "Configuration for the horizontal (X) axis."
+					},
+					"yAxis": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": "string",
+								"description": "The text title for the axis (e.g., \"Driver Age\").",
+								"markdownDescription": "The text title for the axis (e.g., \"Driver Age\")."
+							},
+							"min": {
+								"type": "number",
+								"description": "The minimum value displayed on the axis.",
+								"markdownDescription": "The minimum value displayed on the axis."
+							},
+							"max": {
+								"type": "number",
+								"description": "The maximum value displayed on the axis.",
+								"markdownDescription": "The maximum value displayed on the axis."
+							},
+							"tickInterval": {
+								"type": "number",
+								"description": "The numeric interval between tick marks on the axis.",
+								"markdownDescription": "The numeric interval between tick marks on the axis."
+							},
+							"gridLines": {
+								"type": ["boolean", "null"],
+								"description": "If true, display grid lines for this axis.",
+								"markdownDescription": "If true, display grid lines for this axis."
+							}
+						},
+						"required": ["label", "min", "max", "tickInterval", "gridLines"],
+						"additionalProperties": false,
+						"description": "Configuration for the vertical (Y) axis.",
+						"markdownDescription": "Configuration for the vertical (Y) axis."
+					},
+					"points": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"x": {
+									"type": "number",
+									"description": "The value of the point on the horizontal (X) axis.",
+									"markdownDescription": "The value of the point on the horizontal (X) axis."
+								},
+								"y": {
+									"type": "number",
+									"description": "The value of the point on the vertical (Y) axis.",
+									"markdownDescription": "The value of the point on the vertical (Y) axis."
+								},
+								"label": {
+									"type": ["string", "null"],
+									"description": "An optional text label to display near the point.",
+									"markdownDescription": "An optional text label to display near the point."
+								}
+							},
+							"required": ["x", "y", "label"],
+							"additionalProperties": false
+						},
+						"description": "An array of data points to be plotted.",
+						"markdownDescription": "An array of data points to be plotted."
+					},
+					"trendLines": {
+						"anyOf": [
+							{
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string",
+											"description": "A unique identifier for the line (e.g., \"line-a\").",
+											"markdownDescription": "A unique identifier for the line (e.g., \"line-a\")."
+										},
+										"label": {
+											"type": ["string", "null"],
+											"description": "An optional label to display next to the line (e.g., \"A\", \"B\").",
+											"markdownDescription": "An optional label to display next to the line (e.g., \"A\", \"B\")."
+										},
+										"color": {
+											"type": ["string", "null"],
+											"description": "The color of the line, as a CSS color string (e.g., \"red\", \"#FF0000\").",
+											"markdownDescription": "The color of the line, as a CSS color string (e.g., \"red\", \"#FF0000\")."
+										},
+										"style": {
+											"anyOf": [
+												{
+													"type": "string",
+													"enum": ["solid", "dashed"]
+												},
+												{
+													"type": "null"
+												}
+											],
+											"description": "The style of the line.",
+											"markdownDescription": "The style of the line."
+										},
+										"data": {
+											"anyOf": [
+												{
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "linear",
+															"description": "Specifies a straight line.",
+															"markdownDescription": "Specifies a straight line."
+														},
+														"slope": {
+															"type": "number",
+															"description": "The slope of the line (rise over run).",
+															"markdownDescription": "The slope of the line (rise over run)."
+														},
+														"yIntercept": {
+															"type": "number",
+															"description": "The y-value where the line crosses the Y-axis.",
+															"markdownDescription": "The y-value where the line crosses the Y-axis."
+														}
+													},
+													"required": ["type", "slope", "yIntercept"],
+													"additionalProperties": false
+												},
+												{
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "quadratic",
+															"description": "Specifies a parabolic curve.",
+															"markdownDescription": "Specifies a parabolic curve."
+														},
+														"a": {
+															"type": "number",
+															"description": "The coefficient for the x^2 term in y = ax^2 + bx + c.",
+															"markdownDescription": "The coefficient for the x^2 term in y = ax^2 + bx + c."
+														},
+														"b": {
+															"type": "number",
+															"description": "The coefficient for the x term in y = ax^2 + bx + c.",
+															"markdownDescription": "The coefficient for the x term in y = ax^2 + bx + c."
+														},
+														"c": {
+															"type": "number",
+															"description": "The constant term (y-intercept) in y = ax^2 + bx + c.",
+															"markdownDescription": "The constant term (y-intercept) in y = ax^2 + bx + c."
+														}
+													},
+													"required": ["type", "a", "b", "c"],
+													"additionalProperties": false
+												}
+											],
+											"description": "The mathematical definition of the line or curve.",
+											"markdownDescription": "The mathematical definition of the line or curve."
+										}
+									},
+									"required": ["id", "label", "color", "style", "data"],
+									"additionalProperties": false
+								}
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "An optional array of one or more trend lines or curves to overlay on the plot.",
+						"markdownDescription": "An optional array of one or more trend lines or curves to overlay on the plot."
+					}
+				},
+				"required": ["type", "width", "height", "title", "xAxis", "yAxis", "points", "trendLines"],
+				"additionalProperties": false,
+				"description": "This template generates a two-dimensional scatter plot as an SVG graphic. It constructs a full Cartesian coordinate system and plots data points at specified (x, y) coordinates. Its key feature is the ability to render one or more trend lines (linear or nonlinear) to model the relationship between variables. This is ideal for questions about lines of best fit, data modeling, and making predictions.",
+				"markdownDescription": "This template generates a two-dimensional scatter plot as an SVG graphic. It constructs a full Cartesian coordinate system and plots data points at specified (x, y) coordinates. Its key feature is the ability to render one or more trend lines (linear or nonlinear) to model the relationship between variables. This is ideal for questions about lines of best fit, data modeling, and making predictions."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"stackedItemsDiagram": {
+		"$ref": "#/definitions/stackedItemsDiagram",
+		"definitions": {
+			"stackedItemsDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "stackedItemsDiagram"
+					},
+					"width": {
+						"type": "number",
+						"description": "The total width of the output container div in pixels.",
+						"markdownDescription": "The total width of the output container div in pixels."
+					},
+					"height": {
+						"type": "number",
+						"description": "The total height of the output container div in pixels.",
+						"markdownDescription": "The total height of the output container div in pixels."
+					},
+					"altText": {
+						"type": "string",
+						"description": "A comprehensive alt text describing the final composite image for accessibility.",
+						"markdownDescription": "A comprehensive alt text describing the final composite image for accessibility."
+					},
+					"baseItem": {
+						"type": "object",
+						"properties": {
+							"emoji": {
+								"type": "string",
+								"description": "The emoji character to use as the icon (e.g., '🍦', '🥞', '📚').",
+								"markdownDescription": "The emoji character to use as the icon (e.g., '🍦', '🥞', '📚')."
+							},
+							"size": {
+								"type": "number",
+								"description": "The size of the emoji in pixels.",
+								"markdownDescription": "The size of the emoji in pixels."
+							},
+							"label": {
+								"type": "string",
+								"description": "Alternative text describing the emoji for accessibility.",
+								"markdownDescription": "Alternative text describing the emoji for accessibility."
+							}
+						},
+						"required": ["emoji", "size", "label"],
+						"additionalProperties": false,
+						"description": "The emoji for the non-repeated base item (e.g., the cone '🍦').",
+						"markdownDescription": "The emoji for the non-repeated base item (e.g., the cone '🍦')."
+					},
+					"stackedItem": {
+						"type": "object",
+						"properties": {
+							"emoji": {
+								"type": "string",
+								"description": "The emoji character to use as the icon (e.g., '🍦', '🥞', '📚').",
+								"markdownDescription": "The emoji character to use as the icon (e.g., '🍦', '🥞', '📚')."
+							},
+							"size": {
+								"type": "number",
+								"description": "The size of the emoji in pixels.",
+								"markdownDescription": "The size of the emoji in pixels."
+							},
+							"label": {
+								"type": "string",
+								"description": "Alternative text describing the emoji for accessibility.",
+								"markdownDescription": "Alternative text describing the emoji for accessibility."
+							}
+						},
+						"required": ["emoji", "size", "label"],
+						"additionalProperties": false,
+						"description": "The emoji for the item that will be repeated and stacked (e.g., the scoop '🍨').",
+						"markdownDescription": "The emoji for the item that will be repeated and stacked (e.g., the scoop '🍨')."
+					},
+					"count": {
+						"type": "integer",
+						"minimum": 0,
+						"description": "The number of times the stackedItem should be rendered.",
+						"markdownDescription": "The number of times the stackedItem should be rendered."
+					},
+					"orientation": {
+						"anyOf": [
+							{
+								"type": "string",
+								"enum": ["vertical", "horizontal"]
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "The direction of the stack.",
+						"markdownDescription": "The direction of the stack."
+					},
+					"overlap": {
+						"type": ["number", "null"],
+						"description": "The proportion of the stacked item's size to overlap. E.g., 0.75 means each new item overlaps 75% of the previous one. A value of 0 means they touch at the edges. A negative value would create space.",
+						"markdownDescription": "The proportion of the stacked item's size to overlap. E.g., 0.75 means each new item overlaps 75% of the previous one. A value of 0 means they touch at the edges. A negative value would create space."
+					}
+				},
+				"required": [
+					"type",
+					"width",
+					"height",
+					"altText",
+					"baseItem",
+					"stackedItem",
+					"count",
+					"orientation",
+					"overlap"
+				],
+				"additionalProperties": false,
+				"description": "This template is designed to generate a simple, clear visual representation of a quantity by stacking emoji items on top of a base emoji. It is particularly useful for word problems where a count of items (like scoops of ice cream, pancakes, or blocks) is central to the problem. The output is a self-contained <div> containing absolutely positioned emoji text elements to create a clean, layered visual. The generator will render a single baseItem emoji (e.g., an ice cream cone '🍦', a plate '🍽️'). It will then render a stackedItem emoji a specified number of times (count), creating a vertical or horizontal stack. The degree of overlap or spacing between the stacked items is configurable, allowing for a tight stack or a more spaced-out list. This template's purpose is purely illustrative, helping students visualize the number mentioned in the problem's text. All visual parameters, including the emoji characters, dimensions, and count, are fully configurable to adapt to various scenarios.",
+				"markdownDescription": "This template is designed to generate a simple, clear visual representation of a quantity by stacking emoji items on top of a base emoji. It is particularly useful for word problems where a count of items (like scoops of ice cream, pancakes, or blocks) is central to the problem. The output is a self-contained <div> containing absolutely positioned emoji text elements to create a clean, layered visual. The generator will render a single baseItem emoji (e.g., an ice cream cone '🍦', a plate '🍽️'). It will then render a stackedItem emoji a specified number of times (count), creating a vertical or horizontal stack. The degree of overlap or spacing between the stacked items is configurable, allowing for a tight stack or a more spaced-out list. This template's purpose is purely illustrative, helping students visualize the number mentioned in the problem's text. All visual parameters, including the emoji characters, dimensions, and count, are fully configurable to adapt to various scenarios."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"tapeDiagram": {
+		"$ref": "#/definitions/tapeDiagram",
+		"definitions": {
+			"tapeDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "tapeDiagram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"topTape": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": "string",
+								"description": "The text label for this tape (e.g., \"Teeth per larger gear\").",
+								"markdownDescription": "The text label for this tape (e.g., \"Teeth per larger gear\")."
+							},
+							"segments": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"label": {
+											"type": "string",
+											"description": "The text label to display inside this segment (e.g., \"10\", \"w\").",
+											"markdownDescription": "The text label to display inside this segment (e.g., \"10\", \"w\")."
+										},
+										"length": {
+											"type": "number",
+											"exclusiveMinimum": 0,
+											"description": "The numerical length of the segment for proportional rendering.",
+											"markdownDescription": "The numerical length of the segment for proportional rendering."
+										}
+									},
+									"required": ["label", "length"],
+									"additionalProperties": false
+								},
+								"minItems": 1,
+								"description": "An array of segment objects that make up this tape.",
+								"markdownDescription": "An array of segment objects that make up this tape."
+							},
+							"color": {
+								"type": ["string", "null"],
+								"description": "The CSS fill color for the tape segments.",
+								"markdownDescription": "The CSS fill color for the tape segments."
+							}
+						},
+						"required": ["label", "segments", "color"],
+						"additionalProperties": false,
+						"description": "Configuration for the upper tape.",
+						"markdownDescription": "Configuration for the upper tape."
+					},
+					"bottomTape": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": "string",
+								"description": "The text label for this tape (e.g., \"Teeth per larger gear\").",
+								"markdownDescription": "The text label for this tape (e.g., \"Teeth per larger gear\")."
+							},
+							"segments": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"label": {
+											"type": "string",
+											"description": "The text label to display inside this segment (e.g., \"10\", \"w\").",
+											"markdownDescription": "The text label to display inside this segment (e.g., \"10\", \"w\")."
+										},
+										"length": {
+											"type": "number",
+											"exclusiveMinimum": 0,
+											"description": "The numerical length of the segment for proportional rendering.",
+											"markdownDescription": "The numerical length of the segment for proportional rendering."
+										}
+									},
+									"required": ["label", "length"],
+									"additionalProperties": false
+								},
+								"minItems": 1,
+								"description": "An array of segment objects that make up this tape.",
+								"markdownDescription": "An array of segment objects that make up this tape."
+							},
+							"color": {
+								"type": ["string", "null"],
+								"description": "The CSS fill color for the tape segments.",
+								"markdownDescription": "The CSS fill color for the tape segments."
+							}
+						},
+						"required": ["label", "segments", "color"],
+						"additionalProperties": false,
+						"description": "Configuration for the lower tape.",
+						"markdownDescription": "Configuration for the lower tape."
+					},
+					"showTotalBracket": {
+						"type": ["boolean", "null"],
+						"description": "If true, displays a bracket and label for the total number of segments.",
+						"markdownDescription": "If true, displays a bracket and label for the total number of segments."
+					},
+					"totalLabel": {
+						"type": ["string", "null"],
+						"description": "The text label for the total bracket, if shown.",
+						"markdownDescription": "The text label for the total bracket, if shown."
+					}
+				},
+				"required": ["type", "width", "height", "topTape", "bottomTape", "showTotalBracket", "totalLabel"],
+				"additionalProperties": false,
+				"description": "Generates a \"tape diagram\" or \"bar model\" as an SVG graphic to represent part-whole relationships. This widget is exceptionally useful for modeling and solving word problems involving ratios or algebraic equations. It renders one or two tapes, each composed of proportionally sized segments that can be labeled with numbers or variables. By visually aligning tapes or their segments, it translates abstract numerical relationships into a concrete, geometric form, making concepts like \"3x = 15\" intuitive.",
+				"markdownDescription": "Generates a \"tape diagram\" or \"bar model\" as an SVG graphic to represent part-whole relationships. This widget is exceptionally useful for modeling and solving word problems involving ratios or algebraic equations. It renders one or two tapes, each composed of proportionally sized segments that can be labeled with numbers or variables. By visually aligning tapes or their segments, it translates abstract numerical relationships into a concrete, geometric form, making concepts like \"3x = 15\" intuitive."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"unitBlockDiagram": {
+		"$ref": "#/definitions/unitBlockDiagram",
+		"definitions": {
+			"unitBlockDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "unitBlockDiagram"
+					},
+					"totalBlocks": {
+						"type": "integer",
+						"exclusiveMinimum": 0,
+						"description": "The total number of 10x10 \"hundreds blocks\" to display.",
+						"markdownDescription": "The total number of 10x10 \"hundreds blocks\" to display."
+					},
+					"shadedUnitsPerBlock": {
+						"type": "integer",
+						"minimum": 0,
+						"maximum": 100,
+						"description": "The number of small unit squares to shade within each block.",
+						"markdownDescription": "The number of small unit squares to shade within each block."
+					},
+					"blocksPerRow": {
+						"anyOf": [
+							{
+								"type": "integer",
+								"exclusiveMinimum": 0
+							},
+							{
+								"type": "null"
+							}
+						],
+						"description": "The number of blocks to display in each row before wrapping.",
+						"markdownDescription": "The number of blocks to display in each row before wrapping."
+					},
+					"blockWidth": {
+						"type": ["number", "null"],
+						"description": "The width of each individual 10x10 block in pixels.",
+						"markdownDescription": "The width of each individual 10x10 block in pixels."
+					},
+					"blockHeight": {
+						"type": ["number", "null"],
+						"description": "The height of each individual 10x10 block in pixels.",
+						"markdownDescription": "The height of each individual 10x10 block in pixels."
+					},
+					"shadeColor": {
+						"type": ["string", "null"],
+						"description": "A CSS color string for the shaded units.",
+						"markdownDescription": "A CSS color string for the shaded units."
+					}
+				},
+				"required": [
+					"type",
+					"totalBlocks",
+					"shadedUnitsPerBlock",
+					"blocksPerRow",
+					"blockWidth",
+					"blockHeight",
+					"shadeColor"
+				],
+				"additionalProperties": false,
+				"description": "This template generates an SVG diagram of \"hundreds blocks\" to visually model place value and percentages of large numbers that are multiples of 100. It is particularly effective for explaining concepts like \"1% of 800\" in a concrete, countable manner. The generator will render a specified number of \"hundreds blocks,\" each of which is a distinct 10x10 grid. These blocks can be arranged in a grid layout (e.g., 2 rows of 4 blocks) for clear presentation. The core function is to shade a specific number of unit squares within each individual block. For example, to visualize \"1% of 800,\" the template would render 8 separate 10x10 grids and shade exactly 1 square in each grid. This visual approach clearly demonstrates that the total number of shaded squares is 8, helping students arrive at the correct answer by reasoning about the meaning of \"percent\" (per hundred). The output is a self-contained SVG graphic that provides an intuitive and powerful model for understanding how percentages operate on multiples of 100.",
+				"markdownDescription": "This template generates an SVG diagram of \"hundreds blocks\" to visually model place value and percentages of large numbers that are multiples of 100. It is particularly effective for explaining concepts like \"1% of 800\" in a concrete, countable manner. The generator will render a specified number of \"hundreds blocks,\" each of which is a distinct 10x10 grid. These blocks can be arranged in a grid layout (e.g., 2 rows of 4 blocks) for clear presentation. The core function is to shade a specific number of unit squares within each individual block. For example, to visualize \"1% of 800,\" the template would render 8 separate 10x10 grids and shade exactly 1 square in each grid. This visual approach clearly demonstrates that the total number of shaded squares is 8, helping students arrive at the correct answer by reasoning about the meaning of \"percent\" (per hundred). The output is a self-contained SVG graphic that provides an intuitive and powerful model for understanding how percentages operate on multiples of 100."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"vennDiagram": {
+		"$ref": "#/definitions/vennDiagram",
+		"definitions": {
+			"vennDiagram": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "vennDiagram"
+					},
+					"width": {
+						"type": ["number", "null"],
+						"description": "The total width of the output SVG container in pixels.",
+						"markdownDescription": "The total width of the output SVG container in pixels."
+					},
+					"height": {
+						"type": ["number", "null"],
+						"description": "The total height of the output SVG container in pixels.",
+						"markdownDescription": "The total height of the output SVG container in pixels."
+					},
+					"circleA": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": "string",
+								"description": "The label for the first circle (e.g., \"Have a Dog\").",
+								"markdownDescription": "The label for the first circle (e.g., \"Have a Dog\")."
+							},
+							"count": {
+								"type": "number",
+								"description": "The numerical count for the region unique to this circle (non-overlapping part).",
+								"markdownDescription": "The numerical count for the region unique to this circle (non-overlapping part)."
+							},
+							"color": {
+								"type": ["string", "null"],
+								"description": "The fill color for this circle.",
+								"markdownDescription": "The fill color for this circle."
+							}
+						},
+						"required": ["label", "count", "color"],
+						"additionalProperties": false
+					},
+					"circleB": {
+						"type": "object",
+						"properties": {
+							"label": {
+								"type": "string",
+								"description": "The label for the second circle (e.g., \"Have a Cat\").",
+								"markdownDescription": "The label for the second circle (e.g., \"Have a Cat\")."
+							},
+							"count": {
+								"type": "number",
+								"description": "The numerical count for the region unique to this circle (non-overlapping part).",
+								"markdownDescription": "The numerical count for the region unique to this circle (non-overlapping part)."
+							},
+							"color": {
+								"type": ["string", "null"],
+								"description": "The fill color for this circle.",
+								"markdownDescription": "The fill color for this circle."
+							}
+						},
+						"required": ["label", "count", "color"],
+						"additionalProperties": false
+					},
+					"intersectionCount": {
+						"type": "number",
+						"description": "The numerical count for the overlapping region of the two circles.",
+						"markdownDescription": "The numerical count for the overlapping region of the two circles."
+					},
+					"outsideCount": {
+						"type": "number",
+						"description": "The numerical count for the region outside of both circles.",
+						"markdownDescription": "The numerical count for the region outside of both circles."
+					}
+				},
+				"required": ["type", "width", "height", "circleA", "circleB", "intersectionCount", "outsideCount"],
+				"additionalProperties": false,
+				"description": "This template generates a classic two-circle Venn diagram as an SVG graphic. It is designed to visually represent the relationship between two sets of data. It renders two labeled, overlapping circles and displays the numerical counts for each of the four distinct regions: Circle A only, Circle B only, the intersection, and the region outside both circles. This is ideal for translating set information into a two-way table or for calculating probabilities.",
+				"markdownDescription": "This template generates a classic two-circle Venn diagram as an SVG graphic. It is designed to visually represent the relationship between two sets of data. It renders two labeled, overlapping circles and displays the numerical counts for each of the four distinct regions: Circle A only, Circle B only, the intersection, and the region outside both circles. This is ideal for translating set information into a two-way table or for calculating probabilities."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	},
+	"verticalArithmeticSetup": {
+		"$ref": "#/definitions/verticalArithmeticSetup",
+		"definitions": {
+			"verticalArithmeticSetup": {
+				"type": "object",
+				"properties": {
+					"type": {
+						"type": "string",
+						"const": "verticalArithmeticSetup"
+					},
+					"title": {
+						"type": ["string", "null"],
+						"description": "An optional title or instruction to display above the arithmetic problem.",
+						"markdownDescription": "An optional title or instruction to display above the arithmetic problem."
+					},
+					"operand1": {
+						"type": "string",
+						"description": "The first number (top operand) in the calculation, provided as a string to preserve formatting (e.g., \"1.84\", \"740\").",
+						"markdownDescription": "The first number (top operand) in the calculation, provided as a string to preserve formatting (e.g., \"1.84\", \"740\")."
+					},
+					"operand2": {
+						"type": "string",
+						"description": "The second number (bottom operand) in the calculation, provided as a string.",
+						"markdownDescription": "The second number (bottom operand) in the calculation, provided as a string."
+					},
+					"operator": {
+						"type": "string",
+						"enum": ["×", "+", "−"],
+						"description": "The arithmetic operator symbol to display.",
+						"markdownDescription": "The arithmetic operator symbol to display."
+					}
+				},
+				"required": ["type", "title", "operand1", "operand2", "operator"],
+				"additionalProperties": false,
+				"description": "This template is designed to generate a clear, standards-compliant visual representation of a vertical arithmetic problem within an HTML <div>. It is ideal for scaffolding multi-digit multiplication, addition, or subtraction problems, particularly those involving decimals, by presenting them in the standard algorithm format. The generator will render two numbers (operands) stacked vertically. The alignment is handled automatically: for operations like addition and subtraction, the numbers are aligned by their decimal points; for multiplication, they are typically right-aligned. An operator symbol (×, +, or −) is placed to the left of the bottom number to clearly indicate the operation. A solid horizontal line is drawn underneath the bottom number, separating the problem from the space where the solution would be calculated. The final output is a self-contained, neatly formatted diagram that mimics how students would set up the problem on paper. It uses HTML and CSS to create a table-like structure that ensures proper alignment and readability, helping students focus on the calculation process itself.",
+				"markdownDescription": "This template is designed to generate a clear, standards-compliant visual representation of a vertical arithmetic problem within an HTML <div>. It is ideal for scaffolding multi-digit multiplication, addition, or subtraction problems, particularly those involving decimals, by presenting them in the standard algorithm format. The generator will render two numbers (operands) stacked vertically. The alignment is handled automatically: for operations like addition and subtraction, the numbers are aligned by their decimal points; for multiplication, they are typically right-aligned. An operator symbol (×, +, or −) is placed to the left of the bottom number to clearly indicate the operation. A solid horizontal line is drawn underneath the bottom number, separating the problem from the space where the solution would be calculated. The final output is a self-contained, neatly formatted diagram that mimics how students would set up the problem on paper. It uses HTML and CSS to create a table-like structure that ensures proper alignment and readability, helping students focus on the calculation process itself."
+			}
+		},
+		"$schema": "http://json-schema.org/draft-07/schema#"
+	}
+}

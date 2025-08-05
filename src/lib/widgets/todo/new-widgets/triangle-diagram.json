@@ -1,0 +1,2699 @@
+{
+	"widgetName": "triangle-diagram",
+	"type": "new",
+	"description": "Triangle Diagram",
+	"requirements": [
+		"Missing Angle Problems",
+		"Missing Side Problems",
+		"Mixed Missing Values",
+		"Right Triangles",
+		"Various Measurements & Shading"
+	],
+	"sampleQuestions": [
+		{
+			"questionId": "x87eca2c858cf45b5",
+			"exerciseId": "x14849d000e1568d9",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The isosceles triangle is made up of $2$ congruent right triangles. \n\n\n[[☃ image 1]]\n\nThe base of each right triangle is $\\dfrac12$ the base of the isosceles triangle.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A triangle with a base of x units and a height of 7 units. The other 2 sides of the triangle are the square root of 74 units.  A solid line goes from the center of the base straight up to the top vertex of the triangle. This straight line makes a right angle with the base which creates two right triangles. One right triangle is shaded green and the other right triangle is shaded purple.  The bottom left angle and bottom right angle are congruent.",
+									"box": [240, 219],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e10ab22bc5e332ef41308559d2074ea2c38c96f1",
+										"width": 240,
+										"height": 219
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "When we have a right triangle we can use the Pythagorean Theorem to solve for a missing side.\n\nThe equation for the Pythagorean Theorem is \n\n>$a^2 + b^2  = c^2$\n\nwhere $a$ and $b$ are the lengths of the two legs of the triangle, and $c$ is the length of the hypotenuse.   \n[[☃ explanation 1]]",
+						"replace": false,
+						"widgets": {
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {
+										"image 1": {
+											"type": "image",
+											"graded": true,
+											"static": false,
+											"options": {
+												"alt": "A right triangle. The base and height are labeled leg. The longest side is labeled hypotenuse.",
+												"box": [200, 167],
+												"range": [[0, 10], [0, 10]],
+												"title": "",
+												"labels": [],
+												"static": false,
+												"caption": "",
+												"backgroundImage": {
+													"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1fe06036222ca425cd0c672984225e31aa509700",
+													"width": 200,
+													"height": 167
+												}
+											},
+											"version": {
+												"major": 0,
+												"minor": 0
+											},
+											"alignment": "block"
+										}
+									},
+									"hidePrompt": "Hide explanation",
+									"showPrompt": "How can I tell which side is the hypotenuse?",
+									"explanation": "The hypotenuse is the longest side and is  across from the right angle. The two legs are the shorter sides that form the right angle:\n\n\n[[☃ image 1]]\n\n"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "First we can find the missing length for one of the right triangles. Let's label the drawing with $a$, $b$, and $c$:\n\n\n\n[[☃ image 1]]\n\n*Note that $a$ and $b$ could be switched because they are legs.*",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A triangle with a height of 7 units, labeled b = 7. The other 2 sides of the triangle are the square root of 74 units. The right side is labeled c = square root of 74. A solid line goes from the center of the base straight up to the top vertex of the triangle. This straight line makes a right angle with the base which creates two right triangles. One right triangle is shaded purple. The base of the purple triangle is labeled a. The bottom left angle and bottom right angle are congruent.",
+									"box": [240, 219],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0b9fa14c577cca635ba88e80f9009ad61948a525",
+										"width": 240,
+										"height": 219
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Let's use the Pythagorean Theorem to solve for $x$.\n\n$\\begin{align} \\blueD a^2 + \\greenD b^2 &= \\goldD c^2 ~~~~~~~~~~~\\small\\gray{\\text{The Pythagorean Theorem}}\\\\\\\\\n\\blueD{a}^2 + \\greenD{ 7}^2 &= (\\goldD{\\sqrt{74}})^2~~\\small\\gray{\\text{Plug in the side lengths}}\\\\\\\\\na^2   +49 &= 74 ~~~~~~~~~~\\small\\gray{\\text{Evaluate } 7^2 \\text{ and }  (\\sqrt{74})^2}\\\\\\\\\na^2 &= 25~~~~~~~~~~\\small\\gray{\\text{Subtract 49 from each side}}\\\\\\\\\na &= 5 ~~~~~~~~~~~~\\small\\gray{\\text{Take the square root of each side}}\\\\\\\\ \\\\\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Since $a=5$ and $a$ is half the length of $x$, we can multiply to find $x$.\n\n\n\n\n[[☃ image 1]]\n\n$\\begin{align}x & = a \\cdot 2 \\\\\\\nx & = 5 \\cdot 2 \\\\\\\nx  &= 10 \\end{align}$",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A triangle with a base of 10 units and a height of 7 units. A solid line goes from the center of the base straight up to the top of the vertex of the triangle. This straight line makes a right angle with the base which creates two right triangles. One right triangle is shaded purple. The base of the purple triangle is labeled 5 units, the height is 7 units, and the longest side is the square root of 74 units. The bottom left angle and bottom right angle are congruent.",
+									"box": [238, 240],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/90fd7fd302f67543a57f8b8a98c5d5fc8b9e3d94",
+										"width": 238,
+										"height": 240
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$x = 10$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the value of $x$ in the isosceles triangle shown below.**\n\n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A triangle with a base of x units and a height of 7 units. The other 2 sides of the triangle are the square root of 74 units.  A dashed line goes from the center of the base straight up to the top vertex of the triangle.  The bottom left angle and bottom right angle are congruent.",
+								"box": [240, 219],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/242cbf38bd45de5e89038094cd4e75f85ef06bba",
+									"width": 240,
+									"height": 219
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$x = \\sqrt{81}$",
+										"correct": false
+									},
+									{
+										"content": "$x = 12$",
+										"correct": false
+									},
+									{
+										"content": "$x = 10$",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "$x = 5$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": true,
+								"onePerLine": true,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xdfed46549ec75e86",
+			"exerciseId": "x08c889de30d8bc26",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The two labeled angles are complementary angles because they combine to form a right angle.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Complementary angles have a sum of $90^\\circ$.  So, the labeled angles have a sum of $90^\\circ$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "[[☃ image 1]]\n\n$\\blueD{2x ^\\circ} + \\goldD{30^\\circ} = 90^\\circ$",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Two rays divide a straight angle into three parts labeled as 30 degrees, 2 X degrees and a right angle, from left to right, respectively.\n",
+									"box": [300, 120],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/dc163d911aca13cf635700658ec892bde0b45c28",
+										"width": 300,
+										"height": 120
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Which equation can be used to solve for $x$ in the following diagram?**\n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Two rays divide a straight angle into three parts labeled as 30 degrees, 2 X degrees and a right angle, from left to right, respectively.\n",
+								"box": [300, 120],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/4aad209690cb8b5328f0f0127e24955bdc7da5da",
+									"width": 300,
+									"height": 120
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$2x + 30 = 90$",
+										"correct": true
+									},
+									{
+										"content": "$2x + 30 = 180$",
+										"correct": false
+									},
+									{
+										"content": "$30 - 2x = 90$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "$2x = 30$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"onePerLine": true,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x6dfe2b035dd88d0d",
+			"exerciseId": "251591675",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The three angles in a triangle add up to $180 ^\\circ$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We can write this as an equation:\n\n>$x^\\circ + 33^\\circ + 114^\\circ = 180^\\circ$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The missing angle is $180^\\circ$ minus the measures of the other two angles:\n\n>$x^\\circ = 180^\\circ - 114^\\circ - 33^\\circ$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The answer:\n\n>$x = 33^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the value of $x$ in the triangle shown below.**\n\n$x = $ [[☃ numeric-input 1]] $^\\circ$\n\n\n[[☃ image 1]]\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A triangle. The left angle measure is x degrees. The top, right most angle measure is 33 degrees. The bottom angle measure is 114 degrees.",
+								"box": [300, 150],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c01ca7d70aac98ca2ebb875c3ab266bc84fcf2bf",
+									"width": 300,
+									"height": 150
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 33,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x61bba79752ee8fd7",
+			"exerciseId": "251591675",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The three angles in a triangle add up to $180 ^\\circ$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We can write this as an equation:\n\n>$x^\\circ + 27^\\circ + 82^\\circ = 180^\\circ$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The missing angle is $180^\\circ$ minus the measures of the other two angles:\n\n>$x^\\circ = 180^\\circ - 82^\\circ - 27^\\circ$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The answer:\n\n>$x = 71^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the value of $x$ in the triangle shown below.**\n\n$x = $ [[☃ numeric-input 1]] $^\\circ$\n\n\n\n[[☃ image 1]]\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A triangle. The top, left angle measure is x degrees. The top, right most angle measure is 27 degrees. The bottom, left angle measure is 82 degrees.",
+								"box": [300, 150],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/8d31fd7fdb68464d29662fc1b11771fea9221d6a",
+									"width": 300,
+									"height": 150
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 71,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x24c2390df4d85ad5",
+			"exerciseId": "251591675",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The three angles in a triangle add up to $180 ^\\circ$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We can write this as an equation:\n\n>$x^\\circ + 45^\\circ + 98^\\circ = 180^\\circ$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The missing angle is $180^\\circ$ minus the measures of the other two angles:\n\n>$x^\\circ = 180^\\circ - 98^\\circ - 45^\\circ$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The answer:\n\n>$x = 37^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the value of $x$ in the triangle shown below.**\n\n$x = $ [[☃ numeric-input 1]] $^\\circ$\n\n\n[[☃ image 1]]\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A triangle. The top, left angle measure is x degrees. The top, right most angle measure is 45 degrees. The bottom angle measure is 98 degrees.",
+								"box": [300, 150],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/7508418bdfef7e6f081388417f64ae44794ce9c3",
+									"width": 300,
+									"height": 150
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 37,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x0563d1a13da7ea06",
+			"exerciseId": "251649050",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The triangle inequality theorem states that any side of a triangle is always shorter than the sum of the other two sides.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Therefore the third side must be less than $4.0 + 2.7 = 6.7$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "By the same theorem, the third side must be also larger than the difference between the other two sides.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Therefore the third side must be larger than $4.0 - 2.7 = 1.3$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $1.3 < x < 6.7$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What is the range of possible sizes for side $x$?**\n \n\n[[☃ image 1]]\n\n[[☃ numeric-input 1]] $< x <$ [[☃ numeric-input 2]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A triangle with two of its sides labeled as 4.0 and 2.7. The shortest side is labeled as x.\n",
+								"box": [320, 220],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d27ab9f0bcaa0a4c0d8c7eda4bb62a7e1af66c0a",
+									"width": 320,
+									"height": 220
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 1.3,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 6.7,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x2dd1602a6f6b9915",
+			"exerciseId": "251649050",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The triangle inequality theorem states that any side of a triangle is always shorter than the sum of the other two sides.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Therefore the third side must be less than $4.0 + 5.6 = 9.6$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "By the same theorem, the third side must be also larger than the difference between the other two sides.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Therefore the third side must be larger than $5.6 - 4.0 = 1.6$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $1.6 < x < 9.6$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What is the range of possible sizes for side $x$?**\n \n\n[[☃ image 1]]\n\n[[☃ numeric-input 1]] $< x <$ [[☃ numeric-input 2]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "An isoceles triangle with three of its sides labeled as 5.6, 4.0, and x.\n",
+								"box": [320, 140],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/400bf4b8447875c96883dd99bcd6b0f9e2185c1e",
+									"width": 320,
+									"height": 140
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 1.6,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 9.6,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xc7a58ae19278f258",
+			"exerciseId": "251649050",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The triangle inequality theorem states that any side of a triangle is always shorter than the sum of the other two sides.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Therefore the third side must be less than $8.0 + 4.0 = 12.0$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "By the same theorem, the third side must be also larger than the difference between the other two sides.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Therefore the third side must be larger than $8.0 - 4.0 = 4.0$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "So $4.0 < x < 12.0$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What is the range of possible sizes for side $x$?**\n \n\n[[☃ image 1]]\n\n[[☃ numeric-input 1]] $< x <$ [[☃ numeric-input 2]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A triangle with two of its sides labeled as 8.0 and x. The shortest side is labeled as 4.0.\n",
+								"box": [240, 220],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d7925778ee73ae272abf3faf392c870ccd434977",
+									"width": 240,
+									"height": 220
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 4,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 12,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x0a0b9aeb50bdca7d",
+			"exerciseId": "x7e85fcf8",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Step 1: Recognizing that we have an isosceles triangle\n\nThis is an isosceles triangle because it has two congruent sides $($the two sides with a length of $6.2)$. The angles across from the congruent sides are also congruent, so the angle without a label measures $61^\\circ$:\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A triangle with angle x degrees and its opposite side has a length of six, an angle of sixty-one degrees and its opposite side has a length of six point two, and an angle of sixty-one degrees and its third side has a length of six point two.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fc58b5a5dc7aa9ffea6614fb8657fa6d7d32afbd",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Step 2: Writing an equation\n\nThe three angles in a triangle add up to $180 ^\\circ$.\nWe can write this as an equation:\n\n$x^\\circ + 61^\\circ + 61^\\circ = 180^\\circ$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Step 3: Solving for $x$\n\n$\\begin{align} x + 61 + 61 &= 180 \\\\\\\\\nx + 122 &= 180 ~~~~~~~~\\small{\\gray{\\text{Simplify the left-hand side}}}\\\\\\\\\nx + 122 - \\blueD{122} &= 180 - \\blueD{122} ~~~~~~~~\\small{\\gray{\\text{Subtract 122 from each side}}}\\\\\\\\\nx &= 58 \\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\n$x = 58^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the value of $x$ in the triangle shown below.**\n\n$x = $ [[☃ numeric-input 1]] $^\\circ$\n\n\n\n[[☃ image 1]]\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A triangle with angle x degrees and its opposite side has a length of six, an angle of sixty-one degrees and its opposite side has a length of six point two, and its third side has a length of six point two.",
+								"box": [300, 300],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5bfc9c94be68c3aa7c53eb508f8e84cc60542072",
+									"width": 300,
+									"height": 300
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 58,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0.5,
+										"simplify": "required"
+									}
+								],
+								"labelText": "value of x in degrees",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xca9fcd96b9c53324",
+			"exerciseId": "x7e85fcf8",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Step 1: Recognizing that we have an isosceles triangle\n\nThis is an isosceles triangle because it has two congruent sides $($the two sides with a length of $7)$. The angles across from the congruent sides are also congruent, so the angle without a label measures $66^\\circ$:\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A triangle with angle x degrees and its opposite side has a length of five point seven, an angle of sixty-six degrees and its opposite side has a length of seven, and an angle of sixty-six degrees and its third side has a length of seven.",
+									"box": [300, 281],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ddac2c499dd1cec645f362d000ef0713824ae5ce",
+										"width": 300,
+										"height": 281
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Step 2: Writing an equation\n\nThe three angles in a triangle add up to $180 ^\\circ$.\nWe can write this as an equation:\n\n$x^\\circ + 66^\\circ + 66^\\circ = 180^\\circ$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Step 3: Solving for $x$\n\n$\\begin{align} x + 66 + 66 &= 180 \\\\\\\\\nx + 132 &= 180 ~~~~~~~~\\small{\\gray{\\text{Simplify the left-hand side}}}\\\\\\\\\nx + 132 - \\blueD{132} &= 180 - \\blueD{132} ~~~~~~~~\\small{\\gray{\\text{Subtract 132 from each side}}}\\\\\\\\\nx &= 48 \\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\n$x = 48^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the value of $x$ in the triangle shown below.**\n\n$x = $ [[☃ numeric-input 1]] $^\\circ$\n\n\n\n[[☃ image 1]]\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A triangle with angle x degrees and its opposite side has a length of five point seven, an angle of sixty-six degrees and its opposite side has a length of seven, and its third side has a length of seven.",
+								"box": [300, 281],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e4004d069b563cd8d376d9edfb00b4034848f537",
+									"width": 300,
+									"height": 281
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 48,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0.5,
+										"simplify": "required"
+									}
+								],
+								"labelText": "value of x in degrees",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xccabd151c9d6e33e",
+			"exerciseId": "x7e85fcf8",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Step 1: Recognizing that we have an isosceles triangle\n\nThis is an isosceles triangle because it has two congruent sides $($the two sides with a length of $3.3)$. The angles across from the congruent sides are also congruent, so the angle without a label measures $39^\\circ$:\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A triangle with angle x degrees and its opposite side has a length of five point one, an angle of thirty-nine degrees and its opposite side has a length of three point three, and an angle of thirty-nine degrees and its third side has a length of three point three.",
+									"box": [200, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/12bcc07a4a8badc1bebe0ab06c407b21ab1f8c2c",
+										"width": 200,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Step 2: Writing an equation\n\nThe three angles in a triangle add up to $180 ^\\circ$.\nWe can write this as an equation:\n\n$x^\\circ + 39^\\circ + 39^\\circ = 180^\\circ$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Step 3: Solving for $x$\n\n$\\begin{align} x + 39 + 39 &= 180 \\\\\\\\\nx + 78 &= 180 &\\gray{\\text{Simplify the left-hand side}}\\\\\\\\\nx + 78 - \\blueD{78} &= 180 - \\blueD{78} &\\gray{\\text{Subtract 78 from each side}}\\\\\\\\\nx &= 102 \\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\n$x = 102^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the value of $x$ in the triangle shown below.**\n\n$x = $ [[☃ numeric-input 1]] $^\\circ$\n\n\n\n[[☃ image 1]]\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A triangle with angle x degrees and its opposite side has a length of five point one, an angle of thirty-nine degrees and its opposite side has a length of three point three, and its third side has a length of three point three.",
+								"box": [200, 300],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/39273c119348caa7d1bbcf23a90cf41c7d41c695",
+									"width": 200,
+									"height": 300
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 102,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0.5,
+										"simplify": "required"
+									}
+								],
+								"labelText": "value of x in degrees",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x7a13895bff90e42f",
+			"exerciseId": "xfe793b98f60973b1",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The base of a triangle is the side that meets the height at a $90^\\circ$ angle.\n\nThe height and the base are perpendicular.    \n\nWhich line segment is perpendicular to the height?",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Line segment $\\goldE{\\text{C}}$ is perpendicular to the height.  \n\n[[☃ image 1]]\n\n[[☃ explanation 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A right triangle that is tilted. The longest side is labeled C. There is a dashed line that is perpendicular to side C from side C to the opposite vertex. The dashed line is labeled height.",
+									"box": [320, 184],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0f24d50002d160c00dc164a33818fb6d2c2d18be",
+										"width": 320,
+										"height": 184
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Got it, thanks!",
+									"showPrompt": "What about the other right angle?",
+									"explanation": "Segments ${B}$ and ${A}$ are perpendicular to each other, but neither was the base.\n\nThe height has to be perpendicular to the base, not another side."
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "So, $\\goldE{\\text{C}}$ is the base.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "A height is labeled on the triangle below.\n\n[[☃ image 1]]\n\n**Which line segment shows the base that corresponds to the given height of the triangle?**\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A right triangle that is tilted.  The legs are labeled, in clockwise order, A and B.  The longest side is labeled C. There is a dashed line that is perpendicular to side C from side C to the opposite vertex. The dashed line is labeled height.",
+								"box": [320, 184],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/cb7853d0bce201b43e4023954d6bcace5e15a649",
+									"width": 320,
+									"height": 184
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$\\blueE{A}$",
+										"correct": false
+									},
+									{
+										"content": "$\\purpleD{B}$",
+										"correct": false
+									},
+									{
+										"content": "$\\goldE{C}$",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x7063b4cc6c774053",
+			"exerciseId": "xfe793b98f60973b1",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The height of a triangle extends from the base  to the vertex opposite the base at a $90^\\circ$ angle.\n\nThe height and the base are perpendicular.    \n\nWhich line segment is perpendicular to the base?",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Line segment $\\maroonD{\\text{B}}$ is perpendicular to the base.  \n\n[[☃ image 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A scalene triangle. There is a dashed line that is perpendicular to the base from the base to the opposite vertex. The base is labeled base. The dashed line is labeled B.",
+									"box": [202, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/37df04810eb617cbf82d2d34938813f147221de8",
+										"width": 202,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "So, $\\maroonD{\\text{B}}$ is the height.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "A base is labeled on the triangle below.\n\n[[☃ image 1]]\n\n**Which line segment shows the height that corresponds to the given base of the triangle?**\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A scalene triangle. There is a dashed line that is perpendicular to the base from the base to the opposite vertex. An arrow shows the length of one side of the triangle is labeled base. The other two sides are labeled, in clockwise order, A and C. The dashed line is labeled B.",
+								"box": [202, 320],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f5a6f4a674dad75a5120344777d66f181ba06bda",
+									"width": 202,
+									"height": 320
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$\\blueE{A}$",
+										"correct": false
+									},
+									{
+										"content": "$\\maroonD{B}$",
+										"correct": true
+									},
+									{
+										"content": "$\\goldE{C}$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xb7ed60e9816e6d64",
+			"exerciseId": "xfe793b98f60973b1",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The height of a triangle meets the base (or an extension of the base) at a $90^\\circ$ angle.\n\nThe height and the base are perpendicular.    \n\nWhich line segment is perpendicular to the height?",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Line segment $\\blueE{\\text{C}}$ is perpendicular to the height.  \n\n[[☃ image 1]]\n\n[[☃ explanation 1]]",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A scalene triangle. There is a dashed line that is perpendicular to the base from the top vertex.  The bottom side length is labeled C. The dashed line is labeled height.",
+									"box": [320, 253],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/6a6485c9c0f5f71c7b2ff9582e5a24b6dc01864f",
+										"width": 320,
+										"height": 253
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"explanation 1": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {},
+									"hidePrompt": "Got it, thanks!",
+									"showPrompt": "But they don't touch!",
+									"explanation": "That's alright. \n\nIf we extend the base $\\blueE{C}$, it would form a right angle with the height segment. So they are perpendicular."
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "So, $\\blueE{\\text{C}}$ is the base.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "A height is labeled on the triangle below.\n\n[[☃ image 1]]\n\n**Which line segment shows the base that corresponds to the given height of the triangle?**\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A scalene triangle. There is a dashed line that is perpendicular to the base from the top vertex.  The bottom side length is labeled C.  The other two sides are labeled, in clockwise order, A and B. The dashed line is labeled height.",
+								"box": [320, 253],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c4ccb3eaaae82bfd3c90ca973d21025975d626c9",
+									"width": 320,
+									"height": 253
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$\\maroonD{A}$",
+										"correct": false
+									},
+									{
+										"content": "$\\purpleD{B}$",
+										"correct": false
+									},
+									{
+										"content": "$\\blueE{C}$",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x4ad26d345010cde1",
+			"exerciseId": "3032",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###We can use the Pythagorean Theorem!\n\nWe have a right triangle so we can use the Pythagorean Theorem.\n\nThe equation for the Pythagorean Theorem is \n\n>$a^2 + b^2  = c^2$\n\nwhere $a$ and $b$ are the lengths of the two legs of the triangle, and $c$ is the length of the hypotenuse. [[☃ explanation 2]]",
+						"replace": false,
+						"widgets": {
+							"explanation 2": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {
+										"image 1": {
+											"type": "image",
+											"graded": true,
+											"static": false,
+											"options": {
+												"alt": "A right triangle. The base and height are labeled leg. The longest side is labeled hypotenuse.",
+												"box": [200, 167],
+												"range": [[0, 10], [0, 10]],
+												"title": "",
+												"labels": [],
+												"static": false,
+												"caption": "",
+												"backgroundImage": {
+													"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1fe06036222ca425cd0c672984225e31aa509700",
+													"width": 200,
+													"height": 167
+												}
+											},
+											"version": {
+												"major": 0,
+												"minor": 0
+											},
+											"alignment": "block"
+										}
+									},
+									"hidePrompt": "Hide explanation",
+									"showPrompt": "How can I tell which side is the hypotenuse?",
+									"explanation": "The hypotenuse is the longest side and is  across from the right angle. The two legs are the shorter sides that form the right angle:\n\n\n\n[[☃ image 1]]\n\n"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {
+							"web+graphie://cdn.kastatic.org/ka-perseus-graphie/e7c4206fa17ea0873dd6118c65a7670c978cc7ff": {
+								"width": 225,
+								"height": 250
+							}
+						},
+						"content": "###Figuring out which sides are $a$, $b$, and $c$\n\nLet's label the drawing with $a$, $b$, and $c$:\n\n![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/e7c4206fa17ea0873dd6118c65a7670c978cc7ff )\n\n[[☃ image 1]]\n\n\n\n*Note that $a$ and $b$ could be switched because they are legs.*",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A right triangle with a base labeled a = 6, a height labeled b = 8, and the longest side is labeled c = x.",
+									"box": [225, 250],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e7c4206fa17ea0873dd6118c65a7670c978cc7ff",
+										"width": 225,
+										"height": 250
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Using the Pythagorean Theorem to solve  for $x$\n\n$\\begin{align}\n\\blueD a^2 + \\greenD b^2 &= \\goldD c^2& &\\small\\gray{\\text{The Pythagorean Theorem}}\\\\\\\\\n\\blueD{6}^2 + \\greenD{8}^2 &= \\goldD{x}^2& &\\small\\gray{\\text{Plug in the side lengths}}\\\\\\\\\n36 + 64 &= x^2& &\\small\\gray{\\text{Evaluate } 6^2 \\text{ and }  8^2}\\\\\\\\\n100 &= x^2& &\\small\\gray{\\text{Add } 36 \\text{ and } 64}\\\\\\\\\nx &= 10& &\\small\\gray{\\text{Take the square root of each side}}\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\n$x = 10$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the value of $x$ in the triangle shown below.**\n\n\n\n[[☃ image 1]]\n\n[[☃ radio 2]]\n\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A right triangle with a base of 6 units and a height of 8 units. The longest side is labeled x.",
+								"box": [208, 250],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/8ebd7eccd0ca754e77c1b22499eaae7baf2cd053",
+									"width": 208,
+									"height": 250
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 2": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$x=\\sqrt{28}$",
+										"correct": false
+									},
+									{
+										"content": "$x=\\sqrt{64}$",
+										"correct": false
+									},
+									{
+										"content": "$x= 9$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "$x=10$",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x67af269db6c58323",
+			"exerciseId": "3032",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###We can use the Pythagorean Theorem!\n\nWe have a right triangle so we can use the Pythagorean Theorem.\n\nThe equation for the Pythagorean Theorem is \n\n>$a^2 + b^2  = c^2$\n\nwhere $a$ and $b$ are the lengths of the two legs of the triangle, and $c$ is the length of the hypotenuse. [[☃ explanation 2]]",
+						"replace": false,
+						"widgets": {
+							"explanation 2": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {
+										"image 1": {
+											"type": "image",
+											"graded": true,
+											"static": false,
+											"options": {
+												"alt": "A right triangle. The base and height are labeled leg. The longest side is labeled hypotenuse.",
+												"box": [200, 167],
+												"range": [[0, 10], [0, 10]],
+												"title": "",
+												"labels": [],
+												"static": false,
+												"caption": "",
+												"backgroundImage": {
+													"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1fe06036222ca425cd0c672984225e31aa509700",
+													"width": 200,
+													"height": 167
+												}
+											},
+											"version": {
+												"major": 0,
+												"minor": 0
+											},
+											"alignment": "block"
+										}
+									},
+									"hidePrompt": "Hide explanation",
+									"showPrompt": "How can I tell which side is the hypotenuse?",
+									"explanation": "The hypotenuse is the longest side and is  across from the right angle. The two legs are the shorter sides that form the right angle:\n\n\n[[☃ image 1]]\n\n"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Figuring out which sides are $a$, $b$, and $c$\n\nLet's label the drawing with $a$, $b$, and $c$:\n\n\n\n[[☃ image 1]]\n\n*Note that $a$ and $b$ could be switched because they are legs.*",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A right triangle with a base labeled a = 9, a height labeled b = 12, and the longest side is labeled c = x. ",
+									"box": [225, 250],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/44bdcfc6ab935f7d405ca122140374e414055479",
+										"width": 225,
+										"height": 250
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Using the Pythagorean Theorem to solve  for $x$\n\n$\\begin{align}\n\\blueD a^2 + \\greenD b^2 &= \\goldD c^2& &\\small\\gray{\\text{The Pythagorean Theorem}}\\\\\\\\\n\\blueD{9}^2 + \\greenD{12}^2 &= \\goldD{x}^2& &\\small\\gray{\\text{Plug in the side lengths}}\\\\\\\\\n81 + 144 &= x^2& &\\small\\gray{\\text{Evaluate } 9^2 \\text{ and }  12^2}\\\\\\\\\n225 &= x^2& &\\small\\gray{\\text{Add } 81 \\text{ and } 144}\\\\\\\\\nx &= 15& &\\small\\gray{\\text{Take the square root of each side}}\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\n$x = 15$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the value of $x$ in the triangle shown below.**\n\n\n\n[[☃ image 1]]\n\n[[☃ radio 2]]\n\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A right triangle with a base of 9 units and a height of 12 units. The longest side x units.",
+								"box": [216, 250],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/aa3c1606a296e0abb3c15e0aad12520cba60d5a2",
+									"width": 216,
+									"height": 250
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 2": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$x=\\sqrt{21}$",
+										"correct": false
+									},
+									{
+										"content": "$x=\\sqrt{42}$",
+										"correct": false
+									},
+									{
+										"content": "$x= 15$",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "$x=21$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x153c740a35e0e3ef",
+			"exerciseId": "3032",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###We can use the Pythagorean Theorem!\n\nWe have a right triangle so we can use the Pythagorean Theorem.\n\nThe equation for the Pythagorean Theorem is \n\n>$a^2 + b^2  = c^2$\n\nwhere $a$ and $b$ are the lengths of the two legs of the triangle, and $c$ is the length of the hypotenuse. [[☃ explanation 2]]",
+						"replace": false,
+						"widgets": {
+							"explanation 2": {
+								"type": "explanation",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"widgets": {
+										"image 1": {
+											"type": "image",
+											"graded": true,
+											"static": false,
+											"options": {
+												"alt": "A right triangle. The base and height are labeled leg. The longest side is labeled hypotenuse.",
+												"box": [200, 167],
+												"range": [[0, 10], [0, 10]],
+												"title": "",
+												"labels": [],
+												"static": false,
+												"caption": "",
+												"backgroundImage": {
+													"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1fe06036222ca425cd0c672984225e31aa509700",
+													"width": 200,
+													"height": 167
+												}
+											},
+											"version": {
+												"major": 0,
+												"minor": 0
+											},
+											"alignment": "block"
+										}
+									},
+									"hidePrompt": "Hide explanation",
+									"showPrompt": "How can I tell which side is the hypotenuse?",
+									"explanation": "The hypotenuse is the longest side and is  across from the right angle. The two legs are the shorter sides that form the right angle:\n\n\n\n[[☃ image 1]]\n\n"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Figuring out which sides are $a$, $b$, and $c$\n\nLet's label the drawing with $a$, $b$, and $c$:\n\n\n\n[[☃ image 1]]\n\n*Note that $a$ and $b$ could be switched because they are legs.*",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A right triangle with a base labeled b = 12, a height labeled a = 5, and the longest side is labeled c = x. ",
+									"box": [250, 137],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ebfdcb3e1298dce63351d2082d8299cc5cca9e09",
+										"width": 250,
+										"height": 137
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Using the Pythagorean Theorem to solve  for $x$\n\n$\\begin{align}\n\\blueD a^2 + \\greenD b^2 &= \\goldD c^2& &\\small\\gray{\\text{The Pythagorean Theorem}}\\\\\\\\\n\\blueD{5}^2 + \\greenD{12}^2 &= \\goldD{x}^2& &\\small\\gray{\\text{Plug in the side lengths}}\\\\\\\\\n25 + 144 &= x^2& &\\small\\gray{\\text{Evaluate } 5^2 \\text{ and }  12^2}\\\\\\\\\n169 &= x^2& &\\small\\gray{\\text{Add } 25 \\text{ and } 144}\\\\\\\\\nx &= 13& &\\small\\gray{\\text{Take the square root of each side}}\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###The answer\n\n$x = 13$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Find the value of $x$ in the triangle shown below.**\n\n\n[[☃ image 1]]\n\n[[☃ radio 2]]\n\n\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A right triangle with a base of 12 units and a height of 5 units. The longest side x units.",
+								"box": [250, 137],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/aa61d65079dacd482076ca3a250921ccf417a7c1",
+									"width": 250,
+									"height": 137
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 2": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$x= \\sqrt{60}$",
+										"correct": false
+									},
+									{
+										"content": "$x=\\sqrt{119}$\n",
+										"correct": false
+									},
+									{
+										"content": "$x= 13$",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "$x=17$",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x61c8b090cab03b39",
+			"exerciseId": "47799044",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "From the diagram, we see that $\\angle AOB$ and $\\angle BOC$ are complementary angles.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Therefore, $m \\angle AOB + m \\angle BOC = 90\\degree$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\begin{align}\\angle AOB + \\angle BOC &= 90\\degree\n\\\\\\\\\n53+x &= 90 \\degree\n \\\\\\\\\nx &= 37\\degree \\end{align}$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What is the measure of $\\angle x$?**  \n*Angles are not necessarily drawn to scale.*\n\n[[☃ image 1]]\n\n\n\n$x = $ [[☃ numeric-input 1]] $\\Large{\\degree}$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Angle A O C is a right angle. Ray B O divides angle A O C into two parts. Angle A O B is labeled 53 degrees and Angle B O C is labeled X degrees.\n\n",
+								"box": [216, 162],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/125864788d908cbe396fdee70ff4ac54b2f2eecd",
+									"width": 216,
+									"height": 162
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 37,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x4ac623406421cb1a",
+			"exerciseId": "47799044",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "From the diagram, we see that $\\angle PQR$ and $\\angle RQS$ are complementary angles.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Therefore, $m \\angle PQR + m \\angle RQS = 90\\degree$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\begin{align}\\angle PQR + \\angle RQS &= 90\\degree\n\\\\\\\\\n76+x &= 90 \\degree\n \\\\\\\\\nx &= 14\\degree \\end{align}$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What is the measure of $\\angle x$?**  \n*Angles are not necessarily drawn to scale.*\n\n[[☃ image 1]]\n\n\n\n$x = $ [[☃ numeric-input 1]] $\\Large{\\degree}$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Angle P Q S is a right angle. Ray Q R divides angle P Q S into two parts. Angle P Q R is labeled 76 degrees and Angle R Q S is labeled X degrees.\n",
+								"box": [168, 198],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0f7f48794b25ea973121323d178e99cbc2d39903",
+									"width": 168,
+									"height": 198
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 14,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x5c33bfd29e91e6f0",
+			"exerciseId": "47799044",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "From the diagram, we see that $\\angle PQR$ and $\\angle RQS$ are complementary angles.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Therefore, $m \\angle PQR + m \\angle RQS = 90\\degree$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\begin{align}\\angle PQR + \\angle RQS &= 90\\degree\n\\\\\\\\\n48+x &= 90 \\degree\n \\\\\\\\\nx &= 42\\degree \\end{align}$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What is the measure of $\\angle x$?**  \n*Angles are not necessarily drawn to scale.*\n\n[[☃ image 1]]\n\n\n\n$x = $ [[☃ numeric-input 1]] $\\Large{\\degree}$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "\"Angle P Q S is a right angle. Ray Q R divides angle P Q S into two parts. Angle P Q R is labeled 48 degrees and Angle R Q S is labeled X degrees.\n\"\n",
+								"box": [168, 198],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/6a609530defaa4cf5bd628626599c3b3ee31c5d9",
+									"width": 168,
+									"height": 198
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 42,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": 0,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		}
+	]
+}

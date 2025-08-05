@@ -1,0 +1,377 @@
+{
+	"widgetName": "parallel-lines-transversal",
+	"type": "enhancement",
+	"description": "Enhancements to Parallel Lines Transversal",
+	"requirements": ["Complete Angle Support"],
+	"sampleQuestions": [
+		{
+			"questionId": "x6367f5b96d5f9c82",
+			"exerciseId": "x86398bf2",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The angles marked below are vertical angles because they are angles opposite each other where two lines cross.\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Two parallel lines intersected by a transversal at two points. The transversal and the lower parallel line make Two opposite obtuse angles labeled as X degrees and 145 degrees.\n",
+									"box": [260, 130],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/2d701c29d00fcfede71aef0c07740a52e10e4ead",
+										"width": 260,
+										"height": 130
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Vertical angles are equivalent.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$x = 145^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "\n[[☃ image 1]]\n\n$x = $ [[☃ numeric-input 1]]$^\\circ$\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Two parallel lines intersected by a transversal at two points. The transversal and the lower parallel line make Two opposite obtuse angles labeled as X degrees and 145 degrees. The adjacent angle to angle x is labeled as 35 degrees.\n",
+								"box": [260, 130],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/36deb280c828e99527b8c5b5b5c60fba80e27bbc",
+									"width": 260,
+									"height": 130
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 145,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x1127ab8163666d20",
+			"exerciseId": "x86398bf2",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The angles marked below are vertical angles because they are angles opposite each other where two lines cross.\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Two lines intersect each other creating obtuse angles labeled x and 100 degrees. A ray intersects one of the acute angles and creates an angle labeled 45 degrees.\n",
+									"box": [260, 163],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/96094fc3061c7a899e4b10f70a4e439d3e7eb4c9",
+										"width": 260,
+										"height": 163
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Vertical angles are equivalent.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$x = 100^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "[[☃ image 1]]\n\n$x = $ [[☃ numeric-input 1]]$^\\circ$\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Two lines intersect each other creating obtuse angles labeled x and 100 degrees. A ray intersects one of the acute angles, and creates an angle labeled 45 degrees.",
+								"box": [260, 163],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0b1f174f74716797925ec12cafeb3ab4d73df433",
+									"width": 260,
+									"height": 163
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 100,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xa21d58abd6af5736",
+			"exerciseId": "x86398bf2",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "The angles marked below are vertical angles because they are angles opposite each other where two lines cross.\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Three lines intersecting each others at one point, the angles opposite to each other are labeled as 25 degrees and X degrees.\n",
+									"box": [350, 193],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/8f71c67a890a2f03ee0c4cfee55d170a7672d3a4",
+										"width": 350,
+										"height": 193
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Vertical angles are equivalent.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$x = 25^\\circ$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "[[☃ image 1]]\n\n$x = $ [[☃ numeric-input 1]]$\\degree$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Three lines intersecting each others at one point, the angles on one of the lines are labeled as 25 degrees, and 80 degrees and on the second line the two angles are labeled as 80 degrees and X degrees.\n\n",
+								"box": [300, 165],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e8801c49aa4d9b95aa467723df23ae9df3949e03",
+									"width": 300,
+									"height": 165
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 25,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false,
+					"periodicTableWithKey": false,
+					"financialCalculatorTotalAmount": false,
+					"financialCalculatorTimeToPayOff": false,
+					"financialCalculatorMonthlyPayment": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		}
+	]
+}

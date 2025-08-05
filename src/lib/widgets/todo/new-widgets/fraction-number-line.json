@@ -1,0 +1,476 @@
+{
+	"widgetName": "fraction-number-line",
+	"type": "new",
+	"description": "Fraction Number Line",
+	"requirements": ["Cell-based Fraction Representation"],
+	"sampleQuestions": [
+		{
+			"questionId": "x254489d08703d240",
+			"exerciseId": "x56a09d5e",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Strategy\n\nWe can count the number of groups of $\\blueE{\\dfrac{3}{8}}$ from the diagram. Since $\\blueE{\\dfrac{3}{8}}$ is less than $1$, we will expect to find more than $1$ group.\n\nThe expression $\\purpleD{7}\\div \\blueE{\\dfrac{3}{8}}$ can mean, \"How many groups of $\\blueE{\\dfrac{3}{8}}$ are in $\\purpleD{7}$?\" There will be $\\purpleD{7}$ times as many groups in $\\purpleD{7}$ as there were in $1$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Counting the groups of $\\blueE{\\dfrac{3}{8}}$ in $1$\n\nSince there are $8$ eighths per $1$ unit, there are between $2$ and $3$ full groups of $\\blueE{\\dfrac{3}{8}}$ in $1$. \n\nIt takes $3$ parts for each full group, and there are $2$ parts left over, for a total of $8$ out of $3$ parts.\n\n[[☃ image 1]]\n\nThere are exactly $\\maroonD{\\dfrac{8}{3}}$ groups of $\\blueE{\\dfrac{3}{8}}$ in $1$. \n\nWe call $\\maroonD{\\dfrac{8}{3}}$ the **reciprocal** of $\\blueE{\\dfrac{3}{8}}$.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A number line from 0 to 10 eighths with evenly spaced tick marks in increments of 1 eighth.  0 and 1 are labeled below the number line.  0 eighths, 1 eighth, 2 eighths, 3 eighths, 4 eighths, 5 eighths, 6 eighths, 7 eighths, 8 eighths, 9 eighths, and 10 eighths are labeled above the number line.  There is a teal line on the number line that begins at 0 and ends at 3 eighths.  There is an orange line on the number line that begins at 3 eighths and ends at 6 eighths. There is another teal line on the number line that begins at 6 eighths and ends at 1.  Above the number line is a fraction model with 9 equal parts.  5 parts are shaded teal, 3 parts are shaded orange, and 1 part is white. The number of color blocks of the fraction model correspond to the length of the colored sections on the number line. 8 thirds groups of 3 eighths is above the fraction model with a bracket that starts at the first part of the fraction model and ending after the eighth part of the fraction model.",
+									"box": [320, 238],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ccce66ab870010e31c4e3c1f01626db7f2c55178",
+										"width": 320,
+										"height": 238
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Finding the groups of $\\dfrac{3}{8}$ in $\\purpleD{7}$\n\nThere are $\\maroonD{\\dfrac{8}{3}}$ groups of $\\blueE{\\dfrac{3}{8}}$ in $1$. \n\nSo there are $\\purpleD{7}\\times \\maroonD{\\dfrac{8}{3}}$ groups of $\\blueE{\\dfrac{3}{8}}$ in $\\purpleD{7}$.\n\n$\\begin{align}\n\\purpleD{7}\\div \\blueE{\\dfrac{3}{8}} &= \\purpleD{7} \\times \\maroonD{\\dfrac{8}{3}}\\\\\\\\\n&= \\purpleD{\\dfrac{7}{1}} \\times \\maroonD{\\dfrac{8}{3}}\\\\\\\\\n&= \\goldE{\\dfrac{56}{3}}\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Summary\n\nThere are $\\maroonD{\\dfrac{8}{3}}$ groups of ${\\dfrac{3}{8}}$ in $1$. \n\n$7\\div {\\dfrac{3}{8}} = \\goldE{\\dfrac{56}{3}}$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Use the number line to answer the following $2$ questions.\n\n[[☃ image 1]]\n\n1. **How many groups of $\\dfrac{3}{8}$ are in $1$?**\n\n[[☃ numeric-input 1]] groups\n\n2. **Evaluate.**\n\n$7\\div \\dfrac{3}{8}=$ [[☃ numeric-input 2]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A number line from 0 to 10 eighths with evenly spaced tick marks in increments of 1 eighth.  0 and 1 are labeled below the number line.  0 eighths, 1 eighth, 2 eighths, 3 eighths, 4 eighths, 5 eighths, 6 eighths, 7 eighths, 8 eighths, 9 eighths, and 10 eighths are labeled above the number line.  There is a teal line on the number line that begins at 0 and ends at 3 eighths.  There is an orange line on the number line that begins at 3 eighths and ends at 6 eighths. There is another teal line on the number line that begins at 6 eighths and ends at 1.  Above the number line is a fraction model with 9 equal parts.  5 parts are shaded teal, 3 parts are shaded orange, and 1 part is white. The number of color blocks of the fraction model correspond to the length of the colored sections on the number line. ",
+								"box": [320, 198],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/db8354e620e5b6fc51300fc0849bda69e4206c8b",
+									"width": 320,
+									"height": 198
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 2.6666666666666665,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "optional",
+										"answerForms": ["proper", "improper"]
+									}
+								],
+								"labelText": "groups of 3-eighths in 1",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 18.666666666666668,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "optional",
+										"answerForms": ["proper", "improper"]
+									}
+								],
+								"labelText": "quotient of 7 and 3-eighths",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xf50dfb2fa3c68d44",
+			"exerciseId": "x56a09d5e",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Strategy\n\nWe can count the number of groups of $\\blueE{\\dfrac{5}{7}}$ from the diagram. Since $\\blueE{\\dfrac{5}{7}}$ is less than $1$, we will expect to find more than $1$ group.\n\nThe expression $\\purpleD{8}\\div \\blueE{\\dfrac{5}{7}}$ can mean, \"How many groups of $\\blueE{\\dfrac{5}{7}}$ are in $\\purpleD{8}$?\" There will be $\\purpleD{8}$ times as many groups in $\\purpleD{8}$ as there were in $1$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Counting the groups of $\\blueE{\\dfrac{5}{7}}$ in $1$\n\nSince there are $7$ sevenths per $1$ unit, there are between $1$ and $2$ full groups of $\\blueE{\\dfrac{5}{7}}$ in $1$. \n\nIt takes $5$ parts for each full group, and there are $2$ parts left over, for a total of $7$ out of $5$ parts.\n\n[[☃ image 1]]\n\nThere are exactly $\\maroonD{\\dfrac{7}{5}}$ groups of $\\blueE{\\dfrac{5}{7}}$ in $1$. \n\nWe call $\\maroonD{\\dfrac{7}{5}}$ the **reciprocal** of $\\blueE{\\dfrac{5}{7}}$.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A number line from 0 to 11 sevenths with evenly spaced tick marks in increments of 1 seventh.  0 and 1 are labeled below the number line.  0 sevenths, 1 seventh, 2 sevenths, 3 sevenths, 4 sevenths, 5 sevenths, 6 sevenths, 7 sevenths, 8 sevenths, 9 sevenths, 10 sevenths, and 11 sevenths are labeled above the number line.  There is a teal line on the number line that begins at 0 sevenths and ends at 5 sevenths.  There is an orange line on the number line that begins at 5 sevenths and ends at 7 sevenths.  Above the number line is a fraction model with 10 equal parts.  5 parts are shaded teal, 2 parts are shaded orange, and 3 parts are white. The number of color blocks of the fraction model correspond to the length of the colored sections on the number line. 7 fifths groups of 5 sevenths is above the fraction model with a bracket that starts at the first part of the fraction model and ending after the seventh part of the fraction model.",
+									"box": [320, 238],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c47c5e05d940563e7b2864c73f21a3244323cd65",
+										"width": 320,
+										"height": 238
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Finding the groups of $\\dfrac{5}{7}$ in $\\purpleD{8}$\n\nThere are $\\maroonD{\\dfrac{7}{5}}$ groups of $\\blueE{\\dfrac{5}{7}}$ in $1$. \n\nSo there are $\\purpleD{8}\\times \\maroonD{\\dfrac{7}{5}}$ groups of $\\blueE{\\dfrac{5}{7}}$ in $\\purpleD{8}$.\n\n$\\begin{align}\n\\purpleD{8}\\div \\blueE{\\dfrac{5}{7}} &= \\purpleD{8} \\times \\maroonD{\\dfrac{7}{5}}\\\\\\\\\n&= \\purpleD{\\dfrac{8}{1}} \\times \\maroonD{\\dfrac{7}{5}}\\\\\\\\\n&= \\goldE{\\dfrac{56}{5}}\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Summary\n\nThere are $\\maroonD{\\dfrac{7}{5}}$ groups of ${\\dfrac{5}{7}}$ in $1$. \n\n$8\\div {\\dfrac{5}{7}} = \\goldE{\\dfrac{56}{5}}$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Use the number line to answer the following $2$ questions.\n\n[[☃ image 1]]\n\n1. **How many groups of $\\dfrac{5}{7}$ are in $1$?**\n\n[[☃ numeric-input 1]] groups\n\n2. **Evaluate.**\n\n$8\\div \\dfrac{5}{7}=$ [[☃ numeric-input 2]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A number line from 0 to 11 sevenths with evenly spaced tick marks in increments of 1 seventh.  0 and 1 are labeled below the number line.  0 sevenths, 1 seventh, 2 sevenths, 3 sevenths, 4 sevenths, 5 sevenths, 6 sevenths, 7 sevenths, 8 sevenths, 9 sevenths, 10 sevenths, and 11 sevenths are labeled above the number line.  There is a teal line on the number line that begins at 0 sevenths and ends at 5 sevenths.  There is an orange line on the number line that begins at 5 sevenths and ends at 7 sevenths.  Above the number line is a fraction model with 10 equal parts.  5 parts are shaded teal, 2 parts are shaded orange, and 3 parts are white. The number of color blocks of the fraction model correspond to the length of the colored sections on the number line. ",
+								"box": [320, 198],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b9ca76b4fdca50962206f116674b2da12ddcbe3c",
+									"width": 320,
+									"height": 198
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 1.4,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "optional",
+										"answerForms": ["proper", "improper"]
+									}
+								],
+								"labelText": "groups of 5-sevenths in 1",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 11.2,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "optional",
+										"answerForms": ["proper", "improper"]
+									}
+								],
+								"labelText": "quotient of 8 and 5-sevenths",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x335aafe44cff510e",
+			"exerciseId": "x56a09d5e",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Strategy\n\nWe can count the number of groups of $\\blueE{\\dfrac{3}{4}}$ from the diagram. Since $\\blueE{\\dfrac{3}{4}}$ is less than $1$, we will expect to find more than $1$ group.\n\nThe expression $\\purpleD{5}\\div \\blueE{\\dfrac{3}{4}}$ can mean, \"How many groups of $\\blueE{\\dfrac{3}{4}}$ are in $\\purpleD{5}$?\" There will be $\\purpleD{5}$ times as many groups in $\\purpleD{5}$ as there were in $1$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Counting the groups of $\\blueE{\\dfrac{3}{4}}$ in $1$\n\nSince there are $4$ fourths per $1$ unit, there are between $1$ and $2$ full groups of $\\blueE{\\dfrac{3}{4}}$ in $1$. \n\nIt takes $3$ parts for each full group, and there is $1$ part left over, for a total of $4$ out of $3$ parts.\n\n[[☃ image 1]]\n\nThere are exactly $\\maroonD{\\dfrac{4}{3}}$ groups of $\\blueE{\\dfrac{3}{4}}$ in $1$. \n\nWe call $\\maroonD{\\dfrac{4}{3}}$ the **reciprocal** of $\\blueE{\\dfrac{3}{4}}$.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A number line from 0 to 2 with evenly spaced tick marks in increments of 1 fourth.  0, 1, and 2 are labeled below the number line.  0 fourths, 1 fourth, 2 fourths, 3 fourths, 4 fourths, 5 fourths, 6 fourths, 7 fourths, and 8 fourths are labeled above the number line.  There is a teal line on the number line that begins at 0 and ends at 3 fourths.  There is an orange line on the number line that begins at 3 fourths and ends at 1.  Above the number line is a fraction model with 6 equal parts.  3 parts are shaded teal, 1 part is shaded orange, and 2 parts are white. The number of color blocks of the fraction model correspond to the length of the colored sections on the number line. 4 thirds groups of 3 fourths is above the fraction model with a bracket that starts at the first part of the fraction model and ending after the fourth part of the fraction model.",
+									"box": [320, 238],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/6bcf640dbafc72243df76d6fa0693a06068998cc",
+										"width": 320,
+										"height": 238
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Finding the groups of $\\dfrac{3}{4}$ in $\\purpleD{5}$\n\nThere are $\\maroonD{\\dfrac{4}{3}}$ groups of $\\blueE{\\dfrac{3}{4}}$ in $1$. \n\nSo there are $\\purpleD{5}\\times \\maroonD{\\dfrac{4}{3}}$ groups of $\\blueE{\\dfrac{3}{4}}$ in $\\purpleD{5}$.\n\n$\\begin{align}\n\\purpleD{5}\\div \\blueE{\\dfrac{3}{4}} &= \\purpleD{5} \\times \\maroonD{\\dfrac{4}{3}}\\\\\\\\\n&= \\purpleD{\\dfrac{5}{1}} \\times \\maroonD{\\dfrac{4}{3}}\\\\\\\\\n&= \\goldE{\\dfrac{20}{3}}\n\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Summary\n\nThere are $\\maroonD{\\dfrac{4}{3}}$ groups of ${\\dfrac{3}{4}}$ in $1$. \n\n$5\\div {\\dfrac{3}{4}} = \\goldE{\\dfrac{20}{3}}$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Use the number line to answer the following $2$ questions.\n\n[[☃ image 1]]\n\n1. **How many groups of $\\dfrac{3}{4}$ are in $1$?**\n\n[[☃ numeric-input 1]] groups\n\n2. **Evaluate.**\n\n$5\\div \\dfrac{3}{4}=$ [[☃ numeric-input 2]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A number line from 0 to 2 with evenly spaced tick marks in increments of 1 fourth.  0, 1, and 2 are labeled below the number line.  0 fourths, 1 fourth, 2 fourths, 3 fourths, 4 fourths, 5 fourths, 6 fourths, 7 fourths, and 8 fourths are labeled above the number line.  There is a teal line on the number line that begins at 0 and ends at 3 fourths.  There is an orange line on the number line that begins at 3 fourths and ends at 1.  Above the number line is a fraction model with 6 equal parts.  3 parts are shaded teal, 1 part is shaded orange, and 2 parts are white. The number of color blocks of the fraction model correspond to the length of the colored sections on the number line. ",
+								"box": [320, 198],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/8bc88f5cabe6249a3a6f31b791e45de2e6f5987e",
+									"width": 320,
+									"height": 198
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 1.3333333333333333,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "optional",
+										"answerForms": ["proper", "improper"]
+									}
+								],
+								"labelText": "groups of 3-fourths in 1",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 6.666666666666667,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "optional",
+										"answerForms": ["proper", "improper"]
+									}
+								],
+								"labelText": "quotient of 5 and 3-fourths",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		}
+	]
+}

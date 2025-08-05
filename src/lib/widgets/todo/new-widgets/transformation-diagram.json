@@ -1,0 +1,878 @@
+{
+	"widgetName": "transformation-diagram",
+	"type": "new",
+	"description": "Transformation Diagram",
+	"requirements": ["Non-Coordinate Grid Transformations"],
+	"sampleQuestions": [
+		{
+			"questionId": "x8d93a52239fe1506",
+			"exerciseId": "xbc7109f815e04e37",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "- A *translation* moves a figure up, down, left, or right, or any combination of those.\n- A *rotation* turns a figure around a single point, either on or off of the figure.\n- A *reflection* makes a mirror image of a figure across an imaginary line.\n- A *dilation* enlarges or shrinks a figure.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Since quadrilateral $B$ is larger, but has the exact same shape and direction as quadrilateral $A$, we have enlarged quadrilateral $A$ to get quadrilateral $B$.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral pre-image labeled A and its image of the similar quadrilateral but larger labeled B. 4 lines pass stem from a point in the top left of the quadrilaterals where each line passes through quadrilateral A and B corresponding vertices.",
+									"box": [123, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/9d480c597901f7a5449bac3b641f0eb46e5f7543",
+										"width": 123,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "We apply a *dilation* to quadrilateral $A$ to get quadrilateral $B$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What single transformation was applied to quadrilateral $A$ to get quadrilateral $B$?**\n\n\n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A quadrilateral pre-image labeled A and its image of the similar quadrilateral but larger labeled B.",
+								"box": [185, 300],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a93a92f59d5733539cb7b882c44500a7dde37581",
+									"width": 185,
+									"height": 300
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Translation",
+										"correct": false
+									},
+									{
+										"content": "Rotation",
+										"correct": false
+									},
+									{
+										"content": "Reflection",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "Dilation",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x1bf740377eb02ea2",
+			"exerciseId": "xbc7109f815e04e37",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "- A *translation* moves a figure up, down, left, or right, or any combination of those.\n- A *rotation* turns a figure around a single point, either on or off of the figure.\n- A *reflection* makes a mirror image of a figure across an imaginary line.\n- A *dilation* enlarges or shrinks a figure.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "For this figure, we can visualize a line between triangle $A$ and triangle $B$ such that each point in triangle $B$ is the same distance from the line, but on the opposite side, as the corresponding point in triangle $A$.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A triangle labeled A and a congruent triangle labeled B. Triangle B faces the opposite way than triangle A. A dashed line slants down from left to right evenly separating the triangles. Arrows point from corresponding vertices of both triangles to the dashed line.",
+									"box": [300, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a4428f49f3dd38927b451c3ef9ba0d855301b6e7",
+										"width": 300,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "We apply a *reflection* to triangle $A$ to get triangle $B$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What single transformation was applied to triangle $A$ to get triangle $B$?**\n\n\n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A triangle labeled A and a congruent triangle labeled B. Triangle B faces the opposite way than triangle A.",
+								"box": [300, 300],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/44c351b7e80ab0e38c89c7ef4a5ed57abb92462f",
+									"width": 300,
+									"height": 300
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Translation",
+										"correct": false
+									},
+									{
+										"content": "Rotation",
+										"correct": false
+									},
+									{
+										"content": "Reflection",
+										"correct": true,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "Dilation",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x6ed925bd634081f4",
+			"exerciseId": "xbc7109f815e04e37",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "- A *translation* moves a figure up, down, left, or right, or any combination of those.\n- A *rotation* turns a figure around a single point, either on or off of the figure.\n- A *reflection* makes a mirror image of a figure across an imaginary line.\n- A *dilation* enlarges or shrinks a figure.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We can move quadrilateral $A$ down and left so that each point on quadrilateral $A$ corresponds with a point on quadrilateral $B$.\n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Quadrilateral A is above and to the right of quadrilateral B. There are rays from each vertex in quadrilateral A to each corresponding vertex in quadrilateral B",
+									"box": [220, 300],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f5075f26ee566a77cd87c9cd00207a4de67d84b7",
+										"width": 220,
+										"height": 300
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "We apply a *translation* to quadrilateral $A$ to get quadrilateral $B$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**What single transformation was applied to quadrilateral $A$ to get quadrilateral $B$?**\n\n\n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A quadrilateral labeled A and a quadrilateral labeled B that is the same size, shape, and position as quadrilateral A just moved down and to the left.",
+								"box": [220, 300],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/9c179bd3673470aaf3950a4362704bffce2d52da",
+									"width": 220,
+									"height": 300
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "Translation",
+										"correct": true
+									},
+									{
+										"content": "Rotation",
+										"correct": false
+									},
+									{
+										"content": "Reflection",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									},
+									{
+										"content": "Dilation",
+										"correct": false,
+										"isNoneOfTheAbove": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xb93d4ff5889d1d9b",
+			"exerciseId": "xbdeb6941",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "A reflection moves a point perpendicularly across a line, so that the [[☃ definition 1]] is the same distance from the line as the [[☃ definition 2]], but on the other side.\n\n\n\n[[☃ image 1]]\n\nIn other words, the line of reflection is the perpendicular bisector between any pair of corresponding points in the image and the pre-image.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Point R is reflected across a line to form point R prime. Segment R R prime is perpendicular to the line.",
+									"box": [149, 170],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fb6f2a256ffa7c13a7d13924c1f960a57fd7be6a",
+										"width": 149,
+										"height": 170
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The figure *after* one or more transformations",
+									"togglePrompt": "image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							},
+							"definition 2": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The original figure *before* any transformations",
+									"togglePrompt": "pre-image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Point $D$ is $5$ units directly below line $\\ell$, so $D'$ will be $5$ units above the line and have the same $x$-coordinate as $D$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "This is the image of point $D$:  \n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Point D is reflected across horizontal line l. The new point and point D are both five units from line l.",
+									"box": [265, 265],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/329162d2efc36ae1d2cc2af5d3cb738719f66448",
+										"width": 265,
+										"height": 265
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Plot the image of point $D$ under a reflection across line $\\ell$.**  \n\n[[☃ interactive-graph 1]]",
+					"widgets": {
+						"interactive-graph 1": {
+							"type": "interactive-graph",
+							"graded": true,
+							"static": false,
+							"options": {
+								"step": [1, 1],
+								"graph": {
+									"type": "point",
+									"numPoints": "unlimited"
+								},
+								"range": [[-8, 8], [-8, 8]],
+								"labels": ["x", "y"],
+								"correct": {
+									"type": "point",
+									"coords": [[2, 7]],
+									"numPoints": "unlimited"
+								},
+								"gridStep": [1, 1],
+								"markings": "none",
+								"snapStep": [1, 1],
+								"showRuler": false,
+								"rulerLabel": "",
+								"rulerTicks": 10,
+								"showTooltips": false,
+								"showProtractor": false,
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f990914d45176dfe9659478f8fd4c0c87ae856ed",
+									"width": 400,
+									"height": 400
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x5b3cddc02a578c1e",
+			"exerciseId": "xbdeb6941",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "A reflection moves a point perpendicularly across a line, so that the [[☃ definition 1]] is the same distance from the line as the [[☃ definition 2]], but on the other side.\n\n\n\n[[☃ image 1]]\n\nIn other words, the line of reflection is the perpendicular bisector between any pair of corresponding points in the image and the pre-image.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Point R is reflected across a line to form point R prime. Segment R R prime is perpendicular to the line.",
+									"box": [149, 170],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fb6f2a256ffa7c13a7d13924c1f960a57fd7be6a",
+										"width": 149,
+										"height": 170
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The figure *after* one or more transformations",
+									"togglePrompt": "image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							},
+							"definition 2": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The original figure *before* any transformations",
+									"togglePrompt": "pre-image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Point $A$ is $4$ units directly to the right of line $\\ell$, so $A'$ will be $4$ units to the left of the line and have the same $y$-coordinate as $A$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "This is the image of point $A$:  \n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Point A is reflected across vertical line l. The new point and point A are both four units from line l.",
+									"box": [265, 265],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/835cb6f4b78ab4597ed42cd546a19d4b2b9037b2",
+										"width": 265,
+										"height": 265
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Plot the image of point $A$ under a reflection across line $\\ell$.**  \n\n[[☃ interactive-graph 1]]",
+					"widgets": {
+						"interactive-graph 1": {
+							"type": "interactive-graph",
+							"graded": true,
+							"static": false,
+							"options": {
+								"step": [1, 1],
+								"graph": {
+									"type": "point",
+									"numPoints": "unlimited"
+								},
+								"range": [[-8, 8], [-8, 8]],
+								"labels": ["x", "y"],
+								"correct": {
+									"type": "point",
+									"coords": [[-6, 5]],
+									"numPoints": "unlimited"
+								},
+								"gridStep": [1, 1],
+								"markings": "none",
+								"snapStep": [1, 1],
+								"showRuler": false,
+								"rulerLabel": "",
+								"rulerTicks": 10,
+								"showTooltips": false,
+								"showProtractor": false,
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b23a1ea6cd492cacc5a6942afefcb1dc35e93ec5",
+									"width": 400,
+									"height": 400
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xf5caad0b269d58a2",
+			"exerciseId": "xbdeb6941",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "A reflection moves a point perpendicularly across a line, so that the [[☃ definition 1]] is the same distance from the line as the [[☃ definition 2]], but on the other side.\n\n\n\n[[☃ image 1]]\n\nIn other words, the line of reflection is the perpendicular bisector between any pair of corresponding points in the image and the pre-image.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Point R is reflected across a line to form point R prime. Segment R R prime is perpendicular to the line.",
+									"box": [149, 170],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fb6f2a256ffa7c13a7d13924c1f960a57fd7be6a",
+										"width": 149,
+										"height": 170
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							},
+							"definition 1": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The figure *after* one or more transformations",
+									"togglePrompt": "image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							},
+							"definition 2": {
+								"type": "definition",
+								"graded": true,
+								"static": false,
+								"options": {
+									"static": false,
+									"definition": "The original figure *before* any transformations",
+									"togglePrompt": "pre-image"
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "default"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "Point $C$ is $3$ units directly to the left of line $n$, so $C'$ will be $3$ units to the right of the line and have the same $y$-coordinate as $C$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "This is the image of point $C$:  \n\n\n\n[[☃ image 1]]\n\n",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "Point C is reflected across vertical line n. The new point and point C are both three units from line l.",
+									"box": [265, 265],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0b0409ad4fc8b779c82d8a4ddfce009c8548c382",
+										"width": 265,
+										"height": 265
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Plot the image of point $C$ under a reflection across line $n$.**  \n\n[[☃ interactive-graph 1]]",
+					"widgets": {
+						"interactive-graph 1": {
+							"type": "interactive-graph",
+							"graded": true,
+							"static": false,
+							"options": {
+								"step": [1, 1],
+								"graph": {
+									"type": "point",
+									"numPoints": "unlimited"
+								},
+								"range": [[-8, 8], [-8, 8]],
+								"labels": ["x", "y"],
+								"correct": {
+									"type": "point",
+									"coords": [[5, -1]],
+									"numPoints": "unlimited"
+								},
+								"gridStep": [1, 1],
+								"markings": "none",
+								"snapStep": [1, 1],
+								"showRuler": false,
+								"rulerLabel": "",
+								"rulerTicks": 10,
+								"showTooltips": false,
+								"showProtractor": false,
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/88700d6be4b7337708d1d6eedafed7b24a8b2ab3",
+									"width": 400,
+									"height": 400
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		}
+	]
+}

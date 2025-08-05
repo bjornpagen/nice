@@ -1,0 +1,411 @@
+{
+	"widgetName": "tape-diagram",
+	"type": "enhancement",
+	"description": "Enhancements to Tape Diagram",
+	"requirements": ["Additional Representations"],
+	"sampleQuestions": [
+		{
+			"questionId": "xc1b390ca506f8849",
+			"exerciseId": "xba17b8a2daf91aff",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "We have two tapes that are the same length. Let's start by writing an expression for the length of each tape.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The top tape has two parts, one with a length of $13$ units and the other with a length of $t$ units.\n\nThe total length of the top tape is $13+t$ units.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The bottom tape has a length of $17$ units.\n\nSo, the tape diagram shows us $13+t=17$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The section labeled $t$ is $13$ units shorter than the $17$ unit long tape.\n\n$t=17-13=?$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The equation $13+t=17$ represents the tape diagram.\n\n$t=4$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The tape diagram represents an equation.  \n\n\n\n[[☃ image 1]]\n\n**Write an equation to represent the tape diagram.**\n\n[[☃ radio 1]]\n\n**Find the value of $t$ that makes the equation true.**\n\n$t=$ [[☃ numeric-input 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "2 tape diagrams that represent the same length. The top tape diagram has 2 unequal parts. The first part is 13 units and the second part is t units. The bottom tape diagram has 1 part, which is 17 units.",
+								"box": [320, 160],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5de8141dc8db932366cf8862bd75800380ada870",
+									"width": 320,
+									"height": 160
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$13+t=17$",
+										"correct": true
+									},
+									{
+										"content": "$13t=17$",
+										"correct": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 4,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "value of t",
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x9b187096bb636675",
+			"exerciseId": "xba17b8a2daf91aff",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "We have two tapes that are the same length. Let's start by writing an expression for the length of each tape.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The top tape has two parts, one with a length of $a$ units and the other with a length of $17$ units.\n\nThe total length of the top tape is $a+17$ units.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The bottom tape has a length of $35$ units.\n\nSo, the tape diagram shows us $a+17=35$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The section labeled $a$ is $17$ units shorter than the $35$ unit long tape.\n\n$a=35-17=?$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The equation $a+17=35$ represents the tape diagram.\n\n$a=18$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The tape diagram represents an equation.\n\n[[☃ image 1]]\n\n**Write an equation to represent the tape diagram.**\n\n[[☃ radio 1]]\n\n**Find the value of $a$ that makes the equation true.**\n\n$a=$ [[☃ numeric-input 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A tape diagram with two tapes of equal lengths. The top tape is split in 2 unequal parts. The first part is labeled, \"A,\" and the second part is labeled 17. The bottom tape is labeled 35.",
+								"box": [320, 160],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/7055990fc7ff2490d545c836300381295aec3d50",
+									"width": 320,
+									"height": 160
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$a-17=35$",
+										"correct": false
+									},
+									{
+										"content": "$a+17=35$",
+										"correct": true
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 18,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "value of a",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x6089758dca05221e",
+			"exerciseId": "xba17b8a2daf91aff",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "We have two tapes that are the same length. Let's start by writing an expression for the length of each tape.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The top tape has a length of $25$ units.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The bottom tape has two parts, one with a length of $10$ units and the other with a length of $w$ units.\n\nThe total length of the bottom tape is $10+w$ units.\n\nSo, the tape diagram shows us $25=10+w$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The section labeled $w$ is $10$ units shorter than the $25$ unit long tape.\n\n$w=25-10=?$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The equation $25=10+w$ represents the tape diagram.\n\n$w=15$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The tape diagram represents an equation.  \n\n\n\n[[☃ image 1]]\n\n**Write an equation to represent the tape diagram.**\n\n[[☃ radio 1]]\n\n**Find the value of $w$ that makes the equation true.**\n\n$w=$ [[☃ numeric-input 1]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "2 tape diagrams that represent the same length. The top tape diagram has 1 part, which is 25 units. The bottom tape diagram has 2 unequal parts. The first part is 10 units and the second part is w units.",
+								"box": [320, 160],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c29825bcefbc24b52583b3e35cfff3a2a3c68737",
+									"width": 320,
+									"height": 160
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$25=w-10$",
+										"correct": false
+									},
+									{
+										"content": "$25=10+w$",
+										"correct": true
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 15,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "value of w",
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		}
+	]
+}

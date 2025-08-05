@@ -1,0 +1,2147 @@
+{
+	"widgetName": "quadrilateral-diagram",
+	"type": "new",
+	"description": "Quadrilateral Diagram",
+	"requirements": ["Trapezoids", "Rectangles and Squares", "Area Calculations"],
+	"sampleQuestions": [
+		{
+			"questionId": "xd40573ca1eea1f87",
+			"exerciseId": "898971113",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's imagine we cut the parallelogram on the dotted line. We could slide part of the shape to make a rectangle.\n\nThen we could find the area of the rectangle.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "[[☃ image 1]]\n\nThe area of the parallelogram is the same as the area of a $6$-unit by $4$-unit rectangle.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A parallelogram and a rectangle. Both figures have the same base and height. The segment representing the height of the parallelogram is in the middle of the figure, splitting the figure in 2 parts. The base of the parallelogram is 6 units and the height of the parallelogram is 4 units. The rectangle is made of the same 2 parts, but with the height segment shifted right to form the side of the rectangle. The base of the rectangle is 6 units and the height of the rectangle is 4 units.",
+									"box": [320, 157],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/6776e88f3a180d9270669d6d94a6449354b433b1",
+										"width": 320,
+										"height": 157
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$\\text{Area of parallelogram} = \\text{Area of rectangle} = \\text{base} \\times \\text{height}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\text{Area of parallelogram}  = 6 \\times 4=24$ square units",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Look at the image below.\n\n[[☃ image 2]]\n\n**What is the area of the parallelogram?**\n\n[[☃ numeric-input 2]] square units",
+					"widgets": {
+						"image 2": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A parallelogram. The segment representing the height of the parallelogram is in the middle of the figure, splitting the figure in 2 parts. The base of the parallelogram is 6 units and the height of the parallelogram is 4 units. The diagonal side length is 5 units.",
+								"box": [320, 157],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/9e9aa4d66c2f27f6972fc4193d1af03b166a4633",
+									"width": 320,
+									"height": 157
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 24,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x71e4363caf9528c2",
+			"exerciseId": "898971113",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's imagine we cut the parallelogram on the dotted line. We could slide part of the shape to make a rectangle.\n\nThen we could find the area of the rectangle.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "[[☃ image 1]]\n\nThe area of the parallelogram is the same as the area of a $9$-unit by $6$-unit rectangle.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A parallelogram and a rectangle. Both figures have the same base and height. The segment representing the height of the parallelogram is in the middle of the figure, splitting the figure in 2 parts. The base of the parallelogram is 9 units and the height of the parallelogram is 6 units. The rectangle is made of the same 2 parts, but with the height segment shifted right to form the side of the rectangle. The base of the rectangle is 9 units and the height of the rectangle is 6 units.",
+									"box": [320, 147],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f13ec6b56964619bcb92066549db6a2199dd4003",
+										"width": 320,
+										"height": 147
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$\\text{Area of parallelogram} = \\text{Area of rectangle} = \\text{base} \\times \\text{height}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\text{Area of parallelogram}  = 9 \\times 6=54$ square units",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Look at the image below.\n\n[[☃ image 1]]\n\n\n**What is the area of the parallelogram?**\n\n[[☃ numeric-input 2]] square units",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A parallelogram. The segment representing the height of the parallelogram is in the middle of the figure, splitting the figure in 2 parts. The base of the parallelogram is 9 units and the height of the parallelogram is 6 units. The diagonal side length is 8 units.",
+								"box": [320, 147],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1e777225c601804f2df099d811b2313dddaeb3c7",
+									"width": 320,
+									"height": 147
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 54,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x20a0783691f7ba20",
+			"exerciseId": "898971113",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's imagine we cut the parallelogram on the dotted line. We could slide part of the shape to make a rectangle.\n\nThen we could find the area of the rectangle.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "[[☃ image 1]]\n\nThe area of the parallelogram is the same as the area of a $7$-unit by $5$-unit rectangle.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A parallelogram and a rectangle. Both figures have the same base and height. The segment representing the height of the parallelogram is in the middle of the figure, splitting the figure in 2 parts. The base of the parallelogram is 7 units and the height of the parallelogram is 5 units. The rectangle is made of the same 2 parts, but with the height segment shifted right to form the side of the rectangle. The base of the rectangle is 7 units and the height of the rectangle is 5 units.",
+									"box": [320, 160],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5fb6269d451ae18c840fe325faf2e177853fefc2",
+										"width": 320,
+										"height": 160
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "$\\text{Area of parallelogram} = \\text{Area of rectangle} = \\text{base} \\times \\text{height}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\text{Area of parallelogram}  = 7 \\times 5=35$ square units",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "Look at the image below. \n\n[[☃ image 2]]\n\n**What is the area of the parallelogram?**\n\n[[☃ numeric-input 1]] square units",
+					"widgets": {
+						"image 2": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A parallelogram. The segment representing the height of the parallelogram is in the middle of the figure, splitting the figure in 2 parts. The base of the parallelogram is 7 units and the height of the parallelogram is 5 units. The diagonal side length is 6 units.",
+								"box": [320, 160],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/172a106b6562255eccf91d8f4c1e39c18b24c218",
+									"width": 320,
+									"height": 160
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 35,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x603573094d20c8d1",
+			"exerciseId": "xbb70227762ca3c86",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's set up an equation using the formula for the area of a parallelogram.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\begin{align} \\text{Area of a parallelogram} &=  \\text{base} \\cdot \\text{height}\\\\\\\\\n20&= b \\cdot 4 \\\\\\\\\n20&= 4b \\\\\\\\\n\\dfrac{20}{\\blueD{4}}&= \\dfrac{4b}{\\blueD{4}} ~~~~~~~\\text{divide both sides by } {\\blueD{ 4}}\\\\\\\\\n\\dfrac{20}{\\blueD{4}}&= \\dfrac{\\cancel{4}b}{\\blueD{\\cancel{4}}}\\\\\\\\\nb &=\\dfrac{20}{\\blueD{4}}\\\\\\\\\nb &=5\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The answer:\n\n$b = 5$ units",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The parallelogram shown below has an area of $20$ units$^2$.\n\n[[☃ image 1]]\n\n**Find the missing base.**\n\n$b = $ [[☃ numeric-input 1]] units",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A parallelogram. The segment representing the height of the parallelogram is in the middle of the figure, splitting the figure in 2 parts. The base of the parallelogram is labeled b units and the height of the parallelogram is 4 units. ",
+								"box": [320, 224],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/460b4cc0d74eb8e47385ebfe359571628b4af061",
+									"width": 320,
+									"height": 224
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 5,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x0b7e18231795f451",
+			"exerciseId": "xbb70227762ca3c86",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's set up an equation using the formula for the area of a parallelogram.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\begin{align} \\text{Area of a parallelogram} &=  \\text{base} \\cdot \\text{height}\\\\\\\\\n21&= 7 \\cdot h \\\\\\\\\n21&= 7h \\\\\\\\\n\\dfrac{21}{\\blueD{7}}&= \\dfrac{7h}{\\blueD{7}} ~~~~~~~\\text{divide both sides by } {\\blueD{ 7}}\\\\\\\\\n\\dfrac{21}{\\blueD{7}}&= \\dfrac{\\cancel{7}h}{\\blueD{\\cancel{7}}}\\\\\\\\\nh &=\\dfrac{21}{\\blueD{7}}\\\\\\\\\nh &=3\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The answer:\n\n$h = 3$ units",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The parallelogram shown below has an area of $21$ units$^2$.\n\n[[☃ image 1]]\n\n**Find the missing height.**\n\n$h = $ [[☃ numeric-input 1]] units",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A parallelogram. The segment representing the height of the parallelogram is in the middle of the figure, splitting the figure in 2 parts. The base of the parallelogram is 7 units and the height of the parallelogram is labeled h units. The diagonal side length is 5 units.",
+								"box": [320, 123],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/6437895391d9e4eb437a0d68301a791554bce6ac",
+									"width": 320,
+									"height": 123
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 3,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x4bda16dce29ef2c9",
+			"exerciseId": "xbb70227762ca3c86",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "Let's set up an equation using the formula for the area of a parallelogram.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$\\begin{align} \\text{Area of a parallelogram} &=  \\text{base} \\cdot \\text{height}\\\\\\\\\n40&= b \\cdot 5 \\\\\\\\\n40&= 5b \\\\\\\\\n\\dfrac{40}{\\blueD{5}}&= \\dfrac{5b}{\\blueD{5}} ~~~~~~~\\text{divide both sides by } {\\blueD{ 5}}\\\\\\\\\n\\dfrac{40}{\\blueD{5}}&= \\dfrac{\\cancel{5}b}{\\blueD{\\cancel{5}}}\\\\\\\\\nb &=\\dfrac{40}{\\blueD{5}}\\\\\\\\\nb &=8\\end{align}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The answer:\n\n$b = 8$ units",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The parallelogram shown below has an area of $40$ units$^2$.\n\n[[☃ image 1]]\n\n**Find the missing base.**\n\n$b = $ [[☃ numeric-input 1]] units",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A parallelogram. The segment representing the height of the parallelogram is in the middle of the figure, splitting the figure in 2 parts. The base of the parallelogram is labeled b units and the height of the parallelogram is 5 units. ",
+								"box": [320, 175],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/313b94fc62cedc234a3950e0b1b636ab633dc0a0",
+									"width": 320,
+									"height": 175
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 8,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xa83198c28abd6b4c",
+			"exerciseId": "xf6402ab587cd8bbc",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Strategy\n\nWe have a figure split into $2$ non-overlapping shapes:  $1$ triangle and $1$ rectangle.\n\nWe can add the areas of each part to get the area of the whole figure.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Area of triangle A\n\n[[☃ image 1]]\n\nThe height of triangle A is $4$ units long because $7-3=4$.\n\n$\\begin{align}\n\\text{Area}_\\text{Triangle A} &= \\dfrac{1}{2}\\cdot \\text{base}\\cdot \\text{height}\\\\\\\\\n&=\\dfrac{1}{2}\\cdot 10\\cdot 4\\\\\\\\\n&=20\n\\end{align}$\n\nThe area of triangle A is $\\redE{20}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with one pair of parallel sides.  A dashed line that is perpendicular to the base creates two right triangles. The top right triangle is labeled A. Triangle A has an arrow that shows the length of the base is labeled 4 units and a height of 10 units. ",
+									"box": [320, 212],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/25f8df2ef1c6b6013c9413c76784112a25c70222",
+										"width": 320,
+										"height": 212
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of rectangle B\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{Rectangle B} &= \\text{base}\\cdot \\text{height}\\\\\\\\\n&=10\\cdot 3\\\\\\\\\n&=30\n\\end{align}$\n\nThe area of rectangle B is $\\tealE{30}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with one pair of parallel sides.  A dashed line that is perpendicular to the base creates two right triangles. The bottom right triangle is labeled B. Triangle B has a base of 3 units and a height of 10 units. ",
+									"box": [320, 212],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/bd6050032b207ab4a19861f56e54e8efbedefc4d",
+										"width": 320,
+										"height": 212
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of whole figure\n\nNow we can add all of the partial areas to get the whole area.\n\n$\\redE{20}+\\tealE{30}=\\purpleD{50}$\n\nThe area of the whole figure is $\\purpleD{50}$ square units.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Figure | Area (square units)\n- | -\nTriangle A | $\\redE{20}$\nRectangle B | $\\tealE{30}$\nWhole figure | $\\purpleD{50}$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The following figure is made of $1$ triangle and $1$ rectangle.\n\n[[☃ image 1]]\n\n**Find the area of each part of the figure and the whole figure.**\n\nFigure | Area (square units)\n- | -\nTriangle A | [[☃ numeric-input 1]]\nRectangle B | [[☃ numeric-input 2]]\nWhole figure | [[☃ numeric-input 3]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A quadrilateral with one pair of parallel sides.  The base lengths are 3 units and 7 units.  The height is 10 units. A dashed line that is perpendicular to the base creates two triangles, labeled A and B. ",
+								"box": [320, 212],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/dd850c6236934d914b11f359a9a5c3ff5ecc3a50",
+									"width": 320,
+									"height": 212
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 20,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area of triangle A",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 30,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area of rectangle B",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 3": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 50,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area of whole figure",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x8b3b9e125fed0fc3",
+			"exerciseId": "xf6402ab587cd8bbc",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Strategy\n\nWe have a figure split into $2$ non-overlapping triangles.\n\nWe can add the areas of each part to get the area of the whole figure.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Area of triangle A\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{Triangle A} &= \\dfrac{1}{2}\\cdot \\text{base}\\cdot \\text{height}\\\\\\\\\n&=\\dfrac{1}{2}\\cdot 7\\cdot 5\\\\\\\\\n&=17.5\n\\end{align}$\n\nThe area of triangle A is $\\redE{17.5}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with one pair of parallel sides.  The base length is 7 units.  The height is 5 units. A dashed line from opposite vertices creates two triangles. The left most triangle is labeled A.  Triangle A has a base of 7 units and a height of 5 units.",
+									"box": [280, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/79b4092f13b92a5c6cc679dc6f578ada220449bc",
+										"width": 280,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of triangle B\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{Triangle B} &= \\dfrac{1}{2}\\cdot \\text{base}\\cdot \\text{height}\\\\\\\\\n&=\\dfrac{1}{2}\\cdot 4\\cdot 5\\\\\\\\\n&=10\n\\end{align}$\n\nThe area of triangle B is $\\tealE{10}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with one pair of parallel sides.  The base length is 4 units.  The height is 5 units. A dashed line from opposite vertices creates two triangles. The right most triangle is labeled B.  Triangle B has a base of 4 units and a height of 5 units.",
+									"box": [280, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/eb482d101bfb127a58e50f14bb6f303ae907ae32",
+										"width": 280,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of whole figure\n\nNow we can add all of the partial areas to get the whole area.\n\n$\\redE{17.5}+\\tealE{10}=\\purpleD{27.5}$\n\nThe area of the whole figure is $\\purpleD{27.5}$ square units.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Figure | Area (square units)\n- | -\nTriangle A | $\\redE{17.5}$\nTriangle B | $\\tealE{10}$\nWhole figure | $\\purpleD{27.5}$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The following figure is made of $2$ triangles.\n\n[[☃ image 1]]\n\n**Find the area of each part of the figure and the whole figure.**\n\nFigure | Area (square units)\n- | -\nTriangle A | [[☃ numeric-input 1]]\nTriangle B | [[☃ numeric-input 2]]\nWhole figure | [[☃ numeric-input 3]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A quadrilateral with one pair of parallel sides.  The base lengths are 4 units and 7 units.  The height is 5 units. A dashed line from opposite vertices creates two triangles, labeled A and B. Triangle A has a base of 7 units and a height of 5 units. Triangle B has a base of 4 units and a height of 5 units.",
+								"box": [280, 320],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/96ea076e56cf4c3cd02d9d63ffff90f6aa87dff1",
+									"width": 280,
+									"height": 320
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 17.5,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area of triangle A",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 10,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area of triangle B",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 3": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 27.5,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area of whole figure",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xdc54be7fad1e2e6e",
+			"exerciseId": "xf6402ab587cd8bbc",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Strategy\n\nWe have a figure split into $2$ non-overlapping triangles.\n\nWe can add the areas of each part to get the area of the whole figure.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "###Area of triangle A\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{Triangle A} &= \\dfrac{1}{2}\\cdot \\text{base}\\cdot \\text{height}\\\\\\\\\n&=\\dfrac{1}{2}\\cdot 9\\cdot 3\\\\\\\\\n&=13.5\n\\end{align}$\n\nThe area of triangle A is $\\redE{13.5}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with one pair of parallel sides.  The base length is 9 units.  The height is 3 units. A dashed line from opposite vertices creates two triangles. The left most triangle is labeled A. Triangle A has a base of 9 units and a height of 3 units. ",
+									"box": [320, 134],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/27f1245796243c1cbb8aaed13f69368aae9d5670",
+										"width": 320,
+										"height": 134
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of triangle B\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{Triangle B} &= \\dfrac{1}{2}\\cdot \\text{base}\\cdot \\text{height}\\\\\\\\\n&=\\dfrac{1}{2}\\cdot 7\\cdot 3\\\\\\\\\n&=10.5\n\\end{align}$\n\nThe area of triangle B is $\\tealE{10.5}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with one pair of parallel sides.  The base length is 7 units.  The height is 3 units. A dashed line from opposite vertices creates two triangles. The right most triangle is labeled B. Triangle B has a base of 7 units and a height of 3 units. ",
+									"box": [320, 134],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5f13e2025523acfec3d6b0c1827a0bf7d7c34c52",
+										"width": 320,
+										"height": 134
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of whole figure\n\nNow we can add all of the partial areas to get the whole area.\n\n$\\redE{13.5}+\\tealE{10.5}=\\purpleD{24}$\n\nThe area of the whole figure is $\\purpleD{24}$ square units.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Figure | Area (square units)\n- | -\nTriangle A | $\\redE{13.5}$\nTriangle B | $\\tealE{10.5}$\nWhole figure | $\\purpleD{24}$",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "The following figure is made of $2$ triangles.\n\n[[☃ image 1]]\n\n**Find the area of each part of the figure and the whole figure.**\n\nFigure | Area (square units)\n- | -\nTriangle A | [[☃ numeric-input 1]]\nTriangle B | [[☃ numeric-input 2]]\nWhole figure | [[☃ numeric-input 3]]",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A quadrilateral with one pair of parallel sides.  The base lengths are 7 units and 9 units.  The height is 3 units. A dashed line from opposite vertices creates two triangles, labeled A and B. Triangle A has a base of 9 units and a height of 3 units. Triangle B has a base of 7 units and a height of 3 units.",
+								"box": [320, 134],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/64ff663c9e87ca1eecce85d4b34f931fc16a5b76",
+									"width": 320,
+									"height": 134
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 13.5,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area of triangle A",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 2": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 10.5,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area of triangle B",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"numeric-input 3": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "small",
+								"static": false,
+								"answers": [
+									{
+										"value": 24,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area of whole figure",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x80c83b209703765e",
+			"exerciseId": "xfb0c1229",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Strategy\n\nArea tells us the amount of space enclosed by the figure. \n\nThere are many ways we could split up the space into simpler shapes. Let's split the figure into a rectangle and a triangle.\n\n[[☃ image 1]]\n\nWe can find the area of each shape, then add them to find the total area.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with 1 pair of parallel sides. The top base is 2 units. The bottom base is 7 units. The height is 12 units. The length of the longest side is 13 units. There is an arrow on the bottom that begins below the bottom, left vertex and ends below the bottom, right vertex. There is a vertical line that starts at the top, right vertex to the base that is perpendicular to the base. This line creates a rectangle and a right triangle.",
+									"box": [194, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/430f823dd34ffb26a53f0d6cc868c2217084a753",
+										"width": 194,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of the rectangle\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{rectangle} &= \\text{base} \\cdot \\text{height}\\\\\\\\\n&= 2 \\cdot 12\\\\\\\\\n&= 24\n\\end{align}$\n\nThe rectangle has an area of $\\blueE{24}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with 1 pair of parallel sides. There is a vertical line that starts at the top, right vertex to the base that is perpendicular to the base. This line creates a rectangle and a right triangle. The base of the rectangle is 2 units and the height is 12 units.",
+									"box": [194, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/e96ffc032a697e1ef8a97c605aeeb507b743eea0",
+										"width": 194,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of the triangle\n\nThe base of the triangle is $5$ units, because $7-2=5$.\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{triangle} &= \\dfrac{1}{2} \\cdot \\text{base} \\cdot \\text{height}\\\\\\\\\n&= \\dfrac{1}{2} \\cdot 5 \\cdot 12\\\\\\\\\n&= 30\n\\end{align}$\n\nThe triangle has an area of $\\maroonD{30}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with 1 pair of parallel sides. The top base is 2 units. There is a vertical line that starts at the top, right vertex to the base that is perpendicular to the base. This line creates a rectangle and a right triangle. There is an arrow on the bottom that begins below the bottom, left vertex of the rectangle and ends below the bottom, right vertex of the rectangle. The base of the rectangle is 2 units. There is an arrow on the bottom that begins below the bottom, left vertex of the right triangle and ends below the bottom, right vertex of the right triangle. The base of the right triangle is 5 units. The height of the right triangle is 12 units.",
+									"box": [194, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d2c8b9eaaab0cc876019b2b286ef46fa349410f0",
+										"width": 194,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Total area\n\nTo find the total area of the shape, we can add the two partial areas.\n\n$\\blueE{24}+\\maroonD{30}=\\purpleD{54}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The area of the shape is $54 \\text{ units}^2$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "There is a pair of parallel sides in the following shape.\n\n[[☃ image 1]]\n\n**What is the area of the shape?**\n\n[[☃ numeric-input 1]] $\\text{units}^2$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A quadrilateral with 1 pair of parallel sides. The top base is 2 units. The bottom base is 7 units. The height is 12 units. The length of the longest side is 13 units.",
+								"box": [194, 320],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/048f7c9819a9b4fa06dd41b04d868dea88111398",
+									"width": 194,
+									"height": 320
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 54,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area in square units",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x83417cfed56951cb",
+			"exerciseId": "xfb0c1229",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Strategy\n\nArea tells us the amount of space enclosed by the figure. \n\nThere are many ways we could split up the space into simpler shapes. Let's split the figure into a rectangle with a triangle removed from it.\n\n[[☃ image 1]]\n\nWe can find the area of each shape, then subtract them to find the total area.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with 1 pair of parallel sides. The left base is 9 units. The right base is 10 units. The height is 4 units. A dashed line that is parallel to the height and a dashed line that is parallel to the base create a rectangle.",
+									"box": [182, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/eda5eb3c46db1dca9fc3d8279f03d77330b52b5d",
+										"width": 182,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of the rectangle\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{rectangle} &= \\text{base} \\cdot \\text{height}\\\\\\\\\n&= 4 \\cdot 10\\\\\\\\\n&= 40\n\\end{align}$\n\nThe rectangle has an area of $\\blueE{40}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A rectangle. The base is 4 units and the height is 10 units.",
+									"box": [168, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b3b8f81e265165e928c117e3b7f32cc4f4c6c31d",
+										"width": 168,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of the triangle\n\nThe height of the triangle is $1$ unit, because $10-9=1$.\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{triangle} &= \\dfrac{1}{2} \\cdot \\text{base} \\cdot \\text{height}\\\\\\\\\n&= \\dfrac{1}{2} \\cdot 4 \\cdot 1\\\\\\\\\n&= 2\n\\end{align}$\n\nThe triangle has an area of $\\maroonD{2}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A rectangle. A diagonal line starts on the left side and goes to the bottom, right vertex. This line creates a right triangle. There is an arrow on the side that begins at the bottom, left vertex of the right triangle and ends where the diagonal line begins. This length is the height of the right triangle and is 1 unit. There is an arrow on the side that begins where the diagonal line begins and ends at the top, left vertex of the rectangle. The length is 9 units. The base of the right triangle is 4 units.",
+									"box": [168, 320],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/223cf35b8462a984ee8a150ad83b011076d03130",
+										"width": 168,
+										"height": 320
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Total area\n\nTo find the total area of the shape, we can subtract the  removed area from the larger area.\n\n$\\blueE{40}-\\maroonD{2}=\\purpleD{38}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The area of the shape is $38 \\text{ units}^2$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "There is a pair of parallel sides in the following shape.\n\n[[☃ image 1]]\n\n**What is the area of the shape?**\n\n[[☃ numeric-input 1]] $\\text{units}^2$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A quadrilateral with 1 pair of parallel sides. The left base is 9 units. The right base is 10 units. The height is 4 units.",
+								"box": [182, 320],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0ed9976d779afdc3243aa431cdf3fe79616c6f42",
+									"width": 182,
+									"height": 320
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 38,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area in square units",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x3748626441dc2c4c",
+			"exerciseId": "xfb0c1229",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "###Strategy\n\nArea tells us the amount of space enclosed by the figure. \n\nThere are many ways we could split up the space into simpler shapes. Let's split the figure into a rectangle with a triangle removed from it.\n\n[[☃ image 1]]\n\nWe can find the area of each shape, then subtract them to find the total area.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A quadrilateral with 1 pair of parallel sides. The top base is 3 units. The bottom base is 10 units. The height is 24 units. A dashed line that is parallel to the base and a dashed line that is parallel to the height create a rectangle.",
+									"box": [173, 400],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/2548c66c64e43236479194fbacb7984fbf9d570b",
+										"width": 173,
+										"height": 400
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of the rectangle\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{rectangle} &= \\text{base} \\cdot \\text{height}\\\\\\\\\n&= 10 \\cdot 24\\\\\\\\\n&= 240\n\\end{align}$\n\nThe rectangle has an area of $\\blueE{240}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A rectangle. The base is 10 units and the height is 24 units.",
+									"box": [173, 400],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/00df1125db494b1008840358e9349e54a142831b",
+										"width": 173,
+										"height": 400
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Area of the triangle\n\nThe base of the triangle is $7$ units, because $10-3=7$.\n\n[[☃ image 1]]\n\n$\\begin{align}\n\\text{Area}_\\text{triangle} &= \\dfrac{1}{2} \\cdot \\text{base} \\cdot \\text{height}\\\\\\\\\n&= \\dfrac{1}{2} \\cdot 7 \\cdot 24\\\\\\\\\n&= 84\n\\end{align}$\n\nThe triangle has an area of $\\maroonD{84}$ square units.",
+						"replace": false,
+						"widgets": {
+							"image 1": {
+								"type": "image",
+								"graded": true,
+								"static": false,
+								"options": {
+									"alt": "A rectangle. A diagonal line starts at the top and goes to the bottom, right vertex. This line creates a right triangle. There is an arrow on the top that begins above the top, left vertex of the rectangle and ends where the diagonal line begins. This length is 3 units. There is an arrow on the top that begins where the diagonal line begins and ends at the top, right vertex of the rectangle. This length is the base of the right triangle and is 7 units. The height of the right triangle is 24 units.",
+									"box": [187, 400],
+									"range": [[0, 10], [0, 10]],
+									"title": "",
+									"labels": [],
+									"static": false,
+									"caption": "",
+									"backgroundImage": {
+										"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/89479e6c167568af2279c8ad12eb71066776c958",
+										"width": 187,
+										"height": 400
+									}
+								},
+								"version": {
+									"major": 0,
+									"minor": 0
+								},
+								"alignment": "block"
+							}
+						}
+					},
+					{
+						"images": {},
+						"content": "###Total area\n\nTo find the total area of the shape, we can subtract the  removed area from the larger area.\n\n$\\blueE{240}-\\maroonD{84}=\\purpleD{156}$",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "The area of the shape is $156 \\text{ units}^2$.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "There is a pair of parallel sides in the following shape.\n\n[[☃ image 1]]\n\n**What is the area of the shape?**\n\n[[☃ numeric-input 1]] $\\text{units}^2$",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A quadrilateral with 1 pair of parallel sides. The top base is 3 units. The bottom base is 10 units. The height is 24 units. The length of the longest side is 25 units.",
+								"box": [173, 400],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/66689a8772330507de15b6bb2d0a0685e0a02303",
+									"width": 173,
+									"height": 400
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"numeric-input 1": {
+							"type": "numeric-input",
+							"graded": true,
+							"static": false,
+							"options": {
+								"size": "normal",
+								"static": false,
+								"answers": [
+									{
+										"value": 156,
+										"status": "correct",
+										"strict": false,
+										"message": "",
+										"maxError": null,
+										"simplify": "required"
+									}
+								],
+								"labelText": "area in square units",
+								"rightAlign": false,
+								"coefficient": false,
+								"multipleNumberInput": false
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": true,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "x1b66164ecd8c37ea",
+			"exerciseId": "x6fe7dd73",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "We know that $s<-2$ because $(s, -1)$ is to the left of $(-2,3)$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We know that $t > 0$ because $(t, 3)$ is to the right of $(0,-1)$. \n\nSo, we know $t > s$ because $t$ is a positive number and $s$ is a negative number.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Coordinate $t$ represents a greater number.\n",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Does coordinate $s$ or coordinate $t$ represent a greater number in the following parallelogram?**\n\n\n\n\n[[☃ image 1]]\n\n\n\n[[☃ radio 1]]\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A quadrilateral. The bottom, left vertex is (s, negative 1). The top, left vertex is (negative 2, 3). The top, right vertex is (t, 3). The bottom, right vertex is (0, negative 1).",
+								"box": [300, 300],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/41e3933e57538a82cf7bd66f4c9d83dbe9168b38",
+									"width": 300,
+									"height": 300
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$s$",
+										"correct": false
+									},
+									{
+										"content": "$t$",
+										"correct": true
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xee54a69013edeae6",
+			"exerciseId": "x6fe7dd73",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "We know that $p=6$ because $(p,q)$ has the same horizontal coordinate as $(6,5)$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We know that $q<5$ because $(p,q)$ is below $(6,5)$. \n",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Since $p=6$ and $q$ is less than $5$, we know that $p$ is greater than $q$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "Coordinate $p$ represents a greater number.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Does coordinate $p$ or coordinate $q$ represent a greater number?**\n\n\n\n[[☃ image 1]]\n\n\n\n[[☃ radio 1]]\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A quadrilateral. The bottom, left vertex is (p, q). The top, left vertex is (6, 5). The top, right vertex is (9, 2). The bottom, right vertex is (9, 0).",
+								"box": [206, 300],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f984d4fb1e7041935466d723087b10f84562bc10",
+									"width": 206,
+									"height": 300
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$p$",
+										"correct": true
+									},
+									{
+										"content": "$q$",
+										"correct": false
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		},
+		{
+			"questionId": "xa44dfa8c542539df",
+			"exerciseId": "x6fe7dd73",
+			"parsedData": {
+				"hints": [
+					{
+						"images": {},
+						"content": "We know that $x=2$ because $(x, 3)$ has the same horizontal coordinate as $(2,7)$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "We know that $y=4$ because $(y, 7)$ has the same horizontal coordinate as $(4,3)$.",
+						"replace": false,
+						"widgets": {}
+					},
+					{
+						"images": {},
+						"content": "$4>2$, so $y>x$.\n\nCoordinate $y$ represents a greater number.",
+						"replace": false,
+						"widgets": {}
+					}
+				],
+				"question": {
+					"images": {},
+					"content": "**Does coordinate $x$ or coordinate $y$ represent a greater number in the following rectangle?**\n\n\n\n[[☃ image 1]]\n\n[[☃ radio 1]]\n",
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A rectangle. The bottom, left vertex is (x , 3). The top, left vertex is (2, 7). The top, right vertex is (y, 7). The bottom, right vertex is (4, 3).",
+								"box": [137, 270],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3fc1f54c8f40085c283c01cf5330b9d8cbba47d6",
+									"width": 137,
+									"height": 270
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						},
+						"radio 1": {
+							"type": "radio",
+							"graded": true,
+							"static": false,
+							"options": {
+								"choices": [
+									{
+										"content": "$x$",
+										"correct": false
+									},
+									{
+										"content": "$y$",
+										"correct": true
+									}
+								],
+								"randomize": false,
+								"countChoices": false,
+								"displayCount": null,
+								"multipleSelect": false,
+								"deselectEnabled": false,
+								"hasNoneOfTheAbove": false
+							},
+							"version": {
+								"major": 1,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				"answerArea": {
+					"tTable": false,
+					"zTable": false,
+					"chi2Table": false,
+					"calculator": false,
+					"periodicTable": false
+				},
+				"itemDataVersion": {
+					"major": 0,
+					"minor": 1
+				}
+			}
+		}
+	]
+}
