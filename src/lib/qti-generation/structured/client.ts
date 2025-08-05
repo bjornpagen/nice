@@ -11,6 +11,7 @@ import {
 	AssessmentItemSchema
 } from "@/lib/qti-generation/schemas"
 import { typedSchemas, type WidgetInput } from "@/lib/widgets/generators"
+import { buildImageContext, type ImageContext } from "./perseus-image-resolver"
 // ✅ UPDATE: Import from the new, co-located prompts file.
 import {
 	createAssessmentShellPrompt,
@@ -137,9 +138,13 @@ async function mapSlotsToWidgets(
 /**
  * NEW - Shot 1: Generate Content Shell & Plan.
  */
-async function generateAssessmentShell(logger: logger.Logger, perseusJson: string): Promise<AssessmentShell> {
+async function generateAssessmentShell(
+	logger: logger.Logger,
+	perseusJson: string,
+	imageContext: ImageContext
+): Promise<AssessmentShell> {
 	// Assumes a new prompt function is created for this shot.
-	const { systemInstruction, userContent } = createAssessmentShellPrompt(perseusJson)
+	const { systemInstruction, userContent } = createAssessmentShellPrompt(perseusJson, imageContext)
 
 	const responseFormat = zodResponseFormat(AssessmentShellSchema, "assessment_shell_generator")
 	logger.debug("generated json schema for openai", {
@@ -148,13 +153,18 @@ async function generateAssessmentShell(logger: logger.Logger, perseusJson: strin
 		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
 	})
 
-	logger.debug("calling openai for assessment shell generation")
+	const messageContent: OpenAI.ChatCompletionContentPart[] = [{ type: "text", text: userContent }]
+	for (const imageUrl of imageContext.rasterImageUrls) {
+		messageContent.push({ type: "image_url", image_url: { url: imageUrl } })
+	}
+
+	logger.debug("calling openai for assessment shell with multimodal input")
 	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
 			messages: [
 				{ role: "system", content: systemInstruction },
-				{ role: "user", content: userContent }
+				{ role: "user", content: messageContent }
 			],
 			response_format: responseFormat
 		})
@@ -185,7 +195,8 @@ async function generateAssessmentShell(logger: logger.Logger, perseusJson: strin
 async function generateInteractionContent(
 	logger: logger.Logger,
 	perseusJson: string,
-	assessmentShell: AssessmentShell
+	assessmentShell: AssessmentShell,
+	imageContext: ImageContext
 ): Promise<Record<string, AnyInteraction>> {
 	const interactionSlotNames = assessmentShell.interactions
 	if (interactionSlotNames.length === 0) {
@@ -194,7 +205,7 @@ async function generateInteractionContent(
 	}
 
 	// This new prompt function instructs the AI to generate the interaction objects.
-	const { systemInstruction, userContent } = createInteractionContentPrompt(perseusJson, assessmentShell)
+	const { systemInstruction, userContent } = createInteractionContentPrompt(perseusJson, assessmentShell, imageContext)
 
 	// Create a precise schema asking ONLY for the interactions.
 	const InteractionCollectionSchema = createInteractionCollectionSchema(interactionSlotNames)
@@ -206,13 +217,18 @@ async function generateInteractionContent(
 		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
 	})
 
-	logger.debug("calling openai for interaction content generation", { interactionSlotNames })
+	const messageContent: OpenAI.ChatCompletionContentPart[] = [{ type: "text", text: userContent }]
+	for (const imageUrl of imageContext.rasterImageUrls) {
+		messageContent.push({ type: "image_url", image_url: { url: imageUrl } })
+	}
+
+	logger.debug("calling openai for interaction content generation with multimodal input", { interactionSlotNames })
 	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
 			messages: [
 				{ role: "system", content: systemInstruction },
-				{ role: "user", content: userContent }
+				{ role: "user", content: messageContent }
 			],
 			response_format: responseFormat
 		})
@@ -238,7 +254,8 @@ async function generateWidgetContent(
 	logger: logger.Logger,
 	perseusJson: string,
 	assessmentShell: AssessmentShell,
-	widgetMapping: Record<string, keyof typeof typedSchemas>
+	widgetMapping: Record<string, keyof typeof typedSchemas>,
+	imageContext: ImageContext
 ): Promise<Record<string, WidgetInput>> {
 	const widgetSlotNames = Object.keys(widgetMapping)
 	if (widgetSlotNames.length === 0) {
@@ -247,7 +264,12 @@ async function generateWidgetContent(
 	}
 
 	// This new prompt function instructs the AI to generate the widget objects.
-	const { systemInstruction, userContent } = createWidgetContentPrompt(perseusJson, assessmentShell, widgetMapping)
+	const { systemInstruction, userContent } = createWidgetContentPrompt(
+		perseusJson,
+		assessmentShell,
+		widgetMapping,
+		imageContext
+	)
 
 	// Create a precise schema asking ONLY for the widgets.
 	const WidgetCollectionSchema = createWidgetCollectionSchema(widgetMapping)
@@ -259,13 +281,18 @@ async function generateWidgetContent(
 		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
 	})
 
-	logger.debug("calling openai for widget content generation", { widgetSlotNames })
+	const messageContent: OpenAI.ChatCompletionContentPart[] = [{ type: "text", text: userContent }]
+	for (const imageUrl of imageContext.rasterImageUrls) {
+		messageContent.push({ type: "image_url", image_url: { url: imageUrl } })
+	}
+
+	logger.debug("calling openai for widget content generation with multimodal input", { widgetSlotNames })
 	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
 			messages: [
 				{ role: "system", content: systemInstruction },
-				{ role: "user", content: userContent }
+				{ role: "user", content: messageContent }
 			],
 			response_format: responseFormat
 		})
@@ -295,9 +322,11 @@ export async function generateStructuredQtiItem(
 	const perseusJsonString = JSON.stringify(perseusData, null, 2)
 	logger.info("starting structured qti generation process")
 
+	const imageContext = await buildImageContext(perseusData)
+
 	// Shot 1: Generate the content shell and plan.
 	logger.debug("shot 1: generating assessment shell")
-	const shellResult = await errors.try(generateAssessmentShell(logger, perseusJsonString))
+	const shellResult = await errors.try(generateAssessmentShell(logger, perseusJsonString, imageContext))
 	if (shellResult.error) {
 		logger.error("shot 1 failed: shell generation pass failed", { error: shellResult.error })
 		throw shellResult.error
@@ -325,7 +354,7 @@ export async function generateStructuredQtiItem(
 	// ✅ NEW - Shot 3: Generate the full interaction objects.
 	logger.debug("shot 3: generating interaction content")
 	const interactionContentResult = await errors.try(
-		generateInteractionContent(logger, perseusJsonString, assessmentShell)
+		generateInteractionContent(logger, perseusJsonString, assessmentShell, imageContext)
 	)
 	if (interactionContentResult.error) {
 		logger.error("shot 3 failed: interaction content generation failed", { error: interactionContentResult.error })
@@ -337,7 +366,7 @@ export async function generateStructuredQtiItem(
 	// Shot 4: Generate ONLY the widget content based on the mapping.
 	logger.debug("shot 4: generating widget content")
 	const widgetContentResult = await errors.try(
-		generateWidgetContent(logger, perseusJsonString, assessmentShell, widgetMapping)
+		generateWidgetContent(logger, perseusJsonString, assessmentShell, widgetMapping, imageContext)
 	)
 	if (widgetContentResult.error) {
 		logger.error("shot 4 failed: widget content generation failed", { error: widgetContentResult.error })

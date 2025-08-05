@@ -2,6 +2,7 @@ import { z } from "zod"
 import { allExamples } from "@/lib/qti-generation/examples"
 import { AssessmentItemSchema } from "@/lib/qti-generation/schemas"
 import type { typedSchemas } from "@/lib/widgets/generators"
+import type { ImageContext } from "./perseus-image-resolver"
 
 // Helper to convert a full AssessmentItemInput into a shell for prompt examples
 function createShellFromExample(item: (typeof allExamples)[0]) {
@@ -65,11 +66,16 @@ function createWidgetMappingSchema(slotNames: string[]) {
 /**
  * SHOT 1: Creates the prompt for generating the Assessment Shell.
  */
-export function createAssessmentShellPrompt(perseusJson: string): {
+export function createAssessmentShellPrompt(
+	perseusJson: string,
+	imageContext: ImageContext
+): {
 	systemInstruction: string
 	userContent: string
 } {
-	const systemInstruction = `You are an expert in educational content conversion. Your task is to analyze a Perseus JSON object and create a structured assessment shell that outlines the content organization with placeholder references for widgets and interactions. You will output a JSON object conforming to the AssessmentShell schema.
+	const systemInstruction = `You are an expert in educational content conversion with vision capabilities. Your task is to analyze a Perseus JSON object and accompanying image data to create a structured assessment shell.
+
+**Vision Capability**: You may be provided with raster images (PNG, JPG) as multimodal input. Use your vision to analyze these images. For SVG images, their raw XML content will be provided directly in the text prompt. This visual information is critical context for understanding the Perseus JSON.
 
 The shell should:
 1. Convert Perseus content into a single 'body' string with <slot name="..."/> placeholders.
@@ -82,7 +88,15 @@ Your output MUST be a valid JSON object.`
 
 	const exampleShells = allExamples.map(createShellFromExample)
 
-	const userContent = `Convert the following Perseus JSON into an assessment shell with placeholders.
+	const userContent = `Convert the following Perseus JSON into an assessment shell. Use the provided image context to understand the content fully.
+
+## Image Context (for your analysis only)
+
+### Raw SVG Content
+If any images are SVGs, their content is provided here for you to analyze.
+\`\`\`json
+${imageContext.svgContentMap.size === 0 ? "{}" : JSON.stringify(Object.fromEntries(imageContext.svgContentMap), null, 2)}
+\`\`\`
 
 ## Target Shell Examples
 Below are examples of the exact 'shell' structure you must generate. Study them to understand the desired output format, especially how MathML is used and how widget/interaction slots are defined.
@@ -97,10 +111,12 @@ ${perseusJson}
 \`\`\`
 
 ## CRITICAL Instructions:
+- **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of the question.
 - **\`body\` Field**: Create a 'body' field containing the main content as an HTML string.
 - **Placeholders**:
-  - For each Perseus widget (e.g., [[☃ widget-name 1]]), create a placeholder like \`<slot name="widget_1" />\` in the body and add its identifier (e.g., "widget_1") to the 'widgets' string array.
+  - For ALL Perseus widgets (including 'image' widgets), create a \`<slot name="..." />\` placeholder in the 'body' and add its identifier to the 'widgets' string array.
   - For each Perseus interaction (e.g., 'radio', 'text-input'), create a placeholder like \`<slot name="interaction_1" />\` and add its identifier (e.g., "interaction_1") to the 'interactions' string array.
+- **DO NOT EMBED IMAGES**: You MUST NOT generate \`<img>\` tags or data URIs in the 'body' string. All images must be handled as widgets referenced by slots.
 - **MathML Conversion (MANDATORY)**:
   - You MUST convert ALL LaTeX expressions (text enclosed in \`$...\`) to standard MathML (\`<math>...</math>\`).
   - PRESERVE all mathematical structures: fractions (\`<mfrac>\`), exponents (\`<msup>\`), roots (\`<mroot>\`), operators (\`<mo>\`), and inequalities (\`&lt;\`, \`&gt;\`).
@@ -112,6 +128,7 @@ ${perseusJson}
   - The 'question.answers' from Perseus must be used to create the \`responseDeclarations\`.
   - **Numeric Answers Rule**: For text entry interactions, if the correct answer is a decimal that can be represented as a simple fraction (e.g., 0.5, 0.25), the 'correct' value in the response declaration should be a string representing that fraction (e.g., "1/2", "1/4"). This is to avoid forcing students to type decimals.
 - **Metadata**: Include all required assessment metadata: 'identifier', 'title', 'responseDeclarations', and 'feedback'.
+- **Widget Generation**: When you generate the final widget objects in a later step, ensure all image references are properly resolved.
 
 Return ONLY the JSON object for the assessment shell.`
 
@@ -154,12 +171,15 @@ ${slotNames.join("\n")}`
  */
 export function createInteractionContentPrompt(
 	perseusJson: string,
-	assessmentShell: unknown
+	assessmentShell: unknown,
+	imageContext: ImageContext
 ): {
 	systemInstruction: string
 	userContent: string
 } {
-	const systemInstruction = `You are an expert in educational content conversion, focused on generating QTI interaction objects. Your task is to generate ONLY the interaction content objects based on the original Perseus JSON and a contextual assessment shell.
+	const systemInstruction = `You are an expert in educational content conversion with vision capabilities, focused on generating QTI interaction objects. Your task is to generate ONLY the interaction content objects based on the original Perseus JSON, a contextual assessment shell, and accompanying visual context.
+
+**Vision Capability**: You may be provided with raster images (PNG, JPG) as multimodal input. Use your vision to analyze these images. For SVG images, their raw XML content will be provided directly in the text prompt.
 
 You must generate a JSON object where:
 - Each key is an interaction slot name from the shell.
@@ -167,7 +187,15 @@ You must generate a JSON object where:
 - All interaction properties must conform to the QTI interaction schemas.
 - All MathML must be perfectly preserved.`
 
-	const userContent = `Generate interaction content based on the following inputs:
+	const userContent = `Generate interaction content based on the following inputs. Use the provided image context to understand the visual components.
+
+## Image Context (for your analysis only)
+
+### Raw SVG Content
+If any images are SVGs, their content is provided here for you to analyze.
+\`\`\`json
+${imageContext.svgContentMap.size === 0 ? "{}" : JSON.stringify(Object.fromEntries(imageContext.svgContentMap), null, 2)}
+\`\`\`
 
 ## Original Perseus JSON:
 \`\`\`json
@@ -180,6 +208,7 @@ ${JSON.stringify(assessmentShell, null, 2)}
 \`\`\`
 
 ## Instructions:
+- **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual context of interactions.
 - For each interaction slot name in the shell's 'interactions' array, generate a complete QTI interaction object.
 - Extract all relevant data from the Perseus JSON to populate the interaction properties (prompt, choices, etc.).
 - Ensure all required properties for each interaction type are included.
@@ -201,19 +230,30 @@ Example output structure:
 export function createWidgetContentPrompt(
 	perseusJson: string,
 	assessmentShell: unknown,
-	widgetMapping: Record<string, keyof typeof typedSchemas>
+	widgetMapping: Record<string, keyof typeof typedSchemas>,
+	imageContext: ImageContext
 ): {
 	systemInstruction: string
 	userContent: string
 } {
-	const systemInstruction = `You are an expert in educational content conversion, focused on generating widget content for QTI assessments. Your task is to generate ONLY the widget content objects based on the original Perseus JSON, an assessment shell, and a mapping that specifies the exact widget type for each slot.
+	const systemInstruction = `You are an expert in educational content conversion with vision capabilities, focused on generating widget content for QTI assessments. Your task is to generate ONLY the widget content objects based on the original Perseus JSON, an assessment shell, a mapping that specifies the exact widget type for each slot, and accompanying visual context.
+
+**Vision Capability**: You may be provided with raster images (PNG, JPG) as multimodal input. Use your vision to analyze these images. For SVG images, their raw XML content will be provided directly in the text prompt.
 
 You must generate a JSON object where:
 - Each key is a widget slot name from the mapping.
 - Each value is a fully-formed widget object of the specified type.
 - All widget properties must conform to their respective schemas.`
 
-	const userContent = `Generate widget content based on the following inputs:
+	const userContent = `Generate widget content based on the following inputs. Use the provided image context to understand the visual components.
+
+## Image Context (for your analysis only)
+
+### Raw SVG Content
+If any images are SVGs, their content is provided here for you to analyze.
+\`\`\`json
+${imageContext.svgContentMap.size === 0 ? "{}" : JSON.stringify(Object.fromEntries(imageContext.svgContentMap), null, 2)}
+\`\`\`
 
 ## Original Perseus JSON:
 \`\`\`json
@@ -231,6 +271,7 @@ ${JSON.stringify(widgetMapping, null, 2)}
 \`\`\`
 
 ## Instructions:
+- **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of widgets.
 - For each entry in the widget mapping, generate a fully-formed widget object of the specified type.
 - Extract all relevant data from the Perseus JSON to populate the widget properties.
 - Ensure all required properties for each widget type are included.
