@@ -349,6 +349,32 @@ export async function generateStructuredQtiItem(
 		interactionSlots: assessmentShell.interactions
 	})
 
+	// NEW: Strict validation of slot consistency.
+	logger.debug("validating consistency between declared slots and body content")
+	const allDeclaredSlots = new Set([...assessmentShell.widgets, ...assessmentShell.interactions])
+	const slotNameRegex = /<slot\s+name="([^"]+)"/g
+	const slotsUsedInBody = new Set(
+		[...assessmentShell.body.matchAll(slotNameRegex)]
+			.map((match) => match[1])
+			.filter((slot): slot is string => slot !== undefined)
+	)
+
+	if (
+		allDeclaredSlots.size !== slotsUsedInBody.size ||
+		![...allDeclaredSlots].every((slot) => slotsUsedInBody.has(slot))
+	) {
+		const undeclaredSlots = [...slotsUsedInBody].filter((slot): slot is string => !allDeclaredSlots.has(slot))
+		const unusedSlots = [...allDeclaredSlots].filter((slot): slot is string => !slotsUsedInBody.has(slot))
+		const errorMessage = `Slot declaration mismatch detected.
+- Undeclared in body: [${undeclaredSlots.join(", ")}]
+- Unused in declaration: [${unusedSlots.join(", ")}]`
+
+		logger.error("slot consistency validation failed, will throw retriable error", { undeclaredSlots, unusedSlots })
+		// Throw a standard, retriable error.
+		throw errors.new(errorMessage)
+	}
+	logger.debug("slot consistency validation successful")
+
 	// Step 2: Map widget slot names to widget types.
 	const widgetSlotNames = assessmentShell.widgets
 	logger.debug("shot 2: mapping slots to widgets")

@@ -78,18 +78,17 @@ export function createAssessmentShellPrompt(
 	systemInstruction: string
 	userContent: string
 } {
-	const systemInstruction = `You are an expert in educational content conversion with vision capabilities. Your task is to analyze a Perseus JSON object and accompanying image data to create a structured assessment shell.
-
-**Vision Capability**: You may be provided with raster images (PNG, JPG) as multimodal input. Use your vision to analyze these images. For SVG images, their raw XML content will be provided directly in the text prompt. This visual information is critical context for understanding the Perseus JSON.
+	const systemInstruction = `You are an expert in educational content conversion. Your task is to analyze a Perseus JSON object and create a structured assessment shell.
 
 The shell should:
 1. Convert Perseus content into a single 'body' string with <slot name="..."/> placeholders.
 2. List all widget and interaction identifiers as arrays of strings in the 'widgets' and 'interactions' properties.
 3. Faithfully translate all mathematical content from LaTeX to MathML.
-4. Preserve the logical flow and structure of the original content.
-5. NEVER create HTML tables directly - ALL tables must be converted to widget slots.
 
-Your output MUST be a valid JSON object.`
+ABSOLUTE REQUIREMENT: SLOT CONSISTENCY.
+This is the most critical rule. Any \`<slot name="..."/>\` tag you include in the 'body' string MUST have its name listed in either the 'widgets' array or the 'interactions' array. Conversely, every name in the 'widgets' and 'interactions' arrays MUST correspond to a \`<slot>\` tag in the 'body'. There must be a perfect, one-to-one mapping.
+
+Any discrepancy will cause your output to be rejected. Review your work carefully to ensure the body's slots and the declaration arrays are perfectly synchronized.`
 
 	const exampleShells = allExamples.map(createShellFromExample)
 
