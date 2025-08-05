@@ -8,6 +8,8 @@ import { inngest } from "@/inngest/client"
 import { compile } from "@/lib/qti-generation/compiler"
 // ADD: Import our new constant error and the generator function.
 import { ErrWidgetNotFound, generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
+// NEW: Import the validator function
+import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
 
 // A global key to ensure all OpenAI functions share the same concurrency limit.
 const OPENAI_CONCURRENCY_KEY = "openai-api-global-concurrency"
@@ -80,9 +82,25 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			identifier: assessmentItemInput.identifier
 		})
 
+		// NEW Step 2.5: Validate and Sanitize all HTML content before compiling.
+		// This is the "fail-fast" step.
+		logger.debug("validating and sanitizing all html fields", { questionId })
+		const sanitizedItemResult = errors.trySync(() => validateAndSanitizeHtmlFields(assessmentItemInput, logger))
+		if (sanitizedItemResult.error) {
+			logger.error("structured item content validation failed", {
+				questionId,
+				error: sanitizedItemResult.error
+			})
+			// Throw the error to fail the Inngest job, which will trigger a retry.
+			throw sanitizedItemResult.error
+		}
+		const sanitizedAssessmentItem = sanitizedItemResult.data
+		logger.debug("html content validation and sanitization successful", { questionId })
+
 		// Step 3: Compile structured JSON to QTI XML.
 		logger.debug("compiling structured item to xml", { questionId })
-		const compileResult = errors.trySync(() => compile(assessmentItemInput))
+		// Pass the sanitized object to the compiler.
+		const compileResult = errors.trySync(() => compile(sanitizedAssessmentItem))
 		if (compileResult.error) {
 			logger.error("qti compilation failed", {
 				questionId,

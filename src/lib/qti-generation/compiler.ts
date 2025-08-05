@@ -1,8 +1,4 @@
 import * as errors from "@superbuilders/errors"
-import * as logger from "@superbuilders/slog"
-import { validateNoLatex } from "@/lib/qti-generation/validate-latex"
-// New imports for XML cleanup
-import { convertHtmlEntities, fixInequalityOperators, fixMathMLOperators } from "@/lib/qti-generation/xml-fixes"
 import type { Widget } from "@/lib/widgets/generators"
 import {
 	generateAbsoluteValueNumberLine,
@@ -592,14 +588,6 @@ ${responseDeclarations}
     </qti-item-body>
 ${responseProcessing}
 </qti-assessment-item>`
-
-	// Apply standard XML cleanup and fixes to ensure API compliance
-	finalXml = convertHtmlEntities(finalXml, logger)
-	finalXml = fixMathMLOperators(finalXml, logger)
-	finalXml = fixInequalityOperators(finalXml, logger)
-
-	// Validate that no LaTeX content is present
-	validateNoLatex(finalXml, logger)
 
 	return finalXml
 }

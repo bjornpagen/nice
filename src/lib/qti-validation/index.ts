@@ -6,7 +6,6 @@ import {
 	validateHtmlEntities,
 	validateImageUrls,
 	validateInteractionAttributes,
-	validateNoLatex,
 	validateNoMfencedElements,
 	validateNoSvgInStimulusBody,
 	validatePerseusArtifacts,
@@ -19,6 +18,7 @@ import {
 	validateTruncatedTags,
 	validateWithQtiApi
 } from "./rules"
+import { checkNoLatex } from "./utils"
 
 type ValidationContext = {
 	id: string
@@ -48,7 +48,7 @@ export async function runValidationPipeline(
 		validateStimulusBodyContent,
 		validateNoSvgInStimulusBody,
 		validateHtmlEntities,
-		validateNoLatex,
+		(xml, context) => checkNoLatex(xml, context.logger),
 		validateNoMfencedElements,
 		validateSvgDataUris,
 		validateDecimalAnswerFormats,
