@@ -1,0 +1,26 @@
+[
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5de8141dc8db932366cf8862bd75800380ada870",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"320\" height=\"160\" viewBox=\"0 0 320 160\"><path fill=\"none\" stroke=\"#000\" d=\"M17.778 17.778V71.11h217.516V17.778zM235.294 17.778V71.11h66.928V17.778zM17.778 88.889v53.333h284.444V88.889z\" stroke-width=\"2\" stroke-dasharray=\"0\"/></svg>",
+		"width": 320,
+		"height": 160,
+		"path": "sampleQuestions > [0] > parsedData > question > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/7055990fc7ff2490d545c836300381295aec3d50",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"320\" height=\"160\" viewBox=\"0 0 320 160\"><path fill=\"none\" stroke=\"#000\" d=\"M17.778 17.778V71.11h146.285V17.778zM164.063 17.778V71.11h138.159V17.778zM17.778 88.889v53.333h284.444V88.889z\" stroke-width=\"2\" stroke-dasharray=\"0\"/></svg>",
+		"width": 320,
+		"height": 160,
+		"path": "sampleQuestions > [1] > parsedData > question > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c29825bcefbc24b52583b3e35cfff3a2a3c68737",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"320\" height=\"160\" viewBox=\"0 0 320 160\"><path fill=\"none\" stroke=\"#000\" d=\"M17.778 17.778V71.11h284.444V17.778zM17.778 88.889v53.333h113.778V88.889zM131.556 88.889v53.333h170.666V88.889z\" stroke-width=\"2\" stroke-dasharray=\"0\"/></svg>",
+		"width": 320,
+		"height": 160,
+		"path": "sampleQuestions > [2] > parsedData > question > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	}
+]

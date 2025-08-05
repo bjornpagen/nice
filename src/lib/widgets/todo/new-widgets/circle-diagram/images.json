@@ -1,0 +1,98 @@
+[
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/01ac98f02a183c89591ff61d01330de2f55b3ed8",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"220.00000000000003\" height=\"220.00000000000003\" viewBox=\"0 0 220.00000000000003 220.00000000000003\"><defs/><ellipse cx=\"110.00000000000001\" cy=\"110.00000000000001\" rx=\"100\" ry=\"100\" fill=\"none\" stroke=\"#000\" style=\"stroke-width: 2px;fill-opacity: 0\" stroke-width=\"2\" fill-opacity=\"0\"/><path fill=\"none\" stroke=\"#800080\" d=\"M 110,110 L 210,110\" style=\"stroke-width: 2px\" stroke-width=\"2\"/></svg>",
+		"width": 220,
+		"height": 220,
+		"path": "sampleQuestions > [0] > parsedData > hints > [0] > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/71275d14458ffffbed746d6a81d7f5de21dadb26",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"220.00000000000003\" height=\"220.00000000000003\" viewBox=\"0 0 220.00000000000003 220.00000000000003\"><defs/><ellipse cx=\"110.00000000000001\" cy=\"110.00000000000001\" rx=\"100\" ry=\"100\" fill=\"none\" stroke=\"#000\" style=\"stroke-width: 2px;fill-opacity: 0\" stroke-width=\"2\" fill-opacity=\"0\"/><path fill=\"none\" stroke=\"#800080\" d=\"M 110,110 L 210,110\" style=\"stroke-width: 2px\" stroke-width=\"2\"/><path fill=\"none\" stroke=\"#008000\" d=\"M 10,110 L 210,110\" style=\"stroke-width: 2px\" stroke-width=\"2\"/></svg>",
+		"width": 220,
+		"height": 220,
+		"path": "sampleQuestions > [0] > parsedData > hints > [3] > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/15cf7e02a128fa235980b7d51e289328ee35a055",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"360\" viewBox=\"0 0 360 360\"><ellipse cx=\"180\" cy=\"180\" rx=\"165\" ry=\"165\" fill=\"#ccfaff\" stroke=\"#11accd\" stroke-width=\"2\" fill-opacity=\".5\"/><path fill=\"none\" stroke=\"#11accd\" d=\"M180 180h165\" stroke-width=\"3\"/></svg>",
+		"width": 360,
+		"height": 360,
+		"path": "sampleQuestions > [1] > parsedData > hints > [0] > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/d7b69528eaff0d8b39a41b5e1891fd683019e603",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"360\" viewBox=\"0 0 360 360\"><ellipse cx=\"180\" cy=\"180\" rx=\"45\" ry=\"45\" fill=\"#fdfdfd\" stroke=\"#1fab54\" stroke-width=\"2\"/><path fill=\"none\" stroke=\"#1fab54\" d=\"M180 180v-45\" stroke-width=\"3\"/></svg>",
+		"width": 360,
+		"height": 360,
+		"path": "sampleQuestions > [1] > parsedData > hints > [2] > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/1b6b608f87204bd72a2aae674dff7c2ebb2defc5",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"360\" viewBox=\"0 0 360 360\"><ellipse cx=\"180\" cy=\"180\" rx=\"165\" ry=\"165\" fill=\"#ccfaff\" stroke=\"#11accd\" stroke-width=\"2\" fill-opacity=\".5\"/><ellipse cx=\"180\" cy=\"180\" rx=\"45\" ry=\"45\" fill=\"#fdfdfd\" stroke=\"#1fab54\" stroke-width=\"2\"/><path fill=\"none\" stroke=\"#1fab54\" d=\"M180 180v-45\" stroke-width=\"3\"/><path fill=\"none\" stroke=\"#11accd\" d=\"M180 180h165\" stroke-width=\"3\"/></svg>",
+		"width": 360,
+		"height": 360,
+		"path": "sampleQuestions > [1] > parsedData > question > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/787179a9c53acc36d9e0d55ec3b4ff4378024fe6",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"250\" height=\"250\" viewBox=\"0 0 250 250\"><defs/><path fill=\"#000000\" stroke=\"#e65a4c\" d=\"M 125,125 L 225,125\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\" transform=\"rotate(180 125 125)\"/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 125,125 L 225,125\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" transform=\"rotate(270 125 125)\"/><path fill=\"#29abca\" stroke=\"#29abca\" d=\"M 25,125 A 100,100 0 1,0 125,25 L 125,125 Z\" style=\"stroke-width: 2px;stroke-opacity: 0;fill-opacity: 0;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"0\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\"/><path fill=\"#29abca\" stroke=\"#29abca\" d=\"M 25,125 A 100,100 0 1,0 125,25\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\"/><ellipse cx=\"125\" cy=\"125\" rx=\"4\" ry=\"4\" fill=\"#000000\" stroke=\"#000000\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 1;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"1\" opacity=\"1\"/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 125,111.625 L 111.625,111.625\" style=\"stroke-width: 1px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"1\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\"/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 111.625,125 L 111.625,111.625\" style=\"stroke-width: 1px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"1\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\"/></svg>",
+		"width": 250,
+		"height": 250,
+		"path": "sampleQuestions > [2] > parsedData > question > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/99cb24f138e4db5b2e8a072b57a6c8a9008758b6",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"250\" height=\"250\" viewBox=\"0 0 250 250\"><defs/><path fill=\"#000000\" stroke=\"#e65a4c\" d=\"M 208.333,41.6667 L 375,41.6667\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\" transform=\"rotate(180 208.33333333333331 41.666666666666664)\"/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 41.6667,41.6667 L 208.333,41.6667\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" transform=\"rotate(90 41.666666666666664 41.666666666666664)\"/><path fill=\"#29abca\" stroke=\"#29abca\" d=\"M 41.6667,208.333 A 166.667,166.667 0 0,0 208.333,41.6667 L 41.6667,41.6667 Z\" style=\"stroke-width: 2px;stroke-opacity: 0;fill-opacity: 0;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"0\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\"/><path fill=\"#29abca\" stroke=\"#29abca\" d=\"M 41.6667,208.333 A 166.667,166.667 0 0,0 208.333,41.6667\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\"/><ellipse cx=\"41.666666666666664\" cy=\"41.666666666666664\" rx=\"4\" ry=\"4\" fill=\"#000000\" stroke=\"#000000\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 1;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"1\" opacity=\"1\"/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 41.6667,55.0415 L 55.0415,55.0415\" style=\"stroke-width: 1px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"1\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\"/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 55.0415,41.6667 L 55.0415,55.0415\" style=\"stroke-width: 1px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"1\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\"/></svg>",
+		"width": 250,
+		"height": 250,
+		"path": "sampleQuestions > [3] > parsedData > question > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/219f7eb919a92fa69e7dd6f1417e231520d9571b",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"198\" height=\"220\" viewBox=\"0 0 198 220\"><ellipse cx=\"99\" cy=\"99\" rx=\"93.5\" ry=\"93.5\" fill=\"#fca9a9\" stroke=\"#000\" stroke-width=\"2\" stroke-dasharray=\"0\" fill-opacity=\".3\"/><path fill=\"none\" stroke=\"#7854ab\" d=\"M99 99V5.5\" stroke-width=\"3\"/></svg>",
+		"width": 198,
+		"height": 220,
+		"path": "sampleQuestions > [4] > parsedData > hints > [2] > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/bf9b228630bdc8435876815dd2a80e02372b01f1",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"220.00000000000003\" height=\"220.00000000000003\" viewBox=\"0 0 220.00000000000003 220.00000000000003\"><defs/><ellipse cx=\"110.00000000000001\" cy=\"110.00000000000001\" rx=\"100\" ry=\"100\" fill=\"none\" stroke=\"#000\" style=\"stroke-width: 2px;fill-opacity: 0\" stroke-width=\"2\" fill-opacity=\"0\"/><path fill=\"none\" stroke=\"#800080\" d=\"M 110,110 L 210,110\" style=\"stroke-width: 2px\" stroke-width=\"2\"/></svg>",
+		"width": 220,
+		"height": 220,
+		"path": "sampleQuestions > [4] > parsedData > question > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/fefba2b97f9c042941ce0f6e407841895b371ec2",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"250\" height=\"250\" viewBox=\"0 0 250 250\"><defs/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 208.333,41.6667 A 166.667,166.667 0 0,0 41.6667,208.333 L 208.333,208.333 Z\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\"/><ellipse cx=\"208.33333333333331\" cy=\"208.33333333333331\" rx=\"4\" ry=\"4\" fill=\"#000000\" stroke=\"#000000\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"1\"/><path fill=\"#000000\" stroke=\"#e65a4c\" d=\"M 204.167,208.333 L 366.667,208.333\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\" transform=\"rotate(180 204.16666666666666 208.33333333333331)\"/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 187.5,208.333 L 208.333,208.333\" style=\"stroke-width: 1px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"1\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\" transform=\"rotate(270 187.5 208.33333333333331)\"/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 208.333,187.5 L 229.167,187.5\" style=\"stroke-width: 1px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"1\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\" transform=\"rotate(180 208.33333333333331 187.5)\"/></svg>",
+		"width": 250,
+		"height": 250,
+		"path": "sampleQuestions > [5] > parsedData > question > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/9622f2470dd3f8cf33cfd256a8e7bbfb9417c325",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"250\" height=\"175\" viewBox=\"0 0 250 175\"><defs/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 25,50 A 100,100 0 0,0 225,50 L 125,50 Z\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\"/><ellipse cx=\"125\" cy=\"50\" rx=\"4\" ry=\"4\" fill=\"#000000\" stroke=\"#000000\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"1\"/><path fill=\"#000000\" stroke=\"#e65a4c\" d=\"M 225,50 L 320,50\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\" transform=\"rotate(180 225 50)\"/></svg>",
+		"width": 250,
+		"height": 175,
+		"path": "sampleQuestions > [6] > parsedData > question > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	},
+	{
+		"original": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/a45378288bfe22969c9a6dd99861c18930688756",
+		"converted": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"250\" height=\"175\" viewBox=\"0 0 250 175\"><defs/><path fill=\"#000000\" stroke=\"#000000\" d=\"M 225,125 A 100,100 0 0,0 25,125 L 125,125 Z\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\"/><ellipse cx=\"125\" cy=\"125\" rx=\"4\" ry=\"4\" fill=\"#000000\" stroke=\"#000000\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"1\"/><path fill=\"#000000\" stroke=\"#e65a4c\" d=\"M 130,125 L 225,125\" style=\"stroke-width: 2px;stroke-opacity: 1;fill-opacity: 0;opacity: 1\" stroke-width=\"2\" stroke-opacity=\"1\" stroke-dasharray=\"0\" fill-opacity=\"0\" opacity=\"1\" transform=\"\"/></svg>",
+		"width": 250,
+		"height": 175,
+		"path": "sampleQuestions > [7] > parsedData > question > widgets > image 1 > options > backgroundImage",
+		"questionId": null
+	}
+]
