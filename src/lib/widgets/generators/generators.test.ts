@@ -7,6 +7,7 @@ import { ErrInvalidRange as ErrAVNLInvalidRange, generateAbsoluteValueNumberLine
 import { AngleDiagramPropsSchema, generateAngleDiagram } from "./angle-diagram"
 import { ErrInvalidDimensions as ErrBarChartInvalidDimensions, generateBarChart } from "./bar-chart"
 import { ErrInvalidRange as ErrBoxPlotInvalidRange, generateBoxPlot } from "./box-plot"
+import { CircleDiagramPropsSchema, generateCircleDiagram } from "./circle-diagram"
 import { generateCompositeShapeDiagram } from "./composite-shape-diagram"
 import {
 	ErrInvalidDimensions as ErrCoordinatePlaneInvalidDimensions,
@@ -141,6 +142,70 @@ describe("Widget Generators", () => {
 			}
 			const parsedProps = AngleDiagramPropsSchema.parse(props)
 			expect(generateAngleDiagram(parsedProps)).toMatchSnapshot()
+		})
+	})
+
+	describe("generateCircleDiagram", () => {
+		test("should render basic circle with radius and sectors", () => {
+			const props = {
+				type: "circleDiagram" as const,
+				width: 300,
+				height: 300,
+				radius: 100,
+				fillColor: null,
+				strokeColor: null,
+				innerRadius: null,
+				annulusFillColor: null,
+				segments: [
+					{
+						type: "radius" as const,
+						label: "r",
+						color: null,
+						angle: null
+					}
+				],
+				sectors: [
+					{
+						startAngle: 0,
+						endAngle: 90,
+						fillColor: null,
+						label: "90°",
+						showRightAngleMarker: true
+					}
+				],
+				arcs: null,
+				showCenterDot: null,
+				areaLabel: "A = πr²"
+			}
+			const parsedProps = CircleDiagramPropsSchema.parse(props)
+			expect(generateCircleDiagram(parsedProps)).toMatchSnapshot()
+		})
+
+		test("should render annulus with arcs", () => {
+			const props = {
+				type: "circleDiagram" as const,
+				width: 350,
+				height: 350,
+				radius: 120,
+				fillColor: null,
+				strokeColor: "black",
+				innerRadius: 60,
+				annulusFillColor: "rgba(255, 193, 7, 0.6)",
+				segments: null,
+				sectors: null,
+				arcs: [
+					{
+						startAngle: 0,
+						endAngle: 180,
+						strokeColor: "#D32F2F",
+						label: "Semicircle"
+					}
+				],
+				showCenterDot: true,
+				areaLabel: "Ring"
+			}
+			const parsedProps = CircleDiagramPropsSchema.parse(props)
+			expect(generateCircleDiagram(parsedProps)).toMatchSnapshot()
 		})
 	})
 

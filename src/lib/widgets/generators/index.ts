@@ -6,6 +6,7 @@ import { AbsoluteValueNumberLinePropsSchema, generateAbsoluteValueNumberLine } f
 import { AngleDiagramPropsSchema, generateAngleDiagram } from "./angle-diagram"
 import { BarChartPropsSchema, generateBarChart } from "./bar-chart"
 import { BoxPlotPropsSchema, generateBoxPlot } from "./box-plot"
+import { CircleDiagramPropsSchema, generateCircleDiagram } from "./circle-diagram"
 import { CompositeShapeDiagramPropsSchema, generateCompositeShapeDiagram } from "./composite-shape-diagram"
 import { CoordinatePlanePropsSchema, generateCoordinatePlane } from "./coordinate-plane"
 import { DataTablePropsSchema, generateDataTable } from "./data-table"
@@ -48,6 +49,7 @@ export const typedSchemas = {
 	angleDiagram: AngleDiagramPropsSchema,
 	barChart: BarChartPropsSchema,
 	boxPlot: BoxPlotPropsSchema,
+	circleDiagram: CircleDiagramPropsSchema,
 	compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
 	coordinatePlane: CoordinatePlanePropsSchema,
 	dataTable: DataTablePropsSchema,
@@ -85,6 +87,7 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.angleDiagram,
 	typedSchemas.barChart,
 	typedSchemas.boxPlot,
+	typedSchemas.circleDiagram,
 	typedSchemas.compositeShapeDiagram,
 	typedSchemas.coordinatePlane,
 	typedSchemas.dataTable,
@@ -124,6 +127,7 @@ export {
 	generateAngleDiagram,
 	generateBarChart,
 	generateBoxPlot,
+	generateCircleDiagram,
 	generateCompositeShapeDiagram,
 	generateCoordinatePlane,
 	generateDataTable,

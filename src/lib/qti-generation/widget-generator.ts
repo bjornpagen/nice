@@ -5,6 +5,7 @@ import {
 	generateAngleDiagram,
 	generateBarChart,
 	generateBoxPlot,
+	generateCircleDiagram,
 	generateCompositeShapeDiagram,
 	generateCoordinatePlane,
 	generateDataTable,
@@ -48,6 +49,8 @@ export function generateWidget(widget: Widget): string {
 			return generateBarChart(widget)
 		case "boxPlot":
 			return generateBoxPlot(widget)
+		case "circleDiagram":
+			return generateCircleDiagram(widget)
 		case "compositeShapeDiagram":
 			return generateCompositeShapeDiagram(widget)
 		case "coordinatePlane":
