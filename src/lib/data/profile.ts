@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server"
+import { clerkClient, currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
@@ -688,7 +688,65 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 		throw errors.new("user public metadata missing")
 	}
 
-	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+	let metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+
+	// if validation fails due to missing lastActivityDate, backfill it with current time
+	if (!metadataValidation.success) {
+		// debug: let's see what the actual error message looks like
+		const errorMessage = metadataValidation.error.toString()
+		logger.debug("zod validation error details", {
+			userId: user.id,
+			errorMessage,
+			errorObject: JSON.stringify(metadataValidation.error, null, 2)
+		})
+
+		// simplified check - if lastActivityDate is mentioned in the error, it's our issue
+		const hasLastActivityDateIssue = errorMessage.includes("lastActivityDate")
+
+		logger.debug("lastActivityDate issue detection", {
+			userId: user.id,
+			hasLastActivityDateIssue,
+			userMetadata: JSON.stringify(user.publicMetadata, null, 2)
+		})
+
+		if (hasLastActivityDateIssue && typeof user.publicMetadata === "object" && user.publicMetadata !== null) {
+			logger.info("backfilling missing lastActivityDate with current time", { userId: user.id })
+
+			const clerk = await clerkClient()
+			const currentTime = new Date().toISOString()
+
+			// safely access nested metadata properties
+			const metadata = user.publicMetadata
+			const streak =
+				metadata &&
+				typeof metadata === "object" &&
+				"streak" in metadata &&
+				typeof metadata.streak === "object" &&
+				metadata.streak !== null
+					? metadata.streak
+					: { count: 0 }
+
+			const updatedMetadata = {
+				...metadata,
+				streak: {
+					...streak,
+					lastActivityDate: currentTime
+				}
+			}
+
+			const updateResult = await errors.try(
+				clerk.users.updateUserMetadata(user.id, { publicMetadata: updatedMetadata })
+			)
+			if (updateResult.error) {
+				logger.error("failed to update user metadata", { userId: user.id, error: updateResult.error })
+				throw errors.wrap(updateResult.error, "metadata update failed")
+			}
+
+			// re-validate with the updated metadata
+			metadataValidation = ClerkUserPublicMetadataSchema.safeParse(updatedMetadata)
+		}
+	}
+
 	if (!metadataValidation.success) {
 		logger.error("CRITICAL: Invalid user metadata", {
 			userId: user.id,
