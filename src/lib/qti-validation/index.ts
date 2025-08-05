@@ -1,7 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
 import {
-	validateContentSufficiency,
 	validateDecimalAnswerFormats,
 	validateEquationAnswerReversibility,
 	validateHtmlEntities,
@@ -65,10 +64,7 @@ export async function runValidationPipeline(
 
 	const asyncPasses: AsyncValidationPass[] = [validateImageUrls, validateWithQtiApi]
 
-	// Only run solvability validation for assessment items, not stimuli (performance optimization)
-	if (context.rootTag === "assessmentItem") {
-		asyncPasses.push(validateContentSufficiency)
-	}
+	// NOTE: validateContentSufficiency has been removed as it's not needed for the new structured flow.
 
 	for (const pass of asyncPasses) {
 		const result = await errors.try(pass(xml, context))

@@ -3,10 +3,13 @@ import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import { niceArticles } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { orchestratePerseusToQtiConversion } from "@/lib/perseus-qti/orchestrator"
+import { generateXmlForStimulus } from "@/lib/qti-generation/direct/stimulus-generator"
+import { runValidationPipeline } from "@/lib/qti-validation"
 
-// A global key, including quotes, to ensure all OpenAI functions share the same concurrency limit.
-const OPENAI_CONCURRENCY_KEY = '"openai-api-global-concurrency"'
+// A global key to ensure all OpenAI functions share the same concurrency limit.
+const OPENAI_CONCURRENCY_KEY = "openai-api-global-concurrency"
+
+const MAX_CONVERSION_ATTEMPTS = 3
 
 export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 	{
@@ -38,43 +41,100 @@ export const convertPerseusArticleToQtiStimulus = inngest.createFunction(
 			return { success: true, qtiXml: null }
 		}
 
-		// ADDED: More aggressive validation and logging
-		if (typeof article.perseusContent !== "object" || Object.keys(article.perseusContent).length === 0) {
-			logger.error("CRITICAL: article perseus content is empty or not an object", { articleId })
-			throw errors.new(`article ${articleId} has empty or invalid perseus content`)
-		}
+		// Validation loop for stimulus generation
+		let lastXml = ""
+		let lastError: Error | null = null
 
-		logger.debug("processing perseus content for article", {
-			articleId,
-			contentSnippet: JSON.stringify(article.perseusContent).substring(0, 200)
-		})
-
-		const qtiXmlResult = await errors.try(
-			orchestratePerseusToQtiConversion({
-				id: article.id,
-				type: "stimulus",
-				title: article.title, // Pass the database-sourced title
-				perseusContent: article.perseusContent,
-				logger
-			})
-		)
-		if (qtiXmlResult.error) {
-			logger.error("failed to orchestrate perseus to qti conversion for article", {
+		for (let attempt = 1; attempt <= MAX_CONVERSION_ATTEMPTS; attempt++) {
+			logger.info("starting qti stimulus conversion attempt", {
 				articleId,
-				error: qtiXmlResult.error
+				attempt,
+				maxAttempts: MAX_CONVERSION_ATTEMPTS
 			})
-			throw errors.wrap(qtiXmlResult.error, "perseus to qti conversion")
+
+			let regenerationContext: { flawedXml: string; errorReason: string } | undefined
+			if (attempt > 1 && lastError) {
+				regenerationContext = {
+					flawedXml: lastXml,
+					errorReason: lastError.message
+				}
+			}
+
+			// 1. Generation Attempt (or Regeneration Attempt)
+			const generationResult: Awaited<ReturnType<typeof errors.try<string>>> = await errors.try(
+				generateXmlForStimulus(logger, article.perseusContent, article.title, regenerationContext)
+			)
+
+			if (generationResult.error) {
+				lastError = generationResult.error
+				lastXml = ""
+				logger.error("xml generation/regeneration failed", {
+					attempt,
+					error: lastError,
+					articleId
+				})
+				continue // Go to next attempt
+			}
+			const generatedXml = generationResult.data
+			lastXml = generatedXml
+
+			// 2. Full Validation Pass
+			const validationResult = await runValidationPipeline(generatedXml, {
+				id: article.id,
+				rootTag: "qti-assessment-stimulus",
+				title: article.title,
+				logger,
+				perseusContent: article.perseusContent
+			})
+
+			if (validationResult.isValid) {
+				logger.info("xml generation and validation successful", {
+					articleId,
+					attempt
+				})
+
+				// Update database with the validated XML
+				const updateResult = await errors.try(
+					db.update(niceArticles).set({ xml: validationResult.xml }).where(eq(niceArticles.id, articleId))
+				)
+				if (updateResult.error) {
+					logger.error("failed to update article with qti xml", {
+						articleId,
+						error: updateResult.error
+					})
+					throw errors.wrap(updateResult.error, "db update")
+				}
+
+				logger.info("successfully converted article and stored qti xml", { articleId })
+				return { status: "success", articleId: article.id }
+			}
+
+			// 3. Handle any Validation Failure
+			const combinedErrorMessages = validationResult.errors.map((e) => e.message).join("\n- ")
+			lastError = errors.new(
+				`Validation failed with ${validationResult.errors.length} errors:\n- ${combinedErrorMessages}`
+			)
+
+			logger.warn("xml validation failed, preparing for regeneration", {
+				articleId,
+				attempt,
+				errorCount: validationResult.errors.length,
+				firstError: validationResult.errors[0]?.message
+			})
+
+			if (attempt === MAX_CONVERSION_ATTEMPTS) {
+				break
+			}
 		}
 
-		const updateResult = await errors.try(
-			db.update(niceArticles).set({ xml: qtiXmlResult.data }).where(eq(niceArticles.id, articleId))
-		)
-		if (updateResult.error) {
-			logger.error("failed to update article with qti xml", { articleId, error: updateResult.error })
-			throw errors.wrap(updateResult.error, "db update")
+		// All attempts failed
+		if (!lastError) {
+			logger.error("CRITICAL: Conversion loop finished without a final error", { articleId })
+			throw errors.new(
+				`all ${MAX_CONVERSION_ATTEMPTS} attempts to convert perseus stimulus failed without a specific error`
+			)
 		}
-
-		logger.info("successfully converted article and stored qti xml", { articleId })
-		return { status: "success", articleId: article.id }
+		logger.error("all qti stimulus conversion attempts failed", { articleId, lastError })
+		throw errors.wrap(lastError, `all ${MAX_CONVERSION_ATTEMPTS} attempts to convert perseus stimulus failed`)
 	}
 )

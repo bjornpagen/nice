@@ -1,9 +1,8 @@
 import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
 import { qti } from "@/lib/clients"
-import { validateXmlWithAi } from "@/lib/perseus-qti/client"
 import { ErrQtiNotFound } from "@/lib/qti"
-import { QTI_INTERACTION_TAGS } from "@/lib/qti-tags"
+import { QTI_INTERACTION_TAGS } from "@/lib/qti-generation/valid-tags"
 import { escapeXmlAttribute, extractQtiStimulusBodyContent } from "@/lib/xml-utils"
 
 type ValidationContext = {
@@ -746,71 +745,10 @@ export function validateNoSvgInStimulusBody(xml: string, context: ValidationCont
  */
 export const ErrContentUnsolvable = errors.new("qti content is not self-contained or solvable")
 
-/**
- * NEW: Validates that the generated QTI XML is self-contained and solvable using an AI model.
- */
-export async function validateContentSufficiency(xml: string, context: ValidationContext): Promise<void> {
-	const { logger, perseusContent } = context
-	// ADD: Guard clause to skip this rule if perseusContent is not available.
-	if (!perseusContent) {
-		logger.info("skipping content sufficiency validation: no perseus content provided")
-		return
-	}
-	logger.info("running ai content solvability validation")
-
-	// 1. Extract all image URLs from the XML to provide them as context to the AI.
-	const allImageUrls = [...new Set(Array.from(xml.matchAll(REGEX.IMAGE_URL), (m) => m.groups?.url ?? ""))]
-
-	// 2. Separate SVGs from supported image formats
-	const svgUrls = allImageUrls.filter((url) => url.toLowerCase().endsWith(".svg"))
-	const supportedImageUrls = allImageUrls.filter((url) => {
-		const lowerUrl = url.toLowerCase()
-		return lowerUrl.endsWith(".png") || lowerUrl.endsWith(".jpg") || lowerUrl.endsWith(".jpeg")
-	})
-
-	logger.debug("extracted image urls for ai validation", {
-		totalImageCount: allImageUrls.length,
-		supportedImageCount: supportedImageUrls.length,
-		svgCount: svgUrls.length,
-		urls: allImageUrls
-	})
-
-	// 3. Fetch SVG content as text
-	const svgContents: { url: string; content: string }[] = []
-	for (const svgUrl of svgUrls) {
-		logger.debug("fetching svg content", { url: svgUrl })
-
-		const fetchResult = await errors.try(fetch(svgUrl))
-		if (fetchResult.error) {
-			logger.warn("failed to fetch svg content", { url: svgUrl, error: fetchResult.error })
-			continue
-		}
-
-		const textResult = await errors.try(fetchResult.data.text())
-		if (textResult.error) {
-			logger.warn("failed to read svg as text", { url: svgUrl, error: textResult.error })
-			continue
-		}
-
-		svgContents.push({ url: svgUrl, content: textResult.data })
-		logger.debug("successfully fetched svg content", { url: svgUrl, contentLength: textResult.data.length })
-	}
-
-	// 4. Call the AI validator with the XML, source JSON, image URLs, and SVG content.
-	const validationResult = await errors.try(
-		validateXmlWithAi(logger, perseusContent, xml, supportedImageUrls, svgContents)
-	)
-	if (validationResult.error) {
-		throw errors.wrap(validationResult.error, "ai content solvability validation")
-	}
-
-	const { is_solvable, reason } = validationResult.data
-	if (!is_solvable) {
-		throw errors.wrap(ErrContentUnsolvable, reason)
-	}
-
-	logger.info("ai content solvability validation passed")
-}
+// NOTE: validateContentSufficiency has been removed as it's not needed for the new structured flow.
+// The compiler ensures valid QTI output, and this AI validation was only used for assessment items.
+// export async function validateContentSufficiency(xml: string, context: ValidationContext): Promise<void> {
+// }
 
 /**
  * Validates that decimal answers accept both leading zero and no leading zero formats.

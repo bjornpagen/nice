@@ -35,7 +35,7 @@ export async function loadConversionExamples(
 
 	logger.info("loading perseus-to-qti conversion examples from filesystem", { type })
 
-	const EXAMPLES_DIR = `${process.cwd()}/src/lib/perseus-to-qti/examples`
+	const EXAMPLES_DIR = `${process.cwd()}/src/lib/qti-generation/examples`
 	// Both "assessmentItem" and "stimulus" examples use the same extensions
 	const perseusExt = ".perseus.json"
 	const qtiExt = ".qti.xml"

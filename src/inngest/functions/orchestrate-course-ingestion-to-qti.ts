@@ -11,8 +11,8 @@ import {
 	fixKhanGraphieUrls,
 	fixMathMLOperators,
 	stripXmlComments
-} from "@/lib/perseus-qti/strip"
-import { runValidationPipeline } from "@/lib/perseus-qti/validator"
+} from "@/lib/qti-generation/xml-fixes"
+import { runValidationPipeline } from "@/lib/qti-validation"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 import { differentiateQuestion } from "./qti/differentiate-question"
 import { paraphraseStimulus } from "./qti/paraphrase-stimulus"

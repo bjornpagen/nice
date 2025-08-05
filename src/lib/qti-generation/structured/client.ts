@@ -2,7 +2,6 @@ import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
 import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
-import type { ChatCompletionContentPart } from "openai/resources/chat/completions"
 import { z } from "zod"
 import { env } from "@/env"
 import {
@@ -10,37 +9,35 @@ import {
 	AnyInteractionSchema,
 	type AssessmentItemInput,
 	AssessmentItemSchema
-} from "@/lib/qti/schemas"
+} from "@/lib/qti-generation/schemas"
 import { typedSchemas, type WidgetInput } from "@/lib/widgets/generators"
+// ✅ UPDATE: Import from the new, co-located prompts file.
 import {
 	createAssessmentShellPrompt,
 	createInteractionContentPrompt,
-	createQtiConversionPrompt,
-	createQtiSufficiencyValidationPrompt,
-	// NEW: A new prompt function is required for the widget-only generation shot.
 	createWidgetContentPrompt,
 	createWidgetMappingPrompt
 } from "./prompts"
-import {
-	convertHtmlEntities,
-	fixInequalityOperators,
-	fixKhanGraphieUrls,
-	fixMathMLOperators,
-	stripXmlComments
-} from "./strip"
+
+// ❌ REMOVE: Old prompt imports are no longer needed.
+// import {
+// 	createQtiConversionPrompt,
+// 	createQtiSufficiencyValidationPrompt,
+// } from "@/lib/perseus-qti/prompts"
+// ❌ REMOVE: Strip functions are not used in the structured generation flow.
+// import {
+// 	convertHtmlEntities,
+// 	fixInequalityOperators,
+// 	fixKhanGraphieUrls,
+// 	fixMathMLOperators,
+// 	stripXmlComments
+// } from "@/lib/perseus-qti/strip"
+
+// ... (The rest of the file content remains the same, as its logic is sound)
+// ... (generateXml and validateXmlWithAi functions are removed as they belong to the old flow)
 
 const OPENAI_MODEL = "o3"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
-
-const QtiGenerationSchema = z.object({
-	qti_xml: z.string().describe("The single, complete, and perfectly-formed QTI 3.0 XML string.")
-})
-
-// NEW: Zod schema for the solvability validation response
-const QtiSolvabilityValidationSchema = z.object({
-	is_solvable: z.boolean(),
-	reason: z.string()
-})
 
 // A new schema is needed for the shell from Shot 1.
 // It defines widgets and interactions as maps of empty objects.
@@ -80,181 +77,6 @@ function createInteractionCollectionSchema(interactionSlotNames: string[]) {
 		shape[slotName] = AnyInteractionSchema
 	}
 	return z.object(shape).describe("A collection of fully-defined QTI interaction objects.")
-}
-
-/**
- * Extracts and validates the XML from the AI response
- */
-function extractAndValidateXml(xml: string, rootTag: string, logger: logger.Logger): string {
-	// ROBUST XML VALIDATION AND EXTRACTION:
-	// Step 1: Check for XML declaration (optional)
-	const xmlDeclMatch = xml.match(/^(?<declaration><\?xml[^>]*\?>)?/s)
-	const hasXmlDeclaration = !!xmlDeclMatch?.groups?.declaration
-
-	logger.debug("xml declaration check", {
-		hasXmlDeclaration,
-		declaration: xmlDeclMatch?.groups?.declaration?.substring(0, 50)
-	})
-
-	// Step 2: Extract the root element with robust named capture groups
-	// This regex ensures we match the complete XML document with proper opening and closing tags
-	const rootElementRegex = new RegExp(
-		"(?:^|\\s)" + // Start of string or whitespace
-			`<(?<rootTag>${rootTag})` + // Opening tag must match our expected root
-			"(?<attributes>(?:\\s+[^>]*)?)" + // Optional attributes
-			">" + // Close opening tag
-			"(?<content>[\\s\\S]*?)" + // Content (non-greedy)
-			"</\\k<rootTag>>" + // Closing tag with backreference to ensure it matches
-			"(?:\\s*$)?", // Optional trailing whitespace
-		"s" // Dot matches newline
-	)
-
-	const rootMatch = xml.match(rootElementRegex)
-
-	if (!rootMatch || !rootMatch.groups) {
-		// Try to find ANY qti root element for better error reporting
-		const anyQtiMatch = xml.match(/<(?<anyRoot>qti-[a-z-]+)(?:\s+[^>]*)?>/)
-
-		logger.error("robust extraction failed: ai response did not contain valid qti xml", {
-			expectedRootTag: rootTag,
-			foundRootTag: anyQtiMatch?.groups?.anyRoot,
-			response: xml.substring(0, 200),
-			responseEnd: xml.substring(xml.length - 200)
-		})
-		throw errors.new(
-			`invalid ai xml output: expected ${rootTag} but ${anyQtiMatch?.groups?.anyRoot ? `found ${anyQtiMatch.groups.anyRoot}` : "found no valid QTI root element"}`
-		)
-	}
-
-	// TypeScript now knows rootMatch.groups is defined
-	const { content, rootTag: extractedRootTag, attributes } = rootMatch.groups
-
-	// Step 3: Validate the content doesn't have truncated closing tags
-	if (!content) {
-		logger.error("extracted xml has no content", { rootTag })
-		throw errors.new("invalid ai xml output: empty content")
-	}
-
-	const truncatedTagMatch = content.match(/<\/(?:_|\s*>|\.\.\.)/)
-	if (truncatedTagMatch) {
-		const matchIndex = truncatedTagMatch.index ?? 0
-		logger.error("detected truncated closing tag in xml content", {
-			truncatedTag: truncatedTagMatch[0],
-			context: content.substring(Math.max(0, matchIndex - 50), Math.min(content.length, matchIndex + 50))
-		})
-		throw errors.new("invalid ai xml output: contains truncated closing tags")
-	}
-
-	// Step 4: Reconstruct the complete XML with declaration if present
-	const extractedXml = (
-		(hasXmlDeclaration && xmlDeclMatch?.groups?.declaration ? xmlDeclMatch.groups.declaration : "") +
-		rootMatch[0].trim()
-	).trim()
-
-	// Step 5: Strip all XML comments to prevent malformed comment errors
-	let strippedXml = stripXmlComments(extractedXml, logger)
-
-	// Step 6: Fix unescaped angle brackets in MathML mo elements
-	strippedXml = fixMathMLOperators(strippedXml, logger)
-
-	// Step 7: Fix unescaped inequality operators throughout the XML
-	strippedXml = fixInequalityOperators(strippedXml, logger)
-
-	// Step 8: Fix Khan Academy graphie URLs by appending .svg extension
-	strippedXml = fixKhanGraphieUrls(strippedXml, logger)
-
-	logger.debug("successfully generated and extracted qti xml", {
-		xmlLength: strippedXml.length,
-		rootTag: extractedRootTag,
-		hasAttributes: !!attributes?.trim(),
-		hasXmlDeclaration
-	})
-
-	return strippedXml
-}
-
-interface RegenerationContext {
-	flawedXml: string
-	errorReason: string
-}
-
-export async function generateXml(
-	logger: logger.Logger,
-	perseusData: unknown,
-	options: { type: "assessmentItem" | "stimulus" },
-	regenerationContext?: RegenerationContext
-): Promise<string> {
-	const perseusJsonString = JSON.stringify(perseusData, null, 2)
-	const { systemInstruction, userContent, rootTag } = await createQtiConversionPrompt(
-		logger,
-		perseusJsonString,
-		options,
-		regenerationContext
-	)
-
-	const responseFormat = zodResponseFormat(QtiGenerationSchema, "qti_generator")
-	logger.debug("generated json schema for openai", {
-		functionName: "generateXml",
-		generatorName: "qti_generator",
-		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
-	})
-
-	logger.debug("calling openai for qti generation", { model: OPENAI_MODEL, rootTag })
-	const response = await errors.try(
-		openai.chat.completions.parse({
-			model: OPENAI_MODEL,
-			messages: [
-				{ role: "system", content: systemInstruction },
-				{ role: "user", content: userContent }
-			],
-			response_format: responseFormat,
-			reasoning_effort: "high"
-		})
-	)
-	if (response.error) {
-		logger.error("failed to generate qti xml from perseus via openai", { error: response.error })
-		throw errors.wrap(response.error, "ai qti generation")
-	}
-
-	logger.debug("received openai response", {
-		fullResponse: response.data,
-		choiceCount: response.data.choices.length,
-		finishReason: response.data.choices[0]?.finish_reason,
-		message: response.data.choices[0]?.message,
-		parsed: response.data.choices[0]?.message?.parsed,
-		usage: response.data.usage
-	})
-
-	const choice = response.data.choices[0]
-	// ✅ CORRECT: Explicit validation, no fallbacks. Fails fast and loud.
-	if (!choice) {
-		logger.error("CRITICAL: OpenAI response contained no choices")
-		throw errors.new("openai returned no choices")
-	}
-	const message = choice.message
-	if (!message) {
-		logger.error("CRITICAL: OpenAI choice contained no message")
-		throw errors.new("empty ai response")
-	}
-	if (message.refusal) {
-		logger.error("openai refused to generate qti xml", { refusal: message.refusal })
-		throw errors.new(`ai refused request: ${message.refusal}`)
-	}
-	if (!message.parsed) {
-		logger.error("CRITICAL: OpenAI returned no parsed content for qti conversion")
-		throw errors.new("empty ai response: no parsed content")
-	}
-
-	const qtiXml = message.parsed.qti_xml
-	if (!qtiXml) {
-		logger.error("CRITICAL: OpenAI returned an empty qti_xml string in response")
-		throw errors.new("empty ai response: qti_xml string is empty")
-	}
-	let cleanedXml = convertHtmlEntities(qtiXml, logger)
-	cleanedXml = fixMathMLOperators(cleanedXml, logger)
-	cleanedXml = fixInequalityOperators(cleanedXml, logger)
-	cleanedXml = fixKhanGraphieUrls(cleanedXml, logger)
-	return extractAndValidateXml(cleanedXml, rootTag, logger)
 }
 
 /**
@@ -401,12 +223,8 @@ async function generateInteractionContent(
 		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
 	})
 
-	logger.debug("calling openai for interaction content generation", {
-		interactionSlotNames,
-		interactionCount: interactionSlotNames.length
-	})
-
-	const result = await errors.try(
+	logger.debug("calling openai for interaction content generation", { interactionSlotNames })
+	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
 			messages: [
@@ -416,29 +234,22 @@ async function generateInteractionContent(
 			response_format: responseFormat
 		})
 	)
-	if (result.error) {
-		logger.error("openai request failed for interaction content generation", { error: result.error })
-		throw errors.wrap(result.error, "ai interaction content generation")
+	if (response.error) {
+		logger.error("failed to generate interaction content", { error: response.error })
+		throw errors.wrap(response.error, "ai interaction generation")
 	}
 
-	const message = result.data.choices[0]?.message
-	if (!message) {
-		throw errors.new("openai response missing choices or message")
+	const choice = response.data.choices[0]
+	if (!choice?.message?.parsed) {
+		logger.error("CRITICAL: OpenAI interaction generation returned no parsed content")
+		throw errors.new("empty ai response: no parsed content for interaction generation")
 	}
 
-	if (!message.parsed) {
-		logger.error("openai parsing failed for interaction content generation", {
-			refusal: message.refusal,
-			finishReason: result.data.choices[0]?.finish_reason
-		})
-		throw errors.new("ai interaction content generation: parsing failed")
-	}
-
-	return message.parsed
+	return choice.message.parsed
 }
 
 /**
- * ✅ REFACTORED: This is the new Shot 4. It ONLY generates the widget content.
+ * NEW - Shot 4: Generate ONLY the widget objects.
  */
 async function generateWidgetContent(
 	logger: logger.Logger,
@@ -446,24 +257,27 @@ async function generateWidgetContent(
 	assessmentShell: AssessmentShell,
 	widgetMapping: Record<string, keyof typeof typedSchemas>
 ): Promise<Record<string, WidgetInput>> {
-	// A new prompt function is needed that instructs the AI to only generate widget content.
+	const widgetSlotNames = Object.keys(widgetMapping)
+	if (widgetSlotNames.length === 0) {
+		logger.debug("no widgets to generate, skipping shot 4")
+		return {}
+	}
+
+	// This new prompt function instructs the AI to generate the widget objects.
 	const { systemInstruction, userContent } = createWidgetContentPrompt(perseusJson, assessmentShell, widgetMapping)
 
 	// Create a precise schema asking ONLY for the widgets.
 	const WidgetCollectionSchema = createWidgetCollectionSchema(widgetMapping)
-
 	const responseFormat = zodResponseFormat(WidgetCollectionSchema, "widget_content_generator")
+
 	logger.debug("generated json schema for openai", {
 		functionName: "generateWidgetContent",
 		generatorName: "widget_content_generator",
 		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
 	})
 
-	logger.debug("calling openai for widget content generation", {
-		widgetMapping,
-		widgetCount: Object.keys(widgetMapping).length
-	})
-	const result = await errors.try(
+	logger.debug("calling openai for widget content generation", { widgetSlotNames })
+	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
 			messages: [
@@ -473,29 +287,23 @@ async function generateWidgetContent(
 			response_format: responseFormat
 		})
 	)
-	if (result.error) {
-		logger.error("openai request failed for widget content generation", { error: result.error })
-		throw errors.wrap(result.error, "ai widget content generation")
+	if (response.error) {
+		logger.error("failed to generate widget content", { error: response.error })
+		throw errors.wrap(response.error, "ai widget generation")
 	}
 
-	const message = result.data.choices[0]?.message
-	if (!message) {
-		throw errors.new("openai response missing choices or message")
+	const choice = response.data.choices[0]
+	if (!choice?.message?.parsed) {
+		logger.error("CRITICAL: OpenAI widget generation returned no parsed content")
+		throw errors.new("empty ai response: no parsed content for widget generation")
 	}
 
-	if (!message.parsed) {
-		logger.error("openai parsing failed for widget content generation", {
-			refusal: message.refusal,
-			finishReason: result.data.choices[0]?.finish_reason
-		})
-		throw errors.new("ai widget content generation: parsing failed")
-	}
-
-	return message.parsed
+	return choice.message.parsed
 }
 
 /**
- * ✅ REFACTORED: The main orchestrator implements the new, complete 4-shot flow.
+ * Main entry point for the structured pipeline: generateStructuredQtiItem.
+ * This orchestrates the 4-shot process and merges the results.
  */
 export async function generateStructuredQtiItem(
 	logger: logger.Logger,
@@ -565,79 +373,4 @@ export async function generateStructuredQtiItem(
 
 	logger.info("structured qti generation process successful", { identifier: finalAssessmentItem.identifier })
 	return finalAssessmentItem
-}
-
-/**
- * NEW: A dedicated client function for the AI-powered solvability validator.
- * @param logger The logger instance.
- * @param perseusJson The source Perseus JSON.
- * @param qtiXml The generated QTI XML to validate.
- * @param imageUrls An array of image URLs extracted from the QTI XML.
- * @param svgContents An array of SVG content objects with URL and content.
- * @returns A promise that resolves to the structured validation result.
- */
-export async function validateXmlWithAi(
-	logger: logger.Logger,
-	perseusJson: unknown,
-	qtiXml: string,
-	imageUrls: string[], // NEW: Add imageUrls parameter
-	svgContents: { url: string; content: string }[] = [] // NEW: Add svgContents parameter
-): Promise<z.infer<typeof QtiSolvabilityValidationSchema>> {
-	const { developer, user } = createQtiSufficiencyValidationPrompt(perseusJson, qtiXml, svgContents)
-
-	const responseFormat = zodResponseFormat(QtiSolvabilityValidationSchema, "qti_validator")
-	logger.debug("generated json schema for openai", {
-		functionName: "validateXmlWithAi",
-		generatorName: "qti_validator",
-		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
-	})
-
-	logger.debug("calling openai for qti solvability validation", {
-		model: OPENAI_MODEL,
-		imageCount: imageUrls.length,
-		svgCount: svgContents.length
-	})
-
-	// Construct the multimodal message payload
-	const userMessageContent: ChatCompletionContentPart[] = [{ type: "text", text: user }]
-	for (const url of imageUrls) {
-		userMessageContent.push({
-			type: "image_url",
-			image_url: { url }
-		})
-	}
-
-	const response = await errors.try(
-		openai.chat.completions.parse({
-			model: OPENAI_MODEL, // CHANGED: Use o3 which supports vision
-			messages: [
-				{ role: "system", content: developer },
-				{ role: "user", content: userMessageContent } // CHANGED: Send multimodal content
-			],
-			response_format: responseFormat
-		})
-	)
-
-	if (response.error) {
-		logger.error("failed to validate qti xml via openai", { error: response.error })
-		throw errors.wrap(response.error, "ai qti validation")
-	}
-
-	const choice = response.data.choices[0]
-	// ✅ CORRECT: Explicit validation, no fallbacks.
-	if (!choice) {
-		logger.error("CRITICAL: OpenAI validation response contained no choices")
-		throw errors.new("openai validation returned no choices")
-	}
-	const message = choice.message
-	if (!message || !message.parsed) {
-		logger.error("CRITICAL: OpenAI validation returned no parsed content")
-		throw errors.new("empty ai response: no parsed content for validation")
-	}
-	if (message.refusal) {
-		logger.error("openai refused qti validation request", { refusal: message.refusal })
-		throw errors.new(`ai refused request: ${message.refusal}`)
-	}
-
-	return message.parsed
 }

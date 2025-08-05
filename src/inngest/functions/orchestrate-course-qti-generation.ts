@@ -44,12 +44,12 @@ export const orchestrateCourseXmlGeneration = inngest.createFunction(
 			.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
 			.where(and(inArray(schema.niceLessons.unitId, unitIds), isNull(schema.niceQuestions.xml)))
 
-		logger.info("found content to generate", {
+		logger.info("found content to generate xml for", {
 			articles: articlesToGenerate.length,
 			questions: questionsToGenerate.length
 		})
 
-		// Step 3: Create event payloads instead of invocation promises.
+		// Step 3: Create event payloads for both stimuli and items.
 		const articleEvents: Events["qti/stimulus.migrate"][] = articlesToGenerate.map((article) => ({
 			name: "qti/stimulus.migrate",
 			data: { articleId: article.id }

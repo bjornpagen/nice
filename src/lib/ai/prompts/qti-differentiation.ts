@@ -1,4 +1,4 @@
-import { loadConversionExamples } from "@/lib/qti-examples"
+import { loadConversionExamples } from "@/lib/qti-generation/examples-loader"
 import { loadPromptAsset } from "./prompt-utils"
 
 export async function produceQtiVariationsPrompt(

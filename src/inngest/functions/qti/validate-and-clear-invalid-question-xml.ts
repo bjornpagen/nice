@@ -3,7 +3,7 @@ import { eq, inArray, isNotNull } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { runValidationPipeline } from "@/lib/perseus-qti/validator"
+import { runValidationPipeline } from "@/lib/qti-validation"
 
 const BATCH_SIZE = 500
 

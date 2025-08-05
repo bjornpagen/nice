@@ -5,8 +5,13 @@ import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { generateQtiVariations } from "@/lib/ai/openai"
 import { type QtiSourceContext, reviewAndImproveQtiQuestions } from "@/lib/ai/quality-review"
-import { convertHtmlEntities, fixKhanGraphieUrls, fixMathMLOperators, stripXmlComments } from "@/lib/perseus-qti/strip"
-import { runValidationPipeline } from "@/lib/perseus-qti/validator"
+import {
+	convertHtmlEntities,
+	fixKhanGraphieUrls,
+	fixMathMLOperators,
+	stripXmlComments
+} from "@/lib/qti-generation/xml-fixes"
+import { runValidationPipeline } from "@/lib/qti-validation"
 
 export const differentiateQuestion = inngest.createFunction(
 	{

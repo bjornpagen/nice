@@ -7,7 +7,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { zodResponseFormat } from "openai/helpers/zod"
-import { AssessmentItemSchema } from "@/lib/qti/schemas"
+import { AssessmentItemSchema } from "@/lib/qti-generation/schemas"
 
 async function main() {
 	logger.info("starting zodResponseFormat test")

@@ -1,4 +1,4 @@
-import { loadConversionExamples } from "@/lib/qti-examples"
+import { loadConversionExamples } from "@/lib/qti-generation/examples-loader"
 
 export async function produceQtiParaphrasingPrompt(sourceQtiXml: string): Promise<{ developer: string; user: string }> {
 	// ✅ ADDITION: Load proven examples for additional context

@@ -3,10 +3,11 @@ import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { orchestratePerseusToQtiConversion } from "@/lib/perseus-qti/orchestrator"
+import { compile } from "@/lib/qti-generation/compiler"
+import { generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
 
-// A global key, including quotes, to ensure all OpenAI functions share the same concurrency limit.
-const OPENAI_CONCURRENCY_KEY = '"openai-api-global-concurrency"'
+// A global key to ensure all OpenAI functions share the same concurrency limit.
+const OPENAI_CONCURRENCY_KEY = "openai-api-global-concurrency"
 
 export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 	{
@@ -20,8 +21,11 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 	{ event: "qti/item.migrate" },
 	async ({ event, logger }) => {
 		const { questionId } = event.data
-		logger.info("starting question to qti item conversion", { questionId })
+		// ✅ Enhanced logging at every step, using the provided logger.
+		logger.info("starting perseus to qti conversion", { questionId })
 
+		// Step 1: Fetch Perseus data.
+		logger.debug("fetching perseus data from db", { questionId })
 		const questionResult = await errors.try(
 			db
 				.select({
@@ -35,60 +39,54 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 				.limit(1)
 		)
 		if (questionResult.error) {
-			logger.error("failed to fetch question", { questionId, error: questionResult.error })
+			logger.error("db query for question failed", { questionId, error: questionResult.error })
 			throw errors.wrap(questionResult.error, "db query for question")
 		}
 		const question = questionResult.data[0]
 		if (!question?.parsedData) {
-			logger.warn("question has no parsed data, skipping", { questionId })
-			return { success: true, qtiXml: null }
+			logger.warn("skipping conversion: no perseus data", { questionId })
+			return { status: "skipped", reason: "no_perseus_data" }
 		}
+		logger.debug("db fetch successful", { questionId, exerciseTitle: question.exerciseTitle })
 
-		// ADDED: More aggressive validation and logging
-		if (typeof question.parsedData !== "object" || Object.keys(question.parsedData).length === 0) {
-			logger.error("CRITICAL: question parsedData is empty or not an object", { questionId })
-			throw errors.new(`question ${questionId} has empty or invalid parsedData`)
+		// Step 2: Generate structured JSON from Perseus data.
+		logger.debug("invoking structured item generation pipeline", { questionId })
+		const structuredItemResult = await errors.try(generateStructuredQtiItem(logger, question.parsedData))
+		if (structuredItemResult.error) {
+			logger.error("structured item generation failed", {
+				questionId,
+				error: structuredItemResult.error
+			})
+			throw errors.wrap(structuredItemResult.error, "structured item generation")
 		}
-
-		logger.debug("processing perseus content for question", {
+		const assessmentItemInput = structuredItemResult.data
+		logger.debug("structured item generation successful", {
 			questionId,
-			contentSnippet: JSON.stringify(question.parsedData).substring(0, 200)
+			identifier: assessmentItemInput.identifier
 		})
 
-		if (!question.exerciseTitle) {
-			logger.error("CRITICAL: exercise title missing for question", {
+		// Step 3: Compile structured JSON to QTI XML.
+		logger.debug("compiling structured item to xml", { questionId })
+		const compileResult = errors.trySync(() => compile(assessmentItemInput))
+		if (compileResult.error) {
+			logger.error("qti compilation failed", {
 				questionId,
-				exerciseId: question.id
+				error: compileResult.error
 			})
-			throw errors.new("exercise title required: data integrity violation")
+			throw errors.wrap(compileResult.error, "qti compilation")
 		}
+		const xml = compileResult.data
+		logger.debug("compilation successful", { questionId, xmlLength: xml.length })
 
-		const qtiXmlResult = await errors.try(
-			orchestratePerseusToQtiConversion({
-				id: question.id,
-				type: "assessmentItem",
-				title: question.exerciseTitle,
-				perseusContent: question.parsedData,
-				logger
-			})
-		)
-		if (qtiXmlResult.error) {
-			logger.error("failed to orchestrate perseus to qti conversion for question", {
-				questionId,
-				error: qtiXmlResult.error
-			})
-			throw errors.wrap(qtiXmlResult.error, "perseus to qti conversion")
-		}
-
-		const updateResult = await errors.try(
-			db.update(niceQuestions).set({ xml: qtiXmlResult.data }).where(eq(niceQuestions.id, questionId))
-		)
+		// Step 4: Update database.
+		logger.debug("updating database with generated xml", { questionId })
+		const updateResult = await errors.try(db.update(niceQuestions).set({ xml }).where(eq(niceQuestions.id, questionId)))
 		if (updateResult.error) {
-			logger.error("failed to update question with qti xml", { questionId, error: updateResult.error })
+			logger.error("db update failed", { questionId, error: updateResult.error })
 			throw errors.wrap(updateResult.error, "db update")
 		}
 
-		logger.info("successfully converted question and stored qti xml", { questionId })
+		logger.info("conversion successful", { questionId })
 		return { status: "success", questionId: question.id }
 	}
 )
