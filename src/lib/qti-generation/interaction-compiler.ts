@@ -15,6 +15,8 @@ function transformToInlineContent(content: string): string {
 }
 
 export function compileInteraction(interaction: AnyInteraction): string {
+	let interactionXml: string
+
 	switch (interaction.type) {
 		case "choiceInteraction": {
 			const processedPrompt = transformToInlineContent(interaction.prompt)
@@ -31,10 +33,11 @@ export function compileInteraction(interaction: AnyInteraction): string {
 				})
 				.join("\n            ")
 
-			return `<qti-choice-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" min-choices="${interaction.minChoices}" max-choices="${interaction.maxChoices}">
+			interactionXml = `<qti-choice-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" min-choices="${interaction.minChoices}" max-choices="${interaction.maxChoices}">
             <qti-prompt>${processedPrompt}</qti-prompt>
             ${choices}
         </qti-choice-interaction>`
+			break
 		}
 		case "orderInteraction": {
 			const processedPrompt = transformToInlineContent(interaction.prompt)
@@ -51,10 +54,11 @@ export function compileInteraction(interaction: AnyInteraction): string {
 				})
 				.join("\n            ")
 
-			return `<qti-order-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" orientation="${escapeXmlAttribute(interaction.orientation)}">
+			interactionXml = `<qti-order-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" orientation="${escapeXmlAttribute(interaction.orientation)}">
             <qti-prompt>${processedPrompt}</qti-prompt>
             ${choices}
         </qti-order-interaction>`
+			break
 		}
 		case "textEntryInteraction": {
 			let xml = `<qti-text-entry-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}"`
@@ -62,7 +66,8 @@ export function compileInteraction(interaction: AnyInteraction): string {
 				xml += ` expected-length="${interaction.expectedLength}"`
 			}
 			xml += "/>"
-			return xml
+			interactionXml = xml
+			break
 		}
 		case "inlineChoiceInteraction": {
 			const choices = interaction.choices
@@ -71,11 +76,16 @@ export function compileInteraction(interaction: AnyInteraction): string {
 				)
 				.join("\n                ")
 
-			return `<qti-inline-choice-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}">
+			interactionXml = `<qti-inline-choice-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}">
                 ${choices}
             </qti-inline-choice-interaction>`
+			break
 		}
 		default:
 			throw errors.new("Unknown interaction type")
 	}
+
+	// Wrap all interactions in a div to satisfy QTI content model requirements
+	// QTI schema requires interactions to be in proper block-level containers
+	return `<div>${interactionXml}</div>`
 }
