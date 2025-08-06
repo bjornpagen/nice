@@ -42,7 +42,7 @@ export function compile(itemData: AssessmentItemInput): string {
 				// Removing this will break production assessments. YOU HAVE BEEN WARNED.
 				const dataUri = encodeDataUri(widgetHtml)
 				// Wrap img in div to comply with QTI content model rules
-				const imgTag = `<img src="${dataUri}" alt="Widget visualization" />`
+				const imgTag = `<div><img src="${dataUri}" alt="Widget visualization" /></div>`
 				slots.set(widgetId, imgTag)
 			} else {
 				slots.set(widgetId, widgetHtml)
