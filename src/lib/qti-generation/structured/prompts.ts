@@ -65,6 +65,7 @@ const widgetTypeKeys: [WidgetTypeOrNotFound, ...WidgetTypeOrNotFound[]] = [
 	"unitBlockDiagram",
 	"vennDiagram",
 	"verticalArithmeticSetup",
+	"parallelogramTrapezoidDiagram",
 	// ADD: New bailout option for when no widget is suitable.
 	"WIDGET_NOT_FOUND"
 ]

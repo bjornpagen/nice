@@ -25,6 +25,7 @@ import {
 	generateNumberLineWithAction,
 	generateNumberLineWithFractionGroups,
 	generateNumberSetDiagram,
+	generateParallelogramTrapezoidDiagram,
 	generatePartitionedShape,
 	generatePentagonIntersectionDiagram,
 	generatePictograph,
@@ -134,6 +135,8 @@ export function generateWidget(widget: Widget): string {
 			return generateFigureComparisonDiagram(widget)
 		case "fractionNumberLine":
 			return generateFractionNumberLine(widget)
+		case "parallelogramTrapezoidDiagram":
+			return generateParallelogramTrapezoidDiagram(widget)
 		default:
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
 	}

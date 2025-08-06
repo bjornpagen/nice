@@ -32,6 +32,10 @@ import {
 	NumberLineWithFractionGroupsPropsSchema
 } from "./number-line-with-fraction-groups"
 import { generateNumberSetDiagram, NumberSetDiagramPropsSchema } from "./number-set-diagram"
+import {
+	generateParallelogramTrapezoidDiagram,
+	ParallelogramTrapezoidDiagramPropsSchema
+} from "./parallelogram-trapezoid-diagram"
 import { generatePartitionedShape, PartitionedShapePropsSchema } from "./partitioned-shape"
 import {
 	generatePentagonIntersectionDiagram,
@@ -98,7 +102,8 @@ export const typedSchemas = {
 	triangleDiagram: TriangleDiagramPropsSchema,
 	unitBlockDiagram: UnitBlockDiagramPropsSchema,
 	vennDiagram: VennDiagramPropsSchema,
-	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema
+	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
+	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema
 }
 
 // Create the discriminated union schema from the schemas (each now contains its type field)
@@ -145,7 +150,8 @@ const widgetSchemasWithoutPartitioned = [
 	typedSchemas.triangleDiagram,
 	typedSchemas.unitBlockDiagram,
 	typedSchemas.vennDiagram,
-	typedSchemas.verticalArithmeticSetup
+	typedSchemas.verticalArithmeticSetup,
+	typedSchemas.parallelogramTrapezoidDiagram
 ] as const
 
 export const WidgetSchema = z.union([
@@ -199,5 +205,6 @@ export {
 	generateTriangleDiagram,
 	generateUnitBlockDiagram,
 	generateVennDiagram,
-	generateVerticalArithmeticSetup
+	generateVerticalArithmeticSetup,
+	generateParallelogramTrapezoidDiagram
 }
