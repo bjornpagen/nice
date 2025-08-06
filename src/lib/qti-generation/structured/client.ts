@@ -49,7 +49,11 @@ function createWidgetCollectionSchema(widgetMapping: Record<string, keyof typeof
 		}
 		shape[slotName] = schema
 	}
-	return z.object(shape).describe("A collection of fully-defined widget objects corresponding to the provided slots.")
+	// Ensure the schema is properly structured to avoid OpenAI API interpretation issues
+	return z
+		.object(shape)
+		.strict()
+		.describe("A collection of fully-defined widget objects corresponding to the provided slots.")
 }
 
 /**
