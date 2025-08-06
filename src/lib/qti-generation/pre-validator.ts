@@ -76,8 +76,15 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 			}
 			if ("choices" in interaction && interaction.choices) {
 				for (const choice of interaction.choices) {
-					// The content of a simpleChoice can contain block elements.
-					validateBlockContent(choice.content, `interaction[${key}].choices[${choice.identifier}].content`, logger)
+					// For inline choice interactions, content can be raw text
+					// For other interactions, content must be wrapped in block elements
+					if (interaction.type === "inlineChoiceInteraction") {
+						// Inline choices can have raw text content - just validate base content
+						validateBaseContent(choice.content, `interaction[${key}].choices[${choice.identifier}].content`, logger)
+					} else {
+						// Regular choices must have block-level content
+						validateBlockContent(choice.content, `interaction[${key}].choices[${choice.identifier}].content`, logger)
+					}
 					if ("feedback" in choice && choice.feedback) {
 						validateInlineContent(choice.feedback, `interaction[${key}].choices[${choice.identifier}].feedback`, logger)
 					}

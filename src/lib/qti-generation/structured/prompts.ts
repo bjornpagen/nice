@@ -222,10 +222,28 @@ CORRECT: \`<mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>)</mo></mrow>\`
 
 **General Rule for mfenced:** Replace \`<mfenced open="X" close="Y">content</mfenced>\` with \`<mrow><mo>X</mo>content<mo>Y</mo></mrow>\`
 
+**4. QTI Content Model Violations - ALL BANNED:**
+
+**Body Content Must Be Wrapped in Block-Level Elements:**
+WRONG: \`body: 'This table gives select values of the differentiable function <math>...</math>.<slot name="h_table" />'\`
+CORRECT: \`body: '<p>This table gives select values of the differentiable function <math>...</math>.</p><slot name="h_table" />'\`
+
+WRONG: \`body: 'The lengths of 4 pencils were measured. The lengths are <math><mn>11</mn></math> cm...'\`
+CORRECT: \`body: '<p>The lengths of 4 pencils were measured. The lengths are <math><mn>11</mn></math> cm...</p>'\`
+
+WRONG: \`body: 'Select the correct answer from the choices below.<slot name="choice_interaction" />'\`
+CORRECT: \`body: '<p>Select the correct answer from the choices below.</p><slot name="choice_interaction" />'\`
+
+WRONG: \`body: 'Use the table to answer the question.<slot name="table_widget" /><slot name="interaction_1" />'\`
+CORRECT: \`body: '<p>Use the table to answer the question.</p><slot name="table_widget" /><slot name="interaction_1" />'\`
+
+**General Rule:** ALL text content in the body must be wrapped in block-level elements like \`<p>\` or \`<div>\`. Raw text at the start of body is FORBIDDEN.
+
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
+- ANY raw text at the start of body content (must be wrapped in block-level elements)
 Double-check your output before submitting. ZERO TOLERANCE for these violations.`
 
 	return { systemInstruction, userContent }
@@ -355,10 +373,44 @@ WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <span class="currency">$<
 WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
 WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><mo>(</mo>content<mo>)</mo></mrow>\`
 
+**QTI Content Model Violations:**
+
+**Prompt Fields Must NOT Contain Block-Level Elements:**
+WRONG: \`prompt: '<p>Select the double number line that shows the other values of distance and elevation.</p>'\`
+CORRECT: \`prompt: 'Select the double number line that shows the other values of distance and elevation.'\`
+
+WRONG: \`prompt: '<p>Arrange the cards to make a true comparison.</p>'\`
+CORRECT: \`prompt: 'Arrange the cards to make a true comparison.'\`
+
+WRONG: \`prompt: '<p>Choose the inequality that represents the graph.</p>'\`
+CORRECT: \`prompt: 'Choose the inequality that represents the graph.'\`
+
+WRONG: \`prompt: '<p>What is the value of the function at each point?</p>'\`
+CORRECT: \`prompt: 'What is the value of the function at each point?'\`
+
+WRONG: \`prompt: '<p>Find the area of the shaded region.</p>'\`
+CORRECT: \`prompt: 'Find the area of the shaded region.'\`
+
+WRONG: \`prompt: '<p>How many apples are there in total?</p>'\`
+CORRECT: \`prompt: 'How many apples are there in total?'\`
+
+**General Rule for Prompts:** Prompt fields in interactions can ONLY contain inline content. NO block-level elements like \`<p>\`, \`<div>\`, \`<h1>\`, etc. are allowed.
+
+**Choice Content Must Be Wrapped in Block-Level Elements:**
+WRONG: \`{ identifier: "ABOVE", content: "above" }\`
+CORRECT: \`{ identifier: "ABOVE", content: "<p>above</p>" }\`
+
+WRONG: \`{ identifier: "BELOW", content: "below" }\`
+CORRECT: \`{ identifier: "BELOW", content: "<p>below</p>" }\`
+
+**General Rule for Choices:** Choice content must be wrapped in block-level elements like \`<p>\` or \`<div>\`. Raw text is NOT permitted.
+
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY LaTeX commands (backslash followed by letters)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
+- ANY block-level elements in prompt fields (prompts must contain only inline content)
+- ANY raw text in choice content (must be wrapped in block-level elements)
 Double-check EVERY string in your output. ZERO TOLERANCE.`
 
 	return { systemInstruction, userContent }
@@ -464,10 +516,44 @@ WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <span class="currency">$<
 WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
 WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><mo>(</mo>content<mo>)</mo></mrow>\`
 
+**QTI Content Model Violations:**
+
+**Prompt Fields Must NOT Contain Block-Level Elements:**
+WRONG: \`prompt: '<p>Select the double number line that shows the other values of distance and elevation.</p>'\`
+CORRECT: \`prompt: 'Select the double number line that shows the other values of distance and elevation.'\`
+
+WRONG: \`prompt: '<p>Arrange the cards to make a true comparison.</p>'\`
+CORRECT: \`prompt: 'Arrange the cards to make a true comparison.'\`
+
+WRONG: \`prompt: '<p>Choose the inequality that represents the graph.</p>'\`
+CORRECT: \`prompt: 'Choose the inequality that represents the graph.'\`
+
+WRONG: \`prompt: '<p>What is the value of the function at each point?</p>'\`
+CORRECT: \`prompt: 'What is the value of the function at each point?'\`
+
+WRONG: \`prompt: '<p>Find the area of the shaded region.</p>'\`
+CORRECT: \`prompt: 'Find the area of the shaded region.'\`
+
+WRONG: \`prompt: '<p>How many apples are there in total?</p>'\`
+CORRECT: \`prompt: 'How many apples are there in total?'\`
+
+**General Rule for Prompts:** Prompt fields in interactions can ONLY contain inline content. NO block-level elements like \`<p>\`, \`<div>\`, \`<h1>\`, etc. are allowed.
+
+**Choice Content Must Be Wrapped in Block-Level Elements:**
+WRONG: \`{ identifier: "ABOVE", content: "above" }\`
+CORRECT: \`{ identifier: "ABOVE", content: "<p>above</p>" }\`
+
+WRONG: \`{ identifier: "BELOW", content: "below" }\`
+CORRECT: \`{ identifier: "BELOW", content: "<p>below</p>" }\`
+
+**General Rule for Choices:** Choice content must be wrapped in block-level elements like \`<p>\` or \`<div>\`. Raw text is NOT permitted.
+
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY LaTeX commands (backslash followed by letters)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
+- ANY block-level elements in prompt fields (prompts must contain only inline content)
+- ANY raw text in choice content (must be wrapped in block-level elements)
 Double-check EVERY string in your output. ZERO TOLERANCE.`
 
 	return { systemInstruction, userContent }
