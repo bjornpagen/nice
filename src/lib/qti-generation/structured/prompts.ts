@@ -232,6 +232,71 @@ Double-check your output before submitting. ZERO TOLERANCE for these violations.
 }
 
 /**
+ * SHOT 4 (Single): Creates a prompt for generating a single widget's content.
+ */
+export function createSingleWidgetContentPrompt(
+	perseusJson: string,
+	assessmentShell: unknown,
+	slotName: string,
+	widgetType: keyof typeof typedSchemas,
+	imageContext: ImageContext
+): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction = `You are an expert in educational content conversion with vision capabilities, focused on generating a single widget content object for QTI assessments. Your task is to generate ONLY the widget content object based on the original Perseus JSON, an assessment shell, a specific widget type, and accompanying visual context.
+
+You must generate a single, fully-formed widget object that conforms perfectly to the provided Zod schema for its type.
+
+⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
+The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
+
+1.  **NO LATEX COMMANDS** - ANY backslash followed by letters is FORBIDDEN.
+2.  **NO LATEX DOLLAR SIGNS** - The $ character for LaTeX is BANNED.
+3.  **NO DEPRECATED MATHML** - NEVER use <mfenced> elements.`
+
+	const userContent = `Generate the widget content for the slot named "${slotName}" with the type "${widgetType}" based on the following inputs. Use the provided image context to understand the visual components.
+
+## Image Context (for your analysis only)
+
+### Raw SVG Content
+If any images are SVGs, their content is provided here for you to analyze.
+\`\`\`json
+${imageContext.svgContentMap.size === 0 ? "{}" : JSON.stringify(Object.fromEntries(imageContext.svgContentMap), null, 2)}
+\`\`\`
+
+## Original Perseus JSON:
+\`\`\`json
+${perseusJson}
+\`\`\`
+
+## Assessment Shell (for context):
+\`\`\`json
+${JSON.stringify(assessmentShell, null, 2)}
+\`\`\`
+
+## Instructions:
+- **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of the widget.
+- Generate a complete widget object for the slot "${slotName}", ensuring it matches the type "${widgetType}".
+- Extract all relevant data from the Perseus JSON to populate the widget's properties.
+- Ensure all required properties for the "${widgetType}" widget type are included.
+- Return ONLY the JSON object for this single widget.
+
+## NEGATIVE EXAMPLES FROM REAL ERRORS (DO NOT OUTPUT THESE)
+
+**LaTeX Commands BANNED:**
+WRONG: \`\\\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
+WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
+
+**Deprecated MathML BANNED:**
+WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
+
+⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains ANY LaTeX commands, LaTeX dollar signs, or <mfenced> elements. Double-check EVERY string in your output. ZERO TOLERANCE.`
+
+	return { systemInstruction, userContent }
+}
+
+/**
  * SHOT 2: Creates the prompt for mapping widget slots to widget types.
  */
 export function createWidgetMappingPrompt(perseusJson: string, assessmentBody: string, slotNames: string[]) {
@@ -365,6 +430,71 @@ Double-check EVERY string in your output. ZERO TOLERANCE.`
 }
 
 /**
+ * SHOT 4 (Single): Creates a prompt for generating a single widget's content.
+ */
+export function createSingleWidgetContentPrompt(
+	perseusJson: string,
+	assessmentShell: unknown,
+	slotName: string,
+	widgetType: keyof typeof typedSchemas,
+	imageContext: ImageContext
+): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction = `You are an expert in educational content conversion with vision capabilities, focused on generating a single widget content object for QTI assessments. Your task is to generate ONLY the widget content object based on the original Perseus JSON, an assessment shell, a specific widget type, and accompanying visual context.
+
+You must generate a single, fully-formed widget object that conforms perfectly to the provided Zod schema for its type.
+
+⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
+The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
+
+1.  **NO LATEX COMMANDS** - ANY backslash followed by letters is FORBIDDEN.
+2.  **NO LATEX DOLLAR SIGNS** - The $ character for LaTeX is BANNED.
+3.  **NO DEPRECATED MATHML** - NEVER use <mfenced> elements.`
+
+	const userContent = `Generate the widget content for the slot named "${slotName}" with the type "${widgetType}" based on the following inputs. Use the provided image context to understand the visual components.
+
+## Image Context (for your analysis only)
+
+### Raw SVG Content
+If any images are SVGs, their content is provided here for you to analyze.
+\`\`\`json
+${imageContext.svgContentMap.size === 0 ? "{}" : JSON.stringify(Object.fromEntries(imageContext.svgContentMap), null, 2)}
+\`\`\`
+
+## Original Perseus JSON:
+\`\`\`json
+${perseusJson}
+\`\`\`
+
+## Assessment Shell (for context):
+\`\`\`json
+${JSON.stringify(assessmentShell, null, 2)}
+\`\`\`
+
+## Instructions:
+- **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of the widget.
+- Generate a complete widget object for the slot "${slotName}", ensuring it matches the type "${widgetType}".
+- Extract all relevant data from the Perseus JSON to populate the widget's properties.
+- Ensure all required properties for the "${widgetType}" widget type are included.
+- Return ONLY the JSON object for this single widget.
+
+## NEGATIVE EXAMPLES FROM REAL ERRORS (DO NOT OUTPUT THESE)
+
+**LaTeX Commands BANNED:**
+WRONG: \`\\\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
+WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
+
+**Deprecated MathML BANNED:**
+WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
+
+⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains ANY LaTeX commands, LaTeX dollar signs, or <mfenced> elements. Double-check EVERY string in your output. ZERO TOLERANCE.`
+
+	return { systemInstruction, userContent }
+}
+
+/**
  * SHOT 4: Creates a prompt for generating only widget content.
  */
 export function createWidgetContentPrompt(
@@ -461,6 +591,71 @@ WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><m
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
 Double-check EVERY string in your output. ZERO TOLERANCE.`
+
+	return { systemInstruction, userContent }
+}
+
+/**
+ * SHOT 4 (Single): Creates a prompt for generating a single widget's content.
+ */
+export function createSingleWidgetContentPrompt(
+	perseusJson: string,
+	assessmentShell: unknown,
+	slotName: string,
+	widgetType: keyof typeof typedSchemas,
+	imageContext: ImageContext
+): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction = `You are an expert in educational content conversion with vision capabilities, focused on generating a single widget content object for QTI assessments. Your task is to generate ONLY the widget content object based on the original Perseus JSON, an assessment shell, a specific widget type, and accompanying visual context.
+
+You must generate a single, fully-formed widget object that conforms perfectly to the provided Zod schema for its type.
+
+⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
+The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
+
+1.  **NO LATEX COMMANDS** - ANY backslash followed by letters is FORBIDDEN.
+2.  **NO LATEX DOLLAR SIGNS** - The $ character for LaTeX is BANNED.
+3.  **NO DEPRECATED MATHML** - NEVER use <mfenced> elements.`
+
+	const userContent = `Generate the widget content for the slot named "${slotName}" with the type "${widgetType}" based on the following inputs. Use the provided image context to understand the visual components.
+
+## Image Context (for your analysis only)
+
+### Raw SVG Content
+If any images are SVGs, their content is provided here for you to analyze.
+\`\`\`json
+${imageContext.svgContentMap.size === 0 ? "{}" : JSON.stringify(Object.fromEntries(imageContext.svgContentMap), null, 2)}
+\`\`\`
+
+## Original Perseus JSON:
+\`\`\`json
+${perseusJson}
+\`\`\`
+
+## Assessment Shell (for context):
+\`\`\`json
+${JSON.stringify(assessmentShell, null, 2)}
+\`\`\`
+
+## Instructions:
+- **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of the widget.
+- Generate a complete widget object for the slot "${slotName}", ensuring it matches the type "${widgetType}".
+- Extract all relevant data from the Perseus JSON to populate the widget's properties.
+- Ensure all required properties for the "${widgetType}" widget type are included.
+- Return ONLY the JSON object for this single widget.
+
+## NEGATIVE EXAMPLES FROM REAL ERRORS (DO NOT OUTPUT THESE)
+
+**LaTeX Commands BANNED:**
+WRONG: \`\\\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
+WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
+
+**Deprecated MathML BANNED:**
+WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
+
+⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains ANY LaTeX commands, LaTeX dollar signs, or <mfenced> elements. Double-check EVERY string in your output. ZERO TOLERANCE.`
 
 	return { systemInstruction, userContent }
 }

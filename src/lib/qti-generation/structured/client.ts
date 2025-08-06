@@ -16,6 +16,7 @@ import { buildImageContext, type ImageContext } from "./perseus-image-resolver"
 import {
 	createAssessmentShellPrompt,
 	createInteractionContentPrompt,
+	createSingleWidgetContentPrompt,
 	createWidgetContentPrompt,
 	createWidgetMappingPrompt
 } from "./prompts"
@@ -263,36 +264,35 @@ async function generateInteractionContent(
 }
 
 /**
- * NEW - Shot 4: Generate ONLY the widget objects.
+ * NEW - Shot 4 (Single): Generate a single widget object.
  */
-async function generateWidgetContent(
+async function generateSingleWidgetObject(
 	logger: logger.Logger,
 	perseusJson: string,
 	assessmentShell: AssessmentShell,
-	widgetMapping: Record<string, keyof typeof typedSchemas>,
+	slotName: string,
+	widgetType: keyof typeof typedSchemas,
 	imageContext: ImageContext
-): Promise<Record<string, WidgetInput>> {
-	const widgetSlotNames = Object.keys(widgetMapping)
-	if (widgetSlotNames.length === 0) {
-		logger.debug("no widgets to generate, skipping shot 4")
-		return {}
-	}
-
-	// This new prompt function instructs the AI to generate the widget objects.
-	const { systemInstruction, userContent } = createWidgetContentPrompt(
+): Promise<WidgetInput> {
+	// This new prompt function instructs the AI to generate a single widget object.
+	const { systemInstruction, userContent } = createSingleWidgetContentPrompt(
 		perseusJson,
 		assessmentShell,
-		widgetMapping,
+		slotName,
+		widgetType,
 		imageContext
 	)
 
-	// Create a precise schema asking ONLY for the widgets.
-	const WidgetCollectionSchema = createWidgetCollectionSchema(widgetMapping)
-	const responseFormat = zodResponseFormat(WidgetCollectionSchema, "widget_content_generator")
+	// Get the specific Zod schema for the requested widget type.
+	const WidgetSchema = typedSchemas[widgetType]
+	if (!WidgetSchema) {
+		throw errors.new(`could not find schema for widget type: ${widgetType}`)
+	}
+	const responseFormat = zodResponseFormat(WidgetSchema, `widget_${widgetType}_generator`)
 
-	logger.debug("generated json schema for openai", {
-		functionName: "generateWidgetContent",
-		generatorName: "widget_content_generator",
+	logger.debug("generated json schema for single widget", {
+		functionName: "generateSingleWidgetObject",
+		generatorName: `widget_${widgetType}_generator`,
 		schema: JSON.stringify(responseFormat.json_schema?.schema, null, 2)
 	})
 
@@ -301,7 +301,7 @@ async function generateWidgetContent(
 		messageContent.push({ type: "image_url", image_url: { url: imageUrl } })
 	}
 
-	logger.debug("calling openai for widget content generation with multimodal input", { widgetSlotNames })
+	logger.debug("calling openai for single widget content generation", { slotName, widgetType })
 	const response = await errors.try(
 		openai.chat.completions.parse({
 			model: OPENAI_MODEL,
@@ -313,17 +313,56 @@ async function generateWidgetContent(
 		})
 	)
 	if (response.error) {
-		logger.error("failed to generate widget content", { error: response.error })
-		throw errors.wrap(response.error, "ai widget generation")
+		logger.error("failed to generate single widget content", { slotName, widgetType, error: response.error })
+		throw errors.wrap(response.error, `ai single widget generation for ${slotName}`)
 	}
 
 	const choice = response.data.choices[0]
 	if (!choice?.message?.parsed) {
-		logger.error("CRITICAL: OpenAI widget generation returned no parsed content")
-		throw errors.new("empty ai response: no parsed content for widget generation")
+		logger.error("CRITICAL: OpenAI single widget generation returned no parsed content", { slotName, widgetType })
+		throw errors.new(`empty ai response: no parsed content for widget ${slotName}`)
 	}
 
 	return choice.message.parsed
+}
+
+/**
+ * REFACTORED - Shot 4 (Fan-Out): Generate widget objects by fanning out one evaluation per widget.
+ */
+async function generateWidgetContent(
+	logger: logger.Logger,
+	perseusJson: string,
+	assessmentShell: AssessmentShell,
+	widgetMapping: Record<string, keyof typeof typedSchemas>,
+	imageContext: ImageContext
+): Promise<Record<string, WidgetInput>> {
+	const widgetEntries = Object.entries(widgetMapping)
+	if (widgetEntries.length === 0) {
+		logger.debug("no widgets to generate, skipping shot 4")
+		return {}
+	}
+
+	// Create an array of promises, one for each widget generation.
+	const widgetPromises = widgetEntries.map(([slotName, widgetType]) => {
+		return generateSingleWidgetObject(logger, perseusJson, assessmentShell, slotName, widgetType, imageContext).then(
+			(widgetObject) => ({
+				slotName,
+				widgetObject
+			})
+		)
+	})
+
+	// Execute all widget generation promises in parallel.
+	logger.info("fanning out widget generation", { count: widgetPromises.length })
+	const results = await Promise.all(widgetPromises)
+
+	// Assemble the results back into a record.
+	const generatedWidgets: Record<string, WidgetInput> = {}
+	for (const result of results) {
+		generatedWidgets[result.slotName] = result.widgetObject
+	}
+
+	return generatedWidgets
 }
 
 /**
