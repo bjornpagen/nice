@@ -1,6 +1,9 @@
 "use client"
 
+import * as errors from "@superbuilders/errors"
+import { Check } from "lucide-react"
 import * as React from "react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
@@ -18,6 +21,49 @@ export function Content({ questions }: ContentProps) {
 	const [localQuestions, setLocalQuestions] = React.useState(questions)
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
 
+	// keyboard navigation for TAB/SHIFT+TAB
+	React.useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "Tab") {
+				event.preventDefault()
+				if (event.shiftKey) {
+					// go to previous
+					const newIndex = Math.max(0, currentIndex - 1)
+					setCurrentIndex(newIndex)
+					if (newIndex !== currentIndex) {
+						toast.info(`moved to question ${newIndex + 1}`)
+					}
+				} else {
+					// go to next
+					const newIndex = Math.min(localQuestions.length - 1, currentIndex + 1)
+					setCurrentIndex(newIndex)
+					if (newIndex !== currentIndex) {
+						toast.info(`moved to question ${newIndex + 1}`)
+					}
+				}
+			}
+		}
+
+		window.addEventListener("keydown", handleKeyDown)
+		return () => window.removeEventListener("keydown", handleKeyDown)
+	}, [currentIndex, localQuestions.length])
+
+	const goToPrevious = () => {
+		const newIndex = Math.max(0, currentIndex - 1)
+		setCurrentIndex(newIndex)
+		if (newIndex !== currentIndex) {
+			toast.info(`moved to question ${newIndex + 1}`)
+		}
+	}
+
+	const goToNext = () => {
+		const newIndex = Math.min(localQuestions.length - 1, currentIndex + 1)
+		setCurrentIndex(newIndex)
+		if (newIndex !== currentIndex) {
+			toast.info(`moved to question ${newIndex + 1}`)
+		}
+	}
+
 	if (localQuestions.length === 0) {
 		return <div>no questions with xml found</div>
 	}
@@ -27,16 +73,9 @@ export function Content({ questions }: ContentProps) {
 		return <div>question not found</div>
 	}
 
-	const goToPrevious = () => {
-		setCurrentIndex((prev) => Math.max(0, prev - 1))
-	}
-
-	const goToNext = () => {
-		setCurrentIndex((prev) => Math.min(localQuestions.length - 1, prev + 1))
-	}
-
 	const copyToClipboard = async (text: string) => {
 		await navigator.clipboard.writeText(text)
+		toast.success("copied to clipboard")
 	}
 
 	const truncateText = (text: string, maxLength = 100) => {
@@ -57,6 +96,26 @@ export function Content({ questions }: ContentProps) {
 		setDialogOpen(false)
 		setAnalysisNotes("")
 		setIsSubmitting(false)
+
+		if (notesToSave === "") {
+			toast.success("question marked as successful")
+		} else {
+			toast.success("analysis notes saved")
+		}
+	}
+
+	const handleMarkSuccessful = async () => {
+		toast.info("marking question as successful...")
+		const result = await errors.try(upsertQuestionAnalysis(currentQuestion.id, ""))
+		if (result.error) {
+			toast.error("failed to mark as successful")
+			return
+		}
+
+		// update local state - empty string means successful
+		setLocalQuestions((prev) => prev.map((q) => (q.id === currentQuestion.id ? { ...q, analysisNotes: "" } : q)))
+
+		toast.success("question marked as successful")
 	}
 
 	const getQuestionBackgroundColor = (question: QuestionDebugData) => {
@@ -95,10 +154,26 @@ export function Content({ questions }: ContentProps) {
 						<h2>
 							question {currentIndex + 1} of {localQuestions.length}
 						</h2>
-						<div style={{ display: "flex", gap: "10px" }}>
+						<div style={{ display: "flex", gap: "0" }}>
+							<Button
+								variant="default"
+								onClick={handleMarkSuccessful}
+								style={{
+									borderTopRightRadius: 0,
+									borderBottomRightRadius: 0
+								}}
+								className="hover:cursor-pointer"
+							>
+								<Check size={16} />
+							</Button>
 							<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
 								<DialogTrigger asChild>
-									<Button variant="outline">add analysis note</Button>
+									<Button
+										variant="outline"
+										style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0, borderLeft: "none" }}
+									>
+										add analysis note
+									</Button>
 								</DialogTrigger>
 								<DialogContent>
 									<DialogHeader>
@@ -142,6 +217,7 @@ export function Content({ questions }: ContentProps) {
 								onClick={goToPrevious}
 								disabled={currentIndex === 0}
 								className="hover:cursor-pointer"
+								style={{ marginLeft: "10px" }}
 							>
 								previous
 							</Button>

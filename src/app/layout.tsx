@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import * as React from "react"
 import { DialogManagerProvider } from "@/components/providers/dialog-manager-provider"
 import { UserSyncProvider } from "@/components/UserSyncProvider"
+import { Toaster } from "@/components/ui/sonner"
 import "@/styles/globals.css"
 import "@/styles/variables.css"
 
@@ -38,6 +39,7 @@ export default function RootLayout({
 						</UserSyncProvider>
 					</ClerkProvider>
 				</React.Suspense>
+				<Toaster />
 			</body>
 		</html>
 	)
