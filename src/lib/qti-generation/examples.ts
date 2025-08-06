@@ -357,7 +357,18 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			height: 88,
 			layout: null,
 			overlays: null,
-			shapes: [{ type: "rectangle", totalParts: 6, shadedCells: [0, 1, 2], rows: 1, columns: 6, shadeColor: null }]
+			shapes: [
+				{
+					type: "rectangle",
+					totalParts: 6,
+					shadedCells: [0, 1, 2],
+					hatchedCells: [],
+					rows: 1,
+					columns: 6,
+					shadeColor: null,
+					shadeOpacity: 0.5
+				}
+			]
 		},
 		choice_a_shape: {
 			type: "partitionedShape",
@@ -366,7 +377,18 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			height: 88,
 			layout: null,
 			overlays: null,
-			shapes: [{ type: "rectangle", totalParts: 8, shadedCells: [0, 1, 2, 3], rows: 2, columns: 4, shadeColor: null }]
+			shapes: [
+				{
+					type: "rectangle",
+					totalParts: 8,
+					shadedCells: [0, 1, 2, 3],
+					hatchedCells: [],
+					rows: 2,
+					columns: 4,
+					shadeColor: null,
+					shadeOpacity: 0.5
+				}
+			]
 		},
 		choice_b_shape: {
 			type: "partitionedShape",
@@ -375,7 +397,18 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			height: 88,
 			layout: null,
 			overlays: null,
-			shapes: [{ type: "rectangle", totalParts: 4, shadedCells: [0, 1], rows: 2, columns: 2, shadeColor: null }]
+			shapes: [
+				{
+					type: "rectangle",
+					totalParts: 4,
+					shadedCells: [0, 1],
+					hatchedCells: [],
+					rows: 2,
+					columns: 2,
+					shadeColor: null,
+					shadeOpacity: 0.5
+				}
+			]
 		},
 		choice_c_shape: {
 			type: "partitionedShape",
@@ -384,7 +417,18 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			height: 88,
 			layout: null,
 			overlays: null,
-			shapes: [{ type: "rectangle", totalParts: 4, shadedCells: [0, 1, 2], rows: 2, columns: 2, shadeColor: null }]
+			shapes: [
+				{
+					type: "rectangle",
+					totalParts: 4,
+					shadedCells: [0, 1, 2],
+					hatchedCells: [],
+					rows: 2,
+					columns: 2,
+					shadeColor: null,
+					shadeOpacity: 0.5
+				}
+			]
 		}
 	},
 	body: '<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of the following rectangle is shaded.</p><slot name="stimulus_shape" /><slot name="choice_interaction" />',
@@ -447,9 +491,36 @@ export const calculateShadedArea: AssessmentItemInput = {
 			layout: "horizontal",
 			overlays: null,
 			shapes: [
-				{ type: "circle", totalParts: 4, shadedCells: [0], rows: null, columns: null, shadeColor: null },
-				{ type: "circle", totalParts: 4, shadedCells: [0], rows: null, columns: null, shadeColor: null },
-				{ type: "circle", totalParts: 4, shadedCells: [0], rows: null, columns: null, shadeColor: null }
+				{
+					type: "circle",
+					totalParts: 4,
+					shadedCells: [0],
+					hatchedCells: [],
+					rows: null,
+					columns: null,
+					shadeColor: null,
+					shadeOpacity: 0.5
+				},
+				{
+					type: "circle",
+					totalParts: 4,
+					shadedCells: [0],
+					hatchedCells: [],
+					rows: null,
+					columns: null,
+					shadeColor: null,
+					shadeOpacity: 0.5
+				},
+				{
+					type: "circle",
+					totalParts: 4,
+					shadedCells: [0],
+					hatchedCells: [],
+					rows: null,
+					columns: null,
+					shadeColor: null,
+					shadeOpacity: 0.5
+				}
 			]
 		}
 	},
