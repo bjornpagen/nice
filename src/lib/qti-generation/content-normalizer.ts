@@ -49,6 +49,43 @@ function fixXmlSyntax(content: string, context: ProcessingContext): string {
 		}
 	}
 
+	// Sanitize invalid XML characters
+	// Remove control characters that are not allowed in XML (except tab, LF, CR)
+	// Using character code approach to avoid linter control character warnings
+	// biome-ignore lint/suspicious/noControlCharactersInRegex: intentionally matching control chars for XML sanitization
+	const invalidCharPattern = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g
+	const invalidChars = fixed.match(invalidCharPattern)
+	if (invalidChars) {
+		logger.debug("removing invalid xml characters", {
+			count: invalidChars.length,
+			examples: invalidChars.slice(0, 5).map((c) => `0x${c.charCodeAt(0).toString(16)}`)
+		})
+		fixed = fixed.replace(invalidCharPattern, "")
+		transformations += invalidChars.length
+		context.violations.push(`invalid xml characters: ${invalidChars.length} instances removed`)
+	}
+
+	// Convert common HTML entities to numeric entities (safer for XML)
+	const htmlEntityFixes = [
+		{ pattern: /&nbsp;/g, replacement: "&#160;", name: "nbsp entity" },
+		{ pattern: /&ndash;/g, replacement: "&#8211;", name: "ndash entity" },
+		{ pattern: /&mdash;/g, replacement: "&#8212;", name: "mdash entity" },
+		{ pattern: /&ldquo;/g, replacement: "&#8220;", name: "ldquo entity" },
+		{ pattern: /&rdquo;/g, replacement: "&#8221;", name: "rdquo entity" },
+		{ pattern: /&lsquo;/g, replacement: "&#8216;", name: "lsquo entity" },
+		{ pattern: /&rsquo;/g, replacement: "&#8217;", name: "rsquo entity" },
+		{ pattern: /&hellip;/g, replacement: "&#8230;", name: "hellip entity" }
+	]
+
+	for (const fix of htmlEntityFixes) {
+		const matches = fixed.match(fix.pattern)
+		if (matches) {
+			fixed = fixed.replace(fix.pattern, fix.replacement)
+			transformations += matches.length
+			context.violations.push(`${fix.name}: ${matches.length} instances converted`)
+		}
+	}
+
 	// Fix malformed MathML tags
 	const mathmlFixes = [
 		{
@@ -66,6 +103,40 @@ function fixXmlSyntax(content: string, context: ProcessingContext): string {
 		if (fixedCount > 0) {
 			transformations += fixedCount
 			context.violations.push(`${fix.name}: ${fixedCount} instances`)
+		}
+	}
+
+	// Fix basic XML structure issues
+	// Remove invalid characters in tag names and fix malformed attributes
+	const xmlStructureFixes = [
+		// Fix malformed tag names (remove invalid characters)
+		{
+			// biome-ignore lint/suspicious/noControlCharactersInRegex: intentionally matching control chars in XML tags
+			pattern: /<([a-zA-Z][\w:-]*[^>]*?)[\u0000-\u001F\u007F]+([^>]*?)>/g,
+			replacement: "<$1$2>",
+			name: "invalid characters in tags"
+		},
+		// Fix unclosed self-closing tags
+		{
+			pattern: /<(img|br|hr|input|meta)([^>]*?)(?<!\/)\s*>/g,
+			replacement: "<$1$2 />",
+			name: "unclosed self-closing tags"
+		},
+		// Fix malformed attribute values (remove control chars)
+		{
+			// biome-ignore lint/suspicious/noControlCharactersInRegex: intentionally matching control chars in XML attributes
+			pattern: /(\w+)=["']([^"']*?)[\u0000-\u001F\u007F]+([^"']*?)["']/g,
+			replacement: '$1="$2$3"',
+			name: "invalid characters in attributes"
+		}
+	]
+
+	for (const fix of xmlStructureFixes) {
+		const matches = fixed.match(fix.pattern)
+		if (matches) {
+			fixed = fixed.replace(fix.pattern, fix.replacement)
+			transformations += matches.length
+			context.violations.push(`${fix.name}: ${matches.length} instances fixed`)
 		}
 	}
 
