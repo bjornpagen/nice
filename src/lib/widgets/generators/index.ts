@@ -43,6 +43,7 @@ import { generateScatterPlot, ScatterPlotPropsSchema } from "./scatter-plot"
 import { generateStackedItemsDiagram, StackedItemsDiagramPropsSchema } from "./stacked-items-diagram"
 import { generateTapeDiagram, TapeDiagramPropsSchema } from "./tape-diagram"
 import { generateTransformationDiagram, TransformationDiagramPropsSchema } from "./transformation-diagram"
+import { generateTreeDiagram, TreeDiagramPropsSchema } from "./tree-diagram"
 import { generateUnitBlockDiagram, UnitBlockDiagramPropsSchema } from "./unit-block-diagram"
 import { generateVennDiagram, VennDiagramPropsSchema } from "./venn-diagram"
 import { generateVerticalArithmeticSetup, VerticalArithmeticSetupPropsSchema } from "./vertical-arithmetic-setup"
@@ -85,6 +86,7 @@ export const typedSchemas = {
 	stackedItemsDiagram: StackedItemsDiagramPropsSchema,
 	tapeDiagram: TapeDiagramPropsSchema,
 	transformationDiagram: TransformationDiagramPropsSchema,
+	treeDiagram: TreeDiagramPropsSchema,
 	unitBlockDiagram: UnitBlockDiagramPropsSchema,
 	vennDiagram: VennDiagramPropsSchema,
 	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema
@@ -128,6 +130,7 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.stackedItemsDiagram,
 	typedSchemas.tapeDiagram,
 	typedSchemas.transformationDiagram,
+	typedSchemas.treeDiagram,
 	typedSchemas.unitBlockDiagram,
 	typedSchemas.vennDiagram,
 	typedSchemas.verticalArithmeticSetup
@@ -173,6 +176,7 @@ export {
 	generateStackedItemsDiagram,
 	generateTapeDiagram,
 	generateTransformationDiagram,
+	generateTreeDiagram,
 	generateUnitBlockDiagram,
 	generateVennDiagram,
 	generateVerticalArithmeticSetup
