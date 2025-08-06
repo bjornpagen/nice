@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { allExamples } from "@/lib/qti-generation/examples"
-import { AssessmentItemSchema } from "@/lib/qti-generation/schemas"
+import { type AnyInteraction, AssessmentItemSchema } from "@/lib/qti-generation/schemas"
 import type { typedSchemas } from "@/lib/widgets/generators"
 import type { ImageContext } from "./perseus-image-resolver"
 
@@ -371,6 +371,7 @@ export function createWidgetContentPrompt(
 	perseusJson: string,
 	assessmentShell: unknown,
 	widgetMapping: Record<string, keyof typeof typedSchemas>,
+	generatedInteractions: Record<string, AnyInteraction>,
 	imageContext: ImageContext
 ): {
 	systemInstruction: string
@@ -420,7 +421,14 @@ ${perseusJson}
 ${JSON.stringify(assessmentShell, null, 2)}
 \`\`\`
 
+## Interaction Content (for context):
+This is the full content of the interaction(s) in the item. Use this to understand the question being asked, which is essential for creating correct widget data (e.g., correct tick marks on a number line for a choice).
+\`\`\`json
+${JSON.stringify(generatedInteractions, null, 2)}
+\`\`\`
+
 ## Widget Mapping:
+This mapping tells you the required output type for each widget.
 \`\`\`json
 ${JSON.stringify(widgetMapping, null, 2)}
 \`\`\`
@@ -428,9 +436,9 @@ ${JSON.stringify(widgetMapping, null, 2)}
 ## Instructions:
 - **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of widgets.
 - For each entry in the widget mapping, generate a fully-formed widget object of the specified type.
+- **Use Interaction Context**: You MUST use the "Interaction Content" object to understand the full question. This context is critical for generating correct data for widgets that appear within choices. For example, the interaction's prompt will tell you what the correct values on a number line widget should be.
 - Extract all relevant data from the Perseus JSON to populate the widget properties.
 - Ensure all required properties for each widget type are included.
-- Use the assessment shell's body to understand the context of where each widget appears.
 - Return ONLY a JSON object with widget slot names as keys and widget objects as values.
 
 Example output structure:

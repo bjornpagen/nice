@@ -270,6 +270,7 @@ async function generateWidgetContent(
 	perseusJson: string,
 	assessmentShell: AssessmentShell,
 	widgetMapping: Record<string, keyof typeof typedSchemas>,
+	generatedInteractions: Record<string, AnyInteraction>,
 	imageContext: ImageContext
 ): Promise<Record<string, WidgetInput>> {
 	const widgetSlotNames = Object.keys(widgetMapping)
@@ -283,6 +284,7 @@ async function generateWidgetContent(
 		perseusJson,
 		assessmentShell,
 		widgetMapping,
+		generatedInteractions,
 		imageContext
 	)
 
@@ -419,7 +421,14 @@ export async function generateStructuredQtiItem(
 	// Shot 4: Generate ONLY the widget content based on the mapping.
 	logger.debug("shot 4: generating widget content")
 	const widgetContentResult = await errors.try(
-		generateWidgetContent(logger, perseusJsonString, assessmentShell, widgetMapping, imageContext)
+		generateWidgetContent(
+			logger,
+			perseusJsonString,
+			assessmentShell,
+			widgetMapping,
+			generatedInteractions,
+			imageContext
+		)
 	)
 	if (widgetContentResult.error) {
 		logger.error("shot 4 failed: widget content generation failed", { error: widgetContentResult.error })
