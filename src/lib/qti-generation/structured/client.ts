@@ -380,10 +380,19 @@ export async function generateStructuredQtiItem(
 
 	// Step 2: Map widget slot names to widget types.
 	const widgetSlotNames = assessmentShell.widgets
-	logger.debug("shot 2: mapping slots to widgets")
-	const widgetMappingResult = await errors.try(
-		mapSlotsToWidgets(logger, perseusJsonString, assessmentShell.body, widgetSlotNames)
-	)
+	logger.debug("shot 2: mapping slots to widgets", { count: widgetSlotNames.length })
+
+	const widgetMappingResult = await (async () => {
+		if (widgetSlotNames.length === 0) {
+			logger.info("no widget slots found, skipping ai widget mapping call")
+			// Return a successful result with empty data, mimicking the `errors.try` output
+			const emptyMapping: Record<string, keyof typeof typedSchemas> = {}
+			return { data: emptyMapping, error: null }
+		}
+		// Only make the AI call if there are widgets to map
+		return errors.try(mapSlotsToWidgets(logger, perseusJsonString, assessmentShell.body, widgetSlotNames))
+	})()
+
 	if (widgetMappingResult.error) {
 		logger.error("shot 2 failed: widget mapping pass failed", { error: widgetMappingResult.error })
 		throw widgetMappingResult.error
