@@ -127,7 +127,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 
 	const cx = width / 2
 	const cy = height / 2
-	const mainRadius = Math.min(cx, cy) - 10 // Use a scaled radius for rendering to ensure padding
+	const mainRadius = Math.min(cx, cy) - 10
 	const scale = mainRadius / radius
 
 	const toRad = (deg: number) => (deg * Math.PI) / 180
@@ -135,19 +135,17 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 		x: cx + r * Math.cos(toRad(angleDeg)),
 		y: cy + r * Math.sin(toRad(angleDeg))
 	})
+	const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max))
+	const PADDING = 15
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
-	svg +=
-		"<style>.segment-label { font-size: 13px; fill: #333; } .arc-label { font-size: 14px; font-weight: bold; fill: #333; } .area-label { font-size: 16px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; }</style>"
 
-	// 1. Draw Annulus Shading (if applicable)
 	if (innerRadius && annulusFillColor) {
 		const r1 = radius * scale
 		const r2 = innerRadius * scale
 		svg += `<path d="M ${cx - r1},${cy} a ${r1},${r1} 0 1,0 ${2 * r1},0 a ${r1},${r1} 0 1,0 -${2 * r1},0 M ${cx - r2},${cy} a ${r2},${r2} 0 1,0 ${2 * r2},0 a ${r2},${r2} 0 1,0 -${2 * r2},0" fill="${annulusFillColor}" fill-rule="evenodd" />`
 	}
 
-	// 2. Draw Sectors
 	if (sectors) {
 		for (const sector of sectors) {
 			const r = radius * scale
@@ -155,83 +153,78 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 			const end = pointOnCircle(sector.endAngle, r)
 			const angleDiff = Math.abs(sector.endAngle - sector.startAngle)
 			const largeArcFlag = angleDiff > 180 ? 1 : 0
-
 			const pathData = `M ${cx},${cy} L ${start.x},${start.y} A ${r},${r} 0 ${largeArcFlag} 1 ${end.x},${end.y} Z`
 			svg += `<path d="${pathData}" fill="${sector.fillColor}" stroke="none"/>`
 
-			// Sector Right Angle Marker
 			if (sector.showRightAngleMarker && Math.abs(angleDiff - 90) < 0.1) {
-				const markerSize = Math.min(r, 20)
+				const markerSize = Math.min(r, 20) * 0.8
 				const p1 = pointOnCircle(sector.startAngle, markerSize)
 				const p2 = pointOnCircle(sector.endAngle, markerSize)
-				const p3 = pointOnCircle(sector.startAngle + 45, markerSize * Math.sqrt(2)) // Diagonal point
+				const p3 = pointOnCircle(sector.startAngle + 45, markerSize * Math.sqrt(2))
 				svg += `<path d="M ${p1.x} ${p1.y} L ${p3.x} ${p3.y} L ${p2.x} ${p2.y}" fill="none" stroke="black" stroke-width="1.5"/>`
 			}
 		}
 	}
 
-	// 3. Draw Main Circle Outline
 	svg += `<circle cx="${cx}" cy="${cy}" r="${radius * scale}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="2"/>`
 
-	// 4. Draw Inner Circle Outline (if applicable)
 	if (innerRadius) {
 		svg += `<circle cx="${cx}" cy="${cy}" r="${innerRadius * scale}" fill="white" stroke="black" stroke-width="2"/>`
 	}
 
-	// 5. Draw Arcs
 	if (arcs) {
 		for (const arc of arcs) {
 			const r = radius * scale
 			const start = pointOnCircle(arc.startAngle, r)
 			const end = pointOnCircle(arc.endAngle, r)
 			const largeArcFlag = Math.abs(arc.endAngle - arc.startAngle) > 180 ? 1 : 0
-
 			const pathData = `M ${start.x},${start.y} A ${r},${r} 0 ${largeArcFlag} 1 ${end.x},${end.y}`
 			svg += `<path d="${pathData}" fill="none" stroke="${arc.strokeColor}" stroke-width="3"/>`
 			if (arc.label) {
 				const midAngle = (arc.startAngle + arc.endAngle) / 2
-				const labelPos = pointOnCircle(midAngle, r + 15)
-				svg += `<text x="${labelPos.x}" y="${labelPos.y}" class="arc-label" text-anchor="middle" dominant-baseline="middle">${arc.label}</text>`
+				const labelPos = pointOnCircle(midAngle, r + PADDING)
+				const finalX = clamp(labelPos.x, PADDING, width - PADDING)
+				const finalY = clamp(labelPos.y, PADDING, height - PADDING)
+				svg += `<text x="${finalX}" y="${finalY}" font-size="14px" font-weight="bold" fill="#333" text-anchor="middle" dominant-baseline="middle">${arc.label}</text>`
 			}
 		}
 	}
 
-	// 6. Draw Segments
 	if (segments) {
 		for (const seg of segments) {
 			const r = radius * scale
-			if (seg.type === "radius") {
-				const end = pointOnCircle(seg.angle, r)
-				svg += `<line x1="${cx}" y1="${cy}" x2="${end.x}" y2="${end.y}" stroke="${seg.color}" stroke-width="2"/>`
-				if (seg.label) {
-					const mid = pointOnCircle(seg.angle, r / 2)
-					const angleRad = toRad(seg.angle)
-					// Position label slightly off the line
-					const offsetX = -Math.sin(angleRad) * 10
-					const offsetY = Math.cos(angleRad) * 10
-					svg += `<text x="${mid.x + offsetX}" y="${mid.y + offsetY}" class="segment-label" text-anchor="middle" dominant-baseline="middle">${seg.label}</text>`
-				}
-			} else if (seg.type === "diameter") {
-				const start = pointOnCircle(seg.angle + 180, r)
-				const end = pointOnCircle(seg.angle, r)
-				svg += `<line x1="${start.x}" y1="${start.y}" x2="${end.x}" y2="${end.y}" stroke="${seg.color}" stroke-width="2"/>`
-				if (seg.label) {
-					const mid = pointOnCircle(seg.angle, 0) // center
-					const angleRad = toRad(seg.angle)
-					const offsetX = -Math.sin(angleRad) * 10
-					const offsetY = Math.cos(angleRad) * 10
-					svg += `<text x="${mid.x + offsetX}" y="${mid.y + offsetY}" class="segment-label" text-anchor="middle" dominant-baseline="middle">${seg.label}</text>`
-				}
+			const lineStart = pointOnCircle(seg.type === "diameter" ? seg.angle + 180 : 0, seg.type === "diameter" ? r : 0)
+			const lineEnd = pointOnCircle(seg.angle, r)
+			svg += `<line x1="${lineStart.x}" y1="${lineStart.y}" x2="${lineEnd.x}" y2="${lineEnd.y}" stroke="${seg.color}" stroke-width="2"/>`
+
+			if (seg.label) {
+				// --- START OF FIX: Annulus-aware and collision-aware placement ---
+				const labelStartRadius = (innerRadius ?? 0) * scale
+				const labelAnchorRadius = labelStartRadius + (r - labelStartRadius) / 2
+				const mid = pointOnCircle(seg.angle, labelAnchorRadius)
+				const angleRad = toRad(seg.angle)
+
+				// For near-horizontal lines in the top-right quadrant (like 359 deg), flip the vertical offset
+				// to prevent collision with labels for lines at 0 deg.
+				const verticalOffsetMultiplier = seg.angle > 270 && seg.angle < 360 ? -1 : 1
+				const offsetX = -Math.sin(angleRad) * 10
+				const offsetY = Math.cos(angleRad) * 10 * verticalOffsetMultiplier
+				// --- END OF FIX ---
+
+				const finalX = clamp(mid.x + offsetX, PADDING, width - PADDING)
+				const finalY = clamp(mid.y + offsetY, PADDING, height - PADDING)
+				svg += `<text x="${finalX}" y="${finalY}" font-size="13px" fill="#333" text-anchor="middle" dominant-baseline="middle">${seg.label}</text>`
 			}
 		}
 	}
 
-	// 7. Draw Center Dot and Area Label
 	if (showCenterDot) {
 		svg += `<circle cx="${cx}" cy="${cy}" r="3" fill="black"/>`
 	}
+
 	if (areaLabel) {
-		svg += `<text x="${cx}" y="${cy}" class="area-label">${areaLabel}</text>`
+		const yOffset = -10
+		svg += `<text x="${cx}" y="${cy + yOffset}" font-size="16px" font-weight="bold" fill="#333" text-anchor="middle" dominant-baseline="middle">${areaLabel}</text>`
 	}
 
 	svg += "</svg>"
