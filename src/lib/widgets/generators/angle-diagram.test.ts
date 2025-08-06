@@ -315,6 +315,64 @@ describe("generateAngleDiagram", () => {
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
+
+		test("should render parallel lines with multiple intersecting transversals and angles", () => {
+			const props = {
+				type: "angleDiagram" as const,
+				width: 600,
+				height: 400,
+				points: [
+					// Central intersection point
+					{ id: "A", x: 300, y: 200, label: "A" },
+					// Bottom horizontal line points (D-A-E forms the bottom horizontal line)
+					{ id: "D", x: 100, y: 200, label: "D" },
+					{ id: "E", x: 500, y: 200, label: "E" },
+					// Top horizontal line points (B-C forms the top horizontal line)
+					{ id: "B", x: 150, y: 100, label: "B" },
+					{ id: "C", x: 450, y: 100, label: "C" },
+					// Bottom point for diagonal line
+					// F is positioned so that F-A-C are collinear
+					{ id: "F", x: 150, y: 300, label: "F" }
+				],
+				rays: [
+					// Five rays emanating from central point A
+					{ from: "A", to: "B" },
+					{ from: "A", to: "C" },
+					{ from: "A", to: "D" },
+					{ from: "A", to: "E" },
+					{ from: "A", to: "F" },
+					// Top horizontal line (to show it extends beyond B)
+					{ from: "B", to: "C" }
+				],
+				angles: [
+					// 42° angle at B (green)
+					{
+						vertices: ["C", "B", "A"],
+						label: "42°",
+						color: "rgba(76, 175, 80, 0.8)",
+						radius: 30,
+						isRightAngle: null
+					},
+					// 105° angle at A (purple) - between rays AD and AF
+					{
+						vertices: ["D", "A", "F"],
+						label: "105°",
+						color: "rgba(156, 39, 176, 0.8)",
+						radius: 30,
+						isRightAngle: null
+					},
+					// x° angle at A (light blue) - between rays AE and AC
+					{
+						vertices: ["E", "A", "C"],
+						label: "x°",
+						color: "rgba(33, 150, 243, 0.8)",
+						radius: 25,
+						isRightAngle: null
+					}
+				]
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
 	})
 
 	describe("Special Cases", () => {
