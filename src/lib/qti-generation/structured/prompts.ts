@@ -100,9 +100,10 @@ The shell should:
 4. NEVER generate <img> or <svg> tags in the body - all visual elements must be widget slots.
 
 CRITICAL CLASSIFICATION RULE:
-- WIDGETS are COMPLETELY STATIC (images, graphs, tables) - NO user input
+- WIDGETS are COMPLETELY STATIC (images, graphs) - NO user input
 - INTERACTIONS require USER INPUT (typing, clicking, selecting) - ALL input elements MUST be interactions
-Perseus misleadingly calls both types "widgets" - you MUST reclassify based on whether user input is required.
+- EXCEPTION: TABLES ARE ALWAYS WIDGETS - Even if they contain input fields, tables MUST be widgets
+Perseus misleadingly calls both types "widgets" - you MUST reclassify based on whether user input is required, EXCEPT tables which are ALWAYS widgets.
 
 ABSOLUTE REQUIREMENT: SLOT CONSISTENCY.
 This is the most critical rule. Any \`<slot name="..."/>\` tag you include in the 'body' string MUST have its name listed in either the 'widgets' array or the 'interactions' array. Conversely, every name in the 'widgets' and 'interactions' arrays MUST correspond to a \`<slot>\` tag in the 'body'. There must be a perfect, one-to-one mapping.
@@ -306,10 +307,16 @@ Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turne
 Perseus often calls interactive elements "widgets". You MUST correctly reclassify them as **interactions**.
 
 **CRITICAL DISTINCTION:**
-- **WIDGETS are COMPLETELY STATIC** - they display information only (images, graphs, tables, diagrams)
+- **WIDGETS are COMPLETELY STATIC** - they display information only (images, graphs, diagrams)
 - **INTERACTIONS require USER INPUT** - ANY element that accepts user input MUST be an interaction
+- **EXCEPTION: TABLES ARE ALWAYS WIDGETS** - Even if a table contains input fields, the TABLE itself is ALWAYS a widget
 
-**ABSOLUTE RULE:** If a Perseus element requires ANY form of user input (typing, clicking, selecting, dragging, etc.), it MUST be placed in the \`interactions\` array, NOT the \`widgets\` array. This rule has ZERO exceptions.
+**ABSOLUTE RULE:** If a Perseus element requires ANY form of user input (typing, clicking, selecting, dragging, etc.), it MUST be placed in the \`interactions\` array, NOT the \`widgets\` array. 
+
+**THE ONLY EXCEPTION: TABLES**
+- Tables are ALWAYS widgets, regardless of content
+- If a question requires entry IN a table, the table MUST remain a widget
+- The table widget will handle its own internal input fields
 
 **Perseus Input with \`numeric-input\`:**
 \`\`\`json
@@ -391,9 +398,10 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
   "interactions": ["choice_interaction_1"]
 }
 \`\`\`
-**FINAL RULE - NO EXCEPTIONS:** 
+**FINAL RULE:** 
 - If a Perseus element requires ANY user input = **INTERACTION** (goes in \`interactions\` array)
 - If a Perseus element is purely visual/static = **WIDGET** (goes in \`widgets\` array)
+- **EXCEPTION: TABLES ARE ALWAYS WIDGETS** - Even tables with input fields
 
 **Common Perseus elements that are ALWAYS INTERACTIONS (never widgets):**
 - \`numeric-input\`, \`input-number\`, \`expression\` - text entry
@@ -401,14 +409,39 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 - \`sorter\`, \`matcher\` - ordering/matching
 - ANY element where the user types, clicks, selects, or manipulates = **INTERACTION**
 
-**Remember:** Perseus misleadingly calls interactive elements "widgets" in its JSON. IGNORE THIS. Reclassify based on whether user input is required.
+**Common Perseus elements that are ALWAYS WIDGETS:**
+- \`table\` - **ALWAYS a widget, even if it contains input fields**
+- \`image\` - static images
+- \`grapher\`, \`plotter\` - static graphs/plots
+- \`passage\` - static text passages
+
+**Remember:** Perseus misleadingly calls interactive elements "widgets" in its JSON. IGNORE THIS. Reclassify based on whether user input is required, EXCEPT for tables which are ALWAYS widgets.
+
+**Perseus Input with \`table\` containing input:**
+\`\`\`json
+"question": {
+  "content": "Fill in the table. [[☃ table 1]]",
+  "widgets": {
+    "table 1": { "type": "table", "headers": [...], "answers": [...] }
+  }
+}
+\`\`\`
+**CORRECT Shell Output (Table is ALWAYS a widget):**
+\`\`\`json
+{
+  "body": "<p>Fill in the table.</p><slot name=\"table_1\" />",
+  "widgets": ["table_1"],
+  "interactions": []
+}
+\`\`\`
+**Explanation:** Tables are ALWAYS widgets, even when they contain input fields. The table widget handles its own internal input mechanism.
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
 - ANY raw text at the start of body content (must be wrapped in block-level elements)
-- ANY interactive element (numeric-input, expression, radio, etc.) in the \`widgets\` array instead of \`interactions\`
+- ANY interactive element (numeric-input, expression, radio, etc.) in the \`widgets\` array instead of \`interactions\` (EXCEPT tables, which are ALWAYS widgets)
 Double-check your output before submitting. ZERO TOLERANCE for these violations.`
 
 	return { systemInstruction, userContent }
