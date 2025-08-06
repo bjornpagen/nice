@@ -1,27 +1,29 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines the dimensions for a single rectangle.
-const RectangleDimensionsSchema = z
-	.object({
-		width: z.number().positive().describe("The width of the rectangle."),
-		height: z.number().positive().describe("The height of the rectangle.")
-	})
-	.strict()
+// Factory function that creates a rectangle dimensions schema
+const createRectangleDimensionsSchema = () =>
+	z
+		.object({
+			width: z.number().positive().describe("The width of the rectangle."),
+			height: z.number().positive().describe("The height of the rectangle.")
+		})
+		.strict()
 
-// Defines a single transformation, including the shape before and after.
-const ShapeTransformSchema = z
-	.object({
-		label: z.string().describe("The label for this transformation group (e.g., 'Shape A')."),
-		before: RectangleDimensionsSchema.describe("The dimensions of the shape before the transformation."),
-		after: RectangleDimensionsSchema.describe("The dimensions of the shape after the transformation."),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#9AB8ED")
-			.describe("The fill color for both the before and after shapes in this group.")
-	})
-	.strict()
+// Factory function that creates a shape transform schema
+const createShapeTransformSchema = () =>
+	z
+		.object({
+			label: z.string().describe("The label for this transformation group (e.g., 'Shape A')."),
+			before: createRectangleDimensionsSchema().describe("The dimensions of the shape before the transformation."),
+			after: createRectangleDimensionsSchema().describe("The dimensions of the shape after the transformation."),
+			color: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "#9AB8ED")
+				.describe("The fill color for both the before and after shapes in this group.")
+		})
+		.strict()
 
 // The main Zod schema for the scaleCopiesSlider widget.
 export const ScaleCopiesSliderPropsSchema = z
@@ -37,10 +39,10 @@ export const ScaleCopiesSliderPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 220)
 			.describe("The total height of the output SVG container in pixels."),
-		shapeA: ShapeTransformSchema.describe(
+		shapeA: createShapeTransformSchema().describe(
 			"The first transformation to display, typically corresponding to the 'Slider for Shape A'."
 		),
-		shapeB: ShapeTransformSchema.describe(
+		shapeB: createShapeTransformSchema().describe(
 			"The second transformation to display, typically corresponding to the 'Slider for Shape B'."
 		)
 	})
@@ -82,7 +84,7 @@ export const generateScaleCopiesSlider: WidgetGenerator<typeof ScaleCopiesSlider
 	 * Helper function to draw a single row (e.g., for Shape A) containing
 	 * the "Before" shape, an arrow, and the "After" shape.
 	 */
-	const drawShapeGroup = (shape: z.infer<typeof ShapeTransformSchema>, yOffset: number, title: string): string => {
+	const drawShapeGroup = (shape: ScaleCopiesSliderProps["shapeA"], yOffset: number, title: string): string => {
 		let groupSvg = ""
 
 		// --- Before Shape ---
