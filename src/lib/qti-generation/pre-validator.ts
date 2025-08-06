@@ -40,66 +40,7 @@ function validateBlockContent(html: string, context: string, logger: logger.Logg
 		)
 	}
 
-	// Check for text entry interactions floating outside inline contexts
-	validateTextEntryInteractionPlacement(html, context)
-}
-
-/**
- * Validates that text entry interactions are properly placed within inline contexts.
- * Text entry interactions are inline elements and must be inside text containers like <p> or <span>.
- */
-function validateTextEntryInteractionPlacement(html: string, context: string): void {
-	// Find all text entry and inline choice interaction slot tags
-	const textEntrySlotRegex = /<slot\s+name="[^"]*(?:text_entry|inline_choice)[^"]*"[^>]*\/?>(?:<\/slot>)?/g
-	const slots = Array.from(html.matchAll(textEntrySlotRegex))
-
-	for (const slot of slots) {
-		const slotTag = slot[0]
-		const slotIndex = slot.index
-		if (slotIndex === undefined) continue
-
-		const beforeSlot = html.substring(0, slotIndex)
-		const afterSlot = html.substring(slotIndex + slotTag.length)
-
-		// Check if the slot is floating adjacent to closing tags or math elements
-		// Pattern: </any-tag>slot, <math>slot, slot</any-tag>, slot<math>
-		const beforeEndsWithTag = /<\/[^>]+>\s*$/.test(beforeSlot)
-		const beforeEndsWithMath = /<math[^>]*>[^<]*<\/math>\s*$/.test(beforeSlot) || /<\/math>\s*$/.test(beforeSlot)
-		const afterStartsWithTag = /^\s*<[^>/]+/.test(afterSlot)
-		const beforeStartsWithMath = /<math\b[^>]*>\s*$/.test(beforeSlot)
-
-		// Also check if it's at the very start/end without proper wrapping
-		const isAtStart = beforeSlot.trim() === ""
-
-		// Check if it's directly adjacent to block-level elements or math elements without being wrapped
-		if (beforeEndsWithTag || beforeEndsWithMath || beforeStartsWithMath || (isAtStart && afterStartsWithTag)) {
-			// Now check if it's NOT inside an inline container
-			// Look backwards to see if we're inside a <p>, <span>, etc. that hasn't been closed
-			const openInlineContainers = /(?:<(p|span|em|strong|a|code)\b[^>]*>(?![^<]*<\/\1>))/g
-			const openContainers = Array.from(beforeSlot.matchAll(openInlineContainers))
-
-			// Check if any open containers are still unclosed
-			let hasOpenInlineContainer = false
-			for (const container of openContainers) {
-				const tagName = container[1]
-				const containerIndex = container.index
-				if (containerIndex === undefined) continue
-
-				const afterContainer = beforeSlot.substring(containerIndex + container[0].length)
-				const closeTagRegex = new RegExp(`<\\/${tagName}>`)
-				if (!closeTagRegex.test(afterContainer)) {
-					hasOpenInlineContainer = true
-					break
-				}
-			}
-
-			if (!hasOpenInlineContainer) {
-				throw errors.new(
-					`QTI Validation Error in ${context}: Text entry interaction slot '${slotTag}' is floating outside an inline context. Text entry interactions are inline elements and must be placed inside text containers like <p> or <span>.`
-				)
-			}
-		}
-	}
+	// Widget placement validation removed - no longer checking text entry interaction placement
 }
 
 /**
