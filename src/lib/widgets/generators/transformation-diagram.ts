@@ -109,23 +109,24 @@ const DilationSchema = z
 	})
 	.strict()
 
-// Defines an angle mark to be drawn at a vertex
-const AngleMarkSchema = z
-	.object({
-		vertexIndex: z.number().describe("The index of the vertex where the angle mark should be drawn."),
-		radius: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 20)
-			.describe("The radius of the angle arc in pixels."),
-		label: z.string().nullable().describe("The angle label (e.g., '90°', '∠ABC', '166°')."),
-		labelDistance: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 30)
-			.describe("Distance from vertex to place the label.")
-	})
-	.strict()
+// Factory function for angle mark schema to prevent $ref generation
+const createAngleMarkSchema = () =>
+	z
+		.object({
+			vertexIndex: z.number().describe("The index of the vertex where the angle mark should be drawn."),
+			radius: z
+				.number()
+				.nullable()
+				.transform((val) => val ?? 20)
+				.describe("The radius of the angle arc in pixels."),
+			label: z.string().nullable().describe("The angle label (e.g., '90°', '∠ABC', '166°')."),
+			labelDistance: z
+				.number()
+				.nullable()
+				.transform((val) => val ?? 30)
+				.describe("Distance from vertex to place the label.")
+		})
+		.strict()
 
 // Defines an additional labeled point
 const AdditionalPointSchema = z
@@ -141,22 +142,23 @@ const AdditionalPointSchema = z
 	})
 	.strict()
 
-// Defines a side length label
-const SideLengthSchema = z
-	.object({
-		value: z.string().describe("The length value to display (e.g., '5', '3.14', 'x')."),
-		position: z
-			.enum(["inside", "outside"])
-			.nullable()
-			.transform((val) => val ?? "outside")
-			.describe("Whether to place the label inside or outside the shape."),
-		offset: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 10)
-			.describe("Distance from the edge to place the label.")
-	})
-	.strict()
+// Factory function for side length schema to prevent $ref generation
+const createSideLengthSchema = () =>
+	z
+		.object({
+			value: z.string().describe("The length value to display (e.g., '5', '3.14', 'x')."),
+			position: z
+				.enum(["inside", "outside"])
+				.nullable()
+				.transform((val) => val ?? "outside")
+				.describe("Whether to place the label inside or outside the shape."),
+			offset: z
+				.number()
+				.nullable()
+				.transform((val) => val ?? 10)
+				.describe("Distance from the edge to place the label.")
+		})
+		.strict()
 
 // The main Zod schema for the transformationDiagram function.
 export const TransformationDiagramPropsSchema = z
@@ -203,12 +205,12 @@ export const TransformationDiagramPropsSchema = z
 					.optional()
 					.describe("Labels for each vertex (e.g., ['A', 'B', 'C', 'D']). Must match the number of vertices."),
 				angleMarks: z
-					.array(AngleMarkSchema)
+					.array(createAngleMarkSchema())
 					.nullable()
 					.optional()
 					.describe("Angle marks to draw at specific vertices."),
 				sideLengths: z
-					.array(SideLengthSchema)
+					.array(createSideLengthSchema())
 					.nullable()
 					.optional()
 					.describe("Side length labels for each edge. The first label is for the edge from vertex 0 to vertex 1, etc.")
@@ -246,12 +248,12 @@ export const TransformationDiagramPropsSchema = z
 					.optional()
 					.describe("Labels for each vertex (e.g., ['A'', 'B'', 'C'', 'D'']). Must match the number of vertices."),
 				angleMarks: z
-					.array(AngleMarkSchema)
+					.array(createAngleMarkSchema())
 					.nullable()
 					.optional()
 					.describe("Angle marks to draw at specific vertices."),
 				sideLengths: z
-					.array(SideLengthSchema)
+					.array(createSideLengthSchema())
 					.nullable()
 					.optional()
 					.describe("Side length labels for each edge. The first label is for the edge from vertex 0 to vertex 1, etc.")
@@ -494,7 +496,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 	const drawAngleMark = (
 		vertices: Array<{ x: number; y: number }>,
-		mark: z.infer<typeof AngleMarkSchema>,
+		mark: z.infer<ReturnType<typeof createAngleMarkSchema>>,
 		strokeColor: string
 	) => {
 		if (mark.vertexIndex < 0 || mark.vertexIndex >= vertices.length) {
