@@ -1334,20 +1334,29 @@ describe("Widget Generators", () => {
 		test("should render multiple shapes to show > 100%", () => {
 			const props = {
 				type: "partitionedShape" as const,
+				mode: "partition" as const,
 				width: 400,
 				height: 200,
 				shapes: [
-					{ type: "rectangle" as const, totalParts: 4, shadedParts: 4, rows: 2, columns: 2, shadeColor: "#4285f4" },
 					{
 						type: "rectangle" as const,
 						totalParts: 4,
-						shadedParts: 1,
+						shadedCells: [0, 1, 2, 3],
+						rows: 2,
+						columns: 2,
+						shadeColor: "#4285f4"
+					},
+					{
+						type: "rectangle" as const,
+						totalParts: 4,
+						shadedCells: [0],
 						rows: 2,
 						columns: 2,
 						shadeColor: "purple"
 					}
 				],
-				layout: "horizontal" as const
+				layout: "horizontal" as const,
+				overlays: null
 			}
 			expect(generatePartitionedShape(props)).toMatchSnapshot()
 		})
@@ -1355,12 +1364,21 @@ describe("Widget Generators", () => {
 		test("should render a partitioned circle", () => {
 			const props = {
 				type: "partitionedShape" as const,
+				mode: "partition" as const,
 				width: 300,
 				height: 300,
 				layout: "horizontal" as const,
 				shapes: [
-					{ type: "circle" as const, totalParts: 8, shadedParts: 3, rows: 1, columns: null, shadeColor: "#4285f4" }
-				]
+					{
+						type: "circle" as const,
+						totalParts: 8,
+						shadedCells: [0, 1, 2],
+						rows: 1,
+						columns: null,
+						shadeColor: "#4285f4"
+					}
+				],
+				overlays: null
 			}
 			expect(generatePartitionedShape(props)).toMatchSnapshot()
 		})

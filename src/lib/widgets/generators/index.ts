@@ -93,7 +93,8 @@ export const typedSchemas = {
 }
 
 // Create the discriminated union schema from the schemas (each now contains its type field)
-export const WidgetSchema = z.discriminatedUnion("type", [
+// Note: partitionedShape is handled separately as it has its own discriminated union
+const widgetSchemasWithoutPartitioned = [
 	typedSchemas["3dIntersectionDiagram"],
 	typedSchemas.absoluteValueNumberLine,
 	typedSchemas.angleDiagram,
@@ -118,7 +119,6 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.numberLineWithAction,
 	typedSchemas.numberLineWithFractionGroups,
 	typedSchemas.numberSetDiagram,
-	typedSchemas.partitionedShape,
 	typedSchemas.pictograph,
 	typedSchemas.polyhedronDiagram,
 	typedSchemas.probabilitySpinner,
@@ -134,6 +134,11 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.unitBlockDiagram,
 	typedSchemas.vennDiagram,
 	typedSchemas.verticalArithmeticSetup
+] as const
+
+export const WidgetSchema = z.union([
+	z.discriminatedUnion("type", widgetSchemasWithoutPartitioned),
+	typedSchemas.partitionedShape
 ])
 export type Widget = z.infer<typeof WidgetSchema>
 export type WidgetInput = z.input<typeof WidgetSchema>

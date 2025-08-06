@@ -2211,102 +2211,101 @@
 		"$ref": "#/definitions/partitionedShape",
 		"definitions": {
 			"partitionedShape": {
-				"type": "object",
-				"properties": {
-					"type": {
-						"type": "string",
-						"const": "partitionedShape"
-					},
-					"shapes": {
-						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"type": {
-									"type": "string",
-									"enum": ["rectangle", "circle"],
-									"description": "The type of geometric shape to render.",
-									"markdownDescription": "The type of geometric shape to render."
-								},
-								"totalParts": {
-									"type": "integer",
-									"exclusiveMinimum": 0,
-									"description": "The total number of equal parts the shape is divided into. For a rectangle, this is rows * columns. For a circle, this is segments.",
-									"markdownDescription": "The total number of equal parts the shape is divided into. For a rectangle, this is rows * columns. For a circle, this is segments."
-								},
-								"shadedParts": {
-									"type": "integer",
-									"minimum": 0,
-									"description": "The number of parts that should be shaded.",
-									"markdownDescription": "The number of parts that should be shaded."
-								},
-								"rows": {
-									"anyOf": [
-										{
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										{
-											"type": "null"
-										}
-									],
-									"description": "For rectangles, the number of rows in the grid.",
-									"markdownDescription": "For rectangles, the number of rows in the grid."
-								},
-								"columns": {
-									"anyOf": [
-										{
-											"type": "integer",
-											"exclusiveMinimum": 0
-										},
-										{
-											"type": "null"
-										}
-									],
-									"description": "For rectangles, the number of columns in the grid.",
-									"markdownDescription": "For rectangles, the number of columns in the grid."
-								},
-								"shadeColor": {
-									"type": ["string", "null"],
-									"description": "A CSS color string for the shaded portions.",
-									"markdownDescription": "A CSS color string for the shaded portions."
+				"description": "A versatile widget for visualizing fractions (partition mode) or drawing figures on a grid (geometry mode).",
+				"oneOf": [
+					{
+						"type": "object",
+						"properties": {
+							"type": { "const": "partitionedShape" },
+							"mode": { "const": "partition" },
+							"width": { "type": ["number", "null"] },
+							"height": { "type": ["number", "null"] },
+							"shapes": {
+								"type": "array",
+								"minItems": 1,
+								"items": {
+									"type": "object",
+									"properties": {
+										"type": { "enum": ["rectangle", "circle"] },
+										"totalParts": { "type": "integer", "exclusiveMinimum": 0 },
+										"shadedCells": { "type": ["array", "null"], "items": { "type": "integer" } },
+										"rows": { "type": ["integer", "null"], "exclusiveMinimum": 0 },
+										"columns": { "type": ["integer", "null"], "exclusiveMinimum": 0 },
+										"shadeColor": { "type": ["string", "null"] }
+									},
+									"required": ["type", "totalParts", "shadedCells", "rows", "columns", "shadeColor"]
 								}
 							},
-							"required": ["type", "totalParts", "shadedParts", "rows", "columns", "shadeColor"],
-							"additionalProperties": false
-						},
-						"minItems": 1,
-						"description": "An array of one or more shape definitions. Multiple shapes are used to represent values greater than 100%.",
-						"markdownDescription": "An array of one or more shape definitions. Multiple shapes are used to represent values greater than 100%."
-					},
-					"width": {
-						"type": ["number", "null"],
-						"description": "The width of the SVG container for each shape in pixels.",
-						"markdownDescription": "The width of the SVG container for each shape in pixels."
-					},
-					"height": {
-						"type": ["number", "null"],
-						"description": "The height of the SVG container for each shape in pixels.",
-						"markdownDescription": "The height of the SVG container for each shape in pixels."
-					},
-					"layout": {
-						"anyOf": [
-							{
-								"type": "string",
-								"enum": ["horizontal", "vertical"]
-							},
-							{
-								"type": "null"
+							"layout": { "type": ["string", "null"], "enum": ["horizontal", "vertical", null] },
+							"overlays": {
+								"type": ["array", "null"],
+								"items": {
+									"type": "object",
+									"properties": {
+										"from": { "$ref": "#/definitions/gridPoint" },
+										"to": { "$ref": "#/definitions/gridPoint" },
+										"style": { "type": ["string", "null"], "enum": ["solid", "dashed", "dotted", null] },
+										"color": { "type": ["string", "null"] }
+									},
+									"required": ["from", "to", "style", "color"]
+								}
 							}
-						],
-						"description": "The arrangement of multiple shapes.",
-						"markdownDescription": "The arrangement of multiple shapes."
+						},
+						"required": ["type", "mode", "width", "height", "shapes", "layout", "overlays"]
+					},
+					{
+						"type": "object",
+						"properties": {
+							"type": { "const": "partitionedShape" },
+							"mode": { "const": "geometry" },
+							"width": { "type": ["number", "null"] },
+							"height": { "type": ["number", "null"] },
+							"grid": {
+								"type": "object",
+								"properties": {
+									"rows": { "type": "integer", "exclusiveMinimum": 0 },
+									"columns": { "type": "integer", "exclusiveMinimum": 0 },
+									"opacity": { "type": ["number", "null"] }
+								},
+								"required": ["rows", "columns", "opacity"]
+							},
+							"figures": {
+								"type": ["array", "null"],
+								"items": {
+									"type": "object",
+									"properties": {
+										"vertices": { "type": "array", "items": { "$ref": "#/definitions/gridPoint" } },
+										"fillColor": { "type": ["string", "null"] },
+										"strokeColor": { "type": ["string", "null"] }
+									},
+									"required": ["vertices", "fillColor", "strokeColor"]
+								}
+							},
+							"lines": {
+								"type": ["array", "null"],
+								"items": {
+									"type": "object",
+									"properties": {
+										"from": { "$ref": "#/definitions/gridPoint" },
+										"to": { "$ref": "#/definitions/gridPoint" },
+										"style": { "type": ["string", "null"], "enum": ["solid", "dashed", "dotted", null] },
+										"color": { "type": ["string", "null"] }
+									},
+									"required": ["from", "to", "style", "color"]
+								}
+							}
+						},
+						"required": ["type", "mode", "width", "height", "grid", "figures", "lines"]
 					}
+				]
+			},
+			"gridPoint": {
+				"type": "object",
+				"properties": {
+					"row": { "type": "integer" },
+					"col": { "type": "integer" }
 				},
-				"required": ["type", "shapes", "width", "height", "layout"],
-				"additionalProperties": false,
-				"description": "This template is a highly versatile tool for generating SVG diagrams that visually represent fractions, decimals, and percentages. It replaces the `fractionBar` widget. It renders one or more geometric shapes (rectangles or circles) that are divided into a set number of equal parts, with a specified number of those parts shaded to illustrate a part-to-whole relationship. The generator is capable of creating: Grids and Bars: Rectangles can be partitioned into grids or single-row/column bars (fraction bars). Pie Charts: Circles can be divided into equal segments. Values Greater Than 100%: The template can render an array of shapes to model improper fractions or percentages over 100. The output is a clear, precise, and accessible SVG graphic ideal for questions requiring students to interpret visual models of proportions.",
-				"markdownDescription": "This template is a highly versatile tool for generating SVG diagrams that visually represent fractions, decimals, and percentages. It replaces the `fractionBar` widget. It renders one or more geometric shapes (rectangles or circles) that are divided into a set number of equal parts, with a specified number of those parts shaded to illustrate a part-to-whole relationship. The generator is capable of creating: Grids and Bars: Rectangles can be partitioned into grids or single-row/column bars (fraction bars). Pie Charts: Circles can be divided into equal segments. Values Greater Than 100%: The template can render an array of shapes to model improper fractions or percentages over 100. The output is a clear, precise, and accessible SVG graphic ideal for questions requiring students to interpret visual models of proportions."
+				"required": ["row", "col"]
 			}
 		},
 		"$schema": "http://json-schema.org/draft-07/schema#"
