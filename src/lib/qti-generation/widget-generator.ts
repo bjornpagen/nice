@@ -38,6 +38,7 @@ import {
 	generateThreeDIntersectionDiagram,
 	generateTransformationDiagram,
 	generateTreeDiagram,
+	generateTriangleDiagram,
 	generateUnitBlockDiagram,
 	generateVennDiagram,
 	generateVerticalArithmeticSetup
@@ -115,6 +116,8 @@ export function generateWidget(widget: Widget): string {
 			return generateTransformationDiagram(widget)
 		case "treeDiagram":
 			return generateTreeDiagram(widget)
+		case "triangleDiagram":
+			return generateTriangleDiagram(widget)
 		case "unitBlockDiagram":
 			return generateUnitBlockDiagram(widget)
 		case "vennDiagram":
