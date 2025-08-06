@@ -50,7 +50,10 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 		logger.debug("generating base structured item", { questionId })
 		const structuredItemResult = await errors.try(generateStructuredQtiItem(logger, question.parsedData))
 		if (structuredItemResult.error) {
-			logger.error("base structured item generation failed", { questionId, error: structuredItemResult.error })
+			logger.error("base structured item generation failed", {
+				questionId,
+				error: structuredItemResult.error
+			})
 			// If the error is due to a missing widget, it's not retriable.
 			if (errors.is(structuredItemResult.error, ErrWidgetNotFound)) {
 				throw new NonRetriableError("Widget not found, this item cannot be migrated.", {

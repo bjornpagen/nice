@@ -17,7 +17,6 @@ import {
 	createAssessmentShellPrompt,
 	createInteractionContentPrompt,
 	createSingleWidgetContentPrompt,
-	createWidgetContentPrompt,
 	createWidgetMappingPrompt
 } from "./prompts"
 
@@ -313,14 +312,20 @@ async function generateSingleWidgetObject(
 		})
 	)
 	if (response.error) {
-		logger.error("failed to generate single widget content", { slotName, widgetType, error: response.error })
-		throw errors.wrap(response.error, `ai single widget generation for ${slotName}`)
+		logger.error("failed to generate single widget content", {
+			slotName,
+			widgetType,
+			error: response.error,
+			widgetSlotMapping: `${widgetType} -> ${slotName}`
+		})
+		// Include widget type in the error message for better debugging
+		throw errors.wrap(response.error, `ai widget generation for ${widgetType} (slot: ${slotName})`)
 	}
 
 	const choice = response.data.choices[0]
 	if (!choice?.message?.parsed) {
 		logger.error("CRITICAL: OpenAI single widget generation returned no parsed content", { slotName, widgetType })
-		throw errors.new(`empty ai response: no parsed content for widget ${slotName}`)
+		throw errors.new(`empty ai response: no parsed content for ${widgetType} widget (slot: ${slotName})`)
 	}
 
 	return choice.message.parsed
@@ -461,7 +466,11 @@ export async function generateStructuredQtiItem(
 		generateWidgetContent(logger, perseusJsonString, assessmentShell, widgetMapping, imageContext)
 	)
 	if (widgetContentResult.error) {
-		logger.error("shot 4 failed: widget content generation failed", { error: widgetContentResult.error })
+		logger.error("shot 4 failed: widget content generation failed", {
+			error: widgetContentResult.error,
+			widgetMapping, // Log which widgets were being attempted
+			widgetTypes: Object.values(widgetMapping)
+		})
 		throw widgetContentResult.error
 	}
 	const generatedWidgets = widgetContentResult.data
