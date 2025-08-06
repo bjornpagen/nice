@@ -24,16 +24,16 @@ interface ProcessingContext {
 }
 
 /**
- * Phase 1: XML Syntax Fixes
- * Fix entity escaping and malformed XML structures.
+ * Original aggressive entity escaping - escapes ALL < and > characters.
+ * This was the working baseline that passed all integration tests.
  */
-function fixXmlSyntax(content: string, context: ProcessingContext): string {
-	logger.debug("phase 1: fixing xml syntax", { phase: context.phase })
-
+function applyAggressiveEntityEscaping(
+	content: string,
+	context: ProcessingContext
+): { content: string; transformations: number } {
 	let fixed = content
 	let transformations = 0
 
-	// Fix unescaped XML entities
 	const entityFixes = [
 		{ pattern: /&(?![a-zA-Z]+;|#[0-9]+;|#x[0-9a-fA-F]+;)/g, replacement: "&amp;", name: "unescaped ampersand" },
 		{ pattern: /</g, replacement: "&lt;", name: "unescaped less-than" },
@@ -48,6 +48,109 @@ function fixXmlSyntax(content: string, context: ProcessingContext): string {
 			context.violations.push(`${fix.name}: ${matches.length} instances`)
 		}
 	}
+
+	return { content: fixed, transformations }
+}
+
+/**
+ * Smart entity escaping - attempts to preserve valid XML tags while escaping mathematical expressions.
+ * This approach ignores quoted strings and uses lookahead/lookbehind to detect valid XML.
+ */
+function applySmartEntityEscaping(
+	content: string,
+	context: ProcessingContext
+): { content: string; transformations: number } {
+	let fixed = content
+	let transformations = 0
+
+	// Track quoted strings to avoid escaping inside them
+	const quotedRegions: Array<{ start: number; end: number }> = []
+	const quotedPattern = /(['"])((?:\\.|(?!\1)[^\\])*?)\1/g
+	let match: RegExpExecArray | null = quotedPattern.exec(fixed)
+	while (match !== null) {
+		quotedRegions.push({
+			start: match.index,
+			end: match.index + match[0].length
+		})
+		match = quotedPattern.exec(fixed)
+	}
+
+	function isInsideQuotes(pos: number): boolean {
+		return quotedRegions.some((region) => pos >= region.start && pos < region.end)
+	}
+
+	// Pass 1: escape unescaped ampersands
+	const ampMatches = fixed.match(/&(?![a-zA-Z]+;|#[0-9]+;|#x[0-9a-fA-F]+;)/g)
+	if (ampMatches) {
+		fixed = fixed.replace(/&(?![a-zA-Z]+;|#[0-9]+;|#x[0-9a-fA-F]+;)/g, "&amp;")
+		transformations += ampMatches.length
+		context.violations.push(`unescaped ampersand: ${ampMatches.length} instances`)
+	}
+
+	// Pass 2: escape < that don't look like tag openings and aren't in quotes
+	let ltCount = 0
+	fixed = fixed.replace(/</g, (match, offset) => {
+		if (isInsideQuotes(offset)) return match
+
+		const afterMatch = fixed.slice(offset + 1)
+		const tagPattern = /^(?:[a-zA-Z][a-zA-Z0-9-]*(?:\s|>|\/)|\/[a-zA-Z][a-zA-Z0-9-]*>|!--|!\[CDATA\[)/
+
+		if (tagPattern.test(afterMatch)) {
+			return match
+		}
+
+		ltCount++
+		return "&lt;"
+	})
+
+	if (ltCount > 0) {
+		transformations += ltCount
+		context.violations.push(`unescaped less-than: ${ltCount} instances`)
+	}
+
+	// Pass 3: escape > that don't look like tag closings and aren't in quotes
+	let gtCount = 0
+	fixed = fixed.replace(/>/g, (match, offset) => {
+		if (isInsideQuotes(offset)) return match
+
+		const beforeMatch = fixed.slice(0, offset)
+		const tagEndPattern = /(?:[a-zA-Z0-9-]+|["']\s*|\/|--|\]\])$/
+
+		if (tagEndPattern.test(beforeMatch)) {
+			return match
+		}
+
+		gtCount++
+		return "&gt;"
+	})
+
+	if (gtCount > 0) {
+		transformations += gtCount
+		context.violations.push(`unescaped greater-than: ${gtCount} instances`)
+	}
+
+	return { content: fixed, transformations }
+}
+
+/**
+ * Phase 1: XML Syntax Fixes
+ * Fix entity escaping and malformed XML structures.
+ */
+function fixXmlSyntax(content: string, context: ProcessingContext): string {
+	logger.debug("phase 1: fixing xml syntax", { phase: context.phase })
+
+	let fixed = content
+	let transformations = 0
+
+	// Apply entity escaping
+	// Switch between approaches: aggressive (proven working) vs smart (experimental)
+	const useSmartEscaping = false // set to true to test smart escaping
+	const entityResult = useSmartEscaping
+		? applySmartEntityEscaping(fixed, context)
+		: applyAggressiveEntityEscaping(fixed, context)
+
+	fixed = entityResult.content
+	transformations += entityResult.transformations
 
 	// Sanitize invalid XML characters
 	// Remove control characters that are not allowed in XML (except tab, LF, CR)
@@ -295,9 +398,9 @@ function convertInlineContexts(content: string): { content: string; transformati
 	// Convert <p> to <span> in interaction prompts and feedback
 	// This handles the transformToInlineContent logic from interaction-compiler.ts
 	const promptFeedbackPattern =
-		/<(qti-feedback-inline|prompt)[^>]*>([^<]*(?:<(?!\/(?:qti-feedback-inline|prompt)>)[^<]*)*)<\/(?:qti-feedback-inline|prompt)>/gi
+		/<(qti-feedback-inline|prompt)([^>]*)>([^<]*(?:<(?!\/(?:qti-feedback-inline|prompt)>)[^<]*)*)<\/(?:qti-feedback-inline|prompt)>/gi
 
-	converted = converted.replace(promptFeedbackPattern, (_match, tagName, innerContent) => {
+	converted = converted.replace(promptFeedbackPattern, (_match, tagName, attributes, innerContent) => {
 		const inlineContent = innerContent
 			.replace(/<p(\s[^>]*)?>([^<]*(?:<(?!\/p>)[^<]*)*)<\/p>/gi, "<span$1>$2</span>")
 			.replace(/<p>/gi, "<span>")
@@ -307,7 +410,7 @@ function convertInlineContexts(content: string): { content: string; transformati
 			transformations++
 		}
 
-		return `<${tagName}>${inlineContent}</${tagName}>`
+		return `<${tagName}${attributes}>${inlineContent}</${tagName}>`
 	})
 
 	logger.debug("phase 5 complete", { transformations })

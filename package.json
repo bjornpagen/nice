@@ -65,6 +65,7 @@
 		"drizzle-orm": "^0.44.3",
 		"drizzle-zod": "^0.8.2",
 		"embla-carousel-react": "^8.6.0",
+		"fast-xml-parser": "^5.2.5",
 		"he": "^1.2.0",
 		"inngest": "^3.40.1",
 		"inngest-cli": "^1.11.1",
