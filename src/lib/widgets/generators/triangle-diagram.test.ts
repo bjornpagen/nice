@@ -129,7 +129,9 @@ describe("generateTriangleDiagram", () => {
 					{ vertices: ["A", "B"], label: "x", tickMarks: null },
 					{ vertices: ["C", "D"], label: "7", tickMarks: null }
 				],
-				angles: [{ vertices: ["C", "D", "B"], isRightAngle: true, label: null, color: null, radius: null }],
+				angles: [
+					{ vertices: ["C", "D", "B"], isRightAngle: true, label: null, color: null, radius: null, showArc: null }
+				],
 				internalLines: [{ from: "C", to: "D", style: "dashed" }],
 				shadedRegions: null
 			}
@@ -177,7 +179,7 @@ describe("generateTriangleDiagram", () => {
 				angles: [
 					{ vertices: ["C", "A", "D"], label: null, isRightAngle: false, showArc: true, radius: 20, color: "black" },
 					{ vertices: ["C", "B", "D"], label: null, isRightAngle: false, showArc: true, radius: 20, color: "black" },
-					{ vertices: ["A", "D", "C"], isRightAngle: true, label: null, color: null, radius: null }
+					{ vertices: ["A", "D", "C"], isRightAngle: true, label: null, color: null, radius: null, showArc: null }
 				],
 				internalLines: [{ from: "C", to: "D", style: "solid" }],
 				shadedRegions: [

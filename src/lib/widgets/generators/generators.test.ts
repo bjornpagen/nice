@@ -99,9 +99,9 @@ describe("Widget Generators", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "A", x: 50, y: 150, label: "A" },
-					{ id: "B", x: 150, y: 150, label: "B" },
-					{ id: "C", x: 250, y: 100, label: "C" }
+					{ id: "A", x: 50, y: 150, label: "A", shape: null },
+					{ id: "B", x: 150, y: 150, label: "B", shape: null },
+					{ id: "C", x: 250, y: 100, label: "C", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -127,9 +127,9 @@ describe("Widget Generators", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "P", x: 100, y: 200, label: "P" },
-					{ id: "Q", x: 200, y: 200, label: "Q" },
-					{ id: "R", x: 200, y: 100, label: "R" }
+					{ id: "P", x: 100, y: 200, label: "P", shape: null },
+					{ id: "Q", x: 200, y: 200, label: "Q", shape: null },
+					{ id: "R", x: 200, y: 100, label: "R", shape: null }
 				],
 				rays: [
 					{ from: "Q", to: "P" },

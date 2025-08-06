@@ -436,9 +436,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "P1", x: 100, y: 150, label: null },
-					{ id: "P2", x: 200, y: 150, label: null },
-					{ id: "P3", x: 300, y: 100, label: null }
+					{ id: "P1", x: 100, y: 150, label: null, shape: null },
+					{ id: "P2", x: 200, y: 150, label: null, shape: null },
+					{ id: "P3", x: 300, y: 100, label: null, shape: null }
 				],
 				rays: [
 					{ from: "P2", to: "P1" },
