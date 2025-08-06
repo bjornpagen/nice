@@ -141,6 +141,23 @@ const AdditionalPointSchema = z
 	})
 	.strict()
 
+// Defines a side length label
+const SideLengthSchema = z
+	.object({
+		value: z.string().describe("The length value to display (e.g., '5', '3.14', 'x')."),
+		position: z
+			.enum(["inside", "outside"])
+			.nullable()
+			.transform((val) => val ?? "outside")
+			.describe("Whether to place the label inside or outside the shape."),
+		offset: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 10)
+			.describe("Distance from the edge to place the label.")
+	})
+	.strict()
+
 // The main Zod schema for the transformationDiagram function.
 export const TransformationDiagramPropsSchema = z
 	.object({
@@ -185,7 +202,16 @@ export const TransformationDiagramPropsSchema = z
 					.nullable()
 					.optional()
 					.describe("Labels for each vertex (e.g., ['A', 'B', 'C', 'D']). Must match the number of vertices."),
-				angleMarks: z.array(AngleMarkSchema).nullable().optional().describe("Angle marks to draw at specific vertices.")
+				angleMarks: z
+					.array(AngleMarkSchema)
+					.nullable()
+					.optional()
+					.describe("Angle marks to draw at specific vertices."),
+				sideLengths: z
+					.array(SideLengthSchema)
+					.nullable()
+					.optional()
+					.describe("Side length labels for each edge. The first label is for the edge from vertex 0 to vertex 1, etc.")
 			})
 			.strict()
 			.describe("The original shape before transformation."),
@@ -219,7 +245,16 @@ export const TransformationDiagramPropsSchema = z
 					.nullable()
 					.optional()
 					.describe("Labels for each vertex (e.g., ['A'', 'B'', 'C'', 'D'']). Must match the number of vertices."),
-				angleMarks: z.array(AngleMarkSchema).nullable().optional().describe("Angle marks to draw at specific vertices.")
+				angleMarks: z
+					.array(AngleMarkSchema)
+					.nullable()
+					.optional()
+					.describe("Angle marks to draw at specific vertices."),
+				sideLengths: z
+					.array(SideLengthSchema)
+					.nullable()
+					.optional()
+					.describe("Side length labels for each edge. The first label is for the edge from vertex 0 to vertex 1, etc.")
 			})
 			.strict()
 			.describe("The resulting shape after transformation."),
@@ -533,6 +568,86 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		return pointSvg
 	}
 
+	const drawSideLengths = (shape: TransformationDiagramProps["preImage"]) => {
+		if (!shape.sideLengths || shape.sideLengths.length === 0) {
+			return ""
+		}
+
+		let lengthsSvg = ""
+		const fontSize = Math.max(11, 13 * scale)
+
+		for (let i = 0; i < shape.vertices.length; i++) {
+			const sideLength = shape.sideLengths[i]
+			if (!sideLength) continue
+
+			const vertex1 = shape.vertices[i]
+			const vertex2 = shape.vertices[(i + 1) % shape.vertices.length]
+			if (!vertex1 || !vertex2) continue
+
+			// Calculate midpoint of the edge
+			const midX = (vertex1.x + vertex2.x) / 2
+			const midY = (vertex1.y + vertex2.y) / 2
+
+			// Calculate edge direction and perpendicular
+			const dx = vertex2.x - vertex1.x
+			const dy = vertex2.y - vertex1.y
+			const edgeLength = Math.sqrt(dx * dx + dy * dy)
+
+			// Normalize edge vector
+			const edgeNormX = dx / edgeLength
+			const edgeNormY = dy / edgeLength
+
+			// Calculate perpendicular vector (rotated 90 degrees)
+			let perpX = -edgeNormY
+			let perpY = edgeNormX
+
+			// Determine if we need to flip the perpendicular based on position preference
+			if (sideLength.position === "inside") {
+				// Check if perpendicular points outward by testing with centroid
+				const centroid = calculateCentroid(shape.vertices)
+				const testX = midX + perpX * 10
+				const testY = midY + perpY * 10
+				const distToCentroid = Math.sqrt((testX - centroid.x) ** 2 + (testY - centroid.y) ** 2)
+				const midDistToCentroid = Math.sqrt((midX - centroid.x) ** 2 + (midY - centroid.y) ** 2)
+
+				// If test point is further from centroid, flip the perpendicular
+				if (distToCentroid > midDistToCentroid) {
+					perpX = -perpX
+					perpY = -perpY
+				}
+			} else {
+				// For outside position, ensure perpendicular points away from centroid
+				const centroid = calculateCentroid(shape.vertices)
+				const testX = midX + perpX * 10
+				const testY = midY + perpY * 10
+				const distToCentroid = Math.sqrt((testX - centroid.x) ** 2 + (testY - centroid.y) ** 2)
+				const midDistToCentroid = Math.sqrt((midX - centroid.x) ** 2 + (midY - centroid.y) ** 2)
+
+				// If test point is closer to centroid, flip the perpendicular
+				if (distToCentroid < midDistToCentroid) {
+					perpX = -perpX
+					perpY = -perpY
+				}
+			}
+
+			// Position the label
+			const labelX = midX + perpX * sideLength.offset
+			const labelY = midY + perpY * sideLength.offset
+
+			// Calculate rotation angle for the text to align with the edge
+			let angle = Math.atan2(dy, dx) * (180 / Math.PI)
+
+			// Ensure text is readable (not upside down)
+			if (angle > 90 || angle < -90) {
+				angle += 180
+			}
+
+			lengthsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="#333" transform="rotate(${angle} ${labelX} ${labelY})">${sideLength.value}</text>`
+		}
+
+		return lengthsSvg
+	}
+
 	// 3. Calculate label positions with collision avoidance
 	const avoidPoints: Array<{ x: number; y: number }> = []
 
@@ -605,6 +720,10 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	// 5b. Draw vertex labels for both shapes
 	svg += drawVertexLabels(preImage)
 	svg += drawVertexLabels(image)
+
+	// 5c. Draw side lengths for both shapes
+	svg += drawSideLengths(preImage)
+	svg += drawSideLengths(image)
 
 	// 6. Draw Transformation-Specific Foreground Elements (vectors, centers, vertex indicators)
 	switch (transformation.type) {

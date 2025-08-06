@@ -1059,7 +1059,7 @@ describe("generateTransformationDiagram", () => {
 	})
 
 	describe("Enhanced Features", () => {
-		test("should render transformation with vertex labels, angle marks, and additional points", () => {
+		test("should render transformation with vertex labels, angle marks, side lengths, and additional points", () => {
 			const props = {
 				type: "transformationDiagram" as const,
 				width: 500,
@@ -1082,6 +1082,12 @@ describe("generateTransformationDiagram", () => {
 							label: "166°",
 							labelDistance: 40
 						}
+					],
+					sideLengths: [
+						{ value: "3", position: "outside", offset: null },
+						{ value: "4", position: "outside", offset: null },
+						{ value: "5", position: "outside", offset: null },
+						{ value: "2.8", position: "outside", offset: null }
 					]
 				},
 				image: {
@@ -1102,6 +1108,12 @@ describe("generateTransformationDiagram", () => {
 							label: "123°",
 							labelDistance: 35
 						}
+					],
+					sideLengths: [
+						{ value: "3", position: "outside", offset: null },
+						{ value: "4", position: "outside", offset: null },
+						{ value: "5", position: "outside", offset: null },
+						{ value: "2.8", position: "outside", offset: null }
 					]
 				},
 				transformation: {
@@ -1205,6 +1217,155 @@ describe("generateTransformationDiagram", () => {
 				transformation: {
 					type: "translation" as const,
 					showVectors: true
+				},
+				additionalPoints: null
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render dilation with comprehensive features including side lengths", () => {
+			const props = {
+				type: "transformationDiagram" as const,
+				width: 600,
+				height: 500,
+				preImage: {
+					vertices: [
+						{ x: 200, y: 200 },
+						{ x: 250, y: 200 },
+						{ x: 250, y: 250 },
+						{ x: 200, y: 250 }
+					],
+					label: null,
+					fillColor: "rgba(120, 84, 171, 0.2)",
+					strokeColor: "#7854ab",
+					vertexLabels: ["A", "B", "C", "D"],
+					angleMarks: [
+						{
+							vertexIndex: 0,
+							radius: 20,
+							label: "90°",
+							labelDistance: null
+						},
+						{
+							vertexIndex: 1,
+							radius: 20,
+							label: "90°",
+							labelDistance: null
+						}
+					],
+					sideLengths: [
+						{ value: "50", position: "outside", offset: 15 },
+						{ value: "50", position: "outside", offset: 15 },
+						{ value: "50", position: "outside", offset: 15 },
+						{ value: "50", position: "outside", offset: 15 }
+					]
+				},
+				image: {
+					vertices: [
+						{ x: 150, y: 150 },
+						{ x: 300, y: 150 },
+						{ x: 300, y: 300 },
+						{ x: 150, y: 300 }
+					],
+					label: null,
+					fillColor: "rgba(31, 171, 84, 0.2)",
+					strokeColor: "#1fab54",
+					vertexLabels: ["A'", "B'", "C'", "D'"],
+					angleMarks: [
+						{
+							vertexIndex: 0,
+							radius: 20,
+							label: "90°",
+							labelDistance: null
+						},
+						{
+							vertexIndex: 1,
+							radius: 20,
+							label: "90°",
+							labelDistance: null
+						}
+					],
+					sideLengths: [
+						{ value: "150", position: "inside", offset: 15 },
+						{ value: "150", position: "inside", offset: 15 },
+						{ value: "150", position: "inside", offset: 15 },
+						{ value: "150", position: "inside", offset: 15 }
+					]
+				},
+				transformation: {
+					type: "dilation" as const,
+					centerOfDilation: { x: 225, y: 225 },
+					showRays: true
+				},
+				additionalPoints: [
+					{
+						x: 225,
+						y: 350,
+						label: "Center of Dilation",
+						style: null
+					}
+				]
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render triangle with mixed side length notations", () => {
+			const props = {
+				type: "transformationDiagram" as const,
+				width: 500,
+				height: 400,
+				preImage: {
+					vertices: [
+						{ x: 100, y: 300 },
+						{ x: 200, y: 150 },
+						{ x: 300, y: 300 }
+					],
+					label: "Triangle ABC",
+					fillColor: "rgba(255, 200, 100, 0.2)",
+					strokeColor: "#ffc864",
+					vertexLabels: ["A", "B", "C"],
+					angleMarks: [
+						{
+							vertexIndex: 1,
+							radius: 25,
+							label: "60°",
+							labelDistance: 40
+						}
+					],
+					sideLengths: [
+						{ value: "a", position: "outside", offset: null },
+						{ value: "b", position: "outside", offset: null },
+						{ value: "c = 10", position: "outside", offset: null }
+					]
+				},
+				image: {
+					vertices: [
+						{ x: 350, y: 300 },
+						{ x: 400, y: 200 },
+						{ x: 450, y: 300 }
+					],
+					label: "Triangle A'B'C'",
+					fillColor: "rgba(100, 200, 255, 0.2)",
+					strokeColor: "#64c8ff",
+					vertexLabels: ["A'", "B'", "C'"],
+					angleMarks: [
+						{
+							vertexIndex: 1,
+							radius: 25,
+							label: "60°",
+							labelDistance: 40
+						}
+					],
+					sideLengths: [
+						{ value: "a/2", position: "outside", offset: null },
+						{ value: "b/2", position: "outside", offset: null },
+						{ value: "5", position: "outside", offset: null }
+					]
+				},
+				transformation: {
+					type: "dilation" as const,
+					centerOfDilation: { x: 50, y: 50 },
+					showRays: false
 				},
 				additionalPoints: null
 			}
