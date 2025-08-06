@@ -16,11 +16,13 @@ describe("generateInequalityNumberLine", () => {
 			min: -10,
 			max: 10,
 			tickInterval: 2,
-			inequalities: [
+			ranges: [
 				{
-					value: 3,
-					type: "greater-than" as const,
-					inclusive: false,
+					start: null,
+					end: {
+						value: 3,
+						type: "open" as const
+					},
 					color: null
 				}
 			]
@@ -36,17 +38,21 @@ describe("generateInequalityNumberLine", () => {
 			min: -15,
 			max: 15,
 			tickInterval: 5,
-			inequalities: [
+			ranges: [
 				{
-					value: -5,
-					type: "less-than-or-equal" as const,
-					inclusive: true,
+					start: null,
+					end: {
+						value: -5,
+						type: "closed" as const
+					},
 					color: "#ff6b6b"
 				},
 				{
-					value: 8,
-					type: "greater-than" as const,
-					inclusive: false,
+					start: {
+						value: 8,
+						type: "open" as const
+					},
+					end: null,
 					color: "#4ecdc4"
 				}
 			]

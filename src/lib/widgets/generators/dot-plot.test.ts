@@ -13,7 +13,6 @@ describe("generateDotPlot", () => {
 			type: "dotPlot" as const,
 			width: null,
 			height: null,
-			title: null,
 			axis: {
 				min: 0,
 				max: 10,
@@ -25,7 +24,8 @@ describe("generateDotPlot", () => {
 				{ value: 5, count: 1 },
 				{ value: 7, count: 4 }
 			],
-			dotColor: null
+			dotColor: null,
+			dotRadius: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -35,7 +35,6 @@ describe("generateDotPlot", () => {
 			type: "dotPlot" as const,
 			width: 500,
 			height: 200,
-			title: "Test Scores Distribution",
 			axis: {
 				min: 0,
 				max: 20,
@@ -48,7 +47,8 @@ describe("generateDotPlot", () => {
 				{ value: 15, count: 3 },
 				{ value: 18, count: 1 }
 			],
-			dotColor: "#4285f4"
+			dotColor: "#4285f4",
+			dotRadius: 6
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

@@ -43,7 +43,8 @@ describe("generateRatioBoxDiagram", () => {
 						label: null
 					}
 				],
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -87,7 +88,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 5,
 				boxes: null,
-				partitions: 3
+				partitions: 3,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -111,7 +113,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 4,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -135,7 +138,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 10, // Greater than total items (9)
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -154,7 +158,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 4,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -188,7 +193,8 @@ describe("generateRatioBoxDiagram", () => {
 						label: "Group A"
 					}
 				],
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -234,7 +240,8 @@ describe("generateRatioBoxDiagram", () => {
 						label: "Right Block"
 					}
 				],
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -268,7 +275,8 @@ describe("generateRatioBoxDiagram", () => {
 						label: null
 					}
 				],
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -307,7 +315,8 @@ describe("generateRatioBoxDiagram", () => {
 						label: "Bottom Section"
 					}
 				],
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -328,7 +337,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 4,
 				boxes: null,
-				partitions: 3 // 12 items / 3 partitions = 4 items per partition (1 row each)
+				partitions: 3, // 12 items / 3 partitions = 4 items per partition (1 row each)
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -347,7 +357,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 8,
 				boxes: null,
-				partitions: 4 // 8 items per row / 4 partitions = 2 columns per partition
+				partitions: 4, // 8 items per row / 4 partitions = 2 columns per partition
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -381,7 +392,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 6,
 				boxes: null,
-				partitions: 2
+				partitions: 2,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -400,7 +412,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 10,
 				boxes: null,
-				partitions: 5 // 10 items per row / 5 partitions = 2 columns per partition
+				partitions: 5, // 10 items per row / 5 partitions = 2 columns per partition
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -426,7 +439,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 4,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -450,7 +464,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 4,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -484,7 +499,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 4,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -508,7 +524,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 3,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -534,7 +551,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 5,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -553,7 +571,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 2,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -585,7 +604,8 @@ describe("generateRatioBoxDiagram", () => {
 						label: null
 					}
 				],
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -619,7 +639,8 @@ describe("generateRatioBoxDiagram", () => {
 						label: "Top Row"
 					}
 				],
-				partitions: 2
+				partitions: 2,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -675,7 +696,8 @@ describe("generateRatioBoxDiagram", () => {
 						label: "Group 3"
 					}
 				],
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -707,7 +729,8 @@ describe("generateRatioBoxDiagram", () => {
 						label: null
 					}
 				],
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -738,7 +761,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 4,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -757,7 +781,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 1,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -781,7 +806,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 20,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -805,7 +831,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 9,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -832,7 +859,8 @@ describe("generateRatioBoxDiagram", () => {
 						label: "Clamped Box"
 					}
 				],
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -851,7 +879,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 3,
 				boxes: null,
-				partitions: 3 // Should be ignored since 7 % 3 !== 0
+				partitions: 3, // Should be ignored since 7 % 3 !== 0
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -872,7 +901,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 3,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -891,7 +921,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 3,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -910,7 +941,8 @@ describe("generateRatioBoxDiagram", () => {
 				],
 				itemsPerRow: 4,
 				boxes: null,
-				partitions: null
+				partitions: null,
+				layout: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})

@@ -11,20 +11,22 @@ describe("generateStackedItemsDiagram", () => {
 	test("should render with minimal props", () => {
 		const props = {
 			type: "stackedItemsDiagram" as const,
-			width: null,
-			height: null,
-			stacks: [
-				{
-					items: [
-						{ color: "#ff6b6b", label: null },
-						{ color: "#4ecdc4", label: null },
-						{ color: "#45b7d1", label: null }
-					],
-					label: null
-				}
-			],
-			itemSize: null,
-			spacing: null
+			width: 200,
+			height: 300,
+			altText: "Stack of 3 ice cream scoops on a cone",
+			baseItem: {
+				emoji: "🍦",
+				size: 50,
+				label: "ice cream cone"
+			},
+			stackedItem: {
+				emoji: "🍨",
+				size: 40,
+				label: "ice cream scoop"
+			},
+			count: 3,
+			orientation: null,
+			overlap: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -34,25 +36,20 @@ describe("generateStackedItemsDiagram", () => {
 			type: "stackedItemsDiagram" as const,
 			width: 400,
 			height: 300,
-			stacks: [
-				{
-					items: [
-						{ color: "#4caf50", label: "A" },
-						{ color: "#2196f3", label: "B" },
-						{ color: "#ff9800", label: "C" }
-					],
-					label: "Stack 1"
-				},
-				{
-					items: [
-						{ color: "#9c27b0", label: "D" },
-						{ color: "#f44336", label: "E" }
-					],
-					label: "Stack 2"
-				}
-			],
-			itemSize: 40,
-			spacing: 20
+			altText: "Stack of 5 pancakes on a plate",
+			baseItem: {
+				emoji: "🍽️",
+				size: 60,
+				label: "plate"
+			},
+			stackedItem: {
+				emoji: "🥞",
+				size: 35,
+				label: "pancake"
+			},
+			count: 5,
+			orientation: "vertical" as const,
+			overlap: 0.8
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

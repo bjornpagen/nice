@@ -11,13 +11,10 @@ describe("generateVerticalArithmeticSetup", () => {
 	test("should render with minimal props", () => {
 		const props = {
 			type: "verticalArithmeticSetup" as const,
-			width: null,
-			height: null,
-			operation: "addition" as const,
-			numbers: ["123", "456"],
-			result: null,
-			showCarry: null,
-			highlightSteps: null
+			title: null,
+			operand1: "123",
+			operand2: "456",
+			operator: "+" as const
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -25,16 +22,10 @@ describe("generateVerticalArithmeticSetup", () => {
 	test("should render with all props specified", () => {
 		const props = {
 			type: "verticalArithmeticSetup" as const,
-			width: 300,
-			height: 200,
-			operation: "multiplication" as const,
-			numbers: ["248", "37"],
-			result: "9176",
-			showCarry: true,
-			highlightSteps: [
-				{ step: 1, color: "#ffeb3b" },
-				{ step: 2, color: "#4caf50" }
-			]
+			title: "Multiply these numbers:",
+			operand1: "248",
+			operand2: "37",
+			operator: "×" as const
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

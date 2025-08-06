@@ -13,13 +13,24 @@ describe("generateTapeDiagram", () => {
 			type: "tapeDiagram" as const,
 			width: null,
 			height: null,
-			segments: [
-				{ length: 100, label: null, color: null },
-				{ length: 75, label: null, color: null },
-				{ length: 50, label: null, color: null }
-			],
-			totalLabel: null,
-			showDimensions: null
+			topTape: {
+				label: "Top Tape",
+				segments: [
+					{ label: "100", length: 100 },
+					{ label: "75", length: 75 }
+				],
+				color: null
+			},
+			bottomTape: {
+				label: "Bottom Tape",
+				segments: [
+					{ label: "50", length: 50 },
+					{ label: "125", length: 125 }
+				],
+				color: null
+			},
+			showTotalBracket: null,
+			totalLabel: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -29,13 +40,24 @@ describe("generateTapeDiagram", () => {
 			type: "tapeDiagram" as const,
 			width: 500,
 			height: 150,
-			segments: [
-				{ length: 120, label: "x", color: "#4caf50" },
-				{ length: 80, label: "24", color: "#2196f3" },
-				{ length: 100, label: "y", color: "#ff9800" }
-			],
-			totalLabel: "300 total",
-			showDimensions: true
+			topTape: {
+				label: "Top Segments",
+				segments: [
+					{ label: "x", length: 120 },
+					{ label: "24", length: 80 }
+				],
+				color: "#4caf50"
+			},
+			bottomTape: {
+				label: "Bottom Segments",
+				segments: [
+					{ label: "y", length: 100 },
+					{ label: "100", length: 100 }
+				],
+				color: "#2196f3"
+			},
+			showTotalBracket: true,
+			totalLabel: "300 total"
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

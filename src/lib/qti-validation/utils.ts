@@ -28,26 +28,63 @@ export function checkNoLatex(htmlFragment: string, logger: logger.Logger): void 
 		)
 	}
 
+	// First, check if dollar signs are properly tagged as currency - if so, skip LaTeX validation
+	// This handles cases like <span class="currency">$</span>
+	const currencyTaggedDollar = /<span\s+class\s*=\s*["']currency["']\s*>\s*\$\s*<\/span>/gi
+	const fragmentWithoutCurrencyTags = htmlFragment.replace(currencyTaggedDollar, "CURRENCY_PLACEHOLDER")
+
+	// Also handle cases where $ appears right before a number or math tag (likely currency)
+	// Examples: $50, $<math>, <mo>$</mo>
+	const currencyPatterns = [
+		// Dollar sign in MathML operator element (e.g., <mo>$</mo>)
+		/<mo(?:\s+[^>]*)?>[\s]*\$[\s]*<\/mo>/gi,
+		// Dollar sign immediately before a number or math tag
+		/\$(?=\s*(?:<math|<mn|\d))/g,
+		// Dollar sign at end of sentence/phrase before punctuation or tag
+		/\$(?=\s*(?:[.,;:!?]|<\/|$))/g
+	]
+
+	let processedFragment = fragmentWithoutCurrencyTags
+	for (const pattern of currencyPatterns) {
+		processedFragment = processedFragment.replace(pattern, "CURRENCY_PLACEHOLDER")
+	}
+
+	// Now check for LaTeX-style dollar delimiters in the processed fragment
 	const dollarPairRegex = /\$(?<content>[^$]+)\$/g
 	let match: RegExpExecArray | null
-	match = dollarPairRegex.exec(htmlFragment)
+	match = dollarPairRegex.exec(processedFragment)
 	while (match !== null) {
 		if (match.groups?.content) {
 			const content = match.groups.content
-			const isCurrency = /^\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?$/.test(content.trim())
-			if (!isCurrency) {
-				const contextIndex = match.index ?? 0
-				const errorContext = htmlFragment.substring(
-					Math.max(0, contextIndex - 50),
-					Math.min(htmlFragment.length, contextIndex + 50)
-				)
-				logger.error("found dollar-sign delimited latex", { match: match[0], context: errorContext })
-				throw errors.new(
-					`Invalid content: Dollar-sign delimited LaTeX is not allowed. Found: "${match[0]}". Context: "...${errorContext}..."`
-				)
+			// Check if this looks like mathematical content (not just a number)
+			const hasMathIndicators =
+				// Variables or expressions with operators
+				/[a-zA-Z]\s*[+\-*/=]/.test(content) ||
+				// Superscript or subscript notation
+				/[a-zA-Z0-9][_^]/.test(content) ||
+				// Mathematical functions or parentheses with variables
+				/\([^)]*[a-zA-Z][^)]*\)/.test(content) ||
+				// Mixed letters and numbers (like 2x, 3y)
+				/\d+[a-zA-Z]|[a-zA-Z]+\d/.test(content) ||
+				// Equals signs with variables
+				/[a-zA-Z]\s*=/.test(content)
+
+			if (hasMathIndicators) {
+				// Find the original position in the unprocessed fragment
+				const contextIndex = htmlFragment.indexOf(match[0])
+				if (contextIndex !== -1) {
+					const errorContext = htmlFragment.substring(
+						Math.max(0, contextIndex - 50),
+						Math.min(htmlFragment.length, contextIndex + 50)
+					)
+					logger.error("found dollar-sign delimited latex", { match: match[0], context: errorContext })
+					throw errors.new(
+						`Invalid content: Dollar-sign delimited LaTeX is not allowed. Found: "${match[0]}". Context: "...${errorContext}..."`
+					)
+				}
 			}
 		}
-		match = dollarPairRegex.exec(htmlFragment)
+		match = dollarPairRegex.exec(processedFragment)
 	}
 }
 

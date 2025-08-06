@@ -13,12 +13,18 @@ describe("generateVennDiagram", () => {
 			type: "vennDiagram" as const,
 			width: null,
 			height: null,
-			circles: [
-				{ label: "A", color: null, elements: null },
-				{ label: "B", color: null, elements: null }
-			],
-			intersections: null,
-			showLabels: null
+			circleA: {
+				label: "A",
+				count: 5,
+				color: null
+			},
+			circleB: {
+				label: "B",
+				count: 3,
+				color: null
+			},
+			intersectionCount: 2,
+			outsideCount: 1
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -28,26 +34,18 @@ describe("generateVennDiagram", () => {
 			type: "vennDiagram" as const,
 			width: 500,
 			height: 350,
-			circles: [
-				{
-					label: "Fruits",
-					color: "rgba(255, 107, 107, 0.5)",
-					elements: ["Apple", "Orange", "Banana", "Grape"]
-				},
-				{
-					label: "Red Foods",
-					color: "rgba(76, 237, 196, 0.5)",
-					elements: ["Apple", "Strawberry", "Cherry", "Tomato"]
-				}
-			],
-			intersections: [
-				{
-					circles: [0, 1],
-					elements: ["Apple"],
-					label: "Red Fruits"
-				}
-			],
-			showLabels: true
+			circleA: {
+				label: "Fruits",
+				count: 3,
+				color: "rgba(255, 107, 107, 0.5)"
+			},
+			circleB: {
+				label: "Red Foods",
+				count: 3,
+				color: "rgba(76, 237, 196, 0.5)"
+			},
+			intersectionCount: 1,
+			outsideCount: 0
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

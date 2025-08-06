@@ -14,19 +14,13 @@ describe("generateDoubleNumberLine", () => {
 			width: null,
 			height: null,
 			topLine: {
-				min: 0,
-				max: 10,
-				tickInterval: 2,
-				label: null
+				label: "Top",
+				ticks: [0, 2, 4, 6, 8, 10]
 			},
 			bottomLine: {
-				min: 0,
-				max: 50,
-				tickInterval: 10,
-				label: null
-			},
-			correspondingPairs: null,
-			highlightedValues: null
+				label: "Bottom",
+				ticks: [0, 10, 20, 30, 40, 50]
+			}
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -37,24 +31,12 @@ describe("generateDoubleNumberLine", () => {
 			width: 600,
 			height: 200,
 			topLine: {
-				min: 0,
-				max: 8,
-				tickInterval: 1,
-				label: "Hours"
+				label: "Hours",
+				ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8]
 			},
 			bottomLine: {
-				min: 0,
-				max: 80,
-				tickInterval: 10,
-				label: "Distance (miles)"
-			},
-			correspondingPairs: [
-				{ topValue: 2, bottomValue: 20 },
-				{ topValue: 5, bottomValue: 50 }
-			],
-			highlightedValues: {
-				top: [3],
-				bottom: [30]
+				label: "Distance (miles)",
+				ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80]
 			}
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()

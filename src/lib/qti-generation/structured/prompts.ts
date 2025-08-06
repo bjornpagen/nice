@@ -92,6 +92,28 @@ This is the most critical rule. Any \`<slot name="..."/>\` tag you include in th
 
 CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, MathML, and slot placeholders.
 
+⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
+The following are CATEGORICALLY FORBIDDEN in the output. ANY violation will result in IMMEDIATE REJECTION:
+
+1. **LATEX COMMANDS ARE BANNED** - Under NO circumstances may ANY LaTeX command appear in the output:
+   - NO backslash commands: \sqrt, \dfrac, \frac, \sum, \int, etc.
+   - NO LaTeX delimiters: \(, \), \[, \], \\begin, \\end
+   - NO color commands: \blueD, \maroonD, \redE, \greenC, etc.
+   - NO text commands: \text, \textbf, \textit, etc.
+   - If you see ANY backslash followed by letters, you have FAILED.
+
+2. **LATEX DOLLAR SIGN DELIMITERS ARE BANNED** - The $ character when used for LaTeX is FORBIDDEN:
+   - NO inline math delimiters: $x + y$ (convert to \`<math>...</math>\`)
+   - NO display math delimiters: $$x + y$$ (convert to \`<math display="block">...</math>\`)
+   - Dollar signs for currency are ALLOWED when properly tagged: \`<span class="currency">$</span>\`
+   - Remove $ when it's used as a LaTeX delimiter, but preserve it when it's properly marked as currency.
+
+3. **DEPRECATED MATHML IS BANNED** - The following MathML elements are OBSOLETE and FORBIDDEN:
+   - NO <mfenced> elements - use <mrow> with explicit <mo> delimiters instead
+   - NO deprecated attributes or elements
+
+ALL mathematical content MUST be converted to valid, modern MathML. NO EXCEPTIONS.
+
 Any discrepancy will cause your output to be rejected. Review your work carefully to ensure the body's slots and the declaration arrays are perfectly synchronized.`
 
 	const exampleShells = allExamples.map(createShellFromExample)
@@ -126,9 +148,19 @@ ${perseusJson}
   - For each Perseus interaction (e.g., 'radio', 'text-input'), create a placeholder like \`<slot name="interaction_1" />\` and add its identifier (e.g., "interaction_1") to the 'interactions' string array.
 - **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
 - **MathML Conversion (MANDATORY)**:
-  - You MUST convert ALL LaTeX expressions (text enclosed in \`$...\`) to standard MathML (\`<math>...</math>\`).
-  - PRESERVE all mathematical structures: fractions (\`<mfrac>\`), exponents (\`<msup>\`), roots (\`<mroot>\`), operators (\`<mo>\`), and inequalities (\`&lt;\`, \`&gt;\`).
+  - You MUST convert ALL LaTeX expressions to standard MathML (\`<math>...</math>\`).
+  - PRESERVE all mathematical structures: fractions (\`<mfrac>\`), exponents (\`<msup>\`), roots (\`<mroot>\` or \`<msqrt>\`), operators (\`<mo>\`), and inequalities (\`&lt;\`, \`&gt;\`).
   - Do NOT simplify or alter the mathematical content. It must be a faithful translation.
+  - **CRITICAL BANS**:
+    * NO LaTeX commands in output: If input has \`\\sqrt{x}\`, output must be \`<msqrt><mi>x</mi></msqrt>\`, NEVER leave the backslash command
+    * NO LaTeX dollar sign delimiters: Remove \`$\` when used for LaTeX math (e.g., \`$x+y$\` should be \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`)
+    * NO \`<mfenced>\` elements: Use \`<mrow><mo>(</mo>...<mo>)</mo></mrow>\` instead of \`<mfenced open="(" close=")">\`
+    * NO LaTeX color commands: Strip \`\\blueD{x}\` to just the content \`x\`
+    * NO LaTeX delimiters: Convert \`\\(...\\)\` to proper MathML, never leave the backslashes
+  - **CURRENCY HANDLING**:
+    * Currency symbols are allowed when properly tagged: \`<span class="currency">$</span>\`
+    * Do NOT use \`<mo>$</mo>\` in MathML for currency (use it only for mathematical operators if needed)
+    * Acceptable patterns: \`<span class="currency">$</span><math><mn>5</mn></math>\` or text like "5 dollars"
 - **Table Rule (MANDATORY)**:
   - Tables must NEVER be created as HTML \`<table>\` elements in the body.
   - ALWAYS create a widget slot for every table (e.g., \`<slot name="table_widget_1" />\`) and add "table_widget_1" to the 'widgets' array.
@@ -138,7 +170,54 @@ ${perseusJson}
 - **Metadata**: Include all required assessment metadata: 'identifier', 'title', 'responseDeclarations', and 'feedback'.
 - **Widget Generation**: When you generate the final widget objects in a later step, ensure all image references are properly resolved.
 
-Return ONLY the JSON object for the assessment shell.`
+Return ONLY the JSON object for the assessment shell.
+
+## NEGATIVE EXAMPLES FROM REAL ERRORS (AUTOMATIC REJECTION)
+
+**1. LaTeX Commands - ALL BANNED:**
+WRONG: \`<mi>\\\\sqrt{a}</mi>\` --> CORRECT: \`<msqrt><mi>a</mi></msqrt>\`
+WRONG: \`\\\\(\\\\dfrac{3}{10}\\\\)\` --> CORRECT: \`<math><mfrac><mn>3</mn><mn>10</mn></mfrac></math>\`
+WRONG: \`\\\\(n = \\\\dfrac{96}{5}\\\\)\` --> CORRECT: \`<math><mi>n</mi><mo>=</mo><mfrac><mn>96</mn><mn>5</mn></mfrac></math>\`
+WRONG: \`\\\\blueD{x=2} and \\\\maroonD{y=4}\` --> CORRECT: \`<mi>x</mi><mo>=</mo><mn>2</mn> and <mi>y</mi><mo>=</mo><mn>4</mn>\`
+WRONG: \`\\\\(\\\\tfrac{4}{3}\\\\)\` --> CORRECT: \`<math><mfrac><mn>4</mn><mn>3</mn></mfrac></math>\`
+WRONG: \`$\\\\green{\\\\text{Step }1}$\` --> CORRECT: \`Step 1\`
+WRONG: \`$3^4 \\\\;\\\\rightarrow\\\\; 3\\\\times3\\\\times3\\\\times3$\` --> CORRECT: \`<math><msup><mn>3</mn><mn>4</mn></msup><mo>→</mo><mn>3</mn><mo>×</mo><mn>3</mn><mo>×</mo><mn>3</mn><mo>×</mo><mn>3</mn></math>\`
+WRONG: \`\\\\(\\\\sqrt{121}=11\\\\)\` --> CORRECT: \`<math><msqrt><mn>121</mn></msqrt><mo>=</mo><mn>11</mn></math>\`
+WRONG: \`$\\\\begin{align}2\\\\times11&\\\\stackrel{?}=211\\\\\\\\22&\\\\neq21...\` --> CORRECT: Convert to proper MathML table structure
+WRONG: \`\\\\dfrac{Change in x}{Change in y}\` --> CORRECT: \`<mfrac><mtext>Change in x</mtext><mtext>Change in y</mtext></mfrac>\`
+WRONG: \`\\\\(\\\\dfrac{19}{27}=0.\\\\overline{703}\\\\)\` --> CORRECT: \`<math><mfrac><mn>19</mn><mn>27</mn></mfrac><mo>=</mo><mn>0.</mn><mover><mn>703</mn><mo>‾</mo></mover></math>\`
+WRONG: \`$\\\\dfrac{7^{36}}{9^{24}}$\` --> CORRECT: \`<math><mfrac><msup><mn>7</mn><mn>36</mn></msup><msup><mn>9</mn><mn>24</mn></msup></mfrac></math>\`
+
+**2. LaTeX Dollar Sign Delimiters - BANNED:**
+WRONG: \`$3(9p-12)$\` --> CORRECT: \`<math><mn>3</mn><mo>(</mo><mn>9</mn><mi>p</mi><mo>-</mo><mn>12</mn><mo>)</mo></math>\`
+WRONG: \`$5, \\\\sqrt8, 33$\` --> CORRECT: \`<math><mn>5</mn></math>, <math><msqrt><mn>8</mn></msqrt></math>, <math><mn>33</mn></math>\`
+WRONG: \`paid $<math>\` (bare dollar) --> CORRECT: \`paid <span class="currency">$</span><math>\` (properly tagged currency)
+WRONG: \`<mo>$</mo><mn>12</mn>\` --> CORRECT: For currency use \`<span class="currency">$</span><math><mn>12</mn></math>\`
+ACCEPTABLE: \`<span class="currency">$</span><math xmlns="..."><mn>2.00</mn></math>\` (properly tagged currency symbol)
+
+**3. Deprecated <mfenced> - ALL BANNED:**
+WRONG: \`<mfenced open="|" close="|"><mrow><mo>-</mo><mn>6</mn></mrow></mfenced>\`
+CORRECT: \`<mrow><mo>|</mo><mrow><mo>-</mo><mn>6</mn></mrow><mo>|</mo></mrow>\`
+
+WRONG: \`<mfenced open="(" close=")"><mrow><mo>-</mo><mfrac>...</mfrac></mrow></mfenced>\`
+CORRECT: \`<mrow><mo>(</mo><mrow><mo>-</mo><mfrac>...</mfrac></mrow><mo>)</mo></mrow>\`
+
+WRONG: \`<mfenced open="[" close="]"><mi>x</mi></mfenced>\`
+CORRECT: \`<mrow><mo>[</mo><mi>x</mi><mo>]</mo></mrow>\`
+
+WRONG: \`<mfenced open="{" close="}"><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn></mfenced>\`
+CORRECT: \`<mrow><mo>{</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>}</mo></mrow>\`
+
+WRONG: \`<mfenced><mi>a</mi><mo>+</mo><mi>b</mi></mfenced>\` (default parentheses)
+CORRECT: \`<mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>)</mo></mrow>\`
+
+**General Rule for mfenced:** Replace \`<mfenced open="X" close="Y">content</mfenced>\` with \`<mrow><mo>X</mo>content<mo>Y</mo></mrow>\`
+
+⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
+- ANY backslash character followed by letters (LaTeX commands)
+- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
+- ANY <mfenced> element
+Double-check your output before submitting. ZERO TOLERANCE for these violations.`
 
 	return { systemInstruction, userContent }
 }
@@ -199,7 +278,22 @@ You must generate a JSON object where:
 - Each key is an interaction slot name from the shell.
 - Each value is a fully-formed QTI interaction object.
 - All interaction properties must conform to the QTI interaction schemas.
-- All MathML must be perfectly preserved.`
+- All MathML must be perfectly preserved.
+
+⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
+The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
+
+1. **NO LATEX COMMANDS** - ANY backslash followed by letters is FORBIDDEN:
+   - NO: \\sqrt, \\dfrac, \\frac, \\(, \\), \\blueD, \\text, etc.
+   - If you output ANY LaTeX command, you have FAILED.
+
+2. **NO LATEX DOLLAR SIGNS** - The $ character for LaTeX is BANNED:
+   - NO math delimiters: $x$, $$y$$
+   - Dollar signs for currency are allowed when properly tagged: \`<span class="currency">$</span>\`
+   - LaTeX dollar delimiters mean COMPLETE FAILURE.
+
+3. **NO DEPRECATED MATHML** - NEVER use:
+   - <mfenced> elements (use <mrow> with <mo> delimiters instead)`
 
 	const userContent = `Generate interaction content based on the following inputs. Use the provided image context to understand the visual components.
 
@@ -233,7 +327,30 @@ Example output structure:
 {
   "interaction_1": { /* full QTI choiceInteraction object */ },
   "interaction_2": { /* full QTI textEntryInteraction object */ }
-}`
+}
+
+## NEGATIVE EXAMPLES FROM REAL ERRORS (DO NOT OUTPUT THESE)
+
+**LaTeX Commands BANNED:**
+WRONG: \`\\\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
+WRONG: \`\\\\dfrac{x}{y}\` --> CORRECT: \`<mfrac><mi>x</mi><mi>y</mi></mfrac>\`
+WRONG: \`\\\\(\` or \`\\\\)\` --> CORRECT: Remove entirely, use proper MathML tags
+WRONG: \`\\\\blueD{text}\` --> CORRECT: Just use the text content without color commands
+
+**LaTeX Dollar Signs BANNED:**
+WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
+WRONG: \`$$equation$$\` --> CORRECT: \`<math display="block">...</math>\`
+WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <span class="currency">$</span><mn>5</mn>\` (properly tagged currency)
+
+**Deprecated MathML BANNED:**
+WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
+WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><mo>(</mo>content<mo>)</mo></mrow>\`
+
+⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
+- ANY LaTeX commands (backslash followed by letters)
+- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
+- ANY <mfenced> element
+Double-check EVERY string in your output. ZERO TOLERANCE.`
 
 	return { systemInstruction, userContent }
 }
@@ -257,7 +374,22 @@ export function createWidgetContentPrompt(
 You must generate a JSON object where:
 - Each key is a widget slot name from the mapping.
 - Each value is a fully-formed widget object of the specified type.
-- All widget properties must conform to their respective schemas.`
+- All widget properties must conform to their respective schemas.
+
+⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
+The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
+
+1. **NO LATEX COMMANDS** - ANY backslash followed by letters is FORBIDDEN:
+   - NO: \\sqrt, \\dfrac, \\frac, \\(, \\), \\blueD, \\text, etc.
+   - If you output ANY LaTeX command, you have FAILED.
+
+2. **NO LATEX DOLLAR SIGNS** - The $ character for LaTeX is BANNED:
+   - NO math delimiters: $x$, $$y$$
+   - Dollar signs for currency are allowed when properly tagged: \`<span class="currency">$</span>\`
+   - LaTeX dollar delimiters mean COMPLETE FAILURE.
+
+3. **NO DEPRECATED MATHML** - NEVER use:
+   - <mfenced> elements (use <mrow> with <mo> delimiters instead)`
 
 	const userContent = `Generate widget content based on the following inputs. Use the provided image context to understand the visual components.
 
@@ -296,7 +428,30 @@ Example output structure:
 {
   "widget_1": { "type": "doubleNumberLine", "width": 400, ... },
   "table_1": { "type": "dataTable", "columns": [...], ... }
-}`
+}
+
+## NEGATIVE EXAMPLES FROM REAL ERRORS (DO NOT OUTPUT THESE)
+
+**LaTeX Commands BANNED:**
+WRONG: \`\\\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
+WRONG: \`\\\\dfrac{x}{y}\` --> CORRECT: \`<mfrac><mi>x</mi><mi>y</mi></mfrac>\`
+WRONG: \`\\\\(\` or \`\\\\)\` --> CORRECT: Remove entirely, use proper MathML tags
+WRONG: \`\\\\blueD{text}\` --> CORRECT: Just use the text content without color commands
+
+**LaTeX Dollar Signs BANNED:**
+WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
+WRONG: \`$$equation$$\` --> CORRECT: \`<math display="block">...</math>\`
+WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <span class="currency">$</span><mn>5</mn>\` (properly tagged currency)
+
+**Deprecated MathML BANNED:**
+WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
+WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><mo>(</mo>content<mo>)</mo></mrow>\`
+
+⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
+- ANY LaTeX commands (backslash followed by letters)
+- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
+- ANY <mfenced> element
+Double-check EVERY string in your output. ZERO TOLERANCE.`
 
 	return { systemInstruction, userContent }
 }

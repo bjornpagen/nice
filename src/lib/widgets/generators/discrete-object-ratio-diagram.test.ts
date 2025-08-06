@@ -16,22 +16,18 @@ describe("generateDiscreteObjectRatioDiagram", () => {
 			type: "discreteObjectRatioDiagram" as const,
 			width: null,
 			height: null,
-			groups: [
+			objects: [
 				{
-					label: "Red",
 					count: 6,
-					color: "#ff6b6b",
-					symbol: "circle" as const
+					emoji: "🔴"
 				},
 				{
-					label: "Blue",
 					count: 4,
-					color: "#4ecdc4",
-					symbol: "circle" as const
+					emoji: "🔵"
 				}
 			],
-			showRatio: null,
-			arrangement: null
+			layout: null,
+			title: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -41,28 +37,22 @@ describe("generateDiscreteObjectRatioDiagram", () => {
 			type: "discreteObjectRatioDiagram" as const,
 			width: 500,
 			height: 300,
-			groups: [
+			objects: [
 				{
-					label: "Apples",
 					count: 12,
-					color: "#ff6b6b",
-					symbol: "circle" as const
+					emoji: "🍎"
 				},
 				{
-					label: "Oranges",
 					count: 8,
-					color: "#ffa726",
-					symbol: "square" as const
+					emoji: "🍊"
 				},
 				{
-					label: "Bananas",
 					count: 4,
-					color: "#ffeb3b",
-					symbol: "triangle" as const
+					emoji: "🍌"
 				}
 			],
-			showRatio: true,
-			arrangement: "grouped" as const
+			layout: "grid" as const,
+			title: "Fruit Ratio"
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

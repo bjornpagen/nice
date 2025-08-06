@@ -11,16 +11,16 @@ describe("generatePictograph", () => {
 	test("should render with minimal props", () => {
 		const props = {
 			type: "pictograph" as const,
-			width: null,
-			height: null,
 			title: null,
+			key: {
+				icon: "🍎",
+				label: "= 1 fruit"
+			},
 			data: [
-				{ label: "Apples", count: 8, symbol: "🍎" },
-				{ label: "Oranges", count: 6, symbol: "🍊" },
-				{ label: "Bananas", count: 4, symbol: "🍌" }
-			],
-			symbolsPerUnit: 1,
-			showKey: null
+				{ category: "Apples", iconCount: 8 },
+				{ category: "Oranges", iconCount: 6 },
+				{ category: "Bananas", iconCount: 4 }
+			]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -28,17 +28,17 @@ describe("generatePictograph", () => {
 	test("should render with all props specified", () => {
 		const props = {
 			type: "pictograph" as const,
-			width: 500,
-			height: 300,
 			title: "Favorite Fruits Survey",
+			key: {
+				icon: "🍎",
+				label: "= 2 students"
+			},
 			data: [
-				{ label: "Apples", count: 24, symbol: "🍎" },
-				{ label: "Oranges", count: 18, symbol: "🍊" },
-				{ label: "Bananas", count: 12, symbol: "🍌" },
-				{ label: "Grapes", count: 30, symbol: "🍇" }
-			],
-			symbolsPerUnit: 2,
-			showKey: true
+				{ category: "Apples", iconCount: 12 },
+				{ category: "Oranges", iconCount: 9 },
+				{ category: "Bananas", iconCount: 6 },
+				{ category: "Grapes", iconCount: 15 }
+			]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

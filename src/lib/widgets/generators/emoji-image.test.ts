@@ -11,10 +11,9 @@ describe("generateEmojiImage", () => {
 	test("should render with minimal props", () => {
 		const props = {
 			type: "emojiImage" as const,
-			width: null,
-			height: null,
 			emoji: "😊",
-			size: null
+			size: null,
+			label: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -22,10 +21,9 @@ describe("generateEmojiImage", () => {
 	test("should render with all props specified", () => {
 		const props = {
 			type: "emojiImage" as const,
-			width: 100,
-			height: 100,
 			emoji: "🎯",
-			size: 80
+			size: 80,
+			label: "Target"
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

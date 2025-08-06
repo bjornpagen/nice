@@ -13,12 +13,15 @@ describe("generatePolyhedronDiagram", () => {
 			type: "polyhedronDiagram" as const,
 			width: null,
 			height: null,
-			polyhedronType: "cube" as const,
-			fillColor: null,
-			strokeColor: null,
-			showEdges: null,
-			perspective: null,
-			rotation: null
+			shape: {
+				type: "rectangularPrism" as const,
+				length: 3,
+				width: 3,
+				height: 3
+			},
+			labels: null,
+			shadedFace: null,
+			showHiddenEdges: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -28,12 +31,21 @@ describe("generatePolyhedronDiagram", () => {
 			type: "polyhedronDiagram" as const,
 			width: 400,
 			height: 350,
-			polyhedronType: "dodecahedron" as const,
-			fillColor: "#e3f2fd",
-			strokeColor: "#1976d2",
-			showEdges: true,
-			perspective: "isometric" as const,
-			rotation: { x: 15, y: 25, z: 0 }
+			shape: {
+				type: "triangularPrism" as const,
+				base: {
+					b: 4,
+					h: 3,
+					hypotenuse: 5
+				},
+				length: 6
+			},
+			labels: [
+				{ text: "4 cm", target: "length" },
+				{ text: "3 cm", target: "width" }
+			],
+			shadedFace: "top_face",
+			showHiddenEdges: true
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

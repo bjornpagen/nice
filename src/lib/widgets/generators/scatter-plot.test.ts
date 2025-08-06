@@ -18,22 +18,22 @@ describe("generateScatterPlot", () => {
 				min: 0,
 				max: 10,
 				tickInterval: 2,
-				label: null,
-				showGridLines: null
+				label: "X Axis",
+				gridLines: null
 			},
 			yAxis: {
 				min: 0,
 				max: 10,
 				tickInterval: 2,
-				label: null,
-				showGridLines: null
+				label: "Y Axis",
+				gridLines: null
 			},
-			data: [
-				{ x: 2, y: 3, label: null, color: null },
-				{ x: 5, y: 7, label: null, color: null },
-				{ x: 8, y: 4, label: null, color: null }
+			points: [
+				{ x: 2, y: 3, label: null },
+				{ x: 5, y: 7, label: null },
+				{ x: 8, y: 4, label: null }
 			],
-			trendLine: null
+			trendLines: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -49,26 +49,34 @@ describe("generateScatterPlot", () => {
 				max: 80,
 				tickInterval: 10,
 				label: "Height (inches)",
-				showGridLines: true
+				gridLines: true
 			},
 			yAxis: {
 				min: 0,
 				max: 200,
 				tickInterval: 25,
 				label: "Weight (lbs)",
-				showGridLines: true
+				gridLines: true
 			},
-			data: [
-				{ x: 60, y: 120, label: "A", color: "#4caf50" },
-				{ x: 65, y: 140, label: "B", color: "#2196f3" },
-				{ x: 70, y: 160, label: "C", color: "#ff9800" },
-				{ x: 72, y: 180, label: "D", color: "#f44336" }
+			points: [
+				{ x: 60, y: 120, label: "A" },
+				{ x: 65, y: 140, label: "B" },
+				{ x: 70, y: 160, label: "C" },
+				{ x: 72, y: 180, label: "D" }
 			],
-			trendLine: {
-				show: true,
-				color: "#9c27b0",
-				style: "dashed" as const
-			}
+			trendLines: [
+				{
+					id: "trend1",
+					label: "Linear Trend",
+					color: "#9c27b0",
+					style: "dashed" as const,
+					data: {
+						type: "linear" as const,
+						slope: 2.5,
+						yIntercept: 20
+					}
+				}
+			]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

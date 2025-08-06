@@ -15,25 +15,22 @@ describe("generateHistogram", () => {
 			height: null,
 			title: null,
 			xAxis: {
-				min: 0,
-				max: 100,
-				tickInterval: 10,
-				label: null
+				label: "Score Range",
+				max: null,
+				tickInterval: null
 			},
 			yAxis: {
-				min: 0,
-				max: 20,
-				tickInterval: 5,
-				label: null
+				label: "Frequency",
+				max: null,
+				tickInterval: null
 			},
 			bins: [
-				{ min: 0, max: 20, frequency: 5 },
-				{ min: 20, max: 40, frequency: 12 },
-				{ min: 40, max: 60, frequency: 8 },
-				{ min: 60, max: 80, frequency: 15 },
-				{ min: 80, max: 100, frequency: 3 }
-			],
-			barColor: null
+				{ label: "0-20", frequency: 5 },
+				{ label: "20-40", frequency: 12 },
+				{ label: "40-60", frequency: 8 },
+				{ label: "60-80", frequency: 15 },
+				{ label: "80-100", frequency: 3 }
+			]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -45,25 +42,22 @@ describe("generateHistogram", () => {
 			height: 400,
 			title: "Test Score Distribution",
 			xAxis: {
-				min: 0,
+				label: "Score Range",
 				max: 100,
-				tickInterval: 10,
-				label: "Score Range"
+				tickInterval: 10
 			},
 			yAxis: {
-				min: 0,
+				label: "Frequency",
 				max: 25,
-				tickInterval: 5,
-				label: "Frequency"
+				tickInterval: 5
 			},
 			bins: [
-				{ min: 0, max: 20, frequency: 2 },
-				{ min: 20, max: 40, frequency: 8 },
-				{ min: 40, max: 60, frequency: 15 },
-				{ min: 60, max: 80, frequency: 20 },
-				{ min: 80, max: 100, frequency: 12 }
-			],
-			barColor: "#4285f4"
+				{ label: "0-20", frequency: 2 },
+				{ label: "20-40", frequency: 8 },
+				{ label: "40-60", frequency: 15 },
+				{ label: "60-80", frequency: 20 },
+				{ label: "80-100", frequency: 12 }
+			]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

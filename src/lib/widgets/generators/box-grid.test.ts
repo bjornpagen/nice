@@ -13,13 +13,26 @@ describe("generateBoxGrid", () => {
 			type: "boxGrid" as const,
 			width: null,
 			height: null,
-			rows: 3,
-			columns: 4,
-			boxSize: null,
-			filledBoxes: null,
-			boxColor: null,
-			filledColor: null,
-			strokeColor: null
+			data: [
+				[
+					{ content: "A", backgroundColor: null },
+					{ content: "B", backgroundColor: null },
+					{ content: "C", backgroundColor: null }
+				],
+				[
+					{ content: "D", backgroundColor: null },
+					{ content: "E", backgroundColor: null },
+					{ content: "F", backgroundColor: null }
+				],
+				[
+					{ content: "G", backgroundColor: null },
+					{ content: "H", backgroundColor: null },
+					{ content: "I", backgroundColor: null }
+				]
+			],
+			showGridLines: null,
+			cellPadding: null,
+			fontSize: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -29,13 +42,26 @@ describe("generateBoxGrid", () => {
 			type: "boxGrid" as const,
 			width: 400,
 			height: 300,
-			rows: 5,
-			columns: 6,
-			boxSize: 40,
-			filledBoxes: [0, 2, 5, 7, 12, 18],
-			boxColor: "#f0f0f0",
-			filledColor: "#4285f4",
-			strokeColor: "#333333"
+			data: [
+				[
+					{ content: 1, backgroundColor: "#ffeb3b" },
+					{ content: 2, backgroundColor: null },
+					{ content: 3, backgroundColor: "#ffeb3b" }
+				],
+				[
+					{ content: 4, backgroundColor: null },
+					{ content: 5, backgroundColor: "#4caf50" },
+					{ content: 6, backgroundColor: null }
+				],
+				[
+					{ content: 7, backgroundColor: "#ffeb3b" },
+					{ content: 8, backgroundColor: null },
+					{ content: 9, backgroundColor: "#ffeb3b" }
+				]
+			],
+			showGridLines: true,
+			cellPadding: 10,
+			fontSize: 20
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

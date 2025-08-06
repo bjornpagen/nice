@@ -14,10 +14,14 @@ describe("generatePolyhedronNetDiagram", () => {
 			width: null,
 			height: null,
 			polyhedronType: "cube" as const,
-			faceColor: null,
-			strokeColor: null,
-			showFoldLines: null,
-			labels: null
+			dimensions: {
+				base: {
+					type: "square" as const,
+					side: 50
+				},
+				lateralHeight: null
+			},
+			showLabels: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -27,16 +31,18 @@ describe("generatePolyhedronNetDiagram", () => {
 			type: "polyhedronNetDiagram" as const,
 			width: 600,
 			height: 500,
-			polyhedronType: "tetrahedron" as const,
-			faceColor: "#fff3e0",
-			strokeColor: "#f57c00",
-			showFoldLines: true,
-			labels: [
-				{ face: 0, text: "A", position: "center" as const },
-				{ face: 1, text: "B", position: "center" as const },
-				{ face: 2, text: "C", position: "center" as const },
-				{ face: 3, text: "D", position: "center" as const }
-			]
+			polyhedronType: "triangularPyramid" as const,
+			dimensions: {
+				base: {
+					type: "triangle" as const,
+					base: 60,
+					height: 52,
+					side1: 60,
+					side2: 60
+				},
+				lateralHeight: 70
+			},
+			showLabels: true
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

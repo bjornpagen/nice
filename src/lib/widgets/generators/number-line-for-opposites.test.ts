@@ -13,14 +13,12 @@ describe("generateNumberLineForOpposites", () => {
 			type: "numberLineForOpposites" as const,
 			width: null,
 			height: null,
-			min: -10,
-			max: 10,
+			maxAbsValue: 10,
 			tickInterval: 2,
-			opposites: [
-				{ value: 4, color: null },
-				{ value: -7, color: null }
-			],
-			showZero: null
+			value: 7,
+			positiveLabel: null,
+			negativeLabel: null,
+			showArrows: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -30,16 +28,12 @@ describe("generateNumberLineForOpposites", () => {
 			type: "numberLineForOpposites" as const,
 			width: 600,
 			height: 100,
-			min: -15,
-			max: 15,
+			maxAbsValue: 15,
 			tickInterval: 3,
-			opposites: [
-				{ value: 6, color: "#4caf50" },
-				{ value: -6, color: "#4caf50" },
-				{ value: 9, color: "#2196f3" },
-				{ value: -9, color: "#2196f3" }
-			],
-			showZero: true
+			value: 9,
+			positiveLabel: "9",
+			negativeLabel: "?",
+			showArrows: true
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

@@ -11,18 +11,18 @@ describe("generateDataTable", () => {
 	test("should render with minimal props", () => {
 		const props = {
 			type: "dataTable" as const,
-			width: null,
-			height: null,
 			title: null,
-			headers: ["Name", "Score"],
-			data: [
-				["Alice", "95"],
-				["Bob", "87"],
-				["Carol", "92"]
+			columns: [
+				{ key: "name", label: "Name", isNumeric: false },
+				{ key: "score", label: "Score", isNumeric: true }
 			],
-			headerBackgroundColor: null,
-			cellBackgroundColor: null,
-			borderColor: null
+			data: [
+				["Alice", 95],
+				["Bob", 87],
+				["Carol", 92]
+			],
+			rowHeaderKey: null,
+			footer: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -30,18 +30,20 @@ describe("generateDataTable", () => {
 	test("should render with all props specified", () => {
 		const props = {
 			type: "dataTable" as const,
-			width: 400,
-			height: 300,
 			title: "Student Grades",
-			headers: ["Student", "Math", "Science", "English"],
-			data: [
-				["Alice", "95", "88", "92"],
-				["Bob", "87", "91", "85"],
-				["Carol", "92", "94", "89"]
+			columns: [
+				{ key: "student", label: "Student", isNumeric: false },
+				{ key: "math", label: "Math", isNumeric: true },
+				{ key: "science", label: "Science", isNumeric: true },
+				{ key: "english", label: "English", isNumeric: true }
 			],
-			headerBackgroundColor: "#f0f8ff",
-			cellBackgroundColor: "#ffffff",
-			borderColor: "#cccccc"
+			data: [
+				["Alice", 95, 88, 92],
+				["Bob", 87, 91, 85],
+				["Carol", 92, 94, 89]
+			],
+			rowHeaderKey: "student",
+			footer: ["Average", 91, 91, 89]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

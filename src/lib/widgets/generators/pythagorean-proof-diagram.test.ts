@@ -13,13 +13,18 @@ describe("generatePythagoreanProofDiagram", () => {
 			type: "pythagoreanProofDiagram" as const,
 			width: null,
 			height: null,
-			sideA: 3,
-			sideB: 4,
-			sideC: 5,
-			proofType: "square-arrangement" as const,
-			showLabels: null,
-			showFormula: null,
-			colors: null
+			squareA: {
+				area: 9, // 3²
+				sideLabel: null
+			},
+			squareB: {
+				area: 16, // 4²
+				sideLabel: null
+			},
+			squareC: {
+				area: 25, // 5²
+				sideLabel: null
+			}
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -29,17 +34,17 @@ describe("generatePythagoreanProofDiagram", () => {
 			type: "pythagoreanProofDiagram" as const,
 			width: 500,
 			height: 500,
-			sideA: 5,
-			sideB: 12,
-			sideC: 13,
-			proofType: "dissection" as const,
-			showLabels: true,
-			showFormula: true,
-			colors: {
-				sideASquare: "#ffcdd2",
-				sideBSquare: "#c8e6c9",
-				sideCSquare: "#bbdefb",
-				triangle: "#fff3e0"
+			squareA: {
+				area: 25, // 5²
+				sideLabel: "a"
+			},
+			squareB: {
+				area: 144, // 12²
+				sideLabel: "b"
+			},
+			squareC: {
+				area: 169, // 13²
+				sideLabel: "c"
 			}
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()

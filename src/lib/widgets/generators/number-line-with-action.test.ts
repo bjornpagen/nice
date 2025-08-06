@@ -13,15 +13,19 @@ describe("generateNumberLineWithAction", () => {
 			type: "numberLineWithAction" as const,
 			width: null,
 			height: null,
+			orientation: null,
 			min: 0,
 			max: 20,
 			tickInterval: 2,
-			startPosition: 5,
-			actions: [
-				{ type: "move" as const, amount: 3, color: null },
-				{ type: "move" as const, amount: -2, color: null }
+			customLabels: [
+				{ value: 5, text: "Start" },
+				{ value: 8, text: "?" }
 			],
-			showSteps: null
+			action: {
+				startValue: 5,
+				change: 3,
+				label: "+3"
+			}
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -31,16 +35,19 @@ describe("generateNumberLineWithAction", () => {
 			type: "numberLineWithAction" as const,
 			width: 600,
 			height: 150,
+			orientation: "horizontal" as const,
 			min: -10,
 			max: 30,
 			tickInterval: 5,
-			startPosition: 8,
-			actions: [
-				{ type: "move" as const, amount: 7, color: "#4caf50" },
-				{ type: "move" as const, amount: -12, color: "#f44336" },
-				{ type: "move" as const, amount: 5, color: "#2196f3" }
+			customLabels: [
+				{ value: 8, text: "8°C" },
+				{ value: 3, text: "?°C" }
 			],
-			showSteps: true
+			action: {
+				startValue: 8,
+				change: -5,
+				label: "-5°C"
+			}
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

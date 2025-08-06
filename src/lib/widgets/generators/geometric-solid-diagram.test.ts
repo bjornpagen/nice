@@ -13,12 +13,12 @@ describe("generateGeometricSolidDiagram", () => {
 			type: "geometricSolidDiagram" as const,
 			width: null,
 			height: null,
-			solidType: "cube" as const,
-			dimensions: { width: 100, height: 100, depth: 100 },
-			fillColor: null,
-			strokeColor: null,
-			showDimensions: null,
-			perspective: null
+			shape: {
+				type: "cylinder" as const,
+				radius: 25,
+				height: 50
+			},
+			labels: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -28,12 +28,15 @@ describe("generateGeometricSolidDiagram", () => {
 			type: "geometricSolidDiagram" as const,
 			width: 400,
 			height: 300,
-			solidType: "rectangular-prism" as const,
-			dimensions: { width: 120, height: 80, depth: 60 },
-			fillColor: "#e3f2fd",
-			strokeColor: "#1976d2",
-			showDimensions: true,
-			perspective: "isometric" as const
+			shape: {
+				type: "cone" as const,
+				radius: 40,
+				height: 80
+			},
+			labels: [
+				{ target: "radius" as const, text: "r = 40" },
+				{ target: "height" as const, text: "h = 80" }
+			]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

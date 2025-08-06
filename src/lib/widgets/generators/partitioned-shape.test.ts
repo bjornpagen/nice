@@ -13,12 +13,17 @@ describe("generatePartitionedShape", () => {
 			type: "partitionedShape" as const,
 			width: null,
 			height: null,
-			shape: "rectangle" as const,
-			dimensions: { width: 200, height: 150 },
-			partitions: 6,
-			partitionType: "equal" as const,
-			shadedPartitions: null,
-			labels: null
+			shapes: [
+				{
+					type: "rectangle" as const,
+					totalParts: 6,
+					shadedParts: 3,
+					rows: 2,
+					columns: 3,
+					shadeColor: null
+				}
+			],
+			layout: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -28,15 +33,17 @@ describe("generatePartitionedShape", () => {
 			type: "partitionedShape" as const,
 			width: 400,
 			height: 300,
-			shape: "circle" as const,
-			dimensions: { radius: 100 },
-			partitions: 8,
-			partitionType: "equal" as const,
-			shadedPartitions: [0, 2, 4, 6],
-			labels: [
-				{ partition: 0, text: "1/8", position: "center" as const },
-				{ partition: 2, text: "3/8", position: "center" as const }
-			]
+			shapes: [
+				{
+					type: "circle" as const,
+					totalParts: 8,
+					shadedParts: 4,
+					rows: null,
+					columns: null,
+					shadeColor: "#ff6b6b"
+				}
+			],
+			layout: "horizontal" as const
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

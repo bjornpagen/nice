@@ -14,12 +14,10 @@ describe("generateHangerDiagram", () => {
 			width: null,
 			height: null,
 			leftSide: [
-				{ value: 5, label: null, color: null },
-				{ value: 3, label: null, color: null }
+				{ label: 5, shape: null, color: null },
+				{ label: 3, shape: null, color: null }
 			],
-			rightSide: [{ value: 8, label: null, color: null }],
-			isBalanced: true,
-			showValues: null
+			rightSide: [{ label: 8, shape: null, color: null }]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -30,12 +28,10 @@ describe("generateHangerDiagram", () => {
 			width: 500,
 			height: 300,
 			leftSide: [
-				{ value: 12, label: "x", color: "#4285f4" },
-				{ value: 7, label: "7", color: "#34a853" }
+				{ label: "x", shape: "circle" as const, color: "#4285f4" },
+				{ label: 7, shape: "square" as const, color: "#34a853" }
 			],
-			rightSide: [{ value: 19, label: "19", color: "#ea4335" }],
-			isBalanced: true,
-			showValues: true
+			rightSide: [{ label: "19", shape: "pentagon" as const, color: "#ea4335" }]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
