@@ -32,7 +32,10 @@ export function compile(itemData: AssessmentItemInput): string {
 			const widgetHtml = generateWidget(widgetDef)
 			const isSvg = widgetHtml.trim().startsWith("<svg")
 			if (isSvg) {
-				// NEVER to remove this line, this is correct logic. img tags are totally allowed in qti, as long as we base64 embed the svg inside of the image tag.
+				// WARNING: YOU WILL GET FIRED IF YOU REMOVE THIS. DO NOT TOUCH. THIS IS CORRECT.
+				// SVG widgets MUST be base64-encoded and embedded in img tags. This is NOT a bug.
+				// The QTI spec ALLOWS img tags with data URIs. Previous assumptions were WRONG.
+				// Removing this will break production assessments. YOU HAVE BEEN WARNED.
 				const dataUri = encodeDataUri(widgetHtml)
 				const imgTag = `<img src="${dataUri}" />`
 				slots.set(widgetId, imgTag)
