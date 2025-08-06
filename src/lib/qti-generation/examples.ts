@@ -39,7 +39,7 @@ export const doubleNumberLineRatio: AssessmentItemInput = {
 		choice_interaction: {
 			type: "choiceInteraction",
 			responseIdentifier: "RESPONSE",
-			prompt: "<p>Select the double number line that shows the other values of distance and elevation.</p>",
+			prompt: "Select the double number line that shows the other values of distance and elevation.",
 			minChoices: 1,
 			maxChoices: 1,
 			shuffle: true,
@@ -111,7 +111,7 @@ export const compare3DigitNumbers: AssessmentItemInput = {
 			responseIdentifier: "RESPONSE",
 			shuffle: true,
 			orientation: "horizontal",
-			prompt: "<p>Arrange the cards to make a true comparison.</p>",
+			prompt: "Arrange the cards to make a true comparison.",
 			choices: [
 				{
 					identifier: "A",
@@ -179,7 +179,7 @@ export const inequalityNumberLine: AssessmentItemInput = {
 			shuffle: false,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt: "<p>Choose the inequality that represents the graph.</p>",
+			prompt: "Choose the inequality that represents the graph.",
 			choices: [
 				{
 					identifier: "A",
@@ -263,8 +263,8 @@ export const verticalNumberLineComparison: AssessmentItemInput = {
 			responseIdentifier: "RESPONSE_POS",
 			shuffle: false,
 			choices: [
-				{ identifier: "ABOVE", content: "above" },
-				{ identifier: "BELOW", content: "below" }
+				{ identifier: "ABOVE", content: "<p>above</p>" },
+				{ identifier: "BELOW", content: "<p>below</p>" }
 			]
 		},
 		comp_choice: {
@@ -272,8 +272,8 @@ export const verticalNumberLineComparison: AssessmentItemInput = {
 			responseIdentifier: "RESPONSE_COMP",
 			shuffle: false,
 			choices: [
-				{ identifier: "GT", content: "greater than" },
-				{ identifier: "LT", content: "less than" }
+				{ identifier: "GT", content: "<p>greater than</p>" },
+				{ identifier: "LT", content: "<p>less than</p>" }
 			]
 		}
 	},
@@ -396,7 +396,7 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			minChoices: 0,
 			maxChoices: 3,
 			prompt:
-				'<p>Which of the following rectangles have exactly <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of their area shaded?</p>',
+				'Which of the following rectangles have exactly <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of their area shaded?',
 			choices: [
 				{
 					identifier: "A",
@@ -461,7 +461,7 @@ export const calculateShadedArea: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 0,
 			maxChoices: 3,
-			prompt: "<p>How can we calculate the shaded area?</p>",
+			prompt: "How can we calculate the shaded area?",
 			choices: [
 				{
 					identifier: "A",
@@ -627,7 +627,7 @@ export const libertyvilleBusinessCycle: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt: "<p>In which of the years was Libertyville most likely experiencing a trough in its business cycle?</p>",
+			prompt: "In which of the years was Libertyville most likely experiencing a trough in its business cycle?",
 			choices: [
 				{
 					identifier: "A",
@@ -690,7 +690,7 @@ export const continuityDifferentiabilityPiecewise: AssessmentItemInput = {
 			minChoices: 1,
 			maxChoices: 1,
 			prompt:
-				'<p>Is the function given below continuous/differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>?</p>',
+				'Is the function given below continuous/differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>?',
 			choices: [
 				{
 					identifier: "A",
@@ -803,7 +803,7 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 			footer: null
 		}
 	},
-	body: 'This table gives select values of the differentiable function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>.<slot name="h_table" /><slot name="choice_interaction" />',
+	body: '<p>This table gives select values of the differentiable function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>.</p><slot name="h_table" /><slot name="choice_interaction" />',
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -902,7 +902,7 @@ export const countApplesEmoji: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt: '<p>Which box has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> apples?</p>',
+			prompt: 'Which box has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> apples?',
 			choices: [
 				{
 					identifier: "CHOICE_3",
@@ -1031,7 +1031,7 @@ export const shapeBinBarChart: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt: "<p>Which bar graph correctly shows the number of shapes in the bin?</p>",
+			prompt: "Which bar graph correctly shows the number of shapes in the bin?",
 			choices: [
 				{
 					identifier: "A",
@@ -1125,7 +1125,7 @@ export const pencilLengthLinePlot: AssessmentItemInput = {
 			dotRadius: 8
 		}
 	},
-	body: 'The lengths of 4 pencils were measured. The lengths are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm.<slot name="choice_interaction" />',
+	body: '<p>The lengths of 4 pencils were measured. The lengths are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm.</p><slot name="choice_interaction" />',
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -1133,7 +1133,7 @@ export const pencilLengthLinePlot: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt: "<p>Which line plot correctly shows the length of each pencil?</p>",
+			prompt: "Which line plot correctly shows the length of each pencil?",
 			choices: [
 				{
 					identifier: "A",
