@@ -109,6 +109,38 @@ const DilationSchema = z
 	})
 	.strict()
 
+// Defines an angle mark to be drawn at a vertex
+const AngleMarkSchema = z
+	.object({
+		vertexIndex: z.number().describe("The index of the vertex where the angle mark should be drawn."),
+		radius: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 20)
+			.describe("The radius of the angle arc in pixels."),
+		label: z.string().nullable().describe("The angle label (e.g., '90°', '∠ABC', '166°')."),
+		labelDistance: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 30)
+			.describe("Distance from vertex to place the label.")
+	})
+	.strict()
+
+// Defines an additional labeled point
+const AdditionalPointSchema = z
+	.object({
+		x: z.number().describe("The horizontal coordinate of the point."),
+		y: z.number().describe("The vertical coordinate of the point."),
+		label: z.string().describe("The label for the point (e.g., 'R', 'P')."),
+		style: z
+			.enum(["dot", "circle"])
+			.nullable()
+			.transform((val) => val ?? "dot")
+			.describe("The visual style of the point.")
+	})
+	.strict()
+
 // The main Zod schema for the transformationDiagram function.
 export const TransformationDiagramPropsSchema = z
 	.object({
@@ -147,7 +179,13 @@ export const TransformationDiagramPropsSchema = z
 					.string()
 					.nullable()
 					.transform((val) => val ?? "#7854ab")
-					.describe("The stroke color of the shape's boundary.")
+					.describe("The stroke color of the shape's boundary."),
+				vertexLabels: z
+					.array(z.string())
+					.nullable()
+					.optional()
+					.describe("Labels for each vertex (e.g., ['A', 'B', 'C', 'D']). Must match the number of vertices."),
+				angleMarks: z.array(AngleMarkSchema).nullable().optional().describe("Angle marks to draw at specific vertices.")
 			})
 			.strict()
 			.describe("The original shape before transformation."),
@@ -175,17 +213,28 @@ export const TransformationDiagramPropsSchema = z
 					.string()
 					.nullable()
 					.transform((val) => val ?? "#7854ab")
-					.describe("The stroke color of the shape's boundary.")
+					.describe("The stroke color of the shape's boundary."),
+				vertexLabels: z
+					.array(z.string())
+					.nullable()
+					.optional()
+					.describe("Labels for each vertex (e.g., ['A'', 'B'', 'C'', 'D'']). Must match the number of vertices."),
+				angleMarks: z.array(AngleMarkSchema).nullable().optional().describe("Angle marks to draw at specific vertices.")
 			})
 			.strict()
 			.describe("The resulting shape after transformation."),
 		transformation: z
 			.discriminatedUnion("type", [TranslationSchema, ReflectionSchema, RotationSchema, DilationSchema])
-			.describe("The details of the transformation applied.")
+			.describe("The details of the transformation applied."),
+		additionalPoints: z
+			.array(AdditionalPointSchema)
+			.nullable()
+			.optional()
+			.describe("Additional labeled points to display (e.g., reference points, centers).")
 	})
 	.strict()
 	.describe(
-		"Generates an SVG diagram illustrating a geometric transformation (translation, reflection, rotation, or dilation) of a polygon. This widget renders a 'pre-image' and an 'image' on a blank canvas and includes visual aids like vectors, reflection lines, or dilation rays to clarify the specific transformation, making it ideal for non-coordinate grid geometry problems."
+		"Generates an SVG diagram illustrating a geometric transformation (translation, reflection, rotation, or dilation) of a polygon. This widget renders a 'pre-image' and an 'image' on a blank canvas and includes visual aids like vectors, reflection lines, or dilation rays to clarify the specific transformation, making it ideal for non-coordinate grid geometry problems. Supports vertex labeling, angle marks, and additional reference points."
 	)
 
 export type TransformationDiagramProps = z.infer<typeof TransformationDiagramPropsSchema>
@@ -194,11 +243,16 @@ export type TransformationDiagramProps = z.infer<typeof TransformationDiagramPro
  * Generates an SVG diagram illustrating a geometric transformation.
  */
 export const generateTransformationDiagram: WidgetGenerator<typeof TransformationDiagramPropsSchema> = (props) => {
-	const { width, height, preImage, image, transformation } = props
+	const { width, height, preImage, image, transformation, additionalPoints } = props
 
 	// 1. Calculate intelligent viewBox with proper padding for visual elements
 	const calculateViewBox = () => {
 		let allPoints = [...preImage.vertices, ...image.vertices]
+
+		// Add additional points if any
+		if (additionalPoints) {
+			allPoints.push(...additionalPoints)
+		}
 
 		// Add transformation-specific points
 		if (transformation.type === "reflection") {
@@ -344,6 +398,141 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		return `<path d="M ${startX} ${startY} A ${adjustedRadius} ${adjustedRadius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="#ff6600" stroke-width="${strokeWidth}" fill="none" marker-end="url(#arrowhead)"/>`
 	}
 
+	const drawVertexLabels = (shape: TransformationDiagramProps["preImage"]) => {
+		if (!shape.vertexLabels || shape.vertexLabels.length !== shape.vertices.length) {
+			return ""
+		}
+
+		let labelsSvg = ""
+		const fontSize = Math.max(12, 14 * scale)
+		const labelOffset = Math.max(15, 18 * scale)
+
+		for (let i = 0; i < shape.vertices.length; i++) {
+			const vertex = shape.vertices[i]
+			const label = shape.vertexLabels[i]
+			if (!vertex || !label) continue
+
+			// Calculate label position based on adjacent vertices for better placement
+			const prevVertex = shape.vertices[(i - 1 + shape.vertices.length) % shape.vertices.length]
+			const nextVertex = shape.vertices[(i + 1) % shape.vertices.length]
+
+			if (!prevVertex || !nextVertex) continue
+
+			// Calculate the angle bisector direction
+			const dx1 = vertex.x - prevVertex.x
+			const dy1 = vertex.y - prevVertex.y
+			const dx2 = vertex.x - nextVertex.x
+			const dy2 = vertex.y - nextVertex.y
+
+			// Normalize vectors
+			const len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1)
+			const len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2)
+
+			const nx1 = dx1 / len1
+			const ny1 = dy1 / len1
+			const nx2 = dx2 / len2
+			const ny2 = dy2 / len2
+
+			// Direction for label placement (outward from shape)
+			let labelDx = nx1 + nx2
+			let labelDy = ny1 + ny2
+
+			// Normalize the direction
+			const labelLen = Math.sqrt(labelDx * labelDx + labelDy * labelDy)
+			if (labelLen > 0) {
+				labelDx /= labelLen
+				labelDy /= labelLen
+			} else {
+				// Fallback for collinear edges
+				labelDx = -ny1
+				labelDy = nx1
+			}
+
+			const labelX = vertex.x + labelDx * labelOffset
+			const labelY = vertex.y + labelDy * labelOffset
+
+			labelsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" font-weight="600" fill="#333">${label}</text>`
+		}
+
+		return labelsSvg
+	}
+
+	const drawAngleMark = (
+		vertices: Array<{ x: number; y: number }>,
+		mark: z.infer<typeof AngleMarkSchema>,
+		strokeColor: string
+	) => {
+		if (mark.vertexIndex < 0 || mark.vertexIndex >= vertices.length) {
+			return ""
+		}
+
+		const vertex = vertices[mark.vertexIndex]
+		const prevVertex = vertices[(mark.vertexIndex - 1 + vertices.length) % vertices.length]
+		const nextVertex = vertices[(mark.vertexIndex + 1) % vertices.length]
+
+		if (!vertex || !prevVertex || !nextVertex) {
+			return ""
+		}
+
+		// Calculate angles for the arc
+		const angle1 = Math.atan2(prevVertex.y - vertex.y, prevVertex.x - vertex.x)
+		const angle2 = Math.atan2(nextVertex.y - vertex.y, nextVertex.x - vertex.x)
+
+		// Normalize angles to [0, 2π]
+		let startAngle = angle1
+		let endAngle = angle2
+
+		// Ensure we draw the interior angle
+		if (endAngle < startAngle) {
+			endAngle += 2 * Math.PI
+		}
+		if (endAngle - startAngle > Math.PI) {
+			;[startAngle, endAngle] = [endAngle, startAngle + 2 * Math.PI]
+		}
+
+		const arcRadius = mark.radius
+		const startX = vertex.x + arcRadius * Math.cos(startAngle)
+		const startY = vertex.y + arcRadius * Math.sin(startAngle)
+		const endX = vertex.x + arcRadius * Math.cos(endAngle)
+		const endY = vertex.y + arcRadius * Math.sin(endAngle)
+
+		const largeArcFlag = Math.abs(endAngle - startAngle) > Math.PI ? 1 : 0
+		const sweepFlag = 1
+
+		let markSvg = `<path d="M ${startX} ${startY} A ${arcRadius} ${arcRadius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="${strokeColor}" stroke-width="${Math.max(1, 1.5 * scale)}" fill="none"/>`
+
+		// Add label if provided
+		if (mark.label) {
+			const midAngle = (startAngle + endAngle) / 2
+			const labelX = vertex.x + mark.labelDistance * Math.cos(midAngle)
+			const labelY = vertex.y + mark.labelDistance * Math.sin(midAngle)
+			const fontSize = Math.max(11, 13 * scale)
+
+			markSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="#333">${mark.label}</text>`
+		}
+
+		return markSvg
+	}
+
+	const drawAdditionalPoint = (point: z.infer<typeof AdditionalPointSchema>) => {
+		let pointSvg = ""
+		const radius = Math.max(3, 4 * scale)
+		const fontSize = Math.max(12, 14 * scale)
+
+		if (point.style === "circle") {
+			pointSvg += `<circle cx="${point.x}" cy="${point.y}" r="${radius}" fill="none" stroke="#333" stroke-width="${Math.max(1.5, 2 * scale)}"/>`
+		} else {
+			// dot style
+			pointSvg += `<circle cx="${point.x}" cy="${point.y}" r="${radius}" fill="#333"/>`
+		}
+
+		// Label offset to avoid overlapping with the point
+		const labelOffset = radius + Math.max(8, 10 * scale)
+		pointSvg += `<text x="${point.x}" y="${point.y - labelOffset}" text-anchor="middle" dominant-baseline="bottom" font-size="${fontSize}px" font-weight="600" fill="#333">${point.label}</text>`
+
+		return pointSvg
+	}
+
 	// 3. Calculate label positions with collision avoidance
 	const avoidPoints: Array<{ x: number; y: number }> = []
 
@@ -400,6 +589,22 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	// 5. Draw Main Shapes with proper layering
 	svg += drawPolygon(preImage, false, preImageLabelPos)
 	svg += drawPolygon(image, true, imageLabelPos)
+
+	// 5a. Draw angle marks for both shapes
+	if (preImage.angleMarks) {
+		for (const mark of preImage.angleMarks) {
+			svg += drawAngleMark(preImage.vertices, mark, preImage.strokeColor)
+		}
+	}
+	if (image.angleMarks) {
+		for (const mark of image.angleMarks) {
+			svg += drawAngleMark(image.vertices, mark, image.strokeColor)
+		}
+	}
+
+	// 5b. Draw vertex labels for both shapes
+	svg += drawVertexLabels(preImage)
+	svg += drawVertexLabels(image)
 
 	// 6. Draw Transformation-Specific Foreground Elements (vectors, centers, vertex indicators)
 	switch (transformation.type) {
@@ -480,6 +685,13 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 				}
 			}
 			break
+		}
+	}
+
+	// 7. Draw additional points (last so they appear on top)
+	if (additionalPoints) {
+		for (const point of additionalPoints) {
+			svg += drawAdditionalPoint(point)
 		}
 	}
 

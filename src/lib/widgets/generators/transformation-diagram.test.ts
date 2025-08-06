@@ -1057,4 +1057,158 @@ describe("generateTransformationDiagram", () => {
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
 	})
+
+	describe("Enhanced Features", () => {
+		test("should render transformation with vertex labels, angle marks, and additional points", () => {
+			const props = {
+				type: "transformationDiagram" as const,
+				width: 500,
+				height: 400,
+				preImage: {
+					vertices: [
+						{ x: 116.667, y: 262.5 },
+						{ x: 230.417, y: 291.667 },
+						{ x: 87.5, y: 320.833 },
+						{ x: 29.167, y: 262.5 }
+					],
+					label: null,
+					fillColor: "rgba(120, 84, 171, 0.15)",
+					strokeColor: "#7854ab",
+					vertexLabels: ["A", "B", "C", "D"],
+					angleMarks: [
+						{
+							vertexIndex: 0,
+							radius: 25,
+							label: "166°",
+							labelDistance: 40
+						}
+					]
+				},
+				image: {
+					vertices: [
+						{ x: 235.144, y: 140.092 },
+						{ x: 324.28, y: 63.642 },
+						{ x: 266.198, y: 197.443 },
+						{ x: 184.956, y: 211.768 }
+					],
+					label: null,
+					fillColor: "rgba(31, 171, 84, 0.15)",
+					strokeColor: "#1fab54",
+					vertexLabels: ["A'", "B'", "C'", "D'"],
+					angleMarks: [
+						{
+							vertexIndex: 2,
+							radius: 20,
+							label: "123°",
+							labelDistance: 35
+						}
+					]
+				},
+				transformation: {
+					type: "rotation" as const,
+					centerOfRotation: { x: 180, y: 200 },
+					angle: -57
+				},
+				additionalPoints: [
+					{
+						x: 58.333,
+						y: 87.5,
+						label: "R",
+						style: "circle" as const
+					}
+				]
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render reflection with vertex labels and perpendicular angle marks", () => {
+			const props = {
+				type: "transformationDiagram" as const,
+				width: 500,
+				height: 400,
+				preImage: {
+					vertices: [
+						{ x: 80, y: 120 },
+						{ x: 140, y: 80 },
+						{ x: 180, y: 140 }
+					],
+					label: null,
+					fillColor: "rgba(255, 100, 100, 0.3)",
+					strokeColor: "#ff6464",
+					vertexLabels: ["X", "Y", "Z"],
+					angleMarks: null
+				},
+				image: {
+					vertices: [
+						{ x: 320, y: 120 },
+						{ x: 260, y: 80 },
+						{ x: 220, y: 140 }
+					],
+					label: null,
+					fillColor: "rgba(100, 100, 255, 0.3)",
+					strokeColor: "#6464ff",
+					vertexLabels: ["X'", "Y'", "Z'"],
+					angleMarks: null
+				},
+				transformation: {
+					type: "reflection" as const,
+					lineOfReflection: {
+						from: { x: 200, y: 50 },
+						to: { x: 200, y: 200 },
+						style: "dashed",
+						color: "#333"
+					}
+				},
+				additionalPoints: [
+					{
+						x: 200,
+						y: 30,
+						label: "ℓ",
+						style: null
+					}
+				]
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render translation with labeled vertices showing movement", () => {
+			const props = {
+				type: "transformationDiagram" as const,
+				width: 450,
+				height: 350,
+				preImage: {
+					vertices: [
+						{ x: 50, y: 100 },
+						{ x: 100, y: 80 },
+						{ x: 120, y: 130 },
+						{ x: 70, y: 150 }
+					],
+					label: null,
+					fillColor: "rgba(150, 200, 100, 0.3)",
+					strokeColor: "#96c864",
+					vertexLabels: ["P", "Q", "R", "S"],
+					angleMarks: null
+				},
+				image: {
+					vertices: [
+						{ x: 200, y: 180 },
+						{ x: 250, y: 160 },
+						{ x: 270, y: 210 },
+						{ x: 220, y: 230 }
+					],
+					label: null,
+					fillColor: "rgba(100, 150, 200, 0.3)",
+					strokeColor: "#6496c8",
+					vertexLabels: ["P'", "Q'", "R'", "S'"],
+					angleMarks: null
+				},
+				transformation: {
+					type: "translation" as const,
+					showVectors: true
+				},
+				additionalPoints: null
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
 })
