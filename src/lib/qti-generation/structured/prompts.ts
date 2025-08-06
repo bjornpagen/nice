@@ -297,6 +297,91 @@ Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turne
 }
 \`\`\`
 
+**6. Widget vs. Interaction Misclassification - BANNED:**
+Perseus often calls interactive elements "widgets". You MUST correctly reclassify them as **interactions**.
+
+**Perseus Input with \`numeric-input\`:**
+\`\`\`json
+"question": {
+  "content": "Solve for x. [[☃ numeric-input 1]]",
+  "widgets": {
+    "numeric-input 1": { "type": "numeric-input", ... }
+  }
+}
+\`\`\`
+
+**WRONG Shell Output (Automatic Rejection):**
+\`\`\`json
+{
+  "body": "<p>Solve for x. <slot name=\"numeric-input-1\" /></p>",
+  "widgets": ["numeric-input-1"],
+  "interactions": []
+}
+\`\`\`
+
+**CORRECT Shell Output:**
+\`\`\`json
+{
+  "body": "<p>Solve for x. <slot name=\"text_entry_interaction_1\" /></p>",
+  "widgets": [],
+  "interactions": ["text_entry_interaction_1"]
+}
+\`\`\`
+**Explanation:** \`numeric-input\`, \`input-number\`, and \`expression\` are ALWAYS interactions. They must be placed in the \`interactions\` array, not the \`widgets\` array.
+
+**Perseus Input with \`expression\`:**
+\`\`\`json
+"question": {
+  "content": "Write an equation. [[☃ expression 1]]",
+  "widgets": {
+    "expression 1": { "type": "expression", ... }
+  }
+}
+\`\`\`
+**WRONG Shell Output (Automatic Rejection):**
+\`\`\`json
+{
+  "body": "<p>Write an equation. <slot name=\"expression_1\" /></p>",
+  "widgets": ["expression_1"],
+  "interactions": []
+}
+\`\`\`
+**CORRECT Shell Output:**
+\`\`\`json
+{
+  "body": "<p>Write an equation. <slot name=\"text_entry_interaction_1\" /></p>",
+  "widgets": [],
+  "interactions": ["text_entry_interaction_1"]
+}
+\`\`\`
+
+**Perseus Input with \`radio\`:**
+\`\`\`json
+"question": {
+  "content": "Choose the best answer. [[☃ radio 1]]",
+  "widgets": {
+    "radio 1": { "type": "radio", ... }
+  }
+}
+\`\`\`
+**WRONG Shell Output (Automatic Rejection):**
+\`\`\`json
+{
+  "body": "<p>Choose the best answer. <slot name=\"radio_1\" /></p>",
+  "widgets": ["radio_1"],
+  "interactions": []
+}
+\`\`\`
+**CORRECT Shell Output:**
+\`\`\`json
+{
+  "body": "<p>Choose the best answer. <slot name=\"choice_interaction_1\" /></p>",
+  "widgets": [],
+  "interactions": ["choice_interaction_1"]
+}
+\`\`\`
+**General Rule:** If a Perseus "widget" asks the user for input (\`numeric-input\`, \`input-number\`, \`expression\`, \`radio\`, \`dropdown\`, \`sorter\`, \`matcher\`), it is an INTERACTION. Create a slot, and put its name in the \`interactions\` array.
+
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed

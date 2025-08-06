@@ -1418,7 +1418,35 @@ export const compare2DigitNumbers: AssessmentItemInput = {
 	}
 }
 
+export const greatestCommonFactor: AssessmentItemInput = {
+	identifier: "greatest-common-factor-numeric-input",
+	title: "Greatest common factor",
+	responseDeclarations: [
+		{
+			identifier: "RESPONSE",
+			cardinality: "single",
+			baseType: "integer",
+			correct: 15
+		}
+	],
+	body: '<p><strong>Find the greatest common factor of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>30</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>75</mn></math>.</strong></p><p><slot name="text_entry_interaction_1" /></p>',
+	interactions: {
+		text_entry_interaction_1: {
+			type: "textEntryInteraction",
+			responseIdentifier: "RESPONSE",
+			expectedLength: 3
+		}
+	},
+	widgets: null,
+	feedback: {
+		correct: '<p><span class="qti-keyword-emphasis">Correct!</span> The greatest common factor of 30 and 75 is 15.</p>',
+		incorrect:
+			'<p><span class="qti-keyword-emphasis">Not quite.</span> Remember to find the largest number that divides both 30 and 75 without a remainder. The factors of 30 are 1, 2, 3, 5, 6, 10, 15, 30. The factors of 75 are 1, 3, 5, 15, 25, 75. The greatest common factor is 15.</p>'
+	}
+}
+
 export const allExamples: AssessmentItemInput[] = [
+	greatestCommonFactor,
 	doubleNumberLineRatio,
 	evalFractionalExponents,
 	compare3DigitNumbers,
