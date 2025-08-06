@@ -24,7 +24,6 @@ import {
 	generateNumberLineWithAction,
 	generateNumberLineWithFractionGroups,
 	generateNumberSetDiagram,
-	generateParallelLinesTransversal,
 	generatePartitionedShape,
 	generatePictograph,
 	generatePolyhedronDiagram,
@@ -90,8 +89,6 @@ export function generateWidget(widget: Widget): string {
 			return generateNumberLineWithFractionGroups(widget)
 		case "numberSetDiagram":
 			return generateNumberSetDiagram(widget)
-		case "parallelLinesTransversal":
-			return generateParallelLinesTransversal(widget)
 		case "partitionedShape":
 			return generatePartitionedShape(widget)
 		case "pictograph":

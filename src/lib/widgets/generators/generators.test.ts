@@ -29,7 +29,6 @@ import { generateNumberLineForOpposites } from "./number-line-for-opposites"
 import { generateNumberLineWithAction } from "./number-line-with-action"
 import { generateNumberLineWithFractionGroups } from "./number-line-with-fraction-groups"
 import { generateNumberSetDiagram } from "./number-set-diagram"
-import { generateParallelLinesTransversal } from "./parallel-lines-transversal"
 import { generatePartitionedShape } from "./partitioned-shape"
 import { generatePictograph } from "./pictograph"
 import { generatePolyhedronDiagram } from "./polyhedron-diagram"
@@ -1328,23 +1327,6 @@ describe("Widget Generators", () => {
 				}
 			}
 			expect(generateNumberSetDiagram(props)).toMatchSnapshot()
-		})
-	})
-
-	describe("generateParallelLinesTransversal", () => {
-		test("should render with labels and rotations", () => {
-			const props = {
-				type: "parallelLinesTransversal" as const,
-				width: 400,
-				height: 350,
-				linesAngle: 20,
-				transversalAngle: 80,
-				labels: [
-					{ intersection: "top" as const, position: "topLeft" as const, label: "120°", color: "red" },
-					{ intersection: "bottom" as const, position: "bottomRight" as const, label: "x", color: "blue" }
-				]
-			}
-			expect(generateParallelLinesTransversal(props)).toMatchSnapshot()
 		})
 	})
 

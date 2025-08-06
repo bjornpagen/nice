@@ -31,7 +31,6 @@ import {
 	NumberLineWithFractionGroupsPropsSchema
 } from "./number-line-with-fraction-groups"
 import { generateNumberSetDiagram, NumberSetDiagramPropsSchema } from "./number-set-diagram"
-import { generateParallelLinesTransversal, ParallelLinesTransversalPropsSchema } from "./parallel-lines-transversal"
 import { generatePartitionedShape, PartitionedShapePropsSchema } from "./partitioned-shape"
 import { generatePictograph, PictographPropsSchema } from "./pictograph"
 import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "./polyhedron-diagram"
@@ -75,7 +74,6 @@ export const typedSchemas = {
 	numberLineWithAction: NumberLineWithActionPropsSchema,
 	numberLineWithFractionGroups: NumberLineWithFractionGroupsPropsSchema,
 	numberSetDiagram: NumberSetDiagramPropsSchema,
-	parallelLinesTransversal: ParallelLinesTransversalPropsSchema,
 	partitionedShape: PartitionedShapePropsSchema,
 	pictograph: PictographPropsSchema,
 	polyhedronDiagram: PolyhedronDiagramPropsSchema,
@@ -120,7 +118,6 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.numberLineWithAction,
 	typedSchemas.numberLineWithFractionGroups,
 	typedSchemas.numberSetDiagram,
-	typedSchemas.parallelLinesTransversal,
 	typedSchemas.partitionedShape,
 	typedSchemas.pictograph,
 	typedSchemas.polyhedronDiagram,
@@ -167,7 +164,6 @@ export {
 	generateNumberLineWithAction,
 	generateNumberLineWithFractionGroups,
 	generateNumberSetDiagram,
-	generateParallelLinesTransversal,
 	generatePartitionedShape,
 	generatePictograph,
 	generatePolyhedronDiagram,
