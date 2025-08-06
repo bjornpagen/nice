@@ -3,8 +3,11 @@ import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "./polyh
 
 // Helper function to generate diagram with schema validation
 const generateDiagram = (props: unknown) => {
-	const parsedProps = PolyhedronDiagramPropsSchema.parse(props)
-	return generatePolyhedronDiagram(parsedProps)
+	const validationResult = PolyhedronDiagramPropsSchema.safeParse(props)
+	if (!validationResult.success) {
+		throw validationResult.error
+	}
+	return generatePolyhedronDiagram(validationResult.data)
 }
 
 describe("generatePolyhedronDiagram", () => {
@@ -20,6 +23,7 @@ describe("generatePolyhedronDiagram", () => {
 				height: 3
 			},
 			labels: null,
+			diagonals: null,
 			shadedFace: null,
 			showHiddenEdges: null
 		}
@@ -44,9 +48,61 @@ describe("generatePolyhedronDiagram", () => {
 				{ text: "4 cm", target: "length" },
 				{ text: "3 cm", target: "width" }
 			],
+			diagonals: null,
 			shadedFace: "top_face",
 			showHiddenEdges: true
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
+	})
+
+	describe("Diagonals", () => {
+		test("should render a space diagonal", () => {
+			const props = {
+				type: "polyhedronDiagram" as const,
+				width: 400,
+				height: 300,
+				shape: { type: "rectangularPrism" as const, length: 10, width: 8, height: 6 },
+				diagonals: [{ fromVertexIndex: 0, toVertexIndex: 6, label: "d", style: "solid" as const }],
+				labels: null,
+				shadedFace: null,
+				showHiddenEdges: true
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render a face diagonal on the base", () => {
+			const props = {
+				type: "polyhedronDiagram" as const,
+				width: 400,
+				height: 300,
+				shape: { type: "rectangularPrism" as const, length: 10, width: 8, height: 6 },
+				diagonals: [{ fromVertexIndex: 0, toVertexIndex: 5, label: "r", style: "dashed" as const }],
+				labels: null,
+				shadedFace: null,
+				showHiddenEdges: true
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render both a space and face diagonal with labels", () => {
+			const props = {
+				type: "polyhedronDiagram" as const,
+				width: 400,
+				height: 300,
+				shape: { type: "rectangularPrism" as const, length: 10, width: 8, height: 6 },
+				diagonals: [
+					{ fromVertexIndex: 0, toVertexIndex: 6, label: "d", style: "solid" as const },
+					{ fromVertexIndex: 1, toVertexIndex: 4, label: "r", style: "dashed" as const }
+				],
+				labels: [
+					{ text: "10", target: "length" },
+					{ text: "8", target: "width" },
+					{ text: "6", target: "height" }
+				],
+				shadedFace: null,
+				showHiddenEdges: true
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
 	})
 })

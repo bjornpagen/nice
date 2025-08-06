@@ -1448,6 +1448,7 @@ describe("Widget Generators", () => {
 					{ text: "8 cm", target: "width" as const },
 					{ text: "6 cm", target: "height" as const }
 				],
+				diagonals: null,
 				shadedFace: "top_face",
 				showHiddenEdges: true
 			}

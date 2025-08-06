@@ -49,6 +49,20 @@ const RectangularPyramidDataSchema = z
 	})
 	.strict()
 
+// Defines a diagonal line to be drawn between two vertices.
+const DiagonalLineSchema = z
+	.object({
+		fromVertexIndex: z.number().int().min(0).describe("The 0-based index of the starting vertex."),
+		toVertexIndex: z.number().int().min(0).describe("The 0-based index of the ending vertex."),
+		label: z.string().nullable().describe("An optional text label for the diagonal's length."),
+		style: z
+			.enum(["solid", "dashed", "dotted"])
+			.nullable()
+			.transform((val) => val ?? "solid")
+			.describe("The visual style of the line.")
+	})
+	.strict()
+
 // The main Zod schema for the polyhedronDiagram function
 export const PolyhedronDiagramPropsSchema = z
 	.object({
@@ -67,6 +81,10 @@ export const PolyhedronDiagramPropsSchema = z
 			.discriminatedUnion("type", [RectangularPrismDataSchema, TriangularPrismDataSchema, RectangularPyramidDataSchema])
 			.describe("The geometric data defining the shape of the polyhedron."),
 		labels: z.array(DimensionLabelSchema).nullable().describe("An array of labels for edge lengths or face areas."),
+		diagonals: z
+			.array(DiagonalLineSchema)
+			.nullable()
+			.describe("An optional array of internal diagonals to draw between vertices."),
 		shadedFace: z.string().nullable().describe('The identifier of a face to shade (e.g., "top_face", "front_face").'),
 		showHiddenEdges: z
 			.boolean()
@@ -87,7 +105,7 @@ export type PolyhedronDiagramProps = z.infer<typeof PolyhedronDiagramPropsSchema
  * in a standard isometric or perspective view to provide depth perception.
  */
 export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagramPropsSchema> = (data) => {
-	const { width, height, shape, labels, shadedFace, showHiddenEdges } = data
+	const { width, height, shape, labels, diagonals, shadedFace, showHiddenEdges } = data
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
@@ -99,6 +117,8 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 		const y_offset = (height + h - l * 0.5) / 2
 
 		// 8 vertices of the prism
+		// 0: front bottom left, 1: front bottom right, 2: front top right, 3: front top left
+		// 4: back bottom left,  5: back bottom right,  6: back top right,  7: back top left
 		const p = [
 			{ x: x_offset, y: y_offset }, // 0: front bottom left
 			{ x: x_offset + w, y: y_offset }, // 1: front bottom right
@@ -139,6 +159,33 @@ export const generatePolyhedronDiagram: WidgetGenerator<typeof PolyhedronDiagram
 		svg += getFaceSvg("front_face")
 		svg += getFaceSvg("top_face")
 		svg += getFaceSvg("side_face")
+
+		// --- NEW: Render Diagonals ---
+		if (diagonals) {
+			for (const d of diagonals) {
+				const from = p[d.fromVertexIndex]
+				const to = p[d.toVertexIndex]
+				if (!from || !to) continue
+
+				let lineStyle = 'stroke="black" stroke-width="1.5"'
+				if (d.style === "dashed") {
+					lineStyle += ' stroke-dasharray="4 2"'
+				} else if (d.style === "dotted") {
+					lineStyle += ' stroke-dasharray="2 3"'
+				}
+
+				svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" ${lineStyle}/>`
+
+				if (d.label) {
+					const midX = (from.x + to.x) / 2
+					const midY = (from.y + to.y) / 2
+					const angle = Math.atan2(to.y - from.y, to.x - from.x)
+					const offsetX = -Math.sin(angle) * 10
+					const offsetY = Math.cos(angle) * 10
+					svg += `<text x="${midX + offsetX}" y="${midY + offsetY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="12" style="paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;">${d.label}</text>`
+				}
+			}
+		}
 
 		if (labels) {
 			for (const lab of labels) {
