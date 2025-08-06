@@ -99,6 +99,11 @@ The shell should:
 3. Faithfully translate all mathematical content from LaTeX to MathML.
 4. NEVER generate <img> or <svg> tags in the body - all visual elements must be widget slots.
 
+CRITICAL CLASSIFICATION RULE:
+- WIDGETS are COMPLETELY STATIC (images, graphs, tables) - NO user input
+- INTERACTIONS require USER INPUT (typing, clicking, selecting) - ALL input elements MUST be interactions
+Perseus misleadingly calls both types "widgets" - you MUST reclassify based on whether user input is required.
+
 ABSOLUTE REQUIREMENT: SLOT CONSISTENCY.
 This is the most critical rule. Any \`<slot name="..."/>\` tag you include in the 'body' string MUST have its name listed in either the 'widgets' array or the 'interactions' array. Conversely, every name in the 'widgets' and 'interactions' arrays MUST correspond to a \`<slot>\` tag in the 'body'. There must be a perfect, one-to-one mapping.
 
@@ -300,6 +305,12 @@ Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turne
 **6. Widget vs. Interaction Misclassification - BANNED:**
 Perseus often calls interactive elements "widgets". You MUST correctly reclassify them as **interactions**.
 
+**CRITICAL DISTINCTION:**
+- **WIDGETS are COMPLETELY STATIC** - they display information only (images, graphs, tables, diagrams)
+- **INTERACTIONS require USER INPUT** - ANY element that accepts user input MUST be an interaction
+
+**ABSOLUTE RULE:** If a Perseus element requires ANY form of user input (typing, clicking, selecting, dragging, etc.), it MUST be placed in the \`interactions\` array, NOT the \`widgets\` array. This rule has ZERO exceptions.
+
 **Perseus Input with \`numeric-input\`:**
 \`\`\`json
 "question": {
@@ -380,13 +391,24 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
   "interactions": ["choice_interaction_1"]
 }
 \`\`\`
-**General Rule:** If a Perseus "widget" asks the user for input (\`numeric-input\`, \`input-number\`, \`expression\`, \`radio\`, \`dropdown\`, \`sorter\`, \`matcher\`), it is an INTERACTION. Create a slot, and put its name in the \`interactions\` array.
+**FINAL RULE - NO EXCEPTIONS:** 
+- If a Perseus element requires ANY user input = **INTERACTION** (goes in \`interactions\` array)
+- If a Perseus element is purely visual/static = **WIDGET** (goes in \`widgets\` array)
+
+**Common Perseus elements that are ALWAYS INTERACTIONS (never widgets):**
+- \`numeric-input\`, \`input-number\`, \`expression\` - text entry
+- \`radio\`, \`dropdown\` - selection
+- \`sorter\`, \`matcher\` - ordering/matching
+- ANY element where the user types, clicks, selects, or manipulates = **INTERACTION**
+
+**Remember:** Perseus misleadingly calls interactive elements "widgets" in its JSON. IGNORE THIS. Reclassify based on whether user input is required.
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
 - ANY raw text at the start of body content (must be wrapped in block-level elements)
+- ANY interactive element (numeric-input, expression, radio, etc.) in the \`widgets\` array instead of \`interactions\`
 Double-check your output before submitting. ZERO TOLERANCE for these violations.`
 
 	return { systemInstruction, userContent }
