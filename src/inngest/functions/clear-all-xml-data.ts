@@ -6,16 +6,17 @@ import { inngest } from "@/inngest/client"
 export const clearAllXmlData = inngest.createFunction(
 	{
 		id: "clear-all-xml-data",
-		name: "Clear All XML Data Database-Wide"
+		name: "Clear All XML Data and Analysis Notes Database-Wide"
 	},
 	{ event: "qti/database.clear-all-xml" },
 	async ({ logger }) => {
-		logger.info("starting database-wide xml data clearing")
+		logger.info("starting database-wide xml data and analysis notes clearing")
 
 		// Track clearing results
 		const results = {
 			articles: { total: 0, cleared: 0 },
-			questions: { total: 0, cleared: 0 }
+			questions: { total: 0, cleared: 0 },
+			questionsAnalysis: { total: 0, cleared: 0 }
 		}
 
 		// Count total articles with XML
@@ -62,10 +63,37 @@ export const clearAllXmlData = inngest.createFunction(
 		results.questions.cleared = results.questions.total
 		logger.info("cleared questions xml data", { count: results.questions.cleared })
 
-		logger.info("completed database-wide xml clearing", {
+		// Count total questions_analysis with analysisNotes
+		const questionsAnalysisCountResult = await errors.try(
+			db.query.niceQuestionsAnalysis.findMany({
+				columns: { id: true }
+			})
+		)
+		if (questionsAnalysisCountResult.error) {
+			logger.error("failed to count questions analysis", { error: questionsAnalysisCountResult.error })
+			throw errors.wrap(questionsAnalysisCountResult.error, "questions analysis count query")
+		}
+		results.questionsAnalysis.total = questionsAnalysisCountResult.data.length
+
+		// Clear all analysisNotes data from questions_analysis table
+		logger.info("clearing analysisNotes from questions_analysis table", {
+			totalQuestionsAnalysis: results.questionsAnalysis.total
+		})
+		const questionsAnalysisUpdateResult = await errors.try(
+			db.update(schema.niceQuestionsAnalysis).set({ analysisNotes: null })
+		)
+		if (questionsAnalysisUpdateResult.error) {
+			logger.error("failed to clear questions analysis notes", { error: questionsAnalysisUpdateResult.error })
+			throw errors.wrap(questionsAnalysisUpdateResult.error, "clear questions analysis notes")
+		}
+		results.questionsAnalysis.cleared = results.questionsAnalysis.total
+		logger.info("cleared questions analysis notes", { count: results.questionsAnalysis.cleared })
+
+		logger.info("completed database-wide xml and analysis notes clearing", {
 			articlesCleared: results.articles.cleared,
 			questionsCleared: results.questions.cleared,
-			totalCleared: results.articles.cleared + results.questions.cleared
+			questionsAnalysisCleared: results.questionsAnalysis.cleared,
+			totalCleared: results.articles.cleared + results.questions.cleared + results.questionsAnalysis.cleared
 		})
 
 		return {
@@ -73,7 +101,8 @@ export const clearAllXmlData = inngest.createFunction(
 			cleared: {
 				articles: results.articles.cleared,
 				questions: results.questions.cleared,
-				total: results.articles.cleared + results.questions.cleared
+				questionsAnalysis: results.questionsAnalysis.cleared,
+				total: results.articles.cleared + results.questions.cleared + results.questionsAnalysis.cleared
 			}
 		}
 	}
