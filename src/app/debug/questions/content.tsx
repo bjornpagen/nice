@@ -16,6 +16,7 @@ export function Content({ questions }: ContentProps) {
 	const [dialogOpen, setDialogOpen] = React.useState(false)
 	const [analysisNotes, setAnalysisNotes] = React.useState("")
 	const [localQuestions, setLocalQuestions] = React.useState(questions)
+	const [isSubmitting, setIsSubmitting] = React.useState(false)
 
 	if (localQuestions.length === 0) {
 		return <div>no questions with xml found</div>
@@ -43,6 +44,8 @@ export function Content({ questions }: ContentProps) {
 	}
 
 	const handleSubmitAnalysis = async () => {
+		setIsSubmitting(true)
+
 		const notesToSave = analysisNotes.trim() || ""
 		await upsertQuestionAnalysis(currentQuestion.id, notesToSave === "" ? null : notesToSave)
 
@@ -53,6 +56,7 @@ export function Content({ questions }: ContentProps) {
 
 		setDialogOpen(false)
 		setAnalysisNotes("")
+		setIsSubmitting(false)
 	}
 
 	const getQuestionBackgroundColor = (question: QuestionDebugData) => {
@@ -101,6 +105,21 @@ export function Content({ questions }: ContentProps) {
 										<DialogTitle>analysis notes for {currentQuestion.id}</DialogTitle>
 									</DialogHeader>
 									<div style={{ padding: "20px 0" }}>
+										{currentQuestion.analysisNotes !== null && (
+											<div
+												style={{
+													fontSize: "14px",
+													color: "#666",
+													marginBottom: "10px",
+													padding: "8px",
+													backgroundColor: "#f5f5f5",
+													borderRadius: "4px",
+													fontStyle: "italic"
+												}}
+											>
+												Previous notes: {currentQuestion.analysisNotes || "(marked as successful)"}
+											</div>
+										)}
 										<Textarea
 											placeholder="enter analysis notes (leave empty to mark as successful)"
 											value={analysisNotes}
@@ -112,7 +131,9 @@ export function Content({ questions }: ContentProps) {
 										<Button variant="ghost" onClick={() => setDialogOpen(false)}>
 											cancel
 										</Button>
-										<Button onClick={handleSubmitAnalysis}>submit</Button>
+										<Button onClick={handleSubmitAnalysis} disabled={isSubmitting}>
+											{isSubmitting ? "submitting..." : "submit"}
+										</Button>
 									</div>
 								</DialogContent>
 							</Dialog>
