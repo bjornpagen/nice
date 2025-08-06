@@ -1,4 +1,4 @@
-import { foreignKey, index, integer, jsonb, pgSchema, primaryKey, text, uniqueIndex } from "drizzle-orm/pg-core"
+import { foreignKey, index, integer, jsonb, pgSchema, primaryKey, text, uniqueIndex, uuid } from "drizzle-orm/pg-core"
 
 /**
  * This file defines the entire database schema for the "nice" project,
@@ -227,3 +227,21 @@ const assessmentExercises = schema.table(
 	]
 )
 export { assessmentExercises as niceAssessmentExercises }
+
+const questionsAnalysis = schema.table(
+	"questions_analysis",
+	{
+		id: uuid("id").primaryKey().defaultRandom(),
+		questionId: text("question_id").notNull().unique(),
+		analysisNotes: text("analysis_notes")
+	},
+	(table) => [
+		uniqueIndex("questions_analysis_question_id_idx").on(table.questionId),
+		foreignKey({
+			name: "questions_analysis_question_fk",
+			columns: [table.questionId],
+			foreignColumns: [questions.id]
+		}).onDelete("cascade")
+	]
+)
+export { questionsAnalysis as niceQuestionsAnalysis }
