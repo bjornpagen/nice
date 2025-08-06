@@ -9,23 +9,34 @@ const PointSchema = z
 	})
 	.strict()
 
-// Defines a polygon shape with its vertices and styling.
-const ShapeSchema = z
-	.object({
-		vertices: z.array(PointSchema).min(3).describe("An ordered list of vertices defining the polygon."),
-		label: z.string().nullable().describe('An optional text label for the shape (e.g., "A", "B").'),
-		fillColor: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "rgba(120, 84, 171, 0.2)")
-			.describe("The fill color of the shape."),
-		strokeColor: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#7854ab")
-			.describe("The stroke color of the shape's boundary.")
-	})
-	.strict()
+// Helper function to create shape schema inline
+const createShapeSchema = () =>
+	z
+		.object({
+			vertices: z
+				.array(
+					z
+						.object({
+							x: z.number().describe("The horizontal coordinate of the point."),
+							y: z.number().describe("The vertical coordinate of the point.")
+						})
+						.strict()
+				)
+				.min(3)
+				.describe("An ordered list of vertices defining the polygon."),
+			label: z.string().nullable().describe('An optional text label for the shape (e.g., "A", "B").'),
+			fillColor: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "rgba(120, 84, 171, 0.2)")
+				.describe("The fill color of the shape."),
+			strokeColor: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "#7854ab")
+				.describe("The stroke color of the shape's boundary.")
+		})
+		.strict()
 
 // Defines a line segment, used for reflection lines or visual aids.
 const LineSchema = z
@@ -61,7 +72,35 @@ const TranslationSchema = z
 const ReflectionSchema = z
 	.object({
 		type: z.literal("reflection"),
-		lineOfReflection: LineSchema.describe("The line across which the shape is reflected.")
+		lineOfReflection: z
+			.object({
+				from: z
+					.object({
+						x: z.number().describe("The horizontal coordinate of the point."),
+						y: z.number().describe("The vertical coordinate of the point.")
+					})
+					.strict()
+					.describe("The starting {x, y} coordinate of the line."),
+				to: z
+					.object({
+						x: z.number().describe("The horizontal coordinate of the point."),
+						y: z.number().describe("The vertical coordinate of the point.")
+					})
+					.strict()
+					.describe("The ending {x, y} coordinate of the line."),
+				style: z
+					.enum(["solid", "dashed", "dotted"])
+					.nullable()
+					.transform((val) => val ?? "solid")
+					.describe("The visual style of the line."),
+				color: z
+					.string()
+					.nullable()
+					.transform((val) => val ?? "black")
+					.describe("The CSS color of the line.")
+			})
+			.strict()
+			.describe("The line across which the shape is reflected.")
 	})
 	.strict()
 
@@ -69,7 +108,13 @@ const ReflectionSchema = z
 const RotationSchema = z
 	.object({
 		type: z.literal("rotation"),
-		centerOfRotation: PointSchema.describe("The point around which the shape is rotated."),
+		centerOfRotation: z
+			.object({
+				x: z.number().describe("The horizontal coordinate of the point."),
+				y: z.number().describe("The vertical coordinate of the point.")
+			})
+			.strict()
+			.describe("The point around which the shape is rotated."),
 		angle: z.number().describe("The angle of rotation in degrees (positive is counter-clockwise).")
 	})
 	.strict()
@@ -78,7 +123,13 @@ const RotationSchema = z
 const DilationSchema = z
 	.object({
 		type: z.literal("dilation"),
-		centerOfDilation: PointSchema.describe("The point from which the shape is scaled."),
+		centerOfDilation: z
+			.object({
+				x: z.number().describe("The horizontal coordinate of the point."),
+				y: z.number().describe("The vertical coordinate of the point.")
+			})
+			.strict()
+			.describe("The point from which the shape is scaled."),
 		showRays: z
 			.boolean()
 			.nullable()
@@ -101,8 +152,62 @@ export const TransformationDiagramPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
-		preImage: ShapeSchema.describe("The original shape before transformation."),
-		image: ShapeSchema.describe("The resulting shape after transformation."),
+		// INLINED: The ShapeSchema definition is now directly inside the preImage property.
+		preImage: z
+			.object({
+				vertices: z
+					.array(
+						z
+							.object({
+								x: z.number().describe("The horizontal coordinate of the point."),
+								y: z.number().describe("The vertical coordinate of the point.")
+							})
+							.strict()
+					)
+					.min(3)
+					.describe("An ordered list of vertices defining the polygon."),
+				label: z.string().nullable().describe('An optional text label for the shape (e.g., "A", "B").'),
+				fillColor: z
+					.string()
+					.nullable()
+					.transform((val) => val ?? "rgba(120, 84, 171, 0.2)")
+					.describe("The fill color of the shape."),
+				strokeColor: z
+					.string()
+					.nullable()
+					.transform((val) => val ?? "#7854ab")
+					.describe("The stroke color of the shape's boundary.")
+			})
+			.strict()
+			.describe("The original shape before transformation."),
+		// INLINED: The ShapeSchema definition is now directly inside the image property.
+		image: z
+			.object({
+				vertices: z
+					.array(
+						z
+							.object({
+								x: z.number().describe("The horizontal coordinate of the point."),
+								y: z.number().describe("The vertical coordinate of the point.")
+							})
+							.strict()
+					)
+					.min(3)
+					.describe("An ordered list of vertices defining the polygon."),
+				label: z.string().nullable().describe('An optional text label for the shape (e.g., "A", "B").'),
+				fillColor: z
+					.string()
+					.nullable()
+					.transform((val) => val ?? "rgba(120, 84, 171, 0.2)")
+					.describe("The fill color of the shape."),
+				strokeColor: z
+					.string()
+					.nullable()
+					.transform((val) => val ?? "#7854ab")
+					.describe("The stroke color of the shape's boundary.")
+			})
+			.strict()
+			.describe("The resulting shape after transformation."),
 		transformation: z
 			.discriminatedUnion("type", [TranslationSchema, ReflectionSchema, RotationSchema, DilationSchema])
 			.describe("The details of the transformation applied.")
@@ -180,7 +285,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	}
 
 	const findOptimalLabelPosition = (
-		shape: z.infer<typeof ShapeSchema>,
+		shape: z.infer<ReturnType<typeof createShapeSchema>>,
 		avoidPoints: Array<{ x: number; y: number }> = []
 	) => {
 		const centroid = calculateCentroid(shape.vertices)
@@ -221,7 +326,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	}
 
 	const drawPolygon = (
-		shape: z.infer<typeof ShapeSchema>,
+		shape: z.infer<ReturnType<typeof createShapeSchema>>,
 		isImage: boolean,
 		labelPosition?: { x: number; y: number }
 	) => {

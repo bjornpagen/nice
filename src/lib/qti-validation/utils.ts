@@ -38,10 +38,10 @@ export function checkNoLatex(htmlFragment: string, logger: logger.Logger): void 
 	const currencyPatterns = [
 		// Dollar sign in MathML operator element (e.g., <mo>$</mo>)
 		/<mo(?:\s+[^>]*)?>[\s]*\$[\s]*<\/mo>/gi,
-		// Dollar sign immediately before a number or math tag
-		/\$(?=\s*(?:<math|<mn|\d))/g,
-		// Dollar sign at end of sentence/phrase before punctuation or tag
-		/\$(?=\s*(?:[.,;:!?]|<\/|$))/g
+		// Dollar sign immediately before a math tag or mn element
+		/\$(?=\s*<(?:math|mn))/g,
+		// Dollar sign immediately before a simple number (not followed by parentheses)
+		/\$(?=\s*\d+(?:\.\d+)?(?:\s|$|[.,;:!?]|<))/g
 	]
 
 	let processedFragment = fragmentWithoutCurrencyTags
@@ -67,7 +67,11 @@ export function checkNoLatex(htmlFragment: string, logger: logger.Logger): void 
 				// Mixed letters and numbers (like 2x, 3y)
 				/\d+[a-zA-Z]|[a-zA-Z]+\d/.test(content) ||
 				// Equals signs with variables
-				/[a-zA-Z]\s*=/.test(content)
+				/[a-zA-Z]\s*=/.test(content) ||
+				// Coordinate pairs or tuples (e.g., (2,3) or (x,y))
+				/^\s*\(\s*[^)]+\s*,\s*[^)]+\s*\)\s*$/.test(content) ||
+				// Expressions starting with number followed by parentheses (e.g., 3(x+2))
+				/^\s*\d+\s*\(/.test(content)
 
 			if (hasMathIndicators) {
 				// Find the original position in the unprocessed fragment
