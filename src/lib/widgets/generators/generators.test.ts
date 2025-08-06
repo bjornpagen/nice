@@ -6,6 +6,7 @@ import { generateThreeDIntersectionDiagram, ThreeDIntersectionDiagramPropsSchema
 import { ErrInvalidRange as ErrAVNLInvalidRange, generateAbsoluteValueNumberLine } from "./absolute-value-number-line"
 import { AngleDiagramPropsSchema, generateAngleDiagram } from "./angle-diagram"
 import { ErrInvalidDimensions as ErrBarChartInvalidDimensions, generateBarChart } from "./bar-chart"
+import { BoxGridPropsSchema, generateBoxGrid } from "./box-grid"
 import { ErrInvalidRange as ErrBoxPlotInvalidRange, generateBoxPlot } from "./box-plot"
 import { CircleDiagramPropsSchema, generateCircleDiagram } from "./circle-diagram"
 import { generateCompositeShapeDiagram } from "./composite-shape-diagram"
@@ -576,6 +577,61 @@ describe("Widget Generators", () => {
 				medianColor: "#333333"
 			}
 			expect(generateBoxPlot(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("generateBoxGrid", () => {
+		test("should render a basic 2x2 grid with numbers", () => {
+			const props = {
+				type: "boxGrid" as const,
+				width: 300,
+				height: 300,
+				data: [
+					[
+						{ content: 1, backgroundColor: null },
+						{ content: 2, backgroundColor: null }
+					],
+					[
+						{ content: 3, backgroundColor: null },
+						{ content: 4, backgroundColor: null }
+					]
+				],
+				showGridLines: true,
+				cellPadding: 5,
+				fontSize: 16
+			}
+			const parsedProps = BoxGridPropsSchema.parse(props)
+			expect(generateBoxGrid(parsedProps)).toMatchSnapshot()
+		})
+
+		test("should render a 3x3 grid with mixed content and background colors", () => {
+			const props = {
+				type: "boxGrid" as const,
+				width: 400,
+				height: 400,
+				data: [
+					[
+						{ content: "A", backgroundColor: "#ffebee" },
+						{ content: "B", backgroundColor: null },
+						{ content: "C", backgroundColor: "#e8f5e8" }
+					],
+					[
+						{ content: 10, backgroundColor: null },
+						{ content: 20, backgroundColor: "#fff3e0" },
+						{ content: 30, backgroundColor: null }
+					],
+					[
+						{ content: "X", backgroundColor: "#e3f2fd" },
+						{ content: "Y", backgroundColor: null },
+						{ content: "Z", backgroundColor: "#fce4ec" }
+					]
+				],
+				showGridLines: true,
+				cellPadding: 8,
+				fontSize: 18
+			}
+			const parsedProps = BoxGridPropsSchema.parse(props)
+			expect(generateBoxGrid(parsedProps)).toMatchSnapshot()
 		})
 	})
 

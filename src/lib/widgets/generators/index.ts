@@ -5,6 +5,7 @@ import { generateThreeDIntersectionDiagram, ThreeDIntersectionDiagramPropsSchema
 import { AbsoluteValueNumberLinePropsSchema, generateAbsoluteValueNumberLine } from "./absolute-value-number-line"
 import { AngleDiagramPropsSchema, generateAngleDiagram } from "./angle-diagram"
 import { BarChartPropsSchema, generateBarChart } from "./bar-chart"
+import { BoxGridPropsSchema, generateBoxGrid } from "./box-grid"
 import { BoxPlotPropsSchema, generateBoxPlot } from "./box-plot"
 import { CircleDiagramPropsSchema, generateCircleDiagram } from "./circle-diagram"
 import { CompositeShapeDiagramPropsSchema, generateCompositeShapeDiagram } from "./composite-shape-diagram"
@@ -51,6 +52,7 @@ export const typedSchemas = {
 	absoluteValueNumberLine: AbsoluteValueNumberLinePropsSchema,
 	angleDiagram: AngleDiagramPropsSchema,
 	barChart: BarChartPropsSchema,
+	boxGrid: BoxGridPropsSchema,
 	boxPlot: BoxPlotPropsSchema,
 	circleDiagram: CircleDiagramPropsSchema,
 	compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
@@ -92,6 +94,7 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.absoluteValueNumberLine,
 	typedSchemas.angleDiagram,
 	typedSchemas.barChart,
+	typedSchemas.boxGrid,
 	typedSchemas.boxPlot,
 	typedSchemas.circleDiagram,
 	typedSchemas.compositeShapeDiagram,
@@ -135,6 +138,7 @@ export {
 	generateAbsoluteValueNumberLine,
 	generateAngleDiagram,
 	generateBarChart,
+	generateBoxGrid,
 	generateBoxPlot,
 	generateCircleDiagram,
 	generateCompositeShapeDiagram,

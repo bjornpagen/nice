@@ -4,6 +4,7 @@ import {
 	generateAbsoluteValueNumberLine,
 	generateAngleDiagram,
 	generateBarChart,
+	generateBoxGrid,
 	generateBoxPlot,
 	generateCircleDiagram,
 	generateCompositeShapeDiagram,
@@ -50,6 +51,8 @@ export function generateWidget(widget: Widget): string {
 			return generateAngleDiagram(widget)
 		case "barChart":
 			return generateBarChart(widget)
+		case "boxGrid":
+			return generateBoxGrid(widget)
 		case "boxPlot":
 			return generateBoxPlot(widget)
 		case "circleDiagram":
