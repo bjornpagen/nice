@@ -1,8 +1,9 @@
+import * as logger from "@superbuilders/slog"
 import type { typedSchemas } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
-import { normalizeQtiContent } from "./content-normalizer"
 import { encodeDataUri, isValidWidgetType } from "./helpers"
 import { compileInteraction } from "./interaction-compiler"
+import { validateAssessmentItemInput } from "./pre-validator"
 import { compileResponseDeclarations, compileResponseProcessing } from "./response-processor"
 import type { AssessmentItem, AssessmentItemInput } from "./schemas"
 import { createDynamicAssessmentItemSchema } from "./schemas"
@@ -10,6 +11,10 @@ import { processAndFillSlots } from "./slot-filler"
 import { generateWidget } from "./widget-generator"
 
 export function compile(itemData: AssessmentItemInput): string {
+	// Step 0: Strict Pre-compilation Validation
+	// Fail fast if the input data violates QTI content model rules.
+	validateAssessmentItemInput(itemData, logger)
+
 	// Step 1: Create a dynamic schema based on the widgets present
 	const widgetMapping: Record<string, keyof typeof typedSchemas> = {}
 	if (itemData.widgets) {
@@ -53,19 +58,17 @@ export function compile(itemData: AssessmentItemInput): string {
 	}
 
 	// Step 3: Process the body, filling all slots at once
-	const filledBody = processAndFillSlots(item.body, slots)
+	// If body is null, use empty string (allowed by schema)
+	const filledBody = item.body === null ? "" : processAndFillSlots(item.body, slots)
 
-	// Step 4: Apply multi-pass QTI content normalization pipeline
-	const processedBody = normalizeQtiContent(filledBody)
-
-	// Step 5: Compile response declarations and processing rules
+	// Step 4: Compile response declarations and processing rules
 	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)
 	const responseProcessing = compileResponseProcessing(item.responseDeclarations)
 
 	const correctFeedback = item.feedback.correct
 	const incorrectFeedback = item.feedback.incorrect
 
-	// Step 6: Assemble the final XML document
+	// Step 5: Assemble the final XML document
 	const finalXml = `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
@@ -82,7 +85,7 @@ ${responseDeclarations}
     <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
     <qti-outcome-declaration identifier="FEEDBACK-INLINE" cardinality="multiple" base-type="identifier"/>
     <qti-item-body>
-        ${processedBody}
+        ${filledBody}
         <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
             <qti-content-body>${correctFeedback}</qti-content-body>
         </qti-feedback-block>

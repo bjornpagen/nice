@@ -2,30 +2,18 @@ import * as errors from "@superbuilders/errors"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import type { AnyInteraction } from "./schemas"
 
-/**
- * Transforms content to be QTI-compliant for inline contexts.
- * Converts block-level elements like <p> to inline elements like <span>
- * since QTI schema only allows inline content in prompts and choice feedback.
- */
-function transformToInlineContent(content: string): string {
-	return content
-		.replace(/<p(\s[^>]*)?>([^<]*(?:<(?!\/p>)[^<]*)*)<\/p>/gi, "<span$1>$2</span>")
-		.replace(/<p>/gi, "<span>")
-		.replace(/<\/p>/gi, "</span>")
-}
-
 export function compileInteraction(interaction: AnyInteraction): string {
 	let interactionXml: string
 
 	switch (interaction.type) {
 		case "choiceInteraction": {
-			const processedPrompt = transformToInlineContent(interaction.prompt)
+			const processedPrompt = interaction.prompt
 			const choices = interaction.choices
 				.map((c) => {
 					const processedContent = c.content
 					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
 					if (c.feedback) {
-						const processedFeedback = transformToInlineContent(c.feedback)
+						const processedFeedback = c.feedback
 						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${processedFeedback}</qti-feedback-inline>`
 					}
 					choiceXml += "</qti-simple-choice>"
@@ -40,13 +28,13 @@ export function compileInteraction(interaction: AnyInteraction): string {
 			break
 		}
 		case "orderInteraction": {
-			const processedPrompt = transformToInlineContent(interaction.prompt)
+			const processedPrompt = interaction.prompt
 			const choices = interaction.choices
 				.map((c) => {
 					const processedContent = c.content
 					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
 					if (c.feedback) {
-						const processedFeedback = transformToInlineContent(c.feedback)
+						const processedFeedback = c.feedback
 						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${processedFeedback}</qti-feedback-inline>`
 					}
 					choiceXml += "</qti-simple-choice>"

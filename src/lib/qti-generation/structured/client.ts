@@ -363,9 +363,11 @@ export async function generateStructuredQtiItem(
 	const slotNameRegex = /<slot\s+name\s*=\s*(["'])(.*?)\1/g
 	const slotsUsedInBody = new Set(
 		// The match index is changed from 1 to 2 to capture the slot name correctly.
-		[...assessmentShell.body.matchAll(slotNameRegex)]
-			.map((match) => match[2])
-			.filter((slot): slot is string => slot !== undefined)
+		assessmentShell.body === null
+			? []
+			: [...assessmentShell.body.matchAll(slotNameRegex)]
+					.map((match) => match[2])
+					.filter((slot): slot is string => slot !== undefined)
 	)
 
 	if (
@@ -396,7 +398,7 @@ export async function generateStructuredQtiItem(
 			return { data: emptyMapping, error: null }
 		}
 		// Only make the AI call if there are widgets to map
-		return errors.try(mapSlotsToWidgets(logger, perseusJsonString, assessmentShell.body, widgetSlotNames))
+		return errors.try(mapSlotsToWidgets(logger, perseusJsonString, assessmentShell.body ?? "", widgetSlotNames))
 	})()
 
 	if (widgetMappingResult.error) {

@@ -158,7 +158,7 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			// REPLACES stimulus: string and interactions: array[]
 			body: z
 				.string()
-				.default("")
+				.nullable()
 				.describe(
 					"The main content of the item, with <slot name='...'/> placeholders for both widgets and interactions."
 				),
