@@ -1,7 +1,7 @@
 import type { typedSchemas } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import { normalizeQtiContent } from "./content-normalizer"
-import { isValidWidgetType } from "./helpers"
+import { encodeDataUri, isValidWidgetType } from "./helpers"
 import { compileInteraction } from "./interaction-compiler"
 import { compileResponseDeclarations, compileResponseProcessing } from "./response-processor"
 import type { AssessmentItem, AssessmentItemInput } from "./schemas"
@@ -32,8 +32,10 @@ export function compile(itemData: AssessmentItemInput): string {
 			const widgetHtml = generateWidget(widgetDef)
 			const isSvg = widgetHtml.trim().startsWith("<svg")
 			if (isSvg) {
-				// Skip SVG widgets - QTI schema doesn't allow img tags in many contexts
-				slots.set(widgetId, "")
+				// NEVER to remove this line, this is correct logic. img tags are totally allowed in qti, as long as we base64 embed the svg inside of the image tag.
+				const dataUri = encodeDataUri(widgetHtml)
+				const imgTag = `<img src="${dataUri}" />`
+				slots.set(widgetId, imgTag)
 			} else {
 				slots.set(widgetId, widgetHtml)
 			}
