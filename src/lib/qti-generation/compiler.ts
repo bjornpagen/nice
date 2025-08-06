@@ -8,6 +8,22 @@ import { createDynamicAssessmentItemSchema } from "./schemas"
 import { processAndFillSlots } from "./slot-filler"
 import { generateWidget } from "./widget-generator"
 
+/**
+ * Normalizes QTI content to ensure compliance with schema requirements.
+ * Wraps raw text content in proper block elements to satisfy "element-only" content model.
+ */
+function normalizeQtiContent(content: string): string {
+	const trimmed = content.trim()
+	if (!trimmed) return content
+
+	// Simple approach: if content starts with text (not an element), wrap it in a paragraph
+	if (!trimmed.startsWith("<")) {
+		return `<p>${content}</p>`
+	}
+
+	return content
+}
+
 export function compile(itemData: AssessmentItemInput): string {
 	// Step 1: Create a dynamic schema based on the widgets present
 	const widgetMapping: Record<string, keyof typeof typedSchemas> = {}
@@ -47,7 +63,10 @@ export function compile(itemData: AssessmentItemInput): string {
 	}
 
 	// Step 3: Process the body, filling all slots at once
-	const processedBody = processAndFillSlots(item.body, slots)
+	const filledBody = processAndFillSlots(item.body, slots)
+
+	// Step 4: Normalize content to ensure QTI compliance
+	const processedBody = normalizeQtiContent(filledBody)
 
 	// Step 4: Compile response declarations and processing rules
 	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)

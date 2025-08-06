@@ -85,7 +85,16 @@ export function compileInteraction(interaction: AnyInteraction): string {
 			throw errors.new("Unknown interaction type")
 	}
 
-	// Wrap all interactions in a div to satisfy QTI content model requirements
-	// QTI schema requires interactions to be in proper block-level containers
+	// Context-aware wrapping based on interaction type
+	// Text entry interactions are typically inline-style, use <p>
+	// Choice interactions are typically block-style, use <div>
+	if (interaction.type === "textEntryInteraction") {
+		return `<p>${interactionXml}</p>`
+	}
+	if (interaction.type === "inlineChoiceInteraction") {
+		// Inline choice should use span for inline contexts
+		return `<span>${interactionXml}</span>`
+	}
+	// Default to div for other block-level interactions
 	return `<div>${interactionXml}</div>`
 }
