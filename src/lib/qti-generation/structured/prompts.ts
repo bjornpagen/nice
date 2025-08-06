@@ -240,16 +240,19 @@ WRONG: \`body: 'Use the table to answer the question.<slot name="table_widget" /
 CORRECT: \`body: '<p>Use the table to answer the question.</p><slot name="table_widget" /><slot name="interaction_1" />'\`
 
 **CRITICAL: Text Entry Interaction Placement - INLINE ELEMENTS ONLY:**
-WRONG: \`body: '<p>Evaluate.</p><math>...</math><slot name="text_entry" />'\`
-CORRECT: \`body: '<p>Evaluate. <math>...</math> <slot name="text_entry" /></p>'\`
+WRONG: \`body: '<p>Evaluate.</p><math>...</math> <slot name="text_entry" />'\` (text entry floating outside paragraph)
+CORRECT: \`body: '<p>Evaluate.<math>...</math> <slot name="text_entry" /></p>'\` (text entry inside paragraph)
 
-WRONG: \`body: '<p>The answer is</p><slot name="text_entry_interaction" />'\`
-CORRECT: \`body: '<p>The answer is <slot name="text_entry_interaction" /></p>'\`
+WRONG: \`body: '<p>The answer is</p><slot name="text_entry_interaction" />'\` (text entry floating after paragraph)
+CORRECT: \`body: '<p>The answer is <slot name="text_entry_interaction" /></p>'\` (text entry inside paragraph)
 
 WRONG: \`body: '<p>Question text</p><slot name="inline_choice" />'\` (floating outside text context)
 CORRECT: \`body: '<p>Question text <slot name="inline_choice" /></p>'\` (inside text context)
 
-**Text Entry Interaction Rule:** Text entry interactions (textEntryInteraction, inlineChoiceInteraction) are INLINE elements and MUST be placed inside text containers like \`<p>\` or \`<span>\`. They CANNOT be placed directly in the body or adjacent to block elements without proper wrapping.
+WRONG: \`body: '<p>Evaluate.</p><math>...</math> <span><slot name="text_entry" /></span>'\` (never wrap slots in span)
+CORRECT: \`body: '<p>Evaluate.<math>...</math> <slot name="text_entry" /></p>'\` (slot directly inside paragraph)
+
+**Text Entry Interaction Rule:** Text entry interactions (textEntryInteraction, inlineChoiceInteraction) are INLINE elements and MUST be placed inside text containers like \`<p>\`. They CANNOT be placed directly in the body or adjacent to block elements without proper wrapping. NEVER wrap interaction slots in \`<span>\` elements - the slot should be placed directly inside the paragraph or other block element.
 
 **General Rule:** ALL text content in the body must be wrapped in block-level elements like \`<p>\` or \`<div>\`. Raw text at the start of body is FORBIDDEN. Text entry interactions must be INSIDE inline contexts, not floating between block elements.
 

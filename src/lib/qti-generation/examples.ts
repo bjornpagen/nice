@@ -76,7 +76,7 @@ export const evalFractionalExponents: AssessmentItemInput = {
 			correct: 81
 		}
 	],
-	body: '<p>Evaluate.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math> <slot name="text_entry" />',
+	body: '<p>Evaluate.<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math> <slot name="text_entry" /></p>',
 	interactions: {
 		text_entry: {
 			type: "textEntryInteraction",
