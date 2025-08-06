@@ -30,6 +30,7 @@ import {
 	generatePolyhedronNetDiagram,
 	generateProbabilitySpinner,
 	generatePythagoreanProofDiagram,
+	generateRatioBoxDiagram,
 	generateScatterPlot,
 	generateStackedItemsDiagram,
 	generateTapeDiagram,
@@ -97,6 +98,8 @@ export function generateWidget(widget: Widget): string {
 			return generatePolyhedronNetDiagram(widget)
 		case "pythagoreanProofDiagram":
 			return generatePythagoreanProofDiagram(widget)
+		case "ratioBoxDiagram":
+			return generateRatioBoxDiagram(widget)
 		case "scatterPlot":
 			return generateScatterPlot(widget)
 		case "stackedItemsDiagram":

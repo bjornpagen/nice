@@ -37,6 +37,7 @@ import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "./polyh
 import { generatePolyhedronNetDiagram, PolyhedronNetDiagramPropsSchema } from "./polyhedron-net-diagram"
 import { generateProbabilitySpinner, ProbabilitySpinnerPropsSchema } from "./probability-spinner"
 import { generatePythagoreanProofDiagram, PythagoreanProofDiagramPropsSchema } from "./pythagorean-proof-diagram"
+import { generateRatioBoxDiagram, RatioBoxDiagramPropsSchema } from "./ratio-box-diagram"
 import { generateScatterPlot, ScatterPlotPropsSchema } from "./scatter-plot"
 import { generateStackedItemsDiagram, StackedItemsDiagramPropsSchema } from "./stacked-items-diagram"
 import { generateTapeDiagram, TapeDiagramPropsSchema } from "./tape-diagram"
@@ -76,6 +77,7 @@ export const typedSchemas = {
 	probabilitySpinner: ProbabilitySpinnerPropsSchema,
 	polyhedronNetDiagram: PolyhedronNetDiagramPropsSchema,
 	pythagoreanProofDiagram: PythagoreanProofDiagramPropsSchema,
+	ratioBoxDiagram: RatioBoxDiagramPropsSchema,
 	scatterPlot: ScatterPlotPropsSchema,
 	stackedItemsDiagram: StackedItemsDiagramPropsSchema,
 	tapeDiagram: TapeDiagramPropsSchema,
@@ -116,6 +118,7 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.probabilitySpinner,
 	typedSchemas.polyhedronNetDiagram,
 	typedSchemas.pythagoreanProofDiagram,
+	typedSchemas.ratioBoxDiagram,
 	typedSchemas.scatterPlot,
 	typedSchemas.stackedItemsDiagram,
 	typedSchemas.tapeDiagram,
@@ -158,6 +161,7 @@ export {
 	generateProbabilitySpinner,
 	generatePolyhedronNetDiagram,
 	generatePythagoreanProofDiagram,
+	generateRatioBoxDiagram,
 	generateScatterPlot,
 	generateStackedItemsDiagram,
 	generateTapeDiagram,

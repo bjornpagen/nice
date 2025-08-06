@@ -35,6 +35,7 @@ import { generatePolyhedronDiagram } from "./polyhedron-diagram"
 import { ErrInvalidBaseShape, generatePolyhedronNetDiagram } from "./polyhedron-net-diagram"
 import { generateProbabilitySpinner, ProbabilitySpinnerPropsSchema } from "./probability-spinner"
 import { generatePythagoreanProofDiagram } from "./pythagorean-proof-diagram"
+import { generateRatioBoxDiagram, RatioBoxDiagramPropsSchema } from "./ratio-box-diagram"
 import { generateScatterPlot } from "./scatter-plot"
 import { generateStackedItemsDiagram } from "./stacked-items-diagram"
 import { generateTapeDiagram } from "./tape-diagram"
@@ -1656,6 +1657,49 @@ describe("Widget Generators", () => {
 				operator: "+" as const
 			}
 			expect(generateVerticalArithmeticSetup(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("generateRatioBoxDiagram", () => {
+		test("should render blue outlined and red filled circles with grouped layout and separate boxes", () => {
+			const props = {
+				type: "ratioBoxDiagram" as const,
+				width: 400,
+				height: 200,
+				items: [
+					{
+						count: 9,
+						color: "#0c7f99",
+						style: "outline" as const
+					},
+					{
+						count: 6,
+						color: "#bc2612",
+						style: "filled" as const
+					}
+				],
+				itemsPerRow: 5, // Not used in grouped layout, but required by schema
+				boxes: [
+					{
+						startRow: 0,
+						endRow: 2,
+						startCol: 0,
+						endCol: 2,
+						label: null
+					},
+					{
+						startRow: 0,
+						endRow: 2,
+						startCol: 0,
+						endCol: 4,
+						label: null
+					}
+				],
+				partitions: null,
+				layout: "grouped" as const
+			}
+			const parsedProps = RatioBoxDiagramPropsSchema.parse(props)
+			expect(generateRatioBoxDiagram(parsedProps)).toMatchSnapshot()
 		})
 	})
 })
