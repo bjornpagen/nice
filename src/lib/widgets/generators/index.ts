@@ -43,6 +43,7 @@ import { generatePolyhedronNetDiagram, PolyhedronNetDiagramPropsSchema } from ".
 import { generateProbabilitySpinner, ProbabilitySpinnerPropsSchema } from "./probability-spinner"
 import { generatePythagoreanProofDiagram, PythagoreanProofDiagramPropsSchema } from "./pythagorean-proof-diagram"
 import { generateRatioBoxDiagram, RatioBoxDiagramPropsSchema } from "./ratio-box-diagram"
+import { generateScaleCopiesSlider, ScaleCopiesSliderPropsSchema } from "./scale-copies-slider"
 import { generateScatterPlot, ScatterPlotPropsSchema } from "./scatter-plot"
 import { generateStackedItemsDiagram, StackedItemsDiagramPropsSchema } from "./stacked-items-diagram"
 import { generateTapeDiagram, TapeDiagramPropsSchema } from "./tape-diagram"
@@ -88,6 +89,7 @@ export const typedSchemas = {
 	polyhedronNetDiagram: PolyhedronNetDiagramPropsSchema,
 	pythagoreanProofDiagram: PythagoreanProofDiagramPropsSchema,
 	ratioBoxDiagram: RatioBoxDiagramPropsSchema,
+	scaleCopiesSlider: ScaleCopiesSliderPropsSchema,
 	scatterPlot: ScatterPlotPropsSchema,
 	stackedItemsDiagram: StackedItemsDiagramPropsSchema,
 	tapeDiagram: TapeDiagramPropsSchema,
@@ -134,6 +136,7 @@ const widgetSchemasWithoutPartitioned = [
 	typedSchemas.polyhedronNetDiagram,
 	typedSchemas.pythagoreanProofDiagram,
 	typedSchemas.ratioBoxDiagram,
+	typedSchemas.scaleCopiesSlider,
 	typedSchemas.scatterPlot,
 	typedSchemas.stackedItemsDiagram,
 	typedSchemas.tapeDiagram,
@@ -187,6 +190,7 @@ export {
 	generatePolyhedronNetDiagram,
 	generatePythagoreanProofDiagram,
 	generateRatioBoxDiagram,
+	generateScaleCopiesSlider,
 	generateScatterPlot,
 	generateStackedItemsDiagram,
 	generateTapeDiagram,
