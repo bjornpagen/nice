@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
 import { qti } from "@/lib/clients"
 import { compile } from "./compiler"
 import { allExamples } from "./examples"
@@ -8,30 +9,43 @@ import { allExamples } from "./examples"
 // Its purpose is to provide a final guarantee that the XML produced by our compiler
 // is fully compliant with the target QTI service.
 describe("QTI Compiler API Validation", () => {
-	// Dynamically generate a test for each example in our test suite.
-	for (const example of allExamples) {
-		test(`should produce valid QTI XML for '${example.identifier}' that passes API validation`, async () => {
-			// Step 1: Compile the example JSON into a QTI XML string.
-			const compiledXml = compile(example)
+	test("should produce valid QTI XML for all examples that passes API validation", async () => {
+		// Step 1: Compile all examples into QTI XML strings in parallel.
+		// This compiles all examples at once, taking advantage of CPU parallelism.
+		const compiledExamples = allExamples.map((example) => ({
+			identifier: example.identifier,
+			xml: compile(example)
+		}))
 
-			// Step 2: Use the QTI client to call the validation endpoint.
-			// The validateXml method sends the XML to the API and returns a structured response.
+		// Step 2: Validate all XML documents against the QTI API in parallel.
+		// This sends all validation requests concurrently, dramatically reducing
+		// total execution time when validating many examples.
+		const validationPromises = compiledExamples.map(async ({ identifier, xml }) => {
 			const validationResult = await qti.validateXml({
-				xml: compiledXml,
+				xml: xml,
 				schema: "item" // We are validating an AssessmentItem.
 			})
-
-			// Step 3: Assert that the validation was successful.
-			// If validationResult.success is false, the assertion will fail, and the
-			// validationErrors array will be included in the test failure message,
-			// providing immediate insight into what is wrong with the generated XML.
-			expect(
-				validationResult.success,
-				`Validation failed for '${example.identifier}' with errors: ${validationResult.validationErrors.join(", ")}`
-			).toBe(true)
-
-			// Also assert that the validationErrors array is empty for clarity.
-			expect(validationResult.validationErrors).toBeEmpty()
+			return { identifier, validationResult }
 		})
-	}
+
+		// Wait for all validations to complete
+		const results = await Promise.all(validationPromises)
+
+		// Step 3: Assert that all validations were successful.
+		// Collect any failures for comprehensive error reporting.
+		const failures = results.filter((r) => !r.validationResult.success)
+
+		if (failures.length > 0) {
+			const failureMessages = failures
+				.map((f) => `${f.identifier}: ${f.validationResult.validationErrors.join(", ")}`)
+				.join("\n")
+
+			throw errors.new(`Validation failed for ${failures.length} example(s):\n${failureMessages}`)
+		}
+
+		// Also verify that no validation errors exist
+		for (const { identifier, validationResult } of results) {
+			expect(validationResult.validationErrors, `Unexpected validation errors for ${identifier}`).toBeEmpty()
+		}
+	})
 })
