@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { AngleDiagramPropsSchema, generateAngleDiagram } from "./angle-diagram"
+import { AngleDiagramPropsSchema, findLineIntersection, generateAngleDiagram } from "./angle-diagram"
 
 // Helper function to generate diagram with schema validation
 const generateDiagram = (props: unknown) => {
@@ -622,5 +622,115 @@ describe("generateAngleDiagram", () => {
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
+
+		test("should render points with ellipse shape for Perseus compatibility", () => {
+			const props = {
+				type: "angleDiagram" as const,
+				width: 300,
+				height: 200,
+				points: [
+					{ id: "A", x: 50, y: 100, label: "A", shape: "ellipse" as const },
+					{ id: "B", x: 150, y: 100, label: "B", shape: "ellipse" as const },
+					{ id: "C", x: 250, y: 80, label: "C", shape: "circle" as const }
+				],
+				rays: [
+					{ from: "B", to: "A" },
+					{ from: "B", to: "C" }
+				],
+				angles: [
+					{
+						vertices: ["A", "B", "C"],
+						label: "x°",
+						color: "#1fab54",
+						radius: 25,
+						isRightAngle: false
+					}
+				]
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
+})
+
+describe("New Features", () => {
+	test("findLineIntersection should calculate intersection of two lines", () => {
+		// Test with perpendicular lines intersecting at (100, 100)
+		const intersection1 = findLineIntersection(
+			{ x: 50, y: 100 }, // Point on horizontal line
+			{ x: 150, y: 100 }, // Point on horizontal line
+			{ x: 100, y: 50 }, // Point on vertical line
+			{ x: 100, y: 150 } // Point on vertical line
+		)
+		expect(intersection1).toEqual({ x: 100, y: 100 })
+
+		// Test with diagonal lines
+		const intersection2 = findLineIntersection(
+			{ x: 0, y: 0 }, // Line from (0,0) to (100,100)
+			{ x: 100, y: 100 },
+			{ x: 0, y: 100 }, // Line from (0,100) to (100,0)
+			{ x: 100, y: 0 }
+		)
+		expect(intersection2).toEqual({ x: 50, y: 50 })
+
+		// Test with parallel lines (should return null)
+		const intersection3 = findLineIntersection({ x: 0, y: 0 }, { x: 100, y: 0 }, { x: 0, y: 10 }, { x: 100, y: 10 })
+		expect(intersection3).toBeNull()
+	})
+
+	test("should render Perseus-style vertical angles diagram", () => {
+		// Calculate intersection point of diagonals
+		const intersection = findLineIntersection(
+			{ x: 50, y: 50 }, // Top-left corner
+			{ x: 250, y: 150 }, // Bottom-right corner (diagonal 1)
+			{ x: 200, y: 50 }, // Top-right corner
+			{ x: 100, y: 150 } // Bottom-left corner (diagonal 2)
+		)
+
+		const props = {
+			type: "angleDiagram" as const,
+			width: 300,
+			height: 200,
+			points: [
+				{ id: "A", x: 50, y: 50, label: null, shape: "ellipse" as const }, // Top-left
+				{ id: "B", x: 200, y: 50, label: null, shape: "ellipse" as const }, // Top-right
+				{ id: "C", x: 250, y: 150, label: null, shape: "ellipse" as const }, // Bottom-right
+				{ id: "D", x: 100, y: 150, label: null, shape: "ellipse" as const }, // Bottom-left
+				{ id: "I", x: intersection?.x, y: intersection?.y, label: null, shape: "ellipse" as const } // Intersection
+			],
+			rays: [
+				// Quadrilateral edges
+				{ from: "A", to: "B" },
+				{ from: "B", to: "C" },
+				{ from: "C", to: "D" },
+				{ from: "D", to: "A" },
+				// Diagonals
+				{ from: "A", to: "C" },
+				{ from: "B", to: "D" }
+			],
+			angles: [
+				{
+					vertices: ["A", "I", "B"], // 95° angle
+					label: "95°",
+					color: "#1fab54", // Perseus green
+					radius: 20,
+					isRightAngle: false
+				},
+				{
+					vertices: ["C", "I", "D"], // x° angle (vertical to 95°)
+					label: "x°",
+					color: "#e07d10", // Perseus orange
+					radius: 20,
+					isRightAngle: false
+				},
+				{
+					vertices: ["B", "C", "D"], // 60° angle at bottom-right vertex
+					label: "60°",
+					color: "#11accd", // Perseus blue
+					radius: 20,
+					isRightAngle: false
+				}
+			]
+		}
+		expect(generateDiagram(props)).toMatchSnapshot()
 	})
 })

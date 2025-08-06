@@ -5,13 +5,54 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // Error constants
 export const ErrInvalidAngleVertexCount = errors.new("angle vertices must contain exactly 3 point IDs")
 
+// Utility function to find intersection point of two lines
+// Line 1: from point1 to point2, Line 2: from point3 to point4
+export const findLineIntersection = (
+	point1: { x: number; y: number },
+	point2: { x: number; y: number },
+	point3: { x: number; y: number },
+	point4: { x: number; y: number }
+): { x: number; y: number } | null => {
+	const x1 = point1.x
+	const y1 = point1.y
+	const x2 = point2.x
+	const y2 = point2.y
+	const x3 = point3.x
+	const y3 = point3.y
+	const x4 = point4.x
+	const y4 = point4.y
+
+	// Calculate the direction vectors
+	const denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
+
+	// Lines are parallel if denominator is 0
+	if (Math.abs(denom) < 1e-10) {
+		return null
+	}
+
+	// Calculate intersection point using parametric line equations
+	const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom
+
+	const intersectionX = x1 + t * (x2 - x1)
+	const intersectionY = y1 + t * (y2 - y1)
+
+	return { x: intersectionX, y: intersectionY }
+}
+
 // Defines a 2D coordinate point with a label
 const PointSchema = z
 	.object({
 		id: z.string().describe("A unique identifier for this point (e.g., 'A', 'B', 'V')."),
 		x: z.number().describe("The horizontal coordinate of the point."),
 		y: z.number().describe("The vertical coordinate of the point."),
-		label: z.string().nullable().describe("An optional text label to display near the point.")
+		label: z.string().nullable().describe("An optional text label to display near the point."),
+		shape: z
+			.enum(["circle", "ellipse"])
+			.optional()
+			.transform((val) => val ?? "circle")
+			.describe(
+				"The shape of the point marker. 'circle' renders as <circle>, 'ellipse' renders as <ellipse> (for Perseus compatibility)."
+			)
 	})
 	.strict()
 
@@ -182,7 +223,11 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 
 	// Draw points and their labels (drawn last to be on top)
 	for (const point of points) {
-		svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
+		if (point.shape === "ellipse") {
+			svg += `<ellipse cx="${point.x}" cy="${point.y}" rx="4" ry="4" fill="black" stroke="#000" stroke-width="2" stroke-dasharray="0"/>`
+		} else {
+			svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
+		}
 		if (point.label) {
 			// Basic offset logic, can be improved with more dynamic placement
 			const textX = point.x + 5
