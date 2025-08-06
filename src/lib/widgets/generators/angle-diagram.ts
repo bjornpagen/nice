@@ -1,5 +1,9 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+// Error constants
+export const ErrInvalidAngleVertexCount = errors.new("angle vertices must contain exactly 3 point IDs")
 
 // Defines a 2D coordinate point with a label
 const PointSchema = z
@@ -23,8 +27,10 @@ const RaySchema = z
 const AngleSchema = z
 	.object({
 		vertices: z
-			.tuple([z.string(), z.string(), z.string()])
-			.describe("An array of three point `id`s in the order [pointOnSide1, vertex, pointOnSide2]."),
+			.array(z.string())
+			.describe(
+				"An array of exactly three point `id`s in the order [pointOnSide1, vertex, pointOnSide2]. Must contain exactly 3 elements."
+			),
 		label: z.string().nullable().describe('The text label for the angle (e.g., "x", "30°", "2x+1").'),
 		color: z
 			.string()
@@ -101,9 +107,19 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 
 	// Draw angles
 	for (const angle of angles) {
-		const p1 = pointMap.get(angle.vertices[0])
-		const vertex = pointMap.get(angle.vertices[1])
-		const p2 = pointMap.get(angle.vertices[2])
+		// Validate vertex count
+		if (angle.vertices.length !== 3) {
+			throw errors.wrap(ErrInvalidAngleVertexCount, `expected 3 vertices, got ${angle.vertices.length}`)
+		}
+
+		const v0 = angle.vertices[0]
+		const v1 = angle.vertices[1]
+		const v2 = angle.vertices[2]
+		if (!v0 || !v1 || !v2) continue
+
+		const p1 = pointMap.get(v0)
+		const vertex = pointMap.get(v1)
+		const p2 = pointMap.get(v2)
 
 		if (!p1 || !vertex || !p2) continue
 

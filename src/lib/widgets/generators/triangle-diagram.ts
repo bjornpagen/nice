@@ -1,5 +1,10 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+
+// Error constants
+export const ErrInvalidSideVertexCount = errors.new("side vertices must contain exactly 2 point IDs")
+export const ErrInvalidAngleVertexCount = errors.new("angle vertices must contain exactly 3 point IDs")
 
 // Defines a 2D coordinate point with a label.
 const PointSchema = z
@@ -14,7 +19,9 @@ const PointSchema = z
 // Defines a side of the triangle, including labels and congruence marks.
 const SideSchema = z
 	.object({
-		vertices: z.tuple([z.string(), z.string()]).describe("An array of two point `id`s that form the side."),
+		vertices: z
+			.array(z.string())
+			.describe("An array of exactly two point `id`s that form the side. Must contain exactly 2 elements."),
 		label: z.string().nullable().describe("A label for the side's length (e.g., '5', 'x', '√74')."),
 		tickMarks: z
 			.number()
@@ -30,8 +37,10 @@ const SideSchema = z
 const AngleSchema = z
 	.object({
 		vertices: z
-			.tuple([z.string(), z.string(), z.string()])
-			.describe("An array of three point `id`s in the order [pointOnSide1, vertex, pointOnSide2]."),
+			.array(z.string())
+			.describe(
+				"An array of exactly three point `id`s in the order [pointOnSide1, vertex, pointOnSide2]. Must contain exactly 3 elements."
+			),
 		label: z.string().nullable().describe('The text label for the angle (e.g., "x", "30°", "θ").'),
 		color: z
 			.string()
@@ -169,6 +178,11 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 	// Layer 4: Angle Markers
 	if (angles) {
 		for (const angle of angles) {
+			// Validate vertex count
+			if (angle.vertices.length !== 3) {
+				throw errors.wrap(ErrInvalidAngleVertexCount, `expected 3 vertices, got ${angle.vertices.length}`)
+			}
+
 			const p1 = pointMap.get(angle.vertices[0])
 			const vertex = pointMap.get(angle.vertices[1])
 			const p2 = pointMap.get(angle.vertices[2])
@@ -228,6 +242,11 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 	// Layer 5: Sides (Labels and Ticks)
 	if (sides) {
 		for (const side of sides) {
+			// Validate vertex count
+			if (side.vertices.length !== 2) {
+				throw errors.wrap(ErrInvalidSideVertexCount, `expected 2 vertices, got ${side.vertices.length}`)
+			}
+
 			const p1 = pointMap.get(side.vertices[0])
 			const p2 = pointMap.get(side.vertices[1])
 			if (!p1 || !p2) continue
