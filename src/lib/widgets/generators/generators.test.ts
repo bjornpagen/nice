@@ -17,6 +17,7 @@ import { generateDataTable } from "./data-table"
 import { generateDiscreteObjectRatioDiagram } from "./discrete-object-ratio-diagram"
 import { ErrInvalidDimensions as ErrDotPlotInvalidDimensions, generateDotPlot } from "./dot-plot"
 import { generateDoubleNumberLine } from "./double-number-line"
+import { generateEmojiImage } from "./emoji-image"
 import { FractionNumberLinePropsSchema, generateFractionNumberLine } from "./fraction-number-line"
 import { generateGeometricSolidDiagram } from "./geometric-solid-diagram"
 import { generateHangerDiagram } from "./hanger-diagram"
@@ -839,6 +840,38 @@ describe("Widget Generators", () => {
 				}
 			}
 			expect(generateDoubleNumberLine(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("generateEmojiImage", () => {
+		test("should render an emoji with default size", () => {
+			const props = {
+				type: "emojiImage" as const,
+				emoji: "🍕",
+				size: 100,
+				label: null
+			}
+			expect(generateEmojiImage(props)).toMatchSnapshot()
+		})
+
+		test("should render an emoji with custom size and label", () => {
+			const props = {
+				type: "emojiImage" as const,
+				emoji: "🚗",
+				size: 150,
+				label: "Car"
+			}
+			expect(generateEmojiImage(props)).toMatchSnapshot()
+		})
+
+		test("should handle multiple emojis", () => {
+			const props = {
+				type: "emojiImage" as const,
+				emoji: "🍎🍊🍋",
+				size: 80,
+				label: "Fruits"
+			}
+			expect(generateEmojiImage(props)).toMatchSnapshot()
 		})
 	})
 
