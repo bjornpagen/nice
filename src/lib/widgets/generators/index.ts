@@ -42,6 +42,7 @@ import { generateRatioBoxDiagram, RatioBoxDiagramPropsSchema } from "./ratio-box
 import { generateScatterPlot, ScatterPlotPropsSchema } from "./scatter-plot"
 import { generateStackedItemsDiagram, StackedItemsDiagramPropsSchema } from "./stacked-items-diagram"
 import { generateTapeDiagram, TapeDiagramPropsSchema } from "./tape-diagram"
+import { generateTransformationDiagram, TransformationDiagramPropsSchema } from "./transformation-diagram"
 import { generateUnitBlockDiagram, UnitBlockDiagramPropsSchema } from "./unit-block-diagram"
 import { generateVennDiagram, VennDiagramPropsSchema } from "./venn-diagram"
 import { generateVerticalArithmeticSetup, VerticalArithmeticSetupPropsSchema } from "./vertical-arithmetic-setup"
@@ -83,6 +84,7 @@ export const typedSchemas = {
 	scatterPlot: ScatterPlotPropsSchema,
 	stackedItemsDiagram: StackedItemsDiagramPropsSchema,
 	tapeDiagram: TapeDiagramPropsSchema,
+	transformationDiagram: TransformationDiagramPropsSchema,
 	unitBlockDiagram: UnitBlockDiagramPropsSchema,
 	vennDiagram: VennDiagramPropsSchema,
 	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema
@@ -125,6 +127,7 @@ export const WidgetSchema = z.discriminatedUnion("type", [
 	typedSchemas.scatterPlot,
 	typedSchemas.stackedItemsDiagram,
 	typedSchemas.tapeDiagram,
+	typedSchemas.transformationDiagram,
 	typedSchemas.unitBlockDiagram,
 	typedSchemas.vennDiagram,
 	typedSchemas.verticalArithmeticSetup
@@ -169,6 +172,7 @@ export {
 	generateScatterPlot,
 	generateStackedItemsDiagram,
 	generateTapeDiagram,
+	generateTransformationDiagram,
 	generateUnitBlockDiagram,
 	generateVennDiagram,
 	generateVerticalArithmeticSetup
