@@ -63,6 +63,18 @@ const RightAngleMarkerSchema = z
 	})
 	.strict()
 
+// Defines a label for a side of the outer boundary
+const SideLabelSchema = z
+	.object({
+		text: z.string().describe('The text content of the side label (e.g., "7", "5").'),
+		offset: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 10)
+			.describe("Distance from the edge to place the label.")
+	})
+	.strict()
+
 // The main Zod schema for the compositeShapeDiagram function
 export const CompositeShapeDiagramPropsSchema = z
 	.object({
@@ -81,6 +93,13 @@ export const CompositeShapeDiagramPropsSchema = z
 		outerBoundary: z
 			.array(z.number().int())
 			.describe("An ordered array of vertex indices that defines the solid outline of the shape."),
+		outerBoundaryLabels: z
+			.array(SideLabelSchema.nullable())
+			.nullable()
+			.optional()
+			.describe(
+				"An optional array of labels for each side of the outer boundary. The first label is for the edge from outerBoundary[0] to outerBoundary[1], etc. Use null for sides without labels."
+			),
 		internalSegments: z
 			.array(SegmentSchema)
 			.nullable()
@@ -100,7 +119,7 @@ export const CompositeShapeDiagramPropsSchema = z
 	})
 	.strict()
 	.describe(
-		"Generates a flexible diagram of a composite polygon from a set of vertices. This widget is ideal for area and perimeter problems that involve decomposing a complex shape into simpler ones (e.g., rectangles, triangles). It supports drawing a solid outer boundary, internal dashed lines for decomposition, shaded sub-regions with distinct colors, labels for dimensions and regions, and right-angle markers to indicate perpendicularity. This allows for the clear visualization of shapes like L-shaped polygons, trapezoids, parallelograms, or any multi-sided figure with colored decomposition highlighting."
+		"Generates a flexible diagram of a composite polygon from a set of vertices. This widget is ideal for area and perimeter problems that involve decomposing a complex shape into simpler ones (e.g., rectangles, triangles). It supports drawing a solid outer boundary with labeled sides, internal dashed lines for decomposition, shaded sub-regions with distinct colors, labels for dimensions and regions, and right-angle markers to indicate perpendicularity. This allows for the clear visualization of shapes like L-shaped polygons, trapezoids, parallelograms, or any multi-sided figure with colored decomposition highlighting."
 	)
 
 export type CompositeShapeDiagramProps = z.infer<typeof CompositeShapeDiagramPropsSchema>
@@ -110,8 +129,17 @@ export type CompositeShapeDiagramProps = z.infer<typeof CompositeShapeDiagramPro
  * problems involving the decomposition of a complex shape into simpler figures.
  */
 export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShapeDiagramPropsSchema> = (data) => {
-	const { width, height, vertices, outerBoundary, shadedRegions, internalSegments, regionLabels, rightAngleMarkers } =
-		data
+	const {
+		width,
+		height,
+		vertices,
+		outerBoundary,
+		outerBoundaryLabels,
+		shadedRegions,
+		internalSegments,
+		regionLabels,
+		rightAngleMarkers
+	} = data
 
 	if (vertices.length === 0) return `<svg width="${width}" height="${height}" />`
 
@@ -158,6 +186,61 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		.filter(Boolean)
 		.join(" ")
 	svg += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
+
+	// Outer boundary labels
+	if (outerBoundaryLabels) {
+		for (let i = 0; i < outerBoundary.length; i++) {
+			const label = outerBoundaryLabels[i]
+			if (!label) continue
+
+			const fromIndex = outerBoundary[i]
+			const toIndex = outerBoundary[(i + 1) % outerBoundary.length]
+			if (fromIndex === undefined || toIndex === undefined) continue
+			const from = vertices[fromIndex]
+			const to = vertices[toIndex]
+			if (!from || !to) continue
+
+			// Calculate midpoint of the edge
+			const midX = (from.x + to.x) / 2
+			const midY = (from.y + to.y) / 2
+
+			// Calculate edge direction and perpendicular
+			const dx = to.x - from.x
+			const dy = to.y - from.y
+			const edgeLength = Math.sqrt(dx * dx + dy * dy)
+
+			// Normalize edge vector
+			const edgeNormX = dx / edgeLength
+			const edgeNormY = dy / edgeLength
+
+			// Calculate perpendicular vector (rotated 90 degrees counterclockwise)
+			let perpX = -edgeNormY
+			let perpY = edgeNormX
+
+			// Determine if we need to flip the perpendicular to point outward
+			// Calculate the center of the shape
+			const centerX = vertices.reduce((sum, v) => sum + v.x, 0) / vertices.length
+			const centerY = vertices.reduce((sum, v) => sum + v.y, 0) / vertices.length
+
+			// Test if perpendicular points away from center
+			const testX = midX + perpX * 10
+			const testY = midY + perpY * 10
+			const distToCenterFromTest = Math.sqrt((testX - centerX) ** 2 + (testY - centerY) ** 2)
+			const distToCenterFromMid = Math.sqrt((midX - centerX) ** 2 + (midY - centerY) ** 2)
+
+			// If test point is closer to center, flip the perpendicular
+			if (distToCenterFromTest < distToCenterFromMid) {
+				perpX = -perpX
+				perpY = -perpY
+			}
+
+			// Position the label
+			const labelX = midX + perpX * label.offset
+			const labelY = midY + perpY * label.offset
+
+			svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="bold">${label.text}</text>`
+		}
+	}
 
 	// Internal segments
 	if (internalSegments) {

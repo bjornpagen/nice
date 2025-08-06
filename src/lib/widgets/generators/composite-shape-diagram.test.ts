@@ -69,4 +69,44 @@ describe("generateCompositeShapeDiagram", () => {
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
+
+	test("should render a parallelogram with side length labels and height", () => {
+		const props = {
+			type: "compositeShapeDiagram" as const,
+			width: 350,
+			height: 200,
+			vertices: [
+				{ x: 50, y: 150 }, // Bottom left (0)
+				{ x: 250, y: 150 }, // Bottom right (1)
+				{ x: 300, y: 50 }, // Top right (2)
+				{ x: 100, y: 50 }, // Top left (3)
+				{ x: 100, y: 150 } // Height bottom point (4)
+			],
+			outerBoundary: [0, 1, 2, 3],
+			outerBoundaryLabels: [
+				{ text: "7", offset: 15 }, // Bottom side
+				{ text: "5", offset: 15 }, // Right side
+				{ text: "7", offset: 15 }, // Top side
+				null // Left side (no label)
+			],
+			internalSegments: [
+				{
+					fromVertexIndex: 3,
+					toVertexIndex: 4,
+					style: "dashed" as const,
+					label: "h"
+				}
+			],
+			shadedRegions: null,
+			regionLabels: null,
+			rightAngleMarkers: [
+				{
+					cornerVertexIndex: 4,
+					adjacentVertex1Index: 3,
+					adjacentVertex2Index: 0
+				}
+			]
+		}
+		expect(generateDiagram(props)).toMatchSnapshot()
+	})
 })
