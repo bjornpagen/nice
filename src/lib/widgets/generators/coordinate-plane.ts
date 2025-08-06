@@ -33,11 +33,33 @@ const SlopeInterceptLineSchema = z
 	})
 	.strict()
 
+// Defines a line using standard form Ax + By = C
+const StandardLineSchema = z
+	.object({
+		type: z.literal("standard"),
+		A: z.number(),
+		B: z.number(),
+		C: z.number()
+	})
+	.strict()
+
+// Defines a line using point-slope form y - y1 = m(x - x1)
+const PointSlopeSchema = z
+	.object({
+		type: z.literal("pointSlope"),
+		x1: z.number(),
+		y1: z.number(),
+		slope: z.number()
+	})
+	.strict()
+
 // Defines a straight line to be plotted on the plane
 const LineSchema = z
 	.object({
 		id: z.string().describe('A unique identifier for the line (e.g., "line-a").'),
-		equation: SlopeInterceptLineSchema.describe("The mathematical definition of the line."),
+		equation: z
+			.discriminatedUnion("type", [SlopeInterceptLineSchema, StandardLineSchema, PointSlopeSchema])
+			.describe("The mathematical definition of the line."),
 		color: z
 			.string()
 			.nullable()
@@ -80,6 +102,55 @@ const PolygonSchema = z
 			.transform((val) => val ?? "rgba(66, 133, 244, 1)")
 			.describe("The border color of the polygon."),
 		label: z.string().nullable().describe("An optional label for the polygon itself.")
+	})
+	.strict()
+
+// Defines a visual representation of the distance between two points
+const DistanceSchema = z
+	.object({
+		pointId1: z.string().describe("The ID of the first point."),
+		pointId2: z.string().describe("The ID of the second point."),
+		showLegs: z
+			.boolean()
+			.nullable()
+			.transform((val) => val ?? true)
+			.describe("If true, draws the 'rise' and 'run' legs of the right triangle."),
+		showLegLabels: z
+			.boolean()
+			.nullable()
+			.transform((val) => val ?? false)
+			.describe("If true, labels the legs with their lengths."),
+		hypotenuseLabel: z.string().nullable().describe("An optional label for the hypotenuse (the distance line)."),
+		color: z
+			.string()
+			.nullable()
+			.transform((val) => val ?? "gray")
+			.describe("The color of the distance lines."),
+		style: z
+			.enum(["solid", "dashed"])
+			.nullable()
+			.transform((val) => val ?? "dashed")
+			.describe("The style of the distance lines.")
+	})
+	.strict()
+
+// Defines a simple polyline/function graph from an array of points
+const PolylineSchema = z
+	.object({
+		id: z.string().describe("A unique identifier for this polyline."),
+		points: z
+			.array(z.object({ x: z.number(), y: z.number() }))
+			.describe("An array of {x, y} points to connect in order."),
+		color: z
+			.string()
+			.nullable()
+			.transform((val) => val ?? "black")
+			.describe("The color of the polyline."),
+		style: z
+			.enum(["solid", "dashed"])
+			.nullable()
+			.transform((val) => val ?? "solid")
+			.describe("The style of the polyline.")
 	})
 	.strict()
 
@@ -150,7 +221,15 @@ export const CoordinatePlanePropsSchema = z
 		polygons: z
 			.array(PolygonSchema)
 			.nullable()
-			.describe("An optional array of polygons or polylines to draw on the plane by connecting the defined points.")
+			.describe("An optional array of polygons or polylines to draw on the plane by connecting the defined points."),
+		distances: z
+			.array(DistanceSchema)
+			.nullable()
+			.describe("An optional array of distances to visualize between points."),
+		polylines: z
+			.array(PolylineSchema)
+			.nullable()
+			.describe("An optional array of polylines (function graphs) to draw on the plane.")
 	})
 	.strict()
 	.describe(
@@ -164,7 +243,7 @@ export type CoordinatePlaneProps = z.infer<typeof CoordinatePlanePropsSchema>
  * Supports a wide range of coordinate geometry problems.
  */
 export const generateCoordinatePlane: WidgetGenerator<typeof CoordinatePlanePropsSchema> = (data) => {
-	const { width, height, xAxis, yAxis, showQuadrantLabels, points, lines, polygons } = data
+	const { width, height, xAxis, yAxis, showQuadrantLabels, points, lines, polygons, distances, polylines } = data
 	const pad = { top: 30, right: 30, bottom: 40, left: 40 }
 	const chartWidth = width - pad.left - pad.right
 	const chartHeight = height - pad.top - pad.bottom
@@ -254,13 +333,77 @@ export const generateCoordinatePlane: WidgetGenerator<typeof CoordinatePlaneProp
 		}
 	}
 
+	// --- NEW: Render Distances ---
+	if (distances) {
+		for (const dist of distances) {
+			const p1 = pointMap.get(dist.pointId1)
+			const p2 = pointMap.get(dist.pointId2)
+			if (!p1 || !p2) continue
+
+			const p1Svg = { x: toSvgX(p1.x), y: toSvgY(p1.y) }
+			const p2Svg = { x: toSvgX(p2.x), y: toSvgY(p2.y) }
+			const cornerSvg = { x: toSvgX(p2.x), y: toSvgY(p1.y) }
+
+			const dash = dist.style === "dashed" ? ` stroke-dasharray="4 3"` : ""
+			const stroke = `stroke="${dist.color}" stroke-width="1.5"`
+
+			// Hypotenuse
+			svg += `<line x1="${p1Svg.x}" y1="${p1Svg.y}" x2="${p2Svg.x}" y2="${p2Svg.y}" ${stroke}${dash}/>`
+
+			if (dist.showLegs) {
+				// Horizontal and Vertical Legs
+				svg += `<line x1="${p1Svg.x}" y1="${p1Svg.y}" x2="${cornerSvg.x}" y2="${cornerSvg.y}" ${stroke}${dash}/>`
+				svg += `<line x1="${cornerSvg.x}" y1="${cornerSvg.y}" x2="${p2Svg.x}" y2="${p2Svg.y}" ${stroke}${dash}/>`
+			}
+		}
+	}
+
+	// --- UPDATE: Modify Line Rendering Logic ---
 	if (lines) {
 		for (const l of lines) {
-			const { slope, yIntercept } = l.equation
-			const y1 = slope * xAxis.min + yIntercept
-			const y2 = slope * xAxis.max + yIntercept
+			let y1: number
+			let y2: number
+			if (l.equation.type === "slopeIntercept") {
+				const { slope, yIntercept } = l.equation
+				y1 = slope * xAxis.min + yIntercept
+				y2 = slope * xAxis.max + yIntercept
+			} else if (l.equation.type === "standard") {
+				// Standard form: Ax + By = C
+				// Solve for y: y = (C - Ax) / B
+				const { A, B, C } = l.equation
+				if (B === 0) {
+					// Vertical line: x = C/A
+					const x = C / A
+					if (x >= xAxis.min && x <= xAxis.max) {
+						const dash = l.style === "dashed" ? ' stroke-dasharray="5 3"' : ""
+						svg += `<line x1="${toSvgX(x)}" y1="${toSvgY(yAxis.min)}" x2="${toSvgX(x)}" y2="${toSvgY(yAxis.max)}" stroke="${l.color}" stroke-width="2"${dash}/>`
+					}
+					continue
+				}
+				y1 = (C - A * xAxis.min) / B
+				y2 = (C - A * xAxis.max) / B
+			} else {
+				// Point-slope form: y - y1 = m(x - x1)
+				// Solve for y: y = m(x - x1) + y1
+				const { x1, y1: yPoint, slope } = l.equation
+				y1 = slope * (xAxis.min - x1) + yPoint
+				y2 = slope * (xAxis.max - x1) + yPoint
+			}
+
 			const dash = l.style === "dashed" ? ' stroke-dasharray="5 3"' : ""
 			svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}" stroke="${l.color}" stroke-width="2"${dash}/>`
+		}
+	}
+
+	// --- NEW: Render Polylines ---
+	if (polylines) {
+		for (const polyline of polylines) {
+			const pointsStr = polyline.points.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
+
+			if (pointsStr) {
+				const dash = polyline.style === "dashed" ? ' stroke-dasharray="5 3"' : ""
+				svg += `<polyline points="${pointsStr}" fill="none" stroke="${polyline.color}" stroke-width="2"${dash}/>`
+			}
 		}
 	}
 

@@ -38,7 +38,9 @@ describe("generateCoordinatePlane", () => {
 					strokeColor: "green",
 					label: null
 				}
-			]
+			],
+			distances: null,
+			polylines: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -53,7 +55,9 @@ describe("generateCoordinatePlane", () => {
 			showQuadrantLabels: false,
 			points: null,
 			lines: [],
-			polygons: []
+			polygons: [],
+			distances: null,
+			polylines: null
 		}
 		const result = errors.trySync(() => generateDiagram(props))
 		if (result.error) {
@@ -62,5 +66,206 @@ describe("generateCoordinatePlane", () => {
 		} else {
 			throw errors.new("expected an error to be thrown")
 		}
+	})
+
+	describe("Line Equation Types", () => {
+		test("should render a line from a standard form equation", () => {
+			const props = {
+				type: "coordinatePlane" as const,
+				width: 400,
+				height: 400,
+				xAxis: { label: "x", min: -5, max: 5, tickInterval: 1, showGridLines: true },
+				yAxis: { label: "y", min: -5, max: 5, tickInterval: 1, showGridLines: true },
+				showQuadrantLabels: false,
+				points: null,
+				lines: [
+					{
+						id: "l1",
+						equation: { type: "standard" as const, A: 2, B: 3, C: 6 },
+						style: "solid" as const,
+						color: "red"
+					}
+				],
+				polygons: null,
+				distances: null,
+				polylines: null
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render a line from a point-slope form equation", () => {
+			const props = {
+				type: "coordinatePlane" as const,
+				width: 400,
+				height: 400,
+				xAxis: { label: "x", min: -5, max: 5, tickInterval: 1, showGridLines: true },
+				yAxis: { label: "y", min: -5, max: 5, tickInterval: 1, showGridLines: true },
+				showQuadrantLabels: false,
+				points: null,
+				lines: [
+					{
+						id: "l1",
+						equation: { type: "pointSlope" as const, x1: 2, y1: 3, slope: -0.5 },
+						style: "dashed" as const,
+						color: "blue"
+					}
+				],
+				polygons: null,
+				distances: null,
+				polylines: null
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render a vertical line from standard form", () => {
+			const props = {
+				type: "coordinatePlane" as const,
+				width: 400,
+				height: 400,
+				xAxis: { label: "x", min: -5, max: 5, tickInterval: 1, showGridLines: true },
+				yAxis: { label: "y", min: -5, max: 5, tickInterval: 1, showGridLines: true },
+				showQuadrantLabels: false,
+				points: null,
+				lines: [
+					{
+						id: "l1",
+						equation: { type: "standard" as const, A: 1, B: 0, C: 3 },
+						style: "solid" as const,
+						color: "green"
+					}
+				],
+				polygons: null,
+				distances: null,
+				polylines: null
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("Distance Visualization", () => {
+		test("should render the distance between two points with legs", () => {
+			const props = {
+				type: "coordinatePlane" as const,
+				width: 400,
+				height: 400,
+				xAxis: { label: "x", min: -10, max: 10, tickInterval: 2, showGridLines: true },
+				yAxis: { label: "y", min: -10, max: 10, tickInterval: 2, showGridLines: true },
+				showQuadrantLabels: false,
+				points: [
+					{ id: "p1", x: -2, y: 7, label: "A", color: "blue", style: "closed" as const },
+					{ id: "p2", x: 7, y: -1, label: "B", color: "blue", style: "closed" as const }
+				],
+				lines: null,
+				polygons: null,
+				distances: [
+					{
+						pointId1: "p1",
+						pointId2: "p2",
+						showLegs: true,
+						showLegLabels: false,
+						hypotenuseLabel: null,
+						color: "purple",
+						style: "dashed" as const
+					}
+				],
+				polylines: null
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render distance without legs", () => {
+			const props = {
+				type: "coordinatePlane" as const,
+				width: 400,
+				height: 400,
+				xAxis: { label: "x", min: -5, max: 5, tickInterval: 1, showGridLines: true },
+				yAxis: { label: "y", min: -5, max: 5, tickInterval: 1, showGridLines: true },
+				showQuadrantLabels: false,
+				points: [
+					{ id: "p1", x: -3, y: -2, label: "P", color: "red", style: "closed" as const },
+					{ id: "p2", x: 4, y: 3, label: "Q", color: "red", style: "closed" as const }
+				],
+				lines: null,
+				polygons: null,
+				distances: [
+					{
+						pointId1: "p1",
+						pointId2: "p2",
+						showLegs: false,
+						showLegLabels: false,
+						hypotenuseLabel: null,
+						color: "orange",
+						style: "solid" as const
+					}
+				],
+				polylines: null
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("Polyline Graphing", () => {
+		test("should render a multi-segment polyline", () => {
+			const props = {
+				type: "coordinatePlane" as const,
+				width: 400,
+				height: 400,
+				xAxis: { label: "x", min: -5, max: 5, tickInterval: 1, showGridLines: true },
+				yAxis: { label: "y", min: -5, max: 5, tickInterval: 1, showGridLines: true },
+				showQuadrantLabels: false,
+				points: null,
+				lines: null,
+				polygons: null,
+				distances: null,
+				polylines: [
+					{
+						id: "func1",
+						points: [
+							{ x: -4, y: 4 },
+							{ x: -2, y: -3 },
+							{ x: 0, y: 2 },
+							{ x: 1, y: -1 },
+							{ x: 4, y: 3 }
+						],
+						color: "green",
+						style: "solid" as const
+					}
+				]
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render a dashed polyline function", () => {
+			const props = {
+				type: "coordinatePlane" as const,
+				width: 400,
+				height: 400,
+				xAxis: { label: "x", min: -6, max: 6, tickInterval: 2, showGridLines: true },
+				yAxis: { label: "y", min: -6, max: 6, tickInterval: 2, showGridLines: true },
+				showQuadrantLabels: false,
+				points: null,
+				lines: null,
+				polygons: null,
+				distances: null,
+				polylines: [
+					{
+						id: "piecewise",
+						points: [
+							{ x: -5, y: -5 },
+							{ x: -3, y: -5 },
+							{ x: -3, y: 0 },
+							{ x: 0, y: 0 },
+							{ x: 0, y: 3 },
+							{ x: 3, y: 3 },
+							{ x: 3, y: -2 },
+							{ x: 5, y: -2 }
+						],
+						color: "magenta",
+						style: "dashed" as const
+					}
+				]
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
 	})
 })

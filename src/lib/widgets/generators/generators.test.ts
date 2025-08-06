@@ -730,7 +730,9 @@ describe("Widget Generators", () => {
 						strokeColor: "green",
 						label: null
 					}
-				]
+				],
+				distances: null,
+				polylines: null
 			}
 			expect(generateCoordinatePlane(props)).toMatchSnapshot()
 		})
@@ -745,7 +747,9 @@ describe("Widget Generators", () => {
 				showQuadrantLabels: false,
 				points: null,
 				lines: [],
-				polygons: []
+				polygons: [],
+				distances: null,
+				polylines: null
 			}
 			const result = errors.trySync(() => generateCoordinatePlane(props))
 			if (result.error) {
