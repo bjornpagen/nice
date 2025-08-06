@@ -14,6 +14,7 @@ import {
 	generateDotPlot,
 	generateDoubleNumberLine,
 	generateEmojiImage,
+	generateFigureComparisonDiagram,
 	generateFractionNumberLine,
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
@@ -25,6 +26,7 @@ import {
 	generateNumberLineWithFractionGroups,
 	generateNumberSetDiagram,
 	generatePartitionedShape,
+	generatePentagonIntersectionDiagram,
 	generatePictograph,
 	generatePolyhedronDiagram,
 	generatePolyhedronNetDiagram,
@@ -91,6 +93,8 @@ export function generateWidget(widget: Widget): string {
 			return generateNumberSetDiagram(widget)
 		case "partitionedShape":
 			return generatePartitionedShape(widget)
+		case "pentagonIntersectionDiagram":
+			return generatePentagonIntersectionDiagram(widget)
 		case "pictograph":
 			return generatePictograph(widget)
 		case "polyhedronDiagram":
@@ -123,6 +127,8 @@ export function generateWidget(widget: Widget): string {
 			return generateVerticalArithmeticSetup(widget)
 		case "emojiImage":
 			return generateEmojiImage(widget)
+		case "figureComparisonDiagram":
+			return generateFigureComparisonDiagram(widget)
 		case "fractionNumberLine":
 			return generateFractionNumberLine(widget)
 		default:

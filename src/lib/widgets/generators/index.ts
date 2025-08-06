@@ -18,6 +18,7 @@ import {
 import { DotPlotPropsSchema, generateDotPlot } from "./dot-plot"
 import { DoubleNumberLinePropsSchema, generateDoubleNumberLine } from "./double-number-line"
 import { EmojiImagePropsSchema, generateEmojiImage } from "./emoji-image"
+import { FigureComparisonDiagramPropsSchema, generateFigureComparisonDiagram } from "./figure-comparison-diagram"
 import { FractionNumberLinePropsSchema, generateFractionNumberLine } from "./fraction-number-line"
 import { GeometricSolidDiagramPropsSchema, generateGeometricSolidDiagram } from "./geometric-solid-diagram"
 import { generateHangerDiagram, HangerDiagramPropsSchema } from "./hanger-diagram"
@@ -32,6 +33,10 @@ import {
 } from "./number-line-with-fraction-groups"
 import { generateNumberSetDiagram, NumberSetDiagramPropsSchema } from "./number-set-diagram"
 import { generatePartitionedShape, PartitionedShapePropsSchema } from "./partitioned-shape"
+import {
+	generatePentagonIntersectionDiagram,
+	PentagonIntersectionDiagramPropsSchema
+} from "./pentagon-intersection-diagram"
 import { generatePictograph, PictographPropsSchema } from "./pictograph"
 import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "./polyhedron-diagram"
 import { generatePolyhedronNetDiagram, PolyhedronNetDiagramPropsSchema } from "./polyhedron-net-diagram"
@@ -64,6 +69,7 @@ export const typedSchemas = {
 	dotPlot: DotPlotPropsSchema,
 	doubleNumberLine: DoubleNumberLinePropsSchema,
 	emojiImage: EmojiImagePropsSchema,
+	figureComparisonDiagram: FigureComparisonDiagramPropsSchema,
 	fractionNumberLine: FractionNumberLinePropsSchema,
 	geometricSolidDiagram: GeometricSolidDiagramPropsSchema,
 	hangerDiagram: HangerDiagramPropsSchema,
@@ -75,6 +81,7 @@ export const typedSchemas = {
 	numberLineWithFractionGroups: NumberLineWithFractionGroupsPropsSchema,
 	numberSetDiagram: NumberSetDiagramPropsSchema,
 	partitionedShape: PartitionedShapePropsSchema,
+	pentagonIntersectionDiagram: PentagonIntersectionDiagramPropsSchema,
 	pictograph: PictographPropsSchema,
 	polyhedronDiagram: PolyhedronDiagramPropsSchema,
 	probabilitySpinner: ProbabilitySpinnerPropsSchema,
@@ -109,6 +116,7 @@ const widgetSchemasWithoutPartitioned = [
 	typedSchemas.dotPlot,
 	typedSchemas.doubleNumberLine,
 	typedSchemas.emojiImage,
+	typedSchemas.figureComparisonDiagram,
 	typedSchemas.fractionNumberLine,
 	typedSchemas.geometricSolidDiagram,
 	typedSchemas.hangerDiagram,
@@ -119,6 +127,7 @@ const widgetSchemasWithoutPartitioned = [
 	typedSchemas.numberLineWithAction,
 	typedSchemas.numberLineWithFractionGroups,
 	typedSchemas.numberSetDiagram,
+	typedSchemas.pentagonIntersectionDiagram,
 	typedSchemas.pictograph,
 	typedSchemas.polyhedronDiagram,
 	typedSchemas.probabilitySpinner,
@@ -159,6 +168,7 @@ export {
 	generateDotPlot,
 	generateDoubleNumberLine,
 	generateEmojiImage,
+	generateFigureComparisonDiagram,
 	generateFractionNumberLine,
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
@@ -170,6 +180,7 @@ export {
 	generateNumberLineWithFractionGroups,
 	generateNumberSetDiagram,
 	generatePartitionedShape,
+	generatePentagonIntersectionDiagram,
 	generatePictograph,
 	generatePolyhedronDiagram,
 	generateProbabilitySpinner,
