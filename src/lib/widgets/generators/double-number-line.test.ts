@@ -41,4 +41,21 @@ describe("generateDoubleNumberLine", () => {
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
+
+	test("should throw error when tick counts don't match", () => {
+		const props = {
+			type: "doubleNumberLine" as const,
+			width: null,
+			height: null,
+			topLine: {
+				label: "Top",
+				ticks: [0, 2, 4, 6] // 4 ticks
+			},
+			bottomLine: {
+				label: "Bottom",
+				ticks: [0, 10, 20, 30, 40, 50] // 6 ticks - mismatch!
+			}
+		}
+		expect(() => generateDiagram(props)).toThrow("top line has 4 ticks, bottom line has 6 ticks")
+	})
 })

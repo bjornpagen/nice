@@ -9,35 +9,6 @@ const PointSchema = z
 	})
 	.strict()
 
-// Helper function to create shape schema inline
-const createShapeSchema = () =>
-	z
-		.object({
-			vertices: z
-				.array(
-					z
-						.object({
-							x: z.number().describe("The horizontal coordinate of the point."),
-							y: z.number().describe("The vertical coordinate of the point.")
-						})
-						.strict()
-				)
-				.min(3)
-				.describe("An ordered list of vertices defining the polygon."),
-			label: z.string().nullable().describe('An optional text label for the shape (e.g., "A", "B").'),
-			fillColor: z
-				.string()
-				.nullable()
-				.transform((val) => val ?? "rgba(120, 84, 171, 0.2)")
-				.describe("The fill color of the shape."),
-			strokeColor: z
-				.string()
-				.nullable()
-				.transform((val) => val ?? "#7854ab")
-				.describe("The stroke color of the shape's boundary.")
-		})
-		.strict()
-
 // Defines a line segment, used for reflection lines or visual aids.
 const LineSchema = z
 	.object({
@@ -285,7 +256,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	}
 
 	const findOptimalLabelPosition = (
-		shape: z.infer<ReturnType<typeof createShapeSchema>>,
+		shape: TransformationDiagramProps["preImage"],
 		avoidPoints: Array<{ x: number; y: number }> = []
 	) => {
 		const centroid = calculateCentroid(shape.vertices)
@@ -326,7 +297,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	}
 
 	const drawPolygon = (
-		shape: z.infer<ReturnType<typeof createShapeSchema>>,
+		shape: TransformationDiagramProps["preImage"],
 		isImage: boolean,
 		labelPosition?: { x: number; y: number }
 	) => {

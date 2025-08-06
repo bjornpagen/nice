@@ -59,4 +59,23 @@ describe("generateInequalityNumberLine", () => {
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
+
+	test("should throw error when min >= max", () => {
+		const props = {
+			type: "inequalityNumberLine" as const,
+			width: null,
+			height: null,
+			min: 10,
+			max: 5, // Invalid: min >= max
+			tickInterval: 1,
+			ranges: [
+				{
+					start: null,
+					end: { value: 3, type: "open" as const },
+					color: null
+				}
+			]
+		}
+		expect(() => generateDiagram(props)).toThrow("min (10) must be less than max (5)")
+	})
 })

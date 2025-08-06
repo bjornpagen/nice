@@ -32,11 +32,19 @@ const TriangleBaseSchema = z
 	})
 	.strict()
 
+// Defines a pentagon base shape
+const PentagonBaseSchema = z
+	.object({
+		type: z.literal("pentagon"),
+		side: z.number()
+	})
+	.strict()
+
 // Defines the dimensions for the faces of the net.
 const FaceDimensionsSchema = z
 	.object({
 		base: z
-			.discriminatedUnion("type", [SquareBaseSchema, RectangleBaseSchema, TriangleBaseSchema])
+			.discriminatedUnion("type", [SquareBaseSchema, RectangleBaseSchema, TriangleBaseSchema, PentagonBaseSchema])
 			.describe("The primary base shape of the polyhedron."),
 		lateralHeight: z
 			.number()
@@ -60,7 +68,7 @@ export const PolyhedronNetDiagramPropsSchema = z
 			.transform((val) => val ?? 300)
 			.describe("The total height of the output SVG container in pixels."),
 		polyhedronType: z
-			.enum(["cube", "rectangularPrism", "triangularPrism", "squarePyramid", "triangularPyramid"])
+			.enum(["cube", "rectangularPrism", "triangularPrism", "squarePyramid", "triangularPyramid", "pentagonalPyramid"])
 			.describe("The type of polyhedron for which to generate a net."),
 		dimensions: FaceDimensionsSchema.describe("An object specifying the dimensions of the faces."),
 		showLabels: z
@@ -71,7 +79,7 @@ export const PolyhedronNetDiagramPropsSchema = z
 	})
 	.strict()
 	.describe(
-		'This template generates a two-dimensional "net" of a 3D polyhedron as an SVG graphic. A net is a 2D pattern that can be folded to form the 3D shape, and this template is essential for questions about surface area and the relationship between 2D and 3D geometry. The generator will render a specific, standard layout for the net of a given polyhedron. It programmatically arranges the component faces (squares, rectangles, triangles) in a connected pattern. This template is designed to create nets for various shapes: Cube: A cross-shaped layout of six identical squares. Rectangular Prism: A layout of six rectangles, typically with four in a row and two attached as "lids". Triangular Prism: A layout of three rectangles in a row with two triangular bases attached. Square Pyramid: A central square base with four triangles attached to its sides. Triangular Pyramid (Tetrahedron): A central triangular base with three other triangles attached to its sides. The diagram can be customized with dimension labels on the edges of the faces, allowing students to calculate the area of each component part. The final SVG is a clear and accurate representation of the unfolded solid.'
+		'This template generates a two-dimensional "net" of a 3D polyhedron as an SVG graphic. A net is a 2D pattern that can be folded to form the 3D shape, and this template is essential for questions about surface area and the relationship between 2D and 3D geometry. The generator will render a specific, standard layout for the net of a given polyhedron. It programmatically arranges the component faces (squares, rectangles, triangles) in a connected pattern. This template is designed to create nets for various shapes: Cube: A cross-shaped layout of six identical squares. Rectangular Prism: A layout of six rectangles, typically with four in a row and two attached as "lids". Triangular Prism: A layout of three rectangles in a row with two triangular bases attached. Square Pyramid: A central square base with four triangles attached to its sides. Triangular Pyramid (Tetrahedron): A central triangular base with three other triangles attached to its sides. Pentagonal Pyramid: A central pentagonal base with five triangles attached to its sides. The diagram can be customized with dimension labels on the edges of the faces, allowing students to calculate the area of each component part. The final SVG is a clear and accurate representation of the unfolded solid.'
 	)
 
 export type PolyhedronNetDiagramProps = z.infer<typeof PolyhedronNetDiagramPropsSchema>
@@ -361,6 +369,86 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		svg += poly(
 			`${to_px_x(p3.x)},${to_px_y(p3.y)} ${to_px_x(p2.x)},${to_px_y(p2.y)} ${to_px_x(apex_side2.x)},${to_px_y(apex_side2.y)}`
 		)
+	} else if (polyhedronType === "pentagonalPyramid") {
+		if (dimensions.base.type !== "pentagon") {
+			throw errors.wrap(
+				ErrInvalidBaseShape,
+				`pentagonalPyramid must have a pentagon base, but received type '${dimensions.base.type}'`
+			)
+		}
+		if (dimensions.lateralHeight == null) {
+			throw errors.wrap(ErrInvalidBaseShape, "lateralHeight is required for pentagonalPyramid")
+		}
+		const side = dimensions.base.side
+		const lat_h = dimensions.lateralHeight
+		interface Point {
+			x: number
+			y: number
+		}
+		const sin_pi5 = Math.sin(Math.PI / 5)
+		const R = side / (2 * sin_pi5)
+		let points: Point[] = []
+		for (let i = 0; i < 5; i++) {
+			const theta = (2 * Math.PI * i) / 5 - Math.PI / 2
+			points.push({
+				x: R * Math.cos(theta),
+				y: R * Math.sin(theta)
+			})
+		}
+		const getApex = (pa: Point, pb: Point, pc: Point): Point => {
+			const ex = pb.x - pa.x
+			const ey = pb.y - pa.y
+			const mx = (pa.x + pb.x) / 2
+			const my = (pa.y + pb.y) / 2
+			const cross = ex * (pc.y - pa.y) - ey * (pc.x - pa.x)
+			let px: number
+			let py: number
+			if (cross > 0) {
+				px = ey
+				py = -ex
+			} else {
+				px = -ey
+				py = ex
+			}
+			const plen = Math.sqrt(px ** 2 + py ** 2)
+			const ux = px / plen
+			const uy = py / plen
+			return { x: mx + lat_h * ux, y: my + lat_h * uy }
+		}
+		let all_points: Point[] = [...points]
+		let apexes: Point[] = []
+		for (let j = 0; j < 5; j++) {
+			const pa = points[j]
+			const pb = points[(j + 1) % 5]
+			const pc = points[(j + 2) % 5]
+			if (!pa || !pb || !pc) continue
+			const apex = getApex(pa, pb, pc)
+			apexes.push(apex)
+			all_points.push(apex)
+		}
+		let min_x = Math.min(...all_points.map((p) => p.x))
+		let max_x = Math.max(...all_points.map((p) => p.x))
+		let min_y = Math.min(...all_points.map((p) => p.y))
+		let max_y = Math.max(...all_points.map((p) => p.y))
+		const total_w_units = max_x - min_x
+		const total_h_units = max_y - min_y
+		const scale = Math.min(width / total_w_units, height / total_h_units) * 0.9
+		const u = scale
+		const x_offset = (width - total_w_units * u) / 2
+		const y_offset = (height - total_h_units * u) / 2
+		const to_px_x = (ux: number) => (ux - min_x) * u + x_offset
+		const to_px_y = (uy: number) => (uy - min_y) * u + y_offset
+		const base_points_str = points.map((p) => `${to_px_x(p.x)},${to_px_y(p.y)}`).join(" ")
+		svg += poly(base_points_str)
+		for (let j = 0; j < 5; j++) {
+			const pa = points[j]
+			const pb = points[(j + 1) % 5]
+			const apex = apexes[j]
+			if (!pa || !pb || !apex) continue
+			svg += poly(
+				`${to_px_x(pa.x)},${to_px_y(pa.y)} ${to_px_x(pb.x)},${to_px_y(pb.y)} ${to_px_x(apex.x)},${to_px_y(apex.y)}`
+			)
+		}
 	} else {
 		throw errors.new(`polyhedron type '${polyhedronType}' is not implemented`)
 	}
