@@ -15,9 +15,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "A", x: 50, y: 150, label: "A" },
-					{ id: "B", x: 150, y: 150, label: "B" },
-					{ id: "C", x: 250, y: 100, label: "C" }
+					{ id: "A", x: 50, y: 150, label: "A", shape: null },
+					{ id: "B", x: 150, y: 150, label: "B", shape: null },
+					{ id: "C", x: 250, y: 100, label: "C", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -42,9 +42,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "P", x: 100, y: 200, label: "P" },
-					{ id: "Q", x: 200, y: 200, label: "Q" },
-					{ id: "R", x: 200, y: 100, label: "R" }
+					{ id: "P", x: 100, y: 200, label: "P", shape: null },
+					{ id: "Q", x: 200, y: 200, label: "Q", shape: null },
+					{ id: "R", x: 200, y: 100, label: "R", shape: null }
 				],
 				rays: [
 					{ from: "Q", to: "P" },
@@ -69,9 +69,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "X", x: 80, y: 180, label: "X" },
-					{ id: "Y", x: 180, y: 180, label: "Y" },
-					{ id: "Z", x: 220, y: 120, label: "Z" }
+					{ id: "X", x: 80, y: 180, label: "X", shape: null },
+					{ id: "Y", x: 180, y: 180, label: "Y", shape: null },
+					{ id: "Z", x: 220, y: 120, label: "Z", shape: null }
 				],
 				rays: [
 					{ from: "Y", to: "X" },
@@ -96,9 +96,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "M", x: 60, y: 150, label: "M" },
-					{ id: "N", x: 160, y: 150, label: "N" },
-					{ id: "O", x: 220, y: 200, label: "O" }
+					{ id: "M", x: 60, y: 150, label: "M", shape: null },
+					{ id: "N", x: 160, y: 150, label: "N", shape: null },
+					{ id: "O", x: 220, y: 200, label: "O", shape: null }
 				],
 				rays: [
 					{ from: "N", to: "M" },
@@ -125,10 +125,10 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "A", x: 50, y: 150, label: "A" },
-					{ id: "B", x: 150, y: 150, label: "B" },
-					{ id: "C", x: 250, y: 100, label: "C" },
-					{ id: "D", x: 250, y: 200, label: "D" }
+					{ id: "A", x: 50, y: 150, label: "A", shape: null },
+					{ id: "B", x: 150, y: 150, label: "B", shape: null },
+					{ id: "C", x: 250, y: 100, label: "C", shape: null },
+					{ id: "D", x: 250, y: 200, label: "D", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -161,11 +161,11 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "A", x: 50, y: 100, label: "A" },
-					{ id: "B", x: 200, y: 150, label: "B" },
-					{ id: "C", x: 350, y: 200, label: "C" },
-					{ id: "D", x: 50, y: 200, label: "D" },
-					{ id: "E", x: 350, y: 100, label: "E" }
+					{ id: "A", x: 50, y: 100, label: "A", shape: null },
+					{ id: "B", x: 200, y: 150, label: "B", shape: null },
+					{ id: "C", x: 350, y: 200, label: "C", shape: null },
+					{ id: "D", x: 50, y: 200, label: "D", shape: null },
+					{ id: "E", x: 350, y: 100, label: "E", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -199,10 +199,10 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "P", x: 100, y: 200, label: "P" },
-					{ id: "Q", x: 200, y: 200, label: "Q" },
-					{ id: "R", x: 200, y: 100, label: "R" },
-					{ id: "S", x: 250, y: 130, label: "S" }
+					{ id: "P", x: 100, y: 200, label: "P", shape: null },
+					{ id: "Q", x: 200, y: 200, label: "Q", shape: null },
+					{ id: "R", x: 200, y: 100, label: "R", shape: null },
+					{ id: "S", x: 250, y: 130, label: "S", shape: null }
 				],
 				rays: [
 					{ from: "Q", to: "P" },
@@ -237,9 +237,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "A", x: 200, y: 50, label: "A" },
-					{ id: "B", x: 100, y: 200, label: "B" },
-					{ id: "C", x: 300, y: 200, label: "C" }
+					{ id: "A", x: 200, y: 50, label: "A", shape: null },
+					{ id: "B", x: 100, y: 200, label: "B", shape: null },
+					{ id: "C", x: 300, y: 200, label: "C", shape: null }
 				],
 				rays: [
 					{ from: "A", to: "B" },
@@ -282,14 +282,14 @@ describe("generateAngleDiagram", () => {
 				width: 500,
 				height: 400,
 				points: [
-					{ id: "A", x: 50, y: 120, label: "A" },
-					{ id: "B", x: 450, y: 120, label: "B" },
-					{ id: "C", x: 50, y: 280, label: "C" },
-					{ id: "D", x: 450, y: 280, label: "D" },
-					{ id: "E", x: 150, y: 50, label: "E" },
-					{ id: "F", x: 350, y: 350, label: "F" },
-					{ id: "P", x: 200, y: 120, label: null },
-					{ id: "Q", x: 300, y: 280, label: null }
+					{ id: "A", x: 50, y: 120, label: "A", shape: null },
+					{ id: "B", x: 450, y: 120, label: "B", shape: null },
+					{ id: "C", x: 50, y: 280, label: "C", shape: null },
+					{ id: "D", x: 450, y: 280, label: "D", shape: null },
+					{ id: "E", x: 150, y: 50, label: "E", shape: null },
+					{ id: "F", x: 350, y: 350, label: "F", shape: null },
+					{ id: "P", x: 200, y: 120, label: null, shape: null },
+					{ id: "Q", x: 300, y: 280, label: null, shape: null }
 				],
 				rays: [
 					{ from: "A", to: "B" },
@@ -323,16 +323,16 @@ describe("generateAngleDiagram", () => {
 				height: 400,
 				points: [
 					// Central intersection point
-					{ id: "A", x: 300, y: 200, label: "A" },
+					{ id: "A", x: 300, y: 200, label: "A", shape: null },
 					// Bottom horizontal line points (D-A-E forms the bottom horizontal line)
-					{ id: "D", x: 100, y: 200, label: "D" },
-					{ id: "E", x: 500, y: 200, label: "E" },
+					{ id: "D", x: 100, y: 200, label: "D", shape: null },
+					{ id: "E", x: 500, y: 200, label: "E", shape: null },
 					// Top horizontal line points (B-C forms the top horizontal line)
-					{ id: "B", x: 150, y: 100, label: "B" },
-					{ id: "C", x: 450, y: 100, label: "C" },
+					{ id: "B", x: 150, y: 100, label: "B", shape: null },
+					{ id: "C", x: 450, y: 100, label: "C", shape: null },
 					// Bottom point for diagonal line
 					// F is positioned so that F-A-C are collinear
-					{ id: "F", x: 150, y: 300, label: "F" }
+					{ id: "F", x: 150, y: 300, label: "F", shape: null }
 				],
 				rays: [
 					// Five rays emanating from central point A
@@ -382,9 +382,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "A", x: 80, y: 180, label: "A" },
-					{ id: "B", x: 180, y: 180, label: "B" },
-					{ id: "C", x: 250, y: 120, label: "C" }
+					{ id: "A", x: 80, y: 180, label: "A", shape: null },
+					{ id: "B", x: 180, y: 180, label: "B", shape: null },
+					{ id: "C", x: 250, y: 120, label: "C", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -409,9 +409,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "X", x: 100, y: 150, label: "X" },
-					{ id: "Y", x: 200, y: 150, label: "Y" },
-					{ id: "Z", x: 300, y: 100, label: "Z" }
+					{ id: "X", x: 100, y: 150, label: "X", shape: null },
+					{ id: "Y", x: 200, y: 150, label: "Y", shape: null },
+					{ id: "Z", x: 300, y: 100, label: "Z", shape: null }
 				],
 				rays: [
 					{ from: "Y", to: "X" },
@@ -463,9 +463,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "A", x: 100, y: 150, label: "A" },
-					{ id: "B", x: 200, y: 150, label: "B" },
-					{ id: "C", x: 180, y: 100, label: "C" }
+					{ id: "A", x: 100, y: 150, label: "A", shape: null },
+					{ id: "B", x: 200, y: 150, label: "B", shape: null },
+					{ id: "C", x: 180, y: 100, label: "C", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -492,9 +492,9 @@ describe("generateAngleDiagram", () => {
 				width: 600,
 				height: 500,
 				points: [
-					{ id: "A", x: 150, y: 250, label: "A" },
-					{ id: "B", x: 300, y: 250, label: "B" },
-					{ id: "C", x: 450, y: 150, label: "C" }
+					{ id: "A", x: 150, y: 250, label: "A", shape: null },
+					{ id: "B", x: 300, y: 250, label: "B", shape: null },
+					{ id: "C", x: 450, y: 150, label: "C", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -519,9 +519,9 @@ describe("generateAngleDiagram", () => {
 				width: 200,
 				height: 150,
 				points: [
-					{ id: "A", x: 50, y: 75, label: "A" },
-					{ id: "B", x: 100, y: 75, label: "B" },
-					{ id: "C", x: 150, y: 50, label: "C" }
+					{ id: "A", x: 50, y: 75, label: "A", shape: null },
+					{ id: "B", x: 100, y: 75, label: "B", shape: null },
+					{ id: "C", x: 150, y: 50, label: "C", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -548,9 +548,9 @@ describe("generateAngleDiagram", () => {
 				width: null,
 				height: 300,
 				points: [
-					{ id: "A", x: 100, y: 150, label: "A" },
-					{ id: "B", x: 200, y: 150, label: "B" },
-					{ id: "C", x: 300, y: 100, label: "C" }
+					{ id: "A", x: 100, y: 150, label: "A", shape: null },
+					{ id: "B", x: 200, y: 150, label: "B", shape: null },
+					{ id: "C", x: 300, y: 100, label: "C", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -575,9 +575,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: null,
 				points: [
-					{ id: "A", x: 100, y: 150, label: "A" },
-					{ id: "B", x: 200, y: 150, label: "B" },
-					{ id: "C", x: 300, y: 100, label: "C" }
+					{ id: "A", x: 100, y: 150, label: "A", shape: null },
+					{ id: "B", x: 200, y: 150, label: "B", shape: null },
+					{ id: "C", x: 300, y: 100, label: "C", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -602,9 +602,9 @@ describe("generateAngleDiagram", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "A", x: 100, y: 150, label: "A" },
-					{ id: "B", x: 200, y: 150, label: "B" },
-					{ id: "C", x: 300, y: 100, label: "C" }
+					{ id: "A", x: 100, y: 150, label: "A", shape: null },
+					{ id: "B", x: 200, y: 150, label: "B", shape: null },
+					{ id: "C", x: 300, y: 100, label: "C", shape: null }
 				],
 				rays: [
 					{ from: "B", to: "A" },

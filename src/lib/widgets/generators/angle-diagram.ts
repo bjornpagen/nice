@@ -39,58 +39,6 @@ export const findLineIntersection = (
 	return { x: intersectionX, y: intersectionY }
 }
 
-// Defines a 2D coordinate point with a label
-const PointSchema = z
-	.object({
-		id: z.string().describe("A unique identifier for this point (e.g., 'A', 'B', 'V')."),
-		x: z.number().describe("The horizontal coordinate of the point."),
-		y: z.number().describe("The vertical coordinate of the point."),
-		label: z.string().nullable().describe("An optional text label to display near the point."),
-		shape: z
-			.enum(["circle", "ellipse"])
-			.optional()
-			.transform((val) => val ?? "circle")
-			.describe(
-				"The shape of the point marker. 'circle' renders as <circle>, 'ellipse' renders as <ellipse> (for Perseus compatibility)."
-			)
-	})
-	.strict()
-
-// Defines a ray (line segment) connecting two points
-const RaySchema = z
-	.object({
-		from: z.string().describe("The `id` of the point where the ray originates (the vertex)."),
-		to: z.string().describe("The `id` of a point the ray passes through.")
-	})
-	.strict()
-
-// Defines an angle to be drawn, with its label and style
-const AngleSchema = z
-	.object({
-		vertices: z
-			.array(z.string())
-			.describe(
-				"An array of exactly three point `id`s in the order [pointOnSide1, vertex, pointOnSide2]. Must contain exactly 3 elements."
-			),
-		label: z.string().nullable().describe('The text label for the angle (e.g., "x", "30°", "2x+1").'),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "rgba(217, 95, 79, 0.8)")
-			.describe("The color of the angle's arc marker."),
-		radius: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 30)
-			.describe("The radius of the angle arc in pixels."),
-		isRightAngle: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true, displays a square marker instead of a curved arc to indicate a 90° angle.")
-	})
-	.strict()
-
 // The main Zod schema for the angleDiagram function
 export const AngleDiagramPropsSchema = z
 	.object({
@@ -105,9 +53,65 @@ export const AngleDiagramPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 300)
 			.describe("The total height of the output SVG container in pixels."),
-		points: z.array(PointSchema).min(1).describe("An array of all points to be used in the diagram."),
-		rays: z.array(RaySchema).describe("An array of rays to be drawn, defined by connecting points."),
-		angles: z.array(AngleSchema).describe("An array of angles to be highlighted and labeled on the diagram.")
+		points: z
+			.array(
+				z
+					.object({
+						id: z.string().describe("A unique identifier for this point (e.g., 'A', 'B', 'V')."),
+						x: z.number().describe("The horizontal coordinate of the point."),
+						y: z.number().describe("The vertical coordinate of the point."),
+						label: z.string().nullable().describe("An optional text label to display near the point."),
+						shape: z
+							.enum(["circle", "ellipse"])
+							.nullable()
+							.transform((val) => val ?? "circle")
+							.describe(
+								"The shape of the point marker. 'circle' renders as <circle>, 'ellipse' renders as <ellipse> (for Perseus compatibility)."
+							)
+					})
+					.strict()
+			)
+			.min(1)
+			.describe("An array of all points to be used in the diagram."),
+		rays: z
+			.array(
+				z
+					.object({
+						from: z.string().describe("The `id` of the point where the ray originates (the vertex)."),
+						to: z.string().describe("The `id` of a point the ray passes through.")
+					})
+					.strict()
+			)
+			.describe("An array of rays to be drawn, defined by connecting points."),
+		angles: z
+			.array(
+				z
+					.object({
+						vertices: z
+							.array(z.string())
+							.describe(
+								"An array of exactly three point `id`s in the order [pointOnSide1, vertex, pointOnSide2]. Must contain exactly 3 elements."
+							),
+						label: z.string().nullable().describe('The text label for the angle (e.g., "x", "30°", "2x+1").'),
+						color: z
+							.string()
+							.nullable()
+							.transform((val) => val ?? "rgba(217, 95, 79, 0.8)")
+							.describe("The color of the angle's arc marker."),
+						radius: z
+							.number()
+							.nullable()
+							.transform((val) => val ?? 30)
+							.describe("The radius of the angle arc in pixels."),
+						isRightAngle: z
+							.boolean()
+							.nullable()
+							.transform((val) => val ?? false)
+							.describe("If true, displays a square marker instead of a curved arc to indicate a 90° angle.")
+					})
+					.strict()
+			)
+			.describe("An array of angles to be highlighted and labeled on the diagram.")
 	})
 	.strict()
 	.describe(

@@ -6,94 +6,6 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 export const ErrInvalidSideVertexCount = errors.new("side vertices must contain exactly 2 point IDs")
 export const ErrInvalidAngleVertexCount = errors.new("angle vertices must contain exactly 3 point IDs")
 
-// Defines a 2D coordinate point with a label.
-const PointSchema = z
-	.object({
-		id: z.string().describe("A unique identifier for this point (e.g., 'A', 'B', 'V')."),
-		x: z.number().describe("The horizontal coordinate of the point."),
-		y: z.number().describe("The vertical coordinate of the point."),
-		label: z.string().nullable().describe("An optional text label to display near the point.")
-	})
-	.strict()
-
-// Defines a side of the triangle, including labels and congruence marks.
-const SideSchema = z
-	.object({
-		vertices: z
-			.array(z.string())
-			.describe("An array of exactly two point `id`s that form the side. Must contain exactly 2 elements."),
-		label: z.string().nullable().describe("A label for the side's length (e.g., '5', 'x', '√74')."),
-		tickMarks: z
-			.number()
-			.int()
-			.min(0)
-			.nullable()
-			.transform((val) => val ?? 0)
-			.describe("The number of tick marks to display on the side to indicate congruence.")
-	})
-	.strict()
-
-// Defines an angle to be drawn, with its label and style.
-const AngleSchema = z
-	.object({
-		vertices: z
-			.array(z.string())
-			.describe(
-				"An array of exactly three point `id`s in the order [pointOnSide1, vertex, pointOnSide2]. Must contain exactly 3 elements."
-			),
-		label: z.string().nullable().describe('The text label for the angle (e.g., "x", "30°", "θ").'),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "rgba(217, 95, 79, 0.8)")
-			.describe("The color of the angle's arc marker."),
-		radius: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 25)
-			.describe("The radius of the angle arc in pixels."),
-		isRightAngle: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true, displays a square marker instead of a curved arc to indicate a 90° angle."),
-		showArc: z
-			.boolean()
-			.nullable()
-			.optional()
-			.transform((val) => val ?? true)
-			.describe("If true, displays the angle arc marker. If false, only the label is shown.")
-	})
-	.strict()
-
-// Defines an internal line, such as an altitude or median.
-const InternalLineSchema = z
-	.object({
-		from: z.string().describe("The vertex `id` where the line starts."),
-		to: z.string().describe("The vertex `id` where the line ends."),
-		style: z
-			.enum(["solid", "dashed", "dotted"])
-			.nullable()
-			.transform((val) => val ?? "solid")
-			.describe("The style of the line.")
-	})
-	.strict()
-
-// Defines a region to be shaded, defined by its vertices.
-const ShadedRegionSchema = z
-	.object({
-		vertices: z
-			.array(z.string())
-			.min(3)
-			.describe("An ordered array of vertex `id`s that define the region to be shaded."),
-		color: z
-			.string()
-			.describe(
-				"The CSS fill color for the region, supporting rgba for transparency (e.g., 'rgba(40, 174, 123, 0.2)')."
-			)
-	})
-	.strict()
-
 // The main Zod schema for the triangleDiagram widget.
 export const TriangleDiagramPropsSchema = z
 	.object({
@@ -108,14 +20,108 @@ export const TriangleDiagramPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 300)
 			.describe("The total height of the output SVG container in pixels."),
-		points: z.array(PointSchema).min(3).describe("An array of all vertices to be used in the diagram."),
+		points: z
+			.array(
+				z
+					.object({
+						id: z.string().describe("A unique identifier for this point (e.g., 'A', 'B', 'V')."),
+						x: z.number().describe("The horizontal coordinate of the point."),
+						y: z.number().describe("The vertical coordinate of the point."),
+						label: z.string().nullable().describe("An optional text label to display near the point.")
+					})
+					.strict()
+			)
+			.min(3)
+			.describe("An array of all vertices to be used in the diagram."),
 		sides: z
-			.array(SideSchema)
+			.array(
+				z
+					.object({
+						vertices: z
+							.array(z.string())
+							.describe("An array of exactly two point `id`s that form the side. Must contain exactly 2 elements."),
+						label: z.string().nullable().describe("A label for the side's length (e.g., '5', 'x', '√74')."),
+						tickMarks: z
+							.number()
+							.int()
+							.min(0)
+							.nullable()
+							.transform((val) => val ?? 0)
+							.describe("The number of tick marks to display on the side to indicate congruence.")
+					})
+					.strict()
+			)
 			.nullable()
 			.describe("Optional definitions for the triangle's sides, including labels and tick marks."),
-		angles: z.array(AngleSchema).nullable().describe("Optional definitions for angles to be highlighted and labeled."),
-		internalLines: z.array(InternalLineSchema).nullable().describe("Optional internal lines like altitudes."),
-		shadedRegions: z.array(ShadedRegionSchema).nullable().describe("Optional shaded sub-regions.")
+		angles: z
+			.array(
+				z
+					.object({
+						vertices: z
+							.array(z.string())
+							.describe(
+								"An array of exactly three point `id`s in the order [pointOnSide1, vertex, pointOnSide2]. Must contain exactly 3 elements."
+							),
+						label: z.string().nullable().describe('The text label for the angle (e.g., "x", "30°", "θ").'),
+						color: z
+							.string()
+							.nullable()
+							.transform((val) => val ?? "rgba(217, 95, 79, 0.8)")
+							.describe("The color of the angle's arc marker."),
+						radius: z
+							.number()
+							.nullable()
+							.transform((val) => val ?? 25)
+							.describe("The radius of the angle arc in pixels."),
+						isRightAngle: z
+							.boolean()
+							.nullable()
+							.transform((val) => val ?? false)
+							.describe("If true, displays a square marker instead of a curved arc to indicate a 90° angle."),
+						showArc: z
+							.boolean()
+							.nullable()
+							.transform((val) => val ?? true)
+							.describe("If true, displays the angle arc marker. If false, only the label is shown.")
+					})
+					.strict()
+			)
+			.nullable()
+			.describe("Optional definitions for angles to be highlighted and labeled."),
+		internalLines: z
+			.array(
+				z
+					.object({
+						from: z.string().describe("The vertex `id` where the line starts."),
+						to: z.string().describe("The vertex `id` where the line ends."),
+						style: z
+							.enum(["solid", "dashed", "dotted"])
+							.nullable()
+							.transform((val) => val ?? "solid")
+							.describe("The style of the line.")
+					})
+					.strict()
+			)
+			.nullable()
+			.describe("Optional internal lines like altitudes."),
+		shadedRegions: z
+			.array(
+				z
+					.object({
+						vertices: z
+							.array(z.string())
+							.min(3)
+							.describe("An ordered array of vertex `id`s that define the region to be shaded."),
+						color: z
+							.string()
+							.describe(
+								"The CSS fill color for the region, supporting rgba for transparency (e.g., 'rgba(40, 174, 123, 0.2)')."
+							)
+					})
+					.strict()
+			)
+			.nullable()
+			.describe("Optional shaded sub-regions.")
 	})
 	.strict()
 	.describe(

@@ -38,7 +38,9 @@ describe("generateTriangleDiagram", () => {
 					{ id: "R", x: 50, y: 100, label: "R" }
 				],
 				sides: null,
-				angles: [{ vertices: ["R", "P", "Q"], isRightAngle: true, label: null, color: null, radius: null }],
+				angles: [
+					{ vertices: ["R", "P", "Q"], isRightAngle: true, label: null, color: null, radius: null, showArc: null }
+				],
 				internalLines: null,
 				shadedRegions: null
 			}
@@ -100,9 +102,9 @@ describe("generateTriangleDiagram", () => {
 				],
 				sides: null,
 				angles: [
-					{ vertices: ["C", "A", "B"], label: "x°", isRightAngle: null, color: null, radius: null },
-					{ vertices: ["C", "B", "A"], label: "33°", isRightAngle: null, color: null, radius: null },
-					{ vertices: ["A", "C", "B"], label: "114°", isRightAngle: null, color: null, radius: null }
+					{ vertices: ["C", "A", "B"], label: "x°", isRightAngle: null, color: null, radius: null, showArc: null },
+					{ vertices: ["C", "B", "A"], label: "33°", isRightAngle: null, color: null, radius: null, showArc: null },
+					{ vertices: ["A", "C", "B"], label: "114°", isRightAngle: null, color: null, radius: null, showArc: null }
 				],
 				internalLines: null,
 				shadedRegions: null
