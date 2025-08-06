@@ -50,6 +50,103 @@ QTI strictly differentiates between block-level and inline contexts:
 - **Can be placed inside**: `p`, `span`, or other inline containers
 - **Wrapper Strategy**: Use `<span>` wrapper when in text flow
 
+## MathML Placement Rules
+
+### 1. MathML Namespace Requirements
+
+QTI 3.0 has specific requirements for MathML namespace usage:
+
+**Correct Namespace**: `http://www.w3.org/1998/Math/MathML` (MathML 3.0 standard)
+**Incorrect Namespace**: `http://www.w3.org/2000/Math/MathML` (causes validation errors)
+
+```xml
+<!-- ✅ VALID -->
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+    <mn>42</mn>
+</math>
+
+<!-- ❌ INVALID -->
+<math xmlns="http://www.w3.org/2000/Math/MathML">
+    <mn>42</mn>
+</math>
+```
+
+### 2. MathML Element Placement Restrictions
+
+MathML elements can only be placed in **inline contexts** within QTI content:
+
+**Allowed Contexts**: `p`, `span`, `em`, `strong`, `div` (inline flow)
+**Forbidden Contexts**: Direct in `qti-item-body`, `qti-prompt` (block-only contexts)
+
+```xml
+<!-- ❌ INVALID: Direct in qti-item-body -->
+<qti-item-body>
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mn>42</mn>
+    </math>
+</qti-item-body>
+
+<!-- ✅ VALID: Wrapped in paragraph -->
+<qti-item-body>
+    <p>The answer is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>42</mn></math>.</p>
+</qti-item-body>
+```
+
+### 3. MathML Element Structure Rules
+
+MathML elements must follow strict content model rules:
+
+**msup/msub Structure**: Must contain exactly two child elements
+**mfenced Deprecation**: `<mfenced>` is deprecated, use `<mrow>` with `<mo>` instead
+
+```xml
+<!-- ❌ INVALID: Missing second child in msup -->
+<msup>
+    <mi>x</mi>
+</msup>
+
+<!-- ✅ VALID: Proper msup structure -->
+<msup>
+    <mi>x</mi>
+    <mn>2</mn>
+</msup>
+
+<!-- ❌ INVALID: Deprecated mfenced -->
+<mfenced separators=",">
+    <mn>1</mn>
+    <mn>2</mn>
+</mfenced>
+
+<!-- ✅ VALID: Modern equivalent -->
+<mrow>
+    <mo>(</mo>
+    <mn>1</mn>
+    <mo>,</mo>
+    <mn>2</mn>
+    <mo>)</mo>
+</mrow>
+```
+
+### 4. MathML in Interaction Contexts
+
+MathML in interaction prompts and feedback follows **inline content model**:
+
+```xml
+<!-- ❌ INVALID: Block wrapper in prompt -->
+<qti-choice-interaction>
+    <qti-prompt>
+        <p>Calculate <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>.</p>
+    </qti-prompt>
+</qti-choice-interaction>
+
+<!-- ✅ VALID: Inline content only -->
+<qti-choice-interaction>
+    <qti-prompt>
+        Calculate <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>.
+    </qti-prompt>
+</qti-choice-interaction>
+```
+
 ## Content Model Violations & Solutions
 
 ### 1. Raw Text in Element-Only Contexts

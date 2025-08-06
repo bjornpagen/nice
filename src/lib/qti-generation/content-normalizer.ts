@@ -357,6 +357,98 @@ function finalValidation(content: string): { content: string; transformations: n
 }
 
 /**
+ * Phase 8: MathML Normalization
+ * Fix MathML namespace, placement, and structure issues.
+ */
+function normalizeMathML(content: string): { content: string; transformations: number } {
+	logger.debug("phase 8: normalizing mathml")
+
+	let normalized = content
+	let transformations = 0
+
+	// Fix 1: Correct MathML namespace (2000 -> 1998)
+	const namespace2000Matches = normalized.match(/http:\/\/www\.w3\.org\/2000\/Math\/MathML/g)
+	if (namespace2000Matches) {
+		normalized = normalized.replace(/http:\/\/www\.w3\.org\/2000\/Math\/MathML/g, "http://www.w3.org/1998/Math/MathML")
+		transformations += namespace2000Matches.length
+		logger.debug("fixed mathml namespace", { count: namespace2000Matches.length })
+	}
+
+	// Fix 2: Ensure MathML elements have proper namespace declaration
+	const mathElementsWithoutNs = normalized.match(/<math(?![^>]*xmlns)/g)
+	if (mathElementsWithoutNs) {
+		normalized = normalized.replace(/<math(?![^>]*xmlns)/g, '<math xmlns="http://www.w3.org/1998/Math/MathML"')
+		transformations += mathElementsWithoutNs.length
+		logger.debug("added mathml namespace declarations", { count: mathElementsWithoutNs.length })
+	}
+
+	// Fix 3: Replace deprecated mfenced elements
+	const mfencedPattern = /<mfenced([^>]*)>(.*?)<\/mfenced>/g
+	let mfencedReplacements = 0
+	let mfencedMatch = mfencedPattern.exec(normalized)
+
+	while (mfencedMatch !== null) {
+		const attributes = mfencedMatch[1] || ""
+		const content = mfencedMatch[2] || ""
+		let separators = ","
+
+		// Extract separators attribute if present
+		const separatorsMatch = attributes.match(/separators=["']([^"']*?)["']/)
+		if (separatorsMatch) {
+			separators = separatorsMatch[1] || ","
+		}
+
+		// Build mrow replacement
+		const separatorElements = separators
+			.split("")
+			.map((sep) => `<mo>${sep}</mo>`)
+			.join("")
+
+		const replacement = `<mrow><mo>(</mo>${content.replace(/(<\/m[^>]+>)(?!$)/g, `$1${separatorElements}`)}<mo>)</mo></mrow>`
+
+		normalized = normalized.replace(mfencedMatch[0], replacement)
+		mfencedReplacements++
+		mfencedMatch = mfencedPattern.exec(normalized)
+	}
+
+	if (mfencedReplacements > 0) {
+		transformations += mfencedReplacements
+		logger.debug("replaced deprecated mfenced elements", { count: mfencedReplacements })
+	}
+
+	// Fix 4: Wrap orphaned MathML elements in paragraphs
+	// Pattern: <math> directly in qti-item-body or other block contexts
+	const orphanedMathPattern = /(<qti-item-body[^>]*>|<div[^>]*>|<qti-content-body[^>]*>)\s*(<math[^>]*>.*?<\/math>)/g
+	const orphanedMathMatches = normalized.match(orphanedMathPattern)
+	if (orphanedMathMatches) {
+		normalized = normalized.replace(orphanedMathPattern, "$1<p>$2</p>")
+		transformations += orphanedMathMatches.length
+		logger.debug("wrapped orphaned mathml elements", { count: orphanedMathMatches.length })
+	}
+
+	// Fix 5: Fix incomplete msup/msub elements (must have exactly 2 children)
+	const incompleteMsupPattern = /<msup>\s*(<[^>]+>.*?<\/[^>]+>)\s*<\/msup>/g
+	const incompleteMsupMatches = normalized.match(incompleteMsupPattern)
+	if (incompleteMsupMatches) {
+		normalized = normalized.replace(incompleteMsupPattern, "<msup>$1<mn></mn></msup>")
+		transformations += incompleteMsupMatches.length
+		logger.debug("fixed incomplete msup elements", { count: incompleteMsupMatches.length })
+	}
+
+	const incompleteMsubPattern = /<msub>\s*(<[^>]+>.*?<\/[^>]+>)\s*<\/msub>/g
+	const incompleteMsubMatches = normalized.match(incompleteMsubPattern)
+	if (incompleteMsubMatches) {
+		normalized = normalized.replace(incompleteMsubPattern, "<msub>$1<mn></mn></msub>")
+		transformations += incompleteMsubMatches.length
+		logger.debug("fixed incomplete msub elements", { count: incompleteMsubMatches.length })
+	}
+
+	logger.debug("phase 8 complete", { transformations })
+
+	return { content: normalized, transformations }
+}
+
+/**
  * Main entry point: Multi-pass QTI content normalization pipeline.
  * Systematically applies transformations to ensure QTI schema compliance.
  */
@@ -401,6 +493,11 @@ export function normalizeQtiContent(content: string): string {
 		const phase7 = finalValidation(normalized)
 		normalized = phase7.content
 		totalTransformations += phase7.transformations
+
+		// Phase 8: MathML Normalization
+		const phase8 = normalizeMathML(normalized)
+		normalized = phase8.content
+		totalTransformations += phase8.transformations
 
 		logger.info("qti content normalization complete", {
 			totalTransformations,
