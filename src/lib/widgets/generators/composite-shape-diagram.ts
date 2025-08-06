@@ -38,6 +38,22 @@ const SegmentSchema = z
 	})
 	.strict()
 
+// Defines a shaded region within the composite shape
+const ShadedRegionSchema = z
+	.object({
+		vertexIndices: z
+			.array(z.number().int().min(0))
+			.min(3)
+			.describe("An ordered array of vertex indices that defines the boundary of the region to be shaded."),
+		fillColor: z
+			.string()
+			.min(1)
+			.describe(
+				"The CSS fill color for the region, supporting rgba for transparency (e.g., 'rgba(116, 207, 112, 0.3)')."
+			)
+	})
+	.strict()
+
 // Defines a right-angle marker, positioned by the vertex at its corner
 const RightAngleMarkerSchema = z
 	.object({
@@ -69,6 +85,10 @@ export const CompositeShapeDiagramPropsSchema = z
 			.array(SegmentSchema)
 			.nullable()
 			.describe("An optional array of internal lines, typically dashed, to show decomposition."),
+		shadedRegions: z
+			.array(ShadedRegionSchema)
+			.nullable()
+			.describe("An optional array of shaded sub-regions to highlight parts of the composite shape."),
 		regionLabels: z
 			.array(LabelSchema)
 			.nullable()
@@ -80,7 +100,7 @@ export const CompositeShapeDiagramPropsSchema = z
 	})
 	.strict()
 	.describe(
-		"Generates a flexible diagram of a composite polygon from a set of vertices. This widget is ideal for area and perimeter problems that involve decomposing a complex shape into simpler ones (e.g., rectangles, triangles). It supports drawing a solid outer boundary, internal dashed lines for decomposition, labels for dimensions and regions, and right-angle markers to indicate perpendicularity. This allows for the clear visualization of shapes like L-shaped polygons, trapezoids, or any multi-sided figure."
+		"Generates a flexible diagram of a composite polygon from a set of vertices. This widget is ideal for area and perimeter problems that involve decomposing a complex shape into simpler ones (e.g., rectangles, triangles). It supports drawing a solid outer boundary, internal dashed lines for decomposition, shaded sub-regions with distinct colors, labels for dimensions and regions, and right-angle markers to indicate perpendicularity. This allows for the clear visualization of shapes like L-shaped polygons, trapezoids, parallelograms, or any multi-sided figure with colored decomposition highlighting."
 	)
 
 export type CompositeShapeDiagramProps = z.infer<typeof CompositeShapeDiagramPropsSchema>
@@ -90,7 +110,8 @@ export type CompositeShapeDiagramProps = z.infer<typeof CompositeShapeDiagramPro
  * problems involving the decomposition of a complex shape into simpler figures.
  */
 export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShapeDiagramPropsSchema> = (data) => {
-	const { width, height, vertices, outerBoundary, internalSegments, regionLabels, rightAngleMarkers } = data
+	const { width, height, vertices, outerBoundary, shadedRegions, internalSegments, regionLabels, rightAngleMarkers } =
+		data
 
 	if (vertices.length === 0) return `<svg width="${width}" height="${height}" />`
 
@@ -107,6 +128,26 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="${vbX} ${vbY} ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="10">`
 
+	// Shaded regions (drawn first to be in the background)
+	if (shadedRegions) {
+		for (const region of shadedRegions) {
+			// Validate that all vertex indices are within bounds
+			const validIndices = region.vertexIndices.filter((i) => i >= 0 && i < vertices.length)
+			if (validIndices.length < 3) continue // Skip regions with insufficient valid vertices
+
+			const regionPoints = validIndices
+				.map((i) => {
+					const vertex = vertices[i]
+					if (!vertex) return ""
+					return `${vertex.x},${vertex.y}`
+				})
+				.filter(Boolean)
+				.join(" ")
+
+			svg += `<polygon points="${regionPoints}" fill="${region.fillColor}" stroke="none"/>`
+		}
+	}
+
 	// Outer boundary
 	const outerPoints = outerBoundary
 		.map((i) => {
@@ -116,7 +157,7 @@ export const generateCompositeShapeDiagram: WidgetGenerator<typeof CompositeShap
 		})
 		.filter(Boolean)
 		.join(" ")
-	svg += `<polygon points="${outerPoints}" fill="#f0f0f0" stroke="black" stroke-width="2"/>`
+	svg += `<polygon points="${outerPoints}" fill="none" stroke="black" stroke-width="2"/>`
 
 	// Internal segments
 	if (internalSegments) {
