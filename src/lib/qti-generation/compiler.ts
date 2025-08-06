@@ -1,5 +1,6 @@
 import type { typedSchemas } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
+import { normalizeQtiContent } from "./content-normalizer"
 import { isValidWidgetType } from "./helpers"
 import { compileInteraction } from "./interaction-compiler"
 import { compileResponseDeclarations, compileResponseProcessing } from "./response-processor"
@@ -7,22 +8,6 @@ import type { AssessmentItem, AssessmentItemInput } from "./schemas"
 import { createDynamicAssessmentItemSchema } from "./schemas"
 import { processAndFillSlots } from "./slot-filler"
 import { generateWidget } from "./widget-generator"
-
-/**
- * Normalizes QTI content to ensure compliance with schema requirements.
- * Wraps raw text content in proper block elements to satisfy "element-only" content model.
- */
-function normalizeQtiContent(content: string): string {
-	const trimmed = content.trim()
-	if (!trimmed) return content
-
-	// Simple approach: if content starts with text (not an element), wrap it in a paragraph
-	if (!trimmed.startsWith("<")) {
-		return `<p>${content}</p>`
-	}
-
-	return content
-}
 
 export function compile(itemData: AssessmentItemInput): string {
 	// Step 1: Create a dynamic schema based on the widgets present
@@ -65,17 +50,17 @@ export function compile(itemData: AssessmentItemInput): string {
 	// Step 3: Process the body, filling all slots at once
 	const filledBody = processAndFillSlots(item.body, slots)
 
-	// Step 4: Normalize content to ensure QTI compliance
+	// Step 4: Apply multi-pass QTI content normalization pipeline
 	const processedBody = normalizeQtiContent(filledBody)
 
-	// Step 4: Compile response declarations and processing rules
+	// Step 5: Compile response declarations and processing rules
 	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)
 	const responseProcessing = compileResponseProcessing(item.responseDeclarations)
 
 	const correctFeedback = item.feedback.correct
 	const incorrectFeedback = item.feedback.incorrect
 
-	// Step 5: Assemble the final XML document
+	// Step 6: Assemble the final XML document
 	const finalXml = `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
