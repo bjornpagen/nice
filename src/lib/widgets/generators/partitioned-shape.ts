@@ -1,13 +1,14 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// NEW: Schema for grid-based coordinates used in geometry mode
-const GridPointSchema = z
-	.object({
-		row: z.number().int().describe("The 0-based row index."),
-		col: z.number().int().describe("The 0-based column index.")
-	})
-	.strict()
+// Helper function to create grid point schema inline
+const createGridPointSchema = () =>
+	z
+		.object({
+			row: z.number().int().describe("The 0-based row index."),
+			col: z.number().int().describe("The 0-based column index.")
+		})
+		.strict()
 
 // ENHANCED: The schema for a single shape in partition mode
 const PartitionShapeSchema = z
@@ -45,62 +46,74 @@ const PartitionShapeSchema = z
 		}
 	)
 
-// NEW: Schemas for overlays and geometry mode elements
-const LineOverlaySchema = z.object({
-	from: GridPointSchema,
-	to: GridPointSchema,
-	style: z.enum(["solid", "dashed", "dotted"]).nullable(),
-	color: z.string().nullable()
-})
+// Helper function to create line overlay schema inline
+const createLineOverlaySchema = () =>
+	z.object({
+		from: createGridPointSchema(),
+		to: createGridPointSchema(),
+		style: z.enum(["solid", "dashed", "dotted"]).nullable(),
+		color: z.string().nullable()
+	})
 
-const FigureSchema = z.object({
-	vertices: z.array(GridPointSchema),
-	fillColor: z.string().nullable(),
-	strokeColor: z.string().nullable()
-})
+const createFigureSchema = () =>
+	z.object({
+		vertices: z.array(createGridPointSchema()),
+		fillColor: z.string().nullable(),
+		strokeColor: z.string().nullable()
+	})
 
-const GridSchema = z.object({
-	rows: z.number().int().positive(),
-	columns: z.number().int().positive(),
-	opacity: z.number().min(0).max(1).nullable().default(0.2)
-})
+const createGridSchema = () =>
+	z.object({
+		rows: z.number().int().positive(),
+		columns: z.number().int().positive(),
+		opacity: z.number().min(0).max(1).nullable().default(0.2)
+	})
 
-// NEW: Base schema and discriminated union for the two modes
-const BaseSchema = z.object({
-	type: z.literal("partitionedShape"),
-	width: z
-		.number()
-		.nullable()
-		.transform((val) => val ?? 200),
-	height: z
-		.number()
-		.nullable()
-		.transform((val) => val ?? 200)
-})
-
-const PartitionModeSchema = BaseSchema.extend({
-	mode: z.literal("partition"),
-	shapes: z.array(PartitionShapeSchema).min(1),
-	layout: z
-		.enum(["horizontal", "vertical"])
-		.nullable()
-		.transform((val) => val ?? "horizontal"),
-	overlays: z.array(LineOverlaySchema).nullable()
-})
-
-const GeometryModeSchema = BaseSchema.extend({
-	mode: z.literal("geometry"),
-	grid: GridSchema,
-	figures: z.array(FigureSchema).nullable(),
-	lines: z.array(LineOverlaySchema).nullable()
-})
-
-export const PartitionedShapePropsSchema = z.discriminatedUnion("mode", [PartitionModeSchema, GeometryModeSchema])
+// NEW: Define schemas inline to avoid $ref generation
+export const PartitionedShapePropsSchema = z.discriminatedUnion("mode", [
+	z.object({
+		type: z.literal("partitionedShape"),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 200),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 200),
+		mode: z.literal("partition"),
+		shapes: z.array(PartitionShapeSchema).min(1),
+		layout: z
+			.enum(["horizontal", "vertical"])
+			.nullable()
+			.transform((val) => val ?? "horizontal"),
+		overlays: z.array(createLineOverlaySchema()).nullable()
+	}),
+	z.object({
+		type: z.literal("partitionedShape"),
+		width: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 200),
+		height: z
+			.number()
+			.nullable()
+			.transform((val) => val ?? 200),
+		mode: z.literal("geometry"),
+		grid: createGridSchema(),
+		figures: z.array(createFigureSchema()).nullable(),
+		lines: z.array(createLineOverlaySchema()).nullable()
+	})
+])
 
 export type PartitionedShapeProps = z.infer<typeof PartitionedShapePropsSchema>
 
+// Extract the types for each mode
+type PartitionModeProps = Extract<PartitionedShapeProps, { mode: "partition" }>
+type GeometryModeProps = Extract<PartitionedShapeProps, { mode: "geometry" }>
+
 // NEW: Rendering function for "partition" mode
-const generatePartitionView = (props: z.infer<typeof PartitionModeSchema>): string => {
+const generatePartitionView = (props: PartitionModeProps): string => {
 	const { shapes, width: shapeWidth, height: shapeHeight, layout, overlays } = props
 	const rad = (deg: number) => (deg * Math.PI) / 180
 	const gap = 20
@@ -186,7 +199,7 @@ const generatePartitionView = (props: z.infer<typeof PartitionModeSchema>): stri
 }
 
 // NEW: Rendering function for "geometry" mode
-const generateGeometryView = (props: z.infer<typeof GeometryModeSchema>): string => {
+const generateGeometryView = (props: GeometryModeProps): string => {
 	const { width, height, grid, figures, lines } = props
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">`
 

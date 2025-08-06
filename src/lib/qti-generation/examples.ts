@@ -352,31 +352,39 @@ export const equivalentFractionImages: AssessmentItemInput = {
 	widgets: {
 		stimulus_shape: {
 			type: "partitionedShape",
+			mode: "partition",
 			width: 180,
 			height: 88,
 			layout: null,
-			shapes: [{ type: "rectangle", totalParts: 6, shadedParts: 3, rows: 1, columns: 6, shadeColor: null }]
+			overlays: null,
+			shapes: [{ type: "rectangle", totalParts: 6, shadedCells: [0, 1, 2], rows: 1, columns: 6, shadeColor: null }]
 		},
 		choice_a_shape: {
 			type: "partitionedShape",
+			mode: "partition",
 			width: 180,
 			height: 88,
 			layout: null,
-			shapes: [{ type: "rectangle", totalParts: 8, shadedParts: 4, rows: 2, columns: 4, shadeColor: null }]
+			overlays: null,
+			shapes: [{ type: "rectangle", totalParts: 8, shadedCells: [0, 1, 2, 3], rows: 2, columns: 4, shadeColor: null }]
 		},
 		choice_b_shape: {
 			type: "partitionedShape",
+			mode: "partition",
 			width: 180,
 			height: 88,
 			layout: null,
-			shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 2, rows: 2, columns: 2, shadeColor: null }]
+			overlays: null,
+			shapes: [{ type: "rectangle", totalParts: 4, shadedCells: [0, 1], rows: 2, columns: 2, shadeColor: null }]
 		},
 		choice_c_shape: {
 			type: "partitionedShape",
+			mode: "partition",
 			width: 180,
 			height: 88,
 			layout: null,
-			shapes: [{ type: "rectangle", totalParts: 4, shadedParts: 3, rows: 2, columns: 2, shadeColor: null }]
+			overlays: null,
+			shapes: [{ type: "rectangle", totalParts: 4, shadedCells: [0, 1, 2], rows: 2, columns: 2, shadeColor: null }]
 		}
 	},
 	body: '<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of the following rectangle is shaded.</p><slot name="stimulus_shape" /><slot name="choice_interaction" />',
@@ -433,13 +441,15 @@ export const calculateShadedArea: AssessmentItemInput = {
 	widgets: {
 		multi_shape: {
 			type: "partitionedShape",
+			mode: "partition",
 			width: 320,
 			height: 103,
 			layout: "horizontal",
+			overlays: null,
 			shapes: [
-				{ type: "circle", totalParts: 4, shadedParts: 1, rows: null, columns: null, shadeColor: null },
-				{ type: "circle", totalParts: 4, shadedParts: 1, rows: null, columns: null, shadeColor: null },
-				{ type: "circle", totalParts: 4, shadedParts: 1, rows: null, columns: null, shadeColor: null }
+				{ type: "circle", totalParts: 4, shadedCells: [0], rows: null, columns: null, shadeColor: null },
+				{ type: "circle", totalParts: 4, shadedCells: [0], rows: null, columns: null, shadeColor: null },
+				{ type: "circle", totalParts: 4, shadedCells: [0], rows: null, columns: null, shadeColor: null }
 			]
 		}
 	},
