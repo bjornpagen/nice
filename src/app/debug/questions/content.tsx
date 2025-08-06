@@ -43,8 +43,8 @@ export function Content({ questions }: ContentProps) {
 	}
 
 	const handleSubmitAnalysis = async () => {
-		const notesToSave = analysisNotes.trim() || null
-		await upsertQuestionAnalysis(currentQuestion.id, notesToSave)
+		const notesToSave = analysisNotes.trim() || ""
+		await upsertQuestionAnalysis(currentQuestion.id, notesToSave === "" ? null : notesToSave)
 
 		// update local state
 		setLocalQuestions((prev) =>
