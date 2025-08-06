@@ -21,6 +21,10 @@ const PartitionShapeSchema = z
 			.describe("Total number of equal parts (rows * columns for rectangle, segments for circle)."),
 		// MODIFIED: From `shadedParts: number` to `shadedCells: number[]` for flexibility
 		shadedCells: z.array(z.number().int().min(0)).nullable().describe("A list of 0-based cell indices to be shaded."),
+		hatchedCells: z
+			.array(z.number().int().min(0))
+			.nullable()
+			.describe("A list of 0-based cell indices to be given diagonal hatching pattern."),
 		rows: z
 			.number()
 			.int()
@@ -31,7 +35,13 @@ const PartitionShapeSchema = z
 		shadeColor: z
 			.string()
 			.nullable()
-			.transform((val) => val ?? "#6495ED")
+			.transform((val) => val ?? "#6495ED"),
+		shadeOpacity: z
+			.number()
+			.min(0)
+			.max(1)
+			.nullable()
+			.transform((val) => val ?? 0.5)
 	})
 	.strict()
 	.refine(
@@ -134,12 +144,27 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 
 			// NEW LOGIC: Use shadedCells array instead of shadedParts count
 			const shadedSet = new Set(s.shadedCells ?? [])
+			const hatchedSet = new Set(s.hatchedCells ?? [])
 
 			for (let i = 0; i < s.totalParts; i++) {
 				const row = Math.floor(i / cols)
 				const col = i % cols
-				const fill = shadedSet.has(i) ? s.shadeColor : "none"
-				svg += `<rect x="${xOffset + col * cellW}" y="${yOffset + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" stroke="#333333" stroke-width="1"/>`
+				const isShaded = shadedSet.has(i)
+				const isHatched = hatchedSet.has(i)
+
+				const fill = isShaded ? s.shadeColor : "none"
+				const opacity = isShaded ? s.shadeOpacity : 1
+
+				svg += `<rect x="${xOffset + col * cellW}" y="${yOffset + row * cellH}" width="${cellW}" height="${cellH}" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
+
+				// Add diagonal hatching pattern if specified
+				if (isHatched) {
+					const cellId = `hatch-${idx}-${i}`
+					svg += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+						<rect width="2" height="4" fill="#555" opacity="0.9"/>
+					</pattern></defs>`
+					svg += `<rect x="${xOffset + col * cellW}" y="${yOffset + row * cellH}" width="${cellW}" height="${cellH}" fill="url(#${cellId})" stroke="#545454" stroke-width="1"/>`
+				}
 			}
 		} else if (s.type === "circle") {
 			const cx = xOffset + shapeWidth / 2
@@ -149,6 +174,7 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 
 			// NEW LOGIC: Use shadedCells array for circles too
 			const shadedSet = new Set(s.shadedCells ?? [])
+			const hatchedSet = new Set(s.hatchedCells ?? [])
 
 			for (let i = 0; i < s.totalParts; i++) {
 				const startAngle = i * angleStep - 90 // Start from top
@@ -156,14 +182,27 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 				const startRad = rad(startAngle)
 				const endRad = rad(endAngle)
 				const largeArc = angleStep > 180 ? 1 : 0
-				const fill = shadedSet.has(i) ? s.shadeColor : "none"
+				const isShaded = shadedSet.has(i)
+				const isHatched = hatchedSet.has(i)
+
+				const fill = isShaded ? s.shadeColor : "none"
+				const opacity = isShaded ? s.shadeOpacity : 1
 
 				const x1 = cx + r * Math.cos(startRad)
 				const y1 = cy + r * Math.sin(startRad)
 				const x2 = cx + r * Math.cos(endRad)
 				const y2 = cy + r * Math.sin(endRad)
 
-				svg += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" stroke="#333333" stroke-width="1"/>`
+				svg += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" fill-opacity="${opacity}" stroke="#545454" stroke-width="1"/>`
+
+				// Add diagonal hatching pattern if specified
+				if (isHatched) {
+					const cellId = `hatch-circle-${idx}-${i}`
+					svg += `<defs><pattern id="${cellId}" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+						<rect width="2" height="4" fill="#555" opacity="0.9"/>
+					</pattern></defs>`
+					svg += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="url(#${cellId})" stroke="#545454" stroke-width="1"/>`
+				}
 			}
 		}
 	})

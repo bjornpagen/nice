@@ -23,9 +23,11 @@ describe("generatePartitionedShape", () => {
 						totalParts: 6,
 						// MODIFIED: Use shadedCells instead of shadedParts
 						shadedCells: [0, 1, 2],
+						hatchedCells: null,
 						rows: 2,
 						columns: 3,
-						shadeColor: null
+						shadeColor: null,
+						shadeOpacity: null
 					}
 				],
 				layout: null,
@@ -46,9 +48,11 @@ describe("generatePartitionedShape", () => {
 						type: "circle" as const,
 						totalParts: 8,
 						shadedCells: [0, 1, 2, 3],
+						hatchedCells: null,
 						rows: null,
 						columns: null,
-						shadeColor: "#ff6b6b"
+						shadeColor: "#ff6b6b",
+						shadeOpacity: null
 					}
 				],
 				layout: "horizontal" as const,
@@ -68,17 +72,21 @@ describe("generatePartitionedShape", () => {
 						type: "rectangle" as const,
 						totalParts: 4,
 						shadedCells: [0, 1],
+						hatchedCells: null,
 						rows: 2,
 						columns: 2,
-						shadeColor: "#4ECDC4"
+						shadeColor: "#4ECDC4",
+						shadeOpacity: null
 					},
 					{
 						type: "rectangle" as const,
 						totalParts: 4,
 						shadedCells: [2, 3],
+						hatchedCells: null,
 						rows: 2,
 						columns: 2,
-						shadeColor: "#556270"
+						shadeColor: "#556270",
+						shadeOpacity: null
 					}
 				],
 				layout: "vertical" as const,
@@ -98,9 +106,11 @@ describe("generatePartitionedShape", () => {
 						type: "rectangle" as const,
 						totalParts: 12,
 						shadedCells: [0, 1, 2, 6, 7, 8],
+						hatchedCells: null,
 						rows: 3,
 						columns: 4,
-						shadeColor: "#FFD93D"
+						shadeColor: "#FFD93D",
+						shadeOpacity: null
 					}
 				],
 				layout: "horizontal" as const,
@@ -113,6 +123,112 @@ describe("generatePartitionedShape", () => {
 					}
 				]
 			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should generate fraction model: 10/7 basic representation", () => {
+			const props = {
+				type: "partitionedShape" as const,
+				mode: "partition" as const,
+				width: 200,
+				height: 180,
+				layout: "horizontal" as const,
+				shapes: [
+					{
+						type: "rectangle" as const,
+						totalParts: 7,
+						rows: 1,
+						columns: 7,
+						shadedCells: [0, 1, 2, 3, 4, 5, 6], // All 7 parts shaded (7/7)
+						hatchedCells: null,
+						shadeColor: "#01d1c1",
+						shadeOpacity: 0.5
+					},
+					{
+						type: "rectangle" as const,
+						totalParts: 7,
+						rows: 1,
+						columns: 7,
+						shadedCells: [0, 1, 2], // 3 parts shaded (3/7)
+						hatchedCells: null,
+						shadeColor: "#01d1c1",
+						shadeOpacity: 0.5
+					}
+				],
+				overlays: null
+			}
+
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should generate fraction model: 10/7 divided into 4 rows", () => {
+			const props = {
+				type: "partitionedShape" as const,
+				mode: "partition" as const,
+				width: 200,
+				height: 180,
+				layout: "horizontal" as const,
+				shapes: [
+					{
+						type: "rectangle" as const,
+						totalParts: 28,
+						rows: 4,
+						columns: 7,
+						shadedCells: Array.from({ length: 28 }, (_, i) => i), // All 28 parts shaded
+						hatchedCells: null,
+						shadeColor: "#01d1c1",
+						shadeOpacity: 0.5
+					},
+					{
+						type: "rectangle" as const,
+						totalParts: 28,
+						rows: 4,
+						columns: 7,
+						// 12 specific cells shaded: 3 cells in each of 4 rows
+						shadedCells: [0, 1, 2, 7, 8, 9, 14, 15, 16, 21, 22, 23],
+						hatchedCells: null,
+						shadeColor: "#01d1c1",
+						shadeOpacity: 0.5
+					}
+				],
+				overlays: null
+			}
+
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should generate fraction model: with diagonal hatching", () => {
+			const props = {
+				type: "partitionedShape" as const,
+				mode: "partition" as const,
+				width: 200,
+				height: 180,
+				layout: "horizontal" as const,
+				shapes: [
+					{
+						type: "rectangle" as const,
+						totalParts: 28,
+						rows: 4,
+						columns: 7,
+						shadedCells: Array.from({ length: 28 }, (_, i) => i), // All 28 parts shaded
+						hatchedCells: [0, 1, 2, 3, 4, 5, 6], // First row hatched
+						shadeColor: "#01d1c1",
+						shadeOpacity: 0.5
+					},
+					{
+						type: "rectangle" as const,
+						totalParts: 28,
+						rows: 4,
+						columns: 7,
+						shadedCells: [0, 1, 2, 7, 8, 9, 14, 15, 16, 21, 22, 23], // 12 specific cells
+						hatchedCells: [0, 1, 2], // First 3 cells hatched
+						shadeColor: "#01d1c1",
+						shadeOpacity: 0.5
+					}
+				],
+				overlays: null
+			}
+
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
 	})

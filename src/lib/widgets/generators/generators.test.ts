@@ -1342,17 +1342,21 @@ describe("Widget Generators", () => {
 						type: "rectangle" as const,
 						totalParts: 4,
 						shadedCells: [0, 1, 2, 3],
+						hatchedCells: null,
 						rows: 2,
 						columns: 2,
-						shadeColor: "#4285f4"
+						shadeColor: "#4285f4",
+						shadeOpacity: 0.5
 					},
 					{
 						type: "rectangle" as const,
 						totalParts: 4,
 						shadedCells: [0],
+						hatchedCells: null,
 						rows: 2,
 						columns: 2,
-						shadeColor: "purple"
+						shadeColor: "purple",
+						shadeOpacity: 0.5
 					}
 				],
 				layout: "horizontal" as const,
@@ -1373,9 +1377,11 @@ describe("Widget Generators", () => {
 						type: "circle" as const,
 						totalParts: 8,
 						shadedCells: [0, 1, 2],
+						hatchedCells: null,
 						rows: 1,
 						columns: null,
-						shadeColor: "#4285f4"
+						shadeColor: "#4285f4",
+						shadeOpacity: 0.5
 					}
 				],
 				overlays: null
