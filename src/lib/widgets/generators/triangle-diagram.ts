@@ -183,9 +183,15 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				throw errors.wrap(ErrInvalidAngleVertexCount, `expected 3 vertices, got ${angle.vertices.length}`)
 			}
 
-			const p1 = pointMap.get(angle.vertices[0])
-			const vertex = pointMap.get(angle.vertices[1])
-			const p2 = pointMap.get(angle.vertices[2])
+			// Check that array elements exist before accessing
+			const v0 = angle.vertices[0]
+			const v1 = angle.vertices[1]
+			const v2 = angle.vertices[2]
+			if (!v0 || !v1 || !v2) continue
+
+			const p1 = pointMap.get(v0)
+			const vertex = pointMap.get(v1)
+			const p2 = pointMap.get(v2)
 			if (!p1 || !vertex || !p2) continue
 
 			// Only draw the arc/marker if showArc is true
@@ -247,8 +253,13 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				throw errors.wrap(ErrInvalidSideVertexCount, `expected 2 vertices, got ${side.vertices.length}`)
 			}
 
-			const p1 = pointMap.get(side.vertices[0])
-			const p2 = pointMap.get(side.vertices[1])
+			// Check that array elements exist before accessing
+			const v0 = side.vertices[0]
+			const v1 = side.vertices[1]
+			if (!v0 || !v1) continue
+
+			const p1 = pointMap.get(v0)
+			const p2 = pointMap.get(v1)
 			if (!p1 || !p2) continue
 
 			const midX = (p1.x + p2.x) / 2

@@ -25,7 +25,7 @@ function isZodSchema(value: unknown): value is z.ZodType {
  */
 function containsTuple(schema: z.ZodType): boolean {
 	// Check if this is a tuple
-	if (schema._def.typeName === "ZodTuple") {
+	if ("typeName" in schema._def && schema._def.typeName === "ZodTuple") {
 		return true
 	}
 
