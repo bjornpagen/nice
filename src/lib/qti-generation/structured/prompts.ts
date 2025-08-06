@@ -237,7 +237,19 @@ CORRECT: \`body: '<p>Select the correct answer from the choices below.</p><slot 
 WRONG: \`body: 'Use the table to answer the question.<slot name="table_widget" /><slot name="interaction_1" />'\`
 CORRECT: \`body: '<p>Use the table to answer the question.</p><slot name="table_widget" /><slot name="interaction_1" />'\`
 
-**General Rule:** ALL text content in the body must be wrapped in block-level elements like \`<p>\` or \`<div>\`. Raw text at the start of body is FORBIDDEN.
+**CRITICAL: Text Entry Interaction Placement - INLINE ELEMENTS ONLY:**
+WRONG: \`body: '<p>Evaluate.</p><math>...</math><slot name="text_entry" />'\`
+CORRECT: \`body: '<p>Evaluate. <math>...</math> <slot name="text_entry" /></p>'\`
+
+WRONG: \`body: '<p>The answer is</p><slot name="text_entry_interaction" />'\`
+CORRECT: \`body: '<p>The answer is <slot name="text_entry_interaction" /></p>'\`
+
+WRONG: \`body: '<p>Question text</p><slot name="inline_choice" />'\` (floating outside text context)
+CORRECT: \`body: '<p>Question text <slot name="inline_choice" /></p>'\` (inside text context)
+
+**Text Entry Interaction Rule:** Text entry interactions (textEntryInteraction, inlineChoiceInteraction) are INLINE elements and MUST be placed inside text containers like \`<p>\` or \`<span>\`. They CANNOT be placed directly in the body or adjacent to block elements without proper wrapping.
+
+**General Rule:** ALL text content in the body must be wrapped in block-level elements like \`<p>\` or \`<div>\`. Raw text at the start of body is FORBIDDEN. Text entry interactions must be INSIDE inline contexts, not floating between block elements.
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
@@ -396,21 +408,35 @@ CORRECT: \`prompt: 'How many apples are there in total?'\`
 
 **General Rule for Prompts:** Prompt fields in interactions can ONLY contain inline content. NO block-level elements like \`<p>\`, \`<div>\`, \`<h1>\`, etc. are allowed.
 
-**Choice Content Must Be Wrapped in Block-Level Elements:**
-WRONG: \`{ identifier: "ABOVE", content: "above" }\`
-CORRECT: \`{ identifier: "ABOVE", content: "<p>above</p>" }\`
+**Choice Content - DEPENDS ON INTERACTION TYPE:**
 
-WRONG: \`{ identifier: "BELOW", content: "below" }\`
-CORRECT: \`{ identifier: "BELOW", content: "<p>below</p>" }\`
+**For Standard Choice Interactions (choiceInteraction, orderInteraction):**
+WRONG: \`{ identifier: "A", content: "above" }\` (raw text)
+CORRECT: \`{ identifier: "A", content: "<p>above</p>" }\` (needs block wrapper)
 
-**General Rule for Choices:** Choice content must be wrapped in block-level elements like \`<p>\` or \`<div>\`. Raw text is NOT permitted.
+**For Inline Choice Interactions (inlineChoiceInteraction):**
+WRONG: \`{ identifier: "ABOVE", content: "<p>above</p>" }\` (block element in inline context)
+CORRECT: \`{ identifier: "ABOVE", content: "above" }\` (inline text only)
+
+**Choice Feedback - ALWAYS INLINE ONLY:**
+WRONG: \`feedback: '<p>Correct! This rectangle has...</p>'\` (block element in inline context)
+CORRECT: \`feedback: 'Correct! This rectangle has...'\` (inline text only)
+
+WRONG: \`feedback: '<p>Incorrect. Try again.</p>'\`
+CORRECT: \`feedback: 'Incorrect. Try again.'\`
+
+**Critical Rules:**
+- **Standard choice interactions** (choiceInteraction, orderInteraction): Choice content MUST be wrapped in block elements like \`<p>\`
+- **Inline choice interactions** (inlineChoiceInteraction): Choice content MUST be inline text only (no \`<p>\` tags)
+- **ALL choice feedback**: MUST be inline text only (no \`<p>\` tags) regardless of interaction type
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY LaTeX commands (backslash followed by letters)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
 - ANY block-level elements in prompt fields (prompts must contain only inline content)
-- ANY raw text in choice content (must be wrapped in block-level elements)
+- ANY \`<p>\` tags in choice feedback (feedback must be inline text only)
+- ANY \`<p>\` tags in inline choice interaction content (must be inline text only)
 Double-check EVERY string in your output. ZERO TOLERANCE.`
 
 	return { systemInstruction, userContent }
@@ -539,21 +565,35 @@ CORRECT: \`prompt: 'How many apples are there in total?'\`
 
 **General Rule for Prompts:** Prompt fields in interactions can ONLY contain inline content. NO block-level elements like \`<p>\`, \`<div>\`, \`<h1>\`, etc. are allowed.
 
-**Choice Content Must Be Wrapped in Block-Level Elements:**
-WRONG: \`{ identifier: "ABOVE", content: "above" }\`
-CORRECT: \`{ identifier: "ABOVE", content: "<p>above</p>" }\`
+**Choice Content - DEPENDS ON INTERACTION TYPE:**
 
-WRONG: \`{ identifier: "BELOW", content: "below" }\`
-CORRECT: \`{ identifier: "BELOW", content: "<p>below</p>" }\`
+**For Standard Choice Interactions (choiceInteraction, orderInteraction):**
+WRONG: \`{ identifier: "A", content: "above" }\` (raw text)
+CORRECT: \`{ identifier: "A", content: "<p>above</p>" }\` (needs block wrapper)
 
-**General Rule for Choices:** Choice content must be wrapped in block-level elements like \`<p>\` or \`<div>\`. Raw text is NOT permitted.
+**For Inline Choice Interactions (inlineChoiceInteraction):**
+WRONG: \`{ identifier: "ABOVE", content: "<p>above</p>" }\` (block element in inline context)
+CORRECT: \`{ identifier: "ABOVE", content: "above" }\` (inline text only)
+
+**Choice Feedback - ALWAYS INLINE ONLY:**
+WRONG: \`feedback: '<p>Correct! This rectangle has...</p>'\` (block element in inline context)
+CORRECT: \`feedback: 'Correct! This rectangle has...'\` (inline text only)
+
+WRONG: \`feedback: '<p>Incorrect. Try again.</p>'\`
+CORRECT: \`feedback: 'Incorrect. Try again.'\`
+
+**Critical Rules:**
+- **Standard choice interactions** (choiceInteraction, orderInteraction): Choice content MUST be wrapped in block elements like \`<p>\`
+- **Inline choice interactions** (inlineChoiceInteraction): Choice content MUST be inline text only (no \`<p>\` tags)
+- **ALL choice feedback**: MUST be inline text only (no \`<p>\` tags) regardless of interaction type
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY LaTeX commands (backslash followed by letters)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
 - ANY block-level elements in prompt fields (prompts must contain only inline content)
-- ANY raw text in choice content (must be wrapped in block-level elements)
+- ANY \`<p>\` tags in choice feedback (feedback must be inline text only)
+- ANY \`<p>\` tags in inline choice interaction content (must be inline text only)
 Double-check EVERY string in your output. ZERO TOLERANCE.`
 
 	return { systemInstruction, userContent }

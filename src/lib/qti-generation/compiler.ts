@@ -1,7 +1,9 @@
+import * as logger from "@superbuilders/slog"
 import type { typedSchemas } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import { encodeDataUri, isValidWidgetType } from "./helpers"
 import { compileInteraction } from "./interaction-compiler"
+import { validateAssessmentItemInput } from "./pre-validator"
 import { compileResponseDeclarations, compileResponseProcessing } from "./response-processor"
 import type { AssessmentItem, AssessmentItemInput } from "./schemas"
 import { createDynamicAssessmentItemSchema } from "./schemas"
@@ -9,6 +11,9 @@ import { processAndFillSlots } from "./slot-filler"
 import { generateWidget } from "./widget-generator"
 
 export function compile(itemData: AssessmentItemInput): string {
+	// Step 0: Prevalidation to catch QTI content model violations early
+	validateAssessmentItemInput(itemData, logger)
+
 	// Step 1: Create a dynamic schema based on the widgets present
 	const widgetMapping: Record<string, keyof typeof typedSchemas> = {}
 	if (itemData.widgets) {
@@ -37,7 +42,7 @@ export function compile(itemData: AssessmentItemInput): string {
 				// Removing this will break production assessments. YOU HAVE BEEN WARNED.
 				const dataUri = encodeDataUri(widgetHtml)
 				// Wrap img in div to comply with QTI content model rules
-				const imgTag = `<div><img src="${dataUri}" alt="Widget visualization" /></div>`
+				const imgTag = `<img src="${dataUri}" alt="Widget visualization" />`
 				slots.set(widgetId, imgTag)
 			} else {
 				slots.set(widgetId, widgetHtml)
