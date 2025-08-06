@@ -61,6 +61,7 @@ const widgetTypeKeys: [WidgetTypeOrNotFound, ...WidgetTypeOrNotFound[]] = [
 	"probabilitySpinner",
 	"pythagoreanProofDiagram",
 	"ratioBoxDiagram",
+	"rectangularFrameDiagram",
 	"scaleCopiesSlider",
 	"scatterPlot",
 	"stackedItemsDiagram",

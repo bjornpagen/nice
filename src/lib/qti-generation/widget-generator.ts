@@ -39,6 +39,7 @@ import {
 	generateProbabilitySpinner,
 	generatePythagoreanProofDiagram,
 	generateRatioBoxDiagram,
+	generateRectangularFrameDiagram,
 	generateScaleCopiesSlider,
 	generateScatterPlot,
 	generateShapeTransformationGraph,
@@ -127,6 +128,8 @@ export function generateWidget(widget: Widget): string {
 			return generatePythagoreanProofDiagram(widget)
 		case "ratioBoxDiagram":
 			return generateRatioBoxDiagram(widget)
+		case "rectangularFrameDiagram":
+			return generateRectangularFrameDiagram(widget)
 		case "scaleCopiesSlider":
 			return generateScaleCopiesSlider(widget)
 		case "scatterPlot":
