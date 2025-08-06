@@ -104,14 +104,17 @@ This is the most critical rule. Any \`<slot name="..."/>\` tag you include in th
 
 CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, MathML, and slot placeholders.
 
+**CRITICAL: NO EXPLANATION WIDGETS.**
+NEVER create a widget for explanatory text. Explanations, definitions, or hints found in the Perseus JSON (especially those of type 'explanation' or 'definition') must be embedded directly within the 'body' content using standard HTML like \`<p>\` or \`<blockquote>\`. The 'explanation' and 'definition' widget types are BANNED.
+
 ⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
 The following are CATEGORICALLY FORBIDDEN in the output. ANY violation will result in IMMEDIATE REJECTION:
 
 1. **LATEX COMMANDS ARE BANNED** - Under NO circumstances may ANY LaTeX command appear in the output:
-   - NO backslash commands: \sqrt, \dfrac, \frac, \sum, \int, etc.
-   - NO LaTeX delimiters: \(, \), \[, \], \\begin, \\end
-   - NO color commands: \blueD, \maroonD, \redE, \greenC, etc.
-   - NO text commands: \text, \textbf, \textit, etc.
+   - NO backslash commands: \\sqrt, \\dfrac, \\frac, \\sum, \\int, etc.
+   - NO LaTeX delimiters: \\(, \\), \\[, \\], \\begin, \\end
+   - NO color commands: \\blueD, \\maroonD, \\redE, \\greenC, etc.
+   - NO text commands: \\text, \\textbf, \\textit, etc.
    - If you see ANY backslash followed by letters, you have FAILED.
 
 2. **LATEX DOLLAR SIGN DELIMITERS ARE BANNED** - The $ character when used for LaTeX is FORBIDDEN:
@@ -195,7 +198,8 @@ WRONG: \`\\\\(\\\\tfrac{4}{3}\\\\)\` --> CORRECT: \`<math><mfrac><mn>4</mn><mn>3
 WRONG: \`$\\\\green{\\\\text{Step }1}$\` --> CORRECT: \`Step 1\`
 WRONG: \`$3^4 \\\\;\\\\rightarrow\\\\; 3\\\\times3\\\\times3\\\\times3$\` --> CORRECT: \`<math><msup><mn>3</mn><mn>4</mn></msup><mo>→</mo><mn>3</mn><mo>×</mo><mn>3</mn><mo>×</mo><mn>3</mn><mo>×</mo><mn>3</mn></math>\`
 WRONG: \`\\\\(\\\\sqrt{121}=11\\\\)\` --> CORRECT: \`<math><msqrt><mn>121</mn></msqrt><mo>=</mo><mn>11</mn></math>\`
-WRONG: \`$\\\\begin{align}2\\\\times11&\\\\stackrel{?}=211\\\\\\\\22&\\\\neq21...\` --> CORRECT: Convert to proper MathML table structure
+WRONG: \`$\\\\begin{align}2\\\\times11&\\\\stackrel{?}=211\\\\\\\\22&\\
+eq21...\` --> CORRECT: Convert to proper MathML table structure
 WRONG: \`\\\\dfrac{Change in x}{Change in y}\` --> CORRECT: \`<mfrac><mtext>Change in x</mtext><mtext>Change in y</mtext></mfrac>\`
 WRONG: \`\\\\(\\\\dfrac{19}{27}=0.\\\\overline{703}\\\\)\` --> CORRECT: \`<math><mfrac><mn>19</mn><mn>27</mn></mfrac><mo>=</mo><mn>0.</mn><mover><mn>703</mn><mo>‾</mo></mover></math>\`
 WRONG: \`$\\\\dfrac{7^{36}}{9^{24}}$\` --> CORRECT: \`<math><mfrac><msup><mn>7</mn><mn>36</mn></msup><msup><mn>9</mn><mn>24</mn></msup></mfrac></math>\`
@@ -256,6 +260,42 @@ CORRECT: \`body: '<p>Evaluate.<math>...</math> <slot name="text_entry" /></p>'\`
 **Text Entry Interaction Rule:** Text entry interactions (textEntryInteraction, inlineChoiceInteraction) are INLINE elements and MUST be placed inside text containers like \`<p>\`. They CANNOT be placed directly in the body or adjacent to block elements without proper wrapping. NEVER wrap interaction slots in \`<span>\` elements - the slot should be placed directly inside the paragraph or other block element.
 
 **General Rule:** ALL text content in the body must be wrapped in block-level elements like \`<p>\` or \`<div>\`. Raw text at the start of body is FORBIDDEN. Text entry interactions must be INSIDE inline contexts, not floating between block elements.
+
+**5. Explanation Widgets - BANNED:**
+Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turned into slots.
+
+**Perseus Input Snippet:**
+\`\`\`json
+{
+  "content": "Some text... [[☃ explanation 1]]",
+  "widgets": {
+    "explanation 1": {
+      "type": "explanation",
+      "options": {
+        "showPrompt": "Does this always work?",
+        "explanation": "Yes, dividing by a fraction is always the same as multiplying by the reciprocal of the fraction."
+      }
+    }
+  }
+}
+\`\`\`
+
+**WRONG:**
+\`\`\`json
+{
+  "body": "<p>Some text... <slot name=\\"explanation_1\\" /></p>",
+  "widgets": ["explanation_1"],
+  ...
+}
+\`\`\`
+**CORRECT:**
+\`\`\`json
+{
+  "body": "<p>Some text...</p><p>Does this always work?</p><blockquote>Yes, dividing by a fraction is always the same as multiplying by the reciprocal of the fraction.</blockquote>",
+  "widgets": [], // No widget for the explanation
+  ...
+}
+\`\`\`
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
@@ -384,7 +424,7 @@ WRONG: \`\\\\blueD{text}\` --> CORRECT: Just use the text content without color 
 
 **LaTeX Dollar Signs BANNED:**
 WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
-WRONG: \`$$equation$$\` --> CORRECT: \`<math display="block">...</math>\`
+WRONG: \`$$equation$$\` --> CORRECT: \`<mathdisplay="block">...</math>\`
 WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <span class="currency">$</span><mn>5</mn>\` (properly tagged currency)
 
 **Deprecated MathML BANNED:**
@@ -541,7 +581,7 @@ WRONG: \`\\\\blueD{text}\` --> CORRECT: Just use the text content without color 
 
 **LaTeX Dollar Signs BANNED:**
 WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
-WRONG: \`$$equation$$\` --> CORRECT: \`<math display="block">...</math>\`
+WRONG: \`$$equation$$\` --> CORRECT: \`<mathdisplay="block">...</math>\`
 WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <span class="currency">$</span><mn>5</mn>\` (properly tagged currency)
 
 **Deprecated MathML BANNED:**
