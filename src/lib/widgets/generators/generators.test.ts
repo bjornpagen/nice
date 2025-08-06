@@ -38,7 +38,7 @@ import { generatePythagoreanProofDiagram } from "./pythagorean-proof-diagram"
 import { generateRatioBoxDiagram, RatioBoxDiagramPropsSchema } from "./ratio-box-diagram"
 import { generateScatterPlot } from "./scatter-plot"
 import { generateStackedItemsDiagram } from "./stacked-items-diagram"
-import { generateTapeDiagram } from "./tape-diagram"
+import { generateTapeDiagram, TapeDiagramPropsSchema } from "./tape-diagram"
 import { generateTransformationDiagram, TransformationDiagramPropsSchema } from "./transformation-diagram"
 import { generateUnitBlockDiagram } from "./unit-block-diagram"
 import { generateVennDiagram } from "./venn-diagram"
@@ -1631,6 +1631,7 @@ describe("Widget Generators", () => {
 				type: "tapeDiagram" as const,
 				width: 400,
 				height: 200,
+				modelType: null,
 				topTape: {
 					label: "Boys",
 					segments: [
@@ -1651,7 +1652,8 @@ describe("Widget Generators", () => {
 				showTotalBracket: true,
 				totalLabel: "Total: 30 students"
 			}
-			expect(generateTapeDiagram(props)).toMatchSnapshot()
+			const parsedProps = TapeDiagramPropsSchema.parse(props)
+			expect(generateTapeDiagram(parsedProps)).toMatchSnapshot()
 		})
 	})
 

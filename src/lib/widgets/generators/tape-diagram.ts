@@ -15,6 +15,13 @@ export const TapeDiagramPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 200)
 			.describe("The total height of the output SVG container in pixels."),
+		modelType: z
+			.enum(["additive", "ratio"])
+			.nullable()
+			.transform((val) => val ?? "additive")
+			.describe(
+				"The scaling model. 'additive' scales tapes based on total length (for a + b = c). 'ratio' scales segments based on a common unit size (for a:b ratios)."
+			),
 		// INLINED: The TapeSchema definition is now directly inside the topTape property.
 		topTape: z
 			.object({
@@ -66,6 +73,7 @@ export const TapeDiagramPropsSchema = z
 					.describe("The CSS fill color for the tape segments.")
 			})
 			.strict()
+			.nullable()
 			.describe("Configuration for the lower tape."),
 		showTotalBracket: z
 			.boolean()
@@ -90,30 +98,37 @@ export type TapeDiagramProps = z.infer<typeof TapeDiagramPropsSchema>
  * perfect for modeling ratios and simple algebraic equations.
  */
 export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema> = (data) => {
-	const { width, height, topTape, bottomTape, showTotalBracket, totalLabel } = data
+	const { width, height, modelType, topTape, bottomTape, showTotalBracket, totalLabel } = data
 	const padding = 20
 	const chartWidth = width - 2 * padding
 	const tapeHeight = 30
 	const tapeGap = 40
 
 	const topTotalLength = topTape.segments.reduce((sum, s) => sum + s.length, 0)
-	const bottomTotalLength = bottomTape.segments.reduce((sum, s) => sum + s.length, 0)
-	const maxTotalLength = Math.max(topTotalLength, bottomTotalLength)
+	const bottomTotalLength = bottomTape?.segments.reduce((sum, s) => sum + s.length, 0) ?? 0
 
-	if (maxTotalLength <= 0) return `<svg width="${width}" height="${height}"></svg>`
-	const scale = chartWidth / maxTotalLength
+	let scale = 0
+	let unitWidth = 0
+
+	if (modelType === "ratio") {
+		const maxTotalUnits = Math.max(topTotalLength, bottomTotalLength)
+		if (maxTotalUnits <= 0) return `<svg width="${width}" height="${height}"></svg>`
+		unitWidth = chartWidth / maxTotalUnits
+	} else {
+		// "additive" model (original logic)
+		const maxTotalLength = Math.max(topTotalLength, bottomTotalLength)
+		if (maxTotalLength <= 0) return `<svg width="${width}" height="${height}"></svg>`
+		scale = chartWidth / maxTotalLength
+	}
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
-	const drawTape = (tape: typeof topTape, yPos: number, totalLength: number) => {
+	const drawTape = (tape: typeof topTape, yPos: number) => {
 		svg += `<text x="${padding}" y="${yPos - 5}" fill="black" text-anchor="start" font-weight="bold">${tape.label}</text>`
 		let currentX = padding
-		const tapeWidth = totalLength * scale
-		// Draw a thin background line for the full tape length for alignment
-		svg += `<rect x="${padding}" y="${yPos}" width="${tapeWidth}" height="${tapeHeight}" fill="#f0f0f0" stroke="none"/>`
 
 		for (const s of tape.segments) {
-			const segmentWidth = s.length * scale
+			const segmentWidth = modelType === "ratio" ? s.length * unitWidth : s.length * scale
 			svg += `<rect x="${currentX}" y="${yPos}" width="${segmentWidth}" height="${tapeHeight}" fill="${tape.color}" stroke="black"/>`
 			svg += `<text x="${currentX + segmentWidth / 2}" y="${yPos + tapeHeight / 2}" fill="white" text-anchor="middle" dominant-baseline="middle" font-weight="bold">${s.label}</text>`
 			currentX += segmentWidth
@@ -121,18 +136,21 @@ export const generateTapeDiagram: WidgetGenerator<typeof TapeDiagramPropsSchema>
 	}
 
 	const topY = padding + 20
-	drawTape(topTape, topY, topTotalLength)
+	drawTape(topTape, topY)
 
 	const bottomY = topY + tapeHeight + tapeGap
-	drawTape(bottomTape, bottomY, bottomTotalLength)
+	if (bottomTape) {
+		drawTape(bottomTape, bottomY)
+	}
 
 	if (showTotalBracket) {
-		const bracketY = bottomY + tapeHeight + 20
-		const bracketWidth = chartWidth
-		svg += `<line x1="${padding}" y1="${bracketY}" x2="${padding + bracketWidth}" y2="${bracketY}" stroke="black"/>`
+		const bracketY = (bottomTape ? bottomY : topY) + tapeHeight + 20
+		const totalTapeLength = modelType === "ratio" ? Math.max(topTotalLength, bottomTotalLength) * unitWidth : chartWidth
+
+		svg += `<line x1="${padding}" y1="${bracketY}" x2="${padding + totalTapeLength}" y2="${bracketY}" stroke="black"/>`
 		svg += `<line x1="${padding}" y1="${bracketY - 5}" x2="${padding}" y2="${bracketY + 5}" stroke="black"/>`
-		svg += `<line x1="${padding + bracketWidth}" y1="${bracketY - 5}" x2="${padding + bracketWidth}" y2="${bracketY + 5}" stroke="black"/>`
-		svg += `<text x="${padding + bracketWidth / 2}" y="${bracketY + 15}" fill="black" text-anchor="middle" font-weight="bold">${totalLabel}</text>`
+		svg += `<line x1="${padding + totalTapeLength}" y1="${bracketY - 5}" x2="${padding + totalTapeLength}" y2="${bracketY + 5}" stroke="black"/>`
+		svg += `<text x="${padding + totalTapeLength / 2}" y="${bracketY + 15}" fill="black" text-anchor="middle" font-weight="bold">${totalLabel}</text>`
 	}
 
 	svg += "</svg>"
