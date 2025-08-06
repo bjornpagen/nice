@@ -9,21 +9,27 @@ import { BoxGridPropsSchema, generateBoxGrid } from "./box-grid"
 import { BoxPlotPropsSchema, generateBoxPlot } from "./box-plot"
 import { CircleDiagramPropsSchema, generateCircleDiagram } from "./circle-diagram"
 import { CompositeShapeDiagramPropsSchema, generateCompositeShapeDiagram } from "./composite-shape-diagram"
-import { CoordinatePlanePropsSchema, generateCoordinatePlane } from "./coordinate-plane"
+import {
+	CoordinatePlaneComprehensivePropsSchema,
+	generateCoordinatePlaneComprehensive
+} from "./coordinate-plane-comprehensive"
 import { DataTablePropsSchema, generateDataTable } from "./data-table"
 import {
 	DiscreteObjectRatioDiagramPropsSchema,
 	generateDiscreteObjectRatioDiagram
 } from "./discrete-object-ratio-diagram"
+import { DistanceFormulaGraphPropsSchema, generateDistanceFormulaGraph } from "./distance-formula-graph"
 import { DotPlotPropsSchema, generateDotPlot } from "./dot-plot"
 import { DoubleNumberLinePropsSchema, generateDoubleNumberLine } from "./double-number-line"
 import { EmojiImagePropsSchema, generateEmojiImage } from "./emoji-image"
 import { FigureComparisonDiagramPropsSchema, generateFigureComparisonDiagram } from "./figure-comparison-diagram"
 import { FractionNumberLinePropsSchema, generateFractionNumberLine } from "./fraction-number-line"
+import { FunctionPlotGraphPropsSchema, generateFunctionPlotGraph } from "./function-plot-graph"
 import { GeometricSolidDiagramPropsSchema, generateGeometricSolidDiagram } from "./geometric-solid-diagram"
 import { generateHangerDiagram, HangerDiagramPropsSchema } from "./hanger-diagram"
 import { generateHistogram, HistogramPropsSchema } from "./histogram"
 import { generateInequalityNumberLine, InequalityNumberLinePropsSchema } from "./inequality-number-line"
+import { generateLineEquationGraph, LineEquationGraphPropsSchema } from "./line-equation-graph"
 import { generateNumberLine, NumberLinePropsSchema } from "./number-line"
 import { generateNumberLineForOpposites, NumberLineForOppositesPropsSchema } from "./number-line-for-opposites"
 import { generateNumberLineWithAction, NumberLineWithActionPropsSchema } from "./number-line-with-action"
@@ -42,6 +48,8 @@ import {
 	PentagonIntersectionDiagramPropsSchema
 } from "./pentagon-intersection-diagram"
 import { generatePictograph, PictographPropsSchema } from "./pictograph"
+import { generatePointPlotGraph, PointPlotGraphPropsSchema } from "./point-plot-graph"
+import { generatePolygonGraph, PolygonGraphPropsSchema } from "./polygon-graph"
 import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "./polyhedron-diagram"
 import { generatePolyhedronNetDiagram, PolyhedronNetDiagramPropsSchema } from "./polyhedron-net-diagram"
 import { generateProbabilitySpinner, ProbabilitySpinnerPropsSchema } from "./probability-spinner"
@@ -49,6 +57,7 @@ import { generatePythagoreanProofDiagram, PythagoreanProofDiagramPropsSchema } f
 import { generateRatioBoxDiagram, RatioBoxDiagramPropsSchema } from "./ratio-box-diagram"
 import { generateScaleCopiesSlider, ScaleCopiesSliderPropsSchema } from "./scale-copies-slider"
 import { generateScatterPlot, ScatterPlotPropsSchema } from "./scatter-plot"
+import { generateShapeTransformationGraph, ShapeTransformationGraphPropsSchema } from "./shape-transformation-graph"
 import { generateStackedItemsDiagram, StackedItemsDiagramPropsSchema } from "./stacked-items-diagram"
 import { generateTapeDiagram, TapeDiagramPropsSchema } from "./tape-diagram"
 import { generateTransformationDiagram, TransformationDiagramPropsSchema } from "./transformation-diagram"
@@ -68,7 +77,13 @@ export const typedSchemas = {
 	boxPlot: BoxPlotPropsSchema,
 	circleDiagram: CircleDiagramPropsSchema,
 	compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
-	coordinatePlane: CoordinatePlanePropsSchema,
+	coordinatePlane: CoordinatePlaneComprehensivePropsSchema,
+	distanceFormulaGraph: DistanceFormulaGraphPropsSchema,
+	functionPlotGraph: FunctionPlotGraphPropsSchema,
+	lineEquationGraph: LineEquationGraphPropsSchema,
+	pointPlotGraph: PointPlotGraphPropsSchema,
+	polygonGraph: PolygonGraphPropsSchema,
+	shapeTransformationGraph: ShapeTransformationGraphPropsSchema,
 	dataTable: DataTablePropsSchema,
 	discreteObjectRatioDiagram: DiscreteObjectRatioDiagramPropsSchema,
 	dotPlot: DotPlotPropsSchema,
@@ -118,6 +133,12 @@ const widgetSchemasWithoutPartitioned = [
 	typedSchemas.circleDiagram,
 	typedSchemas.compositeShapeDiagram,
 	typedSchemas.coordinatePlane,
+	typedSchemas.distanceFormulaGraph,
+	typedSchemas.functionPlotGraph,
+	typedSchemas.lineEquationGraph,
+	typedSchemas.pointPlotGraph,
+	typedSchemas.polygonGraph,
+	typedSchemas.shapeTransformationGraph,
 	typedSchemas.dataTable,
 	typedSchemas.discreteObjectRatioDiagram,
 	typedSchemas.dotPlot,
@@ -171,7 +192,13 @@ export {
 	generateBoxPlot,
 	generateCircleDiagram,
 	generateCompositeShapeDiagram,
-	generateCoordinatePlane,
+	generateCoordinatePlaneComprehensive as generateCoordinatePlane,
+	generateDistanceFormulaGraph,
+	generateFunctionPlotGraph,
+	generateLineEquationGraph,
+	generatePointPlotGraph,
+	generatePolygonGraph,
+	generateShapeTransformationGraph,
 	generateDataTable,
 	generateDiscreteObjectRatioDiagram,
 	generateDotPlot,

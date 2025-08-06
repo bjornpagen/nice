@@ -12,8 +12,8 @@ import { CircleDiagramPropsSchema, generateCircleDiagram } from "./circle-diagra
 import { generateCompositeShapeDiagram } from "./composite-shape-diagram"
 import {
 	ErrInvalidDimensions as ErrCoordinatePlaneInvalidDimensions,
-	generateCoordinatePlane
-} from "./coordinate-plane"
+	generateCoordinatePlaneComprehensive as generateCoordinatePlane
+} from "./coordinate-plane-comprehensive"
 import { generateDataTable } from "./data-table"
 import { generateDiscreteObjectRatioDiagram } from "./discrete-object-ratio-diagram"
 import { ErrInvalidDimensions as ErrDotPlotInvalidDimensions, generateDotPlot } from "./dot-plot"

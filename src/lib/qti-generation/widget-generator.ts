@@ -11,15 +11,18 @@ import {
 	generateCoordinatePlane,
 	generateDataTable,
 	generateDiscreteObjectRatioDiagram,
+	generateDistanceFormulaGraph,
 	generateDotPlot,
 	generateDoubleNumberLine,
 	generateEmojiImage,
 	generateFigureComparisonDiagram,
 	generateFractionNumberLine,
+	generateFunctionPlotGraph,
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
 	generateInequalityNumberLine,
+	generateLineEquationGraph,
 	generateNumberLine,
 	generateNumberLineForOpposites,
 	generateNumberLineWithAction,
@@ -29,6 +32,8 @@ import {
 	generatePartitionedShape,
 	generatePentagonIntersectionDiagram,
 	generatePictograph,
+	generatePointPlotGraph,
+	generatePolygonGraph,
 	generatePolyhedronDiagram,
 	generatePolyhedronNetDiagram,
 	generateProbabilitySpinner,
@@ -36,6 +41,7 @@ import {
 	generateRatioBoxDiagram,
 	generateScaleCopiesSlider,
 	generateScatterPlot,
+	generateShapeTransformationGraph,
 	generateStackedItemsDiagram,
 	generateTapeDiagram,
 	generateThreeDIntersectionDiagram,
@@ -67,6 +73,18 @@ export function generateWidget(widget: Widget): string {
 			return generateCompositeShapeDiagram(widget)
 		case "coordinatePlane":
 			return generateCoordinatePlane(widget)
+		case "distanceFormulaGraph":
+			return generateDistanceFormulaGraph(widget)
+		case "functionPlotGraph":
+			return generateFunctionPlotGraph(widget)
+		case "lineEquationGraph":
+			return generateLineEquationGraph(widget)
+		case "pointPlotGraph":
+			return generatePointPlotGraph(widget)
+		case "polygonGraph":
+			return generatePolygonGraph(widget)
+		case "shapeTransformationGraph":
+			return generateShapeTransformationGraph(widget)
 		case "dataTable":
 			return generateDataTable(widget)
 		case "discreteObjectRatioDiagram":
