@@ -267,5 +267,60 @@ describe("generateCoordinatePlane", () => {
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
+
+		test("should render a trigonometric function like Khan Academy sine wave", () => {
+			// Generate points for y = 2sin(2x) from -2π to 2π
+			const points = []
+			const startX = -2 * Math.PI
+			const endX = 2 * Math.PI
+			const numPoints = 200 // Dense sampling for smooth curve
+
+			for (let i = 0; i <= numPoints; i++) {
+				const x = startX + (i / numPoints) * (endX - startX)
+				const y = 2 * Math.sin(2 * x) // y = 2sin(2x) based on visual analysis
+				points.push({ x, y })
+			}
+
+			const props = {
+				type: "coordinatePlane" as const,
+				width: 425,
+				height: 425,
+				xAxis: {
+					label: "x",
+					min: -2 * Math.PI,
+					max: 2 * Math.PI,
+					tickInterval: Math.PI / 2,
+					showGridLines: true
+				},
+				yAxis: {
+					label: "y",
+					min: -3,
+					max: 3,
+					tickInterval: 1,
+					showGridLines: true
+				},
+				showQuadrantLabels: false,
+				points: [
+					// Key points for function analysis questions
+					{ id: "origin", x: 0, y: 0, label: "(0,0)", color: "red", style: "closed" as const },
+					{ id: "max1", x: -Math.PI, y: 2, label: "max", color: "red", style: "closed" as const },
+					{ id: "max2", x: Math.PI, y: 2, label: "max", color: "red", style: "closed" as const },
+					{ id: "min1", x: -Math.PI / 2, y: -2, label: "min", color: "blue", style: "closed" as const },
+					{ id: "min2", x: Math.PI / 2, y: -2, label: "min", color: "blue", style: "closed" as const }
+				],
+				lines: null,
+				polygons: null,
+				distances: null,
+				polylines: [
+					{
+						id: "sine-function",
+						points: points,
+						color: "#4A90E2", // Blue color matching Khan Academy style
+						style: "solid" as const
+					}
+				]
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
 	})
 })

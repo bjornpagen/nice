@@ -239,6 +239,62 @@ export const CoordinatePlanePropsSchema = z
 export type CoordinatePlaneProps = z.infer<typeof CoordinatePlanePropsSchema>
 
 /**
+ * Formats a numeric value as a π-based fraction if it's a multiple of π/4,
+ * otherwise returns the original number as a string.
+ */
+function formatPiLabel(value: number): string {
+	const tolerance = 1e-10
+	const piQuarter = Math.PI / 4
+
+	// Check if value is close to zero
+	if (Math.abs(value) < tolerance) {
+		return "0"
+	}
+
+	// Check if value is a multiple of π/4
+	const ratio = value / piQuarter
+	if (Math.abs(ratio - Math.round(ratio)) < tolerance) {
+		const rounded = Math.round(ratio)
+
+		// Special cases
+		if (rounded === 0) return "0"
+		if (rounded === 1) return "π/4"
+		if (rounded === -1) return "-π/4"
+		if (rounded === 2) return "π/2"
+		if (rounded === -2) return "-π/2"
+		if (rounded === 3) return "3π/4"
+		if (rounded === -3) return "-3π/4"
+		if (rounded === 4) return "π"
+		if (rounded === -4) return "-π"
+		if (rounded === 6) return "3π/2"
+		if (rounded === -6) return "-3π/2"
+		if (rounded === 8) return "2π"
+		if (rounded === -8) return "-2π"
+
+		// General case for other multiples
+		if (rounded % 4 === 0) {
+			const piMultiple = rounded / 4
+			if (piMultiple === 1) return "π"
+			if (piMultiple === -1) return "-π"
+			return `${piMultiple}π`
+		}
+		if (rounded % 2 === 0) {
+			const halfPiMultiple = rounded / 2
+			if (halfPiMultiple === 1) return "π/2"
+			if (halfPiMultiple === -1) return "-π/2"
+			return `${halfPiMultiple}π/2`
+		}
+		// Quarter π multiples
+		if (rounded === 1) return "π/4"
+		if (rounded === -1) return "-π/4"
+		return `${rounded}π/4`
+	}
+
+	// Not a π multiple, return regular number
+	return value.toString()
+}
+
+/**
  * Generates a versatile Cartesian coordinate plane for plotting points, lines, and polygons.
  * Supports a wide range of coordinate geometry problems.
  */
@@ -292,13 +348,13 @@ export const generateCoordinatePlane: WidgetGenerator<typeof CoordinatePlaneProp
 		if (t === 0) continue
 		const x = toSvgX(t)
 		svg += `<line x1="${x}" y1="${zeroY - 4}" x2="${x}" y2="${zeroY + 4}" stroke="black"/>`
-		svg += `<text x="${x}" y="${zeroY + 15}" fill="black" text-anchor="middle">${t}</text>`
+		svg += `<text x="${x}" y="${zeroY + 15}" fill="black" text-anchor="middle">${formatPiLabel(t)}</text>`
 	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		if (t === 0) continue
 		const y = toSvgY(t)
 		svg += `<line x1="${zeroX - 4}" y1="${y}" x2="${zeroX + 4}" y2="${y}" stroke="black"/>`
-		svg += `<text x="${zeroX - 8}" y="${y + 4}" fill="black" text-anchor="end">${t}</text>`
+		svg += `<text x="${zeroX - 8}" y="${y + 4}" fill="black" text-anchor="end">${formatPiLabel(t)}</text>`
 	}
 	if (xAxis.label)
 		svg += `<text x="${pad.left + chartWidth / 2}" y="${height - 5}" class="axis-label">${xAxis.label}</text>`
