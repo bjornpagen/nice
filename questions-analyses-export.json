@@ -1,0 +1,2324 @@
+[
+	{
+		"analysisId": "ed11aa1c-65cc-40c3-8ece-e41f325c8805",
+		"questionId": "x0221b018312c63fa",
+		"analysisNotes": "The problem is fully solvable with the information displayed in the diagram. However, the diagram fails to include the points and their respective labels (e.g., \"A\", \"B'\", \"D\") which the student is meant to use to more easily determine the rotation mapping.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "Let's examine the rotation of a single point, such as point $C$. This will tell us the angle of rotation, since all points undergo the same transformation.\n\nImagine a circle that passes through point $C$ with a center at the origin.  What portion of the circle do we rotate through to reach the image? In which direction?",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "We need to rotate point $C$ through $\\dfrac{1}{2}$ of the circle to reach the image $C'$, so that is $180^\\circ$. \n\n\n[[☃ image 1]]\n\nWe could reach this position by rotating either clockwise or counterclockwise, so we do not need to give the direction.",
+					"replace": false,
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "An XY coordinate plane with 2 quadrilaterals graphed.  The horizontal x axis runs left to right from negative 8 to 8 in intervals of 1.  The vertical y axis runs up and down from negative 8 to 8 in intervals of 1. The blue quadrilateral has 4 vertices.  Point A is plotted at (2, 4), point B is plotted at (1, 5), point C is plotted at (negative 4, 5), and point D is plotted at (2, 3). The red quadrilateral has 4 vertices. Point A prime is plotted at (negative 2, negative 4), point B prime is plotted at (negative 1, negative 5), point C prime is plotted at (4, negative 5), and point D prime is plotted at (negative 2, negative 3). ",
+								"box": [325, 325],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/ef23681f98db6563d52fed51d6a0de624a1830cc",
+									"width": 325,
+									"height": 325
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						}
+					}
+				},
+				{
+					"images": {},
+					"content": "The angle of rotation for quadrilateral $ABCD$ is: \n\n- $180^\\circ$",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "Quadrilateral $A'B'C'D'$ is the image of quadrilateral $ABCD$ under a rotation about the origin, $(0,0)$.\n\n\n\n[[☃ image 1]]\n\n**Determine the angles of rotation.**\n\n[[☃ radio 1]]",
+				"widgets": {
+					"image 1": {
+						"type": "image",
+						"graded": true,
+						"static": false,
+						"options": {
+							"alt": "An XY coordinate plane with 2 quadrilaterals graphed.  The horizontal x axis runs left to right from negative 8 to 8 in intervals of 1.  The vertical y axis runs up and down from negative 8 to 8 in intervals of 1. The blue quadrilateral has 4 vertices.  Point A is plotted at (negative 2, negative 6), point B is plotted at negative 3, negative 6), point C is plotted at negative 4, negative 3), and point D is plotted at 1, negative 4). The red quadrilateral has 4 vertices. Point A prime is plotted at (6, negative 2), point B prime is plotted at (6, negative 3), point C prime is plotted at (3, negative 4), and point D prime is plotted at (4, 1). ",
+							"box": [325, 325],
+							"range": [[0, 10], [0, 10]],
+							"title": "",
+							"labels": [],
+							"static": false,
+							"caption": "",
+							"backgroundImage": {
+								"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/14546acb3e3484136a293975ce9aa41d97a1d3b7",
+								"width": 325,
+								"height": 325
+							}
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "block"
+					},
+					"radio 1": {
+						"type": "radio",
+						"graded": true,
+						"static": false,
+						"options": {
+							"choices": [
+								{
+									"content": "$90^\\circ$ clockwise",
+									"correct": false
+								},
+								{
+									"content": "$90^\\circ$ counterclockwise",
+									"correct": false
+								},
+								{
+									"content": "$180^\\circ$",
+									"correct": true,
+									"isNoneOfTheAbove": false
+								},
+								{
+									"content": "$270^\\circ$ clockwise",
+									"isNoneOfTheAbove": false
+								},
+								{
+									"content": "$270^\\circ$ counterclockwise",
+									"isNoneOfTheAbove": false
+								}
+							],
+							"randomize": false,
+							"countChoices": false,
+							"displayCount": null,
+							"multipleSelect": true,
+							"deselectEnabled": false,
+							"hasNoneOfTheAbove": false
+						},
+						"version": {
+							"major": 1,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"quadrilateral-rotation-angle\"\n    title=\"Identify the angle of rotation\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"identifier\">\n        <qti-correct-response>\n            <qti-value>ANGLE_180</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Quadrilateral A\u00027B\u0002BC\u0002BD\u0002B\u0002B is the image of quadrilateral ABCD after a rotation about the origin (0, 0).</p>\n        <div><img src=\"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzI1IiBoZWlnaHQ9IjMyNSIgdmlld0JveD0iMCAwIDMyNSAzMjUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiPjxzdHlsZT4uYXhpcy1sYWJlbCB7IGZvbnQtc2l6ZTogMTRweDsgdGV4dC1hbmNob3I6IG1pZGRsZTsgfSAucXVhZHJhbnQtbGFiZWwgeyBmb250LXNpemU6IDE4cHg7IGZpbGw6ICNjY2M7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGRvbWluYW50LWJhc2VsaW5lOiBtaWRkbGU7IH08L3N0eWxlPjxsaW5lIHgxPSI0MCIgeTE9IjMwIiB4Mj0iNDAiIHkyPSIyODUiIHN0cm9rZT0iI2VlZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjcxLjg3NSIgeTE9IjMwIiB4Mj0iNzEuODc1IiB5Mj0iMjg1IiBzdHJva2U9IiNlZWUiIHN0cm9rZS13aWR0aD0iMSIvPjxsaW5lIHgxPSIxMDMuNzUiIHkxPSIzMCIgeDI9IjEwMy43NSIgeTI9IjI4NSIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iMTM1LjYyNSIgeTE9IjMwIiB4Mj0iMTM1LjYyNSIgeTI9IjI4NSIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iMTk5LjM3NSIgeTE9IjMwIiB4Mj0iMTk5LjM3NSIgeTI9IjI4NSIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iMjMxLjI1IiB5MT0iMzAiIHgyPSIyMzEuMjUiIHkyPSIyODUiIHN0cm9rZT0iI2VlZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjI2My4xMjUiIHkxPSIzMCIgeDI9IjI2My4xMjUiIHkyPSIyODUiIHN0cm9rZT0iI2VlZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjI5NSIgeTE9IjMwIiB4Mj0iMjk1IiB5Mj0iMjg1IiBzdHJva2U9IiNlZWUiIHN0cm9rZS13aWR0aD0iMSIvPjxsaW5lIHgxPSI0MCIgeTE9IjI4NSIgeDI9IjI5NSIgeTI9IjI4NSIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iNDAiIHkxPSIyNTMuMTI1IiB4Mj0iMjk1IiB5Mj0iMjUzLjEyNSIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iNDAiIHkxPSIyMjEuMjUiIHgyPSIyOTUiIHkyPSIyMjEuMjUiIHN0cm9rZT0iI2VlZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjQwIiB5MT0iMTg5LjM3NSIgeDI9IjI5NSIgeTI9IjE4OS4zNzUiIHN0cm9rZT0iI2VlZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjQwIiB5MT0iMTI1LjYyNSIgeDI9IjI5NSIgeTI9IjEyNS42MjUiIHN0cm9rZT0iI2VlZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjQwIiB5MT0iOTMuNzUiIHgyPSIyOTUiIHkyPSI5My43NSIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iNDAiIHkxPSI2MS44NzUiIHgyPSIyOTUiIHkyPSI2MS44NzUiIHN0cm9rZT0iI2VlZSIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjQwIiB5MT0iMzAiIHgyPSIyOTUiIHkyPSIzMCIgc3Ryb2tlPSIjZWVlIiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iNDAiIHkxPSIxNTcuNSIgeDI9IjI5NSIgeTI9IjE1Ny41IiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxNjcuNSIgeTE9IjMwIiB4Mj0iMTY3LjUiIHkyPSIyODUiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iMS41Ii8+PGxpbmUgeDE9IjQwIiB5MT0iMTUzLjUiIHgyPSI0MCIgeTI9IjE2MS41IiBzdHJva2U9ImJsYWNrIi8+PHRleHQgeD0iNDAiIHk9IjE3Mi41IiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9Im1pZGRsZSI+LTg8L3RleHQ+PGxpbmUgeDE9IjcxLjg3NSIgeTE9IjE1My41IiB4Mj0iNzEuODc1IiB5Mj0iMTYxLjUiIHN0cm9rZT0iYmxhY2siLz48dGV4dCB4PSI3MS44NzUiIHk9IjE3Mi41IiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9Im1pZGRsZSI+LTY8L3RleHQ+PGxpbmUgeDE9IjEwMy43NSIgeTE9IjE1My41IiB4Mj0iMTAzLjc1IiB5Mj0iMTYxLjUiIHN0cm9rZT0iYmxhY2siLz48dGV4dCB4PSIxMDMuNzUiIHk9IjE3Mi41IiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9Im1pZGRsZSI+LTQ8L3RleHQ+PGxpbmUgeDE9IjEzNS42MjUiIHkxPSIxNTMuNSIgeDI9IjEzNS42MjUiIHkyPSIxNjEuNSIgc3Ryb2tlPSJibGFjayIvPjx0ZXh0IHg9IjEzNS42MjUiIHk9IjE3Mi41IiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9Im1pZGRsZSI+LTI8L3RleHQ+PGxpbmUgeDE9IjE5OS4zNzUiIHkxPSIxNTMuNSIgeDI9IjE5OS4zNzUiIHkyPSIxNjEuNSIgc3Ryb2tlPSJibGFjayIvPjx0ZXh0IHg9IjE5OS4zNzUiIHk9IjE3Mi41IiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MjwvdGV4dD48bGluZSB4MT0iMjMxLjI1IiB5MT0iMTUzLjUiIHgyPSIyMzEuMjUiIHkyPSIxNjEuNSIgc3Ryb2tlPSJibGFjayIvPjx0ZXh0IHg9IjIzMS4yNSIgeT0iMTcyLjUiIGZpbGw9ImJsYWNrIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj40PC90ZXh0PjxsaW5lIHgxPSIyNjMuMTI1IiB5MT0iMTUzLjUiIHgyPSIyNjMuMTI1IiB5Mj0iMTYxLjUiIHN0cm9rZT0iYmxhY2siLz48dGV4dCB4PSIyNjMuMTI1IiB5PSIxNzIuNSIgZmlsbD0iYmxhY2siIHRleHQtYW5jaG9yPSJtaWRkbGUiPjY8L3RleHQ+PGxpbmUgeDE9IjI5NSIgeTE9IjE1My41IiB4Mj0iMjk1IiB5Mj0iMTYxLjUiIHN0cm9rZT0iYmxhY2siLz48dGV4dCB4PSIyOTUiIHk9IjE3Mi41IiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9Im1pZGRsZSI+ODwvdGV4dD48bGluZSB4MT0iMTYzLjUiIHkxPSIyODUiIHgyPSIxNzEuNSIgeTI9IjI4NSIgc3Ryb2tlPSJibGFjayIvPjx0ZXh0IHg9IjE1OS41IiB5PSIyODkiIGZpbGw9ImJsYWNrIiB0ZXh0LWFuY2hvcj0iZW5kIj4tODwvdGV4dD48bGluZSB4MT0iMTYzLjUiIHkxPSIyNTMuMTI1IiB4Mj0iMTcxLjUiIHkyPSIyNTMuMTI1IiBzdHJva2U9ImJsYWNrIi8+PHRleHQgeD0iMTU5LjUiIHk9IjI1Ny4xMjUiIGZpbGw9ImJsYWNrIiB0ZXh0LWFuY2hvcj0iZW5kIj4tNjwvdGV4dD48bGluZSB4MT0iMTYzLjUiIHkxPSIyMjEuMjUiIHgyPSIxNzEuNSIgeTI9IjIyMS4yNSIgc3Ryb2tlPSJibGFjayIvPjx0ZXh0IHg9IjE1OS41IiB5PSIyMjUuMjUiIGZpbGw9ImJsYWNrIiB0ZXh0LWFuY2hvcj0iZW5kIj4tNDwvdGV4dD48bGluZSB4MT0iMTYzLjUiIHkxPSIxODkuMzc1IiB4Mj0iMTcxLjUiIHkyPSIxODkuMzc1IiBzdHJva2U9ImJsYWNrIi8+PHRleHQgeD0iMTU5LjUiIHk9IjE5My4zNzUiIGZpbGw9ImJsYWNrIiB0ZXh0LWFuY2hvcj0iZW5kIj4tMjwvdGV4dD48bGluZSB4MT0iMTYzLjUiIHkxPSIxMjUuNjI1IiB4Mj0iMTcxLjUiIHkyPSIxMjUuNjI1IiBzdHJva2U9ImJsYWNrIi8+PHRleHQgeD0iMTU5LjUiIHk9IjEyOS42MjUiIGZpbGw9ImJsYWNrIiB0ZXh0LWFuY2hvcj0iZW5kIj4yPC90ZXh0PjxsaW5lIHgxPSIxNjMuNSIgeTE9IjkzLjc1IiB4Mj0iMTcxLjUiIHkyPSI5My43NSIgc3Ryb2tlPSJibGFjayIvPjx0ZXh0IHg9IjE1OS41IiB5PSI5Ny43NSIgZmlsbD0iYmxhY2siIHRleHQtYW5jaG9yPSJlbmQiPjQ8L3RleHQ+PGxpbmUgeDE9IjE2My41IiB5MT0iNjEuODc1IiB4Mj0iMTcxLjUiIHkyPSI2MS44NzUiIHN0cm9rZT0iYmxhY2siLz48dGV4dCB4PSIxNTkuNSIgeT0iNjUuODc1IiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9ImVuZCI+NjwvdGV4dD48bGluZSB4MT0iMTYzLjUiIHkxPSIzMCIgeDI9IjE3MS41IiB5Mj0iMzAiIHN0cm9rZT0iYmxhY2siLz48dGV4dCB4PSIxNTkuNSIgeT0iMzQiIGZpbGw9ImJsYWNrIiB0ZXh0LWFuY2hvcj0iZW5kIj44PC90ZXh0Pjxwb2x5Z29uIHBvaW50cz0iMTk5LjM3NSw5My43NSAxODMuNDM3NSw3Ny44MTI1IDEwMy43NSw3Ny44MTI1IDE5OS4zNzUsMTA5LjY4NzUiIGZpbGw9IiMxMWFjY2QiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsLW9wYWNpdHk9IjAuNiIvPjxwb2x5Z29uIHBvaW50cz0iMTM1LjYyNSwyMjEuMjUgMTUxLjU2MjUsMjM3LjE4NzUgMjMxLjI1LDIzNy4xODc1IDEzNS42MjUsMjA1LjMxMjUiIGZpbGwtb3BhY2l0eT0iMC42IiBmaWxsPSIjMTFhY2NkIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWRhc2hhcnJheT0iNSAzIi8+PGNpcmNsZSBjeD0iMTY3LjUiIGN5PSIxNTcuNSIgcj0iNCIgZmlsbD0icmVkIiAvPjwvc3ZnPg==\" alt=\"Widget visualization\" /></div>\n        <p>Determine the angle of rotation.</p>\n        <div><div><qti-choice-interaction response-identifier=\"RESPONSE\" shuffle=\"true\" min-choices=\"1\" max-choices=\"1\">\n            <qti-prompt>Select the angle of rotation.</qti-prompt>\n            <qti-simple-choice identifier=\"ANGLE_90_CW\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>90</mn><mo>°</mo></math> clockwise</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"ANGLE_90_CCW\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>90</mn><mo>°</mo></math> counterclockwise</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"ANGLE_180\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>180</mn><mo>°</mo></math></p></qti-simple-choice>\n            <qti-simple-choice identifier=\"ANGLE_270_CW\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>270</mn><mo>°</mo></math> clockwise</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"ANGLE_270_CCW\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>270</mn><mo>°</mo></math> counterclockwise</p></qti-simple-choice>\n        </qti-choice-interaction></div></div>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The angle of rotation is <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>180</mn><mo>°</mo></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. The figure is obtained by a half–turn, which is an angle of <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>180</mn><mo>°</mo></math>.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "e7795d34-74d8-4cb7-ab79-40ce17b09999",
+		"questionId": "x03e63ff464487900",
+		"analysisNotes": "The input should be on a new line.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "We can substitute $x=\\blueE{2}$ into the expression to find its value:\n\n$\\dfrac{5\\cdot x^3}{x^2} \\rightarrow \\dfrac{5\\cdot \\blueE2^3}{\\blueE2^2} = \\, ?$\n\n$$\n \n$$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "Now we evaluate:\n\n$\\begin{align}\n\\dfrac{5\\cdot \\blueE2^3}{\\blueE2^2} &= \\dfrac{5 \\cdot 8}{4}\n\\\\\\\\\n&=\\dfrac{40}{4}\n\\\\\\\\\n&=10\n\\end{align}$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "If $x=2$, then $\\dfrac{5\\cdot x^3}{x^2}=10$.",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Evaluate the expression $\\dfrac{5\\cdot x^3}{x^2}$ for  $x=2$.**\n\n[[☃ numeric-input 1]]",
+				"widgets": {
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"static": false,
+						"options": {
+							"size": "normal",
+							"static": false,
+							"answers": [
+								{
+									"value": 10,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": null,
+									"simplify": "required"
+								}
+							],
+							"labelText": "",
+							"rightAlign": false,
+							"coefficient": false,
+							"multipleNumberInput": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"evaluate-expression-x-equals-2\"\n    title=\"Evaluate the expression for x = 2\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"integer\">\n        <qti-correct-response>\n            <qti-value>10</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Evaluate the expression <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mrow><mn>5</mn><mo>·</mo><msup><mi>x</mi><mn>3</mn></msup></mrow><msup><mi>x</mi><mn>2</mn></msup></mfrac></math> for <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi><mo>=</mo><mn>2</mn></math>. <qti-text-entry-interaction response-identifier=\"RESPONSE\"/></p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The value of the expression is <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>10</mn></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Substitute <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi><mo>=</mo><mn>2</mn></math> into the expression:</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mfrac><mrow><mn>5</mn><mo>·</mo><msup><mn>2</mn><mn>3</mn></msup></mrow><msup><mn>2</mn><mn>2</mn></msup></mfrac><mo>=</mo><mfrac><mn>40</mn><mn>4</mn></mfrac><mo>=</mo><mn>10</mn></mrow></math></p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "d951c421-a765-491e-899a-edce21f01fea",
+		"questionId": "x0444d49c455148f2",
+		"analysisNotes": "The input should be on a new line separate from the value (i.e., \"0.0002077\").",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "Count the zeroes to the right of the decimal point before the leading ${2}$: there are $3$ zeroes.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "If you count the leading digit ${2}$ and those zeroes, there are ${4}$ digits to the right of the decimal point.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "So: $0.000\\;207\\;7 = {2}.077 \\times 10^{{-4}}$",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "** Express this number in scientific notation. **\n\n $0.0002077$\n\n[[☃ expression 1]]",
+				"widgets": {
+					"expression 1": {
+						"type": "expression",
+						"graded": true,
+						"static": false,
+						"options": {
+							"times": true,
+							"static": false,
+							"extraKeys": ["PI"],
+							"functions": ["f", "g", "h"],
+							"buttonSets": ["basic", "prealgebra", "scientific"],
+							"answerForms": [
+								{
+									"key": "0",
+									"form": true,
+									"value": "2.077\\times10^{-4}",
+									"simplify": false,
+									"considered": "correct"
+								}
+							]
+						},
+						"version": {
+							"major": 2,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false,
+				"periodicTableWithKey": false,
+				"financialCalculatorTotalAmount": false,
+				"financialCalculatorTimeToPayOff": false,
+				"financialCalculatorMonthlyPayment": false
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"express-number-scientific-notation\"\n    title=\"Express a number in scientific notation\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"string\">\n        <qti-correct-response>\n            <qti-value>2.077×10^-4</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Express this number in scientific notation.</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>0.0002077</mn></math> <qti-text-entry-interaction response-identifier=\"RESPONSE\" expected-length=\"10\"/></p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>0.0002077</mn></math> written in scientific notation is <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>2.077</mn><mo>×</mo><msup><mn>10</mn><mrow><mo>-</mo><mn>4</mn></mrow></msup></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Count the places the decimal moves: four places to the right turns <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>0.0002077</mn></math> into <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>2.077</mn></math>, so the exponent is <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>4</mn></math>. The correct scientific notation is <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>2.077</mn><mo>×</mo><msup><mn>10</mn><mrow><mo>-</mo><mn>4</mn></mrow></msup></math>.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "9f76cbcf-6d78-4ed9-8c84-d31c4aa45354",
+		"questionId": "x01a29c06ae663bdb",
+		"analysisNotes": "The equation and it's input should be on a new line.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "$0$ divided by any other number is $0$.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "$0 \\div (-4) = 0$",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Evaluate.**\n\n$0 \\div (-4) = $ [[☃ numeric-input 1]]",
+				"widgets": {
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"static": false,
+						"options": {
+							"size": "normal",
+							"static": false,
+							"answers": [
+								{
+									"value": 0,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": 0,
+									"simplify": true
+								}
+							],
+							"labelText": "",
+							"rightAlign": false,
+							"coefficient": false,
+							"multipleNumberInput": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"evaluate-zero-divided-by-negative-number\"\n    title=\"Evaluate 0 ÷ (−4)\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"integer\">\n        <qti-correct-response>\n            <qti-value>0</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Evaluate. <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>0</mn><mo>÷</mo><mrow><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mo>=</mo></math> <qti-text-entry-interaction response-identifier=\"RESPONSE\"/></p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>0</mn><mo>÷</mo><mrow><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mo>=</mo><mn>0</mn></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Remember that <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>0</mn><mo>÷</mo><mi>n</mi></math> equals <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>0</mn></math> for any non-zero number <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>n</mi></math>.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "8b897cef-893d-443c-9e02-5905fee78e8a",
+		"questionId": "x01f60b7757e2df97",
+		"analysisNotes": "The tables for the answer choices are not rendering.",
+		"severity": "major",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "If the **constant of proportionality** is $\\greenD{2}$, then:\n\n$\\maroonD{y}=\\greenD{2}\\blueD{x}$\n\nWhich table follows that pattern?",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "$x$ | $y$ | $\\greenD{2}x$\n- | - | -\n$2$ | $5$ | $2\\cdot 2=4$\n$6$ | $15$ | $2\\cdot 6=12$\n$12$ | $30$ | $2\\cdot 12=24$\n\nThis table does not follow the pattern.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "$x$ | $y$ | $\\greenD{2}x$\n- | - | -\n$3$ | $6$ | $2\\cdot 3=6$\n$5$ | $10$ | $2\\cdot 5=10$\n$18$ | $36$ | $2\\cdot 18=36$\n\nThis table follows the pattern.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "$x$ | $y$ | $\\greenD{2}x$\n- | - | -\n$6$ | $24$ | $2\\cdot 6=12$\n$10$ | $40$ | $2\\cdot 10=20$\n$14$ | $56$ | $2\\cdot 14=28$\n\nThis table does not follow the pattern.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "This is the table that shows a constant of proportionality of $2$ between $y$ and $x$.\n\n$x$ | $y$ \n- | - \n$3$ | $6$\n$5$ | $10$\n$18$ | $36$",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Which table has a constant of proportionality between $y$ and $x$ of $2$?**\n\n[[☃ radio 1]]",
+				"widgets": {
+					"radio 1": {
+						"type": "radio",
+						"graded": true,
+						"static": false,
+						"options": {
+							"choices": [
+								{
+									"clue": "This table has a constant of proportionality of $2.5$.",
+									"content": "$x$ | $y$ \n- | - \n$2$ | $5$\n$6$ | $15$\n$12$ | $30$",
+									"correct": false
+								},
+								{
+									"content": "$x$ | $y$ \n- | - \n$3$ | $6$\n$5$ | $10$\n$18$ | $36$",
+									"correct": true
+								},
+								{
+									"clue": "This table has a constant of proportionality of $3$.",
+									"content": "$x$ | $y$ \n- | - \n$6$ | $24$\n$10$ | $40$\n$14$ | $56$",
+									"correct": false,
+									"isNoneOfTheAbove": false
+								}
+							],
+							"randomize": false,
+							"countChoices": false,
+							"displayCount": null,
+							"multipleSelect": false,
+							"deselectEnabled": false,
+							"hasNoneOfTheAbove": false
+						},
+						"version": {
+							"major": 1,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"table-constant-prop-2\"\n    title=\"Identify the table with constant of proportionality 2\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"identifier\">\n        <qti-correct-response>\n            <qti-value>B</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Which table has a constant of proportionality between <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi></math> and <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi></math> of <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>2</mn></math>?</p>\n        <div><div><qti-choice-interaction response-identifier=\"RESPONSE\" shuffle=\"true\" min-choices=\"1\" max-choices=\"1\">\n            <qti-prompt></qti-prompt>\n            <qti-simple-choice identifier=\"A\"><p>x | y</p>\n        <p>- | -</p>\n        <p>2 | 5</p>\n        <p>6 | 15</p>\n        <p>12 | 30</p><qti-feedback-inline outcome-identifier=\"FEEDBACK-INLINE\" identifier=\"A\">This table has a constant of proportionality of 2.5.</qti-feedback-inline></qti-simple-choice>\n            <qti-simple-choice identifier=\"B\"><p>x | y</p>\n        <p>- | -</p>\n        <p>3 | 6</p>\n        <p>5 | 10</p>\n        <p>18 | 36</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"C\"><p>x | y</p>\n        <p>- | -</p>\n        <p>6 | 24</p>\n        <p>10 | 40</p>\n        <p>14 | 56</p><qti-feedback-inline outcome-identifier=\"FEEDBACK-INLINE\" identifier=\"C\">This table has a constant of proportionality of 3.</qti-feedback-inline></qti-simple-choice>\n        </qti-choice-interaction></div></div>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! In this table the relationship <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><mn>2</mn><mi>x</mi></math> holds for every pair.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. A constant of proportionality of <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>2</mn></math> means each <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi></math> value should equal <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>2</mn><mi>x</mi></math>. Try again.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "8b3a2c1e-3774-4faa-b433-9db3c95a2580",
+		"questionId": "x0201659c2893f524",
+		"analysisNotes": "The original problem's answer choices utilize a line graph with arrows denoting increments and decrements in position on the graph. The XML rendition fails to replicate this and instead erroneously uses text to describe the positional movement.",
+		"severity": "major",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "Let's plot the addends one at a time.\n\n\n[[☃ image 1]]\n\n",
+					"replace": false,
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A number line from negative 3 thirds to 3 thirds with evenly spaced tick marks in increments of 1 third. The tick at 0 thirds is labeled 0. An arrow from 0 thirds to negative 2 thirds points 2 units to the left. Negative 2 third is written above this arrow. Dotted line connect the end of the arrowhead to the respective point on the number line.",
+								"box": [440, 122],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/c7ba423a11723d630c7be3f674d1b22ec77b51f3",
+									"width": 440,
+									"height": 122
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						}
+					}
+				},
+				{
+					"images": {},
+					"content": "\n\n[[☃ image 1]]\n\n",
+					"replace": false,
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A number line from negative 3 thirds to 3 thirds with evenly spaced tick marks in increments of 1 third. The tick at 0 thirds is labeled 0. An arrow from 0 thirds to negative 2 thirds points 2 units to the left. Another arrow above it, from negative 2 thirds to negative 1 third points 1 unit to the right. Plus open parenthesis negative 1 third close parenthesis is written above this arrow.",
+								"box": [440, 166],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f3847cffa0908a98d1f8d98af0050627e1076900",
+									"width": 440,
+									"height": 166
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						}
+					}
+				},
+				{
+					"images": {},
+					"content": "The following number line model represents the expression $-\\dfrac23+\\left(-\\dfrac13\\right)$.  \n\n[[☃ image 1]]\n\n",
+					"replace": false,
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A number line from negative 3 thirds to 3 thirds with evenly spaced tick marks in increments of 1 third. The tick at 0 thirds is labeled 0. An arrow from 0 thirds to negative 2 thirds points 2 units to the left. Another arrow above it, from negative 2 thirds to negative 3 thirds points 1 unit to the left. Dotted lines connect the ends of the arrowheads to their respective points on the number line.",
+								"box": [440, 117],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0208e88b68aef4ed0669ffebff082545c26b0b0c",
+									"width": 440,
+									"height": 117
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						}
+					}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Which number line model represents the expression $-\\dfrac23+\\left(-\\dfrac13\\right)$?** \n\n\n[[☃ radio 1]]\n\n\n",
+				"widgets": {
+					"radio 1": {
+						"type": "radio",
+						"graded": true,
+						"static": false,
+						"options": {
+							"choices": [
+								{
+									"content": "![A number line from negative 3 thirds to 3 thirds with evenly spaced tick marks in increments of 1 third. The tick at 0 thirds is labeled 0. An arrow from 0 thirds to negative 2 thirds points 2 units to the left. Another arrow above it, from negative 2 thirds to negative 3 thirds points 1 unit to the left. Dotted lines connect the ends of the arrowheads to their respective points on the number line.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/0208e88b68aef4ed0669ffebff082545c26b0b0c)",
+									"correct": true
+								},
+								{
+									"content": "![A number line from negative 3 thirds to 3 thirds with evenly spaced tick marks in increments of 1 third. The tick at 0 thirds is labeled 0. An arrow from 0 thirds to negative 2 thirds points 2 units to the left. Another arrow above it, from negative 2 thirds to negative 1 third points 1 unit to the right. Dotted lines connect the ends of the arrowheads to their respective points on the number line.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/795f14a1a5657c3f8f9bb3858d23fc797d19f361)",
+									"correct": false
+								},
+								{
+									"content": "![A number line from negative 3 thirds to 3 thirds with evenly spaced tick marks in increments of 1 third. The tick at 0 thirds is labeled 0. An arrow from 0 thirds to 2 thirds points 2 units to the right. Another arrow above it, from 2 thirds points to 3 thirds 1 unit to the right. Dotted lines connect the ends of the arrowheads to their respective points on the number line.](web+graphie://cdn.kastatic.org/ka-perseus-graphie/d584aa6b6633fb992924df35cc9729d8f41621b1)",
+									"correct": false
+								}
+							],
+							"randomize": true,
+							"onePerLine": false,
+							"countChoices": false,
+							"displayCount": null,
+							"multipleSelect": false,
+							"deselectEnabled": false,
+							"hasNoneOfTheAbove": false
+						},
+						"version": {
+							"major": 1,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"type": "multiple",
+				"options": {
+					"images": {},
+					"content": "",
+					"widgets": {}
+				},
+				"calculator": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"number-line-model-add-negative-fractions\"\n    title=\"Identify the correct number-line model\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"identifier\">\n        <qti-correct-response>\n            <qti-value>A</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Which number line model represents the expression <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>-</mo><mfrac><mn>2</mn><mn>3</mn></mfrac><mo>+</mo><mrow><mo>(</mo><mo>-</mo><mfrac><mn>1</mn><mn>3</mn></mfrac><mo>)</mo></mrow></mrow></math>?</p>\n        <div><div><qti-choice-interaction response-identifier=\"RESPONSE\" shuffle=\"true\" min-choices=\"1\" max-choices=\"1\">\n            <qti-prompt>Select the correct number-line model.</qti-prompt>\n            <qti-simple-choice identifier=\"A\"><p>Model showing a move from 0 to −2⁄3, then another move left to −3⁄3.</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"B\"><p>Model showing a move from 0 to −2⁄3, then a move right to −1⁄3.</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"C\"><p>Model showing a move from 0 to 2⁄3, then another move right to 3⁄3.</p></qti-simple-choice>\n        </qti-choice-interaction></div></div>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The first model shows starting at 0, moving <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>-</mo><mfrac><mn>2</mn><mn>3</mn></mfrac></mrow></math> and then moving <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>-</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></math>, ending at <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>-</mo><mn>1</mn></mrow></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Start at 0, move left <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>-</mo><mfrac><mn>2</mn><mn>3</mn></mfrac></mrow></math>, then move left again <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>-</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></math>. The correct model ends at <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>-</mo><mn>1</mn></mrow></math>.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "d93d92d0-a301-463c-b41e-52ab0341d06c",
+		"questionId": "x020564490645f5b2",
+		"analysisNotes": "The value \"2.6\" should have a horizontal line above the \"6\" to denote the value repeats, known as a 'vinculum'. The failure of this line to appear implies to the student that they are solving for the simplifie-fraction rewrite for \"2.6\", not \"2.666666...\".",
+		"severity": "major",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "Let $x$ equal the decimal. Set up two equations such that the digits after the decimal point are identical.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "$\\large{\\begin{align*} 10x &= 26.6666...\\\\ x &= 2.6666... \\end{align*}} $",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "Subtracting the two equations, we have:\n\n $\\large{9x = 24}$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "$\\large{ x = \\dfrac{24}{9}} $",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "$ \\large{x = \\dfrac{8}{3}} \\quad \\text{or} \\quad\\large{2 \\dfrac{2}{3}} $",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Rewrite as a simplified fraction.**\n\n $\\large{2.\\overline{6} = {?}}$\n\n[[☃ numeric-input 1]]",
+				"widgets": {
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"static": false,
+						"options": {
+							"size": "normal",
+							"static": false,
+							"answers": [
+								{
+									"value": 2.6666666666666665,
+									"status": "correct",
+									"strict": true,
+									"message": "",
+									"maxError": 0,
+									"simplify": "optional",
+									"answerForms": ["proper", "improper", "mixed"]
+								}
+							],
+							"labelText": "",
+							"coefficient": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"rewrite-repeating-decimal-to-fraction\"\n    title=\"Rewrite a repeating decimal as a simplified fraction\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"string\">\n        <qti-correct-response>\n            <qti-value>8/3</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Rewrite as a simplified fraction.</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>2.</mn><mover><mn>6</mn><mo>‾</mo></mover></mrow></math> = <qti-text-entry-interaction response-identifier=\"RESPONSE\"/></p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>2.</mn><mover><mn>6</mn><mo>‾</mo></mover></mrow></math> equals <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>8</mn><mn>3</mn></mfrac></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Let <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi></math> represent the repeating decimal and set up equations so the repeating parts align, then subtract to solve.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "b7f50efc-c4eb-4025-9e9e-08b6ae79ab17",
+		"questionId": "x0242ec9cef278a4c",
+		"analysisNotes": "The parentheses in the text \"(r)\" should be included as part of the mathml. Currently, only the \"r\" is in mathml.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "What times $x$ gives us $y$?",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "If we multiply each $x$-value by $\\blueD{3}$, we get to each corresponding $y$-value:\n\n$y=\\blueD{3}x$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "The *constant of proportionality* $(r)$ in the equation $y=rx$ is $\\blueD{3}$.",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "The quantities $x$ and $y$ are proportional.\n\n$x$ | $y$ \n:-: | :-:\n$12$ | $36$ \n$18$ | $54$\n$25$ | $75$\n\n**Find the *constant of proportionality* $(r)$ in the equation $y=rx$.**\n\n$r =  $ [[☃ numeric-input 1]] ",
+				"widgets": {
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"static": false,
+						"options": {
+							"size": "normal",
+							"static": false,
+							"answers": [
+								{
+									"value": 3,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": null,
+									"simplify": "required"
+								}
+							],
+							"labelText": "r",
+							"coefficient": false,
+							"multipleNumberInput": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"constant-of-proportionality\"\n    title=\"Find the constant of proportionality\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"integer\">\n        <qti-correct-response>\n            <qti-value>3</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>The quantities <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi></math> and <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi></math> are proportional.</p>\n        <div><table style=\"border-collapse: collapse; width: 100%; border: 1px solid black;\"><thead><tr><th scope=\"col\" style=\"border: 1px solid black; padding: 8px; text-align: left; font-weight: bold; background-color: #f2f2f2; text-align: left;\"><math><mi>x</mi></math></th><th scope=\"col\" style=\"border: 1px solid black; padding: 8px; text-align: left; font-weight: bold; background-color: #f2f2f2;\"><math><mi>y</mi></math></th></tr></thead><tbody><tr><th scope=\"row\" style=\"border: 1px solid black; padding: 8px; text-align: left; font-weight: bold; background-color: #f2f2f2;\">12</th><td style=\"border: 1px solid black; padding: 8px; text-align: left;\">36</td></tr><tr><th scope=\"row\" style=\"border: 1px solid black; padding: 8px; text-align: left; font-weight: bold; background-color: #f2f2f2;\">18</th><td style=\"border: 1px solid black; padding: 8px; text-align: left;\">54</td></tr><tr><th scope=\"row\" style=\"border: 1px solid black; padding: 8px; text-align: left; font-weight: bold; background-color: #f2f2f2;\">25</th><td style=\"border: 1px solid black; padding: 8px; text-align: left;\">75</td></tr></tbody></table></div>\n        <p>Find the constant of proportionality (<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>r</mi></math>) in the equation <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><mi>r</mi><mi>x</mi></math>.</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>r</mi><mo>=</mo></math> <qti-text-entry-interaction response-identifier=\"RESPONSE\"/></p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The constant of proportionality is <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>3</mn></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Divide <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi></math> by <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi></math> for any pair: <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>36</mn><mn>12</mn></mfrac><mo>=</mo><mn>3</mn></math>, <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>54</mn><mn>18</mn></mfrac><mo>=</mo><mn>3</mn></math>, <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>75</mn><mn>25</mn></mfrac><mo>=</mo><mn>3</mn></math>. So <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>r</mi><mo>=</mo><mn>3</mn></math>.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "f132eebb-c8de-4668-bc6e-4c9a2ce29863",
+		"questionId": "x007a0bc9f08950e9",
+		"analysisNotes": "The text \"(r)\" should be mathml formatted. The \"r = \" equation should be mathml formatted and on a new line.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "What times $x$ gives us $y$?",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "If we multiply each $x$-value by $\\blueD{\\dfrac{1}{3}}$, we get to each corresponding $y$-value:\n\n$y=\\blueD{\\dfrac{1}{3}}x$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "The *constant of proportionality* $(r)$ in the equation $y=rx$ is $\\blueD{\\dfrac{1}{3}}$.",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "The quantities $x$ and $y$ are proportional.\n\n$x$ | $y$ \n:-: | :-:\n$15$ | $5$ \n$25$ | $8\\dfrac{1}{3}$\n$33$ | $11$\n\n**Find the *constant of proportionality* $(r)$ in the equation $y=rx$.**\n\n$r =  $ [[☃ numeric-input 1]] ",
+				"widgets": {
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"static": false,
+						"options": {
+							"size": "normal",
+							"static": false,
+							"answers": [
+								{
+									"value": 0.3333333333333333,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": null,
+									"simplify": "required",
+									"answerForms": ["proper", "improper"]
+								}
+							],
+							"labelText": "r",
+							"coefficient": false,
+							"multipleNumberInput": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"constant-of-proportionality-numeric\"\n    title=\"Find the constant of proportionality\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"string\">\n        <qti-correct-response>\n            <qti-value>1/3</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>The quantities <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi></math> and <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi></math> are proportional.</p>\n        <div><table style=\"border-collapse: collapse; width: 100%; border: 1px solid black;\"><thead><tr><th scope=\"col\" style=\"border: 1px solid black; padding: 8px; text-align: left; font-weight: bold; background-color: #f2f2f2;\"><math><mi>x</mi></math></th><th scope=\"col\" style=\"border: 1px solid black; padding: 8px; text-align: left; font-weight: bold; background-color: #f2f2f2;\"><math><mi>y</mi></math></th></tr></thead><tbody><tr><td style=\"border: 1px solid black; padding: 8px; text-align: left;\">15</td><td style=\"border: 1px solid black; padding: 8px; text-align: left;\">5</td></tr><tr><td style=\"border: 1px solid black; padding: 8px; text-align: left;\">25</td><td style=\"border: 1px solid black; padding: 8px; text-align: left;\"><math><mrow><mn>8</mn><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></math></td></tr><tr><td style=\"border: 1px solid black; padding: 8px; text-align: left;\">33</td><td style=\"border: 1px solid black; padding: 8px; text-align: left;\">11</td></tr></tbody></table></div>\n        <p>Find the constant of proportionality (r) in the equation <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><mi>r</mi><mi>x</mi></math>. r = <qti-text-entry-interaction response-identifier=\"RESPONSE\"/></p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The constant of proportionality is <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>1</mn><mn>3</mn></mfrac></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Divide each <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi></math> value by its corresponding <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi></math> value; the ratio should be the same each time.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "18f97994-8acd-435e-a891-b1060faee946",
+		"questionId": "x00e45a8a2ba4ac85",
+		"analysisNotes": "The equation should be on a new line.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "What number times itself and then times itself again equals $-512$?",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "$\\green{-8}$\n\n*Notice that $\\green{-8} \\cdot \\green{-8} \\cdot \\green{-8} = -512$.*",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Find the solution(s) of the following equation.**\n\n$x^3 = -512$\n\n[[☃ radio 1]]",
+				"widgets": {
+					"radio 1": {
+						"type": "radio",
+						"graded": true,
+						"static": false,
+						"options": {
+							"choices": [
+								{
+									"content": "$x = 6$"
+								},
+								{
+									"content": "$x = -6$",
+									"correct": false
+								},
+								{
+									"content": "$x = 8$",
+									"correct": false
+								},
+								{
+									"content": "$x = -8$",
+									"correct": true
+								},
+								{
+									"content": "None of the above",
+									"correct": false
+								}
+							],
+							"randomize": false,
+							"onePerLine": true,
+							"displayCount": null,
+							"multipleSelect": true,
+							"deselectEnabled": false,
+							"hasNoneOfTheAbove": false
+						},
+						"version": {
+							"major": 1,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"solve-cubic-equation-x3--512\"\n    title=\"Solve the cubic equation x³ = -512\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"identifier\">\n        <qti-correct-response>\n            <qti-value>D</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Find the solution(s) of the following equation. <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><msup><mi>x</mi><mn>3</mn></msup><mo>=</mo><mo>-</mo><mn>512</mn></math></p>\n        <div><div><qti-choice-interaction response-identifier=\"RESPONSE\" shuffle=\"true\" min-choices=\"1\" max-choices=\"1\">\n            <qti-prompt>Select the correct answer.</qti-prompt>\n            <qti-simple-choice identifier=\"A\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi><mo>=</mo><mn>6</mn></math></p></qti-simple-choice>\n            <qti-simple-choice identifier=\"B\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi><mo>=</mo><mo>-</mo><mn>6</mn></math></p></qti-simple-choice>\n            <qti-simple-choice identifier=\"C\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi><mo>=</mo><mn>8</mn></math></p></qti-simple-choice>\n            <qti-simple-choice identifier=\"D\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi><mo>=</mo><mo>-</mo><mn>8</mn></math></p></qti-simple-choice>\n            <qti-simple-choice identifier=\"E\"><p>None of the above</p></qti-simple-choice>\n        </qti-choice-interaction></div></div>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The solution is <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi><mo>=</mo><mo>-</mo><mn>8</mn></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Hint: What number multiplied by itself three times equals <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>512</mn></math>? Try finding the cube root of <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>512</mn></math>.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "15797f21-a7e0-47a7-ae17-6dea9a064da6",
+		"questionId": "x02590f6b1a866961",
+		"analysisNotes": "The answer choices' coordinates are not written in mathml. For example, the text \"(2,4)\" in the answer choice \"Only (2,4)\" should be written in mathml.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "To check whether an ordered pair $(a,b)$ is a solution of an equation, substitute these values into the equation and determine if the resulting equality is true or false.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "To check whether $(\\blue{2},\\pink{4})$ is a solution of the equation, let's substitute $\\blue{x}=\\blue{2}$ and $\\pink{y}=\\pink{4}$ into the equation:\n\n$\\begin{align}7\\blue{x}-5&=4\\pink{y}-6\\\\\n7\\cdot\\blue{2}-5&=4\\cdot\\pink{4}-6\\\\\n14-5&=16-6\\\\\n9&=10\\end{align}$\n\nSince $9\\neq10$, we obtained a *false* statement, so $(2,4)$ is *not* a solution of the equation.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "To check whether $(\\blue{3},\\pink{6})$ is a solution of the equation, let's substitute $\\blue{x}=\\blue{3}$ and $\\pink{y}=\\pink{6}$ into the equation:\n\n$\\begin{align}7\\blue{x}-5&=4\\pink{y}-6\\\\\n7\\cdot\\blue{3}-5&=4\\cdot\\pink{6}-6\\\\\n21-5&=24-6\\\\\n16&=18\\end{align}$\n\nSince $16\\neq18$, we obtained a *false* statement, so $(3,6)$ is *not* a solution of the equation.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "Neither of the ordered pairs is a solution of the equation.",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Which ordered pair is a solution of the equation?**\n\n$ 7x-5=4y-6$\n\n[[☃ radio 1]] ",
+				"widgets": {
+					"radio 1": {
+						"type": "radio",
+						"graded": true,
+						"static": false,
+						"options": {
+							"choices": [
+								{
+									"clue": "Substituting $\\blueD{x=2}$ and $\\maroonD{y=4}$ gives a false statement:\n\n$\\begin{align}\n7\\blueD{x}-5&\\stackrel{?}{=}4\\maroonD{y}-6\n\\\\\\\\\n7(\\blueD{2})-5&\\stackrel{?}{=}4(\\maroonD{4})-6\n\\\\\\\\\n9&\\neq10\n\\end{align}$\n\nSo $(\\blueD{2},\\maroonD{4})$ isn't a solution.",
+									"content": "Only $(2,4)$",
+									"correct": false
+								},
+								{
+									"clue": "Substituting $\\blueD{x=3}$ and $\\maroonD{y=6}$ gives a false statement:\n\n$\\begin{align}\n7\\blueD{x}-5&\\stackrel{?}{=}4\\maroonD{y}-6\n\\\\\\\\\n7(\\blueD{3})-5&\\stackrel{?}{=}4(\\maroonD{6})-6\n\\\\\\\\\n16&\\neq18\n\\end{align}$\n\nSo $(\\blueD{3},\\maroonD{6})$ isn't a solution.",
+									"content": "Only $(3,6)$",
+									"correct": false
+								},
+								{
+									"clue": "At least one of the pairs isn't a solution.\n\nFor example, substituting $\\blueD{x=3}$ and $\\maroonD{y=6}$ gives a false statement:\n\n$\\begin{align}\n7\\blueD{x}-5&\\stackrel{?}{=}4\\maroonD{y}-6\n\\\\\\\\\n7(\\blueD{3})-5&\\stackrel{?}{=}4(\\maroonD{6})-6\n\\\\\\\\\n16&\\neq18\n\\end{align}$\n\nSo $(\\blueD{3},\\maroonD{6})$ isn't a solution.",
+									"content": "Both $(2,4)$ and $(3,6)$",
+									"correct": false
+								},
+								{
+									"content": "Neither",
+									"correct": true
+								}
+							],
+							"randomize": false,
+							"countChoices": false,
+							"displayCount": null,
+							"multipleSelect": false,
+							"deselectEnabled": false,
+							"hasNoneOfTheAbove": false
+						},
+						"version": {
+							"major": 1,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"solution-linear-equation-radio\"\n    title=\"Identify a solution of a linear equation\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"identifier\">\n        <qti-correct-response>\n            <qti-value>D</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Which ordered pair is a solution of the equation?</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>7</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>=</mo><mn>4</mn><mi>y</mi><mo>-</mo><mn>6</mn></mrow></math></p>\n        <div><div><qti-choice-interaction response-identifier=\"RESPONSE\" shuffle=\"true\" min-choices=\"1\" max-choices=\"1\">\n            <qti-prompt>Select the ordered pair that satisfies the equation.</qti-prompt>\n            <qti-simple-choice identifier=\"A\"><p>Only (2,4)</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"B\"><p>Only (3,6)</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"C\"><p>Both (2,4) and (3,6)</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"D\"><p>Neither</p></qti-simple-choice>\n        </qti-choice-interaction></div></div>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! Neither ordered pair satisfies the equation.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Substitute each ordered pair into <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>7</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>=</mo><mn>4</mn><mi>y</mi><mo>-</mo><mn>6</mn></mrow></math> to see if the equality holds.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "55aee764-87e2-40bf-aa4c-de36220a0be8",
+		"questionId": "x0102286f0d284c98",
+		"analysisNotes": "The equation and input should be on a new line separate from the \"Evaluate.\" text while maintaining the input being adjacent to the equation.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "$\\phantom{=}\\left(-\\dfrac32\\right)^4$\n\n$= -\\dfrac32\\cdot\\left(-\\dfrac32\\right)\\cdot\\left(-\\dfrac32\\right)\\cdot\\left(-\\dfrac32\\right)$",
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "$=\\dfrac{81}{16} $",
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Evaluate.**\n\n$\\left(-\\dfrac32\\right)^4 = $\n[[☃ numeric-input 1]]",
+				"widgets": {
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"options": {
+							"size": "normal",
+							"answers": [
+								{
+									"value": 5.0625,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": null,
+									"simplify": "required",
+									"answerForms": ["proper", "improper"]
+								}
+							],
+							"coefficient": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						}
+					}
+				}
+			},
+			"answerArea": {
+				"type": "multiple",
+				"options": {
+					"images": {},
+					"content": "",
+					"widgets": {}
+				},
+				"calculator": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"evaluate-negative-fraction-exponent\"\n    title=\"Evaluate a power of a negative fraction\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"string\">\n        <qti-correct-response>\n            <qti-value>81/16</qti-value>\n            <qti-value>5.0625</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Evaluate. <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><msup><mrow><mo>(</mo><mo>-</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><mo>)</mo></mrow><mn>4</mn></msup><mo>=</mo></mrow></math> <qti-text-entry-interaction response-identifier=\"RESPONSE\"/></p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>81</mn><mn>16</mn></mfrac></math> is the value of the expression.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>First, rewrite the exponent as repeated multiplication:</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>(</mo><mo>-</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><mo>)</mo><mo>×</mo><mo>(</mo><mo>-</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><mo>)</mo><mo>×</mo><mo>(</mo><mo>-</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><mo>)</mo><mo>×</mo><mo>(</mo><mo>-</mo><mfrac><mn>3</mn><mn>2</mn></mfrac><mo>)</mo></mrow></math></p>\n        <p>Multiplying the numerators and denominators gives:</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>81</mn><mn>16</mn></mfrac></math></p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "c6c3a9db-e3e4-4a7a-bb6e-f488b283d3f7",
+		"questionId": "x025950632aa6ffa5",
+		"analysisNotes": "The correct answer is listed as incorrect.",
+		"severity": "major",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "Let's find $\\blueD{-2}, \\goldD{-5}, \\redD{-1},$ and $\\greenD{-3}$ on the number line:\n\n\n\n[[☃ image 1]]\n\n",
+					"replace": false,
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A number line from negative 5 to 5 with evenly spaced tick marks in increments of 1. There are points 1 tick mark to the left of 0, 2 tick marks to the left of 0, 3 tick marks to the left of 0, and 5 tick marks to the left of 0. ",
+								"box": [460, 80],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b27f3160a38dcaefa8bf506b5e8e2eec5aa61244",
+									"width": 460,
+									"height": 80
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						}
+					}
+				},
+				{
+					"images": {},
+					"content": "Here is the order from least to greatest:\n\n>$\\goldD{-5},  \\greenD{-3}, \\blueD{-2}, \\redD{-1}$",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Order the following numbers from least to greatest.**  \n*Put the lowest number on the left.*\n\n[[☃ sorter 1]]",
+				"widgets": {
+					"sorter 1": {
+						"type": "sorter",
+						"graded": true,
+						"static": false,
+						"options": {
+							"layout": "horizontal",
+							"correct": ["$-5$", "$-3$", "$-2$", "$-1$"],
+							"padding": true
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"order-negative-integers\"\n    title=\"Order integers from least to greatest\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"ordered\" base-type=\"identifier\">\n        <qti-correct-response>\n            <qti-value>-5</qti-value>\n            <qti-value>-3</qti-value>\n            <qti-value>-2</qti-value>\n            <qti-value>-1</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Order the following numbers from least to greatest. Put the lowest number on the left.</p>\n        <div><div><qti-order-interaction response-identifier=\"RESPONSE\" shuffle=\"true\" orientation=\"horizontal\">\n            <qti-prompt>Arrange the numbers from least to greatest.</qti-prompt>\n            <qti-simple-choice identifier=\"NEG5\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>5</mn></math></p></qti-simple-choice>\n            <qti-simple-choice identifier=\"NEG3\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>3</mn></math></p></qti-simple-choice>\n            <qti-simple-choice identifier=\"NEG2\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>2</mn></math></p></qti-simple-choice>\n            <qti-simple-choice identifier=\"NEG1\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>1</mn></math></p></qti-simple-choice>\n        </qti-order-interaction></div></div>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! From least to greatest the numbers are <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>5</mn></math>, <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>3</mn></math>, <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>2</mn></math>, <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>1</mn></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Remember that on the number line, numbers further to the left are smaller. Check the position of each integer and try again.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "b3419d40-d184-45b8-b5a3-334fcb906bbe",
+		"questionId": "x00f25e256a7b101c",
+		"analysisNotes": "There are HTML tags and dollar signs present in the rendered XML. To a minor note, the input should be adjacent to the equation.",
+		"severity": "major",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {
+						"web+graphie://cdn.kastatic.org/ka-perseus-graphie/42b9754ec0acad70bcc79956fadc06e9aa791335": {
+							"width": 240,
+							"height": 160
+						}
+					},
+					"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/42b9754ec0acad70bcc79956fadc06e9aa791335)",
+					"replace": true,
+					"widgets": {}
+				},
+				{
+					"images": {
+						"web+graphie://cdn.kastatic.org/ka-perseus-graphie/9dd21d0633323ba1bfc70318f7aca6a8a0c9af59": {
+							"width": 240,
+							"height": 160
+						}
+					},
+					"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/9dd21d0633323ba1bfc70318f7aca6a8a0c9af59)",
+					"replace": true,
+					"widgets": {}
+				},
+				{
+					"images": {
+						"web+graphie://cdn.kastatic.org/ka-perseus-graphie/0cd2d1b928d8e261881c4f57c74ce8613c801599": {
+							"width": 240,
+							"height": 160
+						}
+					},
+					"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/0cd2d1b928d8e261881c4f57c74ce8613c801599)",
+					"replace": true,
+					"widgets": {}
+				},
+				{
+					"images": {
+						"web+graphie://cdn.kastatic.org/ka-perseus-graphie/d0894a6b88041f6dd66cb5fa454eb699c0eed2bf": {
+							"width": 240,
+							"height": 160
+						}
+					},
+					"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/d0894a6b88041f6dd66cb5fa454eb699c0eed2bf)",
+					"replace": true,
+					"widgets": {}
+				},
+				{
+					"images": {
+						"web+graphie://cdn.kastatic.org/ka-perseus-graphie/0838319960bc833320f7fb5def0ee22bfb2af2c9": {
+							"width": 240,
+							"height": 160
+						}
+					},
+					"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/0838319960bc833320f7fb5def0ee22bfb2af2c9)",
+					"replace": true,
+					"widgets": {}
+				},
+				{
+					"images": {
+						"web+graphie://cdn.kastatic.org/ka-perseus-graphie/2f1e21d3a55b98012f00957050b3cec4e48fd52b": {
+							"width": 240,
+							"height": 160
+						}
+					},
+					"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/2f1e21d3a55b98012f00957050b3cec4e48fd52b)",
+					"replace": true,
+					"widgets": {}
+				},
+				{
+					"images": {
+						"web+graphie://cdn.kastatic.org/ka-perseus-graphie/75d5ec680d1f91269562614d465170d104fc8036": {
+							"width": 240,
+							"height": 160
+						}
+					},
+					"content": "![](web+graphie://cdn.kastatic.org/ka-perseus-graphie/75d5ec680d1f91269562614d465170d104fc8036)",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "$66.54 + 9.393 = $ [[☃ numeric-input 1]]",
+				"widgets": {
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"static": false,
+						"options": {
+							"size": "normal",
+							"static": false,
+							"answers": [
+								{
+									"value": 75.933,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": 0,
+									"simplify": "optional"
+								}
+							],
+							"labelText": "",
+							"coefficient": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"add-decimals-currency-numeric-input\"\n    title=\"Add two monetary amounts\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"float\">\n        <qti-correct-response>\n            <qti-value>75.933</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>&lt;span class=&quot;currency&quot;&gt;$&lt;/span&gt;<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>66.54</mn></math> + <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>9.393</mn></math> = &lt;span class=&quot;currency&quot;&gt;$&lt;/span&gt; <qti-text-entry-interaction response-identifier=\"RESPONSE\" expected-length=\"6\"/></p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The sum is &lt;span class=&quot;currency&quot;&gt;$&lt;/span&gt;<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>75.933</mn></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Add the decimal amounts carefully and try again.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "0f26c1c4-500e-479c-89e9-6af6b8d8ce55",
+		"questionId": "x0120f9f9574a64c2",
+		"analysisNotes": "There should be a space between the input and the rest of the equation. The \"Hint: [...]\" should be italicized.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "We start at an unknown number, $\\blue{\\text{add $(-4)$}}$ units, and end at $-1$. ",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "In other words, we start at an unknown number, $\\blue{\\text{subtract }4}$ units, and end at $-1$. \n\n[[☃ image 1]]\n\n",
+					"replace": false,
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A number line with three unevenly spaced ticks. The tick in the center is labeled as 0. The tick to the left of 0 is labeled as negative 1. The tick to the right of 0 is labeled as question mark. An arrow from question mark to negative 1 points to the left. Subtract 4 is written above the arrow.\n",
+								"box": [460, 92],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/457871ada51e6e349c8b89f578c6907f8d046791",
+									"width": 460,
+									"height": 92
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						}
+					}
+				},
+				{
+					"images": {},
+					"content": "We can find the unknown number by  plotting a point at $-1$ and counting $4$ units to the *right*.\n\n[[☃ image 1]]\n\nOur unknown starting point is $\\pink{3}$.",
+					"replace": false,
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A number line with evenly spaced tick marks in increments of 1. The number line reads from left to right: negative 15, negative 10, negative 5, 0, 5, 10, and 15.",
+								"box": [460, 78],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/6f0561104ab247b62d462c8d6bac150c59ff21d5",
+									"width": 460,
+									"height": 78
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						}
+					}
+				},
+				{
+					"images": {},
+					"content": "The correct answer is\n\n**$\\pink{3}+(-4)=-1$**\n",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Find the missing value.**  \n*Hint: Use the number line to find the missing value.*\n\n[[☃ numeric-input 1]] $+(-4)=-1$\n\n[[☃ image 1]]\n\n",
+				"widgets": {
+					"image 1": {
+						"type": "image",
+						"graded": true,
+						"static": false,
+						"options": {
+							"alt": "A number line with evenly spaced tick marks in increments of 1. The number line reads from left to right: negative 15, negative 10, negative 5, 0, 5, 10, and 15.",
+							"box": [380, 80],
+							"range": [[0, 10], [0, 10]],
+							"title": "",
+							"labels": [],
+							"static": false,
+							"caption": "",
+							"backgroundImage": {
+								"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/71ac8b6268a1c99057ca071ffaa198e4d4f0af34",
+								"width": 380,
+								"height": 80
+							}
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "block"
+					},
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"static": false,
+						"options": {
+							"size": "small",
+							"static": false,
+							"answers": [
+								{
+									"value": 3,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": null,
+									"simplify": "required"
+								}
+							],
+							"labelText": "",
+							"rightAlign": false,
+							"coefficient": false,
+							"multipleNumberInput": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false,
+				"periodicTableWithKey": false,
+				"financialCalculatorTotalAmount": false,
+				"financialCalculatorTimeToPayOff": false,
+				"financialCalculatorMonthlyPayment": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"find-missing-value-number-line\"\n    title=\"Find the missing value using a number line\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"integer\">\n        <qti-correct-response>\n            <qti-value>3</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Find the missing value.</p>\n        <p>Hint: Use the number line to find the missing value.</p>\n        <p><qti-text-entry-interaction response-identifier=\"RESPONSE\" expected-length=\"2\"/><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>+</mo><mrow><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mo>=</mo><mo>-</mo><mn>1</mn></math></p>\n        <div><img src=\"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzgwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMzgwIDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIj48bGluZSB4MT0iNDAiIHkxPSI0MCIgeDI9IjM0MCIgeTI9IjQwIiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjQwIiB5MT0iMzIiIHgyPSI0MCIgeTI9IjQ4IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjUwIiB5MT0iMzYiIHgyPSI1MCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjYwIiB5MT0iMzYiIHgyPSI2MCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjcwIiB5MT0iMzYiIHgyPSI3MCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjgwIiB5MT0iMzYiIHgyPSI4MCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjkwIiB5MT0iMzIiIHgyPSI5MCIgeTI9IjQ4IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjEwMCIgeTE9IjM2IiB4Mj0iMTAwIiB5Mj0iNDQiIHN0cm9rZT0iYmxhY2siLz48bGluZSB4MT0iMTEwIiB5MT0iMzYiIHgyPSIxMTAiIHkyPSI0NCIgc3Ryb2tlPSJibGFjayIvPjxsaW5lIHgxPSIxMjAiIHkxPSIzNiIgeDI9IjEyMCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjEzMCIgeTE9IjM2IiB4Mj0iMTMwIiB5Mj0iNDQiIHN0cm9rZT0iYmxhY2siLz48bGluZSB4MT0iMTQwIiB5MT0iMzIiIHgyPSIxNDAiIHkyPSI0OCIgc3Ryb2tlPSJibGFjayIvPjxsaW5lIHgxPSIxNTAiIHkxPSIzNiIgeDI9IjE1MCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjE2MCIgeTE9IjM2IiB4Mj0iMTYwIiB5Mj0iNDQiIHN0cm9rZT0iYmxhY2siLz48bGluZSB4MT0iMTcwIiB5MT0iMzYiIHgyPSIxNzAiIHkyPSI0NCIgc3Ryb2tlPSJibGFjayIvPjxsaW5lIHgxPSIxODAiIHkxPSIzNiIgeDI9IjE4MCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjE5MCIgeTE9IjMyIiB4Mj0iMTkwIiB5Mj0iNDgiIHN0cm9rZT0iYmxhY2siLz48bGluZSB4MT0iMjAwIiB5MT0iMzYiIHgyPSIyMDAiIHkyPSI0NCIgc3Ryb2tlPSJibGFjayIvPjxsaW5lIHgxPSIyMTAiIHkxPSIzNiIgeDI9IjIxMCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjIyMCIgeTE9IjM2IiB4Mj0iMjIwIiB5Mj0iNDQiIHN0cm9rZT0iYmxhY2siLz48bGluZSB4MT0iMjMwIiB5MT0iMzYiIHgyPSIyMzAiIHkyPSI0NCIgc3Ryb2tlPSJibGFjayIvPjxsaW5lIHgxPSIyNDAiIHkxPSIzMiIgeDI9IjI0MCIgeTI9IjQ4IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjI1MCIgeTE9IjM2IiB4Mj0iMjUwIiB5Mj0iNDQiIHN0cm9rZT0iYmxhY2siLz48bGluZSB4MT0iMjYwIiB5MT0iMzYiIHgyPSIyNjAiIHkyPSI0NCIgc3Ryb2tlPSJibGFjayIvPjxsaW5lIHgxPSIyNzAiIHkxPSIzNiIgeDI9IjI3MCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjI4MCIgeTE9IjM2IiB4Mj0iMjgwIiB5Mj0iNDQiIHN0cm9rZT0iYmxhY2siLz48bGluZSB4MT0iMjkwIiB5MT0iMzIiIHgyPSIyOTAiIHkyPSI0OCIgc3Ryb2tlPSJibGFjayIvPjxsaW5lIHgxPSIzMDAiIHkxPSIzNiIgeDI9IjMwMCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjMxMCIgeTE9IjM2IiB4Mj0iMzEwIiB5Mj0iNDQiIHN0cm9rZT0iYmxhY2siLz48bGluZSB4MT0iMzIwIiB5MT0iMzYiIHgyPSIzMjAiIHkyPSI0NCIgc3Ryb2tlPSJibGFjayIvPjxsaW5lIHgxPSIzMzAiIHkxPSIzNiIgeDI9IjMzMCIgeTI9IjQ0IiBzdHJva2U9ImJsYWNrIi8+PGxpbmUgeDE9IjM0MCIgeTE9IjMyIiB4Mj0iMzQwIiB5Mj0iNDgiIHN0cm9rZT0iYmxhY2siLz48dGV4dCB4PSI0MCIgeT0iNjUiIGZpbGw9ImJsYWNrIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+LTE1PC90ZXh0Pjx0ZXh0IHg9IjkwIiB5PSI2NSIgZmlsbD0iYmxhY2siIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj4tMTA8L3RleHQ+PHRleHQgeD0iMTQwIiB5PSI2NSIgZmlsbD0iYmxhY2siIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj4tNTwvdGV4dD48dGV4dCB4PSIxOTAiIHk9IjY1IiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPjA8L3RleHQ+PHRleHQgeD0iMjQwIiB5PSI2NSIgZmlsbD0iYmxhY2siIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj41PC90ZXh0Pjx0ZXh0IHg9IjI5MCIgeT0iNjUiIGZpbGw9ImJsYWNrIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+MTA8L3RleHQ+PHRleHQgeD0iMzQwIiB5PSI2NSIgZmlsbD0iYmxhY2siIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj4xNTwvdGV4dD48L3N2Zz4=\" alt=\"Widget visualization\" /></div>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The missing value is <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>3</mn></math>.</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>3</mn><mo>+</mo><mrow><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mo>=</mo><mo>-</mo><mn>1</mn></math></p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Adding <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow></math> moves four units to the left on the number line. Starting at <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>-</mo><mn>1</mn></math> and counting four units to the right gives <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>3</mn></math>.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "6b21c09f-d697-4de1-ae2d-cd533f88d419",
+		"questionId": "x012ab26fce14c204",
+		"analysisNotes": "The circle diagram is completely unusable: filled in with black; the diagram is using a full circle rather than a quarter segment; because of the black, it's impossible to see the other components of the diagram if they're even there.",
+		"severity": "major",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "###Getting started\n\nWe want to find the arc length of $\\dfrac14$ of a circle. Let's start by finding the circumference of the circle.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "###Step 1: Find the circumference of the circle\n\n$\\begin{align} \\text{Circumference of the circle} &=  2\\pi r \\\\\\\\ &= 2\\pi\\cdot 1 \\\\\\\\\n&= 1 \\cdot2\\pi \\\\\\\\\n&= \\goldD{2\\pi} \\\\\\\\\n\\end{align}$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "###Step 2: Find the arc length of $\\dfrac14$ of the circle\n\nThe arc length is $\\dfrac14$ of the circumference of the circle.  \n\n$\\begin{align} \\text{Circumference of } \\dfrac14  \\text{ of the circle} &=  \\dfrac14 \\cdot \\goldD{2\\pi} \\\\\\\\ \n&= \\dfrac{2}{4}\\pi \\\\\\\\\n&= \\dfrac12\\pi \\\\\\\\\n\\end{align}$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "###The answer\n\nThe arc length of the partial circle is $\\dfrac12\\pi$ units.\n\n*(Note that we could also multiply $\\dfrac12$ by $3.14$ to get $1.57$ units.)*",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "[[☃ image 1]]\n\n**Find the arc length of the partial circle.**  \n*Either enter an exact answer in terms of $\\pi$ or use $3.14$ for $\\pi$ and enter your answer as a decimal.*\n\n[[☃ expression 1]] units\n",
+				"widgets": {
+					"image 1": {
+						"type": "image",
+						"graded": true,
+						"static": false,
+						"options": {
+							"alt": "A 90 degree angle with sides of equal length is shown. One side is labelled 1. The arc length is drawn between each of the two sides labelled with question mark.",
+							"box": [250, 250],
+							"range": [[0, 10], [0, 10]],
+							"title": "",
+							"labels": [],
+							"static": false,
+							"caption": "",
+							"backgroundImage": {
+								"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/b6771fc1fbde9c752ed59d8817ac86e572204311",
+								"width": 250,
+								"height": 250
+							}
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "block"
+					},
+					"expression 1": {
+						"type": "expression",
+						"graded": true,
+						"static": false,
+						"options": {
+							"times": false,
+							"functions": ["f", "g", "h"],
+							"buttonSets": ["basic", "prealgebra"],
+							"answerForms": [
+								{
+									"key": 0,
+									"form": false,
+									"value": "\\frac{1}{2}\\pi",
+									"simplify": false,
+									"considered": "correct"
+								},
+								{
+									"key": 1,
+									"form": false,
+									"value": "1.57",
+									"simplify": false,
+									"considered": "correct"
+								}
+							]
+						},
+						"version": {
+							"major": 1,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": true,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"arc-length-quarter-circle\"\n    title=\"Find the arc length of a partial circle\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"string\">\n        <qti-correct-response>\n            <qti-value>1/2*pi</qti-value>\n            <qti-value>1.57</qti-value>\n            <qti-value>0.5</qti-value>\n            <qti-value>.5</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <div><img src=\"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjI1MCIgdmlld0JveD0iMCAwIDI1MCAyNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiPjxwYXRoIGQ9Ik0gMTI1LDEyNSBMIDEyNSwyNDAgQSAxMTQuOTk5OTk5OTk5OTk5OTksMTE0Ljk5OTk5OTk5OTk5OTk5IDAgMCAxIDEwLjAwMDAwMDAwMDAwMDAxNCwxMjUuMDAwMDAwMDAwMDAwMDEgWiIgZmlsbD0iIzI5YWJjYSIgc3Ryb2tlPSJub25lIi8+PHBhdGggZD0iTSAxMjUgMTQxIEwgMTA5IDE0MSBMIDEwOSAxMjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iMS41Ii8+PGNpcmNsZSBjeD0iMTI1IiBjeT0iMTI1IiByPSIxMTQuOTk5OTk5OTk5OTk5OTkiIGZpbGw9IiIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNIDEyNSwyNDAgQSAxMTQuOTk5OTk5OTk5OTk5OTksMTE0Ljk5OTk5OTk5OTk5OTk5IDAgMCAxIDEwLjAwMDAwMDAwMDAwMDAxNCwxMjUuMDAwMDAwMDAwMDAwMDEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIzIi8+PHRleHQgeD0iMzMuMDc2MTE4NDQ1NzQ4ODMiIHk9IjIxNi45MjM4ODE1NTQyNTExOCIgZm9udC1zaXplPSIxNHB4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+PzwvdGV4dD48bGluZSB4MT0iMTI1IiB5MT0iMTI1IiB4Mj0iMTAuMDAwMDAwMDAwMDAwMDE0IiB5Mj0iMTI1LjAwMDAwMDAwMDAwMDAxIiBzdHJva2U9IiNlNjVhNGMiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjY3LjUiIHk9IjExNSIgZm9udC1zaXplPSIxM3B4IiBmaWxsPSIjMzMzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj4xPC90ZXh0PjxsaW5lIHgxPSIxMjUiIHkxPSIxMjUiIHgyPSIxMjUiIHkyPSIyNDAiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIyIi8+PGNpcmNsZSBjeD0iMTI1IiBjeT0iMTI1IiByPSIzIiBmaWxsPSJibGFjayIvPjwvc3ZnPg==\" alt=\"Widget visualization\" /></div>\n        <p>Find the arc length of the partial circle.</p>\n        <p>Either enter an exact answer in terms of <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>π</mi></math> or use <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>3.14</mn></math> for <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>π</mi></math> and enter your answer as a decimal.</p>\n        <p><qti-text-entry-interaction response-identifier=\"RESPONSE\"/> units</p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The arc length is <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>π</mi></math> units, which is approximately <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>1.57</mn></math> units.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. First find the circumference of the whole circle using the formula <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>2</mn><mi>π</mi><mi>r</mi></math> with <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>r</mi><mo>=</mo><mn>1</mn></math>. Then take one-fourth of that circumference to get the arc length.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "c77f7f5a-9021-4a8c-967d-147f64176d18",
+		"questionId": "x013e97f8d9b7ac32",
+		"analysisNotes": "The correct answer is marked as incorrect during submission (i.e., the order of -4, -1, 0, 5).",
+		"severity": "major",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "Let's find $\\blueD{-4}, \\goldD{-1}, \\redD{5},$ and $\\greenD{0}$ on the number line:\n\n\n\n[[☃ image 1]]\n\n",
+					"replace": false,
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "A number line from negative 5 to 5 with evenly spaced tick marks in increments of 1. There are points at the 0 tick mark, 1 tick mark to the left of 0, 4 tick marks to the left of 0, and 5 tick marks to the right of 0. ",
+								"box": [460, 80],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/3209b6de4e9f9e4dc588a8837139013001579bd1",
+									"width": 460,
+									"height": 80
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						}
+					}
+				},
+				{
+					"images": {},
+					"content": "Here is the order from least to greatest:\n\n>$\\blueD{-4}, \\goldD{-1}, \\greenD{0},  \\redD{5}$",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Order the following numbers from least to greatest.**  \n*Put the lowest number on the left.*\n\n[[☃ sorter 1]]",
+				"widgets": {
+					"sorter 1": {
+						"type": "sorter",
+						"graded": true,
+						"static": false,
+						"options": {
+							"layout": "horizontal",
+							"correct": ["$-4$", "$-1$", "$0$", "$5$"],
+							"padding": true
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"order-integers-least-to-greatest\"\n    title=\"Order integers from least to greatest\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"ordered\" base-type=\"integer\">\n        <qti-correct-response>\n            <qti-value>-4</qti-value>\n            <qti-value>-1</qti-value>\n            <qti-value>0</qti-value>\n            <qti-value>5</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Order the following numbers from least to greatest.</p>\n        <p>Put the lowest number on the left.</p>\n        <div><div><qti-order-interaction response-identifier=\"RESPONSE\" shuffle=\"true\" orientation=\"horizontal\">\n            <qti-prompt>Arrange the numbers in ascending order.</qti-prompt>\n            <qti-simple-choice identifier=\"C1\"><p>−4</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"C2\"><p>−1</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"C3\"><p>0</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"C4\"><p>5</p></qti-simple-choice>\n        </qti-order-interaction></div></div>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! You placed the numbers in ascending order.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Remember that numbers further to the left on the number line are smaller.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "3eaf4cbb-872d-4edb-a6ce-74880ecdf4e0",
+		"questionId": "x02ac4f2c89a95edb",
+		"analysisNotes": "The horizontal lines should extend past the slanted line to fully replicate the original. The text for each equation, as well as the respective labels, should be colored in the same color as their respective angles.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "$\\blueD{\\angle A}$ and $\\greenD{\\angle B}$ are corresponding angles. Since corresponding angles are congruent, we can set their measures equal to one another. \n\n $\\blueD{6x + 12^\\circ} = \\greenD{3x + 63^\\circ}$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "Solve for $x$:   \n\n$\\begin{align}(6x + 12^\\circ) \\maroonD{- 3x} &= (3x + 63^\\circ) \\maroonD{- 3x}\n\\\\\\\\\n 3x + 12^\\circ&= 63^\\circ\n \\\\\\\\\n (3x + 12^\\circ) \\maroonD{- 12^\\circ} &= 63^\\circ \\maroonD{- 12^\\circ} \\\\\\\\\n 3x& = 51^\\circ\n\\\\\\\\\n \\dfrac{3x}{\\maroonD{3}} &= \\dfrac{51^\\circ}{\\maroonD{3}}\n\\\\\\\\\nx& = \\goldD{17^\\circ} \\end{align}$\n\n",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "Now, we substitute the value of $x$ into the expression for the measurement of $\\blueD{\\angle A}$:\n\n$\\begin{align}\\blueD{\\angle A}  &=  \\blueD{6x + 12^\\circ}\n\\\\\\\\\n\\blueD{\\angle A} &=\\blueD6(\\goldD{17}) \\blueD{+ 12}\n \\\\\\\\\n\\blueD{\\angle A} &=  \\blueD{114 ^\\circ} \\end{align}$\n\n",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "The angle measurements in the diagram are represented by the following expressions.\n\n$\\qquad \\blueD{\\angle A = 6x + 12^\\circ} $ $\\qquad\\greenD{\\angle B = 3x + 63^\\circ}$\n\n\n[[☃ image 1]]\n\n**Solve for $x$ and then find the measure of $\\blueD{\\angle A}$:**\n\n$\\blueD{\\angle A} = $ [[☃ numeric-input 1]] $^\\circ$",
+				"widgets": {
+					"image 1": {
+						"type": "image",
+						"graded": true,
+						"static": false,
+						"options": {
+							"alt": "Two parallel lines with a third line intersecting each line. Where the third line crosses the top parallel line, the top, left angle measure has a curved blue line and is labeled A. Where the third line crosses the bottom parallel line, the top, left angle measure has a curved green line and is labeled B. ",
+							"box": [320, 280],
+							"range": [[0, 10], [0, 10]],
+							"title": "",
+							"labels": [],
+							"static": false,
+							"caption": "",
+							"backgroundImage": {
+								"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/0f7ee0853d2edf05b8fd3201646b0cbcd5cc5591",
+								"width": 320,
+								"height": 280
+							}
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "block"
+					},
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"static": false,
+						"options": {
+							"size": "small",
+							"static": false,
+							"answers": [
+								{
+									"value": 114,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": 0,
+									"simplify": "required"
+								}
+							],
+							"labelText": "",
+							"coefficient": false,
+							"multipleNumberInput": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"corresponding-angles-measure\"\n    title=\"Find the measure of an angle using corresponding angles\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"integer\">\n        <qti-correct-response>\n            <qti-value>114</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>The angle measurements in the diagram are represented by the following expressions.</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>∠</mo><mi>A</mi><mo>=</mo><mn>6</mn><mi>x</mi><mo>+</mo><mn>12</mn><mo>°</mo></math> <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>∠</mo><mi>B</mi><mo>=</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>63</mn><mo>°</mo></math></p>\n        <div><img src=\"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMjAgLTE3IDIyMSAzMTQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiPjxsaW5lIHgxPSIxODgiIHkxPSI3Ny41IiB4Mj0iNDAiIHkyPSI3Ny41IiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiLz48bGluZSB4MT0iMTg4IiB5MT0iNzcuNSIgeDI9IjIyMSIgeTI9IjMiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIxODgiIHkxPSI3Ny41IiB4Mj0iOTkiIHkyPSIyNzciIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIxMzIiIHkxPSIyMDIuNSIgeDI9IjQwIiB5Mj0iMjAyLjUiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIxMzIiIHkxPSIyMDIuNSIgeDI9IjIyMSIgeTI9IjMiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIxMzIiIHkxPSIyMDIuNSIgeDI9Ijk5IiB5Mj0iMjc3IiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNIDE2OCA3Ny41IEEgMjAgMjAgMCAwIDEgMTk2LjA5OTk4ODkxMjcyOTM3IDU5LjIxMzY2MTM5Mzk4OTc0IiBmaWxsPSJub25lIiBzdHJva2U9IiMxMWFjY2QiIHN0cm9rZS13aWR0aD0iMi41Ii8+PHRleHQgeD0iMTczLjgxODY2NzY0NDU4MDMiIHk9IjU1LjcwODAzMzMwMDY2MDM5IiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxNCI+QTwvdGV4dD48cGF0aCBkPSJNIDE0MC4xNzY5MjUzMTIzMzg1NCAxODQuMjQ3OTM0NTcwNjcyOSBBIDIwIDIwIDAgMCAwIDExMiAyMDIuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWZhYjU0IiBzdHJva2Utd2lkdGg9IjIuNSIvPjx0ZXh0IHg9IjExNy44NjQ1ODQ4MjMxNjU2NCIgeT0iMTgwLjY3ODIyMTAyMTY4MjkzIiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxNCI+QjwvdGV4dD48Y2lyY2xlIGN4PSIxODgiIGN5PSI3Ny41IiByPSI0IiBmaWxsPSJibGFjayIvPjxjaXJjbGUgY3g9IjEzMiIgY3k9IjIwMi41IiByPSI0IiBmaWxsPSJibGFjayIvPjxjaXJjbGUgY3g9IjQwIiBjeT0iNzcuNSIgcj0iNCIgZmlsbD0iYmxhY2siLz48Y2lyY2xlIGN4PSI0MCIgY3k9IjIwMi41IiByPSI0IiBmaWxsPSJibGFjayIvPjxjaXJjbGUgY3g9IjIyMSIgY3k9IjMiIHI9IjQiIGZpbGw9ImJsYWNrIi8+PGNpcmNsZSBjeD0iOTkiIGN5PSIyNzciIHI9IjQiIGZpbGw9ImJsYWNrIi8+PC9zdmc+\" alt=\"Widget visualization\" /></div>\n        <p>Solve for x and then find the measure of ∠A:</p>\n        <p>∠A = <qti-text-entry-interaction response-identifier=\"RESPONSE\" expected-length=\"3\"/>°</p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! ∠A measures <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>114</mn><mo>°</mo></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Corresponding angles are congruent, so set the expressions equal, solve for x, and substitute to find the measure of ∠A.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "91fd4567-063a-4df8-883a-b4ddcd0558ea",
+		"questionId": "x02c213b52903e62d",
+		"analysisNotes": "The input should be on a new line.",
+		"severity": "patch",
+		"perseusData": {
+			"hints": [
+				{
+					"content": "$= \\dfrac{6 \\times 5}{7 \\times 8}$"
+				},
+				{
+					"content": "$= \\dfrac{30}{56}$"
+				},
+				{
+					"content": "$= \\dfrac{15}{28}$"
+				}
+			],
+			"question": {
+				"content": "**$ \\dfrac{6}{7} \\times \\dfrac{5}{8} $**\n\n[[☃ numeric-input 1]]",
+				"widgets": {
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"options": {
+							"size": "normal",
+							"answers": [
+								{
+									"value": 0.5357142857142857,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": 0,
+									"simplify": true
+								}
+							],
+							"labelText": "",
+							"coefficient": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"calculator": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"multiply-fractions-numeric-input\"\n    title=\"Multiply Fractions\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"string\">\n        <qti-correct-response>\n            <qti-value>15/28</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Compute <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mfrac><mn>6</mn><mn>7</mn></mfrac><mo>×</mo><mfrac><mn>5</mn><mn>8</mn></mfrac></mrow></math>. <qti-text-entry-interaction response-identifier=\"RESPONSE\" expected-length=\"5\"/></p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfrac><mn>15</mn><mn>28</mn></mfrac></math> is the product.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Hint 1: Multiply the numerators and the denominators.</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mfrac><mn>6</mn><mn>7</mn></mfrac><mo>×</mo><mfrac><mn>5</mn><mn>8</mn></mfrac><mo>=</mo><mfrac><mn>30</mn><mn>56</mn></mfrac></mrow></math></p>\n        <p>Hint 2: Simplify the fraction.</p>\n        <p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mfrac><mn>30</mn><mn>56</mn></mfrac><mo>=</mo><mfrac><mn>15</mn><mn>28</mn></mfrac></mrow></math></p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "d6a59208-da1c-4b75-9486-2bd6d6ff3430",
+		"questionId": "x02d283b3a5235279",
+		"analysisNotes": "The diagram has several flaws: the shapes have an interior fill of black, making the interior angles impossible to read if they're even there; the shapes are in the wrong places on the diagram and thus incorrectly portray the problem; the shapes are in the wrong orientation; the point \"R\" is in the wrong position and erroneously contains an arrow which attempts to indicate which way the shapes are rotated, despite the arrow not being in the original diagram and not matching the description of the problem. The mathml text \"C'D'\" should have a horizontal line above it to denote it as a shape's line segment, however, it is missing. Lastly, the input and its text (i.e., \"units\") should be on a new line.",
+		"severity": "major",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "Quadrilateral $A'B'C'D'$ is a rotation of quadrilateral $ABCD$. Rotations preserve segment lengths.  \n\nSegment $\\overline{CD}$ corresponds to segment $\\overline{C'D'}$, so $CD=C'D'$.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "$CD=2.8$ units, so $C'D'$ also equals $2.8$ units.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "In conclusion, $C'D'=2.8$ units.",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "Quadrilateral $ABCD$ is rotated $55^\\circ$ about point $R$ to create quadrilateral $A'B'C'D'$.\n\n\n\n[[☃ image 1]]\n\n**What is the length of segment $\\overline{C'D'}$?**\n\n[[☃ numeric-input 1]] units",
+				"widgets": {
+					"image 1": {
+						"type": "image",
+						"graded": true,
+						"static": false,
+						"options": {
+							"alt": "An irregular quadrilateral A B C D. The length of side CD is two point eight units. The length of side BC is five units. The angle C is one hundred twenty-three degrees. The point R is directly above quadrilateral A B C D. Quadrilateral A prime B prime C prime D prime is the image of quadrilateral A B C D after a fifty-five degree rotation around point R. The length of side A prime D prime is three. The length of side A prime B prime is four. The angle A prime is one hundred sixty-six degrees.",
+							"box": [350, 350],
+							"range": [[0, 10], [0, 10]],
+							"title": "",
+							"labels": [],
+							"static": false,
+							"caption": "",
+							"backgroundImage": {
+								"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/441ced5aaa6727c18b1a6a7a6bcacf1ba375faca",
+								"width": 350,
+								"height": 350
+							}
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "block"
+					},
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"static": false,
+						"options": {
+							"size": "normal",
+							"static": false,
+							"answers": [
+								{
+									"value": 2.8,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": null,
+									"simplify": "required"
+								}
+							],
+							"labelText": "length",
+							"rightAlign": false,
+							"coefficient": false,
+							"multipleNumberInput": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"length-of-rotated-segment\"\n    title=\"Find the length of segment C′D′ after rotation\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"float\">\n        <qti-correct-response>\n            <qti-value>2.8</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Quadrilateral <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>A</mi><mi>B</mi><mi>C</mi><mi>D</mi></math> is rotated <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>55</mn><mo>°</mo></math> about point <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>R</mi></math> to create quadrilateral A′B′C′D′.</p>\n        <div><img src=\"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjM1MCIgdmlld0JveD0iMCAwIDM1MCAzNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPjxkZWZzPjxtYXJrZXIgaWQ9ImFycm93aGVhZCIgdmlld0JveD0iMCAwIDEwIDEwIiByZWZYPSI4IiByZWZZPSI1IiBtYXJrZXJXaWR0aD0iNiIgbWFya2VySGVpZ2h0PSI2IiBvcmllbnQ9ImF1dG8tc3RhcnQtcmV2ZXJzZSI+PHBhdGggZD0iTSAwIDAgTCAxMCA1IEwgMCAxMCB6IiBmaWxsPSIjMWZhYjU0Ii8+PC9tYXJrZXI+PC9kZWZzPjxwb2x5Z29uIHBvaW50cz0iMTIwLjA1NDA4MDk3OTE1MDM0LDExMC43MTY1NzI5NzM3NDIyNiAyMjQuMTI0Mzg2MjUyMDQ1ODQsODQuMDMxNTc0MzQ2MDk3OTUgOTMuMzY5MDgyMzUxNTA2MDIsNTcuMzQ3NDkwNjIyMjM2MTk0IDM5Ljk5OTk5OTk5OTk5OTk3LDExMC43MTY1NzI5NzM3NDIyNiIgZmlsbD0iIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMiIvPjxwb2x5Z29uIHBvaW50cz0iMjI4LjQ0OTEzNjQzMjQ4NTIsMjIyLjcwODExNTE5NjU1MTgzIDMxMCwyOTIuNjUyNTA5Mzc3NzYzOCAyNTYuODYwNTU4NDk3OTMxMjcsMTcwLjIzNzQ2ODM1OTU3NzUyIDE4Mi41MzE5NDUzOTA0MDk3NiwxNTcuMTMxNDcxNjczNTYyMzQiIGZpbGw9IiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjIuNSIvPjxwYXRoIGQ9Ik0gODMuNjY1MDYyMzE5MTYwNzMgNjcuMDUxNTEwNjU0NTgxNDkgQSAxMy43MjM1NTY3MzkyODI5MjEgMTMuNzIzNTU2NzM5MjgyOTIxIDAgMCAwIDEwNi44MTU0OTI0ODgyODI0IDYwLjA5MTU4NjgzMjI2ODc0IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIi8+PHRleHQgeD0iOTguNjM3MjY4NzY5NjI1ODUiIHk9Ijc0Ljg3MDc4MzI0Nzg4MzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTNweCIgZmlsbD0iIzMzMyI+MTIzwrA8L3RleHQ+PHBhdGggZD0iTSAyMzguODY2MDgxNzE3MDE5MDYgMjMxLjY0MjUwMTYwNjExMjY2IEEgMTMuNzIzNTU2NzM5MjgyOTIxIDEzLjcyMzU1NjczOTI4MjkyMSAwIDAgMCAyMjAuNTc3NjM1NjEwNTUyNjIgMjExLjQ2NjQzMDA3NDM1NDUyIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIi8+PHRleHQgeD0iMjQyLjAwNjQ3MzkyODY2MjI3IiB5PSIyMTAuNDE5MTcwMDU4OTU0NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxM3B4IiBmaWxsPSIjMzMzIj4xNjbCsDwvdGV4dD48dGV4dCB4PSIxMjAuNTg3MTc5MTEzNzk1NTQiIHk9IjEyNi43MDc2ODk0NTY5Mjg3MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxM3B4IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMzMzIj5BPC90ZXh0Pjx0ZXh0IHg9IjI0MC4wOTIwMjYwOTI2NzE1NSIgeT0iODMuMDE0NDgxNDY5Mjg1NDEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTNweCIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0iIzMzMyI+QjwvdGV4dD48dGV4dCB4PSI4My41Mjg0NjM4NDgzNjA4NiIgeT0iNDQuNzMxNTM5MzExNDcyNjE2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LXNpemU9IjEzcHgiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMzMzMiPkM8L3RleHQ+PHRleHQgeD0iMjQuNDg1NDIwMjk2MzUwNTYiIHk9IjExNC42Mjc4MTUzMTA3ODkzNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxM3B4IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMzMzIj5EPC90ZXh0Pjx0ZXh0IHg9IjIxNS42NTU3NjI2MDE4ODE0MyIgeT0iMjMyLjMxNjk0Mzc0Mjc1OTg2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LXNpemU9IjEzcHgiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMzMzMiPkHigLI8L3RleHQ+PHRleHQgeD0iMzE5Ljk5MTcyNjk0MzMzOTI0IiB5PSIzMDUuMTQ5MTI0NjI3MDkyMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxM3B4IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMzMzIj5C4oCyPC90ZXh0Pjx0ZXh0IHg9IjI2MS41NTA1NzQwNzEzNTMiIHk9IjE1NC45NDAyODcxMTg1NDI5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LXNpemU9IjEzcHgiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMzMzMiPkPigLI8L3RleHQ+PHRleHQgeD0iMTcwLjQyOTI4MDQ5ODg3NzYiIHk9IjE0Ni42NjYwMjg0MTg1NzkwNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxM3B4IiBmb250LXdlaWdodD0iNjAwIiBmaWxsPSIjMzMzIj5E4oCyPC90ZXh0Pjx0ZXh0IHg9IjE3NC4zNjE2NTM0NTgzODY0OCIgeT0iMTA2LjIzNjQwOTc2Mjk1MzY3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LXNpemU9IjEzcHgiIGZpbGw9IiMzMzMiIHRyYW5zZm9ybT0icm90YXRlKC0xNC4zODE1NTIxMzI5MTMxNCAxNzQuMzYxNjUzNDU4Mzg2NDggMTA2LjIzNjQwOTc2Mjk1MzY3KSI+PC90ZXh0Pjx0ZXh0IHg9IjE2MC41NzYxMzE3NzUxMzA5NiIgeT0iNjEuNzI1MjU5MDU5NjQ5NDgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTNweCIgZmlsbD0iIzMzMyIgdHJhbnNmb3JtPSJyb3RhdGUoMTEuNTM0MzM3ODg5Njc2NjA3IDE2MC41NzYxMzE3NzUxMzA5NiA2MS43MjUyNTkwNTk2NDk0OCkiPjU8L3RleHQ+PHRleHQgeD0iNjAuMjE1MTk0NDg3NTIyNzk0IiB5PSI3Ny41NjI2ODUxMDk3NTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTNweCIgZmlsbD0iIzMzMyIgdHJhbnNmb3JtPSJyb3RhdGUoMzE1IDYwLjIxNTE5NDQ4NzUyMjc5NCA3Ny41NjI2ODUxMDk3NTkpIj4yLjg8L3RleHQ+PHRleHQgeD0iODAuMDI3MDQwNDg5NTc1MTYiIHk9IjExOS44NjU2MTA3OTk5MzA4OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxM3B4IiBmaWxsPSIjMzMzIiB0cmFuc2Zvcm09InJvdGF0ZSgwIDgwLjAyNzA0MDQ4OTU3NTE2IDExOS44NjU2MTA3OTk5MzA4OCkiPjwvdGV4dD48dGV4dCB4PSIyNjMuMjY4MzEwNjA5ODY4NyIgeT0iMjY0LjYyNDk0MjQ3Njg0NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxM3B4IiBmaWxsPSIjMzMzIiB0cmFuc2Zvcm09InJvdGF0ZSg0MC42MTg5NzA0OTA3NTIwMyAyNjMuMjY4MzEwNjA5ODY4NyAyNjQuNjI0OTQyNDc2ODQ3KSI+NDwvdGV4dD48dGV4dCB4PSIyOTEuODIyNzA0NDk4MTEzODYiIHk9IjIyNy44MDE5MDA2NzU2MDAxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxM3B4IiBmaWxsPSIjMzMzIiB0cmFuc2Zvcm09InJvdGF0ZSg2Ni41MzQ3MDA2Mjc1NzQyMSAyOTEuODIyNzA0NDk4MTEzODYgMjI3LjgwMTkwMDY3NTYwMDE0KSI+PC90ZXh0Pjx0ZXh0IHg9IjIyMS4yODQ5NDg4NDk4MzE2IiB5PSIxNTQuNjc0NDIzNjYzMzYxIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmb250LXNpemU9IjEzcHgiIGZpbGw9IiMzMzMiIHRyYW5zZm9ybT0icm90YXRlKDkuOTk5ODkyOTExMDgxNDc0IDIyMS4yODQ5NDg4NDk4MzE2IDE1NC42NzQ0MjM2NjMzNjEpIj48L3RleHQ+PHRleHQgeD0iMTk3Ljk5NjA4NDE2MzMxNTk0IiB5PSIxOTUuMTY3NDYwNjQ5Njc4OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxM3B4IiBmaWxsPSIjMzMzIiB0cmFuc2Zvcm09InJvdGF0ZSg1NS4wMDAwNDA1MDE4ODQyOSAxOTcuOTk2MDg0MTYzMzE1OTQgMTk1LjE2NzQ2MDY0OTY3ODgpIj4zPC90ZXh0PjxjaXJjbGUgY3g9IjY2LjY4NDA4MzcyMzg2MTY5IiBjeT0iMjcwLjgyNDczNDkzMjA0MyIgcj0iNCIgZmlsbD0iIzc4NTRhYiIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDc1LjM2MzcxMjM3NzkwODM0IDI0NC43ODYxNDY1NTM3NzAyIEEgMjcuNDQ3MTEzNDc4NTY1ODQzIDI3LjQ0NzExMzQ3ODU2NTg0MyAwIDAgMCA1MC4zMzI5NTEyOTU2Mzg0NSAyNDguNzc5Njc4NjQ2Nzg5OSIgc3Ryb2tlPSIjZmY2NjAwIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3doZWFkKSIvPjxjaXJjbGUgY3g9IjY2LjY4NDA4MzcyMzg2MTY5IiBjeT0iMjcwLjgyNDczNDkzMjA0MyIgcj0iNCIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjY2LjY4NDA4MzcyMzg2MTY5IiB5PSIyNTguODI0NzM0OTMyMDQzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iYm90dG9tIiBmb250LXNpemU9IjEzcHgiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IiMzMzMiPlI8L3RleHQ+PC9zdmc+\" alt=\"Widget visualization\" /></div>\n        <p>What is the length of segment <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mover><mrow><mi>C</mi><mo>′</mo><mi>D</mi><mo>′</mo></mrow><mo>‾</mo></mover></math>? <qti-text-entry-interaction response-identifier=\"RESPONSE\" expected-length=\"4\"/> units</p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! Because rotations preserve lengths, segment <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mover><mrow><mi>C</mi><mo>′</mo><mi>D</mi><mo>′</mo></mrow><mo>‾</mo></mover></math> has the same length as segment <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mover><mrow><mi>C</mi><mi>D</mi></mrow><mo>‾</mo></mover></math>, which is 2.8 units.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Remember that a rotation does not change the lengths of corresponding sides, so use the given length of <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mover><mrow><mi>C</mi><mi>D</mi></mrow><mo>‾</mo></mover></math> to find the length of <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mover><mrow><mi>C</mi><mo>′</mo><mi>D</mi><mo>′</mo></mrow><mo>‾</mo></mover></math>.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "b993ad35-9153-421c-b4a6-8ad0afea3990",
+		"questionId": "x0313c307de8d9b3e",
+		"analysisNotes": "The diagram erroneously includes labels on the points of the lines. The arc angle for angles 'a' and 'b' are too small and thus make the diagram harder to read.",
+		"severity": "minor",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "###Definitions\n\n**Vertical angles** are angles opposite each other where two lines cross. [[☃ explanation 1]]\n\n**Complementary angles** are when two angles add up to $90 ^\\circ$. A common case is when they form a right angle. [[☃ explanation 2]]\n\n**Supplementary angles** are when two angles add up to $180 ^\\circ$. A common case is when they lie on the same side of a straight line. [[☃ explanation 3]]",
+					"replace": false,
+					"widgets": {
+						"explanation 1": {
+							"type": "explanation",
+							"graded": true,
+							"static": false,
+							"options": {
+								"static": false,
+								"widgets": {
+									"image 1": {
+										"type": "image",
+										"graded": true,
+										"static": false,
+										"options": {
+											"alt": "Two parallel lines intersected by a Transversal at two points. The transversal and the lower parallel line make an angle labeled A degrees. The angle opposite to angle A is labeled B degrees.\n",
+											"box": [300, 150],
+											"range": [[0, 10], [0, 10]],
+											"title": "",
+											"labels": [],
+											"static": false,
+											"caption": "",
+											"backgroundImage": {
+												"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/f35ddac8b7e46eb96d45e1c50ceb8b3736338961",
+												"width": 300,
+												"height": 150
+											}
+										},
+										"version": {
+											"major": 0,
+											"minor": 0
+										},
+										"alignment": "block"
+									}
+								},
+								"hidePrompt": "Hide explanation",
+								"showPrompt": "Show me",
+								"explanation": "For example, $\\angle AXD$ and $\\angle BXC$ are vertical angles in the following diagram:\n\n[[☃ image 1]]\n\n"
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"explanation 2": {
+							"type": "explanation",
+							"graded": true,
+							"static": false,
+							"options": {
+								"static": false,
+								"widgets": {
+									"image 1": {
+										"type": "image",
+										"graded": true,
+										"static": false,
+										"options": {
+											"alt": "A straight horizontal line with filled points A and D marked near its left and right arrowheads, respectively. Ray B X is perpendicular to line A D and meets the line at filled point X. Ray C X bisects angle B X D. Angle B X D is marked by double arcs.\n\n",
+											"box": [300, 150],
+											"range": [[0, 10], [0, 10]],
+											"title": "",
+											"labels": [],
+											"static": false,
+											"caption": "",
+											"backgroundImage": {
+												"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/45e32e3a43940b373e085dd8742bcfeea908a371",
+												"width": 300,
+												"height": 150
+											}
+										},
+										"version": {
+											"major": 0,
+											"minor": 0
+										},
+										"alignment": "block"
+									}
+								},
+								"hidePrompt": "Hide explanation",
+								"showPrompt": "Show me",
+								"explanation": "For example, $\\angle BXC$ and $\\angle CXD$ are complementary angles in the following diagram:\n\n[[☃ image 1]]\n\n*Note that $\\angle BXD$ must be a right angle because $\\angle AXB$ is a right angle.*"
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						},
+						"explanation 3": {
+							"type": "explanation",
+							"graded": true,
+							"static": false,
+							"options": {
+								"static": false,
+								"widgets": {
+									"image 1": {
+										"type": "image",
+										"graded": true,
+										"static": false,
+										"options": {
+											"alt": "A horizontal straight line with filled points A and C marked near its left and right arrowheads, respectively. A slanting straight line with filled points B and D marked near its upper and lower arrowheads, respectively intersects the horizontal line. Lines A C and B D intersect each other at filled point X. Angle A X C is marked labeled with double arcs.\n",
+											"box": [300, 150],
+											"range": [[0, 10], [0, 10]],
+											"title": "",
+											"labels": [],
+											"static": false,
+											"caption": "",
+											"backgroundImage": {
+												"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/6bc829246f353b8491bfd407a196a7634c3aebb0",
+												"width": 300,
+												"height": 150
+											}
+										},
+										"version": {
+											"major": 0,
+											"minor": 0
+										},
+										"alignment": "block"
+									}
+								},
+								"hidePrompt": "Hide explanation",
+								"showPrompt": "Show me",
+								"explanation": "For example, $\\angle AXD$ and $\\angle DXC$ are supplementary angles in the following diagram:\n\n[[☃ image 1]]\n\n"
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "default"
+						}
+					}
+				},
+				{
+					"images": {},
+					"content": "###What is the relationship?\n\n$\\blueD{\\angle a}$ and $\\greenD{\\angle b}$ are opposite each other where two lines cross.\n\n[[☃ image 1]]\n\n",
+					"replace": false,
+					"widgets": {
+						"image 1": {
+							"type": "image",
+							"graded": true,
+							"static": false,
+							"options": {
+								"alt": "Two parallel lines intersected by a Transversal at two points. The transversal and the lower parallel line make an angle labeled A degrees. The angle opposite to angle A is labeled B degrees.\n",
+								"box": [400, 200],
+								"range": [[0, 10], [0, 10]],
+								"title": "",
+								"labels": [],
+								"static": false,
+								"caption": "",
+								"backgroundImage": {
+									"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/8cd8951935874d63b111574ac53ab6a7783ac588",
+									"width": 400,
+									"height": 200
+								}
+							},
+							"version": {
+								"major": 0,
+								"minor": 0
+							},
+							"alignment": "block"
+						}
+					}
+				},
+				{
+					"images": {},
+					"content": "###The answer\n\nVertical angles",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**What is the relationship between $\\blueD{\\angle a}$ and $\\greenD{\\angle b}$?**  \n\n[[☃ image 1]]\n\n[[☃ radio 1]]\n\n",
+				"widgets": {
+					"image 1": {
+						"type": "image",
+						"graded": true,
+						"static": false,
+						"options": {
+							"alt": "Two parallel lines intersected by a Transversal at two points. The transversal and the lower parallel line make an angle labeled A degrees. The angle opposite to angle A is labeled B degrees.\n",
+							"box": [400, 200],
+							"range": [[0, 10], [0, 10]],
+							"title": "",
+							"labels": [],
+							"static": false,
+							"caption": "",
+							"backgroundImage": {
+								"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/39478408912c976dfa438a629b0976c4789f4207",
+								"width": 400,
+								"height": 200
+							}
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "block"
+					},
+					"radio 1": {
+						"type": "radio",
+						"graded": true,
+						"static": false,
+						"options": {
+							"choices": [
+								{
+									"content": "Vertical angles",
+									"correct": true
+								},
+								{
+									"content": "Complementary angles",
+									"correct": false
+								},
+								{
+									"content": "Supplementary angles",
+									"correct": false,
+									"isNoneOfTheAbove": false
+								},
+								{
+									"isNoneOfTheAbove": true
+								}
+							],
+							"randomize": false,
+							"countChoices": false,
+							"displayCount": null,
+							"multipleSelect": false,
+							"deselectEnabled": false,
+							"hasNoneOfTheAbove": true
+						},
+						"version": {
+							"major": 1,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false,
+				"periodicTableWithKey": false,
+				"financialCalculatorTotalAmount": false,
+				"financialCalculatorTimeToPayOff": false,
+				"financialCalculatorMonthlyPayment": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"vertical-angles-relationship\"\n    title=\"Identify the relationship between two angles\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"identifier\">\n        <qti-correct-response>\n            <qti-value>A</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>What is the relationship between <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>∠</mo><mi>a</mi></math> and <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mo>∠</mo><mi>b</mi></math>?</p>\n        <div><img src=\"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMzAgNDUgMzQwIDExMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiI+PGxpbmUgeDE9IjIwMCIgeTE9IjEwMCIgeDI9IjUwIiB5Mj0iMTAwIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiLz48bGluZSB4MT0iMjAwIiB5MT0iMTAwIiB4Mj0iMzUwIiB5Mj0iMTAwIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjIiLz48bGluZSB4MT0iMjAwIiB5MT0iMTAwIiB4Mj0iMzUwIiB5Mj0iNjUiIHN0cm9rZT0iYmxhY2siIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIyMDAiIHkxPSIxMDAiIHgyPSI1MCIgeTI9IjEzNSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTSAyMzAgMTAwIEEgMzAgMzAgMCAwIDAgMjI5LjIxNTIzNjI5MjI1MzggOTMuMTgzMTExNTMxODA3NDQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzExYWNjZCIgc3Ryb2tlLXdpZHRoPSIyLjUiLz48dGV4dCB4PSIyMzguNzQ0MTEyMzI3MDE4NTciIHk9Ijk1LjUzOTc1Nzg1NTA3NDg3IiBmaWxsPSJibGFjayIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1zaXplPSIxNCI+YTwvdGV4dD48cGF0aCBkPSJNIDE3MCAxMDAgQSAzMCAzMCAwIDAgMCAxNzAuNzg0NzYzNzA3NzQ2MiAxMDYuODE2ODg4NDY4MTkyNTYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFmYWI1NCIgc3Ryb2tlLXdpZHRoPSIyLjUiLz48dGV4dCB4PSIxNjEuMjU1ODg3NjcyOTgxNDMiIHk9IjEwNC40NjAyNDIxNDQ5MjUxNSIgZmlsbD0iYmxhY2siIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTQiPmI8L3RleHQ+PGNpcmNsZSBjeD0iMjAwIiBjeT0iMTAwIiByPSI0IiBmaWxsPSJibGFjayIvPjx0ZXh0IHg9IjIwNSIgeT0iOTUiIGZpbGw9ImJsYWNrIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCI+VjwvdGV4dD48Y2lyY2xlIGN4PSI1MCIgY3k9IjEwMCIgcj0iNCIgZmlsbD0iYmxhY2siLz48dGV4dCB4PSI1NSIgeT0iOTUiIGZpbGw9ImJsYWNrIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCI+QTwvdGV4dD48Y2lyY2xlIGN4PSIzNTAiIGN5PSIxMDAiIHI9IjQiIGZpbGw9ImJsYWNrIi8+PHRleHQgeD0iMzU1IiB5PSI5NSIgZmlsbD0iYmxhY2siIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIj5CPC90ZXh0PjxjaXJjbGUgY3g9IjM1MCIgY3k9IjY1IiByPSI0IiBmaWxsPSJibGFjayIvPjx0ZXh0IHg9IjM1NSIgeT0iNjAiIGZpbGw9ImJsYWNrIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCI+QzwvdGV4dD48Y2lyY2xlIGN4PSI1MCIgY3k9IjEzNSIgcj0iNCIgZmlsbD0iYmxhY2siLz48dGV4dCB4PSI1NSIgeT0iMTMwIiBmaWxsPSJibGFjayIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiPkQ8L3RleHQ+PC9zdmc+\" alt=\"Widget visualization\" /></div>\n        <div><div><qti-choice-interaction response-identifier=\"RESPONSE\" shuffle=\"true\" min-choices=\"1\" max-choices=\"1\">\n            <qti-prompt>Select the correct relationship.</qti-prompt>\n            <qti-simple-choice identifier=\"A\"><p>Vertical angles</p><qti-feedback-inline outcome-identifier=\"FEEDBACK-INLINE\" identifier=\"A\">Correct! The opposite angles where lines cross are called vertical angles.</qti-feedback-inline></qti-simple-choice>\n            <qti-simple-choice identifier=\"B\"><p>Complementary angles</p><qti-feedback-inline outcome-identifier=\"FEEDBACK-INLINE\" identifier=\"B\">Complementary angles sum to 90°; that is not the case here.</qti-feedback-inline></qti-simple-choice>\n            <qti-simple-choice identifier=\"C\"><p>Supplementary angles</p><qti-feedback-inline outcome-identifier=\"FEEDBACK-INLINE\" identifier=\"C\">Supplementary angles sum to 180°; that is not the relationship shown.</qti-feedback-inline></qti-simple-choice>\n            <qti-simple-choice identifier=\"D\"><p>None of the above</p><qti-feedback-inline outcome-identifier=\"FEEDBACK-INLINE\" identifier=\"D\">A listed option describes the correct relationship.</qti-feedback-inline></qti-simple-choice>\n        </qti-choice-interaction></div></div>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The angles are vertical angles because they are opposite each other where two lines intersect.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. When two lines cross, the opposite angles are called vertical angles, and they are always equal.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "c80a8a2c-f4f5-4acb-8d37-8e4bcd142991",
+		"questionId": "x0341ee874c188425",
+		"analysisNotes": "The question contains HTML tags directly in the text (e.g., \"<span class=\"currency\">$</span>). The values and their associated symbols (e.g., \"$1.54\", \"5.5%\") in the question should be written with mathml.",
+		"severity": "major",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "To find the original price, first we need to answer, $\\$\\greenD{1.54}$ is $\\blueD{5.5}\\%$ of what number?\n\n",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "Percent means per hundred, so $\\blueD{5.5}\\%$ is equivalent to $\\blueD{\\dfrac{5.5}{100}}$ which is also equal to $\\blueD{5.5\\div 100}$.\n\n $\\blueD{5.5 \\div 100 = 0.055}$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "To find the original price, we need to know $\\blueD{0.055}$ times what number equals $\\greenD{1.54}$.\n\n $\\blueD{0.055} \\maroonD{x} = \\greenD{\\$1.54}$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "\n\n$\\begin{align}  \\blueD{0.055} \\maroonD{x} &= \\greenD{\\$1.54} \\\\\\\\\n\\dfrac{\\blueD{0.055} \\maroonD{x}}{\\blueD{0.055}} &= \\dfrac{\\greenD{\\$1.54}}{\\blueD{0.055}} \\\\\\\\\n\\maroonD{x} &= \\maroonD{28} \\end{align}$",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "The original price of the board game is $\\$\\maroonD{28}$.",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "Neal buys a board game.  He pays for the board game and pays $\\$1.54$ in sales tax.  The sales tax rate is $5.5\\%$. \n\n**What is the original price of the board game, before tax?**\n\n$\\$\\ $[[☃ numeric-input 1]]",
+				"widgets": {
+					"numeric-input 1": {
+						"type": "numeric-input",
+						"graded": true,
+						"static": false,
+						"options": {
+							"size": "normal",
+							"static": false,
+							"answers": [
+								{
+									"value": 28,
+									"status": "correct",
+									"strict": false,
+									"message": "",
+									"maxError": null,
+									"simplify": "required"
+								}
+							],
+							"labelText": "",
+							"coefficient": false,
+							"multipleNumberInput": false
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": true,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"board-game-original-price\"\n    title=\"Find the original price of a board game before tax\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"integer\">\n        <qti-correct-response>\n            <qti-value>28</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Neal buys a board game. He pays for the board game and pays &lt;span class=&quot;currency&quot;&gt;$&lt;/span&gt;1.54 in sales tax. The sales tax rate is 5.5%.</p>\n        <p>What is the original price of the board game, before tax?</p>\n        <p>&lt;span class=&quot;currency&quot;&gt;$&lt;/span&gt;<qti-text-entry-interaction response-identifier=\"RESPONSE\"/></p>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! The original price is &lt;span class=&quot;currency&quot;&gt;$&lt;/span&gt;<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>28</mn></math>.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. Remember that the sales tax is 5.5% of the original price. Set up the equation 0.055 × original price = 1.54, then solve for the original price.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	},
+	{
+		"analysisId": "03454205-8665-444b-a595-087cdb862a47",
+		"questionId": "x03f872387a8cca62",
+		"analysisNotes": "Given sufficient context, the student should be able to solve this problem. However, the values representing the areas of the squares (e.g., \"27\") should be presented in an equation with their associated edges (e.g., \"c<sup>2</sup> = 27\", maintaining proper formatting.",
+		"severity": "minor",
+		"perseusData": {
+			"hints": [
+				{
+					"images": {},
+					"content": "We can use the Pythagorean theorem $(a^2+b^2=c^2)$ to see if the triangle is a right triangle.\n\n\n$\\text{Area of a square} =\\text{side}^2$\n\n\nSo, we can substitute the areas of the squares that share side lengths with the triangle for $a^2, b^2$ and $c^2$ in the Pythagorean theorem.\n",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "For example, in the diagram above, the area of the square that shares a side with side length $a$ is $18$ square units.  So, $a^2=18$.",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "Let's fill in the rest of the values:\n\n$\\begin{align} a^2 + b^2 &=  c^2 \\\\\\\\\n18 +7 &\\stackrel{\\large?}{=} 27 \\\\\\\\\n25 &\\neq 27\\\\\\\\\n\\end{align}$\n\n",
+					"replace": false,
+					"widgets": {}
+				},
+				{
+					"images": {},
+					"content": "The sum of the areas of the squares connected to the two shorter triangle sides is not equal to the area of the square connected to the longest side.  \n\nSo, the triangle is **not** a right triangle.  ",
+					"replace": false,
+					"widgets": {}
+				}
+			],
+			"question": {
+				"images": {},
+				"content": "**Based on the areas of the squares, determine whether the triangle shown is a right triangle.**\n\n\n[[☃ image 1]]\n\n[[☃ radio 1]]",
+				"widgets": {
+					"image 1": {
+						"type": "image",
+						"graded": true,
+						"static": false,
+						"options": {
+							"alt": "A triangle with a square connected to all 3 sides of the triangle on a coordinate grid.  The square connected to the top, right side of the triangle is labeled c squared equals 27. The square connected to the bottom, right side of the triangle is labeled b squared equals 7.  The square connected to the bottom, left side of the triangle is labeled a squared equals 18. ",
+							"box": [300, 300],
+							"range": [[0, 10], [0, 10]],
+							"title": "",
+							"labels": [],
+							"static": false,
+							"caption": "",
+							"backgroundImage": {
+								"url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/736885597b7beb9c16cfa7c970a9629927efb72f",
+								"width": 300,
+								"height": 300
+							}
+						},
+						"version": {
+							"major": 0,
+							"minor": 0
+						},
+						"alignment": "block"
+					},
+					"radio 1": {
+						"type": "radio",
+						"graded": true,
+						"static": false,
+						"options": {
+							"choices": [
+								{
+									"content": "Yes, it is a right triangle.",
+									"correct": false
+								},
+								{
+									"content": "No, it is not a right triangle.",
+									"correct": true
+								}
+							],
+							"randomize": false,
+							"countChoices": false,
+							"displayCount": null,
+							"multipleSelect": false,
+							"deselectEnabled": false,
+							"hasNoneOfTheAbove": false
+						},
+						"version": {
+							"major": 1,
+							"minor": 0
+						},
+						"alignment": "default"
+					}
+				}
+			},
+			"answerArea": {
+				"tTable": false,
+				"zTable": false,
+				"chi2Table": false,
+				"calculator": false,
+				"periodicTable": false
+			},
+			"itemDataVersion": {
+				"major": 0,
+				"minor": 1
+			}
+		},
+		"xmlData": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<qti-assessment-item\n    xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd\"\n    identifier=\"triangle-right-determination\"\n    title=\"Determine if a triangle is right based on square areas\"\n    time-dependent=\"false\"\n    xml:lang=\"en-US\">\n\n    <qti-response-declaration identifier=\"RESPONSE\" cardinality=\"single\" base-type=\"identifier\">\n        <qti-correct-response>\n            <qti-value>B</qti-value>\n        </qti-correct-response>\n    </qti-response-declaration>\n    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">\n        <qti-default-value><qti-value>0</qti-value></qti-default-value>\n    </qti-outcome-declaration>\n    <qti-outcome-declaration identifier=\"FEEDBACK\" cardinality=\"single\" base-type=\"identifier\"/>\n    <qti-outcome-declaration identifier=\"FEEDBACK-INLINE\" cardinality=\"multiple\" base-type=\"identifier\"/>\n    <qti-item-body>\n        <p>Based on the areas of the squares, determine whether the triangle shown is a right triangle.</p>\n        <div><img src=\"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPjxzdHlsZT4uYXJlYS1sYWJlbCB7IGZvbnQtc2l6ZTogMTZweDsgZm9udC13ZWlnaHQ6IGJvbGQ7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGRvbWluYW50LWJhc2VsaW5lOiBtaWRkbGU7IH0gLnNpZGUtbGFiZWwgeyBmb250LXNpemU6IDE0cHg7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGRvbWluYW50LWJhc2VsaW5lOiBtaWRkbGU7IH0gLmdyaWQtbGluZSB7IHN0cm9rZTogIzg4ODg4ODsgc3Ryb2tlLXdpZHRoOiAwLjU7IG9wYWNpdHk6IDAuNTsgfTwvc3R5bGU+PHBvbHlnb24gcG9pbnRzPSIxMzEuMDk1NDkzOTg1MzE3MDMsMTkwLjIwODQyNjA5OTg3MzI0IDIyNS44ODcwNjc4ODU0NDM3NywxMzEuMDk1NDkzOTg1MzE3MDMgMTY2Ljc3NDEzNTc3MDg4NzU3LDM2LjMwMzkyMDA4NTE5MDMgNzEuOTgyNTYxODcwNzYwODMsOTUuNDE2ODUyMTk5NzQ2NSIgZmlsbD0iI0ZGRTA4MiIgc3Ryb2tlPSIjMzMzMzMzIiBzdHJva2Utd2lkdGg9IjEiLz48bGluZSB4MT0iMTE5LjcxOTIwNDg5NTY3NDY2IiB5MT0iMTcxLjk2NTc3OTE5NzE1Nzc2IiB4Mj0iMjE0LjUxMDc3ODc5NTgwMTQiIHkyPSIxMTIuODUyODQ3MDgyNjAxNTQiIGNsYXNzPSJncmlkLWxpbmUiLz48bGluZSB4MT0iMTQ5LjMzODE0MDg4ODAzMjUiIHkxPSIxNzguODMyMTM3MDEwMjMwODciIHgyPSI5MC4yMjUyMDg3NzM0NzYzMyIgeTI9Ijg0LjA0MDU2MzExMDEwNDEzIiBjbGFzcz0iZ3JpZC1saW5lIi8+PGxpbmUgeDE9IjEwOC4zNDI5MTU4MDYwMzIzMSIgeTE9IjE1My43MjMxMzIyOTQ0NDIyNSIgeDI9IjIwMy4xMzQ0ODk3MDYxNTkwMyIgeTI9Ijk0LjYxMDIwMDE3OTg4NjA1IiBjbGFzcz0iZ3JpZC1saW5lIi8+PGxpbmUgeDE9IjE2Ny41ODA3ODc3OTA3NDgwMiIgeTE9IjE2Ny40NTU4NDc5MjA1ODg1IiB4Mj0iMTA4LjQ2Nzg1NTY3NjE5MTgyIiB5Mj0iNzIuNjY0Mjc0MDIwNDYxNzgiIGNsYXNzPSJncmlkLWxpbmUiLz48bGluZSB4MT0iOTYuOTY2NjI2NzE2Mzg5OTQiIHkxPSIxMzUuNDgwNDg1MzkxNzI2NzUiIHgyPSIxOTEuNzU4MjAwNjE2NTE2NjYiIHkyPSI3Ni4zNjc1NTMyNzcxNzA1NiIgY2xhc3M9ImdyaWQtbGluZSIvPjxsaW5lIHgxPSIxODUuODIzNDM0NjkzNDYzNTMiIHkxPSIxNTYuMDc5NTU4ODMwOTQ2MTYiIHgyPSIxMjYuNzEwNTAyNTc4OTA3MzEiIHkyPSI2MS4yODc5ODQ5MzA4MTk0MDUiIGNsYXNzPSJncmlkLWxpbmUiLz48bGluZSB4MT0iODUuNTkwMzM3NjI2NzQ3NTgiIHkxPSIxMTcuMjM3ODM4NDg5MDExMjciIHgyPSIxODAuMzgxOTExNTI2ODc0MzIiIHkyPSI1OC4xMjQ5MDYzNzQ0NTUwNjUiIGNsYXNzPSJncmlkLWxpbmUiLz48bGluZSB4MT0iMjA0LjA2NjA4MTU5NjE3OSIgeTE9IjE0NC43MDMyNjk3NDEzMDM3OSIgeDI9IjE0NC45NTMxNDk0ODE2MjI4IiB5Mj0iNDkuOTExNjk1ODQxMTc3MDQiIGNsYXNzPSJncmlkLWxpbmUiLz48bGluZSB4MT0iNzQuMjE0MDQ4NTM3MTA1MjEiIHkxPSI5OC45OTUxOTE1ODYyOTU3NyIgeDI9IjE2OS4wMDU2MjI0MzcyMzE5NSIgeTI9IjM5Ljg4MjI1OTQ3MTczOTU3IiBjbGFzcz0iZ3JpZC1saW5lIi8+PGxpbmUgeDE9IjIyMi4zMDg3Mjg0OTg4OTQ0OCIgeTE9IjEzMy4zMjY5ODA2NTE2NjE0MiIgeDI9IjE2My4xOTU3OTYzODQzMzgyOCIgeTI9IjM4LjUzNTQwNjc1MTUzNDY4IiBjbGFzcz0iZ3JpZC1saW5lIi8+PHRleHQgeD0iMTQ4LjkzNDgxNDg3ODEwMjMyIiB5PSIxMTMuMjU2MTczMDkyNTMxNzciIGNsYXNzPSJhcmVhLWxhYmVsIj4yNzwvdGV4dD48dGV4dCB4PSIxNzguNDkxMjgwOTM1MzgwNDIiIHk9IjE1MC42NTE5NjAwNDI1OTUxNCIgY2xhc3M9InNpZGUtbGFiZWwiPmM8L3RleHQ+PHJlY3QgeD0iMjI1Ljg4NzA2Nzg4NTQ0Mzc3IiB5PSIxMzEuMDk1NDkzOTg1MzE3MDMiIHdpZHRoPSI1OS4xMTI5MzIxMTQ1NTYyIiBoZWlnaHQ9IjU5LjExMjkzMjExNDU1NjIiIGZpbGw9IiM5MENBRjkiIHN0cm9rZT0iIzMzMzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjI0OC4yMjk2NTYxMjAxNTIyNCIgeTE9IjEzMS4wOTU0OTM5ODUzMTcwMyIgeDI9IjI0OC4yMjk2NTYxMjAxNTIyNCIgeTI9IjE5MC4yMDg0MjYwOTk4NzMyNCIgY2xhc3M9ImdyaWQtbGluZSIvPjxsaW5lIHgxPSIyNzAuNTcyMjQ0MzU0ODYwNyIgeTE9IjEzMS4wOTU0OTM5ODUzMTcwMyIgeDI9IjI3MC41NzIyNDQzNTQ4NjA3IiB5Mj0iMTkwLjIwODQyNjA5OTg3MzI0IiBjbGFzcz0iZ3JpZC1saW5lIi8+PGxpbmUgeDE9IjIyNS44ODcwNjc4ODU0NDM3NyIgeTE9IjE1My40MzgwODIyMjAwMjU0OCIgeDI9IjI4NSIgeTI9IjE1My40MzgwODIyMjAwMjU0OCIgY2xhc3M9ImdyaWQtbGluZSIvPjxsaW5lIHgxPSIyMjUuODg3MDY3ODg1NDQzNzciIHkxPSIxNzUuNzgwNjcwNDU0NzMzOTUiIHgyPSIyODUiIHkyPSIxNzUuNzgwNjcwNDU0NzMzOTUiIGNsYXNzPSJncmlkLWxpbmUiLz48dGV4dCB4PSIyNTUuNDQzNTMzOTQyNzIxODciIHk9IjE2MC42NTE5NjAwNDI1OTUxNCIgY2xhc3M9ImFyZWEtbGFiZWwiPjc8L3RleHQ+PHRleHQgeD0iMjM1Ljg4NzA2Nzg4NTQ0Mzc3IiB5PSIxNjAuNjUxOTYwMDQyNTk1MTQiIGNsYXNzPSJzaWRlLWxhYmVsIj5iPC90ZXh0PjxyZWN0IHg9IjEzMS4wOTU0OTM5ODUzMTcwMyIgeT0iMTkwLjIwODQyNjA5OTg3MzI0IiB3aWR0aD0iOTQuNzkxNTczOTAwMTI2NzQiIGhlaWdodD0iOTQuNzkxNTczOTAwMTI2NzQiIGZpbGw9IiNGNDhGQjEiIHN0cm9rZT0iIzMzMzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+PGxpbmUgeDE9IjE1My40MzgwODIyMjAwMjU0OCIgeTE9IjE5MC4yMDg0MjYwOTk4NzMyNCIgeDI9IjE1My40MzgwODIyMjAwMjU0OCIgeTI9IjI4NSIgY2xhc3M9ImdyaWQtbGluZSIvPjxsaW5lIHgxPSIxNzUuNzgwNjcwNDU0NzMzOTUiIHkxPSIxOTAuMjA4NDI2MDk5ODczMjQiIHgyPSIxNzUuNzgwNjcwNDU0NzMzOTUiIHkyPSIyODUiIGNsYXNzPSJncmlkLWxpbmUiLz48bGluZSB4MT0iMTk4LjEyMzI1ODY4OTQ0MjQyIiB5MT0iMTkwLjIwODQyNjA5OTg3MzI0IiB4Mj0iMTk4LjEyMzI1ODY4OTQ0MjQyIiB5Mj0iMjg1IiBjbGFzcz0iZ3JpZC1saW5lIi8+PGxpbmUgeDE9IjIyMC40NjU4NDY5MjQxNTA4NyIgeTE9IjE5MC4yMDg0MjYwOTk4NzMyNCIgeDI9IjIyMC40NjU4NDY5MjQxNTA4NyIgeTI9IjI4NSIgY2xhc3M9ImdyaWQtbGluZSIvPjxsaW5lIHgxPSIxMzEuMDk1NDkzOTg1MzE3MDMiIHkxPSIyMTIuNTUxMDE0MzM0NTgxNjgiIHgyPSIyMjUuODg3MDY3ODg1NDQzNzciIHkyPSIyMTIuNTUxMDE0MzM0NTgxNjgiIGNsYXNzPSJncmlkLWxpbmUiLz48bGluZSB4MT0iMTMxLjA5NTQ5Mzk4NTMxNzAzIiB5MT0iMjM0Ljg5MzYwMjU2OTI5MDE1IiB4Mj0iMjI1Ljg4NzA2Nzg4NTQ0Mzc3IiB5Mj0iMjM0Ljg5MzYwMjU2OTI5MDE1IiBjbGFzcz0iZ3JpZC1saW5lIi8+PGxpbmUgeDE9IjEzMS4wOTU0OTM5ODUzMTcwMyIgeTE9IjI1Ny4yMzYxOTA4MDM5OTg2IiB4Mj0iMjI1Ljg4NzA2Nzg4NTQ0Mzc3IiB5Mj0iMjU3LjIzNjE5MDgwMzk5ODYiIGNsYXNzPSJncmlkLWxpbmUiLz48bGluZSB4MT0iMTMxLjA5NTQ5Mzk4NTMxNzAzIiB5MT0iMjc5LjU3ODc3OTAzODcwNzA3IiB4Mj0iMjI1Ljg4NzA2Nzg4NTQ0Mzc3IiB5Mj0iMjc5LjU3ODc3OTAzODcwNzA3IiBjbGFzcz0iZ3JpZC1saW5lIi8+PHRleHQgeD0iMTc4LjQ5MTI4MDkzNTM4MDQyIiB5PSIyMzcuNjA0MjEzMDQ5OTM2NjIiIGNsYXNzPSJhcmVhLWxhYmVsIj4xODwvdGV4dD48dGV4dCB4PSIxNzguNDkxMjgwOTM1MzgwNDIiIHk9IjIwMC4yMDg0MjYwOTk4NzMyNCIgY2xhc3M9InNpZGUtbGFiZWwiPmE8L3RleHQ+PHBvbHlnb24gcG9pbnRzPSIxMzEuMDk1NDkzOTg1MzE3MDMsMTkwLjIwODQyNjA5OTg3MzI0IDIyNS44ODcwNjc4ODU0NDM3NywxOTAuMjA4NDI2MDk5ODczMjQgMjI1Ljg4NzA2Nzg4NTQ0Mzc3LDEzMS4wOTU0OTM5ODUzMTcwMyIgZmlsbD0iI0ZBRkFGQSIgc3Ryb2tlPSIjMzMzMzMzIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=\" alt=\"Widget visualization\" /></div>\n        <div><div><qti-choice-interaction response-identifier=\"RESPONSE\" shuffle=\"true\" min-choices=\"1\" max-choices=\"1\">\n            <qti-prompt></qti-prompt>\n            <qti-simple-choice identifier=\"A\"><p>Yes, it is a right triangle.</p></qti-simple-choice>\n            <qti-simple-choice identifier=\"B\"><p>No, it is not a right triangle.</p></qti-simple-choice>\n        </qti-choice-interaction></div></div>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"CORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Correct! Since <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>18</mn><mo>+</mo><mn>7</mn><mo>≠</mo><mn>27</mn></mrow></math>, the triangle is not a right triangle.</p></qti-content-body>\n        </qti-feedback-block>\n        <qti-feedback-block outcome-identifier=\"FEEDBACK\" identifier=\"INCORRECT\" show-hide=\"show\">\n            <qti-content-body><p>Not quite. According to the Pythagorean theorem <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow></math>. Here, <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mrow><mn>18</mn><mo>+</mo><mn>7</mn><mo>=</mo><mn>25</mn></mrow></math>, which is not equal to <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>27</mn></math>. Therefore, the triangle is not a right triangle.</p></qti-content-body>\n        </qti-feedback-block>\n    </qti-item-body>\n\n    <qti-response-processing>\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-and>\n                    <qti-match><qti-variable identifier=\"RESPONSE\"/><qti-correct identifier=\"RESPONSE\"/></qti-match>\n                </qti-and>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">1</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier=\"SCORE\"><qti-base-value base-type=\"float\">0</qti-base-value></qti-set-outcome-value>\n                <qti-set-outcome-value identifier=\"FEEDBACK\"><qti-base-value base-type=\"identifier\">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>\n</qti-assessment-item>"
+	}
+]
