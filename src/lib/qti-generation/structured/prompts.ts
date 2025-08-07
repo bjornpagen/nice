@@ -696,6 +696,102 @@ Hints and answer-revealing content must NEVER appear in the 'body' field.
 
 **Explanation:** The wrong example contains multiple hint paragraphs that give away the answer (7) and provide step-by-step guidance. The correct version strips all hints and only presents the core question.
 
+**7. Redundant Body and Interaction Prompt - BANNED:**
+Never duplicate the same instructional text in both the body and interaction prompt. When an interaction has a clear prompt, the body can be empty.
+
+**WRONG (Duplicate text in body and prompt):**
+\`\`\`json
+{
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Order the following numbers from least to greatest. Put the lowest number on the left." }
+      ]
+    },
+    { "type": "blockSlot", "slotId": "order_interaction" }
+  ],
+  "interactions": {
+    "order_interaction": {
+      "type": "orderInteraction",
+      "prompt": [
+        { "type": "text", "content": "Order the following numbers from least to greatest. Put the lowest number on the left." }
+      ],
+      "choices": [...]
+    }
+  }
+}
+\`\`\`
+
+**CORRECT (Empty body, instruction only in prompt):**
+\`\`\`json
+{
+  "body": [
+    { "type": "blockSlot", "slotId": "order_interaction" }
+  ],
+  "interactions": {
+    "order_interaction": {
+      "type": "orderInteraction",
+      "prompt": [
+        { "type": "text", "content": "Order the following numbers from least to greatest. Put the lowest number on the left." }
+      ],
+      "choices": [...]
+    }
+  }
+}
+\`\`\`
+
+**Explanation:** The wrong example wastes space by repeating identical instructions. The correct version places the instruction only in the interaction prompt where it belongs, keeping the body minimal and focused.
+
+**8. Poor Visual Separation - Cramped Layout - BANNED:**
+Never place equations, answer prompts, and input fields all in the same paragraph. This creates visual confusion and poor readability.
+
+**WRONG (Everything crammed in one paragraph):**
+\`\`\`json
+{
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Solve the equation. " },
+        { "type": "math", "mathml": "<mn>20</mn><mo>=</mo><mi>r</mi><mo>+</mo><mn>11</mn>" },
+        { "type": "text", "content": " r = " },
+        { "type": "inlineSlot", "slotId": "text_entry" }
+      ]
+    }
+  ]
+}
+\`\`\`
+
+**CORRECT (Clear visual separation with multiple paragraphs):**
+\`\`\`json
+{
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Solve the equation." }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "math", "mathml": "<mn>20</mn><mo>=</mo><mi>r</mi><mo>+</mo><mn>11</mn>" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "r = " },
+        { "type": "inlineSlot", "slotId": "text_entry" }
+      ]
+    }
+  ]
+}
+\`\`\`
+
+**Explanation:** The wrong example crams the instruction, equation, variable prompt, and input field all together, creating visual confusion. The correct version separates these elements into distinct paragraphs for better readability and clarity.
+
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
@@ -704,6 +800,8 @@ Hints and answer-revealing content must NEVER appear in the 'body' field.
 - ANY interactive element (numeric-input, expression, radio, etc.) in the \`widgets\` array instead of \`interactions\` (EXCEPT tables, which are ALWAYS widgets)
  - ANY hints or hint-prefixed lines (e.g., starting with "Hint:", "Remember:") included in the 'body'
  - ANY explicit statement or implication of the correct answer inside the 'body' (in text, MathML, or worked solution form)
+ - ANY duplicate text appearing in both the 'body' and interaction 'prompt' fields (eliminate redundancy by using empty body when interaction has clear prompt)
+ - ANY cramped layouts where equations, answer prompts, and input fields are all in one paragraph (use separate paragraphs for visual clarity)
 Double-check your output before submitting. ZERO TOLERANCE for these violations.`
 
 	return { systemInstruction, userContent }
