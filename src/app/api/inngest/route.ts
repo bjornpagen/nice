@@ -25,7 +25,12 @@ import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-co
 import { orchestrateHardcodedItemMigration } from "@/inngest/functions/orchestrate-hardcoded-item-migration"
 // ADD: Import the new independent functions.
 import { orchestrateHardcodedOnerosterIngestion } from "@/inngest/functions/orchestrate-hardcoded-oneroster-ingestion"
-import { orchestrateHardcodedQtiIngestion } from "@/inngest/functions/orchestrate-hardcoded-qti-ingestion"
+// ❌ REMOVED: Obsolete monolithic QTI ingestion orchestrator
+// import { orchestrateHardcodedQtiIngestion } from "@/inngest/functions/orchestrate-hardcoded-qti-ingestion"
+// ✅ ADDED: Modular hardcoded QTI pipeline orchestrators
+import { orchestrateHardcodedQtiDifferentiationForItems } from "@/inngest/functions/orchestrate-hardcoded-qti-differentiation-for-items"
+import { orchestrateHardcodedQtiGenerationForStimuliAndTests } from "@/inngest/functions/orchestrate-hardcoded-qti-generation-for-stimuli-and-tests"
+import { orchestrateHardcodedQtiUpload } from "@/inngest/functions/orchestrate-hardcoded-qti-upload"
 import { orchestrateHardcodedStimulusMigration } from "@/inngest/functions/orchestrate-hardcoded-stimulus-migration"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
@@ -59,7 +64,10 @@ export const { GET, POST, PUT } = serve({
 		orchestrateHardcodedStimulusMigration,
 		// ADD: Register the new independent functions.
 		orchestrateHardcodedOnerosterIngestion,
-		orchestrateHardcodedQtiIngestion,
+		// ✅ ADDED: Register new modular QTI pipeline orchestrators
+		orchestrateHardcodedQtiDifferentiationForItems,
+		orchestrateHardcodedQtiGenerationForStimuliAndTests,
+		orchestrateHardcodedQtiUpload,
 		// ✅ REMOVED: Old differentiated ingest is no longer registered.
 		// differentiatedIngest,
 		// OneRoster Functions

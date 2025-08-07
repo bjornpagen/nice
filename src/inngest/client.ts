@@ -281,8 +281,20 @@ const events = {
 	"migration/hardcoded.oneroster.ingest": {
 		data: z.object({}) // No data needed
 	},
-	// ADD: New event to trigger QTI data generation and upload for hardcoded courses
-	"migration/hardcoded.qti.ingest": {
+	// ❌ REMOVED: Obsolete single-step QTI ingest event replaced by modular pipeline
+	// "migration/hardcoded.qti.ingest": {
+	//   data: z.object({})
+	// },
+	// ✅ ADDED: New event to trigger the differentiation of assessment items for hardcoded courses
+	"migration/hardcoded.qti.differentiate-items": {
+		data: z.object({})
+	},
+	// ✅ ADDED: New event to trigger the generation of stimuli and tests for hardcoded courses
+	"migration/hardcoded.qti.generate-stimuli-and-tests": {
+		data: z.object({})
+	},
+	// ✅ ADDED: New event to trigger the upload of all QTI content for hardcoded courses
+	"migration/hardcoded.qti.upload": {
 		data: z.object({})
 	}
 }

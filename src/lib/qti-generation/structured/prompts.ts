@@ -145,8 +145,14 @@ This is the most critical rule. Any slot you include in the 'body' MUST have its
 CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, MathML, and slot placeholders.
 \nCRITICAL: All content must be XML-safe. Do not use CDATA sections and do not include invalid XML control characters.
 
+**CRITICAL: NO ANSWERS OR HINTS IN 'BODY'.**
+- The 'body' MUST NEVER contain the correct answer, partial answers, worked solutions, or any text that gives away the answer.
+- Strip and ignore ALL Perseus 'hints' fields. NEVER include hints in any form in the 'body' (no text, MathML, paraphrases, or reworded guidance).
+- Do NOT include hint-like lead-ins such as "Hint:", "Remember:", "Think about...", or statements that restate or imply the answer (e.g., "the constant is 7").
+- The ONLY place the correct answer may appear is in the response declarations; it MUST NOT be echoed anywhere in the 'body'.
+
 **CRITICAL: NO EXPLANATION WIDGETS.**
-NEVER create a widget for explanatory text. Explanations, definitions, or hints found in the Perseus JSON (especially those of type 'explanation' or 'definition') must be embedded directly within the 'body' content as paragraph blocks. The 'explanation' and 'definition' widget types are BANNED.
+NEVER create a widget for explanatory text. Explanations or definitions found in the Perseus JSON (especially those of type 'explanation' or 'definition') must be embedded directly within the 'body' content as paragraph blocks. The 'explanation' and 'definition' widget types are BANNED. Hints are EXPLICITLY FORBIDDEN and MUST be stripped entirely.
 
 **CRITICAL: NO CURRENCY SLOTS.**
 Currency symbols and amounts MUST NOT be represented as slots (widget or interaction). Do not generate any slotId that indicates currency (for example, names containing "currency" or ending with "_feedback"). Represent currency inline using text and/or MathML only; for example: <span class="currency">$</span> followed by <math><mn>5</mn></math> or plain text like "5 dollars".
@@ -210,6 +216,8 @@ ${perseusJson}
   - For inline interactions (e.g., 'text-input', 'inline-choice'), create { "type": "inlineSlot", "slotId": "..." } inside paragraph content.
   - For block interactions (e.g., 'radio', 'order'), create { "type": "blockSlot", "slotId": "..." } in the body array.
 - **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
+ - **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
+ - **NO ANSWERS OR HINTS IN 'BODY'**: Do NOT reveal or restate the correct answer anywhere in the 'body'. Remove ALL Perseus 'hints' content entirely and NEVER include hint-like guidance (e.g., lines starting with "Hint:" or text that gives away the answer). Only the prompt and neutral problem context belong in the 'body'; answers live solely in response declarations.
 - **MathML Conversion (MANDATORY)**:
   - You MUST convert ALL LaTeX expressions to standard MathML (\`<math>...</math>\`).
   - PRESERVE all mathematical structures: fractions (\`<mfrac>\`), exponents (\`<msup>\`), roots (\`<mroot>\` or \`<msqrt>\`), operators (\`<mo>\`), and inequalities (\`&lt;\`, \`&gt;\`).
@@ -605,12 +613,97 @@ CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content"
 - Choice and order interactions use \`{ "type": "blockSlot", "slotId": "..." }\` in the main body array
 - Widgets always use \`{ "type": "blockSlot", "slotId": "..." }\` in the main body array
 
+**6. Hints and Answer Leakage in Body - BANNED:**
+Hints and answer-revealing content must NEVER appear in the 'body' field.
+
+**WRONG (Hints in body revealing answer):**
+\`\`\`json
+{
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "What is the constant of proportionality in the equation " },
+        { "type": "math", "mathml": "<mi>y</mi><mo>=</mo><mn>7</mn><mi>x</mi>" },
+        { "type": "text", "content": "?" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "constant of proportionality = " },
+        { "type": "inlineSlot", "slotId": "text_entry" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Hint: If the constant of proportionality is " },
+        { "type": "math", "mathml": "<mi>k</mi>" },
+        { "type": "text", "content": ", then:" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "math", "mathml": "<mi>y</mi><mo>=</mo><mi>k</mi><mi>x</mi>" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "What number do we multiply by " },
+        { "type": "math", "mathml": "<mi>x</mi>" },
+        { "type": "text", "content": " to get " },
+        { "type": "math", "mathml": "<mi>y</mi>" },
+        { "type": "text", "content": "?" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Hint: The constant of proportionality is " },
+        { "type": "math", "mathml": "<mn>7</mn>" },
+        { "type": "text", "content": "." }
+      ]
+    }
+  ]
+}
+\`\`\`
+
+**CORRECT (Clean body, no hints, no answer leakage):**
+\`\`\`json
+{
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "What is the constant of proportionality in the equation " },
+        { "type": "math", "mathml": "<mi>y</mi><mo>=</mo><mn>7</mn><mi>x</mi>" },
+        { "type": "text", "content": "?" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "constant of proportionality = " },
+        { "type": "inlineSlot", "slotId": "text_entry" }
+      ]
+    }
+  ]
+}
+\`\`\`
+
+**Explanation:** The wrong example contains multiple hint paragraphs that give away the answer (7) and provide step-by-step guidance. The correct version strips all hints and only presents the core question.
+
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
 - ANY raw text at the start of body content (must be wrapped in block-level elements)
 - ANY interactive element (numeric-input, expression, radio, etc.) in the \`widgets\` array instead of \`interactions\` (EXCEPT tables, which are ALWAYS widgets)
+ - ANY hints or hint-prefixed lines (e.g., starting with "Hint:", "Remember:") included in the 'body'
+ - ANY explicit statement or implication of the correct answer inside the 'body' (in text, MathML, or worked solution form)
 Double-check your output before submitting. ZERO TOLERANCE for these violations.`
 
 	return { systemInstruction, userContent }
