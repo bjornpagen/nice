@@ -170,12 +170,16 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 		xml += "</tbody>"
 	}
 
-	// TFOOT
+	// Footer rows are not permitted in QTI item body tables (<tfoot> invalid).
+	// Instead, if footer is provided, render it as an extra row within <tbody> with bold styling.
 	if (footer && columns.length > 0) {
-		xml += `<tfoot><tr style="background-color: #f2f2f2;">`
+		if (!xml.includes("<tbody>")) {
+			xml += "<tbody>"
+		}
+		xml += `<tr style="background-color: #f2f2f2;">`
 		for (let i = 0; i < columns.length; i++) {
 			const col = columns[i]
-			if (!col) continue // Should never happen, but satisfies type checker
+			if (!col) continue
 			const isRowHeader = col.key === rowHeaderKey
 			const tag = isRowHeader ? "th" : "td"
 			const scope = isRowHeader ? ' scope="row"' : ""
@@ -183,7 +187,10 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 			const content = renderCellContent(footer[i])
 			xml += `<${tag}${scope} style="${style}">${content}</${tag}>`
 		}
-		xml += "</tr></tfoot>"
+		xml += "</tr>"
+		if (!data || data.length === 0) {
+			xml += "</tbody>"
+		}
 	}
 
 	xml += "</table>"

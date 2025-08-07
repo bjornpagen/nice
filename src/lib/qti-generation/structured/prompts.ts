@@ -1,3 +1,4 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import { allExamples } from "@/lib/qti-generation/examples"
 import { type AnyInteraction, AssessmentItemShellSchema } from "@/lib/qti-generation/schemas"
@@ -12,7 +13,14 @@ function createShellFromExample(item: (typeof allExamples)[0]) {
 		interactions: item.interactions ? Object.keys(item.interactions) : []
 	}
 	// Validate against the shell schema before returning
-	return AssessmentItemShellSchema.parse(shell)
+	// Use safeParse to avoid throwing and to align with error handling policy
+	const result = AssessmentItemShellSchema.safeParse(shell)
+	if (!result.success) {
+		// If an example shell fails validation, something is wrong with our example data
+		// Log the issue and throw an error instead of using type assertion
+		throw errors.new(`Example shell validation failed: ${result.error.message}`)
+	}
+	return result.data
 }
 
 // Define a strict widget type key list (no bailouts)

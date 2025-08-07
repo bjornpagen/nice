@@ -1,6 +1,17 @@
 import * as errors from "@superbuilders/errors"
-import { escapeXmlAttribute } from "@/lib/xml-utils"
+import { sanitizeXmlAttributeValue } from "@/lib/xml-utils"
 import type { BlockContent, InlineContent } from "./schemas"
+
+/**
+ * Escapes text content for safe inclusion in XML PCDATA.
+ */
+function escapeXmlText(text: string): string {
+	const sanitized = sanitizeXmlAttributeValue(text)
+	return sanitized
+		.replace(/&/g, "&amp;") // Must be first to avoid double-escaping
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+}
 
 export function renderInlineContent(inlineItems: InlineContent | null | undefined, slots: Map<string, string>): string {
 	if (!inlineItems) return ""
@@ -8,8 +19,9 @@ export function renderInlineContent(inlineItems: InlineContent | null | undefine
 		.map((item) => {
 			switch (item.type) {
 				case "text":
-					return escapeXmlAttribute(item.content)
+					return escapeXmlText(item.content)
 				case "math":
+					// Ensure MathML is properly wrapped and namespaced
 					return `<math xmlns="http://www.w3.org/1998/Math/MathML">${item.mathml}</math>`
 				case "inlineSlot": {
 					const content = slots.get(item.slotId)

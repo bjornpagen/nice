@@ -75,13 +75,26 @@ function validateInlineContent(items: InlineContent, _context: string, logger: l
 			validateMathMLWellFormed(item.mathml, _context, logger)
 			// Then check for deprecated elements
 			checkNoMfencedElements(item.mathml, logger)
-			// Ensure no naked MathML tokens outside <math> root
-			if (/^\s*<\s*(?:mi|mo|mn|mtext)\b/i.test(item.mathml)) {
-				logger.error("naked mathml token detected without <math> wrapper", {
-					context: _context,
-					mathml: item.mathml.substring(0, 80)
-				})
-				throw errors.new("mathml tokens must be wrapped in <math> root element")
+			// Note: Input schema defines mathml as content without the outer <math> element.
+			// The renderer is responsible for wrapping tokens in <math xmlns="http://www.w3.org/1998/Math/MathML">…</math>.
+			// Therefore, do not reject unwrapped MathML tokens here.
+			// Check for msup elements with missing children
+			const msupMatches = item.mathml.match(/<msup[^>]*>(.*?)<\/msup>/gi)
+			if (msupMatches) {
+				for (const msupMatch of msupMatches) {
+					const innerContent = msupMatch.replace(/<\/?msup[^>]*>/gi, "").trim()
+					// Count child elements - msup needs exactly 2 children (base and exponent)
+					const childElementCount = (innerContent.match(/<[^>]+>/g) || []).length
+					if (childElementCount < 2 || innerContent.includes("<mo></mo>") || innerContent.includes("<mo />")) {
+						logger.error("msup element missing required children", { context: _context, msup: msupMatch })
+						throw errors.new("msup elements must have exactly 2 children (base and exponent)")
+					}
+				}
+			}
+			// Check for forbidden mo attributes like 'superscript'
+			if (/<mo[^>]*\ssuperscript\s*=/i.test(item.mathml)) {
+				logger.error("forbidden mo attribute detected", { context: _context, mathml: item.mathml.substring(0, 80) })
+				throw errors.new("mo elements cannot have superscript attribute; use msup instead")
 			}
 		}
 		// inlineSlot is just a reference, no validation needed
