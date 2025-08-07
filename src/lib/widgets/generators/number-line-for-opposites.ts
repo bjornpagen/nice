@@ -38,11 +38,7 @@ export const NumberLineForOppositesPropsSchema = z
 			.describe(
 				"The label for the negative point. Can be a string, `true` (use numeric value), or `false` (hide label)."
 			),
-		showArrows: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? true)
-			.describe("If true, shows symmetric arrows from 0 to each point.")
+		showArrows: z.boolean().describe("If true, shows symmetric arrows from 0 to each point.")
 	})
 	.strict()
 	.describe(

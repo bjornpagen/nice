@@ -16,11 +16,7 @@ export const createAxisOptionsSchema = () =>
 			min: z.number().describe("The minimum value displayed on the axis."),
 			max: z.number().describe("The maximum value displayed on the axis."),
 			tickInterval: z.number().describe("The numeric interval between labeled tick marks on the axis."),
-			showGridLines: z
-				.boolean()
-				.nullable()
-				.transform((val) => val ?? true)
-				.describe("If true, display grid lines for this axis.")
+			showGridLines: z.boolean().describe("If true, display grid lines for this axis.")
 		})
 		.strict()
 
@@ -133,8 +129,6 @@ export const createPolygonSchema = () =>
 				),
 			isClosed: z
 				.boolean()
-				.nullable()
-				.transform((val) => val ?? true)
 				.describe(
 					"If true, connects the last vertex to the first to form a closed shape. If false, renders an open polyline."
 				),
@@ -163,16 +157,8 @@ export const createDistanceSchema = () =>
 		.object({
 			pointId1: z.string().describe("The ID of the first point."),
 			pointId2: z.string().describe("The ID of the second point."),
-			showLegs: z
-				.boolean()
-				.nullable()
-				.transform((val) => val ?? true)
-				.describe("If true, draws the 'rise' and 'run' legs of the right triangle."),
-			showLegLabels: z
-				.boolean()
-				.nullable()
-				.transform((val) => val ?? false)
-				.describe("If true, labels the legs with their lengths."),
+			showLegs: z.boolean().describe("If true, draws the 'rise' and 'run' legs of the right triangle."),
+			showLegLabels: z.boolean().describe("If true, labels the legs with their lengths."),
 			hypotenuseLabel: z.string().nullable().describe("An optional label for the hypotenuse (the distance line)."),
 			color: z
 				.string()

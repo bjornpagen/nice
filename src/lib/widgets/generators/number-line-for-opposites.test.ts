@@ -18,7 +18,7 @@ describe("generateNumberLineForOpposites", () => {
 			value: 7,
 			positiveLabel: null,
 			negativeLabel: null,
-			showArrows: null
+			showArrows: true
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

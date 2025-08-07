@@ -114,7 +114,7 @@ describe("Widget Generators", () => {
 						label: "∠ABC",
 						color: null,
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -180,7 +180,7 @@ describe("Widget Generators", () => {
 					}
 				],
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "A = πr²"
 			}
 			const parsedProps = CircleDiagramPropsSchema.parse(props)

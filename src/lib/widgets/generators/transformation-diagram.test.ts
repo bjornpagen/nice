@@ -44,7 +44,7 @@ describe("generateTransformationDiagram", () => {
 				},
 				transformation: {
 					type: "translation" as const,
-					showVectors: null
+					showVectors: false
 				},
 				additionalPoints: null
 			}
@@ -561,7 +561,7 @@ describe("generateTransformationDiagram", () => {
 				transformation: {
 					type: "dilation" as const,
 					centerOfDilation: { x: 100, y: 100 },
-					showRays: null
+					showRays: false
 				},
 				additionalPoints: null
 			}
@@ -732,7 +732,7 @@ describe("generateTransformationDiagram", () => {
 				},
 				transformation: {
 					type: "translation" as const,
-					showVectors: null
+					showVectors: false
 				},
 				additionalPoints: null
 			}

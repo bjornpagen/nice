@@ -23,7 +23,7 @@ describe("generateAbsoluteValueNumberLine", () => {
 			tickInterval: 5,
 			value: -7,
 			highlightColor: null,
-			showDistanceLabel: null
+			showDistanceLabel: true
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

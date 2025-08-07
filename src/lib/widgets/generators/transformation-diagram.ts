@@ -31,11 +31,7 @@ const LineSchema = z
 const TranslationSchema = z
 	.object({
 		type: z.literal("translation"),
-		showVectors: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true, draws arrows from pre-image vertices to image vertices.")
+		showVectors: z.boolean().describe("If true, draws arrows from pre-image vertices to image vertices.")
 	})
 	.strict()
 
@@ -101,11 +97,7 @@ const DilationSchema = z
 			})
 			.strict()
 			.describe("The point from which the shape is scaled."),
-		showRays: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true, draws rays from the center through corresponding vertices.")
+		showRays: z.boolean().describe("If true, draws rays from the center through corresponding vertices.")
 	})
 	.strict()
 

@@ -26,11 +26,7 @@ export const AbsoluteValueNumberLinePropsSchema = z
 			.nullable()
 			.transform((val) => val ?? "rgba(217, 95, 79, 0.8)")
 			.describe("The CSS color for the highlighted distance segment and the point."),
-		showDistanceLabel: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? true)
-			.describe("If true, shows a text label indicating the distance from zero.")
+		showDistanceLabel: z.boolean().describe("If true, shows a text label indicating the distance from zero.")
 	})
 	.strict()
 	.describe(

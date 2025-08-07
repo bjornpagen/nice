@@ -21,7 +21,7 @@ describe("generatePolyhedronNetDiagram", () => {
 				},
 				lateralHeight: null
 			},
-			showLabels: null
+			showLabels: true
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -119,7 +119,7 @@ describe("generatePolyhedronNetDiagram", () => {
 				},
 				lateralHeight: null
 			},
-			showLabels: null
+			showLabels: true
 		}
 		expect(() => generateDiagram(props)).toThrow("cube must have a square base")
 	})
@@ -138,7 +138,7 @@ describe("generatePolyhedronNetDiagram", () => {
 				},
 				lateralHeight: null
 			},
-			showLabels: null
+			showLabels: true
 		}
 		expect(() => generateDiagram(props)).toThrow("lateralHeight is required for rectangularPrism")
 	})
@@ -156,7 +156,7 @@ describe("generatePolyhedronNetDiagram", () => {
 				},
 				lateralHeight: 60 // Should match side (50)
 			},
-			showLabels: null
+			showLabels: true
 		}
 		expect(() => generateDiagram(props)).toThrow("cube lateralHeight must be equal to side if provided")
 	})

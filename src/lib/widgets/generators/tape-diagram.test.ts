@@ -35,7 +35,7 @@ describe("generateTapeDiagram", () => {
 					],
 					color: null
 				},
-				showTotalBracket: null,
+				showTotalBracket: false,
 				totalLabel: null,
 				modelType: null // Explicitly test default
 			}

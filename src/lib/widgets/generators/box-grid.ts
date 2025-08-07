@@ -31,11 +31,7 @@ export const BoxGridPropsSchema = z
 			.describe(
 				"A 2D array of cell objects representing the grid. The outer array holds the rows, and each inner array holds the cells for that row."
 			),
-		showGridLines: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? true)
-			.describe("If true, draws border lines around each cell."),
+		showGridLines: z.boolean().describe("If true, draws border lines around each cell."),
 		cellPadding: z
 			.number()
 			.nullable()

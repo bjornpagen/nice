@@ -9,8 +9,6 @@ const TickMarkSchema = z
 		bottomLabel: z.string().nullable().describe('An optional label to display below the tick mark (e.g., "0", "1").'),
 		isMajor: z
 			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
 			.describe("If true, the tick mark is rendered taller to indicate significance (e.g., for whole numbers).")
 	})
 	.strict()

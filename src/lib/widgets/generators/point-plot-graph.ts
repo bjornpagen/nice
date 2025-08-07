@@ -24,8 +24,6 @@ export const PointPlotGraphPropsSchema = z
 		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical (Y) axis."),
 		showQuadrantLabels: z
 			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
 			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
 		points: z.array(createPlotPointSchema()).describe("An array of points to plot on the plane.")
 	})

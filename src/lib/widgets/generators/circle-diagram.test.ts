@@ -22,7 +22,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -79,7 +79,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "A = πr²"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -100,7 +100,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -119,7 +119,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "Ring Area"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -138,7 +138,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -157,7 +157,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -185,7 +185,7 @@ describe("generateCircleDiagram", () => {
 				],
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -229,7 +229,7 @@ describe("generateCircleDiagram", () => {
 				],
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -255,7 +255,7 @@ describe("generateCircleDiagram", () => {
 				],
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -287,7 +287,7 @@ describe("generateCircleDiagram", () => {
 				],
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -319,7 +319,7 @@ describe("generateCircleDiagram", () => {
 				],
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -351,7 +351,7 @@ describe("generateCircleDiagram", () => {
 				],
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -376,11 +376,11 @@ describe("generateCircleDiagram", () => {
 						endAngle: 90,
 						fillColor: null,
 						label: "90°",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					}
 				],
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -407,7 +407,7 @@ describe("generateCircleDiagram", () => {
 					}
 				],
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -430,11 +430,11 @@ describe("generateCircleDiagram", () => {
 						endAngle: 180,
 						fillColor: "rgba(255, 193, 7, 0.7)",
 						label: "180°",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					}
 				],
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -457,25 +457,25 @@ describe("generateCircleDiagram", () => {
 						endAngle: 120,
 						fillColor: "rgba(244, 67, 54, 0.6)",
 						label: "120°",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					},
 					{
 						startAngle: 120,
 						endAngle: 240,
 						fillColor: "rgba(33, 150, 243, 0.6)",
 						label: "120°",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					},
 					{
 						startAngle: 240,
 						endAngle: 360,
 						fillColor: "rgba(76, 175, 80, 0.6)",
 						label: "120°",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					}
 				],
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -498,32 +498,32 @@ describe("generateCircleDiagram", () => {
 						endAngle: 144,
 						fillColor: "rgba(244, 67, 54, 0.8)",
 						label: "40%",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					},
 					{
 						startAngle: 144,
 						endAngle: 252,
 						fillColor: "rgba(33, 150, 243, 0.8)",
 						label: "30%",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					},
 					{
 						startAngle: 252,
 						endAngle: 324,
 						fillColor: "rgba(76, 175, 80, 0.8)",
 						label: "20%",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					},
 					{
 						startAngle: 324,
 						endAngle: 360,
 						fillColor: "rgba(255, 193, 7, 0.8)",
 						label: "10%",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					}
 				],
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -546,7 +546,7 @@ describe("generateCircleDiagram", () => {
 						endAngle: 60,
 						fillColor: "rgba(156, 39, 176, 0.7)",
 						label: null,
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					},
 					{
 						startAngle: 180,
@@ -557,7 +557,7 @@ describe("generateCircleDiagram", () => {
 					}
 				],
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -585,7 +585,7 @@ describe("generateCircleDiagram", () => {
 						label: "Arc"
 					}
 				],
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -617,7 +617,7 @@ describe("generateCircleDiagram", () => {
 						label: "Arc 2"
 					}
 				],
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -643,7 +643,7 @@ describe("generateCircleDiagram", () => {
 						label: "Major Arc"
 					}
 				],
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -675,7 +675,7 @@ describe("generateCircleDiagram", () => {
 						label: null
 					}
 				],
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -701,7 +701,7 @@ describe("generateCircleDiagram", () => {
 						label: "Semicircle"
 					}
 				],
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -786,7 +786,7 @@ describe("generateCircleDiagram", () => {
 						endAngle: 60,
 						fillColor: "rgba(100, 181, 246, 0.5)",
 						label: "60°",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					}
 				],
 				arcs: [
@@ -820,21 +820,21 @@ describe("generateCircleDiagram", () => {
 						endAngle: 90,
 						fillColor: "rgba(244, 67, 54, 0.7)",
 						label: "1/4",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					},
 					{
 						startAngle: 90,
 						endAngle: 180,
 						fillColor: "rgba(33, 150, 243, 0.7)",
 						label: "1/4",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					},
 					{
 						startAngle: 180,
 						endAngle: 270,
 						fillColor: "rgba(76, 175, 80, 0.7)",
 						label: "1/4",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					}
 				],
 				arcs: null,
@@ -861,14 +861,14 @@ describe("generateCircleDiagram", () => {
 						endAngle: 120,
 						fillColor: "rgba(244, 67, 54, 0.5)",
 						label: "Outer",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					},
 					{
 						startAngle: 180,
 						endAngle: 270,
 						fillColor: "rgba(33, 150, 243, 0.5)",
 						label: "Inner",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					}
 				],
 				arcs: null,
@@ -900,7 +900,7 @@ describe("generateCircleDiagram", () => {
 				],
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "Large Circle"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -923,11 +923,11 @@ describe("generateCircleDiagram", () => {
 						endAngle: 90,
 						fillColor: null,
 						label: "90°",
-						showRightAngleMarker: null
+						showRightAngleMarker: false
 					}
 				],
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -946,7 +946,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "Square Canvas"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -965,7 +965,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "Wide Canvas"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -984,7 +984,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "Tall Canvas"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -1005,7 +1005,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "Tiny"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -1024,7 +1024,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "Huge"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -1050,7 +1050,7 @@ describe("generateCircleDiagram", () => {
 						label: "360°"
 					}
 				],
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -1076,7 +1076,7 @@ describe("generateCircleDiagram", () => {
 						label: "10°"
 					}
 				],
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -1108,7 +1108,7 @@ describe("generateCircleDiagram", () => {
 				],
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -1127,7 +1127,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "Thin Ring"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -1148,7 +1148,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "Default Width"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -1167,7 +1167,7 @@ describe("generateCircleDiagram", () => {
 				segments: null,
 				sectors: null,
 				arcs: null,
-				showCenterDot: null,
+				showCenterDot: true,
 				areaLabel: "Default Height"
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -1197,7 +1197,7 @@ describe("generateCircleDiagram", () => {
 						endAngle: 90,
 						fillColor: null, // defaults to "rgba(100, 181, 246, 0.5)"
 						label: null,
-						showRightAngleMarker: null // defaults to false
+						showRightAngleMarker: false // defaults to false
 					}
 				],
 				arcs: [
@@ -1208,7 +1208,7 @@ describe("generateCircleDiagram", () => {
 						label: null
 					}
 				],
-				showCenterDot: null, // defaults to true
+				showCenterDot: true, // defaults to true
 				areaLabel: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()

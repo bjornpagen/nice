@@ -26,8 +26,6 @@ export const FunctionPlotGraphPropsSchema = z
 		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical (Y) axis."),
 		showQuadrantLabels: z
 			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
 			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
 		polylines: z
 			.array(createPolylineSchema())

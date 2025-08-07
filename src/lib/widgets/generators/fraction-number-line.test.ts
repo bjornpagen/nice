@@ -1775,19 +1775,19 @@ describe("generateFractionNumberLine", () => {
 						value: 0,
 						topLabel: null,
 						bottomLabel: "0",
-						isMajor: null // defaults to false
+						isMajor: false // defaults to false
 					},
 					{
 						value: 0.5,
 						topLabel: "1/2",
 						bottomLabel: null,
-						isMajor: null // defaults to false
+						isMajor: false // defaults to false
 					},
 					{
 						value: 1,
 						topLabel: null,
 						bottomLabel: "1",
-						isMajor: null // defaults to false
+						isMajor: false // defaults to false
 					}
 				],
 				segments: null, // no segments

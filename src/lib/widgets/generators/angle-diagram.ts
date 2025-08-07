@@ -105,8 +105,6 @@ export const AngleDiagramPropsSchema = z
 							.describe("The radius of the angle arc in pixels."),
 						isRightAngle: z
 							.boolean()
-							.nullable()
-							.transform((val) => val ?? false)
 							.describe("If true, displays a square marker instead of a curved arc to indicate a 90° angle.")
 					})
 					.strict()

@@ -279,8 +279,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				viewOptions: {
 					projectionAngle: 30,
 					intersectionColor: null,
-					showHiddenEdges: null,
-					showLabels: null
+					showHiddenEdges: true,
+					showLabels: false
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -304,8 +304,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				viewOptions: {
 					projectionAngle: 60,
 					intersectionColor: null,
-					showHiddenEdges: null,
-					showLabels: null
+					showHiddenEdges: true,
+					showLabels: false
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -328,8 +328,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				viewOptions: {
 					projectionAngle: null,
 					intersectionColor: "rgba(66, 133, 244, 0.7)",
-					showHiddenEdges: null,
-					showLabels: null
+					showHiddenEdges: true,
+					showLabels: false
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -354,7 +354,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 					projectionAngle: null,
 					intersectionColor: null,
 					showHiddenEdges: false,
-					showLabels: null
+					showLabels: false
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -379,7 +379,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 					projectionAngle: 25,
 					intersectionColor: "rgba(76, 175, 80, 0.6)",
 					showHiddenEdges: false,
-					showLabels: null
+					showLabels: false
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -901,7 +901,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 					projectionAngle: 45,
 					intersectionColor: "rgba(76, 175, 80, 0.8)", // Green like user's image
 					showHiddenEdges: true,
-					showLabels: null
+					showLabels: false
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()

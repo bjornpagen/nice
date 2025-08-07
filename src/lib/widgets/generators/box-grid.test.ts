@@ -30,7 +30,7 @@ describe("generateBoxGrid", () => {
 					{ content: "I", backgroundColor: null }
 				]
 			],
-			showGridLines: null,
+			showGridLines: true,
 			cellPadding: null,
 			fontSize: null
 		}

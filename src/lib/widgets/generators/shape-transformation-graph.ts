@@ -87,8 +87,6 @@ export const ShapeTransformationGraphPropsSchema = z
 		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical (Y) axis."),
 		showQuadrantLabels: z
 			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
 			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
 		preImage: createPolygonObjectSchema().describe("The original shape before transformation."),
 		transformation: createTransformationRuleSchema().describe("The transformation to apply to the pre-image."),

@@ -71,11 +71,7 @@ export const PolyhedronNetDiagramPropsSchema = z
 			.enum(["cube", "rectangularPrism", "triangularPrism", "squarePyramid", "triangularPyramid", "pentagonalPyramid"])
 			.describe("The type of polyhedron for which to generate a net."),
 		dimensions: FaceDimensionsSchema.describe("An object specifying the dimensions of the faces."),
-		showLabels: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? true)
-			.describe("If true, display the dimension labels on the net.")
+		showLabels: z.boolean().describe("If true, display the dimension labels on the net.")
 	})
 	.strict()
 	.describe(

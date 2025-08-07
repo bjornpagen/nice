@@ -72,11 +72,7 @@ export const ScatterPlotPropsSchema = z
 				min: z.number().describe("The minimum value displayed on the axis."),
 				max: z.number().describe("The maximum value displayed on the axis."),
 				tickInterval: z.number().describe("The numeric interval between tick marks on the axis."),
-				gridLines: z
-					.boolean()
-					.nullable()
-					.transform((val) => val ?? false)
-					.describe("If true, display grid lines for this axis.")
+				gridLines: z.boolean().describe("If true, display grid lines for this axis.")
 			})
 			.strict()
 			.describe("Configuration for the horizontal (X) axis."),
@@ -87,11 +83,7 @@ export const ScatterPlotPropsSchema = z
 				min: z.number().describe("The minimum value displayed on the axis."),
 				max: z.number().describe("The maximum value displayed on the axis."),
 				tickInterval: z.number().describe("The numeric interval between tick marks on the axis."),
-				gridLines: z
-					.boolean()
-					.nullable()
-					.transform((val) => val ?? false)
-					.describe("If true, display grid lines for this axis.")
+				gridLines: z.boolean().describe("If true, display grid lines for this axis.")
 			})
 			.strict()
 			.describe("Configuration for the vertical (Y) axis."),

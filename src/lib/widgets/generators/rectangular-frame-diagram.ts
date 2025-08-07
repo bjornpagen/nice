@@ -54,11 +54,7 @@ export const RectangularFrameDiagramPropsSchema = z
 			.string()
 			.nullable()
 			.describe('The identifier of a face to shade (e.g., "top_face", "front_face", "side_face", "bottom_face").'),
-		showHiddenEdges: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? true)
-			.describe("If true, render edges hidden from the camera view as dashed lines.")
+		showHiddenEdges: z.boolean().describe("If true, render edges hidden from the camera view as dashed lines.")
 	})
 	.strict()
 	.describe(

@@ -25,7 +25,7 @@ describe("generatePolyhedronDiagram", () => {
 			labels: null,
 			diagonals: null,
 			shadedFace: null,
-			showHiddenEdges: null
+			showHiddenEdges: true
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

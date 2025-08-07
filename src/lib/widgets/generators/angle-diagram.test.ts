@@ -29,7 +29,7 @@ describe("generateAngleDiagram", () => {
 						label: "∠ABC",
 						color: null,
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -83,7 +83,7 @@ describe("generateAngleDiagram", () => {
 						label: "45°",
 						color: "rgba(66, 133, 244, 0.8)",
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -110,7 +110,7 @@ describe("generateAngleDiagram", () => {
 						label: "120°",
 						color: null,
 						radius: 50,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -141,14 +141,14 @@ describe("generateAngleDiagram", () => {
 						label: "α",
 						color: "rgba(217, 95, 79, 0.8)",
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					},
 					{
 						vertices: ["C", "B", "D"],
 						label: "β",
 						color: "rgba(66, 133, 244, 0.8)",
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -179,14 +179,14 @@ describe("generateAngleDiagram", () => {
 						label: "x",
 						color: "rgba(217, 95, 79, 0.8)",
 						radius: 25,
-						isRightAngle: null
+						isRightAngle: false
 					},
 					{
 						vertices: ["C", "B", "E"],
 						label: "x",
 						color: "rgba(217, 95, 79, 0.8)",
 						radius: 25,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -215,14 +215,14 @@ describe("generateAngleDiagram", () => {
 						label: "30°",
 						color: "rgba(76, 175, 80, 0.6)",
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					},
 					{
 						vertices: ["S", "Q", "R"],
 						label: "60°",
 						color: "rgba(255, 193, 7, 0.6)",
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -255,21 +255,21 @@ describe("generateAngleDiagram", () => {
 						label: "60°",
 						color: "rgba(217, 95, 79, 0.8)",
 						radius: 25,
-						isRightAngle: null
+						isRightAngle: false
 					},
 					{
 						vertices: ["A", "B", "C"],
 						label: "60°",
 						color: "rgba(66, 133, 244, 0.8)",
 						radius: 25,
-						isRightAngle: null
+						isRightAngle: false
 					},
 					{
 						vertices: ["A", "C", "B"],
 						label: "60°",
 						color: "rgba(76, 175, 80, 0.8)",
 						radius: 25,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -302,14 +302,14 @@ describe("generateAngleDiagram", () => {
 						label: "1",
 						color: "rgba(217, 95, 79, 0.8)",
 						radius: 20,
-						isRightAngle: null
+						isRightAngle: false
 					},
 					{
 						vertices: ["C", "Q", "F"],
 						label: "1",
 						color: "rgba(217, 95, 79, 0.8)",
 						radius: 20,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -351,7 +351,7 @@ describe("generateAngleDiagram", () => {
 						label: "42°",
 						color: "rgba(76, 175, 80, 0.8)",
 						radius: 30,
-						isRightAngle: null
+						isRightAngle: false
 					},
 					// 105° angle at A (purple) - between rays AD and AF
 					{
@@ -359,7 +359,7 @@ describe("generateAngleDiagram", () => {
 						label: "105°",
 						color: "rgba(156, 39, 176, 0.8)",
 						radius: 30,
-						isRightAngle: null
+						isRightAngle: false
 					},
 					// x° angle at A (light blue) - between rays AE and AC
 					{
@@ -367,7 +367,7 @@ describe("generateAngleDiagram", () => {
 						label: "x°",
 						color: "rgba(33, 150, 243, 0.8)",
 						radius: 25,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -396,7 +396,7 @@ describe("generateAngleDiagram", () => {
 						label: "2x + 15°",
 						color: null,
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -423,7 +423,7 @@ describe("generateAngleDiagram", () => {
 						label: null,
 						color: "rgba(156, 39, 176, 0.8)",
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -450,7 +450,7 @@ describe("generateAngleDiagram", () => {
 						label: "θ",
 						color: null,
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -477,7 +477,7 @@ describe("generateAngleDiagram", () => {
 						label: "300°",
 						color: "rgba(233, 30, 99, 0.8)",
 						radius: 40,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -506,7 +506,7 @@ describe("generateAngleDiagram", () => {
 						label: "∠ABC",
 						color: null,
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -533,7 +533,7 @@ describe("generateAngleDiagram", () => {
 						label: "45°",
 						color: null,
 						radius: 15,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -562,7 +562,7 @@ describe("generateAngleDiagram", () => {
 						label: "60°",
 						color: null,
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -589,7 +589,7 @@ describe("generateAngleDiagram", () => {
 						label: "60°",
 						color: null,
 						radius: null,
-						isRightAngle: null
+						isRightAngle: false
 					}
 				]
 			}
@@ -616,7 +616,7 @@ describe("generateAngleDiagram", () => {
 						label: "Default",
 						color: null, // Will default to "rgba(217, 95, 79, 0.8)"
 						radius: null, // Will default to 30
-						isRightAngle: null // Will default to false
+						isRightAngle: false // Will default to false
 					}
 				]
 			}

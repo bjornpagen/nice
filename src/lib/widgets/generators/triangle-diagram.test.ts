@@ -39,7 +39,7 @@ describe("generateTriangleDiagram", () => {
 				],
 				sides: null,
 				angles: [
-					{ vertices: ["R", "P", "Q"], isRightAngle: true, label: null, color: null, radius: null, showArc: null }
+					{ vertices: ["R", "P", "Q"], isRightAngle: true, label: null, color: null, radius: null, showArc: false }
 				],
 				internalLines: null,
 				shadedRegions: null
@@ -102,9 +102,9 @@ describe("generateTriangleDiagram", () => {
 				],
 				sides: null,
 				angles: [
-					{ vertices: ["C", "A", "B"], label: "x°", isRightAngle: null, color: null, radius: null, showArc: null },
-					{ vertices: ["C", "B", "A"], label: "33°", isRightAngle: null, color: null, radius: null, showArc: null },
-					{ vertices: ["A", "C", "B"], label: "114°", isRightAngle: null, color: null, radius: null, showArc: null }
+					{ vertices: ["C", "A", "B"], label: "x°", isRightAngle: false, color: null, radius: null, showArc: false },
+					{ vertices: ["C", "B", "A"], label: "33°", isRightAngle: false, color: null, radius: null, showArc: false },
+					{ vertices: ["A", "C", "B"], label: "114°", isRightAngle: false, color: null, radius: null, showArc: false }
 				],
 				internalLines: null,
 				shadedRegions: null
@@ -130,7 +130,7 @@ describe("generateTriangleDiagram", () => {
 					{ vertices: ["C", "D"], label: "7", tickMarks: null }
 				],
 				angles: [
-					{ vertices: ["C", "D", "B"], isRightAngle: true, label: null, color: null, radius: null, showArc: null }
+					{ vertices: ["C", "D", "B"], isRightAngle: true, label: null, color: null, radius: null, showArc: false }
 				],
 				internalLines: [{ from: "C", to: "D", style: "dashed" }],
 				shadedRegions: null
@@ -179,7 +179,7 @@ describe("generateTriangleDiagram", () => {
 				angles: [
 					{ vertices: ["C", "A", "D"], label: null, isRightAngle: false, showArc: true, radius: 20, color: "black" },
 					{ vertices: ["C", "B", "D"], label: null, isRightAngle: false, showArc: true, radius: 20, color: "black" },
-					{ vertices: ["A", "D", "C"], isRightAngle: true, label: null, color: null, radius: null, showArc: null }
+					{ vertices: ["A", "D", "C"], isRightAngle: true, label: null, color: null, radius: null, showArc: false }
 				],
 				internalLines: [{ from: "C", to: "D", style: "solid" }],
 				shadedRegions: [

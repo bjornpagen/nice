@@ -9,11 +9,7 @@ const TickMarkSchema = z
 			.string()
 			.nullable()
 			.describe('The text label for the tick mark (e.g., "0", "1", "3/8"). If omitted, no label is shown.'),
-		isMajor: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true, render as a larger, more prominent tick mark.")
+		isMajor: z.boolean().describe("If true, render as a larger, more prominent tick mark.")
 	})
 	.strict()
 

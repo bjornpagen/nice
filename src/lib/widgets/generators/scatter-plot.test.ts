@@ -19,14 +19,14 @@ describe("generateScatterPlot", () => {
 				max: 10,
 				tickInterval: 2,
 				label: "X Axis",
-				gridLines: null
+				gridLines: false
 			},
 			yAxis: {
 				min: 0,
 				max: 10,
 				tickInterval: 2,
 				label: "Y Axis",
-				gridLines: null
+				gridLines: false
 			},
 			points: [
 				{ x: 2, y: 3, label: null },

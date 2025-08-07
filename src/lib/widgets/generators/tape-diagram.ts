@@ -75,11 +75,7 @@ export const TapeDiagramPropsSchema = z
 			.strict()
 			.nullable()
 			.describe("Configuration for the lower tape."),
-		showTotalBracket: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true, displays a bracket and label for the total number of segments."),
+		showTotalBracket: z.boolean().describe("If true, displays a bracket and label for the total number of segments."),
 		totalLabel: z
 			.string()
 			.nullable()

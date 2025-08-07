@@ -30,11 +30,7 @@ const SectorSchema = z
 			.transform((val) => val ?? "rgba(100, 181, 246, 0.5)")
 			.describe("The fill color for the sector."),
 		label: z.string().nullable().describe("An optional label for the sector."),
-		showRightAngleMarker: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true and the sector is 90 degrees, shows a right angle marker.")
+		showRightAngleMarker: z.boolean().describe("If true and the sector is 90 degrees, shows a right angle marker.")
 	})
 	.strict()
 
@@ -92,11 +88,7 @@ export const CircleDiagramPropsSchema = z
 		segments: z.array(SegmentSchema).nullable().describe("An array of radius or diameter lines to draw."),
 		sectors: z.array(SectorSchema).nullable().describe("An array of sectors (pie slices) to draw."),
 		arcs: z.array(ArcSchema).nullable().describe("An array of arcs to highlight on the circumference."),
-		showCenterDot: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? true)
-			.describe("If true, a dot is drawn at the circle's center."),
+		showCenterDot: z.boolean().describe("If true, a dot is drawn at the circle's center."),
 		areaLabel: z.string().nullable().describe("A text label to place in the center of the circle, often for area.")
 	})
 	.strict()

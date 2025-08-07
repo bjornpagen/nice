@@ -20,13 +20,13 @@ describe("generateNumberLineWithFractionGroups", () => {
 			max: 2,
 			ticks: [
 				{ value: 0, label: "0", isMajor: true },
-				{ value: 0.25, label: null, isMajor: null },
-				{ value: 0.5, label: "1/2", isMajor: null },
-				{ value: 0.75, label: null, isMajor: null },
+				{ value: 0.25, label: null, isMajor: false },
+				{ value: 0.5, label: "1/2", isMajor: false },
+				{ value: 0.75, label: null, isMajor: false },
 				{ value: 1, label: "1", isMajor: true },
-				{ value: 1.25, label: null, isMajor: null },
-				{ value: 1.5, label: "3/2", isMajor: null },
-				{ value: 1.75, label: null, isMajor: null },
+				{ value: 1.25, label: null, isMajor: false },
+				{ value: 1.5, label: "3/2", isMajor: false },
+				{ value: 1.75, label: null, isMajor: false },
 				{ value: 2, label: "2", isMajor: true }
 			],
 			segments: null

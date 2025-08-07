@@ -106,16 +106,8 @@ export const ThreeDIntersectionDiagramPropsSchema = z
 					.nullable()
 					.transform((val) => val ?? "rgba(217, 95, 79, 0.8)")
 					.describe("The fill color of the resulting 2D cross-section."),
-				showHiddenEdges: z
-					.boolean()
-					.nullable()
-					.transform((val) => val ?? true)
-					.describe("If true, render edges hidden from view as dashed lines."),
-				showLabels: z
-					.boolean()
-					.nullable()
-					.transform((val) => val ?? false)
-					.describe("If true, show dimension labels on the solid.")
+				showHiddenEdges: z.boolean().describe("If true, render edges hidden from view as dashed lines."),
+				showLabels: z.boolean().describe("If true, show dimension labels on the solid.")
 			})
 			.strict()
 			.nullable()

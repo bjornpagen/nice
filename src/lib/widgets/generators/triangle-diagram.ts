@@ -75,14 +75,8 @@ export const TriangleDiagramPropsSchema = z
 							.describe("The radius of the angle arc in pixels."),
 						isRightAngle: z
 							.boolean()
-							.nullable()
-							.transform((val) => val ?? false)
 							.describe("If true, displays a square marker instead of a curved arc to indicate a 90° angle."),
-						showArc: z
-							.boolean()
-							.nullable()
-							.transform((val) => val ?? true)
-							.describe("If true, displays the angle arc marker. If false, only the label is shown.")
+						showArc: z.boolean().describe("If true, displays the angle arc marker. If false, only the label is shown.")
 					})
 					.strict()
 			)
