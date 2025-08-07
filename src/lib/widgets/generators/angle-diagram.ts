@@ -216,10 +216,17 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			if (endAngle - startAngle > Math.PI) startAngle += 2 * Math.PI
 
 			const midAngle = (startAngle + endAngle) / 2
-			const labelRadius = angle.isRightAngle ? 20 : angle.radius * 1.3
+
+			// Calculate label offset based on label length and arc radius
+			// Longer labels need more space to avoid overlapping with the arc
+			const baseOffset = angle.isRightAngle ? 25 : angle.radius + 8
+			// Only add extra spacing for labels longer than 4 characters
+			const extraSpacing = angle.label.length > 4 ? (angle.label.length - 4) * 2 : 0
+			const labelRadius = baseOffset + extraSpacing
+
 			const labelX = vertex.x + labelRadius * Math.cos(midAngle)
 			const labelY = vertex.y + labelRadius * Math.sin(midAngle)
-			svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="14">${angle.label}</text>`
+			svg += `<text x="${labelX}" y="${labelY}" fill="black" stroke="white" stroke-width="0.3" paint-order="stroke fill" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="500">${angle.label}</text>`
 		}
 	}
 

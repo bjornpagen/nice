@@ -733,4 +733,47 @@ describe("New Features", () => {
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
+
+	test("should render QTI vertical angles problem with 60° and (x+40)°", () => {
+		const props = {
+			type: "angleDiagram" as const,
+			width: 300,
+			height: 150,
+			points: [
+				// Central intersection point
+				{ id: "O", x: 150, y: 75, label: null, shape: null },
+				// Horizontal line endpoints
+				{ id: "A", x: 30, y: 75, label: null, shape: null },
+				{ id: "B", x: 270, y: 75, label: null, shape: null },
+				// Diagonal line endpoints
+				{ id: "C", x: 60, y: 20, label: null, shape: null },
+				{ id: "D", x: 240, y: 130, label: null, shape: null }
+			],
+			rays: [
+				// Horizontal line (both directions from center)
+				{ from: "O", to: "A" },
+				{ from: "O", to: "B" },
+				// Diagonal line (both directions from center)
+				{ from: "O", to: "C" },
+				{ from: "O", to: "D" }
+			],
+			angles: [
+				{
+					vertices: ["B", "O", "D"], // 60° angle (bottom-right)
+					label: "60°",
+					color: "#11accd", // Blue color from QTI
+					radius: 28,
+					isRightAngle: false
+				},
+				{
+					vertices: ["A", "O", "C"], // (x+40)° angle (top-left, vertical to 60°)
+					label: "(x+40)°",
+					color: "#e07d10", // Orange color from QTI
+					radius: 28,
+					isRightAngle: false
+				}
+			]
+		}
+		expect(generateDiagram(props)).toMatchSnapshot()
+	})
 })
