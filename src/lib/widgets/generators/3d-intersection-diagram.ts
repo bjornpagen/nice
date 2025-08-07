@@ -140,7 +140,7 @@ export type ThreeDIntersectionDiagramProps = z.infer<typeof ThreeDIntersectionDi
 
 // Type definitions for 3D vector math
 type Point3D = { x: number; y: number; z: number }
-type Edge = { startIdx: number; endIdx: number; isHidden?: boolean }
+type Edge = { startIdx: number; endIdx: number; isHidden: boolean | null }
 
 /**
  * Generates an SVG diagram of a 3D solid being intersected by a plane,
@@ -180,14 +180,14 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 				{ startIdx: 1, endIdx: 2, isHidden: true },
 				{ startIdx: 2, endIdx: 3, isHidden: true },
 				{ startIdx: 3, endIdx: 0, isHidden: true },
-				{ startIdx: 4, endIdx: 5 },
-				{ startIdx: 5, endIdx: 6 },
-				{ startIdx: 6, endIdx: 7 },
-				{ startIdx: 7, endIdx: 4 },
-				{ startIdx: 0, endIdx: 4 },
-				{ startIdx: 1, endIdx: 5 },
-				{ startIdx: 2, endIdx: 6 },
-				{ startIdx: 3, endIdx: 7 }
+				{ startIdx: 4, endIdx: 5, isHidden: null },
+				{ startIdx: 5, endIdx: 6, isHidden: null },
+				{ startIdx: 6, endIdx: 7, isHidden: null },
+				{ startIdx: 7, endIdx: 4, isHidden: null },
+				{ startIdx: 0, endIdx: 4, isHidden: null },
+				{ startIdx: 1, endIdx: 5, isHidden: null },
+				{ startIdx: 2, endIdx: 6, isHidden: null },
+				{ startIdx: 3, endIdx: 7, isHidden: null }
 			]
 			break
 		}
@@ -204,13 +204,13 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 			]
 			edges = [
 				{ startIdx: 0, endIdx: 1, isHidden: true },
-				{ startIdx: 1, endIdx: 2 },
-				{ startIdx: 2, endIdx: 3 },
-				{ startIdx: 3, endIdx: 0 },
-				{ startIdx: 0, endIdx: 4 },
-				{ startIdx: 1, endIdx: 4 },
-				{ startIdx: 2, endIdx: 4 },
-				{ startIdx: 3, endIdx: 4 }
+				{ startIdx: 1, endIdx: 2, isHidden: null },
+				{ startIdx: 2, endIdx: 3, isHidden: null },
+				{ startIdx: 3, endIdx: 0, isHidden: null },
+				{ startIdx: 0, endIdx: 4, isHidden: null },
+				{ startIdx: 1, endIdx: 4, isHidden: null },
+				{ startIdx: 2, endIdx: 4, isHidden: null },
+				{ startIdx: 3, endIdx: 4, isHidden: null }
 			]
 			break
 		}
@@ -404,7 +404,7 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 	// Draw hidden edges
 	if (showHiddenEdges) {
 		for (const edge of edges) {
-			if (!edge.isHidden) continue
+			if (edge.isHidden !== true) continue
 			const proj1 = projected[edge.startIdx]
 			const proj2 = projected[edge.endIdx]
 			if (!proj1 || !proj2) continue
@@ -416,7 +416,7 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 
 	// Draw visible edges
 	for (const edge of edges) {
-		if (edge.isHidden) continue
+		if (edge.isHidden === true) continue
 		const proj1 = projected[edge.startIdx]
 		const proj2 = projected[edge.endIdx]
 		if (!proj1 || !proj2) continue

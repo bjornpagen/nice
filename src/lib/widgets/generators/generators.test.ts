@@ -1790,7 +1790,10 @@ describe("Widget Generators", () => {
 					],
 					label: "ABCD",
 					fillColor: "rgba(255, 152, 0, 0.3)",
-					strokeColor: "#ff9800"
+					strokeColor: "#ff9800",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -1801,13 +1804,17 @@ describe("Widget Generators", () => {
 					],
 					label: "A'B'C'D'",
 					fillColor: "rgba(76, 175, 80, 0.3)",
-					strokeColor: "#4caf50"
+					strokeColor: "#4caf50",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "rotation" as const,
 					centerOfRotation: { x: 175, y: 145 },
 					angle: -90
-				}
+				},
+				additionalPoints: null
 			}
 			const parsedProps = TransformationDiagramPropsSchema.parse(props)
 			expect(generateTransformationDiagram(parsedProps)).toMatchSnapshot()
@@ -1826,7 +1833,10 @@ describe("Widget Generators", () => {
 					],
 					label: "△ABC",
 					fillColor: "rgba(33, 150, 243, 0.3)",
-					strokeColor: "#2196f3"
+					strokeColor: "#2196f3",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -1836,13 +1846,17 @@ describe("Widget Generators", () => {
 					],
 					label: "△A'B'C'",
 					fillColor: "rgba(255, 87, 34, 0.3)",
-					strokeColor: "#ff5722"
+					strokeColor: "#ff5722",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "dilation" as const,
 					centerOfDilation: { x: 100, y: 100 },
 					showRays: true
-				}
+				},
+				additionalPoints: null
 			}
 			const parsedProps = TransformationDiagramPropsSchema.parse(props)
 			expect(generateTransformationDiagram(parsedProps)).toMatchSnapshot()

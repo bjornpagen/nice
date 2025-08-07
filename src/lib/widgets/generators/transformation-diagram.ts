@@ -202,19 +202,16 @@ export const TransformationDiagramPropsSchema = z
 				vertexLabels: z
 					.array(z.string())
 					.nullable()
-					.optional()
 					.transform((val) => val ?? null)
 					.describe("Labels for each vertex (e.g., ['A', 'B', 'C', 'D']). Must match the number of vertices."),
 				angleMarks: z
 					.array(createAngleMarkSchema())
 					.nullable()
-					.optional()
 					.transform((val) => val ?? null)
 					.describe("Angle marks to draw at specific vertices."),
 				sideLengths: z
 					.array(createSideLengthSchema())
 					.nullable()
-					.optional()
 					.transform((val) => val ?? null)
 					.describe("Side length labels for each edge. The first label is for the edge from vertex 0 to vertex 1, etc.")
 			})
@@ -248,19 +245,16 @@ export const TransformationDiagramPropsSchema = z
 				vertexLabels: z
 					.array(z.string())
 					.nullable()
-					.optional()
 					.transform((val) => val ?? null)
 					.describe("Labels for each vertex (e.g., ['A'', 'B'', 'C'', 'D'']). Must match the number of vertices."),
 				angleMarks: z
 					.array(createAngleMarkSchema())
 					.nullable()
-					.optional()
 					.transform((val) => val ?? null)
 					.describe("Angle marks to draw at specific vertices."),
 				sideLengths: z
 					.array(createSideLengthSchema())
 					.nullable()
-					.optional()
 					.transform((val) => val ?? null)
 					.describe("Side length labels for each edge. The first label is for the edge from vertex 0 to vertex 1, etc.")
 			})
@@ -272,7 +266,6 @@ export const TransformationDiagramPropsSchema = z
 		additionalPoints: z
 			.array(AdditionalPointSchema)
 			.nullable()
-			.optional()
 			.transform((val) => val ?? null)
 			.describe("Additional labeled points to display (e.g., reference points, centers).")
 	})
@@ -397,7 +390,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	const drawPolygon = (
 		shape: TransformationDiagramProps["preImage"],
 		isImage: boolean,
-		labelPosition?: { x: number; y: number }
+		labelPosition: { x: number; y: number } | null
 	) => {
 		const pointsStr = shape.vertices.map((p) => `${p.x},${p.y}`).join(" ")
 		const strokeWidth = Math.max(1.5, 2 * scale)

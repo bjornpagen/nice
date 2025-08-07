@@ -76,7 +76,12 @@ const createGridSchema = () =>
 	z.object({
 		rows: z.number().int().positive(),
 		columns: z.number().int().positive(),
-		opacity: z.number().min(0).max(1).nullable().default(0.2)
+		opacity: z
+			.number()
+			.min(0)
+			.max(1)
+			.nullable()
+			.transform((val) => val ?? 0.2)
 	})
 
 // NEW: Define schemas inline to avoid $ref generation

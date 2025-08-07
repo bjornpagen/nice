@@ -23,7 +23,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -34,12 +37,16 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "B",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
 					showVectors: null
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -57,7 +64,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -67,12 +77,16 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "B",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
 					showVectors: true
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -91,7 +105,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -102,12 +119,16 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "B",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
 					showVectors: true
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -125,7 +146,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "P",
 					fillColor: "rgba(255, 0, 0, 0.3)",
-					strokeColor: "#ff0000"
+					strokeColor: "#ff0000",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -135,12 +159,16 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "Q",
 					fillColor: "rgba(0, 0, 255, 0.3)",
-					strokeColor: "#0000ff"
+					strokeColor: "#0000ff",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
 					showVectors: false
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -160,7 +188,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -170,7 +201,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "B",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "reflection" as const,
@@ -180,7 +214,8 @@ describe("generateTransformationDiagram", () => {
 						style: "dashed",
 						color: "black"
 					}
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -198,7 +233,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -208,7 +246,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "B",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "reflection" as const,
@@ -218,7 +259,8 @@ describe("generateTransformationDiagram", () => {
 						style: "dashed",
 						color: "gray"
 					}
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -237,7 +279,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "P",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -248,7 +293,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "Q",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "reflection" as const,
@@ -258,7 +306,8 @@ describe("generateTransformationDiagram", () => {
 						style: "solid",
 						color: "#333333"
 					}
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -276,7 +325,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "X",
 					fillColor: "rgba(255, 165, 0, 0.4)",
-					strokeColor: "#ff8c00"
+					strokeColor: "#ff8c00",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -286,7 +338,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "Y",
 					fillColor: "rgba(0, 255, 0, 0.4)",
-					strokeColor: "#00ff00"
+					strokeColor: "#00ff00",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "reflection" as const,
@@ -296,7 +351,8 @@ describe("generateTransformationDiagram", () => {
 						style: "dotted",
 						color: "red"
 					}
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -316,7 +372,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -326,13 +385,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "B",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "rotation" as const,
 					centerOfRotation: { x: 150, y: 150 },
 					angle: 90
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -351,7 +414,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "R",
 					fillColor: "rgba(128, 0, 128, 0.3)",
-					strokeColor: "#800080"
+					strokeColor: "#800080",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -362,13 +428,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "S",
 					fillColor: "rgba(255, 192, 203, 0.3)",
-					strokeColor: "#ffc0cb"
+					strokeColor: "#ffc0cb",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "rotation" as const,
 					centerOfRotation: { x: 150, y: 140 },
 					angle: -45
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -386,7 +456,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "M",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -396,13 +469,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "N",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "rotation" as const,
 					centerOfRotation: { x: 150, y: 150 },
 					angle: 180
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -420,7 +497,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "P",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -430,13 +510,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "Q",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "rotation" as const,
 					centerOfRotation: { x: 100, y: 200 },
 					angle: 60
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -456,7 +540,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -466,13 +553,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "B",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "dilation" as const,
 					centerOfDilation: { x: 100, y: 100 },
 					showRays: null
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -491,7 +582,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -502,13 +596,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "B",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "dilation" as const,
 					centerOfDilation: { x: 100, y: 100 },
 					showRays: true
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -527,7 +625,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "LARGE",
 					fillColor: "rgba(255, 100, 100, 0.4)",
-					strokeColor: "#ff6464"
+					strokeColor: "#ff6464",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -538,13 +639,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "SMALL",
 					fillColor: "rgba(100, 100, 255, 0.4)",
-					strokeColor: "#6464ff"
+					strokeColor: "#6464ff",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "dilation" as const,
 					centerOfDilation: { x: 200, y: 200 },
 					showRays: true
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -563,7 +668,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "P",
 					fillColor: "rgba(255, 215, 0, 0.4)",
-					strokeColor: "#ffd700"
+					strokeColor: "#ffd700",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -574,13 +682,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "Q",
 					fillColor: "rgba(0, 191, 255, 0.4)",
-					strokeColor: "#00bfff"
+					strokeColor: "#00bfff",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "dilation" as const,
 					centerOfDilation: { x: 150, y: 150 },
 					showRays: true
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -600,7 +712,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -610,12 +725,16 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "B",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
 					showVectors: null
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -633,7 +752,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "X",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -643,12 +765,16 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "Y",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
 					showVectors: true
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -666,7 +792,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "M",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -676,7 +805,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "N",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "reflection" as const,
@@ -686,7 +818,8 @@ describe("generateTransformationDiagram", () => {
 						style: null,
 						color: null
 					}
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -704,7 +837,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -714,12 +850,16 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "B",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
 					showVectors: false
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -738,7 +878,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "LARGE",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -749,13 +892,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "LARGER",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "dilation" as const,
 					centerOfDilation: { x: 50, y: 50 },
 					showRays: true
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -774,7 +921,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: null,
 					fillColor: "rgba(255, 255, 0, 0.5)",
-					strokeColor: "#ffff00"
+					strokeColor: "#ffff00",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -785,12 +935,16 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: null,
 					fillColor: "rgba(0, 255, 255, 0.5)",
-					strokeColor: "#00ffff"
+					strokeColor: "#00ffff",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
 					showVectors: true
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -813,7 +967,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "OCTAGON",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -828,13 +985,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "OCTAGON'",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "rotation" as const,
 					centerOfRotation: { x: 200, y: 200 },
 					angle: 45
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -855,7 +1016,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "SQUARE",
 					fillColor: "rgba(50, 150, 250, 0.3)",
-					strokeColor: "#3296fa"
+					strokeColor: "#3296fa",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -866,13 +1030,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "ROTATED",
 					fillColor: "rgba(250, 150, 50, 0.3)",
-					strokeColor: "#fa9632"
+					strokeColor: "#fa9632",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "rotation" as const,
 					centerOfRotation: { x: 150, y: 150 },
 					angle: 90
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -890,7 +1058,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "SMALL",
 					fillColor: "rgba(100, 200, 100, 0.4)",
-					strokeColor: "#64c864"
+					strokeColor: "#64c864",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -900,13 +1071,17 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "LARGE",
 					fillColor: "rgba(200, 100, 100, 0.4)",
-					strokeColor: "#c86464"
+					strokeColor: "#c86464",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "dilation" as const,
 					centerOfDilation: { x: 160, y: 140 },
 					showRays: true
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -925,7 +1100,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "ORIGINAL",
 					fillColor: "rgba(150, 100, 200, 0.4)",
-					strokeColor: "#9664c8"
+					strokeColor: "#9664c8",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -936,7 +1114,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "MIRROR",
 					fillColor: "rgba(200, 150, 100, 0.4)",
-					strokeColor: "#c89664"
+					strokeColor: "#c89664",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "reflection" as const,
@@ -946,7 +1127,8 @@ describe("generateTransformationDiagram", () => {
 						style: "dashed",
 						color: "#333"
 					}
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -966,7 +1148,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "RED",
 					fillColor: "rgba(255, 0, 0, 0.6)",
-					strokeColor: "#cc0000"
+					strokeColor: "#cc0000",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -976,12 +1161,16 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "BLUE",
 					fillColor: "rgba(0, 0, 255, 0.6)",
-					strokeColor: "#0000cc"
+					strokeColor: "#0000cc",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
 					showVectors: false
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -999,7 +1188,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A",
 					fillColor: "rgba(0, 128, 0, 0.4)",
-					strokeColor: "#008000"
+					strokeColor: "#008000",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -1009,7 +1201,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "A'",
 					fillColor: "rgba(128, 0, 128, 0.4)",
-					strokeColor: "#800080"
+					strokeColor: "#800080",
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "reflection" as const,
@@ -1019,7 +1214,8 @@ describe("generateTransformationDiagram", () => {
 						style: "dashed",
 						color: "#ff6600"
 					}
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -1037,7 +1233,10 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "WIDE",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -1047,12 +1246,16 @@ describe("generateTransformationDiagram", () => {
 					],
 					label: "VIEW",
 					fillColor: null,
-					strokeColor: null
+					strokeColor: null,
+					vertexLabels: null,
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
 					showVectors: true
-				}
+				},
+				additionalPoints: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
@@ -1148,7 +1351,8 @@ describe("generateTransformationDiagram", () => {
 					fillColor: "rgba(255, 100, 100, 0.3)",
 					strokeColor: "#ff6464",
 					vertexLabels: ["X", "Y", "Z"],
-					angleMarks: null
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -1160,7 +1364,8 @@ describe("generateTransformationDiagram", () => {
 					fillColor: "rgba(100, 100, 255, 0.3)",
 					strokeColor: "#6464ff",
 					vertexLabels: ["X'", "Y'", "Z'"],
-					angleMarks: null
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "reflection" as const,
@@ -1199,7 +1404,8 @@ describe("generateTransformationDiagram", () => {
 					fillColor: "rgba(150, 200, 100, 0.3)",
 					strokeColor: "#96c864",
 					vertexLabels: ["P", "Q", "R", "S"],
-					angleMarks: null
+					angleMarks: null,
+					sideLengths: null
 				},
 				image: {
 					vertices: [
@@ -1212,7 +1418,8 @@ describe("generateTransformationDiagram", () => {
 					fillColor: "rgba(100, 150, 200, 0.3)",
 					strokeColor: "#6496c8",
 					vertexLabels: ["P'", "Q'", "R'", "S'"],
-					angleMarks: null
+					angleMarks: null,
+					sideLengths: null
 				},
 				transformation: {
 					type: "translation" as const,
