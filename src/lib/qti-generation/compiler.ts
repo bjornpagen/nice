@@ -1,50 +1,56 @@
+import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import type { typedSchemas } from "@/lib/widgets/generators"
+import { typedSchemas } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
-import { encodeDataUri, isValidWidgetType } from "./helpers"
+import { renderBlockContent } from "./content-renderer"
+import { encodeDataUri } from "./helpers"
 import { compileInteraction } from "./interaction-compiler"
 import { validateAssessmentItemInput } from "./pre-validator"
 import { compileResponseDeclarations, compileResponseProcessing } from "./response-processor"
 import type { AssessmentItem, AssessmentItemInput } from "./schemas"
 import { createDynamicAssessmentItemSchema } from "./schemas"
-import { processAndFillSlots } from "./slot-filler"
 import { generateWidget } from "./widget-generator"
 import { convertHtmlEntities } from "./xml-fixes"
+
+// Type guard to check if a string is a valid widget type
+function isValidWidgetType(type: string): type is keyof typeof typedSchemas {
+	return Object.keys(typedSchemas).includes(type)
+}
 
 export function compile(itemData: AssessmentItemInput): string {
 	// Step 0: Prevalidation to catch QTI content model violations early
 	validateAssessmentItemInput(itemData, logger)
 
-	// Step 1: Create a dynamic schema based on the widgets present
-	const widgetMapping: Record<string, keyof typeof typedSchemas> = {}
+	const widgetMapping: Record<string, string> = {}
 	if (itemData.widgets) {
-		for (const [slotName, widget] of Object.entries(itemData.widgets)) {
-			if (widget && typeof widget === "object" && "type" in widget && typeof widget.type === "string") {
-				if (isValidWidgetType(widget.type)) {
-					widgetMapping[slotName] = widget.type
-				}
-			}
+		for (const [key, value] of Object.entries(itemData.widgets)) {
+			if (value?.type) widgetMapping[key] = value.type
 		}
 	}
-	const { AssessmentItemSchema } = createDynamicAssessmentItemSchema(widgetMapping)
+
+	// FIX: Add strict validation for widget types before creating the schema.
+	// Create a properly typed mapping object
+	const validatedWidgetMapping: Record<string, keyof typeof typedSchemas> = {}
+
+	for (const [key, type] of Object.entries(widgetMapping)) {
+		if (!isValidWidgetType(type)) {
+			throw errors.new(`Invalid widget type "${type}" for slot "${key}" provided in mapping.`)
+		}
+		// Now TypeScript knows type is a valid keyof typeof typedSchemas
+		validatedWidgetMapping[key] = type
+	}
+
+	const { AssessmentItemSchema } = createDynamicAssessmentItemSchema(validatedWidgetMapping)
 	const item: AssessmentItem = AssessmentItemSchema.parse(itemData)
 
-	// Step 2: Prepare a unified map of all slot content (widgets and interactions)
 	const slots = new Map<string, string>()
 
 	if (item.widgets) {
 		for (const [widgetId, widgetDef] of Object.entries(item.widgets)) {
+			// widgetDef is already typed correctly from the schema parse
 			const widgetHtml = generateWidget(widgetDef)
-			const isSvg = widgetHtml.trim().startsWith("<svg")
-			if (isSvg) {
-				// WARNING: YOU WILL GET FIRED IF YOU REMOVE THIS. DO NOT TOUCH. THIS IS CORRECT.
-				// SVG widgets MUST be base64-encoded and embedded in img tags. This is NOT a bug.
-				// The QTI spec ALLOWS img tags with data URIs. Previous assumptions were WRONG.
-				// Removing this will break production assessments. YOU HAVE BEEN WARNED.
-				const dataUri = encodeDataUri(widgetHtml)
-				// Wrap img in div to comply with QTI content model rules
-				const imgTag = `<div><img src="${dataUri}" alt="Widget visualization" /></div>`
-				slots.set(widgetId, imgTag)
+			if (widgetHtml.trim().startsWith("<svg")) {
+				slots.set(widgetId, `<img src="${encodeDataUri(widgetHtml)}" alt="Widget visualization" />`)
 			} else {
 				slots.set(widgetId, widgetHtml)
 			}
@@ -53,23 +59,18 @@ export function compile(itemData: AssessmentItemInput): string {
 
 	if (item.interactions) {
 		for (const [interactionId, interactionDef] of Object.entries(item.interactions)) {
-			const interactionXml = compileInteraction(interactionDef)
-			slots.set(interactionId, interactionXml)
+			slots.set(interactionId, compileInteraction(interactionDef, slots))
 		}
 	}
 
-	// Step 3: Process the body, filling all slots at once
-	// If body is null, use empty string (allowed by schema)
-	const filledBody = item.body === null ? "" : processAndFillSlots(item.body, slots)
+	const filledBody = item.body ? renderBlockContent(item.body, slots) : ""
+	const correctFeedback = renderBlockContent(item.feedback.correct, slots)
+	const incorrectFeedback = renderBlockContent(item.feedback.incorrect, slots)
 
-	// Step 4: Compile response declarations and processing rules
 	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)
 	const responseProcessing = compileResponseProcessing(item.responseDeclarations)
 
-	const correctFeedback = item.feedback.correct
-	const incorrectFeedback = item.feedback.incorrect
-
-	// Step 5: Assemble the final XML document
+	// Assemble the final XML document
 	const finalXml = `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"

@@ -8,7 +8,10 @@ import {
 	type AnyInteraction,
 	AnyInteractionSchema,
 	type AssessmentItemInput,
-	AssessmentItemSchema
+	type AssessmentItemShell,
+	AssessmentItemShellSchema,
+	type BlockContent,
+	type InlineContent
 } from "@/lib/qti-generation/schemas"
 import { typedSchemas, type WidgetInput } from "@/lib/widgets/generators"
 import { buildImageContext, type ImageContext } from "./perseus-image-resolver"
@@ -26,13 +29,7 @@ const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 // ADD: New exported constant error for standardized identification.
 export const ErrWidgetNotFound = errors.new("widget not found")
 
-// A new schema is needed for the shell from Shot 1.
-// It defines widgets and interactions as maps of empty objects.
-const AssessmentShellSchema = AssessmentItemSchema.extend({
-	widgets: z.array(z.string()).describe("A list of unique identifiers for widget slots that must be filled."),
-	interactions: z.array(z.string()).describe("A list of unique identifiers for interaction slots that must be filled.")
-})
-type AssessmentShell = z.infer<typeof AssessmentShellSchema>
+// Use the AssessmentItemShellSchema from schemas.ts
 
 /**
  * Dynamically creates a Zod schema for a collection of widgets based on a mapping.
@@ -157,11 +154,11 @@ async function generateAssessmentShell(
 	logger: logger.Logger,
 	perseusJson: string,
 	imageContext: ImageContext
-): Promise<AssessmentShell> {
+): Promise<AssessmentItemShell> {
 	// Assumes a new prompt function is created for this shot.
 	const { systemInstruction, userContent } = createAssessmentShellPrompt(perseusJson, imageContext)
 
-	const responseFormat = zodResponseFormat(AssessmentShellSchema, "assessment_shell_generator")
+	const responseFormat = zodResponseFormat(AssessmentItemShellSchema, "assessment_shell_generator")
 	logger.debug("generated json schema for openai", {
 		functionName: "generateAssessmentShell",
 		generatorName: "assessment_shell_generator",
@@ -210,7 +207,7 @@ async function generateAssessmentShell(
 async function generateInteractionContent(
 	logger: logger.Logger,
 	perseusJson: string,
-	assessmentShell: AssessmentShell,
+	assessmentShell: AssessmentItemShell,
 	imageContext: ImageContext
 ): Promise<Record<string, AnyInteraction>> {
 	const interactionSlotNames = assessmentShell.interactions
@@ -268,7 +265,7 @@ async function generateInteractionContent(
 async function generateWidgetContent(
 	logger: logger.Logger,
 	perseusJson: string,
-	assessmentShell: AssessmentShell,
+	assessmentShell: AssessmentItemShell,
 	widgetMapping: Record<string, keyof typeof typedSchemas>,
 	generatedInteractions: Record<string, AnyInteraction>,
 	imageContext: ImageContext
@@ -355,33 +352,56 @@ export async function generateStructuredQtiItem(
 		interactionSlots: assessmentShell.interactions
 	})
 
-	// NEW: Strict validation of slot consistency.
+	// FIX: Replace the incomplete slot checker with a comprehensive one.
 	logger.debug("validating consistency between declared slots and body content")
+
+	function collectAllSlotIds(shell: AssessmentItemShell): Set<string> {
+		const ids = new Set<string>()
+		const _seenInteractions = new Set<string>()
+
+		function walkInline(items: InlineContent | null | undefined) {
+			if (!items) return
+			for (const item of items) {
+				if (item.type === "inlineSlot") ids.add(item.slotId)
+			}
+		}
+
+		function walkBlock(items: BlockContent | null | undefined) {
+			if (!items) return
+			for (const item of items) {
+				if (item.type === "blockSlot") ids.add(item.slotId)
+				else if (item.type === "paragraph") walkInline(item.content)
+			}
+		}
+
+		walkBlock(shell.body)
+		walkBlock(shell.feedback.correct)
+		walkBlock(shell.feedback.incorrect)
+
+		if (shell.interactions) {
+			// Also check for slots inside interaction definitions passed in the shell if any
+			// Although the shell's interactions is just string[], this ensures future-proofing
+			// if the shell becomes more complex. We check the final generated interactions.
+		}
+
+		return ids
+	}
+
 	const allDeclaredSlots = new Set([...assessmentShell.widgets, ...assessmentShell.interactions])
-	// FIX: Use a more robust regex that handles both single and double quotes,
-	// as well as potential whitespace variations. This prevents false positives.
-	const slotNameRegex = /<slot\s+name\s*=\s*(["'])(.*?)\1/g
-	const slotsUsedInBody = new Set(
-		// The match index is changed from 1 to 2 to capture the slot name correctly.
-		assessmentShell.body === null
-			? []
-			: [...assessmentShell.body.matchAll(slotNameRegex)]
-					.map((match) => match[2])
-					.filter((slot): slot is string => slot !== undefined)
-	)
+	const slotsUsedInContent = collectAllSlotIds(assessmentShell)
 
 	if (
-		allDeclaredSlots.size !== slotsUsedInBody.size ||
-		![...allDeclaredSlots].every((slot) => slotsUsedInBody.has(slot))
+		allDeclaredSlots.size !== slotsUsedInContent.size ||
+		![...allDeclaredSlots].every((slot) => slotsUsedInContent.has(slot)) ||
+		![...slotsUsedInContent].every((slot) => allDeclaredSlots.has(slot))
 	) {
-		const undeclaredSlots = [...slotsUsedInBody].filter((slot): slot is string => !allDeclaredSlots.has(slot))
-		const unusedSlots = [...allDeclaredSlots].filter((slot): slot is string => !slotsUsedInBody.has(slot))
-		const errorMessage = `Slot declaration mismatch detected.
-- Undeclared in body: [${undeclaredSlots.join(", ")}]
-- Unused in declaration: [${unusedSlots.join(", ")}]`
+		const undeclaredSlots = [...slotsUsedInContent].filter((slot) => !allDeclaredSlots.has(slot))
+		const unusedSlots = [...allDeclaredSlots].filter((slot) => !slotsUsedInContent.has(slot))
+		const errorMessage = `Slot declaration mismatch detected after shell generation.
+- Slots used in content but not declared in widget/interaction arrays: [${undeclaredSlots.join(", ")}]
+- Slots declared in arrays but not used in any content field: [${unusedSlots.join(", ")}]`
 
-		logger.error("slot consistency validation failed, will throw retriable error", { undeclaredSlots, unusedSlots })
-		// Throw a standard, retriable error.
+		logger.error("slot consistency validation failed", { undeclaredSlots, unusedSlots })
 		throw errors.new(errorMessage)
 	}
 	logger.debug("slot consistency validation successful")
@@ -398,7 +418,9 @@ export async function generateStructuredQtiItem(
 			return { data: emptyMapping, error: null }
 		}
 		// Only make the AI call if there are widgets to map
-		return errors.try(mapSlotsToWidgets(logger, perseusJsonString, assessmentShell.body ?? "", widgetSlotNames))
+		// Convert structured body to string representation for widget mapping prompt
+		const bodyString = assessmentShell.body ? JSON.stringify(assessmentShell.body) : ""
+		return errors.try(mapSlotsToWidgets(logger, perseusJsonString, bodyString, widgetSlotNames))
 	})()
 
 	if (widgetMappingResult.error) {

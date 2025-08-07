@@ -1,76 +1,76 @@
 import * as errors from "@superbuilders/errors"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
+import { renderBlockContent, renderInlineContent } from "./content-renderer"
 import type { AnyInteraction } from "./schemas"
 
-export function compileInteraction(interaction: AnyInteraction): string {
+export function compileInteraction(interaction: AnyInteraction, slots: Map<string, string>): string {
 	let interactionXml: string
 
 	switch (interaction.type) {
 		case "choiceInteraction": {
-			const processedPrompt = interaction.prompt
-			const choices = interaction.choices
+			const promptXml = renderInlineContent(interaction.prompt, slots)
+			const choicesXml = interaction.choices
 				.map((c) => {
-					const processedContent = c.content
-					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
+					const contentXml = renderBlockContent(c.content, slots)
+					let choice = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${contentXml}`
 					if (c.feedback) {
-						const processedFeedback = c.feedback
-						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${processedFeedback}</qti-feedback-inline>`
+						choice += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${renderInlineContent(c.feedback, slots)}</qti-feedback-inline>`
 					}
-					choiceXml += "</qti-simple-choice>"
-					return choiceXml
+					choice += "</qti-simple-choice>"
+					return choice
 				})
 				.join("\n            ")
 
 			interactionXml = `<qti-choice-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" min-choices="${interaction.minChoices}" max-choices="${interaction.maxChoices}">
-            <qti-prompt>${processedPrompt}</qti-prompt>
-            ${choices}
+            <qti-prompt>${promptXml}</qti-prompt>
+            ${choicesXml}
         </qti-choice-interaction>`
 			break
 		}
 		case "orderInteraction": {
-			const processedPrompt = interaction.prompt
-			const choices = interaction.choices
+			const promptXml = renderInlineContent(interaction.prompt, slots)
+			const choicesXml = interaction.choices
 				.map((c) => {
-					const processedContent = c.content
-					let choiceXml = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${processedContent}`
+					const contentXml = renderBlockContent(c.content, slots)
+					let choice = `<qti-simple-choice identifier="${escapeXmlAttribute(c.identifier)}">${contentXml}`
 					if (c.feedback) {
-						const processedFeedback = c.feedback
-						choiceXml += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${processedFeedback}</qti-feedback-inline>`
+						choice += `<qti-feedback-inline outcome-identifier="FEEDBACK-INLINE" identifier="${escapeXmlAttribute(c.identifier)}">${renderInlineContent(c.feedback, slots)}</qti-feedback-inline>`
 					}
-					choiceXml += "</qti-simple-choice>"
-					return choiceXml
+					choice += "</qti-simple-choice>"
+					return choice
 				})
 				.join("\n            ")
 
 			interactionXml = `<qti-order-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}" orientation="${escapeXmlAttribute(interaction.orientation)}">
-            <qti-prompt>${processedPrompt}</qti-prompt>
-            ${choices}
+            <qti-prompt>${promptXml}</qti-prompt>
+            ${choicesXml}
         </qti-order-interaction>`
 			break
 		}
 		case "textEntryInteraction": {
-			let xml = `<qti-text-entry-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}"`
-			if (interaction.expectedLength) {
-				xml += ` expected-length="${interaction.expectedLength}"`
-			}
-			xml += "/>"
-			interactionXml = xml
+			interactionXml = `<qti-text-entry-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}"${
+				interaction.expectedLength ? ` expected-length="${interaction.expectedLength}"` : ""
+			}/>`
 			break
 		}
 		case "inlineChoiceInteraction": {
-			const choices = interaction.choices
+			const choicesXml = interaction.choices
 				.map(
-					(c) => `<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}">${c.content}</qti-inline-choice>`
+					(c) =>
+						`<qti-inline-choice identifier="${escapeXmlAttribute(c.identifier)}">${renderInlineContent(c.content, slots)}</qti-inline-choice>`
 				)
 				.join("\n                ")
 
 			interactionXml = `<qti-inline-choice-interaction response-identifier="${escapeXmlAttribute(interaction.responseIdentifier)}" shuffle="${interaction.shuffle}">
-                ${choices}
+                ${choicesXml}
             </qti-inline-choice-interaction>`
 			break
 		}
-		default:
-			throw errors.new("Unknown interaction type")
+		default: {
+			// This should never happen if all interaction types are handled
+			// We can't access properties on 'never', so we throw a generic error
+			throw errors.new("Unhandled interaction type in switch statement")
+		}
 	}
 
 	// Wrap block-level interactions in div to comply with QTI content model

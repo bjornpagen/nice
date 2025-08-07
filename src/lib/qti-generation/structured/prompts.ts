@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { allExamples } from "@/lib/qti-generation/examples"
-import { type AnyInteraction, AssessmentItemSchema } from "@/lib/qti-generation/schemas"
+import { type AnyInteraction, AssessmentItemShellSchema } from "@/lib/qti-generation/schemas"
 import type { typedSchemas } from "@/lib/widgets/generators"
 import type { ImageContext } from "./perseus-image-resolver"
 
@@ -12,10 +12,7 @@ function createShellFromExample(item: (typeof allExamples)[0]) {
 		interactions: item.interactions ? Object.keys(item.interactions) : []
 	}
 	// Validate against the shell schema before returning
-	return AssessmentItemSchema.extend({
-		widgets: z.array(z.string()),
-		interactions: z.array(z.string())
-	}).parse(shell)
+	return AssessmentItemShellSchema.parse(shell)
 }
 
 // Define a union type that includes both valid widget types and the bailout option
@@ -102,10 +99,32 @@ export function createAssessmentShellPrompt(
 	const systemInstruction = `You are an expert in educational content conversion. Your task is to analyze a Perseus JSON object and create a structured assessment shell.
 
 The shell should:
-1. Convert Perseus content into a single 'body' string with <slot name="..."/> placeholders.
+1. Convert Perseus content into a structured 'body' field as a JSON array of block-level items.
 2. List all widget and interaction identifiers as arrays of strings in the 'widgets' and 'interactions' properties.
-3. Faithfully translate all mathematical content from LaTeX to MathML.
+3. Faithfully translate all mathematical content from LaTeX to MathML within the structured content.
 4. NEVER generate <img> or <svg> tags in the body - all visual elements must be widget slots.
+
+**CRITICAL: STRUCTURED CONTENT MODEL**
+- **'body' Field**: Create a 'body' field containing the main content as a structured JSON array of block-level items.
+  - Paragraphs must be { "type": "paragraph", "content": [...] }.
+  - The 'content' of a paragraph is an array of inline items.
+  - Inline items can be { "type": "text", "content": "..." }, { "type": "math", "mathml": "..." }, or { "type": "inlineSlot", "slotId": "..." }.
+  - Placeholders for block-level widgets or interactions must be { "type": "blockSlot", "slotId": "..." }.
+
+**Example of a structured body:**
+\`\`\`json
+"body": [
+  {
+    "type": "paragraph",
+    "content": [
+      { "type": "text", "content": "Evaluate " },
+      { "type": "math", "mathml": "msup><mi>x</mi><mn>2</mn></msup>" },
+      { "type": "inlineSlot", "slotId": "text_entry_1" }
+    ]
+  },
+  { "type": "blockSlot", "slotId": "some_graph_widget" }
+]
+\`\`\`
 
 CRITICAL CLASSIFICATION RULE:
 - WIDGETS are COMPLETELY STATIC (images, graphs) - NO user input
@@ -171,10 +190,11 @@ ${perseusJson}
 
 ## CRITICAL Instructions:
 - **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of the question.
-- **\`body\` Field**: Create a 'body' field containing the main content as an HTML string.
+- **\`body\` Field**: Create a 'body' field containing the main content as a structured JSON array (not an HTML string).
 - **Placeholders**:
-  - For ALL Perseus widgets (including 'image' widgets), create a \`<slot name="..." />\` placeholder in the 'body' and add its identifier to the 'widgets' string array.
-  - For each Perseus interaction (e.g., 'radio', 'text-input'), create a placeholder like \`<slot name="interaction_1" />\` and add its identifier (e.g., "interaction_1") to the 'interactions' string array.
+  - For ALL Perseus widgets (including 'image' widgets), create a { "type": "blockSlot", "slotId": "..." } placeholder in the 'body' and add its identifier to the 'widgets' string array.
+  - For inline interactions (e.g., 'text-input', 'inline-choice'), create { "type": "inlineSlot", "slotId": "..." } inside paragraph content.
+  - For block interactions (e.g., 'radio', 'order'), create { "type": "blockSlot", "slotId": "..." } in the body array.
 - **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
 - **MathML Conversion (MANDATORY)**:
   - You MUST convert ALL LaTeX expressions to standard MathML (\`<math>...</math>\`).
@@ -243,37 +263,26 @@ CORRECT: \`<mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>)</mo></mrow>\`
 
 **General Rule for mfenced:** Replace \`<mfenced open="X" close="Y">content</mfenced>\` with \`<mrow><mo>X</mo>content<mo>Y</mo></mrow>\`
 
-**4. QTI Content Model Violations - ALL BANNED:**
+**4. Structured Content Model Requirements:**
 
-**Body Content Must Be Wrapped in Block-Level Elements:**
-WRONG: \`body: 'This table gives select values of the differentiable function <math>...</math>.<slot name="h_table" />'\`
-CORRECT: \`body: '<p>This table gives select values of the differentiable function <math>...</math>.</p><slot name="h_table" />'\`
+**Body Content Must Use Structured JSON Arrays:**
+WRONG: \`body: '<p>This table gives select values...</p><slot name="h_table" />'\` (HTML string)
+CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "This table gives select values..." }] }, { "type": "blockSlot", "slotId": "h_table" }]\`
 
-WRONG: \`body: 'The lengths of 4 pencils were measured. The lengths are <math><mn>11</mn></math> cm...'\`
-CORRECT: \`body: '<p>The lengths of 4 pencils were measured. The lengths are <math><mn>11</mn></math> cm...</p>'\`
+WRONG: \`body: 'The lengths of 4 pencils were measured...'\` (raw text)
+CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "The lengths of 4 pencils were measured. The lengths are " }, { "type": "math", "mathml": "<mn>11</mn>" }, { "type": "text", "content": " cm..." }] }]\`
 
-WRONG: \`body: 'Select the correct answer from the choices below.<slot name="choice_interaction" />'\`
-CORRECT: \`body: '<p>Select the correct answer from the choices below.</p><slot name="choice_interaction" />'\`
+**CRITICAL: Inline Interaction Placement:**
+WRONG: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "Evaluate." }] }, { "type": "blockSlot", "slotId": "text_entry" }]\` (text entry as block)
+CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "Evaluate. " }, { "type": "math", "mathml": "..." }, { "type": "text", "content": " " }, { "type": "inlineSlot", "slotId": "text_entry" }] }]\`
 
-WRONG: \`body: 'Use the table to answer the question.<slot name="table_widget" /><slot name="interaction_1" />'\`
-CORRECT: \`body: '<p>Use the table to answer the question.</p><slot name="table_widget" /><slot name="interaction_1" />'\`
+WRONG: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "The answer is" }] }, { "type": "inlineSlot", "slotId": "text_entry" }]\` (inline slot outside paragraph)
+CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "The answer is " }, { "type": "inlineSlot", "slotId": "text_entry" }] }]\`
 
-**CRITICAL: Text Entry Interaction Placement - INLINE ELEMENTS ONLY:**
-WRONG: \`body: '<p>Evaluate.</p><math>...</math> <slot name="text_entry" />'\` (text entry floating outside paragraph)
-CORRECT: \`body: '<p>Evaluate.<math>...</math> <slot name="text_entry" /></p>'\` (text entry inside paragraph)
-
-WRONG: \`body: '<p>The answer is</p><slot name="text_entry_interaction" />'\` (text entry floating after paragraph)
-CORRECT: \`body: '<p>The answer is <slot name="text_entry_interaction" /></p>'\` (text entry inside paragraph)
-
-WRONG: \`body: '<p>Question text</p><slot name="inline_choice" />'\` (floating outside text context)
-CORRECT: \`body: '<p>Question text <slot name="inline_choice" /></p>'\` (inside text context)
-
-WRONG: \`body: '<p>Evaluate.</p><math>...</math> <span><slot name="text_entry" /></span>'\` (never wrap slots in span)
-CORRECT: \`body: '<p>Evaluate.<math>...</math> <slot name="text_entry" /></p>'\` (slot directly inside paragraph)
-
-**Text Entry Interaction Rule:** Text entry interactions (textEntryInteraction, inlineChoiceInteraction) are INLINE elements and MUST be placed inside text containers like \`<p>\`. They CANNOT be placed directly in the body or adjacent to block elements without proper wrapping. NEVER wrap interaction slots in \`<span>\` elements - the slot should be placed directly inside the paragraph or other block element.
-
-**General Rule:** ALL text content in the body must be wrapped in block-level elements like \`<p>\` or \`<div>\`. Raw text at the start of body is FORBIDDEN. Text entry interactions must be INSIDE inline contexts, not floating between block elements.
+**Inline vs Block Slots Rule:** 
+- Text entry and inline choice interactions use \`{ "type": "inlineSlot", "slotId": "..." }\` INSIDE paragraph content arrays
+- Choice and order interactions use \`{ "type": "blockSlot", "slotId": "..." }\` in the main body array
+- Widgets always use \`{ "type": "blockSlot", "slotId": "..." }\` in the main body array
 
 **5. Explanation Widgets - BANNED:**
 Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turned into slots.
@@ -297,7 +306,7 @@ Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turne
 **WRONG:**
 \`\`\`json
 {
-  "body": "<p>Some text... <slot name=\\"explanation_1\\" /></p>",
+  "body": [{ "type": "paragraph", "content": [{ "type": "text", "content": "Some text... " }, { "type": "blockSlot", "slotId": "explanation_1" }] }],
   "widgets": ["explanation_1"],
   ...
 }
@@ -305,7 +314,11 @@ Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turne
 **CORRECT:**
 \`\`\`json
 {
-  "body": "<p>Some text...</p><p>Does this always work?</p><blockquote>Yes, dividing by a fraction is always the same as multiplying by the reciprocal of the fraction.</blockquote>",
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Some text..." }] },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Does this always work?" }] },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Yes, dividing by a fraction is always the same as multiplying by the reciprocal of the fraction." }] }
+  ],
   "widgets": [], // No widget for the explanation
   ...
 }
@@ -477,8 +490,8 @@ Perseus JSON:
 ${perseusJson}
 \`\`\`
 
-Assessment Item Body:
-\`\`\`html
+Assessment Item Body (as structured JSON):
+\`\`\`json
 ${assessmentBody}
 \`\`\`
 
@@ -581,48 +594,40 @@ WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><m
 
 **QTI Content Model Violations:**
 
-**Prompt Fields Must NOT Contain Block-Level Elements:**
-WRONG: \`prompt: '<p>Select the double number line that shows the other values of distance and elevation.</p>'\`
-CORRECT: \`prompt: 'Select the double number line that shows the other values of distance and elevation.'\`
+**Prompt Fields Must Use Structured Inline Content:**
+WRONG: \`prompt: 'Select the double number line...'\` (plain string)
+CORRECT: \`prompt: [{ "type": "text", "content": "Select the double number line that shows the other values of distance and elevation." }]\`
 
-WRONG: \`prompt: '<p>Arrange the cards to make a true comparison.</p>'\`
-CORRECT: \`prompt: 'Arrange the cards to make a true comparison.'\`
+WRONG: \`prompt: '<p>Arrange the cards to make a true comparison.</p>'\` (HTML string)
+CORRECT: \`prompt: [{ "type": "text", "content": "Arrange the cards to make a true comparison." }]\`
 
-WRONG: \`prompt: '<p>Choose the inequality that represents the graph.</p>'\`
-CORRECT: \`prompt: 'Choose the inequality that represents the graph.'\`
+**Example with Math in Prompt:**
+CORRECT: \`prompt: [{ "type": "text", "content": "What is the value of " }, { "type": "math", "mathml": "<mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo>" }, { "type": "text", "content": " at each point?" }]\`
 
-WRONG: \`prompt: '<p>What is the value of the function at each point?</p>'\`
-CORRECT: \`prompt: 'What is the value of the function at each point?'\`
-
-WRONG: \`prompt: '<p>Find the area of the shaded region.</p>'\`
-CORRECT: \`prompt: 'Find the area of the shaded region.'\`
-
-WRONG: \`prompt: '<p>How many apples are there in total?</p>'\`
-CORRECT: \`prompt: 'How many apples are there in total?'\`
-
-**General Rule for Prompts:** Prompt fields in interactions can ONLY contain inline content. NO block-level elements like \`<p>\`, \`<div>\`, \`<h1>\`, etc. are allowed.
+**General Rule for Prompts:** Prompt fields MUST be arrays of inline content objects. No raw strings or HTML allowed.
 
 **Choice Content - DEPENDS ON INTERACTION TYPE:**
 
 **For Standard Choice Interactions (choiceInteraction, orderInteraction):**
-WRONG: \`{ identifier: "A", content: "above" }\` (raw text)
-CORRECT: \`{ identifier: "A", content: "<p>above</p>" }\` (needs block wrapper)
+WRONG: \`{ identifier: "A", content: "<p>above</p>" }\` (HTML string)
+CORRECT: \`{ identifier: "A", content: [{ "type": "paragraph", "content": [{ "type": "text", "content": "above" }] }] }\`
 
 **For Inline Choice Interactions (inlineChoiceInteraction):**
-WRONG: \`{ identifier: "ABOVE", content: "<p>above</p>" }\` (block element in inline context)
-CORRECT: \`{ identifier: "ABOVE", content: "above" }\` (inline text only)
+WRONG: \`{ identifier: "ABOVE", content: "above" }\` (plain string)
+CORRECT: \`{ identifier: "ABOVE", content: [{ "type": "text", "content": "above" }] }\`
 
-**Choice Feedback - ALWAYS INLINE ONLY:**
-WRONG: \`feedback: '<p>Correct! This rectangle has...</p>'\` (block element in inline context)
-CORRECT: \`feedback: 'Correct! This rectangle has...'\` (inline text only)
+**Choice Feedback - ALWAYS INLINE CONTENT:**
+WRONG: \`feedback: 'Correct! This rectangle has...'\` (plain string)
+CORRECT: \`feedback: [{ "type": "text", "content": "Correct! This rectangle has..." }]\`
 
-WRONG: \`feedback: '<p>Incorrect. Try again.</p>'\`
-CORRECT: \`feedback: 'Incorrect. Try again.'\`
+WRONG: \`feedback: '<p>Incorrect. Try again.</p>'\` (HTML string)
+CORRECT: \`feedback: [{ "type": "text", "content": "Incorrect. Try again." }]\`
 
 **Critical Rules:**
-- **Standard choice interactions** (choiceInteraction, orderInteraction): Choice content MUST be wrapped in block elements like \`<p>\`
-- **Inline choice interactions** (inlineChoiceInteraction): Choice content MUST be inline text only (no \`<p>\` tags)
-- **ALL choice feedback**: MUST be inline text only (no \`<p>\` tags) regardless of interaction type
+- **Standard choice interactions** (choiceInteraction, orderInteraction): Choice content MUST be arrays of block content objects
+- **Inline choice interactions** (inlineChoiceInteraction): Choice content MUST be arrays of inline content objects
+- **ALL choice feedback**: MUST be arrays of inline content objects regardless of interaction type
+- **ALL prompts**: MUST be arrays of inline content objects
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY LaTeX commands (backslash followed by letters)
@@ -738,48 +743,40 @@ WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><m
 
 **QTI Content Model Violations:**
 
-**Prompt Fields Must NOT Contain Block-Level Elements:**
-WRONG: \`prompt: '<p>Select the double number line that shows the other values of distance and elevation.</p>'\`
-CORRECT: \`prompt: 'Select the double number line that shows the other values of distance and elevation.'\`
+**Prompt Fields Must Use Structured Inline Content:**
+WRONG: \`prompt: 'Select the double number line...'\` (plain string)
+CORRECT: \`prompt: [{ "type": "text", "content": "Select the double number line that shows the other values of distance and elevation." }]\`
 
-WRONG: \`prompt: '<p>Arrange the cards to make a true comparison.</p>'\`
-CORRECT: \`prompt: 'Arrange the cards to make a true comparison.'\`
+WRONG: \`prompt: '<p>Arrange the cards to make a true comparison.</p>'\` (HTML string)
+CORRECT: \`prompt: [{ "type": "text", "content": "Arrange the cards to make a true comparison." }]\`
 
-WRONG: \`prompt: '<p>Choose the inequality that represents the graph.</p>'\`
-CORRECT: \`prompt: 'Choose the inequality that represents the graph.'\`
+**Example with Math in Prompt:**
+CORRECT: \`prompt: [{ "type": "text", "content": "What is the value of " }, { "type": "math", "mathml": "<mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo>" }, { "type": "text", "content": " at each point?" }]\`
 
-WRONG: \`prompt: '<p>What is the value of the function at each point?</p>'\`
-CORRECT: \`prompt: 'What is the value of the function at each point?'\`
-
-WRONG: \`prompt: '<p>Find the area of the shaded region.</p>'\`
-CORRECT: \`prompt: 'Find the area of the shaded region.'\`
-
-WRONG: \`prompt: '<p>How many apples are there in total?</p>'\`
-CORRECT: \`prompt: 'How many apples are there in total?'\`
-
-**General Rule for Prompts:** Prompt fields in interactions can ONLY contain inline content. NO block-level elements like \`<p>\`, \`<div>\`, \`<h1>\`, etc. are allowed.
+**General Rule for Prompts:** Prompt fields MUST be arrays of inline content objects. No raw strings or HTML allowed.
 
 **Choice Content - DEPENDS ON INTERACTION TYPE:**
 
 **For Standard Choice Interactions (choiceInteraction, orderInteraction):**
-WRONG: \`{ identifier: "A", content: "above" }\` (raw text)
-CORRECT: \`{ identifier: "A", content: "<p>above</p>" }\` (needs block wrapper)
+WRONG: \`{ identifier: "A", content: "<p>above</p>" }\` (HTML string)
+CORRECT: \`{ identifier: "A", content: [{ "type": "paragraph", "content": [{ "type": "text", "content": "above" }] }] }\`
 
 **For Inline Choice Interactions (inlineChoiceInteraction):**
-WRONG: \`{ identifier: "ABOVE", content: "<p>above</p>" }\` (block element in inline context)
-CORRECT: \`{ identifier: "ABOVE", content: "above" }\` (inline text only)
+WRONG: \`{ identifier: "ABOVE", content: "above" }\` (plain string)
+CORRECT: \`{ identifier: "ABOVE", content: [{ "type": "text", "content": "above" }] }\`
 
-**Choice Feedback - ALWAYS INLINE ONLY:**
-WRONG: \`feedback: '<p>Correct! This rectangle has...</p>'\` (block element in inline context)
-CORRECT: \`feedback: 'Correct! This rectangle has...'\` (inline text only)
+**Choice Feedback - ALWAYS INLINE CONTENT:**
+WRONG: \`feedback: 'Correct! This rectangle has...'\` (plain string)
+CORRECT: \`feedback: [{ "type": "text", "content": "Correct! This rectangle has..." }]\`
 
-WRONG: \`feedback: '<p>Incorrect. Try again.</p>'\`
-CORRECT: \`feedback: 'Incorrect. Try again.'\`
+WRONG: \`feedback: '<p>Incorrect. Try again.</p>'\` (HTML string)
+CORRECT: \`feedback: [{ "type": "text", "content": "Incorrect. Try again." }]\`
 
 **Critical Rules:**
-- **Standard choice interactions** (choiceInteraction, orderInteraction): Choice content MUST be wrapped in block elements like \`<p>\`
-- **Inline choice interactions** (inlineChoiceInteraction): Choice content MUST be inline text only (no \`<p>\` tags)
-- **ALL choice feedback**: MUST be inline text only (no \`<p>\` tags) regardless of interaction type
+- **Standard choice interactions** (choiceInteraction, orderInteraction): Choice content MUST be arrays of block content objects
+- **Inline choice interactions** (inlineChoiceInteraction): Choice content MUST be arrays of inline content objects
+- **ALL choice feedback**: MUST be arrays of inline content objects regardless of interaction type
+- **ALL prompts**: MUST be arrays of inline content objects
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY LaTeX commands (backslash followed by letters)

@@ -34,34 +34,88 @@ export const doubleNumberLineRatio: AssessmentItemInput = {
 			bottomLine: { label: "Elevation, meters", ticks: [0, 80, 100, 120, 140] }
 		}
 	},
-	body: '<p>Cory hikes up a hill with a constant slope. The double number line shows that after Cory hikes <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mtext> km</mtext></math>, their elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn><mtext> m</mtext></math>.</p><slot name="stimulus_dnl" /><slot name="choice_interaction" />',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content: "Cory hikes up a hill with a constant slope. The double number line shows that after Cory hikes "
+				},
+				{ type: "math", mathml: "<mn>3</mn><mtext> km</mtext>" },
+				{ type: "text", content: ", their elevation is " },
+				{ type: "math", mathml: "<mn>120</mn><mtext> m</mtext>" },
+				{ type: "text", content: "." }
+			]
+		},
+		{ type: "blockSlot", slotId: "stimulus_dnl" },
+		{ type: "blockSlot", slotId: "choice_interaction" }
+	],
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
 			responseIdentifier: "RESPONSE",
-			prompt: "Select the double number line that shows the other values of distance and elevation.",
+			prompt: [
+				{
+					type: "text",
+					content: "Select the double number line that shows the other values of distance and elevation."
+				}
+			],
 			minChoices: 1,
 			maxChoices: 1,
 			shuffle: true,
 			choices: [
 				{
 					identifier: "A",
-					content: '<slot name="choice_a_dnl" />',
+					content: [{ type: "blockSlot", slotId: "choice_a_dnl" }],
 					feedback: null
 				},
 				{
 					identifier: "B",
-					content: '<slot name="choice_b_dnl" />',
+					content: [{ type: "blockSlot", slotId: "choice_b_dnl" }],
 					feedback: null
 				}
 			]
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> The ratio of distance to elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>:</mo><mn>120</mn></math>, which simplifies to a unit rate of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>:</mo><mn>40</mn></math>. For every <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mtext> km</mtext></math> hiked, the elevation increases by <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>40</mn><mtext> m</mtext></math>. This matches the correct number line.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> First, find the unit rate. If Cory\'s elevation is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>120</mn><mtext> m</mtext></math> after <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mtext> km</mtext></math>, the rate is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mn>120</mn><mtext> m</mtext></mrow><mrow><mn>3</mn><mtext> km</mtext></mrow></mfrac><mo>=</mo><mn>40</mn></math> meters per kilometer. Use this rate to fill in the other values on the number line.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! The ratio of distance to elevation is " },
+					{ type: "math", mathml: "<mn>3</mn><mo>:</mo><mn>120</mn>" },
+					{ type: "text", content: ", which simplifies to a unit rate of " },
+					{ type: "math", mathml: "<mn>1</mn><mo>:</mo><mn>40</mn>" },
+					{ type: "text", content: ". For every " },
+					{ type: "math", mathml: "<mn>1</mn><mtext> km</mtext>" },
+					{ type: "text", content: " hiked, the elevation increases by " },
+					{ type: "math", mathml: "<mn>40</mn><mtext> m</mtext>" },
+					{ type: "text", content: ". This matches the correct number line." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. First, find the unit rate. If Cory's elevation is " },
+					{ type: "math", mathml: "<mn>120</mn><mtext> m</mtext>" },
+					{ type: "text", content: " after " },
+					{ type: "math", mathml: "<mn>3</mn><mtext> km</mtext>" },
+					{ type: "text", content: ", the rate is " },
+					{
+						type: "math",
+						mathml:
+							"<mfrac><mrow><mn>120</mn><mtext> m</mtext></mrow><mrow><mn>3</mn><mtext> km</mtext></mrow></mfrac><mo>=</mo><mn>40</mn>"
+					},
+					{
+						type: "text",
+						content: " meters per kilometer. Use this rate to fill in the other values on the number line."
+					}
+				]
+			}
+		]
 	}
 }
 
@@ -76,7 +130,21 @@ export const evalFractionalExponents: AssessmentItemInput = {
 			correct: 81
 		}
 	],
-	body: '<p>Evaluate.<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow></math> <slot name="text_entry" /></p>',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Evaluate." },
+				{
+					type: "math",
+					mathml:
+						"<mrow><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo></mrow>"
+				},
+				{ type: "text", content: " " },
+				{ type: "inlineSlot", slotId: "text_entry" }
+			]
+		}
+	],
 	interactions: {
 		text_entry: {
 			type: "textEntryInteraction",
@@ -86,10 +154,62 @@ export const evalFractionalExponents: AssessmentItemInput = {
 	},
 	widgets: null,
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> The answer is 81.</p><p>You successfully applied the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math></p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> Let me help you solve this step by step.</p><p>First, use the rule: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup></math></p><p>So: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>2</mn><mn>54</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>1</mn><mn>27</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup></math></p><p>Then: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup><mo>=</mo><msup><mrow><mo>(</mo><mroot><mn>27</mn><mn>3</mn></mroot><mo>)</mo></mrow><mn>4</mn></msup><mo>=</mo><msup><mn>3</mn><mn>4</mn></msup><mo>=</mo><mn>81</mn></math></p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Correct! The answer is 81." }]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "You successfully applied the rule: " },
+					{
+						type: "math",
+						mathml:
+							"<mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup>"
+					}
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Not quite. Let me help you solve this step by step." }]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "First, use the rule: " },
+					{
+						type: "math",
+						mathml:
+							"<mfrac><msup><mi>a</mi><mi>n</mi></msup><msup><mi>b</mi><mi>n</mi></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mi>a</mi><mi>b</mi></mfrac><mo>)</mo></mrow><mi>n</mi></msup>"
+					}
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "So: " },
+					{
+						type: "math",
+						mathml:
+							"<mfrac><msup><mn>2</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><msup><mn>54</mn><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup></mfrac><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>2</mn><mn>54</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mrow><mo>(</mo><mfrac><mn>1</mn><mn>27</mn></mfrac><mo>)</mo></mrow><mrow><mo>-</mo><mfrac><mn>4</mn><mn>3</mn></mfrac></mrow></msup><mo>=</mo><msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup>"
+					}
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Then: " },
+					{
+						type: "math",
+						mathml:
+							"<msup><mn>27</mn><mfrac><mn>4</mn><mn>3</mn></mfrac></msup><mo>=</mo><msup><mrow><mo>(</mo><mroot><mn>27</mn><mn>3</mn></mroot><mo>)</mo></mrow><mn>4</mn></msup><mo>=</mo><msup><mn>3</mn><mn>4</mn></msup><mo>=</mo><mn>81</mn>"
+					}
+				]
+			}
+		]
 	}
 }
 
@@ -104,42 +224,85 @@ export const compare3DigitNumbers: AssessmentItemInput = {
 			correct: ["A", "B", "C"]
 		}
 	],
-	body: '<slot name="order_interaction" />',
+	body: [{ type: "blockSlot", slotId: "order_interaction" }],
 	interactions: {
 		order_interaction: {
 			type: "orderInteraction",
 			responseIdentifier: "RESPONSE",
 			shuffle: true,
 			orientation: "horizontal",
-			prompt: "Arrange the cards to make a true comparison.",
+			prompt: [{ type: "text", content: "Arrange the cards to make a true comparison." }],
 			choices: [
 				{
 					identifier: "A",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn></math>',
-					feedback:
-						'Correct! <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn><mo>&gt;</mo><mn>79</mn></math>.'
+					content: [
+						{
+							type: "paragraph",
+							content: [{ type: "math", mathml: "<mn>708</mn>" }]
+						}
+					],
+					feedback: [
+						{ type: "text", content: "Correct! " },
+						{ type: "math", mathml: "<mn>708</mn><mo>&gt;</mo><mn>79</mn>" },
+						{ type: "text", content: "." }
+					]
 				},
 				{
 					identifier: "B",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>',
-					feedback:
-						'That symbol belongs between <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>79</mn></math> to make a true statement.'
+					content: [
+						{
+							type: "paragraph",
+							content: [{ type: "math", mathml: "<mo>&gt;</mo>" }]
+						}
+					],
+					feedback: [
+						{ type: "text", content: "That symbol belongs between " },
+						{ type: "math", mathml: "<mn>708</mn>" },
+						{ type: "text", content: " and " },
+						{ type: "math", mathml: "<mn>79</mn>" },
+						{ type: "text", content: " to make a true statement." }
+					]
 				},
 				{
 					identifier: "C",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>79</mn></math>',
-					feedback:
-						'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>79</mn></math> is the smaller number on the right.'
+					content: [
+						{
+							type: "paragraph",
+							content: [{ type: "math", mathml: "<mn>79</mn>" }]
+						}
+					],
+					feedback: [
+						{ type: "math", mathml: "<mn>79</mn>" },
+						{ type: "text", content: " is the smaller number on the right." }
+					]
 				}
 			]
 		}
 	},
 	widgets: null,
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> You have arranged the cards as <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>708</mn><mo>&gt;</mo><mn>79</mn></math>, which is a true comparison.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> Make sure the largest number is on the left and the symbol correctly represents the relationship.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! You have arranged the cards as " },
+					{ type: "math", mathml: "<mn>708</mn><mo>&gt;</mo><mn>79</mn>" },
+					{ type: "text", content: ", which is a true comparison." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Not quite. Make sure the largest number is on the left and the symbol correctly represents the relationship."
+					}
+				]
+			}
+		]
 	}
 }
 
@@ -171,7 +334,10 @@ export const inequalityNumberLine: AssessmentItemInput = {
 			]
 		}
 	},
-	body: '<slot name="inequality_widget" /><slot name="choice_interaction" />',
+	body: [
+		{ type: "blockSlot", slotId: "inequality_widget" },
+		{ type: "blockSlot", slotId: "choice_interaction" }
+	],
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -179,36 +345,83 @@ export const inequalityNumberLine: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt: "Choose the inequality that represents the graph.",
+			prompt: [{ type: "text", content: "Choose the inequality that represents the graph." }],
 			choices: [
 				{
 					identifier: "A",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&lt;</mo><mn>0</mn></math>',
+					content: [
+						{
+							type: "paragraph",
+							content: [{ type: "math", mathml: "<mi>x</mi><mo>&lt;</mo><mn>0</mn>" }]
+						}
+					],
 					feedback: null
 				},
 				{
 					identifier: "B",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≤</mo><mn>0</mn></math>',
+					content: [
+						{
+							type: "paragraph",
+							content: [{ type: "math", mathml: "<mi>x</mi><mo>≤</mo><mn>0</mn>" }]
+						}
+					],
 					feedback: null
 				},
 				{
 					identifier: "C",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>',
+					content: [
+						{
+							type: "paragraph",
+							content: [{ type: "math", mathml: "<mi>x</mi><mo>&gt;</mo><mn>0</mn>" }]
+						}
+					],
 					feedback: null
 				},
 				{
 					identifier: "D",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>≥</mo><mn>0</mn></math>',
+					content: [
+						{
+							type: "paragraph",
+							content: [{ type: "math", mathml: "<mi>x</mi><mo>≥</mo><mn>0</mn>" }]
+						}
+					],
 					feedback: null
 				}
 			]
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> The graph shows an open point at 0 with an arrow to the right, representing all values strictly greater than 0, so the inequality is <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> The open point at <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math> means <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math> itself is not included, and the arrow pointing right indicates values greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn></math>.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Correct! The graph shows an open point at 0 with an arrow to the right, representing all values strictly greater than 0, so the inequality is "
+					},
+					{ type: "math", mathml: "<mi>x</mi><mo>&gt;</mo><mn>0</mn>" },
+					{ type: "text", content: "." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. The open point at " },
+					{ type: "math", mathml: "<mn>0</mn>" },
+					{ type: "text", content: " means " },
+					{ type: "math", mathml: "<mn>0</mn>" },
+					{
+						type: "text",
+						content: " itself is not included, and the arrow pointing right indicates values greater than "
+					},
+					{ type: "math", mathml: "<mn>0</mn>" },
+					{ type: "text", content: "." }
+				]
+			}
+		]
 	}
 }
 
@@ -256,15 +469,37 @@ export const verticalNumberLineComparison: AssessmentItemInput = {
 			]
 		}
 	},
-	body: '<p>Use the number line to compare the numbers.</p><slot name="vertical_nl" /><p>-1.4 is <slot name="pos_choice" /> -6.4, so -1.4 is <slot name="comp_choice" /> -6.4.</p>',
+	body: [
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "Use the number line to compare the numbers." }]
+		},
+		{ type: "blockSlot", slotId: "vertical_nl" },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "-1.4 is " },
+				{ type: "inlineSlot", slotId: "pos_choice" },
+				{ type: "text", content: " -6.4, so -1.4 is " },
+				{ type: "inlineSlot", slotId: "comp_choice" },
+				{ type: "text", content: " -6.4." }
+			]
+		}
+	],
 	interactions: {
 		pos_choice: {
 			type: "inlineChoiceInteraction",
 			responseIdentifier: "RESPONSE_POS",
 			shuffle: true,
 			choices: [
-				{ identifier: "ABOVE", content: "above" },
-				{ identifier: "BELOW", content: "below" }
+				{
+					identifier: "ABOVE",
+					content: [{ type: "text", content: "above" }]
+				},
+				{
+					identifier: "BELOW",
+					content: [{ type: "text", content: "below" }]
+				}
 			]
 		},
 		comp_choice: {
@@ -272,16 +507,50 @@ export const verticalNumberLineComparison: AssessmentItemInput = {
 			responseIdentifier: "RESPONSE_COMP",
 			shuffle: true,
 			choices: [
-				{ identifier: "GT", content: "greater than" },
-				{ identifier: "LT", content: "less than" }
+				{
+					identifier: "GT",
+					content: [{ type: "text", content: "greater than" }]
+				},
+				{
+					identifier: "LT",
+					content: [{ type: "text", content: "less than" }]
+				}
 			]
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> On a vertical number line, numbers higher up are greater. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, it is the greater number.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> Look at the positions on the number line. <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is located higher up than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>. This means <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is above <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>, and therefore <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1.4</mn></math> is greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6.4</mn></math>.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! On a vertical number line, numbers higher up are greater. Since " },
+					{ type: "math", mathml: "<mo>-</mo><mn>1.4</mn>" },
+					{ type: "text", content: " is above " },
+					{ type: "math", mathml: "<mo>-</mo><mn>6.4</mn>" },
+					{ type: "text", content: ", it is the greater number." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. Look at the positions on the number line. " },
+					{ type: "math", mathml: "<mo>-</mo><mn>1.4</mn>" },
+					{ type: "text", content: " is located higher up than " },
+					{ type: "math", mathml: "<mo>-</mo><mn>6.4</mn>" },
+					{ type: "text", content: ". This means " },
+					{ type: "math", mathml: "<mo>-</mo><mn>1.4</mn>" },
+					{ type: "text", content: " is above " },
+					{ type: "math", mathml: "<mo>-</mo><mn>6.4</mn>" },
+					{ type: "text", content: ", and therefore " },
+					{ type: "math", mathml: "<mo>-</mo><mn>1.4</mn>" },
+					{ type: "text", content: " is greater than " },
+					{ type: "math", mathml: "<mo>-</mo><mn>6.4</mn>" },
+					{ type: "text", content: "." }
+				]
+			}
+		]
 	}
 }
 
@@ -328,13 +597,48 @@ export const twoWayFrequencyTable: AssessmentItemInput = {
 			footer: null
 		}
 	},
-	body: '<p>The Cold Be Gone Company conducted a study with <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>100</mn></math> participants. Each participant either <em>received</em> cold medicine or <em>did not receive</em> cold medicine, and the company recorded whether the participant\'s cold lasted <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn></math> days or longer.</p><slot name="venn_widget" /><p>Complete the following two-way frequency table.</p><slot name="table_widget" />',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "The Cold Be Gone Company conducted a study with " },
+				{ type: "math", mathml: "<mn>100</mn>" },
+				{
+					type: "text",
+					content:
+						" participants. Each participant either received cold medicine or did not receive cold medicine, and the company recorded whether the participant's cold lasted "
+				},
+				{ type: "math", mathml: "<mn>7</mn>" },
+				{ type: "text", content: " days or longer." }
+			]
+		},
+		{ type: "blockSlot", slotId: "venn_widget" },
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "Complete the following two-way frequency table." }]
+		},
+		{ type: "blockSlot", slotId: "table_widget" }
+	],
 	interactions: {},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> The completed table is:</p><table class="qti-bordered"><thead><tr><th scope="col"></th><th scope="col" class="qti-align-center">Received cold medicine</th><th scope="col" class="qti-align-center">Did not receive cold medicine</th></tr></thead><tbody><tr><th scope="row" class="qti-align-left">Cold <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>≥</mo></math> 7 days</th><td class="qti-align-center">23</td><td class="qti-align-center">20</td></tr><tr><th scope="row" class="qti-align-left">Cold <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math> 7 days</th><td class="qti-align-center">27</td><td class="qti-align-center">30</td></tr></tbody></table>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> Use the numbers in the Venn diagram. The overlap (<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>23</mn></math>) belongs in the "Received medicine" &amp; "Cold <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>≥</mo><mn>7</mn></math> days” cell. Then distribute the other counts accordingly.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Correct! The completed table is:" }]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. Use the numbers in the Venn diagram. The overlap (" },
+					{ type: "math", mathml: "<mn>23</mn>" },
+					{ type: "text", content: ') belongs in the "Received medicine" & "Cold ' },
+					{ type: "math", mathml: "<mo>≥</mo><mn>7</mn>" },
+					{ type: "text", content: ' days" cell. Then distribute the other counts accordingly.' }
+				]
+			}
+		]
 	}
 }
 
@@ -431,7 +735,17 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			]
 		}
 	},
-	body: '<p><math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of the following rectangle is shaded.</p><slot name="stimulus_shape" /><slot name="choice_interaction" />',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{ type: "math", mathml: "<mfrac><mn>3</mn><mn>6</mn></mfrac>" },
+				{ type: "text", content: " of the following rectangle is shaded." }
+			]
+		},
+		{ type: "blockSlot", slotId: "stimulus_shape" },
+		{ type: "blockSlot", slotId: "choice_interaction" }
+	],
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -439,35 +753,116 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 0,
 			maxChoices: 3,
-			prompt:
-				'Which of the following rectangles have exactly <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> of their area shaded?',
+			prompt: [
+				{ type: "text", content: "Which of the following rectangles have exactly " },
+				{ type: "math", mathml: "<mfrac><mn>3</mn><mn>6</mn></mfrac>" },
+				{ type: "text", content: " of their area shaded?" }
+			],
 			choices: [
 				{
 					identifier: "A",
-					content: '<slot name="choice_a_shape" />',
-					feedback:
-						'Correct! This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>4</mn><mn>8</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math>.'
+					content: [{ type: "blockSlot", slotId: "choice_a_shape" }],
+					feedback: [
+						{ type: "text", content: "Correct! This rectangle has " },
+						{ type: "math", mathml: "<mn>4</mn>" },
+						{ type: "text", content: " out of " },
+						{ type: "math", mathml: "<mn>8</mn>" },
+						{ type: "text", content: " parts shaded, which equals " },
+						{ type: "math", mathml: "<mfrac><mn>4</mn><mn>8</mn></mfrac>" },
+						{ type: "text", content: " = " },
+						{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+						{ type: "text", content: " = " },
+						{ type: "math", mathml: "<mfrac><mn>3</mn><mn>6</mn></mfrac>" },
+						{ type: "text", content: "." }
+					]
 				},
 				{
 					identifier: "B",
-					content: '<slot name="choice_b_shape" />',
-					feedback:
-						'Correct! This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>4</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math>.'
+					content: [{ type: "blockSlot", slotId: "choice_b_shape" }],
+					feedback: [
+						{ type: "text", content: "Correct! This rectangle has " },
+						{ type: "math", mathml: "<mn>2</mn>" },
+						{ type: "text", content: " out of " },
+						{ type: "math", mathml: "<mn>4</mn>" },
+						{ type: "text", content: " parts shaded, which equals " },
+						{ type: "math", mathml: "<mfrac><mn>2</mn><mn>4</mn></mfrac>" },
+						{ type: "text", content: " = " },
+						{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+						{ type: "text", content: " = " },
+						{ type: "math", mathml: "<mfrac><mn>3</mn><mn>6</mn></mfrac>" },
+						{ type: "text", content: "." }
+					]
 				},
 				{
 					identifier: "C",
-					content: '<slot name="choice_c_shape" />',
-					feedback:
-						'Not quite. This rectangle has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> out of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> parts shaded, which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math>. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math> is not equal to <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> (which equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>), this is incorrect.'
+					content: [{ type: "blockSlot", slotId: "choice_c_shape" }],
+					feedback: [
+						{ type: "text", content: "Not quite. This rectangle has " },
+						{ type: "math", mathml: "<mn>3</mn>" },
+						{ type: "text", content: " out of " },
+						{ type: "math", mathml: "<mn>4</mn>" },
+						{ type: "text", content: " parts shaded, which equals " },
+						{ type: "math", mathml: "<mfrac><mn>3</mn><mn>4</mn></mfrac>" },
+						{ type: "text", content: ". Since " },
+						{ type: "math", mathml: "<mfrac><mn>3</mn><mn>4</mn></mfrac>" },
+						{ type: "text", content: " is not equal to " },
+						{ type: "math", mathml: "<mfrac><mn>3</mn><mn>6</mn></mfrac>" },
+						{ type: "text", content: " (which equals " },
+						{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+						{ type: "text", content: "), this is incorrect." }
+					]
 				}
 			]
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Excellent!</span> You correctly identified that <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>, and found both rectangles that have exactly half of their area shaded: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>4</mn><mn>8</mn></mfrac></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>4</mn></mfrac></math> both equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> First, simplify <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>6</mn></mfrac></math> to <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>. Then count the shaded parts in each rectangle and check if that fraction equals <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>. Remember: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>4</mn><mn>8</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>2</mn><mn>4</mn></mfrac></math> = <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>, but <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math> ≠ <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>2</mn></mfrac></math>.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Excellent! You correctly identified that " },
+					{ type: "math", mathml: "<mfrac><mn>3</mn><mn>6</mn></mfrac>" },
+					{ type: "text", content: " = " },
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+					{ type: "text", content: ", and found both rectangles that have exactly half of their area shaded: " },
+					{ type: "math", mathml: "<mfrac><mn>4</mn><mn>8</mn></mfrac>" },
+					{ type: "text", content: " and " },
+					{ type: "math", mathml: "<mfrac><mn>2</mn><mn>4</mn></mfrac>" },
+					{ type: "text", content: " both equal " },
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+					{ type: "text", content: "." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. First, simplify " },
+					{ type: "math", mathml: "<mfrac><mn>3</mn><mn>6</mn></mfrac>" },
+					{ type: "text", content: " to " },
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+					{
+						type: "text",
+						content: ". Then count the shaded parts in each rectangle and check if that fraction equals "
+					},
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+					{ type: "text", content: ". Remember: " },
+					{ type: "math", mathml: "<mfrac><mn>4</mn><mn>8</mn></mfrac>" },
+					{ type: "text", content: " = " },
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+					{ type: "text", content: ", " },
+					{ type: "math", mathml: "<mfrac><mn>2</mn><mn>4</mn></mfrac>" },
+					{ type: "text", content: " = " },
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+					{ type: "text", content: ", but " },
+					{ type: "math", mathml: "<mfrac><mn>3</mn><mn>4</mn></mfrac>" },
+					{ type: "text", content: " ≠ " },
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+					{ type: "text", content: "." }
+				]
+			}
+		]
 	}
 }
 
@@ -524,7 +919,10 @@ export const calculateShadedArea: AssessmentItemInput = {
 			]
 		}
 	},
-	body: '<slot name="multi_shape" /><slot name="choice_interaction" />',
+	body: [
+		{ type: "blockSlot", slotId: "multi_shape" },
+		{ type: "blockSlot", slotId: "choice_interaction" }
+	],
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -532,37 +930,134 @@ export const calculateShadedArea: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 0,
 			maxChoices: 3,
-			prompt: "How can we calculate the shaded area?",
+			prompt: [{ type: "text", content: "How can we calculate the shaded area?" }],
 			choices: [
 				{
 					identifier: "A",
-					content:
-						'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>4</mn><mo>×</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow></math>',
-					feedback:
-						'Not quite. This would mean <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> groups of <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>3</mn></mfrac></math> each. But we have <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles, each with <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> shaded, not <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math> groups of <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>3</mn></mfrac></math>.'
+					content: [
+						{
+							type: "paragraph",
+							content: [
+								{ type: "math", mathml: "<mrow><mn>4</mn><mo>×</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow>" }
+							]
+						}
+					],
+					feedback: [
+						{ type: "text", content: "Not quite. This would mean " },
+						{ type: "math", mathml: "<mn>4</mn>" },
+						{ type: "text", content: " groups of " },
+						{ type: "math", mathml: "<mfrac><mn>1</mn><mn>3</mn></mfrac>" },
+						{ type: "text", content: " each. But we have " },
+						{ type: "math", mathml: "<mn>3</mn>" },
+						{ type: "text", content: " circles, each with " },
+						{ type: "math", mathml: "<mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+						{ type: "text", content: " shaded, not " },
+						{ type: "math", mathml: "<mn>4</mn>" },
+						{ type: "text", content: " groups of " },
+						{ type: "math", mathml: "<mfrac><mn>1</mn><mn>3</mn></mfrac>" },
+						{ type: "text", content: "." }
+					]
 				},
 				{
 					identifier: "B",
-					content:
-						'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow></math>',
-					feedback:
-						'Correct! There are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles and <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> of each circle is shaded. We can multiply: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>.'
+					content: [
+						{
+							type: "paragraph",
+							content: [
+								{ type: "math", mathml: "<mrow><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow>" }
+							]
+						}
+					],
+					feedback: [
+						{ type: "text", content: "Correct! There are " },
+						{ type: "math", mathml: "<mn>3</mn>" },
+						{ type: "text", content: " circles and " },
+						{ type: "math", mathml: "<mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+						{ type: "text", content: " of each circle is shaded. We can multiply: " },
+						{ type: "math", mathml: "<mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+						{ type: "text", content: "." }
+					]
 				},
 				{
 					identifier: "C",
-					content:
-						'<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow></math>',
-					feedback:
-						'Correct! Since we have <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles and each has <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> shaded, we can add: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>.'
+					content: [
+						{
+							type: "paragraph",
+							content: [
+								{
+									type: "math",
+									mathml:
+										"<mrow><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></mrow>"
+								}
+							]
+						}
+					],
+					feedback: [
+						{ type: "text", content: "Correct! Since we have " },
+						{ type: "math", mathml: "<mn>3</mn>" },
+						{ type: "text", content: " circles and each has " },
+						{ type: "math", mathml: "<mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+						{ type: "text", content: " shaded, we can add: " },
+						{
+							type: "math",
+							mathml:
+								"<mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>"
+						},
+						{ type: "text", content: "." }
+					]
 				}
 			]
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Excellent!</span> You found both correct ways to calculate the shaded area. Since we have <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles with <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> shaded in each, we can either multiply <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math> or add <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>. Both give us <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>3</mn><mn>4</mn></mfrac></math> as the total shaded area.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> Look carefully at the image. There are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> circles, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac></math> of each circle is shaded. We can find the total shaded area by either: (1) multiplying <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>, or (2) adding <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac></math>.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content: "Excellent! You found both correct ways to calculate the shaded area. Since we have "
+					},
+					{ type: "math", mathml: "<mn>3</mn>" },
+					{ type: "text", content: " circles with " },
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+					{ type: "text", content: " shaded in each, we can either multiply " },
+					{ type: "math", mathml: "<mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+					{ type: "text", content: " or add " },
+					{
+						type: "math",
+						mathml:
+							"<mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>"
+					},
+					{ type: "text", content: ". Both give us " },
+					{ type: "math", mathml: "<mfrac><mn>3</mn><mn>4</mn></mfrac>" },
+					{ type: "text", content: " as the total shaded area." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. Look carefully at the image. There are " },
+					{ type: "math", mathml: "<mn>3</mn>" },
+					{ type: "text", content: " circles, and " },
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+					{
+						type: "text",
+						content: " of each circle is shaded. We can find the total shaded area by either: (1) multiplying "
+					},
+					{ type: "math", mathml: "<mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+					{ type: "text", content: ", or (2) adding " },
+					{
+						type: "math",
+						mathml:
+							"<mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac><mo>+</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>"
+					},
+					{ type: "text", content: "." }
+				]
+			}
+		]
 	}
 }
 
@@ -574,7 +1069,34 @@ export const circleEquationCenterRadius: AssessmentItemInput = {
 		{ identifier: "RESPONSE_Y", cardinality: "single", baseType: "integer", correct: -7 },
 		{ identifier: "RESPONSE_R", cardinality: "single", baseType: "integer", correct: 5 }
 	],
-	body: '<p>A certain circle can be represented by the following equation.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></mrow></math><p>What is the center of this circle? (<slot name="x_entry" />, <slot name="y_entry" />) and radius <slot name="r_entry" />?</p>',
+	body: [
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "A certain circle can be represented by the following equation." }]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "math",
+					mathml:
+						"<mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></mrow>"
+				}
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "What is the center of this circle? (" },
+				{ type: "inlineSlot", slotId: "x_entry" },
+				{ type: "text", content: ", " },
+				{ type: "inlineSlot", slotId: "y_entry" },
+				{ type: "text", content: ") and radius " },
+				{ type: "inlineSlot", slotId: "r_entry" },
+				{ type: "text", content: "?" }
+			]
+		}
+	],
 	interactions: {
 		x_entry: { type: "textEntryInteraction", responseIdentifier: "RESPONSE_X", expectedLength: 3 },
 		y_entry: { type: "textEntryInteraction", responseIdentifier: "RESPONSE_Y", expectedLength: 3 },
@@ -582,10 +1104,59 @@ export const circleEquationCenterRadius: AssessmentItemInput = {
 	},
 	widgets: null,
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> You successfully found that the circle is centered at (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>7</mn></math>) with a radius of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> units.</p><p>You correctly converted the equation to standard form: <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mi>x</mi><mo>+</mo><mn>9</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mo>(</mo><mi>y</mi><mo>+</mo><mn>7</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>=</mo><mn>25</mn></math></p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> Let\'s complete the square to find the center and radius.</p><p>Starting with: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn></math></p><ul><li>Group the x-terms and y-terms: <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>)</mo><mo>+</mo><mo>(</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>14</mn><mi>y</mi><mo>)</mo><mo>=</mo><mo>-</mo><mn>105</mn></math></li><li>Complete the square for x: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>81</mn><mo>=</mo><mo>(</mo><mi>x</mi><mo>+</mo><mn>9</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup></math></li><li>Complete the square for y: <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>49</mn><mo>=</mo><mo>(</mo><mi>y</mi><mo>+</mo><mn>7</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup></math></li><li>Don\'t forget to add <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>81</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>49</mn></math> to both sides!</li><li>Final form: <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>(</mo><mi>x</mi><mo>+</mo><mn>9</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mo>(</mo><mi>y</mi><mo>+</mo><mn>7</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>=</mo><mn>25</mn></math></li></ul><p>Therefore: center = (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>7</mn></math>) and radius = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math></p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! You successfully found that the circle is centered at (" },
+					{ type: "math", mathml: "<mo>-</mo><mn>9</mn>" },
+					{ type: "text", content: ", " },
+					{ type: "math", mathml: "<mo>-</mo><mn>7</mn>" },
+					{ type: "text", content: ") with a radius of " },
+					{ type: "math", mathml: "<mn>5</mn>" },
+					{ type: "text", content: " units." }
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "You correctly converted the equation to standard form: " },
+					{
+						type: "math",
+						mathml:
+							"<mo>(</mo><mi>x</mi><mo>+</mo><mn>9</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mo>(</mo><mi>y</mi><mo>+</mo><mn>7</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>=</mo><mn>25</mn>"
+					}
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Not quite. Let's complete the square to find the center and radius." }]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Starting with: " },
+					{
+						type: "math",
+						mathml:
+							"<msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>14</mn><mi>y</mi><mo>+</mo><mn>105</mn><mo>=</mo><mn>0</mn>"
+					}
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Therefore: center = (" },
+					{ type: "math", mathml: "<mo>-</mo><mn>9</mn>" },
+					{ type: "text", content: ", " },
+					{ type: "math", mathml: "<mo>-</mo><mn>7</mn>" },
+					{ type: "text", content: ") and radius = " },
+					{ type: "math", mathml: "<mn>5</mn>" }
+				]
+			}
+		]
 	}
 }
 
@@ -618,7 +1189,24 @@ export const harukaExamScore: AssessmentItemInput = {
 			footer: null
 		}
 	},
-	body: '<p>The following table shows each of Haruka\'s final exam scores last semester.</p><slot name="score_table" /><p>If the mean of the data set is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn></math> points, find Haruka\'s final exam score in chemistry. <span><slot name="text_entry" /></span></p>',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "The following table shows each of Haruka's final exam scores last semester." }
+			]
+		},
+		{ type: "blockSlot", slotId: "score_table" },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "If the mean of the data set is " },
+				{ type: "math", mathml: "<mn>84</mn>" },
+				{ type: "text", content: " points, find Haruka's final exam score in chemistry. " },
+				{ type: "inlineSlot", slotId: "text_entry" }
+			]
+		}
+	],
 	interactions: {
 		text_entry: {
 			type: "textEntryInteraction",
@@ -627,10 +1215,34 @@ export const harukaExamScore: AssessmentItemInput = {
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> Haruka scored <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>87</mn></math> points on her chemistry exam.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> To find the missing score, use the formula for mean:</p><p>Mean = (Sum of all scores) ÷ (Number of scores)</p><ol><li>Calculate the total points: Mean × Number of exams = <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>84</mn><mo>×</mo><mn>4</mn><mo>=</mo><mn>336</mn></math> points</li><li>Add up the known scores: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn><mo>+</mo><mn>85</mn><mo>+</mo><mn>92</mn><mo>=</mo><mn>249</mn></math> points</li><li>Find the missing score: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>336</mn><mo>-</mo><mn>249</mn><mo>=</mo><mn>87</mn></math> points</li></ol><p>Therefore, Haruka scored <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>87</mn></math> points on her chemistry exam.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! Haruka scored " },
+					{ type: "math", mathml: "<mn>87</mn>" },
+					{ type: "text", content: " points on her chemistry exam." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Not quite. To find the missing score, use the formula for mean:" }]
+			},
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Mean = (Sum of all scores) ÷ (Number of scores)" }]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Therefore, Haruka scored " },
+					{ type: "math", mathml: "<mn>87</mn>" },
+					{ type: "text", content: " points on her chemistry exam." }
+				]
+			}
+		]
 	}
 }
 
@@ -690,7 +1302,20 @@ export const libertyvilleBusinessCycle: AssessmentItemInput = {
 			footer: null
 		}
 	},
-	body: '<p><em>The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years</em></p><slot name="gdp_table" /><slot name="choice_interaction" />',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content:
+						"The table below shows the gross domestic product (GDP) and unemployment data for Libertyville over five years"
+				}
+			]
+		},
+		{ type: "blockSlot", slotId: "gdp_table" },
+		{ type: "blockSlot", slotId: "choice_interaction" }
+	],
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -698,46 +1323,107 @@ export const libertyvilleBusinessCycle: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt: "In which of the years was Libertyville most likely experiencing a trough in its business cycle?",
+			prompt: [
+				{
+					type: "text",
+					content: "In which of the years was Libertyville most likely experiencing a trough in its business cycle?"
+				}
+			],
 			choices: [
 				{
 					identifier: "A",
-					content: "<p>2014</p>",
-					feedback:
-						"GDP fell for the two years following 2014, indicating that Libertyville entered the recession phase of its business cycle in 2014. A trough is the turning point at which a recession ends and an expansion begins."
+					content: [
+						{
+							type: "paragraph",
+							content: [{ type: "text", content: "2014" }]
+						}
+					],
+					feedback: [
+						{
+							type: "text",
+							content:
+								"GDP fell for the two years following 2014, indicating that Libertyville entered the recession phase of its business cycle in 2014. A trough is the turning point at which a recession ends and an expansion begins."
+						}
+					]
 				},
 				{
 					identifier: "B",
-					content: "<p>2015</p>",
-					feedback:
-						"GDP fell in 2015, indicating that Libertyville was in the recession phase of its business cycle in 2015. However the economy still had further to fall before it started to turn around. A trough is the turning point at which a recession ends and an expansion begins."
+					content: [{ type: "paragraph", content: [{ type: "text", content: "2015" }] }],
+					feedback: [
+						{
+							type: "text",
+							content:
+								"GDP fell in 2015, indicating that Libertyville was in the recession phase of its business cycle in 2015. However the economy still had further to fall before it started to turn around. A trough is the turning point at which a recession ends and an expansion begins."
+						}
+					]
 				},
 				{
 					identifier: "C",
-					content: "<p>2016</p>",
-					feedback:
-						"GDP fell in 2016 but increased in 2017, indicating that 2016 was the turning point at which Libertyville's two year recession ended and the economy entered the recovery/expansion phase of its business cycle."
+					content: [{ type: "paragraph", content: [{ type: "text", content: "2016" }] }],
+					feedback: [
+						{
+							type: "text",
+							content:
+								"GDP fell in 2016 but increased in 2017, indicating that 2016 was the turning point at which Libertyville's two year recession ended and the economy entered the recovery/expansion phase of its business cycle."
+						}
+					]
 				},
 				{
 					identifier: "D",
-					content: "<p>2017</p>",
-					feedback:
-						"GDP increased in 2017, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins."
+					content: [{ type: "paragraph", content: [{ type: "text", content: "2017" }] }],
+					feedback: [
+						{
+							type: "text",
+							content:
+								"GDP increased in 2017, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins."
+						}
+					]
 				},
 				{
 					identifier: "E",
-					content: "<p>2018</p>",
-					feedback:
-						"GDP increased in 2018, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins."
+					content: [{ type: "paragraph", content: [{ type: "text", content: "2018" }] }],
+					feedback: [
+						{
+							type: "text",
+							content:
+								"GDP increased in 2018, indicating that Libertyville was in the expansion phase of its business cycle. A trough is the turning point at which a recession ends and an expansion begins."
+						}
+					]
 				}
 			]
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> 2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> A trough occurs at the bottom of a recession, when GDP stops falling and starts growing again. Notice that GDP fell in 2015 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>) and 2016 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>), then rose in 2017 (<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>+</mo><mn>2</mn><mo>%</mo></math>). This makes 2016 the trough year.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Correct! 2016 was the trough year. The GDP had been declining for two years (2015 and 2016) but then began recovering in 2017. A trough marks the lowest point of a recession before recovery begins."
+					}
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Not quite. A trough occurs at the bottom of a recession, when GDP stops falling and starts growing again. Notice that GDP fell in 2015 ("
+					},
+					{ type: "math", mathml: "<mo>-</mo><mn>1</mn><mo>%</mo>" },
+					{ type: "text", content: ") and 2016 (" },
+					{ type: "math", mathml: "<mo>-</mo><mn>2</mn><mo>%</mo>" },
+					{ type: "text", content: "), then rose in 2017 (" },
+					{ type: "math", mathml: "<mo>+</mo><mn>2</mn><mo>%</mo>" },
+					{ type: "text", content: "). This makes 2016 the trough year." }
+				]
+			}
+		]
 	}
 }
 
@@ -752,7 +1438,19 @@ export const continuityDifferentiabilityPiecewise: AssessmentItemInput = {
 			correct: "C"
 		}
 	],
-	body: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mrow><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mrow></mtd></mtr><mtr><mtd columnalign="left"><mrow><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>&gt;</mo><mn>2</mn></mrow></mtd></mtr></mtable></mrow></mrow></math><slot name="choice_interaction" />',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "math",
+					mathml:
+						'<mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>{</mo><mtable><mtr><mtd columnalign="left"><mrow><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>≤</mo><mn>2</mn></mrow></mtd></mtr><mtr><mtd columnalign="left"><mrow><msup><mrow><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn></mrow></mtd><mtd columnalign="left"><mrow><mo>,</mo><mi>x</mi><mo>&gt;</mo><mn>2</mn></mrow></mtd></mtr></mtable></mrow></mrow>'
+				}
+			]
+		},
+		{ type: "blockSlot", slotId: "choice_interaction" }
+	],
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -760,41 +1458,86 @@ export const continuityDifferentiabilityPiecewise: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt:
-				'Is the function given below continuous/differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>?',
+			prompt: [
+				{ type: "text", content: "Is the function given below continuous/differentiable at " },
+				{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mn>2</mn>" },
+				{ type: "text", content: "?" }
+			],
 			choices: [
 				{
 					identifier: "A",
-					content: "<p>continuous, not differentiable</p>",
-					feedback:
-						'This would be the case if the function values matched at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math> but the derivatives from left and right were different. Check both the limit values and the derivatives.'
+					content: [{ type: "paragraph", content: [{ type: "text", content: "continuous, not differentiable" }] }],
+					feedback: [
+						{ type: "text", content: "This would be the case if the function values matched at " },
+						{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mn>2</mn>" },
+						{
+							type: "text",
+							content:
+								" but the derivatives from left and right were different. Check both the limit values and the derivatives."
+						}
+					]
 				},
 				{
 					identifier: "B",
-					content: "<p>differentiable, not continuous</p>",
-					feedback: "This is impossible! A function must be continuous at a point to be differentiable there."
+					content: [{ type: "paragraph", content: [{ type: "text", content: "differentiable, not continuous" }] }],
+					feedback: [
+						{
+							type: "text",
+							content: "This is impossible! A function must be continuous at a point to be differentiable there."
+						}
+					]
 				},
 				{
 					identifier: "C",
-					content: "<p>both continuous and differentiable</p>",
-					feedback:
-						'Correct! The function values match at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math> (both equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>) and the derivatives from both sides equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>, so the function is both continuous and differentiable.'
+					content: [{ type: "paragraph", content: [{ type: "text", content: "both continuous and differentiable" }] }],
+					feedback: [
+						{ type: "text", content: "Correct! The function values match at " },
+						{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mn>2</mn>" },
+						{ type: "text", content: " (both equal " },
+						{ type: "math", mathml: "<mo>-</mo><mn>1</mn>" },
+						{ type: "text", content: ") and the derivatives from both sides equal " },
+						{ type: "math", mathml: "<mo>-</mo><mn>4</mn>" },
+						{ type: "text", content: ", so the function is both continuous and differentiable." }
+					]
 				},
 				{
 					identifier: "D",
-					content: "<p>neither continuous nor differentiable</p>",
-					feedback:
-						'Not quite. The function doesn\'t have a jump discontinuity at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>. Check if the left and right limits at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math> are equal.'
+					content: [
+						{ type: "paragraph", content: [{ type: "text", content: "neither continuous nor differentiable" }] }
+					],
+					feedback: [
+						{ type: "text", content: "Not quite. The function doesn't have a jump discontinuity at " },
+						{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mn>2</mn>" },
+						{ type: "text", content: ". Check if the left and right limits at " },
+						{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mn>2</mn>" },
+						{ type: "text", content: " are equal." }
+					]
 				}
 			]
 		}
 	},
 	widgets: null,
 	feedback: {
-		correct:
-			'<p><strong>Correct!</strong> The function is both continuous and differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>.</p><p>For continuity: <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>(</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>4</mn><mo>+</mo><mn>3</mn><mo>=</mo><mo>-</mo><mn>1</mn></math>, and both one-sided limits equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>.</p><p>For differentiability: The left derivative is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mi>x</mi><msub><mo>|</mo><mrow><mi>x</mi><mo>=</mo><mn>2</mn></mrow></msub><mo>=</mo><mo>-</mo><mn>4</mn></math>, and the right derivative is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo><msub><mo>|</mo><mrow><mi>x</mi><mo>=</mo><mn>2</mn></mrow></msub><mo>=</mo><mo>-</mo><mn>4</mn></math>. Since they match, <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>\'</mo><mo>(</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>4</mn></math>.</p>',
-		incorrect:
-			'<p><strong>Not quite.</strong> Let\'s check both continuity and differentiability at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>:</p><p><strong>Continuity:</strong> We need <math xmlns="http://www.w3.org/1998/Math/MathML"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>-</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>+</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>f</mi><mo>(</mo><mn>2</mn><mo>)</mo></math></p><ul><li><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>f</mi><mo>(</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><msup><mn>2</mn><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>=</mo><mo>-</mo><mn>1</mn></math></li><li><math xmlns="http://www.w3.org/1998/Math/MathML"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>-</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>-</mo></msup></mrow></munder><mo>(</mo><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>1</mn></math></li><li><math xmlns="http://www.w3.org/1998/Math/MathML"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>+</mo></msup></mrow></munder><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msup><mn>2</mn><mo>+</mo></msup></mrow></munder><mo>(</mo><msup><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>)</mo><mo>=</mo><msup><mrow><mo>(</mo><mn>2</mn><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>=</mo><mn>4</mn><mo>-</mo><mn>5</mn><mo>=</mo><mo>-</mo><mn>1</mn></math></li></ul><p>All three values equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>, so the function is continuous.</p><p><strong>Differentiability:</strong> We need the left and right derivatives to be equal.</p><ul><li>Left derivative: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>(</mo><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>2</mn><mi>x</mi></math>, so at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>: <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math></li><li>Right derivative: <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo>(</mo><msup><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>)</mo><mo>=</mo><mn>2</mn><mo>(</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>)</mo></math>, so at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>(</mo><mo>-</mo><mn>2</mn><mo>)</mo><mo>=</mo><mo>-</mo><mn>4</mn></math></li></ul><p>Both derivatives equal <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>, so the function is differentiable at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mn>2</mn></math>.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! The function is both continuous and differentiable at " },
+					{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mn>2</mn>" },
+					{ type: "text", content: "." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. Let's check both continuity and differentiability at " },
+					{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mn>2</mn>" },
+					{ type: "text", content: "." }
+				]
+			}
+		]
 	}
 }
 
@@ -809,7 +1552,15 @@ export const stokesTheoremRewrite: AssessmentItemInput = {
 			correct: "x^2/2-x*cos(z)"
 		}
 	],
-	body: '<p>Assume that <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math> is an inwardly oriented, piecewise-smooth surface with a piecewise-smooth, simple, closed boundary curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> oriented <em>negatively</em> with respect to the orientation of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>S</mi></math>.</p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∬</mo><mi>S</mi></msub><mrow><mo>[</mo><mrow><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow><mo>]</mo></mrow><mo>·</mo><mi>d</mi><mi>S</mi></mrow></math><p>Use Stokes\' theorem to rewrite the surface integral as a line integral.</p><p><em>Leave out extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math> and constant coefficients.</em> <span><slot name="text_entry" /></span></p>',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Use Stokes' theorem to rewrite the surface integral as a line integral. " },
+				{ type: "inlineSlot", slotId: "text_entry" }
+			]
+		}
+	],
 	interactions: {
 		text_entry: {
 			type: "textEntryInteraction",
@@ -819,10 +1570,18 @@ export const stokesTheoremRewrite: AssessmentItemInput = {
 	},
 	widgets: null,
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> The missing component is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>2</mn></mfrac><mo>-</mo><mi>x</mi><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow></math>.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> Let\'s use Stokes\' theorem to solve this.</p><p>Stokes\' theorem states: <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mo>∮</mo><mi>C</mi></msub><mi>F</mi><mo>·</mo><mi>d</mi><mi>r</mi><mo>=</mo><msub><mo>∬</mo><mi>S</mi></msub><mi>curl</mi><mo stretchy="false">(</mo><mi>F</mi><mo stretchy="false">)</mo><mo>·</mo><mi>d</mi><mi>S</mi></mrow></math></p><p>Since the curve <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math> is negatively oriented, we must have:</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>curl</mi><mo stretchy="false">(</mo><mi>F</mi><mo stretchy="false">)</mo><mo>=</mo><mo>-</mo><mrow><mo>[</mo><mrow><mn>4</mn><mi>z</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>x</mi><mo>-</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow><mo>]</mo></mrow><mo>=</mo><mo stretchy="false">(</mo><mo>-</mo><mn>4</mn><mi>z</mi><mo stretchy="false">)</mo><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>-</mo><mi>x</mi><mo stretchy="false">)</mo><mover><mi>j</mi><mo>^</mo></mover><mo>-</mo><mn>2</mn><mover><mi>k</mi><mo>^</mo></mover></mrow></math></p><p>Let the unknown component of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>F</mi></math> be <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>P</mi></math>. We are given <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>F</mi><mo>=</mo><mn>2</mn><mi>y</mi><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mn>2</mn><msup><mi>z</mi><mn>2</mn></msup><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mi>P</mi><mover><mi>k</mi><mo>^</mo></mover></math>. Calculating its curl:</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>curl</mi><mo stretchy="false">(</mo><mi>F</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo>(</mo><mrow><mfrac><mrow><mo>∂</mo><mi>P</mi></mrow><mrow><mo>∂</mo><mi>y</mi></mrow></mfrac><mo>-</mo><mn>4</mn><mi>z</mi></mrow><mo>)</mo></mrow><mover><mi>i</mi><mo>^</mo></mover><mo>+</mo><mrow><mo>(</mo><mrow><mo>-</mo><mfrac><mrow><mo>∂</mo><mi>P</mi></mrow><mrow><mo>∂</mo><mi>x</mi></mrow></mfrac></mrow><mo>)</mo></mrow><mover><mi>j</mi><mo>^</mo></mover><mo>+</mo><mo stretchy="false">(</mo><mo>-</mo><mn>2</mn><mo stretchy="false">)</mo><mover><mi>k</mi><mo>^</mo></mover></mrow></math></p><p>By comparing components, we get:</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mfrac><mrow><mo>∂</mo><mi>P</mi></mrow><mrow><mo>∂</mo><mi>y</mi></mrow></mfrac><mo>-</mo><mn>4</mn><mi>z</mi><mo>=</mo><mo>-</mo><mn>4</mn><mi>z</mi><mspace width="1em"/><mo>⇒</mo><mspace width="1em"/><mfrac><mrow><mo>∂</mo><mi>P</mi></mrow><mrow><mo>∂</mo><mi>y</mi></mrow></mfrac><mo>=</mo><mn>0</mn></mrow></math></p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>-</mo><mfrac><mrow><mo>∂</mo><mi>P</mi></mrow><mrow><mo>∂</mo><mi>x</mi></mrow></mfrac><mo>=</mo><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>-</mo><mi>x</mi></mrow></math></p><p>Integrating the second equation with respect to <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math> gives a solution for <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>P</mi></math> (ignoring extraneous functions of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>z</mi></math>):</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mo>=</mo><mfrac><msup><mi>x</mi><mn>2</mn></msup><mn>2</mn></mfrac><mo>-</mo><mi>x</mi><mi>cos</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow></math></p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Correct!" }]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Not quite. Let's use Stokes' theorem to solve this." }]
+			}
+		]
 	}
 }
 
@@ -874,7 +1633,18 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 			footer: null
 		}
 	},
-	body: '<p>This table gives select values of the differentiable function <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math>.</p><slot name="h_table" /><slot name="choice_interaction" />',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "This table gives select values of the differentiable function " },
+				{ type: "math", mathml: "<mi>h</mi>" },
+				{ type: "text", content: "." }
+			]
+		},
+		{ type: "blockSlot", slotId: "h_table" },
+		{ type: "blockSlot", slotId: "choice_interaction" }
+	],
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -882,41 +1652,62 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt:
-				'What is the best estimate for <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>h</mi><mo>\'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow></math> we can make based on this table?',
+			prompt: [
+				{ type: "text", content: "What is the best estimate for " },
+				{
+					type: "math",
+					mathml: "<mrow><msup><mi>h</mi><mo>'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></mrow>"
+				},
+				{ type: "text", content: " we can make based on this table?" }
+			],
 			choices: [
 				{
 					identifier: "A",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>28</mn></math>',
-					feedback:
-						'Were you trying to pick a value between <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>36</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>20</mn></math>? This can be an estimate for <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math>, but we are looking for <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math>.'
+					content: [{ type: "paragraph", content: [{ type: "math", mathml: "<mo>-</mo><mn>28</mn>" }] }],
+					feedback: [{ type: "text", content: "This can be an estimate for h(-4), but we are looking for h'(-4)." }]
 				},
 				{
 					identifier: "B",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>13.5</mn></math>',
-					feedback:
-						'Were you trying to find <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>1</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>1</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo></mrow></mfrac></math>? This is the average rate of change, or the slope of a secant line, of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math> over the interval <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>3</mn><mo>,</mo><mo>-</mo><mn>1</mn><mo>]</mo></math>. We should pick an interval that includes <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>4</mn></math>.'
+					content: [{ type: "paragraph", content: [{ type: "math", mathml: "<mo>-</mo><mn>13.5</mn>" }] }],
+					feedback: [{ type: "text", content: "We should pick an interval that includes x = -4." }]
 				},
 				{
 					identifier: "C",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2.125</mn></math>',
-					feedback:
-						'Were you trying to find <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>1</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>9</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>1</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>9</mn><mo>)</mo></mrow></mfrac></math>? This is the average rate of change, or the slope of a secant line, of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math> over the entire interval <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>9</mn><mo>,</mo><mo>-</mo><mn>1</mn><mo>]</mo></math>. We can pick a closer interval to estimate <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup></math> specifically at <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>4</mn></math>.'
+					content: [{ type: "paragraph", content: [{ type: "math", mathml: "<mo>-</mo><mn>2.125</mn>" }] }],
+					feedback: [{ type: "text", content: "We can pick a closer interval to estimate h' specifically at x = -4." }]
 				},
 				{
 					identifier: "D",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5.33</mn></math>',
-					feedback:
-						'Correct! The best estimate for <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math> is the average rate of change over the narrowest interval available that contains <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>, which is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>6</mn><mo>,</mo><mo>-</mo><mn>3</mn><mo>]</mo></math>.'
+					content: [{ type: "paragraph", content: [{ type: "math", mathml: "<mn>5.33</mn>" }] }],
+					feedback: [
+						{
+							type: "text",
+							content: "Correct! The best estimate uses the narrowest interval available that contains -4."
+						}
+					]
 				}
 			]
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> The best estimate for <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math> is the average rate of change of <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi></math> over the narrowest interval containing <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math> that can be formed from the table. This interval is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>[</mo><mo>-</mo><mn>6</mn><mo>,</mo><mo>-</mo><mn>3</mn><mo>]</mo></math>. The average rate of change is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>3</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>20</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>36</mn><mo>)</mo></mrow><mn>3</mn></mfrac><mo>=</mo><mfrac><mn>16</mn><mn>3</mn></mfrac><mo>≈</mo><mn>5.33</mn></math>.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> To estimate the derivative <math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>h</mi><mo>\'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo></math>, you should calculate the average rate of change over the smallest interval that contains <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>4</mn></math>. Looking at the table, the points closest to <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>4</mn></math> are <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>6</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mo>-</mo><mn>3</mn></math>. The average rate of change is <math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mi>h</mi><mo>(</mo><mo>-</mo><mn>3</mn><mo>)</mo><mo>-</mo><mi>h</mi><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>-</mo><mn>3</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>6</mn><mo>)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>20</mn><mo>-</mo><mo>(</mo><mo>-</mo><mn>36</mn><mo>)</mo></mrow><mn>3</mn></mfrac><mo>=</mo><mfrac><mn>16</mn><mn>3</mn></mfrac><mo>≈</mo><mn>5.33</mn></math>.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Correct! The best estimate for h'(-4) is approximately 5.33." }]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Not quite. To estimate the derivative h'(-4), calculate the average rate of change over the smallest interval containing -4."
+					}
+				]
+			}
+		]
 	}
 }
 
@@ -965,7 +1756,7 @@ export const countApplesEmoji: AssessmentItemInput = {
 			objects: [{ count: 6, emoji: "🍎" }]
 		}
 	},
-	body: '<slot name="choice_interaction" />',
+	body: [{ type: "blockSlot", slotId: "choice_interaction" }],
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -973,35 +1764,50 @@ export const countApplesEmoji: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt: 'Which box has <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> apples?',
+			prompt: [
+				{ type: "text", content: "Which box has " },
+				{ type: "math", mathml: "<mn>5</mn>" },
+				{ type: "text", content: " apples?" }
+			],
 			choices: [
 				{
 					identifier: "CHOICE_3",
-					content: '<slot name="choice_3_apples" />',
+					content: [{ type: "blockSlot", slotId: "choice_3_apples" }],
 					feedback: null
 				},
 				{
 					identifier: "CHOICE_4",
-					content: '<slot name="choice_4_apples" />',
+					content: [{ type: "blockSlot", slotId: "choice_4_apples" }],
 					feedback: null
 				},
 				{
 					identifier: "CHOICE_5",
-					content: '<slot name="choice_5_apples" />',
+					content: [{ type: "blockSlot", slotId: "choice_5_apples" }],
 					feedback: null
 				},
 				{
 					identifier: "CHOICE_6",
-					content: '<slot name="choice_6_apples" />',
+					content: [{ type: "blockSlot", slotId: "choice_6_apples" }],
 					feedback: null
 				}
 			]
 		}
 	},
 	feedback: {
-		correct: '<p><span class="qti-keyword-emphasis">Great job!</span> That box has exactly five apples.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Try again.</span> Count the apples in each box to find the one with exactly five.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Great job! That box has exactly five apples." }]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Try again. Count the apples in each box to find the one with exactly five." }
+				]
+			}
+		]
 	}
 }
 
@@ -1094,7 +1900,14 @@ export const shapeBinBarChart: AssessmentItemInput = {
 			barColor: null
 		}
 	},
-	body: '<p>A second grade classroom has a bin of shapes.</p><slot name="shapes_table" /><slot name="choice_interaction" />',
+	body: [
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "A second grade classroom has a bin of shapes." }]
+		},
+		{ type: "blockSlot", slotId: "shapes_table" },
+		{ type: "blockSlot", slotId: "choice_interaction" }
+	],
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -1102,36 +1915,52 @@ export const shapeBinBarChart: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt: "Which bar graph correctly shows the number of shapes in the bin?",
+			prompt: [{ type: "text", content: "Which bar graph correctly shows the number of shapes in the bin?" }],
 			choices: [
 				{
 					identifier: "A",
-					content: '<slot name="chart_a" />',
+					content: [{ type: "blockSlot", slotId: "chart_a" }],
 					feedback: null
 				},
 				{
 					identifier: "B",
-					content: '<slot name="chart_b" />',
+					content: [{ type: "blockSlot", slotId: "chart_b" }],
 					feedback: null
 				},
 				{
 					identifier: "C",
-					content: '<slot name="chart_c" />',
+					content: [{ type: "blockSlot", slotId: "chart_c" }],
 					feedback: null
 				},
 				{
 					identifier: "D",
-					content: '<slot name="chart_d" />',
+					content: [{ type: "blockSlot", slotId: "chart_d" }],
 					feedback: null
 				}
 			]
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> The chosen graph perfectly matches the data provided in the table: <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> Triangles, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> Circles, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> Rectangles, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math> Squares.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> Match the number of shapes from the table to the height of the bar for each shape type. For example, the table says there are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> Triangles, so the "Triangles" bar should reach the line for the number <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> on the vertical axis.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! The chosen graph perfectly matches the data provided in the table." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Not quite. Match the number of shapes from the table to the height of the bar for each shape type."
+					}
+				]
+			}
+		]
 	}
 }
 
@@ -1196,7 +2025,23 @@ export const pencilLengthLinePlot: AssessmentItemInput = {
 			dotRadius: 8
 		}
 	},
-	body: '<p>The lengths of 4 pencils were measured. The lengths are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm.</p><slot name="choice_interaction" />',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "The lengths of 4 pencils were measured. The lengths are " },
+				{ type: "math", mathml: "<mn>11</mn>" },
+				{ type: "text", content: " cm, " },
+				{ type: "math", mathml: "<mn>8</mn>" },
+				{ type: "text", content: " cm, " },
+				{ type: "math", mathml: "<mn>8</mn>" },
+				{ type: "text", content: " cm, and " },
+				{ type: "math", mathml: "<mn>3</mn>" },
+				{ type: "text", content: " cm." }
+			]
+		},
+		{ type: "blockSlot", slotId: "choice_interaction" }
+	],
 	interactions: {
 		choice_interaction: {
 			type: "choiceInteraction",
@@ -1204,40 +2049,74 @@ export const pencilLengthLinePlot: AssessmentItemInput = {
 			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
-			prompt: "Which line plot correctly shows the length of each pencil?",
+			prompt: [{ type: "text", content: "Which line plot correctly shows the length of each pencil?" }],
 			choices: [
 				{
 					identifier: "A",
-					content: '<slot name="plot_a" />',
-					feedback:
-						"This plot correctly shows a dot for each of the 4 pencils at its measured length. There is one dot at 3, two dots at 8, and one dot at 11."
+					content: [{ type: "blockSlot", slotId: "plot_a" }],
+					feedback: [
+						{
+							type: "text",
+							content: "This plot correctly shows a dot for each of the 4 pencils at its measured length."
+						}
+					]
 				},
 				{
 					identifier: "B",
-					content: '<slot name="plot_b" />',
-					feedback:
-						'This plot only shows one dot for the length of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm. Remember, there were two pencils with this length, so there should be two dots above the number <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>.'
+					content: [{ type: "blockSlot", slotId: "plot_b" }],
+					feedback: [
+						{
+							type: "text",
+							content:
+								"This plot only shows one dot for the length of 8 cm. Remember, there were two pencils with this length."
+						}
+					]
 				},
 				{
 					identifier: "C",
-					content: '<slot name="plot_c" />',
-					feedback:
-						'This plot shows four dots above the number <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn></math>. This represents the total number of pencils, not their individual lengths.'
+					content: [{ type: "blockSlot", slotId: "plot_c" }],
+					feedback: [
+						{
+							type: "text",
+							content:
+								"This plot shows four dots above the number 4. This represents the total number of pencils, not their individual lengths."
+						}
+					]
 				},
 				{
 					identifier: "D",
-					content: '<slot name="plot_d" />',
-					feedback:
-						"This plot shows lengths of 4 cm, 9 cm, and 12 cm. Check the data again carefully to make sure the dots are placed above the correct numbers on the line plot."
+					content: [{ type: "blockSlot", slotId: "plot_d" }],
+					feedback: [
+						{
+							type: "text",
+							content: "Check the data again carefully to make sure the dots are placed above the correct numbers."
+						}
+					]
 				}
 			]
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> The data set {11, 8, 8, 3} has one pencil of length <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm, two pencils of length <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and one pencil of length <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm. The chosen plot correctly displays a dot for each of these measurements.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> To create the line plot, place one dot above the correct number on the line for each pencil measured. The lengths are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math> cm, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math> cm. This means there should be one dot above <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>, two dots above <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>, and one dot above <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>11</mn></math>.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! The chosen plot correctly displays a dot for each of these measurements." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Not quite. To create the line plot, place one dot above the correct number on the line for each pencil measured."
+					}
+				]
+			}
+		]
 	}
 }
 
@@ -1273,7 +2152,24 @@ export const gamesWonBarChart: AssessmentItemInput = {
 			barColor: null
 		}
 	},
-	body: '<p>The Lions, Tigers, and Bears won baseball games last summer.</p><p>This bar graph shows how many games each team won.</p><slot name="games_chart" /><p>How many games did the Lions win? <span><slot name="text_entry" /></span></p>',
+	body: [
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "The Lions, Tigers, and Bears won baseball games last summer." }]
+		},
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "This bar graph shows how many games each team won." }]
+		},
+		{ type: "blockSlot", slotId: "games_chart" },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "How many games did the Lions win? " },
+				{ type: "inlineSlot", slotId: "text_entry" }
+			]
+		}
+	],
 	interactions: {
 		text_entry: {
 			type: "textEntryInteraction",
@@ -1282,10 +2178,20 @@ export const gamesWonBarChart: AssessmentItemInput = {
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> The bar for the Lions goes up to the line for <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>14</mn></math>, so they won <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>14</mn></math> games.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> To find the number of games the Lions won, first find the "Lions" label on the horizontal axis. Then, follow that bar up to the top. The number on the vertical axis that aligns with the top of the bar is the answer. The Lions\' bar reaches the line for <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>14</mn></math> games.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Correct! The Lions won 14 games." }]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. Find the Lions bar and see where it reaches on the vertical axis." }
+				]
+			}
+		]
 	}
 }
 
@@ -1321,7 +2227,22 @@ export const dollHeightLinePlot: AssessmentItemInput = {
 			dotRadius: 6
 		}
 	},
-	body: '<p>The heights of Sabrina\'s dolls are shown below.</p><slot name="doll_plot" /><p>How many dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> centimeters? <span><slot name="text_entry" /></span></p>',
+	body: [
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "The heights of Sabrina's dolls are shown below." }]
+		},
+		{ type: "blockSlot", slotId: "doll_plot" },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "How many dolls are taller than " },
+				{ type: "math", mathml: "<mn>22</mn>" },
+				{ type: "text", content: " centimeters? " },
+				{ type: "inlineSlot", slotId: "text_entry" }
+			]
+		}
+	],
 	interactions: {
 		text_entry: {
 			type: "textEntryInteraction",
@@ -1330,10 +2251,20 @@ export const dollHeightLinePlot: AssessmentItemInput = {
 		}
 	},
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> There are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> dolls that are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>23</mn></math> cm tall and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> dolls that are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>24</mn></math> cm tall. In total, <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn><mo>+</mo><mn>2</mn><mo>=</mo><mn>5</mn></math> dolls are taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> cm.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> To find the number of dolls taller than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> cm, count all the dots that are to the right of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>22</mn></math> on the line plot. There are <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math> dots above <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>23</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn></math> dots above <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>24</mn></math>. That makes a total of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math> dolls.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Correct! 5 dolls are taller than 22 cm." }]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. Count all the dots that are to the right of 22 on the line plot." }
+				]
+			}
+		]
 	}
 }
 
@@ -1364,15 +2295,44 @@ export const timeOnNumberLine: AssessmentItemInput = {
 			points: [{ value: 55, label: "A", color: "#A0522D", labelPosition: "below" }]
 		}
 	},
-	body: '<p>Look at the following number line.</p><slot name="time_line" /><p>What time is shown on the number line? <slot name="hour_entry" />:<slot name="minute_entry" /></p>',
+	body: [
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "Look at the following number line." }]
+		},
+		{ type: "blockSlot", slotId: "time_line" },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "What time is shown on the number line? " },
+				{ type: "inlineSlot", slotId: "hour_entry" },
+				{ type: "text", content: ":" },
+				{ type: "inlineSlot", slotId: "minute_entry" }
+			]
+		}
+	],
 	interactions: {
 		hour_entry: { type: "textEntryInteraction", responseIdentifier: "RESPONSE_HR", expectedLength: 2 },
 		minute_entry: { type: "textEntryInteraction", responseIdentifier: "RESPONSE_MIN", expectedLength: 2 }
 	},
 	feedback: {
-		correct: '<p><span class="qti-keyword-emphasis">Correct!</span> The time shown is 12:55.</p>',
-		incorrect:
-			"<p><span class=\"qti-keyword-emphasis\">Not quite.</span> The point 'A' is located after the 12:00 mark but before the 1:00 mark, so the hour is 12. The mark for 12:45 is shown. The next medium tick represents 5 minutes later, which is 12:50. The next medium tick represents another 5 minutes, which is 12:55. Point 'A' is on that mark. The time is 12:55.</p>"
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Correct! The time shown is 12:55." }]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content: "Not quite. Point A is located after the 12:00 mark but before the 1:00 mark. The time is 12:55."
+					}
+				]
+			}
+		]
 	}
 }
 
@@ -1387,7 +2347,22 @@ export const compare2DigitNumbers: AssessmentItemInput = {
 			correct: "GT"
 		}
 	],
-	body: '<p>Compare using <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>, <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>, or <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>.</p><p><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math> <slot name="comparison" /> <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math></p>',
+	body: [
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "Compare using >, <, or =." }]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{ type: "math", mathml: "<mn>83</mn>" },
+				{ type: "text", content: " " },
+				{ type: "inlineSlot", slotId: "comparison" },
+				{ type: "text", content: " " },
+				{ type: "math", mathml: "<mn>58</mn>" }
+			]
+		}
+	],
 	interactions: {
 		comparison: {
 			type: "inlineChoiceInteraction",
@@ -1396,25 +2371,35 @@ export const compare2DigitNumbers: AssessmentItemInput = {
 			choices: [
 				{
 					identifier: "GT",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>'
+					content: [{ type: "math", mathml: "<mo>&gt;</mo>" }]
 				},
 				{
 					identifier: "LT",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&lt;</mo></math>'
+					content: [{ type: "math", mathml: "<mo>&lt;</mo>" }]
 				},
 				{
 					identifier: "EQ",
-					content: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>=</mo></math>'
+					content: [{ type: "math", mathml: "<mo>=</mo>" }]
 				}
 			]
 		}
 	},
 	widgets: null,
 	feedback: {
-		correct:
-			'<p><span class="qti-keyword-emphasis">Correct!</span> <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math> is greater than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math>, so the correct symbol is <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math>.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> Remember, when comparing two numbers, the symbol <math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&gt;</mo></math> points to the smaller number. Since <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn></math> is larger than <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>58</mn></math>, the correct comparison is <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>83</mn><mo>&gt;</mo><mn>58</mn></math>.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Correct! 83 is greater than 58, so the correct symbol is >." }]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. Since 83 is larger than 58, the correct comparison is 83 > 58." }
+				]
+			}
+		]
 	}
 }
 
@@ -1429,7 +2414,19 @@ export const greatestCommonFactor: AssessmentItemInput = {
 			correct: 15
 		}
 	],
-	body: '<p><strong>Find the greatest common factor of <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>30</mn></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>75</mn></math>.</strong></p><p><slot name="text_entry_interaction_1" /></p>',
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Find the greatest common factor of " },
+				{ type: "math", mathml: "<mn>30</mn>" },
+				{ type: "text", content: " and " },
+				{ type: "math", mathml: "<mn>75</mn>" },
+				{ type: "text", content: "." }
+			]
+		},
+		{ type: "blockSlot", slotId: "text_entry_interaction_1" }
+	],
 	interactions: {
 		text_entry_interaction_1: {
 			type: "textEntryInteraction",
@@ -1439,9 +2436,24 @@ export const greatestCommonFactor: AssessmentItemInput = {
 	},
 	widgets: null,
 	feedback: {
-		correct: '<p><span class="qti-keyword-emphasis">Correct!</span> The greatest common factor of 30 and 75 is 15.</p>',
-		incorrect:
-			'<p><span class="qti-keyword-emphasis">Not quite.</span> Remember to find the largest number that divides both 30 and 75 without a remainder. The factors of 30 are 1, 2, 3, 5, 6, 10, 15, 30. The factors of 75 are 1, 3, 5, 15, 25, 75. The greatest common factor is 15.</p>'
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Correct! The greatest common factor of 30 and 75 is 15." }]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Not quite. Remember to find the largest number that divides both 30 and 75 without a remainder. The factors of 30 are 1, 2, 3, 5, 6, 10, 15, 30. The factors of 75 are 1, 3, 5, 15, 25, 75. The greatest common factor is 15."
+					}
+				]
+			}
+		]
 	}
 }
 

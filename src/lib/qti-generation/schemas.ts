@@ -2,7 +2,104 @@ import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import { typedSchemas } from "@/lib/widgets/generators"
 
-// ✅ REFACTOR: The function is now correctly named to reflect its role for Shot 3.
+// LEVEL 3: PRIMITIVES
+const _TextContentSchema = z
+	.object({
+		type: z.literal("text").describe("Identifies this as plain text content"),
+		content: z.string().describe("The actual text content to display")
+	})
+	.strict()
+	.describe("Plain text content that will be rendered as-is")
+
+const _MathContentSchema = z
+	.object({
+		type: z.literal("math").describe("Identifies this as mathematical content"),
+		mathml: z.string().describe("MathML markup for mathematical expressions, without the outer math element")
+	})
+	.strict()
+	.describe("Mathematical content represented in MathML format")
+
+const _InlineSlotSchema = z
+	.object({
+		type: z.literal("inlineSlot").describe("Identifies this as an inline placeholder for widgets or interactions"),
+		slotId: z.string().describe("Unique identifier that matches a widget or interaction key")
+	})
+	.strict()
+	.describe("Placeholder for inline content that will be filled with a widget or interaction")
+
+// LEVEL 2: INLINE CONTENT (for paragraphs, prompts, etc.)
+// Factory functions to create fresh schema instances (avoids $ref in JSON Schema)
+function createInlineContentItemSchema() {
+	return z
+		.discriminatedUnion("type", [
+			z
+				.object({
+					type: z.literal("text").describe("Identifies this as plain text content"),
+					content: z.string().describe("The actual text content to display")
+				})
+				.strict()
+				.describe("Plain text content that will be rendered as-is"),
+			z
+				.object({
+					type: z.literal("math").describe("Identifies this as mathematical content"),
+					mathml: z.string().describe("MathML markup for mathematical expressions, without the outer math element")
+				})
+				.strict()
+				.describe("Mathematical content represented in MathML format"),
+			z
+				.object({
+					type: z
+						.literal("inlineSlot")
+						.describe("Identifies this as an inline placeholder for widgets or interactions"),
+					slotId: z.string().describe("Unique identifier that matches a widget or interaction key")
+				})
+				.strict()
+				.describe("Placeholder for inline content that will be filled with a widget or interaction")
+		])
+		.describe("Union type representing any inline content element")
+}
+
+export function createInlineContentSchema() {
+	return z
+		.array(createInlineContentItemSchema())
+		.describe("Array of inline content items that can be rendered within a paragraph or prompt")
+}
+
+export const InlineContentSchema = createInlineContentSchema()
+export type InlineContent = z.infer<typeof InlineContentSchema>
+
+// LEVEL 1: BLOCK CONTENT (for body, feedback, choice content, etc.)
+// Factory functions for block content
+function createBlockContentItemSchema() {
+	return z
+		.discriminatedUnion("type", [
+			z
+				.object({
+					type: z.literal("paragraph").describe("Identifies this as a paragraph block"),
+					content: createInlineContentSchema().describe("The inline content contained within this paragraph")
+				})
+				.strict()
+				.describe("A paragraph block containing inline content"),
+			z
+				.object({
+					type: z.literal("blockSlot").describe("Identifies this as a block-level placeholder"),
+					slotId: z.string().describe("Unique identifier that matches a widget or interaction key")
+				})
+				.strict()
+				.describe("Placeholder for block-level content that will be filled with a widget or interaction")
+		])
+		.describe("Union type representing any block-level content element")
+}
+
+export function createBlockContentSchema() {
+	return z
+		.array(createBlockContentItemSchema())
+		.describe("Array of block content items representing the document structure")
+}
+
+export const BlockContentSchema = createBlockContentSchema()
+export type BlockContent = z.infer<typeof BlockContentSchema>
+
 export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, keyof typeof typedSchemas>) {
 	// Dynamically build the Zod shape for the 'widgets' property.
 	const widgetShape: Record<string, z.ZodType> = {}
@@ -16,12 +113,12 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 		}
 	}
 
-	const DynamicWidgetsSchema = z.object(widgetShape)
+	const DynamicWidgetsSchema = z.object(widgetShape).describe("Map of widget slot IDs to their widget definitions")
 
 	const InlineChoiceSchema = z
 		.object({
 			identifier: z.string().describe("Unique identifier for this inline choice option."),
-			content: z.string().describe("The text content displayed in the dropdown menu.")
+			content: createInlineContentSchema().describe("The inline content displayed in the dropdown menu.")
 		})
 		.strict()
 		.describe("Represents a single option within an inline dropdown choice interaction.")
@@ -30,21 +127,23 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 		.object({
 			type: z.literal("choiceInteraction").describe("Identifies this as a multiple choice interaction."),
 			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
-			prompt: z.string().describe("The question or instruction text presented to the user."),
+			prompt: createInlineContentSchema().describe("The question or instruction presented to the user."),
 			choices: z
 				.array(
 					z
 						.object({
 							identifier: z.string().describe("Unique identifier for this choice option, used for response matching."),
-							content: z
-								.string()
-								.describe(
-									"Content that is plain text/MathML. Rich visualizations are referenced via <slot name='...'> elements."
-								),
-							feedback: z.string().nullable().describe("Optional feedback text shown when this choice is selected.")
+							content: createBlockContentSchema().describe(
+								"Rich content for this choice option, supporting text, math, and embedded widgets."
+							),
+							feedback: createInlineContentSchema()
+								.nullable()
+								.describe("Optional feedback shown when this choice is selected.")
 						})
 						.strict()
+						.describe("A single choice option with content and optional feedback")
 				)
+				// NOTE: OpenAI structured outputs don't support .min() constraints, so we validate length at runtime
 				.describe("Array of selectable choice options."),
 			shuffle: z.literal(true).describe("Whether to randomize the order of choices. Always true to ensure fairness."),
 			minChoices: z.number().int().min(0).describe("The minimum number of choices the user must select."),
@@ -76,31 +175,26 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 		.object({
 			type: z.literal("orderInteraction").describe("Identifies this as an ordering/sequencing interaction."),
 			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
-			prompt: z.string().describe("Instructions asking the user to arrange items in correct order."),
+			prompt: createInlineContentSchema().describe("Instructions asking the user to arrange items in correct order."),
 			choices: z
 				.array(
 					z
 						.object({
 							identifier: z.string().describe("Unique identifier for this choice option, used for response matching."),
-							content: z
-								.string()
-								.describe(
-									"Content that is plain text/MathML. Rich visualizations are referenced via <slot name='...'> elements."
-								),
-							feedback: z.string().nullable().describe("Optional feedback text shown when this choice is selected.")
+							content: createBlockContentSchema().describe("Rich content for this orderable item."),
+							feedback: createInlineContentSchema().nullable().describe("Optional feedback shown for this item.")
 						})
 						.strict()
+						.describe("An orderable item with content and optional feedback")
 				)
+				// NOTE: OpenAI structured outputs don't support .min() constraints, so we validate length at runtime
 				.describe("Array of items to be arranged in order."),
 			shuffle: z
-				.boolean()
-				.nullable()
-				.transform(() => true)
+				.literal(true)
 				.describe("Whether to randomize initial order. Always true to ensure varied starting points."),
 			orientation: z
 				.enum(["horizontal", "vertical"])
-				.nullable()
-				.transform((val) => val ?? "horizontal")
+				.default("horizontal")
 				.describe("Visual layout direction for the orderable items.")
 		})
 		.strict()
@@ -133,12 +227,13 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 
 	const FeedbackSchema = z
 		.object({
-			correct: z.string().describe("Encouraging message shown when the user answers correctly."),
-			incorrect: z.string().describe("Helpful feedback shown when the user answers incorrectly.")
+			correct: createBlockContentSchema().describe("Encouraging message shown when the user answers correctly."),
+			incorrect: createBlockContentSchema().describe("Helpful feedback shown when the user answers incorrectly.")
 		})
 		.strict()
 		.describe("Feedback messages displayed based on answer correctness.")
 
+	// The FINAL schema used by the compiler. It expects full widget/interaction objects.
 	const AssessmentItemSchema = z
 		.object({
 			identifier: z.string().describe("Unique identifier for this assessment item."),
@@ -146,37 +241,46 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			responseDeclarations: z
 				.array(ResponseDeclarationSchema)
 				.describe("Defines correct answers and scoring for all interactions in this item."),
-
-			// REPLACES stimulus: string and interactions: array[]
-			body: z
-				.string()
-				.nullable()
-				.describe(
-					"The main content of the item, with <slot name='...'/> placeholders for both widgets and interactions."
-				),
-			// The 'widgets' property now uses our precisely generated schema
+			body: createBlockContentSchema().nullable().describe("The main content of the item as structured blocks."),
 			widgets: DynamicWidgetsSchema.nullable().describe(
 				"A map of widget identifiers to their full widget object definitions."
 			),
 			interactions: z
 				.record(AnyInteractionSchema)
+				.nullable()
 				.describe("A map of interaction identifiers to their full interaction object definitions."),
-
 			feedback: FeedbackSchema.describe("Global feedback messages for the entire assessment item.")
 		})
 		.strict()
 		.describe("A complete QTI 3.0 assessment item with content, interactions, and scoring rules.")
 
-	return { AssessmentItemSchema, AnyInteractionSchema }
+	// The SHELL schema produced by Shot 1 of the AI pipeline.
+	// It has a structured body but only lists the *names* of slots to be filled.
+	const AssessmentItemShellSchema = AssessmentItemSchema.extend({
+		body: createBlockContentSchema().nullable().describe("The main content with slot placeholders."),
+		widgets: z.array(z.string()).describe("A list of unique identifiers for widget slots that must be filled."),
+		interactions: z
+			.array(z.string())
+			.describe("A list of unique identifiers for interaction slots that must be filled.")
+	})
+		.strict()
+		.describe("Initial assessment item structure with slot placeholders from the first AI generation shot.")
+
+	return { AssessmentItemSchema, AnyInteractionSchema, AssessmentItemShellSchema }
 }
 
-// ✅ FIX: The base AssessmentItemSchema is now correctly generated with an empty widget mapping.
-// This resolves the previous type errors and provides a valid, usable base schema.
-const { AssessmentItemSchema: BaseAssessmentItemSchema, AnyInteractionSchema: BaseAnyInteractionSchema } =
-	createDynamicAssessmentItemSchema({})
+const {
+	AssessmentItemSchema: BaseAssessmentItemSchema,
+	AnyInteractionSchema: BaseAnyInteractionSchema,
+	AssessmentItemShellSchema: BaseAssessmentItemShellSchema
+} = createDynamicAssessmentItemSchema({})
 
 export const AssessmentItemSchema = BaseAssessmentItemSchema
 export const AnyInteractionSchema = BaseAnyInteractionSchema
+export const AssessmentItemShellSchema = BaseAssessmentItemShellSchema
+
 export type AnyInteraction = z.infer<typeof AnyInteractionSchema>
 export type AssessmentItem = z.infer<typeof AssessmentItemSchema>
 export type AssessmentItemInput = z.input<typeof AssessmentItemSchema>
+export type AssessmentItemShell = z.infer<typeof AssessmentItemShellSchema>
+export type Widget = z.infer<(typeof typedSchemas)[keyof typeof typedSchemas]>
