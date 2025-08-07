@@ -872,7 +872,7 @@ export const equivalentFractionImages: AssessmentItemInput = {
 					{ type: "text", content: ", but " },
 					{ type: "math", mathml: "<mfrac><mn>3</mn><mn>4</mn></mfrac>" },
 					{ type: "text", content: " ≠ " },
-					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mfrac>" },
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
 					{ type: "text", content: "." }
 				]
 			}
@@ -988,7 +988,7 @@ export const calculateShadedArea: AssessmentItemInput = {
 						{ type: "text", content: " circles and " },
 						{ type: "math", mathml: "<mfrac><mn>1</mn><mn>4</mn></mfrac>" },
 						{ type: "text", content: " of each circle is shaded. We can multiply: " },
-						{ type: "math", mathml: "<mn>3</mo><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+						{ type: "math", mathml: "<mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
 						{ type: "text", content: "." }
 					]
 				},
@@ -1036,7 +1036,7 @@ export const calculateShadedArea: AssessmentItemInput = {
 					{ type: "text", content: " circles with " },
 					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>4</mn></mfrac>" },
 					{ type: "text", content: " shaded in each, we can either multiply " },
-					{ type: "math", mathml: "<mn>3</mo><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+					{ type: "math", mathml: "<mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
 					{ type: "text", content: " or add " },
 					{
 						type: "math",

@@ -1,7 +1,57 @@
 import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
+import { XMLValidator } from "fast-xml-parser"
 import { checkNoLatex, checkNoMfencedElements, checkNoPerseusArtifacts } from "@/lib/qti-validation/utils"
 import type { AssessmentItemInput, BlockContent, InlineContent } from "./schemas"
+
+/**
+ * Validates that a MathML fragment is well-formed XML.
+ * Throws an error if the XML is malformed.
+ * @param mathml The MathML string to validate.
+ * @param context The context for error reporting.
+ * @param logger The logger instance.
+ */
+function validateMathMLWellFormed(mathml: string, context: string, logger: logger.Logger): void {
+	// Wrap the MathML in a root element to ensure it's a complete XML document
+	const wrappedMathML = `<math xmlns="http://www.w3.org/1998/Math/MathML">${mathml}</math>`
+
+	const validationResult = XMLValidator.validate(wrappedMathML, {
+		allowBooleanAttributes: true,
+		unpairedTags: [
+			"br",
+			"hr",
+			"img",
+			"area",
+			"base",
+			"col",
+			"embed",
+			"input",
+			"link",
+			"meta",
+			"param",
+			"source",
+			"track",
+			"wbr"
+		]
+	})
+
+	if (validationResult !== true) {
+		// Extract the error message
+		const errorMessage =
+			typeof validationResult === "object" && validationResult.err
+				? validationResult.err.msg
+				: "Unknown XML validation error"
+
+		logger.error("malformed MathML XML", {
+			mathml,
+			context,
+			error: errorMessage,
+			validationResult
+		})
+
+		throw errors.new(`Invalid MathML in ${context}: ${errorMessage}. MathML fragment: "${mathml}"`)
+	}
+}
 
 function validateInlineContent(items: InlineContent, _context: string, logger: logger.Logger): void {
 	for (const item of items) {
@@ -10,6 +60,9 @@ function validateInlineContent(items: InlineContent, _context: string, logger: l
 			// FIX: Restore missing Perseus artifact validation
 			checkNoPerseusArtifacts(item.content, logger)
 		} else if (item.type === "math") {
+			// First validate that the MathML is well-formed XML
+			validateMathMLWellFormed(item.mathml, _context, logger)
+			// Then check for deprecated elements
 			checkNoMfencedElements(item.mathml, logger)
 		}
 		// inlineSlot is just a reference, no validation needed
