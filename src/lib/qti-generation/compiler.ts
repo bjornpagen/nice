@@ -10,7 +10,116 @@ import { compileResponseDeclarations, compileResponseProcessing } from "./respon
 import type { AssessmentItem, AssessmentItemInput } from "./schemas"
 import { createDynamicAssessmentItemSchema } from "./schemas"
 import { generateWidget } from "./widget-generator"
-import { convertHtmlEntities } from "./xml-fixes"
+import {
+	convertHtmlEntities,
+	fixInequalityOperators,
+	fixMathMLOperators,
+	removeDoubleNewlines,
+	stripXmlComments
+} from "./xml-fixes"
+
+// QTI IdentifierDType-like validation
+const VALID_IDENTIFIER_REGEX = /^[A-Za-z_][A-Za-z0-9._-]*$/
+
+function normalizeIdentifier(raw: string, fallbackPrefix: string, index: number, used: Set<string>): string {
+	// Basic sanitize: strip leading/trailing spaces
+	let candidate = String(raw).trim()
+	// Replace invalid chars with underscore
+	candidate = candidate.replace(/[^A-Za-z0-9._-]/g, "_")
+	// Must start with letter or underscore; otherwise prefix
+	if (!/^[A-Za-z_]/.test(candidate)) {
+		candidate = `${fallbackPrefix}${index + 1}`
+	}
+	// Empty after sanitize → fallback
+	if (candidate === "") {
+		candidate = `${fallbackPrefix}${index + 1}`
+	}
+	// Ensure matches regex; if not, fallback
+	if (!VALID_IDENTIFIER_REGEX.test(candidate)) {
+		candidate = `${fallbackPrefix}${index + 1}`
+	}
+	// Ensure uniqueness within the interaction
+	let unique = candidate
+	let suffix = 2
+	while (used.has(unique)) {
+		unique = `${candidate}_${suffix}`
+		suffix += 1
+	}
+	used.add(unique)
+	return unique
+}
+
+function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
+	if (!item.interactions) return
+
+	// responseIdentifier → mapping of original choice id to normalized id
+	const responseIdToMap: Record<string, Record<string, string>> = {}
+
+	for (const interaction of Object.values(item.interactions)) {
+		// Only interactions with choices are relevant
+		if (
+			interaction.type !== "inlineChoiceInteraction" &&
+			interaction.type !== "choiceInteraction" &&
+			interaction.type !== "orderInteraction"
+		) {
+			continue
+		}
+
+		const used = new Set<string>()
+		const mapping: Record<string, string> = {}
+
+		const fallbackPrefix = interaction.type === "inlineChoiceInteraction" ? "IC" : "C"
+
+		if (interaction.type === "inlineChoiceInteraction") {
+			const responseId = interaction.responseIdentifier
+			interaction.choices.forEach((choice, idx) => {
+				const originalId = String(choice.identifier)
+				const normalized = VALID_IDENTIFIER_REGEX.test(originalId)
+					? normalizeIdentifier(originalId, fallbackPrefix, idx, used)
+					: normalizeIdentifier(originalId, fallbackPrefix, idx, used)
+				mapping[originalId] = normalized
+				choice.identifier = normalized
+			})
+			responseIdToMap[responseId] = mapping
+			continue
+		}
+
+		// choiceInteraction or orderInteraction
+		const responseId = interaction.responseIdentifier
+		interaction.choices.forEach((choice, idx) => {
+			const originalId = String(choice.identifier)
+			const normalized = VALID_IDENTIFIER_REGEX.test(originalId)
+				? normalizeIdentifier(originalId, fallbackPrefix, idx, used)
+				: normalizeIdentifier(originalId, fallbackPrefix, idx, used)
+			mapping[originalId] = normalized
+			choice.identifier = normalized
+		})
+		responseIdToMap[responseId] = mapping
+	}
+
+	for (const decl of item.responseDeclarations) {
+		if (!decl || decl.baseType !== "identifier") continue
+		const map = responseIdToMap[decl.identifier]
+		if (!map) continue
+		const rewriteString = (val: string): string => map[val] ?? val
+		const current = decl.correct
+		if (Array.isArray(current)) {
+			if (current.every((v): v is string => typeof v === "string")) {
+				const mapped = current.map((v) => rewriteString(v))
+				decl.correct = mapped
+			} else {
+				// number[] or mixed (should not be mixed for identifier baseType); leave unchanged for safety
+				decl.correct = current
+			}
+		} else {
+			if (typeof current === "string") {
+				decl.correct = rewriteString(current)
+			} else {
+				decl.correct = current
+			}
+		}
+	}
+}
 
 // Type guard to check if a string is a valid widget type
 function isValidWidgetType(type: string): type is keyof typeof typedSchemas {
@@ -41,12 +150,20 @@ export function compile(itemData: AssessmentItemInput): string {
 	}
 
 	const { AssessmentItemSchema } = createDynamicAssessmentItemSchema(validatedWidgetMapping)
-	const item: AssessmentItem = AssessmentItemSchema.parse(itemData)
+	const itemResult = AssessmentItemSchema.safeParse(itemData)
+	if (!itemResult.success) {
+		logger.error("schema enforcement failed", { error: itemResult.error })
+		throw errors.wrap(itemResult.error, "schema enforcement")
+	}
+	const enforcedItem = itemResult.data
+
+	// Normalize choice identifiers now that we have strong types
+	normalizeChoiceIdentifiersInPlace(enforcedItem)
 
 	const slots = new Map<string, string>()
 
-	if (item.widgets) {
-		for (const [widgetId, widgetDef] of Object.entries(item.widgets)) {
+	if (enforcedItem.widgets) {
+		for (const [widgetId, widgetDef] of Object.entries(enforcedItem.widgets)) {
 			// widgetDef is already typed correctly from the schema parse
 			const widgetHtml = generateWidget(widgetDef)
 			if (widgetHtml.trim().startsWith("<svg")) {
@@ -57,27 +174,27 @@ export function compile(itemData: AssessmentItemInput): string {
 		}
 	}
 
-	if (item.interactions) {
-		for (const [interactionId, interactionDef] of Object.entries(item.interactions)) {
+	if (enforcedItem.interactions) {
+		for (const [interactionId, interactionDef] of Object.entries(enforcedItem.interactions)) {
 			slots.set(interactionId, compileInteraction(interactionDef, slots))
 		}
 	}
 
-	const filledBody = item.body ? renderBlockContent(item.body, slots) : ""
-	const correctFeedback = renderBlockContent(item.feedback.correct, slots)
-	const incorrectFeedback = renderBlockContent(item.feedback.incorrect, slots)
+	const filledBody = enforcedItem.body ? renderBlockContent(enforcedItem.body, slots) : ""
+	const correctFeedback = renderBlockContent(enforcedItem.feedback.correct, slots)
+	const incorrectFeedback = renderBlockContent(enforcedItem.feedback.incorrect, slots)
 
-	const responseDeclarations = compileResponseDeclarations(item.responseDeclarations)
-	const responseProcessing = compileResponseProcessing(item.responseDeclarations)
+	const responseDeclarations = compileResponseDeclarations(enforcedItem.responseDeclarations)
+	const responseProcessing = compileResponseProcessing(enforcedItem.responseDeclarations)
 
 	// Assemble the final XML document
-	const finalXml = `<?xml version="1.0" encoding="UTF-8"?>
+	let finalXml = `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-item
     xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0p1_v1p0.xsd http://www.w3.org/1998/Math/MathML https://purl.imsglobal.org/spec/mathml/v3p0/schema/xsd/mathml3.xsd"
-    identifier="${escapeXmlAttribute(item.identifier)}"
-    title="${escapeXmlAttribute(item.title)}"
+    identifier="${escapeXmlAttribute(enforcedItem.identifier)}"
+    title="${escapeXmlAttribute(enforcedItem.title)}"
     time-dependent="false"
     xml:lang="en-US">
 ${responseDeclarations}
@@ -97,7 +214,11 @@ ${responseDeclarations}
     </qti-item-body>
 ${responseProcessing}
 </qti-assessment-item>`
-
+	// Global XML post-processing hardening
+	finalXml = stripXmlComments(finalXml, logger)
+	finalXml = removeDoubleNewlines(finalXml, logger)
+	finalXml = fixMathMLOperators(finalXml, logger)
+	finalXml = fixInequalityOperators(finalXml, logger)
 	// Convert HTML entities to Unicode characters at the very end
 	return convertHtmlEntities(finalXml, logger)
 }

@@ -15,10 +15,10 @@ function createShellFromExample(item: (typeof allExamples)[0]) {
 	return AssessmentItemShellSchema.parse(shell)
 }
 
-// Define a union type that includes both valid widget types and the bailout option
-type WidgetTypeOrNotFound = keyof typeof typedSchemas | "WIDGET_NOT_FOUND"
+// Define a strict widget type key list (no bailouts)
+type WidgetTypeKey = keyof typeof typedSchemas
 
-const widgetTypeKeys: [WidgetTypeOrNotFound, ...WidgetTypeOrNotFound[]] = [
+const widgetTypeKeys: [WidgetTypeKey, ...WidgetTypeKey[]] = [
 	"3dIntersectionDiagram",
 	"absoluteValueNumberLine",
 	"angleDiagram",
@@ -69,13 +69,11 @@ const widgetTypeKeys: [WidgetTypeOrNotFound, ...WidgetTypeOrNotFound[]] = [
 	"unitBlockDiagram",
 	"vennDiagram",
 	"verticalArithmeticSetup",
-	"parallelogramTrapezoidDiagram",
-	// ADD: New bailout option for when no widget is suitable.
-	"WIDGET_NOT_FOUND"
+	"parallelogramTrapezoidDiagram"
 ]
 
 function createWidgetMappingSchema(slotNames: string[]) {
-	const mappingShape: Record<string, z.ZodEnum<[WidgetTypeOrNotFound, ...WidgetTypeOrNotFound[]]>> = {}
+	const mappingShape: Record<string, z.ZodEnum<[WidgetTypeKey, ...WidgetTypeKey[]]>> = {}
 	for (const slotName of slotNames) {
 		mappingShape[slotName] = z.enum(widgetTypeKeys)
 	}
@@ -137,9 +135,13 @@ ABSOLUTE REQUIREMENT: SLOT CONSISTENCY.
 This is the most critical rule. Any slot you include in the 'body' MUST have its slotId listed in either the 'widgets' array or the 'interactions' array. Conversely, every name in the 'widgets' and 'interactions' arrays MUST correspond to a slot in the 'body'. There must be a perfect, one-to-one mapping.
 
 CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, MathML, and slot placeholders.
+\nCRITICAL: All content must be XML-safe. Do not use CDATA sections and do not include invalid XML control characters.
 
 **CRITICAL: NO EXPLANATION WIDGETS.**
 NEVER create a widget for explanatory text. Explanations, definitions, or hints found in the Perseus JSON (especially those of type 'explanation' or 'definition') must be embedded directly within the 'body' content as paragraph blocks. The 'explanation' and 'definition' widget types are BANNED.
+
+**CRITICAL: NO CURRENCY SLOTS.**
+Currency symbols and amounts MUST NOT be represented as slots (widget or interaction). Do not generate any slotId that indicates currency (for example, names containing "currency" or ending with "_feedback"). Represent currency inline using text and/or MathML only; for example: <span class="currency">$</span> followed by <math><mn>5</mn></math> or plain text like "5 dollars".
 
 ⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
 The following are CATEGORICALLY FORBIDDEN in the output. ANY violation will result in IMMEDIATE REJECTION:
@@ -160,6 +162,9 @@ The following are CATEGORICALLY FORBIDDEN in the output. ANY violation will resu
 3. **DEPRECATED MATHML IS BANNED** - The following MathML elements are OBSOLETE and FORBIDDEN:
    - NO <mfenced> elements - use <mrow> with explicit <mo> delimiters instead
    - NO deprecated attributes or elements
+\n4. **NO CDATA SECTIONS** - Never use \`<![CDATA[ ... ]]>\`. All content must be properly XML-encoded within elements.
+\n5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
+   - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.
 
 ALL mathematical content MUST be converted to valid, modern MathML. NO EXCEPTIONS.
 
@@ -211,6 +216,7 @@ ${perseusJson}
     * Currency symbols are allowed when properly tagged: \`<span class="currency">$</span>\`
     * Do NOT use \`<mo>$</mo>\` in MathML for currency (use it only for mathematical operators if needed)
     * Acceptable patterns: \`<span class="currency">$</span><math><mn>5</mn></math>\` or text like "5 dollars"
+  - Do NOT create slots for currency. Never generate slotIds like "currency7" or "currency7_feedback"; represent currency inline using \`<span class="currency">$</span>\` and text/MathML.
 - **Table Rule (MANDATORY)**:
   - Tables must NEVER be created as HTML \`<table>\` elements in the body.
   - ALWAYS create a widget slot for every table (e.g., \`<slot name="table_widget_1" />\`) and add "table_widget_1" to the 'widgets' array.
@@ -284,6 +290,55 @@ Return ONLY the JSON object for the assessment shell.
   { "type": "paragraph", "content": [{ "type": "text", "content": "Here is a graph: " }] },
   { "type": "blockSlot", "slotId": "graph_widget_1" }
 ]
+\`\`\`
+
+**Currency Represented as Slots (BANNED):**
+
+**WRONG (currency as a slot in body):**
+\`\`\`json
+"body": [
+  {
+    "type": "paragraph",
+    "content": [
+      { "type": "text", "content": "The price is " },
+      { "type": "inlineSlot", "slotId": "currency7" }
+    ]
+  }
+],
+"widgets": ["currency7"],
+"interactions": []
+\`\`\`
+
+**WRONG (currency slot in feedback):**
+\`\`\`json
+"feedback": {
+  "correct": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "You saved " },
+        { "type": "inlineSlot", "slotId": "currency7_feedback" }
+      ]
+    }
+  ],
+  "incorrect": []
+}
+\`\`\`
+
+**CORRECT (inline currency, no slots):**
+\`\`\`json
+"body": [
+  {
+    "type": "paragraph",
+    "content": [
+      { "type": "text", "content": "The price is " },
+      { "type": "text", "content": "$" },
+      { "type": "math", "mathml": "<mn>7</mn>" }
+    ]
+  }
+],
+"widgets": [],
+"interactions": []
 \`\`\`
 
 **3. Banned Content (LaTeX, Deprecated MathML):**
@@ -559,7 +614,7 @@ Double-check your output before submitting. ZERO TOLERANCE for these violations.
 export function createWidgetMappingPrompt(perseusJson: string, assessmentBody: string, slotNames: string[]) {
 	const systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content and the original Perseus JSON to map widget slots to the most appropriate widget type from a given list.
 
-**CRITICAL RULE**: If you analyze the Perseus JSON for a given slot and determine that NONE of the available widget types are a perfect match, you MUST use the type "WIDGET_NOT_FOUND". This is a bailout signal that the content cannot be migrated. Use this option if the widget cannot be perfectly represented by any of the available types.
+**CRITICAL RULE**: You MUST choose a widget type from the list for every slot. Do not refuse or omit any slot. When no perfect match exists, select the closest semantically correct type that best represents the visual intent.
 
 **SPECIAL WIDGET GUIDANCE**:
 - Use "emojiImage" for generic image widgets that display simple objects (trucks, horses, cookies, etc.) that can be represented as emojis
@@ -624,7 +679,10 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
    - LaTeX dollar delimiters mean COMPLETE FAILURE.
 
 3. **NO DEPRECATED MATHML** - NEVER use:
-   - <mfenced> elements (use <mrow> with <mo> delimiters instead)`
+   - <mfenced> elements (use <mrow> with <mo> delimiters instead)
+\n4. **NO CDATA SECTIONS** - Never use \`<![CDATA[ ... ]]>\`. All content must be properly XML-encoded within elements.
+\n5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
+   - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.`
 
 	const userContent = `Generate interaction content based on the following inputs. Use the provided image context to understand the visual components.
 
@@ -780,7 +838,10 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
    - LaTeX dollar delimiters mean COMPLETE FAILURE.
 
 3. **NO DEPRECATED MATHML** - NEVER use:
-   - <mfenced> elements (use <mrow> with <mo> delimiters instead)`
+   - <mfenced> elements (use <mrow> with <mo> delimiters instead)
+\n4. **NO CDATA SECTIONS** - Never use \`<![CDATA[ ... ]]>\`. All content must be properly XML-encoded within elements.
+\n5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
+   - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.`
 
 	const userContent = `Generate widget content based on the following inputs. Use the provided image context to understand the visual components.
 

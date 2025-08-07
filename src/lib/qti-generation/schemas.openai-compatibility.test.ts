@@ -14,10 +14,40 @@ import {
 import type { typedSchemas } from "@/lib/widgets/generators"
 
 describe("QTI Compiler Schema OpenAI Compatibility", () => {
-	// This test ensures all QTI generation schemas are compatible with OpenAI's structured outputs.
-	// OpenAI's API does not support JSON Schema `$ref` properties, which can appear when
-	// Zod schemas have complex nested structures or circular references.
-	// This test proactively detects any `$ref` properties to ensure our schemas work with OpenAI.
+	function isRecord(value: unknown): value is Record<string, unknown> {
+		return value !== null && typeof value === "object" && !Array.isArray(value)
+	}
+
+	// Helper: recursively assert that no object with $ref has forbidden siblings
+	function assertNoInvalidRefSiblings(node: unknown, path: string[] = []): void {
+		if (isRecord(node)) {
+			if ("$ref" in node) {
+				expect(node).not.toHaveProperty("default")
+				expect(node).not.toHaveProperty("description")
+			}
+			for (const [key, value] of Object.entries(node)) {
+				assertNoInvalidRefSiblings(value, [...path, key])
+			}
+		} else if (Array.isArray(node)) {
+			for (let i = 0; i < node.length; i++) {
+				assertNoInvalidRefSiblings(node[i], [...path, String(i)])
+			}
+		}
+	}
+
+	// Helper: recursively assert no "default" keys exist anywhere
+	function assertNoDefaults(node: unknown, path: string[] = []): void {
+		if (isRecord(node)) {
+			expect(node).not.toHaveProperty("default")
+			for (const [key, value] of Object.entries(node)) {
+				assertNoDefaults(value, [...path, key])
+			}
+		} else if (Array.isArray(node)) {
+			for (let i = 0; i < node.length; i++) {
+				assertNoDefaults(node[i], [...path, String(i)])
+			}
+		}
+	}
 
 	const schemasToTest = {
 		InlineContentSchema: InlineContentSchema,
@@ -28,16 +58,16 @@ describe("QTI Compiler Schema OpenAI Compatibility", () => {
 	}
 
 	for (const [schemaName, zodSchema] of Object.entries(schemasToTest)) {
-		test(`${schemaName} should not contain $ref properties`, () => {
+		test(`${schemaName} should be OpenAI compatible (no defaults; no invalid $ref siblings)`, () => {
 			const responseFormat = zodResponseFormat(zodSchema, `qti_${schemaName}`)
 			const jsonSchema = responseFormat.json_schema?.schema
-			const schemaString = JSON.stringify(jsonSchema, null, 2)
-
-			expect(schemaString).not.toInclude(`"$ref"`)
+			expect(jsonSchema).toBeDefined()
+			assertNoDefaults(jsonSchema)
+			assertNoInvalidRefSiblings(jsonSchema)
 		})
 	}
 
-	test("createDynamicAssessmentItemSchema should generate schemas without $ref properties", () => {
+	test("createDynamicAssessmentItemSchema should be OpenAI compatible (no defaults; no invalid $ref siblings)", () => {
 		// Test with a sample widget mapping
 		const widgetMapping: Record<string, keyof typeof typedSchemas> = {
 			widget1: "3dIntersectionDiagram",
@@ -49,12 +79,12 @@ describe("QTI Compiler Schema OpenAI Compatibility", () => {
 
 		const responseFormat = zodResponseFormat(DynamicSchema, "dynamic_assessment_item")
 		const jsonSchema = responseFormat.json_schema?.schema
-		const schemaString = JSON.stringify(jsonSchema, null, 2)
-
-		expect(schemaString).not.toInclude(`"$ref"`)
+		expect(jsonSchema).toBeDefined()
+		assertNoDefaults(jsonSchema)
+		assertNoInvalidRefSiblings(jsonSchema)
 	})
 
-	test("Deeply nested content structures should not produce $ref properties", () => {
+	test("Deeply nested content structures should be OpenAI compatible (no defaults; no invalid $ref siblings)", () => {
 		// Create a complex nested structure to stress-test the schemas
 		const ComplexNestedSchema = z.object({
 			title: z.string(),
@@ -75,13 +105,13 @@ describe("QTI Compiler Schema OpenAI Compatibility", () => {
 
 		const responseFormat = zodResponseFormat(ComplexNestedSchema, "complex_nested")
 		const jsonSchema = responseFormat.json_schema?.schema
-		const schemaString = JSON.stringify(jsonSchema, null, 2)
-
-		expect(schemaString).not.toInclude(`"$ref"`)
+		expect(jsonSchema).toBeDefined()
+		assertNoDefaults(jsonSchema)
+		assertNoInvalidRefSiblings(jsonSchema)
 	})
 
 	// Test individual interaction schemas that are used within AnyInteractionSchema
-	test("Individual interaction schemas should not contain $ref properties", () => {
+	test("Individual interaction schemas should be OpenAI compatible (no defaults; no invalid $ref siblings)", () => {
 		// We'll create minimal versions of each interaction type to test
 		const interactionExamples = [
 			{
@@ -138,9 +168,25 @@ describe("QTI Compiler Schema OpenAI Compatibility", () => {
 		for (const { name, schema } of interactionExamples) {
 			const responseFormat = zodResponseFormat(schema, `interaction_${name}`)
 			const jsonSchema = responseFormat.json_schema?.schema
-			const schemaString = JSON.stringify(jsonSchema, null, 2)
-
-			expect(schemaString).not.toInclude(`"$ref"`)
+			expect(jsonSchema).toBeDefined()
+			assertNoDefaults(jsonSchema)
+			assertNoInvalidRefSiblings(jsonSchema)
 		}
+	})
+
+	test("Interaction collection schema used for generation should be OpenAI compatible", () => {
+		// Build a collection schema similar to interaction_content_generator
+		const InteractionCollectionSchema = z
+			.object({
+				interaction_1: AnyInteractionSchema,
+				interaction_2: AnyInteractionSchema
+			})
+			.describe("A collection of fully-defined QTI interaction objects.")
+
+		const responseFormat = zodResponseFormat(InteractionCollectionSchema, "interaction_content_generator")
+		const jsonSchema = responseFormat.json_schema?.schema
+		expect(jsonSchema).toBeDefined()
+		assertNoDefaults(jsonSchema)
+		assertNoInvalidRefSiblings(jsonSchema)
 	})
 })

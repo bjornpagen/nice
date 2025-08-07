@@ -771,17 +771,33 @@ describe("Widget Generators", () => {
 				type: "dataTable" as const,
 				title: "Student Scores",
 				columns: [
-					{ key: "name", label: "Name", isNumeric: false },
-					{ key: "score", label: "Score", isNumeric: true },
-					{ key: "notes", label: "Notes", isNumeric: false }
+					{ key: "name", label: [{ type: "text" as const, content: "Name" }], isNumeric: false },
+					{ key: "score", label: [{ type: "text" as const, content: "Score" }], isNumeric: true },
+					{ key: "notes", label: [{ type: "text" as const, content: "Notes" }], isNumeric: false }
 				],
 				rowHeaderKey: "name",
 				data: [
-					["Class A", 1600, "Excellent"],
-					["Alice", 85, "Good"],
-					["Bob", { type: "input" as const, responseIdentifier: "BOB_SCORE", expectedLength: 3 }, "Needs improvement"]
+					[
+						{ kind: "inline" as const, content: [{ type: "text" as const, content: "Class A" }] },
+						{ kind: "number" as const, value: 1600 },
+						{ kind: "inline" as const, content: [{ type: "text" as const, content: "Excellent" }] }
+					],
+					[
+						{ kind: "inline" as const, content: [{ type: "text" as const, content: "Alice" }] },
+						{ kind: "number" as const, value: 85 },
+						{ kind: "inline" as const, content: [{ type: "text" as const, content: "Good" }] }
+					],
+					[
+						{ kind: "inline" as const, content: [{ type: "text" as const, content: "Bob" }] },
+						{ kind: "input" as const, responseIdentifier: "BOB_SCORE", expectedLength: 3 },
+						{ kind: "inline" as const, content: [{ type: "text" as const, content: "Needs improvement" }] }
+					]
 				],
-				footer: ["Total", { type: "input" as const, responseIdentifier: "TOTAL", expectedLength: 5 }, "Summary"]
+				footer: [
+					{ kind: "inline" as const, content: [{ type: "text" as const, content: "Total" }] },
+					{ kind: "input" as const, responseIdentifier: "TOTAL", expectedLength: 5 },
+					{ kind: "inline" as const, content: [{ type: "text" as const, content: "Summary" }] }
+				]
 			}
 			expect(generateDataTable(props)).toMatchSnapshot()
 		})

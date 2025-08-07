@@ -1,11 +1,11 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
-import { NonRetriableError } from "inngest"
+// removed NonRetriableError: no special non-retriable handling needed
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { compile } from "@/lib/qti-generation/compiler"
-import { ErrWidgetNotFound, generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
+import { generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
 import { differentiateAssessmentItem } from "@/lib/qti-generation/structured/differentiator"
 
 // A global key to ensure all OpenAI functions share the same concurrency limit.
@@ -59,13 +59,8 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 				questionId,
 				error: structuredItemResult.error
 			})
-			// If the error is due to a missing widget, it's not retriable.
-			if (errors.is(structuredItemResult.error, ErrWidgetNotFound)) {
-				throw new NonRetriableError("Widget not found, this item cannot be migrated.", {
-					cause: structuredItemResult.error
-				})
-			}
-			throw structuredItemResult.error // Re-throw other errors to allow standard Inngest retries.
+			// Bubble error to allow standard Inngest retries.
+			throw structuredItemResult.error
 		}
 		const structuredItem = structuredItemResult.data
 

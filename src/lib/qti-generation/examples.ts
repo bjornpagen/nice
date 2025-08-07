@@ -591,21 +591,25 @@ export const twoWayFrequencyTable: AssessmentItemInput = {
 			type: "dataTable",
 			title: null,
 			columns: [
-				{ key: "condition", label: "", isNumeric: false },
-				{ key: "received", label: "Received cold medicine", isNumeric: false },
-				{ key: "notReceived", label: "Did not receive cold medicine", isNumeric: false }
+				{ key: "condition", label: null, isNumeric: false },
+				{ key: "received", label: [{ type: "text", content: "Received cold medicine" }], isNumeric: false },
+				{
+					key: "notReceived",
+					label: [{ type: "text", content: "Did not receive cold medicine" }],
+					isNumeric: false
+				}
 			],
 			rowHeaderKey: "condition",
 			data: [
 				[
-					"Cold lasted longer than 7 days",
-					{ type: "input", responseIdentifier: "RESP_A", expectedLength: 3 },
-					{ type: "input", responseIdentifier: "RESP_B", expectedLength: 3 }
+					{ kind: "inline", content: [{ type: "text", content: "Cold lasted longer than 7 days" }] },
+					{ kind: "input", responseIdentifier: "RESP_A", expectedLength: 3 },
+					{ kind: "input", responseIdentifier: "RESP_B", expectedLength: 3 }
 				],
 				[
-					"Cold did <em>not</em> last longer than 7 days",
-					{ type: "input", responseIdentifier: "RESP_C", expectedLength: 3 },
-					{ type: "input", responseIdentifier: "RESP_D", expectedLength: 3 }
+					{ kind: "inline", content: [{ type: "text", content: "Cold did not last longer than 7 days" }] },
+					{ kind: "input", responseIdentifier: "RESP_C", expectedLength: 3 },
+					{ kind: "input", responseIdentifier: "RESP_D", expectedLength: 3 }
 				]
 			],
 			footer: null
@@ -1190,15 +1194,27 @@ export const harukaExamScore: AssessmentItemInput = {
 			type: "dataTable",
 			title: null,
 			columns: [
-				{ key: "exam", label: "Final exam", isNumeric: false },
-				{ key: "score", label: "Score on a 100-point scale", isNumeric: true }
+				{ key: "exam", label: [{ type: "text", content: "Final exam" }], isNumeric: false },
+				{ key: "score", label: [{ type: "text", content: "Score on a 100-point scale" }], isNumeric: true }
 			],
 			rowHeaderKey: null,
 			data: [
-				["Astronomy", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>72</mn></math>'],
-				["Biology", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>85</mn></math>'],
-				["Physics", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>92</mn></math>'],
-				["Chemistry", "?"]
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Astronomy" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>72</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Biology" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>85</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Physics" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>92</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Chemistry" }] },
+					{ kind: "inline", content: [{ type: "text", content: "?" }] }
+				]
 			],
 			footer: null
 		}
@@ -1276,41 +1292,45 @@ export const libertyvilleBusinessCycle: AssessmentItemInput = {
 			type: "dataTable",
 			title: null,
 			columns: [
-				{ key: "year", label: "Year", isNumeric: false },
-				{ key: "gdp", label: "GDP (% change)", isNumeric: true },
-				{ key: "unemployment", label: "Unemployment (% of the labor force)", isNumeric: true }
+				{ key: "year", label: [{ type: "text", content: "Year" }], isNumeric: false },
+				{ key: "gdp", label: [{ type: "text", content: "GDP (% change)" }], isNumeric: true },
+				{
+					key: "unemployment",
+					label: [{ type: "text", content: "Unemployment (% of the labor force)" }],
+					isNumeric: true
+				}
 			],
 			rowHeaderKey: null,
 			data: [
 				[
-					"2014",
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>0</mn><mo>%</mo></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>7</mn><mo>%</mo></math>'
+					{ kind: "inline", content: [{ type: "text", content: "2014" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>0</mn><mo>%</mo>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>7</mn><mo>%</mo>" }] }
 				],
 				[
-					"2015",
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn><mo>%</mo></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn><mo>%</mo></math>'
+					{ kind: "inline", content: [{ type: "text", content: "2015" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1</mn><mo>%</mo>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>8</mn><mo>%</mo>" }] }
 				],
 				[
-					"2016",
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn><mo>%</mo></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>10</mn><mo>%</mo></math>'
+					{ kind: "inline", content: [{ type: "text", content: "2016" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>2</mn><mo>%</mo>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>10</mn><mo>%</mo>" }] }
 				],
 				[
-					"2017",
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>2</mn><mo>%</mo></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
+					{ kind: "inline", content: [{ type: "text", content: "2017" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>2</mn><mo>%</mo>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>6</mn><mo>%</mo>" }] }
 				],
 				[
-					"2018",
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>4</mn><mo>%</mo></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn><mo>%</mo></math>'
+					{ kind: "inline", content: [{ type: "text", content: "2018" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>4</mn><mo>%</mo>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>5</mn><mo>%</mo>" }] }
 				],
 				[
-					"2019",
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>%</mo></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>6</mn><mo>%</mo></math>'
+					{ kind: "inline", content: [{ type: "text", content: "2019" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>1</mn><mo>%</mo>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>6</mn><mo>%</mo>" }] }
 				]
 			],
 			footer: null
@@ -1626,22 +1646,22 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 			rowHeaderKey: "x",
 			data: [
 				[
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>9</mn></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>8</mn></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>6</mn></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>3</mn></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>2</mn></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>1</mn></math>'
+					{ kind: "inline", content: [{ type: "math", mathml: "<mi>x</mi>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>9</mn>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>8</mn>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>6</mn>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>3</mn>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>2</mn>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1</mn>" }] }
 				],
 				[
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>30</mn></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>29</mn></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>36</mn></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>20</mn></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>35</mn></math>',
-					'<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>-</mo><mn>47</mn></math>'
+					{ kind: "inline", content: [{ type: "math", mathml: "<mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>30</mn>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>29</mn>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>36</mn>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>20</mn>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>35</mn>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>47</mn>" }] }
 				]
 			],
 			footer: null
@@ -1866,15 +1886,27 @@ export const shapeBinBarChart: AssessmentItemInput = {
 			type: "dataTable",
 			title: null,
 			columns: [
-				{ key: "shape", label: "Type of shape", isNumeric: false },
-				{ key: "count", label: "Number of shapes", isNumeric: true }
+				{ key: "shape", label: [{ type: "text", content: "Type of shape" }], isNumeric: false },
+				{ key: "count", label: [{ type: "text", content: "Number of shapes" }], isNumeric: true }
 			],
 			rowHeaderKey: null,
 			data: [
-				["Triangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>8</mn></math>'],
-				["Circles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>5</mn></math>'],
-				["Rectangles", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>3</mn></math>'],
-				["Squares", '<math xmlns="http://www.w3.org/1998/Math/MathML"><mn>9</mn></math>']
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Triangles" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>8</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Circles" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>5</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Rectangles" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>3</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Squares" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>9</mn>" }] }
+				]
 			],
 			footer: null
 		},

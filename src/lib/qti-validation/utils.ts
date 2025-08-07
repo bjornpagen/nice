@@ -163,3 +163,109 @@ export function sanitizeMathMLOperators(htmlFragment: string): string {
 	fixedXml = fixedXml.replace(/<mo(?:\s+[^>]*)?>>=(<\/mo>)/gi, (match) => match.replace(">=", "≥"))
 	return fixedXml
 }
+
+/**
+ * Validates that a string contains only XML 1.0 valid characters for character data (PCDATA).
+ * Disallows C0 control characters other than TAB (0x09), LF (0x0A), and CR (0x0D),
+ * as well as non-characters like U+FFFE/U+FFFF and any unpaired UTF-16 surrogates.
+ *
+ * Context: The XML validator surfaced "PCDATA invalid Char value <code>" errors for inputs containing
+ * characters like \u0002, \u0004, \u0019. This function bans such characters early during pre-validation.
+ *
+ * @param fragment The text or markup fragment to validate
+ * @param logger The logger instance
+ */
+export function checkNoInvalidXmlChars(fragment: string, logger: logger.Logger): void {
+	const invalidCodePoints: Array<{ index: number; codePoint: number }> = []
+
+	// Iterate by code points to handle surrogate pairs correctly
+	for (let i = 0; i < fragment.length; ) {
+		const maybeCodePoint = fragment.codePointAt(i)
+		if (maybeCodePoint === undefined) {
+			// Should not happen with 0 <= i < length, but fail safe
+			logger.error("code point retrieval failed", { index: i })
+			throw errors.new("invalid string indexing")
+		}
+		const codePoint = maybeCodePoint
+		const codeUnitCount = codePoint > 0xffff ? 2 : 1
+
+		const isAllowed =
+			// Whitespace controls allowed by XML 1.0
+			codePoint === 0x09 ||
+			codePoint === 0x0a ||
+			codePoint === 0x0d ||
+			// General allowed ranges
+			(codePoint >= 0x20 && codePoint <= 0xd7ff) ||
+			(codePoint >= 0xe000 && codePoint <= 0xfffd) ||
+			(codePoint >= 0x10000 && codePoint <= 0x10ffff)
+
+		// Exclude non-characters U+FFFE/U+FFFF within BMP
+		const isBmpNonCharacter = codePoint === 0xfffe || codePoint === 0xffff
+
+		// Detect unpaired surrogate halves explicitly
+		const codeUnit = fragment.charCodeAt(i)
+		const nextCodeUnit = i + 1 < fragment.length ? fragment.charCodeAt(i + 1) : 0
+		const isHighSurrogate = codeUnit >= 0xd800 && codeUnit <= 0xdbff
+		const isLowSurrogate = codeUnit >= 0xdc00 && codeUnit <= 0xdfff
+		const isUnpairedHigh = isHighSurrogate && !(nextCodeUnit >= 0xdc00 && nextCodeUnit <= 0xdfff)
+		const isUnpairedLow =
+			isLowSurrogate && !(i > 0 && fragment.charCodeAt(i - 1) >= 0xd800 && fragment.charCodeAt(i - 1) <= 0xdbff)
+
+		if (!isAllowed || isBmpNonCharacter || isUnpairedHigh || isUnpairedLow) {
+			invalidCodePoints.push({ index: i, codePoint })
+		}
+
+		i += codeUnitCount
+	}
+
+	if (invalidCodePoints.length > 0) {
+		// Build a concise context preview around the first offending index
+		const first = invalidCodePoints[0]
+		if (!first) {
+			logger.error("invalid code points invariant", { count: invalidCodePoints.length })
+			throw errors.new("invalid code points invariant")
+		}
+		const contextStart = Math.max(0, first.index - 40)
+		const contextEnd = Math.min(fragment.length, first.index + 40)
+		const contextPreview = fragment.substring(contextStart, contextEnd)
+
+		logger.error("invalid xml characters in content", {
+			count: invalidCodePoints.length,
+			invalid: invalidCodePoints.slice(0, 10).map((c) => ({
+				index: c.index,
+				codePointHex: `U+${c.codePoint.toString(16).toUpperCase()}`,
+				codePointDec: c.codePoint
+			})),
+			context: contextPreview
+		})
+
+		const details = invalidCodePoints
+			.slice(0, 5)
+			.map((c) => `U+${c.codePoint.toString(16).toUpperCase()}@${c.index}`)
+			.join(", ")
+		throw errors.new(
+			`invalid xml characters found in content: ${invalidCodePoints.length} occurrence(s), e.g., ${details}`
+		)
+	}
+}
+
+/**
+ * Validates that no CDATA sections are present in the fragment.
+ * QTI requires properly XML-encoded content; CDATA (<![CDATA[ ... ]]>) is disallowed.
+ *
+ * @param fragment The text or markup fragment to validate
+ * @param logger The logger instance
+ */
+export function checkNoCDataSections(fragment: string, logger: logger.Logger): void {
+	const openIdx = fragment.indexOf("<![CDATA[")
+	const closeIdx = fragment.indexOf("]]>")
+	if (openIdx !== -1 || closeIdx !== -1) {
+		const idx = openIdx !== -1 ? openIdx : closeIdx
+		const contextStart = Math.max(0, idx - 40)
+		const contextEnd = Math.min(fragment.length, idx + 40)
+		const contextPreview = fragment.substring(contextStart, contextEnd)
+
+		logger.error("found cdata section in content", { index: idx, context: contextPreview })
+		throw errors.new("cdata sections are not allowed")
+	}
+}

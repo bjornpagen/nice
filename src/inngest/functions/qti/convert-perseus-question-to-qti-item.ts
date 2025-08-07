@@ -1,13 +1,13 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
 // ADD: Import NonRetriableError from the Inngest SDK.
-import { NonRetriableError } from "inngest"
+// removed NonRetriableError: no special non-retriable handling needed
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { compile } from "@/lib/qti-generation/compiler"
 // ADD: Import our new constant error and the generator function.
-import { ErrWidgetNotFound, generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
+import { generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
 // NEW: Import the validator function
 import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
 
@@ -62,16 +62,6 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 				questionId,
 				error: structuredItemResult.error
 			})
-
-			// ADD: New error handling logic for non-retriable failures.
-			// Check if the caught error is an instance of our specific error.
-			if (errors.is(structuredItemResult.error, ErrWidgetNotFound)) {
-				// If it matches, wrap the original error in a NonRetriableError.
-				// This instructs Inngest to halt retries for this event.
-				throw new NonRetriableError(structuredItemResult.error.message, {
-					cause: structuredItemResult.error
-				})
-			}
 
 			// For all other errors, maintain the existing retryable behavior.
 			throw errors.wrap(structuredItemResult.error, "structured item generation")

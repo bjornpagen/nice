@@ -13,21 +13,20 @@ import {
 	type BlockContent,
 	type InlineContent
 } from "@/lib/qti-generation/schemas"
-import { typedSchemas, type WidgetInput } from "@/lib/widgets/generators"
-import { buildImageContext, type ImageContext } from "./perseus-image-resolver"
+import { buildImageContext, type ImageContext } from "@/lib/qti-generation/structured/perseus-image-resolver"
 // ✅ UPDATE: Import from the new, co-located prompts file.
 import {
 	createAssessmentShellPrompt,
 	createInteractionContentPrompt,
 	createWidgetContentPrompt,
 	createWidgetMappingPrompt
-} from "./prompts"
+} from "@/lib/qti-generation/structured/prompts"
+import { typedSchemas, type WidgetInput } from "@/lib/widgets/generators"
 
 const OPENAI_MODEL = "gpt-5"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
-// ADD: New exported constant error for standardized identification.
-export const ErrWidgetNotFound = errors.new("widget not found")
+// Removed ErrWidgetNotFound: all slots must map to a concrete widget type
 
 // Use the AssessmentItemShellSchema from schemas.ts
 
@@ -127,14 +126,6 @@ async function mapSlotsToWidgets(
 	// Validate and build the properly typed mapping
 	const mapping: Record<string, keyof typeof typedSchemas> = {}
 	for (const [key, value] of Object.entries(rawMapping)) {
-		// ADD: Check for the WIDGET_NOT_FOUND signal from the AI.
-		if (value === "WIDGET_NOT_FOUND") {
-			const errorMessage = `AI determined no suitable widget exists for slot: '${key}'. This item is not migratable.`
-			logger.error("ai determined no suitable widget exists", { slot: key, value, errorMessage })
-			// Throw our new constant error, wrapping it to add context.
-			throw errors.wrap(ErrWidgetNotFound, errorMessage)
-		}
-
 		if (isValidWidgetType(value)) {
 			mapping[key] = value
 		} else {

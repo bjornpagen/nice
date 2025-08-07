@@ -1,7 +1,13 @@
 import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
 import { XMLValidator } from "fast-xml-parser"
-import { checkNoLatex, checkNoMfencedElements, checkNoPerseusArtifacts } from "@/lib/qti-validation/utils"
+import {
+	checkNoCDataSections,
+	checkNoInvalidXmlChars,
+	checkNoLatex,
+	checkNoMfencedElements,
+	checkNoPerseusArtifacts
+} from "@/lib/qti-validation/utils"
 import type { AssessmentItemInput, BlockContent, InlineContent } from "./schemas"
 
 /**
@@ -49,21 +55,34 @@ function validateMathMLWellFormed(mathml: string, context: string, logger: logge
 			validationResult
 		})
 
-		throw errors.new(`Invalid MathML in ${context}: ${errorMessage}. MathML fragment: "${mathml}"`)
+		throw errors.new(`invalid mathml in ${context}: ${errorMessage}`)
 	}
 }
 
 function validateInlineContent(items: InlineContent, _context: string, logger: logger.Logger): void {
 	for (const item of items) {
 		if (item.type === "text") {
+			// Ensure PCDATA-safe content (ban control chars etc.)
+			checkNoInvalidXmlChars(item.content, logger)
+			checkNoCDataSections(item.content, logger)
 			checkNoLatex(item.content, logger)
 			// FIX: Restore missing Perseus artifact validation
 			checkNoPerseusArtifacts(item.content, logger)
 		} else if (item.type === "math") {
 			// First validate that the MathML is well-formed XML
+			checkNoInvalidXmlChars(item.mathml, logger)
+			checkNoCDataSections(item.mathml, logger)
 			validateMathMLWellFormed(item.mathml, _context, logger)
 			// Then check for deprecated elements
 			checkNoMfencedElements(item.mathml, logger)
+			// Ensure no naked MathML tokens outside <math> root
+			if (/^\s*<\s*(?:mi|mo|mn|mtext)\b/i.test(item.mathml)) {
+				logger.error("naked mathml token detected without <math> wrapper", {
+					context: _context,
+					mathml: item.mathml.substring(0, 80)
+				})
+				throw errors.new("mathml tokens must be wrapped in <math> root element")
+			}
 		}
 		// inlineSlot is just a reference, no validation needed
 	}

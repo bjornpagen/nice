@@ -1,38 +1,86 @@
 import { z } from "zod"
+import { renderInlineContent } from "@/lib/qti-generation/content-renderer"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines an input cell that will render as a QTI text entry interaction
-const InputCellSchema = z
-	.object({
-		type: z.literal("input"),
-		responseIdentifier: z.string().describe("The QTI response identifier for this input field."),
-		expectedLength: z.number().nullable().describe("The expected character length for the input field.")
-	})
-	.strict()
+// Factory function to create inline content schema - avoids $ref in OpenAI JSON schema
+function createInlineContentSchema() {
+	return z
+		.array(
+			z.discriminatedUnion("type", [
+				z
+					.object({
+						type: z.literal("text").describe("Identifies this as plain text content"),
+						content: z.string().describe("The actual text content to display")
+					})
+					.strict()
+					.describe("Plain text content that will be rendered as-is"),
+				z
+					.object({
+						type: z.literal("math").describe("Identifies this as mathematical content"),
+						mathml: z.string().describe("MathML markup for mathematical expressions, without the outer math element")
+					})
+					.strict()
+					.describe("Mathematical content represented in MathML format"),
+				z
+					.object({
+						type: z
+							.literal("inlineSlot")
+							.describe("Identifies this as an inline placeholder for widgets or interactions"),
+						slotId: z.string().describe("Unique identifier that matches a widget or interaction key")
+					})
+					.strict()
+					.describe("Placeholder for inline content that will be filled with a widget or interaction")
+			])
+		)
+		.describe("Array of inline content items that can be rendered within a paragraph or prompt")
+}
 
-// Defines the content of a single data cell
-const TableCellSchema = z
-	.union([z.string(), z.number(), InputCellSchema])
-	.describe("Content for a cell. Can be text/MathML, a number, or an input field specification.")
-
-// Defines a single column's properties
-const ColumnDefinitionSchema = z
-	.object({
-		key: z.string().describe("A unique identifier for this column."),
-		label: z.string().nullable().describe("The display text for the column header."),
-		isNumeric: z.boolean().describe("If true, content in this column will be right-aligned for readability.")
-	})
-	.strict()
-	.describe("Defines the metadata and display properties for a single column in the data table.")
+// Factory function to create table cell schema - avoids $ref in OpenAI JSON schema
+function createTableCellSchema() {
+	return z.discriminatedUnion("kind", [
+		z
+			.object({
+				kind: z.literal("inline"),
+				content: createInlineContentSchema()
+			})
+			.strict(),
+		z
+			.object({
+				kind: z.literal("number"),
+				value: z.number()
+			})
+			.strict(),
+		z
+			.object({
+				kind: z.literal("input"),
+				responseIdentifier: z.string().describe("The QTI response identifier for this input field."),
+				expectedLength: z.number().nullable().describe("The expected character length for the input field.")
+			})
+			.strict()
+	])
+}
 
 // The main Zod schema for the dataTable function
 export const DataTablePropsSchema = z
 	.object({
 		type: z.literal("dataTable"),
 		title: z.string().nullable().describe("An optional caption for the table."),
-		columns: z.array(ColumnDefinitionSchema).describe("An array of column definitions."),
+		columns: z
+			.array(
+				z
+					.object({
+						key: z.string().describe("A unique identifier for this column."),
+						label: createInlineContentSchema()
+							.nullable()
+							.describe("The display label for the column header as structured inline content."),
+						isNumeric: z.boolean().describe("If true, content in this column will be right-aligned for readability.")
+					})
+					.strict()
+					.describe("Defines the metadata and display properties for a single column in the data table.")
+			)
+			.describe("An array of column definitions."),
 		data: z
-			.array(z.array(TableCellSchema))
+			.array(z.array(createTableCellSchema()))
 			.describe(
 				"An array of arrays representing table rows. Each inner array contains cell values in the same order as columns."
 			),
@@ -40,23 +88,8 @@ export const DataTablePropsSchema = z
 			.string()
 			.nullable()
 			.describe("The 'key' of the column that should be treated as the row header (<th>)."),
-		// INLINED: The TableCellSchema definition is now directly inside the footer property.
 		footer: z
-			.array(
-				z
-					.union([
-						z.string(),
-						z.number(),
-						z
-							.object({
-								type: z.literal("input"),
-								responseIdentifier: z.string().describe("The QTI response identifier for this input field."),
-								expectedLength: z.number().nullable().describe("The expected character length for the input field.")
-							})
-							.strict()
-					])
-					.describe("Content for a cell. Can be text/MathML, a number, or an input field specification.")
-			)
+			.array(createTableCellSchema())
 			.nullable()
 			.describe("An optional array of footer cells, in the same order as columns.")
 	})
@@ -66,17 +99,23 @@ export const DataTablePropsSchema = z
 	)
 
 export type DataTableProps = z.infer<typeof DataTablePropsSchema>
+export type TableCell = z.infer<ReturnType<typeof createTableCellSchema>>
 
 /**
  * Renders the content of a single table cell, handling strings, numbers, and input objects.
  */
-const renderCellContent = (c: z.infer<typeof TableCellSchema> | undefined): string => {
+const renderCellContent = (c: TableCell | undefined): string => {
 	if (c === undefined || c === null) return ""
-	if (typeof c === "object" && "type" in c && c.type === "input") {
-		const expectedLengthAttr = c.expectedLength ? ` expected-length="${c.expectedLength}"` : ""
-		return `<qti-text-entry-interaction response-identifier="${c.responseIdentifier}"${expectedLengthAttr}/>`
+	switch (c.kind) {
+		case "inline":
+			return renderInlineContent(c.content, new Map())
+		case "number":
+			return String(c.value)
+		case "input": {
+			const expectedLengthAttr = c.expectedLength ? ` expected-length="${c.expectedLength}"` : ""
+			return `<qti-text-entry-interaction response-identifier="${c.responseIdentifier}"${expectedLengthAttr}/>`
+		}
 	}
-	return String(c)
 }
 
 /**
@@ -101,7 +140,11 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 		for (const col of columns) {
 			const style = col.key === rowHeaderKey ? `${headerCellStyle} text-align: left;` : headerCellStyle
 			// Accessibility: Add scope="col" to column headers
-			xml += `<th scope="col" style="${style}">${col.label || ""}</th>`
+			if (col.label === null || col.label === undefined) {
+				xml += `<th scope="col" style="${style}"></th>`
+			} else {
+				xml += `<th scope="col" style="${style}">${renderInlineContent(col.label, new Map())}</th>`
+			}
 		}
 		xml += "</tr></thead>"
 	}

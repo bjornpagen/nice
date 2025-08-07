@@ -13,13 +13,22 @@ describe("generateDataTable", () => {
 			type: "dataTable" as const,
 			title: null,
 			columns: [
-				{ key: "name", label: "Name", isNumeric: false },
-				{ key: "score", label: "Score", isNumeric: true }
+				{ key: "name", label: [{ type: "text", content: "Name" }], isNumeric: false },
+				{ key: "score", label: [{ type: "text", content: "Score" }], isNumeric: true }
 			],
 			data: [
-				["Alice", 95],
-				["Bob", 87],
-				["Carol", 92]
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Alice" }] },
+					{ kind: "number", value: 95 }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Bob" }] },
+					{ kind: "number", value: 87 }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Carol" }] },
+					{ kind: "number", value: 92 }
+				]
 			],
 			rowHeaderKey: null,
 			footer: null
@@ -32,18 +41,38 @@ describe("generateDataTable", () => {
 			type: "dataTable" as const,
 			title: "Student Grades",
 			columns: [
-				{ key: "student", label: "Student", isNumeric: false },
-				{ key: "math", label: "Math", isNumeric: true },
-				{ key: "science", label: "Science", isNumeric: true },
-				{ key: "english", label: "English", isNumeric: true }
+				{ key: "student", label: [{ type: "text", content: "Student" }], isNumeric: false },
+				{ key: "math", label: [{ type: "text", content: "Math" }], isNumeric: true },
+				{ key: "science", label: [{ type: "text", content: "Science" }], isNumeric: true },
+				{ key: "english", label: [{ type: "text", content: "English" }], isNumeric: true }
 			],
 			data: [
-				["Alice", 95, 88, 92],
-				["Bob", 87, 91, 85],
-				["Carol", 92, 94, 89]
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Alice" }] },
+					{ kind: "number", value: 95 },
+					{ kind: "number", value: 88 },
+					{ kind: "number", value: 92 }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Bob" }] },
+					{ kind: "number", value: 87 },
+					{ kind: "number", value: 91 },
+					{ kind: "number", value: 85 }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Carol" }] },
+					{ kind: "number", value: 92 },
+					{ kind: "number", value: 94 },
+					{ kind: "number", value: 89 }
+				]
 			],
 			rowHeaderKey: "student",
-			footer: ["Average", 91, 91, 89]
+			footer: [
+				{ kind: "inline", content: [{ type: "text", content: "Average" }] },
+				{ kind: "number", value: 91 },
+				{ kind: "number", value: 91 },
+				{ kind: "number", value: 89 }
+			]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

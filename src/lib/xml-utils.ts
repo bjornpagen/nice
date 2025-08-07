@@ -5,6 +5,29 @@
 import * as errors from "@superbuilders/errors"
 
 /**
+ * Sanitizes a string for safe inclusion in XML attribute values by
+ * - normalizing common mis-encodings found in source content
+ * - removing disallowed control characters (per XML 1.0)
+ */
+export function sanitizeXmlAttributeValue(raw: string): string {
+	// Normalize common mis-encodings observed in dataset
+	// U+0019 often used as an apostrophe; normalize to the ASCII apostrophe
+	// biome-ignore lint/suspicious/noControlCharactersInRegex: Control chars are intentionally handled here for data sanitization
+	let value = raw.replace(/\u0019|\x19|[\u0019]/g, "'")
+
+	// Rare control char U+0004 sometimes appears between digits to denote a fraction like 1\u00044
+	// Normalize digit-CTRL-digit to digit/digit
+	// biome-ignore lint/suspicious/noControlCharactersInRegex: Control chars are intentionally handled here for data sanitization
+	value = value.replace(/(\d)\u0004(\d)/g, "$1/$2")
+
+	// Remove all other disallowed control characters except TAB (0x09), LF (0x0A), CR (0x0D)
+	// biome-ignore lint/suspicious/noControlCharactersInRegex: Control chars are intentionally handled here for data sanitization
+	value = value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF]/g, "")
+
+	return value
+}
+
+/**
  * Escapes special characters in a string to make it safe for use as an XML attribute value.
  * Must escape & first to avoid double-escaping other entities.
  *
@@ -12,7 +35,8 @@ import * as errors from "@superbuilders/errors"
  * @returns The escaped string safe for XML attributes
  */
 export function escapeXmlAttribute(value: string): string {
-	return value
+	const sanitized = sanitizeXmlAttributeValue(value)
+	return sanitized
 		.replace(/&/g, "&amp;") // Must be first to avoid double-escaping
 		.replace(/"/g, "&quot;")
 		.replace(/'/g, "&apos;")
