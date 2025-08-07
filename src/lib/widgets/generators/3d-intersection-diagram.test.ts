@@ -7,6 +7,19 @@ const generateDiagram = (props: unknown) => {
 	return generateThreeDIntersectionDiagram(parsedProps)
 }
 
+// Helper function to create base props with defaults
+const createBaseProps = (overrides: Record<string, unknown> = {}) => ({
+	type: "3dIntersectionDiagram" as const,
+	width: 400,
+	height: 400,
+	plane: {
+		orientation: "horizontal" as const,
+		position: 0.5
+	},
+	viewOptions: null,
+	...overrides
+})
+
 describe("generateThreeDIntersectionDiagram", () => {
 	describe("Rectangular Prism", () => {
 		test("should render rectangular prism with horizontal plane at middle", () => {
@@ -16,7 +29,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 80,
 					height: 60
 				},
@@ -36,7 +49,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 120,
+					depth: 120,
 					width: 100,
 					height: 80
 				},
@@ -56,7 +69,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 90,
+					depth: 90,
 					width: 90,
 					height: 120
 				},
@@ -76,7 +89,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 60,
 					height: 80
 				},
@@ -96,7 +109,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 140,
+					depth: 140,
 					width: 80,
 					height: 100
 				},
@@ -116,7 +129,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 100,
 					height: 50
 				},
@@ -136,7 +149,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 100,
 					height: 100
 				},
@@ -255,7 +268,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 80,
 					height: 60
 				},
@@ -266,7 +279,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				viewOptions: {
 					projectionAngle: 30,
 					intersectionColor: null,
-					showHiddenEdges: null
+					showHiddenEdges: null,
+					showLabels: null
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -279,7 +293,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 80,
 					height: 60
 				},
@@ -290,7 +304,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				viewOptions: {
 					projectionAngle: 60,
 					intersectionColor: null,
-					showHiddenEdges: null
+					showHiddenEdges: null,
+					showLabels: null
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -313,7 +328,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				viewOptions: {
 					projectionAngle: null,
 					intersectionColor: "rgba(66, 133, 244, 0.7)",
-					showHiddenEdges: null
+					showHiddenEdges: null,
+					showLabels: null
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -326,7 +342,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 120,
+					depth: 120,
 					width: 100,
 					height: 80
 				},
@@ -337,7 +353,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				viewOptions: {
 					projectionAngle: null,
 					intersectionColor: null,
-					showHiddenEdges: false
+					showHiddenEdges: false,
+					showLabels: null
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -350,7 +367,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 100,
 					height: 100
 				},
@@ -361,7 +378,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				viewOptions: {
 					projectionAngle: 25,
 					intersectionColor: "rgba(76, 175, 80, 0.6)",
-					showHiddenEdges: false
+					showHiddenEdges: false,
+					showLabels: null
 				}
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -376,7 +394,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 80,
 					height: 60
 				},
@@ -396,7 +414,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 80,
 					height: 60
 				},
@@ -416,7 +434,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 20,
+					depth: 20,
 					width: 15,
 					height: 10
 				},
@@ -436,7 +454,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 500,
+					depth: 500,
 					width: 400,
 					height: 300
 				},
@@ -475,7 +493,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 600,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 80,
 					height: 60
 				},
@@ -495,7 +513,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 30,
+					depth: 30,
 					width: 30,
 					height: 150
 				},
@@ -515,7 +533,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 150,
+					depth: 150,
 					width: 150,
 					height: 20
 				},
@@ -575,7 +593,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 80,
 					height: 60
 				},
@@ -595,7 +613,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: null,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 80,
 					height: 60
 				},
@@ -653,7 +671,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 90,
+					depth: 90,
 					width: 60,
 					height: 90
 				},
@@ -664,6 +682,302 @@ describe("generateThreeDIntersectionDiagram", () => {
 				viewOptions: null
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("Cylinder", () => {
+		test("should render cylinder with horizontal plane intersection", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "cylinder" as const,
+					radius: 50,
+					height: 100
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render cylinder with vertical plane intersection", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "cylinder" as const,
+					radius: 40,
+					height: 80
+				},
+				plane: {
+					orientation: "vertical" as const,
+					position: 0.6
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render cylinder with oblique plane intersection", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "cylinder" as const,
+					radius: 30,
+					height: 70
+				},
+				plane: {
+					orientation: "oblique" as const,
+					position: 0.5,
+					angle: 30
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("Cone", () => {
+		test("should render cone with horizontal plane intersection", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "cone" as const,
+					radius: 60,
+					height: 120
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render cone with vertical plane intersection", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "cone" as const,
+					radius: 45,
+					height: 90
+				},
+				plane: {
+					orientation: "vertical" as const,
+					position: 0.3
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render cone with oblique plane intersection", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "cone" as const,
+					radius: 50,
+					height: 100
+				},
+				plane: {
+					orientation: "oblique" as const,
+					position: 0.4,
+					angle: -15
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("Sphere", () => {
+		test("should render sphere with horizontal plane intersection", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "sphere" as const,
+					radius: 50
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render sphere with vertical plane intersection", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "sphere" as const,
+					radius: 40
+				},
+				plane: {
+					orientation: "vertical" as const,
+					position: 0.7
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render sphere with oblique plane intersection", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "sphere" as const,
+					radius: 35
+				},
+				plane: {
+					orientation: "oblique" as const,
+					position: 0.6,
+					angle: 45
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("Enhanced Schema Features", () => {
+		test("should use default values for simplified schema", () => {
+			const props = {
+				type: "3dIntersectionDiagram" as const,
+				solid: {
+					type: "rectangularPrism" as const,
+					width: 80,
+					height: 60,
+					depth: 40
+				},
+				plane: {
+					orientation: "horizontal" as const,
+					position: 0.5
+				}
+			}
+			const result = generateDiagram(props)
+			expect(result).toContain('width="400"') // Default width
+			expect(result).toContain('height="400"') // Default height
+			expect(result).toMatchSnapshot()
+		})
+
+		test("should handle rectangular prism with new depth property", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "rectangularPrism" as const,
+					width: 100,
+					height: 80,
+					depth: 60
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should render with custom view options", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "cylinder" as const,
+					radius: 40,
+					height: 80
+				},
+				viewOptions: {
+					projectionAngle: 60,
+					intersectionColor: "rgba(100, 150, 200, 0.7)",
+					showHiddenEdges: false,
+					showLabels: true
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+
+		test("should handle extreme oblique angles", () => {
+			const props = createBaseProps({
+				solid: {
+					type: "rectangularPrism" as const,
+					width: 60,
+					height: 80,
+					depth: 40
+				},
+				plane: {
+					orientation: "oblique" as const,
+					position: 0.5,
+					angle: 85
+				}
+			})
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("User Examples", () => {
+		test("should render square pyramid with vertical plane (rectangular cross-section)", () => {
+			const props = {
+				type: "3dIntersectionDiagram" as const,
+				width: 400,
+				height: 400,
+				solid: {
+					type: "squarePyramid" as const,
+					baseSide: 100,
+					height: 120
+				},
+				plane: {
+					orientation: "vertical" as const,
+					position: 0.5 // Cut through the middle
+				},
+				viewOptions: {
+					projectionAngle: 45,
+					intersectionColor: "rgba(76, 175, 80, 0.8)", // Green like user's image
+					showHiddenEdges: true,
+					showLabels: null
+				}
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
+
+	describe("Schema Validation", () => {
+		test("should validate positive dimensions", () => {
+			expect(() =>
+				generateDiagram({
+					type: "3dIntersectionDiagram",
+					solid: {
+						type: "cylinder",
+						radius: -10, // Invalid negative radius
+						height: 50
+					},
+					plane: {
+						orientation: "horizontal",
+						position: 0.5
+					}
+				})
+			).toThrow()
+		})
+
+		test("should validate plane position range", () => {
+			expect(() =>
+				generateDiagram({
+					type: "3dIntersectionDiagram",
+					solid: {
+						type: "sphere",
+						radius: 30
+					},
+					plane: {
+						orientation: "horizontal",
+						position: 1.5 // Invalid position > 1
+					}
+				})
+			).toThrow()
+		})
+
+		test("should validate oblique angle range", () => {
+			expect(() =>
+				generateDiagram({
+					type: "3dIntersectionDiagram",
+					solid: {
+						type: "cone",
+						radius: 30,
+						height: 60
+					},
+					plane: {
+						orientation: "oblique",
+						position: 0.5,
+						angle: 100 // Invalid angle > 90
+					}
+				})
+			).toThrow()
+		})
+
+		test("should validate projection angle range", () => {
+			expect(() =>
+				generateDiagram({
+					type: "3dIntersectionDiagram",
+					solid: {
+						type: "cylinder",
+						radius: 30,
+						height: 60
+					},
+					plane: {
+						orientation: "horizontal",
+						position: 0.5
+					},
+					viewOptions: {
+						projectionAngle: 100 // Invalid angle > 90
+					}
+				})
+			).toThrow()
 		})
 	})
 })

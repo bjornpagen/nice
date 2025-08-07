@@ -5,9 +5,9 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 const RectangularPrismDataSchema = z
 	.object({
 		type: z.literal("rectangularPrism"),
-		length: z.number().describe("The length (depth, z-axis) of the prism."),
-		width: z.number().describe("The width (x-axis) of the prism."),
-		height: z.number().describe("The height (y-axis) of the prism.")
+		width: z.number().positive().describe("The width (x-axis) of the prism."),
+		height: z.number().positive().describe("The height (y-axis) of the prism."),
+		depth: z.number().positive().describe("The depth (z-axis) of the prism.")
 	})
 	.strict()
 
@@ -15,26 +15,52 @@ const RectangularPrismDataSchema = z
 const SquarePyramidDataSchema = z
 	.object({
 		type: z.literal("squarePyramid"),
-		baseSide: z.number().describe("The side length of the square base."),
-		height: z.number().describe("The perpendicular height from the base to the apex.")
+		baseSide: z.number().positive().describe("The side length of the square base."),
+		height: z.number().positive().describe("The perpendicular height from the base to the apex.")
+	})
+	.strict()
+
+// Defines the properties for a cylinder solid
+const CylinderDataSchema = z
+	.object({
+		type: z.literal("cylinder"),
+		radius: z.number().positive().describe("The radius of the circular bases."),
+		height: z.number().positive().describe("The height of the cylinder.")
+	})
+	.strict()
+
+// Defines the properties for a cone solid
+const ConeDataSchema = z
+	.object({
+		type: z.literal("cone"),
+		radius: z.number().positive().describe("The radius of the circular base."),
+		height: z.number().positive().describe("The perpendicular height from the base to the apex.")
+	})
+	.strict()
+
+// Defines the properties for a sphere solid
+const SphereDataSchema = z
+	.object({
+		type: z.literal("sphere"),
+		radius: z.number().positive().describe("The radius of the sphere.")
 	})
 	.strict()
 
 // Defines the intersecting plane's properties
 const PlaneSchema = z
 	.object({
-		orientation: z
-			.enum(["horizontal", "vertical"])
-			.describe(
-				"The orientation of the intersecting plane. 'horizontal' slices parallel to the base, 'vertical' slices parallel to the side."
-			),
+		orientation: z.enum(["horizontal", "vertical", "oblique"]).describe("The orientation of the intersecting plane."),
 		position: z
 			.number()
 			.min(0)
 			.max(1)
-			.describe(
-				"The position of the slice as a fraction of the solid's height or length (0.0 = bottom/back, 1.0 = top/front)."
-			)
+			.describe("The position of the slice as a fraction (0.0 = bottom/back, 1.0 = top/front)."),
+		angle: z
+			.number()
+			.min(-90)
+			.max(90)
+			.default(0)
+			.describe("The angle in degrees for oblique planes (0 = horizontal, 90 = vertical).")
 	})
 	.strict()
 
@@ -44,22 +70,34 @@ export const ThreeDIntersectionDiagramPropsSchema = z
 		type: z.literal("3dIntersectionDiagram"),
 		width: z
 			.number()
+			.positive()
 			.nullable()
+			.default(null)
 			.transform((val) => val ?? 400)
 			.describe("The total width of the output SVG container in pixels."),
 		height: z
 			.number()
+			.positive()
 			.nullable()
+			.default(null)
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
 		solid: z
-			.discriminatedUnion("type", [RectangularPrismDataSchema, SquarePyramidDataSchema])
+			.discriminatedUnion("type", [
+				RectangularPrismDataSchema,
+				SquarePyramidDataSchema,
+				CylinderDataSchema,
+				ConeDataSchema,
+				SphereDataSchema
+			])
 			.describe("The geometric data defining the 3D solid shape."),
 		plane: PlaneSchema.describe("The properties of the intersecting plane."),
 		viewOptions: z
 			.object({
 				projectionAngle: z
 					.number()
+					.min(0)
+					.max(90)
 					.nullable()
 					.transform((val) => val ?? 45)
 					.describe("The angle in degrees for the oblique projection of the z-axis."),
@@ -72,23 +110,30 @@ export const ThreeDIntersectionDiagramPropsSchema = z
 					.boolean()
 					.nullable()
 					.transform((val) => val ?? true)
-					.describe("If true, render edges hidden from view as dashed lines.")
+					.describe("If true, render edges hidden from view as dashed lines."),
+				showLabels: z
+					.boolean()
+					.nullable()
+					.transform((val) => val ?? false)
+					.describe("If true, show dimension labels on the solid.")
 			})
 			.strict()
 			.nullable()
+			.default(null)
 			.transform(
 				(val) =>
 					val ?? {
 						projectionAngle: 45,
 						intersectionColor: "rgba(217, 95, 79, 0.8)",
-						showHiddenEdges: true
+						showHiddenEdges: true,
+						showLabels: false
 					}
 			)
 			.describe("Optional settings for controlling the visual output.")
 	})
 	.strict()
 	.describe(
-		"Generates an SVG diagram illustrating the cross-section of a 3D solid intersected by a plane. This widget is ideal for solid geometry problems that require visualizing the 2D shape created by slicing a 3D object. It supports different solids (like prisms and pyramids) and plane orientations (horizontal or vertical), rendering the solid in a 3D perspective and highlighting the intersection shape."
+		"Generates an SVG diagram illustrating the cross-section of a 3D solid intersected by a plane. This widget supports rectangular prisms, pyramids, cylinders, cones, and spheres with horizontal, vertical, or oblique plane intersections. The resulting cross-section is highlighted to show the 2D shape created by slicing the 3D object."
 	)
 
 export type ThreeDIntersectionDiagramProps = z.infer<typeof ThreeDIntersectionDiagramPropsSchema>
@@ -117,18 +162,18 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 	// We center the solid at (0,0,0) for easier calculations
 	switch (solid.type) {
 		case "rectangularPrism": {
-			const { w, h, l } = { w: solid.width / 2, h: solid.height / 2, l: solid.length / 2 }
+			const { w, h, d } = { w: solid.width / 2, h: solid.height / 2, d: solid.depth / 2 }
 			solidHeight = solid.height
-			solidLength = solid.length
+			solidLength = solid.depth
 			vertices = [
-				{ x: -w, y: -h, z: -l }, // 0: back bottom left
-				{ x: w, y: -h, z: -l }, // 1: back bottom right
-				{ x: w, y: h, z: -l }, // 2: back top right
-				{ x: -w, y: h, z: -l }, // 3: back top left
-				{ x: -w, y: -h, z: l }, // 4: front bottom left
-				{ x: w, y: -h, z: l }, // 5: front bottom right
-				{ x: w, y: h, z: l }, // 6: front top right
-				{ x: -w, y: h, z: l } // 7: front top left
+				{ x: -w, y: -h, z: -d }, // 0: back bottom left
+				{ x: w, y: -h, z: -d }, // 1: back bottom right
+				{ x: w, y: h, z: -d }, // 2: back top right
+				{ x: -w, y: h, z: -d }, // 3: back top left
+				{ x: -w, y: -h, z: d }, // 4: front bottom left
+				{ x: w, y: -h, z: d }, // 5: front bottom right
+				{ x: w, y: h, z: d }, // 6: front top right
+				{ x: -w, y: h, z: d } // 7: front top left
 			]
 			edges = [
 				{ startIdx: 0, endIdx: 1, isHidden: true },
@@ -169,6 +214,103 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 			]
 			break
 		}
+		case "cylinder": {
+			const { r, h } = { r: solid.radius, h: solid.height }
+			solidHeight = solid.height
+			solidLength = solid.radius * 2 // For vertical slicing
+			// Approximate cylinder with octagon for intersection calculations
+			const segments = 8
+			vertices = []
+			edges = []
+
+			// Bottom circle vertices
+			for (let i = 0; i < segments; i++) {
+				const angle = (i * 2 * Math.PI) / segments
+				vertices.push({ x: r * Math.cos(angle), y: -h / 2, z: r * Math.sin(angle) })
+			}
+			// Top circle vertices
+			for (let i = 0; i < segments; i++) {
+				const angle = (i * 2 * Math.PI) / segments
+				vertices.push({ x: r * Math.cos(angle), y: h / 2, z: r * Math.sin(angle) })
+			}
+
+			// Bottom circle edges (hidden)
+			for (let i = 0; i < segments; i++) {
+				edges.push({ startIdx: i, endIdx: (i + 1) % segments, isHidden: true })
+			}
+			// Top circle edges
+			for (let i = 0; i < segments; i++) {
+				edges.push({ startIdx: segments + i, endIdx: segments + ((i + 1) % segments) })
+			}
+			// Vertical edges
+			for (let i = 0; i < segments; i++) {
+				const isHidden = i > segments / 4 && i < (3 * segments) / 4
+				edges.push({ startIdx: i, endIdx: segments + i, isHidden })
+			}
+			break
+		}
+		case "cone": {
+			const { r, h } = { r: solid.radius, h: solid.height }
+			solidHeight = solid.height
+			solidLength = solid.radius * 2
+			// Approximate cone base with octagon
+			const segments = 8
+			vertices = []
+			edges = []
+
+			// Base circle vertices
+			for (let i = 0; i < segments; i++) {
+				const angle = (i * 2 * Math.PI) / segments
+				vertices.push({ x: r * Math.cos(angle), y: -h / 2, z: r * Math.sin(angle) })
+			}
+			// Apex
+			vertices.push({ x: 0, y: h / 2, z: 0 })
+
+			// Base circle edges (hidden)
+			for (let i = 0; i < segments; i++) {
+				edges.push({ startIdx: i, endIdx: (i + 1) % segments, isHidden: true })
+			}
+			// Slant edges to apex
+			for (let i = 0; i < segments; i++) {
+				const isHidden = i > segments / 4 && i < (3 * segments) / 4
+				edges.push({ startIdx: i, endIdx: segments, isHidden })
+			}
+			break
+		}
+		case "sphere": {
+			const { r } = { r: solid.radius }
+			solidHeight = solid.radius * 2
+			solidLength = solid.radius * 2
+			// Approximate sphere with geodesic vertices for intersection calculations
+			const segments = 8
+			vertices = []
+			edges = []
+
+			// Create simplified sphere approximation with rings
+			for (let ring = 0; ring <= 4; ring++) {
+				const y = r * Math.cos((ring * Math.PI) / 4) - r / 2
+				const ringRadius = r * Math.sin((ring * Math.PI) / 4)
+
+				if (ring === 0 || ring === 4) {
+					// Poles
+					vertices.push({ x: 0, y: y, z: 0 })
+				} else {
+					for (let i = 0; i < segments; i++) {
+						const angle = (i * 2 * Math.PI) / segments
+						vertices.push({ x: ringRadius * Math.cos(angle), y: y, z: ringRadius * Math.sin(angle) })
+					}
+				}
+			}
+
+			// Connect vertices with edges (simplified for visualization)
+			for (let i = 1; i < vertices.length - 1; i++) {
+				const vertex = vertices[i]
+				const isHidden = vertex ? vertex.z < 0 : false
+				edges.push({ startIdx: 0, endIdx: i, isHidden })
+				edges.push({ startIdx: i, endIdx: vertices.length - 1, isHidden })
+			}
+			break
+		}
 	}
 
 	// 2. 3D Math and Projection Setup
@@ -198,11 +340,18 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 		planeNormal = { x: 0, y: 1, z: 0 }
 		const yPos = -solidHeight / 2 + plane.position * solidHeight
 		planePoint = { x: 0, y: yPos, z: 0 }
-	} else {
-		// vertical
+	} else if (plane.orientation === "vertical") {
 		planeNormal = { x: 0, y: 0, z: 1 }
 		const zPos = -solidLength / 2 + plane.position * solidLength
 		planePoint = { x: 0, y: 0, z: zPos }
+	} else {
+		// oblique
+		const angleRad = (plane.angle * Math.PI) / 180
+		planeNormal = { x: 0, y: Math.cos(angleRad), z: Math.sin(angleRad) }
+		// Position the plane based on the dominant axis
+		const yPos = -solidHeight / 2 + plane.position * solidHeight
+		const zPos = -solidLength / 2 + plane.position * solidLength
+		planePoint = { x: 0, y: yPos * 0.5 + zPos * 0.5, z: zPos * 0.5 + yPos * 0.5 }
 	}
 
 	const intersectLinePlane = (p1: Point3D, p2: Point3D): Point3D | null => {
