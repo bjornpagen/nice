@@ -336,13 +336,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 		let polySvg = `<polygon points="${pointsStr}" fill="${shape.fillColor}" stroke="${shape.strokeColor}" stroke-width="${strokeWidth}"/>`
 
-		// Draw shape label at centroid
-		if (shape.label) {
-			const centroid = calculateCentroid(shape.vertices)
-			const labelX = toSvgX(centroid.x)
-			const labelY = toSvgY(centroid.y)
-			polySvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="14px" font-weight="bold" fill="#333">${shape.label}</text>`
-		}
+		// Remove shape label at centroid - labels are now only shown via vertex labels
 		return polySvg
 	}
 
@@ -577,13 +571,8 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			const labelX = svgMidX + perpX * svgOffset
 			const labelY = svgMidY + perpY * svgOffset
 
-			// Calculate rotation angle for the text to align with the edge in SVG space
-			let angle = Math.atan2(svgDy, svgDx) * (180 / Math.PI)
-
-			// Ensure text is readable (not upside down)
-			if (angle > 90 || angle < -90) {
-				angle += 180
-			}
+			// Always orient text horizontally (angle = 0) so it faces down/right
+			const angle = 0
 
 			lengthsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="#333" transform="rotate(${angle} ${labelX} ${labelY})">${sideLength.value}</text>`
 		}
@@ -661,15 +650,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	// 6. Draw Transformation-Specific Foreground Elements (vectors, centers, vertex indicators)
 	switch (transformation.type) {
 		case "translation":
-			if (transformation.showVectors && preImage.vertices.length === image.vertices.length) {
-				for (let i = 0; i < preImage.vertices.length; i++) {
-					const from = preImage.vertices[i]
-					const to = image.vertices[i]
-					if (from && to) {
-						svg += drawLine({ from, to, style: "solid", color: "#1fab54" }, true)
-					}
-				}
-			}
+			// Remove translation vectors - no more green arrows between shapes
 			break
 		case "dilation": {
 			const center = transformation.centerOfDilation

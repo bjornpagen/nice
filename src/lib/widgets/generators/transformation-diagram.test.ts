@@ -1578,5 +1578,62 @@ describe("generateTransformationDiagram", () => {
 			}
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
+
+		test("should render triangle translation with side lengths and angle measurements - QTI recreation", () => {
+			const props = {
+				type: "transformationDiagram" as const,
+				width: 350,
+				height: 239.474,
+				preImage: {
+					vertices: [
+						{ x: 42.105, y: 164.036 },
+						{ x: 148.421, y: 199.474 },
+						{ x: 95.263, y: 93.159 }
+					],
+					label: "ABC",
+					fillColor: "none",
+					strokeColor: "#000000",
+					vertexLabels: ["A", "B", "C"],
+					angleMarks: null,
+					sideLengths: [
+						{ value: "8", position: "outside", offset: null },
+						{ value: "9", position: "outside", offset: null },
+						{ value: "6", position: "outside", offset: null }
+					]
+				},
+				image: {
+					vertices: [
+						{ x: 201.579, y: 110.878 },
+						{ x: 307.895, y: 146.316 },
+						{ x: 254.737, y: 40 }
+					],
+					label: "A′B′C′",
+					fillColor: "none",
+					strokeColor: "#000000",
+					vertexLabels: ["A′", "B′", "C′"],
+					angleMarks: [
+						{
+							vertexIndex: 0,
+							radius: 13.467,
+							label: "75°",
+							labelDistance: null
+						},
+						{
+							vertexIndex: 1,
+							radius: 13.467,
+							label: "46°",
+							labelDistance: null
+						}
+					],
+					sideLengths: null
+				},
+				transformation: {
+					type: "translation" as const,
+					showVectors: true
+				},
+				additionalPoints: null
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
 	})
 })
