@@ -4,6 +4,7 @@ import { NonRetriableError } from "inngest"
 import { db } from "@/db"
 import { niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
+import { compile } from "@/lib/qti-generation/compiler"
 import { ErrWidgetNotFound, generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
 import { differentiateAssessmentItem } from "@/lib/qti-generation/structured/differentiator"
 
@@ -73,17 +74,50 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 		}
 		const differentiatedItems = differentiatedItemsResult.data
 
-		// Step 4: Return the array of differentiated items. No database writes are performed.
-		logger.info("successfully completed generation of differentiated items", {
+		// Step 4: Compile each differentiated item to QTI XML.
+		logger.debug("compiling differentiated items to qti xml", { questionId, count: differentiatedItems.length })
+		const compiledXmlItems: string[] = []
+
+		for (let i = 0; i < differentiatedItems.length; i++) {
+			const item = differentiatedItems[i]
+			if (!item) {
+				throw errors.new(`missing differentiated item at index ${i}`)
+			}
+
+			logger.debug("compiling item to xml", { questionId, itemIndex: i + 1, identifier: item.identifier })
+
+			const compileResult = errors.trySync(() => compile(item))
+			if (compileResult.error) {
+				logger.error("failed to compile differentiated item to xml", {
+					questionId,
+					itemIndex: i + 1,
+					identifier: item.identifier,
+					error: compileResult.error
+				})
+				throw errors.wrap(compileResult.error, `xml compilation for item ${i + 1}`)
+			}
+
+			compiledXmlItems.push(compileResult.data)
+			logger.debug("successfully compiled item to xml", {
+				questionId,
+				itemIndex: i + 1,
+				identifier: item.identifier,
+				xmlLength: compileResult.data.length
+			})
+		}
+
+		// Step 5: Return the array of compiled QTI XML strings.
+		logger.info("successfully completed generation and compilation of differentiated qti items", {
 			questionId,
-			generatedCount: differentiatedItems.length
+			generatedCount: differentiatedItems.length,
+			totalXmlLength: compiledXmlItems.reduce((sum, xml) => sum + xml.length, 0)
 		})
 
 		return {
 			status: "success",
 			questionId,
-			count: differentiatedItems.length,
-			items: differentiatedItems
+			count: compiledXmlItems.length,
+			items: compiledXmlItems
 		}
 	}
 )

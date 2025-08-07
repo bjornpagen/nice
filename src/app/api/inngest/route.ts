@@ -28,6 +28,7 @@ import { orchestrateHardcodedOnerosterIngestion } from "@/inngest/functions/orch
 import { orchestrateHardcodedQtiIngestion } from "@/inngest/functions/orchestrate-hardcoded-qti-ingestion"
 import { orchestrateHardcodedStimulusMigration } from "@/inngest/functions/orchestrate-hardcoded-stimulus-migration"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
+import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
@@ -73,6 +74,7 @@ export const { GET, POST, PUT } = serve({
 		clearCourseXmlData,
 		convertPerseusArticleToQtiStimulus,
 		convertPerseusQuestionToQtiItem,
+		convertPerseusQuestionToDifferentiatedQtiItems,
 		requestAllItemMigrationsForCourse,
 		requestAllStimulusMigrationsForCourse,
 		ingestAssessmentItems,
