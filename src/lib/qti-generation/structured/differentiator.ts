@@ -7,7 +7,7 @@ import { env } from "@/env"
 import type { AssessmentItemInput } from "@/lib/qti-generation/schemas"
 import { generateZodSchemaFromObject } from "./zod-runtime-generator"
 
-const OPENAI_MODEL = "o3"
+const OPENAI_MODEL = "gpt-5"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
 function createDifferentiatedItemsPrompt(

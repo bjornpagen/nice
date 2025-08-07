@@ -23,7 +23,7 @@ import {
 	createWidgetMappingPrompt
 } from "./prompts"
 
-const OPENAI_MODEL = "o3"
+const OPENAI_MODEL = "gpt-5"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
 // ADD: New exported constant error for standardized identification.
