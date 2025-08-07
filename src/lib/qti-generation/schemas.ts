@@ -192,10 +192,7 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			shuffle: z
 				.literal(true)
 				.describe("Whether to randomize initial order. Always true to ensure varied starting points."),
-			orientation: z
-				.enum(["horizontal", "vertical"])
-				.default("horizontal")
-				.describe("Visual layout direction for the orderable items.")
+			orientation: z.enum(["horizontal", "vertical"]).describe("Visual layout direction for the orderable items.")
 		})
 		.strict()
 		.describe("An interaction where users arrange items in a specific sequence or order.")
