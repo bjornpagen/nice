@@ -176,7 +176,7 @@ export const inequalityNumberLine: AssessmentItemInput = {
 		choice_interaction: {
 			type: "choiceInteraction",
 			responseIdentifier: "RESPONSE",
-			shuffle: false,
+			shuffle: true,
 			minChoices: 1,
 			maxChoices: 1,
 			prompt: "Choose the inequality that represents the graph.",
@@ -261,7 +261,7 @@ export const verticalNumberLineComparison: AssessmentItemInput = {
 		pos_choice: {
 			type: "inlineChoiceInteraction",
 			responseIdentifier: "RESPONSE_POS",
-			shuffle: false,
+			shuffle: true,
 			choices: [
 				{ identifier: "ABOVE", content: "above" },
 				{ identifier: "BELOW", content: "below" }
@@ -270,7 +270,7 @@ export const verticalNumberLineComparison: AssessmentItemInput = {
 		comp_choice: {
 			type: "inlineChoiceInteraction",
 			responseIdentifier: "RESPONSE_COMP",
-			shuffle: false,
+			shuffle: true,
 			choices: [
 				{ identifier: "GT", content: "greater than" },
 				{ identifier: "LT", content: "less than" }
@@ -1392,7 +1392,7 @@ export const compare2DigitNumbers: AssessmentItemInput = {
 		comparison: {
 			type: "inlineChoiceInteraction",
 			responseIdentifier: "RESPONSE",
-			shuffle: false,
+			shuffle: true,
 			choices: [
 				{
 					identifier: "GT",

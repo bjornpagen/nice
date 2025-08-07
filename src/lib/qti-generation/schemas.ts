@@ -46,11 +46,7 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 						.strict()
 				)
 				.describe("Array of selectable choice options."),
-			shuffle: z
-				.boolean()
-				.nullable()
-				.transform(() => true)
-				.describe("Whether to randomize the order of choices. Always true to ensure fairness."),
+			shuffle: z.literal(true).describe("Whether to randomize the order of choices. Always true to ensure fairness."),
 			minChoices: z.number().int().min(0).describe("The minimum number of choices the user must select."),
 			maxChoices: z.number().int().min(1).describe("The maximum number of choices the user can select.")
 		})
@@ -62,11 +58,7 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			type: z.literal("inlineChoiceInteraction").describe("Identifies this as an inline dropdown interaction."),
 			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
 			choices: z.array(InlineChoiceSchema).describe("Array of options available in the dropdown menu."),
-			shuffle: z
-				.boolean()
-				.nullable()
-				.transform(() => true)
-				.describe("Whether to randomize dropdown options. Always true to ensure fairness.")
+			shuffle: z.literal(true).describe("Whether to randomize dropdown options. Always true to ensure fairness.")
 		})
 		.strict()
 		.describe("An inline dropdown menu embedded within text, ideal for fill-in-the-blank questions.")
