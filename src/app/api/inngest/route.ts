@@ -30,10 +30,10 @@ import { orchestrateHardcodedStimulusMigration } from "@/inngest/functions/orche
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
-
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
+import { orchestrateCourseDifferentiatedIngestion } from "@/inngest/functions/qti/orchestrate-course-differentiated-ingestion"
 // ✅ ADD: Import the new paraphrase function
 import { paraphraseStimulus } from "@/inngest/functions/qti/paraphrase-stimulus"
 import { requestAllItemMigrationsForCourse } from "@/inngest/functions/qti/request-all-item-migrations-for-course"
@@ -51,6 +51,7 @@ export const { GET, POST, PUT } = serve({
 		orchestrateCourseUploadToOneroster,
 		orchestrateCourseIngestionToQti, // ✅ MODIFIED: This is now the unified orchestrator
 		orchestrateBatchCourseIngestion, // ✅ ADD: Register the new batch orchestration function
+		orchestrateCourseDifferentiatedIngestion, // ✅ ADD: Register the new differentiated ingestion orchestrator
 		orchestrateCourseXmlGeneration,
 		orchestrateCourseUploadToQti,
 		// ADD: Register the new hardcoded migration orchestrators for items and stimuli separately

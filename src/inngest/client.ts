@@ -78,6 +78,13 @@ const events = {
 	"qti/batch.ingest": {
 		data: z.object({}) // No additional data needed - uses hardcoded course list
 	},
+	// ✅ ADDED: New event for differentiated course ingestion.
+	"qti/course.ingest.differentiated": {
+		data: z.object({
+			courseId: z.string().min(1),
+			n: z.number().int().positive().describe("The number of differentiated variations to generate per question.")
+		})
+	},
 	// ❌ REMOVED: This event is now obsolete.
 	// "qti/course.differentiated-ingest": {
 	// 	data: z.object({
