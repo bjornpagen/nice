@@ -101,9 +101,17 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		const xml = compileResult.data
 		logger.debug("compilation successful", { questionId, xmlLength: xml.length })
 
-		// Step 4: Update database.
-		logger.debug("updating database with generated xml", { questionId })
-		const updateResult = await errors.try(db.update(niceQuestions).set({ xml }).where(eq(niceQuestions.id, questionId)))
+		// Step 4: Update database with BOTH structured JSON and compiled XML.
+		logger.debug("updating database with generated structured json and xml", { questionId })
+		const updateResult = await errors.try(
+			db
+				.update(niceQuestions)
+				.set({
+					xml,
+					structuredJson: sanitizedAssessmentItem
+				})
+				.where(eq(niceQuestions.id, questionId))
+		)
 		if (updateResult.error) {
 			logger.error("db update failed", { questionId, error: updateResult.error })
 			throw errors.wrap(updateResult.error, "db update")

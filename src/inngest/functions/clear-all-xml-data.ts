@@ -53,15 +53,17 @@ export const clearAllXmlData = inngest.createFunction(
 		results.articles.cleared = results.articles.total
 		logger.info("cleared articles xml data", { count: results.articles.cleared })
 
-		// Clear all XML data from questions table
-		logger.info("clearing xml from questions table", { totalQuestions: results.questions.total })
-		const questionsUpdateResult = await errors.try(db.update(schema.niceQuestions).set({ xml: null }))
+		// Clear all XML and structuredJson data from questions table
+		logger.info("clearing xml and structuredJson from questions table", { totalQuestions: results.questions.total })
+		const questionsUpdateResult = await errors.try(
+			db.update(schema.niceQuestions).set({ xml: null, structuredJson: null })
+		)
 		if (questionsUpdateResult.error) {
-			logger.error("failed to clear questions xml", { error: questionsUpdateResult.error })
-			throw errors.wrap(questionsUpdateResult.error, "clear questions xml")
+			logger.error("failed to clear questions xml/json", { error: questionsUpdateResult.error })
+			throw errors.wrap(questionsUpdateResult.error, "clear questions xml/json")
 		}
 		results.questions.cleared = results.questions.total
-		logger.info("cleared questions xml data", { count: results.questions.cleared })
+		logger.info("cleared questions xml and structuredJson data", { count: results.questions.cleared })
 
 		// Count total questions_analysis with analysisNotes
 		const questionsAnalysisCountResult = await errors.try(

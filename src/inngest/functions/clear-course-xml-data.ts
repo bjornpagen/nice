@@ -138,15 +138,18 @@ export const clearCourseXmlData = inngest.createFunction(
 			}
 			clearedQuestions = questionsResult.data.length
 
-			// Update questions XML to null
+			// Update questions XML and structuredJson to null
 			const updateResult = await errors.try(
-				db.update(schema.niceQuestions).set({ xml: null }).where(inArray(schema.niceQuestions.exerciseId, exerciseIds))
+				db
+					.update(schema.niceQuestions)
+					.set({ xml: null, structuredJson: null })
+					.where(inArray(schema.niceQuestions.exerciseId, exerciseIds))
 			)
 			if (updateResult.error) {
-				logger.error("failed to clear question xml", { error: updateResult.error })
-				throw errors.wrap(updateResult.error, "clear question xml")
+				logger.error("failed to clear question xml/json", { error: updateResult.error })
+				throw errors.wrap(updateResult.error, "clear question xml/json")
 			}
-			logger.info("cleared question xml data", { count: clearedQuestions })
+			logger.info("cleared question xml and structuredJson data", { count: clearedQuestions })
 		}
 
 		logger.info("completed xml data clearing", {

@@ -174,7 +174,9 @@ const questions = schema.table(
 		exerciseId: text("exercise_id").notNull(),
 		sha: text("sha").notNull().default(""),
 		parsedData: jsonb("parsed_data").notNull(),
-		xml: text("xml")
+		xml: text("xml"),
+		// New column to cache the intermediate structured QTI JSON representation
+		structuredJson: jsonb("structured_json")
 	},
 	(table) => [
 		index("questions_exercise_id_idx").on(table.exerciseId),

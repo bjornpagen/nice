@@ -5,8 +5,25 @@ import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { compile } from "@/lib/qti-generation/compiler"
-import { generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
+import type { AssessmentItemInput } from "@/lib/qti-generation/schemas"
+// No longer generating from Perseus in this pipeline
 import { differentiateAssessmentItem } from "@/lib/qti-generation/structured/differentiator"
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return typeof value === "object" && value !== null
+}
+
+function isAssessmentItemInput(value: unknown): value is AssessmentItemInput {
+	if (!isRecord(value)) return false
+	if (typeof value.identifier !== "string") return false
+	if (typeof value.title !== "string") return false
+	if (!Array.isArray(value.responseDeclarations)) return false
+	if (!isRecord(value.feedback)) return false
+	if (!Array.isArray(value.feedback.correct)) return false
+	if (!Array.isArray(value.feedback.incorrect)) return false
+	// body and widgets can be null, interactions can be null or a record – not strictly required for basic shape check
+	return true
+}
 
 // A global key to ensure all OpenAI functions share the same concurrency limit.
 const OPENAI_CONCURRENCY_KEY = "openai-api-global-concurrency"
@@ -26,13 +43,12 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 		logger.info("starting perseus to differentiated qti items conversion", { questionId, variations: n })
 
 		// Step 1: Fetch Perseus data and exercise metadata from the database.
-		logger.debug("fetching perseus data and exercise metadata from db", { questionId })
+		logger.debug("fetching pre-generated structured json and exercise metadata from db", { questionId })
 		const questionResult = await errors.try(
 			db
 				.select({
-					id: niceQuestions.id,
 					exerciseId: niceQuestions.exerciseId,
-					parsedData: niceQuestions.parsedData,
+					structuredJson: niceQuestions.structuredJson,
 					exerciseTitle: niceExercises.title,
 					exerciseSlug: niceExercises.slug
 				})
@@ -46,23 +62,18 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 			throw errors.wrap(questionResult.error, "db query for question and exercise")
 		}
 		const question = questionResult.data[0]
-		if (!question?.parsedData) {
-			logger.warn("cannot proceed: no perseus data found for question", { questionId })
-			return { status: "skipped", reason: "no_perseus_data" }
+		if (!question?.structuredJson) {
+			logger.error("cannot proceed: no pre-generated structured json found for question", { questionId })
+			throw errors.new(`pre-requisite failed: structuredJson is missing for questionId ${questionId}`)
 		}
 
-		// Step 2: Generate a single, base structured JSON from the Perseus data.
-		logger.debug("generating base structured item", { questionId })
-		const structuredItemResult = await errors.try(generateStructuredQtiItem(logger, question.parsedData))
-		if (structuredItemResult.error) {
-			logger.error("base structured item generation failed", {
-				questionId,
-				error: structuredItemResult.error
-			})
-			// Bubble error to allow standard Inngest retries.
-			throw structuredItemResult.error
+		if (!isAssessmentItemInput(question.structuredJson)) {
+			logger.error("invalid structured json shape in database for question", { questionId })
+			throw errors.new("invalid structured json shape")
 		}
-		const structuredItem = structuredItemResult.data
+
+		// Step 2: Use the pre-generated structured JSON from the database.
+		const structuredItem = question.structuredJson
 
 		// Step 3: Fan out to the new differentiation function to generate 'n' variations.
 		logger.debug("differentiating structured item", { questionId, variations: n })
