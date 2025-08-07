@@ -282,63 +282,11 @@ export type TransformationDiagramProps = z.infer<typeof TransformationDiagramPro
 export const generateTransformationDiagram: WidgetGenerator<typeof TransformationDiagramPropsSchema> = (props) => {
 	const { width, height, preImage, image, transformation, additionalPoints } = props
 
-	// 1. Calculate intelligent viewBox with proper padding for visual elements
-	const calculateViewBox = () => {
-		let allPoints = [...preImage.vertices, ...image.vertices]
-
-		// Add additional points if any
-		if (additionalPoints) {
-			allPoints.push(...additionalPoints)
-		}
-
-		// Add transformation-specific points
-		if (transformation.type === "reflection") {
-			allPoints.push(transformation.lineOfReflection.from, transformation.lineOfReflection.to)
-		} else if (transformation.type === "rotation") {
-			allPoints.push(transformation.centerOfRotation)
-		} else if (transformation.type === "dilation") {
-			allPoints.push(transformation.centerOfDilation)
-			// For dilation, extend points to account for rays
-			if (transformation.showRays) {
-				const center = transformation.centerOfDilation
-				for (const vertex of image.vertices) {
-					const dx = vertex.x - center.x
-					const dy = vertex.y - center.y
-					// Extend ray beyond image vertex
-					allPoints.push({ x: vertex.x + dx * 0.2, y: vertex.y + dy * 0.2 })
-				}
-			}
-		}
-
-		const minX = Math.min(...allPoints.map((p) => p.x))
-		const maxX = Math.max(...allPoints.map((p) => p.x))
-		const minY = Math.min(...allPoints.map((p) => p.y))
-		const maxY = Math.max(...allPoints.map((p) => p.y))
-
-		// Adaptive padding based on diagram size and content
-		const baseWidth = maxX - minX
-		const baseHeight = maxY - minY
-		const basePadding = Math.max(30, Math.min(baseWidth, baseHeight) * 0.1)
-
-		// Extra padding for labels and visual elements
-		const labelPadding = 25
-		const totalPadding = basePadding + labelPadding
-
-		return {
-			minX: minX - totalPadding,
-			minY: minY - totalPadding,
-			width: baseWidth + totalPadding * 2,
-			height: baseHeight + totalPadding * 2
-		}
-	}
-
-	const viewBox = calculateViewBox()
-	const scale = Math.min(viewBox.width, viewBox.height) / 400 // Normalize for responsive sizing
-
-	let svg = `<svg width="${width}" height="${height}" viewBox="${viewBox.minX} ${viewBox.minY} ${viewBox.width} ${viewBox.height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
+	// 1. Use a fixed, predictable coordinate system
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg += `<defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1fab54"/></marker></defs>`
 
-	// 2. Helper Functions
+	// Helper function needed for coordinate calculations
 	const calculateCentroid = (vertices: Array<{ x: number; y: number }>) => {
 		const centroid = vertices.reduce((acc, p) => ({ x: acc.x + p.x, y: acc.y + p.y }), { x: 0, y: 0 })
 		centroid.x /= vertices.length
@@ -346,60 +294,62 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		return centroid
 	}
 
-	const findOptimalLabelPosition = (
-		shape: TransformationDiagramProps["preImage"],
-		avoidPoints: Array<{ x: number; y: number }> = []
-	) => {
-		const centroid = calculateCentroid(shape.vertices)
-
-		// If no conflicts, use centroid
-		const hasConflict = avoidPoints.some(
-			(point) => Math.abs(point.x - centroid.x) < 30 && Math.abs(point.y - centroid.y) < 20
-		)
-
-		if (!hasConflict) {
-			return centroid
-		}
-
-		// Try offset positions around the centroid
-		const offsets = [
-			{ x: 0, y: -25 }, // above
-			{ x: 0, y: 25 }, // below
-			{ x: -30, y: 0 }, // left
-			{ x: 30, y: 0 }, // right
-			{ x: -20, y: -20 }, // top-left
-			{ x: 20, y: -20 }, // top-right
-			{ x: -20, y: 20 }, // bottom-left
-			{ x: 20, y: 20 } // bottom-right
-		]
-
-		for (const offset of offsets) {
-			const testPos = { x: centroid.x + offset.x, y: centroid.y + offset.y }
-			const hasOffsetConflict = avoidPoints.some(
-				(point) => Math.abs(point.x - testPos.x) < 25 && Math.abs(point.y - testPos.y) < 15
-			)
-			if (!hasOffsetConflict) {
-				return testPos
-			}
-		}
-
-		// Fallback to centroid if no good position found
-		return centroid
+	// 2. Calculate bounds for ALL points that need to be visible
+	let allPoints = [...preImage.vertices, ...image.vertices]
+	if (additionalPoints) {
+		allPoints.push(...additionalPoints)
+	}
+	if (transformation.type === "rotation") {
+		allPoints.push(transformation.centerOfRotation)
+	} else if (transformation.type === "dilation") {
+		allPoints.push(transformation.centerOfDilation)
+	}
+	if (transformation.type === "reflection") {
+		allPoints.push(transformation.lineOfReflection.from, transformation.lineOfReflection.to)
 	}
 
-	const drawPolygon = (
-		shape: TransformationDiagramProps["preImage"],
-		isImage: boolean,
-		labelPosition: { x: number; y: number } | null
-	) => {
-		const pointsStr = shape.vertices.map((p) => `${p.x},${p.y}`).join(" ")
-		const strokeWidth = Math.max(1.5, 2 * scale)
-		const fontSize = Math.max(12, 16 * scale)
+	const minX = Math.min(...allPoints.map((p) => p.x))
+	const maxX = Math.max(...allPoints.map((p) => p.x))
+	const minY = Math.min(...allPoints.map((p) => p.y))
+	const maxY = Math.max(...allPoints.map((p) => p.y))
 
-		let polySvg = `<polygon points="${pointsStr}" fill="${shape.fillColor}" stroke="${shape.strokeColor}" stroke-width="${isImage ? strokeWidth * 1.25 : strokeWidth}"/>`
+	const dataWidth = maxX - minX
+	const dataHeight = maxY - minY
 
-		if (shape.label && labelPosition) {
-			polySvg += `<text x="${labelPosition.x}" y="${labelPosition.y}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" font-weight="bold" fill="#333">${shape.label}</text>`
+	// 3. Create robust coordinate transformation with proper padding
+	const padding = 40
+	const availableWidth = width - 2 * padding
+	const availableHeight = height - 2 * padding
+
+	// Ensure minimum scale to prevent microscopic shapes
+	const scaleX = dataWidth > 0 ? availableWidth / dataWidth : 1
+	const scaleY = dataHeight > 0 ? availableHeight / dataHeight : 1
+	const scale = Math.min(scaleX, scaleY, 10) // Cap maximum scale at 10
+
+	// Use the center of the bounding box as the data center (simple and reliable)
+	const dataCenterX = (minX + maxX) / 2
+	const dataCenterY = (minY + maxY) / 2
+
+	// Center the data in the SVG canvas
+	const svgCenterX = width / 2
+	const svgCenterY = height / 2
+
+	// Transform coordinate system: data coordinates -> SVG coordinates
+	const toSvgX = (x: number) => svgCenterX + (x - dataCenterX) * scale
+	const toSvgY = (y: number) => svgCenterY - (y - dataCenterY) * scale // Flip Y axis
+
+	const drawPolygon = (shape: TransformationDiagramProps["preImage"], isImage: boolean) => {
+		const pointsStr = shape.vertices.map((p) => `${toSvgX(p.x)},${toSvgY(p.y)}`).join(" ")
+		const strokeWidth = isImage ? 2.5 : 2
+
+		let polySvg = `<polygon points="${pointsStr}" fill="${shape.fillColor}" stroke="${shape.strokeColor}" stroke-width="${strokeWidth}"/>`
+
+		// Draw shape label at centroid
+		if (shape.label) {
+			const centroid = calculateCentroid(shape.vertices)
+			const labelX = toSvgX(centroid.x)
+			const labelY = toSvgY(centroid.y)
+			polySvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="14px" font-weight="bold" fill="#333">${shape.label}</text>`
 		}
 		return polySvg
 	}
@@ -412,27 +362,25 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			strokeDash = 'stroke-dasharray="2 4"'
 		}
 		const marker = hasArrow ? 'marker-end="url(#arrowhead)"' : ""
-		const strokeWidth = Math.max(1.5, 2 * scale)
-		return `<line x1="${line.from.x}" y1="${line.from.y}" x2="${line.to.x}" y2="${line.to.y}" stroke="${line.color}" stroke-width="${strokeWidth}" ${strokeDash} ${marker}/>`
+		return `<line x1="${toSvgX(line.from.x)}" y1="${toSvgY(line.from.y)}" x2="${toSvgX(line.to.x)}" y2="${toSvgY(line.to.y)}" stroke="${line.color}" stroke-width="2" ${strokeDash} ${marker}/>`
 	}
 
 	const drawRotationArc = (center: { x: number; y: number }, startPoint: { x: number; y: number }, angle: number) => {
 		const radius = Math.sqrt((startPoint.x - center.x) ** 2 + (startPoint.y - center.y) ** 2)
-		const adjustedRadius = Math.min(radius * 0.7, 40) // Keep arc visible but not overwhelming
+		const arcRadius = Math.min(radius * 0.6, 30) // Keep arc visible but not overwhelming
 
 		const startAngle = Math.atan2(startPoint.y - center.y, startPoint.x - center.x)
 		const endAngle = startAngle + (angle * Math.PI) / 180
 
-		const startX = center.x + adjustedRadius * Math.cos(startAngle)
-		const startY = center.y + adjustedRadius * Math.sin(startAngle)
-		const endX = center.x + adjustedRadius * Math.cos(endAngle)
-		const endY = center.y + adjustedRadius * Math.sin(endAngle)
+		const startX = toSvgX(center.x + arcRadius * Math.cos(startAngle))
+		const startY = toSvgY(center.y + arcRadius * Math.sin(startAngle))
+		const endX = toSvgX(center.x + arcRadius * Math.cos(endAngle))
+		const endY = toSvgY(center.y + arcRadius * Math.sin(endAngle))
 
 		const largeArcFlag = Math.abs(angle) > 180 ? 1 : 0
-		const sweepFlag = angle > 0 ? 1 : 0
+		const sweepFlag = angle > 0 ? 0 : 1 // Flip sweep direction for Y-axis flip in SVG coordinates
 
-		const strokeWidth = Math.max(1.5, 2 * scale)
-		return `<path d="M ${startX} ${startY} A ${adjustedRadius} ${adjustedRadius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="#ff6600" stroke-width="${strokeWidth}" fill="none" marker-end="url(#arrowhead)"/>`
+		return `<path d="M ${startX} ${startY} A ${arcRadius * scale} ${arcRadius * scale} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="#ff6600" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>`
 	}
 
 	const drawVertexLabels = (shape: TransformationDiagramProps["preImage"]) => {
@@ -441,54 +389,35 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		}
 
 		let labelsSvg = ""
-		const fontSize = Math.max(12, 14 * scale)
-		const labelOffset = Math.max(15, 18 * scale)
+		const labelOffset = 16 // Offset in SVG pixels, not data coordinates
 
 		for (let i = 0; i < shape.vertices.length; i++) {
 			const vertex = shape.vertices[i]
 			const label = shape.vertexLabels[i]
 			if (!vertex || !label) continue
 
-			// Calculate label position based on adjacent vertices for better placement
-			const prevVertex = shape.vertices[(i - 1 + shape.vertices.length) % shape.vertices.length]
-			const nextVertex = shape.vertices[(i + 1) % shape.vertices.length]
+			// Transform vertex to SVG coordinates first
+			const svgX = toSvgX(vertex.x)
+			const svgY = toSvgY(vertex.y)
 
-			if (!prevVertex || !nextVertex) continue
+			// Calculate shape centroid in SVG coordinates
+			const centroid = calculateCentroid(shape.vertices)
+			const svgCentroidX = toSvgX(centroid.x)
+			const svgCentroidY = toSvgY(centroid.y)
 
-			// Calculate the angle bisector direction
-			const dx1 = vertex.x - prevVertex.x
-			const dy1 = vertex.y - prevVertex.y
-			const dx2 = vertex.x - nextVertex.x
-			const dy2 = vertex.y - nextVertex.y
+			// Vector from centroid to vertex in SVG space (outward direction)
+			const dx = svgX - svgCentroidX
+			const dy = svgY - svgCentroidY
+			const len = Math.sqrt(dx * dx + dy * dy)
 
-			// Normalize vectors
-			const len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1)
-			const len2 = Math.sqrt(dx2 * dx2 + dy2 * dy2)
+			// Normalize and scale for label offset in SVG pixels
+			const offsetX = len > 0 ? (dx / len) * labelOffset : 0
+			const offsetY = len > 0 ? (dy / len) * labelOffset : -labelOffset
 
-			const nx1 = dx1 / len1
-			const ny1 = dy1 / len1
-			const nx2 = dx2 / len2
-			const ny2 = dy2 / len2
+			const labelX = svgX + offsetX
+			const labelY = svgY + offsetY
 
-			// Direction for label placement (outward from shape)
-			let labelDx = nx1 + nx2
-			let labelDy = ny1 + ny2
-
-			// Normalize the direction
-			const labelLen = Math.sqrt(labelDx * labelDx + labelDy * labelDy)
-			if (labelLen > 0) {
-				labelDx /= labelLen
-				labelDy /= labelLen
-			} else {
-				// Fallback for collinear edges
-				labelDx = -ny1
-				labelDy = nx1
-			}
-
-			const labelX = vertex.x + labelDx * labelOffset
-			const labelY = vertex.y + labelDy * labelOffset
-
-			labelsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" font-weight="600" fill="#333">${label}</text>`
+			labelsSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="13px" font-weight="600" fill="#333">${label}</text>`
 		}
 
 		return labelsSvg
@@ -511,7 +440,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			return ""
 		}
 
-		// Calculate angles for the arc
+		// Calculate angles for the arc in data coordinates
 		const angle1 = Math.atan2(prevVertex.y - vertex.y, prevVertex.x - vertex.x)
 		const angle2 = Math.atan2(nextVertex.y - vertex.y, nextVertex.x - vertex.x)
 
@@ -527,23 +456,30 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			;[startAngle, endAngle] = [endAngle, startAngle + 2 * Math.PI]
 		}
 
-		const arcRadius = mark.radius
-		const startX = vertex.x + arcRadius * Math.cos(startAngle)
-		const startY = vertex.y + arcRadius * Math.sin(startAngle)
-		const endX = vertex.x + arcRadius * Math.cos(endAngle)
-		const endY = vertex.y + arcRadius * Math.sin(endAngle)
+		// Use scaled radius for SVG coordinates
+		const svgRadius = mark.radius * scale
+		const svgVertexX = toSvgX(vertex.x)
+		const svgVertexY = toSvgY(vertex.y)
+
+		// Calculate arc endpoints in SVG coordinates
+		// Note: Need to flip Y angles because SVG Y-axis is flipped
+		const startX = svgVertexX + svgRadius * Math.cos(startAngle)
+		const startY = svgVertexY + svgRadius * Math.sin(-startAngle) // Flip Y
+		const endX = svgVertexX + svgRadius * Math.cos(endAngle)
+		const endY = svgVertexY + svgRadius * Math.sin(-endAngle) // Flip Y
 
 		const largeArcFlag = Math.abs(endAngle - startAngle) > Math.PI ? 1 : 0
-		const sweepFlag = 1
+		const sweepFlag = 0 // Use 0 for correct direction in flipped Y coordinates
 
-		let markSvg = `<path d="M ${startX} ${startY} A ${arcRadius} ${arcRadius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="${strokeColor}" stroke-width="${Math.max(1, 1.5 * scale)}" fill="none"/>`
+		let markSvg = `<path d="M ${startX} ${startY} A ${svgRadius} ${svgRadius} 0 ${largeArcFlag} ${sweepFlag} ${endX} ${endY}" stroke="${strokeColor}" stroke-width="${Math.max(1, 1.5)}" fill="none"/>`
 
 		// Add label if provided
 		if (mark.label) {
 			const midAngle = (startAngle + endAngle) / 2
-			const labelX = vertex.x + mark.labelDistance * Math.cos(midAngle)
-			const labelY = vertex.y + mark.labelDistance * Math.sin(midAngle)
-			const fontSize = Math.max(11, 13 * scale)
+			const svgLabelDistance = mark.labelDistance * scale
+			const labelX = svgVertexX + svgLabelDistance * Math.cos(midAngle)
+			const labelY = svgVertexY + svgLabelDistance * Math.sin(-midAngle) // Flip Y
+			const fontSize = Math.max(11, 13)
 
 			markSvg += `<text x="${labelX}" y="${labelY}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}px" fill="#333">${mark.label}</text>`
 		}
@@ -553,19 +489,20 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 	const drawAdditionalPoint = (point: z.infer<typeof AdditionalPointSchema>) => {
 		let pointSvg = ""
-		const radius = Math.max(3, 4 * scale)
-		const fontSize = Math.max(12, 14 * scale)
+		const radius = 4
+		const svgX = toSvgX(point.x)
+		const svgY = toSvgY(point.y)
 
 		if (point.style === "circle") {
-			pointSvg += `<circle cx="${point.x}" cy="${point.y}" r="${radius}" fill="none" stroke="#333" stroke-width="${Math.max(1.5, 2 * scale)}"/>`
+			pointSvg += `<circle cx="${svgX}" cy="${svgY}" r="${radius}" fill="none" stroke="#333" stroke-width="2"/>`
 		} else {
 			// dot style
-			pointSvg += `<circle cx="${point.x}" cy="${point.y}" r="${radius}" fill="#333"/>`
+			pointSvg += `<circle cx="${svgX}" cy="${svgY}" r="${radius}" fill="#333"/>`
 		}
 
 		// Label offset to avoid overlapping with the point
-		const labelOffset = radius + Math.max(8, 10 * scale)
-		pointSvg += `<text x="${point.x}" y="${point.y - labelOffset}" text-anchor="middle" dominant-baseline="bottom" font-size="${fontSize}px" font-weight="600" fill="#333">${point.label}</text>`
+		const labelOffset = 12
+		pointSvg += `<text x="${svgX}" y="${svgY - labelOffset}" text-anchor="middle" dominant-baseline="bottom" font-size="13px" font-weight="600" fill="#333">${point.label}</text>`
 
 		return pointSvg
 	}
@@ -576,7 +513,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 		}
 
 		let lengthsSvg = ""
-		const fontSize = Math.max(11, 13 * scale)
+		const fontSize = Math.max(11, 13)
 
 		for (let i = 0; i < shape.vertices.length; i++) {
 			const sideLength = shape.sideLengths[i]
@@ -586,31 +523,43 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			const vertex2 = shape.vertices[(i + 1) % shape.vertices.length]
 			if (!vertex1 || !vertex2) continue
 
-			// Calculate midpoint of the edge
-			const midX = (vertex1.x + vertex2.x) / 2
-			const midY = (vertex1.y + vertex2.y) / 2
+			// Calculate midpoint of the edge in data coordinates
+			const dataMidX = (vertex1.x + vertex2.x) / 2
+			const dataMidY = (vertex1.y + vertex2.y) / 2
 
-			// Calculate edge direction and perpendicular
-			const dx = vertex2.x - vertex1.x
-			const dy = vertex2.y - vertex1.y
-			const edgeLength = Math.sqrt(dx * dx + dy * dy)
+			// Transform to SVG coordinates
+			const svgMidX = toSvgX(dataMidX)
+			const svgMidY = toSvgY(dataMidY)
 
-			// Normalize edge vector
-			const edgeNormX = dx / edgeLength
-			const edgeNormY = dy / edgeLength
+			// Calculate edge direction in SVG coordinates
+			const svgVertex1X = toSvgX(vertex1.x)
+			const svgVertex1Y = toSvgY(vertex1.y)
+			const svgVertex2X = toSvgX(vertex2.x)
+			const svgVertex2Y = toSvgY(vertex2.y)
+
+			const svgDx = svgVertex2X - svgVertex1X
+			const svgDy = svgVertex2Y - svgVertex1Y
+			const svgEdgeLength = Math.sqrt(svgDx * svgDx + svgDy * svgDy)
+
+			// Normalize edge vector in SVG space
+			const edgeNormX = svgDx / svgEdgeLength
+			const edgeNormY = svgDy / svgEdgeLength
 
 			// Calculate perpendicular vector (rotated 90 degrees)
 			let perpX = -edgeNormY
 			let perpY = edgeNormX
 
 			// Determine if we need to flip the perpendicular based on position preference
+			const centroid = calculateCentroid(shape.vertices)
+			const svgCentroidX = toSvgX(centroid.x)
+			const svgCentroidY = toSvgY(centroid.y)
+
 			if (sideLength.position === "inside") {
 				// Check if perpendicular points outward by testing with centroid
-				const centroid = calculateCentroid(shape.vertices)
-				const testX = midX + perpX * 10
-				const testY = midY + perpY * 10
-				const distToCentroid = Math.sqrt((testX - centroid.x) ** 2 + (testY - centroid.y) ** 2)
-				const midDistToCentroid = Math.sqrt((midX - centroid.x) ** 2 + (midY - centroid.y) ** 2)
+				const testX = svgMidX + perpX * 10
+				const testY = svgMidY + perpY * 10
+				const distToCentroid = Math.sqrt((testX - svgCentroidX) ** 2 + (testY - svgCentroidY) ** 2)
+				const midDistToCentroid = Math.sqrt((svgMidX - svgCentroidX) ** 2 + (svgMidY - svgCentroidY) ** 2)
 
 				// If test point is further from centroid, flip the perpendicular
 				if (distToCentroid > midDistToCentroid) {
@@ -619,11 +568,10 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 				}
 			} else {
 				// For outside position, ensure perpendicular points away from centroid
-				const centroid = calculateCentroid(shape.vertices)
-				const testX = midX + perpX * 10
-				const testY = midY + perpY * 10
-				const distToCentroid = Math.sqrt((testX - centroid.x) ** 2 + (testY - centroid.y) ** 2)
-				const midDistToCentroid = Math.sqrt((midX - centroid.x) ** 2 + (midY - centroid.y) ** 2)
+				const testX = svgMidX + perpX * 10
+				const testY = svgMidY + perpY * 10
+				const distToCentroid = Math.sqrt((testX - svgCentroidX) ** 2 + (testY - svgCentroidY) ** 2)
+				const midDistToCentroid = Math.sqrt((svgMidX - svgCentroidX) ** 2 + (svgMidY - svgCentroidY) ** 2)
 
 				// If test point is closer to centroid, flip the perpendicular
 				if (distToCentroid < midDistToCentroid) {
@@ -632,12 +580,13 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 				}
 			}
 
-			// Position the label
-			const labelX = midX + perpX * sideLength.offset
-			const labelY = midY + perpY * sideLength.offset
+			// Position the label in SVG coordinates
+			const svgOffset = sideLength.offset * scale
+			const labelX = svgMidX + perpX * svgOffset
+			const labelY = svgMidY + perpY * svgOffset
 
-			// Calculate rotation angle for the text to align with the edge
-			let angle = Math.atan2(dy, dx) * (180 / Math.PI)
+			// Calculate rotation angle for the text to align with the edge in SVG space
+			let angle = Math.atan2(svgDy, svgDx) * (180 / Math.PI)
 
 			// Ensure text is readable (not upside down)
 			if (angle > 90 || angle < -90) {
@@ -649,20 +598,6 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 
 		return lengthsSvg
 	}
-
-	// 3. Calculate label positions with collision avoidance
-	const avoidPoints: Array<{ x: number; y: number }> = []
-
-	// Add transformation centers to avoid points
-	if (transformation.type === "rotation") {
-		avoidPoints.push(transformation.centerOfRotation)
-	} else if (transformation.type === "dilation") {
-		avoidPoints.push(transformation.centerOfDilation)
-	}
-
-	const preImageLabelPos = findOptimalLabelPosition(preImage, avoidPoints)
-	avoidPoints.push(preImageLabelPos)
-	const imageLabelPos = findOptimalLabelPosition(image, avoidPoints)
 
 	// 4. Draw Transformation-Specific Background Elements (like lines and rays)
 	if (transformation.type === "reflection") {
@@ -683,11 +618,15 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 				// Calculate ray direction from center through both points
 				const dx = imageVertex.x - center.x
 				const dy = imageVertex.y - center.y
+				const rayLength = Math.sqrt(dx * dx + dy * dy)
 
-				// Extend ray beyond image vertex to show continued scaling
-				const extensionFactor = 1.3
-				const extendedX = center.x + dx * extensionFactor
-				const extendedY = center.y + dy * extensionFactor
+				// Limit extension to a reasonable amount relative to the canvas
+				const maxExtension = (Math.min(width, height) * 0.3) / scale // Convert to data units
+				const extensionLength = Math.min(rayLength * 0.3, maxExtension)
+
+				// Calculate extended endpoint
+				const extendedX = center.x + (dx / rayLength) * (rayLength + extensionLength)
+				const extendedY = center.y + (dy / rayLength) * (rayLength + extensionLength)
 
 				// Draw ray from center through both vertices (behind shapes)
 				svg += drawLine(
@@ -704,8 +643,8 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 	}
 
 	// 5. Draw Main Shapes with proper layering
-	svg += drawPolygon(preImage, false, preImageLabelPos)
-	svg += drawPolygon(image, true, imageLabelPos)
+	svg += drawPolygon(preImage, false)
+	svg += drawPolygon(image, true)
 
 	// 5a. Draw angle marks for both shapes
 	if (preImage.angleMarks) {
@@ -742,7 +681,7 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 			break
 		case "dilation": {
 			const center = transformation.centerOfDilation
-			const centerRadius = Math.max(3, 4 * scale)
+			const centerRadius = 4
 
 			// Draw vertex correspondence indicators if rays are shown
 			if (transformation.showRays && preImage.vertices.length === image.vertices.length) {
@@ -751,25 +690,25 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 					const imageVertex = image.vertices[i]
 					if (preVertex && imageVertex) {
 						// Add small circles at vertices to show correspondence
-						const preVertexRadius = Math.max(1.5, 2 * scale)
-						const imageVertexRadius = Math.max(2, 2.5 * scale)
+						const preVertexRadius = 2
+						const imageVertexRadius = 2.5
 
 						// Pre-image vertices: smaller, semi-transparent
-						svg += `<circle cx="${preVertex.x}" cy="${preVertex.y}" r="${preVertexRadius}" fill="#1fab54" opacity="0.6" stroke="#fff" stroke-width="0.5"/>`
+						svg += `<circle cx="${toSvgX(preVertex.x)}" cy="${toSvgY(preVertex.y)}" r="${preVertexRadius}" fill="#1fab54" opacity="0.6" stroke="#fff" stroke-width="0.5"/>`
 						// Image vertices: larger, more prominent
-						svg += `<circle cx="${imageVertex.x}" cy="${imageVertex.y}" r="${imageVertexRadius}" fill="#1fab54" stroke="#fff" stroke-width="0.5"/>`
+						svg += `<circle cx="${toSvgX(imageVertex.x)}" cy="${toSvgY(imageVertex.y)}" r="${imageVertexRadius}" fill="#1fab54" stroke="#fff" stroke-width="0.5"/>`
 					}
 				}
 			}
 
 			// Draw center point on top of everything
-			svg += `<circle cx="${center.x}" cy="${center.y}" r="${centerRadius}" fill="#7854ab" stroke="#fff" stroke-width="1.5"/>`
+			svg += `<circle cx="${toSvgX(center.x)}" cy="${toSvgY(center.y)}" r="${centerRadius}" fill="#7854ab" stroke="#fff" stroke-width="1.5"/>`
 			break
 		}
 		case "rotation": {
 			const center = transformation.centerOfRotation
-			const centerRadius = Math.max(3, 4 * scale)
-			svg += `<circle cx="${center.x}" cy="${center.y}" r="${centerRadius}" fill="#7854ab" stroke="#fff" stroke-width="1"/>`
+			const centerRadius = 4
+			svg += `<circle cx="${toSvgX(center.x)}" cy="${toSvgY(center.y)}" r="${centerRadius}" fill="#7854ab" stroke="#fff" stroke-width="1"/>`
 
 			// Draw rotation arc to show angle and direction
 			if (preImage.vertices.length > 0) {
@@ -799,9 +738,9 @@ export const generateTransformationDiagram: WidgetGenerator<typeof Transformatio
 						)
 
 						// Add small circles at vertices
-						const vertexRadius = Math.max(1.5, 2 * scale)
-						svg += `<circle cx="${preVertex.x}" cy="${preVertex.y}" r="${vertexRadius}" fill="#888" opacity="0.6"/>`
-						svg += `<circle cx="${imageVertex.x}" cy="${imageVertex.y}" r="${vertexRadius}" fill="#888" opacity="0.6"/>`
+						const vertexRadius = 2
+						svg += `<circle cx="${toSvgX(preVertex.x)}" cy="${toSvgY(preVertex.y)}" r="${vertexRadius}" fill="#888" opacity="0.6"/>`
+						svg += `<circle cx="${toSvgX(imageVertex.x)}" cy="${toSvgY(imageVertex.y)}" r="${vertexRadius}" fill="#888" opacity="0.6"/>`
 					}
 				}
 			}
