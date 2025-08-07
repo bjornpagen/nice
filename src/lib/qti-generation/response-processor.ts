@@ -148,10 +148,15 @@ export function compileResponseDeclarations(decls: AssessmentItem["responseDecla
 
 export function compileResponseProcessing(decls: AssessmentItem["responseDeclarations"]): string {
 	const conditions = decls
-		.map(
-			(decl) =>
-				`<qti-match><qti-variable identifier="${escapeXmlAttribute(decl.identifier)}"/><qti-correct identifier="${escapeXmlAttribute(decl.identifier)}"/></qti-match>`
-		)
+		.map((decl) => {
+			const variable = `<qti-variable identifier="${escapeXmlAttribute(decl.identifier)}"/>`
+			const correct = `<qti-correct identifier="${escapeXmlAttribute(decl.identifier)}"/>`
+			// Use order-aware equality for ordered cardinality
+			if (decl.cardinality === "ordered") {
+				return `<qti-equal>${variable}${correct}</qti-equal>`
+			}
+			return `<qti-match>${variable}${correct}</qti-match>`
+		})
 		.join("\n                    ")
 
 	return `

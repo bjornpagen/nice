@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import { allExamples } from "@/lib/qti-generation/examples"
 import { type AnyInteraction, AssessmentItemShellSchema } from "@/lib/qti-generation/schemas"
-import type { typedSchemas } from "@/lib/widgets/generators"
+import { typedSchemas } from "@/lib/widgets/generators"
 import type { ImageContext } from "./perseus-image-resolver"
 
 // Helper to convert a full AssessmentItemInput into a shell for prompt examples
@@ -39,6 +39,7 @@ const widgetTypeKeys: [WidgetTypeKey, ...WidgetTypeKey[]] = [
 	"distanceFormulaGraph",
 	"functionPlotGraph",
 	"lineEquationGraph",
+
 	"pointPlotGraph",
 	"polygonGraph",
 	"shapeTransformationGraph",
@@ -79,6 +80,24 @@ const widgetTypeKeys: [WidgetTypeKey, ...WidgetTypeKey[]] = [
 	"verticalArithmeticSetup",
 	"parallelogramTrapezoidDiagram"
 ]
+
+// Build a machine-generated list of widget type names and their top-level descriptions from schemas
+function buildWidgetTypeDescriptions(): string {
+	const parts: string[] = []
+	for (const typeName of widgetTypeKeys) {
+		const schema = typedSchemas[typeName]
+		// Zod stores the description on the schema definition
+		const rawDescription = schema._def.description
+		const safeDescription =
+			typeof rawDescription === "string" && rawDescription.trim() !== ""
+				? rawDescription.trim()
+				: "no description available"
+		parts.push(`- ${typeName}: ${safeDescription}`)
+	}
+	// Sort for stable output
+	parts.sort((a, b) => a.localeCompare(b))
+	return parts.join("\n")
+}
 
 function createWidgetMappingSchema(slotNames: string[]) {
 	const mappingShape: Record<string, z.ZodEnum<[WidgetTypeKey, ...WidgetTypeKey[]]>> = {}
@@ -145,17 +164,31 @@ This is the most critical rule. Any slot you include in the 'body' MUST have its
 CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, MathML, and slot placeholders.
 \nCRITICAL: All content must be XML-safe. Do not use CDATA sections and do not include invalid XML control characters.
 
-**CRITICAL: NO ANSWERS OR HINTS IN 'BODY'.**
+**CRITICAL: NO ANSWERS OR HINTS IN 'BODY', WIDGETS, OR INTERACTIONS.**
 - The 'body' MUST NEVER contain the correct answer, partial answers, worked solutions, or any text that gives away the answer.
+- WIDGETS MUST NEVER label, highlight, or otherwise indicate the correct answer. This includes diagram labels, highlighted values, or any visual cues that reveal the answer.
 - Strip and ignore ALL Perseus 'hints' fields. NEVER include hints in any form in the 'body' (no text, MathML, paraphrases, or reworded guidance).
 - Do NOT include hint-like lead-ins such as "Hint:", "Remember:", "Think about...", or statements that restate or imply the answer (e.g., "the constant is 7").
-- The ONLY place the correct answer may appear is in the response declarations; it MUST NOT be echoed anywhere in the 'body'.
+- **ABSOLUTE RULE**: The ONLY places the correct answer may appear are:
+  1. Response declarations (for validation)
+  2. Feedback fields - SPECIFICALLY:
+     - The 'feedback' object at the assessment level (correct/incorrect arrays)
+     - Individual choice 'feedback' within interactions
+     - NO OTHER LOCATION
+- **HARD STOP. NO EXCEPTIONS.** Answers are FORBIDDEN in body, widgets, or interactions. They are ONLY allowed in the designated feedback fields above.
 
 **CRITICAL: NO EXPLANATION WIDGETS.**
 NEVER create a widget for explanatory text. Explanations or definitions found in the Perseus JSON (especially those of type 'explanation' or 'definition') must be embedded directly within the 'body' content as paragraph blocks. The 'explanation' and 'definition' widget types are BANNED. Hints are EXPLICITLY FORBIDDEN and MUST be stripped entirely.
 
-**CRITICAL: NO CURRENCY SLOTS.**
-Currency symbols and amounts MUST NOT be represented as slots (widget or interaction). Do not generate any slotId that indicates currency (for example, names containing "currency" or ending with "_feedback"). Represent currency inline using text and/or MathML only; for example: <span class="currency">$</span> followed by <math><mn>5</mn></math> or plain text like "5 dollars".
+**CRITICAL: NO CURRENCY SLOTS - STRICT MATHML ENFORCEMENT.**
+Currency symbols and amounts MUST NOT be represented as slots (widget or interaction). Do not generate any slotId that indicates currency (for example, names containing "currency" or ending with "_feedback"). 
+
+**MANDATORY CURRENCY/PERCENT MATHML CONVERSION:**
+- Currency: Use <mo>$</mo><mn>amount</mn> in MathML, NOT raw text like "$5"
+- Percentages: Use <mn>number</mn><mo>%</mo> in MathML, NOT raw text like "50%"
+- Example: Convert "$5.50" to <math><mo>$</mo><mn>5.50</mn></math>
+- Example: Convert "75%" to <math><mn>75</mn><mo>%</mo></math>
+- NEVER use raw text currency/percent symbols outside MathML tags
 
 ⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
 The following are CATEGORICALLY FORBIDDEN in the output. ANY violation will result in IMMEDIATE REJECTION:
@@ -228,17 +261,24 @@ ${perseusJson}
     * NO \`<mfenced>\` elements: Use \`<mrow><mo>(</mo>...<mo>)</mo></mrow>\` instead of \`<mfenced open="(" close=")">\`
     * NO LaTeX color commands: Strip \`\\blueD{x}\` to just the content \`x\`
     * NO LaTeX delimiters: Convert \`\\(...\\)\` to proper MathML, never leave the backslashes
-  - **CURRENCY HANDLING**:
-    * Currency symbols are allowed when properly tagged: \`<span class="currency">$</span>\`
-    * Do NOT use \`<mo>$</mo>\` in MathML for currency (use it only for mathematical operators if needed)
-    * Acceptable patterns: \`<span class="currency">$</span><math><mn>5</mn></math>\` or text like "5 dollars"
-  - Do NOT create slots for currency. Never generate slotIds like "currency7" or "currency7_feedback"; represent currency inline using \`<span class="currency">$</span>\` and text/MathML.
+  - **CURRENCY/PERCENT HANDLING (UPDATED REQUIREMENTS)**:
+    * Currency: MUST use MathML <mo>$</mo><mn>amount</mn> pattern, NOT <span class="currency">
+    * Percentages: MUST use MathML <mn>number</mn><mo>%</mo> pattern
+    * CORRECT: <math><mo>$</mo><mn>12.50</mn></math> and <math><mn>85</mn><mo>%</mo></math>
+    * WRONG: <span class="currency">$</span><mn>12.50</mn> or raw text "$12.50" or "85%"
+    * Raw text currency/percent symbols are BANNED
+  - Do NOT create slots for currency. Never generate slotIds like "currency7" or "currency7_feedback".
 - **Table Rule (MANDATORY)**:
   - Tables must NEVER be created as HTML \`<table>\` elements in the body.
   - ALWAYS create a widget slot for every table (e.g., \`<slot name="table_widget_1" />\`) and add "table_widget_1" to the 'widgets' array.
 - **Response Declarations**:
   - The 'question.answers' from Perseus must be used to create the \`responseDeclarations\`.
   - **Numeric Answers Rule**: For text entry interactions, if the correct answer is a decimal that can be represented as a simple fraction (e.g., 0.5, 0.25), the 'correct' value in the response declaration should be a string representing that fraction (e.g., "1/2", "1/4"). This is to avoid forcing students to type decimals.
+  - **Cardinality Selection Rule**: 
+    * Use "single" for most choice interactions (select one answer)
+    * Use "multiple" for interactions allowing multiple selections
+    * Use "ordered" ONLY when the sequence of choices matters (e.g., ranking, arranging steps)
+    * For ordering/sequencing tasks, ALWAYS use cardinality "ordered" to enable proper sequence validation
 - **Metadata**: Include all required assessment metadata: 'identifier', 'title', 'responseDeclarations', and 'feedback'.
 - **Widget Generation**: When you generate the final widget objects in a later step, ensure all image references are properly resolved.
 
@@ -380,6 +420,14 @@ WRONG: \`\\(\\sqrt{121}=11\\)\` --> CORRECT: \`<math><msqrt><mn>121</mn></msqrt>
 WRONG: \`$\\begin{align}2\\times11&\\stackrel{?}=211\\\\22&\\neq21...\` --> CORRECT: Convert to proper MathML table structure
 WRONG: \`\\dfrac{Change in x}{Change in y}\` --> CORRECT: \`<mfrac><mtext>Change in x</mtext><mtext>Change in y</mtext></mfrac>\`
 WRONG: \`\\(\\dfrac{19}{27}=0.\\overline{703}\\)\` --> CORRECT: \`<math><mfrac><mn>19</mn><mn>27</mn></mfrac><mo>=</mo><mn>0.</mn><mover><mn>703</mn><mo>‾</mo></mover></math>\`
+
+**CRITICAL: REPEATING DECIMAL OVERLINES**
+- Repeating decimals MUST use <mover> with overline to show the repeating part
+- WRONG: <mn>0.333...</mn> or text "0.3 repeating"
+- CORRECT: <mn>0.</mn><mover><mn>3</mn><mo>‾</mo></mover>
+- WRONG: <mn>2.6666</mn> (truncated)
+- CORRECT: <mn>2.</mn><mover><mn>6</mn><mo>‾</mo></mover>
+- For multi-digit repeating: <mn>0.</mn><mover><mn>142857</mn><mo>‾</mo></mover>
 WRONG: \`$\\dfrac{7^{36}}{9^{24}}$\` --> CORRECT: \`<math><mfrac><msup><mn>7</mn><mn>36</mn></msup><msup><mn>9</mn><mn>24</mn></msup></mfrac></math>\`
 WRONG: \`\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
 WRONG: \`\\dfrac{x}{y}\` --> CORRECT: \`<mfrac><mi>x</mi><mi>y</mi></mfrac>\`
@@ -389,12 +437,12 @@ WRONG: \`\\blueD{text}\` --> CORRECT: Just use the text content without color co
 **LaTeX Dollar Sign Delimiters - BANNED:**
 WRONG: \`$3(9p-12)$\` --> CORRECT: \`<math><mn>3</mn><mo>(</mo><mn>9</mn><mi>p</mi><mo>-</mo><mn>12</mn><mo>)</mo></math>\`
 WRONG: \`$5, \\sqrt8, 33$\` --> CORRECT: \`<math><mn>5</mn></math>, <math><msqrt><mn>8</mn></msqrt></math>, <math><mn>33</mn></math>\`
-WRONG: \`paid $<math>\` (bare dollar) --> CORRECT: \`paid <span class="currency">$</span><math>\` (properly tagged currency)
-WRONG: \`<mo>$</mo><mn>12</mn>\` --> CORRECT: For currency use \`<span class="currency">$</span><math><mn>12</mn></math>\`
-ACCEPTABLE: \`<span class="currency">$</span><math xmlns="..."><mn>2.00</mn></math>\` (properly tagged currency symbol)
+WRONG: \`paid $<math>\` (bare dollar) --> CORRECT: \`paid <math><mo>$</mo><mn>12</mn></math>\` (currency in MathML)
+CORRECT: \`<math><mo>$</mo><mn>12</mn></math>\` (currency symbols go in MathML as operators)
+WRONG: \`<span class="currency">$</span><mn>12</mn>\` --> CORRECT: \`<math><mo>$</mo><mn>12</mn></math>\`
 WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
 WRONG: \`$$equation$$\` --> CORRECT: \`<mathdisplay="block">...</math>\`
-WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <span class="currency">$</span><mn>5</mn>\` (properly tagged currency)
+WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <math><mo>$</mo><mn>5</mn></math>\` (currency in MathML)
 
 **Deprecated <mfenced> - ALL BANNED:**
 WRONG: \`<mfenced open="|" close="|"><mrow><mo>-</mo><mn>6</mn></mrow></mfenced>\`
@@ -795,6 +843,60 @@ Never place equations, answer prompts, and input fields all in the same paragrap
 **9. Explanations, Strategies, Worked Solutions in Body - BANNED:**
 All explanatory material (strategy, step-by-step algebra, graphical intuition, and final conclusions) MUST be placed in the 'feedback' section, NOT in the 'body'. The 'body' is ONLY for the neutral problem statement and slot placement.
 
+**10. Answer Leakage in Widgets - BANNED:**
+Widgets MUST NEVER display, label, or visually indicate the correct answer. This is a critical violation that defeats the purpose of the assessment.
+
+**WRONG (Widget directly labels the answer):**
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "What is a name for the marked angle?" }] },
+    { "type": "blockSlot", "slotId": "angle_diagram" },
+    { "type": "blockSlot", "slotId": "choice_interaction" }
+  ],
+  "widgets": {
+    "angle_diagram": {
+      "type": "angleDiagram",
+      "angles": [{
+        "label": "EAF",  // ❌ BANNED: This labels the angle with the answer!
+        "vertices": ["E", "A", "F"]
+      }]
+    }
+  },
+  "interactions": {
+    "choice_interaction": {
+      "choices": [
+        { "content": [{ "type": "math", "mathml": "<mo>∠</mo><mrow><mi>E</mi><mi>A</mi><mi>F</mi></mrow>" }], "identifier": "C" }
+      ]
+    }
+  },
+  "responseDeclarations": [{ "correct": "C" }]
+}
+\`\`\`
+
+**CORRECT (Widget shows angle without revealing the answer):**
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "What is a name for the marked angle?" }] },
+    { "type": "blockSlot", "slotId": "angle_diagram" },
+    { "type": "blockSlot", "slotId": "choice_interaction" }
+  ],
+  "widgets": {
+    "angle_diagram": {
+      "type": "angleDiagram",
+      "angles": [{
+        "label": "",  // ✅ CORRECT: No label that gives away the answer
+        "vertices": ["E", "A", "F"],
+        "color": "#11accd"  // Visual marking without answer
+      }]
+    }
+  }
+}
+\`\`\`
+
+**Explanation:** The wrong example has the angle diagram widget literally labeling the angle as "EAF", which is the correct answer (∠EAF). This completely defeats the purpose of the question. The correct version visually marks the angle with color but doesn't label it with the answer.
+
 **WRONG (Massive explanations and complete worked solution in body):**
 \`\`\`json
 {
@@ -871,15 +973,18 @@ All explanatory material (strategy, step-by-step algebra, graphical intuition, a
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
-- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
+- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<math><mo>$</mo><mn>amount</mn></math>\` is allowed
 - ANY <mfenced> element
 - ANY raw text at the start of body content (must be wrapped in block-level elements)
 - ANY interactive element (numeric-input, expression, radio, etc.) in the \`widgets\` array instead of \`interactions\` (EXCEPT tables, which are ALWAYS widgets)
- - ANY hints or hint-prefixed lines (e.g., starting with "Hint:", "Remember:") included in the 'body'
- - ANY explicit statement or implication of the correct answer inside the 'body' (in text, MathML, or worked solution form)
- - ANY duplicate text appearing in both the 'body' and interaction 'prompt' fields (eliminate redundancy by using empty body when interaction has clear prompt)
- - ANY cramped layouts where equations, answer prompts, and input fields are all in one paragraph (use separate paragraphs for visual clarity)
- - ANY explanations, strategies, worked solutions, or teaching content in the 'body' (these belong ONLY in 'feedback' sections)
+- ANY hints or hint-prefixed lines (e.g., starting with "Hint:", "Remember:") included in the 'body'
+- ANY explicit statement or implication of the correct answer inside the 'body' (in text, MathML, or worked solution form)
+- ANY widget that labels, highlights, or visually indicates the correct answer (e.g., angle diagrams with answer labels)
+- ANY duplicate text appearing in both the 'body' and interaction 'prompt' fields (eliminate redundancy by using empty body when interaction has clear prompt)
+- ANY cramped layouts where equations, answer prompts, and input fields are all in one paragraph (use separate paragraphs for visual clarity)
+- ANY explanations, strategies, worked solutions, or teaching content in the 'body' (these belong ONLY in 'feedback' sections)
+
+**REMEMBER: Answers are ONLY allowed in feedback fields. HARD STOP. NO EXCEPTIONS.**
 Double-check your output before submitting. ZERO TOLERANCE for these violations.`
 
 	return { systemInstruction, userContent }
@@ -892,10 +997,6 @@ export function createWidgetMappingPrompt(perseusJson: string, assessmentBody: s
 	const systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content and the original Perseus JSON to map widget slots to the most appropriate widget type from a given list.
 
 **CRITICAL RULE**: You MUST choose a widget type from the list for every slot. Do not refuse or omit any slot. When no perfect match exists, select the closest semantically correct type that best represents the visual intent.
-
-**SPECIAL WIDGET GUIDANCE**:
-- Use "emojiImage" for generic image widgets that display simple objects (trucks, horses, cookies, etc.) that can be represented as emojis
-- The "emojiImage" widget is versatile and can replace many Perseus image widgets by using appropriate emoji representations
 
 Widget Type Options:
 ${widgetTypeKeys.join("\n")}`
@@ -911,6 +1012,9 @@ Assessment Item Body (as structured JSON):
 \`\`\`json
 ${assessmentBody}
 \`\`\`
+
+Available Widget Types and Descriptions:
+${buildWidgetTypeDescriptions()}
 
 Your response must be a JSON object with a single key "widget_mapping", mapping every slot name from the list below to its type.
 
@@ -957,9 +1061,17 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 
 3. **NO DEPRECATED MATHML** - NEVER use:
    - <mfenced> elements (use <mrow> with <mo> delimiters instead)
-\n4. **NO CDATA SECTIONS** - Never use \`<![CDATA[ ... ]]>\`. All content must be properly XML-encoded within elements.
-\n5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
-   - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.`
+
+4. **NO CDATA SECTIONS** - Never use \`<![CDATA[ ... ]]>\`. All content must be properly XML-encoded within elements.
+
+5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
+   - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.
+
+6. **NO ANSWER LEAKAGE IN INTERACTIONS** - CRITICAL: Interactions MUST NEVER reveal the correct answer:
+   - NEVER pre-select or highlight the correct choice
+   - NEVER order choices in a way that gives away the answer
+   - NEVER include visual or textual cues that indicate the correct response
+   - **ABSOLUTE RULE**: Answers are ONLY allowed in feedback fields. HARD STOP. NO EXCEPTIONS.`
 
 	const userContent = `Generate interaction content based on the following inputs. Use the provided image context to understand the visual components.
 
@@ -1006,7 +1118,7 @@ WRONG: \`\\blueD{text}\` --> CORRECT: Just use the text content without color co
 **LaTeX Dollar Signs BANNED:**
 WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
 WRONG: \`$$equation$$\` --> CORRECT: \`<mathdisplay="block">...</math>\`
-WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <span class="currency">$</span><mn>5</mn>\` (properly tagged currency)
+WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <math><mo>$</mo><mn>5</mn></math>\` (currency in MathML)
 
 **Deprecated MathML BANNED:**
 WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
@@ -1070,9 +1182,12 @@ CORRECT: \`feedback: [{ "type": "text", "content": "That is correct." }]\`
 - ANY LaTeX commands (backslash followed by letters)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
+- ANY answer content outside of feedback fields (no pre-selected choices, no answer indicators)
 - ANY block-level elements in prompt fields (prompts must contain only inline content)
 - ANY \`<p>\` tags in choice feedback (feedback must be inline text only)
 - ANY \`<p>\` tags in inline choice interaction content (must be inline text only)
+
+**REMEMBER: Answers are ONLY allowed in feedback fields. HARD STOP. NO EXCEPTIONS.**
 Double-check EVERY string in your output. ZERO TOLERANCE.
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if any content field is a plain string instead of the required structured JSON array.`
@@ -1116,9 +1231,18 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 
 3. **NO DEPRECATED MATHML** - NEVER use:
    - <mfenced> elements (use <mrow> with <mo> delimiters instead)
-\n4. **NO CDATA SECTIONS** - Never use \`<![CDATA[ ... ]]>\`. All content must be properly XML-encoded within elements.
-\n5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
-   - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.`
+
+4. **NO CDATA SECTIONS** - Never use \`<![CDATA[ ... ]]>\`. All content must be properly XML-encoded within elements.
+
+5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
+   - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.
+
+6. **NO ANSWER LEAKAGE IN WIDGETS** - CRITICAL: Widgets MUST NEVER reveal the correct answer:
+   - NEVER label diagrams with the answer (e.g., angle labeled "EAF" when asking for angle name)
+   - NEVER highlight or mark the correct value in visualizations
+   - NEVER include text, labels, or visual indicators that give away the answer
+   - The widget should present the problem visually WITHOUT showing the solution
+   - **ABSOLUTE RULE**: Answers are ONLY allowed in feedback fields. HARD STOP. NO EXCEPTIONS.`
 
 	const userContent = `Generate widget content based on the following inputs. Use the provided image context to understand the visual components.
 
@@ -1152,6 +1276,9 @@ This mapping tells you the required output type for each widget.
 ${JSON.stringify(widgetMapping, null, 2)}
 \`\`\`
 
+## Available Widget Types and Descriptions:
+${buildWidgetTypeDescriptions()}
+
 ## Instructions:
 - **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of widgets.
 - For each entry in the widget mapping, generate a fully-formed widget object of the specified type.
@@ -1177,7 +1304,7 @@ WRONG: \`\\blueD{text}\` --> CORRECT: Just use the text content without color co
 **LaTeX Dollar Signs BANNED:**
 WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
 WRONG: \`$$equation$$\` --> CORRECT: \`<mathdisplay="block">...</math>\`
-WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <span class="currency">$</span><mn>5</mn>\` (properly tagged currency)
+WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <math><mo>$</mo><mn>5</mn></math>\` (currency in MathML)
 
 **Deprecated MathML BANNED:**
 WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
@@ -1218,6 +1345,29 @@ CORRECT: \`feedback: [{ "type": "text", "content": "Incorrect. Try again." }]\`
 WRONG (e.g., in a dataTable): \`"label": "Value of $$x$$"\`
 CORRECT: \`"label": "Value of <math><mi>x</mi></math>"\`
 
+**Answer Leakage in Widgets BANNED:**
+WRONG (angle diagram with answer label):
+\`{
+  "angle_diagram": {
+    "type": "angleDiagram",
+    "angles": [{
+      "label": "EAF",  // ❌ BANNED: Labels the angle with the answer!
+      "vertices": ["E", "A", "F"]
+    }]
+  }
+}\`
+CORRECT (angle diagram without answer):
+\`{
+  "angle_diagram": {
+    "type": "angleDiagram", 
+    "angles": [{
+      "label": "",  // ✅ CORRECT: No label revealing the answer
+      "vertices": ["E", "A", "F"],
+      "color": "#11accd"  // Visual marking without giving away answer
+    }]
+  }
+}\`
+
 **Ensure all text content within widget properties is properly escaped and follows content rules.**
 
 **Critical Rules:**
@@ -1230,10 +1380,13 @@ CORRECT: \`"label": "Value of <math><mi>x</mi></math>"\`
 - ANY LaTeX commands (backslash followed by letters)
 - ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
 - ANY <mfenced> element
+- ANY widget that labels or visually indicates the correct answer (e.g., angle labeled "EAF" when answer is ∠EAF)
 - ANY block-level elements in prompt fields (prompts must contain only inline content)
 - ANY \`<p>\` tags in choice feedback (feedback must be inline text only)
 - ANY \`<p>\` tags in inline choice interaction content (must be inline text only)
-Double-check EVERY string in your output. ZERO TOLERANCE.`
+
+**REMEMBER: Answers are ONLY allowed in feedback fields. HARD STOP. NO EXCEPTIONS.**
+Double-check EVERY string in your output. ZERO TOLERANCE for these violations.`
 
 	return { systemInstruction, userContent }
 }

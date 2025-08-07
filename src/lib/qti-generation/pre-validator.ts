@@ -68,6 +68,21 @@ function validateInlineContent(items: InlineContent, _context: string, logger: l
 			checkNoLatex(item.content, logger)
 			// FIX: Restore missing Perseus artifact validation
 			checkNoPerseusArtifacts(item.content, logger)
+
+			// Strict currency/percent enforcement: raw text currency/percent are banned.
+			// Require MathML tokens instead (e.g., <mo>$</mo><mn>50</mn> and <mn>5</mn><mo>%</mo>).
+			const hasCurrencySpan = /<span\s+class\s*=\s*["']currency["']\s*>/i.test(item.content)
+			const hasDollarNumber = /\$(?=\s*\d)/.test(item.content)
+			const hasNumberPercent = /\d\s*%/.test(item.content)
+			if (hasCurrencySpan || hasDollarNumber || hasNumberPercent) {
+				logger.error("raw currency/percent in text content", {
+					context: _context,
+					text: item.content.substring(0, 120)
+				})
+				throw errors.new(
+					"currency and percent must be expressed in MathML, not raw text (use <mo>$</mo><mn>n</mn> and <mn>n</mn><mo>%</mo>)"
+				)
+			}
 		} else if (item.type === "math") {
 			// First validate that the MathML is well-formed XML
 			checkNoInvalidXmlChars(item.mathml, logger)
@@ -95,6 +110,15 @@ function validateInlineContent(items: InlineContent, _context: string, logger: l
 			if (/<mo[^>]*\ssuperscript\s*=/i.test(item.mathml)) {
 				logger.error("forbidden mo attribute detected", { context: _context, mathml: item.mathml.substring(0, 80) })
 				throw errors.new("mo elements cannot have superscript attribute; use msup instead")
+			}
+
+			// Strict repeating decimal enforcement: require <mover> over the repeating part
+			// Heuristic: if a decimal point is followed by a numeric token and no <mover> appears in the fragment,
+			// we reject to force explicit overline usage when repeating decimals are intended.
+			const hasDecimalWithoutMover = /<mo>\.<\/mo>\s*<mn>\d+<\/mn>/.test(item.mathml) && !/<mover>/i.test(item.mathml)
+			if (hasDecimalWithoutMover) {
+				logger.error("decimal without overline mover", { context: _context, mathml: item.mathml })
+				throw errors.new("repeating decimals must use <mover> with an overline for the repeating part")
 			}
 		}
 		// inlineSlot is just a reference, no validation needed
