@@ -53,7 +53,7 @@ describe("Widget Generators", () => {
 				height: 400,
 				solid: {
 					type: "rectangularPrism" as const,
-					length: 100,
+					depth: 100,
 					width: 80,
 					height: 60
 				},
@@ -84,7 +84,8 @@ describe("Widget Generators", () => {
 				viewOptions: {
 					projectionAngle: 30,
 					intersectionColor: "rgba(66, 133, 244, 0.7)",
-					showHiddenEdges: false
+					showHiddenEdges: false,
+					showLabels: false
 				}
 			}
 			const parsedProps = ThreeDIntersectionDiagramPropsSchema.parse(props)

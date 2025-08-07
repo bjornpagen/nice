@@ -240,7 +240,7 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 			}
 			// Top circle edges
 			for (let i = 0; i < segments; i++) {
-				edges.push({ startIdx: segments + i, endIdx: segments + ((i + 1) % segments) })
+				edges.push({ startIdx: segments + i, endIdx: segments + ((i + 1) % segments), isHidden: false })
 			}
 			// Vertical edges
 			for (let i = 0; i < segments; i++) {

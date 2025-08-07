@@ -113,11 +113,10 @@ describe("generatePolyhedronDiagram", () => {
 				width: 350,
 				height: 250,
 				shape: {
-					type: "rectangularFrame" as const,
-					outerLength: 4,
-					outerWidth: 5,
-					outerHeight: 3,
-					thickness: 0.5
+					type: "rectangularPrism" as const,
+					length: 4,
+					width: 5,
+					height: 3
 				},
 				labels: [
 					{ text: "1.5 m", target: "height" },
@@ -137,11 +136,10 @@ describe("generatePolyhedronDiagram", () => {
 				width: 300,
 				height: 200,
 				shape: {
-					type: "rectangularFrame" as const,
-					outerLength: 3,
-					outerWidth: 4,
-					outerHeight: 2.5,
-					thickness: 0.3
+					type: "rectangularPrism" as const,
+					length: 3,
+					width: 4,
+					height: 2.5
 				},
 				labels: null,
 				diagonals: null,
