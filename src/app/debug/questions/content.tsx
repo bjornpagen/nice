@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import type { QuestionDebugData } from "./actions"
-import { upsertQuestionAnalysis } from "./server-actions"
+import { upsertQuestionAnalysis, validateQuestionXml } from "./server-actions"
 
 interface ContentProps {
 	questions: QuestionDebugData[]
@@ -20,6 +20,7 @@ export function Content({ questions }: ContentProps) {
 	const [analysisNotes, setAnalysisNotes] = React.useState("")
 	const [localQuestions, setLocalQuestions] = React.useState(questions)
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
+	const [isValidating, setIsValidating] = React.useState(false)
 
 	// keyboard navigation for TAB/SHIFT+TAB
 	React.useEffect(() => {
@@ -31,14 +32,14 @@ export function Content({ questions }: ContentProps) {
 					const newIndex = Math.max(0, currentIndex - 1)
 					setCurrentIndex(newIndex)
 					if (newIndex !== currentIndex) {
-						toast.info(`moved to question ${newIndex + 1}`)
+						toast.info(`moved to question ${formatIndex(newIndex)}`)
 					}
 				} else {
 					// go to next
 					const newIndex = Math.min(localQuestions.length - 1, currentIndex + 1)
 					setCurrentIndex(newIndex)
 					if (newIndex !== currentIndex) {
-						toast.info(`moved to question ${newIndex + 1}`)
+						toast.info(`moved to question ${formatIndex(newIndex)}`)
 					}
 				}
 			}
@@ -52,7 +53,7 @@ export function Content({ questions }: ContentProps) {
 		const newIndex = Math.max(0, currentIndex - 1)
 		setCurrentIndex(newIndex)
 		if (newIndex !== currentIndex) {
-			toast.info(`moved to question ${newIndex + 1}`)
+			toast.info(`moved to question ${formatIndex(newIndex)}`)
 		}
 	}
 
@@ -60,7 +61,7 @@ export function Content({ questions }: ContentProps) {
 		const newIndex = Math.min(localQuestions.length - 1, currentIndex + 1)
 		setCurrentIndex(newIndex)
 		if (newIndex !== currentIndex) {
-			toast.info(`moved to question ${newIndex + 1}`)
+			toast.info(`moved to question ${formatIndex(newIndex)}`)
 		}
 	}
 
@@ -72,6 +73,8 @@ export function Content({ questions }: ContentProps) {
 	if (!currentQuestion) {
 		return <div>question not found</div>
 	}
+
+	const formatIndex = (index: number) => `[${String(index).padStart(4, "0")}]`
 
 	const copyToClipboard = async (text: string) => {
 		await navigator.clipboard.writeText(text)
@@ -118,6 +121,33 @@ export function Content({ questions }: ContentProps) {
 		toast.success("question marked as successful")
 	}
 
+	const handleValidateXml = async () => {
+		if (!currentQuestion.xml) {
+			toast.error("no xml to validate")
+			return
+		}
+
+		setIsValidating(true)
+		toast.info("validating xml...")
+
+		const result = await errors.try(validateQuestionXml(currentQuestion.xml))
+
+		setIsValidating(false)
+
+		if (result.error) {
+			toast.error("validation request failed")
+			return
+		}
+
+		const validation = result.data
+		if (validation.success) {
+			toast.success("xml validation passed ✓")
+		} else {
+			const errorCount = validation.validationErrors.length
+			toast.error(`xml validation failed (${errorCount} errors)`)
+		}
+	}
+
 	const getQuestionBackgroundColor = (question: QuestionDebugData) => {
 		if (question.analysisNotes === null) return "transparent"
 		return question.analysisNotes === "" ? "#e8f5e8" : "#ffeaea"
@@ -140,7 +170,7 @@ export function Content({ questions }: ContentProps) {
 							}}
 							onClick={() => setCurrentIndex(index)}
 						>
-							{question.id}
+							<strong style={{ fontFamily: "monospace" }}>[{String(index).padStart(4, "0")}]</strong> {question.id}
 						</li>
 					))}
 				</ul>
@@ -199,6 +229,12 @@ export function Content({ questions }: ContentProps) {
 											placeholder="enter analysis notes (leave empty to mark as successful)"
 											value={analysisNotes}
 											onChange={(e) => setAnalysisNotes(e.target.value)}
+											onKeyDown={(e) => {
+												if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+													e.preventDefault()
+													handleSubmitAnalysis()
+												}
+											}}
 											rows={6}
 										/>
 									</div>
@@ -212,6 +248,15 @@ export function Content({ questions }: ContentProps) {
 									</div>
 								</DialogContent>
 							</Dialog>
+							<Button
+								variant="secondary"
+								onClick={handleValidateXml}
+								disabled={isValidating || !currentQuestion.xml}
+								className="hover:cursor-pointer"
+								style={{ marginLeft: "10px" }}
+							>
+								{isValidating ? "validating..." : "validate xml"}
+							</Button>
 							<Button
 								variant="ghost"
 								onClick={goToPrevious}
@@ -288,11 +333,27 @@ export function Content({ questions }: ContentProps) {
 
 					{/* Perseus iframe */}
 					<div style={{ flex: 1 }}>
-						<h3>perseus item renderer</h3>
+						<div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+							<h3>perseus item renderer</h3>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() =>
+									window.open(
+										"https://khan.github.io/perseus/?path=/story/renderers-server-item-renderer--interactive",
+										"_blank"
+									)
+								}
+							>
+								open in new tab
+							</Button>
+						</div>
 						<iframe
 							src="https://khan.github.io/perseus/?path=/story/renderers-server-item-renderer--interactive"
 							style={{ width: "100%", height: "70vh", border: "1px solid #ccc" }}
 							title="Perseus Item Renderer"
+							onLoad={() => toast.info("perseus iframe loaded")}
+							onError={() => toast.error("perseus iframe failed to load")}
 						/>
 					</div>
 				</div>
