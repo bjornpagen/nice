@@ -49,8 +49,8 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			shuffle: z
 				.boolean()
 				.nullable()
-				.transform((val) => val ?? true)
-				.describe("Whether to randomize the order of choices. Defaults to true for fairness."),
+				.transform(() => true)
+				.describe("Whether to randomize the order of choices. Always true to ensure fairness."),
 			minChoices: z.number().int().min(0).describe("The minimum number of choices the user must select."),
 			maxChoices: z.number().int().min(1).describe("The maximum number of choices the user can select.")
 		})
@@ -65,8 +65,8 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			shuffle: z
 				.boolean()
 				.nullable()
-				.transform((val) => val ?? false)
-				.describe("Whether to randomize dropdown options. Defaults to false for consistency.")
+				.transform(() => true)
+				.describe("Whether to randomize dropdown options. Always true to ensure fairness.")
 		})
 		.strict()
 		.describe("An inline dropdown menu embedded within text, ideal for fill-in-the-blank questions.")
@@ -103,8 +103,8 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			shuffle: z
 				.boolean()
 				.nullable()
-				.transform((val) => val ?? true)
-				.describe("Whether to randomize initial order. Defaults to true to ensure varied starting points."),
+				.transform(() => true)
+				.describe("Whether to randomize initial order. Always true to ensure varied starting points."),
 			orientation: z
 				.enum(["horizontal", "vertical"])
 				.nullable()
