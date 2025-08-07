@@ -211,18 +211,50 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			let startAngle = Math.atan2(p1.y - vertex.y, p1.x - vertex.x)
 			let endAngle = Math.atan2(p2.y - vertex.y, p2.x - vertex.x)
 
-			// Ensure we take the smallest angle for the label bisector
-			if (endAngle < startAngle) endAngle += 2 * Math.PI
-			if (endAngle - startAngle > Math.PI) startAngle += 2 * Math.PI
+			// Calculate the angle difference and ensure we always take the interior/smaller angle
+			let angleDiff = endAngle - startAngle
 
-			const midAngle = (startAngle + endAngle) / 2
+			// Normalize to [-π, π] range
+			while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
+			while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI
 
-			// Calculate label offset based on label length and arc radius
-			// Longer labels need more space to avoid overlapping with the arc
-			const baseOffset = angle.isRightAngle ? 25 : angle.radius + 8
-			// Only add extra spacing for labels longer than 4 characters
-			const extraSpacing = angle.label.length > 4 ? (angle.label.length - 4) * 2 : 0
-			const labelRadius = baseOffset + extraSpacing
+			// Always use the smaller angle (interior angle)
+			if (Math.abs(angleDiff) > Math.PI) {
+				angleDiff = angleDiff > 0 ? angleDiff - 2 * Math.PI : angleDiff + 2 * Math.PI
+			}
+
+			const angleSize = Math.abs(angleDiff)
+
+			// Calculate the bisector angle (always points into the interior of the angle)
+			let midAngle: number
+			if (angleDiff >= 0) {
+				// Counter-clockwise from startAngle to endAngle
+				midAngle = startAngle + angleDiff / 2
+			} else {
+				// Clockwise from startAngle to endAngle
+				midAngle = startAngle + angleDiff / 2
+			}
+
+			// Smart label positioning based on angle size and label length
+			let labelRadius: number
+
+			if (angle.isRightAngle) {
+				labelRadius = 25
+			} else {
+				// For small angles (< 30°) or long labels, place outside
+				const isSmallAngle = angleSize < Math.PI / 6 // 30 degrees
+				const isLongLabel = angle.label.length > 3
+
+				if (isSmallAngle || isLongLabel) {
+					// Place label outside the arc for better readability
+					const baseOffset = angle.radius + 15
+					const extraSpacing = angle.label.length > 4 ? (angle.label.length - 4) * 3 : 0
+					labelRadius = baseOffset + extraSpacing
+				} else {
+					// Place label closer to the arc for normal-sized angles
+					labelRadius = angle.radius + 8
+				}
+			}
 
 			const labelX = vertex.x + labelRadius * Math.cos(midAngle)
 			const labelY = vertex.y + labelRadius * Math.sin(midAngle)
@@ -238,10 +270,54 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			svg += `<circle cx="${point.x}" cy="${point.y}" r="4" fill="black"/>`
 		}
 		if (point.label) {
-			// Basic offset logic, can be improved with more dynamic placement
-			const textX = point.x + 5
-			const textY = point.y - 5
-			svg += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
+			// Smart label positioning: avoid rays emanating from this point
+			const raysFromPoint = rays.filter((ray) => ray.from === point.id)
+
+			if (raysFromPoint.length === 0) {
+				// No rays from this point, use simple offset
+				const textX = point.x + 5
+				const textY = point.y - 5
+				svg += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
+			} else {
+				// Calculate angles of all rays from this point
+				const rayAngles = raysFromPoint
+					.map((ray) => {
+						const toPoint = pointMap.get(ray.to)
+						if (!toPoint) return 0
+						return Math.atan2(toPoint.y - point.y, toPoint.x - point.x)
+					})
+					.sort((a, b) => a - b)
+
+				// Find the largest gap between rays to place the label
+				let maxGap = 0
+				let bestAngle = 0
+
+				for (let i = 0; i < rayAngles.length; i++) {
+					const angle1 = rayAngles[i] || 0
+					const angle2 = rayAngles[(i + 1) % rayAngles.length] || 0
+
+					let gap = angle2 - angle1
+					if (gap < 0) gap += 2 * Math.PI
+					if (i === rayAngles.length - 1) {
+						gap = (rayAngles[0] || 0) + 2 * Math.PI - angle1
+					}
+
+					if (gap > maxGap) {
+						maxGap = gap
+						bestAngle = angle1 + gap / 2
+					}
+				}
+
+				// If no good gap found, default to top-left
+				if (maxGap < Math.PI / 6) {
+					bestAngle = (-3 * Math.PI) / 4 // Top-left diagonal
+				}
+
+				const labelDistance = 15
+				const textX = point.x + labelDistance * Math.cos(bestAngle)
+				const textY = point.y + labelDistance * Math.sin(bestAngle)
+				svg += `<text x="${textX}" y="${textY}" fill="black" font-size="16" font-weight="bold">${point.label}</text>`
+			}
 		}
 	}
 

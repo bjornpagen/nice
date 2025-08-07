@@ -776,4 +776,47 @@ describe("New Features", () => {
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
+
+	test("should render QTI complementary angles problem - exact recreation", () => {
+		const props = {
+			type: "angleDiagram" as const,
+			width: 168,
+			height: 198,
+			points: [
+				{ id: "P", x: 59.042, y: 25.237, label: "P", shape: null },
+				{ id: "Q", x: 18, y: 138, label: "Q", shape: null },
+				{ id: "R", x: 117.485, y: 70.897, label: "R", shape: null },
+				{ id: "S", x: 130.763, y: 179.042, label: "S", shape: null }
+			],
+			rays: [
+				{ from: "Q", to: "P" },
+				{ from: "Q", to: "R" },
+				{ from: "Q", to: "S" }
+			],
+			angles: [
+				{
+					vertices: ["P", "Q", "S"],
+					label: null,
+					color: "#000000",
+					radius: 30,
+					isRightAngle: true
+				},
+				{
+					vertices: ["P", "Q", "R"],
+					label: "36°",
+					color: "#1f77b4",
+					radius: 16,
+					isRightAngle: false
+				},
+				{
+					vertices: ["R", "Q", "S"],
+					label: "x",
+					color: "#d62728",
+					radius: 24,
+					isRightAngle: false
+				}
+			]
+		}
+		expect(generateDiagram(props)).toMatchSnapshot()
+	})
 })
