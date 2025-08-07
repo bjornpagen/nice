@@ -96,20 +96,21 @@ export function createAssessmentShellPrompt(
 	systemInstruction: string
 	userContent: string
 } {
-	const systemInstruction = `You are an expert in educational content conversion. Your task is to analyze a Perseus JSON object and create a structured assessment shell.
+	const systemInstruction = `You are an expert in educational content conversion. Your task is to analyze a Perseus JSON object and create a structured assessment shell in JSON format. Your primary goal is to accurately represent all content using a strict, nested object model.
+
+**CRITICAL: STRUCTURED CONTENT MODEL**
+Your entire output for any rich text field (like 'body' or 'feedback') MUST be a JSON array of block-level items.
+- **Block Items**: Can be a paragraph \`{ "type": "paragraph", "content": [...] }\` or a slot \`{ "type": "blockSlot", "slotId": "..." }\`.
+- **Paragraph Content**: The 'content' array inside a paragraph consists of inline items.
+- **Inline Items**: Can be text \`{ "type": "text", "content": "..." }\`, math \`{ "type": "math", "mathml": "..." }\`, or an inline slot \`{ "type": "inlineSlot", "slotId": "..." }\`.
+
+This structure is non-negotiable. You are FORBIDDEN from outputting raw HTML strings for content fields.
 
 The shell should:
 1. Convert Perseus content into a structured 'body' field as a JSON array of block-level items.
 2. List all widget and interaction identifiers as arrays of strings in the 'widgets' and 'interactions' properties.
 3. Faithfully translate all mathematical content from LaTeX to MathML within the structured content.
 4. NEVER generate <img> or <svg> tags in the body - all visual elements must be widget slots.
-
-**CRITICAL: STRUCTURED CONTENT MODEL**
-- **'body' Field**: Create a 'body' field containing the main content as a structured JSON array of block-level items.
-  - Paragraphs must be { "type": "paragraph", "content": [...] }.
-  - The 'content' of a paragraph is an array of inline items.
-  - Inline items can be { "type": "text", "content": "..." }, { "type": "math", "mathml": "..." }, or { "type": "inlineSlot", "slotId": "..." }.
-  - Placeholders for block-level widgets or interactions must be { "type": "blockSlot", "slotId": "..." }.
 
 **Example of a structured body:**
 \`\`\`json
@@ -133,18 +134,18 @@ CRITICAL CLASSIFICATION RULE:
 Perseus misleadingly calls both types "widgets" - you MUST reclassify based on whether user input is required, EXCEPT tables which are ALWAYS widgets.
 
 ABSOLUTE REQUIREMENT: SLOT CONSISTENCY.
-This is the most critical rule. Any \`<slot name="..."/>\` tag you include in the 'body' string MUST have its name listed in either the 'widgets' array or the 'interactions' array. Conversely, every name in the 'widgets' and 'interactions' arrays MUST correspond to a \`<slot>\` tag in the 'body'. There must be a perfect, one-to-one mapping.
+This is the most critical rule. Any slot you include in the 'body' MUST have its slotId listed in either the 'widgets' array or the 'interactions' array. Conversely, every name in the 'widgets' and 'interactions' arrays MUST correspond to a slot in the 'body'. There must be a perfect, one-to-one mapping.
 
 CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, MathML, and slot placeholders.
 
 **CRITICAL: NO EXPLANATION WIDGETS.**
-NEVER create a widget for explanatory text. Explanations, definitions, or hints found in the Perseus JSON (especially those of type 'explanation' or 'definition') must be embedded directly within the 'body' content using standard HTML like \`<p>\` or \`<blockquote>\`. The 'explanation' and 'definition' widget types are BANNED.
+NEVER create a widget for explanatory text. Explanations, definitions, or hints found in the Perseus JSON (especially those of type 'explanation' or 'definition') must be embedded directly within the 'body' content as paragraph blocks. The 'explanation' and 'definition' widget types are BANNED.
 
 ⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
 The following are CATEGORICALLY FORBIDDEN in the output. ANY violation will result in IMMEDIATE REJECTION:
 
 1. **LATEX COMMANDS ARE BANNED** - Under NO circumstances may ANY LaTeX command appear in the output:
-   - NO backslash commands: \\sqrt, \\dfrac, \\frac, \\sum, \\int, etc.
+   - NO backslash commands: \\sqrt, \\dfrac, \\sum, \\int, etc.
    - NO LaTeX delimiters: \\(, \\), \\[, \\], \\begin, \\end
    - NO color commands: \\blueD, \\maroonD, \\redE, \\greenC, etc.
    - NO text commands: \\text, \\textbf, \\textit, etc.
@@ -221,31 +222,110 @@ ${perseusJson}
 
 Return ONLY the JSON object for the assessment shell.
 
-## NEGATIVE EXAMPLES FROM REAL ERRORS (AUTOMATIC REJECTION)
+## NEGATIVE EXAMPLES FROM REAL ERRORS (DO NOT OUTPUT THESE)
 
-**1. LaTeX Commands - ALL BANNED:**
-WRONG: \`<mi>\\\\sqrt{a}</mi>\` --> CORRECT: \`<msqrt><mi>a</mi></msqrt>\`
-WRONG: \`\\\\(\\\\dfrac{3}{10}\\\\)\` --> CORRECT: \`<math><mfrac><mn>3</mn><mn>10</mn></mfrac></math>\`
-WRONG: \`\\\\(n = \\\\dfrac{96}{5}\\\\)\` --> CORRECT: \`<math><mi>n</mi><mo>=</mo><mfrac><mn>96</mn><mn>5</mn></mfrac></math>\`
-WRONG: \`\\\\blueD{x=2} and \\\\maroonD{y=4}\` --> CORRECT: \`<mi>x</mi><mo>=</mo><mn>2</mn> and <mi>y</mi><mo>=</mo><mn>4</mn>\`
-WRONG: \`\\\\(\\\\tfrac{4}{3}\\\\)\` --> CORRECT: \`<math><mfrac><mn>4</mn><mn>3</mn></mfrac></math>\`
-WRONG: \`$\\\\green{\\\\text{Step }1}$\` --> CORRECT: \`Step 1\`
-WRONG: \`$3^4 \\\\;\\\\rightarrow\\\\; 3\\\\times3\\\\times3\\\\times3$\` --> CORRECT: \`<math><msup><mn>3</mn><mn>4</mn></msup><mo>→</mo><mn>3</mn><mo>×</mo><mn>3</mn><mo>×</mo><mn>3</mn><mo>×</mo><mn>3</mn></math>\`
-WRONG: \`\\\\(\\\\sqrt{121}=11\\\\)\` --> CORRECT: \`<math><msqrt><mn>121</mn></msqrt><mo>=</mo><mn>11</mn></math>\`
-WRONG: \`$\\\\begin{align}2\\\\times11&\\\\stackrel{?}=211\\\\\\\\22&\\
-eq21...\` --> CORRECT: Convert to proper MathML table structure
-WRONG: \`\\\\dfrac{Change in x}{Change in y}\` --> CORRECT: \`<mfrac><mtext>Change in x</mtext><mtext>Change in y</mtext></mfrac>\`
-WRONG: \`\\\\(\\\\dfrac{19}{27}=0.\\\\overline{703}\\\\)\` --> CORRECT: \`<math><mfrac><mn>19</mn><mn>27</mn></mfrac><mo>=</mo><mn>0.</mn><mover><mn>703</mn><mo>‾</mo></mover></math>\`
-WRONG: \`$\\\\dfrac{7^{36}}{9^{24}}$\` --> CORRECT: \`<math><mfrac><msup><mn>7</mn><mn>36</mn></msup><msup><mn>9</mn><mn>24</mn></msup></mfrac></math>\`
+**1. Invalid Content Structure:**
 
-**2. LaTeX Dollar Sign Delimiters - BANNED:**
+**WRONG (Raw string in 'body'):**
+\`\`\`json
+"body": "<p>Some text</p>"
+\`\`\`
+**CORRECT (Structured content):**
+\`\`\`json
+"body": [{ "type": "paragraph", "content": [{ "type": "text", "content": "Some text" }] }]
+\`\`\`
+
+**WRONG (Text not wrapped in a paragraph at the block level):**
+\`\`\`json
+"body": [{ "type": "text", "content": "This is invalid." }]
+\`\`\`
+**CORRECT (Text is inside a paragraph's content array):**
+\`\`\`json
+"body": [{ "type": "paragraph", "content": [{ "type": "text", "content": "This is valid." }] }]
+\`\`\`
+
+**2. Incorrect Slot Placement:**
+
+**WRONG (Inline slot used at the block level):**
+\`\`\`json
+"body": [
+  { "type": "paragraph", "content": [{ "type": "text", "content": "Enter your answer: " }] },
+  { "type": "inlineSlot", "slotId": "text_entry_1" }
+]
+\`\`\`
+**CORRECT (Inline slot is INSIDE a paragraph's content):**
+\`\`\`json
+"body": [
+  {
+    "type": "paragraph",
+    "content": [
+      { "type": "text", "content": "Enter your answer: " },
+      { "type": "inlineSlot", "slotId": "text_entry_1" }
+    ]
+  }
+]
+\`\`\`
+
+**WRONG (Block slot used inside a paragraph):**
+\`\`\`json
+"body": [
+  {
+    "type": "paragraph",
+    "content": [
+      { "type": "text", "content": "Here is a graph: " },
+      { "type": "blockSlot", "slotId": "graph_widget_1" }
+    ]
+  }
+]
+\`\`\`
+**CORRECT (Block slot is a top-level item in the 'body' array):**
+\`\`\`json
+"body": [
+  { "type": "paragraph", "content": [{ "type": "text", "content": "Here is a graph: " }] },
+  { "type": "blockSlot", "slotId": "graph_widget_1" }
+]
+\`\`\`
+
+**3. Banned Content (LaTeX, Deprecated MathML):**
+
+**WRONG (LaTeX in text content):**
+\`\`\`json
+{ "type": "text", "content": "The value is $$\\sqrt{x}$$" }
+\`\`\`
+**CORRECT (MathML in a math object):**
+\`\`\`json
+{ "type": "math", "mathml": "<msqrt><mi>x</mi></msqrt>" }
+\`\`\`
+
+**LaTeX Commands - ALL BANNED:**
+WRONG: \`<mi>\\sqrt{a}</mi>\` --> CORRECT: \`<msqrt><mi>a</mi></msqrt>\`
+WRONG: \`\\(\\dfrac{3}{10}\\)\` --> CORRECT: \`<math><mfrac><mn>3</mn><mn>10</mn></mfrac></math>\`
+WRONG: \`\\(n = \\dfrac{96}{5}\\)\` --> CORRECT: \`<math><mi>n</mi><mo>=</mo><mfrac><mn>96</mn><mn>5</mn></mfrac></math>\`
+WRONG: \`\\blueD{x=2} and \\maroonD{y=4}\` --> CORRECT: \`<mi>x</mi><mo>=</mo><mn>2</mn> and <mi>y</mi><mo>=</mo><mn>4</mn>\`
+WRONG: \`\\(\\tfrac{4}{3}\\)\` --> CORRECT: \`<math><mfrac><mn>4</mn><mn>3</mn></mfrac></math>\`
+WRONG: \`$\\green{\\text{Step }1}$\` --> CORRECT: \`Step 1\`
+WRONG: \`$3^4 \\;\\rightarrow\\; 3\\times3\\times3\\times3$\` --> CORRECT: \`<math><msup><mn>3</mn><mn>4</mn></msup><mo>→</mo><mn>3</mn><mo>×</mo><mn>3</mn><mo>×</mo><mn>3</mn><mo>×</mo><mn>3</mn></math>\`
+WRONG: \`\\(\\sqrt{121}=11\\)\` --> CORRECT: \`<math><msqrt><mn>121</mn></msqrt><mo>=</mo><mn>11</mn></math>\`
+WRONG: \`$\\begin{align}2\\times11&\\stackrel{?}=211\\\\22&\\neq21...\` --> CORRECT: Convert to proper MathML table structure
+WRONG: \`\\dfrac{Change in x}{Change in y}\` --> CORRECT: \`<mfrac><mtext>Change in x</mtext><mtext>Change in y</mtext></mfrac>\`
+WRONG: \`\\(\\dfrac{19}{27}=0.\\overline{703}\\)\` --> CORRECT: \`<math><mfrac><mn>19</mn><mn>27</mn></mfrac><mo>=</mo><mn>0.</mn><mover><mn>703</mn><mo>‾</mo></mover></math>\`
+WRONG: \`$\\dfrac{7^{36}}{9^{24}}$\` --> CORRECT: \`<math><mfrac><msup><mn>7</mn><mn>36</mn></msup><msup><mn>9</mn><mn>24</mn></msup></mfrac></math>\`
+WRONG: \`\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
+WRONG: \`\\dfrac{x}{y}\` --> CORRECT: \`<mfrac><mi>x</mi><mi>y</mi></mfrac>\`
+WRONG: \`\\(\` or \`\\)\` --> CORRECT: Remove entirely, use proper MathML tags
+WRONG: \`\\blueD{text}\` --> CORRECT: Just use the text content without color commands
+
+**LaTeX Dollar Sign Delimiters - BANNED:**
 WRONG: \`$3(9p-12)$\` --> CORRECT: \`<math><mn>3</mn><mo>(</mo><mn>9</mn><mi>p</mi><mo>-</mo><mn>12</mn><mo>)</mo></math>\`
-WRONG: \`$5, \\\\sqrt8, 33$\` --> CORRECT: \`<math><mn>5</mn></math>, <math><msqrt><mn>8</mn></msqrt></math>, <math><mn>33</mn></math>\`
+WRONG: \`$5, \\sqrt8, 33$\` --> CORRECT: \`<math><mn>5</mn></math>, <math><msqrt><mn>8</mn></msqrt></math>, <math><mn>33</mn></math>\`
 WRONG: \`paid $<math>\` (bare dollar) --> CORRECT: \`paid <span class="currency">$</span><math>\` (properly tagged currency)
 WRONG: \`<mo>$</mo><mn>12</mn>\` --> CORRECT: For currency use \`<span class="currency">$</span><math><mn>12</mn></math>\`
 ACCEPTABLE: \`<span class="currency">$</span><math xmlns="..."><mn>2.00</mn></math>\` (properly tagged currency symbol)
+WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
+WRONG: \`$$equation$$\` --> CORRECT: \`<mathdisplay="block">...</math>\`
+WRONG: \`costs $5\` (bare dollar) --> CORRECT: \`costs <span class="currency">$</span><mn>5</mn>\` (properly tagged currency)
 
-**3. Deprecated <mfenced> - ALL BANNED:**
+**Deprecated <mfenced> - ALL BANNED:**
 WRONG: \`<mfenced open="|" close="|"><mrow><mo>-</mo><mn>6</mn></mrow></mfenced>\`
 CORRECT: \`<mrow><mo>|</mo><mrow><mo>-</mo><mn>6</mn></mrow><mo>|</mo></mrow>\`
 
@@ -263,28 +343,10 @@ CORRECT: \`<mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>)</mo></mrow>\`
 
 **General Rule for mfenced:** Replace \`<mfenced open="X" close="Y">content</mfenced>\` with \`<mrow><mo>X</mo>content<mo>Y</mo></mrow>\`
 
-**4. Structured Content Model Requirements:**
+WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
+WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><mo>(</mo>content<mo>)</mo></mrow>\`
 
-**Body Content Must Use Structured JSON Arrays:**
-WRONG: \`body: '<p>This table gives select values...</p><slot name="h_table" />'\` (HTML string)
-CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "This table gives select values..." }] }, { "type": "blockSlot", "slotId": "h_table" }]\`
-
-WRONG: \`body: 'The lengths of 4 pencils were measured...'\` (raw text)
-CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "The lengths of 4 pencils were measured. The lengths are " }, { "type": "math", "mathml": "<mn>11</mn>" }, { "type": "text", "content": " cm..." }] }]\`
-
-**CRITICAL: Inline Interaction Placement:**
-WRONG: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "Evaluate." }] }, { "type": "blockSlot", "slotId": "text_entry" }]\` (text entry as block)
-CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "Evaluate. " }, { "type": "math", "mathml": "..." }, { "type": "text", "content": " " }, { "type": "inlineSlot", "slotId": "text_entry" }] }]\`
-
-WRONG: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "The answer is" }] }, { "type": "inlineSlot", "slotId": "text_entry" }]\` (inline slot outside paragraph)
-CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "The answer is " }, { "type": "inlineSlot", "slotId": "text_entry" }] }]\`
-
-**Inline vs Block Slots Rule:** 
-- Text entry and inline choice interactions use \`{ "type": "inlineSlot", "slotId": "..." }\` INSIDE paragraph content arrays
-- Choice and order interactions use \`{ "type": "blockSlot", "slotId": "..." }\` in the main body array
-- Widgets always use \`{ "type": "blockSlot", "slotId": "..." }\` in the main body array
-
-**5. Explanation Widgets - BANNED:**
+**4. Explanation Widgets - BANNED:**
 Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turned into slots.
 
 **Perseus Input Snippet:**
@@ -324,7 +386,7 @@ Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turne
 }
 \`\`\`
 
-**6. Widget vs. Interaction Misclassification - BANNED:**
+**5. Widget vs. Interaction Misclassification - BANNED:**
 Perseus often calls interactive elements "widgets". You MUST correctly reclassify them as **interactions**.
 
 **CRITICAL DISTINCTION:**
@@ -352,7 +414,7 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 **WRONG Shell Output (Automatic Rejection):**
 \`\`\`json
 {
-  "body": "<p>Solve for x. <slot name=\"numeric-input-1\" /></p>",
+  "body": [{ "type": "paragraph", "content": [{ "type": "text", "content": "Solve for x. " }, { "type": "blockSlot", "slotId": "numeric-input-1" }] }],
   "widgets": ["numeric-input-1"],
   "interactions": []
 }
@@ -361,7 +423,7 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 **CORRECT Shell Output:**
 \`\`\`json
 {
-  "body": "<p>Solve for x. <slot name=\"text_entry_interaction_1\" /></p>",
+  "body": [{ "type": "paragraph", "content": [{ "type": "text", "content": "Solve for x. " }, { "type": "inlineSlot", "slotId": "text_entry_interaction_1" }] }],
   "widgets": [],
   "interactions": ["text_entry_interaction_1"]
 }
@@ -380,7 +442,7 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 **WRONG Shell Output (Automatic Rejection):**
 \`\`\`json
 {
-  "body": "<p>Write an equation. <slot name=\"expression_1\" /></p>",
+  "body": [{ "type": "paragraph", "content": [{ "type": "text", "content": "Write an equation. " }, { "type": "blockSlot", "slotId": "expression_1" }] }],
   "widgets": ["expression_1"],
   "interactions": []
 }
@@ -388,7 +450,7 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 **CORRECT Shell Output:**
 \`\`\`json
 {
-  "body": "<p>Write an equation. <slot name=\"text_entry_interaction_1\" /></p>",
+  "body": [{ "type": "paragraph", "content": [{ "type": "text", "content": "Write an equation. " }, { "type": "inlineSlot", "slotId": "text_entry_interaction_1" }] }],
   "widgets": [],
   "interactions": ["text_entry_interaction_1"]
 }
@@ -406,7 +468,7 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 **WRONG Shell Output (Automatic Rejection):**
 \`\`\`json
 {
-  "body": "<p>Choose the best answer. <slot name=\"radio_1\" /></p>",
+  "body": [{ "type": "paragraph", "content": [{ "type": "text", "content": "Choose the best answer." }] }, { "type": "blockSlot", "slotId": "radio_1" }],
   "widgets": ["radio_1"],
   "interactions": []
 }
@@ -414,7 +476,7 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 **CORRECT Shell Output:**
 \`\`\`json
 {
-  "body": "<p>Choose the best answer. <slot name=\"choice_interaction_1\" /></p>",
+  "body": [{ "type": "paragraph", "content": [{ "type": "text", "content": "Choose the best answer." }] }, { "type": "blockSlot", "slotId": "choice_interaction_1" }],
   "widgets": [],
   "interactions": ["choice_interaction_1"]
 }
@@ -450,12 +512,35 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 **CORRECT Shell Output (Table is ALWAYS a widget):**
 \`\`\`json
 {
-  "body": "<p>Fill in the table.</p><slot name=\"table_1\" />",
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Fill in the table." }] },
+    { "type": "blockSlot", "slotId": "table_1" }
+  ],
   "widgets": ["table_1"],
   "interactions": []
 }
 \`\`\`
 **Explanation:** Tables are ALWAYS widgets, even when they contain input fields. The table widget handles its own internal input mechanism.
+
+**Structured Content Model Requirements:**
+**Body Content Must Use Structured JSON Arrays:**
+WRONG: \`body: '<p>This table gives select values...</p><slot name="h_table" />'\` (HTML string)
+CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "This table gives select values..." }] }, { "type": "blockSlot", "slotId": "h_table" }]\`
+
+WRONG: \`body: 'The lengths of 4 pencils were measured...'\` (raw text)
+CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "The lengths of 4 pencils were measured. The lengths are " }, { "type": "math", "mathml": "<mn>11</mn>" }, { "type": "text", "content": " cm..." }] }]\`
+
+**CRITICAL: Inline Interaction Placement:**
+WRONG: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "Evaluate." }] }, { "type": "blockSlot", "slotId": "text_entry" }]\` (text entry as block)
+CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "Evaluate. " }, { "type": "math", "mathml": "..." }, { "type": "text", "content": " " }, { "type": "inlineSlot", "slotId": "text_entry" }] }]\`
+
+WRONG: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "The answer is" }] }, { "type": "inlineSlot", "slotId": "text_entry" }]\` (inline slot outside paragraph)
+CORRECT: \`body: [{ "type": "paragraph", "content": [{ "type": "text", "content": "The answer is " }, { "type": "inlineSlot", "slotId": "text_entry" }] }]\`
+
+**Inline vs Block Slots Rule:**
+- Text entry and inline choice interactions use \`{ "type": "inlineSlot", "slotId": "..." }\` INSIDE paragraph content arrays
+- Choice and order interactions use \`{ "type": "blockSlot", "slotId": "..." }\` in the main body array
+- Widgets always use \`{ "type": "blockSlot", "slotId": "..." }\` in the main body array
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
@@ -563,7 +648,7 @@ ${JSON.stringify(assessmentShell, null, 2)}
 
 ## Instructions:
 - **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual context of interactions.
-- For each interaction slot name in the shell's 'interactions' array, generate a complete QTI interaction object.
+- For each interaction slot name name in the shell's 'interactions' array, generate a complete QTI interaction object.
 - Extract all relevant data from the Perseus JSON to populate the interaction properties (prompt, choices, etc.).
 - Ensure all required properties for each interaction type are included.
 - **CRITICAL**: Preserve all MathML content exactly as it appears in the assessment shell body.
@@ -578,10 +663,10 @@ Example output structure:
 ## NEGATIVE EXAMPLES FROM REAL ERRORS (DO NOT OUTPUT THESE)
 
 **LaTeX Commands BANNED:**
-WRONG: \`\\\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
-WRONG: \`\\\\dfrac{x}{y}\` --> CORRECT: \`<mfrac><mi>x</mi><mi>y</mi></mfrac>\`
-WRONG: \`\\\\(\` or \`\\\\)\` --> CORRECT: Remove entirely, use proper MathML tags
-WRONG: \`\\\\blueD{text}\` --> CORRECT: Just use the text content without color commands
+WRONG: \`\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
+WRONG: \`\\dfrac{x}{y}\` --> CORRECT: \`<mfrac><mi>x</mi><mi>y</mi></mfrac>\`
+WRONG: \`\\(\` or \`\\)\` --> CORRECT: Remove entirely, use proper MathML tags
+WRONG: \`\\blueD{text}\` --> CORRECT: Just use the text content without color commands
 
 **LaTeX Dollar Signs BANNED:**
 WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
@@ -623,6 +708,23 @@ CORRECT: \`feedback: [{ "type": "text", "content": "Correct! This rectangle has.
 WRONG: \`feedback: '<p>Incorrect. Try again.</p>'\` (HTML string)
 CORRECT: \`feedback: [{ "type": "text", "content": "Incorrect. Try again." }]\`
 
+**Prompt Fields Must Use Structured Inline Content:**
+WRONG: \`prompt: 'Select the correct answer.'\` (plain string)
+CORRECT: \`prompt: [{ "type": "text", "content": "Select the correct answer." }]\`
+
+**Choice Content MUST be structured:**
+**For choiceInteraction:**
+WRONG: \`content: "<p>Option A</p>"\` (HTML string)
+CORRECT: \`content: [{ "type": "paragraph", "content": [{ "type": "text", "content": "Option A" }] }]\`
+
+**For inlineChoiceInteraction:**
+WRONG: \`content: "Option A"\` (plain string)
+CORRECT: \`content: [{ "type": "text", "content": "Option A" }]\`
+
+**Feedback MUST be structured inline content:**
+WRONG: \`feedback: 'That is correct.'\` (plain string)
+CORRECT: \`feedback: [{ "type": "text", "content": "That is correct." }]\`
+
 **Critical Rules:**
 - **Standard choice interactions** (choiceInteraction, orderInteraction): Choice content MUST be arrays of block content objects
 - **Inline choice interactions** (inlineChoiceInteraction): Choice content MUST be arrays of inline content objects
@@ -636,7 +738,9 @@ CORRECT: \`feedback: [{ "type": "text", "content": "Incorrect. Try again." }]\`
 - ANY block-level elements in prompt fields (prompts must contain only inline content)
 - ANY \`<p>\` tags in choice feedback (feedback must be inline text only)
 - ANY \`<p>\` tags in inline choice interaction content (must be inline text only)
-Double-check EVERY string in your output. ZERO TOLERANCE.`
+Double-check EVERY string in your output. ZERO TOLERANCE.
+
+⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if any content field is a plain string instead of the required structured JSON array.`
 
 	return { systemInstruction, userContent }
 }
@@ -727,10 +831,10 @@ Example output structure:
 ## NEGATIVE EXAMPLES FROM REAL ERRORS (DO NOT OUTPUT THESE)
 
 **LaTeX Commands BANNED:**
-WRONG: \`\\\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
-WRONG: \`\\\\dfrac{x}{y}\` --> CORRECT: \`<mfrac><mi>x</mi><mi>y</mi></mfrac>\`
-WRONG: \`\\\\(\` or \`\\\\)\` --> CORRECT: Remove entirely, use proper MathML tags
-WRONG: \`\\\\blueD{text}\` --> CORRECT: Just use the text content without color commands
+WRONG: \`\\sqrt{25}\` --> CORRECT: \`<msqrt><mn>25</mn></msqrt>\`
+WRONG: \`\\dfrac{x}{y}\` --> CORRECT: \`<mfrac><mi>x</mi><mi>y</mi></mfrac>\`
+WRONG: \`\\(\` or \`\\)\` --> CORRECT: Remove entirely, use proper MathML tags
+WRONG: \`\\blueD{text}\` --> CORRECT: Just use the text content without color commands
 
 **LaTeX Dollar Signs BANNED:**
 WRONG: \`$x + y$\` --> CORRECT: \`<math><mi>x</mi><mo>+</mo><mi>y</mi></math>\`
@@ -771,6 +875,12 @@ CORRECT: \`feedback: [{ "type": "text", "content": "Correct! This rectangle has.
 
 WRONG: \`feedback: '<p>Incorrect. Try again.</p>'\` (HTML string)
 CORRECT: \`feedback: [{ "type": "text", "content": "Incorrect. Try again." }]\`
+
+**LaTeX in Widget Properties BANNED:**
+WRONG (e.g., in a dataTable): \`"label": "Value of $$x$$"\`
+CORRECT: \`"label": "Value of <math><mi>x</mi></math>"\`
+
+**Ensure all text content within widget properties is properly escaped and follows content rules.**
 
 **Critical Rules:**
 - **Standard choice interactions** (choiceInteraction, orderInteraction): Choice content MUST be arrays of block content objects
