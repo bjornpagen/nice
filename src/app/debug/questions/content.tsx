@@ -6,6 +6,8 @@ import * as React from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
 import type { QuestionDebugData } from "./actions"
 import { upsertQuestionAnalysis, validateQuestionXml } from "./server-actions"
@@ -18,6 +20,7 @@ export function Content({ questions }: ContentProps) {
 	const [currentIndex, setCurrentIndex] = React.useState(0)
 	const [dialogOpen, setDialogOpen] = React.useState(false)
 	const [analysisNotes, setAnalysisNotes] = React.useState("")
+	const [severity, setSeverity] = React.useState<"major" | "minor" | "patch">("minor")
 	const [localQuestions, setLocalQuestions] = React.useState(questions)
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
 	const [isValidating, setIsValidating] = React.useState(false)
@@ -89,15 +92,26 @@ export function Content({ questions }: ContentProps) {
 		setIsSubmitting(true)
 
 		const notesToSave = analysisNotes.trim() || ""
-		await upsertQuestionAnalysis(currentQuestion.id, notesToSave === "" ? null : notesToSave)
+		const severityToSave = notesToSave === "" ? null : severity
+
+		await upsertQuestionAnalysis(currentQuestion.id, notesToSave === "" ? null : notesToSave, severityToSave)
 
 		// update local state
 		setLocalQuestions((prev) =>
-			prev.map((q) => (q.id === currentQuestion.id ? { ...q, analysisNotes: notesToSave } : q))
+			prev.map((q) =>
+				q.id === currentQuestion.id
+					? {
+							...q,
+							analysisNotes: notesToSave,
+							severity: severityToSave
+						}
+					: q
+			)
 		)
 
 		setDialogOpen(false)
 		setAnalysisNotes("")
+		setSeverity("minor")
 		setIsSubmitting(false)
 
 		if (notesToSave === "") {
@@ -109,14 +123,24 @@ export function Content({ questions }: ContentProps) {
 
 	const handleMarkSuccessful = async () => {
 		toast.info("marking question as successful...")
-		const result = await errors.try(upsertQuestionAnalysis(currentQuestion.id, ""))
+		const result = await errors.try(upsertQuestionAnalysis(currentQuestion.id, "", null))
 		if (result.error) {
 			toast.error("failed to mark as successful")
 			return
 		}
 
-		// update local state - empty string means successful
-		setLocalQuestions((prev) => prev.map((q) => (q.id === currentQuestion.id ? { ...q, analysisNotes: "" } : q)))
+		// update local state - empty string means successful, null severity
+		setLocalQuestions((prev) =>
+			prev.map((q) =>
+				q.id === currentQuestion.id
+					? {
+							...q,
+							analysisNotes: "",
+							severity: null
+						}
+					: q
+			)
+		)
 
 		toast.success("question marked as successful")
 	}
@@ -148,9 +172,31 @@ export function Content({ questions }: ContentProps) {
 		}
 	}
 
+	const getSeverityColor = (severity: "major" | "minor" | "patch" | null) => {
+		switch (severity) {
+			case "major":
+				return "#ffeaea" // light red
+			case "minor":
+				return "#fff3e0" // light orange
+			case "patch":
+				return "#fffacd" // light yellow
+			default:
+				return "transparent"
+		}
+	}
+
 	const getQuestionBackgroundColor = (question: QuestionDebugData) => {
+		// successful (empty notes) = green
+		if (question.analysisNotes === "") return "#e8f5e8"
+
+		// has severity = severity color
+		if (question.severity) return getSeverityColor(question.severity)
+
+		// no analysis yet = transparent
 		if (question.analysisNotes === null) return "transparent"
-		return question.analysisNotes === "" ? "#e8f5e8" : "#ffeaea"
+
+		// has notes but no severity = default light orange (minor)
+		return getSeverityColor("minor")
 	}
 
 	return (
@@ -225,6 +271,56 @@ export function Content({ questions }: ContentProps) {
 												Previous notes: {currentQuestion.analysisNotes || "(marked as successful)"}
 											</div>
 										)}
+										<div style={{ marginBottom: "15px" }}>
+											<Label style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "8px", display: "block" }}>
+												Issue Severity
+											</Label>
+											<RadioGroup
+												value={severity}
+												onValueChange={(value: "major" | "minor" | "patch") => setSeverity(value)}
+												style={{ display: "flex", gap: "20px" }}
+											>
+												<div
+													style={{
+														display: "flex",
+														alignItems: "center",
+														gap: "6px",
+														padding: "6px 12px",
+														borderRadius: "4px",
+														backgroundColor: getSeverityColor("major")
+													}}
+												>
+													<RadioGroupItem value="major" />
+													<Label>Major</Label>
+												</div>
+												<div
+													style={{
+														display: "flex",
+														alignItems: "center",
+														gap: "6px",
+														padding: "6px 12px",
+														borderRadius: "4px",
+														backgroundColor: getSeverityColor("minor")
+													}}
+												>
+													<RadioGroupItem value="minor" />
+													<Label>Minor</Label>
+												</div>
+												<div
+													style={{
+														display: "flex",
+														alignItems: "center",
+														gap: "6px",
+														padding: "6px 12px",
+														borderRadius: "4px",
+														backgroundColor: getSeverityColor("patch")
+													}}
+												>
+													<RadioGroupItem value="patch" />
+													<Label>Patch</Label>
+												</div>
+											</RadioGroup>
+										</div>
 										<Textarea
 											placeholder="enter analysis notes (leave empty to mark as successful)"
 											value={analysisNotes}

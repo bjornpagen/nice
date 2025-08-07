@@ -29,6 +29,9 @@ export { assessmentParentTypeEnum as niceAssessmentParentTypeEnum }
 const lessonContentTypeEnum = schema.enum("lesson_content_type_enum", ["Video", "Article", "Exercise"])
 export { lessonContentTypeEnum as niceLessonContentTypeEnum }
 
+const issueSeverityEnum = schema.enum("issue_severity_enum", ["major", "minor", "patch"])
+export { issueSeverityEnum as niceIssueSeverityEnum }
+
 // --- JSONB Type Definitions ---
 
 // --- Content Tables ---
@@ -233,7 +236,8 @@ const questionsAnalysis = schema.table(
 	{
 		id: uuid("id").primaryKey().defaultRandom(),
 		questionId: text("question_id").notNull().unique(),
-		analysisNotes: text("analysis_notes")
+		analysisNotes: text("analysis_notes"),
+		severity: issueSeverityEnum("severity")
 	},
 	(table) => [
 		uniqueIndex("questions_analysis_question_id_idx").on(table.questionId),

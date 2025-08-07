@@ -6,20 +6,26 @@ import { db } from "@/db"
 import { niceQuestionsAnalysis } from "@/db/schemas/nice"
 import { qti } from "@/lib/clients"
 
-export async function upsertQuestionAnalysis(questionId: string, analysisNotes: string | null): Promise<void> {
-	logger.debug("upserting question analysis", { questionId, hasNotes: analysisNotes !== null })
+export async function upsertQuestionAnalysis(
+	questionId: string,
+	analysisNotes: string | null,
+	severity: "major" | "minor" | "patch" | null = null
+): Promise<void> {
+	logger.debug("upserting question analysis", { questionId, hasNotes: analysisNotes !== null, severity })
 
 	const result = await errors.try(
 		db
 			.insert(niceQuestionsAnalysis)
 			.values({
 				questionId,
-				analysisNotes
+				analysisNotes,
+				severity
 			})
 			.onConflictDoUpdate({
 				target: niceQuestionsAnalysis.questionId,
 				set: {
-					analysisNotes
+					analysisNotes,
+					severity
 				}
 			})
 	)

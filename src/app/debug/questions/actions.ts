@@ -11,6 +11,7 @@ export interface QuestionDebugData {
 	parsedData: unknown
 	xml: string
 	analysisNotes: string | null
+	severity: "major" | "minor" | "patch" | null
 }
 
 export async function getQuestionsWithXml(): Promise<QuestionDebugData[]> {
@@ -24,7 +25,8 @@ export async function getQuestionsWithXml(): Promise<QuestionDebugData[]> {
 				sha: niceQuestions.sha,
 				parsedData: niceQuestions.parsedData,
 				xml: niceQuestions.xml,
-				analysisNotes: niceQuestionsAnalysis.analysisNotes
+				analysisNotes: niceQuestionsAnalysis.analysisNotes,
+				severity: niceQuestionsAnalysis.severity
 			})
 			.from(niceQuestions)
 			.leftJoin(niceQuestionsAnalysis, eq(niceQuestions.id, niceQuestionsAnalysis.questionId))

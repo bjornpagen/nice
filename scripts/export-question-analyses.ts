@@ -8,6 +8,7 @@ interface QuestionAnalysisExport {
 	analysisId: string
 	questionId: string
 	analysisNotes: string
+	severity: "major" | "minor" | "patch" | null
 	perseusData: unknown
 	xmlData: string | null
 }
@@ -21,6 +22,7 @@ async function main(): Promise<void> {
 				analysisId: niceQuestionsAnalysis.id,
 				questionId: niceQuestionsAnalysis.questionId,
 				analysisNotes: niceQuestionsAnalysis.analysisNotes,
+				severity: niceQuestionsAnalysis.severity,
 				perseusData: niceQuestions.parsedData,
 				xmlData: niceQuestions.xml
 			})
