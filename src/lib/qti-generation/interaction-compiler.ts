@@ -73,7 +73,13 @@ export function compileInteraction(interaction: AnyInteraction): string {
 			throw errors.new("Unknown interaction type")
 	}
 
-	// Return the interaction XML directly without any wrapping
-	// QTI interactions should be placed directly in the content model according to QTI spec
-	return interactionXml
+	// Wrap block-level interactions in div to comply with QTI content model
+	// Inline interactions (textEntryInteraction, inlineChoiceInteraction) must remain unwrapped
+	// as they need to be placed inside text containers like <p> tags
+	if (interaction.type === "textEntryInteraction" || interaction.type === "inlineChoiceInteraction") {
+		// Inline interactions: return unwrapped for placement inside text containers
+		return interactionXml
+	}
+	// Block interactions: wrap in div to satisfy QTI content model when mixed with other block elements
+	return `<div>${interactionXml}</div>`
 }

@@ -9,6 +9,7 @@ import type { AssessmentItem, AssessmentItemInput } from "./schemas"
 import { createDynamicAssessmentItemSchema } from "./schemas"
 import { processAndFillSlots } from "./slot-filler"
 import { generateWidget } from "./widget-generator"
+import { convertHtmlEntities } from "./xml-fixes"
 
 export function compile(itemData: AssessmentItemInput): string {
 	// Step 0: Prevalidation to catch QTI content model violations early
@@ -96,5 +97,6 @@ ${responseDeclarations}
 ${responseProcessing}
 </qti-assessment-item>`
 
-	return finalXml
+	// Convert HTML entities to Unicode characters at the very end
+	return convertHtmlEntities(finalXml, logger)
 }
