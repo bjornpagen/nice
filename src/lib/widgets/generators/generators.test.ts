@@ -59,7 +59,8 @@ describe("Widget Generators", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -79,7 +80,8 @@ describe("Widget Generators", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.3
+					position: 0.3,
+					angle: null
 				},
 				viewOptions: {
 					projectionAngle: 30,

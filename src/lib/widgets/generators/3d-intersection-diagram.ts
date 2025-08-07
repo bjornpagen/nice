@@ -59,7 +59,8 @@ const PlaneSchema = z
 			.number()
 			.min(-90)
 			.max(90)
-			.default(0)
+			.nullable()
+			.transform((val) => val ?? 0)
 			.describe("The angle in degrees for oblique planes (0 = horizontal, 90 = vertical).")
 	})
 	.strict()
@@ -72,14 +73,12 @@ export const ThreeDIntersectionDiagramPropsSchema = z
 			.number()
 			.positive()
 			.nullable()
-			.default(null)
 			.transform((val) => val ?? 400)
 			.describe("The total width of the output SVG container in pixels."),
 		height: z
 			.number()
 			.positive()
 			.nullable()
-			.default(null)
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
 		solid: z
@@ -111,7 +110,6 @@ export const ThreeDIntersectionDiagramPropsSchema = z
 			})
 			.strict()
 			.nullable()
-			.default(null)
 			.transform(
 				(val) =>
 					val ?? {

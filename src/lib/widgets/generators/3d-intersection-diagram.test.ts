@@ -14,7 +14,8 @@ const createBaseProps = (overrides: Record<string, unknown> = {}) => ({
 	height: 400,
 	plane: {
 		orientation: "horizontal" as const,
-		position: 0.5
+		position: 0.5,
+		angle: null
 	},
 	viewOptions: null,
 	...overrides
@@ -35,7 +36,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -55,7 +57,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.1
+					position: 0.1,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -75,7 +78,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.9
+					position: 0.9,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -95,7 +99,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -115,7 +120,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.2
+					position: 0.2,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -135,7 +141,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.8
+					position: 0.8,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -155,7 +162,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.3
+					position: 0.3,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -176,7 +184,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -195,7 +204,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.2
+					position: 0.2,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -214,7 +224,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.8
+					position: 0.8,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -233,7 +244,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -252,7 +264,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.3
+					position: 0.3,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -274,7 +287,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: {
 					projectionAngle: 30,
@@ -299,7 +313,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: {
 					projectionAngle: 60,
@@ -323,7 +338,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.4
+					position: 0.4,
+					angle: null
 				},
 				viewOptions: {
 					projectionAngle: null,
@@ -348,7 +364,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.6
+					position: 0.6,
+					angle: null
 				},
 				viewOptions: {
 					projectionAngle: null,
@@ -373,7 +390,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.7
+					position: 0.7,
+					angle: null
 				},
 				viewOptions: {
 					projectionAngle: 25,
@@ -400,7 +418,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0
+					position: 0,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -420,7 +439,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 1
+					position: 1,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -440,7 +460,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -460,7 +481,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -479,7 +501,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -499,7 +522,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -519,7 +543,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.3
+					position: 0.3,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -539,7 +564,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -558,7 +584,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -577,7 +604,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -599,7 +627,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -619,7 +648,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -638,7 +668,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
+					position: 0.5,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -657,7 +688,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.333
+					position: 0.333,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -677,7 +709,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.666
+					position: 0.666,
+					angle: null
 				},
 				viewOptions: null
 			}
@@ -706,7 +739,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.6
+					position: 0.6,
+					angle: null
 				}
 			})
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -750,7 +784,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.3
+					position: 0.3,
+					angle: null
 				}
 			})
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -792,7 +827,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.7
+					position: 0.7,
+					angle: null
 				}
 			})
 			expect(generateDiagram(props)).toMatchSnapshot()
@@ -818,6 +854,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 		test("should use default values for simplified schema", () => {
 			const props = {
 				type: "3dIntersectionDiagram" as const,
+				width: null, // Will use default 400
+				height: null, // Will use default 400
 				solid: {
 					type: "rectangularPrism" as const,
 					width: 80,
@@ -826,8 +864,10 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5
-				}
+					position: 0.5,
+					angle: null
+				},
+				viewOptions: null // Will use default viewOptions
 			}
 			const result = generateDiagram(props)
 			expect(result).toContain('width="400"') // Default width
@@ -895,7 +935,8 @@ describe("generateThreeDIntersectionDiagram", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.5 // Cut through the middle
+					position: 0.5, // Cut through the middle
+					angle: null
 				},
 				viewOptions: {
 					projectionAngle: 45,
