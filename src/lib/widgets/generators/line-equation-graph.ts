@@ -1,9 +1,9 @@
 import { z } from "zod"
 import {
-	AxisOptionsSchema,
+	createAxisOptionsSchema,
+	createLineSchema,
+	createPlotPointSchema,
 	generateCoordinatePlaneBase,
-	LineSchema,
-	PlotPointSchema,
 	renderLines,
 	renderPoints
 } from "@/lib/widgets/generators/coordinate-plane-base"
@@ -22,15 +22,17 @@ export const LineEquationGraphPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
-		xAxis: AxisOptionsSchema.describe("Configuration for the horizontal (X) axis."),
-		yAxis: AxisOptionsSchema.describe("Configuration for the vertical (Y) axis."),
+		xAxis: createAxisOptionsSchema().describe("Configuration for the horizontal (X) axis."),
+		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical (Y) axis."),
 		showQuadrantLabels: z
 			.boolean()
 			.nullable()
 			.transform((val) => val ?? false)
 			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
-		lines: z.array(LineSchema).describe("An array of infinite lines to draw on the plane, defined by their equations."),
-		points: z.array(PlotPointSchema).nullable().describe("An optional array of points to plot on the plane.")
+		lines: z
+			.array(createLineSchema())
+			.describe("An array of infinite lines to draw on the plane, defined by their equations."),
+		points: z.array(createPlotPointSchema()).nullable().describe("An optional array of points to plot on the plane.")
 	})
 	.strict()
 	.describe(

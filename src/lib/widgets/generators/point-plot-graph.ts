@@ -1,8 +1,8 @@
 import { z } from "zod"
 import {
-	AxisOptionsSchema,
+	createAxisOptionsSchema,
+	createPlotPointSchema,
 	generateCoordinatePlaneBase,
-	PlotPointSchema,
 	renderPoints
 } from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
@@ -20,14 +20,14 @@ export const PointPlotGraphPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
-		xAxis: AxisOptionsSchema.describe("Configuration for the horizontal (X) axis."),
-		yAxis: AxisOptionsSchema.describe("Configuration for the vertical (Y) axis."),
+		xAxis: createAxisOptionsSchema().describe("Configuration for the horizontal (X) axis."),
+		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical (Y) axis."),
 		showQuadrantLabels: z
 			.boolean()
 			.nullable()
 			.transform((val) => val ?? false)
 			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
-		points: z.array(PlotPointSchema).describe("An array of points to plot on the plane.")
+		points: z.array(createPlotPointSchema()).describe("An array of points to plot on the plane.")
 	})
 	.strict()
 	.describe("Generates a coordinate plane focused on plotting individual points with labels and styling.")

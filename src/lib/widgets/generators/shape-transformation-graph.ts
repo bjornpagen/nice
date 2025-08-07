@@ -1,66 +1,74 @@
 import { z } from "zod"
 import {
-	AxisOptionsSchema,
+	createAxisOptionsSchema,
+	createPlotPointSchema,
 	generateCoordinatePlaneBase,
-	PlotPointSchema,
 	renderPoints
 } from "@/lib/widgets/generators/coordinate-plane-base"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-const VertexSchema = z
-	.object({
-		x: z.number().describe("The x-coordinate of the vertex."),
-		y: z.number().describe("The y-coordinate of the vertex.")
-	})
-	.strict()
-
-type Vertex = z.infer<typeof VertexSchema>
-
-const PolygonObjectSchema = z
-	.object({
-		vertices: z.array(VertexSchema).min(3).describe("An array of vertices that define the shape."),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "rgba(66, 133, 244, 0.5)")
-			.describe("The fill color of the shape."),
-		label: z.string().nullable().describe("An optional label for the shape.")
-	})
-	.strict()
-
-const TransformationRuleSchema = z.discriminatedUnion("type", [
+const createVertexSchema = () =>
 	z
 		.object({
-			type: z.literal("translation"),
-			vector: z
-				.object({
-					x: z.number().describe("The horizontal translation distance."),
-					y: z.number().describe("The vertical translation distance.")
-				})
-				.strict()
-		})
-		.strict(),
-	z
-		.object({
-			type: z.literal("reflection"),
-			axis: z.enum(["x", "y"]).describe("The axis of reflection.")
-		})
-		.strict(),
-	z
-		.object({
-			type: z.literal("rotation"),
-			center: VertexSchema.describe("The center point of rotation."),
-			angle: z.number().describe("The angle of rotation in degrees.")
-		})
-		.strict(),
-	z
-		.object({
-			type: z.literal("dilation"),
-			center: VertexSchema.describe("The center point of dilation."),
-			scaleFactor: z.number().describe("The scale factor for dilation.")
+			x: z.number().describe("The x-coordinate of the vertex."),
+			y: z.number().describe("The y-coordinate of the vertex.")
 		})
 		.strict()
-])
+
+const VertexSchema = createVertexSchema()
+type Vertex = z.infer<typeof VertexSchema>
+
+const createPolygonObjectSchema = () =>
+	z
+		.object({
+			vertices: z.array(createVertexSchema()).min(3).describe("An array of vertices that define the shape."),
+			color: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "rgba(66, 133, 244, 0.5)")
+				.describe("The fill color of the shape."),
+			label: z.string().nullable().describe("An optional label for the shape.")
+		})
+		.strict()
+
+// Note: Schema factory created but not exported - used inline in ShapeTransformationGraphPropsSchema
+
+const createTransformationRuleSchema = () =>
+	z.discriminatedUnion("type", [
+		z
+			.object({
+				type: z.literal("translation"),
+				vector: z
+					.object({
+						x: z.number().describe("The horizontal translation distance."),
+						y: z.number().describe("The vertical translation distance.")
+					})
+					.strict()
+			})
+			.strict(),
+		z
+			.object({
+				type: z.literal("reflection"),
+				axis: z.enum(["x", "y"]).describe("The axis of reflection.")
+			})
+			.strict(),
+		z
+			.object({
+				type: z.literal("rotation"),
+				center: createVertexSchema().describe("The center point of rotation."),
+				angle: z.number().describe("The angle of rotation in degrees.")
+			})
+			.strict(),
+		z
+			.object({
+				type: z.literal("dilation"),
+				center: createVertexSchema().describe("The center point of dilation."),
+				scaleFactor: z.number().describe("The scale factor for dilation.")
+			})
+			.strict()
+	])
+
+// Note: Schema factory created but not exported - used inline in ShapeTransformationGraphPropsSchema
 
 export const ShapeTransformationGraphPropsSchema = z
 	.object({
@@ -75,16 +83,16 @@ export const ShapeTransformationGraphPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
-		xAxis: AxisOptionsSchema.describe("Configuration for the horizontal (X) axis."),
-		yAxis: AxisOptionsSchema.describe("Configuration for the vertical (Y) axis."),
+		xAxis: createAxisOptionsSchema().describe("Configuration for the horizontal (X) axis."),
+		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical (Y) axis."),
 		showQuadrantLabels: z
 			.boolean()
 			.nullable()
 			.transform((val) => val ?? false)
 			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
-		preImage: PolygonObjectSchema.describe("The original shape before transformation."),
-		transformation: TransformationRuleSchema.describe("The transformation to apply to the pre-image."),
-		points: z.array(PlotPointSchema).nullable().describe("Optional additional points to plot.")
+		preImage: createPolygonObjectSchema().describe("The original shape before transformation."),
+		transformation: createTransformationRuleSchema().describe("The transformation to apply to the pre-image."),
+		points: z.array(createPlotPointSchema()).nullable().describe("Optional additional points to plot.")
 	})
 	.strict()
 	.describe("Generates a coordinate plane showing geometric transformations with pre-image and transformed image.")

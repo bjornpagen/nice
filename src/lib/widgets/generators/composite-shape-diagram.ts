@@ -97,6 +97,7 @@ export const CompositeShapeDiagramPropsSchema = z
 			.array(SideLabelSchema.nullable())
 			.nullable()
 			.optional()
+			.transform((val) => val ?? null)
 			.describe(
 				"An optional array of labels for each side of the outer boundary. The first label is for the edge from outerBoundary[0] to outerBoundary[1], etc. Use null for sides without labels."
 			),

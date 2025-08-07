@@ -203,16 +203,19 @@ export const TransformationDiagramPropsSchema = z
 					.array(z.string())
 					.nullable()
 					.optional()
+					.transform((val) => val ?? null)
 					.describe("Labels for each vertex (e.g., ['A', 'B', 'C', 'D']). Must match the number of vertices."),
 				angleMarks: z
 					.array(createAngleMarkSchema())
 					.nullable()
 					.optional()
+					.transform((val) => val ?? null)
 					.describe("Angle marks to draw at specific vertices."),
 				sideLengths: z
 					.array(createSideLengthSchema())
 					.nullable()
 					.optional()
+					.transform((val) => val ?? null)
 					.describe("Side length labels for each edge. The first label is for the edge from vertex 0 to vertex 1, etc.")
 			})
 			.strict()
@@ -246,16 +249,19 @@ export const TransformationDiagramPropsSchema = z
 					.array(z.string())
 					.nullable()
 					.optional()
+					.transform((val) => val ?? null)
 					.describe("Labels for each vertex (e.g., ['A'', 'B'', 'C'', 'D'']). Must match the number of vertices."),
 				angleMarks: z
 					.array(createAngleMarkSchema())
 					.nullable()
 					.optional()
+					.transform((val) => val ?? null)
 					.describe("Angle marks to draw at specific vertices."),
 				sideLengths: z
 					.array(createSideLengthSchema())
 					.nullable()
 					.optional()
+					.transform((val) => val ?? null)
 					.describe("Side length labels for each edge. The first label is for the edge from vertex 0 to vertex 1, etc.")
 			})
 			.strict()
@@ -267,6 +273,7 @@ export const TransformationDiagramPropsSchema = z
 			.array(AdditionalPointSchema)
 			.nullable()
 			.optional()
+			.transform((val) => val ?? null)
 			.describe("Additional labeled points to display (e.g., reference points, centers).")
 	})
 	.strict()

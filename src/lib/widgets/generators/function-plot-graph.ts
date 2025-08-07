@@ -1,9 +1,9 @@
 import { z } from "zod"
 import {
-	AxisOptionsSchema,
+	createAxisOptionsSchema,
+	createPlotPointSchema,
+	createPolylineSchema,
 	generateCoordinatePlaneBase,
-	PlotPointSchema,
-	PolylineSchema,
 	renderPoints,
 	renderPolylines
 } from "@/lib/widgets/generators/coordinate-plane-base"
@@ -22,16 +22,18 @@ export const FunctionPlotGraphPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
-		xAxis: AxisOptionsSchema.describe("Configuration for the horizontal (X) axis."),
-		yAxis: AxisOptionsSchema.describe("Configuration for the vertical (Y) axis."),
+		xAxis: createAxisOptionsSchema().describe("Configuration for the horizontal (X) axis."),
+		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical (Y) axis."),
 		showQuadrantLabels: z
 			.boolean()
 			.nullable()
 			.transform((val) => val ?? false)
 			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
-		polylines: z.array(PolylineSchema).describe("An array of polylines (function graphs) to draw on the plane."),
+		polylines: z
+			.array(createPolylineSchema())
+			.describe("An array of polylines (function graphs) to draw on the plane."),
 		points: z
-			.array(PlotPointSchema)
+			.array(createPlotPointSchema())
 			.nullable()
 			.describe("An optional array of points to highlight key features on the functions.")
 	})

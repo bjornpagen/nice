@@ -1,9 +1,9 @@
 import { z } from "zod"
 import {
-	AxisOptionsSchema,
-	DistanceSchema,
+	createAxisOptionsSchema,
+	createDistanceSchema,
+	createPlotPointSchema,
 	generateCoordinatePlaneBase,
-	PlotPointSchema,
 	renderDistances,
 	renderPoints
 } from "@/lib/widgets/generators/coordinate-plane-base"
@@ -22,15 +22,17 @@ export const DistanceFormulaGraphPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
-		xAxis: AxisOptionsSchema.describe("Configuration for the horizontal (X) axis."),
-		yAxis: AxisOptionsSchema.describe("Configuration for the vertical (Y) axis."),
+		xAxis: createAxisOptionsSchema().describe("Configuration for the horizontal (X) axis."),
+		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical (Y) axis."),
 		showQuadrantLabels: z
 			.boolean()
 			.nullable()
 			.transform((val) => val ?? false)
 			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
-		points: z.array(PlotPointSchema).describe("An array of points that can be referenced by distance visualizations."),
-		distances: z.array(DistanceSchema).describe("An array of distances to visualize between points.")
+		points: z
+			.array(createPlotPointSchema())
+			.describe("An array of points that can be referenced by distance visualizations."),
+		distances: z.array(createDistanceSchema()).describe("An array of distances to visualize between points.")
 	})
 	.strict()
 	.describe(

@@ -1,13 +1,13 @@
 import { z } from "zod"
 import {
-	AxisOptionsSchema,
-	DistanceSchema,
+	createAxisOptionsSchema,
+	createDistanceSchema,
+	createLineSchema,
+	createPlotPointSchema,
+	createPolygonSchema,
+	createPolylineSchema,
 	ErrInvalidDimensions,
 	generateCoordinatePlaneBase,
-	LineSchema,
-	PlotPointSchema,
-	PolygonSchema,
-	PolylineSchema,
 	renderDistances,
 	renderLines,
 	renderPoints,
@@ -29,28 +29,28 @@ export const CoordinatePlaneComprehensivePropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
-		xAxis: AxisOptionsSchema.describe("Configuration for the horizontal (X) axis."),
-		yAxis: AxisOptionsSchema.describe("Configuration for the vertical (Y) axis."),
+		xAxis: createAxisOptionsSchema().describe("Configuration for the horizontal (X) axis."),
+		yAxis: createAxisOptionsSchema().describe("Configuration for the vertical (Y) axis."),
 		showQuadrantLabels: z
 			.boolean()
 			.nullable()
 			.transform((val) => val ?? false)
 			.describe('If true, displays the labels "I", "II", "III", and "IV" in the appropriate quadrants.'),
-		points: z.array(PlotPointSchema).nullable().describe("An optional array of points to plot on the plane."),
+		points: z.array(createPlotPointSchema()).nullable().describe("An optional array of points to plot on the plane."),
 		lines: z
-			.array(LineSchema)
+			.array(createLineSchema())
 			.nullable()
 			.describe("An optional array of infinite lines to draw on the plane, defined by their equations."),
 		polygons: z
-			.array(PolygonSchema)
+			.array(createPolygonSchema())
 			.nullable()
 			.describe("An optional array of polygons or polylines to draw on the plane by connecting the defined points."),
 		distances: z
-			.array(DistanceSchema)
+			.array(createDistanceSchema())
 			.nullable()
 			.describe("An optional array of distances to visualize between points."),
 		polylines: z
-			.array(PolylineSchema)
+			.array(createPolylineSchema())
 			.nullable()
 			.describe("An optional array of polylines (function graphs) to draw on the plane.")
 	})

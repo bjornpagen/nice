@@ -650,6 +650,7 @@ describe("Widget Generators", () => {
 					{ x: 0, y: 100 }
 				],
 				outerBoundary: [0, 1, 2, 3, 4, 5],
+				outerBoundaryLabels: null,
 				internalSegments: [
 					{ fromVertexIndex: 3, toVertexIndex: 5, style: "dashed" as const, label: "60 units" },
 					{ fromVertexIndex: 3, toVertexIndex: 1, style: "dashed" as const, label: "60 units" }
@@ -681,6 +682,7 @@ describe("Widget Generators", () => {
 					{ x: 88.889, y: 113.889 } // Height line bottom
 				],
 				outerBoundary: [0, 1, 2, 3],
+				outerBoundaryLabels: null,
 				shadedRegions: [
 					{
 						vertexIndices: [1, 4, 5, 0], // Left triangle

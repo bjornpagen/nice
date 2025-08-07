@@ -5,191 +5,213 @@ export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis
 
 // --- TYPE DEFINITIONS ---
 
-// Schema for a single axis
-export const AxisOptionsSchema = z
-	.object({
-		label: z
-			.string()
-			.nullable()
-			.describe('The text title for the axis (e.g., "Number of Days"). If omitted, a simple "x" or "y" may be used.'),
-		min: z.number().describe("The minimum value displayed on the axis."),
-		max: z.number().describe("The maximum value displayed on the axis."),
-		tickInterval: z.number().describe("The numeric interval between labeled tick marks on the axis."),
-		showGridLines: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? true)
-			.describe("If true, display grid lines for this axis.")
-	})
-	.strict()
+// Factory function for axis schema to prevent $ref generation
+export const createAxisOptionsSchema = () =>
+	z
+		.object({
+			label: z
+				.string()
+				.nullable()
+				.describe('The text title for the axis (e.g., "Number of Days"). If omitted, a simple "x" or "y" may be used.'),
+			min: z.number().describe("The minimum value displayed on the axis."),
+			max: z.number().describe("The maximum value displayed on the axis."),
+			tickInterval: z.number().describe("The numeric interval between labeled tick marks on the axis."),
+			showGridLines: z
+				.boolean()
+				.nullable()
+				.transform((val) => val ?? true)
+				.describe("If true, display grid lines for this axis.")
+		})
+		.strict()
 
+// For backwards compatibility and type inference
+export const AxisOptionsSchema = createAxisOptionsSchema()
 export type AxisOptions = z.infer<typeof AxisOptionsSchema>
 
-// Schema for a basic plottable point with ID system
-export const PlotPointSchema = z
-	.object({
-		id: z.string().describe("A unique identifier for this point, used to reference it when creating polygons."),
-		x: z.number().describe("The value of the point on the horizontal (X) axis."),
-		y: z.number().describe("The value of the point on the vertical (Y) axis."),
-		label: z.string().nullable().describe('An optional text label to display near the point (e.g., "A", "(m, n)").'),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#4285F4")
-			.describe("The color of the point, as a CSS color string."),
-		style: z
-			.enum(["open", "closed"])
-			.nullable()
-			.transform((val) => val ?? "closed")
-			.describe("Visual style for the point marker.")
-	})
-	.strict()
+// Factory function for point schema to prevent $ref generation
+export const createPlotPointSchema = () =>
+	z
+		.object({
+			id: z.string().describe("A unique identifier for this point, used to reference it when creating polygons."),
+			x: z.number().describe("The value of the point on the horizontal (X) axis."),
+			y: z.number().describe("The value of the point on the vertical (Y) axis."),
+			label: z.string().nullable().describe('An optional text label to display near the point (e.g., "A", "(m, n)").'),
+			color: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "#4285F4")
+				.describe("The color of the point, as a CSS color string."),
+			style: z
+				.enum(["open", "closed"])
+				.nullable()
+				.transform((val) => val ?? "closed")
+				.describe("Visual style for the point marker.")
+		})
+		.strict()
 
+// For backwards compatibility and type inference
+export const PlotPointSchema = createPlotPointSchema()
 export type PlotPoint = z.infer<typeof PlotPointSchema>
 
-// Defines a linear trend line using slope and y-intercept
-export const SlopeInterceptLineSchema = z
-	.object({
-		type: z.literal("slopeIntercept").describe("Specifies a straight line in y = mx + b form."),
-		slope: z.number().describe("The slope of the line (m)."),
-		yIntercept: z.number().describe("The y-value where the line crosses the Y-axis (b).")
-	})
-	.strict()
+// Factory functions for line equation schemas to prevent $ref generation
+export const createSlopeInterceptLineSchema = () =>
+	z
+		.object({
+			type: z.literal("slopeIntercept").describe("Specifies a straight line in y = mx + b form."),
+			slope: z.number().describe("The slope of the line (m)."),
+			yIntercept: z.number().describe("The y-value where the line crosses the Y-axis (b).")
+		})
+		.strict()
 
-// Defines a line using standard form Ax + By = C
-export const StandardLineSchema = z
-	.object({
-		type: z.literal("standard").describe("Specifies a straight line in Ax + By = C form."),
-		A: z.number().describe("The coefficient of x."),
-		B: z.number().describe("The coefficient of y."),
-		C: z.number().describe("The constant term.")
-	})
-	.strict()
+export const createStandardLineSchema = () =>
+	z
+		.object({
+			type: z.literal("standard").describe("Specifies a straight line in Ax + By = C form."),
+			A: z.number().describe("The coefficient of x."),
+			B: z.number().describe("The coefficient of y."),
+			C: z.number().describe("The constant term.")
+		})
+		.strict()
 
-// Defines a line using point-slope form y - y1 = m(x - x1)
-export const PointSlopeLineSchema = z
-	.object({
-		type: z.literal("pointSlope").describe("Specifies a straight line in point-slope form."),
-		x1: z.number().describe("The x-coordinate of the known point."),
-		y1: z.number().describe("The y-coordinate of the known point."),
-		slope: z.number().describe("The slope of the line.")
-	})
-	.strict()
+export const createPointSlopeLineSchema = () =>
+	z
+		.object({
+			type: z.literal("pointSlope").describe("Specifies a straight line in point-slope form."),
+			x1: z.number().describe("The x-coordinate of the known point."),
+			y1: z.number().describe("The y-coordinate of the known point."),
+			slope: z.number().describe("The slope of the line.")
+		})
+		.strict()
 
-// Union of all line equation types
-export const LineEquationSchema = z.discriminatedUnion("type", [
-	SlopeInterceptLineSchema,
-	StandardLineSchema,
-	PointSlopeLineSchema
-])
+// For backwards compatibility
+export const SlopeInterceptLineSchema = createSlopeInterceptLineSchema()
+export const StandardLineSchema = createStandardLineSchema()
+export const PointSlopeLineSchema = createPointSlopeLineSchema()
 
+// Factory function for line equation union
+export const createLineEquationSchema = () =>
+	z.discriminatedUnion("type", [
+		createSlopeInterceptLineSchema(),
+		createStandardLineSchema(),
+		createPointSlopeLineSchema()
+	])
+
+export const LineEquationSchema = createLineEquationSchema()
 export type LineEquation = z.infer<typeof LineEquationSchema>
 
-// Schema for a line with styling
-export const LineSchema = z
-	.object({
-		id: z.string().describe('A unique identifier for the line (e.g., "line-a").'),
-		equation: LineEquationSchema.describe("The mathematical definition of the line."),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#EA4335")
-			.describe('The color of the line, as a CSS color string (e.g., "red", "#FF0000").'),
-		style: z
-			.enum(["solid", "dashed"])
-			.nullable()
-			.transform((val) => val ?? "solid")
-			.describe("The style of the line.")
-	})
-	.strict()
+// Factory function for line schema
+export const createLineSchema = () =>
+	z
+		.object({
+			id: z.string().describe('A unique identifier for the line (e.g., "line-a").'),
+			equation: createLineEquationSchema().describe("The mathematical definition of the line."),
+			color: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "#EA4335")
+				.describe('The color of the line, as a CSS color string (e.g., "red", "#FF0000").'),
+			style: z
+				.enum(["solid", "dashed"])
+				.nullable()
+				.transform((val) => val ?? "solid")
+				.describe("The style of the line.")
+		})
+		.strict()
 
+export const LineSchema = createLineSchema()
 export type Line = z.infer<typeof LineSchema>
 
-// Schema for polygons that reference points by ID
-export const PolygonSchema = z
-	.object({
-		vertices: z
-			.array(z.string())
-			.min(2)
-			.describe(
-				"An array of point `id` strings, in the order they should be connected. Requires at least 2 points for a line, 3 for a polygon."
-			),
-		isClosed: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? true)
-			.describe(
-				"If true, connects the last vertex to the first to form a closed shape. If false, renders an open polyline."
-			),
-		fillColor: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "rgba(66, 133, 244, 0.3)")
-			.describe(
-				"The fill color of the polygon, as a CSS color string (e.g., with alpha for transparency). Only applies if isClosed is true."
-			),
-		strokeColor: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "rgba(66, 133, 244, 1)")
-			.describe("The border color of the polygon."),
-		label: z.string().nullable().describe("An optional label for the polygon itself.")
-	})
-	.strict()
+// Factory function for polygon schema
+export const createPolygonSchema = () =>
+	z
+		.object({
+			vertices: z
+				.array(z.string())
+				.min(2)
+				.describe(
+					"An array of point `id` strings, in the order they should be connected. Requires at least 2 points for a line, 3 for a polygon."
+				),
+			isClosed: z
+				.boolean()
+				.nullable()
+				.transform((val) => val ?? true)
+				.describe(
+					"If true, connects the last vertex to the first to form a closed shape. If false, renders an open polyline."
+				),
+			fillColor: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "rgba(66, 133, 244, 0.3)")
+				.describe(
+					"The fill color of the polygon, as a CSS color string (e.g., with alpha for transparency). Only applies if isClosed is true."
+				),
+			strokeColor: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "rgba(66, 133, 244, 1)")
+				.describe("The border color of the polygon."),
+			label: z.string().nullable().describe("An optional label for the polygon itself.")
+		})
+		.strict()
 
+export const PolygonSchema = createPolygonSchema()
 export type Polygon = z.infer<typeof PolygonSchema>
 
-// Schema for distance visualization between two points
-export const DistanceSchema = z
-	.object({
-		pointId1: z.string().describe("The ID of the first point."),
-		pointId2: z.string().describe("The ID of the second point."),
-		showLegs: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? true)
-			.describe("If true, draws the 'rise' and 'run' legs of the right triangle."),
-		showLegLabels: z
-			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true, labels the legs with their lengths."),
-		hypotenuseLabel: z.string().nullable().describe("An optional label for the hypotenuse (the distance line)."),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "gray")
-			.describe("The color of the distance lines."),
-		style: z
-			.enum(["solid", "dashed"])
-			.nullable()
-			.transform((val) => val ?? "dashed")
-			.describe("The style of the distance lines.")
-	})
-	.strict()
+// Factory function for distance schema
+export const createDistanceSchema = () =>
+	z
+		.object({
+			pointId1: z.string().describe("The ID of the first point."),
+			pointId2: z.string().describe("The ID of the second point."),
+			showLegs: z
+				.boolean()
+				.nullable()
+				.transform((val) => val ?? true)
+				.describe("If true, draws the 'rise' and 'run' legs of the right triangle."),
+			showLegLabels: z
+				.boolean()
+				.nullable()
+				.transform((val) => val ?? false)
+				.describe("If true, labels the legs with their lengths."),
+			hypotenuseLabel: z.string().nullable().describe("An optional label for the hypotenuse (the distance line)."),
+			color: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "gray")
+				.describe("The color of the distance lines."),
+			style: z
+				.enum(["solid", "dashed"])
+				.nullable()
+				.transform((val) => val ?? "dashed")
+				.describe("The style of the distance lines.")
+		})
+		.strict()
 
+export const DistanceSchema = createDistanceSchema()
 export type Distance = z.infer<typeof DistanceSchema>
 
-// Schema for simple polylines (function plots)
-export const PolylineSchema = z
-	.object({
-		id: z.string().describe("A unique identifier for this polyline."),
-		points: z
-			.array(z.object({ x: z.number(), y: z.number() }))
-			.describe("An array of {x, y} points to connect in order."),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "black")
-			.describe("The color of the polyline."),
-		style: z
-			.enum(["solid", "dashed"])
-			.nullable()
-			.transform((val) => val ?? "solid")
-			.describe("The style of the polyline.")
-	})
-	.strict()
+// Factory function for polyline schema
+export const createPolylineSchema = () =>
+	z
+		.object({
+			id: z.string().describe("A unique identifier for this polyline."),
+			points: z
+				.array(z.object({ x: z.number(), y: z.number() }))
+				.describe("An array of {x, y} points to connect in order."),
+			color: z
+				.string()
+				.nullable()
+				.transform((val) => val ?? "black")
+				.describe("The color of the polyline."),
+			style: z
+				.enum(["solid", "dashed"])
+				.nullable()
+				.transform((val) => val ?? "solid")
+				.describe("The style of the polyline.")
+		})
+		.strict()
 
+export const PolylineSchema = createPolylineSchema()
 export type Polyline = z.infer<typeof PolylineSchema>
 
 // --- HELPER FUNCTIONS ---
@@ -278,7 +300,10 @@ export function generateCoordinatePlaneBase(
 	const chartHeight = height - pad.top - pad.bottom
 
 	if (chartWidth <= 0 || chartHeight <= 0 || xAxis.min >= xAxis.max || yAxis.min >= yAxis.max) {
-		throw ErrInvalidDimensions
+		throw errors.wrap(
+			ErrInvalidDimensions,
+			`width: ${width}, height: ${height}, xAxis range: ${xAxis.min}-${xAxis.max}, yAxis range: ${yAxis.min}-${yAxis.max}`
+		)
 	}
 
 	const scaleX = chartWidth / (xAxis.max - xAxis.min)
