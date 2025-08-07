@@ -166,39 +166,11 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 		})
 		logger.info("completed class ingestion", { courseId, classSourcedId: payload.class.sourcedId })
 
-		// 6. Ingest assessmentLineItems (depend on class and other entities) - BATCHED
+		// 6. Ingest assessmentLineItems (depend on class and other entities) - HIERARCHICALLY
 		if (payload.assessmentLineItems.length > 0) {
-			const assessmentBatches = []
-			for (let i = 0; i < payload.assessmentLineItems.length; i += ONEROSTER_BATCH_SIZE) {
-				assessmentBatches.push(payload.assessmentLineItems.slice(i, i + ONEROSTER_BATCH_SIZE))
-			}
-
-			logger.info("processing assessment line items in parallel batches", {
-				courseId,
-				totalAssessmentLineItems: payload.assessmentLineItems.length,
-				batchSize: ONEROSTER_BATCH_SIZE,
-				totalBatches: assessmentBatches.length
-			})
-
-			const assessmentPromises = assessmentBatches.map((batch, i) =>
-				step.invoke(`invoke-ingest-assessment-line-items-batch-${i + 1}`, {
-					function: ingestAssessmentLineItems,
-					data: { assessmentLineItems: batch }
-				})
-			)
-
-			const assessmentResults = await errors.try(Promise.all(assessmentPromises))
-			if (assessmentResults.error) {
-				logger.error("one or more assessment line item ingestion steps failed", {
-					courseId,
-					error: assessmentResults.error
-				})
-				throw errors.wrap(assessmentResults.error, "assessment line item ingestion fan-out")
-			}
-
-			logger.info("completed all assessment line item batches", {
-				courseId,
-				totalAssessmentLineItems: payload.assessmentLineItems.length
+			await step.invoke("invoke-ingest-assessment-line-items", {
+				function: ingestAssessmentLineItems,
+				data: { assessmentLineItems: payload.assessmentLineItems }
 			})
 		}
 
