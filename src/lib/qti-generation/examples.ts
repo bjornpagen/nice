@@ -157,7 +157,11 @@ export const evalFractionalExponents: AssessmentItemInput = {
 		correct: [
 			{
 				type: "paragraph",
-				content: [{ type: "text", content: "Correct! The answer is 81." }]
+				content: [
+					{ type: "text", content: "Correct! The answer is " },
+					{ type: "math", mathml: "<mn>81</mn>" },
+					{ type: "text", content: "." }
+				]
 			},
 			{
 				type: "paragraph",
@@ -397,9 +401,12 @@ export const inequalityNumberLine: AssessmentItemInput = {
 				content: [
 					{
 						type: "text",
-						content:
-							"Correct! The graph shows an open point at 0 with an arrow to the right, representing all values strictly greater than 0, so the inequality is "
+						content: "Correct! The graph shows an open point at "
 					},
+					{ type: "math", mathml: "<mn>0</mn>" },
+					{ type: "text", content: " with an arrow to the right, representing all values strictly greater than " },
+					{ type: "math", mathml: "<mn>0</mn>" },
+					{ type: "text", content: ", so the inequality is " },
 					{ type: "math", mathml: "<mi>x</mi><mo>&gt;</mo><mn>0</mn>" },
 					{ type: "text", content: "." }
 				]
@@ -478,11 +485,18 @@ export const verticalNumberLineComparison: AssessmentItemInput = {
 		{
 			type: "paragraph",
 			content: [
-				{ type: "text", content: "-1.4 is " },
+				{ type: "math", mathml: "<mo>-</mo><mn>1.4</mn>" },
+				{ type: "text", content: " is " },
 				{ type: "inlineSlot", slotId: "pos_choice" },
-				{ type: "text", content: " -6.4, so -1.4 is " },
+				{ type: "text", content: " " },
+				{ type: "math", mathml: "<mo>-</mo><mn>6.4</mn>" },
+				{ type: "text", content: ", so " },
+				{ type: "math", mathml: "<mo>-</mo><mn>1.4</mn>" },
+				{ type: "text", content: " is " },
 				{ type: "inlineSlot", slotId: "comp_choice" },
-				{ type: "text", content: " -6.4." }
+				{ type: "text", content: " " },
+				{ type: "math", mathml: "<mo>-</mo><mn>6.4</mn>" },
+				{ type: "text", content: "." }
 			]
 		}
 	],
@@ -858,7 +872,7 @@ export const equivalentFractionImages: AssessmentItemInput = {
 					{ type: "text", content: ", but " },
 					{ type: "math", mathml: "<mfrac><mn>3</mn><mn>4</mn></mfrac>" },
 					{ type: "text", content: " ≠ " },
-					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mn></mfrac>" },
+					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>2</mfrac>" },
 					{ type: "text", content: "." }
 				]
 			}
@@ -974,7 +988,7 @@ export const calculateShadedArea: AssessmentItemInput = {
 						{ type: "text", content: " circles and " },
 						{ type: "math", mathml: "<mfrac><mn>1</mn><mn>4</mn></mfrac>" },
 						{ type: "text", content: " of each circle is shaded. We can multiply: " },
-						{ type: "math", mathml: "<mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+						{ type: "math", mathml: "<mn>3</mo><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
 						{ type: "text", content: "." }
 					]
 				},
@@ -1022,7 +1036,7 @@ export const calculateShadedArea: AssessmentItemInput = {
 					{ type: "text", content: " circles with " },
 					{ type: "math", mathml: "<mfrac><mn>1</mn><mn>4</mn></mfrac>" },
 					{ type: "text", content: " shaded in each, we can either multiply " },
-					{ type: "math", mathml: "<mn>3</mn><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
+					{ type: "math", mathml: "<mn>3</mo><mo>×</mo><mfrac><mn>1</mn><mn>4</mn></mfrac>" },
 					{ type: "text", content: " or add " },
 					{
 						type: "math",
@@ -1124,7 +1138,7 @@ export const circleEquationCenterRadius: AssessmentItemInput = {
 					{
 						type: "math",
 						mathml:
-							"<mo>(</mo><mi>x</mi><mo>+</mo><mn>9</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>+</mo><mo>(</mo><mi>y</mi><mo>+</mo><mn>7</mn><mo>)</mo><msup><mrow></mrow><mn>2</mn></msup><mo>=</mo><mn>25</mn>"
+							"<msup><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>9</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>+</mo><msup><mrow><mo>(</mo><mi>y</mi><mo>+</mo><mn>7</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>=</mo><mn>25</mn>"
 					}
 				]
 			}
@@ -1664,17 +1678,33 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 				{
 					identifier: "A",
 					content: [{ type: "paragraph", content: [{ type: "math", mathml: "<mo>-</mo><mn>28</mn>" }] }],
-					feedback: [{ type: "text", content: "This can be an estimate for h(-4), but we are looking for h'(-4)." }]
+					feedback: [
+						{ type: "text", content: "This can be an estimate for " },
+						{ type: "math", mathml: "<mi>h</mi><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo>" },
+						{ type: "text", content: ", but we are looking for " },
+						{ type: "math", mathml: "<msup><mi>h</mi><mo>'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo>" },
+						{ type: "text", content: "." }
+					]
 				},
 				{
 					identifier: "B",
 					content: [{ type: "paragraph", content: [{ type: "math", mathml: "<mo>-</mo><mn>13.5</mn>" }] }],
-					feedback: [{ type: "text", content: "We should pick an interval that includes x = -4." }]
+					feedback: [
+						{ type: "text", content: "We should pick an interval that includes " },
+						{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mo>-</mo><mn>4</mn>" },
+						{ type: "text", content: "." }
+					]
 				},
 				{
 					identifier: "C",
 					content: [{ type: "paragraph", content: [{ type: "math", mathml: "<mo>-</mo><mn>2.125</mn>" }] }],
-					feedback: [{ type: "text", content: "We can pick a closer interval to estimate h' specifically at x = -4." }]
+					feedback: [
+						{ type: "text", content: "We can pick a closer interval to estimate " },
+						{ type: "math", mathml: "<msup><mi>h</mi><mo>'</mo></msup>" },
+						{ type: "text", content: " specifically at " },
+						{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mo>-</mo><mn>4</mn>" },
+						{ type: "text", content: "." }
+					]
 				},
 				{
 					identifier: "D",
@@ -1693,7 +1723,13 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 		correct: [
 			{
 				type: "paragraph",
-				content: [{ type: "text", content: "Correct! The best estimate for h'(-4) is approximately 5.33." }]
+				content: [
+					{ type: "text", content: "Correct! The best estimate for " },
+					{ type: "math", mathml: "<msup><mi>h</mi><mo>'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo>" },
+					{ type: "text", content: " is approximately " },
+					{ type: "math", mathml: "<mn>5.33</mn>" },
+					{ type: "text", content: "." }
+				]
 			}
 		],
 		incorrect: [
@@ -1702,9 +1738,12 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 				content: [
 					{
 						type: "text",
-						content:
-							"Not quite. To estimate the derivative h'(-4), calculate the average rate of change over the smallest interval containing -4."
-					}
+						content: "Not quite. To estimate the derivative "
+					},
+					{ type: "math", mathml: "<msup><mi>h</mi><mo>'</mo></msup><mo>(</mo><mo>-</mo><mn>4</mn><mo>)</mo>" },
+					{ type: "text", content: ", calculate the average rate of change over the smallest interval containing " },
+					{ type: "math", mathml: "<mo>-</mo><mn>4</mn>" },
+					{ type: "text", content: "." }
 				]
 			}
 		]
@@ -2030,14 +2069,14 @@ export const pencilLengthLinePlot: AssessmentItemInput = {
 			type: "paragraph",
 			content: [
 				{ type: "text", content: "The lengths of 4 pencils were measured. The lengths are " },
-				{ type: "math", mathml: "<mn>11</mn>" },
-				{ type: "text", content: " cm, " },
-				{ type: "math", mathml: "<mn>8</mn>" },
-				{ type: "text", content: " cm, " },
-				{ type: "math", mathml: "<mn>8</mn>" },
-				{ type: "text", content: " cm, and " },
-				{ type: "math", mathml: "<mn>3</mn>" },
-				{ type: "text", content: " cm." }
+				{ type: "math", mathml: "<mn>11</mn><mtext> cm</mtext>" },
+				{ type: "text", content: ", " },
+				{ type: "math", mathml: "<mn>8</mn><mtext> cm</mtext>" },
+				{ type: "text", content: ", " },
+				{ type: "math", mathml: "<mn>8</mn><mtext> cm</mtext>" },
+				{ type: "text", content: ", and " },
+				{ type: "math", mathml: "<mn>3</mn><mtext> cm</mtext>" },
+				{ type: "text", content: "." }
 			]
 		},
 		{ type: "blockSlot", slotId: "choice_interaction" }
@@ -2067,9 +2106,10 @@ export const pencilLengthLinePlot: AssessmentItemInput = {
 					feedback: [
 						{
 							type: "text",
-							content:
-								"This plot only shows one dot for the length of 8 cm. Remember, there were two pencils with this length."
-						}
+							content: "This plot only shows one dot for the length of "
+						},
+						{ type: "math", mathml: "<mn>8</mn><mtext> cm</mtext>" },
+						{ type: "text", content: ". Remember, there were two pencils with this length." }
 					]
 				},
 				{
@@ -2078,9 +2118,10 @@ export const pencilLengthLinePlot: AssessmentItemInput = {
 					feedback: [
 						{
 							type: "text",
-							content:
-								"This plot shows four dots above the number 4. This represents the total number of pencils, not their individual lengths."
-						}
+							content: "This plot shows four dots above the number "
+						},
+						{ type: "math", mathml: "<mn>4</mn>" },
+						{ type: "text", content: ". This represents the total number of pencils, not their individual lengths." }
 					]
 				},
 				{
@@ -2181,7 +2222,11 @@ export const gamesWonBarChart: AssessmentItemInput = {
 		correct: [
 			{
 				type: "paragraph",
-				content: [{ type: "text", content: "Correct! The Lions won 14 games." }]
+				content: [
+					{ type: "text", content: "Correct! The Lions won " },
+					{ type: "math", mathml: "<mn>14</mn>" },
+					{ type: "text", content: " games." }
+				]
 			}
 		],
 		incorrect: [
@@ -2254,14 +2299,22 @@ export const dollHeightLinePlot: AssessmentItemInput = {
 		correct: [
 			{
 				type: "paragraph",
-				content: [{ type: "text", content: "Correct! 5 dolls are taller than 22 cm." }]
+				content: [
+					{ type: "text", content: "Correct! " },
+					{ type: "math", mathml: "<mn>5</mn>" },
+					{ type: "text", content: " dolls are taller than " },
+					{ type: "math", mathml: "<mn>22</mn><mtext> cm</mtext>" },
+					{ type: "text", content: "." }
+				]
 			}
 		],
 		incorrect: [
 			{
 				type: "paragraph",
 				content: [
-					{ type: "text", content: "Not quite. Count all the dots that are to the right of 22 on the line plot." }
+					{ type: "text", content: "Not quite. Count all the dots that are to the right of " },
+					{ type: "math", mathml: "<mn>22</mn>" },
+					{ type: "text", content: " on the line plot." }
 				]
 			}
 		]
@@ -2389,14 +2442,28 @@ export const compare2DigitNumbers: AssessmentItemInput = {
 		correct: [
 			{
 				type: "paragraph",
-				content: [{ type: "text", content: "Correct! 83 is greater than 58, so the correct symbol is >." }]
+				content: [
+					{ type: "text", content: "Correct! " },
+					{ type: "math", mathml: "<mn>83</mn>" },
+					{ type: "text", content: " is greater than " },
+					{ type: "math", mathml: "<mn>58</mn>" },
+					{ type: "text", content: ", so the correct symbol is " },
+					{ type: "math", mathml: "<mo>&gt;</mo>" },
+					{ type: "text", content: "." }
+				]
 			}
 		],
 		incorrect: [
 			{
 				type: "paragraph",
 				content: [
-					{ type: "text", content: "Not quite. Since 83 is larger than 58, the correct comparison is 83 > 58." }
+					{ type: "text", content: "Not quite. Since " },
+					{ type: "math", mathml: "<mn>83</mn>" },
+					{ type: "text", content: " is larger than " },
+					{ type: "math", mathml: "<mn>58</mn>" },
+					{ type: "text", content: ", the correct comparison is " },
+					{ type: "math", mathml: "<mn>83</mn><mo>&gt;</mo><mn>58</mn>" },
+					{ type: "text", content: "." }
 				]
 			}
 		]
@@ -2439,7 +2506,15 @@ export const greatestCommonFactor: AssessmentItemInput = {
 		correct: [
 			{
 				type: "paragraph",
-				content: [{ type: "text", content: "Correct! The greatest common factor of 30 and 75 is 15." }]
+				content: [
+					{ type: "text", content: "Correct! The greatest common factor of " },
+					{ type: "math", mathml: "<mn>30</mn>" },
+					{ type: "text", content: " and " },
+					{ type: "math", mathml: "<mn>75</mn>" },
+					{ type: "text", content: " is " },
+					{ type: "math", mathml: "<mn>15</mn>" },
+					{ type: "text", content: "." }
+				]
 			}
 		],
 		incorrect: [
@@ -2448,9 +2523,18 @@ export const greatestCommonFactor: AssessmentItemInput = {
 				content: [
 					{
 						type: "text",
+						content: "Not quite. Remember to find the largest number that divides both "
+					},
+					{ type: "math", mathml: "<mn>30</mn>" },
+					{ type: "text", content: " and " },
+					{ type: "math", mathml: "<mn>75</mn>" },
+					{
+						type: "text",
 						content:
-							"Not quite. Remember to find the largest number that divides both 30 and 75 without a remainder. The factors of 30 are 1, 2, 3, 5, 6, 10, 15, 30. The factors of 75 are 1, 3, 5, 15, 25, 75. The greatest common factor is 15."
-					}
+							" without a remainder. The factors of 30 are 1, 2, 3, 5, 6, 10, 15, 30. The factors of 75 are 1, 3, 5, 15, 25, 75. The greatest common factor is "
+					},
+					{ type: "math", mathml: "<mn>15</mn>" },
+					{ type: "text", content: "." }
 				]
 			}
 		]
