@@ -2,21 +2,7 @@
 
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
-
-// Configuration for QTI embed base URLs by type and environment
-const QTI_BASE_URLS = {
-	staging: {
-		assessmentItem: "https://timeback-staging.alpha-1edtech.com/qti-embed",
-		stimulus: "https://timeback-staging.alpha-1edtech.com/qti-stimulus-embed"
-	},
-	production: {
-		assessmentItem: "https://alpha-powerpath-ui-production.up.railway.app/qti-embed",
-		stimulus: "https://timeback.alpha-1edtech.com/qti-stimulus-embed"
-	}
-} as const
-
-// This flag is now derived from the environment
-const USE_STAGING = true
+import { env } from "@/env"
 
 interface QTIRendererProps {
 	identifier: string
@@ -43,8 +29,11 @@ export function QTIRenderer({
 }: QTIRendererProps) {
 	const iframeRef = React.useRef<HTMLIFrameElement>(null)
 
-	const baseUrls = USE_STAGING ? QTI_BASE_URLS.staging : QTI_BASE_URLS.production
-	const baseUrl = baseUrls[materialType] // SELECT BASE URL BASED ON MATERIAL TYPE
+	const baseUrl =
+		materialType === "assessmentItem"
+			? env.NEXT_PUBLIC_QTI_ASSESSMENT_ITEM_PLAYER_URL
+			: env.NEXT_PUBLIC_QTI_STIMULUS_PLAYER_URL
+
 	const embedUrl = `${baseUrl}/${identifier}`
 
 	// Dynamically derive the expected origin from the base URL.
