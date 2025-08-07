@@ -24,6 +24,8 @@ export function Content({ questions }: ContentProps) {
 	const [localQuestions, setLocalQuestions] = React.useState(questions)
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
 	const [isValidating, setIsValidating] = React.useState(false)
+	const [copyModeActive, setCopyModeActive] = React.useState(false)
+	const copyModeTimeoutRef = React.useRef<number | undefined>(undefined)
 
 	// keyboard navigation for TAB/SHIFT+TAB
 	React.useEffect(() => {
@@ -46,11 +48,105 @@ export function Content({ questions }: ContentProps) {
 					}
 				}
 			}
+
+			// enter copy mode with cmd/ctrl + c
+			if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "c") {
+				event.preventDefault()
+				// activate copy mode and highlight copy buttons temporarily
+				setCopyModeActive(true)
+				toast.info("copy mode: i=id, x=xml, p=parsed_data")
+				if (copyModeTimeoutRef.current !== undefined) {
+					window.clearTimeout(copyModeTimeoutRef.current)
+				}
+				copyModeTimeoutRef.current = window.setTimeout(() => {
+					setCopyModeActive(false)
+					copyModeTimeoutRef.current = undefined
+				}, 4000)
+				return
+			}
+
+			// handle action keys while in copy mode
+			if (copyModeActive) {
+				const cq = localQuestions[currentIndex]
+				if (!cq) {
+					setCopyModeActive(false)
+					if (copyModeTimeoutRef.current !== undefined) {
+						window.clearTimeout(copyModeTimeoutRef.current)
+						copyModeTimeoutRef.current = undefined
+					}
+					return
+				}
+				const key = event.key.toLowerCase()
+				if (key === "i") {
+					event.preventDefault()
+					navigator.clipboard.writeText(cq.id).then(() => {
+						toast.success("copied id")
+					})
+					setCopyModeActive(false)
+					if (copyModeTimeoutRef.current !== undefined) {
+						window.clearTimeout(copyModeTimeoutRef.current)
+						copyModeTimeoutRef.current = undefined
+					}
+					return
+				}
+				if (key === "x") {
+					event.preventDefault()
+					const xml = cq.xml
+					if (!xml) {
+						setCopyModeActive(false)
+						if (copyModeTimeoutRef.current !== undefined) {
+							window.clearTimeout(copyModeTimeoutRef.current)
+							copyModeTimeoutRef.current = undefined
+						}
+						toast.error("no xml to copy")
+						return
+					}
+					navigator.clipboard.writeText(xml).then(() => {
+						toast.success("copied xml")
+					})
+					setCopyModeActive(false)
+					if (copyModeTimeoutRef.current !== undefined) {
+						window.clearTimeout(copyModeTimeoutRef.current)
+						copyModeTimeoutRef.current = undefined
+					}
+					return
+				}
+				if (key === "p") {
+					event.preventDefault()
+					const pd = JSON.stringify(cq.parsedData, null, 2)
+					navigator.clipboard.writeText(pd).then(() => {
+						toast.success("copied parsed_data")
+					})
+					setCopyModeActive(false)
+					if (copyModeTimeoutRef.current !== undefined) {
+						window.clearTimeout(copyModeTimeoutRef.current)
+						copyModeTimeoutRef.current = undefined
+					}
+					return
+				}
+
+				// any other key exits without copying
+				setCopyModeActive(false)
+				if (copyModeTimeoutRef.current !== undefined) {
+					window.clearTimeout(copyModeTimeoutRef.current)
+					copyModeTimeoutRef.current = undefined
+				}
+			}
 		}
 
 		window.addEventListener("keydown", handleKeyDown)
 		return () => window.removeEventListener("keydown", handleKeyDown)
-	}, [currentIndex, localQuestions.length])
+	}, [currentIndex, localQuestions.length, localQuestions[currentIndex], copyModeActive])
+
+	// cleanup timeout on unmount
+	React.useEffect(() => {
+		return () => {
+			if (copyModeTimeoutRef.current !== undefined) {
+				window.clearTimeout(copyModeTimeoutRef.current)
+				copyModeTimeoutRef.current = undefined
+			}
+		}
+	}, [])
 
 	const goToPrevious = () => {
 		const newIndex = Math.max(0, currentIndex - 1)
@@ -379,7 +475,7 @@ export function Content({ questions }: ContentProps) {
 							<Button
 								variant="ghost"
 								onClick={() => copyToClipboard(currentQuestion.id)}
-								className="hover:cursor-pointer"
+								className={`hover:cursor-pointer ${copyModeActive ? "bg-gray-100 ring-2 ring-gray-600" : ""}`}
 							>
 								copy
 							</Button>
@@ -391,7 +487,7 @@ export function Content({ questions }: ContentProps) {
 							<Button
 								variant="ghost"
 								onClick={() => copyToClipboard(currentQuestion.xml)}
-								className="hover:cursor-pointer"
+								className={`hover:cursor-pointer ${copyModeActive ? "bg-purple-100 ring-2 ring-purple-600" : ""}`}
 							>
 								copy
 							</Button>
@@ -403,7 +499,7 @@ export function Content({ questions }: ContentProps) {
 							<Button
 								variant="ghost"
 								onClick={() => copyToClipboard(JSON.stringify(currentQuestion.parsedData, null, 2))}
-								className="hover:cursor-pointer"
+								className={`hover:cursor-pointer ${copyModeActive ? "bg-blue-100 ring-2 ring-blue-600" : ""}`}
 							>
 								copy
 							</Button>

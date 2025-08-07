@@ -1520,7 +1520,7 @@ describe("Widget Generators", () => {
 	})
 
 	describe("generateScatterPlot", () => {
-		test("should render a scatter plot with linear and quadratic trend lines", () => {
+		test("should render a scatter plot with a computed linear trend line", () => {
 			const props = {
 				type: "scatterPlot" as const,
 				width: 500,
@@ -1535,22 +1535,7 @@ describe("Widget Generators", () => {
 					{ x: 8, y: 90, label: null },
 					{ x: 9, y: 85, label: null }
 				],
-				trendLines: [
-					{
-						id: "l1",
-						data: { type: "linear" as const, slope: 8, yIntercept: 5 },
-						color: "red",
-						style: "dashed" as const,
-						label: "Linear Trend"
-					},
-					{
-						id: "q1",
-						data: { type: "quadratic" as const, a: 1, b: 2, c: 5 },
-						color: "green",
-						style: "solid" as const,
-						label: "Quadratic Trend"
-					}
-				]
+				trendLine: "linear" as const
 			}
 			expect(generateScatterPlot(props)).toMatchSnapshot()
 		})
@@ -1568,7 +1553,7 @@ describe("Widget Generators", () => {
 					{ x: 5, y: 25, label: null },
 					{ x: 8, y: 40, label: "B" }
 				],
-				trendLines: null
+				trendLine: null
 			}
 			expect(generateScatterPlot(props)).toMatchSnapshot()
 		})
@@ -1582,7 +1567,7 @@ describe("Widget Generators", () => {
 				xAxis: { label: "X", min: 10, max: 0, tickInterval: 1, gridLines: false },
 				yAxis: { label: "Y", min: 0, max: 10, tickInterval: 2, gridLines: false },
 				points: [],
-				trendLines: null
+				trendLine: null
 			}
 			expect(generateScatterPlot(props)).toMatchSnapshot()
 		})

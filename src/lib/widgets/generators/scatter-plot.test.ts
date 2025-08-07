@@ -1,10 +1,14 @@
 import { describe, expect, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
 import { generateScatterPlot, ScatterPlotPropsSchema } from "./scatter-plot"
 
 // Helper function to generate diagram with schema validation
 const generateDiagram = (props: unknown) => {
-	const parsedProps = ScatterPlotPropsSchema.parse(props)
-	return generateScatterPlot(parsedProps)
+	const parsedProps = ScatterPlotPropsSchema.safeParse(props)
+	if (!parsedProps.success) {
+		throw errors.new("invalid props for ScatterPlotPropsSchema")
+	}
+	return generateScatterPlot(parsedProps.data)
 }
 
 describe("generateScatterPlot", () => {
@@ -33,7 +37,7 @@ describe("generateScatterPlot", () => {
 				{ x: 5, y: 7, label: null },
 				{ x: 8, y: 4, label: null }
 			],
-			trendLines: null
+			trendLine: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -64,19 +68,7 @@ describe("generateScatterPlot", () => {
 				{ x: 70, y: 160, label: "C" },
 				{ x: 72, y: 180, label: "D" }
 			],
-			trendLines: [
-				{
-					id: "trend1",
-					label: "Linear Trend",
-					color: "#9c27b0",
-					style: "dashed" as const,
-					data: {
-						type: "linear" as const,
-						slope: 2.5,
-						yIntercept: 20
-					}
-				}
-			]
+			trendLine: "linear" as const
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

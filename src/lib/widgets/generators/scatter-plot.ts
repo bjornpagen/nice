@@ -10,45 +10,11 @@ const ScatterPointSchema = z
 	})
 	.strict()
 
-// Defines a linear trend line using slope and y-intercept
-const LinearTrendLineSchema = z
-	.object({
-		type: z.literal("linear").describe("Specifies a straight line."),
-		slope: z.number().describe("The slope of the line (rise over run)."),
-		yIntercept: z.number().describe("The y-value where the line crosses the Y-axis.")
-	})
-	.strict()
-
-// Defines a nonlinear (quadratic) trend curve
-const QuadraticTrendLineSchema = z
-	.object({
-		type: z.literal("quadratic").describe("Specifies a parabolic curve."),
-		a: z.number().describe("The coefficient for the x^2 term in y = ax^2 + bx + c."),
-		b: z.number().describe("The coefficient for the x term in y = ax^2 + bx + c."),
-		c: z.number().describe("The constant term (y-intercept) in y = ax^2 + bx + c.")
-	})
-	.strict()
-
-// Defines the visual styling and labeling for any trend line
-const TrendLineStyleSchema = z
-	.object({
-		id: z.string().describe('A unique identifier for the line (e.g., "line-a").'),
-		label: z.string().nullable().describe('An optional label to display next to the line (e.g., "A", "B").'),
-		color: z
-			.string()
-			.nullable()
-			.transform((val) => val ?? "#EA4335")
-			.describe('The color of the line, as a CSS color string (e.g., "red", "#FF0000").'),
-		style: z
-			.enum(["solid", "dashed"])
-			.nullable()
-			.transform((val) => val ?? "solid")
-			.describe("The style of the line."),
-		data: z
-			.discriminatedUnion("type", [LinearTrendLineSchema, QuadraticTrendLineSchema])
-			.describe("The mathematical definition of the line or curve.")
-	})
-	.strict()
+// trend line selection (computed from points)
+const TrendLineSchema = z
+	.enum(["linear", "quadratic"])
+	.nullable()
+	.describe("choose a computed trend line type or null for none")
 
 // The main Zod schema for the scatterPlot function
 export const ScatterPlotPropsSchema = z
@@ -88,14 +54,11 @@ export const ScatterPlotPropsSchema = z
 			.strict()
 			.describe("Configuration for the vertical (Y) axis."),
 		points: z.array(ScatterPointSchema).describe("An array of data points to be plotted."),
-		trendLines: z
-			.array(TrendLineStyleSchema)
-			.nullable()
-			.describe("An optional array of one or more trend lines or curves to overlay on the plot.")
+		trendLine: TrendLineSchema
 	})
 	.strict()
 	.describe(
-		"This template generates a two-dimensional scatter plot as an SVG graphic. It constructs a full Cartesian coordinate system and plots data points at specified (x, y) coordinates. Its key feature is the ability to render one or more trend lines (linear or nonlinear) to model the relationship between variables. This is ideal for questions about lines of best fit, data modeling, and making predictions."
+		"this template generates a two-dimensional scatter plot as an svg graphic with optional computed trend line (linear or quadratic) based on the provided points."
 	)
 
 export type ScatterPlotProps = z.infer<typeof ScatterPlotPropsSchema>
@@ -104,8 +67,81 @@ export type ScatterPlotProps = z.infer<typeof ScatterPlotPropsSchema>
  * Generates a two-dimensional scatter plot to visualize the relationship between two
  * variables, with optional support for overlaying linear or nonlinear trend lines.
  */
+function computeLinearRegression(
+	points: ReadonlyArray<{ x: number; y: number }>
+): { slope: number; yIntercept: number } | null {
+	const count = points.length
+	if (count < 2) return null
+
+	let sumX = 0
+	let sumY = 0
+	let sumXY = 0
+	let sumX2 = 0
+	for (const p of points) {
+		sumX += p.x
+		sumY += p.y
+		sumXY += p.x * p.y
+		sumX2 += p.x * p.x
+	}
+
+	const denom = count * sumX2 - sumX * sumX
+	if (denom === 0) return null
+
+	const slope = (count * sumXY - sumX * sumY) / denom
+	const yIntercept = (sumY - slope * sumX) / count
+	return { slope, yIntercept }
+}
+
+function computeQuadraticRegression(
+	points: ReadonlyArray<{ x: number; y: number }>
+): { a: number; b: number; c: number } | null {
+	const count = points.length
+	if (count < 3) return null
+
+	let Sx = 0
+	let Sx2 = 0
+	let Sx3 = 0
+	let Sx4 = 0
+	let Sy = 0
+	let Sxy = 0
+	let Sx2y = 0
+	for (const p of points) {
+		const x = p.x
+		const y = p.y
+		const x2 = x * x
+		Sx += x
+		Sx2 += x2
+		Sx3 += x2 * x
+		Sx4 += x2 * x2
+		Sy += y
+		Sxy += x * y
+		Sx2y += x2 * y
+	}
+
+	const det3 = (
+		m11: number,
+		m12: number,
+		m13: number,
+		m21: number,
+		m22: number,
+		m23: number,
+		m31: number,
+		m32: number,
+		m33: number
+	): number => m11 * (m22 * m33 - m23 * m32) - m12 * (m21 * m33 - m23 * m31) + m13 * (m21 * m32 - m22 * m31)
+
+	const D = det3(Sx4, Sx3, Sx2, Sx3, Sx2, Sx, Sx2, Sx, count)
+	if (D === 0) return null
+
+	const Da = det3(Sx2y, Sx3, Sx2, Sxy, Sx2, Sx, Sy, Sx, count)
+	const Db = det3(Sx4, Sx2y, Sx2, Sx3, Sxy, Sx, Sx2, Sy, count)
+	const Dc = det3(Sx4, Sx3, Sx2y, Sx3, Sx2, Sxy, Sx2, Sx, Sy)
+
+	return { a: Da / D, b: Db / D, c: Dc / D }
+}
+
 export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema> = (data) => {
-	const { width, height, title, xAxis, yAxis, points, trendLines } = data
+	const { width, height, title, xAxis, yAxis, points, trendLine } = data
 	// Use the same robust coordinate plane logic from generateCoordinatePlane
 	const pad = { top: 40, right: 30, bottom: 60, left: 50 }
 	const chartWidth = width - pad.left - pad.right
@@ -148,28 +184,28 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	if (yAxis.label)
 		svg += `<text x="${pad.left - 35}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 35}, ${pad.top + chartHeight / 2})">${yAxis.label}</text>`
 
-	// Trend lines
-	if (trendLines) {
-		for (const tl of trendLines) {
-			const dash = tl.style === "dashed" ? ` stroke-dasharray="5 3"` : ""
-			if (tl.data.type === "linear") {
-				const { slope, yIntercept } = tl.data
-				const y1 = slope * xAxis.min + yIntercept
-				const y2 = slope * xAxis.max + yIntercept
-				svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}" stroke="${tl.color}" stroke-width="2"${dash} />`
-			} else if (tl.data.type === "quadratic") {
-				const { a, b, c } = tl.data
-				const steps = 100
-				let path = ""
-				for (let i = 0; i <= steps; i++) {
-					const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
-					const yVal = a * xVal ** 2 + b * xVal + c
-					const px = toSvgX(xVal)
-					const py = toSvgY(yVal)
-					path += `${i === 0 ? "M" : "L"} ${px} ${py} `
-				}
-				svg += `<path d="${path}" fill="none" stroke="${tl.color}" stroke-width="2"${dash} />`
+	// computed trend line
+	if (trendLine === "linear") {
+		const coeff = computeLinearRegression(points)
+		if (coeff) {
+			const y1 = coeff.slope * xAxis.min + coeff.yIntercept
+			const y2 = coeff.slope * xAxis.max + coeff.yIntercept
+			svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}" stroke="#EA4335" stroke-width="2" />`
+		}
+	}
+	if (trendLine === "quadratic") {
+		const coeff = computeQuadraticRegression(points)
+		if (coeff) {
+			const steps = 100
+			let path = ""
+			for (let i = 0; i <= steps; i++) {
+				const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
+				const yVal = coeff.a * xVal ** 2 + coeff.b * xVal + coeff.c
+				const px = toSvgX(xVal)
+				const py = toSvgY(yVal)
+				path += `${i === 0 ? "M" : "L"} ${px} ${py} `
 			}
+			svg += `<path d="${path}" fill="none" stroke="#EA4335" stroke-width="2" />`
 		}
 	}
 
