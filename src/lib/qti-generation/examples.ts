@@ -2573,6 +2573,188 @@ export const greatestCommonFactor: AssessmentItemInput = {
 	}
 }
 
+export const threeDataTablesMultipleChoice: AssessmentItemInput = {
+	identifier: "three-data-tables-mc",
+	title: "Read three different tables and answer three questions",
+	responseDeclarations: [
+		{ identifier: "RESP_Q1", cardinality: "single", baseType: "identifier", correct: "A" },
+		{ identifier: "RESP_Q2", cardinality: "single", baseType: "identifier", correct: "B" },
+		{ identifier: "RESP_Q3", cardinality: "single", baseType: "identifier", correct: "B" }
+	],
+	widgets: {
+		table_q1: {
+			type: "dataTable",
+			title: null,
+			columns: [
+				{ key: "fruit", label: [{ type: "text", content: "Fruit" }], isNumeric: false },
+				{ key: "count", label: [{ type: "text", content: "Count" }], isNumeric: true }
+			],
+			rowHeaderKey: null,
+			data: [
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Apples" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>12</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Bananas" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>8</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Cherries" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>4</mn>" }] }
+				]
+			],
+			footer: null
+		},
+		table_q2: {
+			type: "dataTable",
+			title: null,
+			columns: [
+				{ key: "city", label: [{ type: "text", content: "City" }], isNumeric: false },
+				{ key: "temp", label: [{ type: "text", content: "Temperature (°F)" }], isNumeric: true }
+			],
+			rowHeaderKey: null,
+			data: [
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Springfield" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>72</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Riverton" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>65</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Lakeside" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>80</mn>" }] }
+				]
+			],
+			footer: null
+		},
+		table_q3: {
+			type: "dataTable",
+			title: null,
+			columns: [
+				{ key: "subject", label: [{ type: "text", content: "Subject" }], isNumeric: false },
+				{ key: "minutes", label: [{ type: "text", content: "Minutes studied" }], isNumeric: true }
+			],
+			rowHeaderKey: null,
+			data: [
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Math" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>45</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "Science" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>30</mn>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "History" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>15</mn>" }] }
+				]
+			],
+			footer: null
+		}
+	},
+	body: [
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "For each table, answer the multiple choice question that follows." }]
+		},
+		{ type: "blockSlot", slotId: "table_q1" },
+		{ type: "blockSlot", slotId: "choice_q1" },
+		{ type: "blockSlot", slotId: "table_q2" },
+		{ type: "blockSlot", slotId: "choice_q2" },
+		{ type: "blockSlot", slotId: "table_q3" },
+		{ type: "blockSlot", slotId: "choice_q3" }
+	],
+	interactions: {
+		choice_q1: {
+			type: "choiceInteraction",
+			responseIdentifier: "RESP_Q1",
+			shuffle: true,
+			minChoices: 1,
+			maxChoices: 1,
+			prompt: [{ type: "text", content: "Which fruit had the highest count?" }],
+			choices: [
+				{
+					identifier: "A",
+					content: [{ type: "paragraph", content: [{ type: "text", content: "Apples" }] }],
+					feedback: null
+				},
+				{
+					identifier: "B",
+					content: [{ type: "paragraph", content: [{ type: "text", content: "Bananas" }] }],
+					feedback: null
+				},
+				{
+					identifier: "C",
+					content: [{ type: "paragraph", content: [{ type: "text", content: "Cherries" }] }],
+					feedback: null
+				}
+			]
+		},
+		choice_q2: {
+			type: "choiceInteraction",
+			responseIdentifier: "RESP_Q2",
+			shuffle: true,
+			minChoices: 1,
+			maxChoices: 1,
+			prompt: [{ type: "text", content: "Which city had the lowest temperature?" }],
+			choices: [
+				{
+					identifier: "A",
+					content: [{ type: "paragraph", content: [{ type: "text", content: "Springfield" }] }],
+					feedback: null
+				},
+				{
+					identifier: "B",
+					content: [{ type: "paragraph", content: [{ type: "text", content: "Riverton" }] }],
+					feedback: null
+				},
+				{
+					identifier: "C",
+					content: [{ type: "paragraph", content: [{ type: "text", content: "Lakeside" }] }],
+					feedback: null
+				}
+			]
+		},
+		choice_q3: {
+			type: "choiceInteraction",
+			responseIdentifier: "RESP_Q3",
+			shuffle: true,
+			minChoices: 1,
+			maxChoices: 1,
+			prompt: [{ type: "text", content: "Which subject shows 30 minutes studied?" }],
+			choices: [
+				{
+					identifier: "A",
+					content: [{ type: "paragraph", content: [{ type: "text", content: "Math" }] }],
+					feedback: null
+				},
+				{
+					identifier: "B",
+					content: [{ type: "paragraph", content: [{ type: "text", content: "Science" }] }],
+					feedback: null
+				},
+				{
+					identifier: "C",
+					content: [{ type: "paragraph", content: [{ type: "text", content: "History" }] }],
+					feedback: null
+				}
+			]
+		}
+	},
+	feedback: {
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Great work! You answered all three questions correctly." }]
+			}
+		],
+		incorrect: [{ type: "paragraph", content: [{ type: "text", content: "Review the tables and try again." }] }]
+	}
+}
+
 export const allExamples: AssessmentItemInput[] = [
 	greatestCommonFactor,
 	doubleNumberLineRatio,
@@ -2595,5 +2777,6 @@ export const allExamples: AssessmentItemInput[] = [
 	gamesWonBarChart,
 	dollHeightLinePlot,
 	timeOnNumberLine,
-	compare2DigitNumbers
+	compare2DigitNumbers,
+	threeDataTablesMultipleChoice
 ]
