@@ -1,7 +1,7 @@
 import { serve } from "inngest/next"
 import { inngest } from "@/inngest/client"
 // Import QTI workers
-import { clearAllXmlData } from "@/inngest/functions/clear-all-xml-data"
+import { clearAllAssessmentItemData } from "@/inngest/functions/clear-all-assessment-item-data"
 import { clearCourseXmlData } from "@/inngest/functions/clear-course-xml-data"
 import { helloWorld } from "@/inngest/functions/hello"
 // Import OneRoster workers
@@ -79,7 +79,7 @@ export const { GET, POST, PUT } = serve({
 		ingestResources,
 		ingestAssessmentLineItems,
 		// QTI Functions
-		clearAllXmlData,
+		clearAllAssessmentItemData,
 		clearCourseXmlData,
 		convertPerseusArticleToQtiStimulus,
 		convertPerseusQuestionToQtiItem,

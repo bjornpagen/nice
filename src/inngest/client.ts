@@ -103,8 +103,8 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
-	// ✅ ADDED: New event to clear ALL XML data database-wide.
-	"qti/database.clear-all-xml": {
+	// ✅ ADDED: New, more specific event for clearing only assessment item data.
+	"qti/database.clear-assessment-item-data": {
 		data: z.object({})
 	},
 	// ✅ ADD: New event to trigger the validation of all question XML
