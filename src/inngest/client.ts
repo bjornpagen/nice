@@ -285,12 +285,11 @@ const events = {
 	// "migration/hardcoded.qti.ingest": {
 	//   data: z.object({})
 	// },
-	// ✅ ADDED: New event to trigger the differentiation of assessment items for hardcoded courses
-	"migration/hardcoded.qti.differentiate-items": {
+	// ✅ UPDATED: Split monolithic generation into two granular events
+	"migration/hardcoded.qti.generate-items-and-tests": {
 		data: z.object({})
 	},
-	// ✅ ADDED: New event to trigger the generation of stimuli and tests for hardcoded courses
-	"migration/hardcoded.qti.generate-stimuli-and-tests": {
+	"migration/hardcoded.qti.generate-stimuli": {
 		data: z.object({})
 	},
 	// ✅ ADDED: New event to trigger the upload of all QTI content for hardcoded courses

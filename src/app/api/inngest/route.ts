@@ -28,8 +28,8 @@ import { orchestrateHardcodedOnerosterIngestion } from "@/inngest/functions/orch
 // ❌ REMOVED: Obsolete monolithic QTI ingestion orchestrator
 // import { orchestrateHardcodedQtiIngestion } from "@/inngest/functions/orchestrate-hardcoded-qti-ingestion"
 // ✅ ADDED: Modular hardcoded QTI pipeline orchestrators
-import { orchestrateHardcodedQtiDifferentiationForItems } from "@/inngest/functions/orchestrate-hardcoded-qti-differentiation-for-items"
-import { orchestrateHardcodedQtiGenerationForStimuliAndTests } from "@/inngest/functions/orchestrate-hardcoded-qti-generation-for-stimuli-and-tests"
+import { orchestrateHardcodedQtiGenerationForItemsAndTests } from "@/inngest/functions/orchestrate-hardcoded-qti-generation-for-items-and-tests"
+import { orchestrateHardcodedQtiGenerationForStimuli } from "@/inngest/functions/orchestrate-hardcoded-qti-generation-for-stimuli"
 import { orchestrateHardcodedQtiUpload } from "@/inngest/functions/orchestrate-hardcoded-qti-upload"
 import { orchestrateHardcodedStimulusMigration } from "@/inngest/functions/orchestrate-hardcoded-stimulus-migration"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
@@ -65,8 +65,8 @@ export const { GET, POST, PUT } = serve({
 		// ADD: Register the new independent functions.
 		orchestrateHardcodedOnerosterIngestion,
 		// ✅ ADDED: Register new modular QTI pipeline orchestrators
-		orchestrateHardcodedQtiDifferentiationForItems,
-		orchestrateHardcodedQtiGenerationForStimuliAndTests,
+		orchestrateHardcodedQtiGenerationForItemsAndTests,
+		orchestrateHardcodedQtiGenerationForStimuli,
 		orchestrateHardcodedQtiUpload,
 		// ✅ REMOVED: Old differentiated ingest is no longer registered.
 		// differentiatedIngest,

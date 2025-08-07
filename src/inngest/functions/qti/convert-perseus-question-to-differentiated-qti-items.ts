@@ -121,13 +121,14 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 
 			const compileResult = errors.trySync(() => compile(itemWithNewIdentifier))
 			if (compileResult.error) {
-				logger.error("failed to compile differentiated item to xml", {
+				// Make resilient: log and continue to next variation instead of throwing
+				logger.error("failed to compile a single differentiated item to xml, skipping this variation", {
 					questionId,
 					itemIndex: i + 1,
 					identifier: qtiIdentifier,
 					error: compileResult.error
 				})
-				throw errors.wrap(compileResult.error, `xml compilation for item ${i + 1}`)
+				continue
 			}
 
 			// Create the output item in the same format as assessmentItems.json
@@ -154,7 +155,8 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 		// Step 5: Return just the array of compiled items (no wrapper object).
 		logger.info("successfully completed generation and compilation of differentiated qti items", {
 			questionId,
-			generatedCount: differentiatedItems.length,
+			attemptedCount: differentiatedItems.length,
+			generatedCount: compiledItems.length,
 			totalXmlLength: compiledItems.reduce((sum, item) => sum + item.xml.length, 0)
 		})
 

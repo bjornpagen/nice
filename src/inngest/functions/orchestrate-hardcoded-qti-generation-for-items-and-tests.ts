@@ -5,7 +5,8 @@ import { and, eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
+import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
+import { escapeXmlAttribute } from "@/lib/xml-utils"
 
 const HARDCODED_COURSE_IDS = [
 	"x0267d782", // 6th grade math (Common Core)
@@ -13,15 +14,18 @@ const HARDCODED_COURSE_IDS = [
 	"x7c7044d7" // 8th grade math (Common Core)
 ]
 
-export const orchestrateHardcodedQtiGenerationForStimuliAndTests = inngest.createFunction(
+const DIFFERENTIATION_COUNT = 3
+
+export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createFunction(
 	{
-		id: "orchestrate-hardcoded-qti-generation-for-stimuli-and-tests",
-		name: "Orchestrate Hardcoded QTI Generation for Assessment Stimuli and Tests"
+		id: "orchestrate-hardcoded-qti-generation-for-items-and-tests",
+		name: "Orchestrate Hardcoded QTI Generation for Items and Tests"
 	},
-	{ event: "migration/hardcoded.qti.generate-stimuli-and-tests" },
-	async ({ logger }) => {
-		logger.info("starting hardcoded qti generation for stimuli and tests", {
-			courseCount: HARDCODED_COURSE_IDS.length
+	{ event: "migration/hardcoded.qti.generate-items-and-tests" },
+	async ({ step, logger }) => {
+		logger.info("starting hardcoded qti generation for items and tests", {
+			courseCount: HARDCODED_COURSE_IDS.length,
+			variationsPerItem: DIFFERENTIATION_COUNT
 		})
 
 		const courses = await db.query.niceCourses.findMany({
@@ -32,10 +36,10 @@ export const orchestrateHardcodedQtiGenerationForStimuliAndTests = inngest.creat
 		await Promise.all(
 			courses.map(async (course) => {
 				const courseId = course.id
-				logger.info("generating stimuli and tests for course", { courseId })
+				logger.info("processing course for item and test generation", { courseId })
 
 				const units = await db.query.niceUnits.findMany({
-					where: eq(schema.niceUnits.courseId, courseId),
+					where: eq(schema.niceUnits.courseId, course.id),
 					columns: { id: true }
 				})
 				if (units.length === 0) {
@@ -44,7 +48,75 @@ export const orchestrateHardcodedQtiGenerationForStimuliAndTests = inngest.creat
 				}
 				const unitIds = units.map((u) => u.id)
 
-				const [allQuestions, allArticles, unitAssessments, courseAssessments, allExercises] = await Promise.all([
+				const questions = await db
+					.selectDistinct({ id: schema.niceQuestions.id })
+					.from(schema.niceQuestions)
+					.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+					.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+					.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+					.where(inArray(schema.niceLessons.unitId, unitIds))
+
+				if (questions.length === 0) {
+					logger.info("no questions found for course, skipping", { courseId })
+					return
+				}
+
+				const differentiationPromises = questions.map((q) =>
+					step.invoke(`differentiate-${q.id}`, {
+						function: convertPerseusQuestionToDifferentiatedQtiItems,
+						data: { questionId: q.id, n: DIFFERENTIATION_COUNT }
+					})
+				)
+
+				const settledResults = await Promise.allSettled(differentiationPromises)
+
+				function isFulfilled<T>(r: PromiseSettledResult<T>): r is PromiseFulfilledResult<T> {
+					return r.status === "fulfilled" && r.value !== null
+				}
+
+				const successfulResults = settledResults.filter(isFulfilled)
+				const failedResults = settledResults.filter(
+					(result): result is PromiseRejectedResult => result.status === "rejected"
+				)
+
+				if (failedResults.length > 0) {
+					logger.warn("some item differentiations failed", {
+						courseId,
+						failedCount: failedResults.length,
+						total: questions.length,
+						errors: failedResults.map((r) => r.reason)
+					})
+				}
+
+				const assessmentItems = successfulResults.flatMap((result) => result.value).filter(Boolean)
+
+				const courseDir = path.join(process.cwd(), "data", course.slug, "qti")
+				const mkdirResult = await errors.try(fs.mkdir(courseDir, { recursive: true }))
+				if (mkdirResult.error) {
+					logger.error("directory creation failed", { error: mkdirResult.error, file: courseDir })
+					throw errors.wrap(mkdirResult.error, "directory creation")
+				}
+				const writeItems = await errors.try(
+					fs.writeFile(path.join(courseDir, "assessmentItems.json"), JSON.stringify(assessmentItems, null, 2))
+				)
+				if (writeItems.error) {
+					logger.error("file write failed", {
+						error: writeItems.error,
+						file: path.join(courseDir, "assessmentItems.json")
+					})
+					throw errors.wrap(writeItems.error, "file write")
+				}
+
+				logger.info("successfully differentiated and saved items for course", {
+					courseId,
+					successfulSources: successfulResults.length,
+					totalSources: questions.length,
+					itemsGenerated: assessmentItems.length
+				})
+
+				// --- Test generation ---
+				logger.info("starting test generation for course", { courseId })
+				const [allQuestionsForTests, unitAssessments, courseAssessments, allExercises] = await Promise.all([
 					db
 						.select({
 							id: schema.niceQuestions.id,
@@ -56,19 +128,6 @@ export const orchestrateHardcodedQtiGenerationForStimuliAndTests = inngest.creat
 						.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
 						.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
 						.where(inArray(schema.niceLessons.unitId, unitIds)),
-
-					db
-						.select({
-							id: schema.niceArticles.id,
-							xml: schema.niceArticles.xml,
-							title: schema.niceArticles.title,
-							slug: schema.niceArticles.slug
-						})
-						.from(schema.niceArticles)
-						.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
-						.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-						.where(inArray(schema.niceLessons.unitId, unitIds)),
-
 					db
 						.select({
 							assessmentId: schema.niceAssessments.id,
@@ -87,7 +146,6 @@ export const orchestrateHardcodedQtiGenerationForStimuliAndTests = inngest.creat
 						.where(
 							and(inArray(schema.niceAssessments.parentId, unitIds), eq(schema.niceAssessments.parentType, "Unit"))
 						),
-
 					db
 						.select({
 							assessmentId: schema.niceAssessments.id,
@@ -104,7 +162,6 @@ export const orchestrateHardcodedQtiGenerationForStimuliAndTests = inngest.creat
 							eq(schema.niceAssessments.id, schema.niceAssessmentExercises.assessmentId)
 						)
 						.where(and(eq(schema.niceAssessments.parentId, courseId), eq(schema.niceAssessments.parentType, "Course"))),
-
 					db.query.niceExercises.findMany({
 						where: inArray(
 							schema.niceExercises.id,
@@ -122,33 +179,14 @@ export const orchestrateHardcodedQtiGenerationForStimuliAndTests = inngest.creat
 					})
 				])
 
-				// Validate ALL articles have XML
-				for (const a of allArticles) {
-					if (!a.xml) {
-						logger.error("CRITICAL: stimulus missing xml", { articleId: a.id })
-						throw errors.new("stimulus missing xml")
-					}
-				}
-
-				const assessmentStimuli = allArticles.map((a) => {
-					if (!a.xml) {
-						// Should be unreachable due to validation above; keep explicit guard to satisfy type checker
-						throw errors.new("unreachable: article should have xml after validation")
-					}
-					const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice_${a.id}`, a.title)
-					return { xml: finalXml, metadata: { khanId: a.id, khanSlug: a.slug, khanTitle: a.title } }
-				})
-
-				// Build questionsByExerciseId map
 				const questionsByExerciseId = new Map<string, string[]>()
-				for (const q of allQuestions) {
+				for (const q of allQuestionsForTests) {
 					if (!questionsByExerciseId.has(q.exerciseId)) {
 						questionsByExerciseId.set(q.exerciseId, [])
 					}
 					questionsByExerciseId.get(q.exerciseId)?.push(q.id)
 				}
 
-				// Group assessments and their exercises
 				const assessmentMap = new Map<
 					string,
 					{ title: string; type: string; path: string; slug: string; description: string | null; exerciseIds: string[] }
@@ -218,7 +256,7 @@ ${sectionsXml}
 					const questionIds = data.exerciseIds.flatMap((exerciseId) => questionsByExerciseId.get(exerciseId) || [])
 
 					const allQuestionsForTest = questionIds.map((id) => {
-						const question = allQuestions.find((q) => q.id === id)
+						const question = allQuestionsForTests.find((q) => q.id === id)
 						if (!question) {
 							logger.error("question not found when building test", { questionId: id, assessmentId })
 							throw errors.new("question not found when building test")
@@ -265,24 +303,6 @@ ${sectionsXml}
 
 				const assessmentTests = [...explicitTests, ...exerciseTests]
 
-				const courseDir = path.join(process.cwd(), "data", course.slug, "qti")
-				const mkdirResult = await errors.try(fs.mkdir(courseDir, { recursive: true }))
-				if (mkdirResult.error) {
-					logger.error("directory creation failed", { error: mkdirResult.error, file: courseDir })
-					throw errors.wrap(mkdirResult.error, "directory creation")
-				}
-
-				const writeStimuli = await errors.try(
-					fs.writeFile(path.join(courseDir, "assessmentStimuli.json"), JSON.stringify(assessmentStimuli, null, 2))
-				)
-				if (writeStimuli.error) {
-					logger.error("file write failed", {
-						error: writeStimuli.error,
-						file: path.join(courseDir, "assessmentStimuli.json")
-					})
-					throw errors.wrap(writeStimuli.error, "file write")
-				}
-
 				const writeTests = await errors.try(
 					fs.writeFile(path.join(courseDir, "assessmentTests.json"), JSON.stringify(assessmentTests, null, 2))
 				)
@@ -294,15 +314,14 @@ ${sectionsXml}
 					throw errors.wrap(writeTests.error, "file write")
 				}
 
-				logger.info("generated stimuli and tests for course", {
+				logger.info("generated tests for course", {
 					courseId,
-					stimuli: assessmentStimuli.length,
 					tests: assessmentTests.length
 				})
 			})
 		)
 
-		logger.info("completed hardcoded qti generation for stimuli and tests")
+		logger.info("completed hardcoded qti item and test generation for all courses")
 		return { status: "complete", courseCount: HARDCODED_COURSE_IDS.length }
 	}
 )
