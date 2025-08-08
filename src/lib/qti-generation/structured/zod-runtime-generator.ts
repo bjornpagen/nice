@@ -1,73 +1,23 @@
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 
-function formatJsonPath(path: Array<string | number>): string {
-	if (path.length === 0) return ""
-	const segments = path.map((seg) => String(seg))
-	return `/${segments.join("/")}`
-}
-
-/**
- * NEW: Configuration options for the dynamic schema generator.
- */
-export type SchemaGenerationOptions = {
-	/**
-	 * Defines how to handle empty arrays.
-	 * - 'throw' (default): Fails fast, throwing an error.
-	 * - 'z.never()': Generates `z.array(z.never())`, allowing validation to pass for empty arrays.
-	 */
-	emptyArrayStrategy?: "throw" | "z.never()"
-	/**
-	 * A list of JSON paths (e.g., "body.*.content") where a field, if it exists,
-	 * MUST be a non-empty string. This overrides type inference for these specific paths.
-	 * The wildcard '*' matches any array index.
-	 */
-	requiredStringPaths?: string[]
-}
-
-/**
- * Creates a regex from a wildcard path for matching against concrete JSON paths.
- * Example: "body.*.content" -> /^body\/\d+\/content$/
- */
-function createPathRegex(wildcardPath: string): RegExp {
-	const escaped = wildcardPath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-	const withWildcard = escaped.replace(/\\\*/g, "\\d+")
-	return new RegExp(`^${withWildcard}$`)
-}
-
 /**
  * Recursively generates a Zod schema from a JavaScript object or value at runtime.
  *
- * CRITICAL: This function follows a FAIL-FAST philosophy. Any unexpected data
- * structure will cause an immediate failure rather than providing fallback schemas.
- * This is a safety-critical requirement - NO FALLBACKS are allowed.
+ * NOTE: This function is now simpler because it expects an object that has already
+ * had its arrays transformed into objects. It will not handle arrays directly.
  *
  * @param obj The object or value to generate a schema from.
- * @param options Configuration for schema generation behavior.
  * @param visited A map to track visited objects to prevent infinite recursion from circular references.
  * @returns A Zod schema that validates the structure and types of the input object.
- * @throws {Error} When encountering unsupported types, empty arrays, or circular references.
+ * @throws {Error} When encountering unsupported types or circular references.
  */
 export function generateZodSchemaFromObject(
 	obj: unknown,
-	options: SchemaGenerationOptions = {}, // ADDED: Options parameter
 	visited = new Map<object, z.ZodTypeAny>(),
 	processing = new Set<object>(),
 	path: Array<string | number> = []
 ): z.ZodTypeAny {
-	// MODIFIED: Check for required path override at the beginning.
-	const concretePath = path.join("/")
-	if (options.requiredStringPaths) {
-		for (const wildcardPath of options.requiredStringPaths) {
-			const regex = createPathRegex(wildcardPath)
-			if (regex.test(concretePath)) {
-				// This path is configured to be a required string.
-				// Override whatever the actual value is.
-				return z.string().min(1, { message: `Field at ${formatJsonPath(path)} is required.` })
-			}
-		}
-	}
-
 	if (obj === null) {
 		return z.null()
 	}
@@ -110,63 +60,14 @@ export function generateZodSchemaFromObject(
 				return z.date()
 			}
 
-			if (Array.isArray(obj)) {
-				// MODIFIED: Implement the emptyArrayStrategy instead of always throwing.
-				if (obj.length === 0) {
-					if (options.emptyArrayStrategy === "z.never()") {
-						return z.array(z.never())
-					}
-					// Default behavior is to fail fast.
-					const where = path.length ? ` at ${formatJsonPath(path)}` : ""
-					throw errors.new(`zod schema generation: cannot infer type from empty array${where}`)
-				}
-
-				// FIX: Handle heterogeneous arrays by creating a union of all possible element types.
-				const elementTypes = obj.map((element, idx) =>
-					generateZodSchemaFromObject(element, options, visited, processing, [...path, idx])
-				)
-				const uniqueElementSchemas = Array.from(
-					// Use a reliable property like JSON stringified description for the uniqueness key
-					new Map(elementTypes.map((schema) => [JSON.stringify(schema.description), schema])).values()
-				)
-
-				let schema: z.ZodArray<z.ZodTypeAny>
-				if (uniqueElementSchemas.length === 0) {
-					// CRITICAL: No schemas found for array elements - data corruption
-					throw errors.new("zod schema generation: no valid schemas for array elements")
-				}
-
-				if (uniqueElementSchemas.length === 1) {
-					// This is now safe because we've confirmed the length.
-					const firstSchema = uniqueElementSchemas[0]
-					if (!firstSchema) {
-						// CRITICAL: Array destructuring failed - logic error
-						throw errors.new("zod schema generation: array element schema is undefined")
-					}
-					schema = z.array(firstSchema)
-				} else {
-					// Create a union with validated tuple structure
-					const [first, second, ...rest] = uniqueElementSchemas
-					if (!first || !second) {
-						// CRITICAL: Union creation failed - data structure error
-						throw errors.new("zod schema generation: cannot create union from array schemas")
-					}
-					schema = z.array(z.union([first, second, ...rest]))
-				}
-
-				// Update the visited map with the final schema.
-				visited.set(obj, schema)
-				// Remove from processing set now that we're done
-				processing.delete(obj)
-				return schema
-			}
+			// MODIFIED: The entire `if (Array.isArray(obj))` block has been REMOVED.
+			// This function will no longer receive arrays due to the pre-transformation.
 
 			const shape: { [key: string]: z.ZodTypeAny } = {}
 			// Use Object.entries to safely iterate over the object
 			const entries = Object.entries(obj)
 			for (const [key, value] of entries) {
-				// MODIFIED: Pass options through in recursive call.
-				shape[key] = generateZodSchemaFromObject(value, options, visited, processing, [...path, key])
+				shape[key] = generateZodSchemaFromObject(value, visited, processing, [...path, key])
 			}
 
 			// Create a strict object schema to disallow any extra properties.

@@ -4,35 +4,85 @@ import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
 import { z } from "zod"
 import { env } from "@/env"
-import type { AssessmentItemInput } from "@/lib/qti-generation/schemas"
+import { type AssessmentItemInput, AssessmentItemSchema } from "@/lib/qti-generation/schemas"
 import { generateZodSchemaFromObject } from "@/lib/qti-generation/structured/zod-runtime-generator"
 
 const OPENAI_MODEL = "gpt-5"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
 /**
- * NEW: Define the paths for fields that are strictly required by downstream
- * processes (sanitizer, compiler). The '*' is a wildcard for any array index.
- * This ensures that even if the input item has `content: undefined`, the schema
- * generated for the AI will require `content: z.string().min(1)`.
+ * A unique, safe prefix for keys created from array indices to prevent
+ * collision with legitimate object keys that are numeric strings.
  */
-const REQUIRED_STRING_PATHS = [
-	// Text content in body, feedback, and prompts
-	"body.*.content.*.content",
-	"feedback.correct.*.content.*.content",
-	"feedback.incorrect.*.content.*.content",
-	"interactions.*.prompt.*.content",
-	// MathML content
-	"body.*.content.*.mathml",
-	"feedback.correct.*.content.*.mathml",
-	"feedback.incorrect.*.content.*.mathml",
-	"interactions.*.prompt.*.mathml",
-	// Content within choices
-	"interactions.*.choices.*.content.*.content.*.content", // Block -> Paragraph -> Inline
-	"interactions.*.choices.*.content.*.mathml", // Inline (for inlineChoice)
-	"interactions.*.choices.*.feedback.*.content",
-	"interactions.*.choices.*.feedback.*.mathml"
-]
+const ARRAY_KEY_PREFIX = "__idx__"
+
+/**
+ * Recursively transforms arrays into objects using a safe, prefixed key.
+ * This creates a rigid, unambiguous structure ideal for schema generation.
+ * e.g., ["a", "b"] -> { "__idx__0": "a", "__idx__1": "b" }
+ */
+function transformArraysToObjects(data: unknown): unknown {
+	if (Array.isArray(data)) {
+		const newObj: Record<string, unknown> = {}
+		for (let i = 0; i < data.length; i++) {
+			newObj[`${ARRAY_KEY_PREFIX}${i}`] = transformArraysToObjects(data[i])
+		}
+		return newObj
+	}
+	if (typeof data === "object" && data !== null) {
+		const newObj: Record<string, unknown> = {}
+		// @ts-ignore - Safe: we've already checked that data is an object
+		// biome-ignore lint: Type assertion needed for recursive transformation
+		const dataObj = data as any
+		for (const key in dataObj) {
+			newObj[key] = transformArraysToObjects(dataObj[key])
+		}
+		return newObj
+	}
+	return data
+}
+
+/**
+ * Recursively transforms objects with prefixed keys back into arrays.
+ * This is the exact, safe inverse of transformArraysToObjects.
+ */
+function transformObjectsToArrays(data: unknown): unknown {
+	if (typeof data === "object" && data !== null) {
+		// @ts-ignore - Safe: we've already checked that data is an object
+		// biome-ignore lint: Type assertion needed for object key iteration
+		const obj = data as any
+		const keys = Object.keys(obj)
+
+		// An object is only considered array-like if ALL its keys have our prefix.
+		const isArrayLike = keys.length === 0 || keys.every((k) => k.startsWith(ARRAY_KEY_PREFIX))
+
+		if (isArrayLike) {
+			if (keys.length === 0) return []
+
+			const newArr: unknown[] = []
+			// Sort keys numerically to guarantee correct array order.
+			const sortedKeys = keys.sort(
+				(a, b) =>
+					Number.parseInt(a.substring(ARRAY_KEY_PREFIX.length), 10) -
+					Number.parseInt(b.substring(ARRAY_KEY_PREFIX.length), 10)
+			)
+
+			for (const key of sortedKeys) {
+				const index = Number.parseInt(key.substring(ARRAY_KEY_PREFIX.length), 10)
+				newArr[index] = transformObjectsToArrays(obj[key])
+			}
+			return newArr
+		}
+
+		// If not array-like, process as a regular object.
+		const newObj: Record<string, unknown> = {}
+		for (const key in obj) {
+			newObj[key] = transformObjectsToArrays(obj[key])
+		}
+		return newObj
+	}
+	return data
+}
 
 function createDifferentiatedItemsPrompt(
 	assessmentItemJson: string,
@@ -86,25 +136,33 @@ export async function differentiateAssessmentItem(
 ): Promise<AssessmentItemInput[]> {
 	logger.info("starting assessment item differentiation", { identifier: assessmentItem.identifier, variations: n })
 
-	// Step 1: Generate a robust Zod schema from the input object at runtime.
-	// MODIFIED: Pass a configuration to harden the generated schema.
-	const runtimeSchema = generateZodSchemaFromObject(assessmentItem, {
-		// Allow empty arrays (e.g., in prompts) to prevent pre-AI failures.
-		emptyArrayStrategy: "z.never()",
-		// Enforce that critical string fields are non-optional and non-empty in the
-		// schema, closing the gap between AI validation and compiler expectations.
-		requiredStringPaths: REQUIRED_STRING_PATHS
-	})
+	// Step 1: First, ensure the incoming data is valid against our canonical schema.
+	// This confirms our assumption that the data is fundamentally correct.
+	const validationResult = AssessmentItemSchema.safeParse(assessmentItem)
+	if (!validationResult.success) {
+		logger.error("Initial assessment item failed canonical schema validation", {
+			identifier: assessmentItem.identifier,
+			error: validationResult.error
+		})
+		throw errors.wrap(validationResult.error, "canonical schema validation failed")
+	}
+	const validatedItem = validationResult.data
 
+	// Step 2: Transform the validated item to an array-free object structure.
+	const transformedItem = transformArraysToObjects(validatedItem)
+
+	// Step 3: Generate a simple, OpenAI-compatible Zod schema from the transformed object.
+	const runtimeSchema = generateZodSchemaFromObject(transformedItem)
 	const DifferentiatedItemsSchema = z.object({
-		differentiated_items: z.array(runtimeSchema).length(n, `Expected exactly ${n} differentiated items.`)
+		differentiated_items: z.array(runtimeSchema)
 	})
 
-	// Step 2: Create the AI prompt.
-	const assessmentItemJson = JSON.stringify(assessmentItem, null, 2)
+	// Step 4: Create the AI prompt using the transformed JSON.
+	const assessmentItemJson = JSON.stringify(transformedItem, null, 2)
 	const { systemInstruction, userContent } = createDifferentiatedItemsPrompt(assessmentItemJson, n)
 
-	// Step 3: Call the AI with the dynamic schema for structured, reliable output.
+	// Step 5: Call the AI.
+	// ... (openai call remains the same)
 	const responseFormat = zodResponseFormat(DifferentiatedItemsSchema, "differentiated_items_generator")
 
 	logger.debug("calling openai for item differentiation", { model: OPENAI_MODEL })
@@ -135,7 +193,12 @@ export async function differentiateAssessmentItem(
 	}
 
 	const result = choice.message.parsed.differentiated_items
-	logger.info("successfully generated and validated differentiated items", { count: result.length })
 
-	return result
+	// Step 6: Transform the AI's object-based output back into the array-based structure.
+	// @ts-ignore - Safe: The transformation ensures the output matches AssessmentItemInput structure
+	// biome-ignore lint: Type assertion needed after transformation from AI response
+	const finalItems: AssessmentItemInput[] = result.map((item: unknown) => transformObjectsToArrays(item) as any)
+
+	logger.info("successfully generated and transformed differentiated items", { count: finalItems.length })
+	return finalItems
 }

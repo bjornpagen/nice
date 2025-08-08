@@ -487,7 +487,9 @@ ${sectionsXml}
 
 						const explicitTestsCandidates: AssessmentTestCandidate[] = Array.from(assessmentMap.entries()).map(
 							([assessmentId, data]) => {
-								const questionIds = data.exerciseIds.flatMap((exerciseId) => questionsByExerciseId.get(exerciseId) || [])
+								const questionIds = data.exerciseIds.flatMap(
+									(exerciseId) => questionsByExerciseId.get(exerciseId) || []
+								)
 
 								const allQuestionsForTest = questionIds
 									.map((id) => {
@@ -500,7 +502,7 @@ ${sectionsXml}
 									})
 									.filter((q): q is { id: string; exerciseId: string; exerciseTitle: string } => q !== null)
 
-															return buildTestObject(assessmentId, data.title, allQuestionsForTest, {
+								return buildTestObject(assessmentId, data.title, allQuestionsForTest, {
 									khanId: assessmentId,
 									khanSlug: data.slug,
 									khanTitle: data.title,
