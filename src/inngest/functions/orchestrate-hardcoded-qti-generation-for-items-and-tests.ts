@@ -9,6 +9,7 @@ import { inngest } from "@/inngest/client"
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 import { qti } from "@/lib/clients"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
+import { ErrQtiNotFound } from "@/lib/qti"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 
 const HARDCODED_COURSE_IDS = [
@@ -114,23 +115,74 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 					}
 				}
 
-				// Validate generated items via QTI API and skip invalid ones
-				const validateResults = await Promise.all(
-					parsedItems.map((item) => qti.validateXml({ schema: "item", xml: item.xml }))
-				)
-				const assessmentItems = parsedItems.filter((_, i) => validateResults[i]?.success === true)
-				const skippedItemsCount = allGeneratedItems.length - assessmentItems.length
+				// Validate generated items via QTI API and skip invalid ones (batched)
+				const assessmentItems: AssessmentItem[] = []
+				const skippedItems: Array<{ item: AssessmentItem; error?: unknown }> = []
+				const batchSize = 20
+				const delayMs = 500
 
-				// Log validation failures
-				for (let i = 0; i < validateResults.length; i++) {
-					const res = validateResults[i]
-					if (!res?.success) {
-						const item = parsedItems[i]
-						logger.warn("skipping invalid differentiated qti item", {
-							questionId: item?.metadata.khanId,
-							errors: res?.validationErrors
+				for (let i = 0; i < parsedItems.length; i += batchSize) {
+					const batch = parsedItems.slice(i, i + batchSize)
+					logger.debug("ghetto-validate batch starting", {
+						batchStart: i,
+						batchSize: batch.length,
+						total: parsedItems.length
+					})
+
+					const batchResults = await Promise.all(
+						batch.map(async (item) => {
+							const tempIdentifier = `nice_tmp:${item.metadata.khanId}-${Math.random().toString(36).substring(2, 7)}`
+							const payload = {
+								identifier: tempIdentifier,
+								xml: item.xml,
+								metadata: { temp: true, sourceId: item.metadata.khanId }
+							}
+
+							// Upsert
+							const updateResult = await errors.try(qti.updateAssessmentItem(payload))
+							if (updateResult.error) {
+								if (errors.is(updateResult.error, ErrQtiNotFound)) {
+									const createResult = await errors.try(qti.createAssessmentItem(payload))
+									if (createResult.error) {
+										return { success: false, item, error: createResult.error }
+									}
+								} else {
+									return { success: false, item, error: updateResult.error }
+								}
+							}
+
+							// Delete immediately
+							const deleteResult = await errors.try(qti.deleteAssessmentItem(tempIdentifier))
+							if (deleteResult.error) {
+								logger.warn("failed to clean up temp validation item", {
+									identifier: tempIdentifier,
+									error: deleteResult.error
+								})
+							}
+
+							return { success: true, item }
 						})
+					)
+
+					for (const result of batchResults) {
+						if (result.success) {
+							assessmentItems.push(result.item)
+						} else {
+							skippedItems.push(result)
+						}
 					}
+
+					if (i + batchSize < parsedItems.length) {
+						await new Promise((resolve) => setTimeout(resolve, delayMs))
+					}
+				}
+
+				const skippedItemsCount = skippedItems.length
+				for (const result of skippedItems) {
+					logger.warn("skipping invalid differentiated qti item after ghetto-validate", {
+						questionId: result.item.metadata.khanId,
+						error: result.error
+					})
 				}
 
 				const courseDir = path.join(process.cwd(), "data", course.slug, "qti")

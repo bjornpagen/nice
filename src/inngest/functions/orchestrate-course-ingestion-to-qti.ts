@@ -6,8 +6,9 @@ import { z } from "zod"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
+import { qti } from "@/lib/clients"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
-import { validateInBatches } from "@/lib/qti-validation/batch"
+import { ErrQtiNotFound } from "@/lib/qti"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 
 // Schema for the expected assessment item format
@@ -241,25 +242,77 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		})
 
 		// Validate all items via QTI API and skip invalid ones (batched)
-		const validationResults = await validateInBatches(itemsUnvalidated, {
-			schema: "item",
-			getXml: (item) => item.xml,
-			batchSize: 20,
-			delayMs: 500,
-			logger
-		})
-		const items = itemsUnvalidated.filter((_, i) => validationResults[i]?.success === true)
-		const skippedItemsCount = itemsUnvalidated.length - items.length
-		for (let i = 0; i < validationResults.length; i++) {
-			const res = validationResults[i]
-			if (!res?.success) {
-				const item = itemsUnvalidated[i]
-				const errorsForLog = res?.response?.validationErrors
-				logger.warn("skipping invalid qti item", {
-					questionId: item?.metadata.khanId,
-					errors: errorsForLog
+		const items: AssessmentItem[] = []
+		const skippedItems: Array<{ item: AssessmentItem; error?: unknown }> = []
+		const batchSize = 20
+		const delayMs = 500
+
+		for (let i = 0; i < itemsUnvalidated.length; i += batchSize) {
+			const batch = itemsUnvalidated.slice(i, i + batchSize)
+			logger.debug("ghetto-validate batch starting", {
+				batchStart: i,
+				batchSize: batch.length,
+				total: itemsUnvalidated.length
+			})
+
+			const batchResults = await Promise.all(
+				batch.map(async (item) => {
+					const tempIdentifier = `nice_tmp:${item.metadata.khanId}`
+					// Use a simple payload. We only care if the XML is structurally valid for the API.
+					const payload = {
+						identifier: tempIdentifier,
+						xml: item.xml,
+						metadata: { temp: true, sourceId: item.metadata.khanId }
+					}
+
+					// Upsert
+					const updateResult = await errors.try(qti.updateAssessmentItem(payload))
+					if (updateResult.error) {
+						if (errors.is(updateResult.error, ErrQtiNotFound)) {
+							const createResult = await errors.try(qti.createAssessmentItem(payload))
+							if (createResult.error) {
+								logger.error("ghetto-validate create failed", { identifier: tempIdentifier, error: createResult.error })
+								return { success: false, item, error: createResult.error }
+							}
+						} else {
+							logger.error("ghetto-validate update failed", { identifier: tempIdentifier, error: updateResult.error })
+							return { success: false, item, error: updateResult.error }
+						}
+					}
+
+					// Delete immediately
+					const deleteResult = await errors.try(qti.deleteAssessmentItem(tempIdentifier))
+					if (deleteResult.error) {
+						// This is a warning because the validation itself succeeded. The temp item just needs cleanup.
+						logger.warn("failed to clean up temp validation item", {
+							identifier: tempIdentifier,
+							error: deleteResult.error
+						})
+					}
+
+					return { success: true, item }
 				})
+			)
+
+			for (const result of batchResults) {
+				if (result.success) {
+					items.push(result.item)
+				} else {
+					skippedItems.push(result)
+				}
 			}
+
+			if (i + batchSize < itemsUnvalidated.length) {
+				await new Promise((resolve) => setTimeout(resolve, delayMs))
+			}
+		}
+
+		const skippedItemsCount = skippedItems.length
+		for (const result of skippedItems) {
+			logger.warn("skipping invalid qti item after ghetto-validate", {
+				questionId: result.item.metadata.khanId,
+				error: result.error
+			})
 		}
 
 		const stimuli = articlesWithXml.map((a) => {
