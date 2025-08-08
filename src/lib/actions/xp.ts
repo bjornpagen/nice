@@ -2,6 +2,7 @@
 
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { oneroster } from "@/lib/clients"
 import { calculateBankedXpForResources } from "@/lib/data/fetchers/caliper"
 import type { Resource } from "@/lib/oneroster"
@@ -10,10 +11,12 @@ import type { Resource } from "@/lib/oneroster"
  * Calculates banked XP for a quiz. This is a hybrid function:
  * - For ARTICLES: Uses the new time-spent model by calling the Caliper fetcher.
  * - For VIDEOS: Uses the original completion-based model by checking OneRoster results.
+ * Also saves the banked XP to individual assessmentResults for each video/article.
  */
 export async function awardBankedXpForAssessment(
 	quizResourceId: string,
-	userSourcedId: string
+	userSourcedId: string,
+	onerosterCourseSourcedId: string
 ): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
 	logger.info("calculating banked xp for quiz", { quizResourceId, userSourcedId })
 
@@ -228,6 +231,46 @@ export async function awardBankedXpForAssessment(
 		articleCount: articleResources.length,
 		videoCount: videoResources.length
 	})
+
+	// 6. Save banked XP to individual assessmentResults for each video/article
+	const allResources = [...articleResources, ...videoResources]
+	for (const resourceId of awardedResourceIds) {
+		const resource = allResources.find((r) => r.sourcedId === resourceId)
+		if (resource) {
+			const saveResult = await errors.try(
+				saveAssessmentResult(
+					resourceId,
+					1.0, // Perfect score for banked XP
+					1, // correctAnswers: 1 (banked XP = completed)
+					1, // totalQuestions: 1 (banked XP = completed)
+					userId,
+					onerosterCourseSourcedId,
+					{
+						masteredUnits: 0, // Banked XP (articles/videos) never count as mastered units
+						totalQuestions: 1,
+						correctQuestions: 1,
+						accuracy: 100,
+						xp: resource.expectedXp,
+						multiplier: 1.0 // No multiplier for banked XP
+					}
+				)
+			)
+			if (saveResult.error) {
+				logger.error("failed to save banked xp assessment result", {
+					resourceId,
+					expectedXp: resource.expectedXp,
+					error: saveResult.error
+				})
+				// Continue with other resources even if one fails
+			} else {
+				logger.info("saved banked xp assessment result", {
+					resourceId,
+					expectedXp: resource.expectedXp,
+					type: resource.type
+				})
+			}
+		}
+	}
 
 	return { bankedXp: totalBankedXp, awardedResourceIds }
 }

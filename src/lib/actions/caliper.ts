@@ -101,7 +101,8 @@ export async function sendCaliperActivityCompletedEvent(
 			})
 			assessmentXp = 0
 		} else {
-			// Calculate XP normally
+			// IMPORTANT: performance.expectedXp is already the CALCULATED XP (with multipliers applied)
+			// from the assessment-stepper, so we should NOT recalculate it here
 			if (performance.totalQuestions === 0) {
 				logger.error("CRITICAL: Assessment has zero questions", {
 					assessmentId: context.activity?.id,
@@ -111,19 +112,15 @@ export async function sendCaliperActivityCompletedEvent(
 			}
 			const accuracy = performance.correctQuestions / performance.totalQuestions
 
-			// Calculate XP for the assessment itself (including penalty check)
-			assessmentXp = calculateAwardedXp(
-				performance.expectedXp,
-				accuracy,
-				performance.totalQuestions,
-				performance.durationInSeconds
-			)
+			// Use the pre-calculated XP value passed from assessment-stepper
+			assessmentXp = performance.expectedXp
 
-			logger.info("awarding xp based on caller decision", {
+			logger.info("using pre-calculated xp from caller", {
 				userSourcedId,
 				assessmentLineItemId,
 				accuracy,
-				awardedXp: assessmentXp
+				awardedXp: assessmentXp,
+				note: "XP already calculated with attempt-based multipliers"
 			})
 		}
 	} else {
@@ -224,9 +221,10 @@ export async function sendCaliperActivityCompletedEvent(
 		isQuiz &&
 		assessmentXp > 0 &&
 		performance.correctQuestions / performance.totalQuestions >= MASTERY_THRESHOLD &&
-		context.activity?.id
+		context.activity?.id &&
+		context.course?.id
 	) {
-		const xpBankResult = await errors.try(awardBankedXpForAssessment(context.activity.id, actor.id))
+		const xpBankResult = await errors.try(awardBankedXpForAssessment(context.activity.id, actor.id, context.course.id))
 		if (xpBankResult.error) {
 			logger.error("failed to process xp bank", {
 				error: xpBankResult.error,

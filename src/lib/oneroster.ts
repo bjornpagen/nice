@@ -363,7 +363,8 @@ const AssessmentResultSchema = z.object({
 	// It can be a number, null, or undefined.
 	score: z.number().nullable().optional(),
 	scoreDate: z.string().datetime(),
-	comment: z.string().nullable().optional()
+	comment: z.string().nullable().optional(),
+	metadata: z.record(z.string(), z.any()).optional()
 })
 export type AssessmentResult = z.infer<typeof AssessmentResultSchema>
 
@@ -373,7 +374,9 @@ const CreateResultInputSchema = z.object({
 		student: GUIDRefWriteSchema,
 		scoreStatus: ScoreStatusEnum,
 		scoreDate: z.string().datetime(),
-		score: z.number()
+		score: z.number(),
+		comment: z.string().optional(),
+		metadata: z.record(z.string(), z.any()).optional()
 	})
 })
 export type CreateResultInput = z.infer<typeof CreateResultInputSchema>

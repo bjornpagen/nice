@@ -208,6 +208,7 @@ export async function updateVideoProgress(
  * @param totalQuestions - Total number of questions in the assessment
  * @param onerosterUserSourcedId - The user's OneRoster sourcedId
  * @param onerosterCourseSourcedId - The sourcedId of the course this assessment belongs to, for cache invalidation.
+ * @param metadata - Optional XP metadata to include in the assessment result
  */
 export async function saveAssessmentResult(
 	onerosterResourceSourcedId: string,
@@ -215,7 +216,15 @@ export async function saveAssessmentResult(
 	correctAnswers: number,
 	totalQuestions: number,
 	onerosterUserSourcedId: string,
-	onerosterCourseSourcedId: string
+	onerosterCourseSourcedId: string,
+	metadata?: {
+		masteredUnits: number
+		totalQuestions: number
+		correctQuestions: number
+		accuracy: number
+		xp: number
+		multiplier: number
+	}
 ) {
 	const { userId: clerkUserId } = await auth()
 	if (!clerkUserId) throw errors.new("user not authenticated")
@@ -226,7 +235,8 @@ export async function saveAssessmentResult(
 		onerosterResourceSourcedId,
 		score,
 		correctAnswers,
-		totalQuestions
+		totalQuestions,
+		metadata
 	})
 
 	// The line item sourcedId is the same as the resource sourcedId
@@ -242,8 +252,17 @@ export async function saveAssessmentResult(
 			scoreStatus: "fully graded" as const,
 			scoreDate: new Date().toISOString(),
 			score: score, // Score as decimal (0-1)
-			comment: `${correctAnswers}/${totalQuestions} correct on first attempt`
+			comment: `${correctAnswers}/${totalQuestions} correct on first attempt`,
+			...(metadata && { metadata })
 		}
+	}
+
+	if (metadata) {
+		logger.debug("assessment result payload includes metadata", {
+			onerosterResourceSourcedId,
+			metadata,
+			payloadHasMetadata: !!resultPayload.result.metadata
+		})
 	}
 
 	// Use putResult for idempotency

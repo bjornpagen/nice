@@ -30,6 +30,7 @@ import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
+import { calculateAssessmentXp } from "@/lib/xp"
 import { AssessmentBottomNav, type AssessmentType } from "./assessment-bottom-nav"
 
 // Summary View Component
@@ -371,7 +372,13 @@ export function AssessmentStepper({
 		if (typeof onerosterUserSourcedId !== "string") {
 			return
 		}
-		const score = questions.length > 0 ? correctAnswersCount / questions.length : 0
+		const finalTotalQuestions = questions.length - reportedQuestionIds.size
+		const accuracy = finalTotalQuestions > 0 ? (correctAnswersCount / finalTotalQuestions) * 100 : 100
+		const score = accuracy / 100
+
+		// Calculate XP and multiplier based on attempt and performance
+		let calculatedXp = 0
+		let multiplier = 0
 
 		const finalizeAndAnalyze = async () => {
 			// Check existing proficiency BEFORE saving the result
@@ -388,15 +395,47 @@ export function AssessmentStepper({
 
 			shouldAwardXp = !proficiencyResult.data
 
-			// NOW save the assessment result
+			// Calculate XP using centralized function
+			let durationInSeconds: number | undefined
+			if (assessmentStartTimeRef.current) {
+				durationInSeconds = Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
+			}
+
+			const xpResult = calculateAssessmentXp(
+				expectedXp,
+				accuracy,
+				attemptNumber,
+				finalTotalQuestions,
+				durationInSeconds,
+				shouldAwardXp
+			)
+
+			calculatedXp = xpResult.finalXp
+			multiplier = xpResult.multiplier
+
+			// NOTE: Cannot use logger in client components - XP calculation details
+			// are logged in the centralized calculateAssessmentXp function
+
+			// Create metadata object
+			const metadata = {
+				masteredUnits: contentType === "Test" && accuracy >= 90 ? 1 : 0,
+				totalQuestions: finalTotalQuestions,
+				correctQuestions: correctAnswersCount,
+				accuracy: accuracy,
+				xp: expectedXp, // BASE XP (before multiplier)
+				multiplier: multiplier
+			}
+
+			// NOW save the assessment result with metadata
 			const saveResult = await errors.try(
 				saveAssessmentResult(
 					onerosterResourceSourcedId,
 					score,
 					correctAnswersCount,
-					questions.length,
+					finalTotalQuestions,
 					onerosterUserSourcedId,
-					onerosterCourseSourcedId // Pass the onerosterCourseSourcedId here
+					onerosterCourseSourcedId,
+					metadata
 				)
 			)
 
@@ -437,7 +476,7 @@ export function AssessmentStepper({
 		}
 
 		// Fire and forget Caliper events
-		const sendCaliperEvents = async (shouldAwardXp: boolean) => {
+		const sendCaliperEvents = async (shouldAwardXp: boolean, calculatedXp: number) => {
 			if (!unitData) return
 
 			// Extract subject and course from unit path: "/{subject}/{course}/{unit}"
@@ -476,7 +515,10 @@ export function AssessmentStepper({
 				type: "TimebackActivityContext" as const,
 				subject: mappedSubject,
 				app: { name: "Nice Academy" },
-				course: { name: course },
+				course: {
+					name: course,
+					id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/courses/${onerosterCourseSourcedId}`
+				},
 				activity: {
 					name: assessmentTitle,
 					id: onerosterResourceSourcedId // Plain OneRoster ID - will be converted to URI server-side
@@ -491,8 +533,8 @@ export function AssessmentStepper({
 			}
 
 			const performance = {
-				expectedXp: expectedXp,
-				totalQuestions: questions.length,
+				expectedXp: calculatedXp, // Use calculated XP (includes multiplier)
+				totalQuestions: finalTotalQuestions, // Use adjusted total (excludes reported questions)
 				correctQuestions: correctAnswersCount,
 				durationInSeconds: durationInSeconds
 			}
@@ -509,7 +551,7 @@ export function AssessmentStepper({
 		// Execute both functions with proper async flow
 		const executeFinalization = async () => {
 			const shouldAwardXp = await finalizeAndAnalyze()
-			sendCaliperEvents(shouldAwardXp)
+			sendCaliperEvents(shouldAwardXp, calculatedXp) // Pass the calculated XP value
 			// Set the flag to true after sending the events to prevent re-execution
 			hasSentCompletionEventRef.current = true
 		}
@@ -529,7 +571,9 @@ export function AssessmentStepper({
 		attemptNumber, // ADDED: Add attemptNumber to dependency array
 		expectedXp,
 		sessionResults, // ADDED: Add sessionResults to dependency array
-		onerosterCourseSourcedId // Add onerosterCourseSourcedId to dependency array
+		onerosterCourseSourcedId, // Add onerosterCourseSourcedId to dependency array
+		reportedQuestionIds.size, // Add reportedQuestionIds.size to dependency array
+		contentType // Add contentType to dependency array for masteredUnits logic
 	])
 
 	if (questions.length === 0) {
