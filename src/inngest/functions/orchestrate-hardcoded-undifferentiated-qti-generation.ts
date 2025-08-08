@@ -167,7 +167,7 @@ export const orchestrateHardcodedUndifferentiatedQtiGeneration = inngest.createF
 
 					const batchResults = await Promise.all(
 						batch.map(async (item) => {
-							const tempIdentifier = `nice_tmp_${item.metadata.khanId}`
+							const tempIdentifier = `nice_${item.metadata.khanId}`
 							// Use a simple payload. We only care if the XML is structurally valid for the API.
 							const payload = {
 								identifier: tempIdentifier,
