@@ -4,6 +4,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { revalidatePath } from "next/cache"
+import { createCacheKey, invalidateCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
 import { getAllCourses, getClassesForSchool, getEnrollmentsForUser } from "@/lib/data/fetchers/oneroster"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
@@ -99,6 +100,14 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 	if (hasErrors) {
 		throw errors.new("one or more enrollment operations failed during sync")
 	}
+
+	// ⚠️ CRITICAL: Invalidate enrollment caches to make changes appear instantly
+	logger.info("invalidating enrollment caches for instant updates", { sourceId })
+	const cacheKeysToInvalidate = [
+		createCacheKey(["oneroster-getEnrollmentsForUser", sourceId]),
+		createCacheKey(["oneroster-getActiveEnrollmentsForUser", sourceId])
+	]
+	await invalidateCache(cacheKeysToInvalidate)
 
 	revalidatePath("/profile/me/courses")
 	logger.info("successfully synced user enrollments", {
