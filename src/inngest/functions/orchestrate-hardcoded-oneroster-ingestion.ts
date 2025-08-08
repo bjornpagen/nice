@@ -18,7 +18,7 @@ const HARDCODED_COURSE_IDS = [
 	"x1baed5db7c1bb50b", // Middle school physics
 	"x87d03b443efbea0a", // Middle school Earth and space science
 	"xc370bc422b7f75fc", // Middle school chemistry
-	// ??                // Middle school biology
+	"x0c5bb03129646fd6", // Middle school biology
 	"x230b3ff252126bb6" // High school biology
 ]
 
