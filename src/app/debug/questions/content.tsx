@@ -4,42 +4,68 @@ import * as errors from "@superbuilders/errors"
 import { Check } from "lucide-react"
 import * as React from "react"
 import { toast } from "sonner"
+import type { QuestionSummaryData } from "@/app/debug/questions/actions"
+import { getQuestionDetails, upsertQuestionAnalysis, validateQuestionXml } from "@/app/debug/questions/server-actions"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
-import type { QuestionDebugData } from "./actions"
-import { upsertQuestionAnalysis, validateQuestionXml } from "./server-actions"
 
 interface ContentProps {
-	questions: QuestionDebugData[]
+	questionsPromise: Promise<QuestionSummaryData[]>
 }
 
-export function Content({ questions }: ContentProps) {
+export function Content({ questionsPromise }: ContentProps) {
 	const [currentIndex, setCurrentIndex] = React.useState(0)
 	const [dialogOpen, setDialogOpen] = React.useState(false)
 	const [analysisNotes, setAnalysisNotes] = React.useState("")
 	const [severity, setSeverity] = React.useState<"major" | "minor" | "patch">("minor")
-	const [localQuestions, setLocalQuestions] = React.useState(questions)
+	const [localQuestions, setLocalQuestions] = React.useState<QuestionSummaryData[] | undefined>(undefined)
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
 	const [isValidating, setIsValidating] = React.useState(false)
 
+	// iframe reload counters
+	const [ampReload, setAmpReload] = React.useState(0)
+	const [perseusReload, setPerseusReload] = React.useState(0)
+
+	// resolve questions on client using React.use to enable streaming
+	const resolvedQuestions = React.use(questionsPromise)
+	React.useEffect(() => {
+		setLocalQuestions(resolvedQuestions)
+	}, [resolvedQuestions])
+
+	// lazily load heavy details (xml, parsedData) on demand
+	const [detailsById, setDetailsById] = React.useState<Record<string, { xml: string; parsedData: unknown }>>({})
+
+	// prefetch current and next to keep navigation smooth
+	React.useEffect(() => {
+		if (!localQuestions || localQuestions.length === 0) return
+		const load = async (id: string) => {
+			if (detailsById[id]) return
+			const d = await getQuestionDetails(id)
+			setDetailsById((prev) => ({ ...prev, [id]: { xml: d.xml, parsedData: d.parsedData } }))
+		}
+		const cur = localQuestions[currentIndex]
+		if (cur) void load(cur.id)
+		const nxt = localQuestions[currentIndex + 1]
+		if (nxt && !detailsById[nxt.id]) void load(nxt.id)
+	}, [localQuestions, currentIndex, detailsById])
+
 	// keyboard navigation for TAB/SHIFT+TAB
 	React.useEffect(() => {
+		if (!localQuestions) return
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Tab") {
 				event.preventDefault()
 				if (event.shiftKey) {
-					// go to previous
 					const newIndex = Math.max(0, currentIndex - 1)
 					setCurrentIndex(newIndex)
 					if (newIndex !== currentIndex) {
 						toast.info(`moved to question ${formatIndex(newIndex)}`)
 					}
 				} else {
-					// go to next
-					const newIndex = Math.min(localQuestions.length - 1, currentIndex + 1)
+					const newIndex = Math.min((localQuestions?.length ?? 1) - 1, currentIndex + 1)
 					setCurrentIndex(newIndex)
 					if (newIndex !== currentIndex) {
 						toast.info(`moved to question ${formatIndex(newIndex)}`)
@@ -50,7 +76,7 @@ export function Content({ questions }: ContentProps) {
 
 		window.addEventListener("keydown", handleKeyDown)
 		return () => window.removeEventListener("keydown", handleKeyDown)
-	}, [currentIndex, localQuestions.length])
+	}, [currentIndex, localQuestions])
 
 	const goToPrevious = () => {
 		const newIndex = Math.max(0, currentIndex - 1)
@@ -61,11 +87,19 @@ export function Content({ questions }: ContentProps) {
 	}
 
 	const goToNext = () => {
-		const newIndex = Math.min(localQuestions.length - 1, currentIndex + 1)
+		const total = localQuestions ? localQuestions.length : 0
+		if (total === 0) {
+			return
+		}
+		const newIndex = Math.min(total - 1, currentIndex + 1)
 		setCurrentIndex(newIndex)
 		if (newIndex !== currentIndex) {
 			toast.info(`moved to question ${formatIndex(newIndex)}`)
 		}
+	}
+
+	if (!localQuestions) {
+		return <div>loading questions...</div>
 	}
 
 	if (localQuestions.length === 0) {
@@ -76,6 +110,8 @@ export function Content({ questions }: ContentProps) {
 	if (!currentQuestion) {
 		return <div>question not found</div>
 	}
+
+	const currentDetails = detailsById[currentQuestion.id]
 
 	const formatIndex = (index: number) => `[${String(index).padStart(4, "0")}]`
 
@@ -98,7 +134,7 @@ export function Content({ questions }: ContentProps) {
 
 		// update local state
 		setLocalQuestions((prev) =>
-			prev.map((q) =>
+			(prev ?? []).map((q) =>
 				q.id === currentQuestion.id
 					? {
 							...q,
@@ -131,7 +167,7 @@ export function Content({ questions }: ContentProps) {
 
 		// update local state - empty string means successful, null severity
 		setLocalQuestions((prev) =>
-			prev.map((q) =>
+			(prev ?? []).map((q) =>
 				q.id === currentQuestion.id
 					? {
 							...q,
@@ -146,15 +182,16 @@ export function Content({ questions }: ContentProps) {
 	}
 
 	const handleValidateXml = async () => {
-		if (!currentQuestion.xml) {
-			toast.error("no xml to validate")
+		const detail = detailsById[currentQuestion.id]
+		if (!detail) {
+			toast.error("details not loaded")
 			return
 		}
 
 		setIsValidating(true)
 		toast.info("validating xml...")
 
-		const result = await errors.try(validateQuestionXml(currentQuestion.xml))
+		const result = await errors.try(validateQuestionXml(detail.xml))
 
 		setIsValidating(false)
 
@@ -185,7 +222,7 @@ export function Content({ questions }: ContentProps) {
 		}
 	}
 
-	const getQuestionBackgroundColor = (question: QuestionDebugData) => {
+	const getQuestionBackgroundColor = (question: QuestionSummaryData) => {
 		// successful (empty notes) = green
 		if (question.analysisNotes === "") return "#e8f5e8"
 
@@ -242,7 +279,24 @@ export function Content({ questions }: ContentProps) {
 							>
 								<Check size={16} />
 							</Button>
-							<Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+							<Dialog
+								open={dialogOpen}
+								onOpenChange={(open) => {
+									setDialogOpen(open)
+									if (open) {
+										// prefill textarea and severity with previous values
+										const previousNotes = currentQuestion.analysisNotes ?? ""
+										setAnalysisNotes(previousNotes)
+										if (previousNotes === "") {
+											// if previously marked successful, default severity to minor
+											setSeverity("minor")
+										} else {
+											const prevSeverity = currentQuestion.severity ?? "minor"
+											setSeverity(prevSeverity)
+										}
+									}
+								}}
+							>
 								<DialogTrigger asChild>
 									<Button
 										variant="outline"
@@ -352,7 +406,7 @@ export function Content({ questions }: ContentProps) {
 							<Button
 								variant="secondary"
 								onClick={handleValidateXml}
-								disabled={isValidating || !currentQuestion.xml}
+								disabled={isValidating || !currentDetails?.xml}
 								className="hover:cursor-pointer"
 								style={{ marginLeft: "10px" }}
 							>
@@ -395,38 +449,101 @@ export function Content({ questions }: ContentProps) {
 						<div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
 							<Button
 								variant="ghost"
-								onClick={() => copyToClipboard(currentQuestion.xml)}
+								onClick={() => {
+									const d = detailsById[currentQuestion.id]
+									if (!d) {
+										toast.error("details not loaded")
+										return
+									}
+									void copyToClipboard(d.xml)
+								}}
 								className="hover:cursor-pointer"
 							>
 								copy
 							</Button>
 							<strong>xml:</strong>
-							<span style={{ fontFamily: "monospace" }}>{truncateText(currentQuestion.xml, 200)}</span>
+							<span style={{ fontFamily: "monospace" }}>
+								{truncateText(detailsById[currentQuestion.id]?.xml ?? "(details not loaded)", 200)}
+							</span>
+							<Button
+								variant="outline"
+								onClick={async () => {
+									const id = currentQuestion.id
+									if (detailsById[id]) return
+									const d = await getQuestionDetails(id)
+									setDetailsById((prev) => ({ ...prev, [id]: { xml: d.xml, parsedData: d.parsedData } }))
+								}}
+								className="hover:cursor-pointer"
+								style={{ marginLeft: "6px" }}
+							>
+								load details
+							</Button>
 						</div>
 
 						<div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
 							<Button
 								variant="ghost"
-								onClick={() => copyToClipboard(JSON.stringify(currentQuestion.parsedData, null, 2))}
+								onClick={() => {
+									const d = detailsById[currentQuestion.id]
+									if (!d) {
+										toast.error("details not loaded")
+										return
+									}
+									void copyToClipboard(JSON.stringify(d.parsedData, null, 2))
+								}}
 								className="hover:cursor-pointer"
 							>
 								copy
 							</Button>
 							<strong>parsed_data:</strong>
 							<span style={{ fontFamily: "monospace" }}>
-								{truncateText(JSON.stringify(currentQuestion.parsedData), 200)}
+								{truncateText(currentDetails ? JSON.stringify(currentDetails.parsedData) : "(details not loaded)", 200)}
 							</span>
 						</div>
 					</div>
 				</div>
 
-				{/* Iframes side by side */}
+				{/* Iframes controls + side by side */}
+				<div style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginBottom: "8px" }}>
+					<Button
+						variant="secondary"
+						onClick={() => {
+							setAmpReload((n) => n + 1)
+							toast.info("reloading amp-up iframe")
+						}}
+						className="hover:cursor-pointer"
+					>
+						reload amp-up
+					</Button>
+					<Button
+						variant="secondary"
+						onClick={() => {
+							setPerseusReload((n) => n + 1)
+							toast.info("reloading perseus iframe")
+						}}
+						className="hover:cursor-pointer"
+					>
+						reload perseus
+					</Button>
+					<Button
+						variant="outline"
+						onClick={() => {
+							setAmpReload((n) => n + 1)
+							setPerseusReload((n) => n + 1)
+							toast.info("reloading both iframes")
+						}}
+						className="hover:cursor-pointer"
+					>
+						reload both
+					</Button>
+				</div>
+
 				<div style={{ display: "flex", gap: "20px" }}>
 					{/* AMP-UP iframe */}
 					<div style={{ flex: 1 }}>
 						<h3>amp-up testrunner sandbox</h3>
 						<iframe
-							src="https://www.amp-up.io/testrunner/sandbox/"
+							src={`https://www.amp-up.io/testrunner/sandbox/?r=${ampReload}`}
 							style={{ width: "100%", height: "70vh", border: "1px solid #ccc" }}
 							title="AMP-UP Testrunner Sandbox"
 						/>
@@ -450,7 +567,7 @@ export function Content({ questions }: ContentProps) {
 							</Button>
 						</div>
 						<iframe
-							src="https://khan.github.io/perseus/?path=/story/renderers-server-item-renderer--interactive"
+							src={`https://khan.github.io/perseus/?path=/story/renderers-server-item-renderer--interactive&r=${perseusReload}`}
 							style={{ width: "100%", height: "70vh", border: "1px solid #ccc" }}
 							title="Perseus Item Renderer"
 							onLoad={() => toast.info("perseus iframe loaded")}

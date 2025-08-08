@@ -1,13 +1,13 @@
 import * as React from "react"
-import { getQuestionsWithXml } from "./actions"
-import { Content } from "./content"
+import { getQuestionSummaries } from "@/app/debug/questions/actions"
+import { Content } from "@/app/debug/questions/content"
 
-export default async function DebugQuestionsPage() {
-	const questions = await getQuestionsWithXml()
+export default function DebugQuestionsPage() {
+	const questionsPromise = getQuestionSummaries()
 
 	return (
 		<React.Suspense fallback={<div>loading questions...</div>}>
-			<Content questions={questions} />
+			<Content questionsPromise={questionsPromise} />
 		</React.Suspense>
 	)
 }
