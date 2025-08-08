@@ -243,6 +243,18 @@ export function compileResponseDeclarations(decls: AssessmentItem["responseDecla
             ${correctXml}
         </qti-correct-response>`
 
+			// For single-string responses, also emit a mapping that awards 1 point for any
+			// of the acceptable values. This enables robust scoring using mapping semantics
+			// while preserving existing behavior elsewhere.
+			const isSingleString = decl.cardinality === "single" && decl.baseType === "string"
+			if (isSingleString) {
+				const mappingXml = Array.from(allCorrectValues)
+					.map((v) => `\n            <qti-map-entry map-key="${escapeXmlAttribute(String(v))}" mapped-value="1"/>`)
+					.join("")
+
+				xml += `\n        <qti-mapping default-value="0">${mappingXml}\n        </qti-mapping>`
+			}
+
 			xml += "\n    </qti-response-declaration>"
 			return xml
 		})
@@ -250,6 +262,14 @@ export function compileResponseDeclarations(decls: AssessmentItem["responseDecla
 }
 
 export function compileResponseProcessing(decls: AssessmentItem["responseDeclarations"]): string {
+	// Prefer mapping-based response processing only for the specific, safe case of a
+	// single string/single response. This avoids regressions for other interaction types.
+	const onlyDecl = decls.length === 1 ? decls[0] : undefined
+	if (onlyDecl && onlyDecl.cardinality === "single" && onlyDecl.baseType === "string") {
+		const responseId = escapeXmlAttribute(onlyDecl.identifier)
+		return `\n    <qti-response-processing>\n        <!-- Map the candidate response to SCORE using the declaration's qti-mapping -->\n        <qti-set-outcome-value identifier="SCORE"><qti-map-response identifier="${responseId}"/></qti-set-outcome-value>\n\n        <!-- Derive FEEDBACK from SCORE without altering other semantics -->\n        <qti-response-condition>\n            <qti-response-if>\n                <qti-gt>\n                    <qti-variable identifier="SCORE"/>\n                    <qti-base-value base-type="float">0</qti-base-value>\n                </qti-gt>\n                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">CORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-if>\n            <qti-response-else>\n                <qti-set-outcome-value identifier="FEEDBACK"><qti-base-value base-type="identifier">INCORRECT</qti-base-value></qti-set-outcome-value>\n            </qti-response-else>\n        </qti-response-condition>\n    </qti-response-processing>`
+	}
+
 	const conditions = decls
 		.map((decl) => {
 			const variable = `<qti-variable identifier="${escapeXmlAttribute(decl.identifier)}"/>`
