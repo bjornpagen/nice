@@ -131,7 +131,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 
 					const batchResults = await Promise.all(
 						batch.map(async (item) => {
-							const tempIdentifier = `nice_tmp:${item.metadata.khanId}-${Math.random().toString(36).substring(2, 7)}`
+							const tempIdentifier = `nice_tmp_${item.metadata.khanId}_${Math.random().toString(36).substring(2, 7)}`
 							const payload = {
 								identifier: tempIdentifier,
 								xml: item.xml,
