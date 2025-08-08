@@ -28,12 +28,16 @@ logger.setDefaultLogLevel(logger.INFO)
 // --- CONFIGURATION ---
 
 const MAX_CONCURRENCY = 10 // Increased back for faster processing within courses
-const TARGET_REGION = "US-CA" // California region for Common Core content
 
 // This cookie is required for authenticated endpoints like creating a practice task.
 // It should be kept up-to-date by copying from a logged-in browser session.
 const KHAN_ACADEMY_COOKIE =
-	'browsing_session_id=_en_bsid_32eabce3-6cd7-4c17-82bb-d5b3c6980001; LIS=www; KAAS=jrq9yFJ1WyFbUimeVG_mMw; KAAL=$FaCVSQbgqpg-ReuvYooEpkHDXw8RifEzxCPKpJakiz4.~syu253$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc*; KAAC=$FzYq2uBMA-XdkCV0lp9UFP9BRQOyQDlsxLSATzx3w38.~syu253$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc*$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc\u00210\u00210$~4; browsing_session_expiry="Thu, 03 Jul 2025 17:35:27 UTC"'
+	'browsing_session_id=_en_bsid_0bd1f363-2837-4506-9ef0-4db5a0760002; LIS=www; KAAS=4sBOL50bmYsf5SmkmTmNXg; KAAL=$l97LrcIGBc-PXllOu9aOLpk4hwzLDYKj7bcw5XJ2alg.~t0nkyb$a2FpZF81NTUyODIzMzg0MjEyNDM0NTQyNTA5NjA*; KAAC=$5O6XOg8xbytVRI08fXnyxsvy2IiC_aif20CguNP3xZ8.~t0nkyb$a2FpZF81NTUyODIzMzg0MjEyNDM0NTQyNTA5NjA*$a2FpZF81NTUyODIzMzg0MjEyNDM0NTQyNTA5NjA!0!0$~4; browsing_session_expiry="Fri, 08 Aug 2025 02:45:47 UTC"'
+
+// --- TARGET COURSE FILTER ---
+// Restrict execution to a single explicit course
+const TARGET_COURSE_SLUG = "/science/ms-biology"
+const TARGET_COURSE_TITLE = "Middle school biology"
 
 // --- HELPER FUNCTIONS ---
 
@@ -293,37 +297,17 @@ async function main() {
 		return existingCourses.has(fileName)
 	}
 
-	// Helper function to check if course should be skipped
-	function shouldSkipCourse(coursePath: string): boolean {
-		// Skip humanities/climate-project courses as they contain inaccessible draft content
-		if (coursePath.includes("/humanities/climate-project")) {
-			logger.info("skipping humanities/climate-project course", { path: coursePath })
-			return true
-		}
-		// Skip getty-museum courses as they contain inaccessible content
-		if (coursePath.includes("/getty-museum")) {
-			logger.info("skipping getty-museum course", { path: coursePath })
-			return true
-		}
-		return false
-	}
+	// target-only mode: no dynamic skip rules
 
-	// Step 3: Discover all content paths.
+	// Step 3: prepare target path only (no discovery scan)
 	const apiClient = new KhanAcademyClient(KHAN_ACADEMY_COOKIE)
-	const topicsResult = await errors.try(apiClient.getLearnMenuTopics(TARGET_REGION))
-	if (topicsResult.error) {
-		logger.error("failed to fetch learn menu topics", { error: topicsResult.error })
-		throw topicsResult.error
-	}
-	const allPaths = topicsResult.data.data.learnMenuTopics.flatMap((category) =>
-		category.children.map((link) => link.href)
-	)
+	const targetOnlyPaths = [TARGET_COURSE_SLUG]
 
 	// Step 4: Handle dry-run.
 	if (isDryRun) {
-		logger.info("dry-run enabled, dumping discovered paths to stdout")
+		logger.info("dry-run enabled, dumping target path to stdout", { target: TARGET_COURSE_SLUG })
 		// biome-ignore lint/suspicious/noConsole: The purpose of dry-run is to pipe output.
-		console.log(JSON.stringify(allPaths, null, 2))
+		console.log(JSON.stringify(targetOnlyPaths, null, 2))
 		return
 	}
 
@@ -427,9 +411,10 @@ async function main() {
 		// --- NEW SEQUENTIAL LOGIC (NO ARGUMENTS) ---
 		// This block processes each course one by one to avoid massive concurrent load.
 		// Hydration *within* each course remains concurrent.
-		const pathsToProcess = allPaths
-		logger.info("no arguments provided, processing all courses sequentially", {
-			courseCount: pathsToProcess.length
+		const pathsToProcess = targetOnlyPaths
+		logger.info("no arguments provided, processing ONLY target course sequentially", {
+			courseCount: pathsToProcess.length,
+			target: TARGET_COURSE_SLUG
 		})
 
 		let processedCount = 0
@@ -438,10 +423,7 @@ async function main() {
 		// Process each discovered course path one at a time.
 		for (const [index, topicPath] of pathsToProcess.entries()) {
 			// Check if course should be skipped due to known issues
-			if (shouldSkipCourse(topicPath)) {
-				skippedCount++
-				continue
-			}
+			// target-only mode: no dynamic skipping logic
 
 			// Check if course already exists
 			if (courseAlreadyExists(topicPath)) {
@@ -455,7 +437,7 @@ async function main() {
 				continue
 			}
 
-			logger.info("sequentially processing course", {
+			logger.info("sequentially processing target course", {
 				progress: `${index + 1}/${pathsToProcess.length}`,
 				path: topicPath,
 				skipped: skippedCount,
@@ -496,6 +478,23 @@ async function main() {
 				throw courseResult.error
 			}
 			const courseInfo = courseResult.data
+			// validate target course identity (path + title) with normalized comparison
+			const normalize = (s: string) => s.normalize("NFKC").replace(/\s+/g, " ").trim()
+			if (courseInfo.path !== TARGET_COURSE_SLUG) {
+				logger.error("unexpected course path returned", { expected: TARGET_COURSE_SLUG, actual: courseInfo.path })
+				throw errors.new("unexpected course path returned")
+			}
+			const expectedTitle = normalize(TARGET_COURSE_TITLE)
+			const actualTitle = normalize(courseInfo.title)
+			if (actualTitle !== expectedTitle) {
+				logger.error("unexpected course title returned", {
+					expected: TARGET_COURSE_TITLE,
+					actual: courseInfo.title,
+					expectedNormalized: expectedTitle,
+					actualNormalized: actualTitle
+				})
+				throw errors.new("unexpected course title returned")
+			}
 
 			// 2. HYDRATE this specific course's content concurrently.
 			logger.info("hydrating content for course", { courseId: courseInfo.id, courseTitle: courseInfo.title })
@@ -557,8 +556,12 @@ async function main() {
 		// --- ORIGINAL CONCURRENT LOGIC (WITH ARGUMENTS) ---
 		// This block is for when specific course paths are passed as arguments.
 		// It preserves the original behavior of full concurrency.
-		const pathsToProcess = pathFilters
-		logger.info("building initial content map from paths", { pathCount: pathsToProcess.length })
+		// ignore provided args; process only target course concurrently
+		const pathsToProcess = targetOnlyPaths
+		logger.info("building initial content map for ONLY target course", {
+			pathCount: pathsToProcess.length,
+			target: TARGET_COURSE_SLUG
+		})
 
 		const contentCaches: ContentCaches = {
 			allDiscoveredExercises: new Map<string, ExerciseInfo>(),
@@ -570,11 +573,7 @@ async function main() {
 		let skippedCount = 0
 
 		for (const [index, topicPath] of pathsToProcess.entries()) {
-			// Check if course should be skipped due to known issues
-			if (shouldSkipCourse(topicPath)) {
-				skippedCount++
-				continue
-			}
+			// target-only mode: no dynamic skipping logic
 
 			// Check if course already exists
 			if (courseAlreadyExists(topicPath)) {
@@ -611,6 +610,23 @@ async function main() {
 				throw courseResult.error
 			}
 			const courseInfo = courseResult.data
+			// validate target course identity (path + title) with normalized comparison
+			const normalize = (s: string) => s.normalize("NFKC").replace(/\s+/g, " ").trim()
+			if (courseInfo.path !== TARGET_COURSE_SLUG) {
+				logger.error("unexpected course path returned", { expected: TARGET_COURSE_SLUG, actual: courseInfo.path })
+				throw errors.new("unexpected course path returned")
+			}
+			const expectedTitle = normalize(TARGET_COURSE_TITLE)
+			const actualTitle = normalize(courseInfo.title)
+			if (actualTitle !== expectedTitle) {
+				logger.error("unexpected course title returned", {
+					expected: TARGET_COURSE_TITLE,
+					actual: courseInfo.title,
+					expectedNormalized: expectedTitle,
+					actualNormalized: actualTitle
+				})
+				throw errors.new("unexpected course title returned")
+			}
 
 			if (!coursesMap.has(courseInfo.id)) {
 				coursesMap.set(courseInfo.id, courseInfo)
