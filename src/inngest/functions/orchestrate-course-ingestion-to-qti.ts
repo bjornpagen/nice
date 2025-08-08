@@ -139,17 +139,24 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			assessmentsCount: allAssessments.length // Use combined count
 		})
 
-		// Validate ALL questions have XML
-		for (const q of allQuestions) {
-			if (!q.xml) {
-				logger.error("CRITICAL: Question missing XML", {
-					questionId: q.id,
-					exerciseId: q.exerciseId,
-					exerciseTitle: q.exerciseTitle
-				})
-				throw errors.new(`question ${q.id} is missing XML - ALL questions MUST have XML`)
+		// Filter out questions with missing XML instead of hard-failing
+		const validQuestions = allQuestions.filter((q) => {
+			if (q.xml) {
+				return true
 			}
-		}
+			logger.warn("skipping question with missing xml", {
+				questionId: q.id,
+				exerciseId: q.exerciseId,
+				exerciseTitle: q.exerciseTitle
+			})
+			return false
+		})
+
+		logger.info("validated questions", {
+			totalQuestions: allQuestions.length,
+			validQuestions: validQuestions.length,
+			skippedCount: allQuestions.length - validQuestions.length
+		})
 
 		// Validate ALL articles have XML - if not, we'll create a default
 		const articlesWithXml = allArticles.map((a) => {
@@ -182,9 +189,9 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			return a
 		})
 
-		// Group questions by exerciseId for efficient lookup.
+		// Group questions by exerciseId for efficient lookup using only valid questions.
 		const questionsByExerciseId = new Map<string, string[]>()
-		for (const q of allQuestions) {
+		for (const q of validQuestions) {
 			if (!questionsByExerciseId.has(q.exerciseId)) {
 				questionsByExerciseId.set(q.exerciseId, [])
 			}
@@ -223,10 +230,11 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			assessmentMap.get(row.assessmentId)?.exerciseIds.push(row.exerciseId)
 		}
 
-		// Step 3: Assemble the JSON payloads from the fetched data.
-		const itemsUnvalidated: AssessmentItem[] = allQuestions.map((q) => {
+		// Step 3: Assemble the JSON payloads from the fetched data using only valid questions.
+		const itemsUnvalidated: AssessmentItem[] = validQuestions.map((q) => {
 			// TypeScript can't infer that validation happened above, so we need to check
 			if (!q.xml) {
+				logger.error("unreachable: question missing xml after filtering", { questionId: q.id })
 				throw errors.new("unreachable: question should have been validated for XML")
 			}
 			const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice_${q.id}`, q.exerciseTitle)

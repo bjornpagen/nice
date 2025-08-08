@@ -9,7 +9,8 @@ import type { AssessmentItemInput } from "@/lib/qti-generation/schemas"
 // No longer generating from Perseus in this pipeline
 import { differentiateAssessmentItem } from "@/lib/qti-generation/structured/differentiator"
 import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
-import { runValidationPipeline } from "@/lib/qti-validation"
+
+// validation pipeline removed from this function per PRD
 
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null
@@ -148,31 +149,9 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 			}
 			const compiledXml = compileResult.data
 
-			// Step 4.2: Full XML validation pipeline
-			logger.debug("validating compiled differentiated xml", {
-				questionId,
-				itemIndex: i + 1,
-				identifier: qtiIdentifier
-			})
-			const validation = await runValidationPipeline(compiledXml, {
-				id: qtiIdentifier,
-				rootTag: "qti-assessment-item",
-				title: sanitizedItem.title,
-				logger
-			})
-			if (!validation.isValid) {
-				logger.warn("compiled differentiated item failed xml validation, skipping this variation", {
-					questionId,
-					itemIndex: i + 1,
-					identifier: qtiIdentifier,
-					errors: validation.errors.map((e) => e.message)
-				})
-				continue
-			}
-
-			// Create the output item in the same format as assessmentItems.json
+			// Create the output item in the same format as assessmentItems.json, using compiled XML directly
 			const outputItem = {
-				xml: validation.xml,
+				xml: compiledXml,
 				metadata: {
 					khanId: questionId,
 					khanExerciseId: question.exerciseId,
@@ -187,7 +166,7 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 				questionId,
 				itemIndex: i + 1,
 				identifier: qtiIdentifier,
-				xmlLength: validation.xml.length
+				xmlLength: compiledXml.length
 			})
 		}
 
