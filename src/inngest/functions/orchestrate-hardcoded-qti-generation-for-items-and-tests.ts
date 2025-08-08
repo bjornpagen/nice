@@ -41,9 +41,12 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 		}
 		const courses = coursesResult.data
 
+		// ✅ MODIFIED: Initialize an array to hold all promises from all courses.
+		const allBatchPromises = []
+
 		for (const course of courses) {
 			const courseId = course.id
-			logger.info("dispatching differentiation jobs for course", { courseId, courseSlug: course.slug })
+			logger.info("queuing differentiation jobs for course", { courseId, courseSlug: course.slug })
 
 			// Fetch all units for the course
 			const unitsResult = await errors.try(
@@ -134,8 +137,8 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 				continue // Proceed to the next course.
 			}
 
-			// Use the `missingBatches` array to create promises.
-			const batchPromises = missingBatches.map((batchIds) =>
+			// ✅ MODIFIED: Use the `missingBatches` array to create promises and add them to the main promise array.
+			const courseBatchPromises = missingBatches.map((batchIds) =>
 				step.invoke(`differentiate-batch-${course.slug}-${batchIds[0]}`, {
 					// Use a more stable ID
 					function: differentiateAndSaveQuestionBatch,
@@ -147,14 +150,17 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 				})
 			)
 
-			// Wait for all batches to complete
-			const batchResults = await Promise.all(batchPromises)
+			// ✅ MODIFIED: Do NOT await here. Add the promises to the collection.
+			allBatchPromises.push(...courseBatchPromises)
+		}
 
-			logger.info("completed all differentiation batches for course", {
-				courseId,
-				totalDispatchedBatches: missingBatches.length,
-				results: batchResults
-			})
+		// ✅ MODIFIED: Await all promises from all courses concurrently after the loop.
+		if (allBatchPromises.length > 0) {
+			logger.info("dispatching all batches for all courses in parallel", { totalBatches: allBatchPromises.length })
+			const allBatchResults = await Promise.all(allBatchPromises)
+			logger.info("completed all differentiation batches for all courses", { resultsCount: allBatchResults.length })
+		} else {
+			logger.info("all course batches were already complete, no new jobs dispatched")
 		}
 
 		// Trigger the assembly step after all differentiation is complete.
