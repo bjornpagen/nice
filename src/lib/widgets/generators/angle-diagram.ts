@@ -241,18 +241,27 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			if (angle.isRightAngle) {
 				labelRadius = 25
 			} else {
-				// For small angles (< 30°) or long labels, place outside
-				const isSmallAngle = angleSize < Math.PI / 6 // 30 degrees
-				const isLongLabel = angle.label.length > 3
+				const baseLabelRadius = angle.radius + 8
+				const FONT_SIZE_ESTIMATE = 14 // Based on the SVG font-size
+				const CLEARANCE_PX = FONT_SIZE_ESTIMATE * 0.7 // Clearance needed for text
 
-				if (isSmallAngle || isLongLabel) {
-					// Place label outside the arc for better readability
-					const baseOffset = angle.radius + 15
-					const extraSpacing = angle.label.length > 4 ? (angle.label.length - 4) * 3 : 0
-					labelRadius = baseOffset + extraSpacing
+				// For very small angles, sin() approaches 0, which can cause radius to be infinite.
+				// We only apply this logic if the angle is wide enough to avoid division by zero.
+				if (Math.sin(angleSize / 2) > 0.01) {
+					// Calculate the minimum radius needed to avoid the label touching the angle's lines
+					const minRadiusForClearance = CLEARANCE_PX / Math.sin(angleSize / 2)
+					// The label radius is the larger of the aesthetic default or the calculated minimum
+					labelRadius = Math.max(baseLabelRadius, minRadiusForClearance)
 				} else {
-					// Place label closer to the arc for normal-sized angles
-					labelRadius = angle.radius + 8
+					// Fallback for extremely small angles
+					labelRadius = baseLabelRadius
+				}
+
+				// Additional spacing for long labels
+				const isLongLabel = angle.label.length > 3
+				if (isLongLabel) {
+					const extraSpacing = angle.label.length > 4 ? (angle.label.length - 4) * 3 : 0
+					labelRadius += 15 + extraSpacing
 				}
 			}
 
