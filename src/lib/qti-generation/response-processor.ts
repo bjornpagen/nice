@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
-import { isTerminatingFraction } from "./helpers"
+import { isTerminatingFraction, tryApproximatePiProduct } from "./helpers"
 import type { AssessmentItem } from "./schemas"
 
 export function compileResponseDeclarations(decls: AssessmentItem["responseDeclarations"]): string {
@@ -28,6 +28,20 @@ export function compileResponseDeclarations(decls: AssessmentItem["responseDecla
 			const correctValues = Array.isArray(decl.correct) ? decl.correct : [decl.correct]
 			const allCorrectValues = new Set<string | number>(correctValues)
 
+			// Heuristics to normalize algebraic strings for whitespace-insensitive matching
+			const isAlgebraLike = (s: string): boolean => /[()=+\-*/^]/.test(s)
+			const compactAlgebra = (s: string): string =>
+				s
+					.replace(/\s+/g, " ")
+					.trim()
+					.replace(/\s*([()])\s*/g, "$1")
+					.replace(/\s*([+\-*/^=])\s*/g, "$1")
+			const spacedAlgebra = (s: string): string =>
+				compactAlgebra(s)
+					.replace(/([+\-*/^=])/g, " $1 ")
+					.replace(/\s+/g, " ")
+					.trim()
+
 			for (const val of correctValues) {
 				if (typeof val !== "string") continue
 
@@ -43,16 +57,93 @@ export function compileResponseDeclarations(decls: AssessmentItem["responseDecla
 					}
 				}
 
+				// Rule: Accept algebraically equivalent strings that only differ by interior whitespace
+				if (isAlgebraLike(val)) {
+					const compact = compactAlgebra(val)
+					const spaced = spacedAlgebra(val)
+					allCorrectValues.add(compact)
+					allCorrectValues.add(spaced)
+				}
+
 				if (val.includes("/") && !val.startsWith(".")) {
 					const parts = val.split("/")
-					if (parts.length === 2 && parts[0] && parts[1]) {
-						const num = Number.parseInt(parts[0], 10)
-						const den = Number.parseInt(parts[1], 10)
-						if (!Number.isNaN(num) && !Number.isNaN(den) && isTerminatingFraction(num, den)) {
-							const decimalValue = (num / den).toString()
-							allCorrectValues.add(decimalValue)
-							if (decimalValue.startsWith("0.")) allCorrectValues.add(decimalValue.substring(1))
+					// Only convert pure numeric fractions like "5/8" to decimals.
+					if (parts.length === 2) {
+						const numStr = parts[0] ?? ""
+						const denStr = parts[1] ?? ""
+						if (!/^\d+$/.test(numStr) || !/^\d+$/.test(denStr)) {
+							// not a simple numeric fraction; skip
+						} else {
+							const num = Number.parseInt(numStr, 10)
+							const den = Number.parseInt(denStr, 10)
+							if (!Number.isNaN(num) && !Number.isNaN(den) && isTerminatingFraction(num, den)) {
+								const decimalValue = (num / den).toString()
+								allCorrectValues.add(decimalValue)
+								if (decimalValue.startsWith("0.")) allCorrectValues.add(decimalValue.substring(1))
+							}
 						}
+					}
+				}
+
+				// Handle fractional coefficients multiplied by a variable/expression in different textual forms.
+				// Examples to normalize across: (5/8)q, 5/8q, 5q/8, and the decimal equivalent 0.625q (when terminating).
+				{
+					// 1) Parenthesized fraction followed by a variable/expression: (a/b)X
+					const mParen = val.match(/^\(\s*(\d+)\s*\/\s*(\d+)\s*\)\s*([A-Za-z].*)$/)
+					if (mParen?.[1] && mParen?.[2] && mParen?.[3]) {
+						const num = Number.parseInt(mParen[1], 10)
+						const den = Number.parseInt(mParen[2], 10)
+						const varPart = mParen[3].trim()
+						// Non-parenthesized fractional coefficient
+						allCorrectValues.add(`${num}/${den}${varPart}`)
+						// Decimal coefficient if terminating
+						if (Number.isFinite(num) && Number.isFinite(den) && den !== 0 && isTerminatingFraction(num, den)) {
+							const dec = (num / den).toString()
+							allCorrectValues.add(`${dec}${varPart}`)
+							if (dec.startsWith("0.")) allCorrectValues.add(`${dec.substring(1)}${varPart}`)
+						}
+					}
+
+					// 2) Non-parenthesized fraction followed by variable/expression: a/b X (no explicit operator)
+					const mNonParen = val.match(/^\s*(\d+)\s*\/\s*(\d+)\s*([A-Za-z].*)$/)
+					if (mNonParen?.[1] && mNonParen?.[2] && mNonParen?.[3]) {
+						const num = Number.parseInt(mNonParen[1], 10)
+						const den = Number.parseInt(mNonParen[2], 10)
+						const varPart = mNonParen[3].trim()
+						// Parenthesized version
+						allCorrectValues.add(`(${num}/${den})${varPart}`)
+						// Decimal coefficient if terminating
+						if (Number.isFinite(num) && Number.isFinite(den) && den !== 0 && isTerminatingFraction(num, den)) {
+							const dec = (num / den).toString()
+							allCorrectValues.add(`${dec}${varPart}`)
+							if (dec.startsWith("0.")) allCorrectValues.add(`${dec.substring(1)}${varPart}`)
+						}
+					}
+
+					// 3) Numerator coefficient attached to variable over denominator: aX/b
+					const mAttached = val.match(/^\s*(\d+)\s*([A-Za-z][A-Za-z0-9]*)\s*\/\s*(\d+)\s*$/)
+					if (mAttached?.[1] && mAttached?.[2] && mAttached?.[3]) {
+						const num = Number.parseInt(mAttached[1], 10)
+						const varPart = mAttached[2]
+						const den = Number.parseInt(mAttached[3], 10)
+						// Move denominator to coefficient position
+						allCorrectValues.add(`(${num}/${den})${varPart}`)
+						allCorrectValues.add(`${num}/${den}${varPart}`)
+						// Decimal coefficient if terminating
+						if (Number.isFinite(num) && Number.isFinite(den) && den !== 0 && isTerminatingFraction(num, den)) {
+							const dec = (num / den).toString()
+							allCorrectValues.add(`${dec}${varPart}`)
+							if (dec.startsWith("0.")) allCorrectValues.add(`${dec.substring(1)}${varPart}`)
+						}
+					}
+				}
+
+				// Add decimal alternative for expressions containing π/pi (π≈3.14) for multiplicative/divisive forms
+				{
+					const approx = tryApproximatePiProduct(val, 3.14)
+					if (approx) {
+						allCorrectValues.add(approx)
+						if (approx.startsWith("0.")) allCorrectValues.add(approx.substring(1))
 					}
 				}
 
@@ -167,7 +258,9 @@ export function compileResponseProcessing(decls: AssessmentItem["responseDeclara
 			if (decl.cardinality === "ordered") {
 				return `<qti-equal>${variable}${correct}</qti-equal>`
 			}
-			return `<qti-match>${variable}${correct}</qti-match>`
+			// For non-ordered responses, allow membership in the set of acceptable correct values.
+			// This ensures that multiple <qti-value> entries in <qti-correct-response> are all accepted.
+			return `<qti-member>${variable}${correct}</qti-member>`
 		})
 		.join("\n                    ")
 

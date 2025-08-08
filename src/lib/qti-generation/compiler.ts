@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import type { InlineContent } from "@/lib/qti-generation/schemas"
 import { ErrUnsupportedInteraction } from "@/lib/qti-generation/structured/client"
 import { typedSchemas } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
@@ -55,6 +56,8 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 
 	// responseIdentifier → mapping of original choice id to normalized id
 	const responseIdToMap: Record<string, Record<string, string>> = {}
+	// responseIdentifier → mapping of simple label text to normalized id (for inlineChoice string-based answers)
+	const responseIdToLabelMap: Record<string, Record<string, string>> = {}
 
 	for (const interaction of Object.values(item.interactions)) {
 		// Only interactions with choices are relevant
@@ -73,15 +76,27 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 
 		if (interaction.type === "inlineChoiceInteraction") {
 			const responseId = interaction.responseIdentifier
+			const labelMap: Record<string, string> = {}
+			const extractInlineText = (inline: import("./schemas").InlineContent): string => {
+				let text = ""
+				for (const part of inline) {
+					if (part.type === "text") text += part.content
+					// intentionally ignore math and inlineSlot for label mapping
+				}
+				return text.replace(/\s+/g, " ").trim()
+			}
 			interaction.choices.forEach((choice, idx) => {
 				const originalId = String(choice.identifier)
 				const normalized = VALID_IDENTIFIER_REGEX.test(originalId)
 					? normalizeIdentifier(originalId, fallbackPrefix, idx, used)
 					: normalizeIdentifier(originalId, fallbackPrefix, idx, used)
 				mapping[originalId] = normalized
+				const labelText = extractInlineText(choice.content)
+				if (labelText) labelMap[labelText] = normalized
 				choice.identifier = normalized
 			})
 			responseIdToMap[responseId] = mapping
+			responseIdToLabelMap[responseId] = labelMap
 			continue
 		}
 
@@ -119,6 +134,45 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 				decl.correct = current
 			}
 		}
+
+		// Convert string-based inline choice declarations to identifier-based using label/id maps
+		for (const decl of item.responseDeclarations) {
+			if (!decl) continue
+			const labelMap = responseIdToLabelMap[decl.identifier]
+			const idMap = responseIdToMap[decl.identifier]
+			if (!labelMap && !idMap) continue
+			if (decl.baseType !== "string") continue
+
+			const toIdentifier = (val: string): string => {
+				// Prefer exact original-id mapping, then label mapping
+				if (idMap?.[val]) return idMap[val]
+				if (labelMap?.[val]) return labelMap[val]
+				// not mappable → fail fast
+				logger.error("string response value not mappable to choice identifier", {
+					responseIdentifier: decl.identifier,
+					value: val
+				})
+				throw errors.new("string response not mappable to identifier")
+			}
+
+			if (Array.isArray(decl.correct)) {
+				const mapped = decl.correct.map((v) => {
+					if (typeof v !== "string") {
+						logger.error("non-string value in string-based response declaration", { value: v })
+						throw errors.new("invalid response declaration value type")
+					}
+					return toIdentifier(v)
+				})
+				decl.correct = mapped
+			} else {
+				if (typeof decl.correct !== "string") {
+					logger.error("non-string scalar in string-based response declaration", { value: decl.correct })
+					throw errors.new("invalid response declaration scalar type")
+				}
+				decl.correct = toIdentifier(decl.correct)
+			}
+			decl.baseType = "identifier"
+		}
 	}
 }
 
@@ -130,24 +184,54 @@ function isValidWidgetType(type: string): type is keyof typeof typedSchemas {
 function dedupePromptTextFromBody(item: AssessmentItem): void {
 	if (!item.interactions || !item.body) return
 
-	const promptTexts = new Set<string>()
+	// Normalize helpers for robust equality
+	const normalizeText = (s: string): string => s.replace(/\s+/g, " ").trim()
+	const normalizeMath = (mathml: string): string => mathml.replace(/\s+/g, " ").trim()
+
+	const inlineContentEquals = (a: InlineContent, b: InlineContent): boolean => {
+		if (a.length !== b.length) return false
+		for (let i = 0; i < a.length; i++) {
+			const ai = a[i]
+			const bi = b[i]
+			if (!ai || !bi) return false
+			if (ai.type !== bi.type) return false
+			if (ai.type === "text" && bi.type === "text") {
+				if (normalizeText(ai.content) !== normalizeText(bi.content)) return false
+				continue
+			}
+			if (ai.type === "math" && bi.type === "math") {
+				if (normalizeMath(ai.mathml) !== normalizeMath(bi.mathml)) return false
+				continue
+			}
+			if (ai.type === "inlineSlot" && bi.type === "inlineSlot") {
+				if (ai.slotId !== bi.slotId) return false
+				continue
+			}
+			// Unknown inline type mismatch
+			return false
+		}
+		return true
+	}
+
+	// Collect all prompts from interactions that support a prompt
+	const prompts: InlineContent[] = []
 	for (const interaction of Object.values(item.interactions)) {
 		if (interaction.type === "choiceInteraction" || interaction.type === "orderInteraction") {
-			const prompt = interaction.prompt
-			if (prompt.length === 1 && prompt[0]?.type === "text") {
-				promptTexts.add(prompt[0].content)
+			if (interaction.prompt && interaction.prompt.length > 0) {
+				prompts.push(interaction.prompt)
 			}
 		}
 	}
-	if (promptTexts.size === 0) return
+	if (prompts.length === 0) return
 
 	const originalLength = item.body.length
 	item.body = item.body.filter((block) => {
 		if (block.type !== "paragraph") return true
-		if (block.content.length !== 1) return true
-		const only = block.content[0]
-		if (only?.type !== "text") return true
-		return !promptTexts.has(only.content)
+		// If any prompt inline content exactly equals this paragraph's inline content, drop it
+		for (const p of prompts) {
+			if (inlineContentEquals(block.content, p)) return false
+		}
+		return true
 	})
 	const removedCount = originalLength - item.body.length
 	if (removedCount > 0) {

@@ -62,7 +62,7 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	const BOTTOM_LINE_LABEL_Y_OFFSET = 30 // Distance from bottom line DOWN to its label
 	const BOTTOM_LINE_TICK_LABEL_Y_OFFSET = -15 // Distance from bottom line UP to its tick labels
 	const TICK_MARK_HEIGHT = 5
-	const LINE_SEPARATION = 70 // A fixed, safe vertical distance between the two number line axes
+	const LINE_SEPARATION = 100 // Increased to ensure sufficient vertical space between lines and labels
 
 	// Calculate minimum height needed to prevent label clipping
 	const requiredMinHeight = Math.abs(TOP_LINE_LABEL_Y_OFFSET) + LINE_SEPARATION + BOTTOM_LINE_LABEL_Y_OFFSET + 10 // +10 buffer

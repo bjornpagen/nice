@@ -256,7 +256,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				if (angle.isRightAngle) {
 					labelRadius = 22
 				} else {
-					const baseLabelRadius = angle.radius * 1.4
+					const baseLabelRadius = angle.radius * 1.6
 					const FONT_SIZE_ESTIMATE = 14 // Based on the SVG font-size
 					const CLEARANCE_PX = FONT_SIZE_ESTIMATE * 0.7 // Clearance needed for text
 
@@ -283,6 +283,16 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 
 	// Layer 5: Sides (Labels and Ticks)
 	if (sides) {
+		// Compute centroid of the main triangle (first 3 points) to determine outward direction
+		const pA = points[0]
+		const pB = points[1]
+		const pC = points[2]
+		if (!pA || !pB || !pC) {
+			throw errors.new("triangle requires at least 3 points")
+		}
+		const centroidX = (pA.x + pB.x + pC.x) / 3
+		const centroidY = (pA.y + pB.y + pC.y) / 3
+
 		for (const side of sides) {
 			// Validate vertex count
 			if (side.vertices.length !== 2) {
@@ -308,7 +318,19 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 			const labelOffset = 15
 
 			if (side.label) {
-				svg += `<text x="${midX + nx * labelOffset}" y="${midY + ny * labelOffset}" fill="black" text-anchor="middle" dominant-baseline="middle">${side.label}</text>`
+				// Flip perpendicular to point away from the triangle centroid so labels are placed outside
+				let perpX = nx
+				let perpY = ny
+				const testX = midX + perpX * 10
+				const testY = midY + perpY * 10
+				const distTest = Math.hypot(testX - centroidX, testY - centroidY)
+				const distMid = Math.hypot(midX - centroidX, midY - centroidY)
+				if (distTest < distMid) {
+					perpX = -perpX
+					perpY = -perpY
+				}
+
+				svg += `<text x="${midX + perpX * labelOffset}" y="${midY + perpY * labelOffset}" fill="black" text-anchor="middle" dominant-baseline="middle">${side.label}</text>`
 			}
 			if (side.tickMarks > 0) {
 				const tickSize = 6

@@ -236,7 +236,7 @@ function drawFigure(figure: z.infer<typeof FigureSchema>, offsetX: number, offse
 			const labelY = midY + outwardNormalY * labelOffset
 
 			const fontSize = Math.max(10, 14 * scale)
-			svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="bold">${label}</text>`
+			svg += `<text x="${labelX}" y="${labelY}" fill="${strokeColor}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="bold">${label}</text>`
 		}
 	}
 
@@ -275,7 +275,7 @@ function drawFigure(figure: z.infer<typeof FigureSchema>, offsetX: number, offse
 		}
 
 		const fontSize = Math.max(12, 16 * scale)
-		svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="bold">${figure.figureLabel.text}</text>`
+		svg += `<text x="${labelX}" y="${labelY}" fill="${strokeColor}" text-anchor="middle" dominant-baseline="middle" font-size="${fontSize}" font-weight="bold">${figure.figureLabel.text}</text>`
 	}
 
 	return svg

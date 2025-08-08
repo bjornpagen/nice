@@ -192,10 +192,13 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			const startAngle = Math.atan2(p1.y - vertex.y, p1.x - vertex.x)
 			const endAngle = Math.atan2(p2.y - vertex.y, p2.x - vertex.x)
 
-			const arcStartX = vertex.x + angle.radius * Math.cos(startAngle)
-			const arcStartY = vertex.y + angle.radius * Math.sin(startAngle)
-			const arcEndX = vertex.x + angle.radius * Math.cos(endAngle)
-			const arcEndY = vertex.y + angle.radius * Math.sin(endAngle)
+			// Push arcs slightly away from the vertex for clearer readability
+			const ARC_OFFSET = 6
+			const effectiveRadius = angle.radius + ARC_OFFSET
+			const arcStartX = vertex.x + effectiveRadius * Math.cos(startAngle)
+			const arcStartY = vertex.y + effectiveRadius * Math.sin(startAngle)
+			const arcEndX = vertex.x + effectiveRadius * Math.cos(endAngle)
+			const arcEndY = vertex.y + effectiveRadius * Math.sin(endAngle)
 
 			let angleDiff = endAngle - startAngle
 			if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
@@ -241,7 +244,9 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			if (angle.isRightAngle) {
 				labelRadius = 25
 			} else {
-				const baseLabelRadius = angle.radius + 8
+				// Keep label a bit beyond the (offset) arc for clarity
+				const ARC_OFFSET = 6
+				const baseLabelRadius = angle.radius + ARC_OFFSET + 8
 				const FONT_SIZE_ESTIMATE = 14 // Based on the SVG font-size
 				const CLEARANCE_PX = FONT_SIZE_ESTIMATE * 0.7 // Clearance needed for text
 
@@ -317,9 +322,13 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 					}
 				}
 
-				// If no good gap found, default to top-left
-				if (maxGap < Math.PI / 6) {
-					bestAngle = (-3 * Math.PI) / 4 // Top-left diagonal
+				// If this point is a common vertex (multiple outgoing rays), bias the label to appear below the point
+				// This improves readability for central vertices like 'O' by avoiding overlap with rays.
+				if (raysFromPoint.length >= 2) {
+					bestAngle = Math.PI / 2 // Downward in SVG coordinate system
+				} else if (maxGap < Math.PI / 6) {
+					// If no good gap found, default to bottom as a clearer fallback
+					bestAngle = Math.PI / 2
 				}
 
 				const labelDistance = 15

@@ -241,15 +241,25 @@ ${JSON.stringify(exampleShells, null, 2)}
 ${perseusJson}
 \`\`\`
 
-## CRITICAL Instructions:
+  ## CRITICAL Instructions:
 - **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of the question.
 - **\`body\` Field**: Create a 'body' field containing the main content as a structured JSON array (not an HTML string).
-- **ONLY REFERENCED WIDGETS**: CRITICAL RULE - Only include widgets/interactions that are explicitly referenced in the Perseus content string via \`[[☃ widget_name]]\` placeholders. Perseus JSON may contain many widget definitions, but you MUST ignore any that aren't actually used in the content.
-- **Placeholders**:
+  - **ONLY REFERENCED WIDGETS (WITH CHOICE-LEVEL EXCEPTION)**: CRITICAL RULE - Only include widgets/interactions that are explicitly referenced in the Perseus content string via \`[[☃ widget_name]]\` placeholders. Perseus JSON may contain many widget definitions, but you MUST ignore any that aren't actually used in the content.
+    - **Exception for visuals inside interaction choices (radio/order/inlineChoice)**: When the original Perseus JSON encodes visuals (e.g., Graphie images, number lines, diagrams) inside interaction choice content, you MUST predeclare widget slots for those visuals even if there is no corresponding \`[[☃ ...]]\` placeholder in the top-level body.
+    - Do NOT render these per-choice visuals in the shell body. Simply reserve their widget slot identifiers in the \`widgets\` array for later use by the interaction content shot.
+  - **Placeholders**:
   - For ALL Perseus widgets (including 'image' widgets), create a { "type": "blockSlot", "slotId": "..." } placeholder in the 'body' and add its identifier to the 'widgets' string array.
   - For inline interactions (e.g., 'text-input', 'inline-choice'), create { "type": "inlineSlot", "slotId": "..." } inside paragraph content.
   - For block interactions (e.g., 'radio', 'order'), create { "type": "blockSlot", "slotId": "..." } in the body array.
-- **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
+  - **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
+  
+  - **CHOICE-LEVEL VISUALS NAMING CONVENTION (MANDATORY)**:
+    - For each interaction slot (e.g., a radio group) that contains choices with visuals in the original Perseus content, predeclare widget slots for those visuals using this deterministic naming scheme:
+      - \`<responseIdentifier>__<choiceLetter>__v<index>\` where:
+        - \`<responseIdentifier>\` is the shell interaction slot name (e.g., the one you list in \`interactions\`)
+        - \`<choiceLetter>\` is the choice identifier you will use later (A, B, C, ...)
+        - \`<index>\` starts at 1 for the first visual in that choice and increments by 1 per additional visual in the same choice
+    - Example: For a radio interaction with response identifier \`RESPONSE\` and three choices where the first and third choices each contain one visual, reserve \`widgets\` = [ ... , "RESPONSE__A__v1", "RESPONSE__C__v1" ]. Do NOT include these as \`blockSlot\`s in the shell body. They are used inside choices during interaction generation.
  - **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
  - **NO ANSWERS OR HINTS IN 'BODY'**: Do NOT reveal or restate the correct answer anywhere in the 'body'. Remove ALL Perseus 'hints' content entirely and NEVER include hint-like guidance (e.g., lines starting with "Hint:" or text that gives away the answer). Only the prompt and neutral problem context belong in the 'body'; answers live solely in response declarations.
 - **MathML Conversion (MANDATORY)**:
@@ -935,7 +945,7 @@ Widgets MUST NEVER display, label, or visually indicate the correct answer. This
     "angle_diagram": {
       "type": "angleDiagram",
       "angles": [{
-        "label": "",  // ✅ CORRECT: No label that gives away the answer
+        "label": null,  // ✅ CORRECT: No label that gives away the answer
         "vertices": ["E", "A", "F"],
         "color": "#11accd"  // Visual marking without answer
       }]
@@ -1063,6 +1073,11 @@ Assessment Item Body (as structured JSON):
 ${assessmentBody}
 \`\`\`
 
+ MANDATORY RULES FOR CHOICE-LEVEL VISUALS:
+ - Some widget slot names may follow the convention \`<responseIdentifier>__<choiceLetter>__v<index>\`. These are widgets reserved for visuals that appear INSIDE interaction choices (e.g., images/diagrams in radio choices).
+ - You MUST map these choice-level widget slots to the correct widget types by inspecting the Perseus JSON for the corresponding choice content.
+ - Do NOT assume these appear in the top-level body; they are intentionally absent from body and will be inserted inside choices later.
+
 Available Widget Types and Descriptions:
 ${buildWidgetTypeDescriptions()}
 
@@ -1163,6 +1178,12 @@ ${JSON.stringify(assessmentShell, null, 2)}
 - Extract all relevant data from the Perseus JSON to populate the interaction properties (prompt, choices, etc.).
 - Ensure all required properties for each interaction type are included.
 - **CRITICAL**: Preserve all MathML content exactly as it appears in the assessment shell body.
+  
+  - **MANDATORY: EMBED WIDGET SLOTS INSIDE CHOICES WHEN VISUALS ARE PRESENT**
+    - If the original Perseus choice content includes images/diagrams/graphie visuals, you MUST represent the choice's visual by inserting a block slot reference to the predeclared widget slot using the naming scheme \`<responseIdentifier>__<choiceLetter>__v<index>\`.
+    - Build each choice's \`content\` as structured block content that includes a \`blockSlot\` with the correct \`slotId\` for each visual in that choice, preserving any accompanying text.
+    - Never embed \`<img>\` or \`<svg>\` directly. Always reference the widget slot(s).
+    - Use choice identifiers A, B, C, ... consistently with the response declaration plan; ensure the slot names match exactly.
 - Return ONLY a JSON object with interaction slot names as keys and interaction objects as values.
 
 Example output structure:
@@ -1227,6 +1248,51 @@ CORRECT: \`prompt: [{ "type": "text", "content": "Select the correct answer." }]
 **For choiceInteraction:**
 WRONG: \`content: "<p>Option A</p>"\` (HTML string)
 CORRECT: \`content: [{ "type": "paragraph", "content": [{ "type": "text", "content": "Option A" }] }]\`
+
+  **CRITICAL: CHOICE-LEVEL VISUALS MUST USE WIDGET SLOTS (DO NOT DESCRIBE THE IMAGE IN TEXT)**
+  WRONG (text-only description of a number line inside a choice):
+  \`\`\`json
+  {
+    "choices": [
+      {
+        "identifier": "A",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "content": "A vertical number line from 6 to -6 with tick marks... another arrow from 2.5 to 5.5 ..."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  \`\`\`
+  
+  CORRECT (embed the predeclared widget slot for the choice's visual):
+  \`\`\`json
+  {
+    "choices": [
+      {
+        "identifier": "A",
+        "content": [
+          { "type": "blockSlot", "slotId": "RESPONSE__A__v1" }
+        ],
+        "feedback": null
+      },
+      {
+        "identifier": "B",
+        "content": [
+          { "type": "blockSlot", "slotId": "RESPONSE__B__v1" }
+        ],
+        "feedback": null
+      }
+    ]
+  }
+  \`\`\`
 
 **For inlineChoiceInteraction:**
 WRONG: \`content: "Option A"\` (plain string)
@@ -1340,6 +1406,13 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
    - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.
 
+  **DEDICATED RULE: ANSWER LEAKAGE IS STRICTLY PROHIBITED**
+  Widgets must NEVER reveal, hint at, or encode the correct answer in any way.
+  - Do not pre-label target values (angles, lengths, coordinates, categories) with the correct answer
+  - Do not pre-highlight the correct region, tick, or element
+  - Do not include explanatory text that states or implies the answer
+  - When a label field could reveal the answer, set it to null
+
 6. **NO ANSWER LEAKAGE IN WIDGETS** - CRITICAL: Widgets MUST NEVER reveal the correct answer:
    - NEVER label diagrams with the answer (e.g., angle labeled "EAF" when asking for angle name)
    - NEVER highlight or mark the correct value in visualizations
@@ -1388,6 +1461,7 @@ ${buildWidgetTypeDescriptions()}
 - **Use Interaction Context**: You MUST use the "Interaction Content" object to understand the full question. This context is critical for generating correct data for widgets that appear within choices. For example, the interaction's prompt will tell you what the correct values on a number line widget should be.
 - Extract all relevant data from the Perseus JSON to populate the widget properties.
 - Ensure all required properties for each widget type are included.
+  - **MANDATORY: HONOR CHOICE-LEVEL SLOT NAMING**: For any widget slot name matching \`<responseIdentifier>__<choiceLetter>__v<index>\`, generate the widget corresponding to the visual content in that specific choice within the referenced interaction. Do not repurpose or collapse these slots; they must map 1:1 to the visuals per choice.
 - Return ONLY a JSON object with widget slot names as keys and widget objects as values.
 
 Example output structure:
@@ -1464,9 +1538,36 @@ CORRECT (angle diagram without answer):
   "angle_diagram": {
     "type": "angleDiagram", 
     "angles": [{
-      "label": "",  // ✅ CORRECT: No label revealing the answer
+        "label": null,  // ✅ CORRECT: No label revealing the answer
       "vertices": ["E", "A", "F"],
       "color": "#11accd"  // Visual marking without giving away answer
+    }]
+  }
+}\`
+
+WRONG (triangle diagram question with angle labeled):
+\`{
+  "triangle_widget": {
+    "type": "triangleDiagram",
+    "triangles": [{
+      "vertices": ["B", "A", "C"],
+      "angles": [{
+        "vertex": "A",
+        "label": "BAC"  // ❌ BANNED: When asking "Which angle is ∠BAC?", don't label it!
+      }]
+    }]
+  }
+}\`
+CORRECT (triangle diagram without revealing labels):
+\`{
+  "triangle_widget": {
+    "type": "triangleDiagram",
+    "triangles": [{
+      "vertices": ["B", "A", "C"],
+      "angles": [{
+        "vertex": "A",
+        "label": null  // ✅ CORRECT: Let students identify which angle is ∠BAC
+      }]
     }]
   }
 }\`

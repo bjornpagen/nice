@@ -86,10 +86,25 @@ export const generateDotPlot: WidgetGenerator<typeof DotPlotPropsSchema> = (data
 	}
 
 	// Ticks and tick labels
-	for (let t = axis.min; t <= axis.max; t += axis.tickInterval) {
+	// Dynamically thin tick labels to prevent overlap when ticks are very dense (e.g., interval = 0.1)
+	const tickPixelStep = scale * axis.tickInterval
+	const minLabelSpacingPx = 28 // approx width needed per label at font-size 12
+	const labelEvery = Math.max(1, Math.ceil(minLabelSpacingPx / tickPixelStep))
+
+	// Determine decimal places for formatting based on tickInterval
+	const intervalStr = String(axis.tickInterval)
+	const decimals = intervalStr.includes(".") ? (intervalStr.split(".")[1] ?? "").length : 0
+	let i = 0
+	for (let t = axis.min; t <= axis.max + 1e-9; t += axis.tickInterval) {
 		const x = toSvgX(t)
 		svg += `<line x1="${x}" y1="${axisY - 5}" x2="${x}" y2="${axisY + 5}" stroke="black"/>`
-		svg += `<text x="${x}" y="${axisY + 20}" fill="black" text-anchor="middle">${t}</text>`
+		// Only render label if spacing allows, but always include min and max labels
+		const isEndpoint = Math.abs(t - axis.min) < 1e-9 || Math.abs(t - axis.max) < 1e-9
+		if (isEndpoint || i % labelEvery === 0) {
+			const label = t.toFixed(decimals)
+			svg += `<text x="${x}" y="${axisY + 20}" fill="black" text-anchor="middle">${label}</text>`
+		}
+		i++
 	}
 
 	const dotDiameter = dotRadius * 2
