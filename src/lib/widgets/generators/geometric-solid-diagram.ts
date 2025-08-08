@@ -42,12 +42,12 @@ export const GeometricSolidDiagramPropsSchema = z
 		width: z
 			.number()
 			.nullable()
-			.transform((val) => val ?? 150)
+			.transform((val) => val ?? 360)
 			.describe("The total width of the output SVG container in pixels."),
 		height: z
 			.number()
 			.nullable()
-			.transform((val) => val ?? 200)
+			.transform((val) => val ?? 300)
 			.describe("The total height of the output SVG container in pixels."),
 		shape: z
 			.discriminatedUnion("type", [CylinderDataSchema, ConeDataSchema, SphereDataSchema])

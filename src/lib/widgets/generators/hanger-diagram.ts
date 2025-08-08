@@ -83,9 +83,9 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	const beamY = Math.max(30, Math.min(50, Math.floor(height * 0.2)))
 	const availableBelowBeam = Math.max(0, height - beamY - bottomMargin)
 
-	const maxWeightSize = 30
-	const minWeightSize = 12
-	const baseGap = 5
+	const maxWeightSize = 42
+	const minWeightSize = 16
+	const baseGap = 6
 	// Compute weight size so that all rows fit within available space
 	let size = Math.min(
 		maxWeightSize,
