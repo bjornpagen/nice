@@ -295,6 +295,21 @@ const events = {
 	"migration/hardcoded.qti.generate-items-and-tests": {
 		data: z.object({})
 	},
+	// ✅ MODIFIED: Event name is now plural and takes an array of question IDs.
+	"qti/questions.differentiate-and-save": {
+		data: z.object({
+			questionIds: z.array(z.string().min(1)),
+			n: z.number().int().positive(),
+			courseSlug: z.string().min(1)
+		})
+	},
+	// ✅ ADD: New event to signal that all differentiation jobs for a set of courses have been dispatched
+	// and the assembly process can begin
+	"qti/assembly.items.ready": {
+		data: z.object({
+			courseSlugs: z.array(z.string().min(1))
+		})
+	},
 	"migration/hardcoded.qti.generate-stimuli": {
 		data: z.object({})
 	},

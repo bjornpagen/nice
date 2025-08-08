@@ -33,9 +33,12 @@ import { orchestrateHardcodedQtiGenerationForStimuli } from "@/inngest/functions
 import { orchestrateHardcodedQtiUpload } from "@/inngest/functions/orchestrate-hardcoded-qti-upload"
 import { orchestrateHardcodedStimulusMigration } from "@/inngest/functions/orchestrate-hardcoded-stimulus-migration"
 import { orchestrateHardcodedUndifferentiatedQtiGeneration } from "@/inngest/functions/orchestrate-hardcoded-undifferentiated-qti-generation"
+// ✅ ADD: Import the new batch differentiation and assembly functions
+import { assembleDifferentiatedItemsAndCreateTests } from "@/inngest/functions/qti/assemble-differentiated-items-and-create-tests"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
+import { differentiateAndSaveQuestionBatch } from "@/inngest/functions/qti/differentiate-and-save-question-batch"
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
@@ -96,6 +99,9 @@ export const { GET, POST, PUT } = serve({
 		validateAndClearInvalidQuestionXml,
 		// ✅ ADD: Register the new paraphrase function
 		paraphraseStimulus,
-		ingestUndifferentiatedCourseFromDb
+		ingestUndifferentiatedCourseFromDb,
+		// ✅ ADD: Register the new batch differentiation and assembly functions
+		differentiateAndSaveQuestionBatch,
+		assembleDifferentiatedItemsAndCreateTests
 	]
 })
