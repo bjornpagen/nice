@@ -98,7 +98,8 @@ export function Content({
 				activity: {
 					name: video.title,
 					id: video.id
-				}
+				},
+				process: true
 			}
 
 			// Send cumulative time event
@@ -220,7 +221,8 @@ export function Content({
 					activity: {
 						name: video.title,
 						id: video.id
-					}
+					},
+					process: true
 				}
 
 				// Send cumulative time event

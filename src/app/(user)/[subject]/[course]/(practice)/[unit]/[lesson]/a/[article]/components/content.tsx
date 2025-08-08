@@ -86,7 +86,8 @@ export function Content({
 							activity: {
 								name: article.title,
 								id: article.id
-							}
+							},
+							process: true
 						}
 						void sendCaliperTimeSpentEvent(actorForCleanup, contextForCleanup, durationInSeconds)
 					}

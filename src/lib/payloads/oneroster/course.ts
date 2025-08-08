@@ -479,7 +479,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						resourceSet.add(contentSourcedId)
 
 						// --- NEW: Add flat line items for videos and articles here ---
-						if (content.type === "Video" || content.type === "Article" || content.type === "Exercise") {
+						if (content.type === "Video" || content.type === "Article") {
 							onerosterPayload.assessmentLineItems.push({
 								sourcedId: contentSourcedId, // The ID matches the resource ID
 								title: `Progress for: ${content.title}`,

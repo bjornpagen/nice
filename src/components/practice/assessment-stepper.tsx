@@ -522,7 +522,8 @@ export function AssessmentStepper({
 				activity: {
 					name: assessmentTitle,
 					id: onerosterResourceSourcedId // Plain OneRoster ID - will be converted to URI server-side
-				}
+				},
+				process: true
 			}
 
 			// Calculate duration before sending events
