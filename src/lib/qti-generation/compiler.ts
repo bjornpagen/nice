@@ -126,6 +126,34 @@ function isValidWidgetType(type: string): type is keyof typeof typedSchemas {
 	return Object.keys(typedSchemas).includes(type)
 }
 
+function dedupePromptTextFromBody(item: AssessmentItem): void {
+	if (!item.interactions || !item.body) return
+
+	const promptTexts = new Set<string>()
+	for (const interaction of Object.values(item.interactions)) {
+		if (interaction.type === "choiceInteraction" || interaction.type === "orderInteraction") {
+			const prompt = interaction.prompt
+			if (prompt.length === 1 && prompt[0]?.type === "text") {
+				promptTexts.add(prompt[0].content)
+			}
+		}
+	}
+	if (promptTexts.size === 0) return
+
+	const originalLength = item.body.length
+	item.body = item.body.filter((block) => {
+		if (block.type !== "paragraph") return true
+		if (block.content.length !== 1) return true
+		const only = block.content[0]
+		if (only?.type !== "text") return true
+		return !promptTexts.has(only.content)
+	})
+	const removedCount = originalLength - item.body.length
+	if (removedCount > 0) {
+		logger.debug("deduplicated prompt text from body", { count: removedCount })
+	}
+}
+
 export function compile(itemData: AssessmentItemInput): string {
 	// Step 0: Build widget mapping prior to schema enforcement
 	const widgetMapping: Record<string, string> = {}
@@ -156,6 +184,8 @@ export function compile(itemData: AssessmentItemInput): string {
 	const enforcedItem = itemResult.data
 
 	// Step 1: Prevalidation on schema-enforced data to catch QTI content model violations
+	// Manual deduplication of paragraphs that duplicate an interaction prompt
+	dedupePromptTextFromBody(enforcedItem)
 	validateAssessmentItemInput(enforcedItem, logger)
 
 	// Normalize choice identifiers now that we have strong types
