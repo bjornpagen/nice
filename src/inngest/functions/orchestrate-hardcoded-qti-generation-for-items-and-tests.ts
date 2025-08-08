@@ -12,6 +12,11 @@ import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 import { ErrQtiNotFound } from "@/lib/qti"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 
+type AssessmentTestCandidate = {
+	id: string
+	xml: string
+}
+
 const HARDCODED_COURSE_IDS = [
 	"x0267d782", // 6th grade math (Common Core)
 	"x6b17ba59", // 7th grade math (Common Core)
@@ -179,9 +184,17 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 								if (errors.is(updateResult.error, ErrQtiNotFound)) {
 									const createResult = await errors.try(qti.createAssessmentItem(payload))
 									if (createResult.error) {
+										logger.error("ghetto-validate create failed", {
+											identifier: tempIdentifier,
+											error: createResult.error
+										})
 										return { success: false, item, error: createResult.error }
 									}
 								} else {
+									logger.error("ghetto-validate update failed", {
+										identifier: tempIdentifier,
+										error: updateResult.error
+									})
 									return { success: false, item, error: updateResult.error }
 								}
 							}
@@ -362,7 +375,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 					title: string,
 					questions: { id: string; exerciseId: string; exerciseTitle: string }[],
 					_metadata: Record<string, unknown>
-				): string => {
+				): AssessmentTestCandidate => {
 					const safeTitle = escapeXmlAttribute(title)
 
 					const questionsByExercise = new Map<string, { title: string; questionIds: string[] }>()
@@ -393,7 +406,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 						})
 						.join("\n")
 
-					return `<?xml version="1.0" encoding="UTF-8"?>
+					const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${id}" title="${safeTitle}">
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
@@ -402,30 +415,33 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 ${sectionsXml}
     </qti-test-part>
 </qti-assessment-test>`
+					return { id, xml }
 				}
 
-				const explicitTests = Array.from(assessmentMap.entries()).map(([assessmentId, data]) => {
-					const questionIds = data.exerciseIds.flatMap((exerciseId) => questionsByExerciseId.get(exerciseId) || [])
+				const explicitTestsCandidates: AssessmentTestCandidate[] = Array.from(assessmentMap.entries()).map(
+					([assessmentId, data]) => {
+						const questionIds = data.exerciseIds.flatMap((exerciseId) => questionsByExerciseId.get(exerciseId) || [])
 
-					const allQuestionsForTest = questionIds.map((id) => {
-						const question = allQuestionsForTests.find((q) => q.id === id)
-						if (!question) {
-							logger.error("question not found when building test", { questionId: id, assessmentId })
-							throw errors.new("question not found when building test")
-						}
-						return { id: question.id, exerciseId: question.exerciseId, exerciseTitle: question.exerciseTitle }
-					})
+						const allQuestionsForTest = questionIds.map((id) => {
+							const question = allQuestionsForTests.find((q) => q.id === id)
+							if (!question) {
+								logger.error("question not found when building test", { questionId: id, assessmentId })
+								throw errors.new("question not found when building test")
+							}
+							return { id: question.id, exerciseId: question.exerciseId, exerciseTitle: question.exerciseTitle }
+						})
 
-					return buildTestObject(assessmentId, data.title, allQuestionsForTest, {
-						khanId: assessmentId,
-						khanSlug: data.slug,
-						khanTitle: data.title,
-						khanDescription: data.description,
-						khanAssessmentType: data.type
-					})
-				})
+						return buildTestObject(assessmentId, data.title, allQuestionsForTest, {
+							khanId: assessmentId,
+							khanSlug: data.slug,
+							khanTitle: data.title,
+							khanDescription: data.description,
+							khanAssessmentType: data.type
+						})
+					}
+				)
 
-				const exerciseTests = allExercises.map((exercise) => {
+				const exerciseTestsCandidates: AssessmentTestCandidate[] = allExercises.map((exercise) => {
 					const questionIds = questionsByExerciseId.get(exercise.id) || []
 
 					const safeTitle = escapeXmlAttribute(exercise.title)
@@ -438,7 +454,7 @@ ${sectionsXml}
 
 					const selectCountForExercise = Math.min(5, questionIds.length)
 
-					return `<?xml version="1.0" encoding="UTF-8"?>
+					const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${exercise.id}" title="${safeTitle}">
     <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
         <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
@@ -451,9 +467,73 @@ ${sectionsXml}
         </qti-assessment-section>
     </qti-test-part>
 </qti-assessment-test>`
+					return { id: exercise.id, xml }
 				})
 
-				const assessmentTests = [...explicitTests, ...exerciseTests]
+				// Ghetto-validate assessment tests (batched upsert + immediate delete)
+				const testCandidates = [...explicitTestsCandidates, ...exerciseTestsCandidates]
+				const validatedTests: AssessmentTestCandidate[] = []
+				const skippedTests: Array<{ test: AssessmentTestCandidate; error?: unknown }> = []
+				const testBatchSize = 20
+				const testDelayMs = 500
+
+				for (let i = 0; i < testCandidates.length; i += testBatchSize) {
+					const batch = testCandidates.slice(i, i + testBatchSize)
+					logger.debug("ghetto-validate batch starting", {
+						batchStart: i,
+						batchSize: batch.length,
+						total: testCandidates.length
+					})
+
+					const batchResults = await Promise.all(
+						batch.map(async (test) => {
+							const identifier = `nice_${test.id}`
+							// Upsert test
+							const updateResult = await errors.try(qti.updateAssessmentTest(identifier, test.xml))
+							if (updateResult.error) {
+								if (errors.is(updateResult.error, ErrQtiNotFound)) {
+									const createResult = await errors.try(qti.createAssessmentTest(test.xml))
+									if (createResult.error) {
+										logger.error("ghetto-validate create failed", { identifier, error: createResult.error })
+										return { success: false, test, error: createResult.error }
+									}
+								} else {
+									logger.error("ghetto-validate update failed", { identifier, error: updateResult.error })
+									return { success: false, test, error: updateResult.error }
+								}
+							}
+
+							// Delete immediately
+							const deleteResult = await errors.try(qti.deleteAssessmentTest(identifier))
+							if (deleteResult.error) {
+								logger.warn("failed to clean up temp validation item", { identifier, error: deleteResult.error })
+							}
+
+							return { success: true, test }
+						})
+					)
+
+					for (const result of batchResults) {
+						if (result.success) {
+							validatedTests.push(result.test)
+						} else {
+							skippedTests.push(result)
+						}
+					}
+
+					if (i + testBatchSize < testCandidates.length) {
+						await new Promise((resolve) => setTimeout(resolve, testDelayMs))
+					}
+				}
+
+				for (const result of skippedTests) {
+					logger.warn("skipping invalid qti test after ghetto-validate", {
+						testId: `nice_${result.test.id}`,
+						error: result.error
+					})
+				}
+
+				const assessmentTests = validatedTests.map((t) => t.xml)
 
 				const writeTests = await errors.try(
 					fs.writeFile(path.join(courseDir, "assessmentTests.json"), JSON.stringify(assessmentTests, null, 2))
