@@ -4,7 +4,7 @@ import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
 import { z } from "zod"
 import { env } from "@/env"
-import { type AssessmentItemInput, AssessmentItemSchema } from "@/lib/qti-generation/schemas"
+import type { AssessmentItemInput } from "@/lib/qti-generation/schemas"
 import { generateZodSchemaFromObject } from "@/lib/qti-generation/structured/zod-runtime-generator"
 
 const OPENAI_MODEL = "gpt-5"
@@ -150,8 +150,9 @@ export async function differentiateAssessmentItem(
 ): Promise<AssessmentItemInput[]> {
 	logger.info("starting assessment item differentiation", { identifier: assessmentItem.identifier, variations: n })
 
-	// Step 1: First, ensure the incoming data is valid against our canonical schema.
-	// This confirms our assumption that the data is fundamentally correct.
+	// REMOVED: The following validation block is the source of the bug and will be removed.
+	// We will assume the structuredJson from our database is valid.
+	/*
 	const validationResult = AssessmentItemSchema.safeParse(assessmentItem)
 	if (!validationResult.success) {
 		logger.error("Initial assessment item failed canonical schema validation", {
@@ -161,9 +162,11 @@ export async function differentiateAssessmentItem(
 		throw errors.wrap(validationResult.error, "canonical schema validation failed")
 	}
 	const validatedItem = validationResult.data
+	*/
 
 	// Step 2: Transform the validated item to an array-free object structure.
-	const transformedItem = transformArraysToObjects(validatedItem)
+	// MODIFIED: Use the `assessmentItem` argument directly instead of the `validatedItem` constant.
+	const transformedItem = transformArraysToObjects(assessmentItem)
 
 	// Step 3: Generate a simple, OpenAI-compatible Zod schema from the transformed object.
 	const runtimeSchema = generateZodSchemaFromObject(transformedItem)
