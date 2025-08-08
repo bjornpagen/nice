@@ -96,9 +96,16 @@ export const assembleDifferentiatedItemsAndCreateTests = inngest.createFunction(
 				const batch = parsedItems.slice(i, i + batchSize)
 				const batchResults = await Promise.all(
 					batch.map(async (item) => {
-						const tempIdentifier = `nice_${item.metadata.khanId}`
+						// Extract the actual identifier from the XML
+						const idMatch = item.xml.match(/identifier="([^"]+)"/)
+						if (!idMatch || !idMatch[1]) {
+							logger.error("could not extract identifier from xml", { khanId: item.metadata.khanId })
+							return { success: false, item, error: errors.new("missing identifier in xml") }
+						}
+						const actualIdentifier = idMatch[1]
+
 						const payload = {
-							identifier: tempIdentifier,
+							identifier: actualIdentifier,
 							xml: item.xml,
 							metadata: { temp: true, sourceId: item.metadata.khanId }
 						}
@@ -111,7 +118,7 @@ export const assembleDifferentiatedItemsAndCreateTests = inngest.createFunction(
 								return { success: false, item, error: updateResult.error }
 							}
 						}
-						await errors.try(qti.deleteAssessmentItem(tempIdentifier))
+						await errors.try(qti.deleteAssessmentItem(actualIdentifier))
 						return { success: true, item }
 					})
 				)
