@@ -111,7 +111,7 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 }
 
 // Type definitions for OneRoster explore dropdown (no DB dependency)
-const ONEROSTER_ORG_ID = "943f079f-969e-4fb7-868d-aefe571173bd"
+const ONEROSTER_ORG_ID = "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
 
 type CourseForExplore = {
 	id: string // Using OneRoster sourcedId as the key
