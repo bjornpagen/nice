@@ -132,7 +132,10 @@ export function compileResponseDeclarations(decls: AssessmentItem["responseDecla
 			}
 
 			const correctXml = Array.from(allCorrectValues)
-				.map((v) => `<qti-value>${String(v)}</qti-value>`)
+				.map(
+					(v) =>
+						`<qti-value>${String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</qti-value>`
+				)
 				.join("\n            ")
 
 			let xml = `\n    <qti-response-declaration identifier="${escapeXmlAttribute(decl.identifier)}" cardinality="${escapeXmlAttribute(decl.cardinality)}" base-type="${escapeXmlAttribute(decl.baseType)}">

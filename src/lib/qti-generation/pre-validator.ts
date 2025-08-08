@@ -90,6 +90,15 @@ function validateInlineContent(items: InlineContent, _context: string, logger: l
 			validateMathMLWellFormed(item.mathml, _context, logger)
 			// Then check for deprecated elements
 			checkNoMfencedElements(item.mathml, logger)
+
+			// Reject any HTML tags embedded inside MathML fragments
+			if (/<\s*(span|div|p|br|img|strong|em|code|pre)(\s|>|\/)/i.test(item.mathml)) {
+				logger.error("html elements found inside mathml fragment", {
+					context: _context,
+					mathml: item.mathml.substring(0, 120)
+				})
+				throw errors.new("mathml must not contain html elements like <span>, <div>, <p>, <img>")
+			}
 			// Note: Input schema defines mathml as content without the outer <math> element.
 			// The renderer is responsible for wrapping tokens in <math xmlns="http://www.w3.org/1998/Math/MathML">…</math>.
 			// Therefore, do not reject unwrapped MathML tokens here.
@@ -120,6 +129,19 @@ function validateInlineContent(items: InlineContent, _context: string, logger: l
 				logger.error("decimal without overline mover", { context: _context, mathml: item.mathml })
 				throw errors.new("repeating decimals must use <mover> with an overline for the repeating part")
 			}
+
+			// Basic mfrac validation: exactly two child elements
+			const mfracMatches = item.mathml.match(/<mfrac[^>]*>(.*?)<\/mfrac>/gi)
+			if (mfracMatches) {
+				for (const mfrac of mfracMatches) {
+					const inner = mfrac.replace(/<\/?mfrac[^>]*>/gi, "").trim()
+					const childTags = inner.match(/<[^>]+>/g) || []
+					if (childTags.length !== 2) {
+						logger.error("mfrac has invalid number of children", { context: _context, mfrac: mfrac.substring(0, 120) })
+						throw errors.new("mfrac elements must have exactly 2 children (numerator and denominator)")
+					}
+				}
+			}
 		}
 		// inlineSlot is just a reference, no validation needed
 	}
@@ -135,6 +157,15 @@ function validateBlockContent(items: BlockContent, _context: string, logger: log
 }
 
 export function validateAssessmentItemInput(item: AssessmentItemInput, logger: logger.Logger): void {
+	// Require at least one response declaration to avoid generating empty response-processing blocks
+	if (!item.responseDeclarations || item.responseDeclarations.length === 0) {
+		logger.error("no response declarations present", {
+			identifier: item.identifier,
+			title: item.title
+		})
+		throw errors.new("assessment item must declare at least one response for scoring")
+	}
+
 	if (item.body) validateBlockContent(item.body, "item.body", logger)
 	validateBlockContent(item.feedback.correct, "item.feedback.correct", logger)
 	validateBlockContent(item.feedback.incorrect, "item.feedback.incorrect", logger)
@@ -169,6 +200,17 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 						validateInlineContent(choice.feedback, `interaction[${key}].choice[${choice.identifier}].feedback`, logger)
 					}
 				}
+			}
+		}
+	}
+
+	// Validate each response declaration has a corresponding interaction identifier
+	if (item.interactions) {
+		const interactionIds = new Set(Object.keys(item.interactions))
+		for (const decl of item.responseDeclarations) {
+			if (!interactionIds.has(decl.identifier)) {
+				logger.error("response declaration without matching interaction", { responseIdentifier: decl.identifier })
+				throw errors.new(`response declaration '${decl.identifier}' has no matching interaction`)
 			}
 		}
 	}

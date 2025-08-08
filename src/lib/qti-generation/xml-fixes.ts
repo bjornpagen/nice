@@ -251,13 +251,9 @@ export function fixInequalityOperators(xml: string, logger: logger.Logger): stri
 			return fullMatch
 		}
 
-		// 2. Only process if content looks like a mathematical expression
-		// Must contain a variable (letter) AND an inequality operator
-		const hasMathVariable = /[a-zA-Z]/.test(content)
+		// 2. Process ANY ASCII inequality sequences in qti-value content
 		const hasInequalityOperator = /[<>]=?/.test(content)
-
-		if (!hasMathVariable || !hasInequalityOperator) {
-			logger.debug("skipping qti-value without math inequality", { content })
+		if (!hasInequalityOperator) {
 			return fullMatch
 		}
 
