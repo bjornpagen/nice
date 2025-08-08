@@ -15,6 +15,12 @@ const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
  * collision with legitimate object keys that are numeric strings.
  */
 const ARRAY_KEY_PREFIX = "__idx__"
+/**
+ * Sentinel key used to represent an empty array in object form.
+ * Prevents ambiguity between a truly empty object and an empty array
+ * after transformation.
+ */
+const ARRAY_EMPTY_SENTINEL = `${ARRAY_KEY_PREFIX}empty`
 
 /**
  * Recursively transforms arrays into objects using a safe, prefixed key.
@@ -23,6 +29,10 @@ const ARRAY_KEY_PREFIX = "__idx__"
  */
 function transformArraysToObjects(data: unknown): unknown {
 	if (Array.isArray(data)) {
+		// Encode empty arrays explicitly to avoid ambiguity with empty objects
+		if (data.length === 0) {
+			return { [ARRAY_EMPTY_SENTINEL]: true }
+		}
 		const newObj: Record<string, unknown> = {}
 		for (let i = 0; i < data.length; i++) {
 			newObj[`${ARRAY_KEY_PREFIX}${i}`] = transformArraysToObjects(data[i])
@@ -54,10 +64,13 @@ function transformObjectsToArrays(data: unknown): unknown {
 		const keys = Object.keys(obj)
 
 		// An object is only considered array-like if ALL its keys have our prefix.
-		const isArrayLike = keys.length === 0 || keys.every((k) => k.startsWith(ARRAY_KEY_PREFIX))
+		const isArrayLike = keys.length > 0 && keys.every((k) => k.startsWith(ARRAY_KEY_PREFIX))
 
 		if (isArrayLike) {
-			if (keys.length === 0) return []
+			// Special-case: our sentinel encodes an empty array
+			if (keys.length === 1 && keys[0] === ARRAY_EMPTY_SENTINEL && obj[ARRAY_EMPTY_SENTINEL] === true) {
+				return []
+			}
 
 			const newArr: unknown[] = []
 			// Sort keys numerically to guarantee correct array order.
@@ -112,9 +125,9 @@ ${assessmentItemJson}
 1.  Generate exactly ${n} new assessment item objects.
 2.  Each new object must be a unique variation of the original but test the identical concept at the same difficulty.
 3.  For EACH new item, the JSON structure, including all keys and nesting, MUST perfectly mirror the original item provided above.
-  4.  CRITICAL: Do NOT use HTML named entities like &nbsp;, &mdash;, &hellip;. Use regular spaces and Unicode characters directly. Only use &lt; &gt; &amp; &quot; &apos; when absolutely necessary for XML syntax.
-  6.  Do NOT use <![CDATA[...]]> or include any Perseus artifacts like [[☃ widget-name 1]].
-5.  Place all ${n} generated items into a JSON array, and return it within a parent object under the key "differentiated_items".`
+4.  CRITICAL: Do NOT use HTML named entities like &nbsp;, &mdash;, &hellip;. Use regular spaces and Unicode characters directly. Only use &lt; &gt; &amp; &quot; &apos; when absolutely necessary for XML syntax.
+5.  Do NOT use <![CDATA[...]]> or include any Perseus artifacts like [[☃ widget-name 1]].
+6.  Place all ${n} generated items into a JSON array, and return it within a parent object under the key "differentiated_items".`
 
 	return { systemInstruction, userContent }
 }
