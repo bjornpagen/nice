@@ -86,7 +86,7 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
 	// Axis and Ticks
-	svg += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="#333333" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
+	svg += `<line x1="${padding.horizontal}" y1="${yPos}" x2="${width - padding.horizontal}" y2="${yPos}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
 
 	// Define markers for arrows
 	svg += "<defs>"
@@ -102,8 +102,9 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 
 	for (let t = min; t <= max; t += tickInterval) {
 		const x = toSvgX(t)
-		svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="#333333"/>`
-		svg += `<text x="${x}" y="${yPos + 20}" fill="#333333" text-anchor="middle">${t}</text>`
+		// Match tick sizing with standard number line widget for visual consistency
+		svg += `<line x1="${x}" y1="${yPos - 8}" x2="${x}" y2="${yPos + 8}" stroke="black"/>`
+		svg += `<text x="${x}" y="${yPos + 25}" fill="black" text-anchor="middle">${t}</text>`
 	}
 
 	for (const r of ranges) {
