@@ -73,7 +73,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 				}
 
 				const differentiationPromises = questions.map((q) =>
-					step.invoke(`differentiate-${q.id}`, {
+					step.invoke(`differentiate-${course.id}-${q.id}`, {
 						function: convertPerseusQuestionToDifferentiatedQtiItems,
 						data: { questionId: q.id, n: DIFFERENTIATION_COUNT }
 					})
