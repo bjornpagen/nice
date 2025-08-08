@@ -10,6 +10,30 @@ import { generateZodSchemaFromObject } from "@/lib/qti-generation/structured/zod
 const OPENAI_MODEL = "gpt-5"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
+/**
+ * NEW: Define the paths for fields that are strictly required by downstream
+ * processes (sanitizer, compiler). The '*' is a wildcard for any array index.
+ * This ensures that even if the input item has `content: undefined`, the schema
+ * generated for the AI will require `content: z.string().min(1)`.
+ */
+const REQUIRED_STRING_PATHS = [
+	// Text content in body, feedback, and prompts
+	"body.*.content.*.content",
+	"feedback.correct.*.content.*.content",
+	"feedback.incorrect.*.content.*.content",
+	"interactions.*.prompt.*.content",
+	// MathML content
+	"body.*.content.*.mathml",
+	"feedback.correct.*.content.*.mathml",
+	"feedback.incorrect.*.content.*.mathml",
+	"interactions.*.prompt.*.mathml",
+	// Content within choices
+	"interactions.*.choices.*.content.*.content.*.content", // Block -> Paragraph -> Inline
+	"interactions.*.choices.*.content.*.mathml", // Inline (for inlineChoice)
+	"interactions.*.choices.*.feedback.*.content",
+	"interactions.*.choices.*.feedback.*.mathml"
+]
+
 function createDifferentiatedItemsPrompt(
 	assessmentItemJson: string,
 	n: number
@@ -63,7 +87,15 @@ export async function differentiateAssessmentItem(
 	logger.info("starting assessment item differentiation", { identifier: assessmentItem.identifier, variations: n })
 
 	// Step 1: Generate a robust Zod schema from the input object at runtime.
-	const runtimeSchema = generateZodSchemaFromObject(assessmentItem)
+	// MODIFIED: Pass a configuration to harden the generated schema.
+	const runtimeSchema = generateZodSchemaFromObject(assessmentItem, {
+		// Allow empty arrays (e.g., in prompts) to prevent pre-AI failures.
+		emptyArrayStrategy: "z.never()",
+		// Enforce that critical string fields are non-optional and non-empty in the
+		// schema, closing the gap between AI validation and compiler expectations.
+		requiredStringPaths: REQUIRED_STRING_PATHS
+	})
+
 	const DifferentiatedItemsSchema = z.object({
 		differentiated_items: z.array(runtimeSchema).length(n, `Expected exactly ${n} differentiated items.`)
 	})

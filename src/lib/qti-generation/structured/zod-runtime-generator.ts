@@ -8,6 +8,34 @@ function formatJsonPath(path: Array<string | number>): string {
 }
 
 /**
+ * NEW: Configuration options for the dynamic schema generator.
+ */
+export type SchemaGenerationOptions = {
+	/**
+	 * Defines how to handle empty arrays.
+	 * - 'throw' (default): Fails fast, throwing an error.
+	 * - 'z.never()': Generates `z.array(z.never())`, allowing validation to pass for empty arrays.
+	 */
+	emptyArrayStrategy?: "throw" | "z.never()"
+	/**
+	 * A list of JSON paths (e.g., "body.*.content") where a field, if it exists,
+	 * MUST be a non-empty string. This overrides type inference for these specific paths.
+	 * The wildcard '*' matches any array index.
+	 */
+	requiredStringPaths?: string[]
+}
+
+/**
+ * Creates a regex from a wildcard path for matching against concrete JSON paths.
+ * Example: "body.*.content" -> /^body\/\d+\/content$/
+ */
+function createPathRegex(wildcardPath: string): RegExp {
+	const escaped = wildcardPath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+	const withWildcard = escaped.replace(/\\\*/g, "\\d+")
+	return new RegExp(`^${withWildcard}$`)
+}
+
+/**
  * Recursively generates a Zod schema from a JavaScript object or value at runtime.
  *
  * CRITICAL: This function follows a FAIL-FAST philosophy. Any unexpected data
@@ -15,16 +43,31 @@ function formatJsonPath(path: Array<string | number>): string {
  * This is a safety-critical requirement - NO FALLBACKS are allowed.
  *
  * @param obj The object or value to generate a schema from.
+ * @param options Configuration for schema generation behavior.
  * @param visited A map to track visited objects to prevent infinite recursion from circular references.
  * @returns A Zod schema that validates the structure and types of the input object.
  * @throws {Error} When encountering unsupported types, empty arrays, or circular references.
  */
 export function generateZodSchemaFromObject(
 	obj: unknown,
+	options: SchemaGenerationOptions = {}, // ADDED: Options parameter
 	visited = new Map<object, z.ZodTypeAny>(),
 	processing = new Set<object>(),
 	path: Array<string | number> = []
 ): z.ZodTypeAny {
+	// MODIFIED: Check for required path override at the beginning.
+	const concretePath = path.join("/")
+	if (options.requiredStringPaths) {
+		for (const wildcardPath of options.requiredStringPaths) {
+			const regex = createPathRegex(wildcardPath)
+			if (regex.test(concretePath)) {
+				// This path is configured to be a required string.
+				// Override whatever the actual value is.
+				return z.string().min(1, { message: `Field at ${formatJsonPath(path)} is required.` })
+			}
+		}
+	}
+
 	if (obj === null) {
 		return z.null()
 	}
@@ -68,15 +111,19 @@ export function generateZodSchemaFromObject(
 			}
 
 			if (Array.isArray(obj)) {
+				// MODIFIED: Implement the emptyArrayStrategy instead of always throwing.
 				if (obj.length === 0) {
-					// CRITICAL: Cannot infer type from empty array - FAIL FAST
+					if (options.emptyArrayStrategy === "z.never()") {
+						return z.array(z.never())
+					}
+					// Default behavior is to fail fast.
 					const where = path.length ? ` at ${formatJsonPath(path)}` : ""
 					throw errors.new(`zod schema generation: cannot infer type from empty array${where}`)
 				}
 
 				// FIX: Handle heterogeneous arrays by creating a union of all possible element types.
 				const elementTypes = obj.map((element, idx) =>
-					generateZodSchemaFromObject(element, visited, processing, [...path, idx])
+					generateZodSchemaFromObject(element, options, visited, processing, [...path, idx])
 				)
 				const uniqueElementSchemas = Array.from(
 					// Use a reliable property like JSON stringified description for the uniqueness key
@@ -118,7 +165,8 @@ export function generateZodSchemaFromObject(
 			// Use Object.entries to safely iterate over the object
 			const entries = Object.entries(obj)
 			for (const [key, value] of entries) {
-				shape[key] = generateZodSchemaFromObject(value, visited, processing, [...path, key])
+				// MODIFIED: Pass options through in recursive call.
+				shape[key] = generateZodSchemaFromObject(value, options, visited, processing, [...path, key])
 			}
 
 			// Create a strict object schema to disallow any extra properties.

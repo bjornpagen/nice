@@ -14,14 +14,26 @@ function processInlineContent(items: InlineContent | null, logger: logger.Logger
 	if (!items) return
 	for (const item of items) {
 		if (item.type === "text") {
-			let sanitized = sanitizeHtmlEntities(item.content)
-			checkNoLatex(sanitized, logger)
-			checkNoPerseusArtifacts(sanitized, logger)
-			item.content = sanitized
+			// MODIFIED: Add a type check to prevent crashes on undefined.
+			if (typeof item.content === "string") {
+				let sanitized = sanitizeHtmlEntities(item.content)
+				checkNoLatex(sanitized, logger)
+				checkNoPerseusArtifacts(sanitized, logger)
+				item.content = sanitized
+			} else {
+				// This should not happen with the new strict schema, but we log it as a safeguard.
+				logger.warn("sanitizer skipping text item with missing or invalid 'content' field")
+			}
 		} else if (item.type === "math") {
-			let sanitized = sanitizeMathMLOperators(item.mathml)
-			checkNoMfencedElements(sanitized, logger)
-			item.mathml = sanitized
+			// MODIFIED: Add a type check to prevent crashes on undefined.
+			if (typeof item.mathml === "string") {
+				let sanitized = sanitizeMathMLOperators(item.mathml)
+				checkNoMfencedElements(sanitized, logger)
+				item.mathml = sanitized
+			} else {
+				// This should not happen with the new strict schema, but we log it as a safeguard.
+				logger.warn("sanitizer skipping math item with missing or invalid 'mathml' field")
+			}
 		}
 	}
 }
