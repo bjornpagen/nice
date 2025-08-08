@@ -1460,6 +1460,7 @@ ${buildWidgetTypeDescriptions()}
 - For each entry in the widget mapping, generate a fully-formed widget object of the specified type.
 - **Use Interaction Context**: You MUST use the "Interaction Content" object to understand the full question. This context is critical for generating correct data for widgets that appear within choices. For example, the interaction's prompt will tell you what the correct values on a number line widget should be.
 - Extract all relevant data from the Perseus JSON to populate the widget properties.
+- **CRITICAL: PRESERVE ALL LABELS AND VALUES FROM PERSEUS EXACTLY** - When Perseus describes labels, markers, values, or any visual properties (in alt text, descriptions, or widget options), you MUST copy them EXACTLY. Missing or changing labels can make questions impossible to answer.
 - Ensure all required properties for each widget type are included.
   - **MANDATORY: HONOR CHOICE-LEVEL SLOT NAMING**: For any widget slot name matching \`<responseIdentifier>__<choiceLetter>__v<index>\`, generate the widget corresponding to the visual content in that specific choice within the referenced interaction. Do not repurpose or collapse these slots; they must map 1:1 to the visuals per choice.
 - Return ONLY a JSON object with widget slot names as keys and widget objects as values.
@@ -1571,6 +1572,37 @@ CORRECT (triangle diagram without revealing labels):
     }]
   }
 }\`
+
+**CRITICAL: Missing Essential Widget Data BANNED:**
+WRONG (triangle with missing side labels that are needed for the question):
+\`{
+  "image_1": {
+    "type": "triangleDiagram",
+    "sides": [
+      {"label": " ", "vertices": ["L", "R"]},  // ❌ BANNED: Side should be labeled "A" per Perseus!
+      {"label": " ", "vertices": ["R", "T"]},  // ❌ BANNED: Side should be labeled "B" per Perseus!
+      {"label": " ", "vertices": ["T", "L"]}   // ❌ BANNED: Side should be labeled "C" per Perseus!
+    ]
+  }
+}\`
+*Perseus had: "The base is labeled A. The other two sides are labeled, in clockwise order, B and C."*
+*Question asks: "Which line segment shows the base?" with choices A, B, C*
+*Without the labels, the question is IMPOSSIBLE to answer!*
+
+CORRECT (preserving all essential labels from Perseus):
+\`{
+  "image_1": {
+    "type": "triangleDiagram",
+    "sides": [
+      {"label": "A", "vertices": ["L", "R"]},  // ✅ CORRECT: Label preserved from Perseus
+      {"label": "B", "vertices": ["R", "T"]},  // ✅ CORRECT: Label preserved from Perseus
+      {"label": "C", "vertices": ["T", "L"]}   // ✅ CORRECT: Label preserved from Perseus
+    ]
+  }
+}\`
+
+**GENERAL RULE: COPY WIDGET DATA FROM PERSEUS EXACTLY**
+When Perseus describes labels, values, or visual properties in the widget (via alt text, descriptions, or widget options), you MUST preserve ALL of them exactly. Missing labels or values makes questions unsolvable!
 
 **Ensure all text content within widget properties is properly escaped and follows content rules.**
 

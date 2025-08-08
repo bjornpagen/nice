@@ -75,7 +75,31 @@ export type HangerDiagramProps = z.infer<typeof HangerDiagramPropsSchema>
 export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSchema> = (data) => {
 	const { width, height, leftSide, rightSide } = data
 	const centerX = width / 2
-	const beamY = 50
+
+	// Dynamic vertical layout to avoid clipping for small heights
+	const maxStack = Math.max(leftSide.length, rightSide.length, 1)
+	const bottomMargin = 8
+	// Place beam relative to height but keep within a sensible range
+	const beamY = Math.max(30, Math.min(50, Math.floor(height * 0.2)))
+	const availableBelowBeam = Math.max(0, height - beamY - bottomMargin)
+
+	const maxWeightSize = 30
+	const minWeightSize = 12
+	const baseGap = 5
+	// Compute weight size so that all rows fit within available space
+	let size = Math.min(
+		maxWeightSize,
+		Math.max(minWeightSize, Math.floor((availableBelowBeam - 10) / maxStack) - baseGap)
+	)
+	// In edge cases (very small height), ensure size is not NaN or negative
+	if (!Number.isFinite(size) || size < minWeightSize) {
+		size = minWeightSize
+	}
+	const weightGap = baseGap
+	const weightHeight = size + weightGap
+	const stringOffset = Math.max(8, Math.min(15, Math.floor(size / 2)))
+	const weightYStart = beamY + stringOffset + 8
+
 	const beamWidth = width * 0.8
 	const beamStartX = centerX - beamWidth / 2
 	const beamEndX = centerX + beamWidth / 2
@@ -83,12 +107,11 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 
 	// Hook and beam
-	svg += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="#333333" stroke-width="2"/>`
+	svg += `<line x1="${centerX}" y1="10" x2="${centerX}" y2="${beamY}" stroke="#333333" stroke-width="0.6667"/>`
 	svg += `<path d="M ${centerX - 5} 10 L ${centerX} 5 L ${centerX + 5} 10 Z" fill="#333333" />` // Triangle at top of hook
 	svg += `<line x1="${beamStartX}" y1="${beamY}" x2="${beamEndX}" y2="${beamY}" stroke="#333333" stroke-width="3"/>`
 
 	const drawWeight = (x: number, y: number, weight: (typeof leftSide)[0]) => {
-		const size = 30
 		let shapeSvg = ""
 		switch (weight.shape) {
 			case "circle":
@@ -122,23 +145,15 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 	// First, draw all the lines
 	const renderLines = (weights: typeof leftSide, isLeft: boolean) => {
 		const sideCenterX = isLeft ? beamStartX + beamWidth / 4 : beamEndX - beamWidth / 4
-		const stringY = beamY + 15
-		const weightYStart = stringY + 10
-		const weightHeight = 35 // size + padding
-
 		weights.forEach((_w, i) => {
 			const weightY = weightYStart + i * weightHeight
-			svg += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + 5}" x2="${sideCenterX}" y2="${weightY}" stroke="#333333"/>`
+			svg += `<line x1="${sideCenterX}" y1="${i === 0 ? beamY : weightY - weightHeight + weightGap}" x2="${sideCenterX}" y2="${weightY}" stroke="#333333"/>`
 		})
 	}
 
 	// Then, draw all the shapes on top
 	const renderShapes = (weights: typeof leftSide, isLeft: boolean) => {
 		const sideCenterX = isLeft ? beamStartX + beamWidth / 4 : beamEndX - beamWidth / 4
-		const stringY = beamY + 15
-		const weightYStart = stringY + 10
-		const weightHeight = 35 // size + padding
-
 		weights.forEach((w, i) => {
 			const weightY = weightYStart + i * weightHeight
 			svg += drawWeight(sideCenterX, weightY, w)
