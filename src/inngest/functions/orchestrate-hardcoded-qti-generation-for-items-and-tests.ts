@@ -14,7 +14,7 @@ const HARDCODED_COURSE_IDS = [
 ]
 
 const DIFFERENTIATION_COUNT = 3
-const QUESTION_BATCH_SIZE = 20 // Batch size for grouping questions.
+const QUESTION_BATCH_SIZE = 30 // Batch size for grouping questions.
 
 export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createFunction(
 	{
