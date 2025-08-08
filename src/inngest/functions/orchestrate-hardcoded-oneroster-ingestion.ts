@@ -10,9 +10,16 @@ const HARDCODED_COURSE_IDS = [
 	// "x41fbdd6301d5fded", // 3rd grade math
 	// "xfb4fc0bf01437792", // 2nd grade reading & vocabulary
 	// "xaf0c1b5d7010608e", // 3rd grade reading & vocabulary
-	"x0267d782", // 6th grade math (Common Core)
-	"x6b17ba59", // 7th grade math (Common Core)
-	"x7c7044d7" // 8th grade math (Common Core)
+	// "x0267d782", // 6th grade math (Common Core)
+	// "x6b17ba59", // 7th grade math (Common Core)
+	// "x7c7044d7" // 8th grade math (Common Core)
+
+	// --- ANDY'S COURSES ---
+	"x1baed5db7c1bb50b", // Middle school physics
+	"x87d03b443efbea0a", // Middle school Earth and space science
+	"xc370bc422b7f75fc", // Middle school chemistry
+	// ??                // Middle school biology
+	"x230b3ff252126bb6" // High school biology
 ]
 
 export const orchestrateHardcodedOnerosterIngestion = inngest.createFunction(
