@@ -39,33 +39,61 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 			variationsPerItem: DIFFERENTIATION_COUNT
 		})
 
-		const courses = await db.query.niceCourses.findMany({
-			where: inArray(schema.niceCourses.id, HARDCODED_COURSE_IDS),
-			columns: { id: true, slug: true }
-		})
+		const coursesResult = await errors.try(
+			db.query.niceCourses.findMany({
+				where: inArray(schema.niceCourses.id, HARDCODED_COURSE_IDS),
+				columns: { id: true, slug: true }
+			})
+		)
+		if (coursesResult.error) {
+			logger.error("db query for courses failed", { error: coursesResult.error, courseIds: HARDCODED_COURSE_IDS })
+			throw errors.wrap(coursesResult.error, "db query for courses")
+		}
+		const courses = coursesResult.data
+		logger.info("fetched courses for generation", { count: courses.length, courseIds: courses.map((c) => c.id) })
 
 		const skippedCountsPerCourse = await Promise.all(
 			courses.map(async (course) => {
 				const courseId = course.id
 				logger.info("processing course for item and test generation", { courseId })
 
-				const units = await db.query.niceUnits.findMany({
-					where: eq(schema.niceUnits.courseId, course.id),
-					columns: { id: true }
-				})
+				const unitsResult = await errors.try(
+					db.query.niceUnits.findMany({
+						where: eq(schema.niceUnits.courseId, course.id),
+						columns: { id: true }
+					})
+				)
+				if (unitsResult.error) {
+					logger.error("db query for units failed", { courseId, error: unitsResult.error })
+					throw errors.wrap(unitsResult.error, "db query for units")
+				}
+				const units = unitsResult.data
+				logger.debug("fetched units for course", { courseId, unitCount: units.length })
 				if (units.length === 0) {
 					logger.info("no units found for course, skipping", { courseId })
 					return 0
 				}
 				const unitIds = units.map((u) => u.id)
 
-				const questions = await db
-					.selectDistinct({ id: schema.niceQuestions.id })
-					.from(schema.niceQuestions)
-					.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
-					.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
-					.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-					.where(inArray(schema.niceLessons.unitId, unitIds))
+				const questionsResult = await errors.try(
+					db
+						.selectDistinct({ id: schema.niceQuestions.id })
+						.from(schema.niceQuestions)
+						.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+						.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+						.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+						.where(inArray(schema.niceLessons.unitId, unitIds))
+				)
+				if (questionsResult.error) {
+					logger.error("db query for questions failed", {
+						courseId,
+						unitCount: unitIds.length,
+						error: questionsResult.error
+					})
+					throw errors.wrap(questionsResult.error, "db query for questions")
+				}
+				const questions = questionsResult.data
+				logger.info("fetched questions for course", { courseId, questionCount: questions.length })
 
 				if (questions.length === 0) {
 					logger.info("no questions found for course, skipping", { courseId })
@@ -80,6 +108,12 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 				)
 
 				const settledResults = await Promise.allSettled(differentiationPromises)
+				logger.debug("differentiation results settled", {
+					courseId,
+					total: settledResults.length,
+					fulfilled: settledResults.filter((r) => r.status === "fulfilled").length,
+					rejected: settledResults.filter((r) => r.status === "rejected").length
+				})
 
 				function isFulfilled<T>(r: PromiseSettledResult<T>): r is PromiseFulfilledResult<T> {
 					return r.status === "fulfilled" && r.value !== null
@@ -100,6 +134,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 				}
 
 				const allGeneratedItems = successfulResults.flatMap((result) => result.value).filter(Boolean)
+				logger.debug("flattened generated items", { courseId, count: allGeneratedItems.length })
 
 				// Parse and validate generated items structure
 				const parsedItems: AssessmentItem[] = []
@@ -184,6 +219,11 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 						error: result.error
 					})
 				}
+				logger.info("ghetto-validate completed", {
+					courseId,
+					validatedItems: assessmentItems.length,
+					skippedItems: skippedItemsCount
+				})
 
 				const courseDir = path.join(process.cwd(), "data", course.slug, "qti")
 				const mkdirResult = await errors.try(fs.mkdir(courseDir, { recursive: true }))
@@ -212,68 +252,84 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 
 				// --- Test generation ---
 				logger.info("starting test generation for course", { courseId })
-				const [allQuestionsForTests, unitAssessments, courseAssessments, allExercises] = await Promise.all([
-					db
-						.select({
-							id: schema.niceQuestions.id,
-							exerciseId: schema.niceQuestions.exerciseId,
-							exerciseTitle: schema.niceExercises.title
-						})
-						.from(schema.niceQuestions)
-						.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
-						.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
-						.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-						.where(inArray(schema.niceLessons.unitId, unitIds)),
-					db
-						.select({
-							assessmentId: schema.niceAssessments.id,
-							assessmentTitle: schema.niceAssessments.title,
-							assessmentType: schema.niceAssessments.type,
-							assessmentPath: schema.niceAssessments.path,
-							assessmentSlug: schema.niceAssessments.slug,
-							assessmentDescription: schema.niceAssessments.description,
-							exerciseId: schema.niceAssessmentExercises.exerciseId
-						})
-						.from(schema.niceAssessments)
-						.innerJoin(
-							schema.niceAssessmentExercises,
-							eq(schema.niceAssessments.id, schema.niceAssessmentExercises.assessmentId)
-						)
-						.where(
-							and(inArray(schema.niceAssessments.parentId, unitIds), eq(schema.niceAssessments.parentType, "Unit"))
-						),
-					db
-						.select({
-							assessmentId: schema.niceAssessments.id,
-							assessmentTitle: schema.niceAssessments.title,
-							assessmentType: schema.niceAssessments.type,
-							assessmentPath: schema.niceAssessments.path,
-							assessmentSlug: schema.niceAssessments.slug,
-							assessmentDescription: schema.niceAssessments.description,
-							exerciseId: schema.niceAssessmentExercises.exerciseId
-						})
-						.from(schema.niceAssessments)
-						.innerJoin(
-							schema.niceAssessmentExercises,
-							eq(schema.niceAssessments.id, schema.niceAssessmentExercises.assessmentId)
-						)
-						.where(and(eq(schema.niceAssessments.parentId, courseId), eq(schema.niceAssessments.parentType, "Course"))),
-					db.query.niceExercises.findMany({
-						where: inArray(
-							schema.niceExercises.id,
-							db
-								.selectDistinct({ id: schema.niceLessonContents.contentId })
-								.from(schema.niceLessonContents)
-								.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-								.where(
-									and(
-										eq(schema.niceLessonContents.contentType, "Exercise"),
-										inArray(schema.niceLessons.unitId, unitIds)
+				const testsDataResult = await errors.try(
+					Promise.all([
+						db
+							.select({
+								id: schema.niceQuestions.id,
+								exerciseId: schema.niceQuestions.exerciseId,
+								exerciseTitle: schema.niceExercises.title
+							})
+							.from(schema.niceQuestions)
+							.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+							.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+							.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+							.where(inArray(schema.niceLessons.unitId, unitIds)),
+						db
+							.select({
+								assessmentId: schema.niceAssessments.id,
+								assessmentTitle: schema.niceAssessments.title,
+								assessmentType: schema.niceAssessments.type,
+								assessmentPath: schema.niceAssessments.path,
+								assessmentSlug: schema.niceAssessments.slug,
+								assessmentDescription: schema.niceAssessments.description,
+								exerciseId: schema.niceAssessmentExercises.exerciseId
+							})
+							.from(schema.niceAssessments)
+							.innerJoin(
+								schema.niceAssessmentExercises,
+								eq(schema.niceAssessments.id, schema.niceAssessmentExercises.assessmentId)
+							)
+							.where(
+								and(inArray(schema.niceAssessments.parentId, unitIds), eq(schema.niceAssessments.parentType, "Unit"))
+							),
+						db
+							.select({
+								assessmentId: schema.niceAssessments.id,
+								assessmentTitle: schema.niceAssessments.title,
+								assessmentType: schema.niceAssessments.type,
+								assessmentPath: schema.niceAssessments.path,
+								assessmentSlug: schema.niceAssessments.slug,
+								assessmentDescription: schema.niceAssessments.description,
+								exerciseId: schema.niceAssessmentExercises.exerciseId
+							})
+							.from(schema.niceAssessments)
+							.innerJoin(
+								schema.niceAssessmentExercises,
+								eq(schema.niceAssessments.id, schema.niceAssessmentExercises.assessmentId)
+							)
+							.where(
+								and(eq(schema.niceAssessments.parentId, courseId), eq(schema.niceAssessments.parentType, "Course"))
+							),
+						db.query.niceExercises.findMany({
+							where: inArray(
+								schema.niceExercises.id,
+								db
+									.selectDistinct({ id: schema.niceLessonContents.contentId })
+									.from(schema.niceLessonContents)
+									.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+									.where(
+										and(
+											eq(schema.niceLessonContents.contentType, "Exercise"),
+											inArray(schema.niceLessons.unitId, unitIds)
+										)
 									)
-								)
-						)
-					})
-				])
+							)
+						})
+					])
+				)
+				if (testsDataResult.error) {
+					logger.error("db queries for test generation failed", { courseId, error: testsDataResult.error })
+					throw errors.wrap(testsDataResult.error, "db queries for test generation")
+				}
+				const [allQuestionsForTests, unitAssessments, courseAssessments, allExercises] = testsDataResult.data
+				logger.debug("fetched data for test generation", {
+					courseId,
+					questions: allQuestionsForTests.length,
+					unitAssessments: unitAssessments.length,
+					courseAssessments: courseAssessments.length,
+					exercises: allExercises.length
+				})
 
 				const questionsByExerciseId = new Map<string, string[]>()
 				for (const q of allQuestionsForTests) {
