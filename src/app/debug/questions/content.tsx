@@ -242,20 +242,30 @@ export function Content({ questionsPromise }: ContentProps) {
 			<div style={{ width: "300px", borderRight: "1px solid #ccc", overflowY: "auto", padding: "10px" }}>
 				<h3>questions with xml ({localQuestions.length})</h3>
 				<ul style={{ listStyle: "none", padding: 0 }}>
-					{localQuestions.map((question, index) => (
-						<li
-							key={question.id}
-							style={{
-								padding: "8px",
-								backgroundColor: index === currentIndex ? "#e0e0e0" : getQuestionBackgroundColor(question),
-								cursor: "pointer",
-								borderBottom: "1px solid #eee"
-							}}
-							onClick={() => setCurrentIndex(index)}
-						>
-							<strong style={{ fontFamily: "monospace" }}>[{String(index).padStart(4, "0")}]</strong> {question.id}
-						</li>
-					))}
+					{localQuestions.map((question, index) => {
+						const isSelected = index === currentIndex
+						const color = getQuestionBackgroundColor(question)
+						return (
+							<li
+								key={question.id}
+								style={{
+									padding: "8px",
+									backgroundColor: isSelected ? "#e0e0e0" : color,
+									cursor: "pointer",
+									borderBottom: "1px solid #eee",
+									borderRadius: "8px",
+									position: isSelected ? "relative" : undefined,
+									zIndex: isSelected ? 1 : undefined,
+									boxShadow: isSelected ? `0 0 0 6px ${color}, 0 6px 14px rgba(0,0,0,0.12)` : undefined,
+									transform: isSelected ? "translateY(-1px)" : undefined,
+									transition: "box-shadow 120ms ease, transform 120ms ease"
+								}}
+								onClick={() => setCurrentIndex(index)}
+							>
+								<strong style={{ fontFamily: "monospace" }}>[{String(index).padStart(4, "0")}]</strong> {question.id}
+							</li>
+						)
+					})}
 				</ul>
 			</div>
 
