@@ -404,12 +404,50 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 							exercises: allExercises.length
 						})
 
+						// Group original questions by exerciseId for mapping
 						const questionsByExerciseId = new Map<string, string[]>()
 						for (const q of allQuestionsForTests) {
 							if (!questionsByExerciseId.has(q.exerciseId)) {
 								questionsByExerciseId.set(q.exerciseId, [])
 							}
 							questionsByExerciseId.get(q.exerciseId)?.push(q.id)
+						}
+
+						// Create a mapping from original question IDs to differentiated QTI identifiers
+						const originalToQtiMap = new Map<string, string[]>()
+						for (const item of assessmentItems) {
+							// Type guard to ensure we have the expected structure
+							if (!item || typeof item !== "object" || !("metadata" in item) || !("xml" in item)) continue
+							const metadata = item.metadata
+							if (!metadata || typeof metadata !== "object" || !("khanId" in metadata)) continue
+
+							const originalId = metadata.khanId
+							if (typeof originalId !== "string") continue
+
+							const xml = item.xml
+							if (typeof xml !== "string") continue
+
+							const idMatch = xml.match(/identifier="([^"]+)"/)
+							const qtiIdentifier = idMatch?.[1] ?? `nice_${originalId}_unknown`
+
+							if (!originalToQtiMap.has(originalId)) {
+								originalToQtiMap.set(originalId, [])
+							}
+							const existingItems = originalToQtiMap.get(originalId)
+							if (existingItems) {
+								existingItems.push(qtiIdentifier)
+							}
+						}
+
+						// Replace original question IDs with differentiated QTI identifiers
+						const differentiatedQuestionsByExerciseId = new Map<string, string[]>()
+						for (const [exerciseId, originalQuestionIds] of questionsByExerciseId) {
+							const differentiatedIds = originalQuestionIds.flatMap(
+								(originalId) => originalToQtiMap.get(originalId) || []
+							)
+							if (differentiatedIds.length > 0) {
+								differentiatedQuestionsByExerciseId.set(exerciseId, differentiatedIds)
+							}
 						}
 
 						const assessmentMap = new Map<
@@ -461,7 +499,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 									const itemRefsXml = questionIds
 										.map(
 											(itemId, itemIndex) =>
-												`<qti-assessment-item-ref identifier="nice_${itemId}" href="/assessment-items/nice_${itemId}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+												`<qti-assessment-item-ref identifier="${itemId}" href="/assessment-items/${itemId}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
 										)
 										.join("\n                ")
 
@@ -487,21 +525,61 @@ ${sectionsXml}
 
 						const explicitTestsCandidates: AssessmentTestCandidate[] = Array.from(assessmentMap.entries()).map(
 							([assessmentId, data]) => {
-								const questionIds = data.exerciseIds.flatMap(
-									(exerciseId) => questionsByExerciseId.get(exerciseId) || []
-								)
+								const questionIds = data.exerciseIds.flatMap((exerciseId) => {
+									const questions = differentiatedQuestionsByExerciseId.get(exerciseId)
+									if (!questions) {
+										logger.warn("Exercise referenced by assessment has no questions", {
+											assessmentId,
+											exerciseId,
+											assessmentTitle: data.title
+										})
+										return []
+									}
+									return questions
+								})
 
-								const allQuestionsForTest = questionIds
-									.map((id) => {
-										const question = allQuestionsForTests.find((q) => q.id === id)
-										if (!question) {
-											logger.warn("question not found when building test, skipping", { questionId: id, assessmentId })
-											return null
-										}
-										return { id: question.id, exerciseId: question.exerciseId, exerciseTitle: question.exerciseTitle }
+								if (questionIds.length === 0) {
+									logger.info("Creating empty test for assessment without questions", {
+										assessmentId,
+										assessmentTitle: data.title,
+										assessmentType: data.type
 									})
-									.filter((q): q is { id: string; exerciseId: string; exerciseTitle: string } => q !== null)
+								}
 
+								// Map question IDs to full question objects with exercise information
+								// Note: For differentiated items, we need to map back to the original metadata
+								const allQuestionsForTest = questionIds.map((qtiId) => {
+									// Find the assessment item by its QTI identifier
+									const item = assessmentItems.find((item) => {
+										if (!item || typeof item !== "object" || !("xml" in item)) return false
+										const xml = item.xml
+										if (typeof xml !== "string") return false
+										const idMatch = xml.match(/identifier="([^"]+)"/)
+										return idMatch && idMatch[1] === qtiId
+									})
+									if (!item) {
+										logger.error("QTI item not found when building test", { qtiId, assessmentId })
+										throw errors.new(`qti item ${qtiId} not found when building test`)
+									}
+
+									// Type guard for metadata
+									if (!("metadata" in item) || !item.metadata || typeof item.metadata !== "object") {
+										logger.error("QTI item missing metadata when building test", { qtiId, assessmentId })
+										throw errors.new(`qti item ${qtiId} missing metadata when building test`)
+									}
+
+									const metadata = item.metadata
+									if (!("khanExerciseId" in metadata) || !("khanExerciseTitle" in metadata)) {
+										logger.error("QTI item metadata missing exercise info when building test", { qtiId, assessmentId })
+										throw errors.new(`qti item ${qtiId} metadata missing exercise info when building test`)
+									}
+
+									return {
+										id: qtiId, // Use the QTI identifier, not the original question ID
+										exerciseId: metadata.khanExerciseId,
+										exerciseTitle: metadata.khanExerciseTitle
+									}
+								})
 								return buildTestObject(assessmentId, data.title, allQuestionsForTest, {
 									khanId: assessmentId,
 									khanSlug: data.slug,
@@ -513,13 +591,21 @@ ${sectionsXml}
 						)
 
 						const exerciseTestsCandidates: AssessmentTestCandidate[] = allExercises.map((exercise) => {
-							const questionIds = questionsByExerciseId.get(exercise.id) || []
+							// Get questions for this exercise (may be empty)
+							const questionIds = differentiatedQuestionsByExerciseId.get(exercise.id) || []
+
+							if (questionIds.length === 0) {
+								logger.info("Creating empty test for exercise without questions", {
+									exerciseId: exercise.id,
+									exerciseTitle: exercise.title
+								})
+							}
 
 							const safeTitle = escapeXmlAttribute(exercise.title)
 							const itemRefsXml = questionIds
 								.map(
 									(itemId, index) =>
-										`<qti-assessment-item-ref identifier="nice_${itemId}" href="/assessment-items/nice_${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
+										`<qti-assessment-item-ref identifier="${itemId}" href="/assessment-items/${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
 								)
 								.join("\n                ")
 

@@ -42,6 +42,23 @@ describe("generateDoubleNumberLine", () => {
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
 
+	test("should render hours to cranes ratio diagram with empty labels", () => {
+		const props = {
+			type: "doubleNumberLine" as const,
+			width: 280,
+			height: 120,
+			topLine: {
+				label: "Hours",
+				ticks: [0, "", "", "", 4]
+			},
+			bottomLine: {
+				label: "Cranes",
+				ticks: [0, "", "", "", 28]
+			}
+		}
+		expect(generateDiagram(props)).toMatchSnapshot()
+	})
+
 	test("should throw error when tick counts don't match", () => {
 		const props = {
 			type: "doubleNumberLine" as const,

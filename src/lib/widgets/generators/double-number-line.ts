@@ -53,10 +53,25 @@ export type DoubleNumberLineProps = z.infer<typeof DoubleNumberLinePropsSchema>
  */
 export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePropsSchema> = (data) => {
 	const { width, height, topLine, bottomLine } = data
-	const padding = { horizontal: 20, vertical: 40 }
+	const padding = { horizontal: 20 }
 	const lineLength = width - 2 * padding.horizontal
-	const topY = padding.vertical
-	const bottomY = height - padding.vertical
+
+	// Define vertical spacing constants for clarity and maintainability.
+	const TOP_LINE_LABEL_Y_OFFSET = -20 // Distance from top line UP to its label
+	const TOP_LINE_TICK_LABEL_Y_OFFSET = 20 // Distance from top line DOWN to its tick labels
+	const BOTTOM_LINE_LABEL_Y_OFFSET = 30 // Distance from bottom line DOWN to its label
+	const BOTTOM_LINE_TICK_LABEL_Y_OFFSET = -15 // Distance from bottom line UP to its tick labels
+	const TICK_MARK_HEIGHT = 5
+	const LINE_SEPARATION = 70 // A fixed, safe vertical distance between the two number line axes
+
+	// Calculate minimum height needed to prevent label clipping
+	const requiredMinHeight = Math.abs(TOP_LINE_LABEL_Y_OFFSET) + LINE_SEPARATION + BOTTOM_LINE_LABEL_Y_OFFSET + 10 // +10 buffer
+	const adjustedHeight = Math.max(height, requiredMinHeight)
+
+	// Calculate the vertical center of the SVG and position the lines symmetrically around it.
+	const verticalCenter = adjustedHeight / 2
+	const topY = verticalCenter - LINE_SEPARATION / 2
+	const bottomY = verticalCenter + LINE_SEPARATION / 2
 
 	if (topLine.ticks.length !== bottomLine.ticks.length) {
 		throw errors.wrap(
@@ -67,36 +82,36 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 
 	const numTicks = topLine.ticks.length
 	if (numTicks < 2) {
-		return `<svg width="${width}" height="${height}"></svg>` // Not enough ticks to draw a line
+		return `<svg width="${width}" height="${adjustedHeight}"></svg>` // Not enough ticks to draw a line
 	}
 
 	const tickSpacing = lineLength / (numTicks - 1)
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	let svg = `<svg width="${width}" height="${adjustedHeight}" viewBox="0 0 ${width} ${adjustedHeight}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg += "<style>.line-label { font-size: 14px; font-weight: bold; text-anchor: middle; }</style>"
 
 	// Top line
 	svg += `<line x1="${padding.horizontal}" y1="${topY}" x2="${width - padding.horizontal}" y2="${topY}" stroke="#333333"/>`
-	svg += `<text x="${width / 2}" y="${topY - 20}" class="line-label">${topLine.label}</text>`
+	svg += `<text x="${width / 2}" y="${topY + TOP_LINE_LABEL_Y_OFFSET}" class="line-label">${topLine.label}</text>`
 	topLine.ticks.forEach((t, i) => {
 		const x = padding.horizontal + i * tickSpacing
-		svg += `<line x1="${x}" y1="${topY - 5}" x2="${x}" y2="${topY + 5}" stroke="#333333"/>`
-		svg += `<text x="${x}" y="${topY + 20}" fill="#333333" text-anchor="middle">${t}</text>`
+		svg += `<line x1="${x}" y1="${topY - TICK_MARK_HEIGHT}" x2="${x}" y2="${topY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
+		svg += `<text x="${x}" y="${topY + TOP_LINE_TICK_LABEL_Y_OFFSET}" fill="#333333" text-anchor="middle">${t}</text>`
 	})
 
 	// Bottom line
 	svg += `<line x1="${padding.horizontal}" y1="${bottomY}" x2="${width - padding.horizontal}" y2="${bottomY}" stroke="#333333"/>`
-	svg += `<text x="${width / 2}" y="${bottomY + 30}" class="line-label">${bottomLine.label}</text>`
+	svg += `<text x="${width / 2}" y="${bottomY + BOTTOM_LINE_LABEL_Y_OFFSET}" class="line-label">${bottomLine.label}</text>`
 	bottomLine.ticks.forEach((t, i) => {
 		const x = padding.horizontal + i * tickSpacing
-		svg += `<line x1="${x}" y1="${bottomY - 5}" x2="${x}" y2="${bottomY + 5}" stroke="#333333"/>`
-		svg += `<text x="${x}" y="${bottomY - 15}" fill="#333333" text-anchor="middle">${t}</text>`
+		svg += `<line x1="${x}" y1="${bottomY - TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY + TICK_MARK_HEIGHT}" stroke="#333333"/>`
+		svg += `<text x="${x}" y="${bottomY + BOTTOM_LINE_TICK_LABEL_Y_OFFSET}" fill="#333333" text-anchor="middle">${t}</text>`
 	})
 
 	// Alignment lines (optional, but good for clarity)
 	for (let i = 0; i < numTicks; i++) {
 		const x = padding.horizontal + i * tickSpacing
-		svg += `<line x1="${x}" y1="${topY + 5}" x2="${x}" y2="${bottomY - 5}" stroke="#ccc" stroke-dasharray="2"/>`
+		svg += `<line x1="${x}" y1="${topY + TICK_MARK_HEIGHT}" x2="${x}" y2="${bottomY - TICK_MARK_HEIGHT}" stroke="#ccc" stroke-dasharray="2"/>`
 	}
 
 	svg += "</svg>"
