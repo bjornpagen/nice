@@ -244,6 +244,7 @@ ${perseusJson}
 ## CRITICAL Instructions:
 - **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of the question.
 - **\`body\` Field**: Create a 'body' field containing the main content as a structured JSON array (not an HTML string).
+- **ONLY REFERENCED WIDGETS**: CRITICAL RULE - Only include widgets/interactions that are explicitly referenced in the Perseus content string via \`[[☃ widget_name]]\` placeholders. Perseus JSON may contain many widget definitions, but you MUST ignore any that aren't actually used in the content.
 - **Placeholders**:
   - For ALL Perseus widgets (including 'image' widgets), create a { "type": "blockSlot", "slotId": "..." } placeholder in the 'body' and add its identifier to the 'widgets' string array.
   - For inline interactions (e.g., 'text-input', 'inline-choice'), create { "type": "inlineSlot", "slotId": "..." } inside paragraph content.
@@ -619,7 +620,55 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 
 **Remember:** Perseus misleadingly calls interactive elements "widgets" in its JSON. IGNORE THIS. Reclassify based on whether user input is required, EXCEPT for tables which are ALWAYS widgets.
 
-**Perseus Input with \`table\` containing input:**
+**11. Unused Widgets in Perseus JSON - IGNORE THEM:**
+Perseus JSON may contain widget definitions that are NOT actually used in the content. You MUST ONLY include widgets/interactions that are explicitly referenced in the Perseus content string via \`[[☃ widget_name]]\` placeholders.
+
+**Perseus Input with unused widget:**
+\`\`\`json
+{
+  "content": "Compare. $\\sqrt{13}$ [[☃ dropdown 1]] $\\dfrac{15}{4}$",
+  "widgets": {
+    "dropdown 1": {
+      "type": "dropdown",
+      "choices": [{"content": "<", "correct": true}, {"content": ">", "correct": false}, {"content": "=", "correct": false}]
+    },
+    "radio 1": {  // ⚠️ NOTE: This widget EXISTS but is NOT referenced in content
+      "type": "radio",
+      "choices": [{"content": "$A$", "correct": false}, {"content": "$B$", "correct": true}]
+    }
+  }
+}
+\`\`\`
+
+**WRONG Shell Output (includes unused widget):**
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Compare. " }, { "type": "math", "mathml": "<msqrt><mn>13</mn></msqrt>" }, { "type": "text", "content": " " }, { "type": "inlineSlot", "slotId": "comparison_dropdown" }, { "type": "text", "content": " " }, { "type": "math", "mathml": "<mfrac><mn>15</mn><mn>4</mn></mfrac>" }] },
+    { "type": "blockSlot", "slotId": "choice_interaction_1" }  // ❌ BANNED: This radio widget was never referenced!
+  ],
+  "widgets": [],
+  "interactions": ["comparison_dropdown", "choice_interaction_1"]  // ❌ WRONG: Extra interaction
+}
+\`\`\`
+
+**CORRECT Shell Output (only referenced widgets):**
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Compare." }] },
+    { "type": "paragraph", "content": [{ "type": "math", "mathml": "<msqrt><mn>13</mn></msqrt>" }, { "type": "text", "content": " " }, { "type": "inlineSlot", "slotId": "comparison_dropdown" }, { "type": "text", "content": " " }, { "type": "math", "mathml": "<mfrac><mn>15</mn><mn>4</mn></mfrac>" }] }
+  ],
+  "widgets": [],
+  "interactions": ["comparison_dropdown"]  // ✅ CORRECT: Only the dropdown that's actually used
+}
+\`\`\`
+
+**Explanation:** The Perseus JSON contained both a dropdown widget (used in content) and a radio widget (not used). The wrong output created slots for BOTH widgets, adding an extra choice interaction that doesn't belong. The correct output ONLY includes the dropdown that's actually referenced via \`[[☃ dropdown 1]]\` in the content string.
+
+**ABSOLUTE RULE:** Only create slots for widgets that appear as \`[[☃ widget_name]]\` in the Perseus content. Ignore all other widget definitions.
+
+ **Perseus Input with \`table\` containing input:**
 \`\`\`json
 "question": {
   "content": "Fill in the table. [[☃ table 1]]",
@@ -983,6 +1032,7 @@ Widgets MUST NEVER display, label, or visually indicate the correct answer. This
 - ANY duplicate text appearing in both the 'body' and interaction 'prompt' fields (eliminate redundancy by using empty body when interaction has clear prompt)
 - ANY cramped layouts where equations, answer prompts, and input fields are all in one paragraph (use separate paragraphs for visual clarity)
 - ANY explanations, strategies, worked solutions, or teaching content in the 'body' (these belong ONLY in 'feedback' sections)
+- ANY widget or interaction that is NOT referenced in the Perseus content via \`[[☃ widget_name]]\` (unused widgets must be ignored)
 
 **REMEMBER: Answers are ONLY allowed in feedback fields. HARD STOP. NO EXCEPTIONS.**
 Double-check your output before submitting. ZERO TOLERANCE for these violations.`
@@ -1046,6 +1096,20 @@ You must generate a JSON object where:
 - Each value is a fully-formed QTI interaction object.
 - All interaction properties must conform to the QTI interaction schemas.
 - All MathML must be perfectly preserved.
+
+**UNSUPPORTED INTERACTION HANDLING**
+Some Perseus widgets require complex, dynamic user input that we do not support. You MUST identify these and flag them.
+
+- **Unsupported Perseus Types**: \`interactive-graph\`, \`plotter\`, \`grapher\`, \`sorter\`, \`matcher\`, \`number-line\` (the interactive version, not a static image).
+- **Your Task**: Look at the original Perseus JSON. If an interaction slot in the shell corresponds to a Perseus widget with one of these unsupported types, you MUST generate a specific JSON object for that slot:
+\`\`\`json
+{
+  "type": "unsupportedInteraction",
+  "perseusType": "the-original-perseus-type-from-the-json",
+  "responseIdentifier": "the-response-identifier-from-the-shell"
+}
+\`\`\`
+This is a critical instruction to flag items that cannot be converted. For all other supported interaction types, generate the full, valid QTI interaction object as normal.
 
 ⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
 The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
@@ -1177,6 +1241,45 @@ CORRECT: \`feedback: [{ "type": "text", "content": "That is correct." }]\`
 - **Inline choice interactions** (inlineChoiceInteraction): Choice content MUST be arrays of inline content objects
 - **ALL choice feedback**: MUST be arrays of inline content objects regardless of interaction type
 - **ALL prompts**: MUST be arrays of inline content objects
+
+## Real Example of Unsupported Interaction - Plotter Widget
+
+Here's a real Perseus question that uses an unsupported plotter widget for creating histograms:
+
+**Perseus JSON (showing unsupported widget):**
+\`\`\`json
+{
+  "question": {
+    "content": "The following data points represent the number of points the Hawaii Eagles football team scored each game.\\n\\n$\\qquad17,33,28,23,10,42,3$\\n\\n**Using the data, create a histogram.**\\n\\n[[☃ plotter 1]]",
+    "widgets": {
+      "plotter 1": {
+        "type": "plotter",
+        "graded": true,
+        "options": {
+          "maxY": 5,
+          "type": "histogram",
+          "labels": ["Number of points", "Number of games"],
+          "correct": [2, 3, 2],
+          "categories": ["$0$", "$15$", "$30$", "$45$"]
+        }
+      }
+    }
+  }
+}
+\`\`\`
+
+**Required Output for this Unsupported Widget:**
+\`\`\`json
+{
+  "histogram_interaction": {
+    "type": "unsupportedInteraction",
+    "perseusType": "plotter",
+    "responseIdentifier": "RESPONSE"
+  }
+}
+\`\`\`
+
+This plotter widget requires interactive histogram creation which is not supported. You MUST flag it as unsupported rather than trying to convert it to a text entry or choice interaction.
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY LaTeX commands (backslash followed by letters)

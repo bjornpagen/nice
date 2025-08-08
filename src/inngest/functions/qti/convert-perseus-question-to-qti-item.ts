@@ -1,13 +1,11 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
-// ADD: Import NonRetriableError from the Inngest SDK.
-// removed NonRetriableError: no special non-retriable handling needed
+import { NonRetriableError } from "inngest"
 import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { compile } from "@/lib/qti-generation/compiler"
-// ADD: Import our new constant error and the generator function.
-import { generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
+import { ErrUnsupportedInteraction, generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
 // NEW: Import the validator function
 import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
 
@@ -63,6 +61,15 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 				error: structuredItemResult.error
 			})
 
+			// Check for the specific unsupported interaction error
+			if (errors.is(structuredItemResult.error, ErrUnsupportedInteraction)) {
+				// This item is fundamentally un-convertible. Fail the job permanently,
+				// chaining the original error for full context in observability tools.
+				throw new NonRetriableError(structuredItemResult.error.message, {
+					cause: structuredItemResult.error
+				})
+			}
+
 			// For all other errors, maintain the existing retryable behavior.
 			throw errors.wrap(structuredItemResult.error, "structured item generation")
 		}
@@ -96,6 +103,15 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 				questionId,
 				error: compileResult.error
 			})
+
+			// Check if compilation failed due to unsupported interaction
+			if (errors.is(compileResult.error, ErrUnsupportedInteraction)) {
+				// This item contains unsupported interactions. Fail permanently.
+				throw new NonRetriableError(compileResult.error.message, {
+					cause: compileResult.error
+				})
+			}
+
 			throw errors.wrap(compileResult.error, "qti compilation")
 		}
 		const xml = compileResult.data

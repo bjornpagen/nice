@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { ErrUnsupportedInteraction } from "@/lib/qti-generation/structured/client"
 import { typedSchemas } from "@/lib/widgets/generators"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import { renderBlockContent } from "./content-renderer"
@@ -182,6 +183,25 @@ export function compile(itemData: AssessmentItemInput): string {
 		throw errors.wrap(itemResult.error, "schema enforcement")
 	}
 	const enforcedItem = itemResult.data
+
+	// Pre-compile gate for unsupported interactions
+	if (enforcedItem.interactions) {
+		for (const interaction of Object.values(enforcedItem.interactions)) {
+			if (interaction.type === "unsupportedInteraction") {
+				// Access property safely using in operator
+				const perseusType =
+					"perseusType" in interaction && typeof interaction.perseusType === "string"
+						? interaction.perseusType
+						: "unknown"
+				logger.error("unsupported interaction type detected, failing compilation", {
+					identifier: enforcedItem.identifier,
+					perseusType: perseusType
+				})
+				// Throw the specific, non-retriable error
+				throw errors.wrap(ErrUnsupportedInteraction, `item contains unsupported Perseus interaction: ${perseusType}`)
+			}
+		}
+	}
 
 	// Step 1: Prevalidation on schema-enforced data to catch QTI content model violations
 	// Manual deduplication of paragraphs that duplicate an interaction prompt

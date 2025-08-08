@@ -28,6 +28,8 @@ const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
 // Removed ErrWidgetNotFound: all slots must map to a concrete widget type
 
+export const ErrUnsupportedInteraction = errors.new("unsupported interaction type found")
+
 // Use the AssessmentItemShellSchema from schemas.ts
 
 /**

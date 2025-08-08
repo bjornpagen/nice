@@ -197,12 +197,26 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 		.strict()
 		.describe("An interaction where users arrange items in a specific sequence or order.")
 
+	const UnsupportedInteractionSchema = z
+		.object({
+			type: z
+				.literal("unsupportedInteraction")
+				.describe("Identifies this as an interaction type that is not supported."),
+			perseusType: z.string().describe("The original Perseus widget type that was identified as unsupported."),
+			responseIdentifier: z.string().describe("Placeholder for the response identifier from the shell.")
+		})
+		.strict()
+		.describe(
+			"A placeholder for Perseus widgets that require interactive features not supported by the QTI schema, such as drawing or graphing."
+		)
+
 	const AnyInteractionSchema = z
 		.discriminatedUnion("type", [
 			ChoiceInteractionSchema,
 			InlineChoiceInteractionSchema,
 			TextEntryInteractionSchema,
-			OrderInteractionSchema
+			OrderInteractionSchema,
+			UnsupportedInteractionSchema
 		])
 		.describe("A discriminated union representing any possible QTI interaction type supported by the system.")
 
