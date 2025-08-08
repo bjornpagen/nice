@@ -8,8 +8,8 @@ import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 import { paraphraseStimulus } from "@/inngest/functions/qti/paraphrase-stimulus"
-import { qti } from "@/lib/clients"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
+import { validateInBatches } from "@/lib/qti-validation/batch"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 
 // Schema for the expected assessment item format
@@ -138,19 +138,24 @@ export const orchestrateCourseDifferentiatedIngestion = inngest.createFunction(
 			}
 		}
 
-		// Validate generated differentiated items via QTI API and skip invalid ones
-		const validateResults = await Promise.all(
-			parsedItems.map((item) => qti.validateXml({ schema: "item", xml: item.xml }))
-		)
+		// Validate generated differentiated items via QTI API and skip invalid ones in batches
+		const validateResults = await validateInBatches(parsedItems, {
+			schema: "item",
+			getXml: (item) => item.xml,
+			batchSize: 20,
+			delayMs: 500,
+			logger
+		})
 		const assessmentItems = parsedItems.filter((_, i) => validateResults[i]?.success === true)
 		const skippedItemsCount = allGeneratedItems.length - assessmentItems.length
 		for (let i = 0; i < validateResults.length; i++) {
 			const res = validateResults[i]
 			if (!res?.success) {
 				const item = parsedItems[i]
+				const errorsForLog = res?.response?.validationErrors
 				logger.warn("skipping invalid differentiated qti item", {
 					questionId: item?.metadata.khanId,
-					errors: res?.validationErrors
+					errors: errorsForLog
 				})
 			}
 		}

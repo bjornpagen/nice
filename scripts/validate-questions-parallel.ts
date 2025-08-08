@@ -6,7 +6,7 @@ import * as logger from "@superbuilders/slog"
 import { isNotNull } from "drizzle-orm"
 import { db } from "@/db"
 import { niceQuestions } from "@/db/schemas/nice"
-import { qti } from "@/lib/clients"
+import { validateInBatches } from "@/lib/qti-validation/batch"
 
 /**
  * parallel qti xml validation script
@@ -34,62 +34,6 @@ interface ValidationFailure {
 	apiError?: string
 	processingTimeMs: number
 	xml: string
-}
-
-async function validateQuestion(question: { id: string; exerciseId: string; xml: string }): Promise<ValidationResult> {
-	const startTime = Date.now()
-
-	logger.debug("validating question", {
-		questionId: question.id,
-		exerciseId: question.exerciseId,
-		xmlLength: question.xml.length
-	})
-
-	const result: ValidationResult = {
-		questionId: question.id,
-		exerciseId: question.exerciseId,
-		xmlLength: question.xml.length,
-		success: false,
-		processingTimeMs: 0
-	}
-
-	const validationResult = await errors.try(
-		qti.validateXml({
-			xml: question.xml,
-			schema: "item"
-		})
-	)
-
-	result.processingTimeMs = Date.now() - startTime
-
-	if (validationResult.error) {
-		logger.error("qti validation api error", {
-			questionId: question.id,
-			error: validationResult.error,
-			processingTimeMs: result.processingTimeMs
-		})
-		result.apiError = validationResult.error.toString()
-		return result
-	}
-
-	const response = validationResult.data
-	result.success = response.success
-	result.errors = response.validationErrors
-
-	if (response.success) {
-		logger.debug("question validation passed", {
-			questionId: question.id,
-			processingTimeMs: result.processingTimeMs
-		})
-	} else {
-		logger.warn("question validation failed", {
-			questionId: question.id,
-			errors: response.validationErrors,
-			processingTimeMs: result.processingTimeMs
-		})
-	}
-
-	return result
 }
 
 async function main(): Promise<void> {
@@ -144,29 +88,45 @@ async function main(): Promise<void> {
 		batchDelayMs: BATCH_DELAY_MS
 	})
 
-	const validationResults: PromiseSettledResult<ValidationResult>[] = []
+	// Use shared batching util directly for the core validation
+	const batched = await validateInBatches(validQuestions, {
+		schema: "item",
+		getXml: (q) => q.xml,
+		batchSize: BATCH_SIZE,
+		delayMs: BATCH_DELAY_MS,
+		logger
+	})
 
-	for (let i = 0; i < validQuestions.length; i += BATCH_SIZE) {
-		const batch = validQuestions.slice(i, i + BATCH_SIZE)
-		const batchNumber = Math.floor(i / BATCH_SIZE) + 1
-		const totalBatches = Math.ceil(validQuestions.length / BATCH_SIZE)
-
-		logger.debug("processing batch", {
-			batchNumber,
-			totalBatches,
-			batchSize: batch.length,
-			progress: `${i + batch.length}/${validQuestions.length}`
-		})
-
-		const batchResults = await Promise.allSettled(batch.map((question) => validateQuestion(question)))
-
-		validationResults.push(...batchResults)
-
-		// add delay between batches (except for the last batch)
-		if (i + BATCH_SIZE < validQuestions.length) {
-			await new Promise((resolve) => setTimeout(resolve, BATCH_DELAY_MS))
+	const validationResults: PromiseSettledResult<ValidationResult>[] = batched.map((res, i) => {
+		const q = validQuestions[i]
+		if (!q) {
+			throw errors.new(`missing question data at index ${i}`)
 		}
-	}
+		if (!res.success) {
+			return {
+				status: "fulfilled",
+				value: {
+					questionId: q.id,
+					exerciseId: q.exerciseId,
+					xmlLength: q.xml.length,
+					success: false,
+					errors: res.response?.validationErrors,
+					apiError: res.error ? String(res.error) : undefined,
+					processingTimeMs: res.processingTimeMs
+				}
+			}
+		}
+		return {
+			status: "fulfilled",
+			value: {
+				questionId: q.id,
+				exerciseId: q.exerciseId,
+				xmlLength: q.xml.length,
+				success: true,
+				processingTimeMs: res.processingTimeMs
+			}
+		}
+	})
 
 	// process results and collect failures
 	const failures: ValidationFailure[] = []

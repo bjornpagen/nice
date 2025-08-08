@@ -571,17 +571,40 @@ export class Client {
 		// Log the raw response for debugging
 		logger.debug("qti api: raw response", { endpoint, response: jsonResult.data })
 
-		const validation = schema.safeParse(jsonResult.data)
-		if (!validation.success) {
-			logger.error("qti api: invalid response schema", {
-				error: validation.error,
-				endpoint,
-				rawResponse: jsonResult.data
-			})
-			throw errors.wrap(validation.error, "qti api response validation")
+		// Primary validation using provided schema
+		const primaryValidation = schema.safeParse(jsonResult.data)
+		if (primaryValidation.success) {
+			return primaryValidation.data
 		}
 
-		return validation.data
+		// Secondary: unwrap possible response envelope from the API
+		// Some endpoints may wrap the entity under a named key
+		const isRecord = (value: unknown): value is Record<string, unknown> => {
+			return typeof value === "object" && value !== null && !Array.isArray(value)
+		}
+
+		if (isRecord(jsonResult.data)) {
+			const envelopeKeys = ["assessmentItem", "assessmentTest", "stimulus"] as const
+			for (const key of envelopeKeys) {
+				if (Object.hasOwn(jsonResult.data, key)) {
+					const maybeWrapped = jsonResult.data[key]
+					if (maybeWrapped !== undefined) {
+						const unwrappedValidation = schema.safeParse(maybeWrapped)
+						if (unwrappedValidation.success) {
+							logger.info("qti api: unwrapped response envelope", { endpoint, envelope: key })
+							return unwrappedValidation.data
+						}
+					}
+				}
+			}
+		}
+
+		logger.error("qti api: invalid response schema", {
+			error: primaryValidation.error,
+			endpoint,
+			rawResponse: jsonResult.data
+		})
+		throw errors.wrap(primaryValidation.error, "qti api response validation")
 	}
 
 	/**

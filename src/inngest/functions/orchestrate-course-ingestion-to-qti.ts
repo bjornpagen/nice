@@ -6,8 +6,8 @@ import { z } from "zod"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { qti } from "@/lib/clients"
 import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
+import { validateInBatches } from "@/lib/qti-validation/batch"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 
 // Schema for the expected assessment item format
@@ -240,19 +240,24 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			}
 		})
 
-		// Validate all items via QTI API and skip invalid ones
-		const validationResults = await Promise.all(
-			itemsUnvalidated.map((item) => qti.validateXml({ schema: "item", xml: item.xml }))
-		)
+		// Validate all items via QTI API and skip invalid ones (batched)
+		const validationResults = await validateInBatches(itemsUnvalidated, {
+			schema: "item",
+			getXml: (item) => item.xml,
+			batchSize: 20,
+			delayMs: 500,
+			logger
+		})
 		const items = itemsUnvalidated.filter((_, i) => validationResults[i]?.success === true)
 		const skippedItemsCount = itemsUnvalidated.length - items.length
 		for (let i = 0; i < validationResults.length; i++) {
 			const res = validationResults[i]
 			if (!res?.success) {
 				const item = itemsUnvalidated[i]
+				const errorsForLog = res?.response?.validationErrors
 				logger.warn("skipping invalid qti item", {
 					questionId: item?.metadata.khanId,
-					errors: res?.validationErrors
+					errors: errorsForLog
 				})
 			}
 		}
