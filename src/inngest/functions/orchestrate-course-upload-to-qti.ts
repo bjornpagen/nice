@@ -20,6 +20,18 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 	},
 	{ event: "qti/course.upload" },
 	async ({ event, step, logger }) => {
+		const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null
+		const isNumber = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value)
+		const hasSummaryFields = (
+			value: unknown
+		): value is { created: number; updated: number; skipped: number; failed: number } => {
+			if (!isRecord(value)) return false
+			const created = value.created
+			const updated = value.updated
+			const skipped = value.skipped
+			const failed = value.failed
+			return isNumber(created) && isNumber(updated) && isNumber(skipped) && isNumber(failed)
+		}
 		const { courseId } = event.data
 		logger.info("starting qti upload workflow from local files", { courseId })
 
@@ -72,21 +84,45 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 				totalBatches: itemBatches.length
 			})
 
-			const itemPromises = itemBatches.map((batch, i) =>
-				step.invoke(`invoke-ingest-assessment-items-batch-${i + 1}`, {
-					function: ingestAssessmentItems,
-					data: { items: batch }
-				})
-			)
-
-			const itemResults = await errors.try(Promise.all(itemPromises))
-			if (itemResults.error) {
-				logger.error("one or more assessment item ingestion steps failed", {
+			let itemsCreated = 0
+			let itemsUpdated = 0
+			let itemsSkipped = 0
+			let itemsFailed = 0
+			for (let i = 0; i < itemBatches.length; i++) {
+				const res = await errors.try(
+					step.invoke(`invoke-ingest-assessment-items-batch-${i + 1}`, {
+						function: ingestAssessmentItems,
+						data: { items: itemBatches[i] }
+					})
+				)
+				if (res.error) {
+					logger.error("assessment item ingestion batch failed", { courseId, batchIndex: i + 1, error: res.error })
+					throw errors.wrap(res.error, "assessment item ingestion batch")
+				}
+				const summary = res.data
+				if (hasSummaryFields(summary)) {
+					itemsCreated += summary.created
+					itemsUpdated += summary.updated
+					itemsSkipped += summary.skipped
+					itemsFailed += summary.failed
+				}
+				logger.info("completed item batch", {
 					courseId,
-					error: itemResults.error
+					batchIndex: i + 1,
+					totalBatches: itemBatches.length,
+					created: itemsCreated,
+					updated: itemsUpdated,
+					skipped: itemsSkipped,
+					failed: itemsFailed
 				})
-				throw errors.wrap(itemResults.error, "assessment item ingestion fan-out")
 			}
+			logger.info("completed all item batches", {
+				courseId,
+				created: itemsCreated,
+				updated: itemsUpdated,
+				skipped: itemsSkipped,
+				failed: itemsFailed
+			})
 		}
 
 		logger.info("completed ingestion of items", { courseId })
@@ -105,21 +141,45 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 				totalBatches: stimuliBatches.length
 			})
 
-			const stimuliPromises = stimuliBatches.map((batch, i) =>
-				step.invoke(`invoke-ingest-assessment-stimuli-batch-${i + 1}`, {
-					function: ingestAssessmentStimuli,
-					data: { stimuli: batch }
-				})
-			)
-
-			const stimuliResults = await errors.try(Promise.all(stimuliPromises))
-			if (stimuliResults.error) {
-				logger.error("one or more assessment stimuli ingestion steps failed", {
+			let stimuliCreated = 0
+			let stimuliUpdated = 0
+			let stimuliSkipped = 0
+			let stimuliFailed = 0
+			for (let i = 0; i < stimuliBatches.length; i++) {
+				const res = await errors.try(
+					step.invoke(`invoke-ingest-assessment-stimuli-batch-${i + 1}`, {
+						function: ingestAssessmentStimuli,
+						data: { stimuli: stimuliBatches[i] }
+					})
+				)
+				if (res.error) {
+					logger.error("assessment stimuli ingestion batch failed", { courseId, batchIndex: i + 1, error: res.error })
+					throw errors.wrap(res.error, "assessment stimuli ingestion batch")
+				}
+				const summary = res.data
+				if (hasSummaryFields(summary)) {
+					stimuliCreated += summary.created
+					stimuliUpdated += summary.updated
+					stimuliSkipped += summary.skipped
+					stimuliFailed += summary.failed
+				}
+				logger.info("completed stimulus batch", {
 					courseId,
-					error: stimuliResults.error
+					batchIndex: i + 1,
+					totalBatches: stimuliBatches.length,
+					created: stimuliCreated,
+					updated: stimuliUpdated,
+					skipped: stimuliSkipped,
+					failed: stimuliFailed
 				})
-				throw errors.wrap(stimuliResults.error, "assessment stimuli ingestion fan-out")
 			}
+			logger.info("completed all stimulus batches", {
+				courseId,
+				created: stimuliCreated,
+				updated: stimuliUpdated,
+				skipped: stimuliSkipped,
+				failed: stimuliFailed
+			})
 		}
 
 		logger.info("completed ingestion of stimuli", { courseId })
@@ -138,21 +198,45 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 				totalBatches: testBatches.length
 			})
 
-			const testPromises = testBatches.map((batch, i) =>
-				step.invoke(`invoke-ingest-assessment-tests-batch-${i + 1}`, {
-					function: ingestAssessmentTests,
-					data: { tests: batch }
-				})
-			)
-
-			const testResults = await errors.try(Promise.all(testPromises))
-			if (testResults.error) {
-				logger.error("one or more assessment test ingestion steps failed", {
+			let testsCreated = 0
+			let testsUpdated = 0
+			let testsSkipped = 0
+			let testsFailed = 0
+			for (let i = 0; i < testBatches.length; i++) {
+				const res = await errors.try(
+					step.invoke(`invoke-ingest-assessment-tests-batch-${i + 1}`, {
+						function: ingestAssessmentTests,
+						data: { tests: testBatches[i] }
+					})
+				)
+				if (res.error) {
+					logger.error("assessment test ingestion batch failed", { courseId, batchIndex: i + 1, error: res.error })
+					throw errors.wrap(res.error, "assessment test ingestion batch")
+				}
+				const summary = res.data
+				if (hasSummaryFields(summary)) {
+					testsCreated += summary.created
+					testsUpdated += summary.updated
+					testsSkipped += summary.skipped
+					testsFailed += summary.failed
+				}
+				logger.info("completed test batch", {
 					courseId,
-					error: testResults.error
+					batchIndex: i + 1,
+					totalBatches: testBatches.length,
+					created: testsCreated,
+					updated: testsUpdated,
+					skipped: testsSkipped,
+					failed: testsFailed
 				})
-				throw errors.wrap(testResults.error, "assessment test ingestion fan-out")
 			}
+			logger.info("completed all test batches", {
+				courseId,
+				created: testsCreated,
+				updated: testsUpdated,
+				skipped: testsSkipped,
+				failed: testsFailed
+			})
 		}
 
 		logger.info("completed qti upload workflow", { courseId })

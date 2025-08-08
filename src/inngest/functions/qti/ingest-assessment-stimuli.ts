@@ -69,20 +69,20 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 			if (updateResult.error) {
 				// Check if it's a 404 error - if so, create instead
 				if (errors.is(updateResult.error, ErrQtiNotFound)) {
-					logger.info("stimulus not found, creating new", { identifier })
+					logger.debug("stimulus not found, creating new", { identifier })
 					const createResult = await errors.try(qti.createStimulus(payload))
 					if (createResult.error) {
 						logger.error("failed to create stimulus", { identifier, error: createResult.error })
 						return { identifier, success: false, status: "failed", error: createResult.error }
 					}
-					logger.info("successfully created stimulus", { identifier })
+					logger.debug("successfully created stimulus", { identifier })
 					return { identifier, success: true, status: "created" }
 				}
 				// Other error - log and continue
 				logger.error("failed to update stimulus", { identifier, error: updateResult.error })
 				return { identifier, success: false, status: "failed", error: updateResult.error }
 			}
-			logger.info("successfully updated stimulus", { identifier })
+			logger.debug("successfully updated stimulus", { identifier })
 			return { identifier, success: true, status: "updated" }
 		})
 
@@ -91,6 +91,9 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 
 		const failedResults = results.filter((r) => !r.success)
 		const failedCount = failedResults.length
+		const createdCount = results.filter((r) => r.status === "created").length
+		const updatedCount = results.filter((r) => r.status === "updated").length
+		const skippedCount = results.filter((r) => r.status === "skipped_no_id").length
 
 		if (failedCount > 0) {
 			// Log detailed information about each failed stimulus
@@ -108,6 +111,13 @@ export const ingestAssessmentStimuli = inngest.createFunction(
 			throw errors.new(`failed to ingest ${failedCount} assessment stimuli: ${failedIdentifiers.join(", ")}`)
 		}
 
-		return { status: "success", count: results.length, results }
+		return {
+			status: "success",
+			count: results.length,
+			created: createdCount,
+			updated: updatedCount,
+			skipped: skippedCount,
+			failed: failedCount
+		}
 	}
 )

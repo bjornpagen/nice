@@ -3,8 +3,8 @@ import { inngest } from "@/inngest/client"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
 
 const HARDCODED_COURSE_IDS = [
-	"x0267d782", // 6th grade math (Common Core)
-	"x6b17ba59", // 7th grade math (Common Core)
+	// "x0267d782", // 6th grade math (Common Core)
+	// "x6b17ba59", // 7th grade math (Common Core)
 	"x7c7044d7" // 8th grade math (Common Core)
 ]
 

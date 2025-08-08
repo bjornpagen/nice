@@ -25,6 +25,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	},
 	{ event: "qti/course.ingest" },
 	async ({ event, logger }) => {
+		const startedAt = Date.now()
 		const { courseId } = event.data
 		logger.info("starting qti json dump workflow", { courseId })
 
@@ -127,6 +128,15 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				)
 			})
 		])
+
+		logger.info("fetched course content from db", {
+			courseId,
+			questionsCount: allQuestions.length,
+			articlesCount: allArticles.length,
+			exercisesCount: allExercises.length,
+			unitAssessmentsCount: unitAssessments.length,
+			courseAssessmentsCount: courseAssessments.length
+		})
 
 		// ADDED: Combine unit and course assessments into a single list
 		const allAssessments = [...unitAssessments, ...courseAssessments]
@@ -310,12 +320,27 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				}
 			}
 
+			const batchSuccesses = batchResults.filter((r) => r.success).length
+			const batchFailures = batchResults.length - batchSuccesses
+			logger.debug("ghetto-validate batch complete", {
+				batchStart: i,
+				batchSize: batchResults.length,
+				successCount: batchSuccesses,
+				failureCount: batchFailures
+			})
+
 			if (i + batchSize < itemsUnvalidated.length) {
 				await new Promise((resolve) => setTimeout(resolve, delayMs))
 			}
 		}
 
 		const skippedItemsCount = skippedItems.length
+		logger.info("ghetto-validate complete", {
+			courseId,
+			totalItems: itemsUnvalidated.length,
+			validItems: items.length,
+			skippedItems: skippedItemsCount
+		})
 		for (const result of skippedItems) {
 			logger.warn("skipping invalid qti item after ghetto-validate", {
 				questionId: result.item.metadata.khanId,
@@ -338,6 +363,8 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				}
 			}
 		})
+
+		logger.info("assembled stimuli", { courseId, stimuliCount: stimuli.length })
 
 		const validOriginalQuestionIds = new Set(items.map((it) => String(it.metadata.khanId)))
 
@@ -480,6 +507,12 @@ ${sectionsXml}
 		})
 
 		const tests = [...explicitTests, ...exerciseTests]
+		logger.info("assembled tests", {
+			courseId,
+			explicitTestsCount: explicitTests.length,
+			exerciseTestsCount: exerciseTests.length,
+			totalTests: tests.length
+		})
 
 		const assessmentItems = items
 		const assessmentStimuli = stimuli
@@ -495,14 +528,50 @@ ${sectionsXml}
 		}
 
 		const courseDir = path.join(process.cwd(), "data", course.slug, "qti")
-		await fs.mkdir(courseDir, { recursive: true })
+		const mkdirResult = await errors.try(fs.mkdir(courseDir, { recursive: true }))
+		if (mkdirResult.error) {
+			logger.error("directory creation failed", { courseDir, error: mkdirResult.error })
+			throw errors.wrap(mkdirResult.error, "directory creation")
+		}
 
-		await fs.writeFile(path.join(courseDir, "assessmentItems.json"), JSON.stringify(assessmentItems, null, 2))
-		await fs.writeFile(path.join(courseDir, "assessmentStimuli.json"), JSON.stringify(assessmentStimuli, null, 2))
-		await fs.writeFile(path.join(courseDir, "assessmentTests.json"), JSON.stringify(assessmentTests, null, 2))
+		logger.info("writing qti json files", {
+			courseId,
+			courseDir,
+			items: assessmentItems.length,
+			stimuli: assessmentStimuli.length,
+			tests: assessmentTests.length
+		})
+
+		const itemsWrite = await errors.try(
+			fs.writeFile(path.join(courseDir, "assessmentItems.json"), JSON.stringify(assessmentItems, null, 2))
+		)
+		if (itemsWrite.error) {
+			logger.error("file write failed", { file: path.join(courseDir, "assessmentItems.json"), error: itemsWrite.error })
+			throw errors.wrap(itemsWrite.error, "file write")
+		}
+
+		const stimuliWrite = await errors.try(
+			fs.writeFile(path.join(courseDir, "assessmentStimuli.json"), JSON.stringify(assessmentStimuli, null, 2))
+		)
+		if (stimuliWrite.error) {
+			logger.error("file write failed", {
+				file: path.join(courseDir, "assessmentStimuli.json"),
+				error: stimuliWrite.error
+			})
+			throw errors.wrap(stimuliWrite.error, "file write")
+		}
+
+		const testsWrite = await errors.try(
+			fs.writeFile(path.join(courseDir, "assessmentTests.json"), JSON.stringify(assessmentTests, null, 2))
+		)
+		if (testsWrite.error) {
+			logger.error("file write failed", { file: path.join(courseDir, "assessmentTests.json"), error: testsWrite.error })
+			throw errors.wrap(testsWrite.error, "file write")
+		}
 
 		const outputDir = courseDir
 
+		const durationMs = Date.now() - startedAt
 		logger.info("completed QTI JSON dump workflow successfully", {
 			courseId,
 			outputDir,
@@ -511,7 +580,8 @@ ${sectionsXml}
 				stimuli: assessmentStimuli.length,
 				tests: assessmentTests.length,
 				skippedItems: skippedItemsCount
-			}
+			},
+			durationMs
 		})
 
 		return {

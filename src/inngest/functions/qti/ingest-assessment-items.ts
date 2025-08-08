@@ -51,7 +51,7 @@ export const ingestAssessmentItems = inngest.createFunction(
 			if (updateResult.error) {
 				// Check if it's a 404 error - if so, create instead
 				if (errors.is(updateResult.error, ErrQtiNotFound)) {
-					logger.info("assessment item not found, creating new", { identifier })
+					logger.debug("assessment item not found, creating new", { identifier })
 					const createResult = await errors.try(
 						qti.createAssessmentItem({ xml: processedXml, metadata: item.metadata })
 					)
@@ -59,14 +59,14 @@ export const ingestAssessmentItems = inngest.createFunction(
 						logger.error("failed to create assessment item", { identifier, error: createResult.error })
 						return { identifier, success: false, status: "failed", error: createResult.error }
 					}
-					logger.info("successfully created assessment item", { identifier })
+					logger.debug("successfully created assessment item", { identifier })
 					return { identifier, success: true, status: "created" }
 				}
 				// Other error - log and continue
 				logger.error("failed to update assessment item", { identifier, error: updateResult.error })
 				return { identifier, success: false, status: "failed", error: updateResult.error }
 			}
-			logger.info("successfully updated assessment item", { identifier })
+			logger.debug("successfully updated assessment item", { identifier })
 			return { identifier, success: true, status: "updated" }
 		})
 
@@ -75,6 +75,9 @@ export const ingestAssessmentItems = inngest.createFunction(
 
 		const failedResults = results.filter((r) => !r.success)
 		const failedCount = failedResults.length
+		const createdCount = results.filter((r) => r.status === "created").length
+		const updatedCount = results.filter((r) => r.status === "updated").length
+		const skippedCount = results.filter((r) => r.status === "skipped_no_id").length
 
 		if (failedCount > 0) {
 			// Log detailed information about each failed item
@@ -92,6 +95,13 @@ export const ingestAssessmentItems = inngest.createFunction(
 			throw errors.new(`failed to ingest ${failedCount} assessment items: ${failedIdentifiers.join(", ")}`)
 		}
 
-		return { status: "success", count: results.length, results }
+		return {
+			status: "success",
+			count: results.length,
+			created: createdCount,
+			updated: updatedCount,
+			skipped: skippedCount,
+			failed: failedCount
+		}
 	}
 )
