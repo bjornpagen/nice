@@ -68,100 +68,111 @@ export type GeometricSolidDiagramProps = z.infer<typeof GeometricSolidDiagramPro
 export const generateGeometricSolidDiagram: WidgetGenerator<typeof GeometricSolidDiagramPropsSchema> = (data) => {
 	const { width, height, shape, labels } = data
 
-	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	// --- NEW SCALING AND DRAWING LOGIC ---
+
+	const padding = 30 // Increased padding for labels and dimension lines
+	const labelSpace = labels ? 40 : 0 // Extra space for external labels
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
+	svg += `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black" /></marker></defs>`
+
+	const availableWidth = width - 2 * padding - labelSpace
+	const availableHeight = height - 2 * padding - labelSpace
 
 	if (shape.type === "cylinder") {
-		const r = shape.radius * 4
-		const h = shape.height * 8
-		const ry = r * 0.3 // Ellipse perspective ratio
+		const scale = Math.min(availableWidth / (shape.radius * 2), availableHeight / shape.height)
+		const r = shape.radius * scale
+		const h = shape.height * scale
+		const ry = r * 0.25 // Ellipse perspective ratio
+
 		const cx = width / 2
 		const topY = (height - h) / 2
 		const bottomY = topY + h
 
 		// Side lines
-		svg += `<line x1="${cx - r}" y1="${topY}" x2="${cx - r}" y2="${bottomY}" stroke="black" stroke-width="1.5"/>`
-		svg += `<line x1="${cx + r}" y1="${topY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="1.5"/>`
+		svg += `<line x1="${cx - r}" y1="${topY}" x2="${cx - r}" y2="${bottomY}" stroke="black" stroke-width="2"/>`
+		svg += `<line x1="${cx + r}" y1="${topY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="2"/>`
 
-		// Bottom base (draw back dashed part first)
-		svg += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 0 ${cx + r} ${bottomY}" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
-		// Bottom base (front solid part)
-		svg += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 1 ${cx + r} ${bottomY}" fill="rgba(200, 200, 200, 0.3)" stroke="black" stroke-width="1.5"/>`
+		// Bottom base (draw back dashed part first, then front solid part)
+		svg += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 0 ${cx + r} ${bottomY}" fill="none" stroke="black" stroke-width="2" stroke-dasharray="4 3"/>`
+		svg += `<path d="M ${cx - r} ${bottomY} A ${r} ${ry} 0 0 1 ${cx + r} ${bottomY}" fill="rgba(200, 200, 200, 0.2)" stroke="black" stroke-width="2"/>`
 
 		// Top base
-		svg += `<ellipse cx="${cx}" cy="${topY}" rx="${r}" ry="${ry}" fill="rgba(220, 220, 220, 0.5)" stroke="black" stroke-width="1.5"/>`
+		svg += `<ellipse cx="${cx}" cy="${topY}" rx="${r}" ry="${ry}" fill="rgba(220, 220, 220, 0.4)" stroke="black" stroke-width="2"/>`
 
 		if (labels) {
 			for (const l of labels) {
 				if (l.target === "radius") {
-					svg += `<line x1="${cx}" y1="${bottomY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="1"/>`
-					svg += `<text x="${cx + r / 2}" y="${bottomY + 15}" fill="black" text-anchor="middle">${l.text ?? shape.radius}</text>`
+					// Dashed line for radius on the bottom base
+					svg += `<line x1="${cx}" y1="${bottomY}" x2="${cx + r}" y2="${bottomY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+					const textY = Math.min(bottomY + 18, height - 10) // Ensure text stays within bounds
+					svg += `<text x="${cx + r / 2}" y="${textY}" fill="black" text-anchor="middle">${l.text ?? shape.radius}</text>`
 				}
 				if (l.target === "height") {
-					svg += `<line x1="${cx + r + 10}" y1="${topY}" x2="${cx + r + 10}" y2="${bottomY}" stroke="black" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
-					svg += `<text x="${cx + r + 20}" y="${(topY + bottomY) / 2}" fill="black" dominant-baseline="middle">${l.text ?? shape.height}</text>`
+					// External line with arrows for height
+					const lineX = Math.min(cx + r + 15, width - 50) // Ensure it stays within bounds
+					svg += `<line x1="${lineX}" y1="${topY}" x2="${lineX}" y2="${bottomY}" stroke="black" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
+					svg += `<text x="${lineX + 10}" y="${height / 2}" fill="black" dominant-baseline="middle">${l.text ?? shape.height}</text>`
 				}
 			}
 		}
-
-		svg += `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black" /></marker></defs>`
 	} else if (shape.type === "cone") {
-		const r = shape.radius * 4
-		const h = shape.height * 8
-		const ry = r * 0.3 // Ellipse perspective ratio
+		const scale = Math.min(availableWidth / (shape.radius * 2), availableHeight / shape.height)
+		const r = shape.radius * scale
+		const h = shape.height * scale
+		const ry = r * 0.25 // Ellipse perspective ratio
+
 		const cx = width / 2
 		const apexY = (height - h) / 2
 		const baseY = apexY + h
 
 		// Generator lines
-		svg += `<line x1="${cx - r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="black" stroke-width="1.5"/>`
-		svg += `<line x1="${cx + r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="black" stroke-width="1.5"/>`
+		svg += `<line x1="${cx - r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="black" stroke-width="2"/>`
+		svg += `<line x1="${cx + r}" y1="${baseY}" x2="${cx}" y2="${apexY}" stroke="black" stroke-width="2"/>`
 
-		// Base (draw back dashed part first)
-		svg += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 0 ${cx + r} ${baseY}" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
-		// Base (front solid part)
-		svg += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 1 ${cx + r} ${baseY}" fill="rgba(200, 200, 200, 0.3)" stroke="black" stroke-width="1.5"/>`
+		// Base (draw back dashed part first, then front solid part)
+		svg += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 0 ${cx + r} ${baseY}" fill="none" stroke="black" stroke-width="2" stroke-dasharray="4 3"/>`
+		svg += `<path d="M ${cx - r} ${baseY} A ${r} ${ry} 0 0 1 ${cx + r} ${baseY}" fill="rgba(200, 200, 200, 0.2)" stroke="black" stroke-width="2"/>`
 
 		if (labels) {
 			for (const l of labels) {
 				if (l.target === "radius") {
-					svg += `<line x1="${cx}" y1="${baseY}" x2="${cx + r}" y2="${baseY}" stroke="black" stroke-width="1"/>`
-					svg += `<text x="${cx + r / 2}" y="${baseY + 15}" fill="black" text-anchor="middle">${l.text ?? shape.radius}</text>`
+					// Dashed line from center to right for radius
+					svg += `<line x1="${cx}" y1="${baseY}" x2="${cx + r}" y2="${baseY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+					const textY = Math.min(baseY + 18, height - 10) // Ensure text stays within bounds
+					svg += `<text x="${cx + r / 2}" y="${textY}" fill="black" text-anchor="middle">${l.text ?? shape.radius}</text>`
 				}
 				if (l.target === "height") {
-					svg += `<line x1="${cx + r + 10}" y1="${apexY}" x2="${cx + r + 10}" y2="${baseY}" stroke="black" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>`
-					svg += `<text x="${cx + r + 20}" y="${(apexY + baseY) / 2}" fill="black" dominant-baseline="middle">${l.text ?? shape.height}</text>`
+					// Dashed line from apex to center for height
+					svg += `<line x1="${cx}" y1="${apexY}" x2="${cx}" y2="${baseY}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+					// Right angle indicator
+					const indicatorSize = Math.min(10, r * 0.2)
+					svg += `<path d="M ${cx + indicatorSize} ${baseY} L ${cx + indicatorSize} ${baseY - indicatorSize} L ${cx} ${baseY - indicatorSize}" fill="none" stroke="black" stroke-width="1"/>`
+					svg += `<text x="${cx - 10}" y="${height / 2}" fill="black" text-anchor="end" dominant-baseline="middle">${l.text ?? shape.height}</text>`
 				}
 			}
 		}
-
-		svg += `<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="black" /></marker></defs>`
 	} else if (shape.type === "sphere") {
-		const r = shape.radius * 4
-		const ry = r * 0.3 // Ellipse perspective ratio for internal equator
+		const scale = Math.min(availableWidth / (shape.radius * 2), availableHeight / (shape.radius * 2))
+		const r = shape.radius * scale
+		const ry = r * 0.3 // Ellipse perspective ratio for equator
+
 		const cx = width / 2
 		const cy = height / 2
 
 		// Main sphere outline
-		svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(220, 220, 220, 0.5)" stroke="black" stroke-width="1.5"/>`
+		svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgba(220, 220, 220, 0.4)" stroke="black" stroke-width="2"/>`
 
-		// Internal equator for 3D effect (front solid, back dashed)
+		// Internal equator for 3D effect (dashed back, solid front)
+		svg += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 0 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4 3"/>`
 		svg += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 1 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5"/>`
-		svg += `<path d="M ${cx - r} ${cy} A ${r} ${ry} 0 0 0 ${cx + r} ${cy}" fill="none" stroke="black" stroke-width="1.5" stroke-dasharray="4 2"/>`
 
 		if (labels) {
 			for (const l of labels) {
 				if (l.target === "radius") {
-					// Draw radius line at an angle to avoid overlapping with the sphere
-					const angle = -Math.PI / 4 // 45 degrees up-right
-					const endX = cx + r * Math.cos(angle)
-					const endY = cy + r * Math.sin(angle)
-					svg += `<line x1="${cx}" y1="${cy}" x2="${endX}" y2="${endY}" stroke="black" stroke-width="1"/>`
-					// Position text outside the sphere
-					const textX = cx + (r + 20) * Math.cos(angle)
-					const textY = cy + (r + 20) * Math.sin(angle)
-					svg += `<text x="${textX}" y="${textY}" fill="black" text-anchor="middle" dominant-baseline="middle">${l.text ?? shape.radius}</text>`
+					// Dashed line from center to circumference for radius
+					svg += `<line x1="${cx}" y1="${cy}" x2="${cx + r}" y2="${cy}" stroke="black" stroke-width="1.5" stroke-dasharray="3 2"/>`
+					svg += `<text x="${cx + r / 2}" y="${cy - 10}" fill="black" text-anchor="middle">${l.text ?? shape.radius}</text>`
 				}
-				// Skip height for sphere
 			}
 		}
 	}

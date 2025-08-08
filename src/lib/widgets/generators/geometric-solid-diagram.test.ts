@@ -40,4 +40,54 @@ describe("generateGeometricSolidDiagram", () => {
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
+
+	test("should render cone with radius 2 and height 5", () => {
+		const props = {
+			type: "geometricSolidDiagram" as const,
+			width: 134,
+			height: 180,
+			shape: {
+				type: "cone" as const,
+				radius: 2,
+				height: 5
+			},
+			labels: [
+				{ target: "radius" as const, text: "2" },
+				{ target: "height" as const, text: "5" }
+			]
+		}
+		expect(generateDiagram(props)).toMatchSnapshot()
+	})
+
+	test("should render beautiful cylinder with labels", () => {
+		const props = {
+			type: "geometricSolidDiagram" as const,
+			width: 300,
+			height: 250,
+			shape: {
+				type: "cylinder" as const,
+				radius: 15,
+				height: 30
+			},
+			labels: [
+				{ target: "radius" as const, text: "15 cm" },
+				{ target: "height" as const, text: "30 cm" }
+			]
+		}
+		expect(generateDiagram(props)).toMatchSnapshot()
+	})
+
+	test("should render beautiful sphere with radius label", () => {
+		const props = {
+			type: "geometricSolidDiagram" as const,
+			width: 250,
+			height: 250,
+			shape: {
+				type: "sphere" as const,
+				radius: 12
+			},
+			labels: [{ target: "radius" as const, text: "r = 12" }]
+		}
+		expect(generateDiagram(props)).toMatchSnapshot()
+	})
 })
