@@ -10,8 +10,8 @@ export const EmojiImagePropsSchema = z
 			.number()
 			.nullable()
 			.transform((val) => val ?? 100)
-			.describe("The size of the emoji in pixels. Defaults to 100."),
-		label: z.string().nullable().describe("Optional label text to display below the emoji.")
+			.describe("The size of the emoji in pixels. Defaults to 100.")
+		// label: z.string().nullable().describe("Optional label text to display below the emoji.")
 	})
 	.strict()
 	.describe(
@@ -25,12 +25,10 @@ export type EmojiImageProps = z.infer<typeof EmojiImagePropsSchema>
  * Can be used to replace various Perseus image widgets with emoji representations.
  */
 export const generateEmojiImage: WidgetGenerator<typeof EmojiImagePropsSchema> = (data) => {
-	const { emoji, size, label } = data
+	const { emoji, size } = data
 
 	// Calculate dimensions
-	const padding = 10
-	const labelHeight = label ? 20 : 0
-	const totalHeight = size + labelHeight + (label ? padding : 0)
+	const totalHeight = size
 	const totalWidth = size
 
 	let svg = `<svg width="${totalWidth}" height="${totalHeight}" viewBox="0 0 ${totalWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg">`
@@ -40,12 +38,6 @@ export const generateEmojiImage: WidgetGenerator<typeof EmojiImagePropsSchema> =
 
 	// Render the emoji
 	svg += `<text x="${totalWidth / 2}" y="${emojiY}" font-size="${size * 0.9}" text-anchor="middle" dominant-baseline="middle">${emoji}</text>`
-
-	// Render the label if provided
-	if (label) {
-		const labelY = size + padding + 15
-		svg += `<text x="${totalWidth / 2}" y="${labelY}" font-size="14" font-family="sans-serif" text-anchor="middle" fill="black">${label}</text>`
-	}
 
 	svg += "</svg>"
 	return svg
