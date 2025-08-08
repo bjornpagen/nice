@@ -234,10 +234,46 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 			if (angle.label) {
 				let startAngle = Math.atan2(p1.y - vertex.y, p1.x - vertex.x)
 				let endAngle = Math.atan2(p2.y - vertex.y, p2.x - vertex.x)
-				if (endAngle < startAngle) endAngle += 2 * Math.PI
-				if (endAngle - startAngle > Math.PI) startAngle += 2 * Math.PI
+
+				// Ensure angles are calculated in a consistent direction
+				if (endAngle < startAngle) {
+					endAngle += 2 * Math.PI
+				}
+				if (endAngle - startAngle > Math.PI) {
+					// This handles the case of reflex angles correctly by swapping
+					const temp = startAngle
+					startAngle = endAngle
+					endAngle = temp + 2 * Math.PI
+				}
+
 				const midAngle = (startAngle + endAngle) / 2
-				const labelRadius = angle.isRightAngle ? 22 : angle.radius * 1.4
+				const angleMagnitudeRad = Math.abs(endAngle - startAngle)
+
+				// --- NEW LOGIC START ---
+				let labelRadius: number
+
+				// Use a fixed radius for right angles, otherwise calculate dynamically
+				if (angle.isRightAngle) {
+					labelRadius = 22
+				} else {
+					const baseLabelRadius = angle.radius * 1.4
+					const FONT_SIZE_ESTIMATE = 14 // Based on the SVG font-size
+					const CLEARANCE_PX = FONT_SIZE_ESTIMATE * 0.7 // Clearance needed for text
+
+					// For very small angles, sin() approaches 0, which can cause radius to be infinite.
+					// We only apply this logic if the angle is wide enough to avoid division by zero.
+					if (Math.sin(angleMagnitudeRad / 2) > 0.01) {
+						// Calculate the minimum radius needed to avoid the label touching the angle's lines
+						const minRadiusForClearance = CLEARANCE_PX / Math.sin(angleMagnitudeRad / 2)
+						// The label radius is the larger of the aesthetic default or the calculated minimum
+						labelRadius = Math.max(baseLabelRadius, minRadiusForClearance)
+					} else {
+						// Fallback for extremely small angles
+						labelRadius = baseLabelRadius
+					}
+				}
+				// --- NEW LOGIC END ---
+
 				const labelX = vertex.x + labelRadius * Math.cos(midAngle)
 				const labelY = vertex.y + labelRadius * Math.sin(midAngle)
 				svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle">${angle.label}</text>`

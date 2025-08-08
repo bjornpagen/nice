@@ -191,6 +191,51 @@ describe("generateTriangleDiagram", () => {
 		})
 	})
 
+	describe("Dynamic Angle Label Positioning", () => {
+		test("should position labels correctly for small angles (19°) without overlap", () => {
+			const props = {
+				type: "triangleDiagram" as const,
+				width: 300,
+				height: 150,
+				points: [
+					{ id: "A", x: 93.75, y: 131.25, label: null },
+					{ id: "B", x: 18.75, y: 75, label: null },
+					{ id: "C", x: 281.25, y: 18.75, label: null }
+				],
+				sides: null,
+				angles: [
+					{
+						vertices: ["B", "A", "C"],
+						label: "112°",
+						isRightAngle: false,
+						color: "rgba(217, 95, 79, 0.8)",
+						radius: 14,
+						showArc: true
+					},
+					{
+						vertices: ["A", "B", "C"],
+						label: "x",
+						isRightAngle: false,
+						color: "rgba(217, 95, 79, 0.8)",
+						radius: 14,
+						showArc: true
+					},
+					{
+						vertices: ["A", "C", "B"],
+						label: "19°",
+						isRightAngle: false,
+						color: "rgba(217, 95, 79, 0.8)",
+						radius: 14,
+						showArc: true
+					}
+				],
+				internalLines: null,
+				shadedRegions: null
+			}
+			expect(generateDiagram(props)).toMatchSnapshot()
+		})
+	})
+
 	describe("Default Values", () => {
 		test("should render with all nullable properties set to null", () => {
 			const props = {
