@@ -6,6 +6,7 @@ export const MASTERY_THRESHOLD = 0.8 // 80% accuracy for full XP
 export const PENALTY_XP = -5 // Penalty to discourage guessing
 export const MIN_SECONDS_PER_QUESTION = 5 // Minimum reasonable time per question
 
+//ploo
 /**
  * XP calculation result with detailed breakdown
  */
