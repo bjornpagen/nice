@@ -12,8 +12,7 @@ describe("generateEmojiImage", () => {
 		const props = {
 			type: "emojiImage" as const,
 			emoji: "😊",
-			size: null,
-			label: null
+			size: null
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -22,8 +21,7 @@ describe("generateEmojiImage", () => {
 		const props = {
 			type: "emojiImage" as const,
 			emoji: "🎯",
-			size: 80,
-			label: "Target"
+			size: 80
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
