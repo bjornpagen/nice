@@ -1,6 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import type * as logger from "@superbuilders/slog"
-import { XMLValidator } from "fast-xml-parser"
+import { XMLParser, XMLValidator } from "fast-xml-parser"
 import {
 	checkNoCDataSections,
 	checkNoInvalidXmlChars,
@@ -134,18 +134,56 @@ function validateInlineContent(items: InlineContent, _context: string, logger: l
 				throw errors.new("repeating decimals must use <mover> with an overline for the repeating part")
 			}
 
-			// Basic mfrac validation: exactly two child elements
-			const mfracMatches = item.mathml.match(/<mfrac[^>]*>(.*?)<\/mfrac>/gi)
-			if (mfracMatches) {
-				for (const mfrac of mfracMatches) {
-					const inner = mfrac.replace(/<\/?mfrac[^>]*>/gi, "").trim()
-					const childTags = inner.match(/<[^>]+>/g) || []
-					if (childTags.length !== 2) {
-						logger.error("mfrac has invalid number of children", { context: _context, mfrac: mfrac.substring(0, 120) })
-						throw errors.new("mfrac elements must have exactly 2 children (numerator and denominator)")
+			// Basic mfrac validation: exactly two top-level child elements (numerator and denominator)
+			// Use a real XML parse to correctly handle nested <mfrac> elements in exponents, etc.
+			const wrappedForParse = `<math xmlns="http://www.w3.org/1998/Math/MathML">${item.mathml}</math>`
+			const parseValid = XMLValidator.validate(wrappedForParse)
+			if (parseValid !== true) {
+				logger.error("malformed MathML XML", { context: _context, error: parseValid })
+				throw errors.new("invalid mathml xml")
+			}
+			const parser = new XMLParser({ ignoreAttributes: false, preserveOrder: true })
+			const parseResult = parser.parse(wrappedForParse)
+			if (!Array.isArray(parseResult)) {
+				logger.error("XML parser returned non-array result", { context: _context })
+				throw errors.new("invalid xml parse result")
+			}
+			const ast = parseResult
+
+			function countElementChildren(nodes: Array<Record<string, unknown>>): number {
+				// Count only element nodes (ignore #text and attribute nodes)
+				return nodes.filter((n) => {
+					const keys = Object.keys(n)
+					if (keys.length !== 1) return false
+					const key = keys[0]
+					return key !== "#text" && key !== ":@"
+				}).length
+			}
+
+			function walk(nodes: Array<Record<string, unknown>>): void {
+				for (const node of nodes) {
+					for (const [key, value] of Object.entries(node)) {
+						if (key === ":@" || key === "#text") continue
+						const children = Array.isArray(value) ? value : []
+						if (key.toLowerCase() === "mfrac") {
+							const childCount = countElementChildren(children)
+							if (childCount !== 2) {
+								logger.error("mfrac has invalid number of children", {
+									context: _context,
+									mfrac: wrappedForParse.substring(0, 120)
+								})
+								throw errors.new("mfrac elements must have exactly 2 children (numerator and denominator)")
+							}
+						}
+						// Recurse into children
+						if (Array.isArray(children) && children.length > 0) {
+							walk(children)
+						}
 					}
 				}
 			}
+
+			walk(ast)
 		}
 		// inlineSlot is just a reference, no validation needed
 	}
@@ -234,11 +272,62 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 		}
 	}
 
-	// Validate each response declaration has a corresponding interaction identifier
-	if (item.interactions) {
-		const interactionIds = new Set(Object.keys(item.interactions))
+	// Validate each response declaration has a corresponding interaction responseIdentifier
+	// or an embedded input within a widget (e.g., dataTable input cells)
+	if (item.responseDeclarations.length > 0) {
+		const interactionResponseIds = new Set<string>()
+		if (item.interactions) {
+			for (const interaction of Object.values(item.interactions)) {
+				interactionResponseIds.add(interaction.responseIdentifier)
+			}
+		}
+
+		const widgetEmbeddedResponseIds = new Set<string>()
+		if (item.widgets) {
+			for (const widget of Object.values(item.widgets)) {
+				// Best-effort detection for dataTable widget with input cells
+				// We avoid importing widget types here; rely on duck-typing by field presence
+				if (typeof widget === "object" && widget !== null && "type" in widget && widget.type === "dataTable") {
+					const data = typeof widget === "object" && widget !== null && "data" in widget ? widget.data : undefined
+					if (Array.isArray(data)) {
+						for (const row of data) {
+							if (Array.isArray(row)) {
+								for (const cell of row) {
+									const c = typeof cell === "object" && cell !== null ? cell : {}
+									if (
+										c &&
+										"kind" in c &&
+										c.kind === "input" &&
+										"responseIdentifier" in c &&
+										typeof c.responseIdentifier === "string"
+									) {
+										widgetEmbeddedResponseIds.add(c.responseIdentifier)
+									}
+								}
+							}
+						}
+					}
+					const footer = typeof widget === "object" && widget !== null && "footer" in widget ? widget.footer : undefined
+					if (Array.isArray(footer)) {
+						for (const cell of footer) {
+							const c = typeof cell === "object" && cell !== null ? cell : {}
+							if (
+								c &&
+								"kind" in c &&
+								c.kind === "input" &&
+								"responseIdentifier" in c &&
+								typeof c.responseIdentifier === "string"
+							) {
+								widgetEmbeddedResponseIds.add(c.responseIdentifier)
+							}
+						}
+					}
+				}
+			}
+		}
+
 		for (const decl of item.responseDeclarations) {
-			if (!interactionIds.has(decl.identifier)) {
+			if (!interactionResponseIds.has(decl.identifier) && !widgetEmbeddedResponseIds.has(decl.identifier)) {
 				logger.error("response declaration without matching interaction", { responseIdentifier: decl.identifier })
 				throw errors.new(`response declaration '${decl.identifier}' has no matching interaction`)
 			}
