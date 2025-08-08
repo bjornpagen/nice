@@ -1090,5 +1090,61 @@ describe("Modular Coordinate Plane Generators - Snapshots", () => {
 			}
 			expect(generateComprehensiveDiagram(props)).toMatchSnapshot()
 		})
+
+		test("should recreate QTI scale copy diagram with two diamond polygons", () => {
+			const props = {
+				type: "coordinatePlane" as const,
+				width: 325,
+				height: 325,
+				xAxis: {
+					label: "",
+					min: 0,
+					max: 16,
+					tickInterval: 1,
+					showGridLines: true
+				},
+				yAxis: {
+					label: "",
+					min: 0,
+					max: 10,
+					tickInterval: 1,
+					showGridLines: true
+				},
+				showQuadrantLabels: false,
+				points: [
+					// Figure 1 (smaller blue diamond) vertices
+					{ id: "M", x: 2, y: 4, label: "M", color: "#11accd", style: "closed" as const },
+					{ id: "fig1_top", x: 3, y: 5.5, label: "", color: "#11accd", style: "closed" as const },
+					{ id: "fig1_right", x: 5, y: 4, label: "", color: "#11accd", style: "closed" as const },
+					{ id: "fig1_bottom", x: 3, y: 2.5, label: "", color: "#11accd", style: "closed" as const },
+
+					// Figure 2 (larger green diamond) vertices
+					{ id: "A", x: 8, y: 7, label: "A", color: "#1fab54", style: "closed" as const },
+					{ id: "B", x: 12, y: 9, label: "B", color: "#1fab54", style: "closed" as const },
+					{ id: "C", x: 16, y: 7, label: "C", color: "#1fab54", style: "closed" as const },
+					{ id: "D", x: 12, y: 5, label: "D", color: "#1fab54", style: "closed" as const }
+				],
+				lines: null,
+				polygons: [
+					{
+						vertices: ["M", "fig1_top", "fig1_right", "fig1_bottom"],
+						isClosed: true,
+						fillColor: "rgba(17, 172, 205, 0.15)",
+						strokeColor: "#11accd",
+						label: "Figure 1"
+					},
+					{
+						vertices: ["A", "B", "C", "D"],
+						isClosed: true,
+						fillColor: "rgba(31, 171, 84, 0.15)",
+						strokeColor: "#1fab54",
+						label: "Figure 2"
+					}
+				],
+				distances: null,
+				polylines: null
+			}
+			expect(generateComprehensiveDiagram(props)).toMatchSnapshot()
+		})
 	})
 })

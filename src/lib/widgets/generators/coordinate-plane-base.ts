@@ -454,18 +454,34 @@ export function renderPolygons(
 	if (!polygons) return ""
 
 	for (const poly of polygons) {
-		const polyPointsStr = poly.vertices
+		const polyPoints = poly.vertices
 			.map((id) => {
 				const pt = pointMap.get(id)
-				return pt ? `${toSvgX(pt.x)},${toSvgY(pt.y)}` : ""
+				return pt ? { x: toSvgX(pt.x), y: toSvgY(pt.y) } : null
 			})
-			.filter(Boolean)
-			.join(" ")
+			.filter((pt): pt is { x: number; y: number } => pt !== null)
+
+		const polyPointsStr = polyPoints.map((pt) => `${pt.x},${pt.y}`).join(" ")
 
 		if (polyPointsStr) {
 			const tag = poly.isClosed ? "polygon" : "polyline"
 			const fill = poly.isClosed ? poly.fillColor : "none"
 			polygonsSvg += `<${tag} points="${polyPointsStr}" fill="${fill}" stroke="${poly.strokeColor}" stroke-width="2"/>`
+
+			// Render polygon label if provided
+			if (poly.label && polyPoints.length > 0) {
+				// Calculate the centroid of the polygon for label placement
+				const centroidX = polyPoints.reduce((sum, pt) => sum + pt.x, 0) / polyPoints.length
+
+				// Calculate the bottom-most point of the polygon
+				const bottomY = Math.max(...polyPoints.map((pt) => pt.y))
+
+				// Position label below the polygon
+				const labelX = centroidX
+				const labelY = bottomY + 20
+
+				polygonsSvg += `<text x="${labelX}" y="${labelY}" fill="${poly.strokeColor}" text-anchor="middle" font-size="14" font-weight="500">${poly.label}</text>`
+			}
 		}
 	}
 
