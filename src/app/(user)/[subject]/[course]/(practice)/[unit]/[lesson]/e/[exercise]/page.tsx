@@ -15,7 +15,7 @@ export default function ExercisePage({
 	const exercisePromise: Promise<ExercisePageData> = normalizedParamsPromise.then(fetchExercisePageData)
 
 	return (
-		<React.Suspense fallback={<div className="p-8">Loading exercise...</div>}>
+		<React.Suspense>
 			<Content exercisePromise={exercisePromise} />
 		</React.Suspense>
 	)
