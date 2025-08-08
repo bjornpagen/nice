@@ -68,6 +68,12 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
+	// ✅ ADDED: New event for undifferentiated course ingestion from DB (pass-through)
+	"qti/course.ingest.undifferentiated": {
+		data: z.object({
+			courseId: z.string().min(1)
+		})
+	},
 	// ✅ REINSTATED & MODIFIED: This is now the single entry point for QTI JSON generation.
 	"qti/course.ingest": {
 		data: z.object({
@@ -294,6 +300,10 @@ const events = {
 	},
 	// ✅ ADDED: New event to trigger the upload of all QTI content for hardcoded courses
 	"migration/hardcoded.qti.upload": {
+		data: z.object({})
+	},
+	// ✅ ADDED: New event to generate undifferentiated QTI JSON for hardcoded courses
+	"migration/hardcoded.qti.generate-undifferentiated": {
 		data: z.object({})
 	}
 }

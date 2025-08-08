@@ -5,7 +5,7 @@ import { zodResponseFormat } from "openai/helpers/zod"
 import { z } from "zod"
 import { env } from "@/env"
 import type { AssessmentItemInput } from "@/lib/qti-generation/schemas"
-import { generateZodSchemaFromObject } from "./zod-runtime-generator"
+import { generateZodSchemaFromObject } from "@/lib/qti-generation/structured/zod-runtime-generator"
 
 const OPENAI_MODEL = "gpt-5"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
@@ -20,10 +20,12 @@ function createDifferentiatedItemsPrompt(
 1.  **IDENTICAL JSON STRUCTURE:** This is the most important rule. The JSON structure of every generated question MUST PERFECTLY match the structure of the original item. You are forbidden from adding, removing, renaming, or nesting any keys. The response must validate against the provided schema, which mirrors the original item's structure.
 2.  **MAINTAIN DIFFICULTY:** All generated questions MUST be at the exact same difficulty level and target the same grade level as the original. Do not simplify or complicate the questions.
 3.  **PRESERVE PEDAGOGICAL INTENT:** The core academic skill or concept being tested must remain unchanged. You can change numbers, scenarios, names, or wording, but the fundamental learning objective must be identical.
-4.  **VALID MATHML:** All mathematical content MUST be valid MathML. Preserve the original MathML structure as much as possible, only changing numerical values or variables as needed for differentiation.
+    4.  **VALID MATHML:** All mathematical content MUST be valid MathML. Preserve the original MathML structure as much as possible, only changing numerical values or variables as needed for differentiation. Avoid deprecated elements like <mfenced>.
 5.  **PRESERVE "type" FIELDS:** The "type" field within widget and interaction objects (e.g., "doubleNumberLine", "choiceInteraction") MUST NOT be changed.
 6.  **HTML ENTITY RESTRICTIONS:** You MUST NOT use HTML named entities like &nbsp;, &mdash;, &hellip;, etc. Instead, use actual Unicode characters directly. The ONLY acceptable entity references are: &lt; &gt; &amp; &quot; &apos;. For spacing, use regular spaces, not &nbsp;.
-7.  **FINAL OUTPUT FORMAT:** Your entire response must be a single JSON object containing one key, "differentiated_items", which holds an array of the newly generated assessment item objects.`
+    7.  **NO CDATA SECTIONS**: Never use <![CDATA[...]]> anywhere in any string fields.
+    8.  **NO PERSEUS ARTIFACTS**: Never include Perseus widget artifacts like [[☃ widget-name 1]] in any text.
+    9.  **FINAL OUTPUT FORMAT:** Your entire response must be a single JSON object containing one key, "differentiated_items", which holds an array of the newly generated assessment item objects.`
 
 	const userContent = `Please differentiate the following assessment item JSON into exactly ${n} new, unique variations.
 
@@ -36,7 +38,8 @@ ${assessmentItemJson}
 1.  Generate exactly ${n} new assessment item objects.
 2.  Each new object must be a unique variation of the original but test the identical concept at the same difficulty.
 3.  For EACH new item, the JSON structure, including all keys and nesting, MUST perfectly mirror the original item provided above.
-4.  CRITICAL: Do NOT use HTML named entities like &nbsp;, &mdash;, &hellip;. Use regular spaces and Unicode characters directly. Only use &lt; &gt; &amp; &quot; &apos; when absolutely necessary for XML syntax.
+  4.  CRITICAL: Do NOT use HTML named entities like &nbsp;, &mdash;, &hellip;. Use regular spaces and Unicode characters directly. Only use &lt; &gt; &amp; &quot; &apos; when absolutely necessary for XML syntax.
+  6.  Do NOT use <![CDATA[...]]> or include any Perseus artifacts like [[☃ widget-name 1]].
 5.  Place all ${n} generated items into a JSON array, and return it within a parent object under the key "differentiated_items".`
 
 	return { systemInstruction, userContent }

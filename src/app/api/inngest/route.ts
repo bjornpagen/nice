@@ -32,12 +32,14 @@ import { orchestrateHardcodedQtiGenerationForItemsAndTests } from "@/inngest/fun
 import { orchestrateHardcodedQtiGenerationForStimuli } from "@/inngest/functions/orchestrate-hardcoded-qti-generation-for-stimuli"
 import { orchestrateHardcodedQtiUpload } from "@/inngest/functions/orchestrate-hardcoded-qti-upload"
 import { orchestrateHardcodedStimulusMigration } from "@/inngest/functions/orchestrate-hardcoded-stimulus-migration"
+import { orchestrateHardcodedUndifferentiatedQtiGeneration } from "@/inngest/functions/orchestrate-hardcoded-undifferentiated-qti-generation"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
+import { ingestUndifferentiatedCourseFromDb } from "@/inngest/functions/qti/ingest-undifferentiated-course-from-db"
 import { orchestrateCourseDifferentiatedIngestion } from "@/inngest/functions/qti/orchestrate-course-differentiated-ingestion"
 // ✅ ADD: Import the new paraphrase function
 import { paraphraseStimulus } from "@/inngest/functions/qti/paraphrase-stimulus"
@@ -68,6 +70,7 @@ export const { GET, POST, PUT } = serve({
 		orchestrateHardcodedQtiGenerationForItemsAndTests,
 		orchestrateHardcodedQtiGenerationForStimuli,
 		orchestrateHardcodedQtiUpload,
+		orchestrateHardcodedUndifferentiatedQtiGeneration,
 		// ✅ REMOVED: Old differentiated ingest is no longer registered.
 		// differentiatedIngest,
 		// OneRoster Functions
@@ -92,6 +95,7 @@ export const { GET, POST, PUT } = serve({
 		// ✅ ADD: Register the new validation function
 		validateAndClearInvalidQuestionXml,
 		// ✅ ADD: Register the new paraphrase function
-		paraphraseStimulus
+		paraphraseStimulus,
+		ingestUndifferentiatedCourseFromDb
 	]
 })

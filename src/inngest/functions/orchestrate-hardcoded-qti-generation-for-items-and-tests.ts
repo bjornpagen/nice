@@ -2,10 +2,13 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { and, eq, inArray } from "drizzle-orm"
+import { z } from "zod"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
+import { qti } from "@/lib/clients"
+import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 
 const HARDCODED_COURSE_IDS = [
@@ -15,6 +18,13 @@ const HARDCODED_COURSE_IDS = [
 ]
 
 const DIFFERENTIATION_COUNT = 3
+
+// Schema for the expected assessment item format
+const AssessmentItemSchema = z.object({
+	xml: z.string(),
+	metadata: QtiItemMetadataSchema
+})
+type AssessmentItem = z.infer<typeof AssessmentItemSchema>
 
 export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createFunction(
 	{
@@ -33,7 +43,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 			columns: { id: true, slug: true }
 		})
 
-		await Promise.all(
+		const skippedCountsPerCourse = await Promise.all(
 			courses.map(async (course) => {
 				const courseId = course.id
 				logger.info("processing course for item and test generation", { courseId })
@@ -44,7 +54,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 				})
 				if (units.length === 0) {
 					logger.info("no units found for course, skipping", { courseId })
-					return
+					return 0
 				}
 				const unitIds = units.map((u) => u.id)
 
@@ -58,7 +68,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 
 				if (questions.length === 0) {
 					logger.info("no questions found for course, skipping", { courseId })
-					return
+					return 0
 				}
 
 				const differentiationPromises = questions.map((q) =>
@@ -88,7 +98,40 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 					})
 				}
 
-				const assessmentItems = successfulResults.flatMap((result) => result.value).filter(Boolean)
+				const allGeneratedItems = successfulResults.flatMap((result) => result.value).filter(Boolean)
+
+				// Parse and validate generated items structure
+				const parsedItems: AssessmentItem[] = []
+				for (const item of allGeneratedItems) {
+					const parseResult = AssessmentItemSchema.safeParse(item)
+					if (parseResult.success) {
+						parsedItems.push(parseResult.data)
+					} else {
+						logger.warn("item has invalid schema", {
+							error: parseResult.error.issues,
+							item: JSON.stringify(item).substring(0, 200) // Log first 200 chars for debugging
+						})
+					}
+				}
+
+				// Validate generated items via QTI API and skip invalid ones
+				const validateResults = await Promise.all(
+					parsedItems.map((item) => qti.validateXml({ schema: "item", xml: item.xml }))
+				)
+				const assessmentItems = parsedItems.filter((_, i) => validateResults[i]?.success === true)
+				const skippedItemsCount = allGeneratedItems.length - assessmentItems.length
+
+				// Log validation failures
+				for (let i = 0; i < validateResults.length; i++) {
+					const res = validateResults[i]
+					if (!res?.success) {
+						const item = parsedItems[i]
+						logger.warn("skipping invalid differentiated qti item", {
+							questionId: item?.metadata.khanId,
+							errors: res?.validationErrors
+						})
+					}
+				}
 
 				const courseDir = path.join(process.cwd(), "data", course.slug, "qti")
 				const mkdirResult = await errors.try(fs.mkdir(courseDir, { recursive: true }))
@@ -111,7 +154,8 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 					courseId,
 					successfulSources: successfulResults.length,
 					totalSources: questions.length,
-					itemsGenerated: assessmentItems.length
+					itemsGenerated: assessmentItems.length,
+					skippedItems: skippedItemsCount
 				})
 
 				// --- Test generation ---
@@ -318,10 +362,16 @@ ${sectionsXml}
 					courseId,
 					tests: assessmentTests.length
 				})
+				return skippedItemsCount
 			})
 		)
 
-		logger.info("completed hardcoded qti item and test generation for all courses")
-		return { status: "complete", courseCount: HARDCODED_COURSE_IDS.length }
+		const overallSkipped = skippedCountsPerCourse.reduce((sum, n) => sum + n, 0)
+
+		logger.info("completed hardcoded qti item and test generation for all courses", {
+			courses: HARDCODED_COURSE_IDS.length,
+			skippedItems: overallSkipped
+		})
+		return { status: "complete", courseCount: HARDCODED_COURSE_IDS.length, skippedItems: overallSkipped }
 	}
 )

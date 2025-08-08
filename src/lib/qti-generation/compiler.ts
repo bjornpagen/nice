@@ -127,9 +127,7 @@ function isValidWidgetType(type: string): type is keyof typeof typedSchemas {
 }
 
 export function compile(itemData: AssessmentItemInput): string {
-	// Step 0: Prevalidation to catch QTI content model violations early
-	validateAssessmentItemInput(itemData, logger)
-
+	// Step 0: Build widget mapping prior to schema enforcement
 	const widgetMapping: Record<string, string> = {}
 	if (itemData.widgets) {
 		for (const [key, value] of Object.entries(itemData.widgets)) {
@@ -156,6 +154,9 @@ export function compile(itemData: AssessmentItemInput): string {
 		throw errors.wrap(itemResult.error, "schema enforcement")
 	}
 	const enforcedItem = itemResult.data
+
+	// Step 1: Prevalidation on schema-enforced data to catch QTI content model violations
+	validateAssessmentItemInput(enforcedItem, logger)
 
 	// Normalize choice identifiers now that we have strong types
 	normalizeChoiceIdentifiersInPlace(enforcedItem)

@@ -1,6 +1,12 @@
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 
+function formatJsonPath(path: Array<string | number>): string {
+	if (path.length === 0) return ""
+	const segments = path.map((seg) => String(seg))
+	return `/${segments.join("/")}`
+}
+
 /**
  * Recursively generates a Zod schema from a JavaScript object or value at runtime.
  *
@@ -16,7 +22,8 @@ import { z } from "zod"
 export function generateZodSchemaFromObject(
 	obj: unknown,
 	visited = new Map<object, z.ZodTypeAny>(),
-	processing = new Set<object>()
+	processing = new Set<object>(),
+	path: Array<string | number> = []
 ): z.ZodTypeAny {
 	if (obj === null) {
 		return z.null()
@@ -63,11 +70,14 @@ export function generateZodSchemaFromObject(
 			if (Array.isArray(obj)) {
 				if (obj.length === 0) {
 					// CRITICAL: Cannot infer type from empty array - FAIL FAST
-					throw errors.new("zod schema generation: cannot infer type from empty array")
+					const where = path.length ? ` at ${formatJsonPath(path)}` : ""
+					throw errors.new(`zod schema generation: cannot infer type from empty array${where}`)
 				}
 
 				// FIX: Handle heterogeneous arrays by creating a union of all possible element types.
-				const elementTypes = obj.map((element) => generateZodSchemaFromObject(element, visited, processing))
+				const elementTypes = obj.map((element, idx) =>
+					generateZodSchemaFromObject(element, visited, processing, [...path, idx])
+				)
 				const uniqueElementSchemas = Array.from(
 					// Use a reliable property like JSON stringified description for the uniqueness key
 					new Map(elementTypes.map((schema) => [JSON.stringify(schema.description), schema])).values()
@@ -108,7 +118,7 @@ export function generateZodSchemaFromObject(
 			// Use Object.entries to safely iterate over the object
 			const entries = Object.entries(obj)
 			for (const [key, value] of entries) {
-				shape[key] = generateZodSchemaFromObject(value, visited, processing)
+				shape[key] = generateZodSchemaFromObject(value, visited, processing, [...path, key])
 			}
 
 			// Create a strict object schema to disallow any extra properties.

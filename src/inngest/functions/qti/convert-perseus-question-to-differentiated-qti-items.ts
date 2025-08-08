@@ -8,6 +8,8 @@ import { compile } from "@/lib/qti-generation/compiler"
 import type { AssessmentItemInput } from "@/lib/qti-generation/schemas"
 // No longer generating from Perseus in this pipeline
 import { differentiateAssessmentItem } from "@/lib/qti-generation/structured/differentiator"
+import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
+import { runValidationPipeline } from "@/lib/qti-validation"
 
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null
@@ -112,6 +114,20 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 				identifier: qtiIdentifier
 			}
 
+			// Step 4.1: JSON-level validation and sanitization
+			logger.debug("sanitizing differentiated json", { questionId, itemIndex: i + 1, identifier: qtiIdentifier })
+			const sanitizedItemResult = errors.trySync(() => validateAndSanitizeHtmlFields(itemWithNewIdentifier, logger))
+			if (sanitizedItemResult.error) {
+				logger.warn("failed to sanitize/validate differentiated item json, skipping this variation", {
+					questionId,
+					itemIndex: i + 1,
+					identifier: qtiIdentifier,
+					error: sanitizedItemResult.error
+				})
+				continue
+			}
+			const sanitizedItem = sanitizedItemResult.data
+
 			logger.debug("compiling item to xml", {
 				questionId,
 				itemIndex: i + 1,
@@ -119,7 +135,7 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 				newIdentifier: qtiIdentifier
 			})
 
-			const compileResult = errors.trySync(() => compile(itemWithNewIdentifier))
+			const compileResult = errors.trySync(() => compile(sanitizedItem))
 			if (compileResult.error) {
 				// Make resilient: log and continue to next variation instead of throwing
 				logger.error("failed to compile a single differentiated item to xml, skipping this variation", {
@@ -130,10 +146,33 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 				})
 				continue
 			}
+			const compiledXml = compileResult.data
+
+			// Step 4.2: Full XML validation pipeline
+			logger.debug("validating compiled differentiated xml", {
+				questionId,
+				itemIndex: i + 1,
+				identifier: qtiIdentifier
+			})
+			const validation = await runValidationPipeline(compiledXml, {
+				id: qtiIdentifier,
+				rootTag: "qti-assessment-item",
+				title: sanitizedItem.title,
+				logger
+			})
+			if (!validation.isValid) {
+				logger.warn("compiled differentiated item failed xml validation, skipping this variation", {
+					questionId,
+					itemIndex: i + 1,
+					identifier: qtiIdentifier,
+					errors: validation.errors.map((e) => e.message)
+				})
+				continue
+			}
 
 			// Create the output item in the same format as assessmentItems.json
 			const outputItem = {
-				xml: compileResult.data,
+				xml: validation.xml,
 				metadata: {
 					khanId: questionId,
 					khanExerciseId: question.exerciseId,
@@ -148,7 +187,7 @@ export const convertPerseusQuestionToDifferentiatedQtiItems = inngest.createFunc
 				questionId,
 				itemIndex: i + 1,
 				identifier: qtiIdentifier,
-				xmlLength: compileResult.data.length
+				xmlLength: validation.xml.length
 			})
 		}
 

@@ -2,12 +2,22 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { and, eq, inArray } from "drizzle-orm"
+import { z } from "zod"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 import { paraphraseStimulus } from "@/inngest/functions/qti/paraphrase-stimulus"
+import { qti } from "@/lib/clients"
+import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
+
+// Schema for the expected assessment item format
+const AssessmentItemSchema = z.object({
+	xml: z.string(),
+	metadata: QtiItemMetadataSchema
+})
+type AssessmentItem = z.infer<typeof AssessmentItemSchema>
 
 export const orchestrateCourseDifferentiatedIngestion = inngest.createFunction(
 	{
@@ -112,7 +122,38 @@ export const orchestrateCourseDifferentiatedIngestion = inngest.createFunction(
 			})
 		)
 		const differentiatedResults = await Promise.all(differentiationPromises)
-		const assessmentItems = differentiatedResults.flat().filter(Boolean)
+		const allGeneratedItems = differentiatedResults.flat().filter(Boolean)
+
+		// Parse and validate generated items structure
+		const parsedItems: AssessmentItem[] = []
+		for (const item of allGeneratedItems) {
+			const parseResult = AssessmentItemSchema.safeParse(item)
+			if (parseResult.success) {
+				parsedItems.push(parseResult.data)
+			} else {
+				logger.warn("item has invalid schema", {
+					error: parseResult.error.issues,
+					item: JSON.stringify(item).substring(0, 200)
+				})
+			}
+		}
+
+		// Validate generated differentiated items via QTI API and skip invalid ones
+		const validateResults = await Promise.all(
+			parsedItems.map((item) => qti.validateXml({ schema: "item", xml: item.xml }))
+		)
+		const assessmentItems = parsedItems.filter((_, i) => validateResults[i]?.success === true)
+		const skippedItemsCount = allGeneratedItems.length - assessmentItems.length
+		for (let i = 0; i < validateResults.length; i++) {
+			const res = validateResults[i]
+			if (!res?.success) {
+				const item = parsedItems[i]
+				logger.warn("skipping invalid differentiated qti item", {
+					questionId: item?.metadata.khanId,
+					errors: res?.validationErrors
+				})
+			}
+		}
 		logger.info("completed all question differentiations", {
 			originalCount: allQuestions.length,
 			generatedCount: assessmentItems.length
@@ -416,14 +457,16 @@ ${sectionsXml}
 			stats: {
 				items: assessmentItems.length,
 				stimuli: assessmentStimuli.length,
-				tests: assessmentTests.length
+				tests: assessmentTests.length,
+				skippedItems: skippedItemsCount
 			}
 		})
 
 		return {
 			message: "Differentiated QTI JSON dump workflow completed successfully.",
 			courseId,
-			outputDir
+			outputDir,
+			skippedItems: skippedItemsCount
 		}
 	}
 )

@@ -60,6 +60,10 @@ function validateMathMLWellFormed(mathml: string, context: string, logger: logge
 }
 
 function validateInlineContent(items: InlineContent, _context: string, logger: logger.Logger): void {
+	if (!Array.isArray(items)) {
+		logger.error("inline content is not an array", { context: _context })
+		throw errors.new(`${_context} must be an array of inline items`)
+	}
 	for (const item of items) {
 		if (item.type === "text") {
 			// Ensure PCDATA-safe content (ban control chars etc.)
@@ -148,6 +152,10 @@ function validateInlineContent(items: InlineContent, _context: string, logger: l
 }
 
 function validateBlockContent(items: BlockContent, _context: string, logger: logger.Logger): void {
+	if (!Array.isArray(items)) {
+		logger.error("block content is not an array", { context: _context })
+		throw errors.new(`${_context} must be an array of block items`)
+	}
 	for (const item of items) {
 		if (item.type === "paragraph") {
 			validateInlineContent(item.content, `${_context}.paragraph`, logger)
@@ -166,7 +174,21 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 		throw errors.new("assessment item must declare at least one response for scoring")
 	}
 
-	if (item.body) validateBlockContent(item.body, "item.body", logger)
+	if (item.body !== null) {
+		if (!Array.isArray(item.body)) {
+			logger.error("item body is not an array", { identifier: item.identifier })
+			throw errors.new("item.body must be null or an array of block items")
+		}
+		validateBlockContent(item.body, "item.body", logger)
+	}
+	if (!Array.isArray(item.feedback?.correct)) {
+		logger.error("feedback.correct is not an array", { identifier: item.identifier })
+		throw errors.new("item.feedback.correct must be an array of block items")
+	}
+	if (!Array.isArray(item.feedback?.incorrect)) {
+		logger.error("feedback.incorrect is not an array", { identifier: item.identifier })
+		throw errors.new("item.feedback.incorrect must be an array of block items")
+	}
 	validateBlockContent(item.feedback.correct, "item.feedback.correct", logger)
 	validateBlockContent(item.feedback.incorrect, "item.feedback.incorrect", logger)
 
@@ -178,6 +200,10 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 
 			// Type narrowing based on interaction type
 			if (interaction.type === "inlineChoiceInteraction" && interaction.choices) {
+				if (!Array.isArray(interaction.choices)) {
+					logger.error("inlineChoiceInteraction.choices is not an array", { interactionKey: key })
+					throw errors.new(`interaction[${key}].choices must be an array`)
+				}
 				// Now TypeScript knows this is an inlineChoiceInteraction
 				for (const choice of interaction.choices) {
 					validateInlineContent(choice.content, `interaction[${key}].choice[${choice.identifier}]`, logger)
@@ -186,6 +212,10 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 				(interaction.type === "choiceInteraction" || interaction.type === "orderInteraction") &&
 				interaction.choices
 			) {
+				if (!Array.isArray(interaction.choices)) {
+					logger.error("choice/order interaction choices is not an array", { interactionKey: key })
+					throw errors.new(`interaction[${key}].choices must be an array`)
+				}
 				// Runtime validation for minimum number of choices
 				if (interaction.choices.length < 2) {
 					throw errors.new(

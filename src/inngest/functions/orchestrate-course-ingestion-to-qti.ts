@@ -2,10 +2,20 @@ import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { and, eq, inArray } from "drizzle-orm"
+import { z } from "zod"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
+import { qti } from "@/lib/clients"
+import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
+
+// Schema for the expected assessment item format
+const AssessmentItemSchema = z.object({
+	xml: z.string(),
+	metadata: QtiItemMetadataSchema
+})
+type AssessmentItem = z.infer<typeof AssessmentItemSchema>
 
 export const orchestrateCourseIngestionToQti = inngest.createFunction(
 	{
@@ -213,7 +223,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		}
 
 		// Step 3: Assemble the JSON payloads from the fetched data.
-		const items = allQuestions.map((q) => {
+		const itemsUnvalidated: AssessmentItem[] = allQuestions.map((q) => {
 			// TypeScript can't infer that validation happened above, so we need to check
 			if (!q.xml) {
 				throw errors.new("unreachable: question should have been validated for XML")
@@ -230,6 +240,23 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 			}
 		})
 
+		// Validate all items via QTI API and skip invalid ones
+		const validationResults = await Promise.all(
+			itemsUnvalidated.map((item) => qti.validateXml({ schema: "item", xml: item.xml }))
+		)
+		const items = itemsUnvalidated.filter((_, i) => validationResults[i]?.success === true)
+		const skippedItemsCount = itemsUnvalidated.length - items.length
+		for (let i = 0; i < validationResults.length; i++) {
+			const res = validationResults[i]
+			if (!res?.success) {
+				const item = itemsUnvalidated[i]
+				logger.warn("skipping invalid qti item", {
+					questionId: item?.metadata.khanId,
+					errors: res?.validationErrors
+				})
+			}
+		}
+
 		const stimuli = articlesWithXml.map((a) => {
 			// All articles now have XML (either original or default)
 			if (!a.xml) {
@@ -245,6 +272,8 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 				}
 			}
 		})
+
+		const validOriginalQuestionIds = new Set(items.map((it) => String(it.metadata.khanId)))
 
 		const buildTestObject = (
 			id: string,
@@ -320,7 +349,9 @@ ${sectionsXml}
 			}
 
 			// Map question IDs to full question objects with exercise information
-			const allQuestionsForTest = questionIds.map((id) => {
+			// Filter out invalid questions by original question id
+			const filteredIds = questionIds.filter((id) => validOriginalQuestionIds.has(String(id)))
+			const allQuestionsForTest = filteredIds.map((id) => {
 				const question = allQuestions.find((q) => q.id === id)
 				if (!question) {
 					logger.error("Question not found when building test", { questionId: id, assessmentId })
@@ -344,7 +375,9 @@ ${sectionsXml}
 
 		const exerciseTests = allExercises.map((exercise) => {
 			// Get questions for this exercise (may be empty)
-			const questionIds = questionsByExerciseId.get(exercise.id) || []
+			const questionIds = (questionsByExerciseId.get(exercise.id) || []).filter((id) =>
+				validOriginalQuestionIds.has(String(id))
+			)
 
 			if (questionIds.length === 0) {
 				logger.info("Creating empty test for exercise without questions", {
@@ -410,14 +443,16 @@ ${sectionsXml}
 			stats: {
 				items: assessmentItems.length,
 				stimuli: assessmentStimuli.length,
-				tests: assessmentTests.length
+				tests: assessmentTests.length,
+				skippedItems: skippedItemsCount
 			}
 		})
 
 		return {
 			message: "QTI JSON dump workflow completed successfully.",
 			courseId,
-			outputDir
+			outputDir,
+			skippedItems: skippedItemsCount
 		}
 	}
 )
