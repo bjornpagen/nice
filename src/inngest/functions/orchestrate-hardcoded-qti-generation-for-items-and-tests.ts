@@ -1,3 +1,5 @@
+import * as fs from "node:fs/promises"
+import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
@@ -5,7 +7,6 @@ import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { differentiateAndSaveQuestionBatch } from "@/inngest/functions/qti/differentiate-and-save-question-batch"
 
-// ... (Constants remain the same)
 const HARDCODED_COURSE_IDS = [
 	"x0267d782", // 6th grade math (Common Core)
 	"x6b17ba59", // 7th grade math (Common Core)
@@ -13,7 +14,7 @@ const HARDCODED_COURSE_IDS = [
 ]
 
 const DIFFERENTIATION_COUNT = 3
-const QUESTION_BATCH_SIZE = 20 // ✅ ADD: Batch size for grouping questions.
+const QUESTION_BATCH_SIZE = 20 // Batch size for grouping questions.
 
 export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createFunction(
 	{
@@ -27,7 +28,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 			variationsPerItem: DIFFERENTIATION_COUNT
 		})
 
-		// ... (DB query to fetch courses is unchanged) ...
+		// Fetch the courses to process
 		const coursesResult = await errors.try(
 			db.query.niceCourses.findMany({
 				where: inArray(schema.niceCourses.id, HARDCODED_COURSE_IDS),
@@ -44,7 +45,7 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 			const courseId = course.id
 			logger.info("dispatching differentiation jobs for course", { courseId, courseSlug: course.slug })
 
-			// ... (DB query to fetch all question IDs for the course remains the same) ...
+			// Fetch all units for the course
 			const unitsResult = await errors.try(
 				db.query.niceUnits.findMany({
 					where: eq(schema.niceUnits.courseId, course.id),
@@ -89,16 +90,54 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 
 			const questionIds = questions.map((q) => q.id)
 
-			// 1. ✅ MODIFIED: Chunk all question IDs into batches of the desired size.
+			// Chunk all question IDs into batches of the desired size.
 			const questionIdBatches: string[][] = []
 			for (let i = 0; i < questionIds.length; i += QUESTION_BATCH_SIZE) {
 				questionIdBatches.push(questionIds.slice(i, i + QUESTION_BATCH_SIZE))
 			}
 
-			// 2. ✅ MODIFIED: Use step.invoke to call differentiation function for each batch
-			// Run all batches in parallel for better performance
-			const batchPromises = questionIdBatches.map((batchIds, index) =>
-				step.invoke(`differentiate-batch-${course.slug}-${index}`, {
+			// Check for existing chunks on disk to enable idempotency.
+			const chunksDir = path.join(process.cwd(), "data", course.slug, "qti", "items_chunks")
+			// Ensure the directory exists before attempting to read from it. This is safe to run even if it exists.
+			await fs.mkdir(chunksDir, { recursive: true })
+
+			const existingChunksResult = await errors.try(fs.readdir(chunksDir))
+			if (existingChunksResult.error) {
+				logger.error("failed to read existing chunks directory", { dir: chunksDir, error: existingChunksResult.error })
+				throw errors.wrap(existingChunksResult.error, "read chunks directory")
+			}
+			const existingChunkFiles = new Set(existingChunksResult.data)
+
+			logger.info("checking for existing batch chunks to determine resumability", {
+				courseSlug: course.slug,
+				foundCount: existingChunkFiles.size
+			})
+
+			// Filter the batches to only include those that are missing on disk.
+			const missingBatches = questionIdBatches.filter((batchIds) => {
+				// Defensively handle empty batches, though this shouldn't happen with the current logic.
+				if (batchIds.length === 0) return false
+				const expectedFilename = `chunk_${batchIds[0]}.json`
+				return !existingChunkFiles.has(expectedFilename)
+			})
+
+			if (missingBatches.length < questionIdBatches.length) {
+				logger.info("some batches already complete, skipping them", {
+					totalBatches: questionIdBatches.length,
+					completedBatches: questionIdBatches.length - missingBatches.length,
+					batchesToProcess: missingBatches.length
+				})
+			}
+
+			if (missingBatches.length === 0) {
+				logger.info("all batches for course already completed, skipping dispatch", { courseId })
+				continue // Proceed to the next course.
+			}
+
+			// Use the `missingBatches` array to create promises.
+			const batchPromises = missingBatches.map((batchIds) =>
+				step.invoke(`differentiate-batch-${course.slug}-${batchIds[0]}`, {
+					// Use a more stable ID
 					function: differentiateAndSaveQuestionBatch,
 					data: {
 						questionIds: batchIds,
@@ -113,13 +152,12 @@ export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createF
 
 			logger.info("completed all differentiation batches for course", {
 				courseId,
-				totalQuestions: questions.length,
-				batchCount: questionIdBatches.length,
+				totalDispatchedBatches: missingBatches.length,
 				results: batchResults
 			})
 		}
 
-		// 3. ✅ MODIFIED: Trigger the assembly step after all differentiation is complete.
+		// Trigger the assembly step after all differentiation is complete.
 		// Since we used step.invoke, we know all batches have completed at this point.
 		await step.run("trigger-assembly-for-all-courses", async () => {
 			await inngest.send({
