@@ -14,14 +14,14 @@ const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
  * A unique, safe prefix for keys created from array indices to prevent
  * collision with legitimate object keys that are numeric strings.
  */
-// Use an aggressively namespaced, obscure prefix to avoid accidental collisions with user data keys
-const ARRAY_KEY_PREFIX = "__sb_structured_array_index__v1__"
+// Balanced: short, namespaced, unlikely to clash but readable
+const ARRAY_KEY_PREFIX = "__sb_idx__"
 /**
  * Sentinel key used to represent an empty array in object form.
  * Prevents ambiguity between a truly empty object and an empty array
  * after transformation.
  */
-const ARRAY_EMPTY_SENTINEL = "__sb_structured_array_empty__v1__"
+const ARRAY_EMPTY_SENTINEL = "__sb_empty_array__"
 
 /**
  * Recursively transforms arrays into objects using a safe, prefixed key.
@@ -64,15 +64,15 @@ function transformObjectsToArrays(data: unknown): unknown {
 		const obj = data as any
 		const keys = Object.keys(obj)
 
+		// Special-case: our sentinel encodes an empty array
+		if (keys.length === 1 && keys[0] === ARRAY_EMPTY_SENTINEL && obj[ARRAY_EMPTY_SENTINEL] === true) {
+			return []
+		}
+
 		// An object is only considered array-like if ALL its keys have our prefix.
 		const isArrayLike = keys.length > 0 && keys.every((k) => k.startsWith(ARRAY_KEY_PREFIX))
 
 		if (isArrayLike) {
-			// Special-case: our sentinel encodes an empty array
-			if (keys.length === 1 && keys[0] === ARRAY_EMPTY_SENTINEL && obj[ARRAY_EMPTY_SENTINEL] === true) {
-				return []
-			}
-
 			const newArr: unknown[] = []
 			// Sort keys numerically to guarantee correct array order.
 			const sortedKeys = keys.sort(
