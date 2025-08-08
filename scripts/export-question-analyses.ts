@@ -10,6 +10,7 @@ interface QuestionAnalysisExport {
 	analysisNotes: string
 	severity: "major" | "minor" | "patch" | null
 	perseusData: unknown
+	structuredJson: unknown | null
 	xmlData: string | null
 }
 
@@ -24,6 +25,7 @@ async function main(): Promise<void> {
 				analysisNotes: niceQuestionsAnalysis.analysisNotes,
 				severity: niceQuestionsAnalysis.severity,
 				perseusData: niceQuestions.parsedData,
+				structuredJson: niceQuestions.structuredJson,
 				xmlData: niceQuestions.xml
 			})
 			.from(niceQuestionsAnalysis)
