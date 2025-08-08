@@ -4,8 +4,8 @@ import * as errors from "@superbuilders/errors"
 import { Check } from "lucide-react"
 import * as React from "react"
 import { toast } from "sonner"
-import type { QuestionSummaryData } from "@/app/debug/questions/actions"
-import { getQuestionDetails, upsertQuestionAnalysis, validateQuestionXml } from "@/app/debug/questions/server-actions"
+import type { QuestionDebugData } from "@/app/debug/questions/actions"
+import { upsertQuestionAnalysis, validateQuestionXml } from "@/app/debug/questions/server-actions"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
@@ -13,7 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
 
 interface ContentProps {
-	questionsPromise: Promise<QuestionSummaryData[]>
+	questionsPromise: Promise<QuestionDebugData[]>
 }
 
 export function Content({ questionsPromise }: ContentProps) {
@@ -21,7 +21,7 @@ export function Content({ questionsPromise }: ContentProps) {
 	const [dialogOpen, setDialogOpen] = React.useState(false)
 	const [analysisNotes, setAnalysisNotes] = React.useState("")
 	const [severity, setSeverity] = React.useState<"major" | "minor" | "patch">("minor")
-	const [localQuestions, setLocalQuestions] = React.useState<QuestionSummaryData[] | undefined>(undefined)
+	const [localQuestions, setLocalQuestions] = React.useState<QuestionDebugData[] | undefined>(undefined)
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
 	const [isValidating, setIsValidating] = React.useState(false)
 
@@ -35,22 +35,7 @@ export function Content({ questionsPromise }: ContentProps) {
 		setLocalQuestions(resolvedQuestions)
 	}, [resolvedQuestions])
 
-	// lazily load heavy details (xml, parsedData) on demand
-	const [detailsById, setDetailsById] = React.useState<Record<string, { xml: string; parsedData: unknown }>>({})
-
-	// prefetch current and next to keep navigation smooth
-	React.useEffect(() => {
-		if (!localQuestions || localQuestions.length === 0) return
-		const load = async (id: string) => {
-			if (detailsById[id]) return
-			const d = await getQuestionDetails(id)
-			setDetailsById((prev) => ({ ...prev, [id]: { xml: d.xml, parsedData: d.parsedData } }))
-		}
-		const cur = localQuestions[currentIndex]
-		if (cur) void load(cur.id)
-		const nxt = localQuestions[currentIndex + 1]
-		if (nxt && !detailsById[nxt.id]) void load(nxt.id)
-	}, [localQuestions, currentIndex, detailsById])
+	// full data present; no lazy details
 
 	// keyboard navigation for TAB/SHIFT+TAB
 	React.useEffect(() => {
@@ -111,7 +96,7 @@ export function Content({ questionsPromise }: ContentProps) {
 		return <div>question not found</div>
 	}
 
-	const currentDetails = detailsById[currentQuestion.id]
+	// no details map when full data is present
 
 	const formatIndex = (index: number) => `[${String(index).padStart(4, "0")}]`
 
@@ -182,16 +167,15 @@ export function Content({ questionsPromise }: ContentProps) {
 	}
 
 	const handleValidateXml = async () => {
-		const detail = detailsById[currentQuestion.id]
-		if (!detail) {
-			toast.error("details not loaded")
+		if (!currentQuestion.xml) {
+			toast.error("no xml to validate")
 			return
 		}
 
 		setIsValidating(true)
 		toast.info("validating xml...")
 
-		const result = await errors.try(validateQuestionXml(detail.xml))
+		const result = await errors.try(validateQuestionXml(currentQuestion.xml))
 
 		setIsValidating(false)
 
@@ -222,7 +206,7 @@ export function Content({ questionsPromise }: ContentProps) {
 		}
 	}
 
-	const getQuestionBackgroundColor = (question: QuestionSummaryData) => {
+	const getQuestionBackgroundColor = (question: QuestionDebugData) => {
 		// successful (empty notes) = green
 		if (question.analysisNotes === "") return "#e8f5e8"
 
@@ -245,6 +229,7 @@ export function Content({ questionsPromise }: ContentProps) {
 					{localQuestions.map((question, index) => {
 						const isSelected = index === currentIndex
 						const color = getQuestionBackgroundColor(question)
+						const ringColor = color === "transparent" ? "#ffffff" : color
 						return (
 							<li
 								key={question.id}
@@ -256,7 +241,7 @@ export function Content({ questionsPromise }: ContentProps) {
 									borderRadius: "8px",
 									position: isSelected ? "relative" : undefined,
 									zIndex: isSelected ? 1 : undefined,
-									boxShadow: isSelected ? `0 0 0 6px ${color}, 0 6px 14px rgba(0,0,0,0.12)` : undefined,
+									boxShadow: isSelected ? `0 0 0 6px ${ringColor}, 0 6px 14px rgba(0,0,0,0.12)` : undefined,
 									transform: isSelected ? "translateY(-1px)" : undefined,
 									transition: "box-shadow 120ms ease, transform 120ms ease"
 								}}
@@ -416,7 +401,7 @@ export function Content({ questionsPromise }: ContentProps) {
 							<Button
 								variant="secondary"
 								onClick={handleValidateXml}
-								disabled={isValidating || !currentDetails?.xml}
+								disabled={isValidating || !currentQuestion.xml}
 								className="hover:cursor-pointer"
 								style={{ marginLeft: "10px" }}
 							>
@@ -459,55 +444,26 @@ export function Content({ questionsPromise }: ContentProps) {
 						<div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
 							<Button
 								variant="ghost"
-								onClick={() => {
-									const d = detailsById[currentQuestion.id]
-									if (!d) {
-										toast.error("details not loaded")
-										return
-									}
-									void copyToClipboard(d.xml)
-								}}
+								onClick={() => copyToClipboard(currentQuestion.xml)}
 								className="hover:cursor-pointer"
 							>
 								copy
 							</Button>
 							<strong>xml:</strong>
-							<span style={{ fontFamily: "monospace" }}>
-								{truncateText(detailsById[currentQuestion.id]?.xml ?? "(details not loaded)", 200)}
-							</span>
-							<Button
-								variant="outline"
-								onClick={async () => {
-									const id = currentQuestion.id
-									if (detailsById[id]) return
-									const d = await getQuestionDetails(id)
-									setDetailsById((prev) => ({ ...prev, [id]: { xml: d.xml, parsedData: d.parsedData } }))
-								}}
-								className="hover:cursor-pointer"
-								style={{ marginLeft: "6px" }}
-							>
-								load details
-							</Button>
+							<span style={{ fontFamily: "monospace" }}>{truncateText(currentQuestion.xml, 200)}</span>
 						</div>
 
 						<div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
 							<Button
 								variant="ghost"
-								onClick={() => {
-									const d = detailsById[currentQuestion.id]
-									if (!d) {
-										toast.error("details not loaded")
-										return
-									}
-									void copyToClipboard(JSON.stringify(d.parsedData, null, 2))
-								}}
+								onClick={() => copyToClipboard(JSON.stringify(currentQuestion.parsedData, null, 2))}
 								className="hover:cursor-pointer"
 							>
 								copy
 							</Button>
 							<strong>parsed_data:</strong>
 							<span style={{ fontFamily: "monospace" }}>
-								{truncateText(currentDetails ? JSON.stringify(currentDetails.parsedData) : "(details not loaded)", 200)}
+								{truncateText(JSON.stringify(currentQuestion.parsedData), 200)}
 							</span>
 						</div>
 					</div>
