@@ -34,6 +34,15 @@ export function compileResponseDeclarations(decls: AssessmentItem["responseDecla
 				if (val.startsWith(".")) allCorrectValues.add(`0${val}`)
 				else if (val.startsWith("0.")) allCorrectValues.add(val.substring(1))
 
+				// Rule: Allow implicit multiplication between a leading numeric coefficient and parentheses
+				// e.g., 25*(p+2q) -> also accept 25(p+2q)
+				{
+					const implicitAlt = val.replace(/(\d+)\s*\*\s*\(/g, "$1(")
+					if (implicitAlt !== val) {
+						allCorrectValues.add(implicitAlt)
+					}
+				}
+
 				if (val.includes("/") && !val.startsWith(".")) {
 					const parts = val.split("/")
 					if (parts.length === 2 && parts[0] && parts[1]) {
