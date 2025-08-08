@@ -14,13 +14,14 @@ const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
  * A unique, safe prefix for keys created from array indices to prevent
  * collision with legitimate object keys that are numeric strings.
  */
-const ARRAY_KEY_PREFIX = "__idx__"
+// Use an aggressively namespaced, obscure prefix to avoid accidental collisions with user data keys
+const ARRAY_KEY_PREFIX = "__sb_structured_array_index__v1__"
 /**
  * Sentinel key used to represent an empty array in object form.
  * Prevents ambiguity between a truly empty object and an empty array
  * after transformation.
  */
-const ARRAY_EMPTY_SENTINEL = `${ARRAY_KEY_PREFIX}empty`
+const ARRAY_EMPTY_SENTINEL = "__sb_structured_array_empty__v1__"
 
 /**
  * Recursively transforms arrays into objects using a safe, prefixed key.
