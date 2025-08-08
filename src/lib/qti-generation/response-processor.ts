@@ -258,9 +258,9 @@ export function compileResponseProcessing(decls: AssessmentItem["responseDeclara
 			if (decl.cardinality === "ordered") {
 				return `<qti-equal>${variable}${correct}</qti-equal>`
 			}
-			// For non-ordered responses, allow membership in the set of acceptable correct values.
-			// This ensures that multiple <qti-value> entries in <qti-correct-response> are all accepted.
-			return `<qti-member>${variable}${correct}</qti-member>`
+			// For non-ordered responses, require an exact (order-insensitive) match between
+			// the candidate response and the correct response set.
+			return `<qti-match>${variable}${correct}</qti-match>`
 		})
 		.join("\n                    ")
 
