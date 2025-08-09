@@ -113,7 +113,56 @@ function createDifferentiatedItemsPrompt(
 6.  **HTML ENTITY RESTRICTIONS:** You MUST NOT use HTML named entities like &nbsp;, &mdash;, &hellip;, etc. Instead, use actual Unicode characters directly. The ONLY acceptable entity references are: &lt; &gt; &amp; &quot; &apos;. For spacing, use regular spaces, not &nbsp;.
     7.  **NO CDATA SECTIONS**: Never use <![CDATA[...]]> anywhere in any string fields.
     8.  **NO PERSEUS ARTIFACTS**: Never include Perseus widget artifacts like [[☃ widget-name 1]] in any text.
-    9.  **FINAL OUTPUT FORMAT:** Your entire response must be a single JSON object containing one key, "differentiated_items", which holds an array of the newly generated assessment item objects.`
+    9.  **FINAL OUTPUT FORMAT:** Your entire response must be a single JSON object containing one key, "differentiated_items", which holds an array of the newly generated assessment item objects.
+
+**SECTION A: MAINTAINING EXACT DIFFICULTY LEVEL**
+
+The difficulty level of every generated variation MUST remain EXACTLY THE SAME as the original question. This is a critical requirement that affects student assessment validity.
+
+**What constitutes difficulty:**
+- **Computational complexity**: Keep the same number of steps, operations, and mathematical complexity. If the original requires 2-digit multiplication, don't change to 3-digit or 1-digit.
+- **Conceptual depth**: Maintain the same level of abstract thinking required. Don't simplify concepts or add complexity.
+- **Numerical properties**: Use numbers with similar properties (e.g., if original uses fractions with denominators 2, 4, 8, use similar simple denominators, not 7, 13, 17).
+- **Cognitive load**: Keep the same amount of information to process. Don't add extra conditions or remove helpful structure.
+- **Prior knowledge**: Require the same foundational skills. Don't introduce concepts from higher or lower grade levels.
+
+**Examples of maintaining difficulty:**
+- If original: "Find 24 ÷ 6", then valid: "Find 36 ÷ 9" (same single-digit divisor resulting in single-digit quotient)
+- If original: "A rectangle has length 8 cm and width 5 cm", then valid: "A rectangle has length 7 cm and width 4 cm" (similar magnitude, whole numbers)
+- If original uses fractions 1/2, 1/4, 3/4, then use other halves/quarters/eighths, not sevenths or thirteenths
+
+**What NOT to do:**
+- Don't change from simple to complex numbers (e.g., 25 to 247 or 2.47)
+- Don't add extra steps or conditions
+- Don't change from concrete to abstract scenarios or vice versa
+- Don't use numbers that create notably harder mental math
+
+**SECTION B: ENSURING UNIQUE VARIATIONS**
+
+Every generated item MUST be genuinely different from the original and from all other generated items. Surface-level changes are NOT sufficient.
+
+**What makes a variation unique:**
+- **Different numerical values**: All numbers should change (except mathematical constants like π)
+- **Different contexts/scenarios**: Change names, objects, situations while preserving the mathematical structure
+- **Different visual arrangements**: If applicable, alter spatial layouts, colors, or orientations
+- **Different choice options**: For multiple choice, create entirely new distractors and arrangements
+
+**Minimum uniqueness requirements:**
+- At least 80% of numerical values must be different from the original
+- Context/scenario must be recognizably different (not just changing "apples" to "oranges")
+- No two generated items should be more than 20% similar in their specific values
+- Each item must be independently solvable without reference to others
+
+**Examples of sufficient uniqueness:**
+- Original: "Tom has 15 marbles, gives away 6..." → Valid: "Sarah has 23 stickers, uses 9..."
+- Original: "Find the area of a 6×4 rectangle" → Valid: "Find the area of a 8×5 rectangle"
+- Original: Uses a number line from 0-10 → Valid: Uses a number line from 0-20 (if difficulty maintained)
+
+**What is NOT unique enough:**
+- Only changing one number in a multi-step problem
+- Changing names but keeping all numbers identical
+- Rearranging the same content without substantive changes
+- Using consecutive numbers from the original (e.g., if original uses 5, don't just use 6)`
 
 	const userContent = `Please differentiate the following assessment item JSON into exactly ${n} new, unique variations.
 
