@@ -5,16 +5,17 @@ import * as schema from "@/db/schemas"
 import { type Events, inngest } from "@/inngest/client"
 
 type Logger = {
-	info: (message: string, attributes?: Record<string, unknown>) => void
 	debug: (message: string, attributes?: Record<string, unknown>) => void
+	info: (message: string, attributes?: Record<string, unknown>) => void
+	warn?: (message: string, attributes?: Record<string, unknown>) => void
 	error: (message: string, attributes?: Record<string, unknown>) => void
 }
 
-//hoopa
-
 type MigrationOptions = {
-	itemEventName: "qti/item.migrate" | "qti/item.migrate.focused"
-	stimulusEventName: "qti/stimulus.migrate"
+	// MODIFIED: Made optional to allow for targeted dispatch
+	itemEventName?: "qti/item.migrate" | "qti/item.migrate.focused"
+	// MODIFIED: Made optional to allow for targeted dispatch
+	stimulusEventName?: "qti/stimulus.migrate"
 }
 
 /**
@@ -31,7 +32,11 @@ export async function dispatchMigrationsForCourses(
 	courseIds: string[],
 	options: MigrationOptions
 ): Promise<{ itemsDispatched: number; stimuliDispatched: number }> {
-	logger.info("dispatching migrations for courses", { courseCount: courseIds.length, itemEvent: options.itemEventName })
+	logger.info("dispatching migrations for courses", {
+		courseCount: courseIds.length,
+		itemEvent: options.itemEventName,
+		stimulusEvent: options.stimulusEventName
+	})
 
 	const unitsResult = await errors.try(
 		db.select({ id: schema.niceUnits.id }).from(schema.niceUnits).where(inArray(schema.niceUnits.courseId, courseIds))
@@ -46,31 +51,50 @@ export async function dispatchMigrationsForCourses(
 		return { itemsDispatched: 0, stimuliDispatched: 0 }
 	}
 
+	// MODIFIED: Conditionally fetch questions and articles based on options
 	const [questionsToMigrate, articlesToMigrate] = await Promise.all([
-		db
-			.selectDistinct({ id: schema.niceQuestions.id })
-			.from(schema.niceQuestions)
-			.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
-			.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
-			.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-			.where(inArray(schema.niceLessons.unitId, unitIds)),
-		db
-			.selectDistinct({ id: schema.niceArticles.id })
-			.from(schema.niceArticles)
-			.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
-			.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
-			.where(inArray(schema.niceLessons.unitId, unitIds))
+		options.itemEventName
+			? db
+					.selectDistinct({ id: schema.niceQuestions.id })
+					.from(schema.niceQuestions)
+					.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
+					.innerJoin(schema.niceLessonContents, eq(schema.niceExercises.id, schema.niceLessonContents.contentId))
+					.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+					.where(inArray(schema.niceLessons.unitId, unitIds))
+			: Promise.resolve([]), // Return empty array if not requested
+		options.stimulusEventName
+			? db
+					.selectDistinct({ id: schema.niceArticles.id })
+					.from(schema.niceArticles)
+					.innerJoin(schema.niceLessonContents, eq(schema.niceArticles.id, schema.niceLessonContents.contentId))
+					.innerJoin(schema.niceLessons, eq(schema.niceLessonContents.lessonId, schema.niceLessons.id))
+					.where(inArray(schema.niceLessons.unitId, unitIds))
+			: Promise.resolve([]) // Return empty array if not requested
 	])
 
-	const itemEvents: Events["qti/item.migrate" | "qti/item.migrate.focused"][] = questionsToMigrate.map((question) => ({
-		name: options.itemEventName,
-		data: { questionId: question.id }
-	}))
+	const itemEvents: (Events["qti/item.migrate"] | Events["qti/item.migrate.focused"])[] = []
+	// MODIFIED: Only push item events if itemEventName is provided
+	if (options.itemEventName) {
+		const eventName = options.itemEventName // Capture to ensure TypeScript knows it's defined
+		itemEvents.push(
+			...questionsToMigrate.map((question) => ({
+				name: eventName,
+				data: { questionId: question.id }
+			}))
+		)
+	}
 
-	const stimulusEvents: Events["qti/stimulus.migrate"][] = articlesToMigrate.map((article) => ({
-		name: options.stimulusEventName,
-		data: { articleId: article.id }
-	}))
+	const stimulusEvents: Events["qti/stimulus.migrate"][] = []
+	// MODIFIED: Only push stimulus events if stimulusEventName is provided
+	if (options.stimulusEventName) {
+		const eventName = options.stimulusEventName // Capture to ensure TypeScript knows it's defined
+		stimulusEvents.push(
+			...articlesToMigrate.map((article) => ({
+				name: eventName,
+				data: { articleId: article.id }
+			}))
+		)
+	}
 
 	const allEvents = [...itemEvents, ...stimulusEvents]
 	if (allEvents.length > 0) {

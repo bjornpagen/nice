@@ -5,6 +5,15 @@ import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { env } from "@/env"
 
+// Normalize slugs that may include an ID prefix like "x123:real-slug" to just "real-slug"
+function normalizeKhanSlug(slug: string): string {
+	const colonIndex = slug.indexOf(":")
+	if (colonIndex >= 0) {
+		return slug.slice(colonIndex + 1)
+	}
+	return slug
+}
+
 // --- ONE ROSTER TYPE DEFINITIONS ---
 // These interfaces define the structure of the final JSON payload.
 
@@ -515,7 +524,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
 						// Khan-specific data
 						khanId: assessment.id,
-						khanSlug: assessment.slug,
+						khanSlug: normalizeKhanSlug(assessment.slug),
 						khanTitle: assessment.title,
 						khanDescription: assessment.description,
 						khanLessonType: assessment.type.toLowerCase(),
@@ -583,7 +592,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
 						// Khan-specific data
 						khanId: assessment.id,
-						khanSlug: assessment.slug,
+						khanSlug: normalizeKhanSlug(assessment.slug),
 						khanTitle: assessment.title,
 						khanDescription: assessment.description,
 						khanLessonType: assessment.type.toLowerCase(),

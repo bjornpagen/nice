@@ -20,7 +20,8 @@ export const orchestrateHardcodedMathStimulusMigration = inngest.createFunction(
 
 		const result = await step.run("dispatch-math-stimulus-migrations", () =>
 			dispatchMigrationsForCourses(logger, HARDCODED_MATH_COURSE_IDS, {
-				itemEventName: "qti/item.migrate", // This is ignored by the return but required by the helper.
+				// MODIFIED: Explicitly set itemEventName to undefined to prevent item migration
+				itemEventName: undefined,
 				stimulusEventName: "qti/stimulus.migrate"
 			})
 		)

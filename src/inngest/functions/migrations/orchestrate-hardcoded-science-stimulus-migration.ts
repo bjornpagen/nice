@@ -22,7 +22,8 @@ export const orchestrateHardcodedScienceStimulusMigration = inngest.createFuncti
 
 		const result = await step.run("dispatch-science-stimulus-migrations", () =>
 			dispatchMigrationsForCourses(logger, HARDCODED_SCIENCE_COURSE_IDS, {
-				itemEventName: "qti/item.migrate.focused", // This is ignored by the return but required by the helper.
+				// MODIFIED: Explicitly set itemEventName to undefined to prevent item migration
+				itemEventName: undefined,
 				stimulusEventName: "qti/stimulus.migrate"
 			})
 		)
