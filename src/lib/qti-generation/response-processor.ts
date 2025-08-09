@@ -274,12 +274,7 @@ export function compileResponseProcessing(decls: AssessmentItem["responseDeclara
 		.map((decl) => {
 			const variable = `<qti-variable identifier="${escapeXmlAttribute(decl.identifier)}"/>`
 			const correct = `<qti-correct identifier="${escapeXmlAttribute(decl.identifier)}"/>`
-			// Use order-aware equality for ordered cardinality
-			if (decl.cardinality === "ordered") {
-				return `<qti-equal>${variable}${correct}</qti-equal>`
-			}
-			// For non-ordered responses, require an exact (order-insensitive) match between
-			// the candidate response and the correct response set.
+			// Use match comparison for all cases, including ordered cardinality
 			return `<qti-match>${variable}${correct}</qti-match>`
 		})
 		.join("\n                    ")
