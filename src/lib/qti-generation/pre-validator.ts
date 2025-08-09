@@ -268,6 +268,45 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 						validateInlineContent(choice.feedback, `interaction[${key}].choice[${choice.identifier}].feedback`, logger)
 					}
 				}
+
+				// Enforce response cardinality consistency with minChoices/maxChoices for choiceInteraction
+				if (interaction.type === "choiceInteraction") {
+					// Find matching response declaration by identifier
+					const decl = item.responseDeclarations.find((d) => d.identifier === interaction.responseIdentifier)
+					if (!decl) {
+						logger.error("response declaration without matching interaction found during cardinality check", {
+							interactionKey: key,
+							responseIdentifier: interaction.responseIdentifier
+						})
+						throw errors.new(
+							`response declaration '${interaction.responseIdentifier}' has no matching interaction for cardinality check`
+						)
+					}
+
+					if (decl.cardinality === "single") {
+						const maxChoices = interaction.maxChoices
+						if (typeof maxChoices === "number" && maxChoices > 1) {
+							logger.error("cardinality mismatch: single with max-choices > 1", {
+								interactionKey: key,
+								responseIdentifier: interaction.responseIdentifier,
+								maxChoices
+							})
+							throw errors.new("choiceInteraction with single cardinality must have max-choices <= 1")
+						}
+					}
+
+					if (decl.cardinality === "multiple") {
+						const maxChoices = interaction.maxChoices
+						if (typeof maxChoices === "number" && maxChoices <= 1) {
+							logger.error("cardinality mismatch: multiple with max-choices <= 1", {
+								interactionKey: key,
+								responseIdentifier: interaction.responseIdentifier,
+								maxChoices
+							})
+							throw errors.new("choiceInteraction with multiple cardinality must have max-choices > 1")
+						}
+					}
+				}
 			}
 		}
 	}

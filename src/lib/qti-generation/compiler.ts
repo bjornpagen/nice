@@ -134,45 +134,45 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 				decl.correct = current
 			}
 		}
+	}
 
-		// Convert string-based inline choice declarations to identifier-based using label/id maps
-		for (const decl of item.responseDeclarations) {
-			if (!decl) continue
-			const labelMap = responseIdToLabelMap[decl.identifier]
-			const idMap = responseIdToMap[decl.identifier]
-			if (!labelMap && !idMap) continue
-			if (decl.baseType !== "string") continue
+	// Convert string-based inline choice declarations to identifier-based using label/id maps
+	for (const decl of item.responseDeclarations) {
+		if (!decl) continue
+		const labelMap = responseIdToLabelMap[decl.identifier]
+		const idMap = responseIdToMap[decl.identifier]
+		if (!labelMap && !idMap) continue
+		if (decl.baseType !== "string") continue
 
-			const toIdentifier = (val: string): string => {
-				// Prefer exact original-id mapping, then label mapping
-				if (idMap?.[val]) return idMap[val]
-				if (labelMap?.[val]) return labelMap[val]
-				// not mappable → fail fast
-				logger.error("string response value not mappable to choice identifier", {
-					responseIdentifier: decl.identifier,
-					value: val
-				})
-				throw errors.new("string response not mappable to identifier")
-			}
-
-			if (Array.isArray(decl.correct)) {
-				const mapped = decl.correct.map((v) => {
-					if (typeof v !== "string") {
-						logger.error("non-string value in string-based response declaration", { value: v })
-						throw errors.new("invalid response declaration value type")
-					}
-					return toIdentifier(v)
-				})
-				decl.correct = mapped
-			} else {
-				if (typeof decl.correct !== "string") {
-					logger.error("non-string scalar in string-based response declaration", { value: decl.correct })
-					throw errors.new("invalid response declaration scalar type")
-				}
-				decl.correct = toIdentifier(decl.correct)
-			}
-			decl.baseType = "identifier"
+		const toIdentifier = (val: string): string => {
+			// Prefer exact original-id mapping, then label mapping
+			if (idMap?.[val]) return idMap[val]
+			if (labelMap?.[val]) return labelMap[val]
+			// not mappable → fail fast
+			logger.error("string response value not mappable to choice identifier", {
+				responseIdentifier: decl.identifier,
+				value: val
+			})
+			throw errors.new("string response not mappable to identifier")
 		}
+
+		if (Array.isArray(decl.correct)) {
+			const mapped = decl.correct.map((v) => {
+				if (typeof v !== "string") {
+					logger.error("non-string value in string-based response declaration", { value: v })
+					throw errors.new("invalid response declaration value type")
+				}
+				return toIdentifier(v)
+			})
+			decl.correct = mapped
+		} else {
+			if (typeof decl.correct !== "string") {
+				logger.error("non-string scalar in string-based response declaration", { value: decl.correct })
+				throw errors.new("invalid response declaration scalar type")
+			}
+			decl.correct = toIdentifier(decl.correct)
+		}
+		decl.baseType = "identifier"
 	}
 }
 
