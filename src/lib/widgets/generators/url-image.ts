@@ -28,7 +28,6 @@ export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema>
 
 	// Validate URL at compile time
 	const urlValidationResult = errors.trySync((): void => {
-		// eslint-disable-next-line no-new
 		new URL(url)
 	})
 	if (urlValidationResult.error) {
