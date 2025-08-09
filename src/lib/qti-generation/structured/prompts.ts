@@ -1118,7 +1118,8 @@ ${slotNames.join("\n")}`
 export function createInteractionContentPrompt(
 	perseusJson: string,
 	assessmentShell: unknown,
-	imageContext: ImageContext
+	imageContext: ImageContext,
+	widgetMapping?: Record<string, keyof typeof allWidgetSchemas>
 ): {
 	systemInstruction: string
 	userContent: string
@@ -1191,6 +1192,12 @@ ${perseusJson}
 ## Assessment Shell (for context):
 \`\`\`json
 ${JSON.stringify(assessmentShell, null, 2)}
+\`\`\`
+
+## Widget Mapping (for context):
+This mapping shows the widget type for each widget slot declared in the shell.
+\`\`\`json
+${widgetMapping ? JSON.stringify(widgetMapping, null, 2) : "No widget mapping available"}
 \`\`\`
 
 ## Instructions:

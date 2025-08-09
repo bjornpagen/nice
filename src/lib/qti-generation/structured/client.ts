@@ -204,7 +204,8 @@ async function generateInteractionContent(
 	logger: logger.Logger,
 	perseusJson: string,
 	assessmentShell: AssessmentItemShell,
-	imageContext: ImageContext
+	imageContext: ImageContext,
+	widgetMapping?: Record<string, keyof typeof allWidgetSchemas>
 ): Promise<Record<string, AnyInteraction>> {
 	const interactionSlotNames = assessmentShell.interactions
 	if (interactionSlotNames.length === 0) {
@@ -213,7 +214,12 @@ async function generateInteractionContent(
 	}
 
 	// This new prompt function instructs the AI to generate the interaction objects.
-	const { systemInstruction, userContent } = createInteractionContentPrompt(perseusJson, assessmentShell, imageContext)
+	const { systemInstruction, userContent } = createInteractionContentPrompt(
+		perseusJson,
+		assessmentShell,
+		imageContext,
+		widgetMapping
+	)
 
 	// Create a precise schema asking ONLY for the interactions.
 	const InteractionCollectionSchema = createInteractionCollectionSchema(interactionSlotNames)
@@ -438,7 +444,7 @@ export async function generateStructuredQtiItem(
 	// ✅ NEW - Shot 3: Generate the full interaction objects.
 	logger.debug("shot 3: generating interaction content")
 	const interactionContentResult = await errors.try(
-		generateInteractionContent(logger, perseusJsonString, assessmentShell, imageContext)
+		generateInteractionContent(logger, perseusJsonString, assessmentShell, imageContext, widgetMapping)
 	)
 	if (interactionContentResult.error) {
 		logger.error("shot 3 failed: interaction content generation failed", { error: interactionContentResult.error })
