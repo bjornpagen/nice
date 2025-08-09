@@ -28,17 +28,18 @@ const SENSOR_ID = env.NEXT_PUBLIC_APP_DOMAIN
  *
  * @param actor - The user who performed the action.
  * @param context - The activity context (course, lesson, etc.).
- * @param performance - The performance data including expectedXp, totalQuestions, and correctQuestions.
+ * @param performance - The performance data including xpEarned, totalQuestions, correctQuestions, and optionally masteredUnits.
  * @param shouldAwardXp - Optional flag indicating if XP should be awarded (when pre-checked by caller)
  */
 export async function sendCaliperActivityCompletedEvent(
 	actor: TimebackActivityCompletedEvent["actor"],
 	context: TimebackActivityContext,
 	performance: {
-		expectedXp: number
+		xpEarned: number
 		totalQuestions: number
 		correctQuestions: number
 		durationInSeconds?: number
+		masteredUnits?: number
 	},
 	shouldAwardXp?: boolean
 ) {
@@ -101,7 +102,7 @@ export async function sendCaliperActivityCompletedEvent(
 			})
 			assessmentXp = 0
 		} else {
-			// IMPORTANT: performance.expectedXp is already the CALCULATED XP (with multipliers applied)
+			// IMPORTANT: performance.xpEarned is already the CALCULATED XP (with multipliers applied)
 			// from the assessment-stepper, so we should NOT recalculate it here
 			if (performance.totalQuestions === 0) {
 				logger.error("CRITICAL: Assessment has zero questions", {
@@ -113,7 +114,7 @@ export async function sendCaliperActivityCompletedEvent(
 			const accuracy = performance.correctQuestions / performance.totalQuestions
 
 			// Use the pre-calculated XP value passed from assessment-stepper
-			assessmentXp = performance.expectedXp
+			assessmentXp = performance.xpEarned
 
 			logger.info("using pre-calculated xp from caller", {
 				userSourcedId,
@@ -173,7 +174,7 @@ export async function sendCaliperActivityCompletedEvent(
 
 			// Calculate XP for the assessment itself (including penalty check)
 			assessmentXp = calculateAwardedXp(
-				performance.expectedXp,
+				performance.xpEarned,
 				accuracy,
 				performance.totalQuestions,
 				performance.durationInSeconds
@@ -265,6 +266,11 @@ export async function sendCaliperActivityCompletedEvent(
 		{ type: "totalQuestions", value: performance.totalQuestions },
 		{ type: "correctQuestions", value: performance.correctQuestions }
 	]
+
+	// Add masteredUnits metric if provided
+	if (performance.masteredUnits !== undefined) {
+		metrics.push({ type: "masteredUnits", value: performance.masteredUnits })
+	}
 
 	const event: TimebackActivityCompletedEvent = {
 		"@context": "http://purl.imsglobal.org/ctx/caliper/v1p2",

@@ -14,7 +14,8 @@ interface ExercisePerformance {
 
 interface QuestionResult {
 	qtiItemId: string
-	isCorrect: boolean
+	isCorrect: boolean | null
+	isReported?: boolean
 }
 
 /**
@@ -80,7 +81,9 @@ export async function updateProficiencyFromAssessment(
 
 	// Step 2: Map questions to exercises using QTI metadata
 	const qtiItemIdToOneRosterResourceSourcedIdMap = new Map<string, string>()
-	const questionResultsFromSession = sessionResults.map((q) => ({ id: q.qtiItemId, correct: q.isCorrect }))
+	const questionResultsFromSession = sessionResults
+		.filter((q) => !q.isReported)
+		.map((q) => ({ id: q.qtiItemId, correct: q.isCorrect }))
 
 	const qtiMetadataPromises = questionResultsFromSession.map(async (question) => {
 		const itemResult = await errors.try(qti.getAssessmentItem(question.id))

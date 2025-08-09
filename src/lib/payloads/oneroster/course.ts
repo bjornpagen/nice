@@ -104,13 +104,9 @@ interface OneRosterAssessmentLineItem {
 	sourcedId: string
 	title: string
 	status: "active"
-	category: {
+	course?: {
 		sourcedId: string
-		type: "category"
-	}
-	parentAssessmentLineItem?: {
-		sourcedId: string
-		type: "assessmentLineItem"
+		type: "course"
 	}
 	componentResource?: {
 		sourcedId: string
@@ -325,15 +321,13 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 	// Find the top-level course challenge
 	const courseChallenge = courseAssessments.find((ca) => ca.type === "CourseChallenge")
-	let courseChallengeLineItemId: string | undefined
 
 	if (courseChallenge) {
-		courseChallengeLineItemId = `nice_${courseChallenge.id}`
 		onerosterPayload.assessmentLineItems.push({
-			sourcedId: courseChallengeLineItemId,
+			sourcedId: `nice_${courseChallenge.id}`,
 			title: courseChallenge.title,
 			status: "active",
-			category: { sourcedId: "default-category", type: "category" }
+			course: { sourcedId: `nice_${course.id}`, type: "course" }
 		})
 	}
 
@@ -353,32 +347,23 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		})
 
 		const unitTest = assessments.find((a) => a.parentId === unit.id && a.type === "UnitTest")
-		let unitTestLineItemId: string | undefined
 
 		if (unitTest) {
-			unitTestLineItemId = `nice_${unitTest.id}`
 			onerosterPayload.assessmentLineItems.push({
-				sourcedId: unitTestLineItemId,
+				sourcedId: `nice_${unitTest.id}`,
 				title: unitTest.title,
 				status: "active",
-				category: { sourcedId: "default-category", type: "category" },
-				parentAssessmentLineItem: courseChallengeLineItemId
-					? { sourcedId: courseChallengeLineItemId, type: "assessmentLineItem" }
-					: undefined
+				course: { sourcedId: `nice_${course.id}`, type: "course" }
 			})
 		}
 
 		const unitQuizzes = assessments.filter((a) => a.parentId === unit.id && a.type === "Quiz")
 		for (const quiz of unitQuizzes.sort((a, b) => a.ordering - b.ordering)) {
-			const quizLineItemId = `nice_${quiz.id}`
 			onerosterPayload.assessmentLineItems.push({
-				sourcedId: quizLineItemId,
+				sourcedId: `nice_${quiz.id}`,
 				title: quiz.title,
 				status: "active",
-				category: { sourcedId: "default-category", type: "category" },
-				parentAssessmentLineItem: unitTestLineItemId
-					? { sourcedId: unitTestLineItemId, type: "assessmentLineItem" }
-					: undefined
+				course: { sourcedId: `nice_${course.id}`, type: "course" }
 			})
 
 			// Find exercises for this quiz and create their line items
@@ -390,8 +375,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						sourcedId: `nice_${exercise.id}`,
 						title: exercise.title,
 						status: "active",
-						category: { sourcedId: "default-category", type: "category" },
-						parentAssessmentLineItem: { sourcedId: quizLineItemId, type: "assessmentLineItem" }
+						course: { sourcedId: `nice_${course.id}`, type: "course" }
 					})
 				}
 			}
@@ -484,7 +468,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								sourcedId: contentSourcedId, // The ID matches the resource ID
 								title: `Progress for: ${content.title}`,
 								status: "active",
-								category: { sourcedId: "default-category", type: "category" },
+								course: { sourcedId: `nice_${course.id}`, type: "course" },
 								componentResource: {
 									sourcedId: `nice_${lesson.id}_${content.id}`,
 									type: "componentResource"

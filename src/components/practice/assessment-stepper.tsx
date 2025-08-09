@@ -20,13 +20,10 @@ import {
 	checkAndCreateNewAttemptIfNeeded,
 	checkExistingProficiency,
 	createNewAssessmentAttempt,
-	finalizeAssessment,
 	flagQuestionAsReported,
 	processQuestionResponse,
 	processSkippedQuestion
 } from "@/lib/actions/assessment"
-import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
-import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
@@ -189,7 +186,9 @@ export function AssessmentStepper({
 	const [showSummary, setShowSummary] = React.useState(false)
 	// ADDED: New state to track the current attempt number. Default to 1 for the first attempt.
 	const [attemptNumber, setAttemptNumber] = React.useState(1)
-	const [sessionResults, setSessionResults] = React.useState<{ qtiItemId: string; isCorrect: boolean }[]>([]) // NEW STATE
+	const [sessionResults, setSessionResults] = React.useState<
+		{ qtiItemId: string; isCorrect: boolean | null; isReported?: boolean }[]
+	>([]) // NEW STATE
 	const [reportedQuestionIds, setReportedQuestionIds] = React.useState<Set<string>>(new Set()) // NEW STATE
 	const [isReportPopoverOpen, setIsReportPopoverOpen] = React.useState(false)
 	const [reportText, setReportText] = React.useState("")
@@ -377,7 +376,6 @@ export function AssessmentStepper({
 		const score = accuracy / 100
 
 		// Calculate XP and multiplier based on attempt and performance
-		let calculatedXp = 0
 		let multiplier = 0
 
 		const finalizeAndAnalyze = async () => {
@@ -410,7 +408,6 @@ export function AssessmentStepper({
 				shouldAwardXp
 			)
 
-			calculatedXp = xpResult.finalXp
 			multiplier = xpResult.multiplier
 
 			// NOTE: Cannot use logger in client components - XP calculation details
@@ -422,138 +419,49 @@ export function AssessmentStepper({
 				totalQuestions: finalTotalQuestions,
 				correctQuestions: correctAnswersCount,
 				accuracy: accuracy,
-				xp: expectedXp, // BASE XP (before multiplier)
+				xp: xpResult.finalXp, // CALCULATED XP (after multiplier applied)
 				multiplier: multiplier
 			}
 
 			// NOW save the assessment result with metadata
 			const saveResult = await errors.try(
-				saveAssessmentResult(
+				saveAssessmentResult({
 					onerosterResourceSourcedId,
 					score,
-					correctAnswersCount,
-					finalTotalQuestions,
+					correctAnswers: correctAnswersCount,
+					totalQuestions: finalTotalQuestions,
 					onerosterUserSourcedId,
 					onerosterCourseSourcedId,
-					metadata
-				)
+					metadata,
+					contentType,
+					isInteractiveAssessment,
+					onerosterComponentResourceSourcedId,
+					sessionResults,
+					attemptNumber,
+					assessmentTitle,
+					assessmentPath,
+					unitData,
+					expectedXp,
+					durationInSeconds: assessmentStartTimeRef.current
+						? Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
+						: undefined,
+					userEmail: user.primaryEmailAddress?.emailAddress,
+					shouldAwardXp
+				})
 			)
 
 			if (saveResult.error) {
 				throw errors.wrap(saveResult.error, "save assessment result")
 			}
 
-			if (isInteractiveAssessment) {
-				// First finalize the assessment to ensure all responses are graded
-				const finalizeResult = await errors.try(
-					finalizeAssessment(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
-				)
-				if (finalizeResult.error) {
-					toast.error("Could not finalize assessment. Proficiency analysis may be incomplete.")
-					return shouldAwardXp
-				}
-
-				// Add a small delay to ensure PowerPath has processed everything
-				await new Promise((resolve) => setTimeout(resolve, 1000))
-
-				// MODIFIED: Pass sessionResults to updateProficiencyFromAssessment
-				const analysisPromise = updateProficiencyFromAssessment(
-					onerosterUserSourcedId,
-					onerosterComponentResourceSourcedId,
-					attemptNumber,
-					sessionResults, // NEW ARGUMENT
-					onerosterCourseSourcedId // Pass onerosterCourseSourcedId
-				)
-				toast.promise(analysisPromise, {
-					loading: "Analyzing your skill performance...",
-					success: (result) => `Updated proficiency for ${result.exercisesUpdated} skills!`,
-					error: "Could not complete skill analysis."
-				})
-			}
-
 			// Return whether XP should be awarded
 			return shouldAwardXp
 		}
 
-		// Fire and forget Caliper events
-		const sendCaliperEvents = async (shouldAwardXp: boolean, calculatedXp: number) => {
-			if (!unitData) return
-
-			// Extract subject and course from unit path: "/{subject}/{course}/{unit}"
-			const pathParts = unitData.path.split("/")
-			if (pathParts.length < 3) return
-			const subject = pathParts[1]
-			const course = pathParts[2]
-			if (!subject || !course) return
-
-			// Map subject to valid enum values
-			const subjectMapping: Record<string, "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"> = {
-				science: "Science",
-				math: "Math",
-				reading: "Reading",
-				language: "Language",
-				"social-studies": "Social Studies"
-			}
-			const mappedSubject = subjectMapping[subject]
-			if (!mappedSubject) {
-				throw errors.new("assessment completion: unmapped subject")
-			}
-
-			const userEmail = user.primaryEmailAddress?.emailAddress
-			if (!userEmail) {
-				throw errors.new("assessment completion: user email required for caliper event")
-			}
-
-			const actor = {
-				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${onerosterUserSourcedId}`,
-				type: "TimebackUser" as const,
-				email: userEmail
-			}
-
-			const context = {
-				id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}${assessmentPath}`,
-				type: "TimebackActivityContext" as const,
-				subject: mappedSubject,
-				app: { name: "Nice Academy" },
-				course: {
-					name: course,
-					id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/courses/${onerosterCourseSourcedId}`
-				},
-				activity: {
-					name: assessmentTitle,
-					id: onerosterResourceSourcedId // Plain OneRoster ID - will be converted to URI server-side
-				},
-				process: true
-			}
-
-			// Calculate duration before sending events
-			let durationInSeconds: number | undefined
-			if (assessmentStartTimeRef.current) {
-				const endTime = new Date()
-				durationInSeconds = Math.floor((endTime.getTime() - assessmentStartTimeRef.current.getTime()) / 1000)
-			}
-
-			const performance = {
-				expectedXp: calculatedXp, // Use calculated XP (includes multiplier)
-				totalQuestions: finalTotalQuestions, // Use adjusted total (excludes reported questions)
-				correctQuestions: correctAnswersCount,
-				durationInSeconds: durationInSeconds
-			}
-
-			// Send activity completed event WITH the shouldAwardXp flag
-			void sendCaliperActivityCompletedEvent(actor, context, performance, shouldAwardXp)
-
-			// Send time spent event if we have a duration of at least 1 second
-			if (durationInSeconds && durationInSeconds >= 1) {
-				void sendCaliperTimeSpentEvent(actor, context, durationInSeconds)
-			}
-		}
-
-		// Execute both functions with proper async flow
+		// Execute finalization with proper async flow
 		const executeFinalization = async () => {
-			const shouldAwardXp = await finalizeAndAnalyze()
-			sendCaliperEvents(shouldAwardXp, calculatedXp) // Pass the calculated XP value
-			// Set the flag to true after sending the events to prevent re-execution
+			await finalizeAndAnalyze()
+			// Set the flag to true after completion to prevent re-execution
 			hasSentCompletionEventRef.current = true
 		}
 
@@ -576,6 +484,79 @@ export function AssessmentStepper({
 		reportedQuestionIds.size, // Add reportedQuestionIds.size to dependency array
 		contentType // Add contentType to dependency array for masteredUnits logic
 	])
+
+	// MODIFIED: handleReset is now async and calls the new action
+	const handleReset = async () => {
+		// For exercises, just reset without creating a new PowerPath attempt
+		if (!isInteractiveAssessment) {
+			setCurrentQuestionIndex(0)
+			setSelectedResponses({})
+			setExpectedResponses([])
+			setShowFeedback(false)
+			setIsAnswerCorrect(false)
+			setIsAnswerChecked(false)
+			setAttemptCount(0)
+			setCorrectAnswersCount(0)
+			setShowSummary(false)
+			setSessionResults([]) // Reset session data
+			setReportedQuestionIds(new Set()) // Reset reported questions
+			hasSentCompletionEventRef.current = false // Reset completion tracking
+			setAttemptNumber((prev) => prev + 1) // Increment attempt number for exercises
+			assessmentStartTimeRef.current = new Date()
+			return
+		}
+
+		// For quizzes and tests, create a new PowerPath attempt
+		if (!user?.publicMetadata?.sourceId) {
+			toast.error("Could not start a new attempt. User session is invalid.")
+			return
+		}
+
+		// Proper type checking instead of assertion
+		if (typeof user.publicMetadata.sourceId !== "string") {
+			toast.error("Invalid user session data.")
+			return
+		}
+
+		const onerosterUserSourcedId = user.publicMetadata.sourceId
+
+		// Step 1: Create a new attempt via the server action.
+		const attemptPromise = createNewAssessmentAttempt(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
+		toast.promise(attemptPromise, {
+			loading: "Starting a new attempt...",
+			success: "New attempt started. Good luck!",
+			error: "Failed to start a new attempt. Please try again."
+		})
+
+		const result = await errors.try(attemptPromise)
+		if (result.error) {
+			// If the API call fails, we do NOT reset the state. The user can try again.
+			return
+		}
+
+		// MODIFIED: Capture the new attempt number from the API response.
+		const newAttemptNumber = result.data.attempt.attempt
+		if (typeof newAttemptNumber !== "number") {
+			toast.error("Could not retrieve new attempt number from the server.")
+			return
+		}
+		setAttemptNumber(newAttemptNumber) // Update state with the new attempt number
+
+		// Step 2: Only on success, reset the component's state for the new attempt.
+		setCurrentQuestionIndex(0)
+		setSelectedResponses({})
+		setExpectedResponses([])
+		setShowFeedback(false)
+		setIsAnswerCorrect(false)
+		setIsAnswerChecked(false)
+		setAttemptCount(0)
+		setCorrectAnswersCount(0)
+		setShowSummary(false)
+		setSessionResults([]) // Reset session data
+		setReportedQuestionIds(new Set()) // Reset reported questions
+		hasSentCompletionEventRef.current = false // Reset completion tracking
+		assessmentStartTimeRef.current = new Date() // Reset the timer for the new attempt
+	}
 
 	if (questions.length === 0) {
 		return <div>No questions available</div>
@@ -658,18 +639,7 @@ export function AssessmentStepper({
 				contentType={contentType}
 				assessmentTitle={assessmentTitle}
 				onComplete={onComplete}
-				handleReset={() => {
-					// Reset the entire assessment to try again
-					setCurrentQuestionIndex(0)
-					setSelectedResponses({})
-					setExpectedResponses([])
-					setShowFeedback(false)
-					setIsAnswerCorrect(false)
-					setIsAnswerChecked(false)
-					setAttemptCount(0)
-					setCorrectAnswersCount(0)
-					setShowSummary(false)
-				}}
+				handleReset={handleReset}
 				nextItem={nextItem}
 			/>
 		)
@@ -880,74 +850,11 @@ export function AssessmentStepper({
 
 		toast.success("Issue reported. Thank you!", { id: toastId })
 
+		// Add reported question to sessionResults for proficiency analysis
+		setSessionResults((prev) => [...prev, { qtiItemId: currentQuestion.id, isCorrect: null, isReported: true }])
+
 		// Immediately advance the student.
 		goToNext()
-	}
-
-	// MODIFIED: handleReset is now async and calls the new action
-	const handleReset = async () => {
-		// For exercises, just reset without creating a new PowerPath attempt
-		if (!isInteractiveAssessment) {
-			setCurrentQuestionIndex(0)
-			setSelectedResponses({})
-			setExpectedResponses([])
-			setShowFeedback(false)
-			setIsAnswerCorrect(false)
-			setIsAnswerChecked(false)
-			setAttemptCount(0)
-			setCorrectAnswersCount(0)
-			setShowSummary(false)
-			assessmentStartTimeRef.current = new Date()
-			return
-		}
-
-		// For quizzes and tests, create a new PowerPath attempt
-		if (!user?.publicMetadata?.sourceId) {
-			toast.error("Could not start a new attempt. User session is invalid.")
-			return
-		}
-
-		// Proper type checking instead of assertion
-		if (typeof user.publicMetadata.sourceId !== "string") {
-			toast.error("Invalid user session data.")
-			return
-		}
-
-		const onerosterUserSourcedId = user.publicMetadata.sourceId
-
-		// Step 1: Create a new attempt via the server action.
-		const attemptPromise = createNewAssessmentAttempt(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
-		toast.promise(attemptPromise, {
-			loading: "Starting a new attempt...",
-			success: "New attempt started. Good luck!",
-			error: "Failed to start a new attempt. Please try again."
-		})
-
-		const result = await errors.try(attemptPromise)
-		if (result.error) {
-			// If the API call fails, we do NOT reset the state. The user can try again.
-			return
-		}
-
-		// MODIFIED: Capture the new attempt number from the API response.
-		const newAttemptNumber = result.data.attempt.attempt
-		if (typeof newAttemptNumber !== "number") {
-			toast.error("Could not retrieve new attempt number from the server.")
-			return
-		}
-		setAttemptNumber(newAttemptNumber) // Update state with the new attempt number
-
-		// Step 2: Only on success, reset the component's state for the new attempt.
-		setCurrentQuestionIndex(0)
-		setSelectedResponses({})
-		setExpectedResponses([])
-		setShowFeedback(false)
-		setIsAnswerCorrect(false)
-		setIsAnswerChecked(false)
-		setAttemptCount(0)
-		setCorrectAnswersCount(0)
-		setShowSummary(false)
-		assessmentStartTimeRef.current = new Date() // Reset the timer for the new attempt
 	}
 
 	// Handle try again for wrong answers
