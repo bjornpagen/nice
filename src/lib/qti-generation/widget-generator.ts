@@ -50,13 +50,14 @@ import {
 	generateTreeDiagram,
 	generateTriangleDiagram,
 	generateUnitBlockDiagram,
+	generateUrlImage,
 	generateVennDiagram,
 	generateVerticalArithmeticSetup
 } from "@/lib/widgets/generators"
 
 export function generateWidget(widget: Widget): string {
 	switch (widget.type) {
-		case "3dIntersectionDiagram":
+		case "threeDIntersectionDiagram":
 			return generateThreeDIntersectionDiagram(widget)
 		case "absoluteValueNumberLine":
 			return generateAbsoluteValueNumberLine(widget)
@@ -158,6 +159,8 @@ export function generateWidget(widget: Widget): string {
 			return generateFractionNumberLine(widget)
 		case "parallelogramTrapezoidDiagram":
 			return generateParallelogramTrapezoidDiagram(widget)
+		case "urlImage":
+			return generateUrlImage(widget)
 		default:
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
 	}

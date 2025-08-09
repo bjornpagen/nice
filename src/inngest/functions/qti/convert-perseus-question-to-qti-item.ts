@@ -54,7 +54,10 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 
 		// Step 2: Generate structured JSON from Perseus data.
 		logger.debug("invoking structured item generation pipeline", { questionId })
-		const structuredItemResult = await errors.try(generateStructuredQtiItem(logger, question.parsedData))
+		const structuredItemResult = await errors.try(
+			// MODIFIED: Explicitly pass the default math-core collection.
+			generateStructuredQtiItem(logger, question.parsedData, { widgetCollectionName: "math-core" })
+		)
 		if (structuredItemResult.error) {
 			logger.error("structured item generation failed", {
 				questionId,

@@ -68,7 +68,7 @@ const PlaneSchema = z
 // The main Zod schema for the 3dIntersectionDiagram function
 export const ThreeDIntersectionDiagramPropsSchema = z
 	.object({
-		type: z.literal("3dIntersectionDiagram"),
+		type: z.literal("threeDIntersectionDiagram"),
 		width: z
 			.number()
 			.positive()

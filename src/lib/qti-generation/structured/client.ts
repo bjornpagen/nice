@@ -21,7 +21,8 @@ import {
 	createWidgetContentPrompt,
 	createWidgetMappingPrompt
 } from "@/lib/qti-generation/structured/prompts"
-import { typedSchemas, type WidgetInput } from "@/lib/widgets/generators"
+import type { WidgetCollectionName } from "@/lib/widget-collections"
+import { allWidgetSchemas, type WidgetInput } from "@/lib/widgets/generators"
 
 const OPENAI_MODEL = "gpt-5"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
@@ -37,10 +38,10 @@ export const ErrUnsupportedInteraction = errors.new("unsupported interaction typ
  * @param widgetMapping A map of slot names to widget type names.
  * @returns A Zod object schema for the widget collection.
  */
-function createWidgetCollectionSchema(widgetMapping: Record<string, keyof typeof typedSchemas>) {
+function createWidgetCollectionSchema(widgetMapping: Record<string, keyof typeof allWidgetSchemas>) {
 	const shape: Record<string, z.ZodType> = {}
 	for (const [slotName, widgetType] of Object.entries(widgetMapping)) {
-		const schema = typedSchemas[widgetType]
+		const schema = allWidgetSchemas[widgetType]
 		if (!schema) {
 			// This check ensures we don't proceed with an invalid type from the mapping.
 			throw errors.new(`unknown widget type in mapping: ${widgetType}`)
@@ -75,13 +76,15 @@ async function mapSlotsToWidgets(
 	logger: logger.Logger,
 	perseusJson: string,
 	assessmentBody: string,
-	slotNames: string[] // ✅ Takes the parsed slot names to generate the prompt.
-): Promise<Record<string, keyof typeof typedSchemas>> {
+	slotNames: string[], // ✅ Takes the parsed slot names to generate the prompt.
+	widgetCollectionName: WidgetCollectionName
+): Promise<Record<string, keyof typeof allWidgetSchemas>> {
 	// ✅ The prompt and the schema are now generated together dynamically.
 	const { systemInstruction, userContent, WidgetMappingSchema } = createWidgetMappingPrompt(
 		perseusJson,
 		assessmentBody,
-		slotNames
+		slotNames,
+		widgetCollectionName
 	)
 
 	const responseFormat = zodResponseFormat(WidgetMappingSchema, "widget_mapper")
@@ -121,12 +124,12 @@ async function mapSlotsToWidgets(
 	const rawMapping = choice.message.parsed.widget_mapping
 
 	// Type guard to check if a value is a valid widget type
-	const isValidWidgetType = (val: unknown): val is keyof typeof typedSchemas => {
-		return typeof val === "string" && val in typedSchemas
+	const isValidWidgetType = (val: unknown): val is keyof typeof allWidgetSchemas => {
+		return typeof val === "string" && val in allWidgetSchemas
 	}
 
 	// Validate and build the properly typed mapping
-	const mapping: Record<string, keyof typeof typedSchemas> = {}
+	const mapping: Record<string, keyof typeof allWidgetSchemas> = {}
 	for (const [key, value] of Object.entries(rawMapping)) {
 		if (isValidWidgetType(value)) {
 			mapping[key] = value
@@ -259,7 +262,7 @@ async function generateWidgetContent(
 	logger: logger.Logger,
 	perseusJson: string,
 	assessmentShell: AssessmentItemShell,
-	widgetMapping: Record<string, keyof typeof typedSchemas>,
+	widgetMapping: Record<string, keyof typeof allWidgetSchemas>,
 	generatedInteractions: Record<string, AnyInteraction>,
 	imageContext: ImageContext
 ): Promise<Record<string, WidgetInput>> {
@@ -324,10 +327,13 @@ async function generateWidgetContent(
  */
 export async function generateStructuredQtiItem(
 	logger: logger.Logger,
-	perseusData: unknown
+	perseusData: unknown,
+	options: { widgetCollectionName?: WidgetCollectionName } = {}
 ): Promise<AssessmentItemInput> {
+	// Default to "math-core" to ensure backward compatibility and no disruption.
+	const { widgetCollectionName = "math-core" } = options
 	const perseusJsonString = JSON.stringify(perseusData, null, 2)
-	logger.info("starting structured qti generation process")
+	logger.info("starting structured qti generation process", { widgetCollection: widgetCollectionName })
 
 	const imageContext = await buildImageContext(perseusData)
 
@@ -407,13 +413,13 @@ export async function generateStructuredQtiItem(
 		if (widgetSlotNames.length === 0) {
 			logger.info("no widget slots found, skipping ai widget mapping call")
 			// Return a successful result with empty data, mimicking the `errors.try` output
-			const emptyMapping: Record<string, keyof typeof typedSchemas> = {}
+			const emptyMapping: Record<string, keyof typeof allWidgetSchemas> = {}
 			return { data: emptyMapping, error: null }
 		}
 		// Only make the AI call if there are widgets to map
 		// Convert structured body to string representation for widget mapping prompt
 		const bodyString = assessmentShell.body ? JSON.stringify(assessmentShell.body) : ""
-		return errors.try(mapSlotsToWidgets(logger, perseusJsonString, bodyString, widgetSlotNames))
+		return errors.try(mapSlotsToWidgets(logger, perseusJsonString, bodyString, widgetSlotNames, widgetCollectionName))
 	})()
 
 	if (widgetMappingResult.error) {

@@ -2,7 +2,8 @@ import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import { allExamples } from "@/lib/qti-generation/examples"
 import { type AnyInteraction, AssessmentItemShellSchema } from "@/lib/qti-generation/schemas"
-import { typedSchemas } from "@/lib/widgets/generators"
+import { type WidgetCollectionName, widgetCollections } from "@/lib/widget-collections"
+import { allWidgetSchemas } from "@/lib/widgets/generators"
 import type { ImageContext } from "./perseus-image-resolver"
 
 // Helper to convert a full AssessmentItemInput into a shell for prompt examples
@@ -24,10 +25,10 @@ function createShellFromExample(item: (typeof allExamples)[0]) {
 }
 
 // Define a strict widget type key list (no bailouts)
-type WidgetTypeKey = keyof typeof typedSchemas
+type WidgetTypeKey = keyof typeof allWidgetSchemas
 
 const widgetTypeKeys: [WidgetTypeKey, ...WidgetTypeKey[]] = [
-	"3dIntersectionDiagram",
+	"threeDIntersectionDiagram",
 	"absoluteValueNumberLine",
 	"angleDiagram",
 	"barChart",
@@ -76,16 +77,18 @@ const widgetTypeKeys: [WidgetTypeKey, ...WidgetTypeKey[]] = [
 	"treeDiagram",
 	"triangleDiagram",
 	"unitBlockDiagram",
+	"urlImage",
 	"vennDiagram",
 	"verticalArithmeticSetup",
 	"parallelogramTrapezoidDiagram"
 ]
 
+// DEPRECATED: This is now moved inside createWidgetMappingPrompt to be dynamic
 // Build a machine-generated list of widget type names and their top-level descriptions from schemas
 function buildWidgetTypeDescriptions(): string {
 	const parts: string[] = []
 	for (const typeName of widgetTypeKeys) {
-		const schema = typedSchemas[typeName]
+		const schema = allWidgetSchemas[typeName]
 		// Zod stores the description on the schema definition
 		const rawDescription = schema._def.description
 		const safeDescription =
@@ -99,15 +102,18 @@ function buildWidgetTypeDescriptions(): string {
 	return parts.join("\n")
 }
 
-function createWidgetMappingSchema(slotNames: string[]) {
-	const mappingShape: Record<string, z.ZodEnum<[WidgetTypeKey, ...WidgetTypeKey[]]>> = {}
+function createWidgetMappingSchema(slotNames: string[], allowedWidgetKeys: readonly string[]) {
+	const shape: Record<string, z.ZodType<string>> = {}
 	for (const slotName of slotNames) {
-		mappingShape[slotName] = z.enum(widgetTypeKeys)
+		// Use z.string() with refinement to validate allowed values
+		shape[slotName] = z.string().refine((val) => allowedWidgetKeys.includes(val), {
+			message: `Must be one of: ${allowedWidgetKeys.join(", ")}`
+		})
 	}
 	return z.object({
 		widget_mapping: z
-			.object(mappingShape)
-			.describe("A JSON object mapping each widget slot name to its corresponding widget type.")
+			.object(shape)
+			.describe("A JSON object mapping each widget slot name to one of the allowed widget types.")
 	})
 }
 
@@ -1053,13 +1059,37 @@ Double-check your output before submitting. ZERO TOLERANCE for these violations.
 /**
  * SHOT 2: Creates the prompt for mapping widget slots to widget types.
  */
-export function createWidgetMappingPrompt(perseusJson: string, assessmentBody: string, slotNames: string[]) {
+export function createWidgetMappingPrompt(
+	perseusJson: string,
+	assessmentBody: string,
+	slotNames: string[],
+	widgetCollectionName: WidgetCollectionName
+) {
+	const collection = widgetCollections[widgetCollectionName]
+
+	function buildWidgetTypeDescriptions(): string {
+		// Use spread operator to convert readonly array to regular array
+		const sortedKeys = [...collection.widgetTypeKeys].sort()
+		return sortedKeys
+			.map((typeName) => {
+				// Type narrowing by iterating through the object
+				const schemaEntries = Object.entries(allWidgetSchemas)
+				const schemaEntry = schemaEntries.find(([key]) => key === typeName)
+				if (schemaEntry) {
+					const [, schema] = schemaEntry
+					const description = schema?._def.description ?? "No description available."
+					return `- ${typeName}: ${description}`
+				}
+				return `- ${typeName}: No description available.`
+			})
+			.join("\n")
+	}
 	const systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content and the original Perseus JSON to map widget slots to the most appropriate widget type from a given list.
 
 **CRITICAL RULE**: You MUST choose a widget type from the list for every slot. Do not refuse or omit any slot. When no perfect match exists, select the closest semantically correct type that best represents the visual intent.
 
 Widget Type Options:
-${widgetTypeKeys.join("\n")}`
+${[...collection.widgetTypeKeys].sort().join("\n")}`
 
 	const userContent = `Based on the Perseus JSON and assessment body below, create a JSON object that maps each widget slot name to the most appropriate widget type.
 
@@ -1086,7 +1116,7 @@ Your response must be a JSON object with a single key "widget_mapping", mapping 
 Slot Names to Map:
 ${slotNames.join("\n")}`
 
-	const WidgetMappingSchema = createWidgetMappingSchema(slotNames)
+	const WidgetMappingSchema = createWidgetMappingSchema(slotNames, collection.widgetTypeKeys)
 
 	return { systemInstruction, userContent, WidgetMappingSchema }
 }
@@ -1370,7 +1400,7 @@ Double-check EVERY string in your output. ZERO TOLERANCE.
 export function createWidgetContentPrompt(
 	perseusJson: string,
 	assessmentShell: unknown,
-	widgetMapping: Record<string, keyof typeof typedSchemas>,
+	widgetMapping: Record<string, keyof typeof allWidgetSchemas>,
 	generatedInteractions: Record<string, AnyInteraction>,
 	imageContext: ImageContext
 ): {

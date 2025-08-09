@@ -48,7 +48,7 @@ describe("Widget Generators", () => {
 	describe("generateThreeDIntersectionDiagram", () => {
 		test("should render rectangular prism with horizontal plane", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -70,7 +70,7 @@ describe("Widget Generators", () => {
 
 		test("should render square pyramid with vertical plane", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {

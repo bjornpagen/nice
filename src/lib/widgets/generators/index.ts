@@ -1,3 +1,4 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 
 // Import all individual schemas and generators
@@ -65,12 +66,14 @@ import { generateTransformationDiagram, TransformationDiagramPropsSchema } from 
 import { generateTreeDiagram, TreeDiagramPropsSchema } from "./tree-diagram"
 import { generateTriangleDiagram, TriangleDiagramPropsSchema } from "./triangle-diagram"
 import { generateUnitBlockDiagram, UnitBlockDiagramPropsSchema } from "./unit-block-diagram"
+import { generateUrlImage, UrlImageWidgetPropsSchema } from "./url-image"
 import { generateVennDiagram, VennDiagramPropsSchema } from "./venn-diagram"
 import { generateVerticalArithmeticSetup, VerticalArithmeticSetupPropsSchema } from "./vertical-arithmetic-setup"
 
-// The `type` field is now included in the base schemas, so we remove .extend()
-export const typedSchemas = {
-	"3dIntersectionDiagram": ThreeDIntersectionDiagramPropsSchema,
+// This object now contains every widget schema from every collection.
+// It serves as a master lookup for dynamic schema generation and compilation.
+export const allWidgetSchemas = {
+	threeDIntersectionDiagram: ThreeDIntersectionDiagramPropsSchema,
 	absoluteValueNumberLine: AbsoluteValueNumberLinePropsSchema,
 	angleDiagram: AngleDiagramPropsSchema,
 	barChart: BarChartPropsSchema,
@@ -118,15 +121,19 @@ export const typedSchemas = {
 	treeDiagram: TreeDiagramPropsSchema,
 	triangleDiagram: TriangleDiagramPropsSchema,
 	unitBlockDiagram: UnitBlockDiagramPropsSchema,
+	urlImage: UrlImageWidgetPropsSchema,
 	vennDiagram: VennDiagramPropsSchema,
 	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
 	parallelogramTrapezoidDiagram: ParallelogramTrapezoidDiagramPropsSchema
 }
 
+// The `type` field is now included in the base schemas, so we remove .extend()
+export const typedSchemas = allWidgetSchemas
+
 // Create the discriminated union schema from the schemas (each now contains its type field)
 // Note: partitionedShape is handled separately as it has its own discriminated union
 const widgetSchemasWithoutPartitioned = [
-	typedSchemas["3dIntersectionDiagram"],
+	typedSchemas.threeDIntersectionDiagram,
 	typedSchemas.absoluteValueNumberLine,
 	typedSchemas.angleDiagram,
 	typedSchemas.barChart,
@@ -173,6 +180,7 @@ const widgetSchemasWithoutPartitioned = [
 	typedSchemas.treeDiagram,
 	typedSchemas.triangleDiagram,
 	typedSchemas.unitBlockDiagram,
+	typedSchemas.urlImage,
 	typedSchemas.vennDiagram,
 	typedSchemas.verticalArithmeticSetup,
 	typedSchemas.parallelogramTrapezoidDiagram
@@ -184,6 +192,62 @@ export const WidgetSchema = z.union([
 ])
 export type Widget = z.infer<typeof WidgetSchema>
 export type WidgetInput = z.input<typeof WidgetSchema>
+
+// Export all schemas for use in widget collections
+export {
+	ThreeDIntersectionDiagramPropsSchema,
+	AbsoluteValueNumberLinePropsSchema,
+	AngleDiagramPropsSchema,
+	BarChartPropsSchema,
+	BoxGridPropsSchema,
+	BoxPlotPropsSchema,
+	CircleDiagramPropsSchema,
+	CompositeShapeDiagramPropsSchema,
+	CoordinatePlaneComprehensivePropsSchema,
+	DataTablePropsSchema,
+	DiscreteObjectRatioDiagramPropsSchema,
+	DistanceFormulaGraphPropsSchema,
+	DotPlotPropsSchema,
+	DoubleNumberLinePropsSchema,
+	EmojiImagePropsSchema,
+	FigureComparisonDiagramPropsSchema,
+	FractionNumberLinePropsSchema,
+	FunctionPlotGraphPropsSchema,
+	GeometricSolidDiagramPropsSchema,
+	HangerDiagramPropsSchema,
+	HistogramPropsSchema,
+	InequalityNumberLinePropsSchema,
+	LineEquationGraphPropsSchema,
+	NumberLinePropsSchema,
+	NumberLineForOppositesPropsSchema,
+	NumberLineWithActionPropsSchema,
+	NumberLineWithFractionGroupsPropsSchema,
+	NumberSetDiagramPropsSchema,
+	ParallelogramTrapezoidDiagramPropsSchema,
+	PartitionedShapePropsSchema,
+	PentagonIntersectionDiagramPropsSchema,
+	PictographPropsSchema,
+	PointPlotGraphPropsSchema,
+	PolygonGraphPropsSchema,
+	PolyhedronDiagramPropsSchema,
+	PolyhedronNetDiagramPropsSchema,
+	ProbabilitySpinnerPropsSchema,
+	PythagoreanProofDiagramPropsSchema,
+	RatioBoxDiagramPropsSchema,
+	RectangularFrameDiagramPropsSchema,
+	ScaleCopiesSliderPropsSchema,
+	ScatterPlotPropsSchema,
+	ShapeTransformationGraphPropsSchema,
+	StackedItemsDiagramPropsSchema,
+	TapeDiagramPropsSchema,
+	TransformationDiagramPropsSchema,
+	TreeDiagramPropsSchema,
+	TriangleDiagramPropsSchema,
+	UnitBlockDiagramPropsSchema,
+	UrlImageWidgetPropsSchema,
+	VennDiagramPropsSchema,
+	VerticalArithmeticSetupPropsSchema
+}
 
 // Export the individual generators for direct use
 export {
@@ -235,7 +299,120 @@ export {
 	generateTreeDiagram,
 	generateTriangleDiagram,
 	generateUnitBlockDiagram,
+	generateUrlImage,
 	generateVennDiagram,
 	generateVerticalArithmeticSetup,
 	generateParallelogramTrapezoidDiagram
+}
+
+// The generateWidget function is a comprehensive switch that can handle any widget type.
+export function generateWidget(widget: Widget): string {
+	switch (widget.type) {
+		case "threeDIntersectionDiagram":
+			return generateThreeDIntersectionDiagram(widget)
+		case "absoluteValueNumberLine":
+			return generateAbsoluteValueNumberLine(widget)
+		case "angleDiagram":
+			return generateAngleDiagram(widget)
+		case "barChart":
+			return generateBarChart(widget)
+		case "boxGrid":
+			return generateBoxGrid(widget)
+		case "boxPlot":
+			return generateBoxPlot(widget)
+		case "circleDiagram":
+			return generateCircleDiagram(widget)
+		case "compositeShapeDiagram":
+			return generateCompositeShapeDiagram(widget)
+		case "coordinatePlane":
+			return generateCoordinatePlaneComprehensive(widget)
+		case "dataTable":
+			return generateDataTable(widget)
+		case "discreteObjectRatioDiagram":
+			return generateDiscreteObjectRatioDiagram(widget)
+		case "distanceFormulaGraph":
+			return generateDistanceFormulaGraph(widget)
+		case "dotPlot":
+			return generateDotPlot(widget)
+		case "doubleNumberLine":
+			return generateDoubleNumberLine(widget)
+		case "emojiImage":
+			return generateEmojiImage(widget)
+		case "figureComparisonDiagram":
+			return generateFigureComparisonDiagram(widget)
+		case "fractionNumberLine":
+			return generateFractionNumberLine(widget)
+		case "functionPlotGraph":
+			return generateFunctionPlotGraph(widget)
+		case "geometricSolidDiagram":
+			return generateGeometricSolidDiagram(widget)
+		case "hangerDiagram":
+			return generateHangerDiagram(widget)
+		case "histogram":
+			return generateHistogram(widget)
+		case "inequalityNumberLine":
+			return generateInequalityNumberLine(widget)
+		case "lineEquationGraph":
+			return generateLineEquationGraph(widget)
+		case "numberLine":
+			return generateNumberLine(widget)
+		case "numberLineForOpposites":
+			return generateNumberLineForOpposites(widget)
+		case "numberLineWithAction":
+			return generateNumberLineWithAction(widget)
+		case "numberLineWithFractionGroups":
+			return generateNumberLineWithFractionGroups(widget)
+		case "numberSetDiagram":
+			return generateNumberSetDiagram(widget)
+		case "parallelogramTrapezoidDiagram":
+			return generateParallelogramTrapezoidDiagram(widget)
+		case "partitionedShape":
+			return generatePartitionedShape(widget)
+		case "pentagonIntersectionDiagram":
+			return generatePentagonIntersectionDiagram(widget)
+		case "pictograph":
+			return generatePictograph(widget)
+		case "pointPlotGraph":
+			return generatePointPlotGraph(widget)
+		case "polygonGraph":
+			return generatePolygonGraph(widget)
+		case "polyhedronDiagram":
+			return generatePolyhedronDiagram(widget)
+		case "polyhedronNetDiagram":
+			return generatePolyhedronNetDiagram(widget)
+		case "probabilitySpinner":
+			return generateProbabilitySpinner(widget)
+		case "pythagoreanProofDiagram":
+			return generatePythagoreanProofDiagram(widget)
+		case "ratioBoxDiagram":
+			return generateRatioBoxDiagram(widget)
+		case "rectangularFrameDiagram":
+			return generateRectangularFrameDiagram(widget)
+		case "scaleCopiesSlider":
+			return generateScaleCopiesSlider(widget)
+		case "scatterPlot":
+			return generateScatterPlot(widget)
+		case "shapeTransformationGraph":
+			return generateShapeTransformationGraph(widget)
+		case "stackedItemsDiagram":
+			return generateStackedItemsDiagram(widget)
+		case "tapeDiagram":
+			return generateTapeDiagram(widget)
+		case "transformationDiagram":
+			return generateTransformationDiagram(widget)
+		case "treeDiagram":
+			return generateTreeDiagram(widget)
+		case "triangleDiagram":
+			return generateTriangleDiagram(widget)
+		case "unitBlockDiagram":
+			return generateUnitBlockDiagram(widget)
+		case "urlImage":
+			return generateUrlImage(widget)
+		case "vennDiagram":
+			return generateVennDiagram(widget)
+		case "verticalArithmeticSetup":
+			return generateVerticalArithmeticSetup(widget)
+		default:
+			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
+	}
 }

@@ -70,7 +70,7 @@ describe("QTI Compiler Schema OpenAI Compatibility", () => {
 	test("createDynamicAssessmentItemSchema should be OpenAI compatible (no defaults; no invalid $ref siblings)", () => {
 		// Test with a sample widget mapping
 		const widgetMapping: Record<string, keyof typeof typedSchemas> = {
-			widget1: "3dIntersectionDiagram",
+			widget1: "threeDIntersectionDiagram",
 			widget2: "angleDiagram",
 			widget3: "barChart"
 		}

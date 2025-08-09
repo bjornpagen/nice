@@ -28,6 +28,12 @@ const events = {
 			questionId: z.string().min(1)
 		})
 	},
+	// ADD THIS NEW EVENT
+	"qti/item.migrate.focused": {
+		data: z.object({
+			questionId: z.string().min(1)
+		})
+	},
 	"qti/stimulus.migrate": {
 		data: z.object({
 			articleId: z.string().min(1)

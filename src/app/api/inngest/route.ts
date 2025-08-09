@@ -21,6 +21,7 @@ import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orches
 import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
+import { orchestrateFocusedQtiGeneration } from "@/inngest/functions/orchestrate-focused-qti-generation"
 // ADD: Import the two new hardcoded migration orchestrators for items and stimuli separately
 import { orchestrateHardcodedItemMigration } from "@/inngest/functions/orchestrate-hardcoded-item-migration"
 // ADD: Import the new independent functions.
@@ -90,6 +91,7 @@ export const { GET, POST, PUT } = serve({
 		convertPerseusArticleToQtiStimulus,
 		convertPerseusQuestionToQtiItem,
 		convertPerseusQuestionToDifferentiatedQtiItems,
+		orchestrateFocusedQtiGeneration, // ADD THIS LINE
 		requestAllItemMigrationsForCourse,
 		requestAllStimulusMigrationsForCourse,
 		ingestAssessmentItems,

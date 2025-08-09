@@ -9,7 +9,7 @@ const generateDiagram = (props: unknown) => {
 
 // Helper function to create base props with defaults
 const createBaseProps = (overrides: Record<string, unknown> = {}) => ({
-	type: "3dIntersectionDiagram" as const,
+	type: "threeDIntersectionDiagram" as const,
 	width: 400,
 	height: 400,
 	plane: {
@@ -25,7 +25,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 	describe("Rectangular Prism", () => {
 		test("should render rectangular prism with horizontal plane at middle", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -46,7 +46,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render rectangular prism with horizontal plane at bottom", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -67,7 +67,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render rectangular prism with horizontal plane at top", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -88,7 +88,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render rectangular prism with vertical plane at middle", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -109,7 +109,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render rectangular prism with vertical plane at back", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -130,7 +130,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render rectangular prism with vertical plane at front", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -151,7 +151,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render cube (equal dimensions) with horizontal plane", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -174,7 +174,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 	describe("Square Pyramid", () => {
 		test("should render square pyramid with horizontal plane at middle", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -194,7 +194,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render square pyramid with horizontal plane near base", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -214,7 +214,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render square pyramid with horizontal plane near apex", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -234,7 +234,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render square pyramid with vertical plane at middle", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -254,7 +254,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render square pyramid with vertical plane offset", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -276,7 +276,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 	describe("View Options", () => {
 		test("should render with custom projection angle", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -302,7 +302,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render with steeper projection angle", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -328,7 +328,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render with custom intersection color", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -353,7 +353,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render without hidden edges", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -379,7 +379,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render with all view options customized", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -407,7 +407,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 	describe("Edge Cases", () => {
 		test("should render plane at exact bottom (position 0)", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -428,7 +428,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render plane at exact top (position 1)", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -449,7 +449,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render very small solid", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -470,7 +470,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render very large solid", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -491,7 +491,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render with small canvas dimensions", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 200,
 				height: 200,
 				solid: {
@@ -511,7 +511,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render with large canvas dimensions", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 800,
 				height: 600,
 				solid: {
@@ -532,7 +532,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render tall thin rectangular prism", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -553,7 +553,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render flat wide rectangular prism", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -574,7 +574,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render tall narrow pyramid", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -594,7 +594,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render flat wide pyramid", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -616,7 +616,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 	describe("Special Configurations", () => {
 		test("should render with width null (defaults to 400)", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: null,
 				height: 400,
 				solid: {
@@ -637,7 +637,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render with height null (defaults to 400)", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: null,
 				solid: {
@@ -658,7 +658,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render with both width and height null", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: null,
 				height: null,
 				solid: {
@@ -678,7 +678,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render pyramid with plane position at 0.333", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -698,7 +698,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 
 		test("should render prism with plane position at 0.666", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -853,7 +853,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 	describe("Enhanced Schema Features", () => {
 		test("should use default values for simplified schema", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: null, // Will use default 400
 				height: null, // Will use default 400
 				solid: {
@@ -925,7 +925,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 	describe("User Examples", () => {
 		test("should render square pyramid with vertical plane (rectangular cross-section)", () => {
 			const props = {
-				type: "3dIntersectionDiagram" as const,
+				type: "threeDIntersectionDiagram" as const,
 				width: 400,
 				height: 400,
 				solid: {
@@ -953,7 +953,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 		test("should validate positive dimensions", () => {
 			expect(() =>
 				generateDiagram({
-					type: "3dIntersectionDiagram",
+					type: "threeDIntersectionDiagram",
 					solid: {
 						type: "cylinder",
 						radius: -10, // Invalid negative radius
@@ -970,7 +970,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 		test("should validate plane position range", () => {
 			expect(() =>
 				generateDiagram({
-					type: "3dIntersectionDiagram",
+					type: "threeDIntersectionDiagram",
 					solid: {
 						type: "sphere",
 						radius: 30
@@ -986,7 +986,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 		test("should validate oblique angle range", () => {
 			expect(() =>
 				generateDiagram({
-					type: "3dIntersectionDiagram",
+					type: "threeDIntersectionDiagram",
 					solid: {
 						type: "cone",
 						radius: 30,
@@ -1004,7 +1004,7 @@ describe("generateThreeDIntersectionDiagram", () => {
 		test("should validate projection angle range", () => {
 			expect(() =>
 				generateDiagram({
-					type: "3dIntersectionDiagram",
+					type: "threeDIntersectionDiagram",
 					solid: {
 						type: "cylinder",
 						radius: 30,
