@@ -28,7 +28,12 @@ const FigureSchema = z
 			.transform((val) => val ?? 2)
 			.describe("The width of the figure outline."),
 		sideLabels: z
-			.array(z.string().nullable())
+			.array(
+				z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			)
 			.nullable()
 			.describe("An optional array of labels for each side of the figure. Use null for sides without labels."),
 		sideLabelOffset: z

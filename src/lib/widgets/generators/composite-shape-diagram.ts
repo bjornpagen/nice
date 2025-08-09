@@ -34,7 +34,11 @@ const SegmentSchema = z
 			.nullable()
 			.transform((val) => val ?? "solid")
 			.describe("The style of the line."),
-		label: z.string().nullable().describe("An optional text label for this segment's length.")
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional text label for this segment's length.")
 	})
 	.strict()
 

@@ -5,7 +5,11 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 const SegmentSchema = z
 	.object({
 		type: z.enum(["radius", "diameter"]).describe("The type of line segment to draw."),
-		label: z.string().nullable().describe("An optional text label for the segment."),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional text label for the segment."),
 		color: z
 			.string()
 			.nullable()
@@ -29,7 +33,11 @@ const SectorSchema = z
 			.nullable()
 			.transform((val) => val ?? "rgba(100, 181, 246, 0.5)")
 			.describe("The fill color for the sector."),
-		label: z.string().nullable().describe("An optional label for the sector."),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional label for the sector."),
 		showRightAngleMarker: z.boolean().describe("If true and the sector is 90 degrees, shows a right angle marker.")
 	})
 	.strict()
@@ -44,7 +52,11 @@ const ArcSchema = z
 			.nullable()
 			.transform((val) => val ?? "#D32F2F")
 			.describe("The color of the arc."),
-		label: z.string().nullable().describe("An optional label for the arc.")
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional label for the arc.")
 	})
 	.strict()
 
@@ -89,7 +101,11 @@ export const CircleDiagramPropsSchema = z
 		sectors: z.array(SectorSchema).nullable().describe("An array of sectors (pie slices) to draw."),
 		arcs: z.array(ArcSchema).nullable().describe("An array of arcs to highlight on the circumference."),
 		showCenterDot: z.boolean().describe("If true, a dot is drawn at the circle's center."),
-		areaLabel: z.string().nullable().describe("A text label to place in the center of the circle, often for area.")
+		areaLabel: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("A text label to place in the center of the circle, often for area.")
 	})
 	.strict()
 	.describe(

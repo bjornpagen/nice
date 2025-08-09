@@ -27,7 +27,11 @@ const createPolygonObjectSchema = () =>
 				.nullable()
 				.transform((val) => val ?? "rgba(66, 133, 244, 0.5)")
 				.describe("The fill color of the shape."),
-			label: z.string().nullable().describe("An optional label for the shape.")
+			label: z
+				.string()
+				.nullable()
+				.transform((val) => (val === "null" || val === "NULL" ? null : val))
+				.describe("An optional label for the shape.")
 		})
 		.strict()
 

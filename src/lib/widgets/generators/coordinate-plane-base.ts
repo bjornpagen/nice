@@ -31,7 +31,11 @@ export const createPlotPointSchema = () =>
 			id: z.string().describe("A unique identifier for this point, used to reference it when creating polygons."),
 			x: z.number().describe("The value of the point on the horizontal (X) axis."),
 			y: z.number().describe("The value of the point on the vertical (Y) axis."),
-			label: z.string().nullable().describe('An optional text label to display near the point (e.g., "A", "(m, n)").'),
+			label: z
+				.string()
+				.nullable()
+				.transform((val) => (val === "null" || val === "NULL" ? null : val))
+				.describe('An optional text label to display near the point (e.g., "A", "(m, n)").'),
 			color: z
 				.string()
 				.nullable()
@@ -144,7 +148,11 @@ export const createPolygonSchema = () =>
 				.nullable()
 				.transform((val) => val ?? "rgba(66, 133, 244, 1)")
 				.describe("The border color of the polygon."),
-			label: z.string().nullable().describe("An optional label for the polygon itself.")
+			label: z
+				.string()
+				.nullable()
+				.transform((val) => (val === "null" || val === "NULL" ? null : val))
+				.describe("An optional label for the polygon itself.")
 		})
 		.strict()
 
@@ -159,7 +167,11 @@ export const createDistanceSchema = () =>
 			pointId2: z.string().describe("The ID of the second point."),
 			showLegs: z.boolean().describe("If true, draws the 'rise' and 'run' legs of the right triangle."),
 			showLegLabels: z.boolean().describe("If true, labels the legs with their lengths."),
-			hypotenuseLabel: z.string().nullable().describe("An optional label for the hypotenuse (the distance line)."),
+			hypotenuseLabel: z
+				.string()
+				.nullable()
+				.transform((val) => (val === "null" || val === "NULL" ? null : val))
+				.describe("An optional label for the hypotenuse (the distance line)."),
 			color: z
 				.string()
 				.nullable()

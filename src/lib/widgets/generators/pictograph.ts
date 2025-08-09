@@ -21,7 +21,11 @@ const PictographDataRowSchema = z
 export const PictographPropsSchema = z
 	.object({
 		type: z.literal("pictograph"),
-		title: z.string().nullable().describe("An optional title displayed above the pictograph."),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional title displayed above the pictograph."),
 		key: PictographKeySchema.describe("The key that explains the value of a single icon."),
 		data: z
 			.array(PictographDataRowSchema)

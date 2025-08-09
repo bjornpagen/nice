@@ -5,7 +5,11 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 export const VerticalArithmeticSetupPropsSchema = z
 	.object({
 		type: z.literal("verticalArithmeticSetup"),
-		title: z.string().nullable().describe("An optional title or instruction to display above the arithmetic problem."),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional title or instruction to display above the arithmetic problem."),
 		operand1: z
 			.string()
 			.describe(

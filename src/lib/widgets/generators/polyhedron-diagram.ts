@@ -70,7 +70,11 @@ const DiagonalLineSchema = z
 	.object({
 		fromVertexIndex: z.number().int().min(0).describe("The 0-based index of the starting vertex."),
 		toVertexIndex: z.number().int().min(0).describe("The 0-based index of the ending vertex."),
-		label: z.string().nullable().describe("An optional text label for the diagonal's length."),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional text label for the diagonal's length."),
 		style: z
 			.enum(["solid", "dashed", "dotted"])
 			.nullable()
@@ -106,7 +110,11 @@ export const PolyhedronDiagramPropsSchema = z
 			.array(DiagonalLineSchema)
 			.nullable()
 			.describe("An optional array of internal diagonals to draw between vertices."),
-		shadedFace: z.string().nullable().describe('The identifier of a face to shade (e.g., "top_face", "front_face").'),
+		shadedFace: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe('The identifier of a face to shade (e.g., "top_face", "front_face").'),
 		showHiddenEdges: z.boolean().describe("If true, render edges hidden from the camera view as dashed lines.")
 	})
 	.strict()

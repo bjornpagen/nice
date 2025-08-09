@@ -6,7 +6,11 @@ const ScatterPointSchema = z
 	.object({
 		x: z.number().describe("The value of the point on the horizontal (X) axis."),
 		y: z.number().describe("The value of the point on the vertical (Y) axis."),
-		label: z.string().nullable().describe("An optional text label to display near the point.")
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional text label to display near the point.")
 	})
 	.strict()
 
@@ -30,7 +34,11 @@ export const ScatterPlotPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 400)
 			.describe("The total height of the output SVG container in pixels."),
-		title: z.string().nullable().describe("An optional title displayed above or below the plot."),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional title displayed above or below the plot."),
 		// INLINED: The AxisSchema definition is now directly inside the xAxis property.
 		xAxis: z
 			.object({

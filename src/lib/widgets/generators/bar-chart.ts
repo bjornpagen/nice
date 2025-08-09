@@ -20,7 +20,11 @@ const BarDataSchema = z
 // Define Y-axis schema separately to avoid inline object issues with o3 model
 const YAxisSchema = z
 	.object({
-		label: z.string().nullable().describe("An optional label for the vertical value axis."),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional label for the vertical value axis."),
 		min: z
 			.number()
 			.nullable()
@@ -48,8 +52,16 @@ export const BarChartPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 300)
 			.describe("The total height of the output SVG container in pixels."),
-		title: z.string().nullable().describe("An optional title displayed above the chart."),
-		xAxisLabel: z.string().nullable().describe("An optional label for the horizontal category axis."),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional title displayed above the chart."),
+		xAxisLabel: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional label for the horizontal category axis."),
 		yAxis: YAxisSchema,
 		data: z.array(BarDataSchema).describe("An array of bar data objects, one for each category."),
 		barColor: z

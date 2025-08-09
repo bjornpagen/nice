@@ -15,7 +15,11 @@ export const UrlImageWidgetPropsSchema = z
 			),
 		width: z.number().positive().nullable().describe("Optional width for the image in pixels."),
 		height: z.number().positive().nullable().describe("Optional height for the image in pixels."),
-		caption: z.string().nullable().describe("An optional caption to display below the image.")
+		caption: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional caption to display below the image.")
 	})
 	.strict()
 

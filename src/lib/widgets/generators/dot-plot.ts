@@ -28,7 +28,11 @@ export const DotPlotPropsSchema = z
 			.describe("The total height of the output SVG container in pixels."),
 		axis: z
 			.object({
-				label: z.string().nullable().describe('An optional title for the horizontal axis (e.g., "Hourly Wages").'),
+				label: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val))
+					.describe('An optional title for the horizontal axis (e.g., "Hourly Wages").'),
 				min: z.number().describe("The minimum value displayed on the axis."),
 				max: z.number().describe("The maximum value displayed on the axis."),
 				tickInterval: z.number().describe("The numeric interval between labeled tick marks.")

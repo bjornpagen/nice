@@ -55,7 +55,11 @@ function createTableCellSchema() {
 export const DataTablePropsSchema = z
 	.object({
 		type: z.literal("dataTable"),
-		title: z.string().nullable().describe("An optional caption for the table."),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional caption for the table."),
 		columns: z
 			.array(
 				z

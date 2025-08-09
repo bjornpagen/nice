@@ -31,7 +31,11 @@ const SphereDataSchema = z
 const SolidDimensionLabelSchema = z
 	.object({
 		target: z.enum(["radius", "height"]).describe("The dimension to label."),
-		text: z.string().nullable().describe("The text for the label. If omitted, the numerical value will be used.")
+		text: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("The text for the label. If omitted, the numerical value will be used.")
 	})
 	.strict()
 

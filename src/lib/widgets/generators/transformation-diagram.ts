@@ -111,7 +111,11 @@ const createAngleMarkSchema = () =>
 				.nullable()
 				.transform((val) => val ?? 20)
 				.describe("The radius of the angle arc in pixels."),
-			label: z.string().nullable().describe("The angle label (e.g., '90°', '∠ABC', '166°')."),
+			label: z
+				.string()
+				.nullable()
+				.transform((val) => (val === "null" || val === "NULL" ? null : val))
+				.describe("The angle label (e.g., '90°', '∠ABC', '166°')."),
 			labelDistance: z
 				.number()
 				.nullable()
@@ -180,7 +184,11 @@ export const TransformationDiagramPropsSchema = z
 					)
 					.min(3)
 					.describe("An ordered list of vertices defining the polygon."),
-				label: z.string().nullable().describe('An optional text label for the shape (e.g., "A", "B").'),
+				label: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val))
+					.describe('An optional text label for the shape (e.g., "A", "B").'),
 				fillColor: z
 					.string()
 					.nullable()
@@ -223,7 +231,11 @@ export const TransformationDiagramPropsSchema = z
 					)
 					.min(3)
 					.describe("An ordered list of vertices defining the polygon."),
-				label: z.string().nullable().describe('An optional text label for the shape (e.g., "A", "B").'),
+				label: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val))
+					.describe('An optional text label for the shape (e.g., "A", "B").'),
 				fillColor: z
 					.string()
 					.nullable()

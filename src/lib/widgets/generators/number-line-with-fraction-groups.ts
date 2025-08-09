@@ -19,7 +19,11 @@ const NumberLineSegmentSchema = z
 		start: z.number().describe("The numerical starting value of the segment on the line."),
 		end: z.number().describe("The numerical ending value of the segment on the line."),
 		color: z.string().describe('A CSS color for the segment (e.g., "#008B8B", "orange").'),
-		label: z.string().nullable().describe("An optional text label to display with the segment.")
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional text label to display with the segment.")
 	})
 	.strict()
 

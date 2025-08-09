@@ -9,7 +9,11 @@ const BoxPlotAxisSchema = z
 	.object({
 		min: z.number().describe("The minimum value displayed on the axis scale."),
 		max: z.number().describe("The maximum value displayed on the axis scale."),
-		label: z.string().nullable().describe('An optional title for the horizontal axis (e.g., "Number of cookies").'),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe('An optional title for the horizontal axis (e.g., "Number of cookies").'),
 		tickLabels: z
 			.array(z.number())
 			.nullable()

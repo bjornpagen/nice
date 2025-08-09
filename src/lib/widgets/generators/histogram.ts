@@ -27,7 +27,11 @@ export const HistogramPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 300)
 			.describe("The total height of the output SVG container in pixels."),
-		title: z.string().nullable().describe("An optional title displayed above the histogram."),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional title displayed above the histogram."),
 		// INLINED: The HistogramAxisSchema definition is now directly inside the xAxis property.
 		xAxis: z
 			.object({

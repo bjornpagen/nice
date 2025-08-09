@@ -29,7 +29,11 @@ export const DiscreteObjectRatioDiagramPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? "cluster")
 			.describe("The arrangement of the rendered objects."),
-		title: z.string().nullable().describe('An optional title for the diagram (e.g., "Fish in Aquarium").')
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe('An optional title for the diagram (e.g., "Fish in Aquarium").')
 	})
 	.strict()
 	.describe(

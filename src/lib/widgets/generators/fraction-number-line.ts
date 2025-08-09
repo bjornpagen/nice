@@ -5,8 +5,16 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 const TickMarkSchema = z
 	.object({
 		value: z.number().describe("The numerical position of the tick mark on the axis."),
-		topLabel: z.string().nullable().describe('An optional label to display above the tick mark (e.g., "3/8").'),
-		bottomLabel: z.string().nullable().describe('An optional label to display below the tick mark (e.g., "0", "1").'),
+		topLabel: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe('An optional label to display above the tick mark (e.g., "3/8").'),
+		bottomLabel: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe('An optional label to display below the tick mark (e.g., "0", "1").'),
 		isMajor: z
 			.boolean()
 			.describe("If true, the tick mark is rendered taller to indicate significance (e.g., for whole numbers).")

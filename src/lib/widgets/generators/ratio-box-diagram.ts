@@ -22,7 +22,11 @@ const BoxOverlaySchema = z
 		endRow: z.number().int().min(0).describe("The 0-based index of the bottom row the box encloses."),
 		startCol: z.number().int().min(0).describe("The 0-based index of the leftmost column the box encloses."),
 		endCol: z.number().int().min(0).describe("The 0-based index of the rightmost column the box encloses."),
-		label: z.string().nullable().describe("An optional text label for the box.")
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional text label for the box.")
 	})
 	.strict()
 

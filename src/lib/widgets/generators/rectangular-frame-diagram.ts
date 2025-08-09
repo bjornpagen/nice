@@ -18,7 +18,11 @@ const DiagonalLineSchema = z
 	.object({
 		fromVertexIndex: z.number().int().min(0).describe("The 0-based index of the starting vertex."),
 		toVertexIndex: z.number().int().min(0).describe("The 0-based index of the ending vertex."),
-		label: z.string().nullable().describe("An optional text label for the diagonal's length."),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional text label for the diagonal's length."),
 		style: z
 			.enum(["solid", "dashed", "dotted"])
 			.nullable()

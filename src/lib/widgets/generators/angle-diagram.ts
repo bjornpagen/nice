@@ -60,7 +60,11 @@ export const AngleDiagramPropsSchema = z
 						id: z.string().describe("A unique identifier for this point (e.g., 'A', 'B', 'V')."),
 						x: z.number().describe("The horizontal coordinate of the point."),
 						y: z.number().describe("The vertical coordinate of the point."),
-						label: z.string().nullable().describe("An optional text label to display near the point."),
+						label: z
+							.string()
+							.nullable()
+							.transform((val) => (val === "null" || val === "NULL" ? null : val))
+							.describe("An optional text label to display near the point."),
 						shape: z
 							.enum(["circle", "ellipse"])
 							.nullable()
@@ -92,7 +96,11 @@ export const AngleDiagramPropsSchema = z
 							.describe(
 								"An array of exactly three point `id`s in the order [pointOnSide1, vertex, pointOnSide2]. Must contain exactly 3 elements."
 							),
-						label: z.string().nullable().describe('The text label for the angle (e.g., "x", "30°", "2x+1").'),
+						label: z
+							.string()
+							.nullable()
+							.transform((val) => (val === "null" || val === "NULL" ? null : val))
+							.describe('The text label for the angle (e.g., "x", "30°", "2x+1").'),
 						color: z
 							.string()
 							.nullable()

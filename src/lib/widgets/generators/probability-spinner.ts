@@ -38,7 +38,11 @@ export const ProbabilitySpinnerPropsSchema = z
 			.nullable()
 			.transform((val) => val ?? 45)
 			.describe("The angle in degrees where the spinner arrow should point (0 is horizontal to the right)."),
-		title: z.string().nullable().describe("An optional title to display above the spinner diagram.")
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("An optional title to display above the spinner diagram.")
 	})
 	.strict()
 	.describe(

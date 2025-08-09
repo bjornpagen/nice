@@ -16,9 +16,18 @@ const ParallelogramShapeBaseSchema = z
 		sideLength: z.number().positive().describe("The length of the non-base side."),
 		labels: z
 			.object({
-				base: z.string().nullable(),
-				height: z.string().nullable(),
-				sideLength: z.string().nullable()
+				base: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val)),
+				height: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val)),
+				sideLength: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val))
 			})
 			.nullable()
 			.transform((val) => val ?? null)
@@ -40,11 +49,26 @@ const TrapezoidShapeSchema = z
 			.describe("The length of the left non-parallel side. If omitted, a right trapezoid is assumed."),
 		labels: z
 			.object({
-				topBase: z.string().nullable(),
-				bottomBase: z.string().nullable(),
-				height: z.string().nullable(),
-				leftSide: z.string().nullable(),
-				rightSide: z.string().nullable()
+				topBase: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val)),
+				bottomBase: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val)),
+				height: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val)),
+				leftSide: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val)),
+				rightSide: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" ? null : val))
 			})
 			.nullable()
 			.transform((val) => val ?? null)

@@ -62,14 +62,23 @@ const createLineOverlaySchema = () =>
 		from: createGridPointSchema(),
 		to: createGridPointSchema(),
 		style: z.enum(["solid", "dashed", "dotted"]).nullable(),
-		color: z.string().nullable()
+		color: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
 	})
 
 const createFigureSchema = () =>
 	z.object({
 		vertices: z.array(createGridPointSchema()),
-		fillColor: z.string().nullable(),
-		strokeColor: z.string().nullable()
+		fillColor: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val)),
+		strokeColor: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
 	})
 
 const createGridSchema = () =>
