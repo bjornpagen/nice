@@ -66,7 +66,69 @@ export function generateZodSchemaFromObject(
 			const shape: { [key: string]: z.ZodTypeAny } = {}
 			// Use Object.entries to safely iterate over the object
 			const entries = Object.entries(obj)
+			// Compute some conservative parent metadata from entries without type assertions
+			let parentType: string | undefined
+			let parentHasIdentifier = false
+			let parentHasCorrect = false
+			for (const [k, v] of entries) {
+				if (k === "type" && typeof v === "string") parentType = v
+				if (k === "identifier" && typeof v === "string") parentHasIdentifier = true
+				if (k === "correct") parentHasCorrect = true
+			}
+
 			for (const [key, value] of entries) {
+				// Freeze specific identifier and scoring-related fields as literals to guarantee immutability
+				if (key === "type" && typeof value === "string") {
+					// Always freeze 'type' across the structure (widgets, interactions, content blocks)
+					shape[key] = z.literal(value)
+					continue
+				}
+
+				if (key === "slotId" && typeof value === "string") {
+					// Freeze slotId only for slot objects to be conservative
+					if (parentType === "blockSlot" || parentType === "inlineSlot") {
+						shape[key] = z.literal(value)
+						continue
+					}
+				}
+
+				if (key === "responseIdentifier" && typeof value === "string") {
+					// Freeze responseIdentifier only within interaction objects (including unsupportedInteraction)
+					if (
+						parentType === "choiceInteraction" ||
+						parentType === "inlineChoiceInteraction" ||
+						parentType === "textEntryInteraction" ||
+						parentType === "orderInteraction" ||
+						parentType === "unsupportedInteraction"
+					) {
+						shape[key] = z.literal(value)
+						continue
+					}
+				}
+
+				if (key === "shuffle" && typeof value === "boolean") {
+					// Freeze shuffle only for interactions that define it
+					if (
+						parentType === "choiceInteraction" ||
+						parentType === "inlineChoiceInteraction" ||
+						parentType === "orderInteraction"
+					) {
+						shape[key] = z.literal(value)
+						continue
+					}
+				}
+
+				if ((key === "cardinality" || key === "baseType") && typeof value === "string") {
+					// Freeze only for response declaration objects: heuristic check by sibling keys
+					const lacksType = typeof parentType !== "string"
+					const isLikelyResponseDeclaration = parentHasIdentifier && parentHasCorrect && lacksType
+					const isInResponseDeclarationsPath = path.includes("responseDeclarations")
+					if (isLikelyResponseDeclaration || isInResponseDeclarationsPath) {
+						shape[key] = z.literal(value)
+						continue
+					}
+				}
+
 				shape[key] = generateZodSchemaFromObject(value, visited, processing, [...path, key])
 			}
 
