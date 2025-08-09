@@ -1296,6 +1296,12 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 
 ## Image Context (for your analysis only)
 
+### Image URL Mappings
+Mapping of original image URLs to resolved URLs (includes both SVG and raster images).
+\`\`\`json
+${imageContext.resolvedUrlMap.size === 0 ? "{}" : JSON.stringify(Object.fromEntries(imageContext.resolvedUrlMap), null, 2)}
+\`\`\`
+
 ### Raw SVG Content
 If any images are SVGs, their content is provided here for you to analyze.
 \`\`\`json
@@ -1796,6 +1802,12 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 	const userContent = `Generate widget content based on the following inputs. Use the provided image context to understand the visual components.
 
 ## Image Context (for your analysis only)
+
+### Image URL Mappings
+Mapping of original image URLs to resolved URLs (includes both SVG and raster images).
+\`\`\`json
+${imageContext.resolvedUrlMap.size === 0 ? "{}" : JSON.stringify(Object.fromEntries(imageContext.resolvedUrlMap), null, 2)}
+\`\`\`
 
 ### Raw SVG Content
 If any images are SVGs, their content is provided here for you to analyze.

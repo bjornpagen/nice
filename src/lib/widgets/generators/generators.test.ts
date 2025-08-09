@@ -157,6 +157,8 @@ describe("Widget Generators", () => {
 		test("should render basic circle with radius and sectors", () => {
 			const props = {
 				type: "circleDiagram" as const,
+				shape: null, // defaults to "circle"
+				rotation: null, // defaults to 0
 				width: 300,
 				height: 300,
 				radius: 100,
@@ -192,6 +194,8 @@ describe("Widget Generators", () => {
 		test("should render annulus with arcs", () => {
 			const props = {
 				type: "circleDiagram" as const,
+				shape: null, // defaults to "circle"
+				rotation: null, // defaults to 0
 				width: 350,
 				height: 350,
 				radius: 120,
