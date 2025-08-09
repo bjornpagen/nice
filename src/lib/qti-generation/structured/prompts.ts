@@ -288,7 +288,6 @@ ${perseusJson}
     * Use "ordered" ONLY when the sequence of choices matters (e.g., ranking, arranging steps)
     * For ordering/sequencing tasks, ALWAYS use cardinality "ordered" to enable proper sequence validation
 - **Metadata**: Include all required assessment metadata: 'identifier', 'title', 'responseDeclarations', and 'feedback'.
-- **Widget Generation**: When you generate the final widget objects in a later step, ensure all image references are properly resolved.
 
 Return ONLY the JSON object for the assessment shell.
 
@@ -616,7 +615,7 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 **Common Perseus elements that are ALWAYS INTERACTIONS (never widgets):**
 - \`numeric-input\`, \`input-number\`, \`expression\` - text entry
 - \`radio\`, \`dropdown\` - selection
-- \`sorter\`, \`matcher\` - ordering/matching
+- \`sorter\` - ordering (converts to orderInteraction)
 - ANY element where the user types, clicks, selects, or manipulates = **INTERACTION**
 
 **Common Perseus elements that are ALWAYS WIDGETS:**
@@ -1134,10 +1133,19 @@ You must generate a JSON object where:
 - All interaction properties must conform to the QTI interaction schemas.
 - All MathML must be perfectly preserved.
 
+**SUPPORTED INTERACTION TYPES**
+We FULLY support the following QTI interaction types:
+- **choiceInteraction**: Multiple choice questions (maps from Perseus \`radio\` widgets)
+- **orderInteraction**: Ordering/sequencing questions (maps from Perseus \`sorter\` widgets) - students arrange items in correct order
+- **textEntryInteraction**: Numeric/text input (maps from Perseus \`numeric-input\`, \`expression\`, \`input-number\` widgets)
+- **inlineChoiceInteraction**: Dropdown selection within text (maps from Perseus \`dropdown\` widgets)
+
+**CRITICAL: Perseus \`sorter\` widgets should be converted to QTI \`orderInteraction\`.** This is a fully supported interaction type where students drag items to arrange them in the correct sequence.
+
 **UNSUPPORTED INTERACTION HANDLING**
 Some Perseus widgets require complex, dynamic user input that we do not support. You MUST identify these and flag them.
 
-- **Unsupported Perseus Types**: \`interactive-graph\`, \`plotter\`, \`grapher\`, \`sorter\`, \`matcher\`, \`number-line\` (the interactive version, not a static image).
+- **Unsupported Perseus Types**: \`interactive-graph\`, \`plotter\`, \`grapher\`, \`matcher\`, \`number-line\` (the interactive version, not a static image).
 - **Your Task**: Look at the original Perseus JSON. If an interaction slot in the shell corresponds to a Perseus widget with one of these unsupported types, you MUST generate a specific JSON object for that slot:
 \`\`\`json
 {
