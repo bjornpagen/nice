@@ -1405,6 +1405,116 @@ When the assessment shell declares widget slots (especially those following patt
 
 **REMEMBER:** The pipeline will DELETE any widget slots you don't reference. If the shell declares it, YOU MUST USE IT.
 
+### POSITIVE EXAMPLE: Double Number Line Choice Interaction
+
+**Assessment Shell:**
+\`\`\`json
+{
+  "widgets": ["image_1", "choice_a_dnl", "choice_b_dnl"],
+  "interactions": ["choice_interaction"],
+  "body": [
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "The double number line shows that " },
+        { "type": "math", "mathml": "<mn>3</mn>" },
+        { "type": "text", "content": " back-to-school packages contain " },
+        { "type": "math", "mathml": "<mn>36</mn>" },
+        { "type": "text", "content": " pencils." }
+      ]
+    },
+    { "type": "blockSlot", "slotId": "image_1" },
+    {
+      "type": "paragraph",
+      "content": [
+        { "type": "text", "content": "Select the double number line that shows the other values of packages and pencils." }
+      ]
+    },
+    { "type": "blockSlot", "slotId": "choice_interaction" }
+  ]
+}
+\`\`\`
+
+**✅ CORRECT: Properly embeds widget slots in choices**
+\`\`\`json
+{
+  "choice_interaction": {
+    "type": "choiceInteraction",
+    "responseIdentifier": "RESPONSE",
+    "prompt": [
+      { "type": "text", "content": "Select the double number line that shows the other values of packages and pencils." }
+    ],
+    "choices": [
+      {
+        "identifier": "A",
+        "content": [
+          { "type": "blockSlot", "slotId": "choice_a_dnl" }
+        ],
+        "feedback": null
+      },
+      {
+        "identifier": "B",
+        "content": [
+          { "type": "blockSlot", "slotId": "choice_b_dnl" }
+        ],
+        "feedback": null
+      }
+    ],
+    "shuffle": true,
+    "maxChoices": 1,
+    "minChoices": 1
+  }
+}
+\`\`\`
+
+**❌ WRONG: Text descriptions instead of widget slots (causes widgets to be deleted!)**
+\`\`\`json
+{
+  "choice_interaction": {
+    "type": "choiceInteraction",
+    "responseIdentifier": "RESPONSE",
+    "prompt": [
+      { "type": "text", "content": "Select the double number line that shows the other values of packages and pencils." }
+    ],
+    "choices": [
+      {
+        "identifier": "A",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "content": "A double number line with 5 equally spaced tick marks. The line labeled Packages reads 0, 1, 2, 3, 4. The line labeled Pencils reads 0, 12, 24, 36, 48."
+              }
+            ]
+          }
+        ],
+        "feedback": null
+      },
+      {
+        "identifier": "B",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "content": "A double number line with 5 equally spaced tick marks. The line labeled Packages reads 0, 1, 2, 3, 4. The line labeled Pencils reads 0, 10, 22, 36, 52."
+              }
+            ]
+          }
+        ],
+        "feedback": null
+      }
+    ],
+    "shuffle": true,
+    "maxChoices": 1,
+    "minChoices": 1
+  }
+}
+\`\`\`
+
 **For inlineChoiceInteraction:**
 WRONG: \`content: "Option A"\` (plain string)
 CORRECT: \`content: [{ "type": "text", "content": "Option A" }]\`
