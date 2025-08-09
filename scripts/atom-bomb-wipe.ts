@@ -16,7 +16,7 @@
  *   bun run src/scripts/atom-bomb-wipe.ts courses "test-"
  *   bun run src/scripts/atom-bomb-wipe.ts all "demo-" --delete
  */
-
+//bloo
 import * as readline from "node:readline/promises"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
