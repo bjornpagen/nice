@@ -1315,6 +1315,96 @@ CORRECT: \`content: [{ "type": "paragraph", "content": [{ "type": "text", "conte
   }
   \`\`\`
 
+**⚠️ CRITICAL NEW SECTION: MANDATORY USE OF ALL DECLARED WIDGET SLOTS IN INTERACTIONS**
+
+**ABSOLUTE REQUIREMENT: You MUST use ALL widget slots declared in the assessment shell that are not already used in the body.**
+
+When the assessment shell declares widget slots (especially those following patterns like \\\`choice_a_table\\\`, \\\`choice_b_table\\\`, or \\\`RESPONSE__A__v1\\\`), these are widgets specifically reserved for embedding inside interaction choices. The pipeline has already:
+1. Identified these widgets in Shot 1
+2. Mapped them to specific widget types in Shot 2
+3. Reserved them for use in this interaction generation step
+
+**FAILURE TO USE DECLARED WIDGET SLOTS WILL CAUSE THEM TO BE PRUNED AND THE QUESTION TO FAIL.**
+
+**Real Example of This Critical Error:**
+
+**Assessment Shell (showing declared but unused widget slots):**
+\`\`\`json
+{
+  "widgets": ["stimulus_dnl", "choice_a_table", "choice_b_table"],
+  "body": [
+    { "type": "blockSlot", "slotId": "stimulus_dnl" },
+    { "type": "blockSlot", "slotId": "choice_interaction" }
+  ]
+}
+\`\`\`
+
+**WRONG (Creating text representations instead of using widget slots):**
+\`\`\`json
+{
+  "choice_interaction": {
+    "type": "choiceInteraction",
+    "choices": [
+      {
+        "identifier": "A",
+        "content": [
+          { "type": "paragraph", "content": [{ "type": "text", "content": "Seconds | Meters" }] },
+          { "type": "paragraph", "content": [{ "type": "text", "content": "8 | 225" }] },
+          { "type": "paragraph", "content": [{ "type": "text", "content": "12 | 300" }] }
+        ]
+      },
+      {
+        "identifier": "B",
+        "content": [
+          { "type": "paragraph", "content": [{ "type": "text", "content": "Seconds | Meters" }] },
+          { "type": "paragraph", "content": [{ "type": "text", "content": "3 | 75" }] },
+          { "type": "paragraph", "content": [{ "type": "text", "content": "5 | 125" }] }
+        ]
+      }
+    ]
+  }
+}
+\`\`\`
+**Why this is WRONG:** The shell declared \\\`choice_a_table\\\` and \\\`choice_b_table\\\` widgets, but the interaction didn't use them. These widgets will be pruned as "unused" and never generated, breaking the question.
+
+**CORRECT (Using the declared widget slots):**
+\`\`\`json
+{
+  "choice_interaction": {
+    "type": "choiceInteraction",
+    "choices": [
+      {
+        "identifier": "A",
+        "content": [
+          { "type": "blockSlot", "slotId": "choice_a_table" }
+        ]
+      },
+      {
+        "identifier": "B",
+        "content": [
+          { "type": "blockSlot", "slotId": "choice_b_table" }
+        ]
+      }
+    ]
+  }
+}
+\`\`\`
+
+**MANDATORY CHECKLIST FOR INTERACTION GENERATION:**
+1. Check the assessment shell's \\\`widgets\\\` array for ALL declared widget slots
+2. Identify which widgets are already used in the \\\`body\\\` 
+3. The remaining unused widgets MUST be embedded in your interaction choices
+4. Use the exact slotId from the shell - do not create new slot names
+5. For choice-level visuals (tables, images, diagrams), ALWAYS use blockSlot, never create text representations
+
+**Common Widget Slot Patterns to Watch For:**
+- \\\`choice_a_table\\\`, \\\`choice_b_table\\\`, etc. - Tables for each choice
+- \\\`RESPONSE__A__v1\\\`, \\\`RESPONSE__B__v1\\\`, etc. - Visual widgets for choices
+- \\\`option_1_diagram\\\`, \\\`option_2_diagram\\\`, etc. - Diagrams for each choice
+- Any widget slot not used in the body MUST be used in the interaction
+
+**REMEMBER:** The pipeline will DELETE any widget slots you don't reference. If the shell declares it, YOU MUST USE IT.
+
 **For inlineChoiceInteraction:**
 WRONG: \`content: "Option A"\` (plain string)
 CORRECT: \`content: [{ "type": "text", "content": "Option A" }]\`
