@@ -8,6 +8,7 @@ const ProbabilitySpinnerSectorGroupSchema = z
 		emoji: z
 			.string()
 			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
 			.describe("The emoji to display in this group's sectors. Can be null for color-only sectors."),
 		color: z
 			.string()

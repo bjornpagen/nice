@@ -1,5 +1,118 @@
 import type { AssessmentItemInput } from "./schemas"
 
+export const probabilityNotPurpleSpinner: AssessmentItemInput = {
+	identifier: "probability-not-purple-spinner",
+	title: "Probability of not purple on a spinner",
+	responseDeclarations: [
+		{
+			identifier: "RESPONSE",
+			cardinality: "single",
+			baseType: "string",
+			// Using "3/4" allows compiler to generate decimal equivalents (0.75 and .75)
+			correct: "3/4"
+		}
+	],
+	widgets: {
+		image_1: {
+			type: "probabilitySpinner",
+			title: null,
+			width: 200,
+			groups: [
+				{
+					color: "#28ae7b",
+					count: 1,
+					emoji: null
+				},
+				{
+					color: "#6495ed",
+					count: 1,
+					emoji: null
+				},
+				{
+					color: "#9d38bd",
+					count: 1,
+					emoji: null
+				},
+				{
+					color: "#ff00af",
+					count: 1,
+					emoji: null
+				}
+			],
+			height: 200,
+			pointerAngle: 80
+		}
+	},
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "You spin the spinner shown below once. The spinner has " },
+				{ type: "math", mathml: "<mn>4</mn>" },
+				{ type: "text", content: " equal sectors colored pink, purple, blue, and green." }
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "What is " },
+				{ type: "math", mathml: "<mi>P</mi><mo>(</mo><mtext>not purple</mtext><mo>)</mo>" },
+				{ type: "text", content: "?" }
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "If necessary, round your answer to " },
+				{ type: "math", mathml: "<mn>2</mn>" },
+				{ type: "text", content: " decimal places." }
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Answer: " },
+				{ type: "inlineSlot", slotId: "text_entry" }
+			]
+		},
+		{
+			type: "blockSlot",
+			slotId: "image_1"
+		}
+	],
+	interactions: {
+		text_entry: {
+			type: "textEntryInteraction",
+			responseIdentifier: "RESPONSE",
+			expectedLength: 4
+		}
+	},
+	feedback: {
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! The probability of not landing on purple is " },
+					{ type: "math", mathml: "<mfrac><mn>3</mn><mn>4</mn></mfrac>" },
+					{ type: "text", content: " = " },
+					{ type: "math", mathml: "<mn>0.75</mn>" },
+					{ type: "text", content: " (or " },
+					{ type: "math", mathml: "<mn>75</mn><mo>%</mo>" },
+					{ type: "text", content: ")." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. There are 3 favorable outcomes out of 4 equally likely outcomes." }
+				]
+			}
+		]
+	}
+}
+
 export const doubleNumberLineRatio: AssessmentItemInput = {
 	identifier: "double-number-line-ratio",
 	title: "Equivalent Ratios on a Double Number Line",
@@ -2756,6 +2869,7 @@ export const threeDataTablesMultipleChoice: AssessmentItemInput = {
 }
 
 export const allExamples: AssessmentItemInput[] = [
+	probabilityNotPurpleSpinner,
 	greatestCommonFactor,
 	doubleNumberLineRatio,
 	evalFractionalExponents,
