@@ -420,7 +420,12 @@ export function AssessmentStepper({
 				correctQuestions: correctAnswersCount,
 				accuracy: accuracy,
 				xp: xpResult.finalXp, // CALCULATED XP (after multiplier applied)
-				multiplier: multiplier
+				multiplier: multiplier,
+				attempt: attemptNumber,
+				startedAt: assessmentStartTimeRef.current?.toISOString(),
+				lessonType: contentType.toLowerCase(),
+				completedAt: new Date().toISOString(),
+				courseSourcedId: onerosterCourseSourcedId
 			}
 
 			// NOW save the assessment result with metadata

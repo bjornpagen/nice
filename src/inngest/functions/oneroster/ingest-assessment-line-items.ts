@@ -6,24 +6,16 @@ import { oneroster } from "@/lib/clients"
 // Define the Zod schema for the line item payload
 const AssessmentLineItemSchema = z.object({
 	sourcedId: z.string(),
-	title: z.string(),
 	status: z.literal("active"),
-	category: z.object({
-		sourcedId: z.string(),
-		type: z.literal("category")
-	}),
-	parentAssessmentLineItem: z
-		.object({
-			sourcedId: z.string(),
-			type: z.literal("assessmentLineItem")
-		})
-		.optional(),
+	title: z.string(),
 	componentResource: z
 		.object({
-			sourcedId: z.string(),
-			type: z.literal("componentResource")
+			sourcedId: z.string()
 		})
 		.optional(),
+	course: z.object({
+		sourcedId: z.string()
+	}),
 	metadata: z.record(z.string(), z.any()).optional()
 })
 
@@ -70,21 +62,14 @@ export const ingestAssessmentLineItems = inngest.createFunction(
 			return { status: "skipped", reason: "no_line_items" }
 		}
 
-		// Group items by their hierarchical level and type
-		const courseChallenges = validatedItems.filter((li) => !li.parentAssessmentLineItem && !li.componentResource)
-		const unitTests = validatedItems.filter(
-			(li) =>
-				li.parentAssessmentLineItem &&
-				courseChallenges.some((cc) => cc.sourcedId === li.parentAssessmentLineItem?.sourcedId)
+		// Group items by their type based on metadata
+		const courseChallenges = validatedItems.filter((li) => li.metadata?.lessonType === "coursechallenge")
+		const unitTests = validatedItems.filter((li) => li.metadata?.lessonType === "unittest")
+		const quizzes = validatedItems.filter((li) => li.metadata?.lessonType === "quiz")
+		const exercises = validatedItems.filter((li) => li.metadata?.lessonType === "exercise")
+		const completionItems = validatedItems.filter(
+			(li) => li.metadata?.lessonType === "video" || li.metadata?.lessonType === "article"
 		)
-		const quizzes = validatedItems.filter(
-			(li) =>
-				li.parentAssessmentLineItem && unitTests.some((ut) => ut.sourcedId === li.parentAssessmentLineItem?.sourcedId)
-		)
-		const exercises = validatedItems.filter(
-			(li) => li.parentAssessmentLineItem && quizzes.some((q) => q.sourcedId === li.parentAssessmentLineItem?.sourcedId)
-		)
-		const completionItems = validatedItems.filter((li) => !li.parentAssessmentLineItem && li.componentResource)
 
 		const runUpsertBatch = async (items: AssessmentLineItemPayload[], stepName: string) => {
 			if (items.length === 0) {

@@ -340,12 +340,18 @@ export type AssessmentLineItem = z.infer<typeof AssessmentLineItemSchema>
 
 const CreateAssessmentLineItemInputSchema = z.object({
 	sourcedId: z.string(),
+	status: z.literal("active"),
 	title: z.string(),
-	category: GUIDRefWriteSchema,
-	componentResource: GUIDRefWriteSchema.optional(),
-	description: z.string().optional(),
-	resultValueMin: z.number().optional(),
-	resultValueMax: z.number().optional()
+	componentResource: z
+		.object({
+			sourcedId: z.string()
+		})
+		.optional(),
+	course: z.object({
+		sourcedId: z.string()
+	}),
+	metadata: z.record(z.string(), z.any()).optional(),
+	parentAssessmentLineItem: z.null().optional() // Allow explicit null to remove field
 })
 export type CreateAssessmentLineItemInput = z.infer<typeof CreateAssessmentLineItemInputSchema>
 

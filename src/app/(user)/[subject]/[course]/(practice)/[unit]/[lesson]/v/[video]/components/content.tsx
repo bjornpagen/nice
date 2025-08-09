@@ -99,7 +99,7 @@ export function Content({
 					name: video.title,
 					id: video.id
 				},
-				process: true
+				process: false
 			}
 
 			// Send cumulative time event
@@ -222,7 +222,7 @@ export function Content({
 						name: video.title,
 						id: video.id
 					},
-					process: true
+					process: false
 				}
 
 				// Send cumulative time event

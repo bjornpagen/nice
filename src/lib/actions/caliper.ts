@@ -14,6 +14,7 @@ import type {
 	TimebackTimeSpentEvent
 } from "@/lib/caliper"
 import { caliper, oneroster } from "@/lib/clients"
+import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 import { calculateAwardedXp, MASTERY_THRESHOLD } from "@/lib/xp"
 
 const SENSOR_ID = env.NEXT_PUBLIC_APP_DOMAIN
@@ -128,7 +129,7 @@ export async function sendCaliperActivityCompletedEvent(
 		// Fallback to checking proficiency ourselves (for backward compatibility)
 		const currentResultsResult = await errors.try(
 			oneroster.getAllResults({
-				filter: `student.sourcedId='${userSourcedId}' AND assessmentLineItem.sourcedId='${assessmentLineItemId}'`
+				filter: `student.sourcedId='${userSourcedId}' AND assessmentLineItem.sourcedId='${getAssessmentLineItemId(assessmentLineItemId)}'`
 			})
 		)
 

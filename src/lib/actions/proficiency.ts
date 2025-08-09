@@ -5,6 +5,7 @@ import * as logger from "@superbuilders/slog"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { oneroster, qti } from "@/lib/clients"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 
 interface ExercisePerformance {
 	exerciseId: string
@@ -135,7 +136,7 @@ export async function updateProficiencyFromAssessment(
 		const currentResultsPromises = onerosterResourceSourcedIds.map(async (onerosterResourceSourcedId) => {
 			const resultsResult = await errors.try(
 				oneroster.getAllResults({
-					filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${onerosterResourceSourcedId}'`
+					filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${getAssessmentLineItemId(onerosterResourceSourcedId)}'`
 				})
 			)
 

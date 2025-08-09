@@ -111,15 +111,13 @@ interface OneRosterClass {
 // ADDED: Interface for AssessmentLineItem
 interface OneRosterAssessmentLineItem {
 	sourcedId: string
-	title: string
 	status: "active"
-	course?: {
-		sourcedId: string
-		type: "course"
-	}
+	title: string
 	componentResource?: {
 		sourcedId: string
-		type: "componentResource"
+	}
+	course: {
+		sourcedId: string
 	}
 	metadata?: Record<string, unknown>
 }
@@ -267,6 +265,14 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		...exercises.map((e) => [e.id, { ...e, type: "Exercise" }] as const)
 	])
 
+	// Create a mapping from exercise ID to lesson ID
+	const exerciseToLessonMap = new Map<string, string>()
+	for (const lc of lessonContents) {
+		if (lc.contentType === "Exercise") {
+			exerciseToLessonMap.set(lc.contentId, lc.lessonId)
+		}
+	}
+
 	// 3. Transform the data into the OneRoster structure.
 	logger.debug("transforming database entities to oneroster objects", { courseId })
 
@@ -333,10 +339,19 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 	if (courseChallenge) {
 		onerosterPayload.assessmentLineItems.push({
-			sourcedId: `nice_${courseChallenge.id}`,
-			title: courseChallenge.title,
+			sourcedId: `nice_${courseChallenge.id}_ali`,
 			status: "active",
-			course: { sourcedId: `nice_${course.id}`, type: "course" }
+			title: courseChallenge.title,
+			componentResource: {
+				sourcedId: `nice_${course.id}_${courseChallenge.id}`
+			},
+			course: {
+				sourcedId: `nice_${course.id}`
+			},
+			metadata: {
+				lessonType: "coursechallenge",
+				courseSourcedId: `nice_${course.id}`
+			}
 		})
 	}
 
@@ -359,32 +374,60 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 		if (unitTest) {
 			onerosterPayload.assessmentLineItems.push({
-				sourcedId: `nice_${unitTest.id}`,
-				title: unitTest.title,
+				sourcedId: `nice_${unitTest.id}_ali`,
 				status: "active",
-				course: { sourcedId: `nice_${course.id}`, type: "course" }
+				title: unitTest.title,
+				componentResource: {
+					sourcedId: `nice_${unit.id}_${unitTest.id}`
+				},
+				course: {
+					sourcedId: `nice_${course.id}`
+				},
+				metadata: {
+					lessonType: "unittest",
+					courseSourcedId: `nice_${course.id}`
+				}
 			})
 		}
 
 		const unitQuizzes = assessments.filter((a) => a.parentId === unit.id && a.type === "Quiz")
 		for (const quiz of unitQuizzes.sort((a, b) => a.ordering - b.ordering)) {
 			onerosterPayload.assessmentLineItems.push({
-				sourcedId: `nice_${quiz.id}`,
-				title: quiz.title,
+				sourcedId: `nice_${quiz.id}_ali`,
 				status: "active",
-				course: { sourcedId: `nice_${course.id}`, type: "course" }
+				title: quiz.title,
+				componentResource: {
+					sourcedId: `nice_${unit.id}_${quiz.id}`
+				},
+				course: {
+					sourcedId: `nice_${course.id}`
+				},
+				metadata: {
+					lessonType: "quiz",
+					courseSourcedId: `nice_${course.id}`
+				}
 			})
 
 			// Find exercises for this quiz and create their line items
 			const quizExerciseIds = exercisesByAssessmentId.get(quiz.id) || []
 			for (const exerciseId of quizExerciseIds) {
 				const exercise = exercises.find((e) => e.id === exerciseId)
-				if (exercise) {
+				const lessonId = exerciseToLessonMap.get(exerciseId)
+				if (exercise && lessonId) {
 					onerosterPayload.assessmentLineItems.push({
-						sourcedId: `nice_${exercise.id}`,
-						title: exercise.title,
+						sourcedId: `nice_${exercise.id}_ali`,
 						status: "active",
-						course: { sourcedId: `nice_${course.id}`, type: "course" }
+						title: exercise.title,
+						componentResource: {
+							sourcedId: `nice_${lessonId}_${exercise.id}`
+						},
+						course: {
+							sourcedId: `nice_${course.id}`
+						},
+						metadata: {
+							lessonType: "exercise",
+							courseSourcedId: `nice_${course.id}`
+						}
 					})
 				}
 			}
@@ -474,13 +517,18 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						// --- NEW: Add flat line items for videos and articles here ---
 						if (content.type === "Video" || content.type === "Article") {
 							onerosterPayload.assessmentLineItems.push({
-								sourcedId: contentSourcedId, // The ID matches the resource ID
-								title: `Progress for: ${content.title}`,
+								sourcedId: `${contentSourcedId}_ali`, // The ID is resource ID + _ali
 								status: "active",
-								course: { sourcedId: `nice_${course.id}`, type: "course" },
+								title: `Progress for: ${content.title}`,
 								componentResource: {
-									sourcedId: `nice_${lesson.id}_${content.id}`,
-									type: "componentResource"
+									sourcedId: `nice_${lesson.id}_${content.id}`
+								},
+								course: {
+									sourcedId: `nice_${course.id}`
+								},
+								metadata: {
+									lessonType: content.type.toLowerCase(),
+									courseSourcedId: `nice_${course.id}`
 								}
 							})
 						}

@@ -5,6 +5,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
 import { oneroster, powerpath, qti } from "@/lib/clients"
+import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 
 /**
  * IMPORTANT NOTE ABOUT POWERPATH TERMINOLOGY:
@@ -377,7 +378,7 @@ export async function checkExistingProficiency(
 
 	const resultsResult = await errors.try(
 		oneroster.getAllResults({
-			filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${onerosterAssessmentSourcedId}'`
+			filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${getAssessmentLineItemId(onerosterAssessmentSourcedId)}'`
 		})
 	)
 

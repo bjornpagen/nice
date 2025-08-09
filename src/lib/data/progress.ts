@@ -12,6 +12,7 @@ import { oneroster } from "@/lib/clients"
 import { getAllEventsForUser } from "@/lib/data/fetchers/caliper"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { Activity } from "@/lib/types/domain"
+import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
 
 // Original types and functions for course/unit progress
 export type AssessmentProgress = {
@@ -77,20 +78,23 @@ export async function getUserUnitProgress(
 			for (const result of resultsResponse.data) {
 				// MODIFIED: Check if score is a valid number before using it.
 				if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
-					progressMap.set(result.assessmentLineItem.sourcedId, {
+					const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
+					progressMap.set(resourceId, {
 						completed: true,
 						score: result.score,
 						proficiency: calculateProficiency(result.score)
 					})
 					// MODIFIED: Handle partially graded items that have a score.
 				} else if (result.scoreStatus === "partially graded" && typeof result.score === "number") {
-					progressMap.set(result.assessmentLineItem.sourcedId, {
+					const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
+					progressMap.set(resourceId, {
 						completed: false,
 						score: result.score
 					})
 					// MODIFIED: Handle completed items that have no score (like article views).
 				} else if (result.scoreStatus === "fully graded") {
-					progressMap.set(result.assessmentLineItem.sourcedId, {
+					const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
+					progressMap.set(resourceId, {
 						completed: true
 						// No score or proficiency is set.
 					})

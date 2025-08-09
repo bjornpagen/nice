@@ -10,6 +10,7 @@ import * as cacheUtils from "@/lib/cache"
 import { invalidateCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
 import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
+import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 
 /**
  * Tracks that a user has viewed an article by creating a "completed"
@@ -27,8 +28,8 @@ export async function trackArticleView(
 ) {
 	logger.info("tracking article view", { onerosterUserSourcedId, onerosterArticleResourceSourcedId })
 
-	// The line item sourcedId is the same as the resource sourcedId
-	const onerosterLineItemSourcedId = onerosterArticleResourceSourcedId
+	// The line item sourcedId is the resource sourcedId + '_ali'
+	const onerosterLineItemSourcedId = getAssessmentLineItemId(onerosterArticleResourceSourcedId)
 
 	// The result sourcedId follows our pattern
 	const onerosterResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterLineItemSourcedId}`
@@ -140,8 +141,8 @@ export async function updateVideoProgress(
 		})
 	}
 
-	// The line item sourcedId is the same as the video resource sourcedId
-	const onerosterLineItemSourcedId = onerosterVideoResourceSourcedId
+	// The line item sourcedId is the video resource sourcedId + '_ali'
+	const onerosterLineItemSourcedId = getAssessmentLineItemId(onerosterVideoResourceSourcedId)
 	// The result sourcedId follows our pattern
 	const onerosterResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterLineItemSourcedId}`
 
@@ -337,8 +338,8 @@ export async function saveAssessmentResult(
 		isInteractiveAssessment
 	})
 
-	// The line item sourcedId is the same as the resource sourcedId
-	const onerosterLineItemSourcedId = resourceId
+	// The line item sourcedId is the resource sourcedId + '_ali'
+	const onerosterLineItemSourcedId = getAssessmentLineItemId(resourceId)
 
 	// The result sourcedId follows our pattern
 	const onerosterResultSourcedId = `nice_${userId}_${onerosterLineItemSourcedId}`
@@ -448,7 +449,7 @@ export async function saveAssessmentResult(
 						name: assessmentTitle,
 						id: resourceId
 					},
-					process: true
+					process: false
 				}
 
 				const performance = {

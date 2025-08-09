@@ -6,6 +6,7 @@ import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { oneroster } from "@/lib/clients"
 import { calculateBankedXpForResources } from "@/lib/data/fetchers/caliper"
 import type { Resource } from "@/lib/oneroster"
+import { getAssessmentLineItemId, getAssessmentLineItemIds } from "@/lib/utils/assessment-line-items"
 
 /**
  * Calculates banked XP for a quiz. This is a hybrid function:
@@ -205,7 +206,7 @@ export async function awardBankedXpForAssessment(
 		const videoResourceIds = videoResources.map((r) => r.sourcedId)
 		const videoResults = await errors.try(
 			oneroster.getAllResults({
-				filter: `student.sourcedId='${userId}' AND assessmentLineItem.sourcedId@'${videoResourceIds.join(",")}'`
+				filter: `student.sourcedId='${userId}' AND assessmentLineItem.sourcedId@'${getAssessmentLineItemIds(videoResourceIds).join(",")}'`
 			})
 		)
 
@@ -215,7 +216,9 @@ export async function awardBankedXpForAssessment(
 			for (const result of videoResults.data) {
 				// A score of 1.0 indicates 95%+ completion
 				if (result.score === 1.0) {
-					const video = videoResources.find((v) => v.sourcedId === result.assessmentLineItem.sourcedId)
+					const video = videoResources.find(
+						(v) => getAssessmentLineItemId(v.sourcedId) === result.assessmentLineItem.sourcedId
+					)
 					if (video) {
 						totalBankedXp += video.expectedXp
 						awardedResourceIds.push(video.sourcedId)

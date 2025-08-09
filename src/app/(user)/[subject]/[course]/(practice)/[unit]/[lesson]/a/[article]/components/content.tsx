@@ -87,7 +87,7 @@ export function Content({
 								name: article.title,
 								id: article.id
 							},
-							process: true
+							process: false
 						}
 						void sendCaliperTimeSpentEvent(actorForCleanup, contextForCleanup, durationInSeconds)
 					}

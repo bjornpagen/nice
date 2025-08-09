@@ -10,6 +10,7 @@ import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 import type { Lesson, ProfileCourse, Quiz, Unit, UnitTest } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
+import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
 import type { ClassReadSchemaType } from "../oneroster"
 
 // NEW: Interface for unit proficiency tracking
@@ -217,7 +218,8 @@ async function fetchUnitProficiencies(
 	const resultsMap = new Map<string, { score: number; isFullyGraded: boolean }>()
 	for (const result of resultsResponse.data) {
 		if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
-			resultsMap.set(result.assessmentLineItem.sourcedId, {
+			const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
+			resultsMap.set(resourceId, {
 				score: result.score,
 				isFullyGraded: true
 			})
