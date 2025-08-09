@@ -113,6 +113,216 @@ export const probabilityNotPurpleSpinner: AssessmentItemInput = {
 	}
 }
 
+export const linearModelEquationPrediction: AssessmentItemInput = {
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content:
+						"Daniel wants to predict how far he can hike based on the time he spends on the hike. He collected some data on the time (in hours) and distance (in kilometers) of some of his previous hikes. A line was fit to the data to model the relationship."
+				}
+			]
+		},
+		{ type: "blockSlot", slotId: "image_1" },
+		{
+			type: "paragraph",
+			content: [{ type: "text", content: "Which of these linear equations best describes the given model?" }]
+		},
+		{ type: "blockSlot", slotId: "choice_interaction" },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Based on this equation, estimate the distance Daniel can hike in " },
+				{ type: "math", mathml: "<mn>6</mn>" },
+				{ type: "text", content: " hours." }
+			]
+		},
+		{ type: "paragraph", content: [{ type: "text", content: "Round your answer to the nearest tenth." }] },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "inlineSlot", slotId: "text_entry" },
+				{ type: "text", content: " km" }
+			]
+		}
+	],
+	title: "Select a linear model from a scatterplot and make a prediction",
+	widgets: {
+		image_1: {
+			type: "scatterPlot",
+			title: "",
+			width: 359,
+			xAxis: { max: 10, min: 0, label: "Time (hours)", gridLines: true, tickInterval: 1 },
+			yAxis: { max: 20, min: 0, label: "Distance (kilometers)", gridLines: true, tickInterval: 2 },
+			height: 354,
+			points: [
+				{ x: 2, y: 5, label: "" },
+				{ x: 2.75, y: 8, label: "" },
+				{ x: 4, y: 9.5, label: "" },
+				{ x: 7.25, y: 16, label: "" },
+				{ x: 8.5, y: 18, label: "" }
+			],
+			trendLine: "linear"
+		}
+	},
+	feedback: {
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! A reasonable linear model fits the points with a slope of " },
+					{ type: "math", mathml: "<mn>2</mn>" },
+					{ type: "text", content: " and a vertical intercept of " },
+					{ type: "math", mathml: "<mn>1.5</mn>" },
+					{ type: "text", content: ", so the equation is " },
+					{
+						type: "math",
+						mathml:
+							'<mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo>=</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1.5</mn></mrow>'
+					},
+					{ type: "text", content: "." }
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Using this model for " },
+					{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mn>6</mn>" },
+					{ type: "text", content: " hours gives " },
+					{
+						type: "math",
+						mathml:
+							'<mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo>=</mo><mn>2</mn><mo>(</mo><mn>6</mn><mo>)</mo><mo>+</mo><mn>1.5</mn><mo>=</mo><mn>12</mn><mo>+</mo><mn>1.5</mn><mo>=</mo><mn>13.5</mn></mrow>'
+					},
+					{ type: "text", content: " km." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Not quite. Estimate the slope from two clear points on the fitted line, then read the vertical intercept."
+					}
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "For example, using points " },
+					{ type: "math", mathml: "<mo>(</mo><mn>0</mn><mo>,</mo><mn>1.5</mn><mo>)</mo>" },
+					{ type: "text", content: " and " },
+					{ type: "math", mathml: "<mo>(</mo><mn>1</mn><mo>,</mo><mn>3.5</mn><mo>)</mo>" },
+					{ type: "text", content: " on the line, the slope is " },
+					{
+						type: "math",
+						mathml:
+							"<mrow><mfrac><mrow><mn>3.5</mn><mo>-</mo><mn>1.5</mn></mrow><mrow><mn>1</mn><mo>-</mo><mn>0</mn></mrow></mfrac><mo>=</mo><mn>2</mn></mrow>"
+					},
+					{ type: "text", content: " and the intercept is " },
+					{ type: "math", mathml: "<mn>1.5</mn>" },
+					{ type: "text", content: ", giving the model " },
+					{
+						type: "math",
+						mathml:
+							'<mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo>=</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1.5</mn></mrow>'
+					},
+					{ type: "text", content: ". Then evaluate it at " },
+					{ type: "math", mathml: "<mi>x</mi><mo>=</mo><mn>6</mn>" },
+					{ type: "text", content: " to find the predicted distance." }
+				]
+			}
+		]
+	},
+	identifier: "linear-model-equation-prediction",
+	interactions: {
+		text_entry: { type: "textEntryInteraction", expectedLength: null, responseIdentifier: "text_entry" },
+		choice_interaction: {
+			type: "choiceInteraction",
+			prompt: [],
+			choices: [
+				{
+					content: [
+						{
+							type: "paragraph",
+							content: [
+								{
+									type: "math",
+									mathml:
+										'<mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo>=</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1.5</mn></mrow>'
+								}
+							]
+						}
+					],
+					feedback: null,
+					identifier: "A"
+				},
+				{
+					content: [
+						{
+							type: "paragraph",
+							content: [
+								{
+									type: "math",
+									mathml:
+										'<mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo>=</mo><mi>x</mi><mo>+</mo><mn>1.5</mn></mrow>'
+								}
+							]
+						}
+					],
+					feedback: null,
+					identifier: "B"
+				},
+				{
+					content: [
+						{
+							type: "paragraph",
+							content: [
+								{
+									type: "math",
+									mathml:
+										'<mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo>=</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>1.5</mn></mrow>'
+								}
+							]
+						}
+					],
+					feedback: null,
+					identifier: "C"
+				},
+				{
+					content: [
+						{
+							type: "paragraph",
+							content: [
+								{
+									type: "math",
+									mathml:
+										'<mrow><mover accent="true"><mi>y</mi><mo>^</mo></mover><mo>=</mo><mi>x</mi><mo>-</mo><mn>1.5</mn></mrow>'
+								}
+							]
+						}
+					],
+					feedback: null,
+					identifier: "D"
+				}
+			],
+			shuffle: true,
+			maxChoices: 1,
+			minChoices: 1,
+			responseIdentifier: "choice_interaction"
+		}
+	},
+	responseDeclarations: [
+		{ correct: "A", baseType: "identifier", identifier: "choice_interaction", cardinality: "single" },
+		{ correct: "27/2", baseType: "string", identifier: "text_entry", cardinality: "single" }
+	]
+}
+
 export const doubleNumberLineRatio: AssessmentItemInput = {
 	identifier: "double-number-line-ratio",
 	title: "Equivalent Ratios on a Double Number Line",
@@ -2870,6 +3080,7 @@ export const threeDataTablesMultipleChoice: AssessmentItemInput = {
 
 export const allExamples: AssessmentItemInput[] = [
 	probabilityNotPurpleSpinner,
+	linearModelEquationPrediction,
 	greatestCommonFactor,
 	doubleNumberLineRatio,
 	evalFractionalExponents,

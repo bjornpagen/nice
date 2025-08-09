@@ -272,9 +272,16 @@ export function compileResponseProcessing(decls: AssessmentItem["responseDeclara
 
 	const conditions = decls
 		.map((decl) => {
+			// For single/string responses, prefer mapping-based validation even in multi-declaration items.
+			if (decl.cardinality === "single" && decl.baseType === "string") {
+				const id = escapeXmlAttribute(decl.identifier)
+				// Check that mapped score > 0 using the declaration's qti-mapping
+				return `<qti-gt><qti-map-response identifier="${id}"/><qti-base-value base-type="float">0</qti-base-value></qti-gt>`
+			}
+
+			// Otherwise, fall back to strict match against the declared correct value(s)
 			const variable = `<qti-variable identifier="${escapeXmlAttribute(decl.identifier)}"/>`
 			const correct = `<qti-correct identifier="${escapeXmlAttribute(decl.identifier)}"/>`
-			// Use match comparison for all cases, including ordered cardinality
 			return `<qti-match>${variable}${correct}</qti-match>`
 		})
 		.join("\n                    ")
