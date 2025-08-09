@@ -4,6 +4,19 @@ import { inngest } from "@/inngest/client"
 import { clearAllAssessmentItemData } from "@/inngest/functions/clear-all-assessment-item-data"
 import { clearCourseXmlData } from "@/inngest/functions/clear-course-xml-data"
 import { helloWorld } from "@/inngest/functions/hello"
+// ✅ ADDED: Modular hardcoded QTI pipeline orchestrators
+import { orchestrateHardcodedMathDifferentiatedItemGeneration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-differentiated-item-generation" // 🛑 RENAMED
+// ✅ RENAMED & ADDED: Import all hardcoded migration functions
+import { orchestrateHardcodedMathItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-item-migration"
+import { orchestrateHardcodedMathOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-oneroster-ingestion"
+import { orchestrateHardcodedMathQtiUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-qti-upload"
+import { orchestrateHardcodedMathStimulusGeneration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-stimulus-generation" // 🛑 RENAMED
+import { orchestrateHardcodedMathStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-stimulus-migration"
+import { orchestrateHardcodedScienceItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-item-migration"
+import { orchestrateHardcodedScienceOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-oneroster-ingestion"
+import { orchestrateHardcodedScienceQtiGenerateUndifferentiated } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-generate-undifferentiated"
+import { orchestrateHardcodedScienceQtiUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-upload"
+import { orchestrateHardcodedScienceStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-stimulus-migration"
 // Import OneRoster workers
 import { generatePayloadForCourse as generateOnerosterPayloadForCourse } from "@/inngest/functions/oneroster/generate-payload-for-course"
 import { ingestAssessmentLineItems } from "@/inngest/functions/oneroster/ingest-assessment-line-items"
@@ -22,18 +35,6 @@ import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
 import { orchestrateFocusedQtiGeneration } from "@/inngest/functions/orchestrate-focused-qti-generation"
-// ADD: Import the two new hardcoded migration orchestrators for items and stimuli separately
-import { orchestrateHardcodedItemMigration } from "@/inngest/functions/orchestrate-hardcoded-item-migration"
-// ADD: Import the new independent functions.
-import { orchestrateHardcodedOnerosterIngestion } from "@/inngest/functions/orchestrate-hardcoded-oneroster-ingestion"
-// ❌ REMOVED: Obsolete monolithic QTI ingestion orchestrator
-// import { orchestrateHardcodedQtiIngestion } from "@/inngest/functions/orchestrate-hardcoded-qti-ingestion"
-// ✅ ADDED: Modular hardcoded QTI pipeline orchestrators
-import { orchestrateHardcodedQtiGenerationForItemsAndTests } from "@/inngest/functions/orchestrate-hardcoded-qti-generation-for-items-and-tests"
-import { orchestrateHardcodedQtiGenerationForStimuli } from "@/inngest/functions/orchestrate-hardcoded-qti-generation-for-stimuli"
-import { orchestrateHardcodedQtiUpload } from "@/inngest/functions/orchestrate-hardcoded-qti-upload"
-import { orchestrateHardcodedStimulusMigration } from "@/inngest/functions/orchestrate-hardcoded-stimulus-migration"
-import { orchestrateHardcodedUndifferentiatedQtiGeneration } from "@/inngest/functions/orchestrate-hardcoded-undifferentiated-qti-generation"
 // ✅ ADD: Import the new batch differentiation and assembly functions
 import { assembleDifferentiatedItemsAndCreateTests } from "@/inngest/functions/qti/assemble-differentiated-items-and-create-tests"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
@@ -65,16 +66,20 @@ export const { GET, POST, PUT } = serve({
 		orchestrateCourseDifferentiatedIngestion, // ✅ ADD: Register the new differentiated ingestion orchestrator
 		orchestrateCourseXmlGeneration,
 		orchestrateCourseUploadToQti,
-		// ADD: Register the new hardcoded migration orchestrators for items and stimuli separately
-		orchestrateHardcodedItemMigration,
-		orchestrateHardcodedStimulusMigration,
-		// ADD: Register the new independent functions.
-		orchestrateHardcodedOnerosterIngestion,
-		// ✅ ADDED: Register new modular QTI pipeline orchestrators
-		orchestrateHardcodedQtiGenerationForItemsAndTests,
-		orchestrateHardcodedQtiGenerationForStimuli,
-		orchestrateHardcodedQtiUpload,
-		orchestrateHardcodedUndifferentiatedQtiGeneration,
+		// ✅ ADDED: Register all new and renamed functions
+		orchestrateHardcodedMathItemMigration,
+		orchestrateHardcodedMathStimulusMigration,
+		orchestrateHardcodedMathOnerosterIngestion,
+		orchestrateHardcodedMathDifferentiatedItemGeneration, // 🛑 RENAMED
+		orchestrateHardcodedMathStimulusGeneration, // 🛑 RENAMED
+		orchestrateHardcodedMathQtiUpload,
+		orchestrateHardcodedScienceItemMigration,
+		orchestrateHardcodedScienceStimulusMigration,
+		orchestrateHardcodedScienceOnerosterIngestion,
+		orchestrateHardcodedScienceQtiGenerateUndifferentiated,
+		orchestrateHardcodedScienceQtiUpload,
+		// ❌ REMOVED: Obsolete undifferentiated math qti generation
+		// orchestrateHardcodedMathQtiGenerateUndifferentiated,
 		// ✅ REMOVED: Old differentiated ingest is no longer registered.
 		// differentiatedIngest,
 		// OneRoster Functions

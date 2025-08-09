@@ -8,7 +8,7 @@ export const orchestrateCourseOnerosterGeneration = inngest.createFunction(
 		id: "orchestrate-course-oneroster-generation", // ✅ RENAMED: ID updated.
 		name: "Orchestrate Course OneRoster Payload Generation" // ✅ RENAMED: Name updated.
 	},
-	{ event: "oneroster/course.ingest" }, // ✅ BEHAVIOR: Still triggered by the original 'ingest' event.
+	{ event: "oneroster/course.generate" }, // ✅ UPDATED: Now triggered by the more specific 'generate' event.
 	async ({ event, step, logger }) => {
 		const { courseId } = event.data
 		logger.info("starting oneroster payload generation workflow", { courseId })

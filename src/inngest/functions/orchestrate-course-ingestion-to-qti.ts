@@ -23,7 +23,7 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		id: "orchestrate-course-ingestion-to-qti",
 		name: "Orchestrate Course Ingestion to QTI"
 	},
-	{ event: "qti/course.ingest" },
+	{ event: "qti/course.generate" },
 	async ({ event, logger }) => {
 		const startedAt = Date.now()
 		const { courseId } = event.data

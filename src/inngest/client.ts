@@ -80,8 +80,8 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
-	// ✅ REINSTATED & MODIFIED: This is now the single entry point for QTI JSON generation.
-	"qti/course.ingest": {
+	// ✅ RENAMED: This event now accurately reflects its purpose of generating QTI JSON.
+	"qti/course.generate": {
 		data: z.object({
 			courseId: z.string().min(1)
 		})
@@ -90,8 +90,8 @@ const events = {
 	"qti/batch.ingest": {
 		data: z.object({}) // No additional data needed - uses hardcoded course list
 	},
-	// ✅ ADDED: New event for differentiated course ingestion.
-	"qti/course.ingest.differentiated": {
+	// ✅ RENAMED: This event now accurately reflects its purpose of generating differentiated content.
+	"qti/course.generate.differentiated": {
 		data: z.object({
 			courseId: z.string().min(1),
 			n: z.number().int().positive().describe("The number of differentiated variations to generate per question.")
@@ -145,7 +145,7 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
-	"oneroster/course.ingest": {
+	"oneroster/course.generate": {
 		data: z.object({
 			courseId: z.string().min(1)
 		})
@@ -280,25 +280,60 @@ const events = {
 	// 	data: z.object({}) // No data needed
 	// },
 
-	// ✅ ADDED: New event to trigger Perseus to QTI XML generation for ONLY assessment items in hardcoded courses.
-	"migration/hardcoded.items.perseus-to-qti": {
-		data: z.object({}) // No data needed
+	// ❌ REMOVED: Obsolete generic hardcoded events
+	// "migration/hardcoded.items.perseus-to-qti": {
+	// 	data: z.object({})
+	// },
+	// "migration/hardcoded.stimuli.perseus-to-qti": {
+	// 	data: z.object({})
+	// },
+	// "migration/hardcoded.oneroster.ingest": {
+	// 	data: z.object({})
+	// },
+	// "migration/hardcoded.qti.upload": {
+	// 	data: z.object({})
+	// },
+	// "migration/hardcoded.qti.generate-undifferentiated": {
+	// 	data: z.object({})
+	// },
+
+	// ✅ ADDED: Explicitly namespaced events for the MATH course pipeline
+	"migration/hardcoded.math.items.perseus-to-qti": {
+		data: z.object({})
+	},
+	"migration/hardcoded.math.stimuli.perseus-to-qti": {
+		data: z.object({})
+	},
+	"migration/hardcoded.math.oneroster.ingest": {
+		data: z.object({})
+	},
+	// ❌ REMOVED: Obsolete undifferentiated math generation event
+	// "migration/hardcoded.math.qti.generate-undifferentiated": {
+	// 	data: z.object({})
+	// },
+	"migration/hardcoded.math.qti.upload": {
+		data: z.object({})
 	},
 
-	// ✅ ADDED: New event to trigger Perseus to QTI XML generation for ONLY stimuli in hardcoded courses.
-	"migration/hardcoded.stimuli.perseus-to-qti": {
-		data: z.object({}) // No data needed
+	// ✅ ADDED: New, explicitly namespaced events for the SCIENCE course pipeline
+	"migration/hardcoded.science.items.perseus-to-qti": {
+		data: z.object({})
 	},
-	// ADD: New event to trigger OneRoster data generation and upload for hardcoded courses
-	"migration/hardcoded.oneroster.ingest": {
-		data: z.object({}) // No data needed
+	"migration/hardcoded.science.stimuli.perseus-to-qti": {
+		data: z.object({})
 	},
-	// ❌ REMOVED: Obsolete single-step QTI ingest event replaced by modular pipeline
-	// "migration/hardcoded.qti.ingest": {
-	//   data: z.object({})
-	// },
-	// ✅ UPDATED: Split monolithic generation into two granular events
-	"migration/hardcoded.qti.generate-items-and-tests": {
+	"migration/hardcoded.science.oneroster.ingest": {
+		data: z.object({})
+	},
+	"migration/hardcoded.science.qti.generate-undifferentiated": {
+		data: z.object({})
+	},
+	"migration/hardcoded.science.qti.upload": {
+		data: z.object({})
+	},
+
+	// ✅ RENAMED: Split monolithic generation into two granular, namespaced events
+	"migration/hardcoded.math.differentiated-items.generate": {
 		data: z.object({})
 	},
 	// ✅ MODIFIED: Event name is now plural and takes an array of question IDs.
@@ -316,15 +351,7 @@ const events = {
 			courseSlugs: z.array(z.string().min(1))
 		})
 	},
-	"migration/hardcoded.qti.generate-stimuli": {
-		data: z.object({})
-	},
-	// ✅ ADDED: New event to trigger the upload of all QTI content for hardcoded courses
-	"migration/hardcoded.qti.upload": {
-		data: z.object({})
-	},
-	// ✅ ADDED: New event to generate undifferentiated QTI JSON for hardcoded courses
-	"migration/hardcoded.qti.generate-undifferentiated": {
+	"migration/hardcoded.math.stimuli.generate": {
 		data: z.object({})
 	}
 }

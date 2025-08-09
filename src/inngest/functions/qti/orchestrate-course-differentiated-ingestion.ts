@@ -24,7 +24,7 @@ export const orchestrateCourseDifferentiatedIngestion = inngest.createFunction(
 		id: "orchestrate-course-differentiated-ingestion",
 		name: "Orchestrate Differentiated Course Ingestion to QTI"
 	},
-	{ event: "qti/course.ingest.differentiated" },
+	{ event: "qti/course.generate.differentiated" },
 	async ({ event, step, logger }) => {
 		const { courseId, n } = event.data
 		logger.info("starting differentiated qti json dump workflow", { courseId, variations: n })

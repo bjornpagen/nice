@@ -18,32 +18,34 @@ const AssessmentItemSchema = z.object({
 })
 type AssessmentItem = z.infer<typeof AssessmentItemSchema>
 
-const HARDCODED_COURSE_IDS = [
-	"x0267d782", // 6th grade math (Common Core)
-	"x6b17ba59", // 7th grade math (Common Core)
-	"x7c7044d7" // 8th grade math (Common Core)
+const HARDCODED_SCIENCE_COURSE_IDS = [
+	"x0c5bb03129646fd6", // ms-biology
+	"x1baed5db7c1bb50b", // ms-physics
+	"x87d03b443efbea0a", // middle-school-earth-and-space-science
+	"x230b3ff252126bb6", // hs-bio
+	"xc370bc422b7f75fc" // ms-chemistry
 ]
 
-export const orchestrateHardcodedUndifferentiatedQtiGeneration = inngest.createFunction(
+export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.createFunction(
 	{
-		id: "orchestrate-hardcoded-undifferentiated-qti-generation",
-		name: "Orchestrate Hardcoded Undifferentiated QTI Generation"
+		id: "orchestrate-hardcoded-science-qti-generate-undifferentiated",
+		name: "Orchestrate Hardcoded Science Course Undifferentiated QTI Generation"
 	},
-	{ event: "migration/hardcoded.qti.generate-undifferentiated" },
+	{ event: "migration/hardcoded.science.qti.generate-undifferentiated" },
 	async ({ logger }) => {
-		logger.info("starting hardcoded undifferentiated qti generation", {
-			courseCount: HARDCODED_COURSE_IDS.length
+		logger.info("starting hardcoded science undifferentiated qti generation", {
+			courseCount: HARDCODED_SCIENCE_COURSE_IDS.length
 		})
 
 		const courses = await db.query.niceCourses.findMany({
-			where: inArray(schema.niceCourses.id, HARDCODED_COURSE_IDS),
+			where: inArray(schema.niceCourses.id, HARDCODED_SCIENCE_COURSE_IDS),
 			columns: { id: true, slug: true }
 		})
 
 		await Promise.all(
 			courses.map(async (course) => {
 				const courseId = course.id
-				logger.info("processing course for undifferentiated generation", { courseId })
+				logger.info("processing science course for undifferentiated generation", { courseId })
 
 				const units = await db.query.niceUnits.findMany({
 					where: eq(schema.niceUnits.courseId, course.id),
@@ -375,7 +377,7 @@ ${sectionsXml}
 					throw errors.wrap(writeResults.error, "file write")
 				}
 
-				logger.info("generated undifferentiated items, stimuli, and tests for course", {
+				logger.info("generated undifferentiated items, stimuli, and tests for science course", {
 					courseId,
 					items: items.length,
 					stimuli: stimuli.length,
@@ -385,7 +387,7 @@ ${sectionsXml}
 			})
 		)
 
-		logger.info("completed hardcoded undifferentiated qti generation for all courses")
-		return { status: "complete", courseCount: HARDCODED_COURSE_IDS.length }
+		logger.info("completed hardcoded science undifferentiated qti generation for all courses")
+		return { status: "complete", courseCount: HARDCODED_SCIENCE_COURSE_IDS.length }
 	}
 )

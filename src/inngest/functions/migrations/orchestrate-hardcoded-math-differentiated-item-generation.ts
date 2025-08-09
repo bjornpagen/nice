@@ -16,12 +16,12 @@ const HARDCODED_COURSE_IDS = [
 const DIFFERENTIATION_COUNT = 3
 const QUESTION_BATCH_SIZE = 30 // Batch size for grouping questions.
 
-export const orchestrateHardcodedQtiGenerationForItemsAndTests = inngest.createFunction(
+export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.createFunction(
 	{
-		id: "orchestrate-hardcoded-qti-generation-for-items-and-tests",
-		name: "Orchestrate Hardcoded QTI Generation for Items and Tests"
+		id: "orchestrate-hardcoded-math-differentiated-item-generation",
+		name: "Orchestrate Hardcoded Math Course Differentiated QTI Item Generation"
 	},
-	{ event: "migration/hardcoded.qti.generate-items-and-tests" },
+	{ event: "migration/hardcoded.math.differentiated-items.generate" },
 	async ({ step, logger }) => {
 		logger.info("starting hardcoded qti generation: DISPATCH PHASE", {
 			courseCount: HARDCODED_COURSE_IDS.length,

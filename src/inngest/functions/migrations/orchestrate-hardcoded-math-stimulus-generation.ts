@@ -13,12 +13,12 @@ const HARDCODED_COURSE_IDS = [
 	"x7c7044d7" // 8th grade math (Common Core)
 ]
 
-export const orchestrateHardcodedQtiGenerationForStimuli = inngest.createFunction(
+export const orchestrateHardcodedMathStimulusGeneration = inngest.createFunction(
 	{
-		id: "orchestrate-hardcoded-qti-generation-for-stimuli",
-		name: "Orchestrate Hardcoded QTI Generation for Assessment Stimuli"
+		id: "orchestrate-hardcoded-math-stimulus-generation",
+		name: "Orchestrate Hardcoded Math Course QTI Stimulus Generation"
 	},
-	{ event: "migration/hardcoded.qti.generate-stimuli" },
+	{ event: "migration/hardcoded.math.stimuli.generate" },
 	async ({ logger }) => {
 		logger.info("starting hardcoded qti generation for stimuli", {
 			courseCount: HARDCODED_COURSE_IDS.length
