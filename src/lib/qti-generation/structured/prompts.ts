@@ -258,16 +258,7 @@ ${perseusJson}
   - For inline interactions (e.g., 'text-input', 'inline-choice'), create { "type": "inlineSlot", "slotId": "..." } inside paragraph content.
   - For block interactions (e.g., 'radio', 'order'), create { "type": "blockSlot", "slotId": "..." } in the body array.
   - **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
-  
-  - **CHOICE-LEVEL VISUALS NAMING CONVENTION (MANDATORY)**:
-    - For each interaction slot (e.g., a radio group) that contains choices with visuals in the original Perseus content, predeclare widget slots for those visuals using this deterministic naming scheme:
-      - \`<responseIdentifier>__<choiceLetter>__v<index>\` where:
-        - \`<responseIdentifier>\` is the shell interaction slot name (e.g., the one you list in \`interactions\`)
-        - \`<choiceLetter>\` is the choice identifier you will use later (A, B, C, ...)
-        - \`<index>\` starts at 1 for the first visual in that choice and increments by 1 per additional visual in the same choice
-    - Example: For a radio interaction with response identifier \`RESPONSE\` and three choices where the first and third choices each contain one visual, reserve \`widgets\` = [ ... , "RESPONSE__A__v1", "RESPONSE__C__v1" ]. Do NOT include these as \`blockSlot\`s in the shell body. They are used inside choices during interaction generation.
- - **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
- - **NO ANSWERS OR HINTS IN 'BODY'**: Do NOT reveal or restate the correct answer anywhere in the 'body'. Remove ALL Perseus 'hints' content entirely and NEVER include hint-like guidance (e.g., lines starting with "Hint:" or text that gives away the answer). Only the prompt and neutral problem context belong in the 'body'; answers live solely in response declarations.
+  - **NO ANSWERS OR HINTS IN 'BODY'**: Do NOT reveal or restate the correct answer anywhere in the 'body'. Remove ALL Perseus 'hints' content entirely and NEVER include hint-like guidance (e.g., lines starting with "Hint:" or text that gives away the answer). Only the prompt and neutral problem context belong in the 'body'; answers live solely in response declarations.
 - **MathML Conversion (MANDATORY)**:
   - You MUST convert ALL LaTeX expressions to standard MathML (\`<math>...</math>\`).
   - PRESERVE all mathematical structures: fractions (\`<mfrac>\`), exponents (\`<msup>\`), roots (\`<mroot>\` or \`<msqrt>\`), operators (\`<mo>\`), and inequalities (\`&lt;\`, \`&gt;\`).

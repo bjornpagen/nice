@@ -389,20 +389,26 @@ export async function generateStructuredQtiItem(
 	const allDeclaredSlots = new Set([...assessmentShell.widgets, ...assessmentShell.interactions])
 	const slotsUsedInContent = collectAllSlotIds(assessmentShell)
 
-	if (
-		allDeclaredSlots.size !== slotsUsedInContent.size ||
-		![...allDeclaredSlots].every((slot) => slotsUsedInContent.has(slot)) ||
-		![...slotsUsedInContent].every((slot) => allDeclaredSlots.has(slot))
-	) {
-		const undeclaredSlots = [...slotsUsedInContent].filter((slot) => !allDeclaredSlots.has(slot))
-		const unusedSlots = [...allDeclaredSlots].filter((slot) => !slotsUsedInContent.has(slot))
-		const errorMessage = `Slot declaration mismatch detected after shell generation.
-- Slots used in content but not declared in widget/interaction arrays: [${undeclaredSlots.join(", ")}]
-- Slots declared in arrays but not used in any content field: [${unusedSlots.join(", ")}]`
+	// Compute explicit differences so we can enforce missing declarations strictly
+	// while pruning declared-but-unused slots per product requirement.
+	const undeclaredSlots = [...slotsUsedInContent].filter((slot) => !allDeclaredSlots.has(slot))
+	const unusedSlots = [...allDeclaredSlots].filter((slot) => !slotsUsedInContent.has(slot))
 
+	if (undeclaredSlots.length > 0) {
+		const errorMessage = `Slot declaration mismatch detected after shell generation.
+	- Slots used in content but not declared in widget/interaction arrays: [${undeclaredSlots.join(", ")}]
+	- Slots declared in arrays but not used in any content field: [${unusedSlots.join(", ")}]`
 		logger.error("slot consistency validation failed", { undeclaredSlots, unusedSlots })
 		throw errors.new(errorMessage)
 	}
+
+	if (unusedSlots.length > 0) {
+		logger.warn("slot consistency adjustment: pruning declared-but-unused slots", { unusedSlots })
+		const used = slotsUsedInContent
+		assessmentShell.widgets = assessmentShell.widgets.filter((slot) => used.has(slot))
+		assessmentShell.interactions = assessmentShell.interactions.filter((slot) => used.has(slot))
+	}
+
 	logger.debug("slot consistency validation successful")
 
 	// Step 2: Map widget slot names to widget types.

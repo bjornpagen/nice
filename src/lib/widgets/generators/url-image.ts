@@ -1,10 +1,12 @@
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const UrlImageWidgetPropsSchema = z
 	.object({
 		type: z.literal("urlImage"),
-		url: z.string().url().describe("The direct URL to the image resource (e.g., 'https://.../image.png')."),
+		url: z.string().describe("The direct URL to the image resource (e.g., 'https://.../image.png')."),
 		alt: z
 			.string()
 			.min(1)
@@ -19,6 +21,16 @@ export const UrlImageWidgetPropsSchema = z
 
 export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema> = (props) => {
 	const { url, alt, width, height, caption } = props
+
+	// Validate URL at compile time
+	const urlValidationResult = errors.trySync((): void => {
+		// eslint-disable-next-line no-new
+		new URL(url)
+	})
+	if (urlValidationResult.error) {
+		logger.error("invalid url provided to urlImage widget", { url, error: urlValidationResult.error })
+		throw errors.new("invalid url")
+	}
 
 	const containerStyles = "display: inline-block; text-align: center;"
 	const imgStyles = ["display: block;", width ? `width: ${width}px;` : "", height ? `height: ${height}px;` : ""]

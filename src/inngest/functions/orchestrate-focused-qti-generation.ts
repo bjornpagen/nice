@@ -1,10 +1,11 @@
 import * as errors from "@superbuilders/errors"
 import { eq } from "drizzle-orm"
+import { NonRetriableError } from "inngest"
 import { db } from "@/db"
 import { niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { compile } from "@/lib/qti-generation/compiler"
-import { generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
+import { ErrUnsupportedInteraction, generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
 import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
 
 export const orchestrateFocusedQtiGeneration = inngest.createFunction(
@@ -41,6 +42,14 @@ export const orchestrateFocusedQtiGeneration = inngest.createFunction(
 		)
 		if (structuredItemResult.error) {
 			logger.error("focused structured item generation failed", { error: structuredItemResult.error })
+
+			// Mark unsupported interactions as non-reaoeutriable to prevent repeated attempts
+			if (errors.is(structuredItemResult.error, ErrUnsupportedInteraction)) {
+				throw new NonRetriableError(structuredItemResult.error.message, {
+					cause: structuredItemResult.error
+				})
+			}
+
 			throw errors.wrap(structuredItemResult.error, "focused generation")
 		}
 
@@ -54,6 +63,14 @@ export const orchestrateFocusedQtiGeneration = inngest.createFunction(
 		const compileResult = errors.trySync(() => compile(sanitizedItem))
 		if (compileResult.error) {
 			logger.error("focused qti compilation failed", { error: compileResult.error })
+
+			// Treat unsupported interactions as permanent failures
+			if (errors.is(compileResult.error, ErrUnsupportedInteraction)) {
+				throw new NonRetriableError(compileResult.error.message, {
+					cause: compileResult.error
+				})
+			}
+
 			throw errors.wrap(compileResult.error, "compilation")
 		}
 		const xml = compileResult.data
