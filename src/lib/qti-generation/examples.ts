@@ -3166,6 +3166,62 @@ export const gustaveStepsPerMile: AssessmentItemInput = {
 	}
 }
 
+export const compareNegativeDecimalVsRootInlineChoice: AssessmentItemInput = {
+	body: [
+		{ type: "paragraph", content: [{ type: "text", content: "Compare." }] },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "math", mathml: "<mo>-</mo><mn>4.1</mn>" },
+				{ type: "text", content: " " },
+				{ type: "inlineSlot", slotId: "comparison_dropdown" },
+				{ type: "text", content: " " },
+				{ type: "math", mathml: "<mo>-</mo><msqrt><mn>20</mn></msqrt>" }
+			]
+		}
+	],
+	title: "Compare a decimal and a square root",
+	widgets: {},
+	feedback: {
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! " },
+					{ type: "math", mathml: "<mo>-</mo><mn>4.1</mn><mo>&gt;</mo><mo>-</mo><msqrt><mn>20</mn></msqrt>" },
+					{ type: "text", content: "." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. Note that " },
+					{ type: "math", mathml: "<msqrt><mn>20</mn></msqrt><mo>≈</mo><mn>4.47</mn>" },
+					{ type: "text", content: ", so " },
+					{ type: "math", mathml: "<mo>-</mo><mn>4.1</mn><mo>&gt;</mo><mo>-</mo><msqrt><mn>20</mn></msqrt>" },
+					{ type: "text", content: "." }
+				]
+			}
+		]
+	},
+	identifier: "compare-negative-decimal-vs-root-inline-choice",
+	interactions: {
+		comparison_dropdown: {
+			type: "inlineChoiceInteraction",
+			choices: [
+				{ content: [{ type: "text", content: "<" }], identifier: "<" },
+				{ content: [{ type: "text", content: ">" }], identifier: ">" },
+				{ content: [{ type: "text", content: "=" }], identifier: "=" }
+			],
+			shuffle: true,
+			responseIdentifier: "RESPONSE"
+		}
+	},
+	responseDeclarations: [{ correct: ">", baseType: "string", identifier: "RESPONSE", cardinality: "single" }]
+}
+
 export const allExamples: AssessmentItemInput[] = [
 	probabilityNotPurpleSpinner,
 	linearModelEquationPrediction,
@@ -3192,5 +3248,6 @@ export const allExamples: AssessmentItemInput[] = [
 	timeOnNumberLine,
 	compare2DigitNumbers,
 	threeDataTablesMultipleChoice,
-	gustaveStepsPerMile
+	gustaveStepsPerMile,
+	compareNegativeDecimalVsRootInlineChoice
 ]

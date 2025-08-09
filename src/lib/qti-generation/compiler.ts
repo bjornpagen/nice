@@ -80,8 +80,33 @@ function normalizeChoiceIdentifiersInPlace(item: AssessmentItem): void {
 			const extractInlineText = (inline: import("./schemas").InlineContent): string => {
 				let text = ""
 				for (const part of inline) {
-					if (part.type === "text") text += part.content
-					// intentionally ignore math and inlineSlot for label mapping
+					if (part.type === "text") {
+						text += part.content
+						continue
+					}
+					if (part.type === "math") {
+						// Minimal extraction: prefer <mo> token content if present; otherwise strip tags
+						const math = part.mathml
+						// Collect all <mo>...</mo> contents
+						const moMatches = Array.from(math.matchAll(/<mo[^>]*>([\s\S]*?)<\/mo>/g)).map((m) => m[1] ?? "")
+						let extracted = ""
+						if (moMatches.length > 0) {
+							extracted = moMatches.join(" ")
+						} else {
+							// Fallback: strip tags and collapse whitespace
+							extracted = math.replace(/<[^>]+>/g, " ")
+						}
+						// Decode common entities used for operators
+						extracted = extracted
+							.replace(/&lt;/g, "<")
+							.replace(/&gt;/g, ">")
+							.replace(/&amp;/g, "&")
+							.replace(/&le;|&#8804;|&#x2264;/gi, "≤")
+							.replace(/&ge;|&#8805;|&#x2265;/gi, "≥")
+							.replace(/&equals;|&#61;/gi, "=")
+						text += extracted
+					}
+					// intentionally ignore inlineSlot for label mapping
 				}
 				return text.replace(/\s+/g, " ").trim()
 			}
