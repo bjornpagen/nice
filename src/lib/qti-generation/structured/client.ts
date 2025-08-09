@@ -390,7 +390,8 @@ export async function generateStructuredQtiItem(
 	const slotsUsedInContent = collectAllSlotIds(assessmentShell)
 
 	// Compute explicit differences so we can enforce missing declarations strictly
-	// while pruning declared-but-unused slots per product requirement.
+	// Note: We no longer prune declared-but-unused slots here to preserve
+	// choice-level widget slots that are intentionally not present in the body.
 	const undeclaredSlots = [...slotsUsedInContent].filter((slot) => !allDeclaredSlots.has(slot))
 	const unusedSlots = [...allDeclaredSlots].filter((slot) => !slotsUsedInContent.has(slot))
 
@@ -402,11 +403,10 @@ export async function generateStructuredQtiItem(
 		throw errors.new(errorMessage)
 	}
 
+	// Intentionally retain declared-but-unused slots; some slots (e.g., choice-level visuals)
+	// are not referenced in the top-level body/feedback and are filled later.
 	if (unusedSlots.length > 0) {
-		logger.warn("slot consistency adjustment: pruning declared-but-unused slots", { unusedSlots })
-		const used = slotsUsedInContent
-		assessmentShell.widgets = assessmentShell.widgets.filter((slot) => used.has(slot))
-		assessmentShell.interactions = assessmentShell.interactions.filter((slot) => used.has(slot))
+		logger.debug("retaining declared-but-unused slots for later stages", { unusedSlots })
 	}
 
 	logger.debug("slot consistency validation successful")
@@ -432,7 +432,7 @@ export async function generateStructuredQtiItem(
 		logger.error("shot 2 failed: widget mapping pass failed", { error: widgetMappingResult.error })
 		throw widgetMappingResult.error
 	}
-	const widgetMapping = widgetMappingResult.data
+	let widgetMapping = widgetMappingResult.data
 	logger.debug("shot 2 complete", { mapping: widgetMapping })
 
 	// ✅ NEW - Shot 3: Generate the full interaction objects.
@@ -446,6 +446,59 @@ export async function generateStructuredQtiItem(
 	}
 	const generatedInteractions = interactionContentResult.data
 	logger.debug("shot 3 complete", { generatedInteractionKeys: Object.keys(generatedInteractions) })
+
+	// After interactions are generated, we can safely prune widgets that are truly unused
+	// across body, feedback, and interaction choice content. This ensures we never prune
+	// before interaction compilation, preserving choice-level visuals.
+	logger.debug("post-shot-3: computing used slot ids for safe pruning of widgets")
+	function collectUsedSlotIdsAfterInteractions(
+		shell: AssessmentItemShell,
+		interactions: Record<string, AnyInteraction>
+	): Set<string> {
+		const ids = new Set<string>()
+		function walkInline(items: InlineContent | null | undefined) {
+			if (!items) return
+			for (const item of items) {
+				if (item.type === "inlineSlot") ids.add(item.slotId)
+			}
+		}
+		function walkBlock(items: BlockContent | null | undefined) {
+			if (!items) return
+			for (const item of items) {
+				if (item.type === "blockSlot") ids.add(item.slotId)
+				else if (item.type === "paragraph") walkInline(item.content)
+			}
+		}
+		// Shell body and feedback
+		walkBlock(shell.body)
+		walkBlock(shell.feedback.correct)
+		walkBlock(shell.feedback.incorrect)
+		// Interaction choice content (where choice-level visuals are embedded)
+		for (const interaction of Object.values(interactions)) {
+			if (interaction.type === "choiceInteraction" || interaction.type === "orderInteraction") {
+				for (const choice of interaction.choices) {
+					walkBlock(choice.content)
+				}
+			}
+			// inlineChoiceInteraction uses inline content (no blockSlot expected)
+		}
+		return ids
+	}
+	const usedAfterShot3 = collectUsedSlotIdsAfterInteractions(assessmentShell, generatedInteractions)
+	const originalWidgetSlots = new Set(assessmentShell.widgets)
+	const usedWidgetSlots = assessmentShell.widgets.filter((slot) => usedAfterShot3.has(slot))
+	const prunedWidgetSlots = assessmentShell.widgets.filter((slot) => !usedAfterShot3.has(slot))
+	if (prunedWidgetSlots.length > 0) {
+		logger.debug("post-shot-3: pruning declared widgets unused by body/feedback/choices", {
+			unused: prunedWidgetSlots
+		})
+	}
+	// Update shell widgets now that interactions are known
+	assessmentShell.widgets = usedWidgetSlots
+	// Also filter the mapping to only generate needed widgets in Shot 4
+	widgetMapping = Object.fromEntries(
+		Object.entries(widgetMapping).filter(([slot]) => originalWidgetSlots.has(slot) && usedAfterShot3.has(slot))
+	)
 
 	// Shot 4: Generate ONLY the widget content based on the mapping.
 	logger.debug("shot 4: generating widget content")

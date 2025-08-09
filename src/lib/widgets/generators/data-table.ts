@@ -20,16 +20,7 @@ function createInlineContentSchema() {
 						mathml: z.string().describe("MathML markup for mathematical expressions, without the outer math element")
 					})
 					.strict()
-					.describe("Mathematical content represented in MathML format"),
-				z
-					.object({
-						type: z
-							.literal("inlineSlot")
-							.describe("Identifies this as an inline placeholder for widgets or interactions"),
-						slotId: z.string().describe("Unique identifier that matches a widget or interaction key")
-					})
-					.strict()
-					.describe("Placeholder for inline content that will be filled with a widget or interaction")
+					.describe("Mathematical content represented in MathML format")
 			])
 		)
 		.describe("Array of inline content items that can be rendered within a paragraph or prompt")
