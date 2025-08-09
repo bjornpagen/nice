@@ -34,7 +34,6 @@ import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orches
 import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
-import { orchestrateFocusedQtiGeneration } from "@/inngest/functions/orchestrate-focused-qti-generation"
 // ✅ ADD: Import the new batch differentiation and assembly functions
 import { assembleDifferentiatedItemsAndCreateTests } from "@/inngest/functions/qti/assemble-differentiated-items-and-create-tests"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
@@ -96,7 +95,6 @@ export const { GET, POST, PUT } = serve({
 		convertPerseusArticleToQtiStimulus,
 		convertPerseusQuestionToQtiItem,
 		convertPerseusQuestionToDifferentiatedQtiItems,
-		orchestrateFocusedQtiGeneration, // ADD THIS LINE
 		requestAllItemMigrationsForCourse,
 		requestAllStimulusMigrationsForCourse,
 		ingestAssessmentItems,

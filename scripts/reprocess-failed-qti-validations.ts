@@ -161,9 +161,14 @@ async function clearXmlForQuestions(questionIds: string[]): Promise<void> {
 
 async function triggerRecompilation(questionIds: string[]): Promise<void> {
 	// Generate events for Inngest
+	// NOTE: Using "math-core" as default widget collection. In the future, this script
+	// might need to be enhanced to determine the correct widget collection per question.
 	const events = questionIds.map((questionId) => ({
 		name: "qti/item.migrate" as const,
-		data: { questionId }
+		data: {
+			questionId,
+			widgetCollection: "math-core" as const // Default to math-core for reprocessing
+		}
 	}))
 
 	// Send events in batches to avoid payload size limits

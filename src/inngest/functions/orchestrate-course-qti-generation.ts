@@ -55,9 +55,14 @@ export const orchestrateCourseXmlGeneration = inngest.createFunction(
 			data: { articleId: article.id }
 		}))
 
+		// NOTE: Using "math-core" as default widget collection. In the future, this might need
+		// to be determined based on the course or question metadata.
 		const questionEvents: Events["qti/item.migrate"][] = questionsToGenerate.map((question) => ({
 			name: "qti/item.migrate",
-			data: { questionId: question.id }
+			data: {
+				questionId: question.id,
+				widgetCollection: "math-core" as const // Default to math-core for course-wide generation
+			}
 		}))
 
 		const allEvents = [...articleEvents, ...questionEvents]

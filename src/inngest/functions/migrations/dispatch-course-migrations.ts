@@ -3,6 +3,7 @@ import { eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { type Events, inngest } from "@/inngest/client"
+import type { WidgetCollectionName } from "@/lib/widget-collections" // NEW: Import WidgetCollectionName
 
 type Logger = {
 	debug: (message: string, attributes?: Record<string, unknown>) => void
@@ -12,9 +13,12 @@ type Logger = {
 }
 
 type MigrationOptions = {
-	// MODIFIED: Made optional to allow for targeted dispatch
-	itemEventName?: "qti/item.migrate" | "qti/item.migrate.focused"
-	// MODIFIED: Made optional to allow for targeted dispatch
+	// MODIFIED: Updated to a single item event name.
+	itemEventName?: "qti/item.migrate"
+	// MODIFIED: widgetCollection is now mandatory if itemEventName is present.
+	// This ensures that when an item migration is requested, the collection is always specified.
+	widgetCollection?: WidgetCollectionName
+	// Keep existing stimulus event name
 	stimulusEventName?: "qti/stimulus.migrate"
 }
 
@@ -35,7 +39,8 @@ export async function dispatchMigrationsForCourses(
 	logger.info("dispatching migrations for courses", {
 		courseCount: courseIds.length,
 		itemEvent: options.itemEventName,
-		stimulusEvent: options.stimulusEventName
+		stimulusEvent: options.stimulusEventName,
+		widgetCollection: options.widgetCollection // NEW: Log widgetCollection
 	})
 
 	const unitsResult = await errors.try(
@@ -72,14 +77,24 @@ export async function dispatchMigrationsForCourses(
 			: Promise.resolve([]) // Return empty array if not requested
 	])
 
-	const itemEvents: (Events["qti/item.migrate"] | Events["qti/item.migrate.focused"])[] = []
+	// MODIFIED: itemEvents now only uses "qti/item.migrate"
+	const itemEvents: Events["qti/item.migrate"][] = []
 	// MODIFIED: Only push item events if itemEventName is provided
 	if (options.itemEventName) {
+		// CRITICAL: Ensure widgetCollection is provided when itemEventName is set.
+		// If itemEventName is set, widgetCollection must also be set due to the updated event schema.
+		if (!options.widgetCollection) {
+			throw errors.new("widgetCollection is required when itemEventName is 'qti/item.migrate'")
+		}
 		const eventName = options.itemEventName // Capture to ensure TypeScript knows it's defined
+		const widgetCollection = options.widgetCollection // Capture to ensure TypeScript knows it's defined
 		itemEvents.push(
 			...questionsToMigrate.map((question) => ({
 				name: eventName,
-				data: { questionId: question.id }
+				data: {
+					questionId: question.id,
+					widgetCollection: widgetCollection // MODIFIED: Pass widgetCollection
+				}
 			}))
 		)
 	}

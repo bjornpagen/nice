@@ -90,9 +90,14 @@ export const requestAllItemMigrationsForCourse = inngest.createFunction(
 		}
 
 		// Step 3: Send migration events for each question
+		// NOTE: Using "math-core" as default widget collection. In the future, this might need
+		// to be determined based on the course or question metadata.
 		const migrationEvents = questionIds.map((questionId) => ({
 			name: "qti/item.migrate" as const,
-			data: { questionId }
+			data: {
+				questionId,
+				widgetCollection: "math-core" as const // Default to math-core for course-wide migration
+			}
 		}))
 
 		await step.run("send-migration-events", async () => {

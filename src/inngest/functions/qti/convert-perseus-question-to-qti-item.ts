@@ -6,7 +6,6 @@ import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { compile } from "@/lib/qti-generation/compiler"
 import { ErrUnsupportedInteraction, generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
-// NEW: Import the validator function
 import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
 
 // A global key to ensure all OpenAI functions share the same concurrency limit.
@@ -14,18 +13,22 @@ const OPENAI_CONCURRENCY_KEY = "openai-api-global-concurrency"
 
 export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 	{
-		id: "convert-perseus-question-to-qti-item",
-		name: "Convert Perseus Question to QTI Item",
+		id: "convert-perseus-question-to-qti-item", // MODIFIED: Simplified ID
+		name: "Convert Perseus Question to QTI Item" // MODIFIED: Simplified name
+	},
+	// MODIFIED: Updated event trigger to use the unified event and require widgetCollection.
+	{
+		event: "qti/item.migrate",
 		concurrency: {
 			limit: 400,
 			key: OPENAI_CONCURRENCY_KEY
 		}
 	},
-	{ event: "qti/item.migrate" },
 	async ({ event, logger }) => {
-		const { questionId } = event.data
+		// MODIFIED: Destructure widgetCollection as a required field.
+		const { questionId, widgetCollection } = event.data
 		// ✅ Enhanced logging at every step, using the provided logger.
-		logger.info("starting perseus to qti conversion", { questionId })
+		logger.info("starting perseus to qti conversion", { questionId, widgetCollection })
 
 		// Step 1: Fetch Perseus data.
 		logger.debug("fetching perseus data from db", { questionId })
@@ -54,9 +57,9 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 
 		// Step 2: Generate structured JSON from Perseus data.
 		logger.debug("invoking structured item generation pipeline", { questionId })
+		// MODIFIED: Pass widgetCollection directly - it's already typed from the event data
 		const structuredItemResult = await errors.try(
-			// MODIFIED: Explicitly pass the default math-core collection.
-			generateStructuredQtiItem(logger, question.parsedData, { widgetCollectionName: "math-core" })
+			generateStructuredQtiItem(logger, question.parsedData, { widgetCollectionName: widgetCollection })
 		)
 		if (structuredItemResult.error) {
 			logger.error("structured item generation failed", {

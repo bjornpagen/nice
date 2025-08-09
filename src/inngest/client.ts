@@ -2,6 +2,7 @@ import * as logger from "@superbuilders/slog"
 import { EventSchemas, type GetEvents, Inngest } from "inngest"
 import { z } from "zod"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import { WidgetCollectionNameSchema } from "@/lib/widget-collections" // MODIFIED: Import the central Zod enum schema
 
 // Helper schema for the XML-based item input
 const CreateItemInputSchema = z.object({
@@ -25,15 +26,12 @@ const events = {
 	// QTI Migration Events
 	"qti/item.migrate": {
 		data: z.object({
-			questionId: z.string().min(1)
+			questionId: z.string().min(1),
+			// MODIFIED: Make widgetCollection mandatory and use the imported schema
+			widgetCollection: WidgetCollectionNameSchema
 		})
 	},
-	// ADD THIS NEW EVENT
-	"qti/item.migrate.focused": {
-		data: z.object({
-			questionId: z.string().min(1)
-		})
-	},
+	// REMOVED: "qti/item.migrate.focused" event is removed as it's merged.
 	"qti/stimulus.migrate": {
 		data: z.object({
 			articleId: z.string().min(1)

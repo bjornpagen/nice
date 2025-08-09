@@ -20,9 +20,9 @@ export const orchestrateHardcodedMathItemMigration = inngest.createFunction(
 
 		const result = await step.run("dispatch-math-item-migrations", () =>
 			dispatchMigrationsForCourses(logger, HARDCODED_MATH_COURSE_IDS, {
-				itemEventName: "qti/item.migrate",
-				// MODIFIED: Explicitly set stimulusEventName to undefined to prevent stimulus migration
-				stimulusEventName: undefined
+				itemEventName: "qti/item.migrate", // MODIFIED: Changed to the unified event
+				widgetCollection: "math-core", // MODIFIED: Explicitly specify "math-core" as mandatory
+				stimulusEventName: undefined // Explicitly set stimulusEventName to undefined to prevent stimulus migration
 			})
 		)
 
