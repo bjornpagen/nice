@@ -152,6 +152,16 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 	let svg = `<svg width="${width}" height="${height}" viewBox="${minX} ${minY} ${maxX - minX} ${maxY - minY}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="14">`
 	const pointMap = new Map(points.map((p) => [p.id, p]))
 
+	// Compute centroid of the main triangle (first 3 points) to infer outward direction
+	const pAforCentroid = points[0]
+	const pBforCentroid = points[1]
+	const pCforCentroid = points[2]
+	if (!pAforCentroid || !pBforCentroid || !pCforCentroid) {
+		throw errors.new("triangle requires at least 3 points")
+	}
+	const centroidXForAngles = (pAforCentroid.x + pBforCentroid.x + pCforCentroid.x) / 3
+	const centroidYForAngles = (pAforCentroid.y + pBforCentroid.y + pCforCentroid.y) / 3
+
 	// Layer 1: Shaded Regions (drawn first to be in the background)
 	if (shadedRegions) {
 		for (const region of shadedRegions) {
@@ -266,7 +276,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 
 				// Use a fixed radius for right angles, otherwise calculate dynamically
 				if (angle.isRightAngle) {
-					labelRadius = 22
+					labelRadius = 28
 				} else {
 					const baseLabelRadius = angle.radius * 1.6
 					const FONT_SIZE_ESTIMATE = 14 // Based on the SVG font-size
@@ -285,9 +295,22 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 					}
 				}
 				// --- NEW LOGIC END ---
+				// For right angles, flip label direction outward from the triangle so it does not
+				// overlap the vertex label or the right-angle marker inside the corner.
+				let labelAngle = midAngle
+				if (angle.isRightAngle) {
+					const inX = vertex.x + labelRadius * Math.cos(midAngle)
+					const inY = vertex.y + labelRadius * Math.sin(midAngle)
+					const outAngle = midAngle + Math.PI
+					const outX = vertex.x + labelRadius * Math.cos(outAngle)
+					const outY = vertex.y + labelRadius * Math.sin(outAngle)
+					const distIn = Math.hypot(inX - centroidXForAngles, inY - centroidYForAngles)
+					const distOut = Math.hypot(outX - centroidXForAngles, outY - centroidYForAngles)
+					labelAngle = distOut > distIn ? outAngle : midAngle
+				}
 
-				const labelX = vertex.x + labelRadius * Math.cos(midAngle)
-				const labelY = vertex.y + labelRadius * Math.sin(midAngle)
+				const labelX = vertex.x + labelRadius * Math.cos(labelAngle)
+				const labelY = vertex.y + labelRadius * Math.sin(labelAngle)
 				svg += `<text x="${labelX}" y="${labelY}" fill="black" text-anchor="middle" dominant-baseline="middle">${angle.label}</text>`
 			}
 		}
