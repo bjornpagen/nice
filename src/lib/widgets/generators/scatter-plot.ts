@@ -289,8 +289,21 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 		}
 	svg += `<line x1="${pad.left}" y1="${height - pad.bottom}" x2="${width - pad.right}" y2="${height - pad.bottom}" stroke="black"/>`
 	svg += `<line x1="${pad.left}" y1="${pad.top}" x2="${pad.left}" y2="${height - pad.bottom}" stroke="black"/>`
+	// Dynamic x-axis label thinning: render all tick marks but only label every n-th
+	// tick so that adjacent labels are at least a minimum pixel distance apart.
+	// Keep tick marks and optional grid lines at the configured tickInterval.
+	const minLabelSpacingPx = 50 // target minimum spacing between x-axis labels
+	const approxTickSpacingPx = scaleX * xAxis.tickInterval
+	const labelStepMultiplier =
+		approxTickSpacingPx > 0 ? Math.max(1, Math.ceil(minLabelSpacingPx / approxTickSpacingPx)) : 1
+	let tickIndex = 0
 	for (let t = xAxis.min; t <= xAxis.max; t += xAxis.tickInterval) {
-		svg += `<line x1="${toSvgX(t)}" y1="${height - pad.bottom}" x2="${toSvgX(t)}" y2="${height - pad.bottom + 5}" stroke="black"/><text x="${toSvgX(t)}" y="${height - pad.bottom + 20}" text-anchor="middle">${t}</text>`
+		const x = toSvgX(t)
+		svg += `<line x1="${x}" y1="${height - pad.bottom}" x2="${x}" y2="${height - pad.bottom + 5}" stroke="black"/>`
+		if (tickIndex % labelStepMultiplier === 0) {
+			svg += `<text x="${x}" y="${height - pad.bottom + 20}" text-anchor="middle">${t}</text>`
+		}
+		tickIndex++
 	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		svg += `<line x1="${pad.left}" y1="${toSvgY(t)}" x2="${pad.left - 5}" y2="${toSvgY(t)}" stroke="black"/><text x="${pad.left - 10}" y="${toSvgY(t) + 4}" text-anchor="end">${t}</text>`
