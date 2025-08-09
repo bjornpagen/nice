@@ -61,8 +61,8 @@ export async function getUserUnitProgress(
 				return "attempted"
 			}
 
-			// For now, we'll fetch all assessmentResults for the user
-			// In a real implementation, you'd want to filter by course/unit
+			// Fetch all assessment results for the user
+			// We'll filter client-side to only include new '_ali' format line items
 			const resultsResponse = await errors.try(
 				oneroster.getAllResults({
 					filter: `student.sourcedId='${userId}'`
@@ -75,7 +75,13 @@ export async function getUserUnitProgress(
 			}
 
 			// Process results to build the progress map
+			// Only process results with new '_ali' format line items
 			for (const result of resultsResponse.data) {
+				// Skip results from old assessment line items (without '_ali' suffix)
+				if (!result.assessmentLineItem.sourcedId.endsWith("_ali")) {
+					continue
+				}
+
 				// MODIFIED: Check if score is a valid number before using it.
 				if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
 					const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)

@@ -194,7 +194,8 @@ async function fetchUnitProficiencies(
 ): Promise<UnitProficiency[]> {
 	logger.info("🎯 STARTING fetchUnitProficiencies", { userSourcedId, unitCount: courseData.units.length })
 
-	// Get all assessment results for this user from OneRoster
+	// Get all assessment results for this user
+	// We'll filter client-side to only include new '_ali' format line items
 	const resultsResponse = await errors.try(
 		oneroster.getAllResults({
 			filter: `student.sourcedId='${userSourcedId}'`
@@ -215,8 +216,14 @@ async function fetchUnitProficiencies(
 	}
 
 	// Create a map of resourceId -> assessment result for quick lookup
+	// Only process results with new '_ali' format line items
 	const resultsMap = new Map<string, { score: number; isFullyGraded: boolean }>()
 	for (const result of resultsResponse.data) {
+		// Skip results from old assessment line items (without '_ali' suffix)
+		if (!result.assessmentLineItem.sourcedId.endsWith("_ali")) {
+			continue
+		}
+
 		if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
 			const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
 			resultsMap.set(resourceId, {
