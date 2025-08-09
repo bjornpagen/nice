@@ -343,13 +343,31 @@ export async function saveAssessmentResult(
 	// The result sourcedId follows our pattern
 	const onerosterResultSourcedId = `nice_${userId}_${onerosterLineItemSourcedId}`
 
+	// Mastery preservation logic for individual exercises
+	let finalScore = assessmentScore // Start with the raw score
+
+	if (assessmentScore === 1.0 && contentType === "Exercise") {
+		// Check current score for this exercise to preserve mastery
+		const currentResultResult = await errors.try(oneroster.getResult(onerosterResultSourcedId))
+
+		if (!currentResultResult.error && currentResultResult.data?.score === 1.1) {
+			finalScore = 1.1 // Preserve mastery
+			logger.info("preserving mastery score", {
+				exerciseId: resourceId,
+				previousScore: 1.1,
+				newAttemptScore: assessmentScore,
+				preservedScore: finalScore
+			})
+		}
+	}
+
 	const resultPayload = {
 		result: {
 			assessmentLineItem: { sourcedId: onerosterLineItemSourcedId, type: "assessmentLineItem" as const },
 			student: { sourcedId: userId, type: "user" as const },
 			scoreStatus: "fully graded" as const,
 			scoreDate: new Date().toISOString(),
-			score: assessmentScore, // Score as decimal (0-1)
+			score: finalScore, // Use finalScore instead of assessmentScore
 			comment: `${assessmentCorrectAnswers}/${assessmentTotalQuestions} correct on first attempt`,
 			...(assessmentMetadata && { metadata: assessmentMetadata })
 		}
