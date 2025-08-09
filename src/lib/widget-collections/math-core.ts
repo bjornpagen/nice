@@ -108,7 +108,7 @@ export const mathCoreCollection = {
 		verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema
 	},
 	widgetTypeKeys: [
-		"3dIntersectionDiagram",
+		"threeDIntersectionDiagram",
 		"absoluteValueNumberLine",
 		"angleDiagram",
 		"barChart",

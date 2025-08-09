@@ -3078,6 +3078,94 @@ export const threeDataTablesMultipleChoice: AssessmentItemInput = {
 	}
 }
 
+export const gustaveStepsPerMile: AssessmentItemInput = {
+	identifier: "gustave-steps-per-mile",
+	title: "Write an equation and find steps per mile",
+	responseDeclarations: [
+		{ identifier: "RESP_EQN", cardinality: "single", baseType: "string", correct: "3s=6300" },
+		{ identifier: "RESP_STEPS", cardinality: "single", baseType: "integer", correct: 2100 }
+	],
+	widgets: {
+		gustave_shoe_image: {
+			type: "emojiImage",
+			emoji: "👟",
+			size: 140
+		}
+	},
+	body: [
+		{ type: "blockSlot", slotId: "gustave_shoe_image" },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Gustave measured his pace and determined that for him, " },
+				{ type: "math", mathml: "<mi>s</mi>" },
+				{ type: "text", content: " steps make up one mile. One day Gustave walked " },
+				{ type: "math", mathml: "<mn>6300</mn>" },
+				{ type: "text", content: " steps, which was " },
+				{ type: "math", mathml: "<mn>3</mn>" },
+				{ type: "text", content: " miles." }
+			]
+		},
+		{ type: "paragraph", content: [{ type: "text", content: "Write an equation to describe this situation." }] },
+		{ type: "paragraph", content: [{ type: "inlineSlot", slotId: "equation_entry" }] },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "How many steps are in one mile for Gustave? " },
+				{ type: "inlineSlot", slotId: "steps_entry" }
+			]
+		}
+	],
+	interactions: {
+		equation_entry: { type: "textEntryInteraction", responseIdentifier: "RESP_EQN", expectedLength: 7 },
+		steps_entry: { type: "textEntryInteraction", responseIdentifier: "RESP_STEPS", expectedLength: 4 }
+	},
+	feedback: {
+		correct: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Correct! A valid equation is " },
+					{ type: "math", mathml: "<mn>3</mn><mi>s</mi><mo>=</mo><mn>6300</mn>" },
+					{ type: "text", content: "." }
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "There are " },
+					{ type: "math", mathml: "<mn>2100</mn>" },
+					{ type: "text", content: " steps in one mile for Gustave." }
+				]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. Let " },
+					{ type: "math", mathml: "<mi>s</mi>" },
+					{ type: "text", content: " be the number of steps in one mile. Since " },
+					{ type: "math", mathml: "<mn>3</mn>" },
+					{ type: "text", content: " miles corresponds to " },
+					{ type: "math", mathml: "<mn>6300</mn>" },
+					{ type: "text", content: " steps, the equation is " },
+					{ type: "math", mathml: "<mn>3</mn><mi>s</mi><mo>=</mo><mn>6300</mn>" },
+					{ type: "text", content: "." }
+				]
+			},
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Solving gives " },
+					{ type: "math", mathml: "<mi>s</mi><mo>=</mo><mn>2100</mn>" },
+					{ type: "text", content: ", so there are 2100 steps in one mile." }
+				]
+			}
+		]
+	}
+}
+
 export const allExamples: AssessmentItemInput[] = [
 	probabilityNotPurpleSpinner,
 	linearModelEquationPrediction,
@@ -3103,5 +3191,6 @@ export const allExamples: AssessmentItemInput[] = [
 	dollHeightLinePlot,
 	timeOnNumberLine,
 	compare2DigitNumbers,
-	threeDataTablesMultipleChoice
+	threeDataTablesMultipleChoice,
+	gustaveStepsPerMile
 ]

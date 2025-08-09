@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test"
 import * as fs from "node:fs"
 import * as path from "node:path"
+import { mathCoreCollection } from "@/lib/widget-collections/math-core"
 import { typedSchemas } from "@/lib/widgets/generators"
 
 function readFileText(p: string): string {
@@ -21,26 +22,7 @@ function extractGeneratorCases(source: string): string[] {
 	return cases
 }
 
-function extractPromptWidgetKeys(source: string): string[] {
-	// Capture the array literal assigned to widgetTypeKeys
-	const start = source.indexOf("const widgetTypeKeys")
-	if (start === -1) return []
-	const slice = source.slice(start)
-	const arrayMatch = slice.match(/=\s*\[(.*?)\]/s)
-	if (!arrayMatch || !arrayMatch[1]) return []
-	const inner = arrayMatch[1]
-	const itemRegex = /"([A-Za-z0-9_]+)"/g
-	const items: string[] = []
-	let m: RegExpExecArray | null
-	m = itemRegex.exec(inner)
-	while (m !== null) {
-		if (m[1]) {
-			items.push(m[1])
-		}
-		m = itemRegex.exec(inner)
-	}
-	return items
-}
+// Removed prompt parsing: prompts.ts no longer contains a static list of widget keys.
 
 describe("Widget type consistency", () => {
 	test("all widget types in typedSchemas are handled by widget-generator.ts", () => {
@@ -58,19 +40,12 @@ describe("Widget type consistency", () => {
 		expect(generatorCases.length).toBe(schemaKeys.length)
 	})
 
-	test("all widget types in typedSchemas are listed in prompts.ts", () => {
-		const promptsPath = path.resolve(__dirname, "../qti-generation/structured/prompts.ts")
-		const promptSource = readFileText(promptsPath)
+	test("all math-core collection keys are defined in typedSchemas", () => {
+		const schemaKeys = Object.keys(typedSchemas)
+		const collectionKeys = [...mathCoreCollection.widgetTypeKeys]
 
-		const schemaKeys = Object.keys(typedSchemas).sort()
-		const promptKeys = extractPromptWidgetKeys(promptSource).sort()
-
-		const inSchemasNotInPrompt = schemaKeys.filter((k) => !promptKeys.includes(k))
-		const inPromptNotInSchemas = promptKeys.filter((k) => !schemaKeys.includes(k))
-
-		expect(inSchemasNotInPrompt).toEqual([])
-		expect(inPromptNotInSchemas).toEqual([])
-		expect(promptKeys.length).toBe(schemaKeys.length)
+		const inCollectionNotInSchemas = collectionKeys.filter((k) => !schemaKeys.includes(k))
+		expect(inCollectionNotInSchemas).toEqual([])
 	})
 
 	test("widget count is as expected", () => {

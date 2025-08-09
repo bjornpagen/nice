@@ -270,7 +270,8 @@ async function generateWidgetContent(
 	assessmentShell: AssessmentItemShell,
 	widgetMapping: Record<string, keyof typeof allWidgetSchemas>,
 	generatedInteractions: Record<string, AnyInteraction>,
-	imageContext: ImageContext
+	imageContext: ImageContext,
+	widgetCollectionName: WidgetCollectionName
 ): Promise<Record<string, WidgetInput>> {
 	const widgetSlotNames = Object.keys(widgetMapping)
 	if (widgetSlotNames.length === 0) {
@@ -284,6 +285,7 @@ async function generateWidgetContent(
 		assessmentShell,
 		widgetMapping,
 		generatedInteractions,
+		widgetCollectionName,
 		imageContext
 	)
 
@@ -515,7 +517,8 @@ export async function generateStructuredQtiItem(
 			assessmentShell,
 			widgetMapping,
 			generatedInteractions,
-			imageContext
+			imageContext,
+			widgetCollectionName
 		)
 	)
 	if (widgetContentResult.error) {

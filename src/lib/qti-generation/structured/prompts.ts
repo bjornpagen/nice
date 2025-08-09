@@ -24,83 +24,7 @@ function createShellFromExample(item: (typeof allExamples)[0]) {
 	return result.data
 }
 
-// Define a strict widget type key list (no bailouts)
-type WidgetTypeKey = keyof typeof allWidgetSchemas
-
-const widgetTypeKeys: [WidgetTypeKey, ...WidgetTypeKey[]] = [
-	"threeDIntersectionDiagram",
-	"absoluteValueNumberLine",
-	"angleDiagram",
-	"barChart",
-	"boxGrid",
-	"boxPlot",
-	"circleDiagram",
-	"compositeShapeDiagram",
-	"coordinatePlane",
-	"distanceFormulaGraph",
-	"functionPlotGraph",
-	"lineEquationGraph",
-
-	"pointPlotGraph",
-	"polygonGraph",
-	"shapeTransformationGraph",
-	"dataTable",
-	"discreteObjectRatioDiagram",
-	"dotPlot",
-	"doubleNumberLine",
-	"emojiImage",
-	"figureComparisonDiagram",
-	"fractionNumberLine",
-	"geometricSolidDiagram",
-	"hangerDiagram",
-	"histogram",
-	"inequalityNumberLine",
-	"numberLine",
-	"numberLineForOpposites",
-	"numberLineWithAction",
-	"numberLineWithFractionGroups",
-	"numberSetDiagram",
-	"partitionedShape",
-	"pentagonIntersectionDiagram",
-	"pictograph",
-	"polyhedronDiagram",
-	"polyhedronNetDiagram",
-	"probabilitySpinner",
-	"pythagoreanProofDiagram",
-	"ratioBoxDiagram",
-	"rectangularFrameDiagram",
-	"scaleCopiesSlider",
-	"scatterPlot",
-	"stackedItemsDiagram",
-	"tapeDiagram",
-	"transformationDiagram",
-	"treeDiagram",
-	"triangleDiagram",
-	"unitBlockDiagram",
-	"urlImage",
-	"vennDiagram",
-	"verticalArithmeticSetup",
-	"parallelogramTrapezoidDiagram"
-]
-
-// DEPRECATED: This is now moved inside createWidgetMappingPrompt to be dynamic
-// Build a machine-generated list of widget type names and their top-level descriptions from schemas
-function buildWidgetTypeDescriptions(): string {
-	const parts: string[] = []
-	for (const typeName of widgetTypeKeys) {
-		const schema = allWidgetSchemas[typeName]
-		// Zod stores the description on the schema definition
-		const rawDescription = schema._def.description
-		const safeDescription =
-			typeof rawDescription === "string" && rawDescription.trim() !== ""
-				? rawDescription.trim()
-				: "no description available"
-		parts.push(`- ${typeName}: ${safeDescription}`)
-	}
-	// Sort for stable output
-	parts.sort((a, b) => a.localeCompare(b))
-	return parts.join("\n")
-}
+// (Removed deprecated global widgetTypeKeys and description builder in favor of collection-aware logic)
 
 function createWidgetMappingSchema(slotNames: string[], allowedWidgetKeys: readonly string[]) {
 	const shape: Record<string, z.ZodType<string>> = {}
@@ -1794,11 +1718,38 @@ export function createWidgetContentPrompt(
 	assessmentShell: unknown,
 	widgetMapping: Record<string, keyof typeof allWidgetSchemas>,
 	generatedInteractions: Record<string, AnyInteraction>,
+	widgetCollectionName: WidgetCollectionName,
 	imageContext: ImageContext
 ): {
 	systemInstruction: string
 	userContent: string
 } {
+	function buildWidgetTypeDescriptionsForCollection(): string {
+		const collection = widgetCollections[widgetCollectionName]
+		const sortedKeys = [...collection.widgetTypeKeys].sort()
+		const lines: string[] = []
+		function hasDef(x: unknown): x is { _def?: { description?: unknown } } {
+			return typeof x === "object" && x !== null && "_def" in x
+		}
+		for (const typeName of sortedKeys) {
+			const schemaEntries = Object.entries(allWidgetSchemas)
+			const schemaEntry = schemaEntries.find(([key]) => key === typeName)
+			if (schemaEntry) {
+				const [, schema] = schemaEntry
+				let description = "No description available."
+				if (hasDef(schema)) {
+					const rawDescription = schema._def?.description
+					if (typeof rawDescription === "string" && rawDescription.trim() !== "") {
+						description = rawDescription.trim()
+					}
+				}
+				lines.push(`- ${typeName}: ${description}`)
+			} else {
+				lines.push(`- ${typeName}: No description available.`)
+			}
+		}
+		return lines.join("\n")
+	}
 	const systemInstruction = `You are an expert in educational content conversion with vision capabilities, focused on generating widget content for QTI assessments. Your task is to generate ONLY the widget content objects based on the original Perseus JSON, an assessment shell, a mapping that specifies the exact widget type for each slot, and accompanying visual context.
 
 **Vision Capability**: You may be provided with raster images (PNG, JPG) as multimodal input. Use your vision to analyze these images. For SVG images, their raw XML content will be provided directly in the text prompt.
@@ -1874,8 +1825,8 @@ This mapping tells you the required output type for each widget.
 ${JSON.stringify(widgetMapping, null, 2)}
 \`\`\`
 
-## Available Widget Types and Descriptions:
-${buildWidgetTypeDescriptions()}
+    ## Available Widget Types and Descriptions:
+    ${buildWidgetTypeDescriptionsForCollection()}
 
 ## Instructions:
 - **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of widgets.
