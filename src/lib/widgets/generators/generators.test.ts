@@ -1551,7 +1551,7 @@ describe("Widget Generators", () => {
 					{ x: 8, y: 90, label: null },
 					{ x: 9, y: 85, label: null }
 				],
-				trendLine: "linear" as const
+				lines: [{ type: "bestFit" as const, method: "linear" as const, label: null, style: null }]
 			}
 			expect(generateScatterPlot(props)).toMatchSnapshot()
 		})
@@ -1569,7 +1569,7 @@ describe("Widget Generators", () => {
 					{ x: 5, y: 25, label: null },
 					{ x: 8, y: 40, label: "B" }
 				],
-				trendLine: null
+				lines: []
 			}
 			expect(generateScatterPlot(props)).toMatchSnapshot()
 		})
@@ -1583,7 +1583,7 @@ describe("Widget Generators", () => {
 				xAxis: { label: "X", min: 10, max: 0, tickInterval: 1, gridLines: false },
 				yAxis: { label: "Y", min: 0, max: 10, tickInterval: 2, gridLines: false },
 				points: [],
-				trendLine: null
+				lines: []
 			}
 			expect(generateScatterPlot(props)).toMatchSnapshot()
 		})

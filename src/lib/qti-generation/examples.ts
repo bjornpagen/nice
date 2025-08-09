@@ -152,19 +152,19 @@ export const linearModelEquationPrediction: AssessmentItemInput = {
 	widgets: {
 		image_1: {
 			type: "scatterPlot",
-			title: "",
+			title: null,
 			width: 359,
 			xAxis: { max: 10, min: 0, label: "Time (hours)", gridLines: true, tickInterval: 1 },
 			yAxis: { max: 20, min: 0, label: "Distance (kilometers)", gridLines: true, tickInterval: 2 },
 			height: 354,
 			points: [
-				{ x: 2, y: 5, label: "" },
-				{ x: 2.75, y: 8, label: "" },
-				{ x: 4, y: 9.5, label: "" },
-				{ x: 7.25, y: 16, label: "" },
-				{ x: 8.5, y: 18, label: "" }
+				{ x: 2, y: 5, label: null },
+				{ x: 2.75, y: 8, label: null },
+				{ x: 4, y: 9.5, label: null },
+				{ x: 7.25, y: 16, label: null },
+				{ x: 8.5, y: 18, label: null }
 			],
-			trendLine: "linear"
+			lines: [{ type: "bestFit", method: "linear", label: null, style: null }]
 		}
 	},
 	feedback: {

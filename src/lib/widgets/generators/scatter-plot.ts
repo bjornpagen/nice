@@ -1,3 +1,4 @@
+import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
@@ -14,11 +15,81 @@ const ScatterPointSchema = z
 	})
 	.strict()
 
-// trend line selection (computed from points)
-const TrendLineSchema = z
-	.enum(["linear", "quadratic"])
-	.nullable()
-	.describe("choose a computed trend line type or null for none")
+// Factory function for common point schema used for free-form line definitions
+const createBarePointSchema = () =>
+	z
+		.object({
+			x: z.number().describe("The value on the horizontal (X) axis for this coordinate."),
+			y: z.number().describe("The value on the vertical (Y) axis for this coordinate.")
+		})
+		.strict()
+		.describe("A 2D coordinate used in line definitions.")
+
+// Factory function for optional styling settings applied to any rendered line
+const createLineStyleSchema = () =>
+	z
+		.object({
+			color: z
+				.string()
+				.nullable()
+				.describe(
+					"Optional CSS color (named color, hex, rgb[a], or hsl[a]) used as the stroke color for this line. Defaults to a distinct accent if omitted."
+				),
+			strokeWidth: z
+				.number()
+				.positive()
+				.nullable()
+				.describe("Optional stroke width in pixels. Defaults to 2 if omitted."),
+			dash: z
+				.boolean()
+				.nullable()
+				.describe("If true, renders the line with a dashed pattern. If false or null, renders a solid line.")
+		})
+		.strict()
+		.describe("Optional per-line styling attributes.")
+
+// A line defined by two distinct points. Rendered across the entire chart domain.
+const LineTwoPointsSchema = z
+	.object({
+		type: z.literal("twoPoints").describe("This line is defined by two points a and b."),
+		a: createBarePointSchema().describe("The first coordinate that lies on the line."),
+		b: createBarePointSchema().describe("The second coordinate that lies on the line. Must not be identical to 'a'."),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("Optional short label to render near the line (e.g., 'A', 'B', 'C')."),
+		style: createLineStyleSchema().nullable().describe("Optional styling overrides for this line.")
+	})
+	.strict()
+	.describe(
+		"Render an infinite line that passes through points 'a' and 'b', clipped to the plot area. Vertical lines (a.x === b.x) are supported."
+	)
+
+// A line that is computed as the best fit for the provided scatter points
+const LineBestFitSchema = z
+	.object({
+		type: z.literal("bestFit").describe("This line is computed from the scatter plot points."),
+		method: z
+			.enum(["linear", "quadratic"]) // quadratic uses a polynomial curve
+			.describe(
+				"The best-fit method. 'linear' renders a straight line; 'quadratic' renders a second-degree polynomial curve."
+			),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe("Optional short label to render near the computed line."),
+		style: createLineStyleSchema().nullable().describe("Optional styling overrides for the computed line.")
+	})
+	.strict()
+	.describe("A computed best-fit line (linear) or curve (quadratic) derived from the data points.")
+
+const LineSpecSchema = z
+	.discriminatedUnion("type", [LineBestFitSchema, LineTwoPointsSchema])
+	.describe(
+		"A line overlay specification. Either a computed 'bestFit' (linear or quadratic) or a free-form 'twoPoints' line defined by two coordinates."
+	)
 
 // The main Zod schema for the scatterPlot function
 export const ScatterPlotPropsSchema = z
@@ -62,11 +133,17 @@ export const ScatterPlotPropsSchema = z
 			.strict()
 			.describe("Configuration for the vertical (Y) axis."),
 		points: z.array(ScatterPointSchema).describe("An array of data points to be plotted."),
-		trendLine: TrendLineSchema
+		lines: z
+			.array(LineSpecSchema)
+			.nullable()
+			.transform((val) => val ?? [])
+			.describe(
+				"Optional overlays to render on top of the scatter plot: computed best-fit lines/curves or user-specified lines defined by two points."
+			)
 	})
 	.strict()
 	.describe(
-		"this template generates a two-dimensional scatter plot as an svg graphic with optional computed trend line (linear or quadratic) based on the provided points."
+		"Generate a two-dimensional scatter plot as an SVG graphic with optional line overlays. Lines can be computed best-fit (linear or quadratic) or explicit lines defined by two points."
 	)
 
 export type ScatterPlotProps = z.infer<typeof ScatterPlotPropsSchema>
@@ -148,8 +225,26 @@ function computeQuadraticRegression(
 	return { a: Da / D, b: Db / D, c: Dc / D }
 }
 
+type LineStyle = z.infer<ReturnType<typeof createLineStyleSchema>>
+
 export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema> = (data) => {
-	const { width, height, title, xAxis, yAxis, points, trendLine } = data
+	const { width, height, title, xAxis, yAxis, points, lines } = data
+
+	// Validation logic moved from schema
+	const hasLinear = lines.some((l) => l.type === "bestFit" && l.method === "linear")
+	const hasQuadratic = lines.some((l) => l.type === "bestFit" && l.method === "quadratic")
+	if (hasLinear && points.length < 2) {
+		throw errors.new("linear best fit requires at least 2 points")
+	}
+	if (hasQuadratic && points.length < 3) {
+		throw errors.new("quadratic best fit requires at least 3 points")
+	}
+	// Validate twoPoints lines have different endpoints
+	for (const line of lines) {
+		if (line.type === "twoPoints" && line.a.x === line.b.x && line.a.y === line.b.y) {
+			throw errors.new("line endpoints must differ")
+		}
+	}
 	// Use the same robust coordinate plane logic from generateCoordinatePlane
 	const pad = { top: 40, right: 30, bottom: 60, left: 50 }
 	const chartWidth = width - pad.left - pad.right
@@ -163,6 +258,19 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	const scaleY = chartHeight / (yAxis.max - yAxis.min)
 	const toSvgX = (val: number) => pad.left + (val - xAxis.min) * scaleX
 	const toSvgY = (val: number) => height - pad.bottom - (val - yAxis.min) * scaleY
+
+	const clamp = (value: number, min: number, max: number) => {
+		if (value < min) return min
+		if (value > max) return max
+		return value
+	}
+
+	const styleAttrs = (style: LineStyle | null): string => {
+		const color = style?.color ?? "#EA4335"
+		const strokeWidth = style?.strokeWidth ?? 2
+		const dash = style?.dash ? ` stroke-dasharray="5 5"` : ""
+		return ` stroke="${color}" stroke-width="${strokeWidth}"${dash}`
+	}
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
@@ -192,28 +300,71 @@ export const generateScatterPlot: WidgetGenerator<typeof ScatterPlotPropsSchema>
 	if (yAxis.label)
 		svg += `<text x="${pad.left - 35}" y="${pad.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${pad.left - 35}, ${pad.top + chartHeight / 2})">${yAxis.label}</text>`
 
-	// computed trend line
-	if (trendLine === "linear") {
-		const coeff = computeLinearRegression(points)
-		if (coeff) {
-			const y1 = coeff.slope * xAxis.min + coeff.yIntercept
-			const y2 = coeff.slope * xAxis.max + coeff.yIntercept
-			svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}" stroke="#EA4335" stroke-width="2" />`
-		}
-	}
-	if (trendLine === "quadratic") {
-		const coeff = computeQuadraticRegression(points)
-		if (coeff) {
-			const steps = 100
-			let path = ""
-			for (let i = 0; i <= steps; i++) {
-				const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
-				const yVal = coeff.a * xVal ** 2 + coeff.b * xVal + coeff.c
-				const px = toSvgX(xVal)
-				const py = toSvgY(yVal)
-				path += `${i === 0 ? "M" : "L"} ${px} ${py} `
+	// Render line overlays (computed or explicit)
+	for (const line of lines) {
+		if (line.type === "bestFit") {
+			if (line.method === "linear") {
+				const coeff = computeLinearRegression(points)
+				if (coeff) {
+					const y1 = coeff.slope * xAxis.min + coeff.yIntercept
+					const y2 = coeff.slope * xAxis.max + coeff.yIntercept
+					svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(y1)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(y2)}"${styleAttrs(
+						line.style
+					)} />`
+					if (line.label) {
+						const labelX = toSvgX(xAxis.max) - 5
+						const labelY = toSvgY(y2)
+						svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${line.label}</text>`
+					}
+				}
 			}
-			svg += `<path d="${path}" fill="none" stroke="#EA4335" stroke-width="2" />`
+			if (line.method === "quadratic") {
+				const coeff = computeQuadraticRegression(points)
+				if (coeff) {
+					const steps = 100
+					let path = ""
+					for (let i = 0; i <= steps; i++) {
+						const xVal = xAxis.min + (i / steps) * (xAxis.max - xAxis.min)
+						const yVal = coeff.a * xVal ** 2 + coeff.b * xVal + coeff.c
+						const px = toSvgX(xVal)
+						const py = toSvgY(yVal)
+						path += `${i === 0 ? "M" : "L"} ${px} ${py} `
+					}
+					svg += `<path d="${path}" fill="none"${styleAttrs(line.style)} />`
+					if (line.label) {
+						const yRight = coeff.a * xAxis.max ** 2 + coeff.b * xAxis.max + coeff.c
+						const labelX = toSvgX(xAxis.max) - 5
+						const labelY = toSvgY(clamp(yRight, yAxis.min, yAxis.max))
+						svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${line.label}</text>`
+					}
+				}
+			}
+		} else if (line.type === "twoPoints") {
+			const { a, b } = line
+			if (a.x === b.x) {
+				// vertical line across full y-domain
+				svg += `<line x1="${toSvgX(a.x)}" y1="${toSvgY(yAxis.min)}" x2="${toSvgX(a.x)}" y2="${toSvgY(yAxis.max)}"${styleAttrs(
+					line.style
+				)} />`
+				if (line.label) {
+					const labelX = toSvgX(a.x) + 6
+					const labelY = toSvgY(yAxis.max) + 14
+					svg += `<text x="${labelX}" y="${labelY}" fill="black">${line.label}</text>`
+				}
+			} else {
+				const slope = (b.y - a.y) / (b.x - a.x)
+				const intercept = a.y - slope * a.x
+				const yAtMin = slope * xAxis.min + intercept
+				const yAtMax = slope * xAxis.max + intercept
+				svg += `<line x1="${toSvgX(xAxis.min)}" y1="${toSvgY(yAtMin)}" x2="${toSvgX(xAxis.max)}" y2="${toSvgY(yAtMax)}"${styleAttrs(
+					line.style
+				)} />`
+				if (line.label) {
+					const labelX = toSvgX(xAxis.max) - 5
+					const labelY = toSvgY(yAtMax)
+					svg += `<text x="${labelX}" y="${labelY - 6}" text-anchor="end" fill="black">${line.label}</text>`
+				}
+			}
 		}
 	}
 

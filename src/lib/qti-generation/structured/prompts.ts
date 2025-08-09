@@ -127,6 +127,17 @@ export function createAssessmentShellPrompt(
 	systemInstruction: string
 	userContent: string
 } {
+	// TODO: In the future, make this configurable by passing in supported interaction types
+	// For now, hardcoded to match our current QTI schema support
+	const supportedInteractionTypes = `**SUPPORTED INTERACTION TYPES**
+We FULLY support the following QTI interaction types:
+- **choiceInteraction**: Multiple choice questions (maps from Perseus \`radio\` widgets)
+- **orderInteraction**: Ordering/sequencing questions (maps from Perseus \`sorter\` widgets) - students arrange items in correct order
+- **textEntryInteraction**: Numeric/text input (maps from Perseus \`numeric-input\`, \`expression\`, \`input-number\` widgets)
+- **inlineChoiceInteraction**: Dropdown selection within text (maps from Perseus \`dropdown\` widgets)
+
+These are the ONLY interaction types we support. Any Perseus widget that maps to one of these should be classified as an interaction.`
+
 	const systemInstruction = `You are an expert in educational content conversion. Your task is to analyze a Perseus JSON object and create a structured assessment shell in JSON format. Your primary goal is to accurately represent all content using a strict, nested object model.
 
 **CRITICAL: STRUCTURED CONTENT MODEL**
@@ -164,8 +175,38 @@ CRITICAL CLASSIFICATION RULE:
 - EXCEPTION: TABLES ARE ALWAYS WIDGETS - Even if they contain input fields, tables MUST be widgets
 Perseus misleadingly calls both types "widgets" - you MUST reclassify based on whether user input is required, EXCEPT tables which are ALWAYS widgets.
 
+${supportedInteractionTypes}
+
+**CRITICAL: UNSUPPORTED INTERACTIVE WIDGETS - CONVERT TO MULTIPLE CHOICE**
+Some Perseus widgets require complex interactive features we cannot support (drawing, plotting, manipulating visuals). When you encounter these, you MUST convert them to multiple choice questions instead of failing.
+
+**Unsupported Perseus Widget Types That MUST Be Converted:**
+- \`plotter\`: Creating histograms, dot plots, bar charts by adding elements
+- \`interactive-graph\`: Drawing lines, plotting points, moving objects on a coordinate plane
+- \`grapher\`: Interactive function graphing or manipulation
+- \`number-line\`: When used for plotting/adding points (not just display)
+- \`matcher\`: Matching or pairing items interactively
+- Any widget requiring drawing, dragging, or visual manipulation
+
+**Conversion Strategy:**
+1. **CRITICAL: Create THREE ADDITIONAL widget slots** for the multiple choice options (e.g., \`choice_a_visual\`, \`choice_b_visual\`, \`choice_c_visual\`)
+2. Convert the interaction to a multiple choice question that will reference these three widget slots
+3. Place ONLY any initial visuals and the choice interaction in the body
+4. The three choice widget slots are declared in the \`widgets\` array but NOT placed in the body
+
+**Implementation Pattern:**
+- THREE additional widgets for choices (e.g., \`dot_plot_choice_a\`, \`dot_plot_choice_b\`, \`dot_plot_choice_c\`)
+- The interaction becomes a choice interaction (e.g., \`dot_plot_choice\`)
+- ONLY \`dot_plot_initial\` and \`dot_plot_choice\` appear in the body
+- The choice widgets are reserved for use by the interaction generation shot
+
 ABSOLUTE REQUIREMENT: SLOT CONSISTENCY.
-This is the most critical rule. Any slot you include in the 'body' MUST have its slotId listed in either the 'widgets' array or the 'interactions' array. Conversely, every name in the 'widgets' and 'interactions' arrays MUST correspond to a slot in the 'body'. There must be a perfect, one-to-one mapping.
+This is the most critical rule. Any slot you include in the 'body' MUST have its slotId listed in either the 'widgets' array or the 'interactions' array. 
+
+**EXCEPTION for Choice-Level Visuals:** Widget slots declared for use in interaction choices (following patterns like \`choice_a_visual\`, \`graph_choice_b\`, etc.) are declared in the \`widgets\` array but NOT placed in the body. This includes:
+- Widgets for multiple choice options when converting unsupported interactive widgets
+- Widgets referenced inside interaction choice content
+These widgets are reserved for the interaction generation shot and will be embedded inside the choice options.
 
 CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, MathML, and slot placeholders.
 \nCRITICAL: All content must be XML-safe. Do not use CDATA sections and do not include invalid XML control characters.
@@ -251,7 +292,8 @@ ${perseusJson}
 - **Analyze Images**: Use the raster images provided to your vision and the raw SVG content above to understand the visual components of the question.
 - **\`body\` Field**: Create a 'body' field containing the main content as a structured JSON array (not an HTML string).
   - **ONLY REFERENCED WIDGETS (WITH CHOICE-LEVEL EXCEPTION)**: CRITICAL RULE - Only include widgets/interactions that are explicitly referenced in the Perseus content string via \`[[☃ widget_name]]\` placeholders. Perseus JSON may contain many widget definitions, but you MUST ignore any that aren't actually used in the content.
-    - **Exception for visuals inside interaction choices (radio/order/inlineChoice)**: When the original Perseus JSON encodes visuals (e.g., Graphie images, number lines, diagrams) inside interaction choice content, you MUST predeclare widget slots for those visuals even if there is no corresponding \`[[☃ ...]]\` placeholder in the top-level body.
+    - **Exception 1 - Visuals inside interaction choices**: When the original Perseus JSON encodes visuals (e.g., Graphie images, number lines, diagrams) inside interaction choice content, you MUST predeclare widget slots for those visuals even if there is no corresponding \`[[☃ ...]]\` placeholder in the top-level body.
+    - **Exception 2 - Unsupported interactive widgets converted to multiple choice**: When converting unsupported widgets (plotter, interactive-graph, etc.), you MUST create THREE additional widget slots for the choice options (e.g., \`dot_plot_choice_a\`, \`dot_plot_choice_b\`, \`dot_plot_choice_c\`).
     - Do NOT render these per-choice visuals in the shell body. Simply reserve their widget slot identifiers in the \`widgets\` array for later use by the interaction content shot.
   - **Placeholders**:
   - For ALL Perseus widgets (including 'image' widgets), create a { "type": "blockSlot", "slotId": "..." } placeholder in the 'body' and add its identifier to the 'widgets' string array.
@@ -472,7 +514,135 @@ CORRECT: \`<mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>)</mo></mrow>\`
 WRONG: \`<mfenced open="|" close="|"><mi>x</mi></mfenced>\` --> CORRECT: \`<mrow><mo>|</mo><mi>x</mi><mo>|</mo></mrow>\`
 WRONG: \`<mfenced open="(" close=")">content</mfenced>\` --> CORRECT: \`<mrow><mo>(</mo>content<mo>)</mo></mrow>\`
 
-**4. Explanation Widgets - BANNED:**
+**4. Unsupported Interactive Widgets - CONVERT TO MULTIPLE CHOICE:**
+
+When Perseus contains interactive widgets that require drawing, plotting, or manipulation, you MUST convert them to multiple choice questions.
+
+**Perseus Input with Interactive Plotter (from your example):**
+\`\`\`json
+{
+  "hints": [
+    {
+      "content": "There was $\\blue1$ newspaper where Kai had $\\pink{3}$ pictures published.\\n\\n[[☃ image 2]]",
+      "widgets": {
+        "image 2": {
+          "type": "image",
+          "options": {
+            "alt": "A dot plot has a horizontal axis labeled, Number of pictures published, marked from 3 to 6, in increments of 1. The number of dots above each value is as follows. 3, 1; 4, unknown; 5, unknown; 6, unknown. 3 is circled.",
+            "backgroundImage": {
+              "url": "web+graphie://cdn.kastatic.org/ka-perseus-graphie/5b5f67c411de00ba02b34ac0be32d384900776ba"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "question": {
+    "content": "The dot plot below shows the number of pictures Kai had published in newspapers.\\n\\n[[☃ plotter 1]]\\n\\nComplete the dot plot by adding the missing dots.",
+    "widgets": {
+      "plotter 1": {
+        "type": "plotter",
+        "options": {
+          "type": "dotplot",
+          "labels": ["Number of pictures published"],
+          "range": [[3, 6], [0, 4]],
+          "starting": [[3, 1]],
+          "correct": [[3, 1], [4, 2], [5, 1], [6, 1]]
+        }
+      }
+    }
+  }
+}
+\`\`\`
+
+**WRONG (Treating as regular interaction - will fail in Shot 2):**
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "The dot plot below shows the number of pictures Kai had published in newspapers." }] },
+    { "type": "blockSlot", "slotId": "plotter_1" },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Complete the dot plot by adding the missing dots." }] }
+  ],
+  "widgets": [],
+  "interactions": ["plotter_1"]  // ❌ This will fail - plotter is unsupported!
+}
+\`\`\`
+
+**CORRECT (Converting to initial visual + 3 choice visuals + multiple choice interaction):**
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "The dot plot below shows the number of pictures Kai had published in newspapers." }] },
+    { "type": "blockSlot", "slotId": "dot_plot_initial" },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Which dot plot correctly shows the complete data?" }] },
+    { "type": "blockSlot", "slotId": "dot_plot_choice" }
+  ],
+  "widgets": [
+    "dot_plot_initial",      // Shows the incomplete dot plot (only the 3,1 dot)
+    "dot_plot_choice_a",     // Shows option A: complete dot plot
+    "dot_plot_choice_b",     // Shows option B: incorrect complete dot plot  
+    "dot_plot_choice_c"      // Shows option C: incorrect complete dot plot
+  ],
+  "interactions": ["dot_plot_choice"],  // Multiple choice referencing the 3 choice widgets
+  "responseDeclarations": [{
+    "identifier": "RESPONSE",
+    "cardinality": "single",
+    "baseType": "identifier",
+    "correct": "A"
+  }]
+}
+\`\`\`
+**Note:** The three choice widget slots (\`dot_plot_choice_a\`, \`dot_plot_choice_b\`, \`dot_plot_choice_c\`) are declared but NOT placed in the body. They will be used by the interaction generation shot to embed in the choice options.
+
+**Perseus Input with Interactive Graph:**
+\`\`\`json
+{
+  "question": {
+    "content": "Plot the line y = 2x + 1 on the coordinate plane. [[☃ interactive-graph 1]]",
+    "widgets": {
+      "interactive-graph 1": {
+        "type": "interactive-graph",
+        "options": {
+          "range": [[-10, 10], [-10, 10]],
+          "labels": ["x", "y"],
+          "correct": {
+            "type": "linear",
+            "coords": [[-1, -1], [1, 3]]
+          }
+        }
+      }
+    }
+  }
+}
+\`\`\`
+
+**CORRECT (Converting to empty coordinate plane + 3 graph choices + multiple choice interaction):**
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Plot the line " }, { "type": "math", "mathml": "<mi>y</mi><mo>=</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn>" }, { "type": "text", "content": " on the coordinate plane." }] },
+    { "type": "blockSlot", "slotId": "coordinate_plane_empty" },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Which graph correctly shows the line " }, { "type": "math", "mathml": "<mi>y</mi><mo>=</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn>" }, { "type": "text", "content": "?" }] },
+    { "type": "blockSlot", "slotId": "graph_choice" }
+  ],
+  "widgets": [
+    "coordinate_plane_empty",  // Shows empty coordinate plane
+    "graph_choice_a",         // Shows graph with incorrect line (e.g., y = 2x - 1)
+    "graph_choice_b",         // Shows graph with correct line y = 2x + 1  
+    "graph_choice_c"          // Shows graph with incorrect line (e.g., y = x + 1)
+  ],
+  "interactions": ["graph_choice"],  // Multiple choice referencing the 3 graph widgets
+  "responseDeclarations": [{
+    "identifier": "RESPONSE",
+    "cardinality": "single", 
+    "baseType": "identifier",
+    "correct": "B"
+  }]
+}
+\`\`\`
+**Critical:** All four widget slots are declared in the \`widgets\` array, but only \`coordinate_plane_empty\` and \`graph_choice\` appear in the body. The three choice widgets will be embedded in the interaction's choices.
+
+**5. Explanation Widgets - BANNED:**
 Perseus 'explanation' or 'definition' widgets MUST be inlined as text, not turned into slots.
 
 **Perseus Input Snippet:**
@@ -612,22 +782,33 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 - If a Perseus element is purely visual/static = **WIDGET** (goes in \`widgets\` array)
 - **EXCEPTION: TABLES ARE ALWAYS WIDGETS** - Even tables with input fields
 
-**Common Perseus elements that are ALWAYS INTERACTIONS (never widgets):**
-- \`numeric-input\`, \`input-number\`, \`expression\` - text entry
-- \`radio\`, \`dropdown\` - selection
-- \`sorter\` - ordering (converts to orderInteraction)
-- ANY element where the user types, clicks, selects, or manipulates = **INTERACTION**
+**Common Perseus elements that map to SUPPORTED INTERACTIONS:**
+- \`numeric-input\`, \`input-number\`, \`expression\` → textEntryInteraction
+- \`radio\` → choiceInteraction
+- \`dropdown\` → inlineChoiceInteraction
+- \`sorter\` → orderInteraction
 
 **Common Perseus elements that are ALWAYS WIDGETS:**
 - \`table\` - **ALWAYS a widget, even if it contains input fields**
 - \`image\` - static images
-- \`grapher\`, \`plotter\` - static graphs/plots
 - \`passage\` - static text passages
+- \`graphie\` - static diagrams/graphs (when not interactive)
+
+**Common Perseus elements that are UNSUPPORTED and must be converted to multiple choice:**
+- \`plotter\` - interactive plotting/drawing
+- \`interactive-graph\` - interactive graphing
+- \`grapher\` - interactive function graphing
+- \`matcher\` - matching items
+- \`number-line\` - when used for plotting points (not just display)
 
 **Remember:** Perseus misleadingly calls interactive elements "widgets" in its JSON. IGNORE THIS. Reclassify based on whether user input is required, EXCEPT for tables which are ALWAYS widgets.
 
-**11. Unused Widgets in Perseus JSON - IGNORE THEM:**
+**11. Unused Widgets in Perseus JSON - IGNORE THEM (WITH EXCEPTIONS):**
 Perseus JSON may contain widget definitions that are NOT actually used in the content. You MUST ONLY include widgets/interactions that are explicitly referenced in the Perseus content string via \`[[☃ widget_name]]\` placeholders.
+
+**EXCEPTIONS to this rule:**
+1. When converting unsupported interactive widgets (plotter, interactive-graph, etc.) to multiple choice, you MUST create 3 additional widget slots for the choice visuals
+2. When Perseus encodes visuals inside interaction choice content, you MUST predeclare widget slots for those visuals
 
 **Perseus Input with unused widget:**
 \`\`\`json
@@ -672,7 +853,10 @@ Perseus JSON may contain widget definitions that are NOT actually used in the co
 
 **Explanation:** The Perseus JSON contained both a dropdown widget (used in content) and a radio widget (not used). The wrong output created slots for BOTH widgets, adding an extra choice interaction that doesn't belong. The correct output ONLY includes the dropdown that's actually referenced via \`[[☃ dropdown 1]]\` in the content string.
 
-**ABSOLUTE RULE:** Only create slots for widgets that appear as \`[[☃ widget_name]]\` in the Perseus content. Ignore all other widget definitions.
+**GENERAL RULE:** Only create slots for widgets that appear as \`[[☃ widget_name]]\` in the Perseus content. Ignore all other widget definitions.
+**EXCEPTIONS:** 
+- Create 3 additional widget slots when converting unsupported interactive widgets to multiple choice
+- Create widget slots for visuals that appear inside interaction choice content
 
  **Perseus Input with \`table\` containing input:**
 \`\`\`json
@@ -1038,9 +1222,11 @@ Widgets MUST NEVER display, label, or visually indicate the correct answer. This
 - ANY duplicate text appearing in both the 'body' and interaction 'prompt' fields (eliminate redundancy by using empty body when interaction has clear prompt)
 - ANY cramped layouts where equations, answer prompts, and input fields are all in one paragraph (use separate paragraphs for visual clarity)
 - ANY explanations, strategies, worked solutions, or teaching content in the 'body' (these belong ONLY in 'feedback' sections)
-- ANY widget or interaction that is NOT referenced in the Perseus content via \`[[☃ widget_name]]\` (unused widgets must be ignored)
+- ANY widget or interaction that is NOT referenced in the Perseus content via \`[[☃ widget_name]]\` (unused widgets must be ignored) - EXCEPT for choice-level visuals and the 3 additional widgets created when converting unsupported interactive widgets
+- ANY unsupported interactive widget (plotter, interactive-graph, grapher, matcher) marked as an interaction instead of being converted to multiple choice
 
 **REMEMBER: Answers are ONLY allowed in feedback fields. HARD STOP. NO EXCEPTIONS.**
+**REMEMBER: Unsupported interactive widgets MUST be converted to multiple choice questions. NEVER mark them as interactions.**
 Double-check your output before submitting. ZERO TOLERANCE for these violations.`
 
 	return { systemInstruction, userContent }
