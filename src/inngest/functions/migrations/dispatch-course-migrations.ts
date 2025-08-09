@@ -10,6 +10,8 @@ type Logger = {
 	error: (message: string, attributes?: Record<string, unknown>) => void
 }
 
+//hoopa
+
 type MigrationOptions = {
 	itemEventName: "qti/item.migrate" | "qti/item.migrate.focused"
 	stimulusEventName: "qti/stimulus.migrate"
