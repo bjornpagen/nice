@@ -271,7 +271,6 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 				const midAngle = (startAngle + endAngle) / 2
 				const angleMagnitudeRad = Math.abs(endAngle - startAngle)
 
-				// --- NEW LOGIC START ---
 				let labelRadius: number
 
 				// Use a fixed radius for right angles, otherwise calculate dynamically
