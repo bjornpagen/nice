@@ -113,6 +113,7 @@ export function Content({
 								index={index}
 								next={findNextUnit(index)}
 								unitProficiency={unitProficiency}
+								resourceLockStatus={resourceLockStatus}
 							/>
 						</div>
 					)

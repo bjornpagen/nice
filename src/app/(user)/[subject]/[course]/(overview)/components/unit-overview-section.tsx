@@ -8,12 +8,14 @@ export function UnitOverviewSection({
 	unit,
 	index,
 	next = false,
-	unitProficiency
+	unitProficiency,
+	resourceLockStatus
 }: {
 	unit: Unit
 	index: number
 	next: boolean
 	unitProficiency?: UnitProficiency
+	resourceLockStatus: Record<string, boolean>
 }) {
 	// Extract videos from lessons within the unit
 	const videos = unit.children
@@ -48,13 +50,20 @@ export function UnitOverviewSection({
 			<div className="border-b border-gray-200 mb-3" />
 
 			<div className="grid grid-cols-2 gap-x-8 gap-y-1 mb-4">
-				{videos.map((video) => (
-					<div key={`${video.lessonId}-${video.id}`}>
-						<Link href={video.path} className="text-gray-600 hover:text-gray-800 hover:underline text-xs">
-							{video.title}
-						</Link>
-					</div>
-				))}
+				{videos.map((video) => {
+					const isLocked = resourceLockStatus[video.id] === true
+					return (
+						<div key={`${video.lessonId}-${video.id}`}>
+							{isLocked ? (
+								<span className="text-gray-400 text-xs cursor-not-allowed">{video.title}</span>
+							) : (
+								<Link href={video.path} className="text-gray-600 hover:text-gray-800 hover:underline text-xs">
+									{video.title}
+								</Link>
+							)}
+						</div>
+					)
+				})}
 			</div>
 
 			{next && (

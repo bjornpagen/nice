@@ -95,9 +95,10 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 		return null
 	}
 
-	// If lock status is available, prevent navigating to locked next items
+	// If lock status is available, use it to inform UI, but do not block progression locally
+	// once the current resource has been completed in this session (article/video cases).
 	const resourceLockStatus = React.use(resourceLockStatusPromise ?? Promise.resolve<Record<string, boolean>>({}))
-	const isNextLocked = resourceLockStatus ? resourceLockStatus[nextItem.id] === true : false
+	const nextLockedByServer = resourceLockStatus ? resourceLockStatus[nextItem.id] === true : false
 
 	const getIcon = (type: string) => {
 		switch (type) {
@@ -134,7 +135,9 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 	}
 
 	// Compute UI state messaging and optional action for incomplete states
-	const showDisabled = !isCurrentResourceCompleted || isNextLocked
+	// Allow progression immediately after local completion for articles/videos,
+	// even if the server-side lock map hasn't reflected it yet.
+	const showDisabled = !isCurrentResourceCompleted
 	let disabledReason = ""
 	if (!isCurrentResourceCompleted) {
 		if (currentResourceType === "Video") {
@@ -144,7 +147,7 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 		} else {
 			disabledReason = "Complete this activity to continue"
 		}
-	} else if (isNextLocked) {
+	} else if (nextLockedByServer) {
 		disabledReason = "Complete the previous activity to unlock next"
 	}
 
