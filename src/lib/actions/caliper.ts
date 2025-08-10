@@ -221,7 +221,7 @@ export async function sendCaliperActivityCompletedEvent(
 		context.activity?.id &&
 		context.course?.id
 	) {
-		const xpBankResult = await errors.try(awardBankedXpForAssessment(context.activity.id, actor.id, context.course.id))
+		const xpBankResult = await errors.try(awardBankedXpForAssessment(assessmentLineItemId, actor.id, context.course.id))
 		if (xpBankResult.error) {
 			logger.error("failed to process xp bank", {
 				error: xpBankResult.error,

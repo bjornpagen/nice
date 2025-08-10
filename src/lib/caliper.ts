@@ -45,7 +45,7 @@ export const TimebackActivityContextSchema = z.object({
 			name: z.string()
 		})
 		.optional(),
-	process: z.boolean()
+	process: z.boolean().optional()
 })
 export type TimebackActivityContext = z.infer<typeof TimebackActivityContextSchema>
 
