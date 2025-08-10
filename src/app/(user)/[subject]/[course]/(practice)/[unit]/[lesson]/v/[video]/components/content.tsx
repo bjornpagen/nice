@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import { useRouter } from "next/navigation"
 import * as React from "react"
 import YouTube, { type YouTubePlayer } from "react-youtube"
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
@@ -37,6 +38,7 @@ export function Content({
 	videoPromise: Promise<VideoPageData>
 	paramsPromise: Promise<{ subject: string; course: string; unit: string; lesson: string; video: string }>
 }) {
+	const router = useRouter()
 	const video = React.use(videoPromise)
 	const params = React.use(paramsPromise)
 	const { user } = useUser()
@@ -49,6 +51,7 @@ export function Content({
 	const totalWatchTimeRef = React.useRef<number>(0)
 	const isPlayingRef = React.useRef<boolean>(false)
 	const hasSentFinalEventRef = React.useRef<boolean>(false)
+	const hasRefreshedForCompletionRef = React.useRef<boolean>(false)
 
 	// Refs for resume functionality
 	const hasResumedRef = React.useRef<boolean>(false)
@@ -122,6 +125,10 @@ export function Content({
 			// Mark video as completed locally to enable Continue
 			setCurrentResourceCompleted(true)
 			hasSentFinalEventRef.current = true
+			if (!hasRefreshedForCompletionRef.current) {
+				hasRefreshedForCompletionRef.current = true
+				router.refresh()
+			}
 		}
 	}
 
@@ -154,12 +161,10 @@ export function Content({
 		void loadSavedProgress()
 	}, [user, video.id])
 
-	// Still track progress periodically for OneRoster
+	// Independent 1s UI timer for read-only progress display
 	React.useEffect(() => {
 		const intervalId = setInterval(() => {
 			const player = playerRef.current
-
-			// Update local read-only UI time display regardless of user tracking
 			if (player && typeof player.getDuration === "function") {
 				const d = player.getDuration()
 				if (d > 0) {
@@ -172,6 +177,15 @@ export function Content({
 					}
 				}
 			}
+		}, 1000)
+
+		return () => clearInterval(intervalId)
+	}, [])
+
+	// Track progress periodically for OneRoster (separate from UI timer)
+	React.useEffect(() => {
+		const intervalId = setInterval(() => {
+			const player = playerRef.current
 
 			// Validate user metadata if user exists (for progress tracking only)
 			let onerosterUserSourcedId: string | undefined
@@ -198,12 +212,19 @@ export function Content({
 						subjectSlug: params.subject,
 						courseSlug: params.course
 					})
+
+					// If completion threshold reached and not yet refreshed, refresh the route once
+					const percentComplete = currentTime / duration
+					if (percentComplete >= 0.95 && !hasRefreshedForCompletionRef.current) {
+						hasRefreshedForCompletionRef.current = true
+						router.refresh()
+					}
 				}
 			}
-		}, 3000) // Update UI/progress every 3 seconds
+		}, 3000) // Sync progress every 3 seconds
 
 		return () => clearInterval(intervalId)
-	}, [user, video.id, params.subject, params.course])
+	}, [user, video.id, params.subject, params.course, router])
 
 	// Cleanup: send cumulative event when component unmounts
 	React.useEffect(() => {

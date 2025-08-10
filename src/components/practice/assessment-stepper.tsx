@@ -4,6 +4,7 @@ import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import confetti from "canvas-confetti"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import * as React from "react"
 import { toast } from "sonner"
 import greenFriend from "@/components/practice/course/unit/lesson/exercise/images/green-friend_v3.png"
@@ -15,7 +16,6 @@ import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
-
 import {
 	checkAndCreateNewAttemptIfNeeded,
 	checkExistingProficiency,
@@ -174,6 +174,7 @@ export function AssessmentStepper({
 	layoutData: _layoutData
 }: AssessmentStepperProps) {
 	const { user } = useUser()
+	const router = useRouter()
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
 	const [selectedResponses, setSelectedResponses] = React.useState<Record<string, unknown>>({})
 	const [expectedResponses, setExpectedResponses] = React.useState<string[]>([])
@@ -200,6 +201,7 @@ export function AssessmentStepper({
 	const currentQuestion = questions[currentQuestionIndex]
 	const assessmentStartTimeRef = React.useRef<Date | null>(null)
 	const hasSentCompletionEventRef = React.useRef(false) // Track whether completion event has been sent
+	const hasRefreshedAfterSaveRef = React.useRef(false)
 
 	const isInteractiveAssessment = contentType === "Quiz" || contentType === "Test"
 	const MAX_ATTEMPTS = 3
@@ -468,6 +470,10 @@ export function AssessmentStepper({
 			await finalizeAndAnalyze()
 			// Set the flag to true after completion to prevent re-execution
 			hasSentCompletionEventRef.current = true
+			if (!hasRefreshedAfterSaveRef.current) {
+				hasRefreshedAfterSaveRef.current = true
+				router.refresh()
+			}
 		}
 
 		executeFinalization()
@@ -487,7 +493,8 @@ export function AssessmentStepper({
 		sessionResults, // ADDED: Add sessionResults to dependency array
 		onerosterCourseSourcedId, // Add onerosterCourseSourcedId to dependency array
 		reportedQuestionIds.size, // Add reportedQuestionIds.size to dependency array
-		contentType // Add contentType to dependency array for masteredUnits logic
+		contentType, // Add contentType to dependency array for masteredUnits logic
+		router
 	])
 
 	// MODIFIED: handleReset is now async and calls the new action

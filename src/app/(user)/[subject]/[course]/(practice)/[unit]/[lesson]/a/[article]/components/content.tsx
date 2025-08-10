@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import { useRouter } from "next/navigation"
 import * as React from "react"
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { QTIRenderer } from "@/components/qti-renderer"
@@ -22,6 +23,7 @@ export function Content({
 	const { user } = useUser()
 	const startTimeRef = React.useRef<Date | null>(null)
 	const { setCurrentResourceCompleted } = useLessonProgress()
+	const router = useRouter()
 
 	React.useEffect(() => {
 		// Record the start time when component mounts
@@ -40,11 +42,18 @@ export function Content({
 		}
 
 		if (onerosterUserSourcedId && article.id) {
-			// Fire-and-forget the existing OneRoster tracking action on component mount.
-			void trackArticleView(onerosterUserSourcedId, article.id, {
-				subjectSlug: params.subject,
-				courseSlug: params.course
-			})
+			// Track article view on mount and refresh route so server-fetched progress updates immediately
+			void (async () => {
+				const result = await errors.try(
+					trackArticleView(onerosterUserSourcedId, article.id, {
+						subjectSlug: params.subject,
+						courseSlug: params.course
+					})
+				)
+				if (!result.error) {
+					router.refresh()
+				}
+			})()
 
 			// Map subject string to the enum value
 			const subjectMapping: Record<string, "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"> = {
@@ -104,7 +113,8 @@ export function Content({
 		params.unit,
 		params.lesson,
 		params.article,
-		setCurrentResourceCompleted
+		setCurrentResourceCompleted,
+		router
 	])
 
 	return (
