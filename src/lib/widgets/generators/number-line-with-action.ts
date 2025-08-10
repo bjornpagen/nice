@@ -1,65 +1,103 @@
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-// Defines a custom label for a specific position on the number line
-const NumberLineCustomLabelSchema = z
+const Label = z
 	.object({
-		value: z.number().describe("The numeric position of the label."),
-		text: z.string().describe('The text to display for the label (e.g., "-11°C", "?°C").')
-	})
-	.strict()
-
-// Defines the action arrow to be drawn over the number line
-const ActionArrowSchema = z
-	.object({
-		startValue: z.number().describe("The numeric value where the action arrow begins."),
-		change: z
+		value: z
 			.number()
-			.describe("The amount of change. A positive value moves right/up, a negative value moves left/down."),
-		label: z.string().describe('The text label to display alongside the arrow (e.g., "+5°C", "-24").')
+			.describe(
+				"The position on the number line where this custom label appears (e.g., 5, -2, 3.5). Must be within min/max range."
+			),
+		text: z
+			.string()
+			.describe(
+				"The text to display at this position instead of the default number (e.g., 'Start', 'A', 'Goal'). Replaces numeric label."
+			)
 	})
 	.strict()
 
-// The main Zod schema for the numberLineWithAction function
+const Action = z
+	.object({
+		delta: z
+			.number()
+			.describe(
+				"The change amount for this action. Positive for addition/forward, negative for subtraction/backward (e.g., 3, -5, 2.5, -1)."
+			),
+		label: z
+			.string()
+			.describe(
+				"Text label for this action arrow (e.g., '+3', '-5', 'add 2', 'back 1'). Displayed above/beside the curved arrow."
+			)
+	})
+	.strict()
+
 export const NumberLineWithActionPropsSchema = z
 	.object({
-		type: z.literal("numberLineWithAction"),
+		type: z
+			.literal("numberLineWithAction")
+			.describe("Identifies this as a number line with action arrows showing addition/subtraction operations."),
 		width: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 260)
-			.describe("The total width of the output SVG container in pixels."),
+			.positive()
+			.describe(
+				"Total width in pixels for horizontal orientation (e.g., 600, 700, 500). For vertical, this is the narrower dimension."
+			),
 		height: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 325)
-			.describe("The total height of the output SVG container in pixels."),
+			.positive()
+			.describe(
+				"Total height in pixels for horizontal orientation (e.g., 150, 200, 180). For vertical, this is the longer dimension."
+			),
 		orientation: z
 			.enum(["horizontal", "vertical"])
-			.nullable()
-			.transform((val) => val ?? "vertical")
-			.describe("The orientation of the number line."),
-		min: z.number().describe("The minimum value displayed on the number line."),
-		max: z.number().describe("The maximum value displayed on the number line."),
-		tickInterval: z.number().describe("The numeric interval between tick marks."),
+			.describe(
+				"Direction of the number line. 'horizontal' is left-to-right, 'vertical' is bottom-to-top. Affects layout and arrow directions."
+			),
+		min: z
+			.number()
+			.describe(
+				"Minimum value shown on the number line (e.g., -10, 0, -5). Should be less than startValue - sum of negative deltas."
+			),
+		max: z
+			.number()
+			.describe(
+				"Maximum value shown on the number line (e.g., 20, 10, 15). Should be greater than startValue + sum of positive deltas."
+			),
+		tickInterval: z
+			.number()
+			.describe(
+				"Spacing between tick marks (e.g., 1, 2, 5, 0.5). Should evenly divide the range for clean appearance."
+			),
+		startValue: z
+			.number()
+			.describe(
+				"The initial position before any actions (e.g., 5, 0, -2). Marked with a distinct point. Actions begin from here."
+			),
 		customLabels: z
-			.array(NumberLineCustomLabelSchema)
-			.describe("An array providing text labels for key points, such as the start value and the unknown end value."),
-		action: ActionArrowSchema.describe("Configuration for the action arrow representing the change.")
+			.array(Label)
+			.describe(
+				"Replace numeric labels at specific positions with custom text. Empty array uses default numeric labels. Useful for word problems."
+			),
+		actions: z
+			.array(Action)
+			.describe(
+				"Sequence of operations shown as curved arrows. Applied in order from startValue. Multiple actions create multi-step problems (e.g., 5 + 3 - 2)."
+			)
 	})
 	.strict()
 	.describe(
-		'This template extends the basic number line to visually represent a dynamic process or operation, such as addition or subtraction. It is perfect for illustrating word problems that involve a change from a starting value. The generator will render a number line, mark a starting point, and draw a curved arrow to visually represent an "action" or change (e.g., "+5°C"). The destination of the arrow can be labeled with a question mark ("?"), making it ideal for problems where the student must calculate the result.'
+		"Creates an interactive number line showing arithmetic operations as curved 'jump' arrows. Perfect for teaching addition/subtraction concepts, multi-step problems, and integer operations. Supports multiple sequential actions to show complex calculations step-by-step."
 	)
 
 export type NumberLineWithActionProps = z.infer<typeof NumberLineWithActionPropsSchema>
 
 /**
- * This template extends the basic number line to visually represent a dynamic process or operation,
- * such as addition or subtraction.
+ * Creates an interactive number line showing arithmetic operations as curved 'jump' arrows.
+ * Perfect for teaching addition/subtraction concepts, multi-step problems, and integer operations.
+ * Supports multiple sequential actions to show complex calculations step-by-step.
  */
 export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWithActionPropsSchema> = (data) => {
-	const { width, height, orientation, min, max, tickInterval, customLabels, action } = data
+	const { width, height, orientation, min, max, tickInterval, startValue, customLabels, actions } = data
 	const isHorizontal = orientation === "horizontal"
 	const padding = 30
 	const lineLength = (isHorizontal ? width : height) - 2 * padding
@@ -73,48 +111,112 @@ export const generateNumberLineWithAction: WidgetGenerator<typeof NumberLineWith
 	if (isHorizontal) {
 		const yPos = height / 2
 		const toSvgX = (val: number) => padding + (val - min) * scale
+
 		// Axis and Ticks
-		svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="#333333"/>`
+		svg += `<line x1="${padding}" y1="${yPos}" x2="${width - padding}" y2="${yPos}" stroke="#333333" stroke-width="2"/>`
 		for (let t = min; t <= max; t += tickInterval) {
 			const x = toSvgX(t)
 			svg += `<line x1="${x}" y1="${yPos - 5}" x2="${x}" y2="${yPos + 5}" stroke="#333333"/>`
+			// Draw default numeric labels if no custom label exists for this position
+			const hasCustomLabel = customLabels.some((label) => label.value === t)
+			if (!hasCustomLabel) {
+				svg += `<text x="${x}" y="${yPos + 20}" fill="#333333" text-anchor="middle" font-size="10">${t}</text>`
+			}
 		}
+
 		// Custom Labels
-		for (const l of customLabels) {
-			const x = toSvgX(l.value)
-			svg += `<text x="${x}" y="${yPos + 20}" fill="#333333" text-anchor="middle" font-weight="bold">${l.text}</text>`
+		for (const label of customLabels) {
+			const x = toSvgX(label.value)
+			svg += `<text x="${x}" y="${yPos + 20}" fill="#333333" text-anchor="middle" font-weight="bold">${label.text}</text>`
 		}
-		// Action arrow
-		const startX = toSvgX(action.startValue)
-		const endX = toSvgX(action.startValue + action.change)
-		const midX = (startX + endX) / 2
-		const arrowY = yPos - 15
-		const controlY = arrowY - 30 * Math.sign(action.change)
-		svg += `<path d="M ${startX} ${arrowY} Q ${midX} ${controlY} ${endX} ${arrowY}" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#action-arrow)"/>`
-		svg += `<text x="${midX}" y="${controlY}" fill="#333333" text-anchor="middle" dominant-baseline="middle">${action.label}</text>`
+
+		// Start value marker
+		const startX = toSvgX(startValue)
+		svg += `<circle cx="${startX}" cy="${yPos}" r="3" fill="#007ACC" stroke="#005999" stroke-width="1"/>`
+
+		// Action arrows - sequential with stacked labels
+		let currentValue = startValue
+		for (let i = 0; i < actions.length; i++) {
+			const action = actions[i]
+			if (!action) continue
+
+			const actionStartX = toSvgX(currentValue)
+			const actionEndX = toSvgX(currentValue + action.delta)
+			const midX = (actionStartX + actionEndX) / 2
+
+			// Stack arrows vertically to avoid overlap
+			const arrowOffset = 20 + i * 15
+			const arrowY = yPos - arrowOffset
+			const controlOffset = 25 + i * 10
+			const controlY = arrowY - controlOffset * Math.sign(action.delta || 1)
+
+			// Draw curved arrow
+			svg += `<path d="M ${actionStartX} ${arrowY} Q ${midX} ${controlY} ${actionEndX} ${arrowY}" fill="none" stroke="#007ACC" stroke-width="1.5" marker-end="url(#action-arrow)"/>`
+
+			// Arrow label
+			svg += `<text x="${midX}" y="${controlY - 5}" fill="#007ACC" text-anchor="middle" font-size="10" font-weight="bold">${action.label}</text>`
+
+			currentValue += action.delta
+		}
+
+		// Final value marker
+		const finalX = toSvgX(currentValue)
+		svg += `<circle cx="${finalX}" cy="${yPos}" r="3" fill="#FF6B35" stroke="#CC5429" stroke-width="1"/>`
 	} else {
-		// Vertical
+		// Vertical orientation
 		const xPos = width / 2
 		const toSvgY = (val: number) => height - padding - (val - min) * scale
+
 		// Axis and Ticks
-		svg += `<line x1="${xPos}" y1="${padding}" x2="${xPos}" y2="${height - padding}" stroke="#333333"/>`
+		svg += `<line x1="${xPos}" y1="${padding}" x2="${xPos}" y2="${height - padding}" stroke="#333333" stroke-width="2"/>`
 		for (let t = min; t <= max; t += tickInterval) {
 			const y = toSvgY(t)
 			svg += `<line x1="${xPos - 5}" y1="${y}" x2="${xPos + 5}" y2="${y}" stroke="#333333"/>`
+			// Draw default numeric labels if no custom label exists for this position
+			const hasCustomLabel = customLabels.some((label) => label.value === t)
+			if (!hasCustomLabel) {
+				svg += `<text x="${xPos - 10}" y="${y + 4}" fill="#333333" text-anchor="end" font-size="10">${t}</text>`
+			}
 		}
+
 		// Custom Labels
-		for (const l of customLabels) {
-			const y = toSvgY(l.value)
-			svg += `<text x="${xPos - 10}" y="${y + 4}" fill="#333333" text-anchor="end" font-weight="bold">${l.text}</text>`
+		for (const label of customLabels) {
+			const y = toSvgY(label.value)
+			svg += `<text x="${xPos - 10}" y="${y + 4}" fill="#333333" text-anchor="end" font-weight="bold">${label.text}</text>`
 		}
-		// Action arrow
-		const startY = toSvgY(action.startValue)
-		const endY = toSvgY(action.startValue + action.change)
-		const midY = (startY + endY) / 2
-		const arrowX = xPos + 15
-		const controlX = arrowX + 30
-		svg += `<path d="M ${arrowX} ${startY} Q ${controlX} ${midY} ${arrowX} ${endY}" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#action-arrow)"/>`
-		svg += `<text x="${controlX}" y="${midY}" fill="#333333" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90, ${controlX}, ${midY})">${action.label}</text>`
+
+		// Start value marker
+		const startY = toSvgY(startValue)
+		svg += `<circle cx="${xPos}" cy="${startY}" r="3" fill="#007ACC" stroke="#005999" stroke-width="1"/>`
+
+		// Action arrows - sequential with stacked labels
+		let currentValue = startValue
+		for (let i = 0; i < actions.length; i++) {
+			const action = actions[i]
+			if (!action) continue
+
+			const actionStartY = toSvgY(currentValue)
+			const actionEndY = toSvgY(currentValue + action.delta)
+			const midY = (actionStartY + actionEndY) / 2
+
+			// Stack arrows horizontally to avoid overlap
+			const arrowOffset = 20 + i * 15
+			const arrowX = xPos + arrowOffset
+			const controlOffset = 25 + i * 10
+			const controlX = arrowX + controlOffset
+
+			// Draw curved arrow
+			svg += `<path d="M ${arrowX} ${actionStartY} Q ${controlX} ${midY} ${arrowX} ${actionEndY}" fill="none" stroke="#007ACC" stroke-width="1.5" marker-end="url(#action-arrow)"/>`
+
+			// Arrow label (rotated for vertical layout)
+			svg += `<text x="${controlX + 5}" y="${midY}" fill="#007ACC" text-anchor="middle" font-size="10" font-weight="bold" transform="rotate(-90, ${controlX + 5}, ${midY})">${action.label}</text>`
+
+			currentValue += action.delta
+		}
+
+		// Final value marker
+		const finalY = toSvgY(currentValue)
+		svg += `<circle cx="${xPos}" cy="${finalY}" r="3" fill="#FF6B35" stroke="#CC5429" stroke-width="1"/>`
 	}
 
 	svg += "</svg>"

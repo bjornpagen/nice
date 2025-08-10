@@ -11,21 +11,18 @@ describe("generateNumberLineWithAction", () => {
 	test("should render with minimal props", () => {
 		const props = {
 			type: "numberLineWithAction" as const,
-			width: null,
-			height: null,
-			orientation: null,
+			width: 260,
+			height: 150,
+			orientation: "horizontal" as const,
 			min: 0,
 			max: 20,
 			tickInterval: 2,
+			startValue: 5,
 			customLabels: [
 				{ value: 5, text: "Start" },
 				{ value: 8, text: "?" }
 			],
-			action: {
-				startValue: 5,
-				change: 3,
-				label: "+3"
-			}
+			actions: [{ delta: 3, label: "+3" }]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -39,15 +36,35 @@ describe("generateNumberLineWithAction", () => {
 			min: -10,
 			max: 30,
 			tickInterval: 5,
+			startValue: 8,
 			customLabels: [
 				{ value: 8, text: "8°C" },
 				{ value: 3, text: "?°C" }
 			],
-			action: {
-				startValue: 8,
-				change: -5,
-				label: "-5°C"
-			}
+			actions: [{ delta: -5, label: "-5°C" }]
+		}
+		expect(generateDiagram(props)).toMatchSnapshot()
+	})
+
+	test("should render multi-step actions", () => {
+		const props = {
+			type: "numberLineWithAction" as const,
+			width: 700,
+			height: 180,
+			orientation: "horizontal" as const,
+			min: 0,
+			max: 25,
+			tickInterval: 5,
+			startValue: 5,
+			customLabels: [
+				{ value: 5, text: "Start" },
+				{ value: 20, text: "End" }
+			],
+			actions: [
+				{ delta: 8, label: "+8" },
+				{ delta: -3, label: "-3" },
+				{ delta: 10, label: "+10" }
+			]
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})

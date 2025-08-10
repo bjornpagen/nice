@@ -1276,7 +1276,8 @@ describe("Widget Generators", () => {
 					{ value: -11, text: "-11°C" },
 					{ value: 13, text: "?°C" }
 				],
-				action: { startValue: -11, change: 24, label: "+24°C" }
+				startValue: -11,
+				actions: [{ delta: 24, label: "+24°C" }]
 			}
 			expect(generateNumberLineWithAction(props)).toMatchSnapshot()
 		})
@@ -1294,7 +1295,8 @@ describe("Widget Generators", () => {
 					{ value: 15, text: "Start" },
 					{ value: 35, text: "End" }
 				],
-				action: { startValue: 15, change: 20, label: "+20" }
+				startValue: 15,
+				actions: [{ delta: 20, label: "+20" }]
 			}
 			expect(generateNumberLineWithAction(props)).toMatchSnapshot()
 		})
@@ -1309,7 +1311,8 @@ describe("Widget Generators", () => {
 				max: 0,
 				tickInterval: 10,
 				customLabels: [],
-				action: { startValue: 10, change: 5, label: "+5" }
+				startValue: 10,
+				actions: [{ delta: 5, label: "+5" }]
 			}
 			expect(generateNumberLineWithAction(props)).toMatchSnapshot()
 		})
