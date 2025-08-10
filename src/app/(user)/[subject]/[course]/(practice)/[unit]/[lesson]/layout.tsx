@@ -6,7 +6,7 @@ import { LessonLayout } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/
 import { fetchCoursePageData } from "@/lib/data/course"
 import { fetchLessonLayoutData } from "@/lib/data/lesson"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
-import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { assertNoEncodedColons, normalizeParams } from "@/lib/utils"
@@ -250,16 +250,16 @@ export default function Layout({
 	const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([userPromise, dataPromise]).then(
 		([user, data]) => {
 			if (user) {
-				const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
-				if (publicMetadataResult.error) {
+				const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+				if (!parsed.success) {
 					logger.warn("invalid user public metadata, cannot fetch progress", {
 						userId: user.id,
-						error: publicMetadataResult.error
+						error: parsed.error
 					})
-					throw errors.wrap(publicMetadataResult.error, "clerk user metadata validation")
+					return new Map<string, AssessmentProgress>()
 				}
-				if (publicMetadataResult.data.sourceId) {
-					return getUserUnitProgress(publicMetadataResult.data.sourceId, data.courseData.id)
+				if (parsed.data.sourceId) {
+					return getUserUnitProgress(parsed.data.sourceId, data.courseData.id)
 				}
 			}
 			// For unauthenticated users or users without a sourceId, an empty map is acceptable.

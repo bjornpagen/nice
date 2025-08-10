@@ -24,10 +24,12 @@ function getProficiencyText(resourceType: ProficiencyItem["type"]) {
 
 export function Progress({
 	unitChildren,
-	progressMap
+	progressMap,
+	resourceLockStatus // Add new prop
 }: {
 	unitChildren: UnitChild[]
 	progressMap: Map<string, AssessmentProgress>
+	resourceLockStatus: Record<string, boolean> // Add new prop
 }) {
 	const items: ProficiencyItem[] = unitChildren.flatMap((child): ProficiencyItem[] => {
 		if (child.type === "Lesson") {
@@ -80,16 +82,33 @@ export function Progress({
 
 	return (
 		<div className="flex items-center gap-1 flex-wrap max-w-full overflow-hidden">
-			{items.map((item) => (
-				<Link key={item.id} href={item.path} className="inline-flex items-center flex-shrink-0">
-					<ProficiencyIcon variant={item.variant}>
+			{items.map((item) => {
+				const isLocked = resourceLockStatus[item.id] === true
+				const content = (
+					<ProficiencyIcon variant={item.variant} isLocked={isLocked}>
 						<h2 className="text-md font-bold text-gray-800 capitalize">
 							{getProficiencyText(item.type)}: {item.title}
 						</h2>
-						<p className="text-sm text-gray-500">Click to start this activity.</p>
+						<p className="text-sm text-gray-500">
+							{isLocked ? "Complete the previous activity to unlock." : "Click to start this activity."}
+						</p>
 					</ProficiencyIcon>
-				</Link>
-			))}
+				)
+
+				if (isLocked) {
+					return (
+						<div key={item.id} className="inline-flex items-center flex-shrink-0 cursor-not-allowed">
+							{content}
+						</div>
+					)
+				}
+
+				return (
+					<Link key={item.id} href={item.path} className="inline-flex items-center flex-shrink-0">
+						{content}
+					</Link>
+				)
+			})}
 		</div>
 	)
 }

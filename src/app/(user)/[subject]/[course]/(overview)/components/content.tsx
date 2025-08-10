@@ -17,14 +17,17 @@ import type { CoursePageData } from "@/lib/types/page"
 
 export function Content({
 	dataPromise,
-	progressPromise
+	progressPromise,
+	resourceLockStatusPromise
 }: {
 	dataPromise: Promise<CoursePageData>
 	progressPromise: Promise<CourseProgressData>
+	resourceLockStatusPromise: Promise<Record<string, boolean>>
 }) {
 	// Consume the promises.
 	const { params, course, totalXP } = React.use(dataPromise)
 	const { progressMap, unitProficiencies } = React.use(progressPromise)
+	const resourceLockStatus = React.use(resourceLockStatusPromise)
 
 	// Find the first unit with < 90% mastery to be the "next" unit
 	const findNextUnit = (unitIndex: number): boolean => {
@@ -43,11 +46,11 @@ export function Content({
 			}
 		}
 
-		// If no unit has < 90% mastery, fall back to first unit
-		if (nextUnitIndex === -1) {
-			nextUnitIndex = 0
-		}
+		// If there is no unit below 90%, then the course is fully mastered
+		const isCourseMastered = nextUnitIndex === -1
+		if (isCourseMastered) return false
 
+		// Otherwise, highlight the "next" unit for the current row
 		return unitIndex === nextUnitIndex
 	}
 
@@ -79,6 +82,7 @@ export function Content({
 							path={unit.path}
 							next={findNextUnit(index)}
 							progressMap={progressMap}
+							resourceLockStatus={resourceLockStatus}
 						/>
 					</div>
 				))}

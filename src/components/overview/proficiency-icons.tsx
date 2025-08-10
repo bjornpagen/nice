@@ -1,4 +1,4 @@
-import { Crown, Star, Zap } from "lucide-react"
+import { Crown, Lock, Star, Zap } from "lucide-react"
 import type * as React from "react"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { cn } from "@/lib/utils"
@@ -94,6 +94,21 @@ const labels = {
 	"unit-test": "Unit Test"
 } as const
 
+export function LockedIcon({ size = 5 }: { size?: number }) {
+	return (
+		<div className="inline-flex items-center">
+			<div
+				className={cn(
+					"inline-flex items-center justify-center rounded-xs bg-gray-200 border-1 border-gray-300",
+					`w-${size} h-${size}`
+				)}
+			>
+				<Lock className={cn(`w-${Math.round(size * 0.6)} h-${Math.round(size * 0.6)}`, "text-gray-500")} />
+			</div>
+		</div>
+	)
+}
+
 /**
  * A general proficiency icon that can display different mastery statuses.
  *
@@ -111,7 +126,8 @@ export function ProficiencyIcon({
 	size = 5,
 	side = "top",
 	active = false,
-	label = false
+	label = false,
+	isLocked = false // Add isLocked prop
 }: {
 	variant: ProficiencyIconVariant
 	children?: React.ReactNode
@@ -119,7 +135,13 @@ export function ProficiencyIcon({
 	side?: "top" | "bottom" | "left" | "right"
 	active?: boolean
 	label?: boolean
+	isLocked?: boolean // Add isLocked prop
 }) {
+	// If locked, render the LockedIcon and return early.
+	if (isLocked) {
+		return <LockedIcon size={size} />
+	}
+
 	const config = variants[variant]
 	const text = labels[variant]
 

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { LockedItem } from "@/app/(user)/[subject]/[course]/(overview)/components/LockedItem"
 import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/section"
 import { ActivityIcon } from "@/components/icons/activity"
 import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
@@ -9,10 +10,12 @@ import { capitalize } from "@/lib/utils"
 
 export function LessonSection({
 	lesson,
-	progressMap
+	progressMap,
+	resourceLockStatus // Add new prop
 }: {
 	lesson: Lesson
 	progressMap: Map<string, AssessmentProgress>
+	resourceLockStatus: Record<string, boolean> // Add new prop
 }) {
 	// Use the original order from lesson.children for learning content
 	const learningContent = lesson.children.filter(
@@ -21,6 +24,9 @@ export function LessonSection({
 
 	// Extract exercises separately (they're displayed in a different section)
 	const exercises = lesson.children.filter((child): child is ExerciseInfo => child.type === "Exercise")
+
+	// CORRECT: Find the index of the first unlocked exercise.
+	const firstUnlockedExerciseIndex = exercises.findIndex((exercise) => resourceLockStatus[exercise.id] !== true)
 
 	return (
 		<Section>
@@ -32,8 +38,12 @@ export function LessonSection({
 					<span className="text-gray-500 text-sm mb-4 block">Learn</span>
 					<div className="space-y-3">
 						{learningContent.length > 0 ? (
-							learningContent.map((item) =>
-								item.type === "Video" ? (
+							learningContent.map((item) => {
+								const isLocked = resourceLockStatus[item.id] === true
+								if (isLocked) {
+									return <LockedItem key={`${lesson.id}-locked-${item.id}`} title={item.title} />
+								}
+								return item.type === "Video" ? (
 									<LessonVideo key={`${lesson.id}-video-${item.id}`} video={item} progress={progressMap.get(item.id)} />
 								) : (
 									<LessonArticle
@@ -42,7 +52,7 @@ export function LessonSection({
 										progress={progressMap.get(item.id)}
 									/>
 								)
-							)
+							})
 						) : (
 							<div className="text-gray-800 text-sm">No learning content found</div>
 						)}
@@ -52,14 +62,21 @@ export function LessonSection({
 					<span className="text-gray-500 text-sm mb-4 block">Practice</span>
 					<div className="space-y-3">
 						{exercises.length > 0 ? (
-							exercises.map((exercise, index) => (
-								<LessonExercise
-									key={`${lesson.id}-exercise-${exercise.id}`}
-									exercise={exercise}
-									next={index === 0}
-									progress={progressMap.get(exercise.id)}
-								/>
-							))
+							exercises.map((exercise, index) => {
+								const isLocked = resourceLockStatus[exercise.id] === true
+								if (isLocked) {
+									return <LockedItem key={`${lesson.id}-locked-exercise-${exercise.id}`} title={exercise.title} />
+								}
+								return (
+									<LessonExercise
+										key={`${lesson.id}-exercise-${exercise.id}`}
+										exercise={exercise}
+										// CORRECT: Apply "Up next" logic only to the first unlocked exercise.
+										next={index === firstUnlockedExerciseIndex}
+										progress={progressMap.get(exercise.id)}
+									/>
+								)
+							})
 						) : (
 							<div className="text-gray-800 text-sm">No exercises found</div>
 						)}

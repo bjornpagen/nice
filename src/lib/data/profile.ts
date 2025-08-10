@@ -484,6 +484,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 							description: componentMetadata.khanDescription,
 							path: "", // Will be set later
 							children: [], // Will be populated with exercises
+							ordering: 0, // Default ordering value
 							xp: 0
 						})
 					}
@@ -570,6 +571,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 								title: child.title,
 								description: child.description,
 								path: child.path,
+								ordering: 0, // Default ordering value
 								children: child.children.map(({ sortOrder: _, ...exercise }) => ({
 									type: exercise.type,
 									id: exercise.id,
@@ -579,6 +581,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 									description: "",
 									totalQuestions: 5, // Default value
 									questionsToPass: 4, // Default value
+									ordering: 0, // Default ordering value
 									xp: 0
 								})),
 								xp: child.xp
@@ -594,6 +597,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 								slug: "",
 								description: "",
 								questions: [], // Not needed for proficiency calculation
+								ordering: 0, // Default ordering value
 								xp: 0
 							}
 							return quiz
@@ -608,6 +612,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 							slug: "",
 							description: "",
 							questions: [], // Not needed for proficiency calculation
+							ordering: 0, // Default ordering value
 							xp: 0
 						}
 						return unitTest
@@ -692,79 +697,67 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 		throw errors.new("user not authenticated")
 	}
 
-	if (!user.publicMetadata) {
-		logger.error("CRITICAL: User public metadata missing", { userId: user.id })
-		throw errors.new("user public metadata missing")
+	// Normalize and validate metadata deterministically (no brittle string checks)
+	const parsedMetadata = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+	if (!parsedMetadata.success) {
+		logger.error("CRITICAL: invalid user metadata structure", {
+			userId: user.id,
+			error: parsedMetadata.error
+		})
+		throw errors.wrap(parsedMetadata.error, "user metadata validation failed")
 	}
 
-	let metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+	const normalizedMetadata = parsedMetadata.data
 
-	// if validation fails due to missing lastActivityDate, backfill it with current time
-	if (!metadataValidation.success) {
-		// debug: let's see what the actual error message looks like
-		const errorMessage = metadataValidation.error.toString()
-		logger.debug("zod validation error details", {
-			userId: user.id,
-			errorMessage,
-			errorObject: JSON.stringify(metadataValidation.error, null, 2)
-		})
+	// Persist normalized shape back to Clerk on first encounter (idempotent)
+	let needsNormalization = false
+	const raw = user.publicMetadata
+	const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null
+	function getProp(v: unknown, key: string): unknown {
+		if (!isRecord(v)) return undefined
+		const rec: Record<string, unknown> = v
+		return rec[key]
+	}
+	if (!isRecord(raw)) {
+		needsNormalization = true
+	} else {
+		if (typeof getProp(raw, "nickname") !== "string") needsNormalization = true
+		if (typeof getProp(raw, "username") !== "string") needsNormalization = true
+		if (typeof getProp(raw, "bio") !== "string") needsNormalization = true
 
-		// simplified check - if lastActivityDate is mentioned in the error, it's our issue
-		const hasLastActivityDateIssue = errorMessage.includes("lastActivityDate")
-
-		logger.debug("lastActivityDate issue detection", {
-			userId: user.id,
-			hasLastActivityDateIssue,
-			userMetadata: JSON.stringify(user.publicMetadata, null, 2)
-		})
-
-		if (hasLastActivityDateIssue && typeof user.publicMetadata === "object" && user.publicMetadata !== null) {
-			logger.info("backfilling missing lastActivityDate with current time", { userId: user.id })
-
-			const clerk = await clerkClient()
-			const currentTime = new Date().toISOString()
-
-			// safely access nested metadata properties
-			const metadata = user.publicMetadata
-			const streak =
-				metadata &&
-				typeof metadata === "object" &&
-				"streak" in metadata &&
-				typeof metadata.streak === "object" &&
-				metadata.streak !== null
-					? metadata.streak
-					: { count: 0 }
-
-			const updatedMetadata = {
-				...metadata,
-				streak: {
-					...streak,
-					lastActivityDate: currentTime
-				}
+		const streakValue = getProp(raw, "streak")
+		if (!isRecord(streakValue)) {
+			needsNormalization = true
+		} else {
+			const lad = getProp(streakValue, "lastActivityDate")
+			if (!(lad === null || lad === undefined || typeof lad === "string")) {
+				needsNormalization = true
 			}
-
-			const updateResult = await errors.try(
-				clerk.users.updateUserMetadata(user.id, { publicMetadata: updatedMetadata })
-			)
-			if (updateResult.error) {
-				logger.error("failed to update user metadata", { userId: user.id, error: updateResult.error })
-				throw errors.wrap(updateResult.error, "metadata update failed")
+			const cnt = getProp(streakValue, "count")
+			if (!(cnt === undefined || typeof cnt === "number")) {
+				needsNormalization = true
 			}
+		}
 
-			// re-validate with the updated metadata
-			metadataValidation = ClerkUserPublicMetadataSchema.safeParse(updatedMetadata)
+		const sid = getProp(raw, "sourceId")
+		if (!(sid === undefined || typeof sid === "string")) {
+			needsNormalization = true
 		}
 	}
 
-	if (!metadataValidation.success) {
-		logger.error("CRITICAL: Invalid user metadata", {
-			userId: user.id,
-			error: metadataValidation.error
-		})
-		throw errors.wrap(metadataValidation.error, "user metadata validation failed")
+	if (needsNormalization) {
+		const clerk = await clerkClient()
+		const updateResult = await errors.try(
+			clerk.users.updateUserMetadata(user.id, { publicMetadata: normalizedMetadata })
+		)
+		if (updateResult.error) {
+			logger.error("failed to normalize user metadata", { userId: user.id, error: updateResult.error })
+			throw errors.wrap(updateResult.error, "metadata normalization failed")
+		}
+		logger.info("normalized user public metadata", { userId: user.id })
 	}
 
-	const metadata = metadataValidation.data
+	const metadata = normalizedMetadata
 
 	// Import from actions since that's where the function is defined (from upstream)
 	const { getOneRosterCoursesForExplore } = await import("@/lib/actions/courses")

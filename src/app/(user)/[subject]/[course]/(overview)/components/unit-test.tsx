@@ -1,12 +1,29 @@
 import Image from "next/image"
 import Link from "next/link"
 import unitTestNotStartedImage from "@/app/(user)/[subject]/[course]/(overview)/components/images/unit-test-not-started.svg"
+import { LockedItem } from "@/app/(user)/[subject]/[course]/(overview)/components/LockedItem"
 import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/section"
 import { Button } from "@/components/ui/button"
 import type { UnitTest } from "@/lib/types/domain"
 import { startCase } from "@/lib/utils"
 
-export function UnitTestSection({ test }: { test: UnitTest }) {
+export function UnitTestSection({
+	test,
+	resourceLockStatus
+}: {
+	test: UnitTest
+	resourceLockStatus: Record<string, boolean>
+}) {
+	const isLocked = resourceLockStatus[test.id] === true
+
+	if (isLocked) {
+		return (
+			<Section>
+				<LockedItem title={startCase(test.title)} />
+			</Section>
+		)
+	}
+
 	return (
 		<Section className="relative overflow-hidden">
 			<div className="flex justify-between items-end gap-6">

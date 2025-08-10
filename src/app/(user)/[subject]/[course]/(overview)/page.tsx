@@ -1,12 +1,11 @@
 import { currentUser } from "@clerk/nextjs/server"
-import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchCoursePageData } from "@/lib/data/course"
 import { type AssessmentProgress, getUserUnitProgress, type UnitProficiency } from "@/lib/data/progress"
-import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { CoursePageData } from "@/lib/types/page"
-import { normalizeParams } from "@/lib/utils"
+import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
 import { aggregateUnitProficiencies } from "@/lib/utils/progress"
 import { Content } from "./components/content"
 
@@ -30,16 +29,16 @@ export default function CoursePage({ params }: { params: Promise<{ subject: stri
 	const progressPromise: Promise<CourseProgressData> = Promise.all([courseDataPromise, userPromise]).then(
 		([courseData, user]) => {
 			if (user) {
-				const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
-				if (publicMetadataResult.error) {
+				const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+				if (!parsed.success) {
 					logger.warn("invalid user public metadata, cannot fetch progress", {
 						userId: user.id,
-						error: publicMetadataResult.error
+						error: parsed.error
 					})
 					return { progressMap: new Map<string, AssessmentProgress>(), unitProficiencies: [] }
 				}
-				if (publicMetadataResult.data.sourceId) {
-					return getUserUnitProgress(publicMetadataResult.data.sourceId, courseData.course.id).then((progressMap) => {
+				if (parsed.data.sourceId) {
+					return getUserUnitProgress(parsed.data.sourceId, courseData.course.id).then((progressMap) => {
 						// Aggregate individual progress into unit proficiencies
 						const unitProficiencies = aggregateUnitProficiencies(progressMap, courseData.course.units)
 
@@ -60,9 +59,22 @@ export default function CoursePage({ params }: { params: Promise<{ subject: stri
 		}
 	)
 
+	const resourceLockStatusPromise: Promise<Record<string, boolean>> = Promise.all([
+		courseDataPromise,
+		progressPromise,
+		userPromise
+	]).then(([courseData, progressData, user]) => {
+		const lockingEnabled = Boolean(user)
+		return buildResourceLockStatus(courseData.course, progressData.progressMap, lockingEnabled)
+	})
+
 	return (
 		<React.Suspense>
-			<Content dataPromise={courseDataPromise} progressPromise={progressPromise} />
+			<Content
+				dataPromise={courseDataPromise}
+				progressPromise={progressPromise}
+				resourceLockStatusPromise={resourceLockStatusPromise}
+			/>
 		</React.Suspense>
 	)
 }

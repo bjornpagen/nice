@@ -1,10 +1,9 @@
 import { currentUser } from "@clerk/nextjs/server"
-import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { fetchCourseChallengePage_LayoutData, fetchCourseChallengePage_TestData } from "@/lib/data/assessment"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
-import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { normalizeParams } from "@/lib/utils"
@@ -138,16 +137,16 @@ export default function CourseChallengePage({
 	const progressPromise: Promise<Map<string, AssessmentProgress>> = layoutDataPromise.then(async (courseData) => {
 		const user = await currentUser()
 		if (user) {
-			const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
-			if (publicMetadataResult.error) {
+			const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+			if (!parsed.success) {
 				logger.warn("invalid user public metadata, cannot fetch progress", {
 					userId: user.id,
-					error: publicMetadataResult.error
+					error: parsed.error
 				})
 				return new Map<string, AssessmentProgress>()
 			}
-			if (publicMetadataResult.data.sourceId) {
-				return getUserUnitProgress(publicMetadataResult.data.sourceId, courseData.course.id)
+			if (parsed.data.sourceId) {
+				return getUserUnitProgress(parsed.data.sourceId, courseData.course.id)
 			}
 		}
 		return new Map<string, AssessmentProgress>()

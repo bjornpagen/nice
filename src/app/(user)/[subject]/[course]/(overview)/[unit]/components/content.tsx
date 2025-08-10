@@ -15,16 +15,18 @@ import type { UnitPageData } from "@/lib/types/page"
 
 export function Content({
 	dataPromise,
-	progressPromise
+	progressPromise,
+	resourceLockStatusPromise
 }: {
 	dataPromise: Promise<UnitPageData>
 	progressPromise: Promise<Map<string, AssessmentProgress>>
+	resourceLockStatusPromise: Promise<Record<string, boolean>>
 }) {
-	const { params, allUnits, unit, totalXP } = React.use(dataPromise)
+	const data = React.use(dataPromise)
+	const { params, allUnits, unit, totalXP } = data
 	const progressMap = React.use(progressPromise)
+	const resourceLockStatus = React.use(resourceLockStatusPromise)
 
-	// Data validation is now handled in the data fetching layer.
-	// We can trust that `unit` and `allUnits` are valid here.
 	const unitIndex = allUnits.findIndex((u) => u.id === unit.id)
 
 	return (
@@ -41,7 +43,7 @@ export function Content({
 				<Legend />
 				<React.Suspense fallback={<div className="w-full h-4 bg-gray-200 animate-pulse rounded" />}>
 					<div className="mt-4">
-						<Progress unitChildren={unit.children} progressMap={progressMap} />
+						<Progress unitChildren={unit.children} progressMap={progressMap} resourceLockStatus={resourceLockStatus} />
 					</div>
 				</React.Suspense>
 			</div>
@@ -71,11 +73,26 @@ export function Content({
 				{unit.children.map((child: UnitChild) => {
 					switch (child.type) {
 						case "Lesson":
-							return <LessonSection key={`${unit.id}-lesson-${child.id}`} lesson={child} progressMap={progressMap} />
+							return (
+								<LessonSection
+									key={`${unit.id}-lesson-${child.id}`}
+									lesson={child}
+									progressMap={progressMap}
+									resourceLockStatus={resourceLockStatus}
+								/>
+							)
 						case "Quiz":
-							return <QuizSection key={`${unit.id}-quiz-${child.id}`} quiz={child} />
+							return (
+								<QuizSection key={`${unit.id}-quiz-${child.id}`} quiz={child} resourceLockStatus={resourceLockStatus} />
+							)
 						case "UnitTest":
-							return <UnitTestSection key={`${unit.id}-test-${child.id}`} test={child} />
+							return (
+								<UnitTestSection
+									key={`${unit.id}-test-${child.id}`}
+									test={child}
+									resourceLockStatus={resourceLockStatus}
+								/>
+							)
 						default:
 							return null
 					}

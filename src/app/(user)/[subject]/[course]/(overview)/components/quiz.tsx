@@ -1,12 +1,23 @@
 import Image from "next/image"
 import Link from "next/link"
 import quizNotStartedImage from "@/app/(user)/[subject]/[course]/(overview)/components/images/quiz-not-started.svg"
+import { LockedItem } from "@/app/(user)/[subject]/[course]/(overview)/components/LockedItem"
 import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/section"
 import { Button } from "@/components/ui/button"
 import type { Quiz } from "@/lib/types/domain"
 import { startCase } from "@/lib/utils"
 
-export function QuizSection({ quiz }: { quiz: Quiz }) {
+export function QuizSection({ quiz, resourceLockStatus }: { quiz: Quiz; resourceLockStatus: Record<string, boolean> }) {
+	const isLocked = resourceLockStatus[quiz.id] === true
+
+	if (isLocked) {
+		return (
+			<Section>
+				<LockedItem title={startCase(quiz.title)} />
+			</Section>
+		)
+	}
+
 	return (
 		<Section className="relative overflow-hidden">
 			<div className="flex justify-between items-end gap-6">

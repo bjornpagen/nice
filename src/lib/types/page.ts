@@ -11,7 +11,7 @@ export interface CoursePageData {
 // Data for the /<subject>/<course>/<unit> page
 export interface UnitPageData {
 	params: { subject: string; course: string; unit: string }
-	course: Pick<Course, "id" | "title" | "path" | "description">
+	course: Course // Return the full course object
 	allUnits: Unit[] // All units in the course for the sidebar
 	unit: Unit // The specific unit being viewed
 	lessonCount: number

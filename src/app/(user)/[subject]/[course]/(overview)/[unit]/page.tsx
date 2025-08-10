@@ -1,13 +1,12 @@
 import { currentUser } from "@clerk/nextjs/server"
-import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { Content } from "@/app/(user)/[subject]/[course]/(overview)/[unit]/components/content"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
 import { fetchUnitPageData } from "@/lib/data/unit"
-import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { UnitPageData } from "@/lib/types/page"
-import { normalizeParams } from "@/lib/utils"
+import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
 
 // ✅ CORRECT: Non-async Server Component following RSC patterns
 export default function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
@@ -23,16 +22,16 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 	const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([unitDataPromise, userPromise]).then(
 		([unitData, user]) => {
 			if (user) {
-				const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
-				if (publicMetadataResult.error) {
+				const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+				if (!parsed.success) {
 					logger.warn("invalid user public metadata, cannot fetch progress", {
 						userId: user.id,
-						error: publicMetadataResult.error
+						error: parsed.error
 					})
-					throw errors.wrap(publicMetadataResult.error, "clerk user metadata validation")
+					return new Map<string, AssessmentProgress>()
 				}
-				if (publicMetadataResult.data.sourceId) {
-					return getUserUnitProgress(publicMetadataResult.data.sourceId, unitData.course.id)
+				if (parsed.data.sourceId) {
+					return getUserUnitProgress(parsed.data.sourceId, unitData.course.id)
 				}
 			}
 			// For unauthenticated users or users without a sourceId, an empty map is acceptable.
@@ -41,9 +40,22 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 		}
 	)
 
+	const resourceLockStatusPromise: Promise<Record<string, boolean>> = Promise.all([
+		unitDataPromise,
+		progressPromise,
+		userPromise
+	]).then(([unitData, progress, user]) => {
+		const lockingEnabled = Boolean(user)
+		return buildResourceLockStatus(unitData.course, progress, lockingEnabled)
+	})
+
 	return (
 		<React.Suspense>
-			<Content dataPromise={unitDataPromise} progressPromise={progressPromise} />
+			<Content
+				dataPromise={unitDataPromise}
+				progressPromise={progressPromise}
+				resourceLockStatusPromise={resourceLockStatusPromise}
+			/>
 		</React.Suspense>
 	)
 }

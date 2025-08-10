@@ -1,4 +1,4 @@
-import { Check, FileText, Pencil, Play } from "lucide-react"
+import { Check, FileText, Lock, Pencil, Play } from "lucide-react"
 import type * as React from "react"
 import { cn } from "@/lib/utils"
 
@@ -28,13 +28,15 @@ export function ActivityIcon({
 	color,
 	className,
 	completed = false,
-	progress
+	progress,
+	isLocked = false // Add isLocked prop
 }: {
 	variant: keyof typeof activityIconVariants
 	color?: string
 	className?: string
 	completed?: boolean
 	progress?: number // Progress from 0 to 1 (0% to 100%)
+	isLocked?: boolean // Add isLocked prop
 }): React.ReactNode {
 	const config = activityIconVariants[variant]
 
@@ -58,6 +60,20 @@ export function ActivityIcon({
 			return "w-2.5 h-2.5"
 		}
 		return "w-2 h-2" // default
+	}
+
+	// If locked, render a lock icon and return early.
+	if (isLocked) {
+		return (
+			<div
+				className={cn(
+					"inline-flex items-center justify-center rounded-xs w-5 h-5 bg-gray-200 border-1 border-gray-300",
+					className
+				)}
+			>
+				<Lock className={cn(getIconSize(), "text-gray-500")} />
+			</div>
+		)
 	}
 
 	// Calculate if we should show partial progress

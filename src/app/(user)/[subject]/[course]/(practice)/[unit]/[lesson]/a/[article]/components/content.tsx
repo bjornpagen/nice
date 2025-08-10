@@ -6,7 +6,7 @@ import * as React from "react"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { trackArticleView } from "@/lib/actions/tracking"
-import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { ArticlePageData } from "@/lib/types/page"
 
 export function Content({
@@ -29,14 +29,11 @@ export function Content({
 		let userEmail: string | undefined
 
 		if (user) {
-			const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
-			if (publicMetadataResult.error) {
-				// CRITICAL: User metadata is invalid. We must stop.
-				// This indicates a severe data integrity issue or misconfiguration.
-				// This prevents proceeding with potentially corrupted user context.
-				throw errors.wrap(publicMetadataResult.error, "clerk user metadata validation")
+			const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+			if (!parsed.success) {
+				throw parsed.error
 			}
-			onerosterUserSourcedId = publicMetadataResult.data.sourceId
+			onerosterUserSourcedId = parsed.data.sourceId
 			userEmail = user.primaryEmailAddress?.emailAddress
 		}
 

@@ -1,6 +1,8 @@
 import * as errors from "@superbuilders/errors"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import type { AssessmentProgress } from "@/lib/data/progress"
+import type { Course, LessonChild, UnitChild } from "@/lib/types/domain"
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
@@ -84,4 +86,50 @@ export function normalizeParamsSync<T extends Record<string, unknown>>(params: T
 // This prevents cache duplication for Khan Academy IDs and similar encoded values
 export function normalizeParams<T extends Record<string, unknown>>(paramsPromise: Promise<T>): Promise<T> {
 	return paramsPromise.then(normalizeParamsSync)
+}
+
+// Helper type for any resource that can be in the sequential path
+type CourseResource = UnitChild | LessonChild | Course["challenges"][number]
+
+export function getOrderedCourseResources(course: Course): CourseResource[] {
+	// Assume ordering has already been propagated in the data layer.
+	// Only perform stable sorts here to avoid divergence.
+	const resources: CourseResource[] = []
+
+	const sortedUnits = [...course.units].sort((a, b) => a.ordering - b.ordering)
+	for (const unit of sortedUnits) {
+		const sortedUnitChildren: UnitChild[] = [...unit.children].sort((a, b) => a.ordering - b.ordering)
+		for (const unitChild of sortedUnitChildren) {
+			if (unitChild.type === "Lesson") {
+				const sortedLessonChildren = [...unitChild.children].sort((a, b) => a.ordering - b.ordering)
+				resources.push(...sortedLessonChildren)
+			} else {
+				resources.push(unitChild)
+			}
+		}
+	}
+	// Challenges remain at the end per product decision
+	resources.push(...course.challenges)
+	return resources
+}
+
+export function buildResourceLockStatus(
+	course: Course,
+	progressMap: Map<string, AssessmentProgress>,
+	lockingEnabled: boolean
+): Record<string, boolean> {
+	const ordered = getOrderedCourseResources(course)
+	const lock: Record<string, boolean> = {}
+	if (!lockingEnabled) {
+		for (const r of ordered) {
+			lock[r.id] = false
+		}
+		return lock
+	}
+	let previousComplete = true
+	for (const r of ordered) {
+		lock[r.id] = !previousComplete
+		previousComplete = progressMap.get(r.id)?.completed === true
+	}
+	return lock
 }

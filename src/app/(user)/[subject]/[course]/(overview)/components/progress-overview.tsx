@@ -10,13 +10,15 @@ export function ProgressOverview({
 	unitChildren,
 	path,
 	next = false,
-	progressMap
+	progressMap,
+	resourceLockStatus
 }: {
 	index: number
 	unitChildren: UnitChild[]
 	path: string
 	next?: boolean
 	progressMap: Map<string, AssessmentProgress>
+	resourceLockStatus: Record<string, boolean>
 }) {
 	return (
 		<div className={cn("py-3 px-6", next ? "bg-blue-100" : "bg-gray-50")}>
@@ -34,7 +36,7 @@ export function ProgressOverview({
 						</div>
 					</div>
 					<div className="ml-20">
-						<Progress unitChildren={unitChildren} progressMap={progressMap} />
+						<Progress unitChildren={unitChildren} progressMap={progressMap} resourceLockStatus={resourceLockStatus} />
 					</div>
 				</>
 			) : (
@@ -44,7 +46,7 @@ export function ProgressOverview({
 							Unit {index + 1}
 						</Link>
 					</h3>
-					<Progress unitChildren={unitChildren} progressMap={progressMap} />
+					<Progress unitChildren={unitChildren} progressMap={progressMap} resourceLockStatus={resourceLockStatus} />
 				</div>
 			)}
 		</div>

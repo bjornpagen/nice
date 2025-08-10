@@ -15,6 +15,7 @@ export interface ContentNode {
 	description: string
 	path: string
 	xp: number
+	ordering: number // Add this mandatory field
 }
 
 // --- Content Types ---
@@ -37,7 +38,9 @@ export interface Exercise extends ContentNode {
 }
 
 /** A lighter version of Exercise for lists where question data is not needed. */
-export type ExerciseInfo = Omit<Exercise, "questions">
+export type ExerciseInfo = Omit<Exercise, "questions"> & {
+	type: "Exercise" // This makes ExerciseInfo a discriminated union member
+}
 
 // --- Assessment Types ---
 

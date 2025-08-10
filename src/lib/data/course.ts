@@ -171,6 +171,7 @@ export async function fetchCoursePageData(
 				description: componentMetadata.khanDescription,
 				path: `/${params.subject}/${params.course}/${parentMetadataResult.data.khanSlug}/${componentMetadata.khanSlug}`, // Construct path from slugs
 				children: [], // Initialize children
+				ordering: 0, // Default ordering value - will be set from sortOrder later
 				xp: 0 // Default XP value
 			})
 		}
@@ -353,6 +354,7 @@ export async function fetchCoursePageData(
 					description: resourceMetadata.khanDescription,
 					path: `/${params.subject}/${params.course}/${unit.slug}/${pathSegment}/${resourceMetadata.khanSlug}`,
 					questions: [], // Questions are not needed on the course page
+					ordering: componentResource.sortOrder,
 					xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 				}
 				unitAssessments.push(assessment)
@@ -436,6 +438,7 @@ export async function fetchCoursePageData(
 						duration: resourceMetadata.duration,
 						type: "Video" as const,
 						sortOrder: componentResource.sortOrder,
+						ordering: componentResource.sortOrder,
 						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 					})
 				} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
@@ -457,6 +460,7 @@ export async function fetchCoursePageData(
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
 						sortOrder: componentResource.sortOrder,
+						ordering: componentResource.sortOrder,
 						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 					})
 				} else if (
@@ -498,6 +502,7 @@ export async function fetchCoursePageData(
 						totalQuestions,
 						questionsToPass,
 						sortOrder: componentResource.sortOrder,
+						ordering: componentResource.sortOrder,
 						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 					})
 				}
@@ -573,12 +578,15 @@ export async function fetchCoursePageData(
 		// Sort all children by their sort order
 		childrenWithOrders.sort((a, b) => a.sortOrder - b.sortOrder)
 
-		// Extract just the children in sorted order
-		const children: UnitChild[] = childrenWithOrders.map((item) => item.child)
+		// Extract just the children in sorted order and propagate explicit ordering
+		const childrenWithOrdering: UnitChild[] = childrenWithOrders.map((item) => ({
+			...item.child,
+			ordering: item.sortOrder
+		}))
 
 		return {
 			...unit,
-			children
+			children: childrenWithOrdering
 		}
 	})
 
@@ -642,6 +650,7 @@ export async function fetchCoursePageData(
 					path: challengePath,
 					description: resourceMetadata.khanDescription,
 					questions: [], // Will be populated when the challenge is accessed
+					ordering: 0, // Course challenges are always at the end
 					xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 				}
 				challenges.push(challenge)
