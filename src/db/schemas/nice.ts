@@ -176,10 +176,14 @@ const questions = schema.table(
 		parsedData: jsonb("parsed_data").notNull(),
 		xml: text("xml"),
 		// New column to cache the intermediate structured QTI JSON representation
-		structuredJson: jsonb("structured_json")
+		structuredJson: jsonb("structured_json"),
+		// Problem type identifier for grouping question variants
+		problemType: text("problem_type").notNull().default("")
 	},
 	(table) => [
 		index("questions_exercise_id_idx").on(table.exerciseId),
+		index("questions_problem_type_idx").on(table.problemType),
+		index("questions_exercise_problem_type_idx").on(table.exerciseId, table.problemType),
 		foreignKey({
 			name: "questions_exercise_fk",
 			columns: [table.exerciseId],

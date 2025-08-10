@@ -125,14 +125,40 @@ async function fetchQuestionsForExercise(
 		throw errors.new("practice task response contained no userExercises array")
 	}
 
-	const allItems = userExercises[0]?.exerciseModel?.problemTypes[0]?.items
+	const problemTypes = userExercises[0]?.exerciseModel?.problemTypes
 
-	if (!allItems || allItems.length === 0) {
-		logger.warn("exercise contains no items", { exerciseId })
+	if (!problemTypes || problemTypes.length === 0) {
+		logger.warn("exercise contains no problem types", { exerciseId })
 		return [] // This is also a valid state.
 	}
 
-	logger.info("retrieved all item IDs for exercise", { exerciseId, count: allItems.length })
+	// Collect items from ALL problem types, not just the first one
+	const allItems: Array<{ id: string; sha: string }> = []
+	for (let i = 0; i < problemTypes.length; i++) {
+		const problemType = problemTypes[i]
+		const items = problemType?.items || []
+
+		logger.debug("processing problem type in dump script", {
+			exerciseId,
+			problemTypeIndex: i,
+			itemCount: items.length
+		})
+
+		for (const item of items) {
+			allItems.push(item)
+		}
+	}
+
+	if (allItems.length === 0) {
+		logger.warn("exercise contains no items across all problem types", { exerciseId })
+		return [] // This is also a valid state.
+	}
+
+	logger.info("retrieved all item IDs for exercise", {
+		exerciseId,
+		count: allItems.length,
+		problemTypesFound: problemTypes.length
+	})
 	const allQuestions: QuestionInfo[] = []
 	let itemsProcessed = 0
 
