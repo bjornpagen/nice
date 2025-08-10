@@ -3,6 +3,7 @@
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
+import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { trackArticleView } from "@/lib/actions/tracking"
@@ -20,6 +21,7 @@ export function Content({
 	const params = React.use(paramsPromise)
 	const { user } = useUser()
 	const startTimeRef = React.useRef<Date | null>(null)
+	const { setCurrentResourceCompleted } = useLessonProgress()
 
 	React.useEffect(() => {
 		// Record the start time when component mounts
@@ -87,11 +89,23 @@ export function Content({
 							process: false
 						}
 						void sendCaliperTimeSpentEvent(actorForCleanup, contextForCleanup, durationInSeconds)
+						// Mark article as completed locally to enable Continue
+						setCurrentResourceCompleted(true)
 					}
 				}
 			}
 		}
-	}, [user, article.id, article.title, params.subject, params.course, params.unit, params.lesson, params.article])
+	}, [
+		user,
+		article.id,
+		article.title,
+		params.subject,
+		params.course,
+		params.unit,
+		params.lesson,
+		params.article,
+		setCurrentResourceCompleted
+	])
 
 	return (
 		<div className="bg-white h-full flex flex-col">

@@ -4,21 +4,29 @@ import { BookCheck, ChevronRight, FileText, PenTool, Play, TestTube } from "luci
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import * as React from "react"
+import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { Button } from "@/components/ui/button"
-import type { Course as CourseV2 } from "@/lib/types/sidebar"
+import type {
+	CourseResourceMaterial,
+	CourseUnitMaterial,
+	Course as CourseV2,
+	LessonResource
+} from "@/lib/types/sidebar"
 import { getCourseMaterials } from "@/lib/types/sidebar"
 import { assertNoEncodedColons, normalizeString } from "@/lib/utils"
 
 interface LessonFooterProps {
 	coursePromise: Promise<CourseV2 | undefined>
+	resourceLockStatusPromise?: Promise<Record<string, boolean>>
 }
 
-export function LessonFooter({ coursePromise }: LessonFooterProps) {
+export function LessonFooter({ coursePromise, resourceLockStatusPromise }: LessonFooterProps) {
 	const rawPathname = usePathname()
 	const pathname = normalizeString(rawPathname)
 	// Assert on the normalized path to ensure correctness before use.
 	assertNoEncodedColons(pathname, "lesson-footer pathname")
 	const course = React.use(coursePromise)
+	const { isCurrentResourceCompleted, setCurrentResourceCompleted } = useLessonProgress()
 
 	if (!course) {
 		return null
@@ -46,24 +54,27 @@ export function LessonFooter({ coursePromise }: LessonFooterProps) {
 		return null
 	}
 
-	// Now find the next navigable item
-	let nextItem = null
+	// Identify the current resource and find the next navigable item
+	let nextItem: LessonResource | CourseUnitMaterial | CourseResourceMaterial | null = null
+	let currentResourceType: "Video" | "Article" | "Exercise" | "Quiz" | "UnitTest" | "CourseChallenge" | undefined
 
 	if (currentMaterial.type === "Lesson") {
 		// Find current resource within the lesson
 		const currentResourceIndex = currentMaterial.resources.findIndex((resource) => resource.path === pathname)
+		const currentResource = currentMaterial.resources[currentResourceIndex]
+		currentResourceType = currentResource?.type
 
 		if (currentResourceIndex >= 0 && currentResourceIndex < currentMaterial.resources.length - 1) {
 			// Next resource in same lesson
-			nextItem = currentMaterial.resources[currentResourceIndex + 1]
+			nextItem = currentMaterial.resources[currentResourceIndex + 1] ?? null
 		} else {
 			// Look for next material (could be another lesson or assessment)
 			const nextMaterial = materials[currentMaterialIndex + 1]
 			if (nextMaterial) {
 				if (nextMaterial.type === "Lesson" && nextMaterial.resources.length > 0) {
-					nextItem = nextMaterial.resources[0] // First resource of next lesson
-				} else {
-					nextItem = nextMaterial // Next assessment
+					nextItem = nextMaterial.resources[0] ?? null // First resource of next lesson
+				} else if (nextMaterial.type !== "Lesson") {
+					nextItem = nextMaterial // Next assessment (Quiz, UnitTest, CourseChallenge)
 				}
 			}
 		}
@@ -72,8 +83,8 @@ export function LessonFooter({ coursePromise }: LessonFooterProps) {
 		const nextMaterial = materials[currentMaterialIndex + 1]
 		if (nextMaterial) {
 			if (nextMaterial.type === "Lesson" && nextMaterial.resources.length > 0) {
-				nextItem = nextMaterial.resources[0] // First resource of next lesson
-			} else {
+				nextItem = nextMaterial.resources[0] ?? null // First resource of next lesson
+			} else if (nextMaterial.type !== "Lesson") {
 				nextItem = nextMaterial // Next assessment
 			}
 		}
@@ -83,6 +94,10 @@ export function LessonFooter({ coursePromise }: LessonFooterProps) {
 	if (!nextItem) {
 		return null
 	}
+
+	// If lock status is available, prevent navigating to locked next items
+	const resourceLockStatus = React.use(resourceLockStatusPromise ?? Promise.resolve<Record<string, boolean>>({}))
+	const isNextLocked = resourceLockStatus ? resourceLockStatus[nextItem.id] === true : false
 
 	const getIcon = (type: string) => {
 		switch (type) {
@@ -118,10 +133,27 @@ export function LessonFooter({ coursePromise }: LessonFooterProps) {
 		}
 	}
 
+	// Compute UI state messaging and optional action for incomplete states
+	const showDisabled = !isCurrentResourceCompleted || isNextLocked
+	let disabledReason = ""
+	if (!isCurrentResourceCompleted) {
+		if (currentResourceType === "Video") {
+			disabledReason = "Finish the video to continue"
+		} else if (currentResourceType === "Article") {
+			disabledReason = "Mark this article as read to continue"
+		} else {
+			disabledReason = "Complete this activity to continue"
+		}
+	} else if (isNextLocked) {
+		disabledReason = "Complete the previous activity to unlock next"
+	}
+
+	const canMarkArticleAsDone = currentResourceType === "Article" && !isCurrentResourceCompleted
+
 	return (
 		<div className="bg-white border-t border-gray-200 shadow-lg">
 			<div className="max-w-7xl mx-auto px-4 py-3">
-				<div className="flex items-center justify-between">
+				<div className="flex items-center justify-between gap-4">
 					<div className="flex items-center space-x-3">
 						<div className="text-sm text-gray-600 font-medium">Up next:</div>
 						<div className="flex items-center space-x-2">
@@ -133,12 +165,39 @@ export function LessonFooter({ coursePromise }: LessonFooterProps) {
 						</div>
 					</div>
 
-					<Button asChild className="bg-blue-600 hover:bg-blue-700 text-white">
-						<Link href={nextItem.path}>
-							Continue
-							<ChevronRight className="w-4 h-4 ml-1" />
-						</Link>
-					</Button>
+					<div className="flex items-center gap-3">
+						{canMarkArticleAsDone && (
+							<Button
+								type="button"
+								variant="outline"
+								className="border-gray-300 text-gray-700"
+								onClick={() => setCurrentResourceCompleted(true)}
+							>
+								Done reading
+							</Button>
+						)}
+
+						<div className="flex flex-col items-end">
+							<Button
+								asChild={!showDisabled}
+								className="bg-blue-600 hover:bg-blue-700 text-white"
+								disabled={showDisabled}
+							>
+								{!showDisabled ? (
+									<Link href={nextItem.path}>
+										Continue
+										<ChevronRight className="w-4 h-4 ml-1" />
+									</Link>
+								) : (
+									<span className="flex items-center">
+										Continue
+										<ChevronRight className="w-4 h-4 ml-1" />
+									</span>
+								)}
+							</Button>
+							{showDisabled && <span className="mt-1 text-xs text-gray-500">{disabledReason}</span>}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

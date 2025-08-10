@@ -4,6 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import * as React from "react"
 import { Sidebar } from "@/components/practice/course/sidebar/sidebar"
+import { LessonProgressProvider } from "@/components/practice/lesson-progress-context"
 import { Button } from "@/components/ui/button"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { LessonLayoutData } from "@/lib/types/page"
@@ -71,10 +72,14 @@ export function LessonLayout({
 				</Button>
 
 				{/* Content area - scrollable */}
-				<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
+				<div className="flex-1 overflow-y-auto bg-gray-50">
+					<LessonProgressProvider>{children}</LessonProgressProvider>
+				</div>
 
 				{/* Conditionally render LessonFooter */}
-				{shouldShowNext && <LessonFooter coursePromise={coursePromise} />}
+				{shouldShowNext && (
+					<LessonFooter coursePromise={coursePromise} resourceLockStatusPromise={resourceLockStatusPromise} />
+				)}
 			</div>
 		</div>
 	)

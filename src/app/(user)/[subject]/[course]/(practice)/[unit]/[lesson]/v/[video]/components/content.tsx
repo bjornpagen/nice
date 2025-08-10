@@ -4,6 +4,7 @@ import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import YouTube, { type YouTubePlayer } from "react-youtube"
+import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { getVideoProgress, updateVideoProgress } from "@/lib/actions/tracking"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
@@ -39,6 +40,7 @@ export function Content({
 	const video = React.use(videoPromise)
 	const params = React.use(paramsPromise)
 	const { user } = useUser()
+	const { setCurrentResourceCompleted } = useLessonProgress()
 	const [activeTab, setActiveTab] = React.useState<"about" | "transcript">("about")
 	const playerRef = React.useRef<YouTubePlayer | null>(null)
 
@@ -104,6 +106,8 @@ export function Content({
 
 			// Send cumulative time event
 			void sendCaliperTimeSpentEvent(actor, context, Math.floor(finalWatchTime))
+			// Mark video as completed locally to enable Continue
+			setCurrentResourceCompleted(true)
 			hasSentFinalEventRef.current = true
 		}
 	}

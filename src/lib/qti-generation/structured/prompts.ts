@@ -151,6 +151,120 @@ CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, 
 **CRITICAL: NO EXPLANATION WIDGETS.**
 NEVER create a widget for explanatory text. Explanations or definitions found in the Perseus JSON (especially those of type 'explanation' or 'definition') must be embedded directly within the 'body' content as paragraph blocks. The 'explanation' and 'definition' widget types are BANNED. Hints are EXPLICITLY FORBIDDEN and MUST be stripped entirely.
 
+**CRITICAL: EQUATION/EXPRESSION INPUTS - ALWAYS CONVERT TO MULTIPLE CHOICE**
+
+Perseus "expression" widgets that ask for equation, inequality, or symbolic form input MUST be converted to multiple choice format. This avoids complex algebraic equivalence checking.
+
+**DETECTION CRITERIA:**
+- Widget type is "expression" AND any of these conditions:
+  - Prompt contains: "write an equation", "write the equation", "equation to represent", "equation to determine", "equation that models", "write an inequality"
+  - Asks for algebraic forms: "in terms of", "slope-intercept form", "standard form", "vertex form", "factored form", "function rule"
+  - Requires algebraic manipulation: "factor", "expand", "simplify to form", "rewrite as"
+  - Contains equals sign or inequality in the expected answer
+
+**CONVERSION RULES:**
+1. Convert to a SINGLE choiceInteraction with THREE options (A, B, C)
+2. Do NOT create textEntryInteraction for these cases
+3. Response declaration uses identifier "RESPONSE" with cardinality "single"
+4. All equation choices use MathML exclusively - NO raw LaTeX, NO HTML strings
+5. The body contains ONLY the problem statement and ONE choiceInteraction slot
+
+**POSITIVE EXAMPLE 1 - Write an equation:**
+Input: Perseus expression widget asking "Write an equation to determine the original price per pound (p)."
+Expected answer: "3(p+0.75)=5.88"
+
+CORRECT shell structure:
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [
+      { "type": "text", "content": "In winter, the price of apples suddenly went up by " },
+      { "type": "math", "mathml": "<mo>$</mo><mn>0.75</mn>" },
+      { "type": "text", "content": " per pound. Sam bought " },
+      { "type": "math", "mathml": "<mn>3</mn>" },
+      { "type": "text", "content": " pounds of apples at the new price for a total of " },
+      { "type": "math", "mathml": "<mo>$</mo><mn>5.88</mn>" },
+      { "type": "text", "content": "." }
+    ]},
+    { "type": "paragraph", "content": [
+      { "type": "text", "content": "Write an equation to determine the original price per pound (" },
+      { "type": "math", "mathml": "<mi>p</mi>" },
+      { "type": "text", "content": ")." }
+    ]},
+    { "type": "blockSlot", "slotId": "equation_choice" },
+    { "type": "paragraph", "content": [
+      { "type": "text", "content": "Find the original price per pound." }
+    ]},
+    { "type": "paragraph", "content": [
+      { "type": "inlineSlot", "slotId": "price_entry" }
+    ]}
+  ],
+  "interactions": [
+    "equation_choice",
+    "price_entry"
+  ],
+  "responseDeclarations": [
+    {
+      "identifier": "RESPONSE",
+      "cardinality": "single",
+      "baseType": "identifier",
+      "correct": "A"
+    },
+    {
+      "identifier": "price_entry",
+      "cardinality": "single",
+      "baseType": "float",
+      "correct": 1.21
+    }
+  ]
+}
+\`\`\`
+
+**POSITIVE EXAMPLE 2 - Write equation from balanced hanger:**
+Input: Perseus expression widget with hanger diagram asking "Write an equation to represent the image."
+Expected answer: "12=4c"
+
+CORRECT shell structure:
+\`\`\`json
+{
+  "body": [
+    { "type": "paragraph", "content": [
+      { "type": "text", "content": "The hanger image below represents a balanced equation." }
+    ]},
+    { "type": "blockSlot", "slotId": "hanger_image" },
+    { "type": "paragraph", "content": [
+      { "type": "text", "content": "Write an equation to represent the image." }
+    ]},
+    { "type": "blockSlot", "slotId": "equation_choice" }
+  ],
+  "widgets": ["hanger_image"],
+  "interactions": [
+    "equation_choice"
+  ],
+  "responseDeclarations": [
+    {
+      "identifier": "RESPONSE",
+      "cardinality": "single",
+      "baseType": "identifier",
+      "correct": "B"
+    }
+  ]
+}
+\`\`\`
+
+**NEGATIVE EXAMPLE - WRONG textEntryInteraction for equation:**
+\`\`\`json
+{
+  "interactions": {
+    "equation_entry": { 
+      "type": "textEntryInteraction",  // ❌ WRONG - equations must be multiple choice
+      "responseIdentifier": "equation_entry",
+      "expectedLength": 16
+    }
+  }
+}
+\`\`\`
+
 **CRITICAL: NO CURRENCY SLOTS - STRICT MATHML ENFORCEMENT.**
 Currency symbols and amounts MUST NOT be represented as slots (widget or interaction). Do not generate any slotId that indicates currency (for example, names containing "currency" or ending with "_feedback"). 
 
@@ -258,6 +372,11 @@ ${perseusJson}
 Return ONLY the JSON object for the assessment shell.
 
 ## NEGATIVE EXAMPLES FROM REAL ERRORS (DO NOT OUTPUT THESE)
+
+**CRITICAL: Equation Input Conversion Errors**
+- If an expression widget asks for an equation/inequality/symbolic form, it MUST be converted to choiceInteraction
+- NEVER create textEntryInteraction for "write an equation" type prompts
+- Automatic rejection if equation inputs are not converted to multiple choice
 
 **1. Invalid Content Structure:**
 
@@ -707,7 +826,8 @@ Perseus often calls interactive elements "widgets". You MUST correctly reclassif
 - **EXCEPTION: TABLES ARE ALWAYS WIDGETS** - Even tables with input fields
 
 **Common Perseus elements that map to SUPPORTED INTERACTIONS:**
-- \`numeric-input\`, \`input-number\`, \`expression\` → textEntryInteraction
+- \`numeric-input\`, \`input-number\` → textEntryInteraction
+- \`expression\` → textEntryInteraction (**EXCEPTION**: Equation/inequality/symbolic-form inputs MUST be converted to choiceInteraction - see CRITICAL section above)
 - \`radio\` → choiceInteraction
 - \`dropdown\` → inlineChoiceInteraction
 - \`sorter\` → orderInteraction
@@ -1265,6 +1385,70 @@ Some Perseus widgets require complex, dynamic user input that we do not support.
 }
 \`\`\`
 This is a critical instruction to flag items that cannot be converted. For all other supported interaction types, generate the full, valid QTI interaction object as normal.
+
+**CRITICAL: EQUATION/EXPRESSION INPUTS - GENERATE CHOICE INTERACTION CONTENT**
+
+When the shell has converted an equation/expression input to choiceInteraction (identified by keywords like "write an equation", "equation to represent", etc.):
+
+1. Generate a choiceInteraction with THREE choices (A, B, C)
+2. Each choice must contain properly formatted MathML equations
+3. The prompt should be the question text as structured inline content
+4. Choices should be block content arrays containing MathML
+5. NO hints, NO answer leakage, NO pre-selected choices
+
+**CORRECT Example - Equation Choice Generation:**
+For a shell with equation_choice interaction asking to "Write an equation to determine the original price per pound (p)":
+
+\`\`\`json
+{
+  "equation_choice": {
+    "type": "choiceInteraction",
+    "responseIdentifier": "RESPONSE",
+    "prompt": [
+      { "type": "text", "content": "Select the equation that determines the original price per pound (" },
+      { "type": "math", "mathml": "<mi>p</mi>" },
+      { "type": "text", "content": "):" }
+    ],
+    "choices": [
+      {
+        "identifier": "A",
+        "content": [
+          { "type": "paragraph", "content": [
+            { "type": "math", "mathml": "<mn>3</mn><mrow><mo>(</mo><mi>p</mi><mo>+</mo><mn>0.75</mn><mo>)</mo></mrow><mo>=</mo><mn>5.88</mn>" }
+          ]}
+        ]
+      },
+      {
+        "identifier": "B",
+        "content": [
+          { "type": "paragraph", "content": [
+            { "type": "math", "mathml": "<mn>3</mn><mi>p</mi><mo>+</mo><mn>0.75</mn><mo>=</mo><mn>5.88</mn>" }
+          ]}
+        ]
+      },
+      {
+        "identifier": "C",
+        "content": [
+          { "type": "paragraph", "content": [
+            { "type": "math", "mathml": "<mrow><mo>(</mo><mi>p</mi><mo>-</mo><mn>0.75</mn><mo>)</mo></mrow><mo>÷</mo><mn>3</mn><mo>=</mo><mn>5.88</mn>" }
+          ]}
+        ]
+      }
+    ]
+  }
+}
+\`\`\`
+
+**WRONG Example - textEntryInteraction for equation:**
+\`\`\`json
+{
+  "equation_entry": {
+    "type": "textEntryInteraction",  // ❌ WRONG - equations must be choiceInteraction
+    "responseIdentifier": "equation_entry",
+    "expectedLength": 16
+  }
+}
+\`\`\`
 
 ⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
 The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
