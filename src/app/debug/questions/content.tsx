@@ -24,6 +24,7 @@ export function Content({ questionsPromise }: ContentProps) {
 	const [localQuestions, setLocalQuestions] = React.useState<QuestionDebugData[] | undefined>(undefined)
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
 	const [isValidating, setIsValidating] = React.useState(false)
+	const [widgetFilter, setWidgetFilter] = React.useState<"all" | "with" | "without">("all")
 
 	// iframe reload counters
 	const [ampReload, setAmpReload] = React.useState(0)
@@ -35,11 +36,56 @@ export function Content({ questionsPromise }: ContentProps) {
 		setLocalQuestions(resolvedQuestions)
 	}, [resolvedQuestions])
 
+	// helper functions to check widget status
+	const hasWidgets = (question: QuestionDebugData): boolean => {
+		if (!question.structuredJson) return false
+
+		// type-safe way to check if it's an object with widgets property
+		if (typeof question.structuredJson !== "object" || question.structuredJson === null) return false
+
+		// check if structuredJson has widgets property
+		if (!("widgets" in question.structuredJson)) return false
+
+		// safely access widgets property
+		const widgets = question.structuredJson.widgets
+		return typeof widgets === "object" && widgets !== null && Object.keys(widgets).length > 0
+	}
+
+	const hasEmptyWidgets = (question: QuestionDebugData): boolean => {
+		if (!question.structuredJson) return true
+
+		// type-safe way to check if it's an object with widgets property
+		if (typeof question.structuredJson !== "object" || question.structuredJson === null) return true
+
+		// check if structuredJson has widgets property
+		if (!("widgets" in question.structuredJson)) return true
+
+		// safely access widgets property
+		const widgets = question.structuredJson.widgets
+		return typeof widgets === "object" && widgets !== null && Object.keys(widgets).length === 0
+	}
+
+	// filter questions based on widget filter
+	const filteredQuestions = (() => {
+		if (!localQuestions) return []
+		if (widgetFilter === "all") return localQuestions
+		if (widgetFilter === "with") return localQuestions.filter(hasWidgets)
+		if (widgetFilter === "without") return localQuestions.filter(hasEmptyWidgets)
+		return localQuestions
+	})()
+
+	// adjust currentIndex when filtering changes
+	React.useEffect(() => {
+		if (filteredQuestions.length > 0 && currentIndex >= filteredQuestions.length) {
+			setCurrentIndex(0)
+		}
+	}, [filteredQuestions.length, currentIndex])
+
 	// full data present; no lazy details
 
 	// keyboard navigation for TAB/SHIFT+TAB
 	React.useEffect(() => {
-		if (!localQuestions) return
+		if (!filteredQuestions) return
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Tab") {
 				event.preventDefault()
@@ -50,7 +96,7 @@ export function Content({ questionsPromise }: ContentProps) {
 						toast.info(`moved to question ${formatIndex(newIndex)}`)
 					}
 				} else {
-					const newIndex = Math.min((localQuestions?.length ?? 1) - 1, currentIndex + 1)
+					const newIndex = Math.min((filteredQuestions?.length ?? 1) - 1, currentIndex + 1)
 					setCurrentIndex(newIndex)
 					if (newIndex !== currentIndex) {
 						toast.info(`moved to question ${formatIndex(newIndex)}`)
@@ -61,7 +107,7 @@ export function Content({ questionsPromise }: ContentProps) {
 
 		window.addEventListener("keydown", handleKeyDown)
 		return () => window.removeEventListener("keydown", handleKeyDown)
-	}, [currentIndex, localQuestions])
+	}, [currentIndex, filteredQuestions])
 
 	const goToPrevious = () => {
 		const newIndex = Math.max(0, currentIndex - 1)
@@ -72,7 +118,7 @@ export function Content({ questionsPromise }: ContentProps) {
 	}
 
 	const goToNext = () => {
-		const total = localQuestions ? localQuestions.length : 0
+		const total = filteredQuestions ? filteredQuestions.length : 0
 		if (total === 0) {
 			return
 		}
@@ -87,11 +133,18 @@ export function Content({ questionsPromise }: ContentProps) {
 		return <div>loading questions...</div>
 	}
 
-	if (localQuestions.length === 0) {
-		return <div>no questions with xml found</div>
+	if (filteredQuestions.length === 0) {
+		let message = "no questions with xml found"
+		if (widgetFilter === "with") {
+			message = "no questions with widgets found"
+		}
+		if (widgetFilter === "without") {
+			message = "no questions without widgets found"
+		}
+		return <div>{message}</div>
 	}
 
-	const currentQuestion = localQuestions[currentIndex]
+	const currentQuestion = filteredQuestions[currentIndex]
 	if (!currentQuestion) {
 		return <div>question not found</div>
 	}
@@ -223,35 +276,75 @@ export function Content({ questionsPromise }: ContentProps) {
 	return (
 		<div style={{ display: "flex", height: "100vh" }}>
 			{/* Left sidebar with question list */}
-			<div style={{ width: "300px", borderRight: "1px solid #ccc", overflowY: "auto", padding: "10px" }}>
-				<h3>questions with xml ({localQuestions.length})</h3>
-				<ul style={{ listStyle: "none", padding: 0 }}>
-					{localQuestions.map((question, index) => {
-						const isSelected = index === currentIndex
-						const color = getQuestionBackgroundColor(question)
-						const ringColor = color === "transparent" ? "#ffffff" : color
-						return (
-							<li
-								key={question.id}
-								style={{
-									padding: "8px",
-									backgroundColor: isSelected ? "#e0e0e0" : color,
-									cursor: "pointer",
-									borderBottom: "1px solid #eee",
-									borderRadius: "8px",
-									position: isSelected ? "relative" : undefined,
-									zIndex: isSelected ? 1 : undefined,
-									boxShadow: isSelected ? `0 0 0 6px ${ringColor}, 0 6px 14px rgba(0,0,0,0.12)` : undefined,
-									transform: isSelected ? "translateY(-1px)" : undefined,
-									transition: "box-shadow 120ms ease, transform 120ms ease"
-								}}
-								onClick={() => setCurrentIndex(index)}
-							>
-								<strong style={{ fontFamily: "monospace" }}>[{String(index).padStart(4, "0")}]</strong> {question.id}
-							</li>
-						)
-					})}
-				</ul>
+			<div style={{ width: "300px", borderRight: "1px solid #ccc", display: "flex", flexDirection: "column" }}>
+				{/* Sticky filter header */}
+				<div
+					style={{
+						padding: "10px",
+						borderBottom: "1px solid #eee",
+						backgroundColor: "#f8f9fa",
+						position: "sticky",
+						top: 0,
+						zIndex: 10
+					}}
+				>
+					<h3 style={{ margin: "0 0 10px 0" }}>
+						questions with xml ({localQuestions.length})
+						{widgetFilter !== "all" && ` → filtered: ${filteredQuestions.length}`}
+					</h3>
+					<div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+						<Label style={{ fontSize: "12px", fontWeight: "bold", color: "#666" }}>widget filter:</Label>
+						<RadioGroup
+							value={widgetFilter}
+							onValueChange={(value: "all" | "with" | "without") => setWidgetFilter(value)}
+							style={{ display: "flex", gap: "12px" }}
+						>
+							<div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+								<RadioGroupItem value="all" />
+								<Label style={{ fontSize: "13px", cursor: "pointer" }}>all</Label>
+							</div>
+							<div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+								<RadioGroupItem value="with" />
+								<Label style={{ fontSize: "13px", cursor: "pointer" }}>with widgets</Label>
+							</div>
+							<div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+								<RadioGroupItem value="without" />
+								<Label style={{ fontSize: "13px", cursor: "pointer" }}>without widgets</Label>
+							</div>
+						</RadioGroup>
+					</div>
+				</div>
+
+				{/* Scrollable question list */}
+				<div style={{ flex: 1, overflowY: "auto", padding: "10px" }}>
+					<ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+						{filteredQuestions.map((question, index) => {
+							const isSelected = index === currentIndex
+							const color = getQuestionBackgroundColor(question)
+							const ringColor = color === "transparent" ? "#ffffff" : color
+							return (
+								<li
+									key={question.id}
+									style={{
+										padding: "8px",
+										backgroundColor: isSelected ? "#e0e0e0" : color,
+										cursor: "pointer",
+										borderBottom: "1px solid #eee",
+										borderRadius: "8px",
+										position: isSelected ? "relative" : undefined,
+										zIndex: isSelected ? 1 : undefined,
+										boxShadow: isSelected ? `0 0 0 6px ${ringColor}, 0 6px 14px rgba(0,0,0,0.12)` : undefined,
+										transform: isSelected ? "translateY(-1px)" : undefined,
+										transition: "box-shadow 120ms ease, transform 120ms ease"
+									}}
+									onClick={() => setCurrentIndex(index)}
+								>
+									<strong style={{ fontFamily: "monospace" }}>[{String(index).padStart(4, "0")}]</strong> {question.id}
+								</li>
+							)
+						})}
+					</ul>
+				</div>
 			</div>
 
 			{/* Main content area */}
@@ -260,7 +353,13 @@ export function Content({ questionsPromise }: ContentProps) {
 				<div style={{ marginBottom: "20px", padding: "15px", border: "1px solid #ddd" }}>
 					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" }}>
 						<h2>
-							question {currentIndex + 1} of {localQuestions.length}
+							question {currentIndex + 1} of {filteredQuestions.length}
+							{widgetFilter === "with" && (
+								<span style={{ fontSize: "14px", color: "#666", fontWeight: "normal" }}> (with widgets)</span>
+							)}
+							{widgetFilter === "without" && (
+								<span style={{ fontSize: "14px", color: "#666", fontWeight: "normal" }}> (without widgets)</span>
+							)}
 						</h2>
 						<div style={{ display: "flex", gap: "0" }}>
 							<Button
@@ -419,7 +518,7 @@ export function Content({ questionsPromise }: ContentProps) {
 							<Button
 								variant="ghost"
 								onClick={goToNext}
-								disabled={currentIndex === localQuestions.length - 1}
+								disabled={currentIndex === filteredQuestions.length - 1}
 								className="hover:cursor-pointer"
 							>
 								next
@@ -464,6 +563,28 @@ export function Content({ questionsPromise }: ContentProps) {
 							<strong>parsed_data:</strong>
 							<span style={{ fontFamily: "monospace" }}>
 								{truncateText(JSON.stringify(currentQuestion.parsedData), 200)}
+							</span>
+						</div>
+
+						<div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+							<Button
+								variant="ghost"
+								onClick={() =>
+									copyToClipboard(
+										currentQuestion.structuredJson ? JSON.stringify(currentQuestion.structuredJson, null, 2) : "null"
+									)
+								}
+								className="hover:cursor-pointer"
+							>
+								copy
+							</Button>
+							<strong>structured_json:</strong>
+							<span style={{ fontFamily: "monospace" }}>
+								{currentQuestion.structuredJson ? (
+									truncateText(JSON.stringify(currentQuestion.structuredJson), 200)
+								) : (
+									<em style={{ color: "#999" }}>null</em>
+								)}
 							</span>
 						</div>
 					</div>

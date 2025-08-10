@@ -10,6 +10,7 @@ export interface QuestionDebugData {
 	sha: string
 	parsedData: unknown
 	xml: string
+	structuredJson: unknown | null
 	analysisNotes: string | null
 	severity: "major" | "minor" | "patch" | null
 }
@@ -33,6 +34,7 @@ export async function getQuestionsWithXml(): Promise<QuestionDebugData[]> {
 				sha: niceQuestions.sha,
 				parsedData: niceQuestions.parsedData,
 				xml: niceQuestions.xml,
+				structuredJson: niceQuestions.structuredJson,
 				analysisNotes: niceQuestionsAnalysis.analysisNotes,
 				severity: niceQuestionsAnalysis.severity
 			})
