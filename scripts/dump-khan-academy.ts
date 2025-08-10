@@ -33,7 +33,7 @@ const TARGET_REGION = "US-CA" // California region for Common Core content
 // This cookie is required for authenticated endpoints like creating a practice task.
 // It should be kept up-to-date by copying from a logged-in browser session.
 const KHAN_ACADEMY_COOKIE =
-	'browsing_session_id=_en_bsid_32eabce3-6cd7-4c17-82bb-d5b3c6980001; LIS=www; KAAS=jrq9yFJ1WyFbUimeVG_mMw; KAAL=$FaCVSQbgqpg-ReuvYooEpkHDXw8RifEzxCPKpJakiz4.~syu253$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc*; KAAC=$FzYq2uBMA-XdkCV0lp9UFP9BRQOyQDlsxLSATzx3w38.~syu253$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc*$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc\u00210\u00210$~4; browsing_session_expiry="Thu, 03 Jul 2025 17:35:27 UTC"'
+	'browsing_session_id=_en_bsid_0bd1f363-2837-4506-9ef0-4db5a0760002; LIS=www; KAAS=4sBOL50bmYsf5SmkmTmNXg; KAAL=$l97LrcIGBc-PXllOu9aOLpk4hwzLDYKj7bcw5XJ2alg.~t0nkyb$a2FpZF81NTUyODIzMzg0MjEyNDM0NTQyNTA5NjA*; KAAC=$5O6XOg8xbytVRI08fXnyxsvy2IiC_aif20CguNP3xZ8.~t0nkyb$a2FpZF81NTUyODIzMzg0MjEyNDM0NTQyNTA5NjA*$a2FpZF81NTUyODIzMzg0MjEyNDM0NTQyNTA5NjA!0!0$~4; browsing_session_expiry="Fri, 08 Aug 2025 02:45:47 UTC"'
 
 // --- HELPER FUNCTIONS ---
 
