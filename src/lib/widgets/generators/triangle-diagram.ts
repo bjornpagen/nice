@@ -216,6 +216,51 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 			const p2 = pointMap.get(v2)
 			if (!p1 || !vertex || !p2) continue
 
+			// Calculate angle magnitude for distance scaling
+			let startAngle = Math.atan2(p1.y - vertex.y, p1.x - vertex.x)
+			let endAngle = Math.atan2(p2.y - vertex.y, p2.x - vertex.x)
+
+			// Ensure angles are calculated in a consistent direction
+			if (endAngle < startAngle) {
+				endAngle += 2 * Math.PI
+			}
+			if (endAngle - startAngle > Math.PI) {
+				// This handles the case of reflex angles correctly by swapping
+				const temp = startAngle
+				startAngle = endAngle
+				endAngle = temp + 2 * Math.PI
+			}
+
+			const angleMagnitudeRad = Math.abs(endAngle - startAngle)
+
+			// Calculate distance scaling based on angle magnitude (smaller angles = farther distance)
+			const calculateAngleDistance = (baseDistance: number): number => {
+				if (angle.isRightAngle) {
+					return baseDistance // Keep right angles at fixed distance
+				}
+
+				const MIN_DISTANCE_MULTIPLIER = 1.0 // Lower bound (current distance is good baseline)
+				const MAX_DISTANCE_MULTIPLIER = 2.5 // Upper bound to prevent labels floating too far
+				const SCALING_FACTOR = 0.3 // Controls how aggressively small angles are pushed out
+
+				// Use logarithmic scaling: smaller angles get exponentially more distance
+				// angleMagnitudeRad ranges from ~0 to π, log gives us smooth inverse relationship
+				const normalizedAngle = angleMagnitudeRad / Math.PI // Normalize to 0-1
+				const logScale = Math.log(normalizedAngle + 0.1) // Add offset to avoid log(0)
+				const invertedScale = -logScale // Invert so smaller angles get higher values
+
+				// Scale and clamp the multiplier
+				const distanceMultiplier = Math.min(
+					MAX_DISTANCE_MULTIPLIER,
+					Math.max(MIN_DISTANCE_MULTIPLIER, MIN_DISTANCE_MULTIPLIER + SCALING_FACTOR * invertedScale)
+				)
+
+				return baseDistance * distanceMultiplier
+			}
+
+			// Calculate scaled arc radius
+			const scaledArcRadius = calculateAngleDistance(angle.radius)
+
 			// Only draw the arc/marker if showArc is true
 			if (angle.showArc) {
 				if (angle.isRightAngle) {
@@ -230,7 +275,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 					const u2x = v2x / mag2
 					const u2y = v2y / mag2
 
-					const markerSize = 15
+					const markerSize = calculateAngleDistance(15)
 					const m1x = vertex.x + u1x * markerSize
 					const m1y = vertex.y + u1y * markerSize
 					const m2x = vertex.x + u2x * markerSize
@@ -239,45 +284,28 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 					const m3y = vertex.y + (u1y + u2y) * markerSize
 					svg += `<path d="M ${m1x} ${m1y} L ${m3x} ${m3y} L ${m2x} ${m2y}" fill="none" stroke="black" stroke-width="2"/>`
 				} else {
-					const startAngle = Math.atan2(p1.y - vertex.y, p1.x - vertex.x)
-					const endAngle = Math.atan2(p2.y - vertex.y, p2.x - vertex.x)
-					const arcStartX = vertex.x + angle.radius * Math.cos(startAngle)
-					const arcStartY = vertex.y + angle.radius * Math.sin(startAngle)
-					const arcEndX = vertex.x + angle.radius * Math.cos(endAngle)
-					const arcEndY = vertex.y + angle.radius * Math.sin(endAngle)
+					const arcStartX = vertex.x + scaledArcRadius * Math.cos(startAngle)
+					const arcStartY = vertex.y + scaledArcRadius * Math.sin(startAngle)
+					const arcEndX = vertex.x + scaledArcRadius * Math.cos(endAngle)
+					const arcEndY = vertex.y + scaledArcRadius * Math.sin(endAngle)
 					let angleDiff = endAngle - startAngle
 					if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
 					if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI
 					const sweepFlag = angleDiff > 0 ? 1 : 0
-					svg += `<path d="M ${arcStartX} ${arcStartY} A ${angle.radius} ${angle.radius} 0 0 ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="2"/>`
+					svg += `<path d="M ${arcStartX} ${arcStartY} A ${scaledArcRadius} ${scaledArcRadius} 0 0 ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="2"/>`
 				}
 			}
 
 			if (angle.label) {
-				let startAngle = Math.atan2(p1.y - vertex.y, p1.x - vertex.x)
-				let endAngle = Math.atan2(p2.y - vertex.y, p2.x - vertex.x)
-
-				// Ensure angles are calculated in a consistent direction
-				if (endAngle < startAngle) {
-					endAngle += 2 * Math.PI
-				}
-				if (endAngle - startAngle > Math.PI) {
-					// This handles the case of reflex angles correctly by swapping
-					const temp = startAngle
-					startAngle = endAngle
-					endAngle = temp + 2 * Math.PI
-				}
-
 				const midAngle = (startAngle + endAngle) / 2
-				const angleMagnitudeRad = Math.abs(endAngle - startAngle)
 
 				let labelRadius: number
 
-				// Use a fixed radius for right angles, otherwise calculate dynamically
+				// Use a fixed radius for right angles, otherwise calculate dynamically with scaling
 				if (angle.isRightAngle) {
 					labelRadius = 28
 				} else {
-					const baseLabelRadius = angle.radius * 1.6
+					const baseLabelRadius = scaledArcRadius * 1.6
 					const FONT_SIZE_ESTIMATE = 14 // Based on the SVG font-size
 					const CLEARANCE_PX = FONT_SIZE_ESTIMATE * 0.7 // Clearance needed for text
 
