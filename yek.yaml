@@ -17,7 +17,6 @@ ignore_patterns:
   - "**/__snapshots__/**"
   - "docs/**"
   - "**/*.test.ts"
-  - "src/app/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"
