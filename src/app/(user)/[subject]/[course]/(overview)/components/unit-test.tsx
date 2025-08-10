@@ -3,6 +3,7 @@ import Link from "next/link"
 import unitTestNotStartedImage from "@/app/(user)/[subject]/[course]/(overview)/components/images/unit-test-not-started.svg"
 import { LockedItem } from "@/app/(user)/[subject]/[course]/(overview)/components/LockedItem"
 import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/section"
+import { XPExplainerDialog } from "@/components/dialogs/xp-explainer-dialog"
 import { Button } from "@/components/ui/button"
 import type { UnitTest } from "@/lib/types/domain"
 import { startCase } from "@/lib/utils"
@@ -31,7 +32,16 @@ export function UnitTestSection({
 					<Link href={test.path} className="font-bold text-gray-900 mb-2 text-md hover:underline">
 						{startCase(test.title)}
 					</Link>
-					<p className="text-gray-600 text-xs mb-4">Test your understanding of the entire unit!</p>
+					<p className="text-gray-600 text-xs mb-2">Test your understanding of the entire unit!</p>
+					{typeof test.xp === "number" && test.xp > 0 && (
+						<div className="text-gray-600 text-xs mb-4">
+							<p className="flex items-center gap-1">
+								<span>Expected: {test.xp} XP</span>
+								<XPExplainerDialog triggerVariant="icon" triggerClassName="inline-flex" />
+							</p>
+							<p className="text-gray-400 mt-0.5">Perfect: up to {Math.round(test.xp * 1.25)} XP</p>
+						</div>
+					)}
 					<Button variant="outline" className="text-blue-600 hover:border-blue-600 w-fit" asChild>
 						<Link href={test.path}>Start Unit test</Link>
 					</Button>

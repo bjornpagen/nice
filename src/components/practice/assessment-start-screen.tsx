@@ -1,6 +1,7 @@
 "use client"
 
 import type * as React from "react"
+import { XPExplainerDialog } from "@/components/dialogs/xp-explainer-dialog"
 import { AssessmentBottomNav, type AssessmentType } from "@/components/practice/assessment-bottom-nav"
 
 interface Props {
@@ -46,13 +47,21 @@ export function AssessmentStartScreen({
 				<div className="text-center max-w-md z-10">
 					<h2 className="text-3xl font-bold mb-4">{title}</h2>
 					<p className={`text-lg mb-8 ${subtitleColorClass}`}>{subtitle}</p>
-					<div className="text-lg font-medium mb-8 flex items-center justify-center gap-3">
-						<span>{questionsCount} questions</span>
-						{expectedXp && (
-							<>
-								<span>•</span>
-								<span>{expectedXp} Total XP</span>
-							</>
+					<div className="text-lg font-medium mb-8 text-center">
+						<div className="flex items-center justify-center gap-3">
+							<span>{questionsCount} questions</span>
+							{typeof expectedXp === "number" && expectedXp > 0 && (
+								<>
+									<span>•</span>
+									<span className="flex items-center gap-1">
+										{expectedXp} XP
+										<XPExplainerDialog triggerVariant="icon" triggerClassName="inline-flex" />
+									</span>
+								</>
+							)}
+						</div>
+						{typeof expectedXp === "number" && expectedXp > 0 && (
+							<div className="text-sm text-gray-500 mt-1">Perfect score: up to {Math.round(expectedXp * 1.25)} XP</div>
 						)}
 					</div>
 				</div>

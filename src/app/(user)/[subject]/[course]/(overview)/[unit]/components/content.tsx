@@ -1,6 +1,5 @@
 "use client"
 
-import { Info } from "lucide-react"
 import * as React from "react"
 import { Header } from "@/app/(user)/[subject]/[course]/(overview)/components/header"
 import { Legend } from "@/app/(user)/[subject]/[course]/(overview)/components/legend"
@@ -9,6 +8,8 @@ import { Progress } from "@/app/(user)/[subject]/[course]/(overview)/components/
 import { QuizSection } from "@/app/(user)/[subject]/[course]/(overview)/components/quiz"
 import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/section"
 import { UnitTestSection } from "@/app/(user)/[subject]/[course]/(overview)/components/unit-test"
+// Info icon was previously used; replaced with XPExplainerDialog
+import { XPExplainerDialog } from "@/components/dialogs/xp-explainer-dialog"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { UnitChild } from "@/lib/types/domain"
 import type { UnitPageData } from "@/lib/types/page"
@@ -38,7 +39,7 @@ export function Content({
 				</h1>
 				<div className="flex items-center space-x-2 text-gray-600">
 					<span className="text-sm">{totalXP} possible mastery points</span>
-					<Info className="w-4 h-4 bg-gray-200 rounded-full cursor-not-allowed" />
+					<XPExplainerDialog triggerVariant="icon" />
 				</div>
 				<Legend />
 				<React.Suspense fallback={<div className="w-full h-4 bg-gray-200 animate-pulse rounded" />}>

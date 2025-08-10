@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { XPExplainerDialog } from "@/components/dialogs/xp-explainer-dialog"
 import type { ProgressPageData } from "@/lib/data/progress"
 import { Table } from "./table"
 
@@ -13,8 +14,9 @@ export function Content({ progressPromise }: { progressPromise: Promise<Progress
 				<h1 className="text-2xl font-bold text-gray-800">My progress</h1>
 
 				<div className="flex items-center space-x-6">
-					<span className="text-sm">
+					<span className="text-sm flex items-center gap-2">
 						<span className="font-bold text-xl text-green-600">{totalXpEarned}</span> XP earned
+						<XPExplainerDialog triggerVariant="icon" />
 					</span>
 					<span className="text-sm">
 						<span className="font-bold text-xl">{exerciseMinutes}</span> exercise minutes

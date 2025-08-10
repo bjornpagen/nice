@@ -1,6 +1,6 @@
 "use client"
 
-import { Info } from "lucide-react"
+// Info icon was previously used; replaced with XPExplainerDialog
 import Link from "next/link"
 import * as React from "react"
 import { CourseChallenge } from "@/app/(user)/[subject]/[course]/(overview)/components/course-challenge"
@@ -12,6 +12,7 @@ import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/s
 // import { CourseSidebar } from "./sidebar"
 import { UnitOverviewSection } from "@/app/(user)/[subject]/[course]/(overview)/components/unit-overview-section"
 import type { CourseProgressData } from "@/app/(user)/[subject]/[course]/(overview)/page"
+import { XPExplainerDialog } from "@/components/dialogs/xp-explainer-dialog"
 import { Button } from "@/components/ui/button"
 import type { CoursePageData } from "@/lib/types/page"
 
@@ -66,7 +67,7 @@ export function Content({
 				<h1 className="text-3xl font-bold text-gray-800 mb-2">{course.title}</h1>
 				<div className="flex items-center space-x-2 text-gray-600">
 					<span className="text-sm">{totalXP} possible mastery points</span>
-					<Info className="w-4 h-4 bg-gray-200 rounded-full cursor-not-allowed" />
+					<XPExplainerDialog triggerVariant="icon" />
 				</div>
 
 				<Legend />
