@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound, redirect } from "next/navigation"
+import { connection } from "next/server"
 import { fetchQuizRedirectPath } from "@/lib/data/assessment"
 import { normalizeParamsSync } from "@/lib/utils"
 
@@ -9,6 +10,8 @@ export default async function QuizRedirectPage({
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; quiz: string }>
 }) {
+	// Opt into dynamic rendering to ensure external fetches (e.g., OneRoster token) occur during request lifecycle
+	await connection()
 	const resolvedParams = await params
 	// Normalize params to handle encoded characters
 	const normalizedParams = normalizeParamsSync(resolvedParams)

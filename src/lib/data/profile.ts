@@ -1,6 +1,7 @@
 import { clerkClient, currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { connection } from "next/server"
 import type { z } from "zod"
 import type { CaliperEventSchema } from "@/lib/caliper"
 import { oneroster } from "@/lib/clients"
@@ -691,6 +692,8 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 }
 
 export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData> {
+	// Opt into dynamic rendering to ensure external fetches (e.g., OneRoster token) occur during request lifecycle
+	await connection()
 	// Cannot use "use cache" here because currentUser() accesses dynamic headers
 	const user = await currentUser()
 	if (!user) {

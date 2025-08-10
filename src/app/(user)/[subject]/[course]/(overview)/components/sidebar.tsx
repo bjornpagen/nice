@@ -10,16 +10,19 @@ import type { Course, CourseChallenge as CourseChallengeType } from "@/lib/types
 export function Sidebar({
 	course,
 	lessonCount,
-	challenges
+	challenges,
+	resourceLockStatusPromise
 }: {
 	course: Promise<Pick<Course, "id" | "title" | "description" | "path" | "units">>
 	lessonCount: Promise<number>
 	challenges: Promise<CourseChallengeType[]>
+	resourceLockStatusPromise: Promise<Record<string, boolean>>
 }) {
 	// Use React.use() to consume the promises
 	const courseData = React.use(course)
 	const lessonCountData = React.use(lessonCount)
 	const challengesData = React.use(challenges)
+	const resourceLockStatus = React.use(resourceLockStatusPromise)
 
 	return (
 		<div className="hidden md:block lg:block w-96 bg-white border-r border-gray-200 flex flex-col h-full">
@@ -33,7 +36,7 @@ export function Sidebar({
 					{courseData.units.length > 0 && (
 						<div>
 							{courseData.units.map((unit, index) => (
-								<UnitTab key={unit.id} index={index} unit={unit} />
+								<UnitTab key={unit.id} index={index} unit={unit} resourceLockStatus={resourceLockStatus} />
 							))}
 						</div>
 					)}

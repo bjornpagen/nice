@@ -1,3 +1,4 @@
+import { Lock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import React from "react"
@@ -28,12 +29,14 @@ export function Materials({
 	index,
 	materials,
 	pathname,
-	progressMap
+	progressMap,
+	resourceLockStatus
 }: {
 	index: number
 	materials: CourseMaterial[]
 	pathname: string
 	progressMap: Map<string, AssessmentProgress>
+	resourceLockStatus: Record<string, boolean>
 }) {
 	const material = materials[index]
 	if (material == null) {
@@ -43,7 +46,12 @@ export function Materials({
 	return (
 		<div id="course-sidebar-course-materials" className="transition-all">
 			<div className="flex flex-col divide-y divide-gray-200">
-				<MaterialItem material={material} pathname={pathname} progressMap={progressMap} />
+				<MaterialItem
+					material={material}
+					pathname={pathname}
+					progressMap={progressMap}
+					resourceLockStatus={resourceLockStatus}
+				/>
 			</div>
 		</div>
 	)
@@ -52,11 +60,13 @@ export function Materials({
 function MaterialItem({
 	material,
 	pathname,
-	progressMap
+	progressMap,
+	resourceLockStatus
 }: {
 	material: CourseMaterial
 	pathname: string
 	progressMap: Map<string, AssessmentProgress>
+	resourceLockStatus: Record<string, boolean>
 }) {
 	const renderStatusText = (progress: AssessmentProgress | undefined, type: string) => {
 		if (type !== "Exercise" && type !== "Quiz" && type !== "UnitTest" && type !== "CourseChallenge") {
@@ -80,6 +90,19 @@ function MaterialItem({
 				<React.Fragment>
 					{material.resources.map((resource) => {
 						const progress = progressMap.get(resource.id)
+						const isLocked = resourceLockStatus[resource.id] === true
+
+						if (isLocked) {
+							return (
+								<div key={resource.path} className="flex items-center gap-4 py-4 px-4 bg-gray-50 cursor-not-allowed">
+									<Lock className="w-5 h-5 text-gray-400 flex-shrink-0" />
+									<div className="flex flex-col">
+										<span className="text-sm text-gray-400">{resource.title}</span>
+									</div>
+								</div>
+							)
+						}
+
 						return (
 							<Link key={resource.path} href={resource.path}>
 								<div
@@ -105,6 +128,7 @@ function MaterialItem({
 		case "UnitTest":
 		case "CourseChallenge": {
 			const progress = progressMap.get(material.id)
+			const isLocked = resourceLockStatus[material.id] === true
 
 			// Get the appropriate illustration based on material type
 			let illustration: typeof quizIllustration
@@ -114,6 +138,31 @@ function MaterialItem({
 				illustration = unitTestIllustration
 			} else {
 				illustration = courseChallengeIllustration
+			}
+
+			if (isLocked) {
+				return (
+					<React.Fragment>
+						<div className="flex items-center gap-4 py-4 px-4 bg-gray-50 cursor-not-allowed">
+							<Lock className="w-5 h-5 text-gray-400 flex-shrink-0" />
+							<div className="flex flex-col">
+								<span className="text-sm text-gray-400">{material.title}</span>
+							</div>
+						</div>
+						<div className="relative">
+							<Image
+								src={illustration}
+								alt={`${material.type} illustration`}
+								width={400}
+								height={400}
+								className="w-full aspect-[4/3] object-cover opacity-50"
+							/>
+							<div className="absolute inset-0 flex items-center justify-center">
+								<Lock className="w-12 h-12 text-gray-400" />
+							</div>
+						</div>
+					</React.Fragment>
+				)
 			}
 
 			return (

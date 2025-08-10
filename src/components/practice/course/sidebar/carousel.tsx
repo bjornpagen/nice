@@ -12,13 +12,15 @@ export function Carousel({
 	materials,
 	index,
 	setIndex,
-	className
+	className,
+	resourceLockStatus
 }: {
 	course: Pick<Course, "path" | "title">
 	materials: CourseMaterial[]
 	index: number
 	setIndex: (index: number) => void
 	className?: string
+	resourceLockStatus: Record<string, boolean>
 }) {
 	const material = materials[index]
 	if (material == null) {
@@ -30,11 +32,17 @@ export function Carousel({
 	const unit = material.meta && "unit" in material.meta ? material.meta.unit : undefined
 	logger.debug("course sidebar course carousel: unit", { course, unit })
 
+	const prevMaterial = materials[index - 1]
+	const nextMaterial = materials[index + 1]
+
+	const isPrevLocked = prevMaterial ? resourceLockStatus[prevMaterial.id] === true : true
+	const isNextLocked = nextMaterial ? resourceLockStatus[nextMaterial.id] === true : true
+
 	const handlePrev = () => {
-		setIndex(index - 1 < 0 ? materials.length - 1 : index - 1)
+		if (index > 0) setIndex(index - 1)
 	}
 	const handleNext = () => {
-		setIndex(index + 1 >= materials.length ? 0 : index + 1)
+		if (index < materials.length - 1) setIndex(index + 1)
 	}
 
 	return (
@@ -42,9 +50,9 @@ export function Carousel({
 			<div id="course-sidebar-course-carousel-prev" className="flex-shrink-0">
 				<Button
 					variant="link"
-					className={cn("pl-1 text-blue-600 w-2 h-2", index === 0 && "opacity-50 cursor-not-allowed")}
+					className={cn("pl-1 text-blue-600 w-2 h-2", (index === 0 || isPrevLocked) && "opacity-50 cursor-not-allowed")}
 					onClick={handlePrev}
-					disabled={index === 0}
+					disabled={index === 0 || isPrevLocked}
 				>
 					<ChevronLeft className="w-5 h-5" />
 				</Button>
@@ -78,10 +86,10 @@ export function Carousel({
 					variant="link"
 					className={cn(
 						"pl-1 text-blue-600 w-2 h-2",
-						index === materials.length - 1 && "opacity-50 cursor-not-allowed"
+						(index === materials.length - 1 || isNextLocked) && "opacity-50 cursor-not-allowed"
 					)}
 					onClick={handleNext}
-					disabled={index === materials.length - 1}
+					disabled={index === materials.length - 1 || isNextLocked}
 				>
 					<ChevronRight className="w-5 h-5" />
 				</Button>

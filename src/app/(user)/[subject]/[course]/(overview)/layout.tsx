@@ -1,9 +1,20 @@
+import { currentUser } from "@clerk/nextjs/server"
+import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { Sidebar } from "@/app/(user)/[subject]/[course]/(overview)/components/sidebar"
 import { Footer } from "@/components/footer"
 import { fetchCoursePageData } from "@/lib/data/course"
+import { type AssessmentProgress, getUserUnitProgress, type UnitProficiency } from "@/lib/data/progress"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { CoursePageData } from "@/lib/types/page"
-import { normalizeParams } from "@/lib/utils"
+import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
+import { aggregateUnitProficiencies } from "@/lib/utils/progress"
+
+// Re-define CourseProgressData here as it's a shared concept
+export interface CourseProgressData {
+	progressMap: Map<string, AssessmentProgress>
+	unitProficiencies: UnitProficiency[]
+}
 
 // This layout component is NOT async. It orchestrates promises and renders immediately.
 export default function CourseLayout({
@@ -21,6 +32,41 @@ export default function CourseLayout({
 	const courseDataPromise: Promise<CoursePageData> = normalizedParamsPromise.then((resolvedParams) =>
 		fetchCoursePageData(resolvedParams, { skip: { questions: true } })
 	)
+
+	const userPromise = currentUser()
+
+	// Fetch progress data for the course. This is needed for the lock status calculation.
+	const progressPromise: Promise<CourseProgressData> = Promise.all([courseDataPromise, userPromise]).then(
+		([courseData, user]) => {
+			if (user) {
+				const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+				if (!parsed.success) {
+					logger.warn("invalid user public metadata, cannot fetch progress", {
+						userId: user.id,
+						error: parsed.error
+					})
+					return { progressMap: new Map<string, AssessmentProgress>(), unitProficiencies: [] }
+				}
+				if (parsed.data.sourceId) {
+					return getUserUnitProgress(parsed.data.sourceId, courseData.course.id).then((progressMap) => {
+						const unitProficiencies = aggregateUnitProficiencies(progressMap, courseData.course.units)
+						return { progressMap, unitProficiencies }
+					})
+				}
+			}
+			return { progressMap: new Map<string, AssessmentProgress>(), unitProficiencies: [] }
+		}
+	)
+
+	// Calculate the lock status for all resources in the course.
+	const resourceLockStatusPromise: Promise<Record<string, boolean>> = Promise.all([
+		courseDataPromise,
+		progressPromise,
+		userPromise
+	]).then(([courseData, progressData, user]) => {
+		const lockingEnabled = Boolean(user)
+		return buildResourceLockStatus(courseData.course, progressData.progressMap, lockingEnabled)
+	})
 
 	return (
 		<div className="h-full overflow-y-auto overflow-x-hidden max-w-full">
@@ -42,6 +88,7 @@ export default function CourseLayout({
 								course={courseDataPromise.then((data) => data.course)}
 								lessonCount={courseDataPromise.then((data) => data.lessonCount)}
 								challenges={courseDataPromise.then((data) => data.course.challenges)}
+								resourceLockStatusPromise={resourceLockStatusPromise}
 							/>
 						</React.Suspense>
 					</div>

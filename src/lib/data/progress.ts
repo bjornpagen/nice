@@ -4,6 +4,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { format } from "date-fns"
+import { connection } from "next/server"
 import type { z } from "zod"
 import { redisCache } from "@/lib/cache"
 import type { CaliperEventSchema } from "@/lib/caliper"
@@ -265,6 +266,8 @@ function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[
 }
 
 export async function fetchProgressPageData(): Promise<ProgressPageData> {
+	// Opt into dynamic rendering to ensure external fetches (e.g., Caliper or OneRoster token) occur during request lifecycle
+	await connection()
 	const user = await currentUser()
 	if (!user) {
 		throw errors.new("user not authenticated")

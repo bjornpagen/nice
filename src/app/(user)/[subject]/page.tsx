@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { connection } from "next/server"
 import * as React from "react"
 import { Footer } from "@/components/footer"
 import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
@@ -8,6 +9,8 @@ import { assertNoEncodedColons, normalizeParams } from "@/lib/utils"
 import { Content } from "./components/content"
 
 async function fetchSubjectPageData(params: { subject: string }): Promise<ProfileSubject | undefined> {
+	// Opt into dynamic rendering to ensure external fetches (e.g., OneRoster token) occur during request lifecycle
+	await connection()
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.subject, "fetchSubjectPageData subject parameter")
 

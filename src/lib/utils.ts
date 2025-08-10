@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import type { AssessmentProgress } from "@/lib/data/progress"
-import type { Course, LessonChild, UnitChild } from "@/lib/types/domain"
+import type { Course, LessonChild, Unit, UnitChild } from "@/lib/types/domain"
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
@@ -111,6 +111,33 @@ export function getOrderedCourseResources(course: Course): CourseResource[] {
 	// Challenges remain at the end per product decision
 	resources.push(...course.challenges)
 	return resources
+}
+
+/**
+ * Returns the id of the first actionable resource within a unit, based on ordering rules
+ * used by getOrderedCourseResources. Throws if the unit contains no actionable resources.
+ */
+export function getFirstResourceIdForUnit(unit: Unit): string {
+	// Sort unit children by ordering to match the global resource ordering strategy
+	const sortedUnitChildren: UnitChild[] = [...unit.children].sort((a, b) => a.ordering - b.ordering)
+
+	for (const unitChild of sortedUnitChildren) {
+		if (unitChild.type === "Lesson") {
+			// Within a lesson, also sort by ordering and take the first resource
+			const sortedLessonChildren: LessonChild[] = [...unitChild.children].sort((a, b) => a.ordering - b.ordering)
+			const first = sortedLessonChildren[0]
+			if (first) {
+				return first.id
+			}
+			// Empty lesson, continue scanning next unit child
+			continue
+		}
+		// For non-lesson unit children (Quiz/UnitTest), the child itself is actionable
+		return unitChild.id
+	}
+
+	// If we reach here, the unit has no actionable resources
+	throw errors.new(`unit has no actionable resources: ${unit.id}`)
 }
 
 export function buildResourceLockStatus(

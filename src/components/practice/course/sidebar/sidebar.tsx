@@ -19,11 +19,13 @@ import { assertNoEncodedColons, cn, normalizeString } from "@/lib/utils"
 export function Sidebar({
 	coursePromise,
 	progressPromise,
-	className
+	className,
+	resourceLockStatusPromise
 }: {
 	coursePromise: Promise<Course | undefined>
 	progressPromise: Promise<Map<string, AssessmentProgress>>
 	className?: string
+	resourceLockStatusPromise: Promise<Record<string, boolean>>
 }) {
 	const rawPathname = usePathname()
 	const pathname = normalizeString(rawPathname)
@@ -33,6 +35,7 @@ export function Sidebar({
 
 	const course = React.use(coursePromise)
 	const progressMap = React.use(progressPromise)
+	const resourceLockStatus = React.use(resourceLockStatusPromise)
 	if (course == null) {
 		notFound()
 	}
@@ -105,7 +108,13 @@ export function Sidebar({
 						<div className="h-px my-4 bg-gray-200" />
 
 						<div className="mt-4">
-							<Carousel course={course} materials={materials} index={index} setIndex={setIndex} />
+							<Carousel
+								course={course}
+								materials={materials}
+								index={index}
+								setIndex={setIndex}
+								resourceLockStatus={resourceLockStatus}
+							/>
 						</div>
 
 						{/* Separator */}
@@ -116,7 +125,13 @@ export function Sidebar({
 					<div className="flex-1 overflow-hidden">
 						<ScrollArea className="h-full bg-white border-none">
 							<div className="px-6 pb-4">
-								<Materials index={index} materials={materials} pathname={pathname} progressMap={progressMap} />
+								<Materials
+									index={index}
+									materials={materials}
+									pathname={pathname}
+									progressMap={progressMap}
+									resourceLockStatus={resourceLockStatus}
+								/>
 
 								{/* Separator */}
 								<div className="h-px my-4 bg-gray-200" />

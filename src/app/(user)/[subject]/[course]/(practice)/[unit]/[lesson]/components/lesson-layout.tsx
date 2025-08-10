@@ -15,11 +15,13 @@ export function LessonLayout({
 	dataPromise,
 	progressPromise,
 	coursePromise,
+	resourceLockStatusPromise,
 	children
 }: {
 	dataPromise: Promise<LessonLayoutData>
 	progressPromise: Promise<Map<string, AssessmentProgress>>
 	coursePromise: Promise<CourseV2 | undefined>
+	resourceLockStatusPromise: Promise<Record<string, boolean>>
 	children: React.ReactNode
 }) {
 	React.use(dataPromise)
@@ -50,6 +52,7 @@ export function LessonLayout({
 				<Sidebar
 					coursePromise={coursePromise}
 					progressPromise={progressPromise}
+					resourceLockStatusPromise={resourceLockStatusPromise}
 					className="h-full bg-transparent border-none"
 				/>
 			</div>

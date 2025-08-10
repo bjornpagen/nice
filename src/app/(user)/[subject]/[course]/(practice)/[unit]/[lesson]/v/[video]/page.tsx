@@ -1,3 +1,4 @@
+import { connection } from "next/server"
 import * as React from "react"
 import { fetchVideoPageData } from "@/lib/data/content"
 import type { VideoPageData } from "@/lib/types/page"
@@ -11,6 +12,8 @@ export default function VideoPage({
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; video: string }>
 }) {
+	// Opt into dynamic rendering to ensure external fetches occur during request lifecycle
+	void connection()
 	const normalizedParamsPromise = normalizeParams(params)
 	const videoPromise: Promise<VideoPageData> = normalizedParamsPromise.then(fetchVideoPageData)
 

@@ -12,6 +12,8 @@ import { fetchLessonLayoutData } from "./lesson"
 import { extractYouTubeId } from "./utils"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
+	// Opt into dynamic rendering to ensure external fetches (e.g., OneRoster token) occur during request lifecycle
+	await connection()
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.article, "fetchArticlePageData article parameter")
 	logger.info("fetchArticlePageData called", { params })
@@ -196,6 +198,8 @@ export async function fetchExercisePageData(params: {
 }
 
 export async function fetchVideoPageData(params: { video: string }): Promise<VideoPageData> {
+	// Opt into dynamic rendering to ensure external fetches (e.g., OneRoster token) occur during request lifecycle
+	await connection()
 	logger.info("fetchVideoPageData called", { params })
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.video, "fetchVideoPageData video parameter")
