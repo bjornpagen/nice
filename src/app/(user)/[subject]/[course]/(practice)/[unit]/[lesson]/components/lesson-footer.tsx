@@ -137,7 +137,8 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 	// Compute UI state messaging and optional action for incomplete states
 	// Allow progression immediately after local completion for articles/videos,
 	// even if the server-side lock map hasn't reflected it yet.
-	const showDisabled = !isCurrentResourceCompleted
+	const isArticle = currentResourceType === "Article"
+	const showDisabled = isArticle ? false : !isCurrentResourceCompleted
 	let disabledReason = ""
 	if (!isCurrentResourceCompleted) {
 		if (currentResourceType === "Video") {
@@ -151,7 +152,13 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 		disabledReason = "Complete the previous activity to unlock next"
 	}
 
-	const canMarkArticleAsDone = currentResourceType === "Article" && !isCurrentResourceCompleted
+	const primaryButtonLabel = isArticle ? "Done Reading" : "Continue"
+	const shouldNavigate = isArticle ? isCurrentResourceCompleted : !showDisabled
+	const handlePrimaryClick = () => {
+		if (isArticle && !isCurrentResourceCompleted) {
+			setCurrentResourceCompleted(true)
+		}
+	}
 
 	return (
 		<div className="bg-white border-t border-gray-200 shadow-lg">
@@ -169,36 +176,26 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 					</div>
 
 					<div className="flex items-center gap-3">
-						{canMarkArticleAsDone && (
-							<Button
-								type="button"
-								variant="outline"
-								className="border-gray-300 text-gray-700"
-								onClick={() => setCurrentResourceCompleted(true)}
-							>
-								Done reading
-							</Button>
-						)}
-
 						<div className="flex flex-col items-end">
 							<Button
-								asChild={!showDisabled}
+								asChild={shouldNavigate}
 								className="bg-blue-600 hover:bg-blue-700 text-white"
-								disabled={showDisabled}
+								disabled={!isArticle && showDisabled}
+								onClick={handlePrimaryClick}
 							>
-								{!showDisabled ? (
+								{shouldNavigate ? (
 									<Link href={nextItem.path}>
-										Continue
+										{primaryButtonLabel}
 										<ChevronRight className="w-4 h-4 ml-1" />
 									</Link>
 								) : (
 									<span className="flex items-center">
-										Continue
+										{primaryButtonLabel}
 										<ChevronRight className="w-4 h-4 ml-1" />
 									</span>
 								)}
 							</Button>
-							{showDisabled && <span className="mt-1 text-xs text-gray-500">{disabledReason}</span>}
+							{!isArticle && showDisabled && <span className="mt-1 text-xs text-gray-500">{disabledReason}</span>}
 						</div>
 					</div>
 				</div>
