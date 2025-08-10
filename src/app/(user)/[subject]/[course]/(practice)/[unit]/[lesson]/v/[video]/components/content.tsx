@@ -54,6 +54,19 @@ export function Content({
 	const hasResumedRef = React.useRef<boolean>(false)
 	const savedProgressRef = React.useRef<{ percentComplete: number } | null>(null)
 
+	// Local UI state for read-only time display
+	const [elapsedSeconds, setElapsedSeconds] = React.useState<number>(0)
+	const [durationSeconds, setDurationSeconds] = React.useState<number | null>(null)
+
+	function formatTime(totalSeconds: number): string {
+		const clampedSeconds = Math.max(0, Math.floor(totalSeconds))
+		const hours = Math.floor(clampedSeconds / 3600)
+		const minutes = Math.floor((clampedSeconds % 3600) / 60)
+		const seconds = clampedSeconds % 60
+		const two = (n: number) => String(n).padStart(2, "0")
+		return hours > 0 ? `${hours}:${two(minutes)}:${two(seconds)}` : `${minutes}:${two(seconds)}`
+	}
+
 	// Function to send the cumulative time spent event
 	function sendCumulativeTimeEvent() {
 		// Prevent duplicate sends
@@ -146,7 +159,21 @@ export function Content({
 		const intervalId = setInterval(() => {
 			const player = playerRef.current
 
-			// Validate user metadata if user exists
+			// Update local read-only UI time display regardless of user tracking
+			if (player && typeof player.getDuration === "function") {
+				const d = player.getDuration()
+				if (d > 0) {
+					setDurationSeconds(d)
+				}
+				if (typeof player.getCurrentTime === "function") {
+					const t = player.getCurrentTime()
+					if (!Number.isNaN(t)) {
+						setElapsedSeconds(t)
+					}
+				}
+			}
+
+			// Validate user metadata if user exists (for progress tracking only)
 			let onerosterUserSourcedId: string | undefined
 			if (user?.publicMetadata) {
 				const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
@@ -173,7 +200,7 @@ export function Content({
 					})
 				}
 			}
-		}, 3000) // Still update OneRoster progress every 3 seconds
+		}, 3000) // Update UI/progress every 3 seconds
 
 		return () => clearInterval(intervalId)
 	}, [user, video.id, params.subject, params.course])
@@ -238,6 +265,10 @@ export function Content({
 
 	function onPlayerReady(event: { target: YouTubePlayer }) {
 		playerRef.current = event.target
+		const d = event.target.getDuration()
+		if (d > 0) {
+			setDurationSeconds(d)
+		}
 	}
 
 	function onPlayerStateChange(event: { target: YouTubePlayer; data: number }) {
@@ -284,15 +315,15 @@ export function Content({
 		<div className="flex flex-col bg-white h-full">
 			{/* Video Title and Share Buttons */}
 			<div className="border-b">
-				<div className="max-w-5xl mx-auto p-6 text-center">
-					<h1 className="text-2xl font-bold text-gray-900 mb-4">{video.title}</h1>
+				<div className="max-w-5xl mx-auto px-6 py-3 md:py-4 text-center">
+					<h1 className="text-2xl font-bold text-gray-900">{video.title}</h1>
 				</div>
 			</div>
 
 			{/* Main Content Area */}
 			<div className="bg-white overflow-y-auto flex-1">
 				<div className="max-w-5xl mx-auto px-6">
-					{/* Video Player - Changed from iframe to YouTube component */}
+					{/* Video Player - YouTube component with skip disabled */}
 					<div className="py-6">
 						<div className="aspect-video bg-black rounded-lg overflow-hidden relative">
 							<YouTube
@@ -315,6 +346,16 @@ export function Content({
 									}
 								}}
 							/>
+						</div>
+						{/* Read-only time display (non-interactive) */}
+						<div className="mt-3 flex justify-center">
+							<div className="inline-flex items-center gap-2 rounded-md bg-gray-100 text-gray-700 px-3 py-1 text-xs sm:text-sm">
+								<span className="tabular-nums">{formatTime(elapsedSeconds)}</span>
+								<span className="text-gray-400">/</span>
+								<span className="tabular-nums">
+									{durationSeconds && durationSeconds > 0 ? formatTime(durationSeconds) : "--:--"}
+								</span>
+							</div>
 						</div>
 					</div>
 

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import * as React from "react"
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { Button } from "@/components/ui/button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import type {
 	CourseResourceMaterial,
 	CourseUnitMaterial,
@@ -162,7 +163,7 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 
 	return (
 		<div className="bg-white border-t border-gray-200 shadow-lg">
-			<div className="max-w-7xl mx-auto px-4 py-3">
+			<div className="max-w-7xl mx-auto px-4 py-2 md:py-2.5">
 				<div className="flex items-center justify-between gap-4">
 					<div className="flex items-center space-x-3">
 						<div className="text-sm text-gray-600 font-medium">Up next:</div>
@@ -177,25 +178,51 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 
 					<div className="flex items-center gap-3">
 						<div className="flex flex-col items-end">
-							<Button
-								asChild={shouldNavigate}
-								className="bg-blue-600 hover:bg-blue-700 text-white"
-								disabled={!isArticle && showDisabled}
-								onClick={handlePrimaryClick}
-							>
-								{shouldNavigate ? (
-									<Link href={nextItem.path}>
-										{primaryButtonLabel}
-										<ChevronRight className="w-4 h-4 ml-1" />
-									</Link>
-								) : (
-									<span className="flex items-center">
-										{primaryButtonLabel}
-										<ChevronRight className="w-4 h-4 ml-1" />
-									</span>
-								)}
-							</Button>
-							{!isArticle && showDisabled && <span className="mt-1 text-xs text-gray-500">{disabledReason}</span>}
+							{!isArticle && showDisabled ? (
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<span className="inline-flex">
+											<Button
+												asChild={shouldNavigate}
+												className="bg-blue-600 hover:bg-blue-700 text-white"
+												disabled
+												onClick={handlePrimaryClick}
+											>
+												{shouldNavigate ? (
+													<Link href={nextItem.path}>
+														{primaryButtonLabel}
+														<ChevronRight className="w-4 h-4 ml-1" />
+													</Link>
+												) : (
+													<span className="flex items-center">
+														{primaryButtonLabel}
+														<ChevronRight className="w-4 h-4 ml-1" />
+													</span>
+												)}
+											</Button>
+										</span>
+									</TooltipTrigger>
+									<TooltipContent sideOffset={6}>{disabledReason}</TooltipContent>
+								</Tooltip>
+							) : (
+								<Button
+									asChild={shouldNavigate}
+									className="bg-blue-600 hover:bg-blue-700 text-white"
+									onClick={handlePrimaryClick}
+								>
+									{shouldNavigate ? (
+										<Link href={nextItem.path}>
+											{primaryButtonLabel}
+											<ChevronRight className="w-4 h-4 ml-1" />
+										</Link>
+									) : (
+										<span className="flex items-center">
+											{primaryButtonLabel}
+											<ChevronRight className="w-4 h-4 ml-1" />
+										</span>
+									)}
+								</Button>
+							)}
 						</div>
 					</div>
 				</div>
