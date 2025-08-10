@@ -15,7 +15,7 @@ import type {
 } from "@/lib/caliper"
 import { caliper, oneroster } from "@/lib/clients"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
-import { calculateAwardedXp, MASTERY_THRESHOLD } from "@/lib/xp"
+import { MASTERY_THRESHOLD } from "@/lib/xp"
 
 const SENSOR_ID = env.NEXT_PUBLIC_APP_DOMAIN
 
@@ -126,7 +126,7 @@ export async function sendCaliperActivityCompletedEvent(
 			})
 		}
 	} else {
-		// Fallback to checking proficiency ourselves (for backward compatibility)
+		// Fallback path: honor pre-calculated XP and perform only the proficiency guard here
 		const currentResultsResult = await errors.try(
 			oneroster.getAllResults({
 				filter: `student.sourcedId='${userSourcedId}' AND assessmentLineItem.sourcedId='${getAssessmentLineItemId(assessmentLineItemId)}'`
@@ -163,7 +163,7 @@ export async function sendCaliperActivityCompletedEvent(
 			})
 			assessmentXp = 0 // User already proficient, no new XP is awarded.
 		} else {
-			// Current proficiency is below mastery - calculate XP for this attempt
+			// Current proficiency is below mastery - use caller-provided xpEarned as final (avoid re-bonus)
 			if (performance.totalQuestions === 0) {
 				logger.error("CRITICAL: Assessment has zero questions", {
 					assessmentId: context.activity?.id,
@@ -171,17 +171,11 @@ export async function sendCaliperActivityCompletedEvent(
 				})
 				throw errors.new("assessment must have at least one question")
 			}
+
 			const accuracy = performance.correctQuestions / performance.totalQuestions
+			assessmentXp = performance.xpEarned
 
-			// Calculate XP for the assessment itself (including penalty check)
-			assessmentXp = calculateAwardedXp(
-				performance.xpEarned,
-				accuracy,
-				performance.totalQuestions,
-				performance.durationInSeconds
-			)
-
-			logger.info("awarding xp for proficiency improvement", {
+			logger.info("using pre-calculated xp in fallback path", {
 				userSourcedId,
 				assessmentLineItemId,
 				currentProficiency,
@@ -216,7 +210,8 @@ export async function sendCaliperActivityCompletedEvent(
 		throw errors.new("activity name required for XP calculation")
 	}
 	const activityType = context.activity.name.toLowerCase()
-	const isQuiz = activityType.includes("quiz")
+	// Prefer route path signal ("/quiz/") over name-based heuristics; fallback to name contains "quiz"
+	const isQuiz = (context.id?.toLowerCase().includes("/quiz/") ?? false) || activityType.includes("quiz")
 
 	// 4. Process XP Bank if applicable (only if assessment XP > 0)
 	if (

@@ -417,7 +417,7 @@ export function AssessmentStepper({
 
 			// Create metadata object
 			const metadata = {
-				masteredUnits: contentType === "Test" && accuracy >= 90 ? 1 : 0,
+				masteredUnits: (contentType === "Test" || contentType === "Quiz") && accuracy >= 90 ? 1 : 0,
 				totalQuestions: finalTotalQuestions,
 				correctQuestions: correctAnswersCount,
 				accuracy: accuracy,
