@@ -30,6 +30,7 @@ const BaseResourceMetadataSchema = z.object({
 const InteractiveResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 	type: z.literal("interactive"),
 	launchUrl: z.string().url(),
+	url: z.string().url().optional(),
 	toolProvider: z.string().optional(),
 	activityType: z.enum(["Article", "Video", "Exercise", "Quiz", "UnitTest", "CourseChallenge"]),
 	// Add khanYoutubeId to support videos being marked as interactive

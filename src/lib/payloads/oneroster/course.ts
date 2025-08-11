@@ -486,6 +486,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								toolProvider: "Nice Academy",
 								activityType: "Article",
 								launchUrl: `${appDomain}${metadata.path}/a/${content.slug}`,
+								url: `${appDomain}${metadata.path}/a/${content.slug}`,
 								xp: 2
 							}
 						} else if (lc.contentType === "Video") {
@@ -501,6 +502,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								toolProvider: "Nice Academy",
 								activityType: "Video",
 								launchUrl: `${appDomain}${metadata.path}/v/${content.slug}`,
+								url: `${appDomain}${metadata.path}/v/${content.slug}`,
 								khanYoutubeId: videoData.youtubeId,
 								xp: videoData?.duration ? Math.ceil(videoData.duration / 60) : 0
 							}
@@ -512,6 +514,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								toolProvider: "Nice Academy",
 								activityType: "Exercise",
 								launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
+								url: `${appDomain}${metadata.path}/e/${content.slug}`,
 								xp: 3
 							}
 						}
@@ -595,6 +598,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						toolProvider: "Nice Academy",
 						activityType: assessment.type,
 						launchUrl: launchUrl,
+						url: launchUrl,
 						// Khan-specific data
 						khanId: assessment.id,
 						khanSlug: normalizeKhanSlug(assessment.slug),
@@ -663,6 +667,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						toolProvider: "Nice Academy",
 						activityType: assessment.type,
 						launchUrl: launchUrl,
+						url: launchUrl,
 						// Khan-specific data
 						khanId: assessment.id,
 						khanSlug: normalizeKhanSlug(assessment.slug),
