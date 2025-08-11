@@ -9,6 +9,7 @@ import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
 import * as cacheUtils from "@/lib/cache"
 import { invalidateCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
+import { VIDEO_COMPLETION_THRESHOLD_PERCENT } from "@/lib/constants/progress"
 import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 
@@ -123,9 +124,8 @@ export async function updateVideoProgress(
 		timestamp: new Date().toISOString()
 	})
 
-	// Define the completion threshold.
-	const COMPLETION_THRESHOLD = 95
-	const isCompleted = percentComplete >= COMPLETION_THRESHOLD
+	// Define the completion threshold (shared constant)
+	const isCompleted = percentComplete >= VIDEO_COMPLETION_THRESHOLD_PERCENT
 
 	// The score is a float from 0.0 to 1.0. Set to 1.0 upon completion.
 	const score = isCompleted ? 1.0 : Number.parseFloat((percentComplete / 100).toFixed(2))

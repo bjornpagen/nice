@@ -1,8 +1,8 @@
 import * as React from "react"
+import { Content } from "@/app/(user)/profile/me/courses/components/content"
 import { Skeleton } from "@/components/ui/skeleton"
 import { fetchProfileCoursesData } from "@/lib/data/profile"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
-import { Content } from "./components/content"
 
 function CourseCardSkeleton() {
 	return (

@@ -5,7 +5,12 @@ import { db } from "@/db"
 import { niceExercises, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
 import { compile } from "@/lib/qti-generation/compiler"
-import { ErrUnsupportedInteraction, generateStructuredQtiItem } from "@/lib/qti-generation/structured/client"
+// MODIFIED: Import the new ErrWidgetNotFound error.
+import {
+	ErrUnsupportedInteraction,
+	ErrWidgetNotFound,
+	generateStructuredQtiItem
+} from "@/lib/qti-generation/structured/client"
 import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
 
 // A global key to ensure all OpenAI functions share the same concurrency limit.
@@ -71,6 +76,14 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			if (errors.is(structuredItemResult.error, ErrUnsupportedInteraction)) {
 				// This item is fundamentally un-convertible. Fail the job permanently,
 				// chaining the original error for full context in observability tools.
+				throw new NonRetriableError(structuredItemResult.error.message, {
+					cause: structuredItemResult.error
+				})
+			}
+
+			// ADDED: Check for the new WIDGET_NOT_FOUND bail condition.
+			// This is a specific, non-retriable failure case.
+			if (errors.is(structuredItemResult.error, ErrWidgetNotFound)) {
 				throw new NonRetriableError(structuredItemResult.error.message, {
 					cause: structuredItemResult.error
 				})

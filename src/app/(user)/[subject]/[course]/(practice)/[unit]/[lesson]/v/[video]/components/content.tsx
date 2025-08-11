@@ -8,6 +8,7 @@ import YouTube, { type YouTubePlayer } from "react-youtube"
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { getVideoProgress, updateVideoProgress } from "@/lib/actions/tracking"
+import { VIDEO_COMPLETION_THRESHOLD_PERCENT, VIDEO_COMPLETION_THRESHOLD_RATIO } from "@/lib/constants/progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { VideoPageData } from "@/lib/types/page"
 
@@ -151,36 +152,52 @@ export function Content({
 					return
 				}
 
-				if (result.data && result.data.percentComplete > 0 && result.data.percentComplete < 95) {
-					savedProgressRef.current = result.data
-					// Note: Loaded saved video progress, will resume from this position
+				if (result.data) {
+					if (result.data.percentComplete >= VIDEO_COMPLETION_THRESHOLD_PERCENT) {
+						// Already completed previously; unlock Continue immediately
+						setCurrentResourceCompleted(true)
+					} else if (result.data.percentComplete > 0) {
+						// Note: Loaded saved video progress, will resume from this position
+						savedProgressRef.current = result.data
+					}
 				}
 			}
 		}
 
 		void loadSavedProgress()
-	}, [user, video.id])
+	}, [user, video.id, setCurrentResourceCompleted])
 
 	// Independent 1s UI timer for read-only progress display
 	React.useEffect(() => {
 		const intervalId = setInterval(() => {
 			const player = playerRef.current
 			if (player && typeof player.getDuration === "function") {
-				const d = player.getDuration()
-				if (d > 0) {
-					setDurationSeconds(d)
+				// Snap duration to an integer second to avoid perpetual off-by-one display
+				const rawDuration = player.getDuration()
+				const snappedDuration = rawDuration > 0 ? Math.round(rawDuration) : rawDuration
+				if (snappedDuration > 0) {
+					setDurationSeconds(snappedDuration)
 				}
 				if (typeof player.getCurrentTime === "function") {
-					const t = player.getCurrentTime()
+					let t = player.getCurrentTime()
 					if (!Number.isNaN(t)) {
-						setElapsedSeconds(t)
+						// If within half a second of the end, snap to end to show the last second
+						if (snappedDuration > 0 && snappedDuration - t <= 0.5) {
+							t = snappedDuration
+						}
+						const clampedTime = snappedDuration > 0 ? Math.min(t, snappedDuration) : t
+						setElapsedSeconds(clampedTime)
+						// Mark as complete locally as soon as threshold is hit (shared constant)
+						if (snappedDuration > 0 && clampedTime / snappedDuration >= VIDEO_COMPLETION_THRESHOLD_RATIO) {
+							setCurrentResourceCompleted(true)
+						}
 					}
 				}
 			}
 		}, 1000)
 
 		return () => clearInterval(intervalId)
-	}, [])
+	}, [setCurrentResourceCompleted])
 
 	// Track progress periodically for OneRoster (separate from UI timer)
 	React.useEffect(() => {
@@ -213,18 +230,21 @@ export function Content({
 						courseSlug: params.course
 					})
 
-					// If completion threshold reached and not yet refreshed, refresh the route once
+					// If completion threshold reached, unlock locally and refresh once (shared constant)
 					const percentComplete = currentTime / duration
-					if (percentComplete >= 0.95 && !hasRefreshedForCompletionRef.current) {
-						hasRefreshedForCompletionRef.current = true
-						router.refresh()
+					if (percentComplete >= VIDEO_COMPLETION_THRESHOLD_RATIO) {
+						setCurrentResourceCompleted(true)
+						if (!hasRefreshedForCompletionRef.current) {
+							hasRefreshedForCompletionRef.current = true
+							router.refresh()
+						}
 					}
 				}
 			}
 		}, 3000) // Sync progress every 3 seconds
 
 		return () => clearInterval(intervalId)
-	}, [user, video.id, params.subject, params.course, router])
+	}, [user, video.id, params.subject, params.course, router, setCurrentResourceCompleted])
 
 	// Cleanup: send cumulative event when component unmounts
 	React.useEffect(() => {

@@ -27,7 +27,8 @@ import { allWidgetSchemas, type WidgetInput } from "@/lib/widgets/generators"
 const OPENAI_MODEL = "gpt-5"
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
 
-// Removed ErrWidgetNotFound: all slots must map to a concrete widget type
+// MODIFIED: Add back the specific error for the widget mapping bail condition.
+export const ErrWidgetNotFound = errors.new("widget could not be mapped to a known type")
 
 export const ErrUnsupportedInteraction = errors.new("unsupported interaction type found")
 
@@ -131,6 +132,14 @@ async function mapSlotsToWidgets(
 	// Validate and build the properly typed mapping
 	const mapping: Record<string, keyof typeof allWidgetSchemas> = {}
 	for (const [key, value] of Object.entries(rawMapping)) {
+		// ADDED: Check for the WIDGET_NOT_FOUND bail string.
+		// If found, throw a specific error to be caught upstream.
+		if (value === "WIDGET_NOT_FOUND") {
+			logger.error("widget slot could not be mapped by AI", { slot: key })
+			// Throw the specific error, which will be wrapped in a NonRetriableError by the Inngest function.
+			throw errors.wrap(ErrWidgetNotFound, `AI bailed on widget mapping for slot: "${key}"`)
+		}
+
 		if (isValidWidgetType(value)) {
 			mapping[key] = value
 		} else {

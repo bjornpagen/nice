@@ -29,15 +29,17 @@ function createShellFromExample(item: (typeof allExamples)[0]) {
 function createWidgetMappingSchema(slotNames: string[], allowedWidgetKeys: readonly string[]) {
 	const shape: Record<string, z.ZodType<string>> = {}
 	for (const slotName of slotNames) {
-		// Use z.string() with refinement to validate allowed values
-		shape[slotName] = z.string().refine((val) => allowedWidgetKeys.includes(val), {
-			message: `Must be one of: ${allowedWidgetKeys.join(", ")}`
+		// MODIFIED: Allow the schema to accept either a valid widget type
+		// from the collection OR the specific "WIDGET_NOT_FOUND" bail string for ALL collections.
+		const validTypesAndBail = [...allowedWidgetKeys, "WIDGET_NOT_FOUND"]
+		shape[slotName] = z.string().refine((val) => validTypesAndBail.includes(val), {
+			message: `Must be one of: ${validTypesAndBail.join(", ")}`
 		})
 	}
 	return z.object({
 		widget_mapping: z
 			.object(shape)
-			.describe("A JSON object mapping each widget slot name to one of the allowed widget types.")
+			.describe("A JSON object mapping each widget slot name to one of the allowed widget types or WIDGET_NOT_FOUND.")
 	})
 }
 
@@ -1338,9 +1340,26 @@ export function createWidgetMappingPrompt(
 			})
 			.join("\n")
 	}
-	const systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content and the original Perseus JSON to map widget slots to the most appropriate widget type from a given list.
+	// MODIFIED: Create a base instruction and then conditionally add the refined, collection-specific rule.
+	let systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content and the original Perseus JSON to map widget slots to the most appropriate widget type from a given list.
 
-**CRITICAL RULE**: You MUST choose a widget type from the list for every slot. Do not refuse or omit any slot. When no perfect match exists, select the closest semantically correct type that best represents the visual intent.
+**CRITICAL RULE: WIDGET_NOT_FOUND BAIL**
+This is your most important instruction. If you determine that a widget slot **CANNOT** be reasonably mapped to any of the available widget types, you **MUST** use the exact string literal **"WIDGET_NOT_FOUND"** as its type. Do not guess or force a fit.
+
+Use "WIDGET_NOT_FOUND" if:
+1.  There is no semantically appropriate widget type in the provided list for the given Perseus content.
+2.  A slot clearly represents an interactive element that was misclassified as a widget.`
+
+	// MODIFIED: Conditionally append the highly specific and clarified simple-visual instruction.
+	if (widgetCollectionName === "simple-visual") {
+		systemInstruction += `
+3.  **For this 'simple-visual' collection ONLY**: Your task is to map Perseus \`image\` widgets to our \`urlImage\` widget. To do this, you must look at the **original Perseus JSON** for the specific widget slot. If the corresponding Perseus \`image\` widget definition is **missing its \`url\` property** or the \`url\` is an empty string, you **MUST** output \`WIDGET_NOT_FOUND\`.
+    - **NOTE**: You will be provided a context map of working URLs. **Assume all URLs in that context map are valid and functional.** Your job is not to validate them, but to recognize when a URL is completely absent from the source Perseus JSON in the first place.`
+	}
+
+	systemInstruction += `
+
+**CRITICAL RULE**: You MUST choose a widget type from the list (or "WIDGET_NOT_FOUND") for every slot. Do not refuse or omit any slot.
 
 Widget Type Options:
 ${[...collection.widgetTypeKeys].sort().join("\n")}`
@@ -1365,7 +1384,7 @@ ${assessmentBody}
 Available Widget Types and Descriptions:
 ${buildWidgetTypeDescriptions()}
 
-Your response must be a JSON object with a single key "widget_mapping", mapping every slot name from the list below to its type.
+Your response must be a JSON object with a single key "widget_mapping", mapping every slot name from the list below to its type. If no suitable type is found, you MUST use the string "WIDGET_NOT_FOUND".
 
 Slot Names to Map:
 ${slotNames.join("\n")}`

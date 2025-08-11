@@ -5,6 +5,7 @@ import * as errors from "@superbuilders/errors"
 import { useRouter } from "next/navigation"
 import * as React from "react"
 import { toast } from "sonner"
+import { Card } from "@/app/(user)/profile/me/courses/components/card"
 import { CourseSelector } from "@/components/course-selector-content"
 import { OnboardingModal } from "@/components/onboarding-modal"
 import { Button } from "@/components/ui/button"
@@ -13,7 +14,6 @@ import { saveUserCourses } from "@/lib/actions/courses"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { ProfileCourse } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
-import { Card } from "./card"
 
 function CourseCardSkeleton() {
 	return (
