@@ -76,9 +76,13 @@ export async function updateProficiencyFromAssessment(
 		logger.error("invalid resource metadata", { resourceSourcedId, error: metadataResult.error })
 		throw errors.wrap(metadataResult.error, "invalid resource metadata")
 	}
-	// Default to 'exercise' if khanLessonType is not present, though it should be for quizzes/tests.
-	const lessonType =
-		metadataResult.data.type === "qti" ? (metadataResult.data.khanLessonType ?? "exercise") : "exercise"
+	// Map activityType to lesson type for proficiency tracking
+	let lessonType = "exercise"
+	if (metadataResult.data.activityType === "Quiz") {
+		lessonType = "quiz"
+	} else if (metadataResult.data.activityType === "UnitTest") {
+		lessonType = "unittest"
+	}
 
 	// Step 2: Map questions to exercises using QTI metadata
 	const qtiItemIdToOneRosterResourceSourcedIdMap = new Map<string, string>()

@@ -234,7 +234,7 @@ export async function getAllResources() {
 	return redisCache(operation, ["oneroster-getAllResources"], { revalidate: 3600 * 24 }) // 24-hour cache
 }
 
-export async function getResourcesBySlugAndType(slug: string, type: "qti" | "video", lessonType?: "quiz" | "unittest") {
+export async function getResourcesBySlugAndType(slug: string, type: "interactive", lessonType?: "quiz" | "unittest") {
 	logger.info("getResourcesBySlugAndType called", { slug, type, lessonType })
 	const operation = async () => {
 		// Due to OneRoster API limitation, we can only use one AND operation

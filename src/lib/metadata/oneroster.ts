@@ -26,34 +26,16 @@ const BaseResourceMetadataSchema = z.object({
 	xp: z.number().default(0)
 })
 
-// Schema for Video-specific metadata
-const VideoResourceMetadataSchema = BaseResourceMetadataSchema.extend({
-	type: z.literal("video"),
-	url: z.string().url(),
-	duration: z.number().optional(),
-	format: z.string(),
-	tenantId: z.string().optional(),
-	clientAppId: z.string().optional(),
-	sourcedId: z.string().optional()
+// Schema for Interactive-specific metadata - this is now the only resource type
+const InteractiveResourceMetadataSchema = BaseResourceMetadataSchema.extend({
+	type: z.literal("interactive"),
+	launchUrl: z.string().url(),
+	toolProvider: z.string().optional(),
+	activityType: z.string(),
+	// Add youtubeId to support videos being marked as interactive
+	youtubeId: z.string().optional()
 })
 
-// Schema for QTI-specific metadata, with its own discriminated union
-const QtiResourceMetadataSchema = BaseResourceMetadataSchema.extend({
-	type: z.literal("qti"),
-	subType: z.enum(["qti-stimulus", "qti-test"]),
-	khanLessonType: z.enum(["unittest", "quiz", "coursechallenge"]).optional(),
-	version: z.string(),
-	language: z.string(),
-	url: z.string().url(),
-	questionType: z.string().optional(),
-	tenantId: z.string().optional(),
-	clientAppId: z.string().optional(),
-	sourcedId: z.string().optional()
-})
-
-// The final discriminated union schema for all resources
-export const ResourceMetadataSchema = z.discriminatedUnion("type", [
-	VideoResourceMetadataSchema,
-	QtiResourceMetadataSchema
-])
+// The resource metadata schema - only interactive resources now
+export const ResourceMetadataSchema = InteractiveResourceMetadataSchema
 export type ResourceMetadata = z.infer<typeof ResourceMetadataSchema>

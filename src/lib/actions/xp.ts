@@ -179,9 +179,10 @@ export async function awardBankedXpForAssessment(
 		const expectedXp = typeof metadata?.xp === "number" ? metadata.xp : 0
 		if (expectedXp <= 0) continue
 
-		if (metadata?.type === "qti" && metadata?.subType === "qti-stimulus") {
+		// Update detection logic for Articles and Videos - all resources are interactive now
+		if (metadata?.activityType === "Article") {
 			articleResources.push({ sourcedId: resource.sourcedId, expectedXp, type: "article" })
-		} else if (metadata?.type === "video") {
+		} else if (metadata?.activityType === "Video") {
 			videoResources.push({ sourcedId: resource.sourcedId, expectedXp, type: "video" })
 		}
 	}
