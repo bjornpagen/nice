@@ -344,6 +344,7 @@ ${perseusJson}
     - Do NOT render these per-choice visuals in the shell body. Simply reserve their widget slot identifiers in the \`widgets\` array for later use by the interaction content shot.
   - **Placeholders**:
   - For ALL Perseus widgets (including 'image' widgets), create a { "type": "blockSlot", "slotId": "..." } placeholder in the 'body' and add its identifier to the 'widgets' string array.
+  - For Perseus resources (reference materials such as periodic tables or formula sheets), when the current widget collection includes a matching widget type (e.g., 'periodicTable' in 'simple-visual'), you MUST create a dedicated widget slot for the resource, include its identifier in the 'widgets' array, and place a { "type": "blockSlot", "slotId": "..." } at the correct position in the body.
   - For inline interactions (e.g., 'text-input', 'inline-choice'), create { "type": "inlineSlot", "slotId": "..." } inside paragraph content.
   - For block interactions (e.g., 'radio', 'order'), create { "type": "blockSlot", "slotId": "..." } in the body array.
   - **NEVER EMBED IMAGES OR SVGs**: You MUST NOT generate \`<img>\` tags, \`<svg>\` tags, or data URIs in the 'body' string. This is a critical requirement. ALL images and visual elements must be handled as widgets referenced by slots. If you see an image in Perseus, create a widget slot for it, never embed it directly.
@@ -1381,7 +1382,7 @@ ${assessmentBody}
  - You MUST map these choice-level widget slots to the correct widget types by inspecting the Perseus JSON for the corresponding choice content.
  - Do NOT assume these appear in the top-level body; they are intentionally absent from body and will be inserted inside choices later.
 
-Available Widget Types and Descriptions:
+  Available Widget Types and Descriptions:
 ${buildWidgetTypeDescriptions()}
 
 Your response must be a JSON object with a single key "widget_mapping", mapping every slot name from the list below to its type. If no suitable type is found, you MUST use the string "WIDGET_NOT_FOUND".
@@ -1390,6 +1391,9 @@ Slot Names to Map:
 ${slotNames.join("\n")}`
 
 	const WidgetMappingSchema = createWidgetMappingSchema(slotNames, collection.widgetTypeKeys)
+	// Resource mapping guidance (collection-aware): When Perseus includes reference resources
+	// such as periodic tables and the collection supports a corresponding widget type
+	// (e.g., 'periodicTable'), prefer mapping the slot to that type instead of bailing.
 
 	return { systemInstruction, userContent, WidgetMappingSchema }
 }
