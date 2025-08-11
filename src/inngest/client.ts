@@ -124,22 +124,20 @@ const events = {
 	// ✅ ADD: New per-entity ingestion events for the fan-out model.
 	"qti/assessment-item.ingest.one": {
 		data: z.object({
-			identifier: z.string().optional(),
-			xml: z.string().min(1),
-			metadata: z.record(z.string(), z.any()).optional()
+			courseSlug: z.string().min(1),
+			identifier: z.string().min(1)
 		})
 	},
 	"qti/assessment-stimulus.ingest.one": {
 		data: z.object({
-			identifier: z.string().optional(),
-			xml: z.string().min(1),
-			metadata: z.record(z.string(), z.any()).optional()
+			courseSlug: z.string().min(1),
+			identifier: z.string().min(1)
 		})
 	},
 	"qti/assessment-test.ingest.one": {
 		data: z.object({
-			identifier: z.string().optional(),
-			xml: z.string().min(1)
+			courseSlug: z.string().min(1),
+			identifier: z.string().min(1)
 		})
 	},
 

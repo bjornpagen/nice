@@ -69,10 +69,11 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 		// STAGE 1: Ingest all Assessment Items
 		if (items.length > 0) {
 			const itemPromises = items.map((item: { xml: string; metadata: Record<string, unknown> }) => {
-				const identifier = extractIdentifier(item.xml, "qti-assessment-item") ?? ""
-				return step.invoke(`ingest-item-${identifier || "unknown"}`, {
+				const identifier = extractIdentifier(item.xml, "qti-assessment-item")
+				if (!identifier) return Promise.resolve(null)
+				return step.invoke(`ingest-item-${identifier}`, {
 					function: ingestAssessmentItemOne,
-					data: { identifier, xml: item.xml, metadata: item.metadata }
+					data: { courseSlug: courseResult.slug, identifier }
 				})
 			})
 			const itemResults = await Promise.allSettled(itemPromises)
@@ -91,10 +92,11 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 		// STAGE 2: Ingest all Assessment Stimuli
 		if (stimuli.length > 0) {
 			const stimuliPromises = stimuli.map((stimulus: { xml: string; metadata: Record<string, unknown> }) => {
-				const identifier = extractIdentifier(stimulus.xml, "qti-assessment-stimulus") ?? ""
-				return step.invoke(`ingest-stimulus-${identifier || "unknown"}`, {
+				const identifier = extractIdentifier(stimulus.xml, "qti-assessment-stimulus")
+				if (!identifier) return Promise.resolve(null)
+				return step.invoke(`ingest-stimulus-${identifier}`, {
 					function: ingestAssessmentStimulusOne,
-					data: { identifier, xml: stimulus.xml, metadata: stimulus.metadata }
+					data: { courseSlug: courseResult.slug, identifier }
 				})
 			})
 			const stimuliResults = await Promise.allSettled(stimuliPromises)
@@ -121,7 +123,7 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 					const testResult = await errors.try(
 						step.invoke(`ingest-test-${testIdentifier}`, {
 							function: ingestAssessmentTestOne,
-							data: { identifier: testIdentifier, xml: testXml }
+							data: { courseSlug: courseResult.slug, identifier: testIdentifier }
 						})
 					)
 					if (testResult.error || !testResult.data) {
