@@ -35,6 +35,8 @@ const REDIS_CONFIG = {
 	pingInterval: 30000
 }
 
+const DISABLE_REDIS = true
+
 if (env.NODE_ENV === "production") {
 	if (!env.REDIS_URL) {
 		// In production, Redis is required for proper caching
@@ -45,15 +47,33 @@ if (env.NODE_ENV === "production") {
 		...REDIS_CONFIG
 	})
 } else {
-	// Development: optional Redis, use global to survive hot reloads
-	if (!globalThis.redisClient && env.REDIS_URL) {
-		globalThis.redisClient = createClient({
-			url: env.REDIS_URL,
-			...REDIS_CONFIG
-		})
+	// Development: optionally disable Redis entirely
+	if (DISABLE_REDIS) {
+		// If a client exists from a previous run, close it and clear globals
+		const clientToQuit = globalThis.redisClient
+		if (clientToQuit) {
+			;(async () => {
+				const quitResult = await errors.try(clientToQuit.quit())
+				if (quitResult.error) {
+					logger.error("failed to quit redis on disable", { error: quitResult.error })
+				}
+			})()
+		}
+		globalThis.redisClient = undefined
+		globalThis.redisConnectionPromise = undefined
+		redis = undefined
+		connectionPromise = undefined
+	} else {
+		// Development: optional Redis, use global to survive hot reloads
+		if (!globalThis.redisClient && env.REDIS_URL) {
+			globalThis.redisClient = createClient({
+				url: env.REDIS_URL,
+				...REDIS_CONFIG
+			})
+		}
+		redis = globalThis.redisClient
+		connectionPromise = globalThis.redisConnectionPromise
 	}
-	redis = globalThis.redisClient
-	connectionPromise = globalThis.redisConnectionPromise
 }
 
 // Only set up connection if redis client exists
