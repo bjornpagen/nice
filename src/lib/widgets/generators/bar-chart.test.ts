@@ -1,32 +1,35 @@
 import { describe, expect, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
-import { BarChartPropsSchema, ErrInvalidDimensions, generateBarChart } from "./bar-chart"
+import { BarChartPropsSchema, ErrInvalidDimensions, generateBarChart } from "@/lib/widgets/generators/bar-chart"
 
 // Helper function to generate diagram with schema validation
 const generateDiagram = (props: unknown) => {
-	const parsedProps = BarChartPropsSchema.parse(props)
-	return generateBarChart(parsedProps)
+	const validation = BarChartPropsSchema.safeParse(props)
+	if (!validation.success) {
+		throw errors.wrap(validation.error, "input validation")
+	}
+	return generateBarChart(validation.data)
 }
 
 describe("generateBarChart", () => {
 	test("should render with minimal props", () => {
 		const props = {
 			type: "barChart" as const,
-			width: null,
-			height: null,
-			title: null,
-			xAxisLabel: null,
+			width: 400,
+			height: 300,
+			title: "",
+			xAxisLabel: "",
 			yAxis: {
-				min: null,
-				max: null,
+				min: 0,
+				max: 42,
 				tickInterval: 10,
-				label: null
+				label: ""
 			},
 			data: [
 				{ label: "A", value: 25, state: "normal" as const },
 				{ label: "B", value: 42, state: "unknown" as const }
 			],
-			barColor: null
+			barColor: "#4285F4"
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
 	})
@@ -59,16 +62,16 @@ describe("generateBarChart", () => {
 			type: "barChart" as const,
 			width: 400,
 			height: 300,
-			title: null,
-			xAxisLabel: null,
+			title: "",
+			xAxisLabel: "",
 			yAxis: {
 				min: 0,
-				max: null,
+				max: 50,
 				tickInterval: 10,
-				label: null
+				label: ""
 			},
 			data: [],
-			barColor: "#4285f4"
+			barColor: "#4285F4"
 		}
 		const result = errors.trySync(() => generateDiagram(props))
 		if (result.error) {

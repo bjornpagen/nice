@@ -9,23 +9,19 @@ export const AbsoluteValueNumberLinePropsSchema = z
 		type: z.literal("absoluteValueNumberLine"),
 		width: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 480)
-			.describe("The total width of the output SVG container in pixels."),
+			.positive()
+			.describe("the total width of the svg in pixels; required to avoid rendering fallbacks"),
 		height: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 80)
-			.describe("The total height of the output SVG container in pixels."),
+			.positive()
+			.describe("the total height of the svg in pixels; required to avoid rendering fallbacks"),
 		min: z.number().describe("The minimum value displayed on the line."),
 		max: z.number().describe("The maximum value displayed on the line."),
 		tickInterval: z.number().describe("The numeric interval between labeled tick marks."),
 		value: z.number().describe("The number whose absolute value is being illustrated."),
 		highlightColor: z
 			.string()
-			.nullable()
-			.transform((val) => val ?? "rgba(217, 95, 79, 0.8)")
-			.describe("The CSS color for the highlighted distance segment and the point."),
+			.describe("the css color for the distance highlight and point; explicit to ensure consistent styling"),
 		showDistanceLabel: z.boolean().describe("If true, shows a text label indicating the distance from zero.")
 	})
 	.strict()

@@ -4,25 +4,28 @@ import {
 	AbsoluteValueNumberLinePropsSchema,
 	ErrInvalidRange,
 	generateAbsoluteValueNumberLine
-} from "./absolute-value-number-line"
+} from "@/lib/widgets/generators/absolute-value-number-line"
 
-// Helper function to generate diagram with schema validation
+// helper: schema validation using safeParse per zod usage rule
 const generateDiagram = (props: unknown) => {
-	const parsedProps = AbsoluteValueNumberLinePropsSchema.parse(props)
-	return generateAbsoluteValueNumberLine(parsedProps)
+	const validation = AbsoluteValueNumberLinePropsSchema.safeParse(props)
+	if (!validation.success) {
+		throw errors.wrap(validation.error, "input validation")
+	}
+	return generateAbsoluteValueNumberLine(validation.data)
 }
 
 describe("generateAbsoluteValueNumberLine", () => {
 	test("should render with minimal props", () => {
 		const props = {
-			type: "absoluteValueNumberLine" as const,
+			type: "absoluteValueNumberLine",
 			width: 500,
 			height: 80,
 			min: -10,
 			max: 10,
 			tickInterval: 5,
 			value: -7,
-			highlightColor: null,
+			highlightColor: "rgba(217, 95, 79, 0.8)",
 			showDistanceLabel: true
 		}
 		expect(generateDiagram(props)).toMatchSnapshot()
@@ -30,7 +33,7 @@ describe("generateAbsoluteValueNumberLine", () => {
 
 	test("should render with all props specified", () => {
 		const props = {
-			type: "absoluteValueNumberLine" as const,
+			type: "absoluteValueNumberLine",
 			width: 600,
 			height: 100,
 			min: -20,
@@ -45,7 +48,7 @@ describe("generateAbsoluteValueNumberLine", () => {
 
 	test("should handle error case where min >= max", () => {
 		const props = {
-			type: "absoluteValueNumberLine" as const,
+			type: "absoluteValueNumberLine",
 			width: 500,
 			height: 80,
 			min: 10,
@@ -59,8 +62,8 @@ describe("generateAbsoluteValueNumberLine", () => {
 		if (result.error) {
 			expect(errors.is(result.error, ErrInvalidRange)).toBe(true)
 			expect(result.error.message).toMatchSnapshot()
-		} else {
-			throw errors.new("expected an error to be thrown")
+			return
 		}
+		throw errors.new("expected an error to be thrown")
 	})
 })

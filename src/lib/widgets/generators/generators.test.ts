@@ -59,10 +59,14 @@ describe("Widget Generators", () => {
 				},
 				plane: {
 					orientation: "horizontal" as const,
-					position: 0.5,
-					angle: null
+					position: 0.5
 				},
-				viewOptions: null
+				viewOptions: {
+					projectionAngle: 45,
+					intersectionColor: "rgba(217, 95, 79, 0.8)",
+					showHiddenEdges: true,
+					showLabels: false
+				}
 			}
 			const parsedProps = ThreeDIntersectionDiagramPropsSchema.parse(props)
 			expect(generateThreeDIntersectionDiagram(parsedProps)).toMatchSnapshot()
@@ -80,8 +84,7 @@ describe("Widget Generators", () => {
 				},
 				plane: {
 					orientation: "vertical" as const,
-					position: 0.3,
-					angle: null
+					position: 0.3
 				},
 				viewOptions: {
 					projectionAngle: 30,
@@ -102,9 +105,9 @@ describe("Widget Generators", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "A", x: 50, y: 150, label: "A", shape: null },
-					{ id: "B", x: 150, y: 150, label: "B", shape: null },
-					{ id: "C", x: 250, y: 100, label: "C", shape: null }
+					{ id: "A", x: 50, y: 150, label: "A", shape: "circle" as const },
+					{ id: "B", x: 150, y: 150, label: "B", shape: "circle" as const },
+					{ id: "C", x: 250, y: 100, label: "C", shape: "circle" as const }
 				],
 				rays: [
 					{ from: "B", to: "A" },
@@ -112,11 +115,11 @@ describe("Widget Generators", () => {
 				],
 				angles: [
 					{
+						type: "arc" as const,
 						vertices: ["A", "B", "C"],
 						label: "∠ABC",
-						color: null,
-						radius: null,
-						isRightAngle: false
+						color: "rgba(217, 95, 79, 0.8)",
+						radius: 30
 					}
 				]
 			}
@@ -130,9 +133,9 @@ describe("Widget Generators", () => {
 				width: 400,
 				height: 300,
 				points: [
-					{ id: "P", x: 100, y: 200, label: "P", shape: null },
-					{ id: "Q", x: 200, y: 200, label: "Q", shape: null },
-					{ id: "R", x: 200, y: 100, label: "R", shape: null }
+					{ id: "P", x: 100, y: 200, label: "P", shape: "circle" as const },
+					{ id: "Q", x: 200, y: 200, label: "Q", shape: "circle" as const },
+					{ id: "R", x: 200, y: 100, label: "R", shape: "circle" as const }
 				],
 				rays: [
 					{ from: "Q", to: "P" },
@@ -140,11 +143,10 @@ describe("Widget Generators", () => {
 				],
 				angles: [
 					{
+						type: "right" as const,
 						vertices: ["P", "Q", "R"],
 						label: "90°",
-						color: null,
-						radius: null,
-						isRightAngle: true
+						color: "rgba(217, 95, 79, 0.8)"
 					}
 				]
 			}
@@ -423,13 +425,13 @@ describe("Widget Generators", () => {
 				type: "barChart" as const,
 				width: 400,
 				height: 300,
-				title: null,
-				xAxisLabel: null,
+				title: "",
+				xAxisLabel: "",
 				yAxis: {
 					min: 0,
-					max: null,
+					max: 42,
 					tickInterval: 10,
-					label: null
+					label: ""
 				},
 				data: [
 					{ label: "A", value: 25, state: "normal" as const },
@@ -468,16 +470,16 @@ describe("Widget Generators", () => {
 				type: "barChart" as const,
 				width: 400,
 				height: 300,
-				title: null,
-				xAxisLabel: null,
+				title: "",
+				xAxisLabel: "",
 				yAxis: {
 					min: 0,
-					max: null,
+					max: 100,
 					tickInterval: 10,
-					label: null
+					label: ""
 				},
 				data: [],
-				barColor: "#4285f4"
+				barColor: "#4285F4"
 			}
 			const result = errors.trySync(() => generateBarChart(props))
 			if (result.error) {

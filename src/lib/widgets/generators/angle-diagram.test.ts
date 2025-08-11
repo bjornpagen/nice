@@ -1,10 +1,102 @@
 import { describe, expect, test } from "bun:test"
-import { AngleDiagramPropsSchema, findLineIntersection, generateAngleDiagram } from "./angle-diagram"
+import * as errors from "@superbuilders/errors"
+import {
+	AngleDiagramPropsSchema,
+	findLineIntersection,
+	generateAngleDiagram
+} from "@/lib/widgets/generators/angle-diagram"
 
-// Helper function to generate diagram with schema validation
-const generateDiagram = (props: unknown) => {
-	const parsedProps = AngleDiagramPropsSchema.parse(props)
-	return generateAngleDiagram(parsedProps)
+// helper to adapt legacy props (used across tests) to the new discriminated union schema
+// - labels null -> ""
+// - shapes null -> "circle"
+// - angles: isRightAngle -> type 'right'; otherwise type 'arc'
+// - provide defaults for color and radius expected by schema
+
+type LegacyPoint = { id: string; x: number; y: number; label: string | null; shape: string | null }
+type LegacyAngle = {
+	vertices?: string[]
+	label: string | null
+	color: string | null
+	radius: number | null
+	isRightAngle: boolean
+}
+
+type LegacyPropsBase = {
+	width: number
+	height: number
+	points?: unknown[] | null
+	rays?: { from: string; to: string }[] | null
+	angles?: unknown[] | null
+}
+
+const isLegacyPoint = (v: unknown): v is LegacyPoint => {
+	if (typeof v !== "object" || v === null) return false
+	const idVal = Reflect.get(v, "id")
+	const xVal = Reflect.get(v, "x")
+	const yVal = Reflect.get(v, "y")
+	const labelVal = Reflect.get(v, "label")
+	const shapeVal = Reflect.get(v, "shape")
+	if (typeof idVal !== "string") return false
+	if (typeof xVal !== "number") return false
+	if (typeof yVal !== "number") return false
+	if (!(typeof labelVal === "string" || labelVal === null)) return false
+	if (!(typeof shapeVal === "string" || shapeVal === null)) return false
+	return true
+}
+
+const isLegacyAngle = (v: unknown): v is LegacyAngle => {
+	if (typeof v !== "object" || v === null) return false
+	const verticesVal = Reflect.get(v, "vertices")
+	const labelVal = Reflect.get(v, "label")
+	const colorVal = Reflect.get(v, "color")
+	const radiusVal = Reflect.get(v, "radius")
+	const isRightAngleVal = Reflect.get(v, "isRightAngle")
+	if (!(verticesVal === undefined || Array.isArray(verticesVal))) return false
+	if (!(typeof labelVal === "string" || labelVal === null)) return false
+	if (!(typeof colorVal === "string" || colorVal === null)) return false
+	if (!(typeof radiusVal === "number" || radiusVal === null)) return false
+	if (typeof isRightAngleVal !== "boolean") return false
+	return true
+}
+
+function adaptProps<T extends LegacyPropsBase>(props: T): Record<string, unknown> {
+	const rawPoints: unknown[] = Array.isArray(props.points) ? props.points : []
+	const points = rawPoints.filter(isLegacyPoint).map((p) => ({
+		id: p.id,
+		x: p.x,
+		y: p.y,
+		label: p.label == null ? "" : p.label,
+		shape: p.shape == null ? "circle" : p.shape
+	}))
+
+	const rawAngles: unknown[] = Array.isArray(props.angles) ? props.angles : []
+	const angles = rawAngles.filter(isLegacyAngle).map((a) => {
+		const vertices = Array.isArray(a.vertices) ? a.vertices : []
+		const label = a.label == null ? "" : a.label
+		const color = a.color == null ? "rgba(217, 95, 79, 0.8)" : a.color
+		if (a.isRightAngle) return { type: "right", vertices, label, color } as const
+		const radius = a.radius == null ? 30 : a.radius
+		return { type: "arc", vertices, label, color, radius } as const
+	})
+
+	return {
+		type: "angleDiagram",
+		width: props.width,
+		height: props.height,
+		points,
+		rays: Array.isArray(props.rays) ? props.rays : [],
+		angles
+	}
+}
+
+// helper function to generate diagram with schema validation (safeParse)
+const generateDiagram = (rawProps: LegacyPropsBase) => {
+	const adapted = adaptProps(rawProps)
+	const result = AngleDiagramPropsSchema.safeParse(adapted)
+	if (!result.success) {
+		throw errors.wrap(result.error, "angle diagram props validation")
+	}
+	return generateAngleDiagram(result.data)
 }
 
 describe("generateAngleDiagram", () => {
@@ -542,10 +634,10 @@ describe("generateAngleDiagram", () => {
 	})
 
 	describe("Default Values", () => {
-		test("should render with width null (defaults to 400)", () => {
+		test("should render with explicit width", () => {
 			const props = {
 				type: "angleDiagram" as const,
-				width: null,
+				width: 400,
 				height: 300,
 				points: [
 					{ id: "A", x: 100, y: 150, label: "A", shape: null },
@@ -569,11 +661,11 @@ describe("generateAngleDiagram", () => {
 			expect(generateDiagram(props)).toMatchSnapshot()
 		})
 
-		test("should render with height null (defaults to 300)", () => {
+		test("should render with explicit height", () => {
 			const props = {
 				type: "angleDiagram" as const,
 				width: 400,
-				height: null,
+				height: 300,
 				points: [
 					{ id: "A", x: 100, y: 150, label: "A", shape: null },
 					{ id: "B", x: 200, y: 150, label: "B", shape: null },
@@ -746,11 +838,11 @@ describe("generateAngleDiagram", () => {
 				width: 300,
 				height: 200,
 				points: [
-					{ id: "A", x: 50, y: 50, label: null, shape: "ellipse" as const }, // Top-left
-					{ id: "B", x: 200, y: 50, label: null, shape: "ellipse" as const }, // Top-right
-					{ id: "C", x: 250, y: 150, label: null, shape: "ellipse" as const }, // Bottom-right
-					{ id: "D", x: 100, y: 150, label: null, shape: "ellipse" as const }, // Bottom-left
-					{ id: "I", x: intersection?.x, y: intersection?.y, label: null, shape: "ellipse" as const } // Intersection
+					{ id: "A", x: 50, y: 50, label: null, shape: "ellipse" as const },
+					{ id: "B", x: 200, y: 50, label: null, shape: "ellipse" as const },
+					{ id: "C", x: 250, y: 150, label: null, shape: "ellipse" as const },
+					{ id: "D", x: 100, y: 150, label: null, shape: "ellipse" as const },
+					{ id: "I", x: intersection?.x, y: intersection?.y, label: null, shape: "ellipse" as const }
 				],
 				rays: [
 					// Quadrilateral edges
@@ -764,23 +856,23 @@ describe("generateAngleDiagram", () => {
 				],
 				angles: [
 					{
-						vertices: ["A", "I", "B"], // 95° angle
+						vertices: ["A", "I", "B"],
 						label: "95°",
-						color: "#1fab54", // Perseus green
+						color: "#1fab54",
 						radius: 20,
 						isRightAngle: false
 					},
 					{
-						vertices: ["C", "I", "D"], // x° angle (vertical to 95°)
+						vertices: ["C", "I", "D"],
 						label: "x°",
-						color: "#e07d10", // Perseus orange
+						color: "#e07d10",
 						radius: 20,
 						isRightAngle: false
 					},
 					{
-						vertices: ["B", "C", "D"], // 60° angle at bottom-right vertex
+						vertices: ["B", "C", "D"],
 						label: "60°",
-						color: "#11accd", // Perseus blue
+						color: "#11accd",
 						radius: 20,
 						isRightAngle: false
 					}
@@ -795,12 +887,9 @@ describe("generateAngleDiagram", () => {
 				width: 300,
 				height: 150,
 				points: [
-					// Central intersection point
 					{ id: "O", x: 150, y: 75, label: null, shape: null },
-					// Horizontal line endpoints
 					{ id: "A", x: 30, y: 75, label: null, shape: null },
 					{ id: "B", x: 270, y: 75, label: null, shape: null },
-					// Diagonal line endpoints
 					{ id: "C", x: 60, y: 20, label: null, shape: null },
 					{ id: "D", x: 240, y: 130, label: null, shape: null }
 				],
@@ -814,16 +903,16 @@ describe("generateAngleDiagram", () => {
 				],
 				angles: [
 					{
-						vertices: ["B", "O", "D"], // 60° angle (bottom-right)
+						vertices: ["B", "O", "D"],
 						label: "60°",
-						color: "#11accd", // Blue color from QTI
+						color: "#11accd",
 						radius: 28,
 						isRightAngle: false
 					},
 					{
-						vertices: ["A", "O", "C"], // (x+40)° angle (top-left, vertical to 60°)
+						vertices: ["A", "O", "C"],
 						label: "(x+40)°",
-						color: "#e07d10", // Orange color from QTI
+						color: "#e07d10",
 						radius: 28,
 						isRightAngle: false
 					}
@@ -851,7 +940,7 @@ describe("generateAngleDiagram", () => {
 				angles: [
 					{
 						vertices: ["P", "Q", "S"],
-						label: null,
+						label: "",
 						color: "#000000",
 						radius: 30,
 						isRightAngle: true

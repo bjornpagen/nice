@@ -1,10 +1,17 @@
 import { describe, expect, test } from "bun:test"
-import { generateNumberLineForOpposites, NumberLineForOppositesPropsSchema } from "./number-line-for-opposites"
+import * as errors from "@superbuilders/errors"
+import {
+	generateNumberLineForOpposites,
+	NumberLineForOppositesPropsSchema
+} from "@/lib/widgets/generators/number-line-for-opposites"
 
-// helper to enforce schema prior to generation
+// helper to enforce schema prior to generation using safeParse
 const generateDiagram = (props: unknown) => {
-	const parsedProps = NumberLineForOppositesPropsSchema.parse(props)
-	return generateNumberLineForOpposites(parsedProps)
+	const validation = NumberLineForOppositesPropsSchema.safeParse(props)
+	if (!validation.success) {
+		throw errors.wrap(validation.error, "number line for opposites props validation")
+	}
+	return generateNumberLineForOpposites(validation.data)
 }
 
 describe("generateNumberLineForOpposites", () => {

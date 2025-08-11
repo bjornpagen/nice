@@ -35,3 +35,5 @@ Why this helps
 
 Generator guidance
 - Fail fast on `min >= max`; otherwise render with provided dimensions and color.
+
+

@@ -39,89 +39,79 @@ export const findLineIntersection = (
 	return { x: intersectionX, y: intersectionY }
 }
 
-// The main Zod schema for the angleDiagram function
+// schemas following the documented api in docs/widget-review/angle-diagram.md
+const Point = z
+	.object({
+		id: z
+			.string()
+			.describe(
+				"unique identifier for this vertex point, used to reference it in rays and angles (e.g., 'A', 'B', 'C', 'vertex1'). must be unique within the diagram."
+			),
+		x: z
+			.number()
+			.describe(
+				"the horizontal coordinate of the point in the svg coordinate system. origin (0,0) is top-left. positive x moves right."
+			),
+		y: z
+			.number()
+			.describe(
+				"the vertical coordinate of the point in the svg coordinate system. origin (0,0) is top-left. positive y moves down."
+			),
+		label: z
+			.string()
+			.describe(
+				"the text label to display next to this point (e.g., 'A', 'B', 'C', 'O' for origin). can be empty string to show no label."
+			),
+		shape: z.enum(["circle", "ellipse"]).describe("the shape of the point marker. 'circle' or 'ellipse'.")
+	})
+	.strict()
+
+const AngleArc = z
+	.object({
+		type: z.literal("arc").describe("arc angle visualization"),
+		vertices: z
+			.tuple([z.string(), z.string(), z.string()])
+			.describe(
+				"exactly three point ids defining the angle: [point on first ray, vertex point, point on second ray]. the middle id is the vertex."
+			),
+		label: z.string().describe("angle label text; empty string to hide"),
+		color: z.string().describe("css color for the angle arc and label"),
+		radius: z.number().describe("arc radius in pixels from the vertex")
+	})
+	.strict()
+
+const AngleRight = z
+	.object({
+		type: z.literal("right").describe("right angle visualization with square"),
+		vertices: z.tuple([z.string(), z.string(), z.string()]).describe("exactly three point ids; middle is the vertex"),
+		label: z.string().describe("label for the right angle; empty string to hide"),
+		color: z.string().describe("css color for the right-angle square and label")
+	})
+	.strict()
+
+const Angle = z.discriminatedUnion("type", [AngleArc, AngleRight]).describe("angle definition")
+
 export const AngleDiagramPropsSchema = z
 	.object({
 		type: z.literal("angleDiagram"),
-		width: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total width of the output SVG container in pixels."),
-		height: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 300)
-			.describe("The total height of the output SVG container in pixels."),
-		points: z
-			.array(
-				z
-					.object({
-						id: z.string().describe("A unique identifier for this point (e.g., 'A', 'B', 'V')."),
-						x: z.number().describe("The horizontal coordinate of the point."),
-						y: z.number().describe("The vertical coordinate of the point."),
-						label: z
-							.string()
-							.nullable()
-							.transform((val) => (val === "null" || val === "NULL" ? null : val))
-							.describe("An optional text label to display near the point."),
-						shape: z
-							.enum(["circle", "ellipse"])
-							.nullable()
-							.transform((val) => val ?? "circle")
-							.describe(
-								"The shape of the point marker. 'circle' renders as <circle>, 'ellipse' renders as <ellipse> (for Perseus compatibility)."
-							)
-					})
-					.strict()
-			)
-			.min(1)
-			.describe("An array of all points to be used in the diagram."),
+		width: z.number().positive().describe("total width of the svg in pixels"),
+		height: z.number().positive().describe("total height of the svg in pixels"),
+		points: z.array(Point).min(1).describe("all points used in the diagram"),
 		rays: z
 			.array(
 				z
 					.object({
-						from: z.string().describe("The `id` of the point where the ray originates (the vertex)."),
-						to: z.string().describe("The `id` of a point the ray passes through.")
+						from: z.string().describe("id of the starting point"),
+						to: z.string().describe("id of the point the ray passes through")
 					})
 					.strict()
 			)
-			.describe("An array of rays to be drawn, defined by connecting points."),
-		angles: z
-			.array(
-				z
-					.object({
-						vertices: z
-							.array(z.string())
-							.describe(
-								"An array of exactly three point `id`s in the order [pointOnSide1, vertex, pointOnSide2]. Must contain exactly 3 elements."
-							),
-						label: z
-							.string()
-							.nullable()
-							.transform((val) => (val === "null" || val === "NULL" ? null : val))
-							.describe('The text label for the angle (e.g., "x", "30°", "2x+1").'),
-						color: z
-							.string()
-							.nullable()
-							.transform((val) => val ?? "rgba(217, 95, 79, 0.8)")
-							.describe("The color of the angle's arc marker."),
-						radius: z
-							.number()
-							.nullable()
-							.transform((val) => val ?? 30)
-							.describe("The radius of the angle arc in pixels."),
-						isRightAngle: z
-							.boolean()
-							.describe("If true, displays a square marker instead of a curved arc to indicate a 90° angle.")
-					})
-					.strict()
-			)
-			.describe("An array of angles to be highlighted and labeled on the diagram.")
+			.describe("rays that form angles"),
+		angles: z.array(Angle).describe("angles to highlight")
 	})
 	.strict()
 	.describe(
-		"Generates an SVG diagram of angles formed by rays originating from vertices. This widget is highly flexible and ideal for a wide range of geometry problems, including questions about angle relationships (complementary, supplementary, vertical), finding unknown angles in a figure, and basic angle identification."
+		"creates geometric diagrams showing angles formed by rays meeting at vertices. supports both general angles (with arcs) and right angles (with squares)."
 	)
 
 export type AngleDiagramProps = z.infer<typeof AngleDiagramPropsSchema>
@@ -156,9 +146,9 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 		svg += `<line x1="${from.x}" y1="${from.y}" x2="${to.x}" y2="${to.y}" stroke="black" stroke-width="2"/>`
 	}
 
-	// Draw angles
+	// draw angles
 	for (const angle of angles) {
-		// Validate vertex count
+		// validate vertex count
 		if (angle.vertices.length !== 3) {
 			throw errors.wrap(ErrInvalidAngleVertexCount, `expected 3 vertices, got ${angle.vertices.length}`)
 		}
@@ -166,15 +156,14 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 		const v0 = angle.vertices[0]
 		const v1 = angle.vertices[1]
 		const v2 = angle.vertices[2]
-		if (!v0 || !v1 || !v2) continue
-
 		const p1 = pointMap.get(v0)
 		const vertex = pointMap.get(v1)
 		const p2 = pointMap.get(v2)
+		if (!p1 || !vertex || !p2) {
+			continue
+		}
 
-		if (!p1 || !vertex || !p2) continue
-
-		if (angle.isRightAngle) {
+		if (angle.type === "right") {
 			const v1x = p1.x - vertex.x
 			const v1y = p1.y - vertex.y
 			const mag1 = Math.sqrt(v1x * v1x + v1y * v1y)
@@ -196,11 +185,12 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			const m3y = vertex.y + (u1y + u2y) * markerSize
 
 			svg += `<path d="M ${m1x} ${m1y} L ${m3x} ${m3y} L ${m2x} ${m2y}" fill="none" stroke="${angle.color}" stroke-width="2"/>`
-		} else {
+		}
+
+		if (angle.type === "arc") {
 			const startAngle = Math.atan2(p1.y - vertex.y, p1.x - vertex.x)
 			const endAngle = Math.atan2(p2.y - vertex.y, p2.x - vertex.x)
 
-			// Push arcs slightly away from the vertex for clearer readability
 			const ARC_OFFSET = 6
 			const effectiveRadius = angle.radius + ARC_OFFSET
 			const arcStartX = vertex.x + effectiveRadius * Math.cos(startAngle)
@@ -218,59 +208,32 @@ export const generateAngleDiagram: WidgetGenerator<typeof AngleDiagramPropsSchem
 			svg += `<path d="M ${arcStartX} ${arcStartY} A ${angle.radius} ${angle.radius} 0 ${largeArcFlag} ${sweepFlag} ${arcEndX} ${arcEndY}" fill="none" stroke="${angle.color}" stroke-width="2.5"/>`
 		}
 
-		if (angle.label) {
+		if (angle.label !== "") {
 			let startAngle = Math.atan2(p1.y - vertex.y, p1.x - vertex.x)
 			let endAngle = Math.atan2(p2.y - vertex.y, p2.x - vertex.x)
-
-			// Calculate the angle difference and ensure we always take the interior/smaller angle
 			let angleDiff = endAngle - startAngle
-
-			// Normalize to [-π, π] range
 			while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
 			while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI
-
-			// Always use the smaller angle (interior angle)
 			if (Math.abs(angleDiff) > Math.PI) {
 				angleDiff = angleDiff > 0 ? angleDiff - 2 * Math.PI : angleDiff + 2 * Math.PI
 			}
-
 			const angleSize = Math.abs(angleDiff)
+			const midAngle = startAngle + angleDiff / 2
 
-			// Calculate the bisector angle (always points into the interior of the angle)
-			let midAngle: number
-			if (angleDiff >= 0) {
-				// Counter-clockwise from startAngle to endAngle
-				midAngle = startAngle + angleDiff / 2
-			} else {
-				// Clockwise from startAngle to endAngle
-				midAngle = startAngle + angleDiff / 2
-			}
-
-			// Smart label positioning based on angle size and label length
 			let labelRadius: number
-
-			if (angle.isRightAngle) {
+			if (angle.type === "right") {
 				labelRadius = 25
 			} else {
-				// Keep label a bit beyond the (offset) arc for clarity
 				const ARC_OFFSET = 6
 				const baseLabelRadius = angle.radius + ARC_OFFSET + 8
-				const FONT_SIZE_ESTIMATE = 14 // Based on the SVG font-size
-				const CLEARANCE_PX = FONT_SIZE_ESTIMATE * 0.7 // Clearance needed for text
-
-				// For very small angles, sin() approaches 0, which can cause radius to be infinite.
-				// We only apply this logic if the angle is wide enough to avoid division by zero.
+				const FONT_SIZE_ESTIMATE = 14
+				const CLEARANCE_PX = FONT_SIZE_ESTIMATE * 0.7
 				if (Math.sin(angleSize / 2) > 0.01) {
-					// Calculate the minimum radius needed to avoid the label touching the angle's lines
 					const minRadiusForClearance = CLEARANCE_PX / Math.sin(angleSize / 2)
-					// The label radius is the larger of the aesthetic default or the calculated minimum
 					labelRadius = Math.max(baseLabelRadius, minRadiusForClearance)
 				} else {
-					// Fallback for extremely small angles
 					labelRadius = baseLabelRadius
 				}
-
-				// Additional spacing for long labels
 				const isLongLabel = angle.label.length > 3
 				if (isLongLabel) {
 					const extraSpacing = angle.label.length > 4 ? (angle.label.length - 4) * 3 : 0

@@ -46,24 +46,60 @@ const SphereDataSchema = z
 	})
 	.strict()
 
-// Defines the intersecting plane's properties
-const PlaneSchema = z
-	.object({
-		orientation: z.enum(["horizontal", "vertical", "oblique"]).describe("The orientation of the intersecting plane."),
-		position: z
-			.number()
-			.min(0)
-			.max(1)
-			.describe("The position of the slice as a fraction (0.0 = bottom/back, 1.0 = top/front)."),
-		angle: z
-			.number()
-			.min(-90)
-			.max(90)
-			.nullable()
-			.transform((val) => val ?? 0)
-			.describe("The angle in degrees for oblique planes (0 = horizontal, 90 = vertical).")
-	})
-	.strict()
+// Defines the intersecting plane's properties as a discriminated union
+const PlaneSchema = z.discriminatedUnion("orientation", [
+	z
+		.object({
+			orientation: z
+				.literal("horizontal")
+				.describe("A plane parallel to the base, cutting through the solid horizontally like slicing a cake layer."),
+			position: z
+				.number()
+				.min(0)
+				.max(1)
+				.describe(
+					"The relative position along the solid's height where the plane intersects (0 = bottom, 0.5 = middle, 1 = top)."
+				)
+		})
+		.strict(),
+	z
+		.object({
+			orientation: z
+				.literal("vertical")
+				.describe(
+					"A plane perpendicular to the base, cutting through the solid vertically like slicing a loaf of bread."
+				),
+			position: z
+				.number()
+				.min(0)
+				.max(1)
+				.describe(
+					"The relative position along the solid's width/depth where the plane intersects (0 = back/left, 0.5 = center, 1 = front/right)."
+				)
+		})
+		.strict(),
+	z
+		.object({
+			orientation: z
+				.literal("oblique")
+				.describe("A plane at an angle, neither purely horizontal nor vertical, creating diagonal cross-sections."),
+			position: z
+				.number()
+				.min(0)
+				.max(1)
+				.describe(
+					"The relative position where the plane's center intersects the solid (0 = near bottom/left, 0.5 = center, 1 = near top/right)."
+				),
+			angle: z
+				.number()
+				.min(-90)
+				.max(90)
+				.describe(
+					"The tilt angle in degrees from horizontal (-90 = steep downward, 0 = horizontal, 45 = diagonal upward, 90 = steep upward)."
+				)
+		})
+		.strict()
+])
 
 // The main Zod schema for the 3dIntersectionDiagram function
 export const ThreeDIntersectionDiagramPropsSchema = z
@@ -72,15 +108,15 @@ export const ThreeDIntersectionDiagramPropsSchema = z
 		width: z
 			.number()
 			.positive()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total width of the output SVG container in pixels."),
+			.describe(
+				"The total width of the output SVG in pixels. Must accommodate the 3D projection (e.g., 400, 600, 500)."
+			),
 		height: z
 			.number()
 			.positive()
-			.nullable()
-			.transform((val) => val ?? 400)
-			.describe("The total height of the output SVG container in pixels."),
+			.describe(
+				"The total height of the output SVG in pixels. Should be proportional to the solid's dimensions (e.g., 300, 400, 350)."
+			),
 		solid: z
 			.discriminatedUnion("type", [
 				RectangularPrismDataSchema,
@@ -97,29 +133,21 @@ export const ThreeDIntersectionDiagramPropsSchema = z
 					.number()
 					.min(0)
 					.max(90)
-					.nullable()
-					.transform((val) => val ?? 45)
-					.describe("The angle in degrees for the oblique projection of the z-axis."),
+					.describe(
+						"The isometric projection angle in degrees for the 3D view (0 = straight-on side view, 30 = standard isometric, 45 = cabinet projection, 90 = top-down)."
+					),
 				intersectionColor: z
 					.string()
-					.nullable()
-					.transform((val) => val ?? "rgba(217, 95, 79, 0.8)")
-					.describe("The fill color of the resulting 2D cross-section."),
-				showHiddenEdges: z.boolean().describe("If true, render edges hidden from view as dashed lines."),
-				showLabels: z.boolean().describe("If true, show dimension labels on the solid.")
+					.describe("The fill color for the cross-section area where the plane cuts the solid. Use CSS color format."),
+				showHiddenEdges: z
+					.boolean()
+					.describe("Whether to show edges that would be hidden behind the solid as dashed lines."),
+				showLabels: z
+					.boolean()
+					.describe("Whether to display measurement labels on the solid's dimensions and the cross-section.")
 			})
 			.strict()
-			.nullable()
-			.transform(
-				(val) =>
-					val ?? {
-						projectionAngle: 45,
-						intersectionColor: "rgba(217, 95, 79, 0.8)",
-						showHiddenEdges: true,
-						showLabels: false
-					}
-			)
-			.describe("Optional settings for controlling the visual output.")
+			.describe("Visual presentation options that control how the 3D solid and its cross-section are rendered.")
 	})
 	.strict()
 	.describe(
