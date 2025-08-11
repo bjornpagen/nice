@@ -448,8 +448,25 @@ export function AssessmentStepper({
 			// are logged in the centralized calculateAssessmentXp function
 
 			// Create metadata object
+			// Mastered units policy (align with XP thresholds):
+			// - Exercise: >= 80% accuracy
+			// - Quiz: >= 80% accuracy
+			// - Test (includes Course Challenge): >= 90% accuracy
+			const masteredUnits = (() => {
+				if (contentType === "Exercise") {
+					return accuracy >= 80 ? 1 : 0
+				}
+				if (contentType === "Quiz") {
+					return accuracy >= 80 ? 1 : 0
+				}
+				if (contentType === "Test") {
+					return accuracy >= 90 ? 1 : 0
+				}
+				return 0
+			})()
+
 			const metadata = {
-				masteredUnits: (contentType === "Test" || contentType === "Quiz") && accuracy >= 90 ? 1 : 0,
+				masteredUnits,
 				totalQuestions: finalTotalQuestions,
 				correctQuestions: correctAnswersCount,
 				accuracy: accuracy,
