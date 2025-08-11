@@ -4,9 +4,9 @@ import { BookCheck, ChevronRight, FileText, PenTool, Play, TestTube } from "luci
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import * as React from "react"
-import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import type { AssessmentProgress } from "@/lib/data/progress"
 import type {
 	CourseResourceMaterial,
 	CourseUnitMaterial,
@@ -18,16 +18,17 @@ import { assertNoEncodedColons, normalizeString } from "@/lib/utils"
 
 interface LessonFooterProps {
 	coursePromise: Promise<CourseV2 | undefined>
+	progressPromise: Promise<Map<string, AssessmentProgress>>
 	resourceLockStatusPromise?: Promise<Record<string, boolean>>
 }
 
-export function LessonFooter({ coursePromise, resourceLockStatusPromise }: LessonFooterProps) {
+export function LessonFooter({ coursePromise, progressPromise, resourceLockStatusPromise }: LessonFooterProps) {
 	const rawPathname = usePathname()
 	const pathname = normalizeString(rawPathname)
 	// Assert on the normalized path to ensure correctness before use.
 	assertNoEncodedColons(pathname, "lesson-footer pathname")
 	const course = React.use(coursePromise)
-	const { isCurrentResourceCompleted, setCurrentResourceCompleted } = useLessonProgress()
+	const progressMap = React.use(progressPromise)
 
 	if (!course) {
 		return null
@@ -59,11 +60,13 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 	let nextItem: LessonResource | CourseUnitMaterial | CourseResourceMaterial | null = null
 	let currentResourceType: "Video" | "Article" | "Exercise" | "Quiz" | "UnitTest" | "CourseChallenge" | undefined
 
+	let currentResourceId: string | undefined
 	if (currentMaterial.type === "Lesson") {
 		// Find current resource within the lesson
 		const currentResourceIndex = currentMaterial.resources.findIndex((resource) => resource.path === pathname)
 		const currentResource = currentMaterial.resources[currentResourceIndex]
 		currentResourceType = currentResource?.type
+		currentResourceId = currentResource?.id
 
 		if (currentResourceIndex >= 0 && currentResourceIndex < currentMaterial.resources.length - 1) {
 			// Next resource in same lesson
@@ -96,8 +99,7 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 		return null
 	}
 
-	// If lock status is available, use it to inform UI, but do not block progression locally
-	// once the current resource has been completed in this session (article/video cases).
+	// If lock status is available, use it to inform UI; video/article progression is unlocked when the server marks completion
 	const resourceLockStatus = React.use(resourceLockStatusPromise ?? Promise.resolve<Record<string, boolean>>({}))
 	const nextLockedByServer = resourceLockStatus ? resourceLockStatus[nextItem.id] === true : false
 
@@ -135,17 +137,15 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 		}
 	}
 
-	// Compute UI state messaging and optional action for incomplete states
-	// Allow progression immediately after local completion for articles/videos,
-	// even if the server-side lock map hasn't reflected it yet.
+	// Compute UI state from server progress only. Video completion comes from OneRoster via updateVideoProgress.
+	// Articles do not currently produce server-side completion; allow navigation regardless.
 	const isArticle = currentResourceType === "Article"
-	const showDisabled = isArticle ? false : !isCurrentResourceCompleted
+	const isServerCompleted = currentResourceId ? Boolean(progressMap.get(currentResourceId)?.completed) : false
+	const showDisabled = isArticle ? false : !isServerCompleted
 	let disabledReason = ""
-	if (!isCurrentResourceCompleted) {
+	if (!isServerCompleted && !isArticle) {
 		if (currentResourceType === "Video") {
 			disabledReason = "Finish the video to continue"
-		} else if (currentResourceType === "Article") {
-			disabledReason = "Mark this article as read to continue"
 		} else {
 			disabledReason = "Complete this activity to continue"
 		}
@@ -153,13 +153,9 @@ export function LessonFooter({ coursePromise, resourceLockStatusPromise }: Lesso
 		disabledReason = "Complete the previous activity to unlock next"
 	}
 
-	const primaryButtonLabel = isArticle ? "Done Reading" : "Continue"
-	const shouldNavigate = isArticle ? isCurrentResourceCompleted : !showDisabled
-	const handlePrimaryClick = () => {
-		if (isArticle && !isCurrentResourceCompleted) {
-			setCurrentResourceCompleted(true)
-		}
-	}
+	const primaryButtonLabel = isArticle ? (isServerCompleted ? "Continue" : "Done Reading") : "Continue"
+	const shouldNavigate = isArticle ? true : !showDisabled
+	const handlePrimaryClick = () => {}
 
 	return (
 		<div className="bg-white border-t border-gray-200 shadow-lg">

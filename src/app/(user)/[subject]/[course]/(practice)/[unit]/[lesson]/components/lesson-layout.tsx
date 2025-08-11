@@ -3,6 +3,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 import * as React from "react"
+import { LessonFooter } from "@/app/(user)/[subject]/[course]/(practice)/[unit]/[lesson]/components/lesson-footer"
 import { Sidebar } from "@/components/practice/course/sidebar/sidebar"
 import { LessonProgressProvider } from "@/components/practice/lesson-progress-context"
 import { Button } from "@/components/ui/button"
@@ -10,7 +11,6 @@ import type { AssessmentProgress } from "@/lib/data/progress"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
 import { assertNoEncodedColons, normalizeString } from "@/lib/utils"
-import { LessonFooter } from "./lesson-footer"
 
 export function LessonLayout({
 	dataPromise,
@@ -71,15 +71,19 @@ export function LessonLayout({
 					<span className="sr-only">Toggle Sidebar</span>
 				</Button>
 
-				{/* Content area - scrollable */}
-				<div className="flex-1 overflow-y-auto bg-gray-50">
-					<LessonProgressProvider>{children}</LessonProgressProvider>
-				</div>
+				{/* Content area + footer share the same lesson progress context */}
+				<LessonProgressProvider>
+					<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 
-				{/* Conditionally render LessonFooter */}
-				{shouldShowNext && (
-					<LessonFooter coursePromise={coursePromise} resourceLockStatusPromise={resourceLockStatusPromise} />
-				)}
+					{/* Conditionally render LessonFooter */}
+					{shouldShowNext && (
+						<LessonFooter
+							coursePromise={coursePromise}
+							progressPromise={progressPromise}
+							resourceLockStatusPromise={resourceLockStatusPromise}
+						/>
+					)}
+				</LessonProgressProvider>
 			</div>
 		</div>
 	)
