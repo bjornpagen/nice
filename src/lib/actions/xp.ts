@@ -75,27 +75,16 @@ export async function awardBankedXpForAssessment(
 		resourceMap.set(resource.sourcedId, resource)
 	}
 
-	// Find the previous quiz using proper metadata-based detection (not string matching)
+	// Find the previous quiz using interactive metadata-based detection
 	let previousQuizSortOrder = -1
 	let detectedQuizzes = 0
 	for (const cr of unitCrResult.data) {
 		const resource = resourceMap.get(cr.resource.sourcedId)
-		if (resource?.metadata?.type === "qti") {
-			logger.debug("evaluating qti resource for quiz detection", {
-				resourceId: resource.sourcedId,
-				resourceType: resource.metadata.type,
-				khanLessonType: resource.metadata.khanLessonType,
-				sortOrder: cr.sortOrder,
-				isCurrentQuiz: resource.sourcedId === quizResourceId
-			})
-		}
+		const isInteractiveQuiz = resource?.metadata?.type === "interactive" && resource?.metadata?.activityType === "Quiz"
 
-		// FIXED: Use proper metadata checking like the original implementation
-		// Quizzes have type="qti" AND khanLessonType="quiz"
 		if (
 			resource &&
-			resource.metadata?.type === "qti" &&
-			resource.metadata?.khanLessonType === "quiz" &&
+			isInteractiveQuiz &&
 			resource.sourcedId !== quizResourceId &&
 			cr.sortOrder < quizSortOrder &&
 			cr.sortOrder > previousQuizSortOrder
@@ -128,12 +117,8 @@ export async function awardBankedXpForAssessment(
 		throw errors.wrap(unitComponentsResult.error, "unit components fetch")
 	}
 
-	// FIXED: Add back the lesson type filtering to exclude quizzes and unit tests
+	// Exclude assessment components positioned as lessons based on heuristic of sort order window only.
 	const lessons = unitComponentsResult.data.filter((component) => {
-		// CRITICAL: Don't treat quizzes/unit-tests as lessons (restored from original)
-		if (component.metadata?.khanLessonType === "quiz" || component.metadata?.khanLessonType === "unit-test") {
-			return false
-		}
 		return component.sortOrder > previousQuizSortOrder && component.sortOrder < quizSortOrder
 	})
 
@@ -179,9 +164,10 @@ export async function awardBankedXpForAssessment(
 		const expectedXp = typeof metadata?.xp === "number" ? metadata.xp : 0
 		if (expectedXp <= 0) continue
 
-		if (metadata?.type === "qti" && metadata?.subType === "qti-stimulus") {
+		// Update detection logic for Articles and Videos - all resources are interactive now
+		if (metadata?.activityType === "Article") {
 			articleResources.push({ sourcedId: resource.sourcedId, expectedXp, type: "article" })
-		} else if (metadata?.type === "video") {
+		} else if (metadata?.activityType === "Video") {
 			videoResources.push({ sourcedId: resource.sourcedId, expectedXp, type: "video" })
 		}
 	}

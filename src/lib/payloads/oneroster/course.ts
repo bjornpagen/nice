@@ -169,6 +169,16 @@ const getAllSubjectsQuery = db
 export async function generateCoursePayload(courseId: string): Promise<OneRosterPayload> {
 	logger.info("starting oneroster payload generation", { courseId })
 
+	// Guard: Ensure base domain for launchUrl is configured
+	if (!env.NEXT_PUBLIC_APP_DOMAIN || typeof env.NEXT_PUBLIC_APP_DOMAIN !== "string") {
+		logger.error("CRITICAL: NEXT_PUBLIC_APP_DOMAIN is not configured or invalid", {
+			NEXT_PUBLIC_APP_DOMAIN: env.NEXT_PUBLIC_APP_DOMAIN
+		})
+		throw errors.new("configuration: NEXT_PUBLIC_APP_DOMAIN is required for interactive launchUrl")
+	}
+	// Normalize domain (remove trailing slash) to avoid double slashes
+	const appDomain = env.NEXT_PUBLIC_APP_DOMAIN.replace(/\/$/, "")
+
 	// 1. Fetch the root course and all subjects in parallel.
 	const [courseResult, subjectsResult] = await Promise.all([
 		errors.try(getCourseByIdQuery.execute({ courseId })),
@@ -463,41 +473,46 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							khanId: content.id,
 							khanSlug: content.slug,
 							khanTitle: content.title,
-							khanDescription: content.description
+							khanDescription: content.description,
+							// Construct the base path for the launchUrl
+							path: `/${subjectSlug}/${course.slug}/${unit.slug}/${lesson.slug}`
 						}
 
 						if (lc.contentType === "Article") {
-							// Articles should be QTI Stimulus
+							// CHANGE: Convert Articles to interactive type
 							metadata = {
 								...metadata,
-								type: "qti",
-								subType: "qti-stimulus",
-								version: "3.0",
-								language: "en-US",
-								url: `${env.TIMEBACK_QTI_SERVER_URL}/stimuli/nice_${content.id}`,
-								xp: 2 // CHANGED: Articles are now worth 2 XP each
+								type: "interactive",
+								toolProvider: "Nice Academy",
+								activityType: "Article",
+								launchUrl: `${appDomain}${metadata.path}/a/${content.slug}`,
+								xp: 2
 							}
 						} else if (lc.contentType === "Video") {
-							// Videos need proper URL
+							// CHANGE: Convert Videos to interactive type
 							const videoData = videos.find((v) => v.id === content.id)
+							if (!videoData?.youtubeId) {
+								logger.error("CRITICAL: Missing youtubeId for video", { contentId: content.id, slug: content.slug })
+								throw errors.new("video metadata: youtubeId is required for interactive video resource")
+							}
 							metadata = {
 								...metadata,
-								type: "video",
-								format: "youtube",
-								url: `https://www.youtube.com/watch?v=${videoData?.youtubeId}`,
-								xp: videoData?.duration ? Math.ceil(videoData.duration / 60) : 0 // 1 XP per minute (rounded up)
+								type: "interactive",
+								toolProvider: "Nice Academy",
+								activityType: "Video",
+								launchUrl: `${appDomain}${metadata.path}/v/${content.slug}`,
+								youtubeId: videoData.youtubeId,
+								xp: videoData?.duration ? Math.ceil(videoData.duration / 60) : 0
 							}
 						} else if (lc.contentType === "Exercise") {
-							// Exercises might need QTI test URLs
+							// CHANGE: Convert Exercises to interactive type
 							metadata = {
 								...metadata,
-								type: "qti",
-								subType: "qti-test",
-								version: "3.0",
-								questionType: "custom",
-								language: "en-US",
-								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${content.id}`,
-								xp: 3 // CHANGED: Exercises are now worth 3 XP each
+								type: "interactive",
+								toolProvider: "Nice Academy",
+								activityType: "Exercise",
+								launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
+								xp: 3
 							}
 						}
 
@@ -550,9 +565,21 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		for (const assessment of unitAssessments) {
 			const assessmentSourcedId = `nice_${assessment.id}`
 			if (!resourceSet.has(assessmentSourcedId)) {
-				// Calculate XP based on number of exercises in the assessment
 				const exerciseCount = exercisesByAssessmentId.get(assessment.id)?.length || 0
-				const assessmentXp = exerciseCount * 1 // CHANGED: XP is now exercises × 1
+				const assessmentXp = exerciseCount * 1
+
+				// CHANGE: Convert Assessments to interactive type
+				const pathSegment = assessment.type === "UnitTest" || assessment.type === "CourseChallenge" ? "test" : "quiz"
+				const lastLessonInUnit = unitLessons[unitLessons.length - 1]
+				if (!lastLessonInUnit) {
+					logger.error("CRITICAL: No lessons found in unit for assessment launchUrl", {
+						unitId: unit.id,
+						assessmentId: assessment.id,
+						assessmentType: assessment.type
+					})
+					throw errors.new("assessment launchUrl: unit has no lessons to anchor path")
+				}
+				const launchUrl = `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/${lastLessonInUnit.slug}/${pathSegment}/${assessment.slug}`
 
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
@@ -564,19 +591,16 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					roles: ["primary"],
 					importance: "primary",
 					metadata: {
-						type: "qti",
-						subType: "qti-test",
-						version: "3.0",
-						questionType: "custom",
-						language: "en-US",
-						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
+						type: "interactive",
+						toolProvider: "Nice Academy",
+						activityType: assessment.type,
+						launchUrl: launchUrl,
 						// Khan-specific data
 						khanId: assessment.id,
 						khanSlug: normalizeKhanSlug(assessment.slug),
 						khanTitle: assessment.title,
 						khanDescription: assessment.description,
-						khanLessonType: assessment.type.toLowerCase(),
-						xp: assessmentXp // XP based on number of exercises
+						xp: assessmentXp
 					}
 				})
 				resourceSet.add(assessmentSourcedId)
@@ -618,9 +642,12 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		for (const assessment of courseAssessments.sort((a, b) => a.ordering - b.ordering)) {
 			const assessmentSourcedId = `nice_${assessment.id}`
 			if (!resourceSet.has(assessmentSourcedId)) {
-				// Calculate XP based on number of exercises in the assessment
 				const exerciseCount = exercisesByAssessmentId.get(assessment.id)?.length || 0
-				const assessmentXp = exerciseCount * 1 // CHANGED: XP is now exercises × 1
+				const assessmentXp = exerciseCount * 1
+
+				// CHANGE: Convert Course Assessments to interactive type
+				const pathSegment = assessment.type === "UnitTest" || assessment.type === "CourseChallenge" ? "test" : "quiz"
+				const launchUrl = `${appDomain}/${subjectSlug}/${course.slug}/${pathSegment}/${assessment.slug}`
 
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
@@ -632,19 +659,16 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					roles: ["primary"],
 					importance: "primary",
 					metadata: {
-						type: "qti",
-						subType: "qti-test",
-						version: "3.0",
-						questionType: "custom",
-						language: "en-US",
-						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
+						type: "interactive",
+						toolProvider: "Nice Academy",
+						activityType: assessment.type,
+						launchUrl: launchUrl,
 						// Khan-specific data
 						khanId: assessment.id,
 						khanSlug: normalizeKhanSlug(assessment.slug),
 						khanTitle: assessment.title,
 						khanDescription: assessment.description,
-						khanLessonType: assessment.type.toLowerCase(),
-						xp: assessmentXp // XP based on number of exercises
+						xp: assessmentXp
 					}
 				})
 				resourceSet.add(assessmentSourcedId)

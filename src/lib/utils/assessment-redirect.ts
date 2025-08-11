@@ -138,8 +138,7 @@ export async function findAssessmentRedirectPath(params: AssessmentRedirectParam
 		return (
 			metadataResult.success &&
 			metadataResult.data.khanSlug === params.assessment && // Use decoded value!
-			metadataResult.data.type === "qti" &&
-			metadataResult.data.khanLessonType === params.assessmentType
+			metadataResult.data.activityType === (params.assessmentType === "quiz" ? "Quiz" : "UnitTest")
 		)
 	})
 

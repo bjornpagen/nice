@@ -238,12 +238,7 @@ export async function fetchCoursePageData(
 	const exerciseResourceSourcedIds = new Set<string>()
 	for (const resource of allResources) {
 		const metadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
-		if (
-			metadataResult.success &&
-			metadataResult.data.type === "qti" &&
-			metadataResult.data.subType === "qti-test" &&
-			!metadataResult.data.khanLessonType
-		) {
+		if (metadataResult.success && metadataResult.data.activityType === "Exercise") {
 			exerciseResourceSourcedIds.add(resource.sourcedId)
 		}
 	}
@@ -316,12 +311,8 @@ export async function fetchCoursePageData(
 			}
 			const resourceMetadata = resourceMetadataResult.data
 
-			if (
-				resourceMetadata.type === "qti" &&
-				resourceMetadata.subType === "qti-test" &&
-				resourceMetadata.khanLessonType
-			) {
-				const assessmentType = resourceMetadata.khanLessonType === "unittest" ? "UnitTest" : "Quiz"
+			if (resourceMetadata.activityType === "Quiz" || resourceMetadata.activityType === "UnitTest") {
+				const assessmentType = resourceMetadata.activityType
 
 				// Find the component resource to get sortOrder
 				const componentResource = componentResources.find(
@@ -408,19 +399,12 @@ export async function fetchCoursePageData(
 					throw errors.new(`component resource not found for lesson ${lesson.id} resource ${resource.sourcedId}`)
 				}
 
-				if (resourceMetadata.type === "video") {
-					const youtubeUrl = resourceMetadata.url
-					if (!youtubeUrl) {
-						logger.error("video missing YouTube URL", { videoSourcedId: resource.sourcedId })
-						throw errors.new("video missing YouTube URL")
+				if (resourceMetadata.activityType === "Video") {
+					const youtubeId = resourceMetadata.youtubeId
+					if (!youtubeId) {
+						logger.error("video missing YouTube ID", { videoSourcedId: resource.sourcedId })
+						throw errors.new("video missing YouTube ID")
 					}
-
-					const youtubeMatch = youtubeUrl.match(/[?&]v=([^&]+)/)
-					if (!youtubeMatch || !youtubeMatch[1]) {
-						logger.error("video has invalid youtube url", { videoSourcedId: resource.sourcedId, url: youtubeUrl })
-						throw errors.new(`video ${resource.sourcedId} has invalid youtube url`)
-					}
-					const youtubeId = youtubeMatch[1]
 
 					// Get lesson slug for path construction
 					const lessonComponentMeta = ComponentMetadataSchema.safeParse(
@@ -438,13 +422,13 @@ export async function fetchCoursePageData(
 						slug: resourceMetadata.khanSlug,
 						description: resourceMetadata.khanDescription,
 						youtubeId: youtubeId,
-						duration: resourceMetadata.duration,
+
 						type: "Video" as const,
 						sortOrder: componentResource.sortOrder,
 						ordering: componentResource.sortOrder,
 						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 					})
-				} else if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-stimulus") {
+				} else if (resourceMetadata.activityType === "Article") {
 					// This is an article
 					// Get lesson slug for path construction
 					const lessonComponentMeta = ComponentMetadataSchema.safeParse(
@@ -466,11 +450,7 @@ export async function fetchCoursePageData(
 						ordering: componentResource.sortOrder,
 						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 					})
-				} else if (
-					resourceMetadata.type === "qti" &&
-					resourceMetadata.subType === "qti-test" &&
-					!resourceMetadata.khanLessonType
-				) {
+				} else if (resourceMetadata.activityType === "Exercise") {
 					// This is an exercise
 					// Get lesson slug for path construction
 					const lessonComponentMeta = ComponentMetadataSchema.safeParse(
@@ -636,11 +616,7 @@ export async function fetchCoursePageData(
 			const resourceMetadata = resourceMetadataResult.data
 
 			// Check if this is a course challenge resource
-			if (
-				resourceMetadata.type === "qti" &&
-				resourceMetadata.subType === "qti-test" &&
-				resourceMetadata.khanLessonType === "coursechallenge"
-			) {
+			if (resourceMetadata.activityType === "CourseChallenge") {
 				// The ResourceMetadataSchema transform drops the path field, so we reconstruct it
 				// from slugs, adhering to our architectural pattern.
 				const challengePath = `/${params.subject}/${params.course}/test/${resourceMetadata.khanSlug}`

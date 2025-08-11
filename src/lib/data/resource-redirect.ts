@@ -21,47 +21,54 @@ export async function findResourcePath(slug: string, type: ResourceType): Promis
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(slug, "findResourcePath slug parameter")
 
-	// Step 1: Find the resource by slug and type
-	const onerosterType = type === "article" || type === "exercise" ? "qti" : "video"
-
-	const resourcesResult = await errors.try(getResourcesBySlugAndType(slug, onerosterType))
+	// Step 1: Find the resource by slug and type - everything is interactive now
+	const resourcesResult = await errors.try(getResourcesBySlugAndType(slug, "interactive"))
 	if (resourcesResult.error) {
 		logger.error("failed to find resource by slug", { slug, type, error: resourcesResult.error })
 		return null
 	}
 
-	// For exercises and articles (both QTI), we need to filter further
+	// For exercises, articles, and videos (all interactive), we need to filter by activityType
 	let resource = null
 	if (type === "exercise") {
-		// Filter to only exercises (QTI resources without khanLessonType)
+		// Filter to only exercises (interactive resources with activityType "Exercise")
 		for (const r of resourcesResult.data) {
 			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
 			if (
 				metadataResult.success &&
-				metadataResult.data.type === "qti" &&
-				metadataResult.data.subType === "qti-test" &&
-				!metadataResult.data.khanLessonType
+				metadataResult.data.type === "interactive" &&
+				metadataResult.data.activityType === "Exercise"
 			) {
 				resource = r
 				break
 			}
 		}
 	} else if (type === "article") {
-		// Filter to only articles (QTI stimulus resources)
+		// Filter to only articles (interactive resources with activityType "Article")
 		for (const r of resourcesResult.data) {
 			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
 			if (
 				metadataResult.success &&
-				metadataResult.data.type === "qti" &&
-				metadataResult.data.subType === "qti-stimulus"
+				metadataResult.data.type === "interactive" &&
+				metadataResult.data.activityType === "Article"
 			) {
 				resource = r
 				break
 			}
 		}
 	} else {
-		// For videos, just take the first one
-		resource = resourcesResult.data[0] || null
+		// For videos, filter to interactive resources with activityType "Video"
+		for (const r of resourcesResult.data) {
+			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
+			if (
+				metadataResult.success &&
+				metadataResult.data.type === "interactive" &&
+				metadataResult.data.activityType === "Video"
+			) {
+				resource = r
+				break
+			}
+		}
 	}
 
 	if (!resource) {

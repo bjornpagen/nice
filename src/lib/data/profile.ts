@@ -514,10 +514,10 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 						const resourceMetadata = resourceMetadataResult.data
 
 						// Check if this is an assessable resource (exercise, quiz, or test)
-						if (resourceMetadata.type === "qti" && resourceMetadata.subType === "qti-test") {
+						if (resourceMetadata.activityType === "UnitTest" || resourceMetadata.activityType === "Quiz") {
 							if (componentResource.courseComponent.sourcedId === unit.id) {
 								// This is a unit-level assessment
-								if (resourceMetadata.khanLessonType === "unittest") {
+								if (resourceMetadata.activityType === "UnitTest") {
 									unitAssessments.push({
 										type: "UnitTest",
 										id: resource.sourcedId,
@@ -525,7 +525,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 										path: "", // Will be set later
 										sortOrder: componentResource.sortOrder
 									})
-								} else if (resourceMetadata.khanLessonType?.includes("quiz")) {
+								} else if (resourceMetadata.activityType === "Quiz") {
 									unitAssessments.push({
 										type: "Quiz",
 										id: resource.sourcedId,
@@ -534,19 +534,19 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 										sortOrder: componentResource.sortOrder
 									})
 								}
-							} else {
-								// This is a lesson-level exercise
-								const lesson = unitLessons.find((l) => l.id === componentResource.courseComponent.sourcedId)
-								if (lesson && !resourceMetadata.khanLessonType) {
-									// Only exercises (no lesson type) count as assessable within lessons
-									lesson.children.push({
-										type: "Exercise",
-										id: resource.sourcedId,
-										title: resource.title,
-										path: "", // Will be set later
-										sortOrder: componentResource.sortOrder
-									})
-								}
+							}
+						} else if (resourceMetadata.activityType === "Exercise") {
+							// This is a lesson-level exercise
+							const lesson = unitLessons.find((l) => l.id === componentResource.courseComponent.sourcedId)
+							if (lesson) {
+								// Only exercises count as assessable within lessons
+								lesson.children.push({
+									type: "Exercise",
+									id: resource.sourcedId,
+									title: resource.title,
+									path: "", // Will be set later
+									sortOrder: componentResource.sortOrder
+								})
 							}
 						}
 					}

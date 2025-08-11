@@ -234,8 +234,12 @@ export async function getAllResources() {
 	return redisCache(operation, ["oneroster-getAllResources"], { revalidate: 3600 * 24 }) // 24-hour cache
 }
 
-export async function getResourcesBySlugAndType(slug: string, type: "qti" | "video", lessonType?: "quiz" | "unittest") {
-	logger.info("getResourcesBySlugAndType called", { slug, type, lessonType })
+export async function getResourcesBySlugAndType(
+	slug: string,
+	type: "interactive",
+	activityType?: "Article" | "Video" | "Exercise" | "Quiz" | "UnitTest" | "CourseChallenge"
+) {
+	logger.info("getResourcesBySlugAndType called", { slug, type, activityType })
 	const operation = async () => {
 		// Due to OneRoster API limitation, we can only use one AND operation
 		// Keep filtering by slug as it's reasonably selective, type filter is quick client-side
@@ -248,35 +252,20 @@ export async function getResourcesBySlugAndType(slug: string, type: "qti" | "vid
 		// Filter by type in-memory
 		let filtered = activeResources.filter((r) => r.metadata?.type === type)
 
-		// Filter by lessonType in-memory if specified
-		if (lessonType) {
-			filtered = filtered.filter((r) => r.metadata?.khanLessonType === lessonType)
+		// Filter by activityType in-memory if specified
+		if (activityType) {
+			filtered = filtered.filter((r) => r.metadata?.activityType === activityType)
 		}
 
 		return filtered
 	}
-	const keyParts = lessonType
-		? ["oneroster-getResourcesBySlugAndType", slug, type, lessonType]
+	const keyParts = activityType
+		? ["oneroster-getResourcesBySlugAndType", slug, type, activityType]
 		: ["oneroster-getResourcesBySlugAndType", slug, type]
 	return redisCache(operation, keyParts, { revalidate: 3600 * 24 }) // 24-hour cache
 }
 
-export async function getResourceByCourseAndSlug(courseSourcedId: string, slug: string, type: "qti") {
-	logger.info("getResourceByCourseAndSlug called", { courseSourcedId, slug, type })
-	const operation = async () => {
-		// Due to OneRoster API limitation, we can only use one AND operation
-		// Keep filtering by slug as it's the most selective publicly queryable field
-		const filter = `metadata.khanSlug='${slug}' AND status='active'`
-		const resources = await oneroster.getAllResources({ filter })
-
-		// ⚠️ CRITICAL: Apply client-side safety filtering first
-		const activeResources = ensureActiveStatus(resources)
-		return activeResources.filter((r) => r.metadata?.type === type && r.metadata?.courseSourcedId === courseSourcedId)
-	}
-	return redisCache(operation, ["oneroster-getResourceByCourseAndSlug", courseSourcedId, slug, type], {
-		revalidate: 3600 * 24
-	}) // 24-hour cache
-}
+// Removed legacy getResourceByCourseAndSlug (qti-only) – not needed in the interactive-only model
 
 export async function getAllComponentResources() {
 	logger.info("getAllComponentResources called")

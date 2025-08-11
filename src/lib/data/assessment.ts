@@ -237,7 +237,7 @@ export async function fetchQuizPageData(params: {
 	assertNoEncodedColons(params.quiz, "fetchQuizPageData quiz parameter")
 
 	// Pass only the params needed by fetchLessonLayoutData, not the quiz param
-	const resourcePromise = errors.try(getResourcesBySlugAndType(params.quiz, "qti", "quiz"))
+	const resourcePromise = errors.try(getResourcesBySlugAndType(params.quiz, "interactive", "Quiz"))
 
 	const [resourceResult] = await Promise.all([resourcePromise])
 
@@ -282,14 +282,14 @@ export async function fetchQuizPageData(params: {
 		throw errors.wrap(resourceMetadataResult.error, "invalid quiz resource metadata")
 	}
 
-	// Because we use a discriminated union, we must also check the type
-	if (resourceMetadataResult.data.type !== "qti") {
-		logger.error("invalid resource type for quiz page", {
+	// Check for "Quiz" activityType
+	if (resourceMetadataResult.data.activityType !== "Quiz") {
+		logger.error("invalid activityType for quiz page", {
 			resourceSourcedId: resource.sourcedId,
-			expected: "qti",
-			actual: resourceMetadataResult.data.type
+			expected: "Quiz",
+			actualActivityType: resourceMetadataResult.data.activityType
 		})
-		throw errors.new("invalid resource type")
+		throw errors.new("invalid activity type")
 	}
 
 	const resourceMetadata = resourceMetadataResult.data
@@ -389,7 +389,7 @@ export async function fetchUnitTestPageData(params: {
 	assertNoEncodedColons(params.test, "fetchUnitTestPageData test parameter")
 
 	// Pass only the params needed by fetchLessonLayoutData, not the test param
-	const resourcePromise = errors.try(getResourcesBySlugAndType(params.test, "qti", "unittest"))
+	const resourcePromise = errors.try(getResourcesBySlugAndType(params.test, "interactive", "UnitTest"))
 
 	const [resourceResult] = await Promise.all([resourcePromise])
 
@@ -434,14 +434,14 @@ export async function fetchUnitTestPageData(params: {
 		throw errors.wrap(resourceMetadataResult.error, "invalid unittest resource metadata")
 	}
 
-	// Because we use a discriminated union, we must also check the type
-	if (resourceMetadataResult.data.type !== "qti") {
-		logger.error("invalid resource type for unittest page", {
+	// Check for "UnitTest" activityType
+	if (resourceMetadataResult.data.activityType !== "UnitTest") {
+		logger.error("invalid activityType for unittest page", {
 			resourceSourcedId: resource.sourcedId,
-			expected: "qti",
-			actual: resourceMetadataResult.data.type
+			expected: "UnitTest",
+			actualActivityType: resourceMetadataResult.data.activityType
 		})
-		throw errors.new("invalid resource type")
+		throw errors.new("invalid activity type")
 	}
 
 	const resourceMetadata = resourceMetadataResult.data
@@ -660,13 +660,13 @@ export async function fetchCourseChallengePage_TestData(params: {
 		throw errors.wrap(testResourceMetadataResult.error, "invalid test resource metadata")
 	}
 
-	if (testResourceMetadataResult.data.type !== "qti") {
-		logger.error("invalid resource type for test page", {
+	if (testResourceMetadataResult.data.activityType !== "CourseChallenge") {
+		logger.error("invalid activityType for course challenge page", {
 			resourceSourcedId: testResource.sourcedId,
-			expected: "qti",
-			actual: testResourceMetadataResult.data.type
+			expected: "CourseChallenge",
+			actualActivityType: testResourceMetadataResult.data.activityType
 		})
-		throw errors.new("invalid resource type")
+		throw errors.new("invalid activity type")
 	}
 	const testResourceMetadata = testResourceMetadataResult.data
 
