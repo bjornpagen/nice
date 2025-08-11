@@ -116,7 +116,7 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 			for (const testXml of tests) {
 				const testIdentifier = extractIdentifier(testXml, "qti-assessment-test") ?? `unknown-test-${Date.now()}`
 
-				// Preflight: ensure all referenced items exist (no step.run)
+				// Preflight: ensure al l referenced items exist (no step.run)
 				const referencedItemIds = extractItemRefs(testXml)
 				const missingItemIds = referencedItemIds.filter((id) => !successfullyIngestedItemIds.has(id))
 				if (missingItemIds.length === 0) {
