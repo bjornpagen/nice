@@ -6,7 +6,7 @@ import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progres
 import { fetchUnitPageData } from "@/lib/data/unit"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { UnitPageData } from "@/lib/types/page"
-import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
+import { normalizeParams } from "@/lib/utils"
 
 // ✅ CORRECT: Non-async Server Component following RSC patterns
 export default function UnitPage({ params }: { params: Promise<{ subject: string; course: string; unit: string }> }) {
@@ -18,6 +18,13 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 
 	// Get user promise for progress fetching
 	const userPromise = currentUser()
+
+	const canUnlockAllPromise: Promise<boolean> = userPromise.then((user) => {
+		if (!user) return false
+		const metadata = ClerkUserPublicMetadataSchema.parse(user.publicMetadata ?? {})
+		// A user can unlock content if they have any role other than 'student'
+		return metadata.roles.some((r) => r.role !== "student")
+	})
 
 	const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([unitDataPromise, userPromise]).then(
 		([unitData, user]) => {
@@ -40,21 +47,12 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 		}
 	)
 
-	const resourceLockStatusPromise: Promise<Record<string, boolean>> = Promise.all([
-		unitDataPromise,
-		progressPromise,
-		userPromise
-	]).then(([unitData, progress, user]) => {
-		const lockingEnabled = Boolean(user)
-		return buildResourceLockStatus(unitData.course, progress, lockingEnabled)
-	})
-
 	return (
 		<React.Suspense>
 			<Content
 				dataPromise={unitDataPromise}
 				progressPromise={progressPromise}
-				resourceLockStatusPromise={resourceLockStatusPromise}
+				canUnlockAllPromise={canUnlockAllPromise}
 			/>
 		</React.Suspense>
 	)

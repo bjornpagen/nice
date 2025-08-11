@@ -5,7 +5,7 @@ import { fetchCoursePageData } from "@/lib/data/course"
 import { type AssessmentProgress, getUserUnitProgress, type UnitProficiency } from "@/lib/data/progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { CoursePageData } from "@/lib/types/page"
-import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
+import { normalizeParams } from "@/lib/utils"
 import { aggregateUnitProficiencies } from "@/lib/utils/progress"
 import { Content } from "./components/content"
 
@@ -25,6 +25,13 @@ export default function CoursePage({ params }: { params: Promise<{ subject: stri
 
 	// Get user promise for progress fetching
 	const userPromise = currentUser()
+
+	const canUnlockAllPromise: Promise<boolean> = userPromise.then((user) => {
+		if (!user) return false
+		const metadata = ClerkUserPublicMetadataSchema.parse(user.publicMetadata ?? {})
+		// A user can unlock content if they have any role other than 'student'
+		return metadata.roles.some((r) => r.role !== "student")
+	})
 
 	const progressPromise: Promise<CourseProgressData> = Promise.all([courseDataPromise, userPromise]).then(
 		([courseData, user]) => {
@@ -59,21 +66,12 @@ export default function CoursePage({ params }: { params: Promise<{ subject: stri
 		}
 	)
 
-	const resourceLockStatusPromise: Promise<Record<string, boolean>> = Promise.all([
-		courseDataPromise,
-		progressPromise,
-		userPromise
-	]).then(([courseData, progressData, user]) => {
-		const lockingEnabled = Boolean(user)
-		return buildResourceLockStatus(courseData.course, progressData.progressMap, lockingEnabled)
-	})
-
 	return (
 		<React.Suspense>
 			<Content
 				dataPromise={courseDataPromise}
 				progressPromise={progressPromise}
-				resourceLockStatusPromise={resourceLockStatusPromise}
+				canUnlockAllPromise={canUnlockAllPromise}
 			/>
 		</React.Suspense>
 	)

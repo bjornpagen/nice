@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { notFound, usePathname } from "next/navigation"
 import * as React from "react"
+import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { Breadcrumbs } from "@/components/practice/course/sidebar/breadcrumbs"
 import { Carousel } from "@/components/practice/course/sidebar/carousel"
 import courseIconForeground from "@/components/practice/course/sidebar/images/7a86b575f4360619-course-icon.svg"
@@ -19,13 +20,11 @@ import { assertNoEncodedColons, cn, normalizeString } from "@/lib/utils"
 export function Sidebar({
 	coursePromise,
 	progressPromise,
-	className,
-	resourceLockStatusPromise
+	className
 }: {
 	coursePromise: Promise<Course | undefined>
 	progressPromise: Promise<Map<string, AssessmentProgress>>
 	className?: string
-	resourceLockStatusPromise: Promise<Record<string, boolean>>
 }) {
 	const rawPathname = usePathname()
 	const pathname = normalizeString(rawPathname)
@@ -35,7 +34,9 @@ export function Sidebar({
 
 	const course = React.use(coursePromise)
 	const progressMap = React.use(progressPromise)
-	const resourceLockStatus = React.use(resourceLockStatusPromise)
+
+	// Get lock status from course-wide context instead of props
+	const { resourceLockStatus } = useCourseLockStatus()
 	if (course == null) {
 		notFound()
 	}

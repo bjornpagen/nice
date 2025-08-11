@@ -6,12 +6,10 @@ import type { Course as CourseV2 } from "@/lib/types/sidebar"
 export function ChallengeLayout({
 	coursePromise,
 	progressPromise,
-	resourceLockStatusPromise,
 	children
 }: {
 	coursePromise: Promise<CourseV2 | undefined>
 	progressPromise: Promise<Map<string, AssessmentProgress>>
-	resourceLockStatusPromise: Promise<Record<string, boolean>>
 	children: React.ReactNode
 }) {
 	return (
@@ -21,7 +19,6 @@ export function ChallengeLayout({
 				<Sidebar
 					coursePromise={coursePromise}
 					progressPromise={progressPromise}
-					resourceLockStatusPromise={resourceLockStatusPromise}
 					className="h-full bg-transparent border-none"
 				/>
 			</div>

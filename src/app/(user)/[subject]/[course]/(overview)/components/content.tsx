@@ -1,8 +1,10 @@
 "use client"
 
 // Info icon was previously used; replaced with XPExplainerDialog
+import { Lock, Unlock } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
+import { toast } from "sonner"
 import { CourseChallenge } from "@/app/(user)/[subject]/[course]/(overview)/components/course-challenge"
 import { Header } from "@/app/(user)/[subject]/[course]/(overview)/components/header"
 import { Legend } from "@/app/(user)/[subject]/[course]/(overview)/components/legend"
@@ -12,6 +14,7 @@ import { Section } from "@/app/(user)/[subject]/[course]/(overview)/components/s
 // import { CourseSidebar } from "./sidebar"
 import { UnitOverviewSection } from "@/app/(user)/[subject]/[course]/(overview)/components/unit-overview-section"
 import type { CourseProgressData } from "@/app/(user)/[subject]/[course]/(overview)/page"
+import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { XPExplainerDialog } from "@/components/dialogs/xp-explainer-dialog"
 import { Button } from "@/components/ui/button"
 import type { CoursePageData } from "@/lib/types/page"
@@ -19,16 +22,35 @@ import type { CoursePageData } from "@/lib/types/page"
 export function Content({
 	dataPromise,
 	progressPromise,
-	resourceLockStatusPromise
+	canUnlockAllPromise
 }: {
 	dataPromise: Promise<CoursePageData>
 	progressPromise: Promise<CourseProgressData>
-	resourceLockStatusPromise: Promise<Record<string, boolean>>
+	canUnlockAllPromise: Promise<boolean>
 }) {
 	// Consume the promises.
 	const { params, course, totalXP } = React.use(dataPromise)
 	const { progressMap, unitProficiencies } = React.use(progressPromise)
-	const resourceLockStatus = React.use(resourceLockStatusPromise)
+	const canUnlockAll = React.use(canUnlockAllPromise)
+
+	// Use course-wide lock status context instead of local state
+	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus } = useCourseLockStatus()
+
+	// Check if all items are currently unlocked
+	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
+
+	const handleToggleLockAll = () => {
+		if (allUnlocked) {
+			// Restore original server-side lock state (natural progression locks)
+			setResourceLockStatus(initialResourceLockStatus)
+			toast.success("Lock state restored to natural progression.")
+		} else {
+			// Unlock all: set all to false (unlocked)
+			const unlockedStatus = Object.fromEntries(Object.keys(resourceLockStatus).map((key) => [key, false]))
+			setResourceLockStatus(unlockedStatus)
+			toast.success("All activities have been unlocked.")
+		}
+	}
 
 	// Find the first unit with < 90% mastery to be the "next" unit
 	const findNextUnit = (unitIndex: number): boolean => {
@@ -70,7 +92,24 @@ export function Content({
 					<XPExplainerDialog triggerVariant="icon" />
 				</div>
 
-				<Legend />
+				<div className="flex items-center justify-between mt-4">
+					<Legend />
+					{canUnlockAll && (
+						<Button onClick={handleToggleLockAll} variant="outline" size="sm">
+							{allUnlocked ? (
+								<>
+									<Lock className="w-4 h-4 mr-2" />
+									Restore Locks
+								</>
+							) : (
+								<>
+									<Unlock className="w-4 h-4 mr-2" />
+									Unlock All
+								</>
+							)}
+						</Button>
+					)}
+				</div>
 			</div>
 
 			{/* Units Layout */}

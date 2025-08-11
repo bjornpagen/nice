@@ -7,10 +7,9 @@ import { fetchCoursePageData } from "@/lib/data/course"
 import { fetchLessonLayoutData } from "@/lib/data/lesson"
 import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progress"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
-import type { Course } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
-import { assertNoEncodedColons, buildResourceLockStatus, normalizeParams } from "@/lib/utils"
+import { assertNoEncodedColons, normalizeParams } from "@/lib/utils"
 
 // The layout component is NOT async. It orchestrates promises and renders immediately.
 export default function Layout({
@@ -269,35 +268,8 @@ export default function Layout({
 		}
 	)
 
-	// Calculate resource lock status for the practice sidebar
-	// We need the original course data for buildResourceLockStatus
-	const originalCoursePromise: Promise<Course> = normalizedParamsPromise.then(async (resolvedParams) => {
-		const courseResult = await fetchCoursePageData(
-			{
-				subject: resolvedParams.subject,
-				course: resolvedParams.course
-			},
-			{ skip: { questions: true } }
-		)
-		return courseResult.course
-	})
-
-	const resourceLockStatusPromise: Promise<Record<string, boolean>> = Promise.all([
-		originalCoursePromise,
-		progressPromise,
-		userPromise
-	]).then(([course, progress, user]) => {
-		const lockingEnabled = Boolean(user)
-		return buildResourceLockStatus(course, progress, lockingEnabled)
-	})
-
 	return (
-		<LessonLayout
-			dataPromise={dataPromise}
-			progressPromise={progressPromise}
-			coursePromise={courseV2Promise}
-			resourceLockStatusPromise={resourceLockStatusPromise}
-		>
+		<LessonLayout dataPromise={dataPromise} progressPromise={progressPromise} coursePromise={courseV2Promise}>
 			{children}
 		</LessonLayout>
 	)

@@ -6,7 +6,7 @@ import { type AssessmentProgress, getUserUnitProgress } from "@/lib/data/progres
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { CourseChallengeLayoutData, CourseChallengePageData } from "@/lib/types/page"
 import type { Course as CourseV2 } from "@/lib/types/sidebar"
-import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
+import { normalizeParams } from "@/lib/utils"
 import { ChallengeLayout } from "./components/challenge-layout"
 import { Content } from "./components/content"
 
@@ -154,28 +154,8 @@ export default function CourseChallengePage({
 		}
 	)
 
-	// Calculate resource lock status for the practice sidebar
-	const resourceLockStatusPromise: Promise<Record<string, boolean>> = Promise.all([
-		layoutDataPromise,
-		progressPromise,
-		userPromise
-	]).then(([courseData, progress, user]) => {
-		const lockingEnabled = Boolean(user)
-		// Construct a full Course object from the partial data
-		const fullCourse = {
-			...courseData.course,
-			slug: courseData.course.path.split("/").pop() || "",
-			challenges: courseData.challenges
-		}
-		return buildResourceLockStatus(fullCourse, progress, lockingEnabled)
-	})
-
 	return (
-		<ChallengeLayout
-			coursePromise={coursePromise}
-			progressPromise={progressPromise}
-			resourceLockStatusPromise={resourceLockStatusPromise}
-		>
+		<ChallengeLayout coursePromise={coursePromise} progressPromise={progressPromise}>
 			<React.Suspense>
 				<Content testDataPromise={testDataPromise} />
 			</React.Suspense>

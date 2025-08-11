@@ -4,25 +4,26 @@ import * as React from "react"
 import { CourseChallenge } from "@/app/(user)/[subject]/[course]/(overview)/components/course-challenge"
 import { CourseTab } from "@/app/(user)/[subject]/[course]/(overview)/components/course-tab"
 import { UnitTab } from "@/app/(user)/[subject]/[course]/(overview)/components/unit-tab"
+import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import type { Course, CourseChallenge as CourseChallengeType } from "@/lib/types/domain"
 
 export function Sidebar({
 	course,
 	lessonCount,
-	challenges,
-	resourceLockStatusPromise
+	challenges
 }: {
 	course: Promise<Pick<Course, "id" | "title" | "description" | "path" | "units">>
 	lessonCount: Promise<number>
 	challenges: Promise<CourseChallengeType[]>
-	resourceLockStatusPromise: Promise<Record<string, boolean>>
 }) {
 	// Use React.use() to consume the promises
 	const courseData = React.use(course)
 	const lessonCountData = React.use(lessonCount)
 	const challengesData = React.use(challenges)
-	const resourceLockStatus = React.use(resourceLockStatusPromise)
+
+	// Get lock status from course-wide context instead of props
+	const { resourceLockStatus } = useCourseLockStatus()
 
 	return (
 		<div className="hidden md:block lg:block w-96 bg-white border-r border-gray-200 flex flex-col h-full">

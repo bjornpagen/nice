@@ -16,13 +16,11 @@ export function LessonLayout({
 	dataPromise,
 	progressPromise,
 	coursePromise,
-	resourceLockStatusPromise,
 	children
 }: {
 	dataPromise: Promise<LessonLayoutData>
 	progressPromise: Promise<Map<string, AssessmentProgress>>
 	coursePromise: Promise<CourseV2 | undefined>
-	resourceLockStatusPromise: Promise<Record<string, boolean>>
 	children: React.ReactNode
 }) {
 	React.use(dataPromise)
@@ -53,7 +51,6 @@ export function LessonLayout({
 				<Sidebar
 					coursePromise={coursePromise}
 					progressPromise={progressPromise}
-					resourceLockStatusPromise={resourceLockStatusPromise}
 					className="h-full bg-transparent border-none"
 				/>
 			</div>
@@ -76,13 +73,7 @@ export function LessonLayout({
 					<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 
 					{/* Conditionally render LessonFooter */}
-					{shouldShowNext && (
-						<LessonFooter
-							coursePromise={coursePromise}
-							progressPromise={progressPromise}
-							resourceLockStatusPromise={resourceLockStatusPromise}
-						/>
-					)}
+					{shouldShowNext && <LessonFooter coursePromise={coursePromise} progressPromise={progressPromise} />}
 				</LessonProgressProvider>
 			</div>
 		</div>

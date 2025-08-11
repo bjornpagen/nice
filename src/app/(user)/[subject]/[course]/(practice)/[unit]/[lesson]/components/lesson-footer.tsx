@@ -4,6 +4,7 @@ import { BookCheck, ChevronRight, FileText, PenTool, Play, TestTube } from "luci
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import * as React from "react"
+import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import type { AssessmentProgress } from "@/lib/data/progress"
@@ -19,16 +20,18 @@ import { assertNoEncodedColons, normalizeString } from "@/lib/utils"
 interface LessonFooterProps {
 	coursePromise: Promise<CourseV2 | undefined>
 	progressPromise: Promise<Map<string, AssessmentProgress>>
-	resourceLockStatusPromise?: Promise<Record<string, boolean>>
 }
 
-export function LessonFooter({ coursePromise, progressPromise, resourceLockStatusPromise }: LessonFooterProps) {
+export function LessonFooter({ coursePromise, progressPromise }: LessonFooterProps) {
 	const rawPathname = usePathname()
 	const pathname = normalizeString(rawPathname)
 	// Assert on the normalized path to ensure correctness before use.
 	assertNoEncodedColons(pathname, "lesson-footer pathname")
 	const course = React.use(coursePromise)
 	const progressMap = React.use(progressPromise)
+
+	// Get lock status from course-wide context instead of props
+	const { resourceLockStatus } = useCourseLockStatus()
 
 	if (!course) {
 		return null
@@ -99,8 +102,7 @@ export function LessonFooter({ coursePromise, progressPromise, resourceLockStatu
 		return null
 	}
 
-	// If lock status is available, use it to inform UI; video/article progression is unlocked when the server marks completion
-	const resourceLockStatus = React.use(resourceLockStatusPromise ?? Promise.resolve<Record<string, boolean>>({}))
+	// Use lock status from context to inform UI; video/article progression is unlocked when the server marks completion
 	const nextLockedByServer = resourceLockStatus ? resourceLockStatus[nextItem.id] === true : false
 
 	const getIcon = (type: string) => {
