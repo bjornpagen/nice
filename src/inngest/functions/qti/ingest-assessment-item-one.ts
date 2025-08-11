@@ -12,9 +12,9 @@ export const ingestAssessmentItemOne = inngest.createFunction(
 		name: "Ingest One QTI Assessment Item",
 		// Apply concurrency limits to avoid overwhelming the provider.
 		concurrency: {
-			limit: 200,
+			limit: 100,
 			// Serialize writes for the same item to prevent race conditions using provided identifier
-			key: "event.data.identifier || null"
+			key: "timeback"
 		},
 		// Define a retry strategy for transient provider errors.
 		retries: 3

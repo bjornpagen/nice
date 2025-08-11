@@ -11,8 +11,8 @@ export const ingestAssessmentStimulusOne = inngest.createFunction(
 		id: "ingest-assessment-stimulus-one",
 		name: "Ingest One QTI Assessment Stimulus",
 		concurrency: {
-			limit: 200,
-			key: "event.data.identifier || null"
+			limit: 100,
+			key: "timeback"
 		},
 		retries: 3
 	},

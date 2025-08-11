@@ -5,10 +5,7 @@ import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { ingestAssessmentItemOne } from "@/inngest/functions/qti/ingest-assessment-item-one"
-import { ingestAssessmentStimulusOne } from "@/inngest/functions/qti/ingest-assessment-stimulus-one"
-import { ingestAssessmentTestOne } from "@/inngest/functions/qti/ingest-assessment-test-one"
-import { extractIdentifier, extractItemRefs } from "@/lib/xml-utils"
+import { extractIdentifier } from "@/lib/xml-utils"
 
 export const orchestrateCourseUploadToQti = inngest.createFunction(
 	{
@@ -19,7 +16,7 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 	{ event: "qti/course.upload" },
 	async ({ event, step, logger }) => {
 		const { courseId } = event.data
-		logger.info("Starting QTI upload orchestration from local files", { courseId })
+		logger.info("Starting QTI upload event dispatch from local files", { courseId })
 
 		// Determine file paths
 		const courseResult = await db.query.niceCourses.findFirst({
@@ -31,18 +28,19 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 		}
 		const courseDir = path.join(process.cwd(), "data", courseResult.slug, "qti")
 
-		// Read all necessary files (no step.run)
+		// Read all necessary files from disk before the step
 		const readJsonFile = async (fileName: string) => {
 			const filePath = path.join(courseDir, fileName)
 			const readResult = await errors.try(fs.readFile(filePath, "utf-8"))
 			if (readResult.error) {
-				logger.error("file read", { file: filePath, error: readResult.error })
-				throw errors.wrap(readResult.error, "file read")
+				logger.error("Failed to read or parse file", { fileName, file: filePath, error: readResult.error })
+				// Return empty array to allow the process to continue if a file is missing
+				return []
 			}
 			const parseResult = errors.trySync(() => JSON.parse(readResult.data))
 			if (parseResult.error) {
-				logger.error("json parse", { file: filePath, error: parseResult.error })
-				throw errors.wrap(parseResult.error, "json parse")
+				logger.error("Failed to parse JSON", { fileName, file: filePath, error: parseResult.error })
+				return []
 			}
 			return parseResult.data
 		}
@@ -54,96 +52,75 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 		])
 		logger.info("Read QTI payloads from disk", {
 			courseId,
-			itemCount: items.length,
 			stimulusCount: stimuli.length,
-			testCount: tests.length
+			testCount: tests.length,
+			itemCount: items.length
 		})
 
-		const summary = {
-			items: { created: 0, updated: 0, failed: 0, skipped: 0, total: items.length },
-			stimuli: { created: 0, updated: 0, failed: 0, skipped: 0, total: stimuli.length },
-			tests: { created: 0, updated: 0, failed: 0, skipped: 0, total: tests.length }
-		}
-		const successfullyIngestedItemIds = new Set<string>()
+		// This is now a dispatch-only operation, wrapped in a single step for atomicity.
+		const dispatchResult = await step.run("dispatch-all-ingestion-events", async () => {
+			const { slug: courseSlug } = courseResult
 
-		// STAGE 1: Ingest all Assessment Items
-		if (items.length > 0) {
-			const itemPromises = items.map((item: { xml: string; metadata: Record<string, unknown> }) => {
-				const identifier = extractIdentifier(item.xml, "qti-assessment-item")
-				if (!identifier) return Promise.resolve(null)
-				return step.invoke(`ingest-item-${identifier}`, {
-					function: ingestAssessmentItemOne,
-					data: { courseSlug: courseResult.slug, identifier }
-				})
-			})
-			const itemResults = await Promise.allSettled(itemPromises)
-			for (const res of itemResults) {
-				if (res.status === "fulfilled" && res.value) {
-					if (res.value.status === "created") summary.items.created++
-					if (res.value.status === "updated") summary.items.updated++
-					if (res.value.identifier) successfullyIngestedItemIds.add(res.value.identifier)
-				} else {
-					summary.items.failed++
-				}
-			}
-		}
-		logger.info("Stage 1 (Items) complete.", { summary: summary.items })
-
-		// STAGE 2: Ingest all Assessment Stimuli
-		if (stimuli.length > 0) {
-			const stimuliPromises = stimuli.map((stimulus: { xml: string; metadata: Record<string, unknown> }) => {
+			// 1. Prepare Stimulus Events
+			const stimulusEvents = stimuli.map((stimulus: { xml: string }) => {
 				const identifier = extractIdentifier(stimulus.xml, "qti-assessment-stimulus")
-				if (!identifier) return Promise.resolve(null)
-				return step.invoke(`ingest-stimulus-${identifier}`, {
-					function: ingestAssessmentStimulusOne,
-					data: { courseSlug: courseResult.slug, identifier }
-				})
+				return identifier ? { name: "qti/assessment-stimulus.ingest.one", data: { courseSlug, identifier } } : null
 			})
-			const stimuliResults = await Promise.allSettled(stimuliPromises)
-			for (const res of stimuliResults) {
-				if (res.status === "fulfilled" && res.value) {
-					if (res.value.status === "created") summary.stimuli.created++
-					if (res.value.status === "updated") summary.stimuli.updated++
-				} else {
-					summary.stimuli.failed++
-				}
-			}
-		}
-		logger.info("Stage 2 (Stimuli) complete.", { summary: summary.stimuli })
 
-		// STAGE 3: Ingest all Assessment Tests with Pre-flight Validation
-		if (tests.length > 0) {
-			for (const testXml of tests) {
-				const testIdentifier = extractIdentifier(testXml, "qti-assessment-test") ?? `unknown-test-${Date.now()}`
+			// 2. Prepare Test Events
+			const testEvents = tests.map((testXml: string) => {
+				const identifier = extractIdentifier(testXml, "qti-assessment-test")
+				return identifier ? { name: "qti/assessment-test.ingest.one", data: { courseSlug, identifier } } : null
+			})
 
-				// Preflight: ensure al l referenced items exist (no step.run)
-				const referencedItemIds = extractItemRefs(testXml)
-				const missingItemIds = referencedItemIds.filter((id) => !successfullyIngestedItemIds.has(id))
-				if (missingItemIds.length === 0) {
-					const testResult = await errors.try(
-						step.invoke(`ingest-test-${testIdentifier}`, {
-							function: ingestAssessmentTestOne,
-							data: { courseSlug: courseResult.slug, identifier: testIdentifier }
-						})
-					)
-					if (testResult.error || !testResult.data) {
-						summary.tests.failed++
-					} else {
-						if (testResult.data.status === "created") summary.tests.created++
-						if (testResult.data.status === "updated") summary.tests.updated++
+			// 3. Prepare Item Events
+			const itemEvents = items.map((item: { xml: string }) => {
+				const identifier = extractIdentifier(item.xml, "qti-assessment-item")
+				return identifier ? { name: "qti/assessment-item.ingest.one", data: { courseSlug, identifier } } : null
+			})
+
+			// Combine and filter out any entities where an identifier couldn't be extracted
+			const allEvents = [...stimulusEvents, ...testEvents, ...itemEvents].filter(Boolean)
+
+			if (allEvents.length === 0) {
+				logger.info("No valid events to dispatch.", { courseId })
+				return {
+					dispatched: 0,
+					counts: {
+						stimuli: 0,
+						tests: 0,
+						items: 0
 					}
-				} else {
-					logger.warn("Test references items that failed ingestion. Skipping test.", {
-						testIdentifier,
-						missingItemIds
-					})
-					summary.tests.skipped++
 				}
 			}
-		}
-		logger.info("Stage 3 (Tests) complete.", { summary: summary.tests })
 
-		logger.info("QTI upload orchestration complete.", { finalSummary: summary })
-		return { status: "success", summary }
+			// Send all events in batches to avoid payload size limits
+			const BATCH_SIZE = 500
+			for (let i = 0; i < allEvents.length; i += BATCH_SIZE) {
+				const batch = allEvents.slice(i, i + BATCH_SIZE)
+				await inngest.send(batch)
+			}
+
+			return {
+				dispatched: allEvents.length,
+				counts: {
+					stimuli: stimulusEvents.filter(Boolean).length,
+					tests: testEvents.filter(Boolean).length,
+					items: itemEvents.filter(Boolean).length
+				}
+			}
+		})
+
+		logger.info("QTI upload event dispatch complete.", {
+			courseId,
+			totalEventsDispatched: dispatchResult.dispatched,
+			...dispatchResult.counts
+		})
+
+		return {
+			status: "success",
+			message: `Dispatched ${dispatchResult.dispatched} QTI ingestion events.`,
+			...dispatchResult
+		}
 	}
 )
