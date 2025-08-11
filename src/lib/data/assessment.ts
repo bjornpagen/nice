@@ -1,7 +1,9 @@
+import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { connection } from "next/server"
+import { powerpath } from "@/lib/clients"
 import {
 	getAllComponentResources,
 	getAllCoursesBySlug,
@@ -10,6 +12,7 @@ import {
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
 import { getAllQuestionsForTest, getAssessmentTest } from "@/lib/data/fetchers/qti"
+import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import type { Question } from "@/lib/types/domain"
 import type {
@@ -57,7 +60,8 @@ function shuffleArray<T>(array: T[]): T[] {
  */
 export function applyQtiSelectionAndOrdering(
 	assessmentTest: AssessmentTest,
-	allQuestions: TestQuestionsResponse["questions"]
+	allQuestions: TestQuestionsResponse["questions"],
+	options?: { baseSeed?: string; attemptNumber?: number }
 ): Question[] {
 	const xml = assessmentTest.rawXml
 	const allQuestionsMap = new Map(allQuestions.map((q) => [q.question.identifier, q]))
@@ -91,6 +95,23 @@ export function applyQtiSelectionAndOrdering(
 
 	const selectedQuestionIds: string[] = []
 
+	// Deterministic ordering helpers for strict non-repetition until exhaustion
+	function fnv1aHash(input: string): number {
+		let hash = 0x811c9dc5
+		for (let i = 0; i < input.length; i++) {
+			hash ^= input.charCodeAt(i)
+			hash = (hash >>> 0) * 0x01000193
+		}
+		return hash >>> 0
+	}
+
+	function deterministicallyOrder(values: string[], seed: string): string[] {
+		return [...values]
+			.map((v) => ({ v, h: fnv1aHash(`${seed}:${v}`) }))
+			.sort((a, b) => (a.h === b.h ? (a.v < b.v ? -1 : 1) : a.h - b.h))
+			.map((x) => x.v)
+	}
+
 	for (let sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
 		const sectionMatch = sections[sectionIndex]
 		const sectionContent = sectionMatch?.[1] ?? ""
@@ -113,7 +134,14 @@ export function applyQtiSelectionAndOrdering(
 				testIdentifier: assessmentTest.identifier,
 				sectionIndex
 			})
-			itemRefs = shuffleArray(itemRefs)
+			const sectionIdMatch = sectionContent.match(/identifier="([^"]+)"/)
+			const sectionId = sectionIdMatch?.[1] ?? `section_${sectionIndex}`
+			if (options?.baseSeed) {
+				const seed = `${options.baseSeed}:${assessmentTest.identifier}:${sectionId}`
+				itemRefs = deterministicallyOrder(itemRefs, seed)
+			} else {
+				itemRefs = shuffleArray(itemRefs)
+			}
 		}
 
 		// 3. Apply selection to limit the number of questions, using a named capture group for clarity.
@@ -129,7 +157,23 @@ export function applyQtiSelectionAndOrdering(
 					itemRefsBeforeSelection: itemRefs.length,
 					itemRefsAfterSelection: Math.min(selectCount, itemRefs.length)
 				})
-				itemRefs = itemRefs.slice(0, selectCount)
+				// Strict non-repetition until exhaustion using sliding window over base order
+				if (options?.baseSeed && options?.attemptNumber && itemRefs.length > 0) {
+					const n = itemRefs.length
+					const k = Math.min(selectCount, n)
+					const offset = ((options.attemptNumber - 1) * k) % n
+					const window: string[] = []
+					for (let i = 0; i < k; i++) {
+						const idx = (offset + i) % n
+						const ref = itemRefs[idx]
+						if (ref !== undefined) {
+							window.push(ref)
+						}
+					}
+					itemRefs = window
+				} else {
+					itemRefs = itemRefs.slice(0, selectCount)
+				}
 			} else {
 				logger.warn("invalid non-numeric select attribute in QTI test", {
 					testIdentifier: assessmentTest.identifier,
@@ -278,8 +322,38 @@ export async function fetchQuizPageData(params: {
 		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for quiz")
 	}
 
-	// Apply selection and ordering rules to the fetched questions.
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, questionsResult.data.questions)
+	// Apply selection and ordering rules with strict non-repetition using baseSeed + attempt
+	// Derive user and attempt
+	const userForQuiz = await currentUser()
+	if (!userForQuiz) {
+		logger.error("user authentication required for deterministic selection", {})
+		throw errors.new("user authentication required")
+	}
+	const userMetaForQuiz = parseUserPublicMetadata(userForQuiz.publicMetadata)
+	if (!userMetaForQuiz.sourceId) {
+		logger.error("user source id missing for deterministic selection", {})
+		throw errors.new("user source id missing")
+	}
+	const progressForQuiz = await errors.try(
+		powerpath.getAssessmentProgress(userMetaForQuiz.sourceId, componentResource.sourcedId)
+	)
+	if (progressForQuiz.error) {
+		logger.error("failed to fetch assessment progress for deterministic selection", {
+			error: progressForQuiz.error,
+			componentResourceSourcedId: componentResource.sourcedId
+		})
+		throw errors.wrap(progressForQuiz.error, "powerpath assessment progress")
+	}
+	const attemptNumberForQuiz = progressForQuiz.data.attempt
+	if (typeof attemptNumberForQuiz !== "number") {
+		logger.error("assessment attempt number missing", { componentResourceSourcedId: componentResource.sourcedId })
+		throw errors.new("assessment attempt number missing")
+	}
+
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, questionsResult.data.questions, {
+		baseSeed: `${userMetaForQuiz.sourceId}:${resource.sourcedId}`,
+		attemptNumber: attemptNumberForQuiz
+	})
 
 	return {
 		quiz: {
@@ -400,8 +474,37 @@ export async function fetchUnitTestPageData(params: {
 		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for unittest")
 	}
 
-	// Apply selection and ordering rules to the fetched questions.
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, questionsResult.data.questions)
+	// Apply selection and ordering rules with strict non-repetition using baseSeed + attempt
+	const userForUnitTest = await currentUser()
+	if (!userForUnitTest) {
+		logger.error("user authentication required for deterministic selection", {})
+		throw errors.new("user authentication required")
+	}
+	const userMetaForUnitTest = parseUserPublicMetadata(userForUnitTest.publicMetadata)
+	if (!userMetaForUnitTest.sourceId) {
+		logger.error("user source id missing for deterministic selection", {})
+		throw errors.new("user source id missing")
+	}
+	const progressForUnitTest = await errors.try(
+		powerpath.getAssessmentProgress(userMetaForUnitTest.sourceId, componentResource.sourcedId)
+	)
+	if (progressForUnitTest.error) {
+		logger.error("failed to fetch assessment progress for deterministic selection", {
+			error: progressForUnitTest.error,
+			componentResourceSourcedId: componentResource.sourcedId
+		})
+		throw errors.wrap(progressForUnitTest.error, "powerpath assessment progress")
+	}
+	const attemptNumberForUnitTest = progressForUnitTest.data.attempt
+	if (typeof attemptNumberForUnitTest !== "number") {
+		logger.error("assessment attempt number missing", { componentResourceSourcedId: componentResource.sourcedId })
+		throw errors.new("assessment attempt number missing")
+	}
+
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, questionsResult.data.questions, {
+		baseSeed: `${userMetaForUnitTest.sourceId}:${resource.sourcedId}`,
+		attemptNumber: attemptNumberForUnitTest
+	})
 
 	return {
 		test: {
@@ -594,8 +697,37 @@ export async function fetchCourseChallengePage_TestData(params: {
 		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for course challenge")
 	}
 
-	// Apply selection and ordering rules to the fetched questions.
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, qtiTestDataResult.data.questions)
+	// Apply selection and ordering rules with strict non-repetition using baseSeed + attempt
+	const userForChallenge = await currentUser()
+	if (!userForChallenge) {
+		logger.error("user authentication required for deterministic selection", {})
+		throw errors.new("user authentication required")
+	}
+	const userMetaForChallenge = parseUserPublicMetadata(userForChallenge.publicMetadata)
+	if (!userMetaForChallenge.sourceId) {
+		logger.error("user source id missing for deterministic selection", {})
+		throw errors.new("user source id missing")
+	}
+	const progressForChallenge = await errors.try(
+		powerpath.getAssessmentProgress(userMetaForChallenge.sourceId, componentResource.sourcedId)
+	)
+	if (progressForChallenge.error) {
+		logger.error("failed to fetch assessment progress for deterministic selection", {
+			error: progressForChallenge.error,
+			componentResourceSourcedId: componentResource.sourcedId
+		})
+		throw errors.wrap(progressForChallenge.error, "powerpath assessment progress")
+	}
+	const attemptNumberForChallenge = progressForChallenge.data.attempt
+	if (typeof attemptNumberForChallenge !== "number") {
+		logger.error("assessment attempt number missing", { componentResourceSourcedId: componentResource.sourcedId })
+		throw errors.new("assessment attempt number missing")
+	}
+
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, qtiTestDataResult.data.questions, {
+		baseSeed: `${userMetaForChallenge.sourceId}:${testResource.sourcedId}`,
+		attemptNumber: attemptNumberForChallenge
+	})
 
 	return {
 		test: {
