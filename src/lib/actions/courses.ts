@@ -6,43 +6,86 @@ import * as logger from "@superbuilders/slog"
 import { revalidatePath } from "next/cache"
 import { createCacheKey, invalidateCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
-import { getAllCourses, getClassesForSchool, getEnrollmentsForUser } from "@/lib/data/fetchers/oneroster"
+import { getAllCourses, getClass, getClassesForSchool, getEnrollmentsForUser } from "@/lib/data/fetchers/oneroster"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
 
-export async function saveUserCourses(selectedClassIds: string[]) {
+// Move org id constant up so helpers below can use it safely
+const ONEROSTER_ORG_ID = "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
+
+// DEPRECATED: This action was ambiguous and could lead to destructive behavior.
+export async function saveUserCourses(_: string[]) {
+	throw errors.new("saveUserCourses deprecated use setUserEnrollmentsByCourseId or enrollUserInCoursesByCourseId")
+}
+
+type UpdateEnrollmentsResult = { success: true; changed: boolean; message?: string }
+
+async function getUserAndSourceId(): Promise<{ userId: string; sourceId: string | null }> {
 	const user = await currentUser()
 	if (!user) {
 		throw errors.new("user not authenticated")
 	}
-
 	if (!user.publicMetadata) {
 		logger.error("CRITICAL: User public metadata missing", { userId: user.id })
 		throw errors.new("user public metadata missing")
 	}
-
 	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
 	if (!metadataValidation.success) {
-		logger.error("CRITICAL: Invalid user metadata", {
-			userId: user.id,
-			error: metadataValidation.error
-		})
+		logger.error("CRITICAL: Invalid user metadata", { userId: user.id, error: metadataValidation.error })
 		throw errors.wrap(metadataValidation.error, "user metadata validation failed")
 	}
-
 	const metadata = metadataValidation.data
-
-	// sourceId is required for enrollment operations
 	if (!metadata.sourceId) {
-		logger.info("user has no sourceId yet, cannot save courses", { userId: user.id })
-		// Return success but indicate no changes were made
+		logger.info("user has no sourceId yet, cannot modify enrollments", { userId: user.id })
+		// No change; caller UI can prompt to sync account first
+		return { userId: user.id, sourceId: null }
+	}
+	return { userId: user.id, sourceId: metadata.sourceId }
+}
+
+// Build a mapping of courseId -> canonical classId for our org (active classes only)
+async function buildCanonicalClassMap(): Promise<Map<string, string>> {
+	const classesResult = await errors.try(getClassesForSchool(ONEROSTER_ORG_ID))
+	if (classesResult.error) {
+		logger.error("failed to fetch classes for canonical mapping", { error: classesResult.error })
+		throw errors.wrap(classesResult.error, "canonical class mapping")
+	}
+	const classes = classesResult.data
+	const byCourse = new Map<string, string>()
+	// Choose deterministically: sort candidates by classCode, then title, then sourcedId
+	const grouped = new Map<string, typeof classes>()
+	for (const cls of classes) {
+		const courseId = cls.course.sourcedId
+		const arr = grouped.get(courseId)
+		if (arr) arr.push(cls)
+		else grouped.set(courseId, [cls])
+	}
+	for (const [courseId, group] of grouped.entries()) {
+		const sorted = [...group].sort((a, b) => {
+			const aCode = typeof a.classCode === "string" ? a.classCode : ""
+			const bCode = typeof b.classCode === "string" ? b.classCode : ""
+			const ac = aCode.localeCompare(bCode)
+			if (ac !== 0) return ac
+			const at = a.title.localeCompare(b.title)
+			if (at !== 0) return at
+			return a.sourcedId.localeCompare(b.sourcedId)
+		})
+		const canonical = sorted[0]
+		if (!canonical) continue
+		byCourse.set(courseId, canonical.sourcedId)
+	}
+	return byCourse
+}
+
+// Append-only: enroll user into the given courses (by courseId) without deleting anything
+export async function enrollUserInCoursesByCourseId(courseIds: string[]): Promise<UpdateEnrollmentsResult> {
+	const { userId, sourceId } = await getUserAndSourceId()
+	if (!sourceId) {
 		return { success: true, changed: false, message: "OneRoster account required to save courses" }
 	}
-	const sourceId = metadata.sourceId
 
-	logger.info("syncing user enrollments", { userId: user.id, sourceId, selectedClassIds })
+	logger.info("append enrollments by course id", { userId, sourceId, count: courseIds.length })
 
-	// Get current enrollments for the user using new fetcher
 	const currentEnrollmentsResult = await errors.try(getEnrollmentsForUser(sourceId))
 	if (currentEnrollmentsResult.error) {
 		logger.error("failed to fetch current enrollments", { sourceId, error: currentEnrollmentsResult.error })
@@ -50,27 +93,38 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 	}
 	const currentEnrollments = currentEnrollmentsResult.data
 
-	const currentClassIds = new Set(currentEnrollments.map((e) => e.class.sourcedId))
-	const newClassIds = new Set(selectedClassIds)
-
-	const classesToAdd = selectedClassIds.filter((id) => !currentClassIds.has(id))
-	const enrollmentsToRemove = currentEnrollments.filter((e) => !newClassIds.has(e.class.sourcedId))
-
-	logger.debug("enrollment diff calculated", {
-		toAdd: classesToAdd.length,
-		toRemove: enrollmentsToRemove.length
+	// Map current enrollments to courseIds, but only for Nice Academy classes
+	const niceEnrollments = currentEnrollments.filter((e) => e.class.sourcedId.startsWith("nice_"))
+	const uniqueClassIds = [...new Set(niceEnrollments.map((e) => e.class.sourcedId))]
+	const currentCourseIds = new Set<string>()
+	// Resolve courseIds for current nice classes
+	const classPromises = uniqueClassIds.map(async (classId) => {
+		const clsResult = await errors.try(getClass(classId))
+		if (clsResult.error) {
+			logger.error("failed to fetch class details for course mapping", { classId, error: clsResult.error })
+			throw errors.wrap(clsResult.error, "class fetch")
+		}
+		const cls = clsResult.data
+		if (cls) currentCourseIds.add(cls.course.sourcedId)
 	})
+	await Promise.all(classPromises)
 
-	// Early return if no changes needed (from upstream)
-	if (classesToAdd.length === 0 && enrollmentsToRemove.length === 0) {
-		logger.info("no enrollment changes needed", { userId: user.id, sourceId })
+	const toAddCourseIds = courseIds.filter((cid) => !currentCourseIds.has(cid))
+	if (toAddCourseIds.length === 0) {
+		logger.info("no new enrollments to append", { userId, sourceId })
 		return { success: true, changed: false }
 	}
 
-	const promises: Promise<unknown>[] = []
-
-	for (const classId of classesToAdd) {
-		promises.push(
+	// Resolve canonical class ids for new course ids
+	const courseToClassMap = await buildCanonicalClassMap()
+	const addOps: Promise<unknown>[] = []
+	for (const courseId of toAddCourseIds) {
+		const classId = courseToClassMap.get(courseId)
+		if (!classId) {
+			logger.error("canonical class not found for course", { courseId })
+			throw errors.new("canonical class not found")
+		}
+		addOps.push(
 			oneroster.createEnrollment({
 				status: "active",
 				role: "student",
@@ -80,47 +134,146 @@ export async function saveUserCourses(selectedClassIds: string[]) {
 		)
 	}
 
-	for (const enrollment of enrollmentsToRemove) {
-		promises.push(oneroster.deleteEnrollment(enrollment.sourcedId))
-	}
-
-	const results = await Promise.allSettled(promises)
-	let hasErrors = false
-	results.forEach((result, index) => {
-		if (result.status === "rejected") {
-			hasErrors = true
-			const operation =
-				index < classesToAdd.length
-					? `create enrollment for class ${classesToAdd[index]}`
-					: `delete enrollment ${enrollmentsToRemove[index - classesToAdd.length]?.sourcedId}`
-			logger.error("failed enrollment operation", { operation, error: result.reason })
+	const addResults = await Promise.allSettled(addOps)
+	const addErrors = addResults.filter((r): r is PromiseRejectedResult => r.status === "rejected")
+	if (addErrors.length > 0) {
+		for (const err of addErrors) {
+			logger.error("failed to append enrollment", { error: err.reason })
 		}
-	})
-
-	if (hasErrors) {
-		throw errors.new("one or more enrollment operations failed during sync")
+		throw errors.new("append enrollments failed")
 	}
 
-	// ⚠️ CRITICAL: Invalidate enrollment caches to make changes appear instantly
-	logger.info("invalidating enrollment caches for instant updates", { sourceId })
+	// Invalidate caches
+	logger.info("invalidating enrollment caches after append", { sourceId })
 	const cacheKeysToInvalidate = [
 		createCacheKey(["oneroster-getEnrollmentsForUser", sourceId]),
 		createCacheKey(["oneroster-getActiveEnrollmentsForUser", sourceId])
 	]
 	await invalidateCache(cacheKeysToInvalidate)
-
 	revalidatePath("/profile/me/courses")
-	logger.info("successfully synced user enrollments", {
-		userId: user.id,
+	return { success: true, changed: true }
+}
+
+// Replace-only: set user enrollments by the given courseIds, but only for Nice Academy classes
+export async function setUserEnrollmentsByCourseId(selectedCourseIds: string[]): Promise<UpdateEnrollmentsResult> {
+	const { userId, sourceId } = await getUserAndSourceId()
+	if (!sourceId) {
+		return { success: true, changed: false, message: "OneRoster account required to save courses" }
+	}
+
+	logger.info("replace enrollments by course id", { userId, sourceId, count: selectedCourseIds.length })
+
+	// Fetch current enrollments
+	const currentEnrollmentsResult = await errors.try(getEnrollmentsForUser(sourceId))
+	if (currentEnrollmentsResult.error) {
+		logger.error("failed to fetch current enrollments", { sourceId, error: currentEnrollmentsResult.error })
+		throw errors.wrap(currentEnrollmentsResult.error, "get current enrollments")
+	}
+	const currentEnrollments = currentEnrollmentsResult.data
+
+	// Consider only Nice Academy classes for destructive operations
+	const niceEnrollments = currentEnrollments.filter((e) => e.class.sourcedId.startsWith("nice_"))
+	const uniqueClassIds = [...new Set(niceEnrollments.map((e) => e.class.sourcedId))]
+
+	// Map current nice class enrollments -> courseIds
+	const enrollmentToCourseId = new Map<string, string>() // enrollmentId -> courseId
+	const currentCourseIdsSet = new Set<string>()
+	const mapPromises = uniqueClassIds.map(async (classId) => {
+		const clsResult = await errors.try(getClass(classId))
+		if (clsResult.error) {
+			logger.error("failed to fetch class details for mapping", { classId, error: clsResult.error })
+			throw errors.wrap(clsResult.error, "class fetch")
+		}
+		const cls = clsResult.data
+		if (cls) {
+			currentCourseIdsSet.add(cls.course.sourcedId)
+			const enrollment = niceEnrollments.find((e) => e.class.sourcedId === classId)
+			if (enrollment) enrollmentToCourseId.set(enrollment.sourcedId, cls.course.sourcedId)
+		}
+	})
+	await Promise.all(mapPromises)
+
+	const selectedSet = new Set(selectedCourseIds)
+
+	// Determine adds and removals in terms of courseIds
+	const coursesToAdd = selectedCourseIds.filter((cid) => !currentCourseIdsSet.has(cid))
+	const enrollmentsToRemove = niceEnrollments.filter((e) => {
+		const courseId = enrollmentToCourseId.get(e.sourcedId)
+		return !!courseId && !selectedSet.has(courseId)
+	})
+
+	logger.debug("enrollment diff by course id", {
+		toAdd: coursesToAdd.length,
+		toRemove: enrollmentsToRemove.length
+	})
+
+	if (coursesToAdd.length === 0 && enrollmentsToRemove.length === 0) {
+		logger.info("no enrollment changes needed", { userId, sourceId })
+		return { success: true, changed: false }
+	}
+
+	// Resolve canonical class ids once
+	const courseToClassMap = await buildCanonicalClassMap()
+
+	// First perform all additions; if any fail, do not delete anything
+	const addOps: Promise<unknown>[] = []
+	for (const courseId of coursesToAdd) {
+		const classId = courseToClassMap.get(courseId)
+		if (!classId) {
+			logger.error("canonical class not found for course", { courseId })
+			throw errors.new("canonical class not found")
+		}
+		addOps.push(
+			oneroster.createEnrollment({
+				status: "active",
+				role: "student",
+				user: { sourcedId: sourceId, type: "user" },
+				class: { sourcedId: classId, type: "class" }
+			})
+		)
+	}
+	const addResults = await Promise.allSettled(addOps)
+	const addErrors = addResults.filter((r): r is PromiseRejectedResult => r.status === "rejected")
+	if (addErrors.length > 0) {
+		for (const err of addErrors) {
+			logger.error("failed to add enrollment during replace", { error: err.reason })
+		}
+		throw errors.new("one or more enrollment additions failed")
+	}
+
+	// Now perform deletions
+	const delOps: Promise<unknown>[] = []
+	for (const enrollment of enrollmentsToRemove) {
+		delOps.push(oneroster.deleteEnrollment(enrollment.sourcedId))
+	}
+	const delResults = await Promise.allSettled(delOps)
+	const delErrors = delResults.filter((r): r is PromiseRejectedResult => r.status === "rejected")
+	if (delErrors.length > 0) {
+		for (const err of delErrors) {
+			logger.error("failed to delete enrollment during replace", { error: err.reason })
+		}
+		throw errors.new("one or more enrollment deletions failed")
+	}
+
+	// Invalidate caches
+	logger.info("invalidating enrollment caches after replace", { sourceId })
+	const cacheKeysToInvalidate = [
+		createCacheKey(["oneroster-getEnrollmentsForUser", sourceId]),
+		createCacheKey(["oneroster-getActiveEnrollmentsForUser", sourceId])
+	]
+	await invalidateCache(cacheKeysToInvalidate)
+	revalidatePath("/profile/me/courses")
+
+	logger.info("successfully replaced user enrollments by course id", {
+		userId,
 		sourceId,
-		added: classesToAdd.length,
+		added: coursesToAdd.length,
 		removed: enrollmentsToRemove.length
 	})
 	return { success: true, changed: true }
 }
 
 // Type definitions for OneRoster explore dropdown (no DB dependency)
-const ONEROSTER_ORG_ID = "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
 
 type CourseForExplore = {
 	id: string // Using OneRoster sourcedId as the key

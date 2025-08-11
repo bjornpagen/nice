@@ -10,7 +10,7 @@ import { CourseSelector } from "@/components/course-selector-content"
 import { OnboardingModal } from "@/components/onboarding-modal"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { saveUserCourses } from "@/lib/actions/courses"
+import { setUserEnrollmentsByCourseId } from "@/lib/actions/courses"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { ProfileCourse } from "@/lib/types/domain"
 import type { ProfileCoursesPageData } from "@/lib/types/page"
@@ -119,10 +119,10 @@ export function Content({ coursesPromise }: { coursesPromise: Promise<ProfileCou
 		}
 	}, [needsSync, isLoaded, user, router])
 
-	const handleCourseSelection = async (selectedClassIds: string[]) => {
+	const handleCourseSelection = async (selectedCourseIds: string[]) => {
 		const initialCourseIds = userCourses.map((course) => course.id)
 		const initialSet = new Set(initialCourseIds)
-		const selectedSet = new Set(selectedClassIds)
+		const selectedSet = new Set(selectedCourseIds)
 		const hasChanges = initialSet.size !== selectedSet.size || ![...initialSet].every((id) => selectedSet.has(id))
 
 		if (!hasChanges) {
@@ -130,7 +130,7 @@ export function Content({ coursesPromise }: { coursesPromise: Promise<ProfileCou
 			return
 		}
 
-		const promise = saveUserCourses(selectedClassIds)
+		const promise = setUserEnrollmentsByCourseId(selectedCourseIds)
 		toast.promise(promise, {
 			loading: "Saving your courses...",
 			success: "Courses saved successfully!",
