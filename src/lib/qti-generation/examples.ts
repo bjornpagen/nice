@@ -2235,63 +2235,63 @@ export const shapeBinBarChart: AssessmentItemInput = {
 		},
 		chart_a: {
 			type: "barChart",
-			title: null,
+			title: "",
 			width: 400,
 			height: 300,
 			xAxisLabel: "Type of shape",
 			yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
 			data: [
-				{ label: "Triangles", value: 8, state: null },
-				{ label: "Circles", value: 5, state: null },
-				{ label: "Rectangles", value: 3, state: null },
-				{ label: "Squares", value: 9, state: null }
+				{ label: "Triangles", value: 8, state: "normal" },
+				{ label: "Circles", value: 5, state: "normal" },
+				{ label: "Rectangles", value: 3, state: "normal" },
+				{ label: "Squares", value: 9, state: "normal" }
 			],
-			barColor: null
+			barColor: "#4285F4"
 		},
 		chart_b: {
 			type: "barChart",
-			title: null,
+			title: "",
 			width: 400,
 			height: 300,
 			xAxisLabel: "Type of shape",
 			yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
 			data: [
-				{ label: "Triangles", value: 9, state: null },
-				{ label: "Circles", value: 5, state: null },
-				{ label: "Rectangles", value: 3, state: null },
-				{ label: "Squares", value: 8, state: null }
+				{ label: "Triangles", value: 9, state: "normal" },
+				{ label: "Circles", value: 5, state: "normal" },
+				{ label: "Rectangles", value: 3, state: "normal" },
+				{ label: "Squares", value: 8, state: "normal" }
 			],
-			barColor: null
+			barColor: "#4285F4"
 		},
 		chart_c: {
 			type: "barChart",
-			title: null,
+			title: "",
 			width: 400,
 			height: 300,
 			xAxisLabel: "Type of shape",
 			yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
 			data: [
-				{ label: "Triangles", value: 7, state: null },
-				{ label: "Circles", value: 4, state: null },
-				{ label: "Rectangles", value: 2, state: null },
-				{ label: "Squares", value: 10, state: null }
+				{ label: "Triangles", value: 7, state: "normal" },
+				{ label: "Circles", value: 4, state: "normal" },
+				{ label: "Rectangles", value: 2, state: "normal" },
+				{ label: "Squares", value: 10, state: "normal" }
 			],
-			barColor: null
+			barColor: "#4285F4"
 		},
 		chart_d: {
 			type: "barChart",
-			title: null,
+			title: "",
 			width: 400,
 			height: 300,
 			xAxisLabel: "Type of shape",
 			yAxis: { label: "Number of shape", min: 0, max: 10, tickInterval: 2 },
 			data: [
-				{ label: "Triangles", value: 4, state: null },
-				{ label: "Circles", value: 8, state: null },
-				{ label: "Rectangles", value: 9, state: null },
-				{ label: "Squares", value: 3, state: null }
+				{ label: "Triangles", value: 4, state: "normal" },
+				{ label: "Circles", value: 8, state: "normal" },
+				{ label: "Rectangles", value: 9, state: "normal" },
+				{ label: "Squares", value: 3, state: "normal" }
 			],
-			barColor: null
+			barColor: "#4285F4"
 		}
 	},
 	body: [
@@ -2530,7 +2530,7 @@ export const gamesWonBarChart: AssessmentItemInput = {
 	widgets: {
 		games_chart: {
 			type: "barChart",
-			title: null,
+			title: "",
 			width: 480,
 			height: 340,
 			xAxisLabel: "Team",
@@ -2541,11 +2541,11 @@ export const gamesWonBarChart: AssessmentItemInput = {
 				tickInterval: 2
 			},
 			data: [
-				{ label: "Lions", value: 14, state: null },
-				{ label: "Tigers", value: 2, state: null },
-				{ label: "Bears", value: 7, state: null }
+				{ label: "Lions", value: 14, state: "normal" },
+				{ label: "Tigers", value: 2, state: "normal" },
+				{ label: "Bears", value: 7, state: "normal" }
 			],
-			barColor: null
+			barColor: "#4285F4"
 		}
 	},
 	body: [
