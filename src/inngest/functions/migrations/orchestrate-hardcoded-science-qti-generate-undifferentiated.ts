@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto"
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
@@ -17,6 +18,10 @@ const AssessmentItemSchema = z.object({
 	metadata: QtiItemMetadataSchema
 })
 type AssessmentItem = z.infer<typeof AssessmentItemSchema>
+
+function encodeProblemType(problemType: string): string {
+	return createHash("sha256").update(problemType).digest("hex").slice(0, 12)
+}
 
 const HARDCODED_SCIENCE_COURSE_IDS = [
 	"x0c5bb03129646fd6", // ms-biology
@@ -64,7 +69,8 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 							xml: schema.niceQuestions.xml,
 							exerciseId: schema.niceQuestions.exerciseId,
 							exerciseTitle: schema.niceExercises.title,
-							exerciseSlug: schema.niceExercises.slug
+							exerciseSlug: schema.niceExercises.slug,
+							problemType: schema.niceQuestions.problemType // ADD THIS LINE
 						})
 						.from(schema.niceQuestions)
 						.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
@@ -278,30 +284,31 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 				const buildTestObject = (
 					id: string,
 					title: string,
-					questions: { id: string; exerciseId: string; exerciseTitle: string }[]
+					questions: { id: string; exerciseId: string; exerciseTitle: string; problemType: string }[] // ADD problemType
 				): string => {
 					const safeTitle = escapeXmlAttribute(title)
-					const questionsByExercise = new Map<string, { title: string; questionIds: string[] }>()
+					const questionsByProblemType = new Map<string, typeof questions>()
 					for (const q of questions) {
-						if (!questionsByExercise.has(q.exerciseId)) {
-							questionsByExercise.set(q.exerciseId, { title: q.exerciseTitle, questionIds: [] })
+						if (!questionsByProblemType.has(q.problemType)) {
+							questionsByProblemType.set(q.problemType, [])
 						}
-						questionsByExercise.get(q.exerciseId)?.questionIds.push(q.id)
+						questionsByProblemType.get(q.problemType)?.push(q)
 					}
 
-					const selectCount = 2
-					const sectionsXml = Array.from(questionsByExercise.entries())
-						.map(([exerciseId, { title: exerciseTitle, questionIds }]) => {
-							const safeExerciseTitle = escapeXmlAttribute(exerciseTitle)
-							const itemRefsXml = questionIds
+					const sectionsXml = Array.from(questionsByProblemType.entries())
+						.map(([problemType, problemTypeQuestions]) => {
+							const encodedProblemType = encodeProblemType(problemType)
+							const safeExerciseTitle = escapeXmlAttribute(problemTypeQuestions[0]?.exerciseTitle ?? "Exercise Section")
+							const exerciseId = problemTypeQuestions[0]?.exerciseId
+							const itemRefsXml = problemTypeQuestions
 								.map(
 									(itemId, itemIndex) =>
-										`<qti-assessment-item-ref identifier="nice_${itemId}" href="/assessment-items/nice_${itemId}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+										`<qti-assessment-item-ref identifier="nice_${itemId.id}" href="/assessment-items/nice_${itemId.id}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
 								)
 								.join("\n                ")
 
-							return `        <qti-assessment-section identifier="SECTION_${exerciseId}" title="${safeExerciseTitle}" visible="false">
-            <qti-selection select="${Math.min(selectCount, questionIds.length)}" with-replacement="false"/>
+							return `        <qti-assessment-section identifier="SECTION_${exerciseId}_${encodedProblemType}" title="${safeExerciseTitle}" visible="false">
+            <qti-selection select="1" with-replacement="false"/>
             <qti-ordering shuffle="true"/>
             ${itemRefsXml}
         </qti-assessment-section>`
@@ -326,31 +333,53 @@ ${sectionsXml}
 						if (!question) {
 							throw errors.new(`question ${id} not found when building test`)
 						}
-						return { id: question.id, exerciseId: question.exerciseId, exerciseTitle: question.exerciseTitle }
+						return {
+							id: question.id,
+							exerciseId: question.exerciseId,
+							exerciseTitle: question.exerciseTitle,
+							problemType: question.problemType
+						} // ADD problemType
 					})
 					return buildTestObject(assessmentId, data.title, allQuestionsForTest)
 				})
 
 				const exerciseTests = allExercises.map((exercise) => {
-					const questionIds = (questionsByExerciseId.get(exercise.id) || []).filter((id) =>
-						validOriginalIds.has(String(id))
+					const questionsForExercise = allQuestions.filter(
+						(q) => q.exerciseId === exercise.id && validOriginalIds.has(String(q.id))
 					)
+					// Group questions by their problemType.
+					const questionsByProblemType = new Map<string, typeof questionsForExercise>()
+					for (const q of questionsForExercise) {
+						if (!questionsByProblemType.has(q.problemType)) {
+							questionsByProblemType.set(q.problemType, [])
+						}
+						questionsByProblemType.get(q.problemType)?.push(q)
+					}
+
 					const safeTitle = escapeXmlAttribute(exercise.title)
-					const itemRefsXml = questionIds
-						.map(
-							(itemId, index) =>
-								`<qti-assessment-item-ref identifier="nice_${itemId}" href="/assessment-items/nice_${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
-						)
-						.join("\n                ")
-					const selectCountForExercise = Math.min(5, questionIds.length)
+
+					const sectionsXml = Array.from(questionsByProblemType.entries())
+						.map(([problemType, problemTypeQuestions]) => {
+							const encodedProblemType = encodeProblemType(problemType)
+							const itemRefsXml = problemTypeQuestions
+								.map(
+									(itemId, index) =>
+										`<qti-assessment-item-ref identifier="nice_${itemId.id}" href="/assessment-items/nice_${itemId.id}" sequence="${index + 1}"></qti-assessment-item-ref>`
+								)
+								.join("\n                ")
+							const selectCountForExercise = 1
+							return `        <qti-assessment-section identifier="SECTION_${exercise.id}_${encodedProblemType}" title="${safeTitle}" visible="true">
+            <qti-selection select="${selectCountForExercise}" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>
+            ${itemRefsXml}
+        </qti-assessment-section>`
+						})
+						.join("\n")
+
 					return `<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <qti-assessment-test xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd\" identifier=\"nice_${exercise.id}\" title=\"${safeTitle}\">
     <qti-test-part identifier=\"PART_1\" navigation-mode=\"nonlinear\" submission-mode=\"individual\">
-        <qti-assessment-section identifier=\"SECTION_${exercise.id}\" title=\"${safeTitle}\" visible=\"true\">
-            <qti-selection select=\"${selectCountForExercise}\" with-replacement=\"false\"/>
-            <qti-ordering shuffle=\"true\"/>
-            ${itemRefsXml}
-        </qti-assessment-section>
+${sectionsXml}
     </qti-test-part>
 </qti-assessment-test>`
 				})

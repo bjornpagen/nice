@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto"
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
@@ -18,6 +19,9 @@ const AssessmentItemSchema = z.object({
 	metadata: QtiItemMetadataSchema
 })
 type AssessmentItem = z.infer<typeof AssessmentItemSchema>
+function encodeProblemType(problemType: string): string {
+	return createHash("sha256").update(problemType).digest("hex").slice(0, 12)
+}
 
 export const orchestrateCourseDifferentiatedIngestion = inngest.createFunction(
 	{
@@ -48,7 +52,8 @@ export const orchestrateCourseDifferentiatedIngestion = inngest.createFunction(
 					exerciseId: schema.niceQuestions.exerciseId,
 					exerciseTitle: schema.niceExercises.title,
 					exercisePath: schema.niceExercises.path,
-					exerciseSlug: schema.niceExercises.slug
+					exerciseSlug: schema.niceExercises.slug,
+					problemType: schema.niceQuestions.problemType // ADD THIS LINE
 				})
 				.from(schema.niceQuestions)
 				.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
@@ -282,36 +287,35 @@ export const orchestrateCourseDifferentiatedIngestion = inngest.createFunction(
 		const buildTestObject = (
 			id: string,
 			title: string,
-			questions: { id: string; exerciseId: string; exerciseTitle: string }[],
+			questions: { id: string; exerciseId: string; exerciseTitle: string; problemType: string }[], // ADD problemType
 			_metadata: Record<string, unknown>
 		): string => {
 			const safeTitle = escapeXmlAttribute(title)
 
-			// Group questions by their source exercise.
-			const questionsByExercise = new Map<string, { title: string; questionIds: string[] }>()
+			// Group questions by their source problemType.
+			const questionsByProblemType = new Map<string, typeof questions>()
 			for (const q of questions) {
-				if (!questionsByExercise.has(q.exerciseId)) {
-					questionsByExercise.set(q.exerciseId, { title: q.exerciseTitle, questionIds: [] })
+				if (!questionsByProblemType.has(q.problemType)) {
+					questionsByProblemType.set(q.problemType, [])
 				}
-				questionsByExercise.get(q.exerciseId)?.questionIds.push(q.id)
+				questionsByProblemType.get(q.problemType)?.push(q)
 			}
 
-			// Determine the number of questions to select from each exercise based on assessment type.
-			// All summative assessments (Quizzes, Unit Tests, Course Challenges) will now select 2 questions per exercise.
-			const selectCount = 2
-
-			const sectionsXml = Array.from(questionsByExercise.entries())
-				.map(([exerciseId, { title: exerciseTitle, questionIds }]) => {
-					const safeExerciseTitle = escapeXmlAttribute(exerciseTitle)
-					const itemRefsXml = questionIds
+			const sectionsXml = Array.from(questionsByProblemType.entries())
+				.map(([problemType, problemTypeQuestions]) => {
+					const encodedProblemType = encodeProblemType(problemType)
+					const safeExerciseTitle = escapeXmlAttribute(problemTypeQuestions[0]?.exerciseTitle ?? "Exercise Section")
+					const exerciseId = problemTypeQuestions[0]?.exerciseId
+					const itemRefsXml = problemTypeQuestions
 						.map(
-							(itemId, itemIndex) =>
-								`<qti-assessment-item-ref identifier="${itemId}" href="/assessment-items/${itemId}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+							(q, itemIndex) =>
+								// Use the question ID directly as it's already the unique QTI identifier for differentiated items
+								`<qti-assessment-item-ref identifier="${q.id}" href="/assessment-items/${q.id}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
 						)
 						.join("\n                ")
 
-					return `        <qti-assessment-section identifier="SECTION_${exerciseId}" title="${safeExerciseTitle}" visible="false">
-            <qti-selection select="${Math.min(selectCount, questionIds.length)}" with-replacement="false"/>
+					return `        <qti-assessment-section identifier="SECTION_${exerciseId}_${encodedProblemType}" title="${safeExerciseTitle}" visible="false">
+            <qti-selection select="1" with-replacement="false"/>
             <qti-ordering shuffle="true"/>
             ${itemRefsXml}
         </qti-assessment-section>`
@@ -380,10 +384,18 @@ ${sectionsXml}
 					throw errors.new(`qti item ${qtiId} metadata missing exercise info when building test`)
 				}
 
+				// Find original question to get its problemType
+				const originalQuestion = allQuestions.find((q) => q.id === metadata.khanId)
+				if (!originalQuestion) {
+					logger.error("Original question not found for differentiated item", { qtiId, originalId: metadata.khanId })
+					throw errors.new(`original question not found for qti item ${qtiId}`)
+				}
+
 				return {
-					id: qtiId, // Use the QTI identifier, not the original question ID
+					id: qtiId, // Use the QTI identifier
 					exerciseId: metadata.khanExerciseId,
-					exerciseTitle: metadata.khanExerciseTitle
+					exerciseTitle: metadata.khanExerciseTitle,
+					problemType: originalQuestion.problemType // ADD THIS LINE
 				}
 			})
 
@@ -407,16 +419,60 @@ ${sectionsXml}
 				})
 			}
 
-			const safeTitle = escapeXmlAttribute(exercise.title)
-			const itemRefsXml = questionIds
-				.map(
-					(itemId, index) =>
-						`<qti-assessment-item-ref identifier="${itemId}" href="/assessment-items/${itemId}" sequence="${index + 1}"></qti-assessment-item-ref>`
-				)
-				.join("\n                ")
+			// Map back to full question objects to get problemType
+			const questionsForExercise = questionIds.map((qtiId) => {
+				const item = assessmentItems.find((item) => {
+					if (!item || typeof item !== "object" || !("xml" in item)) return false
+					const xml = item.xml
+					if (typeof xml !== "string") return false
+					const idMatch = xml.match(/identifier="([^"]+)"/)
+					return idMatch && idMatch[1] === qtiId
+				})
+				if (!item) {
+					throw errors.new(`qti item ${qtiId} not found`)
+				}
+				if (!("metadata" in item) || !item.metadata || typeof item.metadata !== "object") {
+					throw errors.new(`qti item ${qtiId} missing metadata`)
+				}
+				const metadata = item.metadata
+				if (!("khanId" in metadata)) {
+					throw errors.new("qti item metadata is missing khanId")
+				}
+				const originalQuestion = allQuestions.find((q) => q.id === metadata.khanId)
+				if (!originalQuestion) {
+					throw errors.new(`original question ${metadata.khanId} not found`)
+				}
+				return { id: qtiId, problemType: originalQuestion.problemType }
+			})
 
-			// The number of questions to select. Math.min ensures we don't try to select more questions than exist.
-			const selectCountForExercise = Math.min(5, questionIds.length)
+			// Group questions by their problemType.
+			const questionsByProblemType = new Map<string, Array<{ id: string; problemType: string }>>()
+			for (const q of questionsForExercise) {
+				if (!questionsByProblemType.has(q.problemType)) {
+					questionsByProblemType.set(q.problemType, [])
+				}
+				questionsByProblemType.get(q.problemType)?.push(q)
+			}
+
+			const safeTitle = escapeXmlAttribute(exercise.title)
+
+			const sectionsXml = Array.from(questionsByProblemType.entries())
+				.map(([problemType, problemTypeQuestions]) => {
+					const encodedProblemType = encodeProblemType(problemType)
+					const itemRefsXml = problemTypeQuestions
+						.map(
+							(q, index) =>
+								`<qti-assessment-item-ref identifier="${q.id}" href="/assessment-items/${q.id}" sequence="${index + 1}"></qti-assessment-item-ref>`
+						)
+						.join("\n                ")
+
+					return `        <qti-assessment-section identifier="SECTION_${exercise.id}_${encodedProblemType}" title="${safeTitle}" visible="true">
+            <qti-selection select="1" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>
+            ${itemRefsXml}
+        </qti-assessment-section>`
+				})
+				.join("\n")
 
 			// For standalone exercises, we now create a test that selects a random sample of questions.
 			return `<?xml version="1.0" encoding="UTF-8"?>
@@ -425,11 +481,7 @@ ${sectionsXml}
         <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
     </qti-outcome-declaration>
     <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
-        <qti-assessment-section identifier="SECTION_${exercise.id}" title="${safeTitle}" visible="true">
-            <qti-selection select="${selectCountForExercise}" with-replacement="false"/>
-            <qti-ordering shuffle="true"/>
-            ${itemRefsXml}
-        </qti-assessment-section>
+${sectionsXml}
     </qti-test-part>
 </qti-assessment-test>`
 		})
