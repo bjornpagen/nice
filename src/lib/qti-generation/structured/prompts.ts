@@ -72,6 +72,12 @@ Your entire output for any rich text field (like 'body' or 'feedback') MUST be a
 
 This structure is non-negotiable. You are FORBIDDEN from outputting raw HTML strings for content fields.
 
+**⚠️ CRITICAL MATHML REQUIREMENT FOR CURRENCY AND PERCENTAGES ⚠️**
+ALWAYS express currency symbols and percentages in MathML, NEVER as raw text:
+- Currency: MUST use <math><mo>$</mo><mn>amount</mn></math> (e.g., <math><mo>$</mo><mn>5.50</mn></math>)
+- Percentages: MUST use <math><mn>number</mn><mo>%</mo></math> (e.g., <math><mn>75</mn><mo>%</mo></math>)
+- Raw text like "$5" or "75%" will cause IMMEDIATE REJECTION and compilation errors
+
 The shell should:
 1. Convert Perseus content into a structured 'body' field as a JSON array of block-level items.
 2. List all widget and interaction identifiers as arrays of strings in the 'widgets' and 'interactions' properties.
@@ -268,12 +274,13 @@ CORRECT shell structure:
 **CRITICAL: NO CURRENCY SLOTS - STRICT MATHML ENFORCEMENT.**
 Currency symbols and amounts MUST NOT be represented as slots (widget or interaction). Do not generate any slotId that indicates currency (for example, names containing "currency" or ending with "_feedback"). 
 
-**MANDATORY CURRENCY/PERCENT MATHML CONVERSION:**
-- Currency: Use <mo>$</mo><mn>amount</mn> in MathML, NOT raw text like "$5"
-- Percentages: Use <mn>number</mn><mo>%</mo> in MathML, NOT raw text like "50%"
+**MANDATORY CURRENCY/PERCENT MATHML CONVERSION - COMPILATION WILL FAIL IF NOT FOLLOWED:**
+- Currency: ALWAYS use <mo>$</mo><mn>amount</mn> in MathML, NEVER raw text like "$5"
+- Percentages: ALWAYS use <mn>number</mn><mo>%</mo> in MathML, NEVER raw text like "50%"
 - Example: Convert "$5.50" to <math><mo>$</mo><mn>5.50</mn></math>
 - Example: Convert "75%" to <math><mn>75</mn><mo>%</mo></math>
-- NEVER use raw text currency/percent symbols outside MathML tags
+- Raw text currency/percent symbols will cause ERROR: "currency and percent must be expressed in MathML, not raw text"
+- This applies to ALL content fields: body, feedback, choice options, table cells, EVERYWHERE
 
 ⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
 The following are CATEGORICALLY FORBIDDEN in the output. ANY violation will result in IMMEDIATE REJECTION:
@@ -349,12 +356,13 @@ ${perseusJson}
     * NO \`<mfenced>\` elements: Use \`<mrow><mo>(</mo>...<mo>)</mo></mrow>\` instead of \`<mfenced open="(" close=")">\`
     * NO LaTeX color commands: Strip \`\\blueD{x}\` to just the content \`x\`
     * NO LaTeX delimiters: Convert \`\\(...\\)\` to proper MathML, never leave the backslashes
-  - **CURRENCY/PERCENT HANDLING (UPDATED REQUIREMENTS)**:
-    * Currency: MUST use MathML <mo>$</mo><mn>amount</mn> pattern, NOT <span class="currency">
-    * Percentages: MUST use MathML <mn>number</mn><mo>%</mo> pattern
+  - **CURRENCY/PERCENT HANDLING (CRITICAL - COMPILATION ERRORS IF NOT FOLLOWED)**:
+    * Currency: MUST use MathML <mo>$</mo><mn>amount</mn> pattern, NEVER raw text
+    * Percentages: MUST use MathML <mn>number</mn><mo>%</mo> pattern, NEVER raw text
     * CORRECT: <math><mo>$</mo><mn>12.50</mn></math> and <math><mn>85</mn><mo>%</mo></math>
     * WRONG: <span class="currency">$</span><mn>12.50</mn> or raw text "$12.50" or "85%"
-    * Raw text currency/percent symbols are BANNED
+    * ERROR MESSAGE IF VIOLATED: "currency and percent must be expressed in MathML, not raw text"
+    * This is NOT optional - the QTI compiler will REJECT any raw text currency/percent symbols
   - Do NOT create slots for currency. Never generate slotIds like "currency7" or "currency7_feedback".
 - **Table Rule (MANDATORY)**:
   - Tables must NEVER be created as HTML \`<table>\` elements in the body.
@@ -473,20 +481,46 @@ Return ONLY the JSON object for the assessment shell.
 }
 \`\`\`
 
-**CORRECT (inline currency, no slots):**
+**CORRECT (inline currency using MathML):**
 \`\`\`json
 "body": [
   {
     "type": "paragraph",
     "content": [
       { "type": "text", "content": "The price is " },
-      { "type": "text", "content": "$" },
-      { "type": "math", "mathml": "<mn>7</mn>" }
+      { "type": "math", "mathml": "<mo>$</mo><mn>7</mn>" }
     ]
   }
 ],
 "widgets": [],
 "interactions": []
+\`\`\`
+
+**CRITICAL ERROR EXAMPLES - THESE WILL FAIL COMPILATION:**
+\`\`\`json
+// ❌ WRONG - Raw text currency symbol
+"content": [
+  { "type": "text", "content": "The cost is $5.50" }
+]
+// Error: currency and percent must be expressed in MathML, not raw text
+
+// ✅ CORRECT - Currency in MathML
+"content": [
+  { "type": "text", "content": "The cost is " },
+  { "type": "math", "mathml": "<mo>$</mo><mn>5.50</mn>" }
+]
+
+// ❌ WRONG - Raw text percentage
+"content": [
+  { "type": "text", "content": "The discount is 25%" }
+]
+// Error: currency and percent must be expressed in MathML, not raw text
+
+// ✅ CORRECT - Percentage in MathML
+"content": [
+  { "type": "text", "content": "The discount is " },
+  { "type": "math", "mathml": "<mn>25</mn><mo>%</mo>" }
+]
 \`\`\`
 
 **3. Banned Content (LaTeX, Deprecated MathML):**
