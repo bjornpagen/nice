@@ -296,36 +296,52 @@ export const generateThreeDIntersectionDiagram: WidgetGenerator<typeof ThreeDInt
 			break
 		}
 		case "sphere": {
-			const { r } = { r: solid.radius }
-			solidHeight = solid.radius * 2
-			solidLength = solid.radius * 2
-			// Approximate sphere with geodesic vertices for intersection calculations
-			const segments = 8
+			const { radius } = solid
+			solidHeight = radius * 2
+			solidLength = radius * 2
 			vertices = []
 			edges = []
 
-			// Create simplified sphere approximation with rings
-			for (let ring = 0; ring <= 4; ring++) {
-				const y = r * Math.cos((ring * Math.PI) / 4) - r / 2
-				const ringRadius = r * Math.sin((ring * Math.PI) / 4)
+			const stacks = 8 // rings of latitude
+			const sectors = 16 // slices of longitude
 
-				if (ring === 0 || ring === 4) {
-					// Poles
-					vertices.push({ x: 0, y: y, z: 0 })
-				} else {
-					for (let i = 0; i < segments; i++) {
-						const angle = (i * 2 * Math.PI) / segments
-						vertices.push({ x: ringRadius * Math.cos(angle), y: y, z: ringRadius * Math.sin(angle) })
-					}
+			// Generate vertices for a UV sphere
+			for (let i = 0; i <= stacks; i++) {
+				const phi = (Math.PI * i) / stacks // from 0 (top) to PI (bottom)
+				const y = radius * Math.cos(phi)
+				const r_i = radius * Math.sin(phi)
+
+				for (let j = 0; j < sectors; j++) {
+					const theta = (2 * Math.PI * j) / sectors // from 0 to 2PI
+					const x = r_i * Math.cos(theta)
+					const z = r_i * Math.sin(theta)
+					vertices.push({ x, y, z })
 				}
 			}
 
-			// Connect vertices with edges (simplified for visualization)
-			for (let i = 1; i < vertices.length - 1; i++) {
-				const vertex = vertices[i]
-				const isHidden = vertex ? vertex.z < 0 : false
-				edges.push({ startIdx: 0, endIdx: i, isHidden })
-				edges.push({ startIdx: i, endIdx: vertices.length - 1, isHidden })
+			// Generate edges from the vertices
+			for (let i = 0; i < stacks; i++) {
+				for (let j = 0; j < sectors; j++) {
+					const first = i * sectors + j
+					const second = (i + 1) * sectors + j
+					const nextInRing = i * sectors + ((j + 1) % sectors)
+
+					const p1 = vertices[first]
+					const p2 = vertices[nextInRing]
+					const p3 = vertices[second]
+					if (!p1 || !p2 || !p3) continue
+
+					// An edge is hidden if both its vertices have a negative z-coordinate (are on the back of the sphere)
+					const checkHidden = (v1: Point3D, v2: Point3D) => v1.z < -1e-6 && v2.z < -1e-6 // tolerance
+
+					// Latitude edge (horizontal)
+					if (i > 0 && i < stacks) {
+						// Poles don't have latitude edges in this structure
+						edges.push({ startIdx: first, endIdx: nextInRing, isHidden: checkHidden(p1, p2) ? true : null })
+					}
+					// Longitude edge (vertical)
+					edges.push({ startIdx: first, endIdx: second, isHidden: checkHidden(p1, p3) ? true : null })
+				}
 			}
 			break
 		}
