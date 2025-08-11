@@ -6,7 +6,13 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 export const UrlImageWidgetPropsSchema = z
 	.object({
 		type: z.literal("urlImage"),
-		url: z.string().describe("The direct URL to the image resource (e.g., 'https://.../image.png')."),
+		url: z
+			.string()
+			.regex(
+				/^https:\/\/.+\.(?:svg|png|jpe?g)$/,
+				"url must start with https:// and end with .svg, .png, .jpg, or .jpeg"
+			)
+			.describe("The direct HTTPS URL to the image resource (must end with .svg, .png, .jpg, or .jpeg)."),
 		alt: z
 			.string()
 			.min(1)

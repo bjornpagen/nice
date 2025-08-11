@@ -554,20 +554,11 @@ export function AssessmentStepper({
 		}
 		setAttemptNumber(newAttemptNumber) // Update state with the new attempt number
 
-		// Step 2: Only on success, reset the component's state for the new attempt.
-		setCurrentQuestionIndex(0)
-		setSelectedResponses({})
-		setExpectedResponses([])
-		setShowFeedback(false)
-		setIsAnswerCorrect(false)
-		setIsAnswerChecked(false)
-		setAttemptCount(0)
-		setCorrectAnswersCount(0)
-		setShowSummary(false)
-		setSessionResults([]) // Reset session data
-		setReportedQuestionIds(new Set()) // Reset reported questions
-		hasSentCompletionEventRef.current = false // Reset completion tracking
-		assessmentStartTimeRef.current = new Date() // Reset the timer for the new attempt
+		// Refresh the route to fetch a freshly randomized question set
+		router.refresh()
+		return
+
+		// Step 2 (no longer needed when refreshing): previously we reset local state here.
 	}
 
 	if (questions.length === 0) {
