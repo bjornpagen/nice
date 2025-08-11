@@ -159,10 +159,13 @@ export function applyQtiSelectionAndOrdering(
 					itemRefsAfterSelection: Math.min(selectCount, itemRefs.length)
 				})
 				// Strict non-repetition until exhaustion using sliding window over base order
-				if (options?.baseSeed && options?.attemptNumber && itemRefs.length > 0) {
+				// Accept attemptNumber === 0 (truthy check would otherwise skip)
+				if (options?.baseSeed !== undefined && options?.attemptNumber !== undefined && itemRefs.length > 0) {
 					const n = itemRefs.length
 					const k = Math.min(selectCount, n)
-					const offset = ((options.attemptNumber - 1) * k) % n
+					// Treat attemptNumber as 0-based to ensure attempt 0 and 1 select different windows
+					const attemptIndex = options.attemptNumber >= 0 ? options.attemptNumber : 0
+					const offset = (attemptIndex * k) % n
 					const window: string[] = []
 					for (let i = 0; i < k; i++) {
 						const idx = (offset + i) % n
