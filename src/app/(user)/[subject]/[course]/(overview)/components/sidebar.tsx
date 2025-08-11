@@ -42,14 +42,16 @@ export function Sidebar({
 						</div>
 					)}
 
-					{/* Challenges (only show when unlocked) */}
+					{/* Challenges (always show; render locked state when applicable) */}
 					{challengesData.length > 0 && (
 						<div className="mt-8">
-							{challengesData
-								.filter((challenge) => resourceLockStatus[challenge.id] !== true)
-								.map((challenge) => (
-									<CourseChallenge key={challenge.id} path={challenge.path} />
-								))}
+							{challengesData.map((challenge) => (
+								<CourseChallenge
+									key={challenge.id}
+									path={challenge.path}
+									isLocked={resourceLockStatus[challenge.id] !== false}
+								/>
+							))}
 						</div>
 					)}
 				</ScrollArea>

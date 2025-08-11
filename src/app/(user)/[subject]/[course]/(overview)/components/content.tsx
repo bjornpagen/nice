@@ -137,13 +137,14 @@ export function Content({
 				))}
 
 				{/* Course Challenge */}
-				{course.challenges.length > 0 &&
-					course.challenges[0] &&
-					resourceLockStatus[course.challenges[0].id] !== true && (
-						<div className="break-inside-avoid">
-							<CourseChallenge path={course.challenges[0].path} />
-						</div>
-					)}
+				{course.challenges.length > 0 && course.challenges[0] && (
+					<div className="break-inside-avoid">
+						<CourseChallenge
+							path={course.challenges[0].path}
+							isLocked={resourceLockStatus[course.challenges[0].id] !== false}
+						/>
+					</div>
+				)}
 			</div>
 
 			{/* Units Breakdown Section */}
@@ -171,13 +172,17 @@ export function Content({
 
 			{/* Course Challenge */}
 			<div className="rounded-sm">
-				{course.challenges.length > 0 &&
-					course.challenges[0] &&
-					resourceLockStatus[course.challenges[0].id] !== true && (
-						<div className="break-inside-avoid">
-							<Section className="rounded-sm">
-								<h2 className="font-medium text-gray-900 text-base text-lg">Course challenge</h2>
-								<p className="text-gray-600 text-sm">Test your knowledge of the skills in this course.</p>
+				{course.challenges.length > 0 && course.challenges[0] && (
+					<div className="break-inside-avoid">
+						<Section className="rounded-sm">
+							<h2 className="font-medium text-gray-900 text-base text-lg">Course challenge</h2>
+							<p className="text-gray-600 text-sm">Test your knowledge of the skills in this course.</p>
+							{resourceLockStatus[course.challenges[0].id] !== false ? (
+								<div className="inline-flex items-center gap-2 text-gray-400 mt-2">
+									<Lock className="w-4 h-4" />
+									<span className="text-sm font-medium">Locked</span>
+								</div>
+							) : (
 								<Button
 									variant="ghost"
 									className="bg-white text-blue-600 text-sm border border-gray-400 px-4 py-2 rounded-sm mt-2 hover:ring-2 hover:ring-blue-500 hover:text-blue-600"
@@ -185,9 +190,10 @@ export function Content({
 								>
 									<Link href={course.challenges[0].path}>Start Course challenge</Link>
 								</Button>
-							</Section>
-						</div>
-					)}
+							)}
+						</Section>
+					</div>
+				)}
 			</div>
 		</>
 	)
