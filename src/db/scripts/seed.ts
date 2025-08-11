@@ -51,6 +51,33 @@ async function main() {
 
 	const dataDir = path.join(process.cwd(), "data")
 
+	// --- CLI FILTERS: allow partial uploads by table type ---
+	// usage examples:
+	//   bun run src/db/scripts/seed.ts --only=articles
+	//   bun run src/db/scripts/seed.ts --only=articles,questions
+	//   bun run src/db/scripts/seed.ts --only=videos --only=lessonContents
+	const args = process.argv.slice(2)
+	const onlyArgs = args.filter((a) => a.startsWith("--only="))
+	const onlySet = new Set<string>()
+	for (const onlyArg of onlyArgs) {
+		const val = onlyArg.split("=", 2)[1] || ""
+		for (const t of val.split(",")) {
+			const trimmed = t.trim()
+			if (trimmed) onlySet.add(trimmed)
+		}
+	}
+	const hasFilter = onlySet.size > 0
+	if (hasFilter) {
+		logger.info("seeding with partial table selection", { only: Array.from(onlySet) })
+	} else {
+		logger.info("seeding all tables (no --only filter provided)")
+	}
+
+	function shouldSeed(type: string): boolean {
+		if (!hasFilter) return true
+		return onlySet.has(type)
+	}
+
 	// --- 1. Read all JSON data files from the data directory ---
 	const fileReadResult = await errors.try(fs.readdir(dataDir))
 	if (fileReadResult.error) {
@@ -296,14 +323,21 @@ async function main() {
 		}
 	}
 
-	const subjectInsertResult = await errors.try(
-		db.insert(schema.niceSubjects).values(subjectsToInsert).onConflictDoNothing()
-	)
-	if (subjectInsertResult.error) {
-		logger.error("failed to insert subjects", { error: subjectInsertResult.error })
-		throw errors.wrap(subjectInsertResult.error, "subject seeding")
+	if (shouldSeed("subjects")) {
+		const subjectInsertResult = await errors.try(
+			db
+				.insert(schema.niceSubjects)
+				.values(subjectsToInsert)
+				.onConflictDoUpdate({ target: schema.niceSubjects.slug, set: { title: sql.raw("excluded.title") } })
+		)
+		if (subjectInsertResult.error) {
+			logger.error("failed to upsert subjects", { error: subjectInsertResult.error })
+			throw errors.wrap(subjectInsertResult.error, "subject seeding")
+		}
+		logger.info("successfully upserted subjects", { count: subjectsToInsert.length })
+	} else {
+		logger.info("skipping subjects seeding due to --only filter")
 	}
-	logger.info("successfully seeded subjects", { count: subjectsToInsert.length })
 
 	// --- 3. Perform bulk inserts for each table in batches ---
 	logger.info("starting database inserts with validation")
@@ -323,7 +357,7 @@ async function main() {
 			throw errors.wrap(validation.error, "course data validation")
 		}
 	}
-	if (coursesToInsert.length > 0) {
+	if (coursesToInsert.length > 0 && shouldSeed("courses")) {
 		logger.info("seeding courses", { total: coursesToInsert.length, batchSize: BATCH_SIZE })
 		for (let i = 0; i < coursesToInsert.length; i += BATCH_SIZE) {
 			const batch = coursesToInsert.slice(i, i + BATCH_SIZE)
@@ -387,7 +421,7 @@ async function main() {
 			throw errors.wrap(validation.error, "unit data validation")
 		}
 	}
-	if (unitsToInsert.length > 0) {
+	if (unitsToInsert.length > 0 && shouldSeed("units")) {
 		logger.info("seeding units", { total: unitsToInsert.length, batchSize: BATCH_SIZE })
 		for (let i = 0; i < unitsToInsert.length; i += BATCH_SIZE) {
 			const batch = unitsToInsert.slice(i, i + BATCH_SIZE)
@@ -455,7 +489,7 @@ async function main() {
 			throw errors.wrap(validation.error, "lesson data validation")
 		}
 	}
-	if (lessonsToInsert.length > 0) {
+	if (lessonsToInsert.length > 0 && shouldSeed("lessons")) {
 		logger.info("seeding lessons", { total: lessonsToInsert.length, batchSize: BATCH_SIZE })
 		for (let i = 0; i < lessonsToInsert.length; i += BATCH_SIZE) {
 			const batch = lessonsToInsert.slice(i, i + BATCH_SIZE)
@@ -519,7 +553,7 @@ async function main() {
 			throw errors.wrap(validation.error, "lesson content data validation")
 		}
 	}
-	if (lessonContentsToInsert.length > 0) {
+	if (lessonContentsToInsert.length > 0 && shouldSeed("lessonContents")) {
 		logger.info("seeding lesson_contents", { total: lessonContentsToInsert.length, batchSize: BATCH_SIZE })
 		for (let i = 0; i < lessonContentsToInsert.length; i += BATCH_SIZE) {
 			const batch = lessonContentsToInsert.slice(i, i + BATCH_SIZE)
@@ -577,7 +611,7 @@ async function main() {
 			throw errors.wrap(validation.error, "video data validation")
 		}
 	}
-	if (videosToInsert.length > 0) {
+	if (videosToInsert.length > 0 && shouldSeed("videos")) {
 		logger.info("seeding videos", { total: videosToInsert.length, batchSize: BATCH_SIZE })
 		for (let i = 0; i < videosToInsert.length; i += BATCH_SIZE) {
 			const batch = videosToInsert.slice(i, i + BATCH_SIZE)
@@ -645,7 +679,7 @@ async function main() {
 			throw errors.wrap(validation.error, "article data validation")
 		}
 	}
-	if (articlesToInsert.length > 0) {
+	if (articlesToInsert.length > 0 && shouldSeed("articles")) {
 		logger.info("seeding articles", { total: articlesToInsert.length, batchSize: BATCH_SIZE })
 		for (let i = 0; i < articlesToInsert.length; i += BATCH_SIZE) {
 			const batch = articlesToInsert.slice(i, i + BATCH_SIZE)
@@ -709,7 +743,7 @@ async function main() {
 			throw errors.wrap(validation.error, "exercise data validation")
 		}
 	}
-	if (exercisesToInsert.length > 0) {
+	if (exercisesToInsert.length > 0 && shouldSeed("exercises")) {
 		logger.info("seeding exercises", { total: exercisesToInsert.length, batchSize: BATCH_SIZE })
 		for (let i = 0; i < exercisesToInsert.length; i += BATCH_SIZE) {
 			const batch = exercisesToInsert.slice(i, i + BATCH_SIZE)
@@ -772,7 +806,7 @@ async function main() {
 			throw errors.wrap(validation.error, "question data validation")
 		}
 	}
-	if (questionsToInsert.length > 0) {
+	if (questionsToInsert.length > 0 && shouldSeed("questions")) {
 		logger.info("seeding questions", { total: questionsToInsert.length, batchSize: BATCH_SIZE })
 		for (let i = 0; i < questionsToInsert.length; i += BATCH_SIZE) {
 			const batch = questionsToInsert.slice(i, i + BATCH_SIZE)
@@ -836,7 +870,7 @@ async function main() {
 			throw errors.wrap(validation.error, "assessment data validation")
 		}
 	}
-	if (assessmentsToInsert.length > 0) {
+	if (assessmentsToInsert.length > 0 && shouldSeed("assessments")) {
 		logger.info("seeding assessments", { total: assessmentsToInsert.length, batchSize: BATCH_SIZE })
 		for (let i = 0; i < assessmentsToInsert.length; i += BATCH_SIZE) {
 			const batch = assessmentsToInsert.slice(i, i + BATCH_SIZE)
@@ -908,7 +942,7 @@ async function main() {
 			throw errors.wrap(validation.error, "assessment exercise data validation")
 		}
 	}
-	if (assessmentExercisesToInsert.length > 0) {
+	if (assessmentExercisesToInsert.length > 0 && shouldSeed("assessmentExercises")) {
 		logger.info("seeding assessment exercises", { total: assessmentExercisesToInsert.length, batchSize: BATCH_SIZE })
 		for (let i = 0; i < assessmentExercisesToInsert.length; i += BATCH_SIZE) {
 			const batch = assessmentExercisesToInsert.slice(i, i + BATCH_SIZE)
@@ -939,6 +973,8 @@ async function main() {
 				}
 			}
 		}
+	} else {
+		logger.info("skipping assessment exercises due to --only filter", { skipped: assessmentExercisesToInsert.length })
 	}
 
 	logger.info("database seeding completed")
