@@ -1,0 +1,676 @@
+Bjorn Pagen
+  Today at 11:40 AM
+@Felipe Taboada @Carlos Bonetti How do we modify our course in TimeBack so that you cannot do the resources like Videos, Articles inside of TimeBack? We want to set an "External Resource" flag.
+3 replies
+
+
+Felipe Taboada
+  Today at 1:55 PM
+Every native resource will de doable by any client app that reads from timeback.
+If you want app specific resources you need to use an interactive one and have a deep link url that sends to your app, docs here: https://docs.google.com/document/d/1pqo0D2hpozv-OYom_-hRotLIm85S8vny2o1tUMh3wpU/edit?tab=t.x2y6cux6ih2b#heading=h.s99bghx0zl0h and its how all 3rd party apps work
+
+
+Bjorn Pagen
+  Today at 2:49 PM
+Ok, so if I don't want a local resource like a Video or an Article to accessible to any other app in TimeBack, what should I do? For example, MathAcademy renders any resources as "External" on timeback.timeback.com/app. We would like to have the same behavior for https://nice.academy.
+
+nice.academynice.academy
+Nice Academy
+Nice Academy is a platform for learning and teaching
+
+
+Felipe Taboada
+  Today at 4:50 PM
+If you want app specific resources you need to use an interactive one and have a deep link url that sends to your app, docs here: https://docs.google.com/document/d/1pqo0D2hpozv-OYom_-hRotLIm85S8vny2o1tUMh3wpU/edit?tab=t.x2y6cux6ih2b#heading=h.s99bghx0zl0h and its how all 3rd party apps work
+
+Resources Metadata
+
+Here’s a breakdown of the metadata fields we recommend using when creating resources. Adding good metadata makes your content easier to organize, search, and align with learning objectives.
+Start with the Common Metadata section—these fields apply to all types of resources. Then, depending on the type of content you’re working with (like a QTI question, video, or document), check out the more specific fields for that type.
+You can also add your own custom fields if you need to store anything extra. The goal is to make your resources as useful and reusable as possible
+
+Common Metadata
+
+Name
+Description
+Example
+type
+Resource type identifier (qti-question, text, video, etc.)
+“qti”, “text”, “audio”', “video”, “interactive”, “visual”,  “course-material”
+subject
+Academic subject area (Math, Biology, etc.)
+"Language"
+grades
+Array or range of grade levels ([1,2,3])
+[5]
+learningObjectiveSet
+A list of learning objectives that the resource is aligned to, grouped by source or standard framework (e.g., CASE, local district standards). Each group includes one or more objective identifiers.
+"learningObjectiveSet": [
+  {
+    "source": "CASE",
+    "learningObjectiveIds": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "fc6a7e3d-9a9f-4ef4-a3c6-dfa3b2c78cba"
+    ]
+  }
+]
+xp
+Experience points if it will be used for a game
+10
+url
+The direct URL where the resource file or content is stored and can be accessed or downloaded.
+
+For external static assets (videos, pdfs, articles etc) this is the actual URL where the content can be retrieved (a YouTube link for example)
+"https://cdn.example.com/resources/math-1"
+language
+Language of the content, using standard IETF BCP 47 codes.
+"en-US", "pt-BR"
+keywords
+Array of topic-related tags or important terms covered by the content. Helps with search and classification.
+["algebra", "linear equations"]
+wordLength
+The number of words of the content
+300
+timeLength
+Number of Seconds a median student would take to consume this content properly. For video resources, this is the actual video duration.
+500
+
+
+QTI
+
+Name
+Description
+Example
+type
+Resource type identifier (qti-question, text, video, etc.)
+"qti"
+subType
+More specific classification of the QTI resource.
+"qti-question", "qti-test", "qti-test-bank", “qti-stimulus”
+lessonType
+Lesson mode for this activity (must be qti-test subType)
+
+This is deprecated and should now live on ComponentResource lessonType field
+“powerpath-100”, “quiz”, “test-out”, “placement”
+subject
+Academic subject area (Math, Language, etc.)
+"Science"
+grades
+Array or range of grade levels ([1,2,3])
+[1,2]
+language
+Language of the content, using standard IETF BCP 47 codes.
+"en-US", "pt-BR"
+url
+The direct URL where the resource file or content is stored and can be accessed or downloaded
+"https://cdn.example.com/resources/math-1"
+learningObjectiveSet
+A list of learning objectives that the resource is aligned to, grouped by source or standard framework (e.g., CASE, local district standards). Each group includes one or more objective identifiers.
+"learningObjectiveSet": [
+  {
+    "source": "CASE",
+    "learningObjectiveIds": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "fc6a7e3d-9a9f-4ef4-a3c6-dfa3b2c78cba"
+    ]
+  }
+]
+xp
+Experience gained when completing the QTI item
+10
+
+
+
+
+Textual
+
+
+Name
+Description
+Example
+type
+Resource type identifier (qti-question, text, video, etc.)
+text
+activityType
+AlphaLearn will render this text in the activity badge if you want to override the default “Article, Exercise, Quiz, Video”. Limit to a single word for best UI experience. Reach out to Amanda if you require a custom icon mapping.
+“Applet”, “Experiment”,
+format
+The file or content format of the resource.
+"pdf", "epub", "docx", "html"
+author
+Name of the person or organization that created or wrote the content.
+"John Smith", "Oxford Press"
+
+
+language
+Language of the content using IETF BCP 47 codes.
+"en-US", "pt-BR"
+pageCount
+Number of pages (if applicable), typically for PDFs, eBooks, or other paginated documents.
+10
+subject
+Academic subject area (Math, Biology, etc.)
+“Mathematics”
+grades
+Array or range of grade levels ([1,2,3])
+[5]
+keywords
+Array of topic-related tags or important terms covered by the content. Helps with search and classification.
+["algebra", "linear equations"]
+url
+The direct URL where the resource file or content is stored and can be accessed or downloaded. AlphaLearn will attempt to display this url in an iframe.
+"https://cdn.example.com/resources/algebra-2.pdf"
+learningObjectiveSet
+A list of learning objectives that the resource is aligned to, grouped by source or standard framework (e.g., CASE, local district standards). Each group includes one or more objective identifiers.
+"learningObjectiveSet": [
+  {
+    "source": "CASE",
+    "learningObjectiveIds": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "fc6a7e3d-9a9f-4ef4-a3c6-dfa3b2c78cba"
+    ]
+  }
+]
+
+
+Audio
+
+Name
+Description
+Example
+type
+Resource type identifier (qti-question, text, video, etc.)
+audio
+duration
+Length of the audio file. HH:MM:SS 
+"00:03:03.45"
+format
+The file or content format of the resource.
+"mp3", “wav”
+speaker
+Name of the speaker, narrator, or person delivering the content.
+"Prof. Jane Doe"
+language
+Language of the content using IETF BCP 47 codes.
+"en-US", "pt-BR"
+subject
+Academic subject area (Math, Biology, etc.)
+“History”
+grades
+Array or range of grade levels ([1,2,3])
+[1]
+keywords
+Tags or relevant topics covered in the audio, useful for filtering and search.
+["lecture", "cold war"]
+url
+The direct URL where the resource file or content is stored and can be accessed or downloaded
+"https://cdn.example.com/resources/us-history.mp3"
+learningObjectiveSet
+A list of learning objectives that the resource is aligned to, grouped by source or standard framework (e.g., CASE, local district standards). Each group includes one or more objective identifiers.
+"learningObjectiveSet": [
+  {
+    "source": "CASE",
+    "learningObjectiveIds": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "fc6a7e3d-9a9f-4ef4-a3c6-dfa3b2c78cba"
+    ]
+  }
+]
+
+
+
+
+Video
+
+Name
+Description
+Example
+type
+Resource type identifier (qti-question, text, video, etc.)
+video
+duration
+Length of the audio file. HH:MM:SS 
+"00:03:03.45"
+captionsAvailable
+Indicates whether the video includes closed captions or subtitles for accessibility.
+true, false
+format
+The file or content format of the resource.
+“mp4”, “webm”, “mov”
+language
+Language of the content using IETF BCP 47 codes.
+"en-US", "pt-BR"
+grades
+Array or range of grade levels ([1,2,3])
+[3,4]
+subject
+Academic subject area (Math, Biology, etc.)
+"History’
+url
+The direct URL where the resource file or content is stored and can be accessed or downloaded
+"https://cdn.example.com/resources/us-history.mp4"
+learningObjectiveSet
+A list of learning objectives that the resource is aligned to, grouped by source or standard framework (e.g., CASE, local district standards). Each group includes one or more objective identifiers.
+"learningObjectiveSet": [
+  {
+    "source": "CASE",
+    "learningObjectiveIds": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "fc6a7e3d-9a9f-4ef4-a3c6-dfa3b2c78cba"
+    ]
+  }
+]
+
+
+
+Interactive
+Used for external 3rd Party App resources
+
+Name
+Description
+Example
+type
+Resource type identifier (qti-question, text, video, etc.)
+interactive
+launchUrl
+The URL used to launch the interactive tool, often via LTI or similar protocol.
+https://tool.example.com/lti/launch,
+toolProvider
+Name of the external tool provider or platform delivering the content.
+"Testing Tool", "Desmos", "Khan Academy"
+activityType
+AlphaLearn will render this text in the activity badge. Limit to a single word for best UI experience. Reach out to Amanda if you require a custom icon mapping.
+“Applet”, “Experiment”
+instructionalMethod
+Teaching method or pedagogy supported by the resource.
+"exploratory", "direct-instruction"
+grades
+Array or range of grade levels ([1,2,3])
+[4]
+subject
+Academic subject area (Math, Biology, etc.)
+“Biology”
+language
+Language of the content using IETF BCP 47 codes.
+"en-US", "pt-BR"
+url
+The direct URL where the resource file or content is stored and can be accessed or downloaded
+-
+learningObjectiveSet
+A list of learning objectives that the resource is aligned to, grouped by source or standard framework (e.g., CASE, local district standards). Each group includes one or more objective identifiers.
+"learningObjectiveSet": [
+  {
+    "source": "CASE",
+    "learningObjectiveIds": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "fc6a7e3d-9a9f-4ef4-a3c6-dfa3b2c78cba"
+    ]
+  }
+]
+
+
+Visuals
+
+Name
+Description
+Example
+type
+Resource type identifier (qti-question, text, video, etc.)
+visual
+format
+The file format or image type of the visual.
+"png", "jpeg", "svg", "pdf"
+resolution
+Dimensions of the visual in pixels.
+"1920x1080"
+subject
+Academic subject area (Math, Biology, etc.)
+Biology
+grades
+Array or range of grade levels ([1,2,3])
+[2]
+language
+Language of the content using IETF BCP 47 codes.
+"en-US", "pt-BR"
+url
+The direct URL where the resource file or content is stored and can be accessed or downloaded
+"https://cdn.example.com/resources/body.png"
+learningObjectiveSet
+A list of learning objectives that the resource is aligned to, grouped by source or standard framework (e.g., CASE, local district standards). Each group includes one or more objective identifiers.
+"learningObjectiveSet": [
+  {
+    "source": "CASE",
+    "learningObjectiveIds": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "fc6a7e3d-9a9f-4ef4-a3c6-dfa3b2c78cba"
+    ]
+  }
+]
+
+
+Course Material
+
+Name
+Description
+Example
+type
+Resource type identifier (qti-question, text, video, etc.)
+course-material
+subType
+A more specific classification for the course material based on its purpose.
+"unit", "course", "resource-collection"
+author
+Name of the person or organization who created the material.
+"Jane Doe", "State Education Board"
+format
+The file format or packaging type of the resource.
+"docx", "pdf", "cc" (Common Cartridge)
+subject
+Academic subject area (Math, Biology, etc.)
+English Language
+grades
+Array or range of grade levels ([1,2,3])
+[5]
+instructionalMethod
+Teaching method or pedagogy supported by the resource.
+"direct-instruction", "project-based"
+keywords
+Tags or key concepts addressed in the material.
+["reading comprehension", "structure"]
+language
+Language of the content using IETF BCP 47 codes.
+"en-US", "pt-BR"
+url
+The direct URL where the resource file or content is stored and can be accessed or downloaded
+"https://cdn.example.com/resources/lesson-plan-5.pdf"
+learningObjectiveSet
+A list of learning objectives that the resource is aligned to, grouped by source or standard framework (e.g., CASE, local district standards). Each group includes one or more objective identifiers.
+"learningObjectiveSet": [
+  {
+    "source": "CASE",
+    "learningObjectiveIds": [
+        "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "fc6a7e3d-9a9f-4ef4-a3c6-dfa3b2c78cba"
+    ]
+  }
+]
+
+Assessment Bank
+Represents a collection of Assessments as a single Resource (useful for test-out, for example).
+
+
+Assessment Banks can store multiple versions of a test, such as end-of-course assessments. To prevent cheating, a new test instance is served for each student attempt, ensuring questions and potential answers from previous attempts are not reused.
+
+
+Name
+Description
+Example
+type
+Resource type identifier
+“assessment-bank”
+resources
+Array of resource IDs referenced by the assessment-bank
+
+The IDs should point to valid Resources that are individual tests themselves
+[
+  “4bd9-b816-f841ee4d26d1”,
+  “462f-855a-8aa8f69fceea”
+]
+
+
+
+so i'm confused how to label our oneroster resources, like videos, qti tests, and articles to not be attempted to be used by the timeback ui, and for it to simply render an external link to nice academy. i'm bjorn. i'm asking felipe what to do here, clearly pretty confused. what's the best way for me to attempt this? don't make any changes yet, please just see if you can turn this into any sense. read our code, and try to figure out what felipe is suggesting here.
+
+the combination of oneroster/qti is called TimeBack, and it has a central ui dashboard where they can see all the courses from nice academy, but we use a different method of storing assessmentLineItems ourselves, so we have to make sure they don't try to do stuff on their end. can you figure it out for me? no code changes yet.
+
+
+---
+
+I’m going to scan the codebase to find where OneRoster resources are built/sent to TimeBack, how resource types are labeled (video, text, qti, interactive), and where we could set a flag or use the interactive/deep-link pattern Felipe mentioned. I’ll search broadly first, then narrow to the OneRoster payload generation and QTI ingestion paths.
+Search files...
+Search files...
+Search files...
+Search files...
+Search files...
+
+Ran tool
+
+Short status: I looked through where we build OneRoster payloads and how the metadata is labeled for Videos, Articles, Exercises, and assessments. I also checked our local schemas that validate resource metadata and where they’re consumed.
+
+### What Felipe is suggesting, applied to our setup
+- To prevent TimeBack from rendering our resources natively, we must not label them as “qti”, “video”, or “text” in resource metadata.
+- Instead, for any app-specific content we want TimeBack to treat as external, we should publish them as type “interactive” with a deep-link `launchUrl` to `https://nice.academy/...`.
+- TimeBack will see type “interactive” and show an External link that launches our app. That’s how third-party apps integrate.
+
+### What our code does today
+- We currently label:
+  - Articles as QTI Stimuli with a QTI URL.
+  - Videos as type “video” with a YouTube URL.
+  - Exercises/Assessments as QTI Tests with a QTI URL.
+- This invites TimeBack to render them natively.
+
+You can see where this happens in `src/lib/payloads/oneroster/course.ts`:
+```startLine:469:endLine:502:src/lib/payloads/oneroster/course.ts
+if (lc.contentType === "Article") {
+  // Articles should be QTI Stimulus
+  metadata = {
+    ...metadata,
+    type: "qti",
+    subType: "qti-stimulus",
+    version: "3.0",
+    language: "en-US",
+    url: `${env.TIMEBACK_QTI_SERVER_URL}/stimuli/nice_${content.id}`,
+    xp: 2
+  }
+} else if (lc.contentType === "Video") {
+  metadata = {
+    ...metadata,
+    type: "video",
+    format: "youtube",
+    url: `https://www.youtube.com/watch?v=${videoData?.youtubeId}`,
+    xp: videoData?.duration ? Math.ceil(videoData.duration / 60) : 0
+  }
+} else if (lc.contentType === "Exercise") {
+  metadata = {
+    ...metadata,
+    type: "qti",
+    subType: "qti-test",
+    version: "3.0",
+    questionType: "custom",
+    language: "en-US",
+    url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${content.id}`,
+    xp: 3
+  }
+}
+```
+
+- Our resource metadata schema only recognizes “video” and “qti” types today. No “interactive” yet:
+```startLine:54:endLine:58:src/lib/metadata/oneroster.ts
+export const ResourceMetadataSchema = z.discriminatedUnion("type", [
+  VideoResourceMetadataSchema,
+  QtiResourceMetadataSchema
+])
+```
+
+- We also validate OneRoster ingestion event payloads against that schema here:
+```startLine:157:endLine:175:src/inngest/client.ts
+"oneroster/resources.ingest": {
+  data: z.object({
+    resources: z.array(
+      z.object({
+        ...
+        metadata: ResourceMetadataSchema.optional()
+      })
+    )
+  })
+},
+```
+
+### The practical change to get “External” behavior
+- For each resource we want TimeBack to treat as external-only:
+  - Set metadata `type` to “interactive”.
+  - Include `launchUrl` pointing to our route in `https://nice.academy/...` that handles that specific resource.
+  - Optionally set `toolProvider: "Nice Academy"` and `activityType` (“Video”, “Article”, “Exercise”) so their UI can label it.
+- Do not provide `type: "qti"` or `type: "video"` for these resources; otherwise TimeBack will try to host them.
+
+Example metadata for a video as external:
+```json
+{
+  "type": "interactive",
+  "launchUrl": "https://nice.academy/math/algebra-1/(practice)/unit-1/lesson-2/v/factoring-basics",
+  "toolProvider": "Nice Academy",
+  "activityType": "Video",
+  "khanId": "x123",
+  "khanSlug": "factoring-basics",
+  "khanTitle": "Factoring basics",
+  "khanDescription": "",
+  "xp": 5
+}
+```
+
+Same idea for articles and exercises: use type “interactive” and a `launchUrl` to our article/exercise pages.
+
+### Notes about our pipeline
+- We currently generate QTI tests and stimuli and also push those URLs into resource metadata. If we want TimeBack to not attempt them internally:
+  - Either stop attaching QTI resource metadata to those resources (use “interactive” instead), or
+  - Stop generating/uploading QTI for those particular items if not needed downstream.
+- Our local code that reads resources (e.g., `src/lib/data/resource-redirect.ts`) assumes “video” or “qti”. We’ll need to allow “interactive” in our schema and any code paths that parse metadata.
+
+### Minimal changes we’d eventually make (not doing now)
+- Extend `ResourceMetadataSchema` to add an “interactive” variant with fields like `launchUrl`, `toolProvider`, `activityType`.
+- Update `generateCoursePayload` to emit `type: "interactive"` with `launchUrl` for Videos, Articles, Exercises we want external.
+- Ensure `assessmentLineItems` still work; TimeBack should link out using the resource’s `interactive.launchUrl`.
+
+### TL;DR for your reply to Felipe
+- We’ll mark our Videos, Articles, and Exercises as `type: "interactive"` with a `launchUrl` to `nice.academy`. This makes TimeBack show them as External, like MathAcademy. We’ll stop labeling them as “qti”/“video” so TimeBack doesn’t render them natively.
+
+- We also need to add “interactive” to our internal metadata schema so our ingestion/validation and redirects don’t break.
+
+- We’ll keep our own assessment tracking and let TimeBack point to our app via deep links.
+
+- If needed, we can still push QTI for other workflows, but we won’t reference those QTI URLs in resource metadata that TimeBack uses.
+
+- Confirming: this matches the “Interactive” resource type in the docs and should produce the exact “External” behavior we want on timeback.timeback.com/app.
+
+- If you’d like, I can draft the specific edits to `src/lib/metadata/oneroster.ts` and `src/lib/payloads/oneroster/course.ts` next.
+
+- Changes highlighted
+  - Switch resource metadata for Videos/Articles/Exercises to `type: "interactive"` with `launchUrl` instead of `type: "qti"`/`"video"`.
+  - Add an “interactive” schema in `src/lib/metadata/oneroster.ts` and reference it in `ResourceMetadataSchema`.
+  - Keep `assessmentLineItems`; TimeBack will link out to `launchUrl` for those items.
+
+  ---
+
+  let's talk about this change. will it break anything else? seems like a big change right? question, what's everything in OUR code that needs to be fixed to support this? where do we need to update our code? and also, will this affect xp, progress tracking, all of that jazz? please describe the full implications of this change.
+
+  ---
+
+  Search files...
+
+Ran tool
+
+Ran tool
+
+Ran tool
+
+Ran tool
+
+Ran tool
+Ran tool
+
+Ran tool
+
+Ran tool
+Ran tool
+
+Ran tool
+Ran tool
+
+Short status: I traced where we construct OneRoster resources and where we consume their metadata across the app. Switching to “interactive” + deep link will require coordinated edits in our resource metadata schema, the OneRoster payload generator, and the places that currently assume type “qti” or “video”. XP/progress keep working with small refactors.
+
+### What changes, conceptually
+- Today we label resources as:
+  - Articles: type “qti” subType “qti-stimulus”, url points to QTI
+  - Videos: type “video”, url points to YouTube
+  - Exercises/Quizzes/Unit Tests/Course Challenges: type “qti” subType “qti-test”, url points to QTI
+- Target behavior: mark all app-owned resources as type “interactive” with a deep-link launchUrl to `https://nice.academy/...` so TimeBack renders them as External and doesn’t try to host them.
+
+### Will this break anything?
+- It will break our own consumers that currently expect type “qti” or “video” unless we update them. Main areas: page data fetchers, XP bank detection, resource redirect helper, and our Zod metadata schema.
+- QTI itself does not need to go away. We can continue generating QTI tests/stimuli for our internal rendering; we just won’t advertise QTI URLs in OneRoster metadata. Our pages can still fetch QTI by the resource’s sourcedId.
+
+### Files to update and how
+
+- Schema for resource metadata
+  - File: `src/lib/metadata/oneroster.ts`
+  - Add an InteractiveResourceMetadata schema with fields: type: "interactive", launchUrl: string, activityType: string ("Article" | "Video" | "Exercise" | "Quiz" | "UnitTest" | "CourseChallenge"), toolProvider?: "Nice Academy", plus our common fields (khanId, khanSlug, khanTitle, khanDescription, xp).
+  - Extend `ResourceMetadataSchema` union to include the interactive variant.
+
+- OneRoster payload generation (where we author metadata)
+  - File: `src/lib/payloads/oneroster/course.ts`
+  - For Articles, Videos, Exercises: switch to `type: "interactive"` with `launchUrl` pointing to our app route, set `activityType` accordingly, keep `xp` and khan* fields.
+  - For Quizzes/Unit Tests/Course Challenges: if we want them external too, mark their resources as `type: "interactive"` with `launchUrl` to our test pages; optionally set `activityType` and keep `khanLessonType` as an extra metadata field if helpful.
+  - Keep generating assessmentLineItems (we already create line items for Articles, Videos, and assessments). Those are used for progress/XP and don’t depend on metadata.type.
+
+- Fetchers: getting resources by slug/type
+  - File: `src/lib/data/fetchers/oneroster.ts`
+  - Update `getResourcesBySlugAndType` to accept "interactive" (and optionally an `activityType` filter). Add a helper like `getResourcesBySlugAndActivityType(slug, "Article" | "Video" | "Exercise" | "Quiz" | "UnitTest" | "CourseChallenge")` to make call sites clear.
+  - Keep backward-compat filtering to accept both the new “interactive” and legacy “qti”/“video” during rollout.
+
+- Page data fetchers (server)
+  - File: `src/lib/data/content.ts`
+    - `fetchArticlePageData`: switch to fetch interactive by slug; validate `type === "interactive"` and `activityType === "Article"`. Keep using `khanSlug` and `xp`.
+    - `fetchExercisePageData`: same but `activityType === "Exercise"`. We still call QTI via `resource.sourcedId`, so this continues to work.
+    - `fetchVideoPageData`: same but `activityType === "Video"`. Today we derive `youtubeId` from `metadata.url`; with “interactive” this changes. Options:
+      - Preferred: fetch the video by slug from our DB (`niceVideos`) to get the YouTube ID.
+      - Alternate: include `youtubeId` as a custom field in the interactive metadata to avoid a DB read.
+  - File: `src/lib/data/assessment.ts`
+    - `fetchQuizPageData` and `fetchUnitTestPageData`: update to fetch interactive by slug; differentiate by `activityType: "Quiz" | "UnitTest"` (or keep `khanLessonType` alongside). Keep QTI usage via `resource.sourcedId` for questions and test XML.
+
+- Resource redirect helper
+  - File: `src/lib/data/resource-redirect.ts`
+  - It maps slugs to internal routes based on type assumptions (“article/exercise => qti”, “video => video”). Update to handle `type: "interactive"` and discriminate via `activityType` instead of the QTI subType.
+
+- XP bank and time-spent detection
+  - File: `src/lib/actions/xp.ts`
+    - Detection currently treats articles as `metadata.type === "qti" && subType === "qti-stimulus"` and videos as `metadata.type === "video"`.
+    - Update detection to include `metadata.type === "interactive"` with `activityType === "Article"` or `activityType === "Video"`. Keep awarding based on `metadata.xp`.
+  - File: `src/lib/data/fetchers/caliper.ts`
+    - Calculation itself takes a list of passive resources; no change needed here, but the upstream collector still needs to build that list using the new detection above.
+
+- Ingestion/validation events
+  - File: `src/inngest/client.ts`
+  - We validate resource payloads with `ResourceMetadataSchema`. After adding “interactive,” the existing event schema accepts it. No further changes.
+
+### XP, progress, mastery impacts
+- Assessments (quizzes/tests) XP:
+  - Unchanged. We still render QTI in our app and send Caliper Activity events with computed XP. “Interactive” only changes TimeBack UI behavior for launching.
+- XP Bank (articles/videos):
+  - Unchanged in concept. We continue to award based on time-spent thresholds; we just change how we detect which resources are articles/videos (switch to `interactive+activityType`). `xp` remains in metadata.
+- Caliper events:
+  - Unchanged. We already send time-spent events and activity-completed events; they reference the resource or line item IDs, not the metadata type string.
+- Mastery/proficiency:
+  - Unchanged. Proficiency checks rely on OneRoster results and our Caliper flows, not on metadata.type.
+
+### Migration and risk management
+- Backward compatibility: make fetchers accept both legacy (“qti”/“video”) and new (“interactive”) for a period. That prevents 404s while payloads are republished.
+- Video pages: decide on one path:
+  - Add `youtubeId` to interactive metadata, or
+  - Read `niceVideos` by slug to compute it server-side.
+- Thoroughly test:
+  - Enrolled user flow launching each resource from our app.
+  - TimeBack dashboard shows External for all our items and deep links correctly.
+  - XP bank still populates after a quiz; Articles/Videos award banked XP based on time spent.
+  - Quizzes/Tests still render correctly and award XP.
+
+### Summary
+- Change scope
+  - Add “interactive” schema and switch resource metadata generation to use it with `launchUrl`.
+  - Update fetchers and page data code to query interactive resources and discriminate by `activityType`.
+  - Update XP bank detection from “qti/video” to “interactive + activityType”.
+- Impact
+  - TimeBack UI stops hosting our content; shows External with deep link to `nice.academy`.
+  - Our XP/progress remains intact with minor refactors.
+  - No DB migrations needed.
+
+If you want, I can draft the exact edits in the files listed above and stage them behind backward-compatible checks so we can roll out safely.
