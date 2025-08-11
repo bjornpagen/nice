@@ -57,6 +57,7 @@ export async function updateUserProfile(data: z.infer<typeof updateProfileSchema
 			nickname: validatedData.nickname,
 			username: validatedData.username,
 			bio: validatedData.bio
+			// Preserve existing sourceId and roles - do not modify them during profile updates
 		}
 	}
 

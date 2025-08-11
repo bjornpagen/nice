@@ -4,7 +4,6 @@ import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import * as React from "react"
 import { syncUserWithOneRoster } from "@/lib/actions/user-sync"
-import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 
 export function UserSyncProvider({ children }: { children: React.ReactNode }) {
 	const { isLoaded, isSignedIn, user } = useUser()
@@ -14,15 +13,8 @@ export function UserSyncProvider({ children }: { children: React.ReactNode }) {
 		if (!isLoaded || !isSignedIn || !user || hasSynced.current) return
 
 		const syncUser = async () => {
-			// Check if user already has sourceId (already synced)
-			const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata || {})
-			if (metadataValidation.success && metadataValidation.data.sourceId) {
-				// User already has sourceId, no sync needed
-				hasSynced.current = true
-				return
-			}
-
-			// Call the server action to handle OneRoster sync
+			// Always call the server action to handle OneRoster sync
+			// This ensures roles are always up-to-date, even for existing users
 			const result = await errors.try(syncUserWithOneRoster())
 			if (result.error) {
 				// Log error but don't throw - sync can be retried later
@@ -30,7 +22,7 @@ export function UserSyncProvider({ children }: { children: React.ReactNode }) {
 				return
 			}
 
-			if (result.data.success && result.data.sourceId) {
+			if (result.data.success) {
 				// Refresh user data to get updated metadata
 				await user.reload()
 				hasSynced.current = true

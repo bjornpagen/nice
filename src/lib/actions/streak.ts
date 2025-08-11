@@ -69,7 +69,7 @@ export async function updateStreak() {
 	const updateResult = await errors.try(
 		clerk.users.updateUserMetadata(userId, {
 			publicMetadata: {
-				...metadata,
+				...metadata, // Preserve all existing metadata including sourceId and roles
 				streak
 			}
 		})

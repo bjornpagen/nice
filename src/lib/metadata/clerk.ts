@@ -2,6 +2,22 @@ import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 
 /**
+ * Schema for OneRoster user roles stored in Clerk metadata.
+ * Matches the structure from OneRoster UserRoleSchema.
+ */
+const ClerkUserRoleSchema = z.object({
+	roleType: z.string(),
+	role: z.string(),
+	org: z.object({
+		sourcedId: z.string(),
+		type: z.string().optional()
+	}),
+	userProfile: z.string().optional(),
+	beginDate: z.string().nullable().optional(),
+	endDate: z.string().nullable().optional()
+})
+
+/**
  * Schema for Clerk user public metadata.
  * This schema MUST be used whenever accessing user.publicMetadata to ensure type safety.
  * No optional chaining or fallbacks allowed - data must be validated.
@@ -19,7 +35,9 @@ export const ClerkUserPublicMetadataSchema = z
 				})
 				.default({ count: 0, lastActivityDate: null }),
 			// sourceId is used for OneRoster integration
-			sourceId: z.string().optional()
+			sourceId: z.string().optional(),
+			// roles array from OneRoster
+			roles: z.array(ClerkUserRoleSchema).default([])
 		}),
 		z.undefined(),
 		z.null()
@@ -32,7 +50,8 @@ export const ClerkUserPublicMetadataSchema = z
 				username: "",
 				bio: "",
 				streak: { count: 0, lastActivityDate: null },
-				sourceId: undefined
+				sourceId: undefined,
+				roles: []
 			}
 		}
 		return val

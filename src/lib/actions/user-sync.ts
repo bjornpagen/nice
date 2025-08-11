@@ -60,11 +60,80 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	// Check if user already has sourceId (already synced)
 	const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata || {})
 	if (metadataValidation.success && metadataValidation.data.sourceId) {
-		// User already has sourceId, no sync needed
-		logger.info("user already synced with oneroster", {
+		// User already has sourceId, but we still need to update roles
+		logger.info("user already synced with oneroster, updating roles", {
 			clerkId,
 			sourceId: metadataValidation.data.sourceId
 		})
+
+		// Fetch latest user data from OneRoster to get current roles
+		const onerosterUserResult = await errors.try(oneroster.getUsersByEmail(email))
+		if (onerosterUserResult.error) {
+			logger.warn("failed to get user from oneroster for role update", {
+				userId: clerkId,
+				error: onerosterUserResult.error
+			})
+			// Return existing data if we can't fetch roles
+			return {
+				success: true,
+				sourceId: metadataValidation.data.sourceId,
+				nickname: metadataValidation.data.nickname || nickname,
+				alreadySynced: true
+			}
+		}
+
+		if (onerosterUserResult.data) {
+			// Update metadata with latest roles from OneRoster
+			const updatedMetadata = {
+				...metadataValidation.data,
+				roles: onerosterUserResult.data.roles.map((role) => ({
+					roleType: role.roleType,
+					role: role.role,
+					org: {
+						sourcedId: role.org.sourcedId,
+						type: role.org.type
+					},
+					userProfile: role.userProfile,
+					beginDate: role.beginDate,
+					endDate: role.endDate
+				}))
+			}
+
+			// Update Clerk metadata with latest roles
+			const clerk = await clerkClient()
+			const updateResult = await errors.try(
+				clerk.users.updateUserMetadata(clerkId, { publicMetadata: updatedMetadata })
+			)
+
+			if (updateResult.error) {
+				logger.error("failed to update roles metadata in clerk for existing user", {
+					error: updateResult.error,
+					clerkId
+				})
+				// Still return success with existing data if metadata update fails
+				return {
+					success: true,
+					sourceId: metadataValidation.data.sourceId,
+					nickname: metadataValidation.data.nickname || nickname,
+					alreadySynced: true
+				}
+			}
+
+			logger.info("successfully updated roles for existing user", {
+				clerkId,
+				sourceId: metadataValidation.data.sourceId,
+				roleCount: updatedMetadata.roles.length
+			})
+
+			return {
+				success: true,
+				sourceId: metadataValidation.data.sourceId,
+				nickname: metadataValidation.data.nickname || nickname,
+				alreadySynced: true
+			}
+		}
+
+		// No user data found in OneRoster, return existing
 		return {
 			success: true,
 			sourceId: metadataValidation.data.sourceId,
@@ -81,7 +150,8 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 		username: "",
 		bio: "",
 		streak: { count: 0, lastActivityDate: null },
-		sourceId: undefined
+		sourceId: undefined,
+		roles: []
 	})
 
 	// Check if user exists in OneRoster
@@ -95,14 +165,35 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	} else if (onerosterUserResult.data) {
 		// User exists in OneRoster
 		publicMetadataPayload.sourceId = onerosterUserResult.data.sourcedId
-		logger.info("successfully fetched sourceid from oneroster", {
+		// Store roles from OneRoster in Clerk metadata
+		publicMetadataPayload.roles = onerosterUserResult.data.roles.map((role) => ({
+			roleType: role.roleType,
+			role: role.role,
+			org: {
+				sourcedId: role.org.sourcedId,
+				type: role.org.type
+			},
+			userProfile: role.userProfile,
+			beginDate: role.beginDate,
+			endDate: role.endDate
+		}))
+		logger.info("successfully fetched sourceid and roles from oneroster", {
 			userId: clerkId,
-			sourceId: onerosterUserResult.data.sourcedId
+			sourceId: onerosterUserResult.data.sourcedId,
+			roleCount: publicMetadataPayload.roles.length
 		})
 	} else {
 		// Create new user in OneRoster (same logic as webhook and route)
 		logger.info("user not found in oneroster, creating a new one", { userId: clerkId, email })
 		const newSourcedId = randomUUID()
+
+		const defaultRole = {
+			roleType: "primary" as const,
+			role: "student" as const,
+			org: {
+				sourcedId: "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
+			}
+		}
 
 		const newUserPayload = {
 			sourcedId: newSourcedId,
@@ -111,15 +202,7 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 			givenName: firstName,
 			familyName: lastName,
 			email: email,
-			roles: [
-				{
-					roleType: "primary" as const,
-					role: "student" as const,
-					org: {
-						sourcedId: "nice-academy"
-					}
-				}
-			]
+			roles: [defaultRole]
 		}
 
 		const createUserResult = await errors.try(oneroster.createUser(newUserPayload))
@@ -130,9 +213,24 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 			})
 		} else {
 			publicMetadataPayload.sourceId = newSourcedId
-			logger.info("successfully created new user in oneroster and assigned sourceid", {
+			// Store the default role in Clerk metadata for new users
+			publicMetadataPayload.roles = [
+				{
+					roleType: defaultRole.roleType,
+					role: defaultRole.role,
+					org: {
+						sourcedId: defaultRole.org.sourcedId,
+						type: undefined
+					},
+					userProfile: undefined,
+					beginDate: null,
+					endDate: null
+				}
+			]
+			logger.info("successfully created new user in oneroster and assigned sourceid with default role", {
 				userId: clerkId,
-				sourceId: newSourcedId
+				sourceId: newSourcedId,
+				roleCount: publicMetadataPayload.roles.length
 			})
 		}
 	}
