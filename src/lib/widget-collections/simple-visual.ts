@@ -1,6 +1,7 @@
 import {
 	DataTablePropsSchema,
 	EmojiImagePropsSchema,
+	PeriodicTableWidgetPropsSchema,
 	UrlImageWidgetPropsSchema,
 	VennDiagramPropsSchema
 } from "@/lib/widgets/generators"
@@ -11,7 +12,8 @@ export const simpleVisualCollection = {
 		dataTable: DataTablePropsSchema,
 		emojiImage: EmojiImagePropsSchema,
 		urlImage: UrlImageWidgetPropsSchema,
-		vennDiagram: VennDiagramPropsSchema
+		vennDiagram: VennDiagramPropsSchema,
+		periodicTable: PeriodicTableWidgetPropsSchema
 	},
-	widgetTypeKeys: ["dataTable", "emojiImage", "urlImage", "vennDiagram"] as const
+	widgetTypeKeys: ["dataTable", "emojiImage", "urlImage", "vennDiagram", "periodicTable"] as const
 } as const
