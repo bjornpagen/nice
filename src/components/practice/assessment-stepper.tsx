@@ -7,6 +7,7 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import * as React from "react"
 import { toast } from "sonner"
+import { AssessmentBottomNav, type AssessmentType } from "@/components/practice/assessment-bottom-nav"
 import greenFriend from "@/components/practice/course/unit/lesson/exercise/images/green-friend_v3.png"
 import lightBlueFriend from "@/components/practice/course/unit/lesson/exercise/images/light-blue-friend_v3.png"
 import spaceFriend from "@/components/practice/course/unit/lesson/exercise/images/space-friend_v3.png"
@@ -28,7 +29,6 @@ import { saveAssessmentResult } from "@/lib/actions/tracking"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { calculateAssessmentXp } from "@/lib/xp"
-import { AssessmentBottomNav, type AssessmentType } from "./assessment-bottom-nav"
 
 // Summary View Component
 function SummaryView({
@@ -202,10 +202,18 @@ export function AssessmentStepper({
 	const assessmentStartTimeRef = React.useRef<Date | null>(null)
 	const hasSentCompletionEventRef = React.useRef(false) // Track whether completion event has been sent
 	const hasRefreshedAfterSaveRef = React.useRef(false)
+	const finalizationInFlightRef = React.useRef(false)
+
+	// Navigation race-condition guards
+	const isNavigatingRef = React.useRef(false)
+	const skipTimeoutRef = React.useRef<number | null>(null)
 
 	const isInteractiveAssessment = contentType === "Quiz" || contentType === "Test"
 	const MAX_ATTEMPTS = 3
 	const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
+
+	// Ensure attempt is initialized for interactive assessments before allowing actions
+	const [isAttemptReady, setIsAttemptReady] = React.useState<boolean>(!isInteractiveAssessment)
 
 	function triggerConfetti() {
 		const canvas = document.createElement("canvas")
@@ -294,10 +302,33 @@ export function AssessmentStepper({
 				onerosterComponentResourceSourcedId
 			)
 			setAttemptNumber(currentAttemptNumber)
+			setIsAttemptReady(true)
 		}
 
 		initializeAttempt()
 	}, [onerosterComponentResourceSourcedId, isInteractiveAssessment, user?.publicMetadata?.sourceId])
+
+	// Cleanup any pending timers on unmount
+	React.useEffect(() => {
+		return () => {
+			if (skipTimeoutRef.current !== null) {
+				clearTimeout(skipTimeoutRef.current)
+				skipTimeoutRef.current = null
+			}
+		}
+	}, [])
+
+	// If interactive but unauthenticated or missing component id, no attempt init needed
+	React.useEffect(() => {
+		if (!isInteractiveAssessment) {
+			setIsAttemptReady(true)
+			return
+		}
+		const hasAuthIds = Boolean(user?.publicMetadata?.sourceId && onerosterComponentResourceSourcedId)
+		if (!hasAuthIds) {
+			setIsAttemptReady(true)
+		}
+	}, [isInteractiveAssessment, user?.publicMetadata?.sourceId, onerosterComponentResourceSourcedId])
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
@@ -362,6 +393,7 @@ export function AssessmentStepper({
 		if (
 			!showSummary ||
 			hasSentCompletionEventRef.current ||
+			finalizationInFlightRef.current ||
 			!onerosterResourceSourcedId ||
 			!user?.publicMetadata?.sourceId
 		) {
@@ -467,13 +499,21 @@ export function AssessmentStepper({
 
 		// Execute finalization with proper async flow
 		const executeFinalization = async () => {
-			await finalizeAndAnalyze()
-			// Set the flag to true after completion to prevent re-execution
+			finalizationInFlightRef.current = true
+			// Set sent flag immediately to prevent parallel executions on dependency changes
 			hasSentCompletionEventRef.current = true
+			const result = await errors.try(finalizeAndAnalyze())
+			if (result.error) {
+				// Allow retry on next effect run if something failed
+				hasSentCompletionEventRef.current = false
+				finalizationInFlightRef.current = false
+				return
+			}
 			if (!hasRefreshedAfterSaveRef.current) {
 				hasRefreshedAfterSaveRef.current = true
 				router.refresh()
 			}
+			finalizationInFlightRef.current = false
 		}
 
 		executeFinalization()
@@ -672,6 +712,10 @@ export function AssessmentStepper({
 	}
 
 	const handleCheckAnswer = async () => {
+		// Prevent actions before attempt is ready for interactive assessments
+		if (isInteractiveAssessment && !isAttemptReady) {
+			return
+		}
 		if (Object.keys(selectedResponses).length === 0 || !currentQuestion) {
 			return
 		}
@@ -766,21 +810,48 @@ export function AssessmentStepper({
 	}
 
 	const goToNext = () => {
-		if (currentQuestionIndex < questions.length - 1) {
-			setCurrentQuestionIndex(currentQuestionIndex + 1)
+		// Clear any pending skip auto-advance
+		if (skipTimeoutRef.current !== null) {
+			clearTimeout(skipTimeoutRef.current)
+			skipTimeoutRef.current = null
+		}
+
+		if (isNavigatingRef.current) {
+			return
+		}
+		isNavigatingRef.current = true
+
+		setCurrentQuestionIndex((prevIndex) => {
+			const nextIndex = prevIndex + 1
+			const isLast = nextIndex >= questions.length
+			if (isLast) {
+				setShowSummary(true)
+				// Keep index unchanged at end
+				return prevIndex
+			}
+
+			// Reset per-question state atomically with the index change
 			setSelectedResponses({})
 			setExpectedResponses([])
 			setShowFeedback(false)
 			setIsAnswerCorrect(false)
 			setIsAnswerChecked(false)
 			setAttemptCount(0)
-		} else {
-			// Show summary when all questions are completed
-			setShowSummary(true)
-		}
+
+			return nextIndex
+		})
+
+		// Release navigation lock on next frame
+		requestAnimationFrame(() => {
+			isNavigatingRef.current = false
+		})
 	}
 
 	const handleSkip = () => {
+		// Prevent actions before attempt is ready for interactive assessments
+		if (isInteractiveAssessment && !isAttemptReady) {
+			return
+		}
 		// For ALL assessments, treat skip as incorrect
 		// Log this as an incorrect response to PowerPath
 		if (user?.publicMetadata?.sourceId && onerosterComponentResourceSourcedId && isInteractiveAssessment) {
@@ -807,7 +878,7 @@ export function AssessmentStepper({
 		setShowFeedback(true)
 
 		// Move to next question after showing feedback
-		setTimeout(goToNext, 1500)
+		skipTimeoutRef.current = window.setTimeout(goToNext, 1500)
 	}
 
 	// OPEN REPORT POPOVER
@@ -889,7 +960,8 @@ export function AssessmentStepper({
 	const isButtonEnabled =
 		expectedResponses.length > 0 &&
 		expectedResponses.every((id) => selectedResponses[id] !== "" && selectedResponses[id] !== undefined) &&
-		!isSubmitting
+		!isSubmitting &&
+		(isInteractiveAssessment ? isAttemptReady : true)
 
 	return (
 		<div className="flex flex-col h-full bg-white">
