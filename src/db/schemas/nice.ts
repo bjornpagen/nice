@@ -178,7 +178,7 @@ const questions = schema.table(
 		// New column to cache the intermediate structured QTI JSON representation
 		structuredJson: jsonb("structured_json"),
 		// Problem type identifier for grouping question variants
-		problemType: text("problem_type").notNull().default("")
+		problemType: text("problem_type").notNull()
 	},
 	(table) => [
 		index("questions_exercise_id_idx").on(table.exerciseId),

@@ -4,6 +4,7 @@ import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type { InferInsertModel } from "drizzle-orm"
+import { sql } from "drizzle-orm"
 import { createInsertSchema } from "drizzle-zod"
 import { ZodError } from "zod"
 import { db } from "@/db"
@@ -261,7 +262,8 @@ async function main() {
 						id: question.id,
 						exerciseId: exerciseId,
 						sha: question.sha,
-						parsedData: question.parsedData
+						parsedData: question.parsedData,
+						problemType: question.problemType
 					})
 				}
 			}
@@ -326,13 +328,39 @@ async function main() {
 		for (let i = 0; i < coursesToInsert.length; i += BATCH_SIZE) {
 			const batch = coursesToInsert.slice(i, i + BATCH_SIZE)
 			logger.debug("inserting course batch", { batch: i / BATCH_SIZE + 1, count: batch.length })
-			const result = await errors.try(db.insert(schema.niceCourses).values(batch).onConflictDoNothing())
+			const result = await errors.try(
+				db
+					.insert(schema.niceCourses)
+					.values(batch)
+					.onConflictDoUpdate({
+						target: schema.niceCourses.id,
+						set: {
+							slug: sql.raw("excluded.slug"),
+							title: sql.raw("excluded.title"),
+							description: sql.raw("excluded.description"),
+							path: sql.raw("excluded.path")
+						}
+					})
+			)
 			if (result.error) {
 				logger.error("failed to insert course batch, retrying one-by-one", {
 					error: result.error
 				})
 				for (const record of batch) {
-					const singleResult = await errors.try(db.insert(schema.niceCourses).values(record).onConflictDoNothing())
+					const singleResult = await errors.try(
+						db
+							.insert(schema.niceCourses)
+							.values(record)
+							.onConflictDoUpdate({
+								target: schema.niceCourses.id,
+								set: {
+									slug: sql.raw("excluded.slug"),
+									title: sql.raw("excluded.title"),
+									description: sql.raw("excluded.description"),
+									path: sql.raw("excluded.path")
+								}
+							})
+					)
 					if (singleResult.error) {
 						logger.error("failed to insert single course record", {
 							record,
@@ -364,13 +392,43 @@ async function main() {
 		for (let i = 0; i < unitsToInsert.length; i += BATCH_SIZE) {
 			const batch = unitsToInsert.slice(i, i + BATCH_SIZE)
 			logger.debug("inserting unit batch", { batch: i / BATCH_SIZE + 1, count: batch.length })
-			const result = await errors.try(db.insert(schema.niceUnits).values(batch).onConflictDoNothing())
+			const result = await errors.try(
+				db
+					.insert(schema.niceUnits)
+					.values(batch)
+					.onConflictDoUpdate({
+						target: schema.niceUnits.id,
+						set: {
+							courseId: sql.raw("excluded.course_id"),
+							slug: sql.raw("excluded.slug"),
+							title: sql.raw("excluded.title"),
+							description: sql.raw("excluded.description"),
+							path: sql.raw("excluded.path"),
+							ordering: sql.raw("excluded.ordering")
+						}
+					})
+			)
 			if (result.error) {
 				logger.error("failed to insert unit batch, retrying one-by-one", {
 					error: result.error
 				})
 				for (const record of batch) {
-					const singleResult = await errors.try(db.insert(schema.niceUnits).values(record).onConflictDoNothing())
+					const singleResult = await errors.try(
+						db
+							.insert(schema.niceUnits)
+							.values(record)
+							.onConflictDoUpdate({
+								target: schema.niceUnits.id,
+								set: {
+									courseId: sql.raw("excluded.course_id"),
+									slug: sql.raw("excluded.slug"),
+									title: sql.raw("excluded.title"),
+									description: sql.raw("excluded.description"),
+									path: sql.raw("excluded.path"),
+									ordering: sql.raw("excluded.ordering")
+								}
+							})
+					)
 					if (singleResult.error) {
 						logger.error("failed to insert single unit record", {
 							record,
@@ -402,13 +460,43 @@ async function main() {
 		for (let i = 0; i < lessonsToInsert.length; i += BATCH_SIZE) {
 			const batch = lessonsToInsert.slice(i, i + BATCH_SIZE)
 			logger.debug("inserting lesson batch", { batch: i / BATCH_SIZE + 1, count: batch.length })
-			const result = await errors.try(db.insert(schema.niceLessons).values(batch).onConflictDoNothing())
+			const result = await errors.try(
+				db
+					.insert(schema.niceLessons)
+					.values(batch)
+					.onConflictDoUpdate({
+						target: schema.niceLessons.id,
+						set: {
+							unitId: sql.raw("excluded.unit_id"),
+							slug: sql.raw("excluded.slug"),
+							title: sql.raw("excluded.title"),
+							description: sql.raw("excluded.description"),
+							path: sql.raw("excluded.path"),
+							ordering: sql.raw("excluded.ordering")
+						}
+					})
+			)
 			if (result.error) {
 				logger.error("failed to insert lesson batch, retrying one-by-one", {
 					error: result.error
 				})
 				for (const record of batch) {
-					const singleResult = await errors.try(db.insert(schema.niceLessons).values(record).onConflictDoNothing())
+					const singleResult = await errors.try(
+						db
+							.insert(schema.niceLessons)
+							.values(record)
+							.onConflictDoUpdate({
+								target: schema.niceLessons.id,
+								set: {
+									unitId: sql.raw("excluded.unit_id"),
+									slug: sql.raw("excluded.slug"),
+									title: sql.raw("excluded.title"),
+									description: sql.raw("excluded.description"),
+									path: sql.raw("excluded.path"),
+									ordering: sql.raw("excluded.ordering")
+								}
+							})
+					)
 					if (singleResult.error) {
 						logger.error("failed to insert single lesson record", {
 							record,
@@ -436,10 +524,40 @@ async function main() {
 		for (let i = 0; i < lessonContentsToInsert.length; i += BATCH_SIZE) {
 			const batch = lessonContentsToInsert.slice(i, i + BATCH_SIZE)
 			logger.debug("inserting lesson_content batch", { batch: i / BATCH_SIZE + 1, count: batch.length })
-			const result = await errors.try(db.insert(schema.niceLessonContents).values(batch).onConflictDoNothing())
+			const result = await errors.try(
+				db
+					.insert(schema.niceLessonContents)
+					.values(batch)
+					.onConflictDoUpdate({
+						target: [schema.niceLessonContents.lessonId, schema.niceLessonContents.contentId],
+						set: {
+							contentType: sql.raw("excluded.content_type"),
+							ordering: sql.raw("excluded.ordering")
+						}
+					})
+			)
 			if (result.error) {
-				logger.error("failed to insert lesson_content batch", { error: result.error })
-				// Add one-by-one retry logic if necessary
+				logger.error("failed to insert lesson_content batch, retrying one-by-one", { error: result.error })
+				for (const record of batch) {
+					const singleResult = await errors.try(
+						db
+							.insert(schema.niceLessonContents)
+							.values(record)
+							.onConflictDoUpdate({
+								target: [schema.niceLessonContents.lessonId, schema.niceLessonContents.contentId],
+								set: {
+									contentType: sql.raw("excluded.content_type"),
+									ordering: sql.raw("excluded.ordering")
+								}
+							})
+					)
+					if (singleResult.error) {
+						logger.error("failed to insert single lesson_content record", {
+							record,
+							error: singleResult.error
+						})
+					}
+				}
 			}
 		}
 	}
@@ -464,13 +582,43 @@ async function main() {
 		for (let i = 0; i < videosToInsert.length; i += BATCH_SIZE) {
 			const batch = videosToInsert.slice(i, i + BATCH_SIZE)
 			logger.debug("inserting video batch", { batch: i / BATCH_SIZE + 1, count: batch.length })
-			const result = await errors.try(db.insert(schema.niceVideos).values(batch).onConflictDoNothing())
+			const result = await errors.try(
+				db
+					.insert(schema.niceVideos)
+					.values(batch)
+					.onConflictDoUpdate({
+						target: schema.niceVideos.id,
+						set: {
+							title: sql.raw("excluded.title"),
+							slug: sql.raw("excluded.slug"),
+							path: sql.raw("excluded.path"),
+							youtubeId: sql.raw("excluded.youtube_id"),
+							duration: sql.raw("excluded.duration"),
+							description: sql.raw("excluded.description")
+						}
+					})
+			)
 			if (result.error) {
 				logger.error("failed to insert video batch, retrying one-by-one", {
 					error: result.error
 				})
 				for (const record of batch) {
-					const singleResult = await errors.try(db.insert(schema.niceVideos).values(record).onConflictDoNothing())
+					const singleResult = await errors.try(
+						db
+							.insert(schema.niceVideos)
+							.values(record)
+							.onConflictDoUpdate({
+								target: schema.niceVideos.id,
+								set: {
+									title: sql.raw("excluded.title"),
+									slug: sql.raw("excluded.slug"),
+									path: sql.raw("excluded.path"),
+									youtubeId: sql.raw("excluded.youtube_id"),
+									duration: sql.raw("excluded.duration"),
+									description: sql.raw("excluded.description")
+								}
+							})
+					)
 					if (singleResult.error) {
 						logger.error("failed to insert single video record", {
 							record,
@@ -502,13 +650,39 @@ async function main() {
 		for (let i = 0; i < articlesToInsert.length; i += BATCH_SIZE) {
 			const batch = articlesToInsert.slice(i, i + BATCH_SIZE)
 			logger.debug("inserting article batch", { batch: i / BATCH_SIZE + 1, count: batch.length })
-			const result = await errors.try(db.insert(schema.niceArticles).values(batch).onConflictDoNothing())
+			const result = await errors.try(
+				db
+					.insert(schema.niceArticles)
+					.values(batch)
+					.onConflictDoUpdate({
+						target: schema.niceArticles.id,
+						set: {
+							title: sql.raw("excluded.title"),
+							slug: sql.raw("excluded.slug"),
+							path: sql.raw("excluded.path"),
+							perseusContent: sql.raw("excluded.perseus_content")
+						}
+					})
+			)
 			if (result.error) {
 				logger.error("failed to insert article batch, retrying one-by-one", {
 					error: result.error
 				})
 				for (const record of batch) {
-					const singleResult = await errors.try(db.insert(schema.niceArticles).values(record).onConflictDoNothing())
+					const singleResult = await errors.try(
+						db
+							.insert(schema.niceArticles)
+							.values(record)
+							.onConflictDoUpdate({
+								target: schema.niceArticles.id,
+								set: {
+									title: sql.raw("excluded.title"),
+									slug: sql.raw("excluded.slug"),
+									path: sql.raw("excluded.path"),
+									perseusContent: sql.raw("excluded.perseus_content")
+								}
+							})
+					)
 					if (singleResult.error) {
 						logger.error("failed to insert single article record", {
 							record,
@@ -540,13 +714,39 @@ async function main() {
 		for (let i = 0; i < exercisesToInsert.length; i += BATCH_SIZE) {
 			const batch = exercisesToInsert.slice(i, i + BATCH_SIZE)
 			logger.debug("inserting exercise batch", { batch: i / BATCH_SIZE + 1, count: batch.length })
-			const result = await errors.try(db.insert(schema.niceExercises).values(batch).onConflictDoNothing())
+			const result = await errors.try(
+				db
+					.insert(schema.niceExercises)
+					.values(batch)
+					.onConflictDoUpdate({
+						target: schema.niceExercises.id,
+						set: {
+							title: sql.raw("excluded.title"),
+							slug: sql.raw("excluded.slug"),
+							path: sql.raw("excluded.path"),
+							description: sql.raw("excluded.description")
+						}
+					})
+			)
 			if (result.error) {
 				logger.error("failed to insert exercise batch, retrying one-by-one", {
 					error: result.error
 				})
 				for (const record of batch) {
-					const singleResult = await errors.try(db.insert(schema.niceExercises).values(record).onConflictDoNothing())
+					const singleResult = await errors.try(
+						db
+							.insert(schema.niceExercises)
+							.values(record)
+							.onConflictDoUpdate({
+								target: schema.niceExercises.id,
+								set: {
+									title: sql.raw("excluded.title"),
+									slug: sql.raw("excluded.slug"),
+									path: sql.raw("excluded.path"),
+									description: sql.raw("excluded.description")
+								}
+							})
+					)
 					if (singleResult.error) {
 						logger.error("failed to insert single exercise record", {
 							record,
@@ -577,15 +777,41 @@ async function main() {
 		for (let i = 0; i < questionsToInsert.length; i += BATCH_SIZE) {
 			const batch = questionsToInsert.slice(i, i + BATCH_SIZE)
 			logger.debug("inserting question batch", { batch: i / BATCH_SIZE + 1, count: batch.length })
-			const result = await errors.try(db.insert(schema.niceQuestions).values(batch).onConflictDoNothing())
+			const result = await errors.try(
+				db
+					.insert(schema.niceQuestions)
+					.values(batch)
+					.onConflictDoUpdate({
+						target: schema.niceQuestions.id,
+						set: {
+							exerciseId: sql.raw("excluded.exercise_id"),
+							sha: sql.raw("excluded.sha"),
+							parsedData: sql.raw("excluded.parsed_data"),
+							problemType: sql.raw("excluded.problem_type")
+						}
+					})
+			)
 			if (result.error) {
 				logger.error("failed to insert question batch, retrying one-by-one", {
 					error: result.error
 				})
 				for (const record of batch) {
-					const singleResult = await errors.try(db.insert(schema.niceQuestions).values(record).onConflictDoNothing())
+					const singleResult = await errors.try(
+						db
+							.insert(schema.niceQuestions)
+							.values(record)
+							.onConflictDoUpdate({
+								target: schema.niceQuestions.id,
+								set: {
+									exerciseId: sql.raw("excluded.exercise_id"),
+									sha: sql.raw("excluded.sha"),
+									parsedData: sql.raw("excluded.parsed_data"),
+									problemType: sql.raw("excluded.problem_type")
+								}
+							})
+					)
 					if (singleResult.error) {
-						logger.error("failed to insert single question record", {
+						logger.error("failed to upsert single question record", {
 							record,
 							error: singleResult.error
 						})
@@ -615,13 +841,47 @@ async function main() {
 		for (let i = 0; i < assessmentsToInsert.length; i += BATCH_SIZE) {
 			const batch = assessmentsToInsert.slice(i, i + BATCH_SIZE)
 			logger.debug("inserting assessment batch", { batch: i / BATCH_SIZE + 1, count: batch.length })
-			const result = await errors.try(db.insert(schema.niceAssessments).values(batch).onConflictDoNothing())
+			const result = await errors.try(
+				db
+					.insert(schema.niceAssessments)
+					.values(batch)
+					.onConflictDoUpdate({
+						target: schema.niceAssessments.id,
+						set: {
+							type: sql.raw("excluded.type"),
+							parentId: sql.raw("excluded.parent_id"),
+							parentType: sql.raw("excluded.parent_type"),
+							title: sql.raw("excluded.title"),
+							slug: sql.raw("excluded.slug"),
+							path: sql.raw("excluded.path"),
+							ordering: sql.raw("excluded.ordering"),
+							description: sql.raw("excluded.description")
+						}
+					})
+			)
 			if (result.error) {
 				logger.error("failed to insert assessment batch, retrying one-by-one", {
 					error: result.error
 				})
 				for (const record of batch) {
-					const singleResult = await errors.try(db.insert(schema.niceAssessments).values(record).onConflictDoNothing())
+					const singleResult = await errors.try(
+						db
+							.insert(schema.niceAssessments)
+							.values(record)
+							.onConflictDoUpdate({
+								target: schema.niceAssessments.id,
+								set: {
+									type: sql.raw("excluded.type"),
+									parentId: sql.raw("excluded.parent_id"),
+									parentType: sql.raw("excluded.parent_type"),
+									title: sql.raw("excluded.title"),
+									slug: sql.raw("excluded.slug"),
+									path: sql.raw("excluded.path"),
+									ordering: sql.raw("excluded.ordering"),
+									description: sql.raw("excluded.description")
+								}
+							})
+					)
 					if (singleResult.error) {
 						logger.error("failed to insert single assessment record", {
 							record,
@@ -653,14 +913,22 @@ async function main() {
 		for (let i = 0; i < assessmentExercisesToInsert.length; i += BATCH_SIZE) {
 			const batch = assessmentExercisesToInsert.slice(i, i + BATCH_SIZE)
 			logger.debug("inserting assessment exercise batch", { batch: i / BATCH_SIZE + 1, count: batch.length })
-			const result = await errors.try(db.insert(schema.niceAssessmentExercises).values(batch).onConflictDoNothing())
+			const result = await errors.try(
+				db
+					.insert(schema.niceAssessmentExercises)
+					.values(batch)
+					.onConflictDoNothing() // This table only has primary key columns, nothing to update
+			)
 			if (result.error) {
 				logger.error("failed to insert assessment exercise batch, retrying one-by-one", {
 					error: result.error
 				})
 				for (const record of batch) {
 					const singleResult = await errors.try(
-						db.insert(schema.niceAssessmentExercises).values(record).onConflictDoNothing()
+						db
+							.insert(schema.niceAssessmentExercises)
+							.values(record)
+							.onConflictDoNothing() // This table only has primary key columns, nothing to update
 					)
 					if (singleResult.error) {
 						logger.error("failed to insert single assessment exercise record", {

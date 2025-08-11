@@ -33,7 +33,7 @@ const TARGET_REGION = "US-CA" // California region for Common Core content
 // This cookie is required for authenticated endpoints like creating a practice task.
 // It should be kept up-to-date by copying from a logged-in browser session.
 const KHAN_ACADEMY_COOKIE =
-	'browsing_session_id=_en_bsid_0bd1f363-2837-4506-9ef0-4db5a0760002; LIS=www; KAAS=4sBOL50bmYsf5SmkmTmNXg; KAAL=$l97LrcIGBc-PXllOu9aOLpk4hwzLDYKj7bcw5XJ2alg.~t0nkyb$a2FpZF81NTUyODIzMzg0MjEyNDM0NTQyNTA5NjA*; KAAC=$5O6XOg8xbytVRI08fXnyxsvy2IiC_aif20CguNP3xZ8.~t0nkyb$a2FpZF81NTUyODIzMzg0MjEyNDM0NTQyNTA5NjA*$a2FpZF81NTUyODIzMzg0MjEyNDM0NTQyNTA5NjA!0!0$~4; browsing_session_expiry="Fri, 08 Aug 2025 02:45:47 UTC"'
+	'browsing_session_id=_en_bsid_32eabce3-6cd7-4c17-82bb-d5b3c6980001; LIS=www; KAAS=jrq9yFJ1WyFbUimeVG_mMw; KAAL=$FaCVSQbgqpg-ReuvYooEpkHDXw8RifEzxCPKpJakiz4.~syu253$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc*; KAAC=$FzYq2uBMA-XdkCV0lp9UFP9BRQOyQDlsxLSATzx3w38.~syu253$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc*$a2FpZF8xMTg2NTk5ODQyNDYwNjE0MDE2MTAzMjc\u00210\u00210$~4; browsing_session_expiry="Thu, 03 Jul 2025 17:35:27 UTC"'
 
 // --- HELPER FUNCTIONS ---
 
@@ -287,10 +287,12 @@ async function fetchArticleOrVideoDetails(
 async function main() {
 	const args = process.argv.slice(2)
 	const isDryRun = args.includes("--dry-run")
-	const pathFilters = args.filter((arg) => arg !== "--dry-run")
+	const noVideosOrArticles = args.includes("--no-videos-or-articles")
+	const pathFilters = args.filter((arg) => arg !== "--dry-run" && arg !== "--no-videos-or-articles")
 
 	logger.info("starting khan academy content data dumper script", {
 		dryRun: isDryRun,
+		noVideosOrArticles,
 		filters: pathFilters.length > 0 ? pathFilters : "none"
 	})
 
@@ -367,7 +369,12 @@ async function main() {
 		| MasteryChallengeInfo
 
 	// EXTRACTED: Shared hydration scheduling function
-	function createScheduleHydration(fetchPromises: Promise<void>[], scheduledQuestionFetches: Set<string>) {
+	function createScheduleHydration(
+		fetchPromises: Promise<void>[],
+		scheduledQuestionFetches: Set<string>,
+		noVideosOrArticlesFlag: boolean,
+		isKnownExerciseId: (exerciseId: string) => boolean
+	) {
 		return function scheduleHydration(item: ContentItem, ancestors: string[], course: CourseInfo) {
 			const newAncestors = [item.id, ...ancestors]
 			const scheduleQuestionFetch = (exerciseId: string) => {
@@ -406,7 +413,15 @@ async function main() {
 							.map((ex) => ex.id)
 						item.exerciseIds = exerciseIds
 						for (const exId of exerciseIds) {
-							scheduleQuestionFetch(exId)
+							if (isKnownExerciseId(exId)) {
+								scheduleQuestionFetch(exId)
+							} else {
+								logger.warn("skipping question fetch for unknown exercise id from assessment", {
+									exerciseId: exId,
+									itemId: item.id,
+									itemType: item.type
+								})
+							}
 						}
 					})
 					.catch((error) => {
@@ -422,23 +437,38 @@ async function main() {
 				fetchPromises.push(assessmentPromise)
 			} else if (item.type === "CourseChallenge" || item.type === "MasteryChallenge") {
 				for (const exId of course.masterableExerciseIds) {
-					scheduleQuestionFetch(exId)
+					if (isKnownExerciseId(exId)) {
+						scheduleQuestionFetch(exId)
+					} else {
+						logger.warn("skipping question fetch for unknown masterable exercise id", {
+							exerciseId: exId,
+							courseId: course.id
+						})
+					}
 				}
 			} else if (item.type === "Video") {
-				fetchPromises.push(
-					retryOperation(() => fetchVideoDetails(apiClient, item), `fetchVideo:${item.id}`).then((details) => {
-						Object.assign(item, details)
-					})
-				)
-			} else if (item.type === "Article") {
-				fetchPromises.push(
-					retryOperation(() => fetchArticleOrVideoDetails(apiClient, item), `fetchArticle:${item.id}`).then(
-						(result) => {
-							if (result.type === "Article") Object.assign(item, result.data)
-							if (result.type === "Video") Object.assign(item, result.data, { type: "Video" })
-						}
+				if (noVideosOrArticlesFlag) {
+					logger.info("skipping video hydration", { videoId: item.id, videoSlug: item.slug })
+				} else {
+					fetchPromises.push(
+						retryOperation(() => fetchVideoDetails(apiClient, item), `fetchVideo:${item.id}`).then((details) => {
+							Object.assign(item, details)
+						})
 					)
-				)
+				}
+			} else if (item.type === "Article") {
+				if (noVideosOrArticlesFlag) {
+					logger.info("skipping article hydration", { articleId: item.id, articleSlug: item.slug })
+				} else {
+					fetchPromises.push(
+						retryOperation(() => fetchArticleOrVideoDetails(apiClient, item), `fetchArticle:${item.id}`).then(
+							(result) => {
+								if (result.type === "Article") Object.assign(item, result.data)
+								if (result.type === "Video") Object.assign(item, result.data, { type: "Video" })
+							}
+						)
+					)
+				}
 			}
 			if ("children" in item && item.children && Array.isArray(item.children)) {
 				for (const child of item.children) {
@@ -446,6 +476,44 @@ async function main() {
 				}
 			}
 		}
+	}
+
+	// Helper: prune videos and invalid articles so seed.ts can ingest cleanly
+	function pruneNonExerciseContent(course: CourseInfo): {
+		removedVideos: number
+		removedArticles: number
+	} {
+		let removedVideos = 0
+		let removedArticles = 0
+
+		for (const unit of course.children) {
+			if (unit.type !== "Unit") continue
+			for (const lesson of unit.children) {
+				if (lesson.type !== "Lesson") continue
+				const before = lesson.children.length
+				lesson.children = lesson.children.filter((child) => {
+					if (child.type === "Video") {
+						removedVideos++
+						return false
+					}
+					if (child.type === "Article") {
+						removedArticles++
+						return false
+					}
+					return true
+				})
+				const after = lesson.children.length
+				if (before !== after) {
+					logger.debug("pruned lesson children", {
+						lessonId: lesson.id,
+						removed: before - after,
+						remaining: after
+					})
+				}
+			}
+		}
+
+		return { removedVideos, removedArticles }
 	}
 
 	// MODIFIED: Logic is now split based on whether arguments are provided.
@@ -526,7 +594,12 @@ async function main() {
 			// 2. HYDRATE this specific course's content concurrently.
 			logger.info("hydrating content for course", { courseId: courseInfo.id, courseTitle: courseInfo.title })
 			const fetchPromises: Promise<void>[] = []
-			const scheduleHydration = createScheduleHydration(fetchPromises, scheduledQuestionFetches)
+			const scheduleHydration = createScheduleHydration(
+				fetchPromises,
+				scheduledQuestionFetches,
+				noVideosOrArticles,
+				(exerciseId) => contentCaches.allDiscoveredExercises.has(exerciseId)
+			)
 
 			scheduleHydration(courseInfo, [], courseInfo)
 			const allPromisesResult = await errors.try(Promise.all(fetchPromises))
@@ -538,6 +611,14 @@ async function main() {
 				continue // Move to the next course.
 			}
 			logger.info("finished hydrating course", { courseId: courseInfo.id })
+
+			if (noVideosOrArticles) {
+				const pruneStats = pruneNonExerciseContent(courseInfo)
+				logger.info("pruned content for seed compatibility due to --no-videos-or-articles", {
+					removedVideos: pruneStats.removedVideos,
+					removedArticles: pruneStats.removedArticles
+				})
+			}
 
 			// 3. SAVE this specific course's data to a file with retry.
 			const slug = courseInfo.path.replace(/^\/|\/$/g, "").replace(/\//g, "-")
@@ -666,7 +747,12 @@ async function main() {
 		logger.info("starting to fetch and embed all content details concurrently")
 		const fetchPromises: Promise<void>[] = []
 		const scheduledQuestionFetches = new Set<string>()
-		const scheduleHydration = createScheduleHydration(fetchPromises, scheduledQuestionFetches)
+		const scheduleHydration = createScheduleHydration(
+			fetchPromises,
+			scheduledQuestionFetches,
+			noVideosOrArticles,
+			(exerciseId) => contentCaches.allDiscoveredExercises.has(exerciseId)
+		)
 
 		for (const course of fullContentMap) {
 			scheduleHydration(course, [], course)
@@ -681,6 +767,17 @@ async function main() {
 		}
 
 		logger.info("completed fetching and embedding all content")
+
+		if (noVideosOrArticles) {
+			for (const course of fullContentMap) {
+				const pruneStats = pruneNonExerciseContent(course)
+				logger.info("pruned content for seed compatibility due to --no-videos-or-articles", {
+					courseId: course.id,
+					removedVideos: pruneStats.removedVideos,
+					removedArticles: pruneStats.removedArticles
+				})
+			}
+		}
 
 		logger.info("writing each course to a separate JSON file", { courseCount: fullContentMap.length })
 		let savedCount = 0
