@@ -2,6 +2,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { escapeXmlAttribute, sanitizeXmlAttributeValue } from "@/lib/xml-utils"
 
 export const UrlImageWidgetPropsSchema = z
 	.object({
@@ -47,8 +48,12 @@ export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema>
 		.join(" ")
 	const captionStyles = "font-size: 0.9em; color: #555; margin-top: 4px;"
 
-	const imgTag = `<img src="${url}" alt="${alt}" style="${imgStyles}" />`
-	const captionTag = caption ? `<div style="${captionStyles}">${caption}</div>` : ""
+	// Escape helpers for XML contexts
+	const escapeXmlText = (text: string): string =>
+		sanitizeXmlAttributeValue(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+
+	const imgTag = `<img src="${escapeXmlAttribute(url)}" alt="${escapeXmlAttribute(alt)}" style="${escapeXmlAttribute(imgStyles)}" />`
+	const captionTag = caption ? `<div style="${escapeXmlAttribute(captionStyles)}">${escapeXmlText(caption)}</div>` : ""
 
 	return `<div style="${containerStyles}">${imgTag}${captionTag}</div>`
 }
