@@ -5,249 +5,140 @@ import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { ingestAssessmentItems } from "./qti/ingest-assessment-items"
-import { ingestAssessmentStimuli } from "./qti/ingest-assessment-stimuli"
-import { ingestAssessmentTests } from "./qti/ingest-assessment-tests"
-
-// ✅ RE-INTRODUCED: A batch size for controlled ingestion to external APIs.
-const QTI_BATCH_SIZE = 100
+import { ingestAssessmentItemOne } from "@/inngest/functions/qti/ingest-assessment-item-one"
+import { ingestAssessmentStimulusOne } from "@/inngest/functions/qti/ingest-assessment-stimulus-one"
+import { ingestAssessmentTestOne } from "@/inngest/functions/qti/ingest-assessment-test-one"
+import { extractIdentifier, extractItemRefs } from "@/lib/xml-utils"
 
 export const orchestrateCourseUploadToQti = inngest.createFunction(
 	{
 		id: "orchestrate-course-upload-to-qti",
-		name: "Orchestrate Course Upload to QTI"
+		name: "Orchestrate Course Upload to QTI",
+		retries: 0 // The orchestrator itself should not retry; it manages retries of its children.
 	},
 	{ event: "qti/course.upload" },
 	async ({ event, step, logger }) => {
-		const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null
-		const isNumber = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value)
-		const hasSummaryFields = (
-			value: unknown
-		): value is { created: number; updated: number; skipped: number; failed: number } => {
-			if (!isRecord(value)) return false
-			const created = value.created
-			const updated = value.updated
-			const skipped = value.skipped
-			const failed = value.failed
-			return isNumber(created) && isNumber(updated) && isNumber(skipped) && isNumber(failed)
-		}
 		const { courseId } = event.data
-		logger.info("starting qti upload workflow from local files", { courseId })
+		logger.info("Starting QTI upload orchestration from local files", { courseId })
 
-		// Get the course slug to determine the file path
+		// Determine file paths
 		const courseResult = await db.query.niceCourses.findFirst({
 			where: eq(schema.niceCourses.id, courseId),
 			columns: { slug: true }
 		})
 		if (!courseResult) {
-			throw errors.new(`course not found in database: ${courseId}`)
+			throw errors.new(`Course not found in database: ${courseId}`)
 		}
-
 		const courseDir = path.join(process.cwd(), "data", courseResult.slug, "qti")
 
-		// Read the generated JSON files
-		const readJsonFile = async (fileName: string) => {
-			const filePath = path.join(courseDir, fileName)
-			const result = await errors.try(fs.readFile(filePath, "utf-8"))
-			if (result.error) {
-				logger.error("failed to read qti json file", { filePath, error: result.error })
-				throw errors.wrap(result.error, `read ${fileName}`)
-			}
-			return JSON.parse(result.data)
-		}
-
-		const [items, stimuli, tests] = await Promise.all([
-			readJsonFile("assessmentItems.json"),
-			readJsonFile("assessmentStimuli.json"),
-			readJsonFile("assessmentTests.json")
-		])
-
-		logger.info("read qti payloads from disk", {
+		// Read all necessary files in one step
+		const { items, stimuli, tests } = await step.run("read-qti-json-files", async () => {
+			const readJson = async (fileName: string) =>
+				JSON.parse(await fs.readFile(path.join(courseDir, fileName), "utf-8"))
+			const [items, stimuli, tests] = await Promise.all([
+				readJson("assessmentItems.json"),
+				readJson("assessmentStimuli.json"),
+				readJson("assessmentTests.json")
+			])
+			return { items, stimuli, tests }
+		})
+		logger.info("Read QTI payloads from disk", {
 			courseId,
 			itemCount: items.length,
 			stimulusCount: stimuli.length,
 			testCount: tests.length
 		})
 
-		// Ingest items sequentially, with batching
+		const summary = {
+			items: { created: 0, updated: 0, failed: 0, skipped: 0, total: items.length },
+			stimuli: { created: 0, updated: 0, failed: 0, skipped: 0, total: stimuli.length },
+			tests: { created: 0, updated: 0, failed: 0, skipped: 0, total: tests.length }
+		}
+		const successfullyIngestedItemIds = new Set<string>()
+
+		// STAGE 1: Ingest all Assessment Items
 		if (items.length > 0) {
-			const itemBatches = []
-			for (let i = 0; i < items.length; i += QTI_BATCH_SIZE) {
-				itemBatches.push(items.slice(i, i + QTI_BATCH_SIZE))
-			}
-
-			logger.info("processing assessment items in batches", {
-				courseId,
-				totalItems: items.length,
-				batchSize: QTI_BATCH_SIZE,
-				totalBatches: itemBatches.length
-			})
-
-			let itemsCreated = 0
-			let itemsUpdated = 0
-			let itemsSkipped = 0
-			let itemsFailed = 0
-			for (let i = 0; i < itemBatches.length; i++) {
-				const res = await errors.try(
-					step.invoke(`invoke-ingest-assessment-items-batch-${i + 1}`, {
-						function: ingestAssessmentItems,
-						data: { items: itemBatches[i] }
-					})
-				)
-				if (res.error) {
-					logger.error("assessment item ingestion batch failed", { courseId, batchIndex: i + 1, error: res.error })
-					throw errors.wrap(res.error, "assessment item ingestion batch")
-				}
-				const summary = res.data
-				if (hasSummaryFields(summary)) {
-					itemsCreated += summary.created
-					itemsUpdated += summary.updated
-					itemsSkipped += summary.skipped
-					itemsFailed += summary.failed
-				}
-				logger.info("completed item batch", {
-					courseId,
-					batchIndex: i + 1,
-					totalBatches: itemBatches.length,
-					created: itemsCreated,
-					updated: itemsUpdated,
-					skipped: itemsSkipped,
-					failed: itemsFailed
+			const itemPromises = items.map((item: { xml: string; metadata: Record<string, unknown> }) => {
+				const identifier = extractIdentifier(item.xml, "qti-assessment-item") ?? ""
+				return step.invoke(`ingest-item-${identifier || "unknown"}`, {
+					function: ingestAssessmentItemOne,
+					data: { identifier, xml: item.xml, metadata: item.metadata }
 				})
-			}
-			logger.info("completed all item batches", {
-				courseId,
-				created: itemsCreated,
-				updated: itemsUpdated,
-				skipped: itemsSkipped,
-				failed: itemsFailed
 			})
+			const itemResults = await Promise.allSettled(itemPromises)
+			for (const res of itemResults) {
+				if (res.status === "fulfilled" && res.value) {
+					if (res.value.status === "created") summary.items.created++
+					if (res.value.status === "updated") summary.items.updated++
+					if (res.value.identifier) successfullyIngestedItemIds.add(res.value.identifier)
+				} else {
+					summary.items.failed++
+				}
+			}
 		}
+		logger.info("Stage 1 (Items) complete.", { summary: summary.items })
 
-		logger.info("completed ingestion of items", { courseId })
-
-		// Ingest stimuli sequentially, with batching
+		// STAGE 2: Ingest all Assessment Stimuli
 		if (stimuli.length > 0) {
-			const stimuliBatches = []
-			for (let i = 0; i < stimuli.length; i += QTI_BATCH_SIZE) {
-				stimuliBatches.push(stimuli.slice(i, i + QTI_BATCH_SIZE))
-			}
-
-			logger.info("processing assessment stimuli in batches", {
-				courseId,
-				totalStimuli: stimuli.length,
-				batchSize: QTI_BATCH_SIZE,
-				totalBatches: stimuliBatches.length
-			})
-
-			let stimuliCreated = 0
-			let stimuliUpdated = 0
-			let stimuliSkipped = 0
-			let stimuliFailed = 0
-			for (let i = 0; i < stimuliBatches.length; i++) {
-				const res = await errors.try(
-					step.invoke(`invoke-ingest-assessment-stimuli-batch-${i + 1}`, {
-						function: ingestAssessmentStimuli,
-						data: { stimuli: stimuliBatches[i] }
-					})
-				)
-				if (res.error) {
-					logger.error("assessment stimuli ingestion batch failed", { courseId, batchIndex: i + 1, error: res.error })
-					throw errors.wrap(res.error, "assessment stimuli ingestion batch")
-				}
-				const summary = res.data
-				if (hasSummaryFields(summary)) {
-					stimuliCreated += summary.created
-					stimuliUpdated += summary.updated
-					stimuliSkipped += summary.skipped
-					stimuliFailed += summary.failed
-				}
-				logger.info("completed stimulus batch", {
-					courseId,
-					batchIndex: i + 1,
-					totalBatches: stimuliBatches.length,
-					created: stimuliCreated,
-					updated: stimuliUpdated,
-					skipped: stimuliSkipped,
-					failed: stimuliFailed
+			const stimuliPromises = stimuli.map((stimulus: { xml: string; metadata: Record<string, unknown> }) => {
+				const identifier = extractIdentifier(stimulus.xml, "qti-assessment-stimulus") ?? ""
+				return step.invoke(`ingest-stimulus-${identifier || "unknown"}`, {
+					function: ingestAssessmentStimulusOne,
+					data: { identifier, xml: stimulus.xml, metadata: stimulus.metadata }
 				})
-			}
-			logger.info("completed all stimulus batches", {
-				courseId,
-				created: stimuliCreated,
-				updated: stimuliUpdated,
-				skipped: stimuliSkipped,
-				failed: stimuliFailed
 			})
+			const stimuliResults = await Promise.allSettled(stimuliPromises)
+			for (const res of stimuliResults) {
+				if (res.status === "fulfilled" && res.value) {
+					if (res.value.status === "created") summary.stimuli.created++
+					if (res.value.status === "updated") summary.stimuli.updated++
+				} else {
+					summary.stimuli.failed++
+				}
+			}
 		}
+		logger.info("Stage 2 (Stimuli) complete.", { summary: summary.stimuli })
 
-		logger.info("completed ingestion of stimuli", { courseId })
-
-		// Ingest tests after items and stimuli are complete, with batching
+		// STAGE 3: Ingest all Assessment Tests with Pre-flight Validation
 		if (tests.length > 0) {
-			const testBatches = []
-			for (let i = 0; i < tests.length; i += QTI_BATCH_SIZE) {
-				testBatches.push(tests.slice(i, i + QTI_BATCH_SIZE))
-			}
+			for (const testXml of tests) {
+				const testIdentifier = extractIdentifier(testXml, "qti-assessment-test") ?? `unknown-test-${Date.now()}`
 
-			logger.info("processing assessment tests in batches", {
-				courseId,
-				totalTests: tests.length,
-				batchSize: QTI_BATCH_SIZE,
-				totalBatches: testBatches.length
-			})
+				const preflightResult = await step.run(`preflight-check-${testIdentifier}`, async () => {
+					const referencedItemIds = extractItemRefs(testXml)
+					const missingItemIds = referencedItemIds.filter((id) => !successfullyIngestedItemIds.has(id))
 
-			let testsCreated = 0
-			let testsUpdated = 0
-			let testsSkipped = 0
-			let testsFailed = 0
-			for (let i = 0; i < testBatches.length; i++) {
-				const res = await errors.try(
-					step.invoke(`invoke-ingest-assessment-tests-batch-${i + 1}`, {
-						function: ingestAssessmentTests,
-						data: { tests: testBatches[i] }
-					})
-				)
-				if (res.error) {
-					logger.error("assessment test ingestion batch failed", { courseId, batchIndex: i + 1, error: res.error })
-					throw errors.wrap(res.error, "assessment test ingestion batch")
-				}
-				const summary = res.data
-				if (hasSummaryFields(summary)) {
-					testsCreated += summary.created
-					testsUpdated += summary.updated
-					testsSkipped += summary.skipped
-					testsFailed += summary.failed
-				}
-				logger.info("completed test batch", {
-					courseId,
-					batchIndex: i + 1,
-					totalBatches: testBatches.length,
-					created: testsCreated,
-					updated: testsUpdated,
-					skipped: testsSkipped,
-					failed: testsFailed
+					if (missingItemIds.length > 0) {
+						logger.warn("Test references items that failed ingestion. Skipping test.", {
+							testIdentifier,
+							missingItemIds
+						})
+						return { canProceed: false }
+					}
+					return { canProceed: true }
 				})
-			}
-			logger.info("completed all test batches", {
-				courseId,
-				created: testsCreated,
-				updated: testsUpdated,
-				skipped: testsSkipped,
-				failed: testsFailed
-			})
-		}
 
-		logger.info("completed qti upload workflow", { courseId })
-
-		return {
-			status: "success",
-			courseId,
-			uploaded: {
-				items: items.length,
-				stimuli: stimuli.length,
-				tests: tests.length
+				if (preflightResult.canProceed) {
+					const testResult = await errors.try(
+						step.invoke(`ingest-test-${testIdentifier}`, {
+							function: ingestAssessmentTestOne,
+							data: { identifier: testIdentifier, xml: testXml }
+						})
+					)
+					if (testResult.error || !testResult.data) {
+						summary.tests.failed++
+					} else {
+						if (testResult.data.status === "created") summary.tests.created++
+						if (testResult.data.status === "updated") summary.tests.updated++
+					}
+				} else {
+					summary.tests.skipped++
+				}
 			}
 		}
+		logger.info("Stage 3 (Tests) complete.", { summary: summary.tests })
+
+		logger.info("QTI upload orchestration complete.", { finalSummary: summary })
+		return { status: "success", summary }
 	}
 )

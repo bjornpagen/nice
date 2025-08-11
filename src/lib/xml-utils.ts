@@ -1,136 +1,134 @@
 /**
- * XML utility functions for safe attribute value escaping and manipulation
+ * XML utility functions for extracting data from QTI XML strings
  */
 
-import * as errors from "@superbuilders/errors"
-
 /**
- * Sanitizes a string for safe inclusion in XML attribute values by
- * - normalizing common mis-encodings found in source content
- * - removing disallowed control characters (per XML 1.0)
- */
-export function sanitizeXmlAttributeValue(raw: string): string {
-	// Normalize common mis-encodings observed in dataset
-	// U+0019 often used as an apostrophe; normalize to the ASCII apostrophe
-	// biome-ignore lint/suspicious/noControlCharactersInRegex: Control chars are intentionally handled here for data sanitization
-	let value = raw.replace(/\u0019|\x19|[\u0019]/g, "'")
-
-	// Rare control char U+0004 sometimes appears between digits to denote a fraction like 1\u00044
-	// Normalize digit-CTRL-digit to digit/digit
-	// biome-ignore lint/suspicious/noControlCharactersInRegex: Control chars are intentionally handled here for data sanitization
-	value = value.replace(/(\d)\u0004(\d)/g, "$1/$2")
-
-	// Remove all other disallowed control characters except TAB (0x09), LF (0x0A), CR (0x0D)
-	// biome-ignore lint/suspicious/noControlCharactersInRegex: Control chars are intentionally handled here for data sanitization
-	value = value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF]/g, "")
-
-	return value
-}
-
-/**
- * Escapes special characters in a string to make it safe for use as an XML attribute value.
- * Must escape & first to avoid double-escaping other entities.
- *
- * @param value - The string to escape
- * @returns The escaped string safe for XML attributes
+ * Escapes special characters in XML attribute values
+ * @param value The value to escape
+ * @returns The escaped value
  */
 export function escapeXmlAttribute(value: string): string {
-	const sanitized = sanitizeXmlAttributeValue(value)
-	return sanitized
-		.replace(/&/g, "&amp;") // Must be first to avoid double-escaping
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "&apos;")
+	return value
+		.replace(/&/g, "&amp;")
 		.replace(/</g, "&lt;")
 		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&apos;")
 }
 
 /**
- * Replaces the identifier and title attributes on the root tag of a given XML string.
- *
- * @param xml - The original XML string
- * @param rootTag - The name of the root tag (e.g., "qti-assessment-item")
- * @param newIdentifier - The new identifier to set
- * @param newTitle - The new title to set
- * @returns The XML string with updated attributes
+ * Sanitizes a value for use in XML attributes by removing invalid characters
+ * @param value The value to sanitize
+ * @returns The sanitized value
  */
-export function replaceRootAttributes(xml: string, rootTag: string, newIdentifier: string, newTitle: string): string {
-	// A robust regex to find the root tag and capture its attributes
-	const rootTagRegex = new RegExp(`<(${rootTag})([^>]*?)>`)
-
-	// Escape the title to be safely used in an XML attribute
-	const safeTitle = escapeXmlAttribute(newTitle)
-
-	return xml.replace(rootTagRegex, (_match, tagName, existingAttrs) => {
-		// Replace attributes within the captured group
-		let updatedAttrs = existingAttrs.replace(/identifier="[^"]*"/, `identifier="${newIdentifier}"`)
-		updatedAttrs = updatedAttrs.replace(/title="[^"]*"/, `title="${safeTitle}"`)
-		return `<${tagName}${updatedAttrs}>`
-	})
+export function sanitizeXmlAttributeValue(value: string): string {
+	// Remove control characters and other invalid XML characters
+	// biome-ignore lint/suspicious/noControlCharactersInRegex: Control chars are intentionally handled here for data sanitization
+	return value.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "")
 }
 
 /**
- * Extracts the content from within <qti-stimulus-body> tags in a QTI XML document.
- * This is a hyper-robust implementation that handles various edge cases and XML variations.
- *
- * The QTI API expects only the inner HTML content of the stimulus body, not the full XML document.
- *
- * @param xml - The full QTI XML document
- * @returns The extracted inner HTML content from the qti-stimulus-body element
- * @throws Error if no qti-stimulus-body element is found or if content extraction fails
+ * Replaces attributes on the root element of an XML string
+ * @param xml The XML string
+ * @param elementName The expected root element name
+ * @param identifier The identifier attribute value
+ * @param title The title attribute value
+ * @returns The modified XML string
+ */
+export function replaceRootAttributes(xml: string, elementName: string, identifier: string, title: string): string {
+	// Find the root element matching the expected name
+	const regex = new RegExp(`^(\\s*<\\s*${elementName})((?:\\s+[^>]+)?)(>)`, "s")
+	const rootMatch = xml.match(regex)
+	if (!rootMatch) return xml
+
+	const [, openTag, , closeTag] = rootMatch
+
+	// Build new attributes string
+	const newAttrs = ` identifier="${escapeXmlAttribute(identifier)}" title="${escapeXmlAttribute(title)}"`
+
+	// Replace the root element's opening tag
+	return xml.replace(rootMatch[0], `${openTag}${newAttrs}${closeTag}`)
+}
+
+/**
+ * Extracts the identifier attribute from a QTI XML element
+ * @param xml The XML string to parse
+ * @param elementName The name of the element (e.g., 'qti-assessment-item')
+ * @returns The identifier value or null if not found
+ */
+export function extractIdentifier(xml: string, elementName: string): string | null {
+	// Match the element and extract the identifier attribute
+	const regex = new RegExp(`<${elementName}[^>]*\\sidentifier=["']([^"']+)["']`, "i")
+	const match = xml.match(regex)
+	return match?.[1] ?? null
+}
+
+/**
+ * Extracts the title from a QTI XML element
+ * @param xml The XML string to parse
+ * @returns The title value or null if not found
+ */
+export function extractTitle(xml: string): string | null {
+	// Try to extract from title attribute
+	const titleAttrMatch = xml.match(/\stitle=["']([^"']+)["']/i)
+	if (titleAttrMatch?.[1]) return titleAttrMatch[1]
+
+	// Try to extract from <qti-title> element
+	const titleElementMatch = xml.match(/<qti-title[^>]*>([^<]+)<\/qti-title>/i)
+	if (titleElementMatch?.[1]) return titleElementMatch[1].trim()
+
+	return null
+}
+
+/**
+ * Extracts the body content from a QTI stimulus XML
+ * @param xml The XML string to parse
+ * @returns The body content or null if not found
  */
 export function extractQtiStimulusBodyContent(xml: string): string {
-	// Remove any BOM (Byte Order Mark) that might be present
-	const cleanXml = xml.replace(/^\uFEFF/, "")
-
-	// Hyper-robust regex explanation:
-	// 1. <qti-stimulus-body - Match the opening tag name exactly
-	// 2. (?![a-zA-Z0-9_-]) - Negative lookahead to ensure tag name ends here (not qti-stimulus-body-something)
-	// 3. (?:\s+ - Optional whitespace followed by attributes
-	// 4. (?:[^>"']+|"[^"]*"|'[^']*')* - Match attributes (unquoted, double-quoted, or single-quoted values)
-	// 5. )? - Make attributes section optional
-	// 6. \s*> - Optional whitespace and closing bracket
-	// 7. ([\s\S]*?) - Capture group for content (non-greedy, matches anything including newlines)
-	// 8. </qti-stimulus-body\s*> - Closing tag with optional whitespace before >
-	const bodyRegex =
-		/<qti-stimulus-body(?![a-zA-Z0-9_-])(?:\s+(?:[^>"']+|"[^"]*"|'[^']*')*)?\s*>([\s\S]*?)<\/qti-stimulus-body\s*>/i
-
-	const match = cleanXml.match(bodyRegex)
-
-	if (!match || !match[1]) {
-		// Try to provide helpful error context
-		const hasOpenTag = cleanXml.match(/<qti-stimulus-body/i)
-		const hasCloseTag = cleanXml.match(/<\/qti-stimulus-body/i)
-
-		if (!hasOpenTag && !hasCloseTag) {
-			throw errors.new("No qti-stimulus-body element found in XML")
-		}
-		if (!hasOpenTag) {
-			throw errors.new("Found closing </qti-stimulus-body> tag but no opening tag")
-		}
-		if (!hasCloseTag) {
-			throw errors.new("Found opening <qti-stimulus-body> tag but no closing tag")
-		}
-		// Both tags exist but regex didn't match - likely malformed
-		throw errors.new("Found qti-stimulus-body tags but they appear to be malformed or improperly nested")
-	}
-
-	// Extract the content and handle edge cases
-	let content = match[1]
-
-	// Check for self-closing tag (should have no content)
-	if (cleanXml.match(/<qti-stimulus-body[^>]*\/>/i)) {
+	// Extract content between <qti-stimulus-body> tags
+	const match = xml.match(/<qti-stimulus-body[^>]*>([\s\S]*?)<\/qti-stimulus-body>/i)
+	if (!match) {
 		return ""
 	}
+	return (match[1] ?? "").trim()
+}
 
-	// Trim the content but preserve intentional whitespace within
-	// Only trim leading/trailing whitespace that's likely from XML formatting
-	content = content.replace(/^\s*\n/, "").replace(/\n\s*$/, "")
+/**
+ * Extracts all assessment item references from a QTI test XML
+ * @param xml The XML string to parse
+ * @returns Array of referenced item identifiers
+ */
+export function extractItemRefs(xml: string): string[] {
+	const itemRefs: string[] = []
 
-	// Validate that we actually extracted something meaningful
-	if (content.length === 0) {
-		// Empty content is valid - some stimuli might legitimately be empty
-		return ""
+	// Match all qti-assessment-item-ref elements and extract their identifier attributes
+	const regex = /<qti-assessment-item-ref[^>]*\sidentifier=["']([^"']+)["']/gi
+	let match: RegExpExecArray | null = regex.exec(xml)
+
+	while (match !== null) {
+		if (match[1]) itemRefs.push(match[1])
+		match = regex.exec(xml)
 	}
 
-	return content
+	// Also check for href attributes that might reference items
+	const hrefRegex = /<qti-assessment-item-ref[^>]*\shref=["']([^"']+)["']/gi
+	let hrefMatch: RegExpExecArray | null = hrefRegex.exec(xml)
+
+	while (hrefMatch !== null) {
+		// Extract identifier from href (usually the last part of the path without extension)
+		const href = hrefMatch[1]
+		if (href) {
+			const identifier = href
+				.split("/")
+				.pop()
+				?.replace(/\.[^.]+$/, "")
+			if (identifier && !itemRefs.includes(identifier)) {
+				itemRefs.push(identifier)
+			}
+		}
+		hrefMatch = hrefRegex.exec(xml)
+	}
+
+	return itemRefs
 }

@@ -40,9 +40,9 @@ import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/conv
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
 import { differentiateAndSaveQuestion } from "@/inngest/functions/qti/differentiate-and-save-question"
-import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
-import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
-import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
+import { ingestAssessmentItemOne } from "@/inngest/functions/qti/ingest-assessment-item-one"
+import { ingestAssessmentStimulusOne } from "@/inngest/functions/qti/ingest-assessment-stimulus-one"
+import { ingestAssessmentTestOne } from "@/inngest/functions/qti/ingest-assessment-test-one"
 import { ingestUndifferentiatedCourseFromDb } from "@/inngest/functions/qti/ingest-undifferentiated-course-from-db"
 import { orchestrateCourseDifferentiatedIngestion } from "@/inngest/functions/qti/orchestrate-course-differentiated-ingestion"
 // ✅ ADD: Import the new paraphrase function
@@ -97,9 +97,9 @@ export const { GET, POST, PUT } = serve({
 		convertPerseusQuestionToDifferentiatedQtiItems,
 		requestAllItemMigrationsForCourse,
 		requestAllStimulusMigrationsForCourse,
-		ingestAssessmentItems,
-		ingestAssessmentStimuli,
-		ingestAssessmentTests,
+		ingestAssessmentItemOne,
+		ingestAssessmentStimulusOne,
+		ingestAssessmentTestOne,
 		// ✅ ADD: Register the new validation function
 		validateAndClearInvalidQuestionXml,
 		// ✅ ADD: Register the new paraphrase function

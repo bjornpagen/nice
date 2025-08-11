@@ -121,6 +121,30 @@ const events = {
 	"qti/questions.validate-all": {
 		data: z.object({})
 	},
+	// ✅ ADD: New per-entity ingestion events for the fan-out model.
+	"qti/assessment-item.ingest.one": {
+		data: z.object({
+			identifier: z.string().optional(),
+			xml: z.string().min(1),
+			metadata: z.record(z.string(), z.any()).optional()
+		})
+	},
+	"qti/assessment-stimulus.ingest.one": {
+		data: z.object({
+			identifier: z.string().optional(),
+			xml: z.string().min(1),
+			metadata: z.record(z.string(), z.any()).optional()
+		})
+	},
+	"qti/assessment-test.ingest.one": {
+		data: z.object({
+			identifier: z.string().optional(),
+			xml: z.string().min(1)
+		})
+	},
+
+	// ❌ DEPRECATE: These batch events are replaced by the orchestrator fanning out to per-entity events.
+	// They will be removed in a future commit.
 	"qti/assessment-items.ingest": {
 		data: z.object({
 			items: z.array(CreateItemInputSchema)
