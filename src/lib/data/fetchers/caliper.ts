@@ -1,4 +1,3 @@
-import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { redisCache } from "@/lib/cache"
@@ -31,42 +30,27 @@ import { caliper } from "@/lib/clients"
 // --- Universal Event Processing Helpers ---
 
 /**
+ * Normalize activity.id to a plain OneRoster resource id (e.g., "nice_x...")
+ * Accepts either a plain id or a fully-qualified OneRoster URI.
+ */
+function normalizeResourceIdFromActivityId(activityId: string | undefined): string | null {
+	if (!activityId) return null
+	if (activityId.startsWith("http")) {
+		const marker = "/resources/"
+		const idx = activityId.lastIndexOf(marker)
+		if (idx === -1) return null
+		return activityId.slice(idx + marker.length)
+	}
+	return activityId
+}
+
+/**
  * Filters events to only include TimeSpent events for specific resource IDs
  */
 function filterTimeSpentEventsByResources(
 	events: z.infer<typeof CaliperEventSchema>[],
 	resourceIds: Set<string>
 ): z.infer<typeof CaliperEventSchema>[] {
-	// Convert OneRoster resource IDs to resource slugs for URL pattern matching
-	// OneRoster IDs need to be converted to URL patterns
-	const resourceSlugs = new Set<string>()
-
-	for (const resourceId of resourceIds) {
-		// Validate that the resource ID has the expected format
-		if (!resourceId.startsWith("nice_")) {
-			logger.error("CRITICAL: Invalid OneRoster resource ID format", {
-				resourceId,
-				expectedFormat: "nice_x..."
-			})
-			throw errors.new("invalid OneRoster resource ID format")
-		}
-
-		// Extract the resource identifier part (remove "nice_" prefix)
-		const resourceSlug = resourceId.slice(5) // Remove "nice_" prefix
-		if (resourceSlug.length === 0) {
-			logger.error("CRITICAL: Empty resource slug after removing prefix", { resourceId })
-			throw errors.new("empty resource slug")
-		}
-
-		resourceSlugs.add(resourceSlug)
-	}
-
-	logger.debug("converted oneroster resource ids to url patterns for filtering", {
-		originalResourceIds: Array.from(resourceIds),
-		extractedSlugs: Array.from(resourceSlugs),
-		conversionCount: resourceSlugs.size
-	})
-
 	return events.filter((event) => {
 		if (event.action !== "SpentTime") return false
 
@@ -78,46 +62,24 @@ function filterTimeSpentEventsByResources(
 			eventId: event.id
 		})
 
-		// First try to match by explicit activity.id (OneRoster format)
-		const activityId = event.object.activity?.id
-		if (activityId && resourceIds.has(activityId)) {
-			logger.debug("matched timespent event by activity id", {
+		// Match by normalized activity.id (handles fully-qualified URIs and plain ids)
+		const normalized = normalizeResourceIdFromActivityId(event.object.activity?.id)
+		if (normalized && resourceIds.has(normalized)) {
+			logger.debug("matched timespent event by normalized activity id", {
 				eventAction: event.action,
-				activityId,
-				matchType: "activity_id"
+				activityId: event.object.activity?.id,
+				normalizedActivityId: normalized,
+				matchType: "activity_id_normalized"
 			})
 			return true
 		}
 
-		// If no explicit activity.id match, try URL pattern matching
-		// TimeSpent events may use context.id (URL) as the primary identifier
-		const contextId = event.object.id
-		if (!contextId) {
-			logger.debug("skipping event with no context id", { eventId: event.id })
-			return false
-		}
-
-		// Check if the URL contains any of our target resource patterns
-		// Articles: /a/{slug}, Videos: /v/{slug}
-		for (const slug of resourceSlugs) {
-			if (contextId.includes(`/a/${slug}`) || contextId.includes(`/v/${slug}`)) {
-				logger.debug("matched timespent event by url pattern", {
-					eventAction: event.action,
-					contextId,
-					matchedSlug: slug,
-					matchType: "url_pattern"
-				})
-				return true
-			}
-		}
-
-		// Log when we fail to match a TimeSpent event
+		// No match
 		logger.debug("timespent event did not match any resource", {
 			eventAction: event.action,
 			activityId: event.object.activity?.id,
 			contextId: event.object.id,
-			targetResourceIds: Array.from(resourceIds),
-			targetSlugs: Array.from(resourceSlugs)
+			targetResourceIds: Array.from(resourceIds)
 		})
 
 		return false
@@ -142,14 +104,14 @@ function aggregateTimeSpentByResource(timeSpentEvents: z.infer<typeof CaliperEve
 	const timeSpentMap = new Map<string, number>()
 
 	for (const event of timeSpentEvents) {
-		const activityId = event.object.activity?.id
-		if (!activityId) continue
+		const normalizedId = normalizeResourceIdFromActivityId(event.object.activity?.id)
+		if (!normalizedId) continue
 
 		const timeMetric = event.generated.items.find((item) => item.type === "active")
 		if (!timeMetric) continue
 
-		const currentTime = timeSpentMap.get(activityId) || 0
-		timeSpentMap.set(activityId, currentTime + timeMetric.value)
+		const currentTime = timeSpentMap.get(normalizedId) || 0
+		timeSpentMap.set(normalizedId, currentTime + timeMetric.value)
 	}
 
 	return timeSpentMap

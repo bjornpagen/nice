@@ -6,7 +6,8 @@ import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { oneroster } from "@/lib/clients"
 import { calculateBankedXpForResources } from "@/lib/data/fetchers/caliper"
 import type { Resource } from "@/lib/oneroster"
-import { getAssessmentLineItemId, getAssessmentLineItemIds } from "@/lib/utils/assessment-line-items"
+// Keep for assessmentResult saving in bank write
+// Note: no local usage; banked results are saved by resource id
 
 /**
  * Calculates banked XP for a quiz. This is a hybrid function:
@@ -189,43 +190,20 @@ export async function awardBankedXpForAssessment(
 		return { bankedXp: 0, awardedResourceIds: [] }
 	}
 
-	// 5. Calculate XP for each type using its specific logic
+	// 5. Calculate XP for passive content (articles and videos) using time-spent for BOTH types
 	let totalBankedXp = 0
 	const awardedResourceIds: string[] = []
 
-	// 5a. ARTICLES: Use the new time-based fetcher
-	if (articleResources.length > 0) {
+	const passiveResources: Array<{ sourcedId: string; expectedXp: number }> = [
+		...articleResources.map((r) => ({ sourcedId: r.sourcedId, expectedXp: r.expectedXp })),
+		...videoResources.map((r) => ({ sourcedId: r.sourcedId, expectedXp: r.expectedXp }))
+	]
+
+	if (passiveResources.length > 0) {
 		const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`
-		const articleResult = await calculateBankedXpForResources(actorId, articleResources)
-		totalBankedXp += articleResult.bankedXp
-		awardedResourceIds.push(...articleResult.awardedResourceIds)
-	}
-
-	// 5b. VIDEOS: Use the original completion-based logic (check OneRoster results)
-	if (videoResources.length > 0) {
-		const videoResourceIds = videoResources.map((r) => r.sourcedId)
-		const videoResults = await errors.try(
-			oneroster.getAllResults({
-				filter: `student.sourcedId='${userId}' AND assessmentLineItem.sourcedId@'${getAssessmentLineItemIds(videoResourceIds).join(",")}'`
-			})
-		)
-
-		if (videoResults.error) {
-			logger.error("failed to fetch video completion results for banked xp", { error: videoResults.error, userId })
-		} else {
-			for (const result of videoResults.data) {
-				// A score of 1.0 indicates 95%+ completion
-				if (result.score === 1.0) {
-					const video = videoResources.find(
-						(v) => getAssessmentLineItemId(v.sourcedId) === result.assessmentLineItem.sourcedId
-					)
-					if (video) {
-						totalBankedXp += video.expectedXp
-						awardedResourceIds.push(video.sourcedId)
-					}
-				}
-			}
-		}
+		const bankResult = await calculateBankedXpForResources(actorId, passiveResources)
+		totalBankedXp += bankResult.bankedXp
+		awardedResourceIds.push(...bankResult.awardedResourceIds)
 	}
 
 	logger.info("calculated total banked xp", {
