@@ -253,22 +253,18 @@ export async function calculateBankedXpForResources(
 			awardedXp: number
 		}> = []
 
+		// Spec-compliant policy: award Full expected XP when engagement meets a completion threshold,
+		// otherwise award 0. Do not scale awarded XP by actual minutes.
+		const COMPLETION_THRESHOLD_RATIO = 0.95
+
 		for (const resource of passiveResources) {
 			const secondsSpent = timeSpentMap.get(resource.sourcedId) || 0
 
-			if (secondsSpent === 0) {
-				detailedResults.push({
-					resourceId: resource.sourcedId,
-					expectedXp: resource.expectedXp,
-					secondsSpent: 0,
-					minutesSpent: 0,
-					awardedXp: 0
-				})
-				continue
-			}
+			const minutesSpent = secondsSpent > 0 ? Math.ceil(secondsSpent / 60) : 0
+			const requiredMinutes = Math.ceil(resource.expectedXp * COMPLETION_THRESHOLD_RATIO)
 
-			const minutesSpent = Math.ceil(secondsSpent / 60)
-			const awardedXp = Math.min(minutesSpent, resource.expectedXp)
+			const meetsThreshold = minutesSpent >= requiredMinutes && resource.expectedXp > 0
+			const awardedXp = meetsThreshold ? resource.expectedXp : 0
 
 			if (awardedXp > 0) {
 				totalBankedXp += awardedXp
