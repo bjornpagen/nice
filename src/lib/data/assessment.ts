@@ -11,9 +11,10 @@ import {
 	getCourseComponentByCourseAndSlug,
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
-import { getAllQuestionsForTest, getAssessmentTest } from "@/lib/data/fetchers/qti"
+import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
 import type { Question } from "@/lib/types/domain"
 import type {
 	CourseChallengeLayoutData,
@@ -294,24 +295,6 @@ export async function fetchQuizPageData(params: {
 
 	const resourceMetadata = resourceMetadataResult.data
 
-	// Fetch questions from QTI server
-	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
-	if (questionsResult.error) {
-		logger.error("failed to fetch questions for quiz", {
-			testSourcedId: resource.sourcedId,
-			error: questionsResult.error
-		})
-		throw errors.wrap(questionsResult.error, "fetch questions for quiz")
-	}
-
-	if (!Array.isArray(questionsResult.data.questions)) {
-		logger.error("CRITICAL: QTI test questions are not an array", {
-			testSourcedId: resource.sourcedId,
-			questionsData: questionsResult.data.questions
-		})
-		throw errors.new("QTI test questions: malformed data")
-	}
-
 	// Fetch the assessment test XML to get selection and ordering rules
 	const assessmentTestResult = await errors.try(getAssessmentTest(resource.sourcedId))
 	if (assessmentTestResult.error) {
@@ -320,6 +303,16 @@ export async function fetchQuizPageData(params: {
 			error: assessmentTestResult.error
 		})
 		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for quiz")
+	}
+
+	// Resolve questions by parsing XML and fetching items
+	const resolvedQuestionsResult = await errors.try(resolveAllQuestionsForTestFromXml(assessmentTestResult.data))
+	if (resolvedQuestionsResult.error) {
+		logger.error("failed to resolve questions from qti xml for quiz", {
+			testSourcedId: resource.sourcedId,
+			error: resolvedQuestionsResult.error
+		})
+		throw errors.wrap(resolvedQuestionsResult.error, "resolve questions from qti xml for quiz")
 	}
 
 	// Apply selection and ordering rules with strict non-repetition using baseSeed + attempt
@@ -350,7 +343,7 @@ export async function fetchQuizPageData(params: {
 		throw errors.new("assessment attempt number missing")
 	}
 
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, questionsResult.data.questions, {
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, resolvedQuestionsResult.data, {
 		baseSeed: `${userMetaForQuiz.sourceId}:${resource.sourcedId}`,
 		attemptNumber: attemptNumberForQuiz
 	})
@@ -446,24 +439,6 @@ export async function fetchUnitTestPageData(params: {
 
 	const resourceMetadata = resourceMetadataResult.data
 
-	// Fetch questions from QTI server
-	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
-	if (questionsResult.error) {
-		logger.error("failed to fetch questions for unittest", {
-			testSourcedId: resource.sourcedId,
-			error: questionsResult.error
-		})
-		throw errors.wrap(questionsResult.error, "fetch questions for unittest")
-	}
-
-	if (!Array.isArray(questionsResult.data.questions)) {
-		logger.error("CRITICAL: QTI test questions are not an array", {
-			testSourcedId: resource.sourcedId,
-			questionsData: questionsResult.data.questions
-		})
-		throw errors.new("QTI test questions: malformed data")
-	}
-
 	// Fetch the assessment test XML to get selection and ordering rules
 	const assessmentTestResult = await errors.try(getAssessmentTest(resource.sourcedId))
 	if (assessmentTestResult.error) {
@@ -472,6 +447,16 @@ export async function fetchUnitTestPageData(params: {
 			error: assessmentTestResult.error
 		})
 		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for unittest")
+	}
+
+	// Resolve questions by parsing XML and fetching items
+	const resolvedQuestionsResult = await errors.try(resolveAllQuestionsForTestFromXml(assessmentTestResult.data))
+	if (resolvedQuestionsResult.error) {
+		logger.error("failed to resolve questions from qti xml for unittest", {
+			testSourcedId: resource.sourcedId,
+			error: resolvedQuestionsResult.error
+		})
+		throw errors.wrap(resolvedQuestionsResult.error, "resolve questions from qti xml for unittest")
 	}
 
 	// Apply selection and ordering rules with strict non-repetition using baseSeed + attempt
@@ -501,7 +486,7 @@ export async function fetchUnitTestPageData(params: {
 		throw errors.new("assessment attempt number missing")
 	}
 
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, questionsResult.data.questions, {
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, resolvedQuestionsResult.data, {
 		baseSeed: `${userMetaForUnitTest.sourceId}:${resource.sourcedId}`,
 		attemptNumber: attemptNumberForUnitTest
 	})
@@ -670,23 +655,6 @@ export async function fetchCourseChallengePage_TestData(params: {
 	}
 	const testResourceMetadata = testResourceMetadataResult.data
 
-	const qtiTestDataResult = await errors.try(getAllQuestionsForTest(testResource.sourcedId))
-	if (qtiTestDataResult.error) {
-		logger.error("failed to fetch questions for test", {
-			testSourcedId: testResource.sourcedId,
-			error: qtiTestDataResult.error
-		})
-		throw errors.wrap(qtiTestDataResult.error, "fetch questions for test")
-	}
-
-	if (!Array.isArray(qtiTestDataResult.data.questions)) {
-		logger.error("CRITICAL: QTI test questions are not an array", {
-			testSourcedId: testResource.sourcedId,
-			questionsData: qtiTestDataResult.data.questions
-		})
-		throw errors.new("QTI test questions: malformed data")
-	}
-
 	// Fetch the assessment test XML to get selection and ordering rules
 	const assessmentTestResult = await errors.try(getAssessmentTest(testResource.sourcedId))
 	if (assessmentTestResult.error) {
@@ -695,6 +663,16 @@ export async function fetchCourseChallengePage_TestData(params: {
 			error: assessmentTestResult.error
 		})
 		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for course challenge")
+	}
+
+	// Resolve questions by parsing XML and fetching items
+	const resolvedQuestionsResult = await errors.try(resolveAllQuestionsForTestFromXml(assessmentTestResult.data))
+	if (resolvedQuestionsResult.error) {
+		logger.error("failed to resolve questions from qti xml for course challenge", {
+			testSourcedId: testResource.sourcedId,
+			error: resolvedQuestionsResult.error
+		})
+		throw errors.wrap(resolvedQuestionsResult.error, "resolve questions from qti xml for course challenge")
 	}
 
 	// Apply selection and ordering rules with strict non-repetition using baseSeed + attempt
@@ -724,7 +702,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 		throw errors.new("assessment attempt number missing")
 	}
 
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, qtiTestDataResult.data.questions, {
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, resolvedQuestionsResult.data, {
 		baseSeed: `${userMetaForChallenge.sourceId}:${testResource.sourcedId}`,
 		attemptNumber: attemptNumberForChallenge
 	})

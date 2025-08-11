@@ -8,8 +8,9 @@ import {
 	getAllResources,
 	getCourseComponentsByCourseId
 } from "@/lib/data/fetchers/oneroster"
-import { getAllQuestionsForTest } from "@/lib/data/fetchers/qti"
+import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { ComponentMetadataSchema, CourseMetadataSchema, ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
 import type {
 	Article,
 	Course,
@@ -258,21 +259,28 @@ export async function fetchCoursePageData(
 
 		const exerciseQuestionsPromises = await Promise.all(
 			Array.from(exerciseResourceSourcedIds).map(async (exerciseSourcedId) => {
-				const result = await errors.try(getAllQuestionsForTest(exerciseSourcedId))
-				if (result.error) {
-					logger.error("failed to fetch questions for exercise", { exerciseSourcedId, error: result.error })
-					return { exerciseSourcedId, questions: [] }
-				}
-				if (!Array.isArray(result.data.questions)) {
-					logger.error("CRITICAL: QTI test questions are not an array", {
+				// Fetch test XML then resolve items from XML
+				const testResult = await errors.try(getAssessmentTest(exerciseSourcedId))
+				if (testResult.error) {
+					logger.error("failed to fetch assessment test for exercise", {
 						exerciseSourcedId,
-						questionsData: result.data.questions
+						error: testResult.error
 					})
 					return { exerciseSourcedId, questions: [] }
 				}
+
+				const resolved = await errors.try(resolveAllQuestionsForTestFromXml(testResult.data))
+				if (resolved.error) {
+					logger.error("failed to resolve questions from qti xml for exercise", {
+						exerciseSourcedId,
+						error: resolved.error
+					})
+					return { exerciseSourcedId, questions: [] }
+				}
+
 				return {
 					exerciseSourcedId,
-					questions: result.data.questions.map((q) => ({ id: q.question.identifier }))
+					questions: resolved.data.map((q) => ({ id: q.question.identifier }))
 				}
 			})
 		)

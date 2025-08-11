@@ -38,15 +38,24 @@ export function Content({
 	// Check if all items are currently unlocked
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
 
+	// Persistent toggle key (per course)
+	const storageKey = `nice_unlock_all_${data.course.id}` as const
+
 	const handleToggleLockAll = () => {
 		if (allUnlocked) {
 			// Restore original server-side lock state (natural progression locks)
 			setResourceLockStatus(initialResourceLockStatus)
+			if (typeof window !== "undefined") {
+				window.localStorage.removeItem(storageKey)
+			}
 			toast.success("Lock state restored to natural progression.")
 		} else {
 			// Unlock all: set all to false (unlocked)
 			const unlockedStatus = Object.fromEntries(Object.keys(resourceLockStatus).map((key) => [key, false]))
 			setResourceLockStatus(unlockedStatus)
+			if (typeof window !== "undefined") {
+				window.localStorage.setItem(storageKey, "1")
+			}
 			toast.success("All activities have been unlocked.")
 		}
 	}

@@ -3,8 +3,9 @@ import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { connection } from "next/server"
 import { getAllComponentResources, getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
-import { getAllQuestionsForTest, getAssessmentTest } from "@/lib/data/fetchers/qti"
+import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
 import { applyQtiSelectionAndOrdering } from "./assessment"
@@ -150,24 +151,6 @@ export async function fetchExercisePageData(params: {
 		notFound()
 	}
 
-	// Fetch questions from QTI server
-	const questionsResult = await errors.try(getAllQuestionsForTest(resource.sourcedId))
-	if (questionsResult.error) {
-		logger.error("failed to fetch questions for exercise", {
-			testSourcedId: resource.sourcedId,
-			error: questionsResult.error
-		})
-		throw errors.wrap(questionsResult.error, "fetch questions for exercise")
-	}
-
-	if (!Array.isArray(questionsResult.data.questions)) {
-		logger.error("CRITICAL: QTI test questions are not an array", {
-			testSourcedId: resource.sourcedId,
-			questionsData: questionsResult.data.questions
-		})
-		throw errors.new("QTI test questions: malformed data")
-	}
-
 	// Fetch the assessment test XML to get selection and ordering rules
 	const assessmentTestResult = await errors.try(getAssessmentTest(resource.sourcedId))
 	if (assessmentTestResult.error) {
@@ -178,9 +161,18 @@ export async function fetchExercisePageData(params: {
 		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for exercise")
 	}
 
-	// Use the same helper. It will correctly handle exercises that don't have
-	// selection/ordering rules by returning all questions.
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, questionsResult.data.questions)
+	// Resolve questions by parsing XML and fetching items
+	const resolvedQuestionsResult = await errors.try(resolveAllQuestionsForTestFromXml(assessmentTestResult.data))
+	if (resolvedQuestionsResult.error) {
+		logger.error("failed to resolve questions from qti xml for exercise", {
+			testSourcedId: resource.sourcedId,
+			error: resolvedQuestionsResult.error
+		})
+		throw errors.wrap(resolvedQuestionsResult.error, "resolve questions from qti xml for exercise")
+	}
+
+	// Use the same helper for selection/ordering.
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, resolvedQuestionsResult.data)
 
 	return {
 		exercise: {

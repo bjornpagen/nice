@@ -9,13 +9,19 @@ import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
 // Wrapper component to consume the lock status promise and provide it to context
 function CourseLockStatusWrapper({
 	children,
-	resourceLockStatusPromise
+	resourceLockStatusPromise,
+	storageKey
 }: {
 	children: React.ReactNode
 	resourceLockStatusPromise: Promise<Record<string, boolean>>
+	storageKey: string
 }) {
 	const initialLockStatus = React.use(resourceLockStatusPromise)
-	return <CourseLockStatusProvider initialLockStatus={initialLockStatus}>{children}</CourseLockStatusProvider>
+	return (
+		<CourseLockStatusProvider initialLockStatus={initialLockStatus} storageKey={storageKey}>
+			{children}
+		</CourseLockStatusProvider>
+	)
 }
 
 // Course-wide layout that provides lock status context for both overview and practice pages
@@ -59,9 +65,18 @@ export default function CourseLayout({
 		return buildResourceLockStatus(courseData.course, progressData, lockingEnabled)
 	})
 
+	// Build a stable per-course storage key for persisting the unlock-all toggle in localStorage
+	const storageKeyPromise: Promise<string> = courseDataPromise.then((courseData) => {
+		// Example: nice_unlock_all_<courseId>
+		return `nice_unlock_all_${courseData.course.id}`
+	})
+
 	return (
 		<React.Suspense fallback={<div className="h-screen bg-gray-100 animate-pulse" />}>
-			<CourseLockStatusWrapper resourceLockStatusPromise={resourceLockStatusPromise}>
+			<CourseLockStatusWrapper
+				resourceLockStatusPromise={resourceLockStatusPromise}
+				storageKey={React.use(storageKeyPromise)}
+			>
 				{children}
 			</CourseLockStatusWrapper>
 		</React.Suspense>

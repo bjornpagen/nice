@@ -936,19 +936,7 @@ export class Client {
 		return this.#request(endpoint, { method: "GET" }, SearchAssessmentTestsResponseSchema)
 	}
 
-	/**
-	 * Retrieves all questions referenced within a given assessment test.
-	 * @param {string} identifier - The identifier of the assessment test.
-	 * @returns {Promise<TestQuestionsResponse>} An object containing all questions and their context.
-	 */
-	async getAllQuestionsForTest(identifier: string): Promise<TestQuestionsResponse> {
-		logger.info("qti client: getting all questions for test", { identifier })
-		if (!identifier) {
-			throw errors.new("qti client: identifier is required for getAllQuestionsForTest")
-		}
-		const endpoint = `/assessment-tests/${identifier}/questions`
-		return this.#request(endpoint, { method: "GET" }, TestQuestionsResponseSchema)
-	}
+	// Removed: non-1EdTech-compliant /questions endpoint support
 
 	/**
 	 * Processes a user's response for a given assessment item and returns the result.

@@ -13,17 +13,34 @@ const CourseLockStatusContext = React.createContext<CourseLockStatusContextType 
 
 export function CourseLockStatusProvider({
 	children,
-	initialLockStatus
+	initialLockStatus,
+	storageKey
 }: {
 	children: React.ReactNode
 	initialLockStatus: Record<string, boolean>
+	storageKey: string
 }) {
 	const [resourceLockStatus, setResourceLockStatus] = React.useState(initialLockStatus)
+
+	// Precompute an all-unlocked status map derived from the current initialLockStatus keys
+	const allUnlockedStatus = React.useMemo<Record<string, boolean>>(() => {
+		return Object.fromEntries(Object.keys(initialLockStatus).map((key) => [key, false]))
+	}, [initialLockStatus])
 
 	// Update state when initial status changes (e.g., navigation to different course)
 	React.useEffect(() => {
 		setResourceLockStatus(initialLockStatus)
 	}, [initialLockStatus])
+
+	// Hydrate from localStorage to persist a forced unlock across navigations/reloads
+	React.useEffect(() => {
+		// Client-side only
+		if (typeof window === "undefined") return
+		const forced = window.localStorage.getItem(storageKey)
+		if (forced === "1") {
+			setResourceLockStatus(allUnlockedStatus)
+		}
+	}, [storageKey, allUnlockedStatus])
 
 	const value = {
 		resourceLockStatus,
