@@ -1,6 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
-
+import { generatePeriodicTable, PeriodicTableWidgetPropsSchema } from "@/lib/widgets/generators/periodic-table"
 // Import all individual schemas and generators
 import { generateThreeDIntersectionDiagram, ThreeDIntersectionDiagramPropsSchema } from "./3d-intersection-diagram"
 import { AbsoluteValueNumberLinePropsSchema, generateAbsoluteValueNumberLine } from "./absolute-value-number-line"
@@ -121,6 +121,7 @@ export const allWidgetSchemas = {
 	treeDiagram: TreeDiagramPropsSchema,
 	triangleDiagram: TriangleDiagramPropsSchema,
 	unitBlockDiagram: UnitBlockDiagramPropsSchema,
+	periodicTable: PeriodicTableWidgetPropsSchema,
 	urlImage: UrlImageWidgetPropsSchema,
 	vennDiagram: VennDiagramPropsSchema,
 	verticalArithmeticSetup: VerticalArithmeticSetupPropsSchema,
@@ -180,6 +181,7 @@ const widgetSchemasWithoutPartitioned = [
 	typedSchemas.treeDiagram,
 	typedSchemas.triangleDiagram,
 	typedSchemas.unitBlockDiagram,
+	typedSchemas.periodicTable,
 	typedSchemas.urlImage,
 	typedSchemas.vennDiagram,
 	typedSchemas.verticalArithmeticSetup,
@@ -243,6 +245,7 @@ export {
 	TransformationDiagramPropsSchema,
 	TreeDiagramPropsSchema,
 	TriangleDiagramPropsSchema,
+	PeriodicTableWidgetPropsSchema,
 	UnitBlockDiagramPropsSchema,
 	UrlImageWidgetPropsSchema,
 	VennDiagramPropsSchema,
@@ -298,6 +301,7 @@ export {
 	generateTransformationDiagram,
 	generateTreeDiagram,
 	generateTriangleDiagram,
+	generatePeriodicTable,
 	generateUnitBlockDiagram,
 	generateUrlImage,
 	generateVennDiagram,
@@ -406,6 +410,8 @@ export function generateWidget(widget: Widget): string {
 			return generateTriangleDiagram(widget)
 		case "unitBlockDiagram":
 			return generateUnitBlockDiagram(widget)
+		case "periodicTable":
+			return generatePeriodicTable(widget)
 		case "urlImage":
 			return generateUrlImage(widget)
 		case "vennDiagram":

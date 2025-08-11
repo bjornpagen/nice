@@ -31,6 +31,7 @@ import {
 	generateParallelogramTrapezoidDiagram,
 	generatePartitionedShape,
 	generatePentagonIntersectionDiagram,
+	generatePeriodicTable,
 	generatePictograph,
 	generatePointPlotGraph,
 	generatePolygonGraph,
@@ -147,6 +148,8 @@ export function generateWidget(widget: Widget): string {
 			return generateTriangleDiagram(widget)
 		case "unitBlockDiagram":
 			return generateUnitBlockDiagram(widget)
+		case "periodicTable":
+			return generatePeriodicTable(widget)
 		case "vennDiagram":
 			return generateVennDiagram(widget)
 		case "verticalArithmeticSetup":
