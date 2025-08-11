@@ -400,7 +400,7 @@ export async function fetchCoursePageData(
 				}
 
 				if (resourceMetadata.activityType === "Video") {
-					const youtubeId = resourceMetadata.youtubeId
+					const youtubeId = resourceMetadata.khanYoutubeId
 					if (!youtubeId) {
 						logger.error("video missing YouTube ID", { videoSourcedId: resource.sourcedId })
 						throw errors.new("video missing YouTube ID")

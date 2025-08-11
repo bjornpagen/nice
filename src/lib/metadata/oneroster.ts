@@ -32,8 +32,8 @@ const InteractiveResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 	launchUrl: z.string().url(),
 	toolProvider: z.string().optional(),
 	activityType: z.enum(["Article", "Video", "Exercise", "Quiz", "UnitTest", "CourseChallenge"]),
-	// Add youtubeId to support videos being marked as interactive
-	youtubeId: z.string().optional()
+	// Add khanYoutubeId to support videos being marked as interactive
+	khanYoutubeId: z.string().optional()
 })
 
 // The resource metadata schema - only interactive resources now

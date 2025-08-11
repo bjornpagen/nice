@@ -501,7 +501,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								toolProvider: "Nice Academy",
 								activityType: "Video",
 								launchUrl: `${appDomain}${metadata.path}/v/${content.slug}`,
-								youtubeId: videoData.youtubeId,
+								khanYoutubeId: videoData.youtubeId,
 								xp: videoData?.duration ? Math.ceil(videoData.duration / 60) : 0
 							}
 						} else if (lc.contentType === "Exercise") {

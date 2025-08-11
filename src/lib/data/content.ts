@@ -245,8 +245,8 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 		notFound()
 	}
 
-	// CHANGE: Get youtubeId from metadata directly instead of parsing a URL
-	const youtubeId = resourceMetadataResult.data.youtubeId
+	// CHANGE: Get YouTube ID from metadata field `khanYoutubeId`
+	const youtubeId = resourceMetadataResult.data.khanYoutubeId
 	if (!youtubeId) {
 		logger.error("video metadata missing youtubeId", { metadata: resourceMetadataResult.data })
 		throw errors.new("invalid video metadata")
