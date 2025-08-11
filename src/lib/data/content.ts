@@ -16,8 +16,8 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.article, "fetchArticlePageData article parameter")
 	logger.info("fetchArticlePageData called", { params })
-	// CHANGE: Fetch "interactive" type instead of "qti"
-	const resourceResult = await errors.try(getResourcesBySlugAndType(params.article, "interactive"))
+	// CHANGE: Fetch "interactive" type and filter by activityType "Article"
+	const resourceResult = await errors.try(getResourcesBySlugAndType(params.article, "interactive", "Article"))
 	if (resourceResult.error) {
 		logger.error("failed to fetch article resource by slug", { error: resourceResult.error, slug: params.article })
 		throw errors.wrap(resourceResult.error, "failed to fetch article resource by slug")
@@ -84,8 +84,8 @@ export async function fetchExercisePageData(params: {
 		unit: params.unit,
 		lesson: params.lesson
 	})
-	// CHANGE: Fetch "interactive" type instead of "qti"
-	const resourcePromise = errors.try(getResourcesBySlugAndType(params.exercise, "interactive"))
+	// CHANGE: Fetch "interactive" type and filter by activityType "Exercise"
+	const resourcePromise = errors.try(getResourcesBySlugAndType(params.exercise, "interactive", "Exercise"))
 
 	const [layoutData, resourceResult] = await Promise.all([layoutDataPromise, resourcePromise])
 
@@ -203,8 +203,8 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 	logger.info("fetchVideoPageData called", { params })
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.video, "fetchVideoPageData video parameter")
-	// CHANGE: Fetch "interactive" type instead of "video"
-	const resourceResult = await errors.try(getResourcesBySlugAndType(params.video, "interactive"))
+	// CHANGE: Fetch "interactive" type and filter by activityType "Video"
+	const resourceResult = await errors.try(getResourcesBySlugAndType(params.video, "interactive", "Video"))
 	if (resourceResult.error) {
 		logger.error("failed to fetch video resource by slug", { error: resourceResult.error, slug: params.video })
 		throw errors.wrap(resourceResult.error, "failed to fetch video resource by slug")
