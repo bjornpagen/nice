@@ -31,17 +31,27 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 		}
 		const courseDir = path.join(process.cwd(), "data", courseResult.slug, "qti")
 
-		// Read all necessary files in one step
-		const { items, stimuli, tests } = await step.run("read-qti-json-files", async () => {
-			const readJson = async (fileName: string) =>
-				JSON.parse(await fs.readFile(path.join(courseDir, fileName), "utf-8"))
-			const [items, stimuli, tests] = await Promise.all([
-				readJson("assessmentItems.json"),
-				readJson("assessmentStimuli.json"),
-				readJson("assessmentTests.json")
-			])
-			return { items, stimuli, tests }
-		})
+		// Read all necessary files (no step.run)
+		const readJsonFile = async (fileName: string) => {
+			const filePath = path.join(courseDir, fileName)
+			const readResult = await errors.try(fs.readFile(filePath, "utf-8"))
+			if (readResult.error) {
+				logger.error("file read", { file: filePath, error: readResult.error })
+				throw errors.wrap(readResult.error, "file read")
+			}
+			const parseResult = errors.trySync(() => JSON.parse(readResult.data))
+			if (parseResult.error) {
+				logger.error("json parse", { file: filePath, error: parseResult.error })
+				throw errors.wrap(parseResult.error, "json parse")
+			}
+			return parseResult.data
+		}
+
+		const [items, stimuli, tests] = await Promise.all([
+			readJsonFile("assessmentItems.json"),
+			readJsonFile("assessmentStimuli.json"),
+			readJsonFile("assessmentTests.json")
+		])
 		logger.info("Read QTI payloads from disk", {
 			courseId,
 			itemCount: items.length,
@@ -104,21 +114,10 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 			for (const testXml of tests) {
 				const testIdentifier = extractIdentifier(testXml, "qti-assessment-test") ?? `unknown-test-${Date.now()}`
 
-				const preflightResult = await step.run(`preflight-check-${testIdentifier}`, async () => {
-					const referencedItemIds = extractItemRefs(testXml)
-					const missingItemIds = referencedItemIds.filter((id) => !successfullyIngestedItemIds.has(id))
-
-					if (missingItemIds.length > 0) {
-						logger.warn("Test references items that failed ingestion. Skipping test.", {
-							testIdentifier,
-							missingItemIds
-						})
-						return { canProceed: false }
-					}
-					return { canProceed: true }
-				})
-
-				if (preflightResult.canProceed) {
+				// Preflight: ensure all referenced items exist (no step.run)
+				const referencedItemIds = extractItemRefs(testXml)
+				const missingItemIds = referencedItemIds.filter((id) => !successfullyIngestedItemIds.has(id))
+				if (missingItemIds.length === 0) {
 					const testResult = await errors.try(
 						step.invoke(`ingest-test-${testIdentifier}`, {
 							function: ingestAssessmentTestOne,
@@ -132,6 +131,10 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 						if (testResult.data.status === "updated") summary.tests.updated++
 					}
 				} else {
+					logger.warn("Test references items that failed ingestion. Skipping test.", {
+						testIdentifier,
+						missingItemIds
+					})
 					summary.tests.skipped++
 				}
 			}
