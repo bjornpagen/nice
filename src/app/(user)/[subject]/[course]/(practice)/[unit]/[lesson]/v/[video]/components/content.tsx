@@ -2,10 +2,12 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import { Lock, Unlock } from "lucide-react"
 import { useRouter } from "next/navigation"
 import * as React from "react"
 import YouTube, { type YouTubePlayer } from "react-youtube"
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
+import { Button } from "@/components/ui/button"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { getVideoProgress, updateVideoProgress } from "@/lib/actions/tracking"
 import { VIDEO_COMPLETION_THRESHOLD_PERCENT, VIDEO_COMPLETION_THRESHOLD_RATIO } from "@/lib/constants/progress"
@@ -61,6 +63,28 @@ export function Content({
 	// Local UI state for read-only time display
 	const [elapsedSeconds, setElapsedSeconds] = React.useState<number>(0)
 	const [durationSeconds, setDurationSeconds] = React.useState<number | null>(null)
+
+	// Admin-only: Toggle video media controls
+	const parsedMetadata = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
+	const canToggleControls = parsedMetadata.success && parsedMetadata.data.roles.some((r) => r.role !== "student")
+	const videoControlsStorageKey = `nice_video_controls_${params.subject}_${params.course}` as const
+	const [controlsEnabled, setControlsEnabled] = React.useState<boolean>(() => {
+		if (typeof window === "undefined") return false
+		const stored = window.localStorage.getItem(videoControlsStorageKey)
+		return stored === "1"
+	})
+	function handleToggleControls() {
+		if (!canToggleControls) return
+		const next = !controlsEnabled
+		setControlsEnabled(next)
+		if (typeof window !== "undefined") {
+			if (next) {
+				window.localStorage.setItem(videoControlsStorageKey, "1")
+			} else {
+				window.localStorage.removeItem(videoControlsStorageKey)
+			}
+		}
+	}
 
 	function formatTime(totalSeconds: number): string {
 		const clampedSeconds = Math.max(0, Math.floor(totalSeconds))
@@ -354,10 +378,28 @@ export function Content({
 
 	return (
 		<div className="flex flex-col bg-white h-full">
-			{/* Video Title and Share Buttons */}
+			{/* Video Title and Admin Controls Toggle */}
 			<div className="border-b">
-				<div className="max-w-5xl mx-auto px-6 py-3 md:py-4 text-center">
-					<h1 className="text-2xl font-bold text-gray-900">{video.title}</h1>
+				<div className="max-w-5xl mx-auto px-6 py-3 md:py-4">
+					<div className="flex items-center justify-between">
+						<div className="w-24" />
+						<h1 className="text-2xl font-bold text-gray-900 text-center flex-1">{video.title}</h1>
+						<div className="w-24 flex justify-end">
+							{canToggleControls && (
+								<Button onClick={handleToggleControls} variant="outline" size="sm">
+									{controlsEnabled ? (
+										<>
+											<Unlock className="w-4 h-4 mr-2" /> Enable Controls
+										</>
+									) : (
+										<>
+											<Lock className="w-4 h-4 mr-2" /> Disable Controls
+										</>
+									)}
+								</Button>
+							)}
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -377,12 +419,9 @@ export function Content({
 									width: "100%",
 									height: "100%",
 									playerVars: {
-										// To prevent gaming the time-spent metric, we disable seeking.
-										// `controls: 0` hides the video player controls, including the seek bar.
-										// Play/pause is still possible by clicking the video.
-										controls: 0,
-										// `disablekb: 1` disables keyboard controls to prevent seeking with arrow keys.
-										disablekb: 1,
+										// Admin toggle controls visibility and keyboard seeking
+										controls: controlsEnabled ? 1 : 0,
+										disablekb: controlsEnabled ? 0 : 1,
 										autoplay: 0
 									}
 								}}

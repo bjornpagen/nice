@@ -3,10 +3,12 @@
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import confetti from "canvas-confetti"
+import { Lock, Unlock } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import * as React from "react"
 import { toast } from "sonner"
+import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { AssessmentBottomNav, type AssessmentType } from "@/components/practice/assessment-bottom-nav"
 import greenFriend from "@/components/practice/course/unit/lesson/exercise/images/green-friend_v3.png"
 import lightBlueFriend from "@/components/practice/course/unit/lesson/exercise/images/light-blue-friend_v3.png"
@@ -26,6 +28,7 @@ import {
 	processSkippedQuestion
 } from "@/lib/actions/assessment"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { calculateAssessmentXp } from "@/lib/xp"
@@ -196,6 +199,33 @@ export function AssessmentStepper({
 
 	const [nextItem, setNextItem] = React.useState<{ text: string; path: string; type?: string } | null>(null)
 	const [debugClickCount, setDebugClickCount] = React.useState(0)
+
+	// Admin-only: practice header lock toggle (far right)
+	const layoutData = _layoutData
+	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus } = useCourseLockStatus()
+	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
+	const parsedMetadata = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
+	const canUnlockAll = parsedMetadata.success && parsedMetadata.data.roles.some((r) => r.role !== "student")
+
+	const storageKey = layoutData?.courseData?.id ? (`nice_unlock_all_${layoutData.courseData.id}` as const) : null
+
+	const handleToggleLockAll = () => {
+		if (!canUnlockAll || !storageKey) return
+		if (allUnlocked) {
+			setResourceLockStatus(initialResourceLockStatus)
+			if (typeof window !== "undefined") {
+				window.localStorage.removeItem(storageKey)
+			}
+			toast.success("Lock state restored to natural progression.")
+			return
+		}
+		const unlockedStatus = Object.fromEntries(Object.keys(resourceLockStatus).map((key) => [key, false]))
+		setResourceLockStatus(unlockedStatus)
+		if (typeof window !== "undefined") {
+			window.localStorage.setItem(storageKey, "1")
+		}
+		toast.success("All activities have been unlocked.")
+	}
 	const audioRef = React.useRef<HTMLAudioElement | null>(null)
 	const wrongAudioRef = React.useRef<HTMLAudioElement | null>(null)
 	const currentQuestion = questions[currentQuestionIndex]
@@ -990,7 +1020,8 @@ export function AssessmentStepper({
 			</audio>
 			{/* Assessment Header */}
 			<div className="bg-white px-6 py-4 border-b border-gray-200 flex-shrink-0">
-				<div className="flex items-center justify-center">
+				<div className="flex items-center justify-between">
+					<div className="w-24" />
 					<h1
 						className="text-xl font-semibold text-gray-900 select-none"
 						onClick={() => {
@@ -1002,6 +1033,21 @@ export function AssessmentStepper({
 							<span className="ml-3 text-sm font-mono text-gray-500">{currentQuestion.id}</span>
 						)}
 					</h1>
+					<div className="w-24 flex justify-end">
+						{canUnlockAll && (
+							<Button onClick={handleToggleLockAll} variant="outline" size="sm">
+								{allUnlocked ? (
+									<>
+										<Lock className="w-4 h-4 mr-2" /> Restore Locks
+									</>
+								) : (
+									<>
+										<Unlock className="w-4 h-4 mr-2" /> Unlock All
+									</>
+								)}
+							</Button>
+						)}
+					</div>
 				</div>
 			</div>
 			<div className="flex-1 overflow-y-auto overflow-x-hidden relative">
