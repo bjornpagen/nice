@@ -14,18 +14,14 @@ const PROBLEM_RESOURCE = {
 	roles: ["primary"],
 	importance: "primary" as const,
 	metadata: {
-		type: "qti",
-		subType: "qti-test",
-		version: "3.0",
-		questionType: "custom",
-		language: "en-US",
-		url: "https://qti-staging.alpha-1edtech.com/api/assessment-tests/nice_x2832fbb7463fe65a",
+		type: "interactive",
+		toolProvider: "Nice Academy",
+		activityType: "CourseChallenge",
+		launchUrl: `${env.NEXT_PUBLIC_APP_DOMAIN}/economics-finance-domain/ap-microeconomics/test/x2832fbb7463fe65a:course-challenge`,
 		khanId: "x2832fbb7463fe65a",
 		khanSlug: "x2832fbb7463fe65a:course-challenge",
 		khanTitle: "Course Challenge",
-		khanDescription: "",
-		path: "/economics-finance-domain/ap-microeconomics/test/x2832fbb7463fe65a:course-challenge",
-		khanLessonType: "coursechallenge"
+		khanDescription: ""
 	}
 }
 

@@ -237,7 +237,7 @@ export async function fetchQuizPageData(params: {
 	assertNoEncodedColons(params.quiz, "fetchQuizPageData quiz parameter")
 
 	// Pass only the params needed by fetchLessonLayoutData, not the quiz param
-	const resourcePromise = errors.try(getResourcesBySlugAndType(params.quiz, "interactive", "quiz"))
+	const resourcePromise = errors.try(getResourcesBySlugAndType(params.quiz, "interactive", "Quiz"))
 
 	const [resourceResult] = await Promise.all([resourcePromise])
 
@@ -389,7 +389,7 @@ export async function fetchUnitTestPageData(params: {
 	assertNoEncodedColons(params.test, "fetchUnitTestPageData test parameter")
 
 	// Pass only the params needed by fetchLessonLayoutData, not the test param
-	const resourcePromise = errors.try(getResourcesBySlugAndType(params.test, "interactive", "unittest"))
+	const resourcePromise = errors.try(getResourcesBySlugAndType(params.test, "interactive", "UnitTest"))
 
 	const [resourceResult] = await Promise.all([resourcePromise])
 

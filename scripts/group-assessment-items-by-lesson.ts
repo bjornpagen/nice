@@ -22,7 +22,8 @@ const ResourceSchema = z.object({
 	sourcedId: z.string(),
 	metadata: z.object({
 		khanId: z.string(),
-		type: z.string()
+		type: z.literal("interactive"),
+		activityType: z.enum(["Exercise", "Quiz", "UnitTest", "Article", "Video", "CourseChallenge"]) // comprehensive
 	})
 })
 
@@ -108,7 +109,9 @@ async function main() {
 
 		// Build lookup maps
 		const componentById = new Map(components.map((c) => [c.sourcedId, c]))
-		const exerciseResources = resources.filter((r) => r.metadata.type === "qti")
+		const exerciseResources = resources.filter(
+			(r) => r.metadata.type === "interactive" && r.metadata.activityType === "Exercise"
+		)
 		const exerciseByKhanId = new Map(exerciseResources.map((r) => [r.metadata.khanId, r]))
 
 		// Map resources to components

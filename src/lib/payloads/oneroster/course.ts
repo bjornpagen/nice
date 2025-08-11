@@ -169,6 +169,16 @@ const getAllSubjectsQuery = db
 export async function generateCoursePayload(courseId: string): Promise<OneRosterPayload> {
 	logger.info("starting oneroster payload generation", { courseId })
 
+	// Guard: Ensure base domain for launchUrl is configured
+	if (!env.NEXT_PUBLIC_APP_DOMAIN || typeof env.NEXT_PUBLIC_APP_DOMAIN !== "string") {
+		logger.error("CRITICAL: NEXT_PUBLIC_APP_DOMAIN is not configured or invalid", {
+			NEXT_PUBLIC_APP_DOMAIN: env.NEXT_PUBLIC_APP_DOMAIN
+		})
+		throw errors.new("configuration: NEXT_PUBLIC_APP_DOMAIN is required for interactive launchUrl")
+	}
+	// Normalize domain (remove trailing slash) to avoid double slashes
+	const appDomain = env.NEXT_PUBLIC_APP_DOMAIN.replace(/\/$/, "")
+
 	// 1. Fetch the root course and all subjects in parallel.
 	const [courseResult, subjectsResult] = await Promise.all([
 		errors.try(getCourseByIdQuery.execute({ courseId })),
@@ -475,19 +485,23 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								type: "interactive",
 								toolProvider: "Nice Academy",
 								activityType: "Article",
-								launchUrl: `${env.NEXT_PUBLIC_APP_DOMAIN}${metadata.path}/a/${content.slug}`,
+								launchUrl: `${appDomain}${metadata.path}/a/${content.slug}`,
 								xp: 2
 							}
 						} else if (lc.contentType === "Video") {
 							// CHANGE: Convert Videos to interactive type
 							const videoData = videos.find((v) => v.id === content.id)
+							if (!videoData?.youtubeId) {
+								logger.error("CRITICAL: Missing youtubeId for video", { contentId: content.id, slug: content.slug })
+								throw errors.new("video metadata: youtubeId is required for interactive video resource")
+							}
 							metadata = {
 								...metadata,
 								type: "interactive",
 								toolProvider: "Nice Academy",
 								activityType: "Video",
-								launchUrl: `${env.NEXT_PUBLIC_APP_DOMAIN}${metadata.path}/v/${content.slug}`,
-								youtubeId: videoData?.youtubeId,
+								launchUrl: `${appDomain}${metadata.path}/v/${content.slug}`,
+								youtubeId: videoData.youtubeId,
 								xp: videoData?.duration ? Math.ceil(videoData.duration / 60) : 0
 							}
 						} else if (lc.contentType === "Exercise") {
@@ -497,7 +511,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								type: "interactive",
 								toolProvider: "Nice Academy",
 								activityType: "Exercise",
-								launchUrl: `${env.NEXT_PUBLIC_APP_DOMAIN}${metadata.path}/e/${content.slug}`,
+								launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
 								xp: 3
 							}
 						}
@@ -555,10 +569,17 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				const assessmentXp = exerciseCount * 1
 
 				// CHANGE: Convert Assessments to interactive type
-				const assessmentType = assessment.type.toLowerCase()
-				const pathSegment = assessmentType === "unittest" ? "test" : assessmentType
+				const pathSegment = assessment.type === "UnitTest" || assessment.type === "CourseChallenge" ? "test" : "quiz"
 				const lastLessonInUnit = unitLessons[unitLessons.length - 1]
-				const launchUrl = `${env.NEXT_PUBLIC_APP_DOMAIN}/${subjectSlug}/${course.slug}/${unit.slug}/${lastLessonInUnit?.slug}/${pathSegment}/${assessment.slug}`
+				if (!lastLessonInUnit) {
+					logger.error("CRITICAL: No lessons found in unit for assessment launchUrl", {
+						unitId: unit.id,
+						assessmentId: assessment.id,
+						assessmentType: assessment.type
+					})
+					throw errors.new("assessment launchUrl: unit has no lessons to anchor path")
+				}
+				const launchUrl = `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/${lastLessonInUnit.slug}/${pathSegment}/${assessment.slug}`
 
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
@@ -579,7 +600,6 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						khanSlug: normalizeKhanSlug(assessment.slug),
 						khanTitle: assessment.title,
 						khanDescription: assessment.description,
-						khanLessonType: assessment.type.toLowerCase(),
 						xp: assessmentXp
 					}
 				})
@@ -626,9 +646,8 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				const assessmentXp = exerciseCount * 1
 
 				// CHANGE: Convert Course Assessments to interactive type
-				const assessmentType = assessment.type.toLowerCase()
-				const pathSegment = assessmentType === "unittest" ? "test" : assessmentType
-				const launchUrl = `${env.NEXT_PUBLIC_APP_DOMAIN}/${subjectSlug}/${course.slug}/${pathSegment}/${assessment.slug}`
+				const pathSegment = assessment.type === "UnitTest" || assessment.type === "CourseChallenge" ? "test" : "quiz"
+				const launchUrl = `${appDomain}/${subjectSlug}/${course.slug}/${pathSegment}/${assessment.slug}`
 
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
@@ -649,7 +668,6 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						khanSlug: normalizeKhanSlug(assessment.slug),
 						khanTitle: assessment.title,
 						khanDescription: assessment.description,
-						khanLessonType: assessment.type.toLowerCase(),
 						xp: assessmentXp
 					}
 				})
