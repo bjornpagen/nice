@@ -284,6 +284,54 @@ Currency symbols and amounts MUST NOT be represented as slots (widget or interac
 - Raw text currency/percent symbols will cause ERROR: "currency and percent must be expressed in MathML, not raw text"
 - This applies to ALL content fields: body, feedback, choice options, table cells, EVERYWHERE
 
+**Currency and Percent: Comprehensive Examples**
+
+Before finalizing, SCAN ALL inline text nodes for any "$" or "%" characters or \`<span class="currency">\`. 
+If found, REWRITE by splitting the text and inserting \`{ "type": "math", "mathml": ... }\` for each occurrence.
+
+**Single values:**
+- ❌ WRONG: { "type": "text", "content": "The cost is $5.50." }
+  ✅ CORRECT:
+  [
+    { "type": "text", "content": "The cost is " },
+    { "type": "math", "mathml": "<mo>$</mo><mn>5.50</mn>" },
+    { "type": "text", "content": "." }
+  ]
+
+- ❌ WRONG: { "type": "text", "content": "The discount is 25%!" }
+  ✅ CORRECT:
+  [
+    { "type": "text", "content": "The discount is " },
+    { "type": "math", "mathml": "<mn>25</mn><mo>%</mo>" },
+    { "type": "text", "content": "!" }
+  ]
+
+**Thousands/decimals:**
+- ❌ WRONG: "You paid $1,234.56 for it"
+  ✅ CORRECT: ["You paid ", { "type": "math", "mathml": "<mo>$</mo><mn>1,234.56</mn>" }, " for it"]
+
+**Signed values:**
+- ❌ WRONG: "Your balance is -$5"
+  ✅ CORRECT: ["Your balance is ", { "type": "math", "mathml": "<mo>-</mo><mo>$</mo><mn>5</mn>" }]
+
+**Ranges:**
+- ❌ WRONG: "A discount of 5%–10%"
+  ✅ CORRECT: [
+    "A discount of ",
+    { "type": "math", "mathml": "<mn>5</mn><mo>%</mo>" },
+    "–",
+    { "type": "math", "mathml": "<mn>10</mn><mo>%</mo>" }
+  ]
+
+**Pattern checklist you MUST handle:**
+- Dollar before number: /\$(?=\s*\d)/
+- Number before percent: /\d\s*%/
+- Any \`<span class="currency">\` usage (BANNED)
+- Currency/percent inside parentheses
+- Ranges with hyphen/en dash
+
+After rewriting, there must be ZERO occurrences of "$" or "%" characters in any "text" item.
+
 ⚠️ ABSOLUTELY BANNED CONTENT - ZERO TOLERANCE ⚠️
 The following are CATEGORICALLY FORBIDDEN in the output. ANY violation will result in IMMEDIATE REJECTION:
 
@@ -297,8 +345,8 @@ The following are CATEGORICALLY FORBIDDEN in the output. ANY violation will resu
 2. **LATEX DOLLAR SIGN DELIMITERS ARE BANNED** - The $ character when used for LaTeX is FORBIDDEN:
    - NO inline math delimiters: $x + y$ (convert to \`<math>...</math>\`)
    - NO display math delimiters: $$x + y$$ (convert to \`<math display="block">...</math>\`)
-   - Dollar signs for currency are ALLOWED when properly tagged: \`<span class="currency">$</span>\`
-   - Remove $ when it's used as a LaTeX delimiter, but preserve it when it's properly marked as currency.
+   - NEVER use HTML for currency symbols. Currency and percent MUST be MathML, NOT HTML, NOT raw text.
+   - Remove $ when it's used as a LaTeX delimiter. For currency, ALWAYS use MathML: \`<mo>$</mo><mn>amount</mn>\`.
 
 3. **DEPRECATED MATHML IS BANNED** - The following MathML elements are OBSOLETE and FORBIDDEN:
    - NO <mfenced> elements - use <mrow> with explicit <mo> delimiters instead
@@ -1293,7 +1341,8 @@ Widgets MUST NEVER display, label, or visually indicate the correct answer. This
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY backslash character followed by letters (LaTeX commands)
-- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<math><mo>$</mo><mn>amount</mn></math>\` is allowed
+- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$)
+- ANY raw text "$" or "%" in text nodes - currency/percent MUST be in MathML: \`<mo>$</mo><mn>amount</mn>\` and \`<mn>number</mn><mo>%</mo>\`
 - ANY <mfenced> element
 - ANY raw text at the start of body content (must be wrapped in block-level elements)
 - ANY interactive element (numeric-input, expression, radio, etc.) in the \`widgets\` array instead of \`interactions\` (EXCEPT tables, which are ALWAYS widgets)
@@ -1518,8 +1567,8 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 
 2. **NO LATEX DOLLAR SIGNS** - The $ character for LaTeX is BANNED:
    - NO math delimiters: $x$, $$y$$
-   - Dollar signs for currency are allowed when properly tagged: \`<span class="currency">$</span>\`
-   - LaTeX dollar delimiters mean COMPLETE FAILURE.
+   - NEVER use HTML for currency symbols. Currency MUST be MathML, NOT HTML, NOT raw text.
+   - For currency, ALWAYS use MathML: \`<mo>$</mo><mn>amount</mn>\`.
 
 3. **NO DEPRECATED MATHML** - NEVER use:
    - <mfenced> elements (use <mrow> with <mo> delimiters instead)
@@ -1528,6 +1577,29 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 
 5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
    - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.
+
+**Currency and Percent: Comprehensive Examples**
+
+SCAN ALL text content (prompts, choices, feedback) for "$" or "%" - these MUST be converted to MathML.
+
+**Single values:**
+- ❌ WRONG: "The cost is $5.50"
+  ✅ CORRECT: [{ "type": "text", "content": "The cost is " }, { "type": "math", "mathml": "<mo>$</mo><mn>5.50</mn>" }]
+
+- ❌ WRONG: "Save 25%!"
+  ✅ CORRECT: [{ "type": "text", "content": "Save " }, { "type": "math", "mathml": "<mn>25</mn><mo>%</mo>" }, { "type": "text", "content": "!" }]
+
+**Complex examples:**
+- ❌ WRONG: "$1,000–$2,000 range"
+  ✅ CORRECT: [{ "type": "math", "mathml": "<mo>$</mo><mn>1,000</mn>" }, { "type": "text", "content": "–" }, { "type": "math", "mathml": "<mo>$</mo><mn>2,000</mn>" }, { "type": "text", "content": " range" }]
+
+- ❌ WRONG: "(-$5) refund"
+  ✅ CORRECT: [{ "type": "math", "mathml": "<mo>(</mo><mo>-</mo><mo>$</mo><mn>5</mn><mo>)</mo>" }, { "type": "text", "content": " refund" }]
+
+**Pattern checklist:**
+- /\$(?=\s*\d)/ - dollar before number
+- /\d\s*%/ - number before percent
+- NEVER use HTML spans for currency
 
 6. **NO ANSWER LEAKAGE IN INTERACTIONS** - CRITICAL: Interactions MUST NEVER reveal the correct answer:
    - NEVER pre-select or highlight the correct choice
@@ -1944,7 +2016,8 @@ This plotter widget requires interactive histogram creation which is not support
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY LaTeX commands (backslash followed by letters)
-- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
+- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$)
+- ANY raw text "$" or "%" in text nodes - currency/percent MUST be in MathML: \`<mo>$</mo><mn>amount</mn>\` and \`<mn>number</mn><mo>%</mo>\`
 - ANY <mfenced> element
 - ANY answer content outside of feedback fields (no pre-selected choices, no answer indicators)
 - ANY block-level elements in prompt fields (prompts must contain only inline content)
@@ -2017,8 +2090,8 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 
 2. **NO LATEX DOLLAR SIGNS** - The $ character for LaTeX is BANNED:
    - NO math delimiters: $x$, $$y$$
-   - Dollar signs for currency are allowed when properly tagged: \`<span class="currency">$</span>\`
-   - LaTeX dollar delimiters mean COMPLETE FAILURE.
+   - NEVER use HTML for currency symbols. Currency and percent MUST be MathML, NOT HTML, NOT raw text.
+   - For currency, ALWAYS use MathML: \`<mo>$</mo><mn>amount</mn>\`. For percent: \`<mn>number</mn><mo>%</mo>\`.
 
 3. **NO DEPRECATED MATHML** - NEVER use:
    - <mfenced> elements (use <mrow> with <mo> delimiters instead)
@@ -2027,6 +2100,27 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 
 5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
    - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.
+
+**Currency: Comprehensive Examples**
+
+SCAN ALL text content in widgets (labels, captions, content) for "$" - these MUST be converted to MathML.
+
+**Single values:**
+- ❌ WRONG: "Price: $5.50"
+  ✅ CORRECT: [{ "type": "text", "content": "Price: " }, { "type": "math", "mathml": "<mo>$</mo><mn>5.50</mn>" }]
+
+// intentionally omit percent examples in widget prompts
+
+**Complex examples:**
+- ❌ WRONG: "$10–$20"
+  ✅ CORRECT: [{ "type": "math", "mathml": "<mo>$</mo><mn>10</mn>" }, { "type": "text", "content": "–" }, { "type": "math", "mathml": "<mo>$</mo><mn>20</mn>" }]
+
+- ❌ WRONG: "Cost: -$5"
+  ✅ CORRECT: [{ "type": "text", "content": "Cost: " }, { "type": "math", "mathml": "<mo>-</mo><mo>$</mo><mn>5</mn>" }]
+
+**Pattern checklist:**
+- /\$(?=\s*\d)/ - dollar before number
+- NEVER use HTML spans for currency
 
   **DEDICATED RULE: ANSWER LEAKAGE IS STRICTLY PROHIBITED**
   Widgets must NEVER reveal, hint at, or encode the correct answer in any way.
@@ -2242,7 +2336,8 @@ When Perseus describes labels, values, or visual properties in the widget (via a
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY LaTeX commands (backslash followed by letters)
-- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$) - properly tagged currency like \`<span class="currency">$</span>\` is allowed
+- ANY dollar sign used as LaTeX delimiter (e.g., $x$, $$y$$)
+- ANY raw text "$" in text nodes - currency MUST be in MathML: \`<mo>$</mo><mn>amount</mn>\`
 - ANY <mfenced> element
 - ANY widget that labels or visually indicates the correct answer (e.g., angle labeled "EAF" when answer is ∠EAF)
 - ANY block-level elements in prompt fields (prompts must contain only inline content)
