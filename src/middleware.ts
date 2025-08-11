@@ -2,7 +2,8 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
 
 // Define which routes should be protected (require authentication)
 const isProtectedRoute = createRouteMatcher([
-	"/profile(.*)" // Protect all profile routes
+	"/profile(.*)", // Protect all profile routes
+	"/((?!api|login|sign-up|debug|demo|test-redirect|sso-callback|a|e|v).*)" // Protect all subject routes (exclude public routes)
 ])
 
 // Define which routes authenticated users shouldn't access
