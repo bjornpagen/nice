@@ -95,15 +95,16 @@ const labels = {
 } as const
 
 export function LockedIcon({ size = 5 }: { size?: number }) {
+	// Use inline sizing in rems to avoid Tailwind class jitter and ensure proportional scaling
+	const containerSizeRem = size * 0.25 // Tailwind's spacing scale: 1 => 0.25rem
+	const iconSizeRem = containerSizeRem * 0.6
 	return (
 		<div className="inline-flex items-center">
 			<div
-				className={cn(
-					"inline-flex items-center justify-center rounded-xs bg-gray-200 border-1 border-gray-300",
-					`w-${size} h-${size}`
-				)}
+				className={cn("inline-flex items-center justify-center rounded-xs bg-gray-200 border-1 border-gray-300")}
+				style={{ width: `${containerSizeRem}rem`, height: `${containerSizeRem}rem` }}
 			>
-				<Lock className={cn(`w-${Math.round(size * 0.6)} h-${Math.round(size * 0.6)}`, "text-gray-500")} />
+				<Lock className={cn("text-gray-500")} style={{ width: `${iconSizeRem}rem`, height: `${iconSizeRem}rem` }} />
 			</div>
 		</div>
 	)
@@ -137,6 +138,10 @@ export function ProficiencyIcon({
 	label?: boolean
 	isLocked?: boolean // Add isLocked prop
 }) {
+	// Fixed-size container sizing in rems, used for both locked and unlocked states
+	const containerSizeRem = size * 0.25
+	const iconSizeRem = containerSizeRem * 0.6
+
 	// If locked, render the LockedIcon and return early.
 	if (isLocked) {
 		return <LockedIcon size={size} />
@@ -154,9 +159,9 @@ export function ProficiencyIcon({
 							"inline-flex items-center justify-center rounded-xs relative overflow-hidden",
 							config.bg.color,
 							config.bg.border,
-							`w-${size} h-${size}`,
 							active && "ring-1 ring-blue-600 ring-offset-2"
 						)}
+						style={{ width: `${containerSizeRem}rem`, height: `${containerSizeRem}rem` }}
 					>
 						{config.bg.fill < 100 && (
 							<div className="absolute top-0 left-0 w-full bg-white" style={{ height: `${100 - config.bg.fill}%` }} />
@@ -165,7 +170,8 @@ export function ProficiencyIcon({
 						{config.fg.icon && (
 							<div className="relative z-10">
 								<config.fg.icon
-									className={cn(config.fg.color, `w-${Math.round(size * 0.6)} h-${Math.round(size * 0.6)}`)}
+									className={cn(config.fg.color)}
+									style={{ width: `${iconSizeRem}rem`, height: `${iconSizeRem}rem` }}
 								/>
 							</div>
 						)}
