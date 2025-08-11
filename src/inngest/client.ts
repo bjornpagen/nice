@@ -334,10 +334,10 @@ const events = {
 	"migration/hardcoded.math.differentiated-items.generate": {
 		data: z.object({})
 	},
-	// ✅ MODIFIED: Event name is now plural and takes an array of question IDs.
-	"qti/questions.differentiate-and-save": {
+	// ✅ MODIFIED: Event name is now singular and takes a single question ID for atomic AI generation.
+	"qti/question.differentiate-and-save": {
 		data: z.object({
-			questionIds: z.array(z.string().min(1)),
+			questionId: z.string().min(1),
 			n: z.number().int().positive(),
 			courseSlug: z.string().min(1)
 		})

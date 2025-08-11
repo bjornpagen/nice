@@ -9,8 +9,7 @@ import { ingestAssessmentItems } from "./qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "./qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "./qti/ingest-assessment-tests"
 
-// Reduced batch size to avoid QTI API rate limits
-// Smaller batches mean fewer concurrent token requests
+// ✅ RE-INTRODUCED: A batch size for controlled ingestion to external APIs.
 const QTI_BATCH_SIZE = 100
 
 export const orchestrateCourseUploadToQti = inngest.createFunction(

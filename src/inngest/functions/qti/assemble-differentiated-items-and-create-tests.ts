@@ -13,6 +13,10 @@ import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 import { ErrQtiNotFound } from "@/lib/qti"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 
+// ✅ ADD: Configurable constants for batched validation to avoid overwhelming the QTI API.
+const VALIDATION_BATCH_SIZE = 20
+const VALIDATION_DELAY_MS = 500
+
 // ... (copy AssessmentItem schema, AssessmentTestCandidate type from original file) ...
 const AssessmentItemSchema = z.object({
 	xml: z.string(),
@@ -92,13 +96,13 @@ export const assembleDifferentiatedItemsAndCreateTests = inngest.createFunction(
 				}
 			}
 
+			// ✅ MODIFIED: The "ghetto-validate" logic now uses the configured batch size and delay.
+			// This remains a batched process inside a single Inngest function run.
 			const assessmentItems: AssessmentItem[] = []
 			const skippedItems: Array<{ item: AssessmentItem; error?: unknown }> = []
-			const batchSize = 20
-			const delayMs = 500
-			// ... (This entire for-loop for validation is copied from the original orchestrator)
-			for (let i = 0; i < parsedItems.length; i += batchSize) {
-				const batch = parsedItems.slice(i, i + batchSize)
+
+			for (let i = 0; i < parsedItems.length; i += VALIDATION_BATCH_SIZE) {
+				const batch = parsedItems.slice(i, i + VALIDATION_BATCH_SIZE)
 				const batchResults = await Promise.all(
 					batch.map(async (item) => {
 						// Extract the actual identifier from the XML
@@ -131,7 +135,9 @@ export const assembleDifferentiatedItemsAndCreateTests = inngest.createFunction(
 					if (result.success) assessmentItems.push(result.item)
 					else skippedItems.push(result)
 				}
-				if (i + batchSize < parsedItems.length) await new Promise((resolve) => setTimeout(resolve, delayMs))
+				if (i + VALIDATION_BATCH_SIZE < parsedItems.length) {
+					await new Promise((resolve) => setTimeout(resolve, VALIDATION_DELAY_MS))
+				}
 			}
 
 			// 5. Write the final aggregated and validated assessmentItems.json file
@@ -534,11 +540,9 @@ ${sectionsXml}
 			const testCandidates = [...explicitTestsCandidates, ...exerciseTestsCandidates]
 			const validatedTests: AssessmentTestCandidate[] = []
 			const skippedTests: Array<{ test: AssessmentTestCandidate; error?: unknown }> = []
-			const testBatchSize = 20
-			const testDelayMs = 500
 
-			for (let i = 0; i < testCandidates.length; i += testBatchSize) {
-				const batch = testCandidates.slice(i, i + testBatchSize)
+			for (let i = 0; i < testCandidates.length; i += VALIDATION_BATCH_SIZE) {
+				const batch = testCandidates.slice(i, i + VALIDATION_BATCH_SIZE)
 				logger.debug("ghetto-validate batch starting", {
 					batchStart: i,
 					batchSize: batch.length,
@@ -581,8 +585,8 @@ ${sectionsXml}
 					}
 				}
 
-				if (i + testBatchSize < testCandidates.length) {
-					await new Promise((resolve) => setTimeout(resolve, testDelayMs))
+				if (i + VALIDATION_BATCH_SIZE < testCandidates.length) {
+					await new Promise((resolve) => setTimeout(resolve, VALIDATION_DELAY_MS))
 				}
 			}
 

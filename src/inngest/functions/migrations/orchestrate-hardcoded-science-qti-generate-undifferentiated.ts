@@ -12,6 +12,10 @@ import { QtiItemMetadataSchema } from "@/lib/metadata/qti"
 import { ErrQtiNotFound } from "@/lib/qti"
 import { escapeXmlAttribute, replaceRootAttributes } from "@/lib/xml-utils"
 
+// ✅ ADD: Configurable constants for batched validation.
+const VALIDATION_BATCH_SIZE = 20
+const VALIDATION_DELAY_MS = 500
+
 // Schema for the expected assessment item format
 const AssessmentItemSchema = z.object({
 	xml: z.string(),
@@ -162,11 +166,13 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 				// Validate all items via QTI API and skip invalid ones (batched)
 				const items: AssessmentItem[] = []
 				const skippedItems: Array<{ item: AssessmentItem; error?: unknown }> = []
-				const batchSize = 20
-				const delayMs = 500
+				// ❌ REMOVED: Hardcoded values are replaced by constants.
+				// const batchSize = 20
+				// const delayMs = 500
 
-				for (let i = 0; i < itemsUnvalidated.length; i += batchSize) {
-					const batch = itemsUnvalidated.slice(i, i + batchSize)
+				// ✅ MODIFIED: Use the new constants for the batched validation loop.
+				for (let i = 0; i < itemsUnvalidated.length; i += VALIDATION_BATCH_SIZE) {
+					const batch = itemsUnvalidated.slice(i, i + VALIDATION_BATCH_SIZE)
 					logger.debug("ghetto-validate batch starting", {
 						batchStart: i,
 						batchSize: batch.length,
@@ -226,8 +232,9 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 						}
 					}
 
-					if (i + batchSize < itemsUnvalidated.length) {
-						await new Promise((resolve) => setTimeout(resolve, delayMs))
+					// ✅ MODIFIED: Use the new constant for the delay.
+					if (i + VALIDATION_BATCH_SIZE < itemsUnvalidated.length) {
+						await new Promise((resolve) => setTimeout(resolve, VALIDATION_DELAY_MS))
 					}
 				}
 

@@ -39,7 +39,7 @@ import { assembleDifferentiatedItemsAndCreateTests } from "@/inngest/functions/q
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
 import { convertPerseusQuestionToDifferentiatedQtiItems } from "@/inngest/functions/qti/convert-perseus-question-to-differentiated-qti-items"
 import { convertPerseusQuestionToQtiItem } from "@/inngest/functions/qti/convert-perseus-question-to-qti-item"
-import { differentiateAndSaveQuestionBatch } from "@/inngest/functions/qti/differentiate-and-save-question-batch"
+import { differentiateAndSaveQuestion } from "@/inngest/functions/qti/differentiate-and-save-question"
 import { ingestAssessmentItems } from "@/inngest/functions/qti/ingest-assessment-items"
 import { ingestAssessmentStimuli } from "@/inngest/functions/qti/ingest-assessment-stimuli"
 import { ingestAssessmentTests } from "@/inngest/functions/qti/ingest-assessment-tests"
@@ -105,8 +105,8 @@ export const { GET, POST, PUT } = serve({
 		// ✅ ADD: Register the new paraphrase function
 		paraphraseStimulus,
 		ingestUndifferentiatedCourseFromDb,
-		// ✅ ADD: Register the new batch differentiation and assembly functions
-		differentiateAndSaveQuestionBatch,
+		// ✅ ADD: Register the new atomic differentiation and assembly functions
+		differentiateAndSaveQuestion, // ✅ ADD: Register the new atomic differentiation function
 		assembleDifferentiatedItemsAndCreateTests
 	]
 })

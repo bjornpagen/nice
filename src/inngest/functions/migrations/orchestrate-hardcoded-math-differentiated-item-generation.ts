@@ -5,7 +5,8 @@ import { eq, inArray } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { differentiateAndSaveQuestionBatch } from "@/inngest/functions/qti/differentiate-and-save-question-batch"
+// ✅ ADD: Import the new atomic function for AI generation.
+import { differentiateAndSaveQuestion } from "@/inngest/functions/qti/differentiate-and-save-question"
 
 const HARDCODED_COURSE_IDS = [
 	"x0267d782", // 6th grade math (Common Core)
@@ -14,7 +15,7 @@ const HARDCODED_COURSE_IDS = [
 ]
 
 const DIFFERENTIATION_COUNT = 3
-const QUESTION_BATCH_SIZE = 30 // Batch size for grouping questions.
+// ❌ REMOVED: The batch size is no longer needed for AI generation.
 
 export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.createFunction(
 	{
@@ -41,8 +42,7 @@ export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.crea
 		}
 		const courses = coursesResult.data
 
-		// ✅ MODIFIED: Initialize an array to hold all promises from all courses.
-		const allBatchPromises = []
+		const allInvocationPromises = []
 
 		for (const course of courses) {
 			const courseId = course.id
@@ -93,11 +93,7 @@ export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.crea
 
 			const questionIds = questions.map((q) => q.id)
 
-			// Chunk all question IDs into batches of the desired size.
-			const questionIdBatches: string[][] = []
-			for (let i = 0; i < questionIds.length; i += QUESTION_BATCH_SIZE) {
-				questionIdBatches.push(questionIds.slice(i, i + QUESTION_BATCH_SIZE))
-			}
+			// ❌ REMOVED: The logic for chunking questions into batches is removed.
 
 			// Check for existing chunks on disk to enable idempotency.
 			const chunksDir = path.join(process.cwd(), "data", course.slug, "qti", "items_chunks")
@@ -111,56 +107,45 @@ export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.crea
 			}
 			const existingChunkFiles = new Set(existingChunksResult.data)
 
-			logger.info("checking for existing batch chunks to determine resumability", {
-				courseSlug: course.slug,
-				foundCount: existingChunkFiles.size
-			})
-
-			// Filter the batches to only include those that are missing on disk.
-			const missingBatches = questionIdBatches.filter((batchIds) => {
-				// Defensively handle empty batches, though this shouldn't happen with the current logic.
-				if (batchIds.length === 0) return false
-				const expectedFilename = `chunk_${batchIds[0]}.json`
+			const missingQuestionIds = questionIds.filter((questionId) => {
+				const expectedFilename = `chunk_${questionId}.json`
 				return !existingChunkFiles.has(expectedFilename)
 			})
-
-			if (missingBatches.length < questionIdBatches.length) {
-				logger.info("some batches already complete, skipping them", {
-					totalBatches: questionIdBatches.length,
-					completedBatches: questionIdBatches.length - missingBatches.length,
-					batchesToProcess: missingBatches.length
+			// ... (logging for skipping) ...
+			if (missingQuestionIds.length < questionIds.length) {
+				logger.info("some questions already completed, skipping them", {
+					totalQuestions: questionIds.length,
+					completedQuestions: questionIds.length - missingQuestionIds.length,
+					questionsToProcess: missingQuestionIds.length
 				})
 			}
 
-			if (missingBatches.length === 0) {
-				logger.info("all batches for course already completed, skipping dispatch", { courseId })
+			if (missingQuestionIds.length === 0) {
+				logger.info("all questions for course already completed, skipping dispatch", { courseId })
 				continue // Proceed to the next course.
 			}
 
-			// ✅ MODIFIED: Use the `missingBatches` array to create promises and add them to the main promise array.
-			const courseBatchPromises = missingBatches.map((batchIds) =>
-				step.invoke(`differentiate-batch-${course.slug}-${batchIds[0]}`, {
-					// Use a more stable ID
-					function: differentiateAndSaveQuestionBatch,
+			// ✅ MODIFIED: Use the `missingQuestionIds` array to create atomic invocation promises for the AI step.
+			const courseInvocationPromises = missingQuestionIds.map((questionId) =>
+				step.invoke(`differentiate-${course.slug}-${questionId}`, {
+					function: differentiateAndSaveQuestion,
 					data: {
-						questionIds: batchIds,
+						questionId: questionId,
 						n: DIFFERENTIATION_COUNT,
 						courseSlug: course.slug
 					}
 				})
 			)
 
-			// ✅ MODIFIED: Do NOT await here. Add the promises to the collection.
-			allBatchPromises.push(...courseBatchPromises)
+			allInvocationPromises.push(...courseInvocationPromises)
 		}
 
-		// ✅ MODIFIED: Await all promises from all courses concurrently after the loop.
-		if (allBatchPromises.length > 0) {
-			logger.info("dispatching all batches for all courses in parallel", { totalBatches: allBatchPromises.length })
-			const allBatchResults = await Promise.all(allBatchPromises)
-			logger.info("completed all differentiation batches for all courses", { resultsCount: allBatchResults.length })
-		} else {
-			logger.info("all course batches were already complete, no new jobs dispatched")
+		// ✅ MODIFIED: Await all AI generation promises from all courses concurrently after the loop.
+		if (allInvocationPromises.length > 0) {
+			logger.info("dispatching all AI generation jobs for all courses in parallel", {
+				totalJobs: allInvocationPromises.length
+			})
+			await Promise.all(allInvocationPromises)
 		}
 
 		// Trigger the assembly step after all differentiation is complete.
@@ -174,7 +159,7 @@ export const orchestrateHardcodedMathDifferentiatedItemGeneration = inngest.crea
 			})
 		})
 
-		logger.info("all differentiation jobs completed. triggered final assembly function.")
+		// ... (final trigger-assembly step remains the same) ...
 
 		return { status: "DISPATCH_AND_WAIT_COMPLETE", dispatchedCourseCount: courses.length }
 	}
