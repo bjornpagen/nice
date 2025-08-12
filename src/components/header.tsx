@@ -39,7 +39,7 @@ export function Header({
 					<ExploreDropdown dark={dark} />
 
 					{/* Search - strictly constrained width */}
-					<div className="relative w-24 sm:w-32 md:w-40">
+					<div className="relative w-24 sm:w-32 md:w-40 cursor-not-allowed">
 						<Search
 							className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 ${
 								dark ? "text-white" : "text-blue-600"
@@ -48,6 +48,7 @@ export function Header({
 						<Input
 							type="search"
 							placeholder="Search"
+							disabled
 							className={`pl-10 pr-4 py-2 w-full text-sm ${
 								dark
 									? "border-white text-white placeholder:text-white focus:border-white focus:ring-white"
