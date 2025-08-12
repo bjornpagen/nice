@@ -11,11 +11,13 @@ import { capitalize } from "@/lib/utils"
 export function LessonSection({
 	lesson,
 	progressMap,
-	resourceLockStatus // Add new prop
+	resourceLockStatus, // Add new prop
+	nextExerciseId
 }: {
 	lesson: Lesson
 	progressMap: Map<string, AssessmentProgress>
 	resourceLockStatus: Record<string, boolean> // Add new prop
+	nextExerciseId?: string
 }) {
 	// Use the original order from lesson.children for learning content
 	const learningContent = lesson.children.filter(
@@ -71,8 +73,8 @@ export function LessonSection({
 									<LessonExercise
 										key={`${lesson.id}-exercise-${exercise.id}`}
 										exercise={exercise}
-										// CORRECT: Apply "Up next" logic only to the first unlocked exercise.
-										next={index === firstUnlockedExerciseIndex}
+										// Apply unit-level next exercise if provided; otherwise fallback to per-lesson first unlocked
+										next={nextExerciseId ? exercise.id === nextExerciseId : index === firstUnlockedExerciseIndex}
 										progress={progressMap.get(exercise.id)}
 									/>
 								)

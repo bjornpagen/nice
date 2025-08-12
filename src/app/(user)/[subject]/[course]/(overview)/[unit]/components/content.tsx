@@ -15,7 +15,7 @@ import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/
 import { XPExplainerDialog } from "@/components/dialogs/xp-explainer-dialog"
 import { Button } from "@/components/ui/button"
 import type { AssessmentProgress } from "@/lib/data/progress"
-import type { UnitChild } from "@/lib/types/domain"
+import type { ExerciseInfo, Lesson, UnitChild } from "@/lib/types/domain"
 import type { UnitPageData } from "@/lib/types/page"
 
 export function Content({
@@ -61,6 +61,18 @@ export function Content({
 	}
 
 	const unitIndex = allUnits.findIndex((u) => u.id === unit.id)
+
+	// Determine the single next exercise across the entire unit
+	// The next exercise is the first one that is unlocked and not completed
+	const allExercises = unit.children
+		.filter((child): child is Lesson => child.type === "Lesson")
+		.flatMap((lesson) => lesson.children.filter((c): c is ExerciseInfo => c.type === "Exercise"))
+
+	const nextExerciseId = allExercises.find((exercise) => {
+		const isLocked = resourceLockStatus[exercise.id] === true
+		const progress = progressMap.get(exercise.id)
+		return !isLocked && !progress?.completed
+	})?.id
 
 	return (
 		<>
@@ -129,6 +141,7 @@ export function Content({
 									lesson={child}
 									progressMap={progressMap}
 									resourceLockStatus={resourceLockStatus}
+									nextExerciseId={nextExerciseId}
 								/>
 							)
 						case "Quiz":
