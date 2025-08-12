@@ -10,15 +10,17 @@ import { buildResourceLockStatus, normalizeParams } from "@/lib/utils"
 function CourseLockStatusWrapper({
 	children,
 	resourceLockStatusPromise,
-	storageKey
+	storageKey,
+	canUnlockAll
 }: {
 	children: React.ReactNode
 	resourceLockStatusPromise: Promise<Record<string, boolean>>
 	storageKey: string
+	canUnlockAll: boolean
 }) {
 	const initialLockStatus = React.use(resourceLockStatusPromise)
 	return (
-		<CourseLockStatusProvider initialLockStatus={initialLockStatus} storageKey={storageKey}>
+		<CourseLockStatusProvider initialLockStatus={initialLockStatus} storageKey={storageKey} canUnlockAll={canUnlockAll}>
 			{children}
 		</CourseLockStatusProvider>
 	)
@@ -76,6 +78,13 @@ export default function CourseLayout({
 			<CourseLockStatusWrapper
 				resourceLockStatusPromise={resourceLockStatusPromise}
 				storageKey={React.use(storageKeyPromise)}
+				canUnlockAll={React.use(
+					userPromise.then((user) => {
+						if (!user) return false
+						const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+						return parsed.success && parsed.data.roles.some((r) => r.role !== "student")
+					})
+				)}
 			>
 				{children}
 			</CourseLockStatusWrapper>

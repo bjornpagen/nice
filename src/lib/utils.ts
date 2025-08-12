@@ -155,8 +155,10 @@ export function buildResourceLockStatus(
 	}
 	let previousComplete = true
 	for (const r of ordered) {
-		lock[r.id] = !previousComplete
-		previousComplete = progressMap.get(r.id)?.completed === true
+		const currentComplete = progressMap.get(r.id)?.completed === true
+		// Locked only when the previous resource is incomplete AND the current one itself is not completed
+		lock[r.id] = !previousComplete && !currentComplete
+		previousComplete = currentComplete
 	}
 	return lock
 }

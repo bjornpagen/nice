@@ -14,18 +14,17 @@ const CourseLockStatusContext = React.createContext<CourseLockStatusContextType 
 export function CourseLockStatusProvider({
 	children,
 	initialLockStatus,
-	storageKey
+	storageKey,
+	canUnlockAll
 }: {
 	children: React.ReactNode
 	initialLockStatus: Record<string, boolean>
 	storageKey: string
+	canUnlockAll: boolean
 }) {
 	const [resourceLockStatus, setResourceLockStatus] = React.useState(initialLockStatus)
 
-	// Precompute an all-unlocked status map derived from the current initialLockStatus keys
-	const allUnlockedStatus = React.useMemo<Record<string, boolean>>(() => {
-		return Object.fromEntries(Object.keys(initialLockStatus).map((key) => [key, false]))
-	}, [initialLockStatus])
+	// Helper: derived all-unlocked status map is computed inline where needed
 
 	// Update state when initial status changes (e.g., navigation to different course)
 	React.useEffect(() => {
@@ -36,11 +35,20 @@ export function CourseLockStatusProvider({
 	React.useEffect(() => {
 		// Client-side only
 		if (typeof window === "undefined") return
+		// Only honor forced unlock for users permitted to unlock
+		if (!canUnlockAll) {
+			// Clean up any stale unlock flag set by other users on this device
+			const forced = window.localStorage.getItem(storageKey)
+			if (forced === "1") {
+				window.localStorage.removeItem(storageKey)
+			}
+			return
+		}
 		const forced = window.localStorage.getItem(storageKey)
 		if (forced === "1") {
-			setResourceLockStatus(allUnlockedStatus)
+			setResourceLockStatus(Object.fromEntries(Object.keys(initialLockStatus).map((key) => [key, false])))
 		}
-	}, [storageKey, allUnlockedStatus])
+	}, [storageKey, canUnlockAll, initialLockStatus])
 
 	const value = {
 		resourceLockStatus,

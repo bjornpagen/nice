@@ -29,8 +29,10 @@ export function useResourceLockStatus(
 
 	let previousResourceCompleted = true // The first resource is always unlocked
 	for (const resource of orderedResources) {
-		lockStatus.set(resource.id, !previousResourceCompleted)
-		previousResourceCompleted = progressMap.get(resource.id)?.completed === true
+		const currentCompleted = progressMap.get(resource.id)?.completed === true
+		// Locked only when the previous resource is incomplete AND the current one itself is not completed
+		lockStatus.set(resource.id, !previousResourceCompleted && !currentCompleted)
+		previousResourceCompleted = currentCompleted
 	}
 	return lockStatus
 }
