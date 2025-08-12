@@ -153,10 +153,13 @@ async function fetchCourseTotalXP(courseSourcedId: string): Promise<number> {
 
 	// Use the course metadata to fetch detailed course data with XP
 	const coursePageDataResult = await errors.try(
-		fetchCoursePageData({
-			subject: courseMetadata.khanSubjectSlug,
-			course: courseMetadata.khanSlug
-		})
+		fetchCoursePageData(
+			{
+				subject: courseMetadata.khanSubjectSlug,
+				course: courseMetadata.khanSlug
+			},
+			{ skip: { questions: true } }
+		)
 	)
 	if (coursePageDataResult.error) {
 		logger.error("failed to fetch course page data for XP calculation", {
