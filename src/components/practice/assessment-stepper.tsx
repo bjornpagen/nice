@@ -503,7 +503,12 @@ export function AssessmentStepper({
 				startedAt: assessmentStartTimeRef.current?.toISOString(),
 				lessonType: contentType.toLowerCase(),
 				completedAt: new Date().toISOString(),
-				courseSourcedId: onerosterCourseSourcedId
+				courseSourcedId: onerosterCourseSourcedId,
+				// Anti-gamification markers
+				penaltyApplied: xpResult.penaltyApplied,
+				xpReason: xpResult.reason,
+				avgSecondsPerQuestion:
+					durationInSeconds && finalTotalQuestions > 0 ? durationInSeconds / finalTotalQuestions : undefined
 			}
 
 			// NOW save the assessment result with metadata
