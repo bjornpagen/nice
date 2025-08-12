@@ -165,8 +165,8 @@ export function Content({
 			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0">
 				<div className="flex items-center justify-between">
 					<div className="w-24" />
-					<div className="text-center flex-1">
-						<h1 className="text-2xl font-bold text-gray-800">{article.title}</h1>
+					<div className="text-center flex-1 min-w-0">
+						<h1 className="text-2xl font-bold text-gray-800 truncate">{article.title}</h1>
 					</div>
 					<div className="w-24 flex justify-end">
 						{canUnlockAll && (

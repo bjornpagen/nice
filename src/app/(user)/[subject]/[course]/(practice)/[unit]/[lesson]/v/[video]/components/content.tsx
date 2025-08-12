@@ -406,7 +406,9 @@ export function Content({
 				<div className="max-w-5xl mx-auto px-6 py-3 md:py-4">
 					<div className="flex items-center justify-between">
 						<div className="w-24" />
-						<h1 className="text-2xl font-bold text-gray-900 text-center flex-1">{video.title}</h1>
+						<div className="flex-1 min-w-0">
+							<h1 className="text-2xl font-bold text-gray-900 text-center truncate">{video.title}</h1>
+						</div>
 						<div className="w-24 flex justify-end">
 							{canToggleControls && (
 								<Button onClick={handleToggleLockAll} variant="outline" size="sm">

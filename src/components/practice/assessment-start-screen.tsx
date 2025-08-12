@@ -71,7 +71,7 @@ export function AssessmentStartScreen({
 				<div className="flex items-center justify-between">
 					<div className="w-24" />
 					<div className="text-center flex-1">
-						<h1 className="text-2xl font-bold text-gray-900">{headerTitle}</h1>
+						<h1 className="text-2xl font-bold text-gray-900 break-normal">{headerTitle}</h1>
 						{headerDescription && <p className="text-gray-600 mt-2">{headerDescription}</p>}
 					</div>
 					<div className="w-24 flex justify-end">
