@@ -380,6 +380,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			org: { sourcedId: ORG_SOURCED_ID, type: "district" },
 			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" },
 			metadata: {
+				primaryApp: "nice_academy",
 				khanId: course.id,
 				khanSlug: course.slug,
 				khanSubjectSlug: subjectSlug,
