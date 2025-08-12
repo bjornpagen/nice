@@ -15,6 +15,7 @@ import lightBlueFriend from "@/components/practice/course/unit/lesson/exercise/i
 import spaceFriend from "@/components/practice/course/unit/lesson/exercise/images/space-friend_v3.png"
 import quizIllustration from "@/components/practice/course/unit/quiz/images/quiz-illustration.png"
 import testIllustration from "@/components/practice/course/unit/test/images/test-illustration.png"
+import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -227,8 +228,8 @@ export function AssessmentStepper({
 	const currentQuestion = questions[currentQuestionIndex]
 	const assessmentStartTimeRef = React.useRef<Date | null>(null)
 	const hasSentCompletionEventRef = React.useRef(false) // Track whether completion event has been sent
-	const hasRefreshedAfterSaveRef = React.useRef(false)
 	const finalizationInFlightRef = React.useRef(false)
+	const { setProgressForResource, beginProgressUpdate, endProgressUpdate } = useLessonProgress()
 
 	// Navigation race-condition guards
 	const isNavigatingRef = React.useRef(false)
@@ -545,18 +546,28 @@ export function AssessmentStepper({
 			finalizationInFlightRef.current = true
 			// Set sent flag immediately to prevent parallel executions on dependency changes
 			hasSentCompletionEventRef.current = true
+			beginProgressUpdate(onerosterResourceSourcedId)
 			const result = await errors.try(finalizeAndAnalyze())
 			if (result.error) {
 				// Allow retry on next effect run if something failed
 				hasSentCompletionEventRef.current = false
 				finalizationInFlightRef.current = false
+				endProgressUpdate(onerosterResourceSourcedId)
 				return
 			}
-			if (!hasRefreshedAfterSaveRef.current) {
-				hasRefreshedAfterSaveRef.current = true
-				router.refresh()
-			}
+			// update local sidebar progress overlay instead of full refresh
+			setProgressForResource(onerosterResourceSourcedId, {
+				completed: true,
+				score,
+				proficiency: (() => {
+					if (score >= 1.1) return "mastered" as const
+					if (score >= 1.0) return "proficient" as const
+					if (score >= 0.7) return "familiar" as const
+					return "attempted" as const
+				})()
+			})
 			finalizationInFlightRef.current = false
+			endProgressUpdate(onerosterResourceSourcedId)
 		}
 
 		executeFinalization()
@@ -577,7 +588,9 @@ export function AssessmentStepper({
 		onerosterCourseSourcedId, // Add onerosterCourseSourcedId to dependency array
 		reportedQuestionIds.size, // Add reportedQuestionIds.size to dependency array
 		contentType, // Add contentType to dependency array for masteredUnits logic
-		router
+		setProgressForResource,
+		beginProgressUpdate,
+		endProgressUpdate
 	])
 
 	// MODIFIED: handleReset is now async and calls the new action

@@ -7,6 +7,7 @@ import { ProficiencyIcon } from "@/components/overview/proficiency-icons"
 import courseChallengeIllustration from "@/components/practice/course/sidebar/images/course-challenge-sidebar-illustration.png"
 import quizIllustration from "@/components/practice/course/sidebar/images/quiz-sidebar-illustration.png"
 import unitTestIllustration from "@/components/practice/course/sidebar/images/unit-test-sidebar-illustration.png"
+import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { CourseMaterial, LessonResource } from "@/lib/types/sidebar"
 import { cn } from "@/lib/utils"
@@ -68,6 +69,7 @@ function MaterialItem({
 	progressMap: Map<string, AssessmentProgress>
 	resourceLockStatus: Record<string, boolean>
 }) {
+	const { updatingResourceIds } = useLessonProgress()
 	const renderStatusText = (progress: AssessmentProgress | undefined, type: string) => {
 		if (type !== "Exercise" && type !== "Quiz" && type !== "UnitTest" && type !== "CourseChallenge") {
 			return null
@@ -103,6 +105,7 @@ function MaterialItem({
 							)
 						}
 
+						const isUpdating = updatingResourceIds.has(resource.id)
 						return (
 							<Link key={resource.path} href={resource.path}>
 								<div
@@ -111,12 +114,16 @@ function MaterialItem({
 										pathname === resource.path && "bg-blue-100 border-l-4 border-l-blue-600"
 									)}
 								>
-									<ResourceItemIcon resource={resource} progress={progress} />
+									<ResourceItemIcon resource={resource} progress={progress} isUpdating={isUpdating} />
 									<div className="flex flex-col">
 										<span className={cn("text-sm text-gray-800", pathname === resource.path && "text-blue-800")}>
 											{resource.title}
 										</span>
-										{renderStatusText(progress, resource.type)}
+										{isUpdating ? (
+											<span className="text-xs text-gray-500">updating...</span>
+										) : (
+											renderStatusText(progress, resource.type)
+										)}
 									</div>
 								</div>
 							</Link>
@@ -199,10 +206,12 @@ function MaterialItem({
 
 function ResourceItemIcon({
 	resource,
-	progress
+	progress,
+	isUpdating
 }: {
 	resource: LessonResource
 	progress: AssessmentProgress | undefined
+	isUpdating: boolean
 }) {
 	// Create variant mapping without type assertion
 	let variant: "article" | "exercise" | "video"
@@ -216,6 +225,10 @@ function ResourceItemIcon({
 
 	// Only show proficiency icon for exercises that are completed AND have proficiency
 	const showProficiencyIcon = variant === "exercise" && progress?.completed && progress?.proficiency
+
+	if (isUpdating) {
+		return <div className="w-6 h-6 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600" />
+	}
 
 	if (showProficiencyIcon && progress?.proficiency) {
 		return <ProficiencyIcon variant={progress.proficiency} size={6} />

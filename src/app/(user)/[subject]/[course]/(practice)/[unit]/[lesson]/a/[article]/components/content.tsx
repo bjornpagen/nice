@@ -3,7 +3,6 @@
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import { Lock, Unlock } from "lucide-react"
-import { useRouter } from "next/navigation"
 import * as React from "react"
 import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
@@ -25,8 +24,8 @@ export function Content({
 	const params = React.use(paramsPromise)
 	const { user } = useUser()
 	const startTimeRef = React.useRef<Date | null>(null)
-	const { setCurrentResourceCompleted } = useLessonProgress()
-	const router = useRouter()
+	const { setCurrentResourceCompleted, setProgressForResource, beginProgressUpdate, endProgressUpdate } =
+		useLessonProgress()
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
 	const parsed = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
@@ -67,6 +66,7 @@ export function Content({
 		if (onerosterUserSourcedId && article.id) {
 			// Track article view on mount and refresh route so server-fetched progress updates immediately
 			void (async () => {
+				beginProgressUpdate(article.id)
 				const result = await errors.try(
 					trackArticleView(onerosterUserSourcedId, article.id, {
 						subjectSlug: params.subject,
@@ -74,8 +74,10 @@ export function Content({
 					})
 				)
 				if (!result.error) {
-					router.refresh()
+					// update local overlay for immediate sidebar state
+					setProgressForResource(article.id, { completed: true })
 				}
+				endProgressUpdate(article.id)
 			})()
 
 			// Map subject string to the enum value
@@ -137,7 +139,9 @@ export function Content({
 		params.lesson,
 		params.article,
 		setCurrentResourceCompleted,
-		router
+		setProgressForResource,
+		beginProgressUpdate,
+		endProgressUpdate
 	])
 
 	return (

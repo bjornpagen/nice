@@ -11,6 +11,7 @@ import { Carousel } from "@/components/practice/course/sidebar/carousel"
 import courseIconForeground from "@/components/practice/course/sidebar/images/7a86b575f4360619-course-icon.svg"
 import courseIconBackground from "@/components/practice/course/sidebar/images/course-accordion-bg.png"
 import { Materials } from "@/components/practice/course/sidebar/materials"
+import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { ScrollArea } from "@/components/ui/scroll-area"
 // import { useSidebar } from "@/components/ui/sidebar" // Removed for relative positioning layout
 import type { AssessmentProgress } from "@/lib/data/progress"
@@ -33,7 +34,15 @@ export function Sidebar({
 	// Removed useSidebar() dependency for relative positioning layout
 
 	const course = React.use(coursePromise)
-	const progressMap = React.use(progressPromise)
+	const baseProgressMap = React.use(progressPromise)
+	const { progressOverrides } = useLessonProgress()
+	const progressMap = (() => {
+		const merged = new Map(baseProgressMap)
+		for (const [key, value] of progressOverrides.entries()) {
+			merged.set(key, value)
+		}
+		return merged
+	})()
 
 	// Get lock status from course-wide context instead of props
 	const { resourceLockStatus } = useCourseLockStatus()
