@@ -209,55 +209,103 @@ function isValidWidgetType(type: string): type is keyof typeof typedSchemas {
 function dedupePromptTextFromBody(item: AssessmentItem): void {
 	if (!item.interactions || !item.body) return
 
-	// Normalize helpers for robust equality
-	const normalizeText = (s: string): string => s.replace(/\s+/g, " ").trim()
-	const normalizeMath = (mathml: string): string => mathml.replace(/\s+/g, " ").trim()
-
-	const inlineContentEquals = (a: InlineContent, b: InlineContent): boolean => {
-		if (a.length !== b.length) return false
-		for (let i = 0; i < a.length; i++) {
-			const ai = a[i]
-			const bi = b[i]
-			if (!ai || !bi) return false
-			if (ai.type !== bi.type) return false
-			if (ai.type === "text" && bi.type === "text") {
-				if (normalizeText(ai.content) !== normalizeText(bi.content)) return false
+	// --- normalization helpers ---
+	const collapseWhitespace = (s: string): string => s.replace(/\s+/g, " ").trim()
+	const decodeEntities = (s: string): string =>
+		s
+			.replace(/&lt;/gi, "<")
+			.replace(/&gt;/gi, ">")
+			.replace(/&amp;/gi, "&")
+			.replace(/&quot;/gi, '"')
+			.replace(/&apos;/gi, "'")
+	const stripPunct = (s: string): string =>
+		s
+			.replace(/\u200b/g, "")
+			.replace(/\u200c/g, "")
+			.replace(/\u200d/g, "")
+			.replace(/\uFEFF/g, "")
+			.replace(/[.,;:!?]/g, " ")
+	const toComparable = (s: string): string => collapseWhitespace(stripPunct(decodeEntities(s.toLowerCase())))
+	const normalizeMath = (mathml: string): string => {
+		// prefer <mo> text; otherwise strip tags
+		const moMatches = Array.from(mathml.matchAll(/<mo[^>]*>([\s\S]*?)<\/mo>/g)).map((m) => m[1] ?? "")
+		const raw = moMatches.length > 0 ? moMatches.join(" ") : mathml.replace(/<[^>]+>/g, " ")
+		return toComparable(raw)
+	}
+	const normalizeInline = (inline: InlineContent): string => {
+		let out = ""
+		for (const part of inline) {
+			if (part.type === "text") {
+				out += ` ${toComparable(part.content)}`
 				continue
 			}
-			if (ai.type === "math" && bi.type === "math") {
-				if (normalizeMath(ai.mathml) !== normalizeMath(bi.mathml)) return false
+			if (part.type === "math") {
+				out += ` ${normalizeMath(part.mathml)}`
 				continue
 			}
-			if (ai.type === "inlineSlot" && bi.type === "inlineSlot") {
-				if (ai.slotId !== bi.slotId) return false
-				continue
+			if (part.type === "inlineSlot") {
+				out += ` {slot:${part.slotId}}`
 			}
-			// Unknown inline type mismatch
-			return false
 		}
-		return true
+		return collapseWhitespace(out)
 	}
 
-	// Collect all prompts from interactions that support a prompt
-	const prompts: InlineContent[] = []
+	// collect prompts from interactions that support it
+	const promptStrings: string[] = []
+	const interactionIds = new Set<string>(Object.keys(item.interactions))
 	for (const interaction of Object.values(item.interactions)) {
 		if (interaction.type === "choiceInteraction" || interaction.type === "orderInteraction") {
 			if (interaction.prompt && interaction.prompt.length > 0) {
-				prompts.push(interaction.prompt)
+				promptStrings.push(normalizeInline(interaction.prompt))
 			}
 		}
 	}
-	if (prompts.length === 0) return
+	if (promptStrings.length === 0) return
+
+	// only consider paragraphs before the first blockSlot that targets any interaction
+	const firstSlotIndex = item.body.findIndex((b) => b.type === "blockSlot" && interactionIds.has(b.slotId))
+	const cutoff = firstSlotIndex === -1 ? item.body.length : firstSlotIndex
+
+	const paragraphNorms: string[] = item.body.map((b) => (b.type === "paragraph" ? normalizeInline(b.content) : ""))
+
+	// mark indices to delete
+	const toDelete = new Set<number>()
+
+	// strategy A: exact paragraph equality with prompt
+	for (let i = 0; i < cutoff; i++) {
+		if (item.body[i]?.type !== "paragraph") continue
+		const pStr = paragraphNorms[i]
+		for (const ps of promptStrings) {
+			if (pStr !== "" && pStr === ps) {
+				toDelete.add(i)
+				break
+			}
+		}
+	}
+
+	// strategy B: join adjacent paragraphs to match prompt (handles prompt = p1 + p2 + ...)
+	for (let i = 0; i < cutoff; i++) {
+		if (item.body[i]?.type !== "paragraph") continue
+		if (toDelete.has(i)) continue
+		let acc = paragraphNorms[i]
+		for (let j = i + 1; j < cutoff; j++) {
+			if (item.body[j]?.type !== "paragraph") break
+			acc = collapseWhitespace(`${acc} ${paragraphNorms[j]}`)
+			for (const ps of promptStrings) {
+				if (acc === ps) {
+					for (let k = i; k <= j; k++) toDelete.add(k)
+					i = j // advance outer loop
+					break
+				}
+			}
+			if (toDelete.has(i)) break
+		}
+	}
+
+	if (toDelete.size === 0) return
 
 	const originalLength = item.body.length
-	item.body = item.body.filter((block) => {
-		if (block.type !== "paragraph") return true
-		// If any prompt inline content exactly equals this paragraph's inline content, drop it
-		for (const p of prompts) {
-			if (inlineContentEquals(block.content, p)) return false
-		}
-		return true
-	})
+	item.body = item.body.filter((_, idx) => !toDelete.has(idx))
 	const removedCount = originalLength - item.body.length
 	if (removedCount > 0) {
 		logger.debug("deduplicated prompt text from body", { count: removedCount })
