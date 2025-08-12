@@ -20,7 +20,7 @@ export function Breadcrumbs({
 	material: CourseMaterial
 	pathname: string
 }) {
-	const subject = course.path.split("/")[2]
+	const subject = course.path.split("/")[1]
 	if (subject == null) {
 		logger.error("course sidebar breadcrumbs: subject not found", {
 			course,
@@ -53,7 +53,7 @@ export function Breadcrumbs({
 					{/* Course Subject */}
 					<BreadcrumbItem className="max-w-[100px]">
 						<BreadcrumbLink asChild>
-							<Link href={`/v2/${subject}`} className="capitalize hover:text-gray-800 hover:underline truncate block">
+							<Link href={`/${subject}`} className="capitalize hover:text-gray-800 hover:underline truncate block">
 								{subject}
 							</Link>
 						</BreadcrumbLink>
