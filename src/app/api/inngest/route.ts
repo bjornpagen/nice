@@ -26,12 +26,10 @@ import { ingestCourse } from "@/inngest/functions/oneroster/ingest-course"
 import { ingestCourseComponents } from "@/inngest/functions/oneroster/ingest-course-components"
 import { ingestResources } from "@/inngest/functions/oneroster/ingest-resources"
 // ✅ ADD: Import the new batch orchestration function
-import { orchestrateBatchCourseIngestion } from "@/inngest/functions/orchestrate-batch-course-ingestion"
-// ✅ MODIFIED: The old orchestrator is replaced by the new unified one.
-import { orchestrateCourseIngestionToQti } from "@/inngest/functions/orchestrate-course-ingestion-to-qti"
+// Removed generic batch and course ingestion orchestrators
 // Import orchestrators
 import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orchestrate-course-oneroster-generation"
-import { orchestrateCourseXmlGeneration } from "@/inngest/functions/orchestrate-course-qti-generation"
+// Removed: orchestrateCourseXmlGeneration (generic course QTI generation)
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
 // ✅ ADD: Import the new batch differentiation and assembly functions
@@ -43,8 +41,7 @@ import { differentiateAndSaveQuestion } from "@/inngest/functions/qti/differenti
 import { ingestAssessmentItemOne } from "@/inngest/functions/qti/ingest-assessment-item-one"
 import { ingestAssessmentStimulusOne } from "@/inngest/functions/qti/ingest-assessment-stimulus-one"
 import { ingestAssessmentTestOne } from "@/inngest/functions/qti/ingest-assessment-test-one"
-import { ingestUndifferentiatedCourseFromDb } from "@/inngest/functions/qti/ingest-undifferentiated-course-from-db"
-import { orchestrateCourseDifferentiatedIngestion } from "@/inngest/functions/qti/orchestrate-course-differentiated-ingestion"
+// Removed generic undifferentiated and differentiated ingest orchestrators
 // ✅ ADD: Import the new paraphrase function
 import { paraphraseStimulus } from "@/inngest/functions/qti/paraphrase-stimulus"
 import { requestAllItemMigrationsForCourse } from "@/inngest/functions/qti/request-all-item-migrations-for-course"
@@ -60,10 +57,8 @@ export const { GET, POST, PUT } = serve({
 		// Orchestrators
 		orchestrateCourseOnerosterGeneration,
 		orchestrateCourseUploadToOneroster,
-		orchestrateCourseIngestionToQti, // ✅ MODIFIED: This is now the unified orchestrator
-		orchestrateBatchCourseIngestion, // ✅ ADD: Register the new batch orchestration function
-		orchestrateCourseDifferentiatedIngestion, // ✅ ADD: Register the new differentiated ingestion orchestrator
-		orchestrateCourseXmlGeneration,
+		// Removed: generic ingestion orchestrators
+		// Removed: orchestrateCourseXmlGeneration
 		orchestrateCourseUploadToQti,
 		// ✅ ADDED: Register all new and renamed functions
 		orchestrateHardcodedMathItemMigration,
@@ -104,7 +99,7 @@ export const { GET, POST, PUT } = serve({
 		validateAndClearInvalidQuestionXml,
 		// ✅ ADD: Register the new paraphrase function
 		paraphraseStimulus,
-		ingestUndifferentiatedCourseFromDb,
+		// Removed: undifferentiated ingest
 		// ✅ ADD: Register the new atomic differentiation and assembly functions
 		differentiateAndSaveQuestion, // ✅ ADD: Register the new atomic differentiation function
 		assembleDifferentiatedItemsAndCreateTests

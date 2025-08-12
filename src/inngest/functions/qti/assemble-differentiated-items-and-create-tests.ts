@@ -335,11 +335,61 @@ export const assembleDifferentiatedItemsAndCreateTests = inngest.createFunction(
 			const buildTestObject = (
 				id: string,
 				title: string,
-				questions: { id: string; exerciseId: string; exerciseTitle: string; problemType: string }[], // ADD problemType
-				_metadata: Record<string, unknown>
+				questions: { id: string; exerciseId: string; exerciseTitle: string; problemType: string }[],
+				assessmentType: string
 			): AssessmentTestCandidate => {
 				const safeTitle = escapeXmlAttribute(title)
 
+				// Grab-bag for CourseChallenge and UnitTest
+				if (assessmentType === "CourseChallenge") {
+					const itemRefsXml = questions
+						.map(
+							(q, idx) =>
+								`<qti-assessment-item-ref identifier="${q.id}" href="/assessment-items/${q.id}" sequence="${idx + 1}"></qti-assessment-item-ref>`
+						)
+						.join("\n                ")
+
+					const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${id}" title="${safeTitle}">
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
+        <qti-assessment-section identifier="SECTION_COURSE_GRAB_BAG" title="Course Challenge" visible="false">
+            <qti-selection select="30" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>
+            ${itemRefsXml}
+        </qti-assessment-section>
+    </qti-test-part>
+</qti-assessment-test>`
+					return { id, xml }
+				}
+
+				if (assessmentType === "UnitTest") {
+					const itemRefsXml = questions
+						.map(
+							(q, idx) =>
+								`<qti-assessment-item-ref identifier="${q.id}" href="/assessment-items/${q.id}" sequence="${idx + 1}"></qti-assessment-item-ref>`
+						)
+						.join("\n                ")
+
+					const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${id}" title="${safeTitle}">
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
+        <qti-assessment-section identifier="SECTION_UNITTEST_GRAB_BAG" title="Unit Test" visible="false">
+            <qti-selection select="12" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>
+            ${itemRefsXml}
+        </qti-assessment-section>
+    </qti-test-part>
+</qti-assessment-test>`
+					return { id, xml }
+				}
+
+				// Default: per-problem-type sections (exercises, quizzes)
 				const questionsByProblemType = new Map<string, typeof questions>()
 				for (const q of questions) {
 					if (!questionsByProblemType.has(q.problemType)) {
@@ -448,13 +498,7 @@ ${sectionsXml}
 							problemType: originalQuestion.problemType // ADD THIS LINE
 						}
 					})
-					return buildTestObject(assessmentId, data.title, allQuestionsForTest, {
-						khanId: assessmentId,
-						khanSlug: data.slug,
-						khanTitle: data.title,
-						khanDescription: data.description,
-						khanAssessmentType: data.type
-					})
+					return buildTestObject(assessmentId, data.title, allQuestionsForTest, data.type)
 				}
 			)
 
