@@ -4,6 +4,9 @@ import { and, eq, inArray, sql } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { env } from "@/env"
+import { getAssessmentTest } from "@/lib/data/fetchers/qti"
+import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
+import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
 
 // Normalize slugs that may include an ID prefix like "x123:real-slug" to just "real-slug"
 function normalizeKhanSlug(slug: string): string {
@@ -283,6 +286,66 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		}
 	}
 
+	// 2.5. Compute question counts for exercises and quizzes to derive XP
+	logger.info("computing qti question counts for xp", { courseId })
+
+	// Helper to deterministically compute the final selected question count for a test
+	async function computeSelectedQuestionCountForTest(testSourcedId: string): Promise<number> {
+		const testResult = await errors.try(getAssessmentTest(testSourcedId))
+		if (testResult.error) {
+			logger.error("qti xp: failed to fetch assessment test", { testSourcedId, error: testResult.error })
+			throw errors.wrap(testResult.error, "qti assessment test")
+		}
+
+		const resolvedResult = await errors.try(resolveAllQuestionsForTestFromXml(testResult.data))
+		if (resolvedResult.error) {
+			logger.error("qti xp: failed to resolve questions from qti xml", {
+				testSourcedId,
+				error: resolvedResult.error
+			})
+			throw errors.wrap(resolvedResult.error, "qti resolve questions")
+		}
+
+		// Apply selection and ordering. Count is deterministic w.r.t selection limits.
+		const selected = applyQtiSelectionAndOrdering(testResult.data, resolvedResult.data)
+		return selected.length
+	}
+
+	// Build maps: exerciseId -> count, assessmentId (Quiz) -> count
+	const exerciseCountsResult = await errors.try(
+		Promise.all(
+			exercises.map(async (e) => {
+				const testSourcedId = `nice_${e.id}`
+				const count = await computeSelectedQuestionCountForTest(testSourcedId)
+				return { id: e.id, count }
+			})
+		)
+	)
+	if (exerciseCountsResult.error) {
+		logger.error("qti xp: failed computing exercise question counts", { error: exerciseCountsResult.error })
+		throw exerciseCountsResult.error
+	}
+	const exerciseQuestionCountMap = new Map<string, number>(exerciseCountsResult.data.map((r) => [r.id, r.count]))
+
+	const allQuizAssessments = [
+		...assessments.filter((a) => a.type === "Quiz"),
+		...courseAssessments.filter((a) => a.type === "Quiz")
+	]
+	const quizCountsResult = await errors.try(
+		Promise.all(
+			allQuizAssessments.map(async (a) => {
+				const testSourcedId = `nice_${a.id}`
+				const count = await computeSelectedQuestionCountForTest(testSourcedId)
+				return { id: a.id, count }
+			})
+		)
+	)
+	if (quizCountsResult.error) {
+		logger.error("qti xp: failed computing quiz question counts", { error: quizCountsResult.error })
+		throw quizCountsResult.error
+	}
+	const quizQuestionCountMap = new Map<string, number>(quizCountsResult.data.map((r) => [r.id, r.count]))
+
 	// 3. Transform the data into the OneRoster structure.
 	logger.debug("transforming database entities to oneroster objects", { courseId })
 
@@ -514,6 +577,11 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							}
 						} else if (lc.contentType === "Exercise") {
 							// CHANGE: Convert Exercises to interactive type
+							const exerciseQuestionCount = exerciseQuestionCountMap.get(content.id)
+							if (exerciseQuestionCount === undefined) {
+								logger.error("qti xp: missing question count for exercise", { exerciseId: content.id })
+								throw errors.new("qti xp: exercise question count missing")
+							}
 							metadata = {
 								...metadata,
 								type: "interactive",
@@ -521,7 +589,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								activityType: "Exercise",
 								launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
 								url: `${appDomain}${metadata.path}/e/${content.slug}`,
-								xp: 3
+								xp: Math.ceil(exerciseQuestionCount * 0.5)
 							}
 						}
 
@@ -578,6 +646,13 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				let assessmentXp = exerciseCount * 1
 				if (assessment.type === "UnitTest") {
 					assessmentXp = Math.round(UNIT_TEST_EXPECTED_QUESTIONS / QUESTIONS_PER_MINUTE)
+				} else if (assessment.type === "Quiz") {
+					const quizCount = quizQuestionCountMap.get(assessment.id)
+					if (quizCount === undefined) {
+						logger.error("qti xp: missing question count for quiz", { assessmentId: assessment.id })
+						throw errors.new("qti xp: quiz question count missing")
+					}
+					assessmentXp = Math.ceil(quizCount * 0.5)
 				}
 
 				// CHANGE: Convert Assessments to interactive type
@@ -659,6 +734,13 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				let assessmentXp = exerciseCount * 1
 				if (assessment.type === "CourseChallenge") {
 					assessmentXp = Math.round(COURSE_CHALLENGE_EXPECTED_QUESTIONS / QUESTIONS_PER_MINUTE)
+				} else if (assessment.type === "Quiz") {
+					const quizCount = quizQuestionCountMap.get(assessment.id)
+					if (quizCount === undefined) {
+						logger.error("qti xp: missing question count for quiz", { assessmentId: assessment.id })
+						throw errors.new("qti xp: quiz question count missing")
+					}
+					assessmentXp = Math.ceil(quizCount * 0.5)
 				}
 
 				// CHANGE: Convert Course Assessments to interactive type
