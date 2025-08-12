@@ -74,8 +74,15 @@ export function Content({
 					})
 				)
 				if (!result.error) {
-					// update local overlay for immediate sidebar state
+					// update local overlay for immediate sidebar state (by OneRoster id)
 					setProgressForResource(article.id, { completed: true })
+					// also update by slug id for the injected sidebar row on current page
+					try {
+						const currentSlug = params.article
+						if (currentSlug) {
+							setProgressForResource(currentSlug, { completed: true })
+						}
+					} catch {}
 				}
 				endProgressUpdate(article.id)
 			})()

@@ -566,6 +566,20 @@ export function AssessmentStepper({
 					return "attempted" as const
 				})()
 			})
+			// Also update by slug id for the injected sidebar resource row when viewing the current page
+			const currentSlug = (assessmentPath || "").split("/").pop()
+			if (currentSlug) {
+				setProgressForResource(currentSlug, {
+					completed: true,
+					score,
+					proficiency: (() => {
+						if (score >= 1.1) return "mastered" as const
+						if (score >= 1.0) return "proficient" as const
+						if (score >= 0.7) return "familiar" as const
+						return "attempted" as const
+					})()
+				})
+			}
 			finalizationInFlightRef.current = false
 			endProgressUpdate(onerosterResourceSourcedId)
 		}

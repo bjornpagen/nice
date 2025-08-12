@@ -42,40 +42,40 @@ export function LessonLayout({
 	const toggleSidebar = () => setIsCollapsed(!isCollapsed)
 
 	return (
-		<div className="flex h-full">
-			{/* Wrap Sidebar in a flex container to match legacy layout behavior */}
-			<div
-				className="w-[var(--sidebar-width)] flex-shrink-0 bg-gray-50 border-r border-gray-200 h-full sidebar-container"
-				data-collapsed={isCollapsed}
-			>
-				<Sidebar
-					coursePromise={coursePromise}
-					progressPromise={progressPromise}
-					className="h-full bg-transparent border-none"
-				/>
-			</div>
-
-			{/* Main area with flex column layout */}
-			<div className="flex-1 flex flex-col relative">
-				{/* Sidebar toggle button */}
-				<Button
-					onClick={toggleSidebar}
-					variant="ghost"
-					size="icon"
-					className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md z-10 rounded-l-none rounded-r-md hover:cursor-pointer size-7 border border-l-0"
+		<LessonProgressProvider>
+			<div className="flex h-full">
+				{/* Wrap Sidebar in a flex container to match legacy layout behavior */}
+				<div
+					className="w-[var(--sidebar-width)] flex-shrink-0 bg-gray-50 border-r border-gray-200 h-full sidebar-container"
+					data-collapsed={isCollapsed}
 				>
-					{isCollapsed ? <ChevronRightIcon className="h-4 w-4" /> : <ChevronLeftIcon className="h-4 w-4" />}
-					<span className="sr-only">Toggle Sidebar</span>
-				</Button>
+					<Sidebar
+						coursePromise={coursePromise}
+						progressPromise={progressPromise}
+						className="h-full bg-transparent border-none"
+					/>
+				</div>
 
-				{/* Content area + footer share the same lesson progress context */}
-				<LessonProgressProvider>
+				{/* Main area with flex column layout */}
+				<div className="flex-1 flex flex-col relative">
+					{/* Sidebar toggle button */}
+					<Button
+						onClick={toggleSidebar}
+						variant="ghost"
+						size="icon"
+						className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md z-10 rounded-l-none rounded-r-md hover:cursor-pointer size-7 border border-l-0"
+					>
+						{isCollapsed ? <ChevronRightIcon className="h-4 w-4" /> : <ChevronLeftIcon className="h-4 w-4" />}
+						<span className="sr-only">Toggle Sidebar</span>
+					</Button>
+
+					{/* Content area */}
 					<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
 
 					{/* Conditionally render LessonFooter */}
 					{shouldShowNext && <LessonFooter coursePromise={coursePromise} progressPromise={progressPromise} />}
-				</LessonProgressProvider>
+				</div>
 			</div>
-		</div>
+		</LessonProgressProvider>
 	)
 }
