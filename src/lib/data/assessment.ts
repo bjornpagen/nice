@@ -2,7 +2,6 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { createNewAssessmentAttempt } from "@/lib/actions/assessment"
 import { powerpath } from "@/lib/clients"
 import {
 	getAllComponentResources,
@@ -149,31 +148,6 @@ export async function fetchQuizPageData(params: {
 		})
 		throw errors.wrap(progressForQuiz.error, "powerpath assessment progress")
 	}
-	// Auto-rollover: if the previous attempt is finalized, create a new attempt now
-	let attemptNumberForQuiz = progressForQuiz.data.attempt
-	const isFinalizedForQuiz = Boolean(progressForQuiz.data.finalized)
-	if (isFinalizedForQuiz) {
-		const userId = userMetaForQuiz.sourceId
-		if (!userId) {
-			throw errors.new("auto-rollover: missing user id")
-		}
-		const newAttemptResult = await errors.try(createNewAssessmentAttempt(userId, componentResource.sourcedId))
-		if (newAttemptResult.error) {
-			logger.error("failed to auto-create new attempt for quiz on page load", {
-				error: newAttemptResult.error,
-				componentResourceSourcedId: componentResource.sourcedId
-			})
-		} else {
-			const newAttemptNumber = newAttemptResult.data.attempt.attempt
-			if (typeof newAttemptNumber === "number") {
-				attemptNumberForQuiz = newAttemptNumber
-				logger.info("auto-created new attempt for quiz on page load", {
-					componentResourceSourcedId: componentResource.sourcedId,
-					attemptNumber: attemptNumberForQuiz
-				})
-			}
-		}
-	}
 	const preparedQuiz = await prepareInteractiveAssessment({
 		userSourceId: userMetaForQuiz.sourceId,
 		resourceSourcedId: resource.sourcedId,
@@ -314,31 +288,6 @@ export async function fetchUnitTestPageData(params: {
 			componentResourceSourcedId: componentResource.sourcedId
 		})
 		throw errors.wrap(progressForUnitTest.error, "powerpath assessment progress")
-	}
-	// Auto-rollover: if the previous attempt is finalized, create a new attempt now
-	let attemptNumberForUnitTest = progressForUnitTest.data.attempt
-	const isFinalizedForUnitTest = Boolean(progressForUnitTest.data.finalized)
-	if (isFinalizedForUnitTest) {
-		const userId = userMetaForUnitTest.sourceId
-		if (!userId) {
-			throw errors.new("auto-rollover: missing user id")
-		}
-		const newAttemptResult = await errors.try(createNewAssessmentAttempt(userId, componentResource.sourcedId))
-		if (newAttemptResult.error) {
-			logger.error("failed to auto-create new attempt for unit test on page load", {
-				error: newAttemptResult.error,
-				componentResourceSourcedId: componentResource.sourcedId
-			})
-		} else {
-			const newAttemptNumber = newAttemptResult.data.attempt.attempt
-			if (typeof newAttemptNumber === "number") {
-				attemptNumberForUnitTest = newAttemptNumber
-				logger.info("auto-created new attempt for unit test on page load", {
-					componentResourceSourcedId: componentResource.sourcedId,
-					attemptNumber: attemptNumberForUnitTest
-				})
-			}
-		}
 	}
 	const preparedUnitTest = await prepareInteractiveAssessment({
 		userSourceId: userMetaForUnitTest.sourceId,
@@ -553,31 +502,6 @@ export async function fetchCourseChallengePage_TestData(params: {
 			componentResourceSourcedId: componentResource.sourcedId
 		})
 		throw errors.wrap(progressForChallenge.error, "powerpath assessment progress")
-	}
-	// Auto-rollover: if the previous attempt is finalized, create a new attempt now
-	let attemptNumberForChallenge = progressForChallenge.data.attempt
-	const isFinalizedForChallenge = Boolean(progressForChallenge.data.finalized)
-	if (isFinalizedForChallenge) {
-		const userId = userMetaForChallenge.sourceId
-		if (!userId) {
-			throw errors.new("auto-rollover: missing user id")
-		}
-		const newAttemptResult = await errors.try(createNewAssessmentAttempt(userId, componentResource.sourcedId))
-		if (newAttemptResult.error) {
-			logger.error("failed to auto-create new attempt for course challenge on page load", {
-				error: newAttemptResult.error,
-				componentResourceSourcedId: componentResource.sourcedId
-			})
-		} else {
-			const newAttemptNumber = newAttemptResult.data.attempt.attempt
-			if (typeof newAttemptNumber === "number") {
-				attemptNumberForChallenge = newAttemptNumber
-				logger.info("auto-created new attempt for course challenge on page load", {
-					componentResourceSourcedId: componentResource.sourcedId,
-					attemptNumber: attemptNumberForChallenge
-				})
-			}
-		}
 	}
 	const preparedChallenge = await prepareInteractiveAssessment({
 		userSourceId: userMetaForChallenge.sourceId,

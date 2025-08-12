@@ -1,6 +1,5 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { cookies } from "next/headers"
 import { createNewAssessmentAttempt } from "@/lib/actions/assessment"
 import { powerpath } from "@/lib/clients"
 import type { AssessmentTest, TestQuestionsResponse } from "@/lib/qti"
@@ -41,52 +40,59 @@ export async function prepareInteractiveAssessment(options: PrepareOptions): Pro
 		throw errors.wrap(progressResult.error, "powerpath assessment progress")
 	}
 
-	// 2) Auto-rollover on entry: use one-shot cookie OR finalized
+	// 2) Auto-rollover on entry: based on finalized only (marker logic removed)
 	let attemptNumber = progressResult.data.attempt
 	const isFinalized = Boolean(progressResult.data.finalized)
-	let forceRollover = false
-	const cookieStoreResult = await errors.try(cookies())
-	if (cookieStoreResult.error) {
-		logger.error("failed to obtain cookie store for rollover marker read", {
-			error: cookieStoreResult.error,
-			componentResourceSourcedId
-		})
-	} else {
-		const store = cookieStoreResult.data
-		const marker = store.get(`nice_force_rollover_${componentResourceSourcedId}`)
-		forceRollover = Boolean(marker?.value === "1")
+	if (!isFinalized) {
+		// Robustness: poll for propagation of finalize state before creating next attempt
+		const backoffMs = [100, 200, 400, 800, 1600, 3200]
+		for (const delay of backoffMs) {
+			await new Promise((resolve) => setTimeout(resolve, delay))
+			const retryProgress = await errors.try(powerpath.getAssessmentProgress(userSourceId, componentResourceSourcedId))
+			if (retryProgress.error) {
+				logger.error("progress polling failed", { error: retryProgress.error, componentResourceSourcedId })
+				continue
+			}
+			if (retryProgress.data.finalized) {
+				logger.info("progress finalized after polling", { componentResourceSourcedId, delay })
+				break
+			}
+		}
 	}
 
-	if (isFinalized || forceRollover) {
-		const newAttempt = await errors.try(createNewAssessmentAttempt(userSourceId, componentResourceSourcedId))
-		if (newAttempt.error) {
+	// Re-check and attempt to create next attempt when finalized
+	const progressAfter = isFinalized
+		? progressResult
+		: await errors.try(powerpath.getAssessmentProgress(userSourceId, componentResourceSourcedId))
+	if (!progressAfter.error && Boolean(progressAfter.data.finalized)) {
+		// Try to create; if 422, retry with small backoff once
+		let createResult = await errors.try(createNewAssessmentAttempt(userSourceId, componentResourceSourcedId))
+		if (createResult.error) {
 			logger.error("failed to auto-create new attempt on page load", {
-				error: newAttempt.error,
+				error: createResult.error,
 				componentResourceSourcedId
 			})
-		} else {
-			const newAttemptNumber = newAttempt.data.attempt.attempt
+			// Retry once if backend says not completed yet
+			const msg = String(createResult.error)
+			if (msg.includes("not completed") || msg.includes("422")) {
+				await new Promise((r) => setTimeout(r, 200))
+				createResult = await errors.try(createNewAssessmentAttempt(userSourceId, componentResourceSourcedId))
+				if (createResult.error) {
+					logger.error("retry: failed to auto-create new attempt on page load", {
+						error: createResult.error,
+						componentResourceSourcedId
+					})
+				}
+			}
+		}
+		if (!createResult.error) {
+			const newAttemptNumber = createResult.data.attempt.attempt
 			if (typeof newAttemptNumber === "number") {
 				attemptNumber = newAttemptNumber
 				logger.info("auto-created new attempt on page load", {
 					componentResourceSourcedId,
 					attemptNumber
 				})
-				// Clear the marker cookie on success
-				const clearStoreResult = await errors.try(cookies())
-				if (clearStoreResult.error) {
-					logger.error("failed to obtain cookie store for rollover marker clear", {
-						error: clearStoreResult.error,
-						componentResourceSourcedId
-					})
-				} else {
-					clearStoreResult.data.set(`nice_force_rollover_${componentResourceSourcedId}`, "", {
-						httpOnly: true,
-						path: "/",
-						maxAge: 0
-					})
-					logger.info("cleared rollover marker cookie", { componentResourceSourcedId })
-				}
 			}
 		}
 	}
