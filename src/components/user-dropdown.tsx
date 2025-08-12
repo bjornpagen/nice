@@ -39,7 +39,7 @@ export function UserDropdown({ displayName, displayInitial, dark }: UserDropdown
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-64 p-0">
 				{/* Notifications */}
-				<DropdownMenuItem className="px-4 py-3 cursor-pointer">
+				<DropdownMenuItem className="px-4 py-3 cursor-not-allowed opacity-60" onSelect={(e) => e.preventDefault()}>
 					<span className="text-base">Notifications</span>
 					<ChevronRight className="h-4 w-4 text-gray-400 ml-auto" />
 				</DropdownMenuItem>
@@ -48,14 +48,14 @@ export function UserDropdown({ displayName, displayInitial, dark }: UserDropdown
 
 				{/* Menu Items */}
 				<DropdownMenuItem className="px-4 py-3 cursor-pointer" onClick={() => router.push("/profile/me/courses")}>
-					<span className="text-base text-blue-600">Learner home</span>
+					<span className="text-base text-blue-600">Learner Home</span>
 				</DropdownMenuItem>
 
-				<DropdownMenuItem className="px-4 py-3 cursor-pointer">
+				<DropdownMenuItem className="px-4 py-3 cursor-not-allowed opacity-60" onSelect={(e) => e.preventDefault()}>
 					<span className="text-base text-blue-600">Settings</span>
 				</DropdownMenuItem>
 
-				<DropdownMenuItem className="px-4 py-3 cursor-pointer">
+				<DropdownMenuItem className="px-4 py-3 cursor-not-allowed opacity-60" onSelect={(e) => e.preventDefault()}>
 					<span className="text-base text-blue-600">Help</span>
 				</DropdownMenuItem>
 

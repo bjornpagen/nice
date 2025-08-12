@@ -60,11 +60,11 @@ export function LessonSection({
 						)}
 					</div>
 				</div>
-				<div className="mb-2 mt-4">
-					<span className="text-gray-500 text-sm mb-4 block">Practice</span>
-					<div className="space-y-3">
-						{exercises.length > 0 ? (
-							exercises.map((exercise, index) => {
+				{exercises.length > 0 && (
+					<div className="mb-2 mt-4">
+						<span className="text-gray-500 text-sm mb-4 block">Practice</span>
+						<div className="space-y-3">
+							{exercises.map((exercise, index) => {
 								const isLocked = resourceLockStatus[exercise.id] === true
 								if (isLocked) {
 									return <LockedItem key={`${lesson.id}-locked-exercise-${exercise.id}`} title={exercise.title} />
@@ -78,12 +78,10 @@ export function LessonSection({
 										progress={progressMap.get(exercise.id)}
 									/>
 								)
-							})
-						) : (
-							<div className="text-gray-800 text-sm">No exercises found</div>
-						)}
+							})}
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 		</Section>
 	)

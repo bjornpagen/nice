@@ -58,7 +58,7 @@ function SubjectCourseItem({ course }: { course: CourseSummary }) {
 						<ul className="grid grid-cols-1 sm:grid-cols-2 gap-1">
 							{course.units.map((unit) => (
 								<li key={unit.id}>
-									<Link href={unit.path} className="text-sm text-blue-700 hover:underline">
+									<Link href={unit.path} className="text-sm text-gray-700 hover:underline">
 										{unit.title}
 									</Link>
 								</li>
