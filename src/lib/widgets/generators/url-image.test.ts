@@ -9,7 +9,8 @@ describe("generateUrlImage", () => {
 			alt: "Example image",
 			width: null,
 			height: null,
-			caption: null
+			caption: null,
+			attribution: null
 		})
 
 		expect(result).toMatchSnapshot()
@@ -24,7 +25,8 @@ describe("generateUrlImage", () => {
 			alt: "A beautiful landscape",
 			width: 400,
 			height: 300,
-			caption: "Sunset over the mountains"
+			caption: "Sunset over the mountains",
+			attribution: "Photo by John Doe"
 		})
 
 		expect(result).toMatchSnapshot()
@@ -42,7 +44,8 @@ describe("generateUrlImage", () => {
 			alt: "Diagram showing process flow",
 			width: 600,
 			height: null,
-			caption: null
+			caption: null,
+			attribution: null
 		})
 
 		expect(result).toMatchSnapshot()
@@ -57,7 +60,8 @@ describe("generateUrlImage", () => {
 			alt: "Sales chart",
 			width: null,
 			height: 450,
-			caption: null
+			caption: null,
+			attribution: null
 		})
 
 		expect(result).toMatchSnapshot()
@@ -72,12 +76,32 @@ describe("generateUrlImage", () => {
 			alt: "Scientific figure",
 			width: null,
 			height: null,
-			caption: "Figure 1: Cell division process"
+			caption: "Figure 1: Cell division process",
+			attribution: null
 		})
 
 		expect(result).toMatchSnapshot()
 		expect(result).toContain("Figure 1: Cell division process")
 		expect(result).toContain("font-size: 0.9em")
-		expect(result).toContain("color: #555")
+		expect(result).toContain("color: #333")
+	})
+
+	test("should not render attribution even when provided", () => {
+		const result = generateUrlImage({
+			type: "urlImage",
+			url: "https://example.com/artwork.jpg",
+			alt: "Famous artwork",
+			width: null,
+			height: null,
+			caption: "The Starry Night",
+			attribution: "Vincent van Gogh, 1889"
+		})
+
+		expect(result).toMatchSnapshot()
+		expect(result).toContain("The Starry Night")
+		expect(result).not.toContain("Vincent van Gogh")
+		expect(result).not.toContain("1889")
+		// Verify that attribution text is not rendered anywhere
+		expect(result).not.toContain("attribution")
 	})
 })

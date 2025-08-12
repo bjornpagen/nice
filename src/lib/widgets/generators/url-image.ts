@@ -26,12 +26,24 @@ export const UrlImageWidgetPropsSchema = z
 			.string()
 			.nullable()
 			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional caption to display below the image.")
+			.describe(
+				"An optional descriptive caption to display below the image. This should describe what the image shows or provide context."
+			),
+		attribution: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe(
+				"An optional attribution or source credit field (not rendered). This field exists to encourage LLMs to separate attribution/source information from the caption text. Include image source, creator, or copyright information here instead of in the caption."
+			)
 	})
 	.strict()
 
 export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema> = (props) => {
 	const { url, alt, width, height, caption } = props
+	// Note: attribution is intentionally not destructured or rendered
+	// The attribution field exists in the schema to encourage LLMs to separate
+	// attribution/source info from the caption, but we don't display it
 
 	// Validate URL at compile time
 	const urlValidationResult = errors.trySync((): void => {
@@ -46,7 +58,7 @@ export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema>
 	const imgStyles = ["display: block;", width ? `width: ${width}px;` : "", height ? `height: ${height}px;` : ""]
 		.filter(Boolean)
 		.join(" ")
-	const captionStyles = "font-size: 0.9em; color: #555; margin-top: 4px;"
+	const captionStyles = "font-size: 0.9em; color: #333; margin-top: 8px;"
 
 	// Escape helpers for XML contexts
 	const escapeXmlText = (text: string): string =>

@@ -156,6 +156,73 @@ CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, 
      - NO OTHER LOCATION
 - **HARD STOP. NO EXCEPTIONS.** Answers are FORBIDDEN in body, widgets, or interactions. They are ONLY allowed in the designated feedback fields above.
 
+  **CRITICAL: ATTRIBUTION/CREDIT HANDLING — BANNED IN 'BODY'**
+  Attribution, credit, and licensing strings (e.g., creator names, "Image credit:", source sites, licenses like "CC0 1.0", "CC BY-SA", Wikimedia/Unsplash references) MUST NOT appear anywhere in the 'body'. This information is captured downstream in widget data.
+  - Do NOT place attribution/credit/license strings in 'body' paragraphs, prompts, or feedback.
+  - Do NOT include attribution in widget captions. Captions should ONLY describe the image content.
+  - If the Perseus content includes attribution/credit text adjacent to an image, STRIP IT from the 'body'. The pipeline will store attribution in the widget's 'attribution' field later.
+  - Examples of banned phrases in body: "Image credit:", "Photo by", "by <creator>", "Wikimedia", "CC0", "CC BY", "licensed under".
+
+  WRONG (attribution left in 'body' as a trailing paragraph):
+  \`\`\`json
+  {
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Consider the following passage." }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Skeletal muscle is a type of tissue that helps move the bones of the skeleton. Skeletal muscles produce movement by contracting (shortening) in response to signals from the nervous system. These muscles require a large supply of energy in order to maintain their function. Each skeletal muscle is made up of specialized cells called myocytes." }] },
+      { "type": "blockSlot", "slotId": "image_1" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Which claim is best supported by the passage above?" }] },
+      { "type": "blockSlot", "slotId": "choice_interaction" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "\"Muscle Tissue Skeletal Muscle Fibers\" by Berkshire Community College Bioscience Image Library, CC0 1.0." }] }
+    ]
+  }
+  \`\`\`
+
+  CORRECT (remove attribution paragraph from 'body'; attribution will be captured later in the widget data):
+  \`\`\`json
+  {
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Consider the following passage." }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Skeletal muscle is a type of tissue that helps move the bones of the skeleton. Skeletal muscles produce movement by contracting (shortening) in response to signals from the nervous system. These muscles require a large supply of energy in order to maintain their function. Each skeletal muscle is made up of specialized cells called myocytes." }] },
+      { "type": "blockSlot", "slotId": "image_1" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Which claim is best supported by the passage above?" }] },
+      { "type": "blockSlot", "slotId": "choice_interaction" }
+    ]
+  }
+  \`\`\`
+
+  WRONG (attribution/credit string in 'body' following an image):
+  \`\`\`json
+  {
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "The following diagram shows Earth's lines of latitude." }] },
+      { "type": "blockSlot", "slotId": "image_1" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Complete the statement." }] },
+      { "type": "paragraph", "content": [
+        { "type": "text", "content": "As latitude decreases, species richness tends to " },
+        { "type": "inlineSlot", "slotId": "dropdown_1" },
+        { "type": "text", "content": "." }
+      ]},
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Diagram credit: \"Latitude of the Earth\" by Djexplo, CC0 1.0." }] }
+    ]
+  }
+  \`\`\`
+
+  CORRECT (remove the attribution paragraph; it belongs in the widget's non-rendered 'attribution' property):
+  \`\`\`json
+  {
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "The following diagram shows Earth's lines of latitude." }] },
+      { "type": "blockSlot", "slotId": "image_1" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Complete the statement." }] },
+      { "type": "paragraph", "content": [
+        { "type": "text", "content": "As latitude decreases, species richness tends to " },
+        { "type": "inlineSlot", "slotId": "dropdown_1" },
+        { "type": "text", "content": "." }
+      ]}
+    ]
+  }
+  \`\`\`
+
 **CRITICAL: NO EXPLANATION WIDGETS.**
 NEVER create a widget for explanatory text. Explanations or definitions found in the Perseus JSON (especially those of type 'explanation' or 'definition') must be embedded directly within the 'body' content as paragraph blocks. The 'explanation' and 'definition' widget types are BANNED. Hints are EXPLICITLY FORBIDDEN and MUST be stripped entirely.
 
