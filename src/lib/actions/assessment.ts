@@ -3,7 +3,7 @@
 import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-
+import { cookies } from "next/headers"
 import { oneroster, powerpath, qti } from "@/lib/clients"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 
@@ -167,6 +167,27 @@ export async function processQuestionResponse(
 				onerosterComponentResourceSourcedId
 			})
 			// Do not throw: finalization failure should not block the user's response flow.
+		} else {
+			// Set a one-shot server marker to force rollover on next entry
+			const cookieName = `nice_force_rollover_${onerosterComponentResourceSourcedId}`
+			const cookieStoreResult = await errors.try(cookies())
+			if (cookieStoreResult.error) {
+				logger.error("failed to obtain cookie store for rollover marker", {
+					error: cookieStoreResult.error,
+					qtiItemId,
+					onerosterComponentResourceSourcedId
+				})
+			} else {
+				const store = cookieStoreResult.data
+				store.set(cookieName, "1", {
+					httpOnly: true,
+					sameSite: "lax",
+					path: "/",
+					maxAge: 60 * 5,
+					secure: process.env.NODE_ENV === "production"
+				})
+				logger.info("set rollover marker cookie after finalize", { onerosterComponentResourceSourcedId })
+			}
 		}
 	}
 
@@ -214,6 +235,19 @@ export async function createNewAssessmentAttempt(
 		onerosterComponentResourceSourcedId,
 		attempt: result.data
 	})
+
+	// Clear any rollover marker cookie to avoid double-attempt creation on immediate re-entry
+	const cookieName = `nice_force_rollover_${onerosterComponentResourceSourcedId}`
+	const cookieStoreResult = await errors.try(cookies())
+	if (cookieStoreResult.error) {
+		logger.error("failed to obtain cookie store to clear rollover marker", {
+			error: cookieStoreResult.error,
+			onerosterComponentResourceSourcedId
+		})
+	} else {
+		cookieStoreResult.data.set(cookieName, "", { httpOnly: true, path: "/", maxAge: 0 })
+		logger.info("cleared rollover marker cookie after explicit retake", { onerosterComponentResourceSourcedId })
+	}
 
 	return result.data
 }

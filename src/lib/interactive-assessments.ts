@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { cookies } from "next/headers"
 import { createNewAssessmentAttempt } from "@/lib/actions/assessment"
 import { powerpath } from "@/lib/clients"
 import type { AssessmentTest, TestQuestionsResponse } from "@/lib/qti"
@@ -40,10 +41,23 @@ export async function prepareInteractiveAssessment(options: PrepareOptions): Pro
 		throw errors.wrap(progressResult.error, "powerpath assessment progress")
 	}
 
-	// 2) Auto-rollover if finalized
+	// 2) Auto-rollover on entry: use one-shot cookie OR finalized
 	let attemptNumber = progressResult.data.attempt
 	const isFinalized = Boolean(progressResult.data.finalized)
-	if (isFinalized) {
+	let forceRollover = false
+	const cookieStoreResult = await errors.try(cookies())
+	if (cookieStoreResult.error) {
+		logger.error("failed to obtain cookie store for rollover marker read", {
+			error: cookieStoreResult.error,
+			componentResourceSourcedId
+		})
+	} else {
+		const store = cookieStoreResult.data
+		const marker = store.get(`nice_force_rollover_${componentResourceSourcedId}`)
+		forceRollover = Boolean(marker?.value === "1")
+	}
+
+	if (isFinalized || forceRollover) {
 		const newAttempt = await errors.try(createNewAssessmentAttempt(userSourceId, componentResourceSourcedId))
 		if (newAttempt.error) {
 			logger.error("failed to auto-create new attempt on page load", {
@@ -58,6 +72,21 @@ export async function prepareInteractiveAssessment(options: PrepareOptions): Pro
 					componentResourceSourcedId,
 					attemptNumber
 				})
+				// Clear the marker cookie on success
+				const clearStoreResult = await errors.try(cookies())
+				if (clearStoreResult.error) {
+					logger.error("failed to obtain cookie store for rollover marker clear", {
+						error: clearStoreResult.error,
+						componentResourceSourcedId
+					})
+				} else {
+					clearStoreResult.data.set(`nice_force_rollover_${componentResourceSourcedId}`, "", {
+						httpOnly: true,
+						path: "/",
+						maxAge: 0
+					})
+					logger.info("cleared rollover marker cookie", { componentResourceSourcedId })
+				}
 			}
 		}
 	}
