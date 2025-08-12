@@ -2,7 +2,6 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { connection } from "next/server"
 import { getAllComponentResources, getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
 import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { prepareInteractiveAssessment } from "@/lib/interactive-assessments"
@@ -14,8 +13,7 @@ import { assertNoEncodedColons } from "@/lib/utils"
 import { fetchLessonLayoutData } from "./lesson"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {
-	// Opt into dynamic rendering to ensure external fetches (e.g., OneRoster token) occur during request lifecycle
-	await connection()
+	// dynamic opt-in is handled at the page level
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.article, "fetchArticlePageData article parameter")
 	logger.info("fetchArticlePageData called", { params })
@@ -74,8 +72,7 @@ export async function fetchExercisePageData(params: {
 	lesson: string
 	exercise: string
 }): Promise<ExercisePageData> {
-	// Opt into dynamic rendering
-	await connection()
+	// dynamic opt-in is handled at the page level
 
 	logger.info("fetchExercisePageData called", { params })
 	// Defensive check: middleware should have normalized URLs
@@ -212,8 +209,7 @@ export async function fetchExercisePageData(params: {
 }
 
 export async function fetchVideoPageData(params: { video: string }): Promise<VideoPageData> {
-	// Opt into dynamic rendering to ensure external fetches (e.g., OneRoster token) occur during request lifecycle
-	await connection()
+	// dynamic opt-in is handled at the page level
 	logger.info("fetchVideoPageData called", { params })
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.video, "fetchVideoPageData video parameter")

@@ -1,6 +1,5 @@
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { connection } from "next/server"
 import type { UnitPageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
 import { fetchCoursePageData } from "./course"
@@ -10,8 +9,6 @@ export async function fetchUnitPageData(params: {
 	course: string
 	unit: string
 }): Promise<UnitPageData> {
-	// Opt into dynamic rendering to ensure external fetches (e.g., OneRoster token) occur during request lifecycle
-	await connection()
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.unit, "fetchUnitPageData unit parameter")
 

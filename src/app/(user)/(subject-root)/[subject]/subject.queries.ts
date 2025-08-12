@@ -1,6 +1,5 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { connection } from "next/server"
 import { getOneRosterCoursesForExplore } from "@/lib/actions/courses"
 import { fetchCoursePageData } from "@/lib/data/course"
 import type { Unit } from "@/lib/types/domain"
@@ -23,7 +22,6 @@ export type SubjectWithCourseUnits = {
 export async function fetchSubjectPageData(params: {
 	subject: string
 }): Promise<SubjectWithCourseUnitsHeader | undefined> {
-	await connection()
 	assertNoEncodedColons(params.subject, "fetchSubjectPageData subject parameter")
 
 	logger.info("fetching subject page data from oneroster", { subjectSlug: params.subject })
@@ -51,7 +49,6 @@ export async function fetchSubjectPageData(params: {
 export async function fetchSubjectCoursesWithUnits(params: {
 	subject: string
 }): Promise<SubjectWithCourseUnits | undefined> {
-	await connection()
 	assertNoEncodedColons(params.subject, "fetchSubjectCoursesWithUnits subject parameter")
 
 	logger.info("fetching subject courses with units", { subjectSlug: params.subject })

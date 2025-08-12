@@ -1,3 +1,4 @@
+import { connection } from "next/server"
 import * as React from "react"
 import { fetchQuizPageData } from "@/lib/data/assessment"
 import type { QuizPageData } from "@/lib/types/page"
@@ -6,11 +7,12 @@ import { Content } from "./components/content"
 
 // --- REMOVED: The local QuizPageData type definition ---
 
-export default function QuizPage({
+export default async function QuizPage({
 	params
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; quiz: string }>
 }) {
+	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
 	const quizPromise: Promise<QuizPageData> = normalizedParamsPromise.then(fetchQuizPageData)
 

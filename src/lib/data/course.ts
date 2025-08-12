@@ -1,7 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { connection } from "next/server"
 import {
 	getAllComponentResources,
 	getAllCoursesBySlug,
@@ -39,8 +38,6 @@ export async function fetchCoursePageData(
 	params: { subject: string; course: string },
 	options?: { skip?: { questions?: boolean } }
 ): Promise<CoursePageData> {
-	// Opt into dynamic rendering to ensure external fetches (e.g., OneRoster token) occur during request lifecycle
-	await connection()
 	logger.info("fetchCoursePageData called", { params, options })
 
 	// Defensive check: middleware should have normalized URLs

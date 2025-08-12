@@ -2,7 +2,6 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { connection } from "next/server"
 import { createNewAssessmentAttempt } from "@/lib/actions/assessment"
 import { powerpath } from "@/lib/clients"
 import {
@@ -41,8 +40,7 @@ export async function fetchQuizPageData(params: {
 	lesson: string
 	quiz: string
 }): Promise<QuizPageData> {
-	// Opt into dynamic rendering since we use Math.random() for shuffling
-	await connection()
+	// dynamic opt-in is handled at the page level
 
 	const layoutData = await fetchLessonLayoutData(params)
 
@@ -209,8 +207,7 @@ export async function fetchUnitTestPageData(params: {
 	lesson: string
 	test: string
 }): Promise<UnitTestPageData> {
-	// Opt into dynamic rendering since we use Math.random() for shuffling
-	await connection()
+	// dynamic opt-in is handled at the page level
 
 	const layoutData = await fetchLessonLayoutData(params)
 
@@ -374,8 +371,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 	course: string
 	subject: string
 }): Promise<CourseChallengePageData> {
-	// Opt into dynamic rendering since we use Math.random() for shuffling
-	await connection()
+	// dynamic opt-in is handled at the page level
 
 	logger.info("fetchCourseChallengePage_TestData called", { params })
 
@@ -613,8 +609,7 @@ export async function fetchCourseChallengePage_LayoutData(params: {
 	course: string
 	subject: string
 }): Promise<CourseChallengeLayoutData> {
-	// Opt into dynamic rendering since we use Math.random() for shuffling
-	await connection()
+	// dynamic opt-in is handled at the page level
 
 	const coursePageData = await fetchCoursePageData({ subject: params.subject, course: params.course })
 

@@ -7,13 +7,13 @@ import { Content } from "./components/content"
 
 // --- REMOVED: The local fetchVideoData function ---
 
-export default function VideoPage({
+export default async function VideoPage({
 	params
 }: {
 	params: Promise<{ subject: string; course: string; unit: string; lesson: string; video: string }>
 }) {
 	// Opt into dynamic rendering to ensure external fetches occur during request lifecycle
-	void connection()
+	await connection()
 	const normalizedParamsPromise = normalizeParams(params)
 	const videoPromise: Promise<VideoPageData> = normalizedParamsPromise.then(fetchVideoPageData)
 
