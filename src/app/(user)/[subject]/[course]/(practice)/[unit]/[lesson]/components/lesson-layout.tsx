@@ -34,6 +34,20 @@ export function LessonLayout({
 	const pathname = normalizeString(rawPathname)
 	assertNoEncodedColons(pathname, "lesson-layout pathname")
 	const [isCollapsed, setIsCollapsed] = React.useState(false)
+	const [isMobile, setIsMobile] = React.useState<boolean>(false)
+
+	// collapse sidebar and hide toggle on small screens (<= md)
+	React.useEffect(() => {
+		const mq = window.matchMedia("(max-width: 767px)")
+		const update = () => {
+			const mobile = mq.matches
+			setIsMobile(mobile)
+			setIsCollapsed(mobile ? true : false)
+		}
+		update()
+		mq.addEventListener("change", update)
+		return () => mq.removeEventListener("change", update)
+	}, [])
 
 	// Determine lock state for the current route using course + resourceLockStatus
 	const course = React.use(coursePromise)
@@ -86,7 +100,7 @@ export function LessonLayout({
 				<div className="flex h-full">
 					{/* Wrap Sidebar in a flex container to match legacy layout behavior */}
 					<div
-						className="w-[var(--sidebar-width)] flex-shrink-0 bg-gray-50 border-r border-gray-200 h-full sidebar-container"
+						className="w-0 md:w-[var(--sidebar-width)] flex-shrink-0 md:bg-gray-50 md:border-r border-none h-full sidebar-container overflow-hidden md:overflow-visible"
 						data-collapsed={isCollapsed}
 					>
 						<Sidebar
@@ -98,16 +112,18 @@ export function LessonLayout({
 
 					{/* Main area with flex column layout */}
 					<div className="flex-1 flex flex-col relative">
-						{/* Sidebar toggle button */}
-						<Button
-							onClick={toggleSidebar}
-							variant="ghost"
-							size="icon"
-							className="absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md z-10 rounded-l-none rounded-r-md hover:cursor-pointer size-7 border border-l-0"
-						>
-							{isCollapsed ? <ChevronRightIcon className="h-4 w-4" /> : <ChevronLeftIcon className="h-4 w-4" />}
-							<span className="sr-only">Toggle Sidebar</span>
-						</Button>
+						{/* Sidebar toggle button - hidden on small screens */}
+						{!isMobile && (
+							<Button
+								onClick={toggleSidebar}
+								variant="ghost"
+								size="icon"
+								className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md z-10 rounded-l-none rounded-r-md hover:cursor-pointer size-7 border border-l-0"
+							>
+								{isCollapsed ? <ChevronRightIcon className="h-4 w-4" /> : <ChevronLeftIcon className="h-4 w-4" />}
+								<span className="sr-only">Toggle Sidebar</span>
+							</Button>
+						)}
 
 						{/* Content area */}
 						<div className="flex-1 overflow-y-auto bg-gray-50">{children}</div>
