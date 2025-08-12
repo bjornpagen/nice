@@ -80,7 +80,8 @@ export async function awardBankedXpForAssessment(
 	let detectedQuizzes = 0
 	for (const cr of unitCrResult.data) {
 		const resource = resourceMap.get(cr.resource.sourcedId)
-		const isInteractiveQuiz = resource?.metadata?.type === "interactive" && resource?.metadata?.activityType === "Quiz"
+		const isInteractiveQuiz =
+			resource?.metadata?.type === "interactive" && resource?.metadata?.khanActivityType === "Quiz"
 
 		if (
 			resource &&

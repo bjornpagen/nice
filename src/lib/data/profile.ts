@@ -514,10 +514,10 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 						const resourceMetadata = resourceMetadataResult.data
 
 						// Check if this is an assessable resource (exercise, quiz, or test)
-						if (resourceMetadata.activityType === "UnitTest" || resourceMetadata.activityType === "Quiz") {
+						if (resourceMetadata.khanActivityType === "UnitTest" || resourceMetadata.khanActivityType === "Quiz") {
 							if (componentResource.courseComponent.sourcedId === unit.id) {
 								// This is a unit-level assessment
-								if (resourceMetadata.activityType === "UnitTest") {
+								if (resourceMetadata.khanActivityType === "UnitTest") {
 									unitAssessments.push({
 										type: "UnitTest",
 										id: resource.sourcedId,
@@ -525,7 +525,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 										path: "", // Will be set later
 										sortOrder: componentResource.sortOrder
 									})
-								} else if (resourceMetadata.activityType === "Quiz") {
+								} else if (resourceMetadata.khanActivityType === "Quiz") {
 									unitAssessments.push({
 										type: "Quiz",
 										id: resource.sourcedId,
@@ -535,7 +535,7 @@ export async function fetchUserEnrolledCourses(userSourcedId: string): Promise<P
 									})
 								}
 							}
-						} else if (resourceMetadata.activityType === "Exercise") {
+						} else if (resourceMetadata.khanActivityType === "Exercise") {
 							// This is a lesson-level exercise
 							const lesson = unitLessons.find((l) => l.id === componentResource.courseComponent.sourcedId)
 							if (lesson) {

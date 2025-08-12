@@ -25,7 +25,9 @@ const BaseResourceMetadataSchema = z.object({
 	khanDescription: z.string().default(""),
 	xp: z.number().default(0),
 	// Optional shared convenience field used by our frontend for videos
-	khanYoutubeId: z.string().optional()
+	khanYoutubeId: z.string().optional(),
+	// REQUIRED: Nice-controlled activity type used across the app
+	khanActivityType: z.enum(["Article", "Video", "Exercise", "Quiz", "UnitTest", "CourseChallenge"])
 })
 
 // Schema for Interactive-specific metadata
@@ -33,8 +35,7 @@ const InteractiveResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 	type: z.literal("interactive"),
 	launchUrl: z.string().url(),
 	url: z.string().url().optional(),
-	toolProvider: z.string().optional(),
-	activityType: z.enum(["Article", "Video", "Exercise", "Quiz", "UnitTest", "CourseChallenge"])
+	toolProvider: z.string().optional()
 })
 
 // Schema for QTI-specific metadata (used for exercises and assessment tests)
@@ -44,9 +45,7 @@ const QtiResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 	url: z.string().url(),
 	version: z.string().default("3.0"),
 	language: z.string().default("en-US"),
-	questionType: z.string().optional(),
-	// Nice-controlled fields to keep frontend logic stable
-	activityType: z.enum(["Article", "Video", "Exercise", "Quiz", "UnitTest", "CourseChallenge"]).optional()
+	questionType: z.string().optional()
 })
 
 // The resource metadata schema supports both interactive and qti resources
@@ -55,4 +54,4 @@ export const ResourceMetadataSchema = z.discriminatedUnion("type", [
 	QtiResourceMetadataSchema
 ])
 export type ResourceMetadata = z.infer<typeof ResourceMetadataSchema>
-export type ActivityType = z.infer<typeof InteractiveResourceMetadataSchema.shape.activityType>
+export type KhanActivityType = z.infer<typeof BaseResourceMetadataSchema.shape.khanActivityType>

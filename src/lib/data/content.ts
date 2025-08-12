@@ -43,11 +43,11 @@ export async function fetchArticlePageData(params: { article: string }): Promise
 	}
 
 	// Check for "Article" activityType
-	if (resourceMetadataResult.data.activityType !== "Article") {
+	if (resourceMetadataResult.data.khanActivityType !== "Article") {
 		logger.error("invalid activityType for article page", {
 			resourceSourcedId: resource.sourcedId,
 			expected: "Article",
-			actualActivityType: resourceMetadataResult.data.activityType
+			actualActivityType: resourceMetadataResult.data.khanActivityType
 		})
 		throw errors.new("invalid activity type")
 	}
@@ -114,11 +114,11 @@ export async function fetchExercisePageData(params: {
 	}
 
 	// Check for "Exercise" activityType
-	if (resourceMetadataResult.data.activityType !== "Exercise") {
+	if (resourceMetadataResult.data.khanActivityType !== "Exercise") {
 		logger.error("invalid activityType for exercise page", {
 			resourceSourcedId: resource.sourcedId,
 			expected: "Exercise",
-			actualActivityType: resourceMetadataResult.data.activityType
+			actualActivityType: resourceMetadataResult.data.khanActivityType
 		})
 		throw errors.new("invalid activity type")
 	}
@@ -253,11 +253,11 @@ export async function fetchVideoPageData(params: { video: string }): Promise<Vid
 	}
 
 	// Check for "Video" activityType
-	if (resourceMetadataResult.data.activityType !== "Video") {
+	if (resourceMetadataResult.data.khanActivityType !== "Video") {
 		logger.error("invalid activityType for video page", {
 			resourceSourcedId: resource.sourcedId,
 			expected: "Video",
-			actualActivityType: resourceMetadataResult.data.activityType
+			actualActivityType: resourceMetadataResult.data.khanActivityType
 		})
 		throw errors.new("invalid activity type")
 	}

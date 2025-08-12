@@ -16,7 +16,7 @@ const PROBLEM_RESOURCE = {
 	metadata: {
 		type: "interactive",
 		toolProvider: "Nice Academy",
-		activityType: "CourseChallenge",
+		khanActivityType: "CourseChallenge",
 		launchUrl: `${env.NEXT_PUBLIC_APP_DOMAIN}/economics-finance-domain/ap-microeconomics/test/x2832fbb7463fe65a:course-challenge`,
 		khanId: "x2832fbb7463fe65a",
 		khanSlug: "x2832fbb7463fe65a:course-challenge",

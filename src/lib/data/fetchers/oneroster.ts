@@ -35,7 +35,7 @@ import { createPrefixFilter } from "@/lib/filter"
 
 // Prefix filters for leveraging btree indexes
 const NICE_PREFIX_FILTER = createPrefixFilter("nice_")
-function hasMetaKeys(x: unknown): x is { type?: unknown; subType?: unknown; activityType?: unknown } {
+function hasMetaKeys(x: unknown): x is { type?: unknown; subType?: unknown; khanActivityType?: unknown } {
 	return typeof x === "object" && x !== null
 }
 
@@ -240,9 +240,9 @@ export async function getAllResources() {
 export async function getResourcesBySlugAndType(
 	slug: string,
 	type: "interactive",
-	activityType?: "Article" | "Video" | "Exercise" | "Quiz" | "UnitTest" | "CourseChallenge"
+	khanActivityType?: "Article" | "Video" | "Exercise" | "Quiz" | "UnitTest" | "CourseChallenge"
 ) {
-	logger.info("getResourcesBySlugAndType called", { slug, type, activityType })
+	logger.info("getResourcesBySlugAndType called", { slug, type, khanActivityType })
 	const operation = async () => {
 		// Due to OneRoster API limitation, we can only use one AND operation
 		// Keep filtering by slug as it's reasonably selective, type filter is quick client-side
@@ -254,14 +254,16 @@ export async function getResourcesBySlugAndType(
 
 		// Filter by type in-memory with backward-compatible support for QTI tests/exercises
 		let filtered = activeResources
-		if (activityType === "Article" || activityType === "Video") {
+		if (khanActivityType === "Article" || khanActivityType === "Video") {
 			// Articles and Videos remain interactive only
-			filtered = filtered.filter((r) => r.metadata?.type === "interactive" && r.metadata?.activityType === activityType)
+			filtered = filtered.filter(
+				(r) => r.metadata?.type === "interactive" && r.metadata?.khanActivityType === khanActivityType
+			)
 		} else if (
-			activityType === "Exercise" ||
-			activityType === "Quiz" ||
-			activityType === "UnitTest" ||
-			activityType === "CourseChallenge"
+			khanActivityType === "Exercise" ||
+			khanActivityType === "Quiz" ||
+			khanActivityType === "UnitTest" ||
+			khanActivityType === "CourseChallenge"
 		) {
 			// Accept either interactive (older) or qti (reverted) forms
 			filtered = filtered.filter((r) => {
@@ -269,15 +271,15 @@ export async function getResourcesBySlugAndType(
 				if (!hasMetaKeys(meta)) return false
 				const typeVal = typeof meta.type === "string" ? meta.type : undefined
 				const subTypeVal = typeof meta.subType === "string" ? meta.subType : undefined
-				const activityVal = typeof meta.activityType === "string" ? meta.activityType : undefined
+				const activityVal = typeof meta.khanActivityType === "string" ? meta.khanActivityType : undefined
 
 				if (typeVal === "interactive") {
-					return activityVal === activityType
+					return activityVal === khanActivityType
 				}
 				if (typeVal === "qti") {
 					// All assessment tests and exercises use qti-test
 					const subtypeOk = subTypeVal === "qti-test"
-					const activityOk = !activityVal || activityVal === activityType
+					const activityOk = !activityVal || activityVal === khanActivityType
 					return subtypeOk && activityOk
 				}
 				return false
@@ -289,8 +291,8 @@ export async function getResourcesBySlugAndType(
 
 		return filtered
 	}
-	const keyParts = activityType
-		? ["oneroster-getResourcesBySlugAndType", slug, type, activityType]
+	const keyParts = khanActivityType
+		? ["oneroster-getResourcesBySlugAndType", slug, type, khanActivityType]
 		: ["oneroster-getResourcesBySlugAndType", slug, type]
 	return redisCache(operation, keyParts, { revalidate: 3600 * 24 }) // 24-hour cache
 }

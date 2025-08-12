@@ -554,7 +554,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								...metadata,
 								type: "interactive",
 								toolProvider: "Nice Academy",
-								activityType: "Article",
+								khanActivityType: "Article",
 								launchUrl: `${appDomain}${metadata.path}/a/${content.slug}`,
 								url: `${appDomain}${metadata.path}/a/${content.slug}`,
 								xp: 2
@@ -570,7 +570,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								...metadata,
 								type: "interactive",
 								toolProvider: "Nice Academy",
-								activityType: "Video",
+								khanActivityType: "Video",
 								launchUrl: `${appDomain}${metadata.path}/v/${content.slug}`,
 								url: `${appDomain}${metadata.path}/v/${content.slug}`,
 								khanYoutubeId: videoData.youtubeId,
@@ -590,8 +590,9 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								version: "3.0",
 								language: "en-US",
 								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${content.id}`,
+								questionType: "custom",
 								// Keep Nice-controlled hints for our app (optional)
-								activityType: "Exercise",
+								khanActivityType: "Exercise",
 								xp: Math.ceil(exerciseQuestionCount * 0.5)
 							}
 						}
@@ -659,6 +660,17 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				}
 
 				// REVERT: Emit QTI test resources for Assessments (Quiz/UnitTest)
+				let khanLessonType: "quiz" | "unittest" | "coursechallenge" | undefined
+				if (assessment.type === "Quiz") {
+					khanLessonType = "quiz"
+				} else if (assessment.type === "UnitTest") {
+					khanLessonType = "unittest"
+				} else if (assessment.type === "CourseChallenge") {
+					khanLessonType = "coursechallenge"
+				} else {
+					khanLessonType = undefined
+				}
+
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
 					status: "active",
@@ -674,8 +686,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						version: "3.0",
 						language: "en-US",
 						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
+						questionType: "custom",
 						// Keep Nice-controlled hints for our app (optional)
-						activityType: assessment.type,
+						khanActivityType: assessment.type,
+						khanLessonType,
 						// Khan-specific data
 						khanId: assessment.id,
 						khanSlug: normalizeKhanSlug(assessment.slug),
@@ -736,6 +750,17 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					assessmentXp = Math.ceil(quizCount * 0.5)
 				}
 
+				let khanLessonType: "quiz" | "unittest" | "coursechallenge" | undefined
+				if (assessment.type === "Quiz") {
+					khanLessonType = "quiz"
+				} else if (assessment.type === "UnitTest") {
+					khanLessonType = "unittest"
+				} else if (assessment.type === "CourseChallenge") {
+					khanLessonType = "coursechallenge"
+				} else {
+					khanLessonType = undefined
+				}
+
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
 					status: "active",
@@ -751,8 +776,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						version: "3.0",
 						language: "en-US",
 						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
+						questionType: "custom",
 						// Keep Nice-controlled hints for our app (optional)
-						activityType: assessment.type,
+						khanActivityType: assessment.type,
+						khanLessonType,
 						// Khan-specific data
 						khanId: assessment.id,
 						khanSlug: normalizeKhanSlug(assessment.slug),

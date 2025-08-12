@@ -96,11 +96,11 @@ export async function fetchQuizPageData(params: {
 	}
 
 	// Check for "Quiz" activityType
-	if (resourceMetadataResult.data.activityType !== "Quiz") {
+	if (resourceMetadataResult.data.khanActivityType !== "Quiz") {
 		logger.error("invalid activityType for quiz page", {
 			resourceSourcedId: resource.sourcedId,
 			expected: "Quiz",
-			actualActivityType: resourceMetadataResult.data.activityType
+			actualActivityType: resourceMetadataResult.data.khanActivityType
 		})
 		throw errors.new("invalid activity type")
 	}
@@ -240,11 +240,11 @@ export async function fetchUnitTestPageData(params: {
 	}
 
 	// Check for "UnitTest" activityType
-	if (resourceMetadataResult.data.activityType !== "UnitTest") {
+	if (resourceMetadataResult.data.khanActivityType !== "UnitTest") {
 		logger.error("invalid activityType for unittest page", {
 			resourceSourcedId: resource.sourcedId,
 			expected: "UnitTest",
-			actualActivityType: resourceMetadataResult.data.activityType
+			actualActivityType: resourceMetadataResult.data.khanActivityType
 		})
 		throw errors.new("invalid activity type")
 	}
@@ -457,11 +457,11 @@ export async function fetchCourseChallengePage_TestData(params: {
 		throw errors.wrap(testResourceMetadataResult.error, "invalid test resource metadata")
 	}
 
-	if (testResourceMetadataResult.data.activityType !== "CourseChallenge") {
+	if (testResourceMetadataResult.data.khanActivityType !== "CourseChallenge") {
 		logger.error("invalid activityType for course challenge page", {
 			resourceSourcedId: testResource.sourcedId,
 			expected: "CourseChallenge",
-			actualActivityType: testResourceMetadataResult.data.activityType
+			actualActivityType: testResourceMetadataResult.data.khanActivityType
 		})
 		throw errors.new("invalid activity type")
 	}

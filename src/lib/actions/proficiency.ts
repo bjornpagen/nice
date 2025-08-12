@@ -76,13 +76,13 @@ export async function updateProficiencyFromAssessment(
 		logger.error("invalid resource metadata", { resourceSourcedId, error: metadataResult.error })
 		throw errors.wrap(metadataResult.error, "invalid resource metadata")
 	}
-	// Map activityType to lesson type for proficiency tracking
+	// Map khanActivityType to lesson type for proficiency tracking
 	let lessonType = "exercise"
-	if (metadataResult.data.activityType === "Quiz") {
+	if (metadataResult.data.khanActivityType === "Quiz") {
 		lessonType = "quiz"
-	} else if (metadataResult.data.activityType === "UnitTest") {
+	} else if (metadataResult.data.khanActivityType === "UnitTest") {
 		lessonType = "unittest"
-	} else if (metadataResult.data.activityType === "CourseChallenge") {
+	} else if (metadataResult.data.khanActivityType === "CourseChallenge") {
 		lessonType = "coursechallenge"
 	}
 

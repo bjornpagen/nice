@@ -239,7 +239,7 @@ export async function fetchCoursePageData(
 	const exerciseResourceSourcedIds = new Set<string>()
 	for (const resource of allResources) {
 		const metadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
-		if (metadataResult.success && metadataResult.data.activityType === "Exercise") {
+		if (metadataResult.success && metadataResult.data.khanActivityType === "Exercise") {
 			exerciseResourceSourcedIds.add(resource.sourcedId)
 		}
 	}
@@ -319,8 +319,8 @@ export async function fetchCoursePageData(
 			}
 			const resourceMetadata = resourceMetadataResult.data
 
-			if (resourceMetadata.activityType === "Quiz" || resourceMetadata.activityType === "UnitTest") {
-				const assessmentType = resourceMetadata.activityType
+			if (resourceMetadata.khanActivityType === "Quiz" || resourceMetadata.khanActivityType === "UnitTest") {
+				const assessmentType = resourceMetadata.khanActivityType
 
 				// Find the component resource to get sortOrder
 				const componentResource = componentResources.find(
@@ -407,7 +407,7 @@ export async function fetchCoursePageData(
 					throw errors.new(`component resource not found for lesson ${lesson.id} resource ${resource.sourcedId}`)
 				}
 
-				if (resourceMetadata.activityType === "Video") {
+				if (resourceMetadata.khanActivityType === "Video") {
 					const youtubeId = resourceMetadata.khanYoutubeId
 					if (!youtubeId) {
 						logger.error("video missing YouTube ID", { videoSourcedId: resource.sourcedId })
@@ -436,7 +436,7 @@ export async function fetchCoursePageData(
 						ordering: componentResource.sortOrder,
 						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 					})
-				} else if (resourceMetadata.activityType === "Article") {
+				} else if (resourceMetadata.khanActivityType === "Article") {
 					// This is an article
 					// Get lesson slug for path construction
 					const lessonComponentMeta = ComponentMetadataSchema.safeParse(
@@ -458,7 +458,7 @@ export async function fetchCoursePageData(
 						ordering: componentResource.sortOrder,
 						xp: resourceMetadata.xp || 0 // Use XP from metadata or default to 0
 					})
-				} else if (resourceMetadata.activityType === "Exercise") {
+				} else if (resourceMetadata.khanActivityType === "Exercise") {
 					// This is an exercise
 					// Get lesson slug for path construction
 					const lessonComponentMeta = ComponentMetadataSchema.safeParse(
@@ -624,7 +624,7 @@ export async function fetchCoursePageData(
 			const resourceMetadata = resourceMetadataResult.data
 
 			// Check if this is a course challenge resource
-			if (resourceMetadata.activityType === "CourseChallenge") {
+			if (resourceMetadata.khanActivityType === "CourseChallenge") {
 				// The ResourceMetadataSchema transform drops the path field, so we reconstruct it
 				// from slugs, adhering to our architectural pattern.
 				const challengePath = `/${params.subject}/${params.course}/test/${resourceMetadata.khanSlug}`

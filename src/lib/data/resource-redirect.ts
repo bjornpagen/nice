@@ -23,11 +23,11 @@ export async function findResourcePath(slug: string, type: ResourceType): Promis
 
 	// Step 1: Find the resource by slug and type. Pass activityType so fetcher returns
 	// either interactive or qti forms for assessments/exercises.
-	let activityType: "Article" | "Video" | "Exercise"
-	if (type === "article") activityType = "Article"
-	else if (type === "video") activityType = "Video"
-	else activityType = "Exercise"
-	const resourcesResult = await errors.try(getResourcesBySlugAndType(slug, "interactive", activityType))
+	let khanActivityType: "Article" | "Video" | "Exercise"
+	if (type === "article") khanActivityType = "Article"
+	else if (type === "video") khanActivityType = "Video"
+	else khanActivityType = "Exercise"
+	const resourcesResult = await errors.try(getResourcesBySlugAndType(slug, "interactive", khanActivityType))
 	if (resourcesResult.error) {
 		logger.error("failed to find resource by slug", { slug, type, error: resourcesResult.error })
 		return null
@@ -39,7 +39,7 @@ export async function findResourcePath(slug: string, type: ResourceType): Promis
 		// Filter to only exercises
 		for (const r of resourcesResult.data) {
 			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
-			if (metadataResult.success && metadataResult.data.activityType === "Exercise") {
+			if (metadataResult.success && metadataResult.data.khanActivityType === "Exercise") {
 				resource = r
 				break
 			}
@@ -48,7 +48,7 @@ export async function findResourcePath(slug: string, type: ResourceType): Promis
 		// Filter to only articles
 		for (const r of resourcesResult.data) {
 			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
-			if (metadataResult.success && metadataResult.data.activityType === "Article") {
+			if (metadataResult.success && metadataResult.data.khanActivityType === "Article") {
 				resource = r
 				break
 			}
@@ -57,7 +57,7 @@ export async function findResourcePath(slug: string, type: ResourceType): Promis
 		// Filter to only videos
 		for (const r of resourcesResult.data) {
 			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
-			if (metadataResult.success && metadataResult.data.activityType === "Video") {
+			if (metadataResult.success && metadataResult.data.khanActivityType === "Video") {
 				resource = r
 				break
 			}
