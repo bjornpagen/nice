@@ -42,7 +42,7 @@ export function LessonLayout({
 		const update = () => {
 			const mobile = mq.matches
 			setIsMobile(mobile)
-			setIsCollapsed(mobile ? true : false)
+			setIsCollapsed(!!mobile)
 		}
 		update()
 		mq.addEventListener("change", update)
