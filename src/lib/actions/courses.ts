@@ -4,8 +4,10 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { revalidatePath } from "next/cache"
+import { env } from "@/env.js"
 import { createCacheKey, invalidateCache } from "@/lib/cache"
 import { oneroster } from "@/lib/clients"
+import { isCourseAllowed } from "@/lib/constants/allowed-courses"
 import { getAllCourses, getClass, getClassesForSchool, getEnrollmentsForUser } from "@/lib/data/fetchers/oneroster"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import { CourseMetadataSchema } from "@/lib/metadata/oneroster"
@@ -326,7 +328,9 @@ export async function getOneRosterCoursesForExplore(): Promise<SubjectWithCourse
 	}
 
 	const allClasses = classesResult.data.filter((c) => c.status === "active")
-	const allCourses = coursesResult.data
+	// Frontend-only gating: hide non-science courses in production
+	const allCourses =
+		env.NODE_ENV === "production" ? coursesResult.data.filter((c) => isCourseAllowed(c.sourcedId)) : coursesResult.data
 	const coursesMap = new Map(allCourses.map((c) => [c.sourcedId, c]))
 	const coursesBySubject = new Map<string, CourseForExplore[]>()
 	const processedCourseIds = new Set<string>()
