@@ -4,13 +4,13 @@ import * as React from "react"
 import { EditProfileModal } from "@/components/edit-profile-modal"
 import { Button } from "@/components/ui/button"
 
-const badges = [
-	{ color: "bg-red-500", count: 0 },
-	{ color: "bg-yellow-500", count: 0 },
-	{ color: "bg-green-500", count: 0 },
-	{ color: "bg-purple-500", count: 0 },
-	{ color: "bg-gray-500", count: 0 }
-] as const
+// const badges = [
+// 	{ color: "bg-red-500", count: 0 },
+// 	{ color: "bg-yellow-500", count: 0 },
+// 	{ color: "bg-green-500", count: 0 },
+// 	{ color: "bg-purple-500", count: 0 },
+// 	{ color: "bg-gray-500", count: 0 }
+// ] as const
 
 export function ProfileBanner({ uid, username, bio }: { uid: string; username: string; bio: string }) {
 	const [showEditModal, setShowEditModal] = React.useState(false)
@@ -66,17 +66,19 @@ export function ProfileBanner({ uid, username, bio }: { uid: string; username: s
 							>
 								Edit Profile
 							</Button>
-							<div className="flex items-center space-x-3">
-								<div className="bg-blue-500 text-white px-2 py-1 rounded text-xs font-medium">0</div>
-								<div className="flex items-center space-x-1">
-									{badges.map((badge, index) => (
-										<div key={index} className="flex items-center space-x-0.5">
-											<div className={`w-2 h-2 ${badge.color} rounded-full`} />
-											<span className="text-xs text-gray-600">{badge.count}</span>
-										</div>
-									))}
+							{/*
+					<div className="flex items-center space-x-3">
+						<div className="bg-blue-500 text-white px-2 py-1 rounded text-xs font-medium">0</div>
+						<div className="flex items-center space-x-1">
+							{badges.map((badge, index) => (
+								<div key={index} className="flex items-center space-x-0.5">
+									<div className={`w-2 h-2 ${badge.color} rounded-full`} />
+									<span className="text-xs text-gray-600">{badge.count}</span>
 								</div>
-							</div>
+							))}
+						</div>
+					</div>
+					*/}
 						</div>
 					</div>
 				</div>
