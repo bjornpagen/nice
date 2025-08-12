@@ -41,9 +41,38 @@ function CourseCardSkeleton() {
 	)
 }
 
-function CourseGrid({ courses }: { courses: ProfileCourse[] }) {
-	const colors = ["bg-blue-500", "bg-green-500", "bg-purple-500", "bg-orange-500", "bg-pink-500"] as const
+function CourseGridRow({ courses }: { courses: ProfileCourse[] }) {
+	const heightsRef = React.useRef<number[]>(new Array(courses.length).fill(0))
+	const [headerMinHeight, setHeaderMinHeight] = React.useState<number>(0)
 
+	const handleResize = (idx: number, height: number) => {
+		heightsRef.current[idx] = height
+		// Compute the maximum height seen in this row so both cards align
+		const nextMin = Math.max(0, ...heightsRef.current)
+		setHeaderMinHeight(nextMin)
+	}
+
+	return (
+		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+			{courses.map((course, idx) => {
+				if (!course.units) {
+					throw errors.new("course units: missing required data")
+				}
+				return (
+					<Card
+						key={course.id}
+						course={course}
+						units={course.units}
+						headerMinHeight={headerMinHeight}
+						onHeaderResize={(h: number) => handleResize(idx, h)}
+					/>
+				)
+			})}
+		</div>
+	)
+}
+
+function CourseGrid({ courses }: { courses: ProfileCourse[] }) {
 	if (courses.length === 0) {
 		return (
 			<div className="text-center py-12 text-gray-500">
@@ -53,19 +82,16 @@ function CourseGrid({ courses }: { courses: ProfileCourse[] }) {
 		)
 	}
 
+	const rows: ProfileCourse[][] = []
+	for (let i = 0; i < courses.length; i += 2) {
+		rows.push(courses.slice(i, i + 2))
+	}
+
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-			{courses.map((course, index) => {
-				const colorIndex = index % colors.length
-				const color = colors[colorIndex]
-				if (!color) {
-					throw errors.new("color selection failed")
-				}
-				if (!course.units) {
-					throw errors.new("course units: missing required data")
-				}
-				return <Card key={course.id} course={course} units={course.units} />
-			})}
+		<div className="space-y-6">
+			{rows.map((rowCourses, rowIdx) => (
+				<CourseGridRow key={rowIdx} courses={rowCourses} />
+			))}
 		</div>
 	)
 }

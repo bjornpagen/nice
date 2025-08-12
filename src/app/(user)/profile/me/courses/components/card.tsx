@@ -12,10 +12,30 @@ import { cn } from "@/lib/utils"
 type CardProps = {
 	course: ProfileCourse
 	units: Unit[]
+	headerMinHeight?: number
+	onHeaderResize?: (height: number) => void
 }
 
-export function Card({ course, units }: CardProps) {
+export function Card({ course, units, headerMinHeight, onHeaderResize }: CardProps) {
 	const [isExpanded, setIsExpanded] = React.useState(false)
+	const headerRef = React.useRef<HTMLDivElement | null>(null)
+
+	React.useEffect(() => {
+		const element = headerRef.current
+		if (!element) return
+		const observer = new ResizeObserver((entries) => {
+			for (const entry of entries) {
+				const height = entry.contentRect.height
+				if (onHeaderResize) {
+					onHeaderResize(height)
+				}
+			}
+		})
+		observer.observe(element)
+		return () => {
+			observer.disconnect()
+		}
+	}, [onHeaderResize])
 
 	// CRITICAL: `course.path` and `course.description` are guaranteed to be non-empty strings by the ProfileCourse type.
 	// No fallbacks `||` or `??` are needed here.
@@ -29,35 +49,37 @@ export function Card({ course, units }: CardProps) {
 
 	return (
 		<UICard className="bg-white rounded-lg border border-gray-200 p-6 flex flex-col h-full">
-			<CardHeader className="p-0 pb-4">
-				<CardTitle className="flex items-start justify-between mb-0 gap-3">
-					<h2 className="text-lg font-bold text-gray-800 flex-1 min-w-0">{course.title}</h2>
-					<Link href={coursePath} className="text-blue-600 hover:text-blue-700 text-sm font-medium flex-shrink-0">
-						See all ({units.length})
-					</Link>
-				</CardTitle>
-				{/* Fixed height description area to align progress bars */}
-				<CardDescription className="text-gray-600 relative h-[72px]">
-					{courseDescription !== "" ? (
-						<>
-							<div className={cn("transition-all duration-200", !isExpanded && "line-clamp-3")}>
-								{courseDescription}
-							</div>
-							{courseDescription.length > 150 && (
-								<button
-									type="button"
-									onClick={() => setIsExpanded(!isExpanded)}
-									className="text-blue-600 hover:text-blue-700 text-sm font-medium mt-1 focus:outline-none"
-								>
-									{isExpanded ? "Show less" : "Read more..."}
-								</button>
-							)}
-						</>
-					) : (
-						<div className="text-gray-500 italic">No description available</div>
-					)}
-				</CardDescription>
-			</CardHeader>
+			<div ref={headerRef} style={{ minHeight: headerMinHeight ? `${headerMinHeight}px` : undefined }}>
+				<CardHeader className="p-0 pb-4">
+					<CardTitle className="flex items-start justify-between mb-0 gap-3">
+						<h2 className="text-lg font-bold text-gray-800 flex-1 min-w-0">{course.title}</h2>
+						<Link href={coursePath} className="text-blue-600 hover:text-blue-700 text-sm font-medium flex-shrink-0">
+							See all ({units.length})
+						</Link>
+					</CardTitle>
+					{/* Reserve baseline space but allow growth when expanded to push progress down */}
+					<CardDescription className="text-gray-600 relative min-h-[72px]">
+						{courseDescription !== "" ? (
+							<>
+								<div className={cn("transition-all duration-200", !isExpanded && "line-clamp-3")}>
+									{courseDescription}
+								</div>
+								{courseDescription.length > 150 && (
+									<button
+										type="button"
+										onClick={() => setIsExpanded(!isExpanded)}
+										className="text-blue-600 hover:text-blue-700 text-sm font-medium mt-1 focus:outline-none"
+									>
+										{isExpanded ? "Show less" : "Read more..."}
+									</button>
+								)}
+							</>
+						) : (
+							<div className="text-gray-500 italic">No description available</div>
+						)}
+					</CardDescription>
+				</CardHeader>
+			</div>
 
 			{/* XP Progress Bar - now aligned at same level across all cards */}
 			<div className="px-0 pb-4">
