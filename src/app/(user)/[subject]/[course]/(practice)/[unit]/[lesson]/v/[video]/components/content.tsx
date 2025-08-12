@@ -67,6 +67,28 @@ export function Content({
 	const [elapsedSeconds, setElapsedSeconds] = React.useState<number>(0)
 	const [durationSeconds, setDurationSeconds] = React.useState<number | null>(null)
 
+	// Auto-pause when tab/window loses focus
+	React.useEffect(() => {
+		const pause = () => {
+			const player = playerRef.current
+			if (player && typeof player.pauseVideo === "function") {
+				player.pauseVideo()
+			}
+		}
+
+		const handleVisibilityChange = () => {
+			if (document.hidden) pause()
+		}
+
+		window.addEventListener("blur", pause)
+		document.addEventListener("visibilitychange", handleVisibilityChange)
+
+		return () => {
+			window.removeEventListener("blur", pause)
+			document.removeEventListener("visibilitychange", handleVisibilityChange)
+		}
+	}, [])
+
 	// Unified system: use course lock context to drive video control state
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
