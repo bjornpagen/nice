@@ -162,6 +162,8 @@ interface AssessmentStepperProps {
 	unitData?: Unit
 	expectedXp: number
 	layoutData?: LessonLayoutData
+	// Callback invoked when user starts a new interactive attempt (quiz/test retake)
+	onRetake?: (newAttemptNumber: number) => void
 }
 
 export function AssessmentStepper({
@@ -174,7 +176,8 @@ export function AssessmentStepper({
 	assessmentTitle,
 	assessmentPath,
 	unitData,
-	expectedXp // Will be used when caliper action is updated
+	expectedXp, // Will be used when caliper action is updated
+	onRetake
 }: AssessmentStepperProps) {
 	const { user } = useUser()
 	const router = useRouter()
@@ -665,7 +668,27 @@ export function AssessmentStepper({
 		}
 		setAttemptNumber(newAttemptNumber) // Update state with the new attempt number
 
-		// Refresh the route to fetch a freshly randomized question set
+		// Notify parent to reset to start screen and trigger a route-level refresh/remount
+		if (onRetake) {
+			onRetake(newAttemptNumber)
+			return
+		}
+
+		// Fallback: locally reset state to first question and end summary,
+		// then force a route refresh to fetch a new question set
+		setCurrentQuestionIndex(0)
+		setSelectedResponses({})
+		setExpectedResponses([])
+		setShowFeedback(false)
+		setIsAnswerCorrect(false)
+		setIsAnswerChecked(false)
+		setAttemptCount(0)
+		setCorrectAnswersCount(0)
+		setShowSummary(false)
+		setSessionResults([])
+		setReportedQuestionIds(new Set())
+		hasSentCompletionEventRef.current = false
+		assessmentStartTimeRef.current = new Date()
 		router.refresh()
 		return
 

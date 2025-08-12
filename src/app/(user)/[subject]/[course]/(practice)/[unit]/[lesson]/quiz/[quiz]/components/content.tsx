@@ -13,10 +13,12 @@ export function Content({ quizPromise }: { quizPromise: Promise<QuizPageData> })
 	const { resourceLockStatus } = useCourseLockStatus()
 	const isLocked = resourceLockStatus[quiz.id] === true
 	const [hasStarted, setHasStarted] = React.useState(false)
+	const [retakeKey, setRetakeKey] = React.useState(0)
 
 	if (hasStarted) {
 		return (
 			<AssessmentStepper
+				key={`${quiz.id}:${retakeKey}`}
 				questions={questions}
 				contentType="Quiz"
 				onerosterComponentResourceSourcedId={quiz.componentResourceSourcedId} // The componentResource sourcedId that PowerPath uses
@@ -27,6 +29,17 @@ export function Content({ quizPromise }: { quizPromise: Promise<QuizPageData> })
 				unitData={layoutData.unitData}
 				expectedXp={quiz.expectedXp}
 				layoutData={layoutData}
+				onRetake={(_newAttemptNumber) => {
+					// Return to start screen to make retake explicit and ensure full reset
+					setHasStarted(false)
+					// Bump key so the assessment stepper remounts on next start
+					setRetakeKey((k) => k + 1)
+					// Force a route data refresh to get a newly rotated question set
+					// Use location.reload to guarantee a full reload since replace/refresh are client navigations
+					if (typeof window !== "undefined") {
+						window.location.reload()
+					}
+				}}
 			/>
 		)
 	}
