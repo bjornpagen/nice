@@ -21,9 +21,16 @@ export default function UnitPage({ params }: { params: Promise<{ subject: string
 
 	const canUnlockAllPromise: Promise<boolean> = userPromise.then((user) => {
 		if (!user) return false
-		const metadata = ClerkUserPublicMetadataSchema.parse(user.publicMetadata ?? {})
+		const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata ?? {})
+		if (!parsed.success) {
+			logger.warn("invalid user public metadata for unlock check", {
+				userId: user.id,
+				error: parsed.error
+			})
+			return false
+		}
 		// A user can unlock content if they have any role other than 'student'
-		return metadata.roles.some((r) => r.role !== "student")
+		return parsed.data.roles.some((r) => r.role !== "student")
 	})
 
 	const progressPromise: Promise<Map<string, AssessmentProgress>> = Promise.all([unitDataPromise, userPromise]).then(
