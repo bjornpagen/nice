@@ -1,0 +1,31 @@
+- The root cause is a mismatch between how we treated exercises and how PowerPath expects them to be configured.
+
+What the logs show
+- PowerPath rejects per-question logging for exercises:
+```1692:1696:logs.txt
+ERROR powerpath api returned non-ok status status=422 body={"imsx_description":"Invalid QTI test URL: https://nice.academy/.../e/understand-food-and-energy-in-organisms. URL is not a valid QTI item URL pointing to QTI Test URL (https://qti.alpha-1edtech.com/api/assessment-tests/[identifier]/)"} endpoint=/powerpath/updateStudentQuestionResponse
+```
+- PowerPath rejects finalizing exercises (they’re marked as “external test” in PP and cannot be finalized):
+```2223:2225:logs.txt
+ERROR powerpath api returned non-ok status status=422 body={"imsx_description":"Lesson ... is an external test and cannot be finalized. Results should be retrieved using 'importExternalTestAssignmentResults'."} endpoint=/powerpath/finalStudentAssessmentResponse
+```
+- Because the attempt cannot be finalized, retry cannot create a new attempt:
+```2322:2325:logs.txt
+ERROR powerpath api returned non-ok status status=422 body={"imsx_description":"Cannot create a new attempt for lesson ... because the current attempt is not completed"} endpoint=/powerpath/createNewAttempt
+ERROR failed to create new assessment attempt ...
+```
+
+Why you saw repeats and retry failures
+- Repeats: The exercise loader started using deterministic selection with a seed and the attempt number. Since PowerPath wouldn’t finalize the attempt (422) and therefore wouldn’t issue a new one, the attempt number stayed the same. Deterministic selection with a constant attempt number produces the same window of questions each time.
+- Retry fails: The stepper tried to create a new attempt, but PowerPath rejected it with “current attempt is not completed” because finalize failed earlier (exercises are treated by PP as external tests and cannot be finalized via that endpoint).
+
+In short
+- We treated exercises like quizzes/tests, but PowerPath considers these exercise lessons as “external tests” requiring a different integration path (QTI Test URL mapping and no finalize). That caused 422s on response logging and finalize, blocked new attempts, and kept the attempt number constant, leading to the same questions on re-entry.
+
+- Status: Investigated logs and code. Identified the two coupled failures:
+  - Invalid test URL and external-test restriction in PowerPath for exercises → 422s
+  - Attempt cannot be finalized → no new attempt → deterministic selection repeats
+
+- Next: I can adjust the exercise flow to either:
+  - fully provision/point exercises in PowerPath to the correct QTI Test URLs and use the “external test” workflow properly, or
+  - avoid PowerPath attempt creation for exercises while still rotating deterministically using a server-derived attempt counter (e.g., based on OneRoster result history), until PowerPath config is ready.
