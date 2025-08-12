@@ -81,7 +81,7 @@ export function Progress({
 	}
 
 	return (
-		<div className="flex items-center gap-1 flex-wrap max-w-full overflow-hidden">
+		<div className="flex items-center gap-1 flex-wrap max-w-full overflow-visible">
 			{items.map((item) => {
 				const isLocked = resourceLockStatus[item.id] === true
 				const content = (
