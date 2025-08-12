@@ -591,6 +591,9 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								language: "en-US",
 								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${content.id}`,
 								questionType: "custom",
+								// Ensure external markers are explicitly cleared
+								launchUrl: null,
+								toolProvider: null,
 								// Keep Nice-controlled hints for our app (optional)
 								khanActivityType: "Exercise",
 								xp: Math.ceil(exerciseQuestionCount * 0.5)
@@ -687,6 +690,9 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						language: "en-US",
 						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
 						questionType: "custom",
+						// Ensure external markers are explicitly cleared
+						launchUrl: null,
+						toolProvider: null,
 						// Keep Nice-controlled hints for our app (optional)
 						khanActivityType: assessment.type,
 						khanLessonType,
@@ -777,6 +783,9 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 						language: "en-US",
 						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
 						questionType: "custom",
+						// Ensure external markers are explicitly cleared
+						launchUrl: null,
+						toolProvider: null,
 						// Keep Nice-controlled hints for our app (optional)
 						khanActivityType: assessment.type,
 						khanLessonType,
