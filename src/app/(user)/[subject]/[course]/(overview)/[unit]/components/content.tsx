@@ -146,7 +146,12 @@ export function Content({
 							)
 						case "Quiz":
 							return (
-								<QuizSection key={`${unit.id}-quiz-${child.id}`} quiz={child} resourceLockStatus={resourceLockStatus} />
+								<QuizSection
+									key={`${unit.id}-quiz-${child.id}`}
+									quiz={child}
+									resourceLockStatus={resourceLockStatus}
+									progress={progressMap.get(child.id)}
+								/>
 							)
 						case "UnitTest":
 							return (
@@ -154,6 +159,7 @@ export function Content({
 									key={`${unit.id}-test-${child.id}`}
 									test={child}
 									resourceLockStatus={resourceLockStatus}
+									progress={progressMap.get(child.id)}
 								/>
 							)
 						default:
