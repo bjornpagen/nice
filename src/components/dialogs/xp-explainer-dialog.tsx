@@ -4,6 +4,7 @@ import { Info } from "lucide-react"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { cn } from "@/lib/utils"
 
 type XPExplainerDialogProps = {
 	triggerVariant?: "link" | "icon"
@@ -20,7 +21,10 @@ export function XPExplainerDialog({ triggerVariant = "link", triggerClassName }:
 					<button
 						type="button"
 						aria-label="What is XP?"
-						className={triggerClassName || "inline-flex items-center text-gray-500 hover:text-gray-700"}
+						className={cn(
+							"inline-flex items-center text-gray-500 hover:text-gray-700 cursor-pointer hover:cursor-pointer",
+							triggerClassName
+						)}
 						onClick={() => setOpen(true)}
 					>
 						<Info className="w-4 h-4" />
