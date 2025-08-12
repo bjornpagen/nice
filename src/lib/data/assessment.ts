@@ -15,7 +15,10 @@ import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
-import type { Question } from "@/lib/types/domain"
+// import type { AssessmentTest, TestQuestionsResponse } from "@/lib/qti"
+import { applyQtiSelectionAndOrdering as applyQtiSelectionAndOrderingCommon } from "@/lib/qti-selection"
+// NOTE: selection util now returns domain Question; direct type import not required here
+// import type { Question } from "@/lib/types/domain"
 import type {
 	CourseChallengeLayoutData,
 	CourseChallengePageData,
@@ -24,204 +27,10 @@ import type {
 } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
 import { findAssessmentRedirectPath } from "@/lib/utils/assessment-redirect"
-import type { AssessmentTest, TestQuestionsResponse } from "../qti"
 import { fetchCoursePageData } from "./course"
 import { fetchLessonLayoutData } from "./lesson"
 
-/**
- * Shuffles an array in place using the Fisher-Yates algorithm.
- * This function creates a shallow copy to avoid mutating the original array.
- * @param array The array to shuffle.
- * @returns The shuffled array.
- */
-function shuffleArray<T>(array: T[]): T[] {
-	const shuffled = [...array]
-	for (let i = shuffled.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1))
-		// Swap elements using a temporary variable
-		// We know these indices are valid because i < shuffled.length and j <= i
-		const elementI = shuffled[i]
-		const elementJ = shuffled[j]
-		if (elementI !== undefined && elementJ !== undefined) {
-			shuffled[i] = elementJ
-			shuffled[j] = elementI
-		}
-	}
-	return shuffled
-}
-
-/**
- * Parses a QTI assessment test's XML to apply selection and ordering rules.
- * This function is designed to be robust, using named capture groups in its regex
- * and handling edge cases gracefully.
- *
- * @param assessmentTest The assessment test object containing the rawXml
- * @param allQuestions The array of all possible questions for this test
- * @returns A filtered and ordered array of questions according to the test's rules.
- */
-export function applyQtiSelectionAndOrdering(
-	assessmentTest: AssessmentTest,
-	allQuestions: TestQuestionsResponse["questions"],
-	options?: { baseSeed?: string; attemptNumber?: number }
-): Question[] {
-	const xml = assessmentTest.rawXml
-	const allQuestionsMap = new Map(allQuestions.map((q) => [q.question.identifier, q]))
-
-	logger.debug("applyQtiSelectionAndOrdering: starting processing", {
-		testIdentifier: assessmentTest.identifier,
-		totalQuestionsProvided: allQuestions.length,
-		xmlLength: xml.length
-	})
-
-	// Log first 1000 chars of XML for debugging
-	logger.debug("applyQtiSelectionAndOrdering: XML sample", {
-		testIdentifier: assessmentTest.identifier,
-		xmlSample: xml.substring(0, 1000)
-	})
-
-	// Regex to find all <qti-assessment-section> blocks, capturing their content non-greedily.
-	const sectionRegex = /<qti-assessment-section[^>]*>([\s\S]*?)<\/qti-assessment-section>/g
-	const sections = [...xml.matchAll(sectionRegex)]
-
-	logger.debug("applyQtiSelectionAndOrdering: found sections", {
-		testIdentifier: assessmentTest.identifier,
-		sectionCount: sections.length
-	})
-
-	// If no sections are defined (e.g., in a simple Exercise), return all questions in their original order.
-	if (sections.length === 0) {
-		logger.debug("no qti sections found, returning all questions", { testIdentifier: assessmentTest.identifier })
-		return allQuestions.map((q) => ({ id: q.question.identifier }))
-	}
-
-	const selectedQuestionIds: string[] = []
-
-	// Deterministic ordering helpers for strict non-repetition until exhaustion
-	function fnv1aHash(input: string): number {
-		let hash = 0x811c9dc5
-		for (let i = 0; i < input.length; i++) {
-			hash ^= input.charCodeAt(i)
-			hash = (hash >>> 0) * 0x01000193
-		}
-		return hash >>> 0
-	}
-
-	function deterministicallyOrder(values: string[], seed: string): string[] {
-		return [...values]
-			.map((v) => ({ v, h: fnv1aHash(`${seed}:${v}`) }))
-			.sort((a, b) => (a.h === b.h ? (a.v < b.v ? -1 : 1) : a.h - b.h))
-			.map((x) => x.v)
-	}
-
-	for (let sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
-		const sectionMatch = sections[sectionIndex]
-		const sectionContent = sectionMatch?.[1] ?? ""
-
-		// 1. Extract all item references from the current section using a robust regex.
-		const itemRefRegex = /<qti-assessment-item-ref[^>]*identifier="(?<identifier>[^"]+)"/g
-		let itemRefs = [...sectionContent.matchAll(itemRefRegex)].map((match) => match.groups?.identifier ?? "")
-
-		logger.debug("applyQtiSelectionAndOrdering: processing section", {
-			testIdentifier: assessmentTest.identifier,
-			sectionIndex,
-			itemRefsFound: itemRefs.length,
-			itemRefs: itemRefs.slice(0, 5) // Log first 5 for debugging
-		})
-
-		// 2. Apply ordering (shuffling) if specified.
-		const orderingMatch = sectionContent.match(/<qti-ordering[^>]*shuffle="true"/)
-		if (orderingMatch) {
-			logger.debug("applyQtiSelectionAndOrdering: shuffling enabled for section", {
-				testIdentifier: assessmentTest.identifier,
-				sectionIndex
-			})
-			const sectionIdMatch = sectionContent.match(/identifier="([^"]+)"/)
-			const sectionId = sectionIdMatch?.[1] ?? `section_${sectionIndex}`
-			if (options?.baseSeed) {
-				const seed = `${options.baseSeed}:${assessmentTest.identifier}:${sectionId}`
-				itemRefs = deterministicallyOrder(itemRefs, seed)
-			} else {
-				itemRefs = shuffleArray(itemRefs)
-			}
-		}
-
-		// 3. Apply selection to limit the number of questions, using a named capture group for clarity.
-		const selectionMatch = sectionContent.match(/<qti-selection[^>]*select="(?<selectCount>\d+)"/)
-		const selectCountStr = selectionMatch?.groups?.selectCount
-		if (selectCountStr) {
-			const selectCount = Number.parseInt(selectCountStr, 10)
-			if (!Number.isNaN(selectCount)) {
-				logger.debug("applyQtiSelectionAndOrdering: applying selection limit", {
-					testIdentifier: assessmentTest.identifier,
-					sectionIndex,
-					selectCount,
-					itemRefsBeforeSelection: itemRefs.length,
-					itemRefsAfterSelection: Math.min(selectCount, itemRefs.length)
-				})
-				// Strict non-repetition until exhaustion using sliding window over base order
-				// Accept attemptNumber === 0 (truthy check would otherwise skip)
-				if (options?.baseSeed !== undefined && options?.attemptNumber !== undefined && itemRefs.length > 0) {
-					const n = itemRefs.length
-					const k = Math.min(selectCount, n)
-					// Treat attemptNumber as 0-based to ensure attempt 0 and 1 select different windows
-					const attemptIndex = options.attemptNumber >= 0 ? options.attemptNumber : 0
-					const offset = (attemptIndex * k) % n
-					const window: string[] = []
-					for (let i = 0; i < k; i++) {
-						const idx = (offset + i) % n
-						const ref = itemRefs[idx]
-						if (ref !== undefined) {
-							window.push(ref)
-						}
-					}
-					itemRefs = window
-				} else {
-					itemRefs = itemRefs.slice(0, selectCount)
-				}
-			} else {
-				logger.warn("invalid non-numeric select attribute in QTI test", {
-					testIdentifier: assessmentTest.identifier,
-					selectAttribute: selectCountStr
-				})
-			}
-		} else {
-			logger.debug("applyQtiSelectionAndOrdering: no selection limit for section", {
-				testIdentifier: assessmentTest.identifier,
-				sectionIndex
-			})
-		}
-
-		selectedQuestionIds.push(...itemRefs)
-	}
-
-	// Critical validation: If parsing results in zero questions, the QTI XML is malformed
-	// and must be fixed rather than continuing with incorrect assessment structure.
-	if (selectedQuestionIds.length === 0) {
-		logger.error("CRITICAL: QTI parsing failed - no questions selected", {
-			testIdentifier: assessmentTest.identifier,
-			sectionCount: sections.length,
-			xmlLength: xml.length,
-			xmlSample: xml.substring(0, 500)
-		})
-		throw errors.new("QTI assessment parsing: no questions selected")
-	}
-
-	// 4. Map the final list of IDs back to the full question objects, preserving the new order.
-	const finalQuestions = selectedQuestionIds
-		.map((id) => allQuestionsMap.get(id))
-		.filter((q): q is Exclude<typeof q, undefined> => !!q)
-		.map((q) => ({ id: q.question.identifier }))
-
-	logger.info("applied qti selection and ordering rules", {
-		testIdentifier: assessmentTest.identifier,
-		initialCount: allQuestions.length,
-		finalCount: finalQuestions.length,
-		selectedQuestionIds: selectedQuestionIds.length,
-		sectionsProcessed: sections.length
-	})
-
-	return finalQuestions
-}
+export const applyQtiSelectionAndOrdering = applyQtiSelectionAndOrderingCommon
 
 export async function fetchQuizPageData(params: {
 	subject: string

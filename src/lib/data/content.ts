@@ -6,9 +6,9 @@ import { getAllComponentResources, getResourcesBySlugAndType } from "@/lib/data/
 import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
+import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
-import { applyQtiSelectionAndOrdering } from "./assessment"
 import { fetchLessonLayoutData } from "./lesson"
 
 export async function fetchArticlePageData(params: { article: string }): Promise<ArticlePageData> {

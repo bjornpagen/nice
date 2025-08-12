@@ -342,6 +342,12 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 
 	const resourceSet = new Set<string>()
 
+	// SHOUTY CONSTANTS per XP spec: expected XP reflects minutes of focused work.
+	// For unit tests and course challenges, assume 2 questions per minute.
+	const QUESTIONS_PER_MINUTE = 2
+	const UNIT_TEST_EXPECTED_QUESTIONS = 12
+	const COURSE_CHALLENGE_EXPECTED_QUESTIONS = 30
+
 	// --- NEW: Hierarchical Line Item Generation ---
 
 	// Find the top-level course challenge
@@ -569,7 +575,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			const assessmentSourcedId = `nice_${assessment.id}`
 			if (!resourceSet.has(assessmentSourcedId)) {
 				const exerciseCount = exercisesByAssessmentId.get(assessment.id)?.length || 0
-				const assessmentXp = exerciseCount * 1
+				let assessmentXp = exerciseCount * 1
+				if (assessment.type === "UnitTest") {
+					assessmentXp = Math.round(UNIT_TEST_EXPECTED_QUESTIONS / QUESTIONS_PER_MINUTE)
+				}
 
 				// CHANGE: Convert Assessments to interactive type
 				const pathSegment = assessment.type === "UnitTest" || assessment.type === "CourseChallenge" ? "test" : "quiz"
@@ -647,7 +656,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 			const assessmentSourcedId = `nice_${assessment.id}`
 			if (!resourceSet.has(assessmentSourcedId)) {
 				const exerciseCount = exercisesByAssessmentId.get(assessment.id)?.length || 0
-				const assessmentXp = exerciseCount * 1
+				let assessmentXp = exerciseCount * 1
+				if (assessment.type === "CourseChallenge") {
+					assessmentXp = Math.round(COURSE_CHALLENGE_EXPECTED_QUESTIONS / QUESTIONS_PER_MINUTE)
+				}
 
 				// CHANGE: Convert Course Assessments to interactive type
 				const pathSegment = assessment.type === "UnitTest" || assessment.type === "CourseChallenge" ? "test" : "quiz"

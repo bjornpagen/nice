@@ -82,6 +82,8 @@ export async function updateProficiencyFromAssessment(
 		lessonType = "quiz"
 	} else if (metadataResult.data.activityType === "UnitTest") {
 		lessonType = "unittest"
+	} else if (metadataResult.data.activityType === "CourseChallenge") {
+		lessonType = "coursechallenge"
 	}
 
 	// Step 2: Map questions to exercises using QTI metadata
@@ -132,7 +134,7 @@ export async function updateProficiencyFromAssessment(
 
 	// Step 3: Get current proficiency levels for mastery upgrade logic
 	const currentProficiencyMap = new Map<string, number>()
-	if (lessonType === "unittest") {
+	if (lessonType === "unittest" || lessonType === "coursechallenge") {
 		// For unit tests, we need to check current proficiency to handle mastery upgrades
 		const onerosterResourceSourcedIds = Array.from(new Set(qtiItemIdToOneRosterResourceSourcedIdMap.values()))
 
@@ -220,14 +222,14 @@ export async function updateProficiencyFromAssessment(
 	const updatePromises: Promise<unknown>[] = []
 	for (const [exerciseId, performance] of performanceMap.entries()) {
 		const percentageCorrect = performance.correctCount / performance.totalCount
-		const isUnitTest = lessonType === "unittest"
+		const isUnitTest = lessonType === "unittest" || lessonType === "coursechallenge"
 
 		// Calculate proficiency score for this exercise
 		let proficiencyScore = percentageCorrect // Store the EXACT percentage, not discrete levels
 
 		// Special case: Unit test mastery upgrade
 		// If student was already at 100% (1.0) and gets unit test question correct → Mastered (1.1)
-		if (lessonType === "unittest" && percentageCorrect === 1.0) {
+		if ((lessonType === "unittest" || lessonType === "coursechallenge") && percentageCorrect === 1.0) {
 			const currentScore = currentProficiencyMap.get(exerciseId)
 			if (currentScore && currentScore >= 1.0) {
 				proficiencyScore = 1.1 // Mastered level
@@ -246,7 +248,7 @@ export async function updateProficiencyFromAssessment(
 		// - Single question: 0/1 = 0% → Apply penalty
 		// - Multiple questions: Only if ALL wrong (0/2, 0/3, etc) → Apply penalty
 		// - Partial credit (1/2, 2/3): Normal percentage calculation applies
-		if (lessonType === "unittest" && percentageCorrect === 0) {
+		if ((lessonType === "unittest" || lessonType === "coursechallenge") && percentageCorrect === 0) {
 			const currentScore = currentProficiencyMap.get(exerciseId)
 			if (currentScore !== undefined && currentScore > 0) {
 				// Apply softer penalty based on current proficiency level
@@ -297,9 +299,12 @@ export async function updateProficiencyFromAssessment(
 		// 4. Score is 0 and this is from a quiz/test (new failure to record)
 		if (
 			proficiencyScore > 0 ||
-			(lessonType === "unittest" && percentageCorrect === 0 && currentProficiencyMap.has(exerciseId)) ||
+			((lessonType === "unittest" || lessonType === "coursechallenge") &&
+				percentageCorrect === 0 &&
+				currentProficiencyMap.has(exerciseId)) ||
 			(proficiencyScore === 0 && currentProficiencyMap.has(exerciseId)) ||
-			(proficiencyScore === 0 && (lessonType === "quiz" || lessonType === "unittest"))
+			(proficiencyScore === 0 &&
+				(lessonType === "quiz" || lessonType === "unittest" || lessonType === "coursechallenge"))
 		) {
 			updatePromises.push(
 				saveAssessmentResult(

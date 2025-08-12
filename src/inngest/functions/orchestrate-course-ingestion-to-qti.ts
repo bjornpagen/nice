@@ -65,7 +65,8 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 					exerciseTitle: schema.niceExercises.title,
 					exercisePath: schema.niceExercises.path,
 					exerciseSlug: schema.niceExercises.slug,
-					problemType: schema.niceQuestions.problemType // ADD THIS LINE
+					problemType: schema.niceQuestions.problemType, // ADD THIS LINE
+					unitId: schema.niceLessons.unitId
 				})
 				.from(schema.niceQuestions)
 				.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
@@ -377,40 +378,192 @@ export const orchestrateCourseIngestionToQti = inngest.createFunction(
 		const buildTestObject = (
 			id: string,
 			title: string,
-			questions: { id: string; exerciseId: string; exerciseTitle: string; problemType: string }[], // ADD problemType
-			_metadata: Record<string, unknown>
+			questions: {
+				id: string
+				exerciseId: string
+				exerciseTitle: string
+				problemType: string
+				unitId?: string
+			}[],
+			metadata: { khanAssessmentType?: string } & Record<string, unknown>
 		): string => {
 			const safeTitle = escapeXmlAttribute(title)
 
-			// Group questions by their problemType.
-			const questionsByProblemType = new Map<string, typeof questions>()
-			for (const q of questions) {
-				if (!questionsByProblemType.has(q.problemType)) {
-					questionsByProblemType.set(q.problemType, [])
-				}
-				questionsByProblemType.get(q.problemType)?.push(q)
+			// Decide target cap by assessment type
+			let assessmentType: string | undefined
+			if (typeof metadata.khanAssessmentType === "string") {
+				assessmentType = metadata.khanAssessmentType
+			} else {
+				assessmentType = undefined
+			}
+			let targetTotal: number | undefined
+			if (assessmentType === "CourseChallenge") {
+				targetTotal = 30
+			} else if (assessmentType === "UnitTest") {
+				targetTotal = 12
+			} else {
+				targetTotal = undefined
 			}
 
-			const sectionsXml = Array.from(questionsByProblemType.entries())
-				.map(([problemType, problemTypeQuestions]) => {
-					const encodedProblemType = encodeProblemType(problemType)
-					// Use the exercise title for the section, as all questions share it.
-					const safeExerciseTitle = escapeXmlAttribute(problemTypeQuestions[0]?.exerciseTitle ?? "Exercise Section")
-					const exerciseId = problemTypeQuestions[0]?.exerciseId
-					const itemRefsXml = problemTypeQuestions
+			// Strategy:
+			// - CourseChallenge: single grab-bag section across all questions with select=30 (pure random)
+			// - UnitTest: single grab-bag section across all questions with select=12 (pure random) to avoid starvation
+			// - Else (e.g., Quiz): include all problemTypes as before
+
+			type GroupKey = string
+			const groups = new Map<GroupKey, typeof questions>()
+
+			if (assessmentType === "UnitTest") {
+				for (const q of questions) {
+					const key = `${q.exerciseId}::${q.problemType}`
+					const existing = groups.get(key)
+					if (existing) {
+						existing.push(q)
+					} else {
+						groups.set(key, [q])
+					}
+				}
+			} else {
+				for (const q of questions) {
+					const key = q.problemType
+					const existing = groups.get(key)
+					if (existing) {
+						existing.push(q)
+					} else {
+						groups.set(key, [q])
+					}
+				}
+			}
+
+			// Build a round-robin order over buckets (outer by unit/exercise, inner by problemType), stable and deterministic
+			// First, index buckets by their outer id to interleave fairly
+			const outerToInner = new Map<string, Array<[string, typeof questions]>>()
+			const sortedEntries = Array.from(groups.entries()).sort(([a], [b]) => (a < b ? -1 : 1))
+			for (const [key, arr] of sortedEntries) {
+				let outer: string
+				if (key.includes("::")) {
+					const parts = key.split("::")
+					outer = parts[0] ?? "__"
+				} else {
+					outer = "__"
+				}
+				const existingList = outerToInner.get(outer)
+				if (existingList) {
+					existingList.push([key, arr])
+				} else {
+					outerToInner.set(outer, [[key, arr]])
+				}
+			}
+			for (const entry of outerToInner.entries()) {
+				const list = entry[1]
+				list.sort(([ka], [kb]) => (ka < kb ? -1 : 1))
+			}
+
+			const chosenKeys: string[] = []
+			if (assessmentType === "CourseChallenge") {
+				// grab-bag: use a single synthetic key representing all questions
+				chosenKeys.push("__grab_bag__")
+			} else if (assessmentType === "UnitTest") {
+				// grab-bag for unit tests as well
+				chosenKeys.push("__grab_bag__")
+			} else if (typeof targetTotal === "number") {
+				// Round-robin pick one inner per outer until target reached or buckets exhausted
+				const outers = Array.from(outerToInner.keys()).sort((a, b) => (a < b ? -1 : 1))
+				let picked = 0
+				// Prepare per-outer cursors
+				const cursors = new Map<string, number>(outers.map((o) => [o, 0]))
+				let progress = true
+				while (picked < targetTotal && progress) {
+					progress = false
+					for (const outer of outers) {
+						if (picked >= targetTotal) break
+						const cursor = cursors.get(outer) ?? 0
+						const listForOuter = outerToInner.get(outer) ?? []
+						if (cursor >= listForOuter.length) {
+							continue
+						}
+						const tuple = listForOuter[cursor]
+						if (!Array.isArray(tuple)) {
+							continue
+						}
+						const keyToPush = tuple[0]
+						chosenKeys.push(keyToPush)
+						cursors.set(outer, cursor + 1)
+						picked++
+						progress = true
+					}
+				}
+			} else {
+				// No cap: include all
+				chosenKeys.push(...sortedEntries.map(([k]) => k))
+			}
+
+			const sectionsXml = (() => {
+				if (assessmentType === "CourseChallenge") {
+					const itemRefsXml = questions
 						.map(
-							(q, itemIndex) =>
-								`<qti-assessment-item-ref identifier="nice_${q.id}" href="/assessment-items/nice_${q.id}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+							(q, idx) =>
+								`<qti-assessment-item-ref identifier="nice_${q.id}" href="/assessment-items/nice_${q.id}" sequence="${idx + 1}"></qti-assessment-item-ref>`
 						)
 						.join("\n                ")
+					// Single grab-bag section with select=30
+					return `        <qti-assessment-section identifier="SECTION_COURSE_GRAB_BAG" title="Course Challenge" visible="false">
+            <qti-selection select="30" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>
+            ${itemRefsXml}
+        </qti-assessment-section>`
+				}
+				if (assessmentType === "UnitTest") {
+					const itemRefsXml = questions
+						.map(
+							(q, idx) =>
+								`<qti-assessment-item-ref identifier="nice_${q.id}" href="/assessment-items/nice_${q.id}" sequence="${idx + 1}"></qti-assessment-item-ref>`
+						)
+						.join("\n                ")
+					// Single grab-bag section with select=12
+					return `        <qti-assessment-section identifier="SECTION_UNITTEST_GRAB_BAG" title="Unit Test" visible="false">
+            <qti-selection select="12" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>
+            ${itemRefsXml}
+        </qti-assessment-section>`
+				}
 
-					return `        <qti-assessment-section identifier="SECTION_${exerciseId}_${encodedProblemType}" title="${safeExerciseTitle}" visible="false">
+				return chosenKeys
+					.map((key) => {
+						const split = key.split("::")
+						let problemType: string
+						if (split.length > 1 && typeof split[1] === "string" && split[1].length > 0) {
+							problemType = split[1]
+						} else {
+							problemType = key
+						}
+						const encodedProblemType = encodeProblemType(problemType)
+						const problemTypeQuestions = groups.get(key) ?? []
+						const first = problemTypeQuestions[0]
+						if (!first || !first.exerciseTitle || !first.exerciseId) {
+							logger.error("invalid problemType group: missing exercise info", {
+								problemType,
+								groupSize: problemTypeQuestions.length
+							})
+							throw errors.new("invalid question grouping")
+						}
+						const safeExerciseTitle = escapeXmlAttribute(first.exerciseTitle)
+						const exerciseId = first.exerciseId
+						const itemRefsXml = problemTypeQuestions
+							.map(
+								(q, itemIndex) =>
+									`<qti-assessment-item-ref identifier="nice_${q.id}" href="/assessment-items/nice_${q.id}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+							)
+							.join("\n                ")
+
+						return `        <qti-assessment-section identifier="SECTION_${exerciseId}_${encodedProblemType}" title="${safeExerciseTitle}" visible="false">
             <qti-selection select="1" with-replacement="false"/>
             <qti-ordering shuffle="true"/>
             ${itemRefsXml}
         </qti-assessment-section>`
-				})
-				.join("\n")
+					})
+					.join("\n")
+			})()
 
 			// The entire test is now constructed as a single XML string.
 			return `<?xml version="1.0" encoding="UTF-8"?>
@@ -459,7 +612,8 @@ ${sectionsXml}
 					id: question.id,
 					exerciseId: question.exerciseId,
 					exerciseTitle: question.exerciseTitle,
-					problemType: question.problemType // ADD THIS LINE
+					problemType: question.problemType, // ADD THIS LINE
+					unitId: question.unitId
 				}
 			})
 

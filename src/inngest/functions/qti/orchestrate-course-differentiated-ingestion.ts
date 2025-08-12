@@ -53,7 +53,8 @@ export const orchestrateCourseDifferentiatedIngestion = inngest.createFunction(
 					exerciseTitle: schema.niceExercises.title,
 					exercisePath: schema.niceExercises.path,
 					exerciseSlug: schema.niceExercises.slug,
-					problemType: schema.niceQuestions.problemType // ADD THIS LINE
+					problemType: schema.niceQuestions.problemType, // ADD THIS LINE
+					unitId: schema.niceLessons.unitId
 				})
 				.from(schema.niceQuestions)
 				.innerJoin(schema.niceExercises, eq(schema.niceQuestions.exerciseId, schema.niceExercises.id))
@@ -287,29 +288,143 @@ export const orchestrateCourseDifferentiatedIngestion = inngest.createFunction(
 		const buildTestObject = (
 			id: string,
 			title: string,
-			questions: { id: string; exerciseId: string; exerciseTitle: string; problemType: string }[], // ADD problemType
-			_metadata: Record<string, unknown>
+			questions: {
+				id: string
+				exerciseId: string
+				exerciseTitle: string
+				problemType: string
+				unitId?: string
+			}[],
+			metadata: { khanAssessmentType?: string } & Record<string, unknown>
 		): string => {
 			const safeTitle = escapeXmlAttribute(title)
 
-			// Group questions by their source problemType.
-			const questionsByProblemType = new Map<string, typeof questions>()
-			for (const q of questions) {
-				if (!questionsByProblemType.has(q.problemType)) {
-					questionsByProblemType.set(q.problemType, [])
-				}
-				questionsByProblemType.get(q.problemType)?.push(q)
+			let assessmentType: string | undefined
+			if (typeof metadata.khanAssessmentType === "string") {
+				assessmentType = metadata.khanAssessmentType
+			} else {
+				assessmentType = undefined
+			}
+			let targetTotal: number | undefined
+			if (assessmentType === "CourseChallenge") {
+				targetTotal = 30
+			} else if (assessmentType === "UnitTest") {
+				targetTotal = 12
+			} else {
+				targetTotal = undefined
 			}
 
-			const sectionsXml = Array.from(questionsByProblemType.entries())
-				.map(([problemType, problemTypeQuestions]) => {
+			type GroupKey = string
+			const groups = new Map<GroupKey, typeof questions>()
+			if (assessmentType === "CourseChallenge") {
+				for (const q of questions) {
+					if (!q.unitId) {
+						logger.error("question missing unit id for course challenge grouping", {
+							questionId: q.id,
+							exerciseId: q.exerciseId,
+							problemType: q.problemType
+						})
+						throw errors.new("question missing unit id")
+					}
+					const key = `${q.unitId}::${q.problemType}`
+					const existing = groups.get(key)
+					if (existing) {
+						existing.push(q)
+					} else {
+						groups.set(key, [q])
+					}
+				}
+			} else if (assessmentType === "UnitTest") {
+				for (const q of questions) {
+					const key = `${q.exerciseId}::${q.problemType}`
+					const existing = groups.get(key)
+					if (existing) {
+						existing.push(q)
+					} else {
+						groups.set(key, [q])
+					}
+				}
+			} else {
+				for (const q of questions) {
+					const key = q.problemType
+					const existing = groups.get(key)
+					if (existing) {
+						existing.push(q)
+					} else {
+						groups.set(key, [q])
+					}
+				}
+			}
+
+			const outerToInner = new Map<string, Array<[string, typeof questions]>>()
+			const sortedEntries = Array.from(groups.entries()).sort(([a], [b]) => (a < b ? -1 : 1))
+			for (const [key, arr] of sortedEntries) {
+				let outer: string
+				if (key.includes("::")) {
+					const parts = key.split("::")
+					outer = parts[0] ?? "__"
+				} else {
+					outer = "__"
+				}
+				const existingList = outerToInner.get(outer)
+				if (existingList) {
+					existingList.push([key, arr])
+				} else {
+					outerToInner.set(outer, [[key, arr]])
+				}
+			}
+			for (const entry of outerToInner.entries()) {
+				const list = entry[1]
+				list.sort(([ka], [kb]) => (ka < kb ? -1 : 1))
+			}
+
+			const chosenKeys: string[] = []
+			if (typeof targetTotal === "number") {
+				const outers = Array.from(outerToInner.keys()).sort((a, b) => (a < b ? -1 : 1))
+				let picked = 0
+				const cursors = new Map<string, number>(outers.map((o) => [o, 0]))
+				let progress = true
+				while (picked < targetTotal && progress) {
+					progress = false
+					for (const outer of outers) {
+						if (picked >= targetTotal) break
+						const cursor = cursors.get(outer) ?? 0
+						const listForOuter = outerToInner.get(outer) ?? []
+						if (cursor < listForOuter.length) {
+							const tupleAtCursor = listForOuter[cursor]
+							if (Array.isArray(tupleAtCursor)) {
+								const keyAtCursor = tupleAtCursor[0]
+								chosenKeys.push(keyAtCursor)
+								cursors.set(outer, cursor + 1)
+								picked++
+								progress = true
+							}
+						}
+					}
+				}
+			} else {
+				chosenKeys.push(...sortedEntries.map(([k]) => k))
+			}
+
+			const sectionsXml = chosenKeys
+				.map((key) => {
+					const split = key.split("::")
+					const problemType = split.length > 1 ? String(split[1]) : String(key)
 					const encodedProblemType = encodeProblemType(problemType)
-					const safeExerciseTitle = escapeXmlAttribute(problemTypeQuestions[0]?.exerciseTitle ?? "Exercise Section")
-					const exerciseId = problemTypeQuestions[0]?.exerciseId
+					const problemTypeQuestions = groups.get(key) ?? []
+					const first = problemTypeQuestions[0]
+					if (!first || !first.exerciseTitle || !first.exerciseId) {
+						logger.error("invalid problemType group: missing exercise info", {
+							problemType,
+							groupSize: problemTypeQuestions.length
+						})
+						throw errors.new("invalid question grouping")
+					}
+					const safeExerciseTitle = escapeXmlAttribute(first.exerciseTitle)
+					const exerciseId = first.exerciseId
 					const itemRefsXml = problemTypeQuestions
 						.map(
 							(q, itemIndex) =>
-								// Use the question ID directly as it's already the unique QTI identifier for differentiated items
 								`<qti-assessment-item-ref identifier="${q.id}" href="/assessment-items/${q.id}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
 						)
 						.join("\n                ")
@@ -395,7 +510,8 @@ ${sectionsXml}
 					id: qtiId, // Use the QTI identifier
 					exerciseId: metadata.khanExerciseId,
 					exerciseTitle: metadata.khanExerciseTitle,
-					problemType: originalQuestion.problemType // ADD THIS LINE
+					problemType: originalQuestion.problemType, // ADD THIS LINE
+					unitId: originalQuestion.unitId
 				}
 			})
 
