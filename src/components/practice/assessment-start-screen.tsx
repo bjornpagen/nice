@@ -6,6 +6,7 @@ import type * as React from "react"
 import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { XPExplainerDialog } from "@/components/dialogs/xp-explainer-dialog"
 import { AssessmentBottomNav, type AssessmentType } from "@/components/practice/assessment-bottom-nav"
+import { LockOverlay } from "@/components/practice/lock-overlay"
 import { Button } from "@/components/ui/button"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 
@@ -22,6 +23,7 @@ interface Props {
 	contentType: AssessmentType
 	children?: React.ReactNode // For character images
 	textPositioning?: string // Custom text positioning classes
+	isLocked?: boolean
 }
 
 export function AssessmentStartScreen({
@@ -36,7 +38,8 @@ export function AssessmentStartScreen({
 	bgClass,
 	contentType,
 	children,
-	textPositioning
+	textPositioning,
+	isLocked
 }: Props) {
 	const defaultPositioning = children ? "justify-start pt-16" : "justify-center"
 	const positioning = textPositioning || defaultPositioning
@@ -63,7 +66,7 @@ export function AssessmentStartScreen({
 	}
 
 	return (
-		<div className="flex flex-col h-full">
+		<div className="flex flex-col h-full relative">
 			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0">
 				<div className="flex items-center justify-between">
 					<div className="w-24" />
@@ -115,6 +118,12 @@ export function AssessmentStartScreen({
 			</div>
 
 			<AssessmentBottomNav contentType={contentType} onContinue={onStart} isEnabled={true} isStartScreen={true} />
+
+			{isLocked && (
+				<div className="absolute top-[6rem] bottom-0 left-0 right-0 z-30">
+					<LockOverlay message="This content is locked. Please complete earlier activities in the unit." />
+				</div>
+			)}
 		</div>
 	)
 }

@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import * as React from "react"
+import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { AssessmentStartScreen } from "@/components/practice/assessment-start-screen"
 import { AssessmentStepper } from "@/components/practice/assessment-stepper"
 import quizIllustration from "@/components/practice/course/unit/quiz/images/quiz-illustration.png"
@@ -9,6 +10,8 @@ import type { QuizPageData } from "@/lib/types/page"
 
 export function Content({ quizPromise }: { quizPromise: Promise<QuizPageData> }) {
 	const { quiz, questions, layoutData } = React.use(quizPromise)
+	const { resourceLockStatus } = useCourseLockStatus()
+	const isLocked = resourceLockStatus[quiz.id] === true
 	const [hasStarted, setHasStarted] = React.useState(false)
 
 	if (hasStarted) {
@@ -29,22 +32,25 @@ export function Content({ quizPromise }: { quizPromise: Promise<QuizPageData> })
 	}
 
 	return (
-		<AssessmentStartScreen
-			headerTitle={quiz.title}
-			title="Time for a quiz?"
-			subtitle="Get ready for questions on the unit so far."
-			subtitleColorClass="text-blue-100"
-			questionsCount={questions.length}
-			expectedXp={quiz.expectedXp}
-			onStart={() => setHasStarted(true)}
-			bgClass="bg-blue-950"
-			contentType="Quiz"
-			textPositioning="justify-start pt-24"
-		>
-			{/* Quiz Illustration - Slightly Smaller */}
-			<div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 justify-center items-center overflow-hidden h-1/2 max-h-80 w-full hidden [@media(min-height:600px)]:block">
-				<Image src={quizIllustration} alt="Quiz illustration" className="w-full h-full object-contain" />
-			</div>
-		</AssessmentStartScreen>
+		<div className="relative h-full">
+			<AssessmentStartScreen
+				headerTitle={quiz.title}
+				title="Time for a quiz?"
+				subtitle="Get ready for questions on the unit so far."
+				subtitleColorClass="text-blue-100"
+				questionsCount={questions.length}
+				expectedXp={quiz.expectedXp}
+				onStart={() => setHasStarted(true)}
+				bgClass="bg-blue-950"
+				contentType="Quiz"
+				textPositioning="justify-start pt-24"
+				isLocked={isLocked}
+			>
+				{/* Quiz Illustration - Slightly Smaller */}
+				<div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 justify-center items-center overflow-hidden h-1/2 max-h-80 w-full hidden [@media(min-height:600px)]:block">
+					<Image src={quizIllustration} alt="Quiz illustration" className="w-full h-full object-contain" />
+				</div>
+			</AssessmentStartScreen>
+		</div>
 	)
 }

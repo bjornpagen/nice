@@ -377,7 +377,6 @@ export function Content({
 			}
 		}
 	}
-
 	return (
 		<div className="flex flex-col bg-white h-full">
 			{/* Video Title and unified lock toggle */}
@@ -406,7 +405,7 @@ export function Content({
 			</div>
 
 			{/* Main Content Area */}
-			<div className="bg-white overflow-y-auto flex-1">
+			<div className="bg-white overflow-y-auto flex-1 relative">
 				<div className="max-w-5xl mx-auto px-6">
 					{/* Video Player - YouTube component with skip disabled */}
 					<div className="py-6">

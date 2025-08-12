@@ -28,6 +28,7 @@ export function Content({
 		useLessonProgress()
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
+	const isLocked = resourceLockStatus[article.id] === true
 	const parsed = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
 	const canUnlockAll = parsed.success && parsed.data.roles.some((r) => r.role !== "student")
 
@@ -48,6 +49,10 @@ export function Content({
 	}
 
 	React.useEffect(() => {
+		if (isLocked) {
+			// Do not track or mark progress when locked
+			return
+		}
 		// Record the start time when component mounts
 		startTimeRef.current = new Date()
 
@@ -148,8 +153,11 @@ export function Content({
 		setCurrentResourceCompleted,
 		setProgressForResource,
 		beginProgressUpdate,
-		endProgressUpdate
+		endProgressUpdate,
+		isLocked
 	])
+
+	// isLocked computed above
 
 	return (
 		<div className="bg-white h-full flex flex-col">
@@ -179,7 +187,7 @@ export function Content({
 			</div>
 
 			{/* Article Content - Render through QTI */}
-			<div className="flex-1 overflow-y-auto">
+			<div className="flex-1 overflow-y-auto relative">
 				<QTIRenderer
 					identifier={article.id}
 					materialType="stimulus"
