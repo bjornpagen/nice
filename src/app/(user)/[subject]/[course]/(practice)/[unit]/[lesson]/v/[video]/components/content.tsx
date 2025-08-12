@@ -46,6 +46,8 @@ export function Content({
 	const params = React.use(paramsPromise)
 	const { user } = useUser()
 	const { setCurrentResourceCompleted } = useLessonProgress()
+	// Transcript tab is intentionally hidden for now because transcript data is not hydrated.
+	// We keep "transcript" in the union type non-destructively so this is trivial to re-enable later.
 	const [activeTab, setActiveTab] = React.useState<"about" | "transcript">("about")
 	const playerRef = React.useRef<YouTubePlayer | null>(null)
 
@@ -452,16 +454,29 @@ export function Content({
 								About
 								{activeTab === "about" && <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-blue-600" />}
 							</button>
-							<button
-								type="button"
-								className={`pb-4 px-1 font-medium text-base transition-colors relative ${
-									activeTab === "transcript" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
-								}`}
-								onClick={() => setActiveTab("transcript")}
-							>
-								Transcript
-								{activeTab === "transcript" && <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-blue-600" />}
-							</button>
+							{/**
+							 * Transcript tab temporarily hidden.
+							 *
+							 * Why commented out instead of removed:
+							 * - Transcript data is not hydrated yet; showing the tab creates a broken UX.
+							 * - Non-destructive: keeping the code here makes re-enabling trivial when data is ready.
+							 *
+							 * To re-enable: uncomment the button below AND the content section in the tab panel.
+							 */}
+							{false && (
+								<button
+									type="button"
+									className={`pb-4 px-1 font-medium text-base transition-colors relative ${
+										activeTab === "transcript" ? "text-blue-600" : "text-gray-600 hover:text-gray-900"
+									}`}
+									onClick={() => setActiveTab("transcript")}
+								>
+									Transcript
+									{activeTab === "transcript" && (
+										<div className="absolute bottom-0 left-0 right-0 h-[3px] bg-blue-600" />
+									)}
+								</button>
+							)}
 						</div>
 					</div>
 
@@ -477,7 +492,11 @@ export function Content({
 							</div>
 						)}
 
-						{activeTab === "transcript" && (
+						{/**
+						 * Transcript content temporarily hidden. See the comment above near the tab button for
+						 * rationale and instructions to re-enable when transcript data is available.
+						 */}
+						{false && activeTab === "transcript" && (
 							<div>
 								<p className="text-gray-500 italic">Transcript not available for this video.</p>
 							</div>
