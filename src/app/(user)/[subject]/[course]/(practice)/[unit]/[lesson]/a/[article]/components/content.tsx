@@ -2,10 +2,13 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import { Lock, Unlock } from "lucide-react"
 import { useRouter } from "next/navigation"
 import * as React from "react"
+import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { QTIRenderer } from "@/components/qti-renderer"
+import { Button } from "@/components/ui/button"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { trackArticleView } from "@/lib/actions/tracking"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
@@ -24,6 +27,26 @@ export function Content({
 	const startTimeRef = React.useRef<Date | null>(null)
 	const { setCurrentResourceCompleted } = useLessonProgress()
 	const router = useRouter()
+	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
+	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
+	const parsed = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
+	const canUnlockAll = parsed.success && parsed.data.roles.some((r) => r.role !== "student")
+
+	const handleToggleLockAll = () => {
+		if (!canUnlockAll) return
+		if (allUnlocked) {
+			setResourceLockStatus(initialResourceLockStatus)
+			if (typeof window !== "undefined") {
+				window.localStorage.removeItem(storageKey)
+			}
+			return
+		}
+		const unlockedStatus = Object.fromEntries(Object.keys(resourceLockStatus).map((key) => [key, false]))
+		setResourceLockStatus(unlockedStatus)
+		if (typeof window !== "undefined") {
+			window.localStorage.setItem(storageKey, "1")
+		}
+	}
 
 	React.useEffect(() => {
 		// Record the start time when component mounts
@@ -121,8 +144,26 @@ export function Content({
 		<div className="bg-white h-full flex flex-col">
 			{/* Article Header */}
 			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0">
-				<div className="text-center">
-					<h1 className="text-2xl font-bold text-gray-800 mb-4">{article.title}</h1>
+				<div className="flex items-center justify-between">
+					<div className="w-24" />
+					<div className="text-center flex-1">
+						<h1 className="text-2xl font-bold text-gray-800">{article.title}</h1>
+					</div>
+					<div className="w-24 flex justify-end">
+						{canUnlockAll && (
+							<Button onClick={handleToggleLockAll} variant="outline" size="sm">
+								{allUnlocked ? (
+									<>
+										<Lock className="w-4 h-4 mr-2" /> Restore Locks
+									</>
+								) : (
+									<>
+										<Unlock className="w-4 h-4 mr-2" /> Unlock All
+									</>
+								)}
+							</Button>
+						)}
+					</div>
 				</div>
 			</div>
 

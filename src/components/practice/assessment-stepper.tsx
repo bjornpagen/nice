@@ -173,8 +173,7 @@ export function AssessmentStepper({
 	assessmentTitle,
 	assessmentPath,
 	unitData,
-	expectedXp, // Will be used when caliper action is updated
-	layoutData: _layoutData
+	expectedXp // Will be used when caliper action is updated
 }: AssessmentStepperProps) {
 	const { user } = useUser()
 	const router = useRouter()
@@ -201,13 +200,10 @@ export function AssessmentStepper({
 	const [debugClickCount, setDebugClickCount] = React.useState(0)
 
 	// Admin-only: practice header lock toggle (far right)
-	const layoutData = _layoutData
-	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus } = useCourseLockStatus()
+	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
 	const parsedMetadata = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
 	const canUnlockAll = parsedMetadata.success && parsedMetadata.data.roles.some((r) => r.role !== "student")
-
-	const storageKey = layoutData?.courseData?.id ? (`nice_unlock_all_${layoutData.courseData.id}` as const) : null
 
 	const handleToggleLockAll = () => {
 		if (!canUnlockAll || !storageKey) return

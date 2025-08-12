@@ -1,8 +1,13 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
+import { Lock, Unlock } from "lucide-react"
 import type * as React from "react"
+import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { XPExplainerDialog } from "@/components/dialogs/xp-explainer-dialog"
 import { AssessmentBottomNav, type AssessmentType } from "@/components/practice/assessment-bottom-nav"
+import { Button } from "@/components/ui/button"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 
 interface Props {
 	headerTitle: string
@@ -35,12 +40,53 @@ export function AssessmentStartScreen({
 }: Props) {
 	const defaultPositioning = children ? "justify-start pt-16" : "justify-center"
 	const positioning = textPositioning || defaultPositioning
+	const { user } = useUser()
+	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
+	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
+	const parsed = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
+	const canUnlockAll = parsed.success && parsed.data.roles.some((r) => r.role !== "student")
+
+	const handleToggleLockAll = () => {
+		if (!canUnlockAll) return
+		if (allUnlocked) {
+			setResourceLockStatus(initialResourceLockStatus)
+			if (typeof window !== "undefined") {
+				window.localStorage.removeItem(storageKey)
+			}
+			return
+		}
+		const unlockedStatus = Object.fromEntries(Object.keys(resourceLockStatus).map((key) => [key, false]))
+		setResourceLockStatus(unlockedStatus)
+		if (typeof window !== "undefined") {
+			window.localStorage.setItem(storageKey, "1")
+		}
+	}
 
 	return (
 		<div className="flex flex-col h-full">
-			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0 text-center">
-				<h1 className="text-2xl font-bold text-gray-900">{headerTitle}</h1>
-				{headerDescription && <p className="text-gray-600 mt-2">{headerDescription}</p>}
+			<div className="bg-white p-6 border-b border-gray-200 flex-shrink-0">
+				<div className="flex items-center justify-between">
+					<div className="w-24" />
+					<div className="text-center flex-1">
+						<h1 className="text-2xl font-bold text-gray-900">{headerTitle}</h1>
+						{headerDescription && <p className="text-gray-600 mt-2">{headerDescription}</p>}
+					</div>
+					<div className="w-24 flex justify-end">
+						{canUnlockAll && (
+							<Button onClick={handleToggleLockAll} variant="outline" size="sm">
+								{allUnlocked ? (
+									<>
+										<Lock className="w-4 h-4 mr-2" /> Restore Locks
+									</>
+								) : (
+									<>
+										<Unlock className="w-4 h-4 mr-2" /> Unlock All
+									</>
+								)}
+							</Button>
+						)}
+					</div>
+				</div>
 			</div>
 
 			<div className={`${bgClass} text-white flex-1 flex flex-col items-center ${positioning} p-12 pb-32 relative`}>

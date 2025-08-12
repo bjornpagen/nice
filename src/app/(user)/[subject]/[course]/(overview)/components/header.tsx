@@ -9,7 +9,15 @@ import {
 } from "@/components/ui/breadcrumb"
 import { capitalize } from "@/lib/utils"
 
-export function Header({ subject, course }: { subject: string; course: string }) {
+export function Header({
+	subject,
+	courseTitle,
+	coursePath
+}: {
+	subject: string
+	courseTitle?: string
+	coursePath?: string
+}) {
 	return (
 		<div className="flex items-center space-x-2 text-sm text-blue-600 mb-6">
 			<Breadcrumb>
@@ -29,14 +37,18 @@ export function Header({ subject, course }: { subject: string; course: string })
 							</Link>
 						</BreadcrumbLink>
 					</BreadcrumbItem>
-					<BreadcrumbSeparator className="text-gray-400">•</BreadcrumbSeparator>
-					<BreadcrumbItem>
-						<BreadcrumbLink asChild>
-							<Link href={`/${subject}/${course}`} className="text-blue-600 hover:text-blue-800">
-								{capitalize(course)}
-							</Link>
-						</BreadcrumbLink>
-					</BreadcrumbItem>
+					{courseTitle && coursePath && (
+						<>
+							<BreadcrumbSeparator className="text-gray-400">•</BreadcrumbSeparator>
+							<BreadcrumbItem>
+								<BreadcrumbLink asChild>
+									<Link href={coursePath} className="text-blue-600 hover:text-blue-800">
+										{courseTitle}
+									</Link>
+								</BreadcrumbLink>
+							</BreadcrumbItem>
+						</>
+					)}
 				</BreadcrumbList>
 			</Breadcrumb>
 		</div>

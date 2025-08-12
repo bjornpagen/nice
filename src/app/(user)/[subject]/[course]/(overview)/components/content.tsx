@@ -90,7 +90,7 @@ export function Content({
 	// The component now returns only the main content without sidebar container
 	return (
 		<>
-			<Header subject={params.subject} course={params.course} />
+			<Header subject={params.subject} />
 
 			{/* Course Header */}
 			<div className="mb-6">

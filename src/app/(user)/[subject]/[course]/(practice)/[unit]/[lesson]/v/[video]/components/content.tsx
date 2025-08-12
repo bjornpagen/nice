@@ -6,6 +6,7 @@ import { Lock, Unlock } from "lucide-react"
 import { useRouter } from "next/navigation"
 import * as React from "react"
 import YouTube, { type YouTubePlayer } from "react-youtube"
+import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { Button } from "@/components/ui/button"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
@@ -66,25 +67,24 @@ export function Content({
 	const [elapsedSeconds, setElapsedSeconds] = React.useState<number>(0)
 	const [durationSeconds, setDurationSeconds] = React.useState<number | null>(null)
 
-	// Admin-only: Toggle video media controls
+	// Unified system: use course lock context to drive video control state
+	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
+	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
 	const parsedMetadata = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
 	const canToggleControls = parsedMetadata.success && parsedMetadata.data.roles.some((r) => r.role !== "student")
-	const videoControlsStorageKey = `nice_video_controls_${params.subject}_${params.course}` as const
-	const [controlsEnabled, setControlsEnabled] = React.useState<boolean>(() => {
-		if (typeof window === "undefined") return false
-		const stored = window.localStorage.getItem(videoControlsStorageKey)
-		return stored === "1"
-	})
-	function handleToggleControls() {
+	const handleToggleLockAll = () => {
 		if (!canToggleControls) return
-		const next = !controlsEnabled
-		setControlsEnabled(next)
-		if (typeof window !== "undefined") {
-			if (next) {
-				window.localStorage.setItem(videoControlsStorageKey, "1")
-			} else {
-				window.localStorage.removeItem(videoControlsStorageKey)
+		if (allUnlocked) {
+			setResourceLockStatus(initialResourceLockStatus)
+			if (typeof window !== "undefined") {
+				window.localStorage.removeItem(storageKey)
 			}
+			return
+		}
+		const unlockedStatus = Object.fromEntries(Object.keys(resourceLockStatus).map((key) => [key, false]))
+		setResourceLockStatus(unlockedStatus)
+		if (typeof window !== "undefined") {
+			window.localStorage.setItem(storageKey, "1")
 		}
 	}
 
@@ -380,7 +380,7 @@ export function Content({
 
 	return (
 		<div className="flex flex-col bg-white h-full">
-			{/* Video Title and Admin Controls Toggle */}
+			{/* Video Title and unified lock toggle */}
 			<div className="border-b">
 				<div className="max-w-5xl mx-auto px-6 py-3 md:py-4">
 					<div className="flex items-center justify-between">
@@ -388,14 +388,14 @@ export function Content({
 						<h1 className="text-2xl font-bold text-gray-900 text-center flex-1">{video.title}</h1>
 						<div className="w-24 flex justify-end">
 							{canToggleControls && (
-								<Button onClick={handleToggleControls} variant="outline" size="sm">
-									{controlsEnabled ? (
+								<Button onClick={handleToggleLockAll} variant="outline" size="sm">
+									{allUnlocked ? (
 										<>
-											<Unlock className="w-4 h-4 mr-2" /> Enable Controls
+											<Lock className="w-4 h-4 mr-2" /> Restore Locks
 										</>
 									) : (
 										<>
-											<Lock className="w-4 h-4 mr-2" /> Disable Controls
+											<Unlock className="w-4 h-4 mr-2" /> Unlock All
 										</>
 									)}
 								</Button>
@@ -421,9 +421,9 @@ export function Content({
 									width: "100%",
 									height: "100%",
 									playerVars: {
-										// Admin toggle controls visibility and keyboard seeking
-										controls: controlsEnabled ? 1 : 0,
-										disablekb: controlsEnabled ? 0 : 1,
+										// Use course-wide lock state to toggle media controls
+										controls: allUnlocked ? 1 : 0,
+										disablekb: allUnlocked ? 0 : 1,
 										autoplay: 0
 									}
 								}}

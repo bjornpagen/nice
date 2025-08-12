@@ -7,6 +7,7 @@ interface CourseLockStatusContextType {
 	resourceLockStatus: Record<string, boolean>
 	setResourceLockStatus: (status: Record<string, boolean>) => void
 	initialResourceLockStatus: Record<string, boolean>
+	storageKey: string
 }
 
 const CourseLockStatusContext = React.createContext<CourseLockStatusContextType | null>(null)
@@ -53,7 +54,8 @@ export function CourseLockStatusProvider({
 	const value = {
 		resourceLockStatus,
 		setResourceLockStatus,
-		initialResourceLockStatus: initialLockStatus
+		initialResourceLockStatus: initialLockStatus,
+		storageKey
 	}
 
 	return <CourseLockStatusContext.Provider value={value}>{children}</CourseLockStatusContext.Provider>

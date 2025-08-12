@@ -64,7 +64,7 @@ export function Content({
 
 	return (
 		<>
-			<Header subject={params.subject} course={params.course} />
+			<Header subject={params.subject} courseTitle={data.course.title} coursePath={data.course.path} />
 			<div className="mb-6">
 				<h1 className="text-3xl font-bold text-gray-800 mb-2">
 					Unit {unitIndex + 1}: {unit.title}
