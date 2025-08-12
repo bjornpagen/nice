@@ -34,10 +34,13 @@ export const UrlImageWidgetPropsSchema = z
 			.nullable()
 			.transform((val) => (val === "null" || val === "NULL" ? null : val))
 			.describe(
-				"An optional attribution or source credit field (not rendered). This field exists to encourage LLMs to separate attribution/source information from the caption text. Include image source, creator, or copyright information here instead of in the caption."
+				"Optional attribution or source credit. Use this to provide image source, creator, or licensing details. Keep the caption strictly descriptive and place attribution here instead."
 			)
 	})
 	.strict()
+	.describe(
+		"Static image widget rendered from a direct HTTPS URL. Use 'alt' for accessibility, optional 'width'/'height' for sizing, 'caption' for descriptive figure text, and 'attribution' for source/credit/licensing. Keep captions strictly descriptive; place any credits or licensing details in 'attribution'."
+	)
 
 export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema> = (props) => {
 	const { url, alt, width, height, caption } = props

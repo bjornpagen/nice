@@ -157,7 +157,7 @@ CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, 
 - **HARD STOP. NO EXCEPTIONS.** Answers are FORBIDDEN in body, widgets, or interactions. They are ONLY allowed in the designated feedback fields above.
 
   **CRITICAL: ATTRIBUTION/CREDIT HANDLING — BANNED IN 'BODY'**
-  Attribution, credit, and licensing strings (e.g., creator names, "Image credit:", source sites, licenses like "CC0 1.0", "CC BY-SA", Wikimedia/Unsplash references) MUST NOT appear anywhere in the 'body'. This information is captured downstream in widget data.
+  Attribution, credit, and licensing strings (e.g., creator names, "Image credit:", source sites, licenses like "CC0 1.0", "CC BY-SA", Wikimedia/Unsplash references) MUST NOT appear anywhere in the 'body'. Provide attribution in the widget's 'attribution' property instead.
   - Do NOT place attribution/credit/license strings in 'body' paragraphs, prompts, or feedback.
   - Do NOT include attribution in widget captions. Captions should ONLY describe the image content.
   - If the Perseus content includes attribution/credit text adjacent to an image, STRIP IT from the 'body'. The pipeline will store attribution in the widget's 'attribution' field later.
