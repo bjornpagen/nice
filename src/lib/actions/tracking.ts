@@ -3,7 +3,6 @@
 import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { finalizeAssessment } from "@/lib/actions/assessment"
 import { sendCaliperActivityCompletedEvent, sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { updateProficiencyFromAssessment } from "@/lib/actions/proficiency"
 import * as cacheUtils from "@/lib/cache"
@@ -521,39 +520,28 @@ export async function saveAssessmentResult(
 			attemptNumber
 		})
 
-		// First finalize the assessment to ensure all responses are graded
-		const finalizeResult = await errors.try(finalizeAssessment(userId, onerosterComponentResourceSourcedId))
-		if (finalizeResult.error) {
-			logger.error("failed to finalize assessment for proficiency analysis", {
-				error: finalizeResult.error,
+		// Finalization is performed at the end of the last question response.
+		// Proceed directly to proficiency update.
+		const proficiencyResult = await errors.try(
+			updateProficiencyFromAssessment(
+				userId,
+				onerosterComponentResourceSourcedId,
+				attemptNumber || 1,
+				sessionResults,
+				courseId
+			)
+		)
+		if (proficiencyResult.error) {
+			logger.error("failed to update proficiency from assessment", {
+				error: proficiencyResult.error,
 				onerosterComponentResourceSourcedId
 			})
+			// Continue execution - proficiency failure should not block assessment save
 		} else {
-			// Add delay to ensure PowerPath has processed everything
-			await new Promise((resolve) => setTimeout(resolve, 1000))
-
-			// Update proficiency based on session results
-			const proficiencyResult = await errors.try(
-				updateProficiencyFromAssessment(
-					userId,
-					onerosterComponentResourceSourcedId,
-					attemptNumber || 1,
-					sessionResults,
-					courseId
-				)
-			)
-			if (proficiencyResult.error) {
-				logger.error("failed to update proficiency from assessment", {
-					error: proficiencyResult.error,
-					onerosterComponentResourceSourcedId
-				})
-				// Continue execution - proficiency failure should not block assessment save
-			} else {
-				logger.info("successfully updated proficiency from server", {
-					exercisesUpdated: proficiencyResult.data.exercisesUpdated,
-					onerosterComponentResourceSourcedId
-				})
-			}
+			logger.info("successfully updated proficiency from server", {
+				exercisesUpdated: proficiencyResult.data.exercisesUpdated,
+				onerosterComponentResourceSourcedId
+			})
 		}
 	}
 

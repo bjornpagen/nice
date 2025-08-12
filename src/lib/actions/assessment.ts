@@ -135,16 +135,21 @@ export async function processQuestionResponse(
 			powerpathResponse = String(selectedResponse)
 		}
 
-		powerpath
-			.updateStudentQuestionResponse({
+		const upsertResult = await errors.try(
+			powerpath.updateStudentQuestionResponse({
 				student: onerosterUserSourcedId,
 				lesson: onerosterComponentResourceSourcedId,
 				question: qtiItemId,
 				response: powerpathResponse
 			})
-			.catch((err) => {
-				logger.error("failed to log question response to powerpath", { error: err, qtiItemId, onerosterUserSourcedId })
+		)
+		if (upsertResult.error) {
+			logger.error("failed to log question response to powerpath", {
+				error: upsertResult.error,
+				qtiItemId,
+				onerosterUserSourcedId
 			})
+		}
 	} else if (assessmentAttemptNumber && assessmentAttemptNumber > 0) {
 		logger.debug("skipping powerpath logging for retry attempt", {
 			qtiItemId,
