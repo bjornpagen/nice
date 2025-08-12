@@ -243,8 +243,8 @@ export function AssessmentStepper({
 	const MAX_ATTEMPTS = 3
 	const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
 
-	// Ensure attempt is initialized for interactive assessments before allowing actions
-	const [isAttemptReady, setIsAttemptReady] = React.useState<boolean>(!isInteractiveAssessment)
+	// Ensure attempt is initialized for all assessments (now always interactive)
+	const [isAttemptReady, setIsAttemptReady] = React.useState<boolean>(false)
 
 	function triggerConfetti() {
 		const canvas = document.createElement("canvas")
@@ -317,7 +317,7 @@ export function AssessmentStepper({
 
 	// ADDED: Check for and create new attempt when component mounts or when assessment changes
 	React.useEffect(() => {
-		if (!isInteractiveAssessment || !user?.publicMetadata?.sourceId || !onerosterComponentResourceSourcedId) {
+		if (!user?.publicMetadata?.sourceId || !onerosterComponentResourceSourcedId) {
 			return
 		}
 
@@ -337,7 +337,7 @@ export function AssessmentStepper({
 		}
 
 		initializeAttempt()
-	}, [onerosterComponentResourceSourcedId, isInteractiveAssessment, user?.publicMetadata?.sourceId])
+	}, [onerosterComponentResourceSourcedId, user?.publicMetadata?.sourceId])
 
 	// Cleanup any pending timers on unmount
 	React.useEffect(() => {
@@ -349,17 +349,13 @@ export function AssessmentStepper({
 		}
 	}, [])
 
-	// If interactive but unauthenticated or missing component id, no attempt init needed
+	// If unauthenticated or missing component id, allow UI but disable server logging
 	React.useEffect(() => {
-		if (!isInteractiveAssessment) {
-			setIsAttemptReady(true)
-			return
-		}
 		const hasAuthIds = Boolean(user?.publicMetadata?.sourceId && onerosterComponentResourceSourcedId)
 		if (!hasAuthIds) {
 			setIsAttemptReady(true)
 		}
-	}, [isInteractiveAssessment, user?.publicMetadata?.sourceId, onerosterComponentResourceSourcedId])
+	}, [user?.publicMetadata?.sourceId, onerosterComponentResourceSourcedId])
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
@@ -613,26 +609,7 @@ export function AssessmentStepper({
 
 	// MODIFIED: handleReset is now async and calls the new action
 	const handleReset = async () => {
-		// For exercises, just reset without creating a new PowerPath attempt
-		if (!isInteractiveAssessment) {
-			setCurrentQuestionIndex(0)
-			setSelectedResponses({})
-			setExpectedResponses([])
-			setShowFeedback(false)
-			setIsAnswerCorrect(false)
-			setIsAnswerChecked(false)
-			setAttemptCount(0)
-			setCorrectAnswersCount(0)
-			setShowSummary(false)
-			setSessionResults([]) // Reset session data
-			setReportedQuestionIds(new Set()) // Reset reported questions
-			hasSentCompletionEventRef.current = false // Reset completion tracking
-			setAttemptNumber((prev) => prev + 1) // Increment attempt number for exercises
-			assessmentStartTimeRef.current = new Date()
-			return
-		}
-
-		// For quizzes and tests, create a new PowerPath attempt
+		// Create a new PowerPath attempt for all interactive assessments (Exercise/Quiz/Test/Challenge)
 		if (!user?.publicMetadata?.sourceId) {
 			toast.error("Could not start a new attempt. User session is invalid.")
 			return
@@ -1057,7 +1034,7 @@ export function AssessmentStepper({
 		expectedResponses.length > 0 &&
 		expectedResponses.every((id) => selectedResponses[id] !== "" && selectedResponses[id] !== undefined) &&
 		!isSubmitting &&
-		(isInteractiveAssessment ? isAttemptReady : true)
+		isAttemptReady
 
 	return (
 		<div className="flex flex-col h-full bg-white">
