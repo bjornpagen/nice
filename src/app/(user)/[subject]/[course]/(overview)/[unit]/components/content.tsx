@@ -1,7 +1,10 @@
 "use client"
 
-import { Lock, Unlock } from "lucide-react"
+import { ExternalLink, Lock, Unlock } from "lucide-react"
 import * as React from "react"
+import ReactMarkdown from "react-markdown"
+import rehypeSanitize from "rehype-sanitize"
+import remarkGfm from "remark-gfm"
 import { toast } from "sonner"
 import { Header } from "@/app/(user)/[subject]/[course]/(overview)/components/header"
 import { Legend } from "@/app/(user)/[subject]/[course]/(overview)/components/legend"
@@ -74,6 +77,18 @@ export function Content({
 		return !isLocked && !progress?.completed
 	})?.id
 
+	// Lightweight detector to decide if description likely contains markdown
+	const looksLikeMarkdown = (value: string): boolean => {
+		// common patterns: links, bold/italic, inline code, headings, lists
+		return (
+			/\[[^\]]+\]\([^)]+\)/.test(value) ||
+			/(^|\s)[*_]{1,2}[^*_]+[*_]{1,2}(\s|$)/.test(value) ||
+			/`[^`]+`/.test(value) ||
+			/^#{1,6}\s/.test(value) ||
+			/^(\s*)[-*]\s+/.test(value)
+		)
+	}
+
 	return (
 		<>
 			<Header subject={params.subject} courseTitle={data.course.title} coursePath={data.course.path} />
@@ -114,7 +129,34 @@ export function Content({
 
 			<Section>
 				<h2 className="font-semibold text-gray-900 mb-2 text-xl">About this unit</h2>
-				<p className="text-gray-600 text-xs">{unit.description}</p>
+				{looksLikeMarkdown(unit.description) ? (
+					<div className="prose prose-sm text-gray-600 max-w-none">
+						<ReactMarkdown
+							remarkPlugins={[remarkGfm]}
+							rehypePlugins={[rehypeSanitize]}
+							components={{
+								a: ({ href, children }) => {
+									const isExternal = typeof href === "string" && /^https?:\/\//.test(href)
+									return (
+										<a
+											href={href}
+											target={isExternal ? "_blank" : undefined}
+											rel={isExternal ? "noopener noreferrer" : undefined}
+											className="text-blue-600 hover:text-blue-700 underline underline-offset-2 inline-flex items-center gap-1"
+										>
+											{children}
+											{isExternal && <ExternalLink className="h-4 w-4" />}
+										</a>
+									)
+								}
+							}}
+						>
+							{unit.description}
+						</ReactMarkdown>
+					</div>
+				) : (
+					<p className="text-gray-600 text-xs">{unit.description}</p>
+				)}
 			</Section>
 
 			<React.Suspense
