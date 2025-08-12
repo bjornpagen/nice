@@ -127,10 +127,8 @@ export async function updateVideoProgress(
 	// Define the completion threshold (shared constant)
 	const isCompleted = percentComplete >= VIDEO_COMPLETION_THRESHOLD_PERCENT
 
-	// The score is a float from 0.0 to 1.0. Set to 1.0 upon completion.
-	const score = isCompleted ? 1.0 : Number.parseFloat((percentComplete / 100).toFixed(2))
-	// The status becomes 'fully graded' upon completion, which marks it as complete in the UI.
-	const scoreStatus = isCompleted ? ("fully graded" as const) : ("partially graded" as const)
+	// The score is a float from 0.0 to 1.0 based on current playback position.
+	const newScore = isCompleted ? 1.0 : Number.parseFloat((percentComplete / 100).toFixed(2))
 
 	// Log whether this is marking the video as complete
 	if (isCompleted) {
@@ -146,20 +144,48 @@ export async function updateVideoProgress(
 	// The result sourcedId follows our pattern
 	const onerosterResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterLineItemSourcedId}`
 
+	// Preserve monotonic progress: never decrease an existing higher result
+	let finalScore = newScore
+	let finalStatus: "fully graded" | "partially graded" = isCompleted ? "fully graded" : "partially graded"
+
+	const existingResult = await errors.try(oneroster.getResult(onerosterResultSourcedId))
+	if (existingResult.error) {
+		// To preserve monotonicity, avoid sending a potentially lower score if we can't compare
+		if (newScore < 1.0) {
+			logger.warn("skipping video progress update due to unknown existing score", {
+				onerosterResultSourcedId,
+				proposedScore: newScore,
+				percentComplete
+			})
+			return
+		}
+		logger.debug("no existing video result, proceeding with completion", { onerosterResultSourcedId })
+	} else {
+		const existingScore = typeof existingResult.data?.score === "number" ? existingResult.data.score : undefined
+		const existingIsCompleted = existingScore !== undefined && existingScore >= VIDEO_COMPLETION_THRESHOLD_PERCENT / 100
+		if (existingScore !== undefined && existingScore >= newScore) {
+			finalScore = existingScore
+		}
+		// Once completed, remain completed
+		if (existingIsCompleted) {
+			finalStatus = "fully graded"
+		}
+	}
+
 	const resultPayload = {
 		result: {
 			assessmentLineItem: { sourcedId: onerosterLineItemSourcedId, type: "assessmentLineItem" as const },
 			student: { sourcedId: onerosterUserSourcedId, type: "user" as const },
-			scoreStatus,
+			scoreStatus: finalStatus,
 			scoreDate: new Date().toISOString(),
-			score
+			score: finalScore
 		}
 	}
 
 	logger.debug("sending video progress to OneRoster", {
 		onerosterResultSourcedId,
-		score,
-		scoreStatus,
+		score: finalScore,
+		scoreStatus: finalStatus,
 		onerosterVideoResourceSourcedId
 	})
 
@@ -195,10 +221,10 @@ export async function updateVideoProgress(
 	logger.info("video progress saved successfully", {
 		onerosterUserSourcedId,
 		onerosterVideoResourceSourcedId,
-		score,
+		score: finalScore,
 		percentComplete,
-		status: scoreStatus,
-		isPartialProgress: !isCompleted
+		status: finalStatus,
+		isPartialProgress: finalStatus === "partially graded"
 	})
 }
 
@@ -551,8 +577,9 @@ export async function getVideoProgress(
 		onerosterVideoResourceSourcedId
 	})
 
-	// The result sourcedId follows our pattern
-	const onerosterResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterVideoResourceSourcedId}`
+	// The result sourcedId follows our pattern: use the assessment line item id
+	const onerosterLineItemSourcedId = getAssessmentLineItemId(onerosterVideoResourceSourcedId)
+	const onerosterResultSourcedId = `nice_${onerosterUserSourcedId}_${onerosterLineItemSourcedId}`
 
 	const result = await errors.try(oneroster.getResult(onerosterResultSourcedId))
 	if (result.error) {
