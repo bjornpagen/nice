@@ -436,7 +436,7 @@ function RightSection({
 					</div>
 				)}
 				<div className="flex flex-row gap-2">
-					{!hasExhaustedAttempts && (
+					{!hasExhaustedAttempts && !isCorrect && (
 						<Button variant="link" className="text-blue-600 hover:underline hover:cursor-pointer" asChild>
 							<AlertDialog>
 								<AlertDialogTrigger className="text-sm text-blue-600 hover:underline hover:cursor-pointer">
