@@ -185,13 +185,14 @@ export async function sendCaliperActivityCompletedEvent(
 		}
 	}
 
-	// Log if penalty was applied
-	if (assessmentXp === -5) {
+	// Log if penalty was applied (any negative XP indicates penalty)
+	if (assessmentXp < 0) {
 		logger.warn("insincere effort detected - penalty applied", {
 			userId: actor.id,
 			assessmentId: context.activity?.id,
 			accuracy: performance.correctQuestions / performance.totalQuestions,
 			totalQuestions: performance.totalQuestions,
+			penaltyXp: assessmentXp,
 			durationInSeconds: performance.durationInSeconds,
 			timePerQuestion: performance.durationInSeconds
 				? performance.durationInSeconds / performance.totalQuestions

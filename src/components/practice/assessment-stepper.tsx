@@ -17,6 +17,7 @@ import quizIllustration from "@/components/practice/course/unit/quiz/images/quiz
 import testIllustration from "@/components/practice/course/unit/test/images/test-illustration.png"
 import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { QTIRenderer } from "@/components/qti-renderer"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
@@ -32,6 +33,7 @@ import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
+import { cn } from "@/lib/utils"
 import { calculateAssessmentXp } from "@/lib/xp"
 
 // Summary View Component
@@ -47,7 +49,10 @@ function SummaryView({
 	assessmentTitle,
 	onComplete,
 	handleReset,
-	nextItem
+	nextItem,
+	penaltyXp,
+	xpReason,
+	avgSecondsPerQuestion
 }: {
 	title: string
 	subtitle: string
@@ -61,6 +66,9 @@ function SummaryView({
 	onComplete?: () => void
 	handleReset: () => void
 	nextItem: { text: string; path: string } | null
+	penaltyXp?: number
+	xpReason?: string
+	avgSecondsPerQuestion?: number
 }) {
 	// Play summary sound when component mounts
 	React.useEffect(() => {
@@ -89,6 +97,36 @@ function SummaryView({
 						>
 							{subtitle}
 						</p>
+					)}
+					{typeof penaltyXp === "number" && penaltyXp < 0 && (
+						<div className="mt-6 w-full max-w-xl mx-auto">
+							{(() => {
+								const isDark = contentType === "Exercise" || contentType === "Quiz" || contentType === "Test"
+								return (
+									<Alert
+										className={cn(
+											"backdrop-blur-sm",
+											isDark
+												? "border-white/15 bg-white/5 text-white [&_[data-slot=alert-description]]:text-white/80"
+												: "border-red-200 bg-red-50 text-red-900 [&_[data-slot=alert-description]]:text-red-900"
+										)}
+									>
+										<AlertTitle className={cn(isDark ? "text-white" : "text-red-900")}>XP penalty applied</AlertTitle>
+										<AlertDescription>
+											<p>
+												{xpReason || "insincere effort detected"}. Deducted
+												<span className="font-semibold"> {Math.abs(penaltyXp)} XP</span>
+												{typeof avgSecondsPerQuestion === "number" && (
+													<> (~{avgSecondsPerQuestion.toFixed(1)}s per question)</>
+												)}
+												.
+											</p>
+											<p>Slow down and aim for accuracy to earn XP.</p>
+										</AlertDescription>
+									</Alert>
+								)
+							})()}
+						</div>
 					)}
 					<div className="mt-8">
 						<p
@@ -199,6 +237,11 @@ export function AssessmentStepper({
 	const [reportedQuestionIds, setReportedQuestionIds] = React.useState<Set<string>>(new Set()) // NEW STATE
 	const [isReportPopoverOpen, setIsReportPopoverOpen] = React.useState(false)
 	const [reportText, setReportText] = React.useState("")
+
+	// Store XP penalty info for summary display
+	const [xpPenaltyInfo, setXpPenaltyInfo] = React.useState<
+		{ penaltyXp: number; reason: string; avgSecondsPerQuestion?: number } | undefined
+	>(undefined)
 
 	const [nextItem, setNextItem] = React.useState<{ text: string; path: string; type?: string } | null>(null)
 	const [debugClickCount, setDebugClickCount] = React.useState(0)
@@ -471,6 +514,23 @@ export function AssessmentStepper({
 
 			multiplier = xpResult.multiplier
 
+			// Capture penalty info for the summary view
+			if (xpResult.penaltyApplied) {
+				const avgSecondsPerQuestion =
+					durationInSeconds && finalTotalQuestions > 0 ? durationInSeconds / finalTotalQuestions : undefined
+				setXpPenaltyInfo({
+					penaltyXp: xpResult.finalXp,
+					reason: xpResult.reason,
+					avgSecondsPerQuestion
+				})
+				// User feedback toast for penalties
+				toast.error(`${xpResult.finalXp} XP`, {
+					description: xpResult.reason
+				})
+			} else {
+				setXpPenaltyInfo(undefined)
+			}
+
 			// NOTE: Cannot use logger in client components - XP calculation details
 			// are logged in the centralized calculateAssessmentXp function
 
@@ -540,6 +600,18 @@ export function AssessmentStepper({
 
 			if (saveResult.error) {
 				throw errors.wrap(saveResult.error, "save assessment result")
+			}
+
+			// User feedback toast for awarded XP (assessment portion only)
+			if (xpResult.finalXp > 0 && shouldAwardXp) {
+				toast.success(`+${xpResult.finalXp} XP`, {
+					description: <span className="text-black">Earned for this assessment</span>
+				})
+			} else if (!shouldAwardXp) {
+				// No XP if already proficient on this assessment
+				toast("No XP awarded", {
+					description: <span className="text-black">Already proficient on this assessment</span>
+				})
 			}
 
 			// Return whether XP should be awarded
@@ -760,6 +832,9 @@ export function AssessmentStepper({
 				onComplete={onComplete}
 				handleReset={handleReset}
 				nextItem={nextItem}
+				penaltyXp={xpPenaltyInfo?.penaltyXp}
+				xpReason={xpPenaltyInfo?.reason}
+				avgSecondsPerQuestion={xpPenaltyInfo?.avgSecondsPerQuestion}
 			/>
 		)
 	}

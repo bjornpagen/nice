@@ -3,7 +3,8 @@ import * as logger from "@superbuilders/slog"
 // Constants defining the XP award thresholds and multipliers.
 export const BONUS_MULTIPLIER = 1.25 // 25% bonus for perfect scores
 export const MASTERY_THRESHOLD = 0.8 // 80% accuracy for full XP
-export const PENALTY_XP = -5 // Penalty to discourage guessing
+// Deprecated: fixed penalty has been replaced by dynamic per-assessment penalty
+export const PENALTY_XP = -5 // legacy fallback (unused in new logic)
 export const MIN_SECONDS_PER_QUESTION = 5 // Minimum reasonable time per question
 
 //ploo
@@ -77,14 +78,14 @@ export function calculateAssessmentXp(
 	if (
 		totalQuestions &&
 		durationInSeconds &&
-		totalQuestions > 5 && // Only penalize if there are enough questions for statistical significance
 		durationInSeconds / totalQuestions < MIN_SECONDS_PER_QUESTION && // Less than 5 seconds per question
 		accuracyDecimal < 0.5 // Less than 50% accuracy
 	) {
 		// User is rushing and performing poorly - likely random clicking
 		const timePerQuestion = durationInSeconds / totalQuestions
+		const dynamicPenalty = -Math.max(1, Math.floor(totalQuestions))
 		const result = {
-			finalXp: PENALTY_XP,
+			finalXp: dynamicPenalty,
 			multiplier: 0,
 			baseXp,
 			accuracy,
@@ -100,7 +101,7 @@ export function calculateAssessmentXp(
 			durationInSeconds,
 			timePerQuestion,
 			minSecondsPerQuestion: MIN_SECONDS_PER_QUESTION,
-			penaltyXp: PENALTY_XP,
+			penaltyXp: dynamicPenalty,
 			finalXp: result.finalXp
 		})
 
@@ -179,12 +180,11 @@ export function calculateAwardedXp(
 	if (
 		totalQuestions &&
 		durationInSeconds &&
-		totalQuestions > 5 && // Only penalize if there are enough questions for statistical significance
 		durationInSeconds / totalQuestions < MIN_SECONDS_PER_QUESTION && // Less than 5 seconds per question
 		accuracy < 0.5 // Less than 50% accuracy
 	) {
 		// User is rushing and performing poorly - likely random clicking
-		return PENALTY_XP
+		return -Math.max(1, Math.floor(totalQuestions))
 	}
 
 	if (accuracy === 1.0) {
