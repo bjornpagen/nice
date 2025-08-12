@@ -35,6 +35,9 @@ import { createPrefixFilter } from "@/lib/filter"
 
 // Prefix filters for leveraging btree indexes
 const NICE_PREFIX_FILTER = createPrefixFilter("nice_")
+function hasMetaKeys(x: unknown): x is { type?: unknown; subType?: unknown; activityType?: unknown } {
+	return typeof x === "object" && x !== null
+}
 
 // ⚠️ IMPORTANT: OneRoster API Filtering Limitation
 // The OneRoster API only supports a SINGLE AND operation in filter queries.
@@ -249,12 +252,39 @@ export async function getResourcesBySlugAndType(
 		// ⚠️ CRITICAL: Apply client-side safety filtering first
 		const activeResources = ensureActiveStatus(resources)
 
-		// Filter by type in-memory
-		let filtered = activeResources.filter((r) => r.metadata?.type === type)
+		// Filter by type in-memory with backward-compatible support for QTI tests/exercises
+		let filtered = activeResources
+		if (activityType === "Article" || activityType === "Video") {
+			// Articles and Videos remain interactive only
+			filtered = filtered.filter((r) => r.metadata?.type === "interactive" && r.metadata?.activityType === activityType)
+		} else if (
+			activityType === "Exercise" ||
+			activityType === "Quiz" ||
+			activityType === "UnitTest" ||
+			activityType === "CourseChallenge"
+		) {
+			// Accept either interactive (older) or qti (reverted) forms
+			filtered = filtered.filter((r) => {
+				const meta = r.metadata
+				if (!hasMetaKeys(meta)) return false
+				const typeVal = typeof meta.type === "string" ? meta.type : undefined
+				const subTypeVal = typeof meta.subType === "string" ? meta.subType : undefined
+				const activityVal = typeof meta.activityType === "string" ? meta.activityType : undefined
 
-		// Filter by activityType in-memory if specified
-		if (activityType) {
-			filtered = filtered.filter((r) => r.metadata?.activityType === activityType)
+				if (typeVal === "interactive") {
+					return activityVal === activityType
+				}
+				if (typeVal === "qti") {
+					// All assessment tests and exercises use qti-test
+					const subtypeOk = subTypeVal === "qti-test"
+					const activityOk = !activityVal || activityVal === activityType
+					return subtypeOk && activityOk
+				}
+				return false
+			})
+		} else {
+			// No activityType specified: preserve legacy behavior (interactive only)
+			filtered = filtered.filter((r) => r.metadata?.type === type)
 		}
 
 		return filtered

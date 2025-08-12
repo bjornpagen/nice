@@ -577,7 +577,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								xp: videoData?.duration ? Math.ceil(videoData.duration / 60) : 0
 							}
 						} else if (lc.contentType === "Exercise") {
-							// CHANGE: Convert Exercises to interactive type
+							// REVERT: Emit QTI test resources for Exercises
 							const exerciseQuestionCount = exerciseQuestionCountMap.get(content.id)
 							if (exerciseQuestionCount === undefined) {
 								logger.error("qti xp: missing question count for exercise", { exerciseId: content.id })
@@ -585,11 +585,13 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							}
 							metadata = {
 								...metadata,
-								type: "interactive",
-								toolProvider: "Nice Academy",
+								type: "qti",
+								subType: "qti-test",
+								version: "3.0",
+								language: "en-US",
+								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${content.id}`,
+								// Keep Nice-controlled hints for our app (optional)
 								activityType: "Exercise",
-								launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
-								url: `${appDomain}${metadata.path}/e/${content.slug}`,
 								xp: Math.ceil(exerciseQuestionCount * 0.5)
 							}
 						}
@@ -656,19 +658,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					assessmentXp = Math.ceil(quizCount * 0.5)
 				}
 
-				// CHANGE: Convert Assessments to interactive type
-				const pathSegment = assessment.type === "UnitTest" || assessment.type === "CourseChallenge" ? "test" : "quiz"
-				const lastLessonInUnit = unitLessons[unitLessons.length - 1]
-				if (!lastLessonInUnit) {
-					logger.error("CRITICAL: No lessons found in unit for assessment launchUrl", {
-						unitId: unit.id,
-						assessmentId: assessment.id,
-						assessmentType: assessment.type
-					})
-					throw errors.new("assessment launchUrl: unit has no lessons to anchor path")
-				}
-				const launchUrl = `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/${lastLessonInUnit.slug}/${pathSegment}/${assessment.slug}`
-
+				// REVERT: Emit QTI test resources for Assessments (Quiz/UnitTest)
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
 					status: "active",
@@ -679,11 +669,13 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					roles: ["primary"],
 					importance: "primary",
 					metadata: {
-						type: "interactive",
-						toolProvider: "Nice Academy",
+						type: "qti",
+						subType: "qti-test",
+						version: "3.0",
+						language: "en-US",
+						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
+						// Keep Nice-controlled hints for our app (optional)
 						activityType: assessment.type,
-						launchUrl: launchUrl,
-						url: launchUrl,
 						// Khan-specific data
 						khanId: assessment.id,
 						khanSlug: normalizeKhanSlug(assessment.slug),
@@ -744,10 +736,6 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					assessmentXp = Math.ceil(quizCount * 0.5)
 				}
 
-				// CHANGE: Convert Course Assessments to interactive type
-				const pathSegment = assessment.type === "UnitTest" || assessment.type === "CourseChallenge" ? "test" : "quiz"
-				const launchUrl = `${appDomain}/${subjectSlug}/${course.slug}/${pathSegment}/${assessment.slug}`
-
 				onerosterPayload.resources.push({
 					sourcedId: assessmentSourcedId,
 					status: "active",
@@ -758,11 +746,13 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					roles: ["primary"],
 					importance: "primary",
 					metadata: {
-						type: "interactive",
-						toolProvider: "Nice Academy",
+						type: "qti",
+						subType: "qti-test",
+						version: "3.0",
+						language: "en-US",
+						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
+						// Keep Nice-controlled hints for our app (optional)
 						activityType: assessment.type,
-						launchUrl: launchUrl,
-						url: launchUrl,
 						// Khan-specific data
 						khanId: assessment.id,
 						khanSlug: normalizeKhanSlug(assessment.slug),

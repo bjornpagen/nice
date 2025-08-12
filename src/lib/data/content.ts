@@ -1,9 +1,12 @@
+import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { connection } from "next/server"
+import { powerpath } from "@/lib/clients"
 import { getAllComponentResources, getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
 import { getAssessmentTest } from "@/lib/data/fetchers/qti"
+import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
 import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
@@ -72,7 +75,7 @@ export async function fetchExercisePageData(params: {
 	lesson: string
 	exercise: string
 }): Promise<ExercisePageData> {
-	// Opt into dynamic rendering since we use Math.random() for shuffling
+	// Opt into dynamic rendering
 	await connection()
 
 	logger.info("fetchExercisePageData called", { params })
@@ -171,8 +174,40 @@ export async function fetchExercisePageData(params: {
 		throw errors.wrap(resolvedQuestionsResult.error, "resolve questions from qti xml for exercise")
 	}
 
-	// Use the same helper for selection/ordering.
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, resolvedQuestionsResult.data)
+	// Align exercises with quizzes/tests: deterministic selection using user + attempt
+	const userForExercise = await currentUser()
+	if (!userForExercise) {
+		logger.error("user authentication required for deterministic selection", {})
+		throw errors.new("user authentication required")
+	}
+	const userMetaForExercise = parseUserPublicMetadata(userForExercise.publicMetadata)
+	if (!userMetaForExercise.sourceId) {
+		logger.error("user source id missing for deterministic selection", {})
+		throw errors.new("user source id missing")
+	}
+
+	// Use lesson-level componentResource for exercises
+	const progressForExercise = await errors.try(
+		powerpath.getAssessmentProgress(userMetaForExercise.sourceId, componentResource.sourcedId)
+	)
+	if (progressForExercise.error) {
+		logger.error("failed to fetch assessment progress for deterministic selection", {
+			error: progressForExercise.error,
+			componentResourceSourcedId: componentResource.sourcedId
+		})
+		throw errors.wrap(progressForExercise.error, "powerpath assessment progress")
+	}
+	const attemptNumberForExercise = progressForExercise.data.attempt
+	if (typeof attemptNumberForExercise !== "number") {
+		logger.error("assessment attempt number missing", { componentResourceSourcedId: componentResource.sourcedId })
+		throw errors.new("assessment attempt number missing")
+	}
+
+	// Use the common helper for selection/ordering with deterministic options
+	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, resolvedQuestionsResult.data, {
+		baseSeed: `${userMetaForExercise.sourceId}:${resource.sourcedId}`,
+		attemptNumber: attemptNumberForExercise
+	})
 
 	return {
 		exercise: {

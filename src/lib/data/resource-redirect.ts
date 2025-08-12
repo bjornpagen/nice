@@ -21,50 +21,43 @@ export async function findResourcePath(slug: string, type: ResourceType): Promis
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(slug, "findResourcePath slug parameter")
 
-	// Step 1: Find the resource by slug and type - everything is interactive now
-	const resourcesResult = await errors.try(getResourcesBySlugAndType(slug, "interactive"))
+	// Step 1: Find the resource by slug and type. Pass activityType so fetcher returns
+	// either interactive or qti forms for assessments/exercises.
+	let activityType: "Article" | "Video" | "Exercise"
+	if (type === "article") activityType = "Article"
+	else if (type === "video") activityType = "Video"
+	else activityType = "Exercise"
+	const resourcesResult = await errors.try(getResourcesBySlugAndType(slug, "interactive", activityType))
 	if (resourcesResult.error) {
 		logger.error("failed to find resource by slug", { slug, type, error: resourcesResult.error })
 		return null
 	}
 
-	// For exercises, articles, and videos (all interactive), we need to filter by activityType
+	// Filter by activityType
 	let resource = null
 	if (type === "exercise") {
-		// Filter to only exercises (interactive resources with activityType "Exercise")
+		// Filter to only exercises
 		for (const r of resourcesResult.data) {
 			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
-			if (
-				metadataResult.success &&
-				metadataResult.data.type === "interactive" &&
-				metadataResult.data.activityType === "Exercise"
-			) {
+			if (metadataResult.success && metadataResult.data.activityType === "Exercise") {
 				resource = r
 				break
 			}
 		}
 	} else if (type === "article") {
-		// Filter to only articles (interactive resources with activityType "Article")
+		// Filter to only articles
 		for (const r of resourcesResult.data) {
 			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
-			if (
-				metadataResult.success &&
-				metadataResult.data.type === "interactive" &&
-				metadataResult.data.activityType === "Article"
-			) {
+			if (metadataResult.success && metadataResult.data.activityType === "Article") {
 				resource = r
 				break
 			}
 		}
 	} else {
-		// For videos, filter to interactive resources with activityType "Video"
+		// Filter to only videos
 		for (const r of resourcesResult.data) {
 			const metadataResult = ResourceMetadataSchema.safeParse(r.metadata)
-			if (
-				metadataResult.success &&
-				metadataResult.data.type === "interactive" &&
-				metadataResult.data.activityType === "Video"
-			) {
+			if (metadataResult.success && metadataResult.data.activityType === "Video") {
 				resource = r
 				break
 			}

@@ -23,21 +23,36 @@ const BaseResourceMetadataSchema = z.object({
 	khanSlug: z.string().min(1),
 	khanTitle: z.string().min(1),
 	khanDescription: z.string().default(""),
-	xp: z.number().default(0)
+	xp: z.number().default(0),
+	// Optional shared convenience field used by our frontend for videos
+	khanYoutubeId: z.string().optional()
 })
 
-// Schema for Interactive-specific metadata - this is now the only resource type
+// Schema for Interactive-specific metadata
 const InteractiveResourceMetadataSchema = BaseResourceMetadataSchema.extend({
 	type: z.literal("interactive"),
 	launchUrl: z.string().url(),
 	url: z.string().url().optional(),
 	toolProvider: z.string().optional(),
-	activityType: z.enum(["Article", "Video", "Exercise", "Quiz", "UnitTest", "CourseChallenge"]),
-	// Add khanYoutubeId to support videos being marked as interactive
-	khanYoutubeId: z.string().optional()
+	activityType: z.enum(["Article", "Video", "Exercise", "Quiz", "UnitTest", "CourseChallenge"])
 })
 
-// The resource metadata schema - only interactive resources now
-export const ResourceMetadataSchema = InteractiveResourceMetadataSchema
+// Schema for QTI-specific metadata (used for exercises and assessment tests)
+const QtiResourceMetadataSchema = BaseResourceMetadataSchema.extend({
+	type: z.literal("qti"),
+	subType: z.enum(["qti-test", "qti-stimulus", "qti-question", "qti-test-bank"]).default("qti-test"),
+	url: z.string().url(),
+	version: z.string().default("3.0"),
+	language: z.string().default("en-US"),
+	questionType: z.string().optional(),
+	// Nice-controlled fields to keep frontend logic stable
+	activityType: z.enum(["Article", "Video", "Exercise", "Quiz", "UnitTest", "CourseChallenge"]).optional()
+})
+
+// The resource metadata schema supports both interactive and qti resources
+export const ResourceMetadataSchema = z.discriminatedUnion("type", [
+	InteractiveResourceMetadataSchema,
+	QtiResourceMetadataSchema
+])
 export type ResourceMetadata = z.infer<typeof ResourceMetadataSchema>
 export type ActivityType = z.infer<typeof InteractiveResourceMetadataSchema.shape.activityType>

@@ -235,6 +235,7 @@ export function AssessmentStepper({
 	const isNavigatingRef = React.useRef(false)
 	const skipTimeoutRef = React.useRef<number | null>(null)
 
+	// Interactive assessments (PowerPath attempts/logging) are quizzes and tests only
 	const isInteractiveAssessment = contentType === "Quiz" || contentType === "Test"
 	const MAX_ATTEMPTS = 3
 	const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
