@@ -44,8 +44,8 @@ export async function prepareInteractiveAssessment(options: PrepareOptions): Pro
 	let attemptNumber = progressResult.data.attempt
 	const isFinalized = Boolean(progressResult.data.finalized)
 	if (!isFinalized) {
-		// Robustness: poll for propagation of finalize state before creating next attempt
-		const backoffMs = [100, 200, 400, 800, 1600, 3200]
+		// Poll briefly to reduce SSR latency; client-side init will catch longer lags
+		const backoffMs = [100, 200, 400, 800, 1600]
 		for (const delay of backoffMs) {
 			await new Promise((resolve) => setTimeout(resolve, delay))
 			const retryProgress = await errors.try(powerpath.getAssessmentProgress(userSourceId, componentResourceSourcedId))
