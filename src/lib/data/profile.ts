@@ -3,10 +3,8 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { connection } from "next/server"
 import type { z } from "zod"
-import { env } from "@/env.js"
 import type { CaliperEventSchema } from "@/lib/caliper"
 import { oneroster } from "@/lib/clients"
-import { isCourseAllowed } from "@/lib/constants/allowed-courses"
 import { getAllEventsForUser } from "@/lib/data/fetchers/caliper"
 import { getActiveEnrollmentsForUser, getClass, getCourse, getUnitsForCourses } from "@/lib/data/fetchers/oneroster"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
@@ -781,11 +779,7 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 	// Get user's enrolled courses
 	const userCoursesPromise = fetchUserEnrolledCourses(sourceId)
 
-	const [subjects, userCoursesRaw] = await Promise.all([subjectsPromise, userCoursesPromise])
-
-	// Hide non-science courses in production from profile UI
-	const userCourses =
-		env.NODE_ENV === "production" ? userCoursesRaw.filter((c) => isCourseAllowed(c.id)) : userCoursesRaw
+	const [subjects, userCourses] = await Promise.all([subjectsPromise, userCoursesPromise])
 
 	// Fetch XP data for each course in parallel
 	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${sourceId}`
@@ -840,9 +834,7 @@ export async function fetchProfileCoursesDataWithUser(sourceId: string): Promise
 	const subjectsPromise = getOneRosterCoursesForExplore()
 	const userCoursesPromise = fetchUserEnrolledCourses(sourceId)
 
-	const [subjects, userCoursesRaw] = await Promise.all([subjectsPromise, userCoursesPromise])
-	const userCourses =
-		env.NODE_ENV === "production" ? userCoursesRaw.filter((c) => isCourseAllowed(c.id)) : userCoursesRaw
+	const [subjects, userCourses] = await Promise.all([subjectsPromise, userCoursesPromise])
 
 	return { subjects, userCourses }
 }
