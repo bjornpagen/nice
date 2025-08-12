@@ -32,15 +32,17 @@ export function UnitOverviewSection({
 			className={`bg-white border border-gray-200 rounded-xs p-4 mb-2 ${next ? "border-t-4 border-t-blue-500" : ""}`}
 		>
 			<div className="flex items-center mb-2">
-				<div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
-					<BookOpen className="w-5 h-5 text-white" />
-				</div>
-				<div className="ml-3">
-					{next && <div className="text-blue-500 text-xs font-small">Up next for you:</div>}
-					<h2 className="font-semibold text-gray-900 text-base text-sm">
-						Unit {index + 1}: {unit.title}
-					</h2>
-				</div>
+				<Link href={unit.path} className="flex items-center group">
+					<div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+						<BookOpen className="w-5 h-5 text-white" />
+					</div>
+					<div className="ml-3">
+						{next && <div className="text-blue-500 text-xs font-small">Up next for you:</div>}
+						<h2 className="font-semibold text-gray-900 text-base text-sm group-hover:underline">
+							Unit {index + 1}: {unit.title}
+						</h2>
+					</div>
+				</Link>
 				<div className="ml-auto text-right flex items-center gap-2">
 					<div className="text-xs text-gray-600">Unit mastery: {masteryPercentage ?? 0}%</div>
 					<Info className="w-4 h-4 text-gray-500 cursor-not-allowed" />
