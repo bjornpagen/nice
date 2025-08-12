@@ -80,12 +80,13 @@ export async function awardBankedXpForAssessment(
 	let detectedQuizzes = 0
 	for (const cr of unitCrResult.data) {
 		const resource = resourceMap.get(cr.resource.sourcedId)
-		const isInteractiveQuiz =
-			resource?.metadata?.type === "interactive" && resource?.metadata?.khanActivityType === "Quiz"
+		// Quizzes are emitted as QTI resources with khanLessonType "quiz" (and khanActivityType "Quiz")
+		const isQuizResource =
+			resource?.metadata?.khanLessonType === "quiz" || resource?.metadata?.khanActivityType === "Quiz"
 
 		if (
 			resource &&
-			isInteractiveQuiz &&
+			isQuizResource &&
 			resource.sourcedId !== quizResourceId &&
 			cr.sortOrder < quizSortOrder &&
 			cr.sortOrder > previousQuizSortOrder
@@ -165,15 +166,24 @@ export async function awardBankedXpForAssessment(
 		const expectedXp = typeof metadata?.xp === "number" ? metadata.xp : 0
 		if (expectedXp <= 0) continue
 
-		// Update detection logic for Articles and Videos - all resources are interactive now
-		if (metadata?.activityType === "Article") {
+		// Recognize interactive resources and classify by khanActivityType
+		const isInteractive = metadata?.type === "interactive"
+		const kind = metadata && typeof metadata.khanActivityType === "string" ? metadata.khanActivityType : undefined
+
+		if (isInteractive && kind === "Article") {
 			articleResources.push({ sourcedId: resource.sourcedId, expectedXp, type: "article" })
-		} else if (metadata?.activityType === "Video") {
+		} else if (isInteractive && kind === "Video") {
 			videoResources.push({ sourcedId: resource.sourcedId, expectedXp, type: "video" })
 		}
 	}
 
 	if (articleResources.length === 0 && videoResources.length === 0) {
+		// Fail-loud visibility when nothing qualifies
+		logger.info("no eligible passive resources found for banked xp", {
+			discoveredResourceCount: resourcesResult.data.length,
+			kinds: resourcesResult.data.map((r) => r.metadata?.khanActivityType || r.metadata?.activityType),
+			hasInteractive: resourcesResult.data.some((r) => r.metadata?.type === "interactive")
+		})
 		return { bankedXp: 0, awardedResourceIds: [] }
 	}
 

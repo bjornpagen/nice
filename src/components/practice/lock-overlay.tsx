@@ -64,7 +64,7 @@ export function LockOverlay({ message }: { message?: string }) {
 						{message ?? "This content is locked until you complete the earlier activities."}
 					</p>
 					<div className="mt-4 flex justify-center">
-						<Button asChild>
+						<Button asChild className="bg-blue-600 hover:bg-blue-700 text-white">
 							<Link href={targetUnitPath}>Go to current unit</Link>
 						</Button>
 					</div>
