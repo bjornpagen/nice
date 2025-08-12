@@ -36,18 +36,32 @@ export function sanitizeXmlAttributeValue(value: string): string {
  * @returns The modified XML string
  */
 export function replaceRootAttributes(xml: string, elementName: string, identifier: string, title: string): string {
-	// Find the root element matching the expected name
-	const regex = new RegExp(`^(\\s*<\\s*${elementName})((?:\\s+[^>]+)?)(>)`, "s")
-	const rootMatch = xml.match(regex)
-	if (!rootMatch) return xml
+	// Match the opening tag for the specified element anywhere in the document,
+	// preserving any XML declaration that might appear before it.
+	const regex = new RegExp(`<\s*${elementName}([^>]*)>`, "i")
+	const match = xml.match(regex)
+	if (!match) return xml
 
-	const [, openTag, , closeTag] = rootMatch
+	const originalAttrs = match[1] ?? ""
 
-	// Build new attributes string
-	const newAttrs = ` identifier="${escapeXmlAttribute(identifier)}" title="${escapeXmlAttribute(title)}"`
+	// Update or insert the identifier attribute
+	let updatedAttrs = originalAttrs.replace(
+		/\sidentifier=["'][^"']*["']/i,
+		` identifier="${escapeXmlAttribute(identifier)}"`
+	)
+	if (!/\sidentifier=["'][^"']*["']/i.test(originalAttrs)) {
+		updatedAttrs += ` identifier="${escapeXmlAttribute(identifier)}"`
+	}
 
-	// Replace the root element's opening tag
-	return xml.replace(rootMatch[0], `${openTag}${newAttrs}${closeTag}`)
+	// Update or insert the title attribute
+	updatedAttrs = updatedAttrs.replace(/\stitle=["'][^"']*["']/i, ` title="${escapeXmlAttribute(title)}"`)
+	if (!/\stitle=["'][^"']*["']/i.test(originalAttrs)) {
+		updatedAttrs += ` title="${escapeXmlAttribute(title)}"`
+	}
+
+	// Reconstruct the opening tag with updated attributes
+	const replacement = `<${elementName}${updatedAttrs}>`
+	return xml.replace(regex, replacement)
 }
 
 /**
