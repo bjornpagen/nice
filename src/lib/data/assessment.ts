@@ -13,6 +13,7 @@ import {
 	getResourcesBySlugAndType
 } from "@/lib/data/fetchers/oneroster"
 import { getAssessmentTest } from "@/lib/data/fetchers/qti"
+import { prepareInteractiveAssessment } from "@/lib/interactive-assessments"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
@@ -175,15 +176,15 @@ export async function fetchQuizPageData(params: {
 			}
 		}
 	}
-	if (typeof attemptNumberForQuiz !== "number") {
-		logger.error("assessment attempt number missing", { componentResourceSourcedId: componentResource.sourcedId })
-		throw errors.new("assessment attempt number missing")
-	}
-
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, resolvedQuestionsResult.data, {
-		baseSeed: `${userMetaForQuiz.sourceId}:${resource.sourcedId}`,
-		attemptNumber: attemptNumberForQuiz
+	const preparedQuiz = await prepareInteractiveAssessment({
+		userSourceId: userMetaForQuiz.sourceId,
+		resourceSourcedId: resource.sourcedId,
+		componentResourceSourcedId: componentResource.sourcedId,
+		assessmentTest: assessmentTestResult.data,
+		resolvedQuestions: resolvedQuestionsResult.data,
+		rotationMode: "deterministic"
 	})
+	const questions = preparedQuiz.questions
 
 	return {
 		quiz: {
@@ -342,15 +343,15 @@ export async function fetchUnitTestPageData(params: {
 			}
 		}
 	}
-	if (typeof attemptNumberForUnitTest !== "number") {
-		logger.error("assessment attempt number missing", { componentResourceSourcedId: componentResource.sourcedId })
-		throw errors.new("assessment attempt number missing")
-	}
-
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, resolvedQuestionsResult.data, {
-		baseSeed: `${userMetaForUnitTest.sourceId}:${resource.sourcedId}`,
-		attemptNumber: attemptNumberForUnitTest
+	const preparedUnitTest = await prepareInteractiveAssessment({
+		userSourceId: userMetaForUnitTest.sourceId,
+		resourceSourcedId: resource.sourcedId,
+		componentResourceSourcedId: componentResource.sourcedId,
+		assessmentTest: assessmentTestResult.data,
+		resolvedQuestions: resolvedQuestionsResult.data,
+		rotationMode: "random"
 	})
+	const questions = preparedUnitTest.questions
 
 	return {
 		test: {
@@ -582,15 +583,15 @@ export async function fetchCourseChallengePage_TestData(params: {
 			}
 		}
 	}
-	if (typeof attemptNumberForChallenge !== "number") {
-		logger.error("assessment attempt number missing", { componentResourceSourcedId: componentResource.sourcedId })
-		throw errors.new("assessment attempt number missing")
-	}
-
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, resolvedQuestionsResult.data, {
-		baseSeed: `${userMetaForChallenge.sourceId}:${testResource.sourcedId}`,
-		attemptNumber: attemptNumberForChallenge
+	const preparedChallenge = await prepareInteractiveAssessment({
+		userSourceId: userMetaForChallenge.sourceId,
+		resourceSourcedId: testResource.sourcedId,
+		componentResourceSourcedId: componentResource.sourcedId,
+		assessmentTest: assessmentTestResult.data,
+		resolvedQuestions: resolvedQuestionsResult.data,
+		rotationMode: "random"
 	})
+	const questions = preparedChallenge.questions
 
 	return {
 		test: {

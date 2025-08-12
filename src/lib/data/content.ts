@@ -3,13 +3,12 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
 import { connection } from "next/server"
-import { powerpath } from "@/lib/clients"
 import { getAllComponentResources, getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
 import { getAssessmentTest } from "@/lib/data/fetchers/qti"
+import { prepareInteractiveAssessment } from "@/lib/interactive-assessments"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
-import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
 import { fetchLessonLayoutData } from "./lesson"
@@ -186,28 +185,16 @@ export async function fetchExercisePageData(params: {
 		throw errors.new("user source id missing")
 	}
 
-	// Use lesson-level componentResource for exercises
-	const progressForExercise = await errors.try(
-		powerpath.getAssessmentProgress(userMetaForExercise.sourceId, componentResource.sourcedId)
-	)
-	if (progressForExercise.error) {
-		logger.error("failed to fetch assessment progress for deterministic selection", {
-			error: progressForExercise.error,
-			componentResourceSourcedId: componentResource.sourcedId
-		})
-		throw errors.wrap(progressForExercise.error, "powerpath assessment progress")
-	}
-	const attemptNumberForExercise = progressForExercise.data.attempt
-	if (typeof attemptNumberForExercise !== "number") {
-		logger.error("assessment attempt number missing", { componentResourceSourcedId: componentResource.sourcedId })
-		throw errors.new("assessment attempt number missing")
-	}
-
-	// Use the common helper for selection/ordering with deterministic options
-	const questions = applyQtiSelectionAndOrdering(assessmentTestResult.data, resolvedQuestionsResult.data, {
-		baseSeed: `${userMetaForExercise.sourceId}:${resource.sourcedId}`,
-		attemptNumber: attemptNumberForExercise
+	// Unified interactive preparation with deterministic rotation for exercises
+	const preparedExercise = await prepareInteractiveAssessment({
+		userSourceId: userMetaForExercise.sourceId,
+		resourceSourcedId: resource.sourcedId,
+		componentResourceSourcedId: componentResource.sourcedId,
+		assessmentTest: assessmentTestResult.data,
+		resolvedQuestions: resolvedQuestionsResult.data,
+		rotationMode: "deterministic"
 	})
+	const questions = preparedExercise.questions
 
 	return {
 		exercise: {
