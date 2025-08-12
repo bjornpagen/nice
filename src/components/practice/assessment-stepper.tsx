@@ -855,6 +855,7 @@ export function AssessmentStepper({
 			}
 		}
 
+		const isLastQuestion = currentQuestionIndex === questions.length - 1
 		const result = await errors.try(
 			processQuestionResponse(
 				currentQuestion.id,
@@ -863,7 +864,8 @@ export function AssessmentStepper({
 				isAuthenticated ? onerosterUserSourcedId : undefined,
 				isAuthenticated ? onerosterComponentResourceSourcedId : undefined,
 				isInteractiveAssessment && isAuthenticated,
-				attemptNumber - 1 // Pass assessment attempt number (0-indexed) instead of question attempt count
+				attemptNumber - 1, // Pass assessment attempt number (0-indexed)
+				isLastQuestion
 			)
 		)
 

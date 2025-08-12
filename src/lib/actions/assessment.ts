@@ -37,7 +37,8 @@ export async function processQuestionResponse(
 	onerosterUserSourcedId?: string,
 	onerosterComponentResourceSourcedId?: string,
 	isInteractiveAssessment?: boolean,
-	assessmentAttemptNumber?: number
+	assessmentAttemptNumber?: number,
+	isLastQuestion?: boolean
 ) {
 	logger.debug("processing question response", {
 		qtiItemId,
@@ -150,6 +151,20 @@ export async function processQuestionResponse(
 			qtiItemId,
 			assessmentAttemptNumber,
 			isCorrect
+		})
+	}
+
+	// If this was the last question in an interactive assessment, finalize on the server now.
+	// This ensures that when the user navigates away and re-enters, the server will see finalized=true
+	// and can auto-rollover to a new attempt immediately.
+	if (isInteractiveAssessment && onerosterUserSourcedId && onerosterComponentResourceSourcedId && isLastQuestion) {
+		// Best-effort finalization: log errors but do not fail the primary response processing path.
+		finalizeAssessment(onerosterUserSourcedId, onerosterComponentResourceSourcedId).catch((err) => {
+			logger.error("failed to finalize assessment in processQuestionResponse", {
+				error: err,
+				qtiItemId,
+				onerosterComponentResourceSourcedId
+			})
 		})
 	}
 
