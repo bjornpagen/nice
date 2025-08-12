@@ -1159,6 +1159,58 @@ Never duplicate the same instructional text in both the body and interaction pro
 
 **Explanation:** The wrong example wastes space by repeating identical instructions. The correct version places the instruction only in the interaction prompt where it belongs, keeping the body minimal and focused.
 
+**REAL-WORLD NEGATIVE EXAMPLE (FROM QA) – DUPLICATED SENTENCES:**
+
+\`\`\`
+{
+  "body": [
+    { "type": "paragraph", "content": [{ "type": "text", "content": "Choose the best phrase to fill in the blank." }] },
+    { "type": "paragraph", "content": [{ "type": "text", "content": "A diploid organism has _____ in each cell." }] },
+    { "type": "blockSlot", "slotId": "choice_interaction" }
+  ],
+  "interactions": {
+    "choice_interaction": {
+      "type": "choiceInteraction",
+      "prompt": [
+        { "type": "text", "content": "Choose the best phrase to fill in the blank. A diploid organism has _____ in each cell." }
+      ],
+      "choices": [ ... ]
+    }
+  }
+}
+\`\`\`
+
+**POSITIVE EXAMPLE (DEDUPED – KEEP PROMPT ONLY):**
+
+\`\`\`
+{
+  "body": [
+    { "type": "blockSlot", "slotId": "choice_interaction" }
+  ],
+  "interactions": {
+    "choice_interaction": {
+      "type": "choiceInteraction",
+      "prompt": [
+        { "type": "text", "content": "Choose the best phrase to fill in the blank. A diploid organism has _____ in each cell." }
+      ],
+      "choices": [ ... ]
+    }
+  }
+}
+\`\`\`
+
+This case occurs when the prompt equals the concatenation of multiple body paragraphs. Our compiler dedupes by joining adjacent paragraphs before the interaction slot and removing them when they exactly match the prompt after normalization (whitespace, entities, and math tokens).
+
+**CRITICAL: DO NOT RELY ON COMPILER DEDUPLICATION**
+
+The compiler has a last-resort safety net that removes duplicated instruction text from the body when it is identical to the interaction prompt. This exists ONLY to prevent catastrophic UX regressions if upstream generation makes a mistake.
+
+- If your output depends on this dedupe to look correct, your output is WRONG.
+- Treat dedupe as an EMERGENCY GUARDRAIL, not a feature.
+- You MUST produce clean, non-duplicated content: when an interaction has a prompt, keep those instructions out of the body. HARD STOP. NO EXCEPTIONS.
+
+Any generated item that repeats instruction text in both body and prompt may be rejected even if the compiler could fix it. Your job is to avoid the duplication entirely.
+
 **8. Poor Visual Separation - Cramped Layout - BANNED:**
 Never place equations, answer prompts, and input fields all in the same paragraph. This creates visual confusion and poor readability.
 
