@@ -195,19 +195,19 @@ export function Footer() {
 						<p className="text-gray-300 leading-relaxed">
 							Nice Academy is a 501(c)(3) nonprofit organization.{" "}
 							<Link
-								href="https://donate.khanacademy.org/campaign/580662/donate?c_src=kaid_555282338421243454250960&c_src2=Webapp.footer"
-								target="_blank"
-								rel="noopener noreferrer"
+								href="#"
+								onClick={(e) => e.preventDefault()}
+								aria-disabled="true"
 								className="text-blue-400 hover:text-blue-300 underline inline-flex items-center"
 							>
 								Donate
 							</Link>{" "}
 							or{" "}
 							<Link
-								href="https://khanacademy.org/contribute"
+								href="#"
+								onClick={(e) => e.preventDefault()}
+								aria-disabled="true"
 								className="text-blue-400 hover:text-blue-300 underline"
-								target="_blank"
-								rel="noopener noreferrer"
 							>
 								volunteer
 							</Link>{" "}
@@ -221,14 +221,19 @@ export function Footer() {
 					{/* About Section */}
 					<div>
 						<h3 className="font-semibold mb-4 text-white">
-							<Link href="/about" className="hover:text-blue-400">
+							<Link href="#" onClick={(e) => e.preventDefault()} aria-disabled="true" className="hover:text-blue-400">
 								About
 							</Link>
 						</h3>
 						<ul className="space-y-2 text-sm">
 							{about.map((item) => (
 								<li key={item.name}>
-									<Link href={item.href} className="text-gray-300 hover:text-white">
+									<Link
+										href="#"
+										onClick={(e) => e.preventDefault()}
+										aria-disabled="true"
+										className="text-gray-300 hover:text-white"
+									>
 										{item.name}
 									</Link>
 								</li>
@@ -242,7 +247,12 @@ export function Footer() {
 						<ul className="space-y-2 text-sm">
 							{contact.map((item) => (
 								<li key={item.name}>
-									<Link href={item.href} className="text-gray-300 hover:text-white">
+									<Link
+										href="#"
+										onClick={(e) => e.preventDefault()}
+										aria-disabled="true"
+										className="text-gray-300 hover:text-white"
+									>
 										{item.name}
 									</Link>
 								</li>
@@ -253,13 +263,19 @@ export function Footer() {
 					{/* Download Apps Section */}
 					<div>
 						<h3 className="font-semibold mb-4 text-white">
-							<Link href="/downloads" className="hover:text-blue-400">
+							<Link href="#" onClick={(e) => e.preventDefault()} aria-disabled="true" className="hover:text-blue-400">
 								Download the apps
 							</Link>
 						</h3>
 						<div className="space-y-4">
 							{download.map((item) => (
-								<Link href={item.href} key={item.alt} className="block">
+								<Link
+									href="#"
+									onClick={(e) => e.preventDefault()}
+									aria-disabled="true"
+									key={item.alt}
+									className="block"
+								>
 									<Image src={item.src} alt={item.alt} width={135} height={40} unoptimized />
 								</Link>
 							))}
@@ -272,7 +288,12 @@ export function Footer() {
 						<ul className="space-y-2 text-sm">
 							{courses.map((item) => (
 								<li key={item.name}>
-									<Link href={item.href} className="text-gray-300 hover:text-white">
+									<Link
+										href="#"
+										onClick={(e) => e.preventDefault()}
+										aria-disabled="true"
+										className="text-gray-300 hover:text-white"
+									>
 										{item.name}
 									</Link>
 								</li>
@@ -287,7 +308,13 @@ export function Footer() {
 						<div className="flex flex-wrap items-center gap-6 mb-4 md:mb-0">
 							<span className="text-gray-400 text-sm">© 2025 Nice Academy</span>
 							{legal.map((item) => (
-								<Link href={item.href} key={item.name} className="text-gray-400 hover:text-white">
+								<Link
+									href="#"
+									onClick={(e) => e.preventDefault()}
+									aria-disabled="true"
+									key={item.name}
+									className="text-gray-400 hover:text-white"
+								>
 									{item.name}
 								</Link>
 							))}
@@ -297,11 +324,11 @@ export function Footer() {
 						<div className="flex space-x-4">
 							{social.map((item) => (
 								<Link
-									href={item.href}
+									href="#"
+									onClick={(e) => e.preventDefault()}
+									aria-disabled="true"
 									key={item.name}
 									className="text-gray-400 hover:text-white"
-									target="_blank"
-									rel="noopener noreferrer"
 								>
 									<svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
 										<title>{item.name}</title>
