@@ -155,17 +155,19 @@ export async function processQuestionResponse(
 	}
 
 	// If this was the last question in an interactive assessment, finalize on the server now.
-	// This ensures that when the user navigates away and re-enters, the server will see finalized=true
-	// and can auto-rollover to a new attempt immediately.
+	// Await to avoid race conditions with page re-entry and server-side auto rollover.
 	if (isInteractiveAssessment && onerosterUserSourcedId && onerosterComponentResourceSourcedId && isLastQuestion) {
-		// Best-effort finalization: log errors but do not fail the primary response processing path.
-		finalizeAssessment(onerosterUserSourcedId, onerosterComponentResourceSourcedId).catch((err) => {
+		const finalizeResult = await errors.try(
+			finalizeAssessment(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
+		)
+		if (finalizeResult.error) {
 			logger.error("failed to finalize assessment in processQuestionResponse", {
-				error: err,
+				error: finalizeResult.error,
 				qtiItemId,
 				onerosterComponentResourceSourcedId
 			})
-		})
+			// Do not throw: finalization failure should not block the user's response flow.
+		}
 	}
 
 	// For fill-in-the-blank questions, we don't have a single score/feedback
