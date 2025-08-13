@@ -186,7 +186,7 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 			primaryButtonLabel = "Done Reading"
 		}
 	}
-	const shouldNavigate = isArticle ? !showDisabled : !isServerCompleted
+	const shouldNavigate = !showDisabled
 	const handlePrimaryClick = () => {
 		if (!isArticle) return
 		if (!currentResourceId) return
