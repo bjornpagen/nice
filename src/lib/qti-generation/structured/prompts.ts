@@ -2470,44 +2470,41 @@ Double-check EVERY string in your output. ZERO TOLERANCE for these violations.`
 }
 
 /**
- * Creates the prompt for visual QA analysis comparing production QTI vs Perseus screenshots.
- * Uses OpenAI Vision to identify rendering issues and discrepancies.
+ * Creates the prompt for visual QA analysis of production QTI screenshot.
+ * Uses OpenAI Vision to identify rendering issues and problems.
  */
 export function createVisualQAPrompt(
 	questionId: string,
-	productionScreenshotUrl: string,
-	perseusScreenshotUrl: string
+	productionScreenshotUrl: string
 ): {
 	systemInstruction: string
 	userContent: string
 } {
-	const systemInstruction = `You are an expert quality assurance analyst for educational content. Your task is to analyze two screenshots of the same educational question: one from a production QTI renderer and one from a Perseus renderer (ground truth).
+	const systemInstruction = `You are an expert quality assurance analyst for educational content. Your task is to analyze a screenshot of an educational question from a production QTI renderer to identify any rendering issues, problems, or quality concerns.
 
 **YOUR MISSION: PRODUCTION QUALITY ENFORCEMENT**
-The Perseus screenshot represents the GOLD STANDARD for how this question should appear and function. Your job is to identify ANY discrepancies, issues, or problems in the production QTI rendering when compared to the Perseus reference.
+You need to examine the production QTI rendering and identify ANY issues that could impact student learning or create confusion. Focus on obvious technical problems, layout issues, and usability concerns.
 
-**CRITICAL SEVERITY CLASSIFICATIONS:**
+**SEVERITY CLASSIFICATIONS:**
 
-**🚨 CRITICAL ISSUES (Block Production Immediately):**
+**⚠️ MAJOR ISSUES (Fix Required):**
 - HTML entities not rendering correctly (e.g., "&lt;" appearing as literal text instead of "<")
 - Images completely failing to load or showing broken image icons
 - Text completely unreadable, corrupted, or malformed
 - Interactive elements completely non-functional or missing
 - Content overflow causing essential information to be clipped or hidden
-
-**⚠️ MAJOR ISSUES (Fix Required Before Release):**
 - Duplicate text appearing in production that doesn't exist in Perseus
 - Wrong input modality (hard-coded text entry fields vs appropriate dropdown/choice widgets)
 - Incorrect widget types being used (e.g., text input when Perseus shows radio buttons)
 - Layout inconsistencies causing significant visual confusion
-- Explanation text styled identically to question labels/captions (confusing UI hierarchy)
 - Mathematical expressions rendering incorrectly or inconsistently
 
 **🔧 MINOR ISSUES (Should Fix):**
-- Subtle layout differences that don't impact core functionality
+- Text labels appearing when they shouldn't (e.g., "(empty)" placeholder text visible to students)
+- Explanation text styled identically to question labels/captions (confusing UI hierarchy)
+- Subtle layout differences that impact readability or user understanding
 - Missing visual polish or styling compared to Perseus
-- Slight alignment, spacing, or typography inconsistencies
-- Color or contrast variations that don't affect readability
+- Color or contrast variations that affect readability
 
 **📝 PATCH ISSUES (Low Priority):**
 - Missing punctuation or minor typographical differences
@@ -2522,40 +2519,38 @@ You MUST provide a detailed JSON analysis following this exact schema:
   "issues": [
     {
       "category": "Descriptive category name",
-      "severity": "critical|major|minor|patch", 
+      "severity": "major|minor|patch", 
       "details": "Specific description of what's wrong and why it matters"
     }
   ],
   "recommendations": ["Actionable recommendations for fixing identified issues"],
-  "production_assessment": "Detailed analysis of what you observe in the production screenshot",
-  "perseus_assessment": "Detailed analysis of what you observe in the Perseus ground truth screenshot"
+  "production_assessment": "Detailed analysis of what you observe in the production screenshot"
 }
 
 **ANALYSIS APPROACH:**
-1. First, carefully examine the Perseus screenshot to understand the intended design and functionality
-2. Then examine the production screenshot, noting every difference
-3. Classify each difference by severity based on its impact on student learning and usability
-4. Focus especially on: text rendering, image loading, widget types, layout consistency, and functional elements
-5. Be thorough but fair - not every difference is necessarily a problem
+1. Carefully examine the production screenshot for obvious technical problems
+2. Look for broken images, malformed text, layout issues, or missing elements
+3. Check if interactive elements appear functional and accessible
+4. Assess overall visual quality and student usability
+5. Focus especially on: text rendering, image loading, widget types, layout consistency, and functional elements
+6. If everything looks good, still provide a brief assessment with no issues
 
 **REMEMBER:** The goal is to ensure students have a flawless learning experience. Any issue that could confuse, mislead, or frustrate a student should be flagged appropriately.`
 
-	const userContent = `Please analyze these two screenshots of question ID: ${questionId}
+	const userContent = `Please analyze this screenshot of question ID: ${questionId}
 
 **Production QTI Screenshot (What students actually see):**
 ${productionScreenshotUrl}
 
-**Perseus Reference Screenshot (Ground truth/expected appearance):**
-${perseusScreenshotUrl}
-
-Compare these images carefully and provide your analysis in the required JSON format. Pay special attention to:
+Examine this image carefully and provide your analysis in the required JSON format. Pay special attention to:
 - Text rendering and HTML entity handling
 - Image loading and display
-- Widget types and interaction modalities  
+- Widget types and interaction elements
 - Layout consistency and visual hierarchy
 - Overall user experience quality
+- Any obvious technical problems or broken elements
 
-Focus on identifying issues that would impact student learning or create confusion.`
+Focus on identifying issues that would impact student learning or create confusion. If the rendering looks good with no obvious problems, indicate that in your assessment.`
 
 	return { systemInstruction, userContent }
 }

@@ -4,18 +4,43 @@ import { NonRetriableError } from "inngest"
 import { db } from "@/db"
 import { niceQuestionRenderReviews, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
+import { createVisualQAPrompt } from "@/lib/qti-generation/structured/prompts"
+import { uploadScreenshot } from "@/lib/utils/blob-storage"
+import { analyzeScreenshotWithVision, type VisualQAResponse } from "@/lib/utils/openai-vision"
+import { captureProductionQTIScreenshot } from "@/lib/utils/screenshot-capture"
 
 // Temporary type definitions for TODO implementations
 type ScreenshotBuffer = Buffer
 type ScreenshotUrls = {
 	productionUrl: string
-	perseusUrl: string
+	perseusUrl: string // placeholder for future use
 }
 type AIAnalysis = {
 	summary: string
-	maxSeverity: "critical" | "major" | "minor" | "patch"
-	rawResponse: Record<string, unknown>
+	maxSeverity: "major" | "minor" | "patch"
+	rawResponse: VisualQAResponse
 	issues: Array<{ category: string; severity: string; details: string }>
+}
+
+// Helper to handle Inngest Buffer serialization
+function deserializeBuffer(bufferLike: ScreenshotBuffer | { type: string; data: number[] }): Buffer {
+	if (Buffer.isBuffer(bufferLike)) {
+		return bufferLike
+	}
+
+	// Validate the serialized buffer structure
+	if (
+		typeof bufferLike === "object" &&
+		bufferLike !== null &&
+		"type" in bufferLike &&
+		"data" in bufferLike &&
+		bufferLike.type === "Buffer" &&
+		Array.isArray(bufferLike.data)
+	) {
+		return Buffer.from(bufferLike.data)
+	}
+
+	throw errors.new("invalid buffer format received from inngest step")
 }
 
 export const reviewQuestionRendering = inngest.createFunction(
@@ -82,65 +107,125 @@ export const reviewQuestionRendering = inngest.createFunction(
 			async (): Promise<ScreenshotBuffer> => {
 				logger.debug("capturing production qti screenshot", { questionId })
 
-				// TODO: Implement Browserbase + Playwright screenshot capture
-				// This would:
-				// 1. Create Browserbase session
-				// 2. Navigate to https://alpha-powerpath-ui-production.up.railway.app/qti-embed/nice_{questionId}
-				// 3. Wait 10 seconds for complete rendering
-				// 4. Capture full-page screenshot
-				// 5. Return screenshot buffer
+				const screenshotResult = await errors.try(captureProductionQTIScreenshot(questionId))
 
-				throw errors.new("production screenshot capture not yet implemented")
+				if (screenshotResult.error) {
+					logger.error("failed to capture production screenshot", {
+						error: screenshotResult.error,
+						questionId
+					})
+					throw errors.wrap(screenshotResult.error, "production screenshot capture")
+				}
+
+				logger.debug("production screenshot captured", {
+					questionId,
+					bufferSize: screenshotResult.data.length
+				})
+
+				return screenshotResult.data
 			}
 		)
-		void productionScreenshot // Mark as intentionally unused (TODO implementation)
 
 		// Step 3: Capture Perseus ground truth screenshot
-		const perseusScreenshot = await step.run("capture-perseus-screenshot", async (): Promise<ScreenshotBuffer> => {
-			logger.debug("capturing perseus ground truth screenshot", { questionId })
+		// TODO: Re-enable when Perseus automation is stable
+		// const perseusScreenshot = await step.run("capture-perseus-screenshot", async (): Promise<ScreenshotBuffer> => {
+		// 	logger.debug("capturing perseus ground truth screenshot", { questionId })
 
-			// TODO: Implement Perseus automation
-			// This would:
-			// 1. Create Browserbase session
-			// 2. Navigate to https://khan.github.io/perseus/?path=/story/renderers-server-item-renderer--interactive
-			// 3. Paste question.parsedData into textarea
-			// 4. Wait for automatic rendering
-			// 5. Capture full-page screenshot
-			// 6. Return screenshot buffer
+		// 	const screenshotResult = await errors.try(capturePerseusScreenshot(questionId, question.parsedData))
 
-			throw errors.new("perseus screenshot capture not yet implemented")
-		})
-		void perseusScreenshot // Mark as intentionally unused (TODO implementation)
+		// 	if (screenshotResult.error) {
+		// 		logger.error("failed to capture perseus screenshot", {
+		// 			error: screenshotResult.error,
+		// 			questionId
+		// 		})
+		// 		throw errors.wrap(screenshotResult.error, "perseus screenshot capture")
+		// 	}
 
-		// Step 4: Upload screenshots to Vercel Blob
-		const screenshotUrls = await step.run("upload-screenshots", async (): Promise<ScreenshotUrls> => {
-			logger.debug("uploading screenshots to vercel blob", { questionId })
+		// 	logger.debug("perseus screenshot captured", {
+		// 		questionId,
+		// 		bufferSize: screenshotResult.data.length
+		// 	})
 
-			// TODO: Implement Vercel Blob upload
-			// This would:
-			// 1. Upload productionScreenshot to Vercel Blob
-			// 2. Upload perseusScreenshot to Vercel Blob
-			// 3. Return both URLs
+		// 	return screenshotResult.data
+		// })
 
-			throw errors.new("vercel blob upload not yet implemented")
+		// Perseus screenshot capture is disabled for now
+
+		// Step 4: Upload production screenshot to Vercel Blob
+		const screenshotUrls = await step.run("upload-production-screenshot", async (): Promise<ScreenshotUrls> => {
+			logger.debug("uploading production screenshot to vercel blob", { questionId })
+
+			// Convert serialized buffer back to Buffer object
+			const productionBuffer = deserializeBuffer(productionScreenshot)
+
+			const uploadResult = await errors.try(uploadScreenshot(questionId, "production", productionBuffer))
+
+			if (uploadResult.error) {
+				logger.error("failed to upload production screenshot to vercel blob", {
+					error: uploadResult.error,
+					questionId
+				})
+				throw errors.wrap(uploadResult.error, "production screenshot upload")
+			}
+
+			logger.debug("production screenshot uploaded successfully", {
+				questionId,
+				productionUrl: uploadResult.data
+			})
+
+			return {
+				productionUrl: uploadResult.data,
+				perseusUrl: "" // placeholder until perseus is re-enabled
+			}
 		})
 
 		// Step 5: AI analysis with OpenAI Vision
 		const analysis = await step.run("ai-analysis", async (): Promise<AIAnalysis> => {
 			logger.debug("analyzing screenshots with ai", {
 				questionId,
-				productionUrl: screenshotUrls.productionUrl,
-				perseusUrl: screenshotUrls.perseusUrl
+				productionUrl: screenshotUrls.productionUrl
 			})
 
-			// TODO: Implement OpenAI Vision analysis
-			// This would:
-			// 1. Create prompt using createVisualQAPrompt
-			// 2. Call OpenAI Vision API with both screenshot URLs
-			// 3. Parse and validate JSON response
-			// 4. Return structured analysis
+			// Create visual QA prompt
+			const { systemInstruction, userContent } = createVisualQAPrompt(questionId, screenshotUrls.productionUrl)
 
-			throw errors.new("ai analysis not yet implemented")
+			// Call OpenAI Vision API with structured outputs
+			const visionResult = await errors.try(
+				analyzeScreenshotWithVision(screenshotUrls.productionUrl, systemInstruction, userContent)
+			)
+
+			if (visionResult.error) {
+				logger.error("failed to analyze screenshot with openai vision", {
+					error: visionResult.error,
+					questionId
+				})
+				throw errors.wrap(visionResult.error, "openai vision analysis")
+			}
+
+			const visionResponse = visionResult.data
+
+			// Determine max severity from structured response
+			const severities = visionResponse.issues.map((issue) => issue.severity)
+			let maxSeverity: "major" | "minor" | "patch" = "patch"
+			if (severities.includes("major")) {
+				maxSeverity = "major"
+			} else if (severities.includes("minor")) {
+				maxSeverity = "minor"
+			}
+
+			logger.debug("ai analysis completed", {
+				questionId,
+				maxSeverity,
+				issueCount: visionResponse.issues.length,
+				summary: visionResponse.summary
+			})
+
+			return {
+				summary: visionResponse.summary,
+				maxSeverity,
+				rawResponse: visionResponse,
+				issues: visionResponse.issues
+			}
 		})
 
 		// Step 6: Prepare analysis data for database upsert
@@ -149,7 +234,7 @@ export const reviewQuestionRendering = inngest.createFunction(
 				questionId: question.id,
 				analysisNotes: analysis.summary,
 				severity: analysis.maxSeverity,
-				model: "gpt-4o-vision",
+				model: "gpt-4o",
 				raw: analysis.rawResponse,
 				productionScreenshotUrl: screenshotUrls.productionUrl,
 				perseusScreenshotUrl: screenshotUrls.perseusUrl,

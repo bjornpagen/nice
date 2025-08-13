@@ -29,7 +29,7 @@ export { assessmentParentTypeEnum as niceAssessmentParentTypeEnum }
 const lessonContentTypeEnum = schema.enum("lesson_content_type_enum", ["Video", "Article", "Exercise"])
 export { lessonContentTypeEnum as niceLessonContentTypeEnum }
 
-const issueSeverityEnum = schema.enum("issue_severity_enum", ["critical", "major", "minor", "patch"])
+const issueSeverityEnum = schema.enum("issue_severity_enum", ["major", "minor", "patch"])
 export { issueSeverityEnum as niceIssueSeverityEnum }
 
 // --- JSONB Type Definitions ---
