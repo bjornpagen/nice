@@ -1,14 +1,18 @@
 "use server"
 
-import { auth } from "@clerk/nextjs/server"
+import { randomUUID } from "node:crypto"
+// Note: services are framework-agnostic. Do not import auth or Next APIs here.
+import { auth, clerkClient } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { oneroster, qti } from "@/lib/clients"
 import { XP_PROFICIENCY_THRESHOLD } from "@/lib/constants/progress"
+import type { SaveAssessmentResultCommand } from "@/lib/dtos/assessment"
+import * as assessment from "@/lib/services/assessment"
+import * as attempt from "@/lib/services/attempt"
 import type { Unit } from "@/lib/types/domain"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
-import { filterInteractiveAttemptResults, findLatestInteractiveAttempt } from "@/lib/utils/assessment-results"
+import { findLatestInteractiveAttempt } from "@/lib/utils/assessment-results"
 import { assertPercentageInteger } from "@/lib/utils/score"
 
 /**
@@ -170,38 +174,7 @@ export async function processQuestionResponse(
  * Computes the next attempt number for a user on an assessment resource using OneRoster.
  * Attempt number is defined as 1 + count of existing AssessmentResults for the line item.
  */
-export async function getNextAttemptNumber(
-	onerosterUserSourcedId: string,
-	onerosterResourceSourcedId: string
-): Promise<number> {
-	logger.info("computing next attempt number from oneroster", {
-		onerosterUserSourcedId,
-		onerosterResourceSourcedId
-	})
-
-	const lineItemId = getAssessmentLineItemId(onerosterResourceSourcedId)
-	const filter = `status='active' AND student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${lineItemId}'`
-	const resultsResult = await errors.try(oneroster.getAllResults({ filter }))
-	if (resultsResult.error) {
-		logger.error("failed to fetch results for attempt derivation", {
-			error: resultsResult.error,
-			lineItemId
-		})
-		// Fail fast per no-fallbacks policy
-		throw errors.wrap(resultsResult.error, "attempt number derivation")
-	}
-	// REMOVED: isStrictAttemptId function is now centralized.
-
-	// CHANGED: Use the new centralized utility to filter results.
-	const validAttempts = Array.isArray(resultsResult.data)
-		? filterInteractiveAttemptResults(resultsResult.data, onerosterUserSourcedId, lineItemId)
-		: []
-
-	const count = validAttempts.length
-	const nextAttempt = count + 1
-	logger.info("derived next attempt number", { lineItemId, existingResults: count, nextAttempt })
-	return nextAttempt
-}
+export const getNextAttemptNumber = attempt.getNext
 
 /**
  * Checks if a user has already achieved proficiency (80%+) on an assessment.
@@ -294,28 +267,50 @@ export async function finalizeAssessment(options: {
 	userEmail?: string
 	contentType: "Exercise" | "Quiz" | "Test" | "CourseChallenge"
 }) {
+	const correlationId = randomUUID()
 	logger.info("finalizing assessment", {
 		userSourcedId: options.onerosterUserSourcedId,
 		resourceSourcedId: options.onerosterResourceSourcedId,
-		componentResourceSourcedId: options.onerosterComponentResourceSourcedId
+		correlationId
 	})
 
-	// 1. Calculate final score authoritatively on the server.
+	const { userId: clerkUserId } = await auth()
+	if (!clerkUserId) throw errors.new("user not authenticated")
+
 	const validResults = options.sessionResults.filter((r) => !r.isReported)
 	const correctAnswers = validResults.filter((r) => r.isCorrect).length
 	const totalQuestions = validResults.length
 	const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 100
 
-	// 2. Call the existing saveAssessmentResult, which orchestrates XP, proficiency, and Caliper events.
-	const saveResult = await errors.try(
-		saveAssessmentResult({
-			...options,
-			score: assertPercentageInteger(score, "assessment score"),
-			correctAnswers,
-			totalQuestions,
-			isInteractiveAssessment: true // This is an interactive stepper
-		})
-	)
+	// Extract subject and course slugs from assessment path
+	const pathParts = options.assessmentPath.split("/")
+	if (pathParts.length < 3 || !pathParts[1] || !pathParts[2]) {
+		logger.error("invalid assessment path structure", { assessmentPath: options.assessmentPath, correlationId })
+		throw errors.new("assessment path invalid")
+	}
+	const subjectSlug = pathParts[1]
+	const courseSlug = pathParts[2]
+
+	// Build the command DTO for the service layer
+	// Fetch user metadata for downstream services (streak)
+	const clerk = await clerkClient()
+	const user = await clerk.users.getUser(clerkUserId)
+
+	const command: SaveAssessmentResultCommand = {
+		...options,
+		score: assertPercentageInteger(score, "assessment score"),
+		correctAnswers,
+		totalQuestions,
+		isInteractiveAssessment: true,
+		clerkUserId,
+		correlationId,
+		subjectSlug,
+		courseSlug,
+		userPublicMetadata: user.publicMetadata
+	}
+
+	// 2. Call the new assessment service orchestrator
+	const saveResult = await errors.try(assessment.saveResult(command))
 
 	if (saveResult.error) {
 		logger.error("failed to save final assessment result", {

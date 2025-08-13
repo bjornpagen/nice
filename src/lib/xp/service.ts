@@ -82,7 +82,11 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 	// 3. Process XP Bank for quizzes if the user achieved mastery.
 	if (options.isQuiz && assessmentXpResult.finalXp > 0 && accuracy >= 80) {
 		const xpBankResult = await errors.try(
-			awardBankedXpForAssessment(options.componentResourceId, options.userSourcedId, options.courseSourcedId)
+			awardBankedXpForAssessment({
+				quizResourceSourcedId: options.assessmentResourceId,
+				onerosterUserSourcedId: options.userSourcedId,
+				onerosterCourseSourcedId: options.courseSourcedId
+			})
 		)
 
 		if (xpBankResult.error) {
