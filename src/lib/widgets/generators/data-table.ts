@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { renderInlineContent } from "@/lib/qti-generation/content-renderer"
 import type { WidgetGenerator } from "@/lib/widgets/types"
+import { escapeXmlAttribute } from "@/lib/xml-utils"
 
 // Factory function to create inline content schema - avoids $ref in OpenAI JSON schema
 function createInlineContentSchema() {
@@ -46,6 +47,28 @@ function createTableCellSchema() {
 				kind: z.literal("input"),
 				responseIdentifier: z.string().describe("The QTI response identifier for this input field."),
 				expectedLength: z.number().nullable().describe("The expected character length for the input field.")
+			})
+			.strict(),
+		z
+			.object({
+				kind: z.literal("dropdown"),
+				responseIdentifier: z
+					.string()
+					.describe("The QTI response identifier for this inline choice (dropdown) interaction."),
+				shuffle: z.boolean().default(false).describe("If true, the dropdown choices will be shuffled."),
+				choices: z
+					.array(
+						z
+							.object({
+								identifier: z
+									.string()
+									.describe("Unique identifier for this choice, used in the QTI identifier attribute."),
+								content: createInlineContentSchema().describe("Inline content to display for this choice.")
+							})
+							.strict()
+					)
+					.nonempty()
+					.describe("The list of choices available in the dropdown.")
 			})
 			.strict()
 	])
@@ -109,6 +132,20 @@ const renderCellContent = (c: TableCell | undefined): string => {
 		case "input": {
 			const expectedLengthAttr = c.expectedLength ? ` expected-length="${c.expectedLength}"` : ""
 			return `<qti-text-entry-interaction response-identifier="${c.responseIdentifier}"${expectedLengthAttr}/>`
+		}
+		case "dropdown": {
+			const choicesXml = c.choices
+				.map(
+					(ch) =>
+						`<qti-inline-choice identifier="${escapeXmlAttribute(ch.identifier)}">${renderInlineContent(ch.content, new Map())}</qti-inline-choice>`
+				)
+				.join("\n                ")
+
+			return `<qti-inline-choice-interaction response-identifier="${escapeXmlAttribute(
+				c.responseIdentifier
+			)}" shuffle="${c.shuffle}">
+				${choicesXml}
+			</qti-inline-choice-interaction>`
 		}
 	}
 }

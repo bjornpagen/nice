@@ -2193,6 +2193,264 @@ export const countApplesEmoji: AssessmentItemInput = {
 	}
 }
 
+export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput = {
+	identifier: "reactant-amounts-temp-change-table",
+	title: "Identify reactants and amounts from temperature change table",
+	responseDeclarations: [
+		{ identifier: "RESP_REACT_C", cardinality: "single", baseType: "identifier", correct: "MGSO4" },
+		{ identifier: "RESP_AMT_C", cardinality: "single", baseType: "identifier", correct: "AMT_2_5" },
+		{ identifier: "RESP_REACT_D", cardinality: "single", baseType: "identifier", correct: "NH4CL" },
+		{ identifier: "RESP_AMT_D", cardinality: "single", baseType: "identifier", correct: "AMT_3_0" },
+		{ identifier: "RESP_REACT_E", cardinality: "single", baseType: "identifier", correct: "CACL2" },
+		{ identifier: "RESP_AMT_E", cardinality: "single", baseType: "identifier", correct: "AMT_8_0" }
+	],
+	widgets: {
+		react_temp_table: {
+			type: "dataTable",
+			title: null,
+			columns: [
+				{ key: "experiment", label: [{ type: "text", content: "Experiment" }], isNumeric: false },
+				{ key: "reactant", label: [{ type: "text", content: "Reactant" }], isNumeric: false },
+				{ key: "amount", label: [{ type: "text", content: "Amount of reactant (grams)" }], isNumeric: false },
+				{ key: "temp", label: [{ type: "text", content: "Temperature change" }], isNumeric: false }
+			],
+			rowHeaderKey: "experiment",
+			data: [
+				[
+					{ kind: "inline", content: [{ type: "text", content: "A" }] },
+					{ kind: "inline", content: [{ type: "text", content: "NH4Cl" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>6.0</mn><mtext> grams</mtext>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>3.6</mn><mo>°</mo><mi>C</mi>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "B" }] },
+					{ kind: "inline", content: [{ type: "text", content: "MgSO4" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mn>5.0</mn><mtext> grams</mtext>" }] },
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>1.0</mn><mo>°</mo><mi>C</mi>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "C" }] },
+					{
+						kind: "dropdown",
+						responseIdentifier: "RESP_REACT_C",
+						shuffle: true,
+						choices: [
+							{ identifier: "NH4CL", content: [{ type: "text", content: "NH4Cl" }] },
+							{ identifier: "MGSO4", content: [{ type: "text", content: "MgSO4" }] },
+							{ identifier: "CACL2", content: [{ type: "text", content: "CaCl2" }] }
+						]
+					},
+					{
+						kind: "dropdown",
+						responseIdentifier: "RESP_AMT_C",
+						shuffle: true,
+						choices: [
+							{ identifier: "AMT_2_5", content: [{ type: "math", mathml: "<mn>2.5</mn>" }] },
+							{ identifier: "AMT_3_0", content: [{ type: "math", mathml: "<mn>3.0</mn>" }] },
+							{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
+						]
+					},
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>0.5</mn><mo>°</mo><mi>C</mi>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "D" }] },
+					{
+						kind: "dropdown",
+						responseIdentifier: "RESP_REACT_D",
+						shuffle: true,
+						choices: [
+							{ identifier: "NH4CL", content: [{ type: "text", content: "NH4Cl" }] },
+							{ identifier: "MGSO4", content: [{ type: "text", content: "MgSO4" }] },
+							{ identifier: "CACL2", content: [{ type: "text", content: "CaCl2" }] }
+						]
+					},
+					{
+						kind: "dropdown",
+						responseIdentifier: "RESP_AMT_D",
+						shuffle: true,
+						choices: [
+							{ identifier: "AMT_2_5", content: [{ type: "math", mathml: "<mn>2.5</mn>" }] },
+							{ identifier: "AMT_3_0", content: [{ type: "math", mathml: "<mn>3.0</mn>" }] },
+							{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
+						]
+					},
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1.8</mn><mo>°</mo><mi>C</mi>" }] }
+				],
+				[
+					{ kind: "inline", content: [{ type: "text", content: "E" }] },
+					{
+						kind: "dropdown",
+						responseIdentifier: "RESP_REACT_E",
+						shuffle: true,
+						choices: [
+							{ identifier: "NH4CL", content: [{ type: "text", content: "NH4Cl" }] },
+							{ identifier: "MGSO4", content: [{ type: "text", content: "MgSO4" }] },
+							{ identifier: "CACL2", content: [{ type: "text", content: "CaCl2" }] }
+						]
+					},
+					{
+						kind: "dropdown",
+						responseIdentifier: "RESP_AMT_E",
+						shuffle: true,
+						choices: [
+							{ identifier: "AMT_2_5", content: [{ type: "math", mathml: "<mn>2.5</mn>" }] },
+							{ identifier: "AMT_3_0", content: [{ type: "math", mathml: "<mn>3.0</mn>" }] },
+							{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
+						]
+					},
+					{ kind: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }] }
+				]
+			],
+			footer: null
+		}
+	},
+	body: [
+		{
+			type: "paragraph",
+			content: [
+				{
+					type: "text",
+					content:
+						"Use the data provided to identify the reactant and amount that caused each temperature change. Each option is only used once."
+				}
+			]
+		},
+		{ type: "blockSlot", slotId: "react_temp_table" }
+	],
+	interactions: {},
+	feedback: {
+		correct: [
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Great job! You matched reactants and amounts to the temperature changes." }]
+			}
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{
+						type: "text",
+						content:
+							"Not quite. Identify whether the temperature increases (exothermic) or decreases (endothermic), then compare magnitudes to match amounts."
+					}
+				]
+			}
+		]
+	}
+}
+
+export const attractRepelCompletionTable: AssessmentItemInput = {
+	identifier: "attract-repel-completion-table",
+	title: "Complete the table: attract or repel",
+	responseDeclarations: [
+		{ identifier: "RESP_R1", cardinality: "single", baseType: "identifier", correct: "REPEL" },
+		{ identifier: "RESP_R2", cardinality: "single", baseType: "identifier", correct: "ATTRACT" },
+		{ identifier: "RESP_R3", cardinality: "single", baseType: "identifier", correct: "ATTRACT" },
+		{ identifier: "RESP_R4", cardinality: "single", baseType: "identifier", correct: "REPEL" }
+	],
+	widgets: {
+		attract_repel_table: {
+			type: "dataTable",
+			title: null,
+			columns: [
+				{ key: "description", label: [{ type: "text", content: "Description of objects" }], isNumeric: false },
+				{
+					key: "result",
+					label: [{ type: "text", content: "Will the objects attract or repel each other?" }],
+					isNumeric: false
+				}
+			],
+			rowHeaderKey: null,
+			data: [
+				[
+					{ kind: "inline", content: [{ type: "text", content: "two charged objects, both with positive charge" }] },
+					{
+						kind: "dropdown",
+						responseIdentifier: "RESP_R1",
+						shuffle: false,
+						choices: [
+							{ identifier: "ATTRACT", content: [{ type: "text", content: "attract" }] },
+							{ identifier: "REPEL", content: [{ type: "text", content: "repel" }] }
+						]
+					}
+				],
+				[
+					{
+						kind: "inline",
+						content: [
+							{
+								type: "text",
+								content: "two charged objects, one with positive charge and the other with negative charge"
+							}
+						]
+					},
+					{
+						kind: "dropdown",
+						responseIdentifier: "RESP_R2",
+						shuffle: false,
+						choices: [
+							{ identifier: "ATTRACT", content: [{ type: "text", content: "attract" }] },
+							{ identifier: "REPEL", content: [{ type: "text", content: "repel" }] }
+						]
+					}
+				],
+				[
+					{
+						kind: "inline",
+						content: [
+							{ type: "text", content: "two magnets, with the north pole of one facing the south pole of the other" }
+						]
+					},
+					{
+						kind: "dropdown",
+						responseIdentifier: "RESP_R3",
+						shuffle: false,
+						choices: [
+							{ identifier: "ATTRACT", content: [{ type: "text", content: "attract" }] },
+							{ identifier: "REPEL", content: [{ type: "text", content: "repel" }] }
+						]
+					}
+				],
+				[
+					{
+						kind: "inline",
+						content: [{ type: "text", content: "two magnets, with their south poles facing each other" }]
+					},
+					{
+						kind: "dropdown",
+						responseIdentifier: "RESP_R4",
+						shuffle: false,
+						choices: [
+							{ identifier: "ATTRACT", content: [{ type: "text", content: "attract" }] },
+							{ identifier: "REPEL", content: [{ type: "text", content: "repel" }] }
+						]
+					}
+				]
+			],
+			footer: null
+		}
+	},
+	body: [
+		{ type: "paragraph", content: [{ type: "text", content: "Complete the table for each pair of objects." }] },
+		{ type: "blockSlot", slotId: "attract_repel_table" }
+	],
+	interactions: {},
+	feedback: {
+		correct: [
+			{ type: "paragraph", content: [{ type: "text", content: "Correct! Likes repel and opposites attract." }] }
+		],
+		incorrect: [
+			{
+				type: "paragraph",
+				content: [
+					{ type: "text", content: "Not quite. Remember: like charges/poles repel; opposite charges/poles attract." }
+				]
+			}
+		]
+	}
+}
+
 export const shapeBinBarChart: AssessmentItemInput = {
 	identifier: "shape-bin-barchart-choice",
 	title: "Create a bar graph for shapes in a bin",
@@ -3249,5 +3507,7 @@ export const allExamples: AssessmentItemInput[] = [
 	compare2DigitNumbers,
 	threeDataTablesMultipleChoice,
 	gustaveStepsPerMile,
-	compareNegativeDecimalVsRootInlineChoice
+	compareNegativeDecimalVsRootInlineChoice,
+	reactantAmountsTemperatureTableWithDropdowns,
+	attractRepelCompletionTable
 ]

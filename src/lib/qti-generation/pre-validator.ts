@@ -336,7 +336,7 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 									if (
 										c &&
 										"kind" in c &&
-										c.kind === "input" &&
+										(c.kind === "input" || c.kind === "dropdown") &&
 										"responseIdentifier" in c &&
 										typeof c.responseIdentifier === "string"
 									) {
@@ -353,7 +353,7 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 							if (
 								c &&
 								"kind" in c &&
-								c.kind === "input" &&
+								(c.kind === "input" || c.kind === "dropdown") &&
 								"responseIdentifier" in c &&
 								typeof c.responseIdentifier === "string"
 							) {
