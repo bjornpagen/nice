@@ -3,11 +3,14 @@
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
 import { Lock, Unlock } from "lucide-react"
+import { useRouter } from "next/navigation"
 import * as React from "react"
 import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
+import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
+import { trackArticleView } from "@/lib/actions/tracking"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { ArticlePageData } from "@/lib/types/page"
 
@@ -18,11 +21,13 @@ export function Content({
 	articlePromise: Promise<ArticlePageData>
 	paramsPromise: Promise<{ subject: string; course: string; unit: string; lesson: string; article: string }>
 }) {
+	const router = useRouter()
 	const article = React.use(articlePromise)
 	const params = React.use(paramsPromise)
 	const { user } = useUser()
 	const startTimeRef = React.useRef<Date | null>(null)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
+	const { setProgressForResource, beginProgressUpdate, endProgressUpdate } = useLessonProgress()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
 	const isLocked = resourceLockStatus[article.id] === true
 	const parsed = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
@@ -65,6 +70,32 @@ export function Content({
 		}
 
 		if (onerosterUserSourcedId && article.id) {
+			// Track article view on mount and refresh route so server-fetched progress updates immediately
+			void (async () => {
+				beginProgressUpdate(article.id)
+				const result = await errors.try(
+					trackArticleView(onerosterUserSourcedId, article.id, {
+						subjectSlug: params.subject,
+						courseSlug: params.course
+					})
+				)
+				if (result.error) {
+					endProgressUpdate(article.id)
+					return
+				}
+				// update local overlay for immediate sidebar state (by OneRoster id)
+				setProgressForResource(article.id, { completed: true })
+                // also update by slug id for the injected sidebar row on current page
+                errors.trySync(() => {
+                    const currentSlug = params.article
+                    if (currentSlug) {
+                        setProgressForResource(currentSlug, { completed: true })
+                    }
+                })
+				// Ensure server-side lock state is refreshed after recording completion
+				router.refresh()
+				endProgressUpdate(article.id)
+			})()
 			// Map subject string to the enum value
 			const subjectMapping: Record<string, "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"> = {
 				science: "Science",
@@ -121,7 +152,11 @@ export function Content({
 		params.unit,
 		params.lesson,
 		params.article,
-		isLocked
+		isLocked,
+		router,
+		beginProgressUpdate,
+		endProgressUpdate,
+		setProgressForResource
 	])
 
 	// isLocked computed above

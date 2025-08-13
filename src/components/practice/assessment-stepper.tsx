@@ -659,6 +659,8 @@ export function AssessmentStepper({
 			}
 			finalizationInFlightRef.current = false
 			endProgressUpdate(onerosterResourceSourcedId)
+			// Ensure server-side lock state reflects completion for subsequent navigation
+			router.refresh()
 		}
 
 		executeFinalization()
@@ -681,7 +683,8 @@ export function AssessmentStepper({
 		contentType, // Add contentType to dependency array for masteredUnits logic
 		setProgressForResource,
 		beginProgressUpdate,
-		endProgressUpdate
+		endProgressUpdate,
+		router
 	])
 
 	// MODIFIED: handleReset is now async and calls the new action
