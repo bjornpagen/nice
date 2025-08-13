@@ -65,7 +65,7 @@ export default function Home() {
 								{/* Continue with TimeBack - The only SSO option */}
 								<Button
 									variant="outline"
-									className="w-full h-12 text-base font-medium border-gray-300 hover:bg-gray-50"
+									className="w-full h-12 text-base font-medium border-gray-300 hover:bg-gray-50 hover:cursor-pointer"
 									onClick={handleTimeBackSignIn}
 								>
 									<span className="mr-2">Continue with</span>
