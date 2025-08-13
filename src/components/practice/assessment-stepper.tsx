@@ -22,15 +22,14 @@ import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
 import {
-	checkAndCreateNewAttemptIfNeeded,
 	checkExistingProficiency,
-	createNewAssessmentAttempt,
 	flagQuestionAsReported,
-	processQuestionResponse,
-	processSkippedQuestion
+	getNextAttemptNumber,
+	processQuestionResponse
 } from "@/lib/actions/assessment"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
-import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+import { getBankedXpBreakdownForQuiz } from "@/lib/actions/xp"
+import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { cn } from "@/lib/utils"
@@ -254,8 +253,17 @@ export function AssessmentStepper({
 	// Admin-only: practice header lock toggle (far right)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
-	const parsedMetadata = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
-	const canUnlockAll = parsedMetadata.success && parsedMetadata.data.roles.some((r) => r.role !== "student")
+	// Parse Clerk metadata using errors.trySync (no client logging)
+	let userSourceId: string | undefined
+	let canUnlockAll = false
+	const parsedMetaResult = errors.trySync(() => parseUserPublicMetadata(user?.publicMetadata))
+	if (parsedMetaResult.error) {
+		userSourceId = undefined
+		canUnlockAll = false
+	} else {
+		userSourceId = parsedMetaResult.data.sourceId
+		canUnlockAll = parsedMetaResult.data.roles.some((r) => r.role !== "student")
+	}
 
 	const handleToggleLockAll = () => {
 		if (!canUnlockAll || !storageKey) return
@@ -286,7 +294,7 @@ export function AssessmentStepper({
 	const isNavigatingRef = React.useRef(false)
 	const skipTimeoutRef = React.useRef<number | null>(null)
 
-	// Interactive assessments (PowerPath attempts/logging) now include Exercises as well
+	// Interactive assessments include Exercises as well
 	const isInteractiveAssessment = contentType === "Quiz" || contentType === "Test" || contentType === "Exercise"
 	const MAX_ATTEMPTS = 3
 	const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
@@ -363,29 +371,30 @@ export function AssessmentStepper({
 		}
 	}, [questions.length])
 
-	// ADDED: Check for and create new attempt when component mounts or when assessment changes
+	// ADDED: Derive attempt number from OneRoster results when component mounts or when assessment changes
 	React.useEffect(() => {
-		if (!user?.publicMetadata?.sourceId || !onerosterComponentResourceSourcedId) {
+		if (!userSourceId || !onerosterResourceSourcedId) {
 			return
 		}
 
-		const onerosterUserSourcedId = user.publicMetadata.sourceId
-		if (typeof onerosterUserSourcedId !== "string") {
+		if (typeof userSourceId !== "string") {
 			return
 		}
 
-		// Check if we need to create a new attempt and get the current attempt number
+		// Fetch the next attempt number derived from existing results
 		const initializeAttempt = async () => {
-			const currentAttemptNumber = await checkAndCreateNewAttemptIfNeeded(
-				onerosterUserSourcedId,
-				onerosterComponentResourceSourcedId
-			)
-			setAttemptNumber(currentAttemptNumber)
+			const attemptResult = await errors.try(getNextAttemptNumber(userSourceId, onerosterResourceSourcedId))
+			if (attemptResult.error) {
+				setIsAttemptReady(false)
+				toast.error("Could not initialize assessment. Please reload and try again.")
+				return
+			}
+			setAttemptNumber(attemptResult.data)
 			setIsAttemptReady(true)
 		}
 
 		initializeAttempt()
-	}, [onerosterComponentResourceSourcedId, user?.publicMetadata?.sourceId])
+	}, [userSourceId, onerosterResourceSourcedId])
 
 	// Cleanup any pending timers on unmount
 	React.useEffect(() => {
@@ -397,13 +406,13 @@ export function AssessmentStepper({
 		}
 	}, [])
 
-	// If unauthenticated or missing component id, allow UI but disable server logging
+	// If unauthenticated or missing resource id, allow UI but disable server logging
 	React.useEffect(() => {
-		const hasAuthIds = Boolean(user?.publicMetadata?.sourceId && onerosterComponentResourceSourcedId)
+		const hasAuthIds = Boolean(userSourceId && onerosterResourceSourcedId)
 		if (!hasAuthIds) {
 			setIsAttemptReady(true)
 		}
-	}, [user?.publicMetadata?.sourceId, onerosterComponentResourceSourcedId])
+	}, [userSourceId, onerosterResourceSourcedId])
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
@@ -474,13 +483,13 @@ export function AssessmentStepper({
 			hasSentCompletionEventRef.current ||
 			finalizationInFlightRef.current ||
 			!onerosterResourceSourcedId ||
-			!user?.publicMetadata?.sourceId
+			!userSourceId
 		) {
 			return
 		}
 
 		// Proper type check for onerosterUserSourcedId
-		const onerosterUserSourcedId = user.publicMetadata.sourceId
+		const onerosterUserSourcedId = userSourceId
 		if (typeof onerosterUserSourcedId !== "string") {
 			return
 		}
@@ -602,7 +611,7 @@ export function AssessmentStepper({
 					durationInSeconds: assessmentStartTimeRef.current
 						? Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
 						: undefined,
-					userEmail: user.primaryEmailAddress?.emailAddress,
+					userEmail: user?.primaryEmailAddress?.emailAddress,
 					shouldAwardXp
 				})
 			)
@@ -611,11 +620,35 @@ export function AssessmentStepper({
 				throw errors.wrap(saveResult.error, "save assessment result")
 			}
 
-			// User feedback toast for awarded XP (assessment portion only)
+			// User feedback toast for awarded XP
 			if (xpResult.finalXp > 0 && shouldAwardXp) {
-				toast.success(`+${xpResult.finalXp} XP`, {
-					description: <span className="text-black">Earned for this assessment</span>
-				})
+				// For quizzes, include banked XP breakdown in the description
+				if (contentType === "Quiz") {
+					const toastId = toast.loading("Calculating XP…")
+					// Fire and forget: replace loading toast with final success once breakdown is ready
+					;(async () => {
+						const breakdownResult = await errors.try(
+							getBankedXpBreakdownForQuiz(onerosterResourceSourcedId, onerosterUserSourcedId)
+						)
+						if (breakdownResult.error) {
+							toast.success(`+${xpResult.finalXp} XP earned for this assessment`, { id: toastId })
+							return
+						}
+						const { articleXp, videoXp } = breakdownResult.data
+						toast.success(`+${xpResult.finalXp} XP earned for this assessment`, {
+							id: toastId,
+							description: (
+								<span className="text-black">
+									Banked XP Awarded:
+									<br />+ {videoXp} xp from videos
+									<br />+ {articleXp} xp from articles
+								</span>
+							)
+						})
+					})()
+				} else {
+					toast.success(`+${xpResult.finalXp} XP earned for this assessment`)
+				}
 			} else if (!shouldAwardXp) {
 				// No XP if already proficient on this assessment
 				toast("No XP awarded", {
@@ -684,71 +717,38 @@ export function AssessmentStepper({
 		showSummary,
 		onerosterComponentResourceSourcedId,
 		onerosterResourceSourcedId,
-		user,
+		userSourceId,
+		user?.primaryEmailAddress?.emailAddress,
 		correctAnswersCount,
 		questions.length,
 		isInteractiveAssessment,
 		unitData,
 		assessmentTitle,
 		assessmentPath,
-		attemptNumber, // ADDED: Add attemptNumber to dependency array
+		attemptNumber,
 		expectedXp,
-		sessionResults, // ADDED: Add sessionResults to dependency array
-		onerosterCourseSourcedId, // Add onerosterCourseSourcedId to dependency array
-		reportedQuestionIds.size, // Add reportedQuestionIds.size to dependency array
-		contentType, // Add contentType to dependency array for masteredUnits logic
+		sessionResults,
+		onerosterCourseSourcedId,
+		reportedQuestionIds.size,
+		contentType,
 		setProgressForResource,
 		beginProgressUpdate,
 		endProgressUpdate,
 		router
 	])
 
-	// MODIFIED: handleReset is now async and calls the new action
+	// Retake: ensure finalization completed, honor parent onRetake for explicit reset/remount
 	const handleReset = async () => {
-		// Create a new PowerPath attempt for all interactive assessments (Exercise/Quiz/Test/Challenge)
-		if (!user?.publicMetadata?.sourceId) {
-			toast.error("Could not start a new attempt. User session is invalid.")
+		if (!isFinalizationComplete) {
+			toast.info("Finishing up your result... please try again in a moment.")
 			return
 		}
-
-		// Proper type checking instead of assertion
-		if (typeof user.publicMetadata.sourceId !== "string") {
-			toast.error("Invalid user session data.")
-			return
-		}
-
-		const onerosterUserSourcedId = user.publicMetadata.sourceId
-
-		// Step 1: Create a new attempt via the server action.
-		const attemptPromise = createNewAssessmentAttempt(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
-		toast.promise(attemptPromise, {
-			loading: "Starting a new attempt...",
-			success: "New attempt started. Good luck!",
-			error: "Failed to start a new attempt. Please try again."
-		})
-
-		const result = await errors.try(attemptPromise)
-		if (result.error) {
-			// If the API call fails, we do NOT reset the state. The user can try again.
-			return
-		}
-
-		// MODIFIED: Capture the new attempt number from the API response.
-		const newAttemptNumber = result.data.attempt.attempt
-		if (typeof newAttemptNumber !== "number") {
-			toast.error("Could not retrieve new attempt number from the server.")
-			return
-		}
-		setAttemptNumber(newAttemptNumber) // Update state with the new attempt number
-
-		// Notify parent to reset to start screen and trigger a route-level refresh/remount
 		if (onRetake) {
-			onRetake(newAttemptNumber)
+			// Use the next attempt number as a hint to parent for UX
+			onRetake(attemptNumber + 1)
 			return
 		}
-
-		// Fallback: locally reset state to first question and end summary,
-		// then force a route refresh to fetch a new question set
+		// Fallback: local reset then refresh
 		setCurrentQuestionIndex(0)
 		setSelectedResponses({})
 		setExpectedResponses([])
@@ -763,9 +763,6 @@ export function AssessmentStepper({
 		hasSentCompletionEventRef.current = false
 		assessmentStartTimeRef.current = new Date()
 		router.refresh()
-		return
-
-		// Step 2 (no longer needed when refreshing): previously we reset local state here.
 	}
 
 	if (questions.length === 0) {
@@ -895,7 +892,7 @@ export function AssessmentStepper({
 		setShowFeedback(false)
 
 		// Extract user source ID if available (for authenticated users)
-		const onerosterUserSourcedId = user?.publicMetadata?.sourceId
+		const onerosterUserSourcedId = userSourceId
 		const isAuthenticated = typeof onerosterUserSourcedId === "string"
 
 		// Determine response format based on the question type
@@ -1025,21 +1022,7 @@ export function AssessmentStepper({
 		if (isInteractiveAssessment && !isAttemptReady) {
 			return
 		}
-		// For ALL assessments, treat skip as incorrect
-		// Log this as an incorrect response to PowerPath
-		if (user?.publicMetadata?.sourceId && onerosterComponentResourceSourcedId && isInteractiveAssessment) {
-			const onerosterUserSourcedId = user.publicMetadata.sourceId
-			if (typeof onerosterUserSourcedId === "string") {
-				processSkippedQuestion(
-					currentQuestion.id,
-					onerosterUserSourcedId,
-					onerosterComponentResourceSourcedId,
-					attemptNumber - 1 // Pass assessment attempt number (0-indexed) instead of question attempt count
-				).catch(() => {
-					// Error is logged inside processSkippedQuestion, no need to log again
-				})
-			}
-		}
+		// For ALL assessments, treat skip as incorrect (no external logging)
 
 		// NEW: Add skipped result to session state
 		setSessionResults((prev) => [...prev, { qtiItemId: currentQuestion.id, isCorrect: false }])

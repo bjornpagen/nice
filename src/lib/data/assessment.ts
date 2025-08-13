@@ -2,7 +2,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { powerpath } from "@/lib/clients"
+// PowerPath removed; attempt number derived via server action in prepareInteractiveAssessment
 import {
 	getAllComponentResources,
 	getAllCoursesBySlug,
@@ -138,16 +138,7 @@ export async function fetchQuizPageData(params: {
 		logger.error("user source id missing for deterministic selection", {})
 		throw errors.new("user source id missing")
 	}
-	const progressForQuiz = await errors.try(
-		powerpath.getAssessmentProgress(userMetaForQuiz.sourceId, componentResource.sourcedId)
-	)
-	if (progressForQuiz.error) {
-		logger.error("failed to fetch assessment progress for deterministic selection", {
-			error: progressForQuiz.error,
-			componentResourceSourcedId: componentResource.sourcedId
-		})
-		throw errors.wrap(progressForQuiz.error, "powerpath assessment progress")
-	}
+	// Attempt number is computed inside prepareInteractiveAssessment
 	const preparedQuiz = await prepareInteractiveAssessment({
 		userSourceId: userMetaForQuiz.sourceId,
 		resourceSourcedId: resource.sourcedId,
@@ -279,16 +270,7 @@ export async function fetchUnitTestPageData(params: {
 		logger.error("user source id missing for deterministic selection", {})
 		throw errors.new("user source id missing")
 	}
-	const progressForUnitTest = await errors.try(
-		powerpath.getAssessmentProgress(userMetaForUnitTest.sourceId, componentResource.sourcedId)
-	)
-	if (progressForUnitTest.error) {
-		logger.error("failed to fetch assessment progress for deterministic selection", {
-			error: progressForUnitTest.error,
-			componentResourceSourcedId: componentResource.sourcedId
-		})
-		throw errors.wrap(progressForUnitTest.error, "powerpath assessment progress")
-	}
+	// Attempt number is computed inside prepareInteractiveAssessment
 	const preparedUnitTest = await prepareInteractiveAssessment({
 		userSourceId: userMetaForUnitTest.sourceId,
 		resourceSourcedId: resource.sourcedId,
@@ -493,16 +475,7 @@ export async function fetchCourseChallengePage_TestData(params: {
 		logger.error("user source id missing for deterministic selection", {})
 		throw errors.new("user source id missing")
 	}
-	const progressForChallenge = await errors.try(
-		powerpath.getAssessmentProgress(userMetaForChallenge.sourceId, componentResource.sourcedId)
-	)
-	if (progressForChallenge.error) {
-		logger.error("failed to fetch assessment progress for deterministic selection", {
-			error: progressForChallenge.error,
-			componentResourceSourcedId: componentResource.sourcedId
-		})
-		throw errors.wrap(progressForChallenge.error, "powerpath assessment progress")
-	}
+	// Attempt number is computed inside prepareInteractiveAssessment
 	const preparedChallenge = await prepareInteractiveAssessment({
 		userSourceId: userMetaForChallenge.sourceId,
 		resourceSourcedId: testResource.sourcedId,

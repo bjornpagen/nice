@@ -85,13 +85,13 @@ export function Content({
 				}
 				// update local overlay for immediate sidebar state (by OneRoster id)
 				setProgressForResource(article.id, { completed: true })
-                // also update by slug id for the injected sidebar row on current page
-                errors.trySync(() => {
-                    const currentSlug = params.article
-                    if (currentSlug) {
-                        setProgressForResource(currentSlug, { completed: true })
-                    }
-                })
+				// also update by slug id for the injected sidebar row on current page
+				{
+					const currentSlug = params.article
+					if (currentSlug) {
+						setProgressForResource(currentSlug, { completed: true })
+					}
+				}
 				// Ensure server-side lock state is refreshed after recording completion
 				router.refresh()
 				endProgressUpdate(article.id)

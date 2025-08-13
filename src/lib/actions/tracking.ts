@@ -394,7 +394,10 @@ export async function saveAssessmentResult(
 			scoreStatus: "fully graded" as const,
 			scoreDate: new Date().toISOString(),
 			score: finalScore, // Use finalScore instead of assessmentScore
-			comment: `${assessmentCorrectAnswers}/${assessmentTotalQuestions} correct on first attempt`,
+			comment:
+				attemptNumber && attemptNumber > 1
+					? `${assessmentCorrectAnswers}/${assessmentTotalQuestions} correct on attempt ${attemptNumber}`
+					: `${assessmentCorrectAnswers}/${assessmentTotalQuestions} correct on first attempt`,
 			...(assessmentMetadata && { metadata: assessmentMetadata })
 		}
 	}
