@@ -366,8 +366,14 @@ export async function saveAssessmentResult(
 	// The line item sourcedId is the resource sourcedId + '_ali'
 	const onerosterLineItemSourcedId = getAssessmentLineItemId(resourceId)
 
-	// The result sourcedId follows our pattern
-	const onerosterResultSourcedId = `nice_${userId}_${onerosterLineItemSourcedId}`
+	// The result sourcedId follows our pattern. For interactive assessments, persist
+	// an immutable history by including the attempt number in the result id so
+	// future attempts can be derived from count of existing results.
+	const baseResultSourcedId = `nice_${userId}_${onerosterLineItemSourcedId}`
+	const onerosterResultSourcedId =
+		isInteractiveAssessment && attemptNumber && attemptNumber > 0
+			? `${baseResultSourcedId}_attempt_${attemptNumber}`
+			: baseResultSourcedId
 
 	// Mastery preservation logic for individual exercises
 	let finalScore = assessmentScore // Start with the raw score
