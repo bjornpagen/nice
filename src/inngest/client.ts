@@ -390,6 +390,15 @@ const events = {
 	},
 	"migration/hardcoded.math.stimuli.generate": {
 		data: z.object({})
+	},
+	// Visual QA Events
+	"qa/question.review-rendering": {
+		data: z.object({
+			questionId: z.string().min(1)
+		})
+	},
+	"qa/questions.review-all-rendering": {
+		data: z.object({})
 	}
 }
 

@@ -10,7 +10,7 @@ import { qti } from "@/lib/clients"
 export async function upsertQuestionAnalysis(
 	questionId: string,
 	analysisNotes: string | null,
-	severity: "major" | "minor" | "patch" | null = null
+	severity: "critical" | "major" | "minor" | "patch" | null = null
 ): Promise<void> {
 	logger.debug("upserting question analysis", { questionId, hasNotes: analysisNotes !== null, severity })
 

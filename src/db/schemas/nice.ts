@@ -29,7 +29,7 @@ export { assessmentParentTypeEnum as niceAssessmentParentTypeEnum }
 const lessonContentTypeEnum = schema.enum("lesson_content_type_enum", ["Video", "Article", "Exercise"])
 export { lessonContentTypeEnum as niceLessonContentTypeEnum }
 
-const issueSeverityEnum = schema.enum("issue_severity_enum", ["major", "minor", "patch"])
+const issueSeverityEnum = schema.enum("issue_severity_enum", ["critical", "major", "minor", "patch"])
 export { issueSeverityEnum as niceIssueSeverityEnum }
 
 // --- JSONB Type Definitions ---
@@ -255,3 +255,25 @@ const questionsAnalysis = schema.table(
 	]
 )
 export { questionsAnalysis as niceQuestionsAnalysis }
+
+const questionRenderReviews = schema.table(
+	"question_render_reviews",
+	{
+		questionId: text("question_id").primaryKey(),
+		analysisNotes: text("analysis_notes").notNull(),
+		severity: issueSeverityEnum("severity"),
+		model: text("model").notNull().default(""),
+		raw: jsonb("raw"),
+		productionScreenshotUrl: text("production_screenshot_url").notNull(),
+		perseusScreenshotUrl: text("perseus_screenshot_url").notNull(),
+		reviewedAt: text("reviewed_at").notNull().default("")
+	},
+	(table) => [
+		foreignKey({
+			name: "qrr_question_fk",
+			columns: [table.questionId],
+			foreignColumns: [questions.id]
+		}).onDelete("cascade")
+	]
+)
+export { questionRenderReviews as niceQuestionRenderReviews }

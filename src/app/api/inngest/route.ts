@@ -37,6 +37,9 @@ import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orches
 // Removed: orchestrateCourseXmlGeneration (generic course QTI generation)
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
+// Import Visual QA workers
+import { orchestrateVisualQAReview } from "@/inngest/functions/qa/orchestrate-visual-qa-review"
+import { reviewQuestionRendering } from "@/inngest/functions/qa/review-question-rendering"
 // ✅ ADD: Import the new batch differentiation and assembly functions
 import { assembleDifferentiatedItemsAndCreateTests } from "@/inngest/functions/qti/assemble-differentiated-items-and-create-tests"
 import { convertPerseusArticleToQtiStimulus } from "@/inngest/functions/qti/convert-perseus-article-to-qti-stimulus"
@@ -113,6 +116,9 @@ export const { GET, POST, PUT } = serve({
 		// Removed: undifferentiated ingest
 		// ✅ ADD: Register the new atomic differentiation and assembly functions
 		differentiateAndSaveQuestion, // ✅ ADD: Register the new atomic differentiation function
-		assembleDifferentiatedItemsAndCreateTests
+		assembleDifferentiatedItemsAndCreateTests,
+		// Visual QA Functions
+		orchestrateVisualQAReview,
+		reviewQuestionRendering
 	]
 })

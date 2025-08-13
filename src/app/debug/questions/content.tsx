@@ -20,7 +20,7 @@ export function Content({ questionsPromise }: ContentProps) {
 	const [currentIndex, setCurrentIndex] = React.useState(0)
 	const [dialogOpen, setDialogOpen] = React.useState(false)
 	const [analysisNotes, setAnalysisNotes] = React.useState("")
-	const [severity, setSeverity] = React.useState<"major" | "minor" | "patch">("minor")
+	const [severity, setSeverity] = React.useState<"critical" | "major" | "minor" | "patch">("minor")
 	const [localQuestions, setLocalQuestions] = React.useState<QuestionDebugData[] | undefined>(undefined)
 	const [isSubmitting, setIsSubmitting] = React.useState(false)
 	const [isValidating, setIsValidating] = React.useState(false)
@@ -246,8 +246,10 @@ export function Content({ questionsPromise }: ContentProps) {
 		}
 	}
 
-	const getSeverityColor = (severity: "major" | "minor" | "patch" | null) => {
+	const getSeverityColor = (severity: "critical" | "major" | "minor" | "patch" | null) => {
 		switch (severity) {
+			case "critical":
+				return "#ffebee" // light pink/red for critical
 			case "major":
 				return "#ffeaea" // light red
 			case "minor":
@@ -430,9 +432,22 @@ export function Content({ questionsPromise }: ContentProps) {
 											</Label>
 											<RadioGroup
 												value={severity}
-												onValueChange={(value: "major" | "minor" | "patch") => setSeverity(value)}
+												onValueChange={(value: "critical" | "major" | "minor" | "patch") => setSeverity(value)}
 												style={{ display: "flex", gap: "20px" }}
 											>
+												<div
+													style={{
+														display: "flex",
+														alignItems: "center",
+														gap: "6px",
+														padding: "6px 12px",
+														borderRadius: "4px",
+														backgroundColor: getSeverityColor("critical")
+													}}
+												>
+													<RadioGroupItem value="critical" />
+													<Label>Critical</Label>
+												</div>
 												<div
 													style={{
 														display: "flex",

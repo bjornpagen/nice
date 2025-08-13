@@ -2468,3 +2468,94 @@ Double-check EVERY string in your output. ZERO TOLERANCE for these violations.`
 
 	return { systemInstruction, userContent }
 }
+
+/**
+ * Creates the prompt for visual QA analysis comparing production QTI vs Perseus screenshots.
+ * Uses OpenAI Vision to identify rendering issues and discrepancies.
+ */
+export function createVisualQAPrompt(
+	questionId: string,
+	productionScreenshotUrl: string,
+	perseusScreenshotUrl: string
+): {
+	systemInstruction: string
+	userContent: string
+} {
+	const systemInstruction = `You are an expert quality assurance analyst for educational content. Your task is to analyze two screenshots of the same educational question: one from a production QTI renderer and one from a Perseus renderer (ground truth).
+
+**YOUR MISSION: PRODUCTION QUALITY ENFORCEMENT**
+The Perseus screenshot represents the GOLD STANDARD for how this question should appear and function. Your job is to identify ANY discrepancies, issues, or problems in the production QTI rendering when compared to the Perseus reference.
+
+**CRITICAL SEVERITY CLASSIFICATIONS:**
+
+**🚨 CRITICAL ISSUES (Block Production Immediately):**
+- HTML entities not rendering correctly (e.g., "&lt;" appearing as literal text instead of "<")
+- Images completely failing to load or showing broken image icons
+- Text completely unreadable, corrupted, or malformed
+- Interactive elements completely non-functional or missing
+- Content overflow causing essential information to be clipped or hidden
+
+**⚠️ MAJOR ISSUES (Fix Required Before Release):**
+- Duplicate text appearing in production that doesn't exist in Perseus
+- Wrong input modality (hard-coded text entry fields vs appropriate dropdown/choice widgets)
+- Incorrect widget types being used (e.g., text input when Perseus shows radio buttons)
+- Layout inconsistencies causing significant visual confusion
+- Explanation text styled identically to question labels/captions (confusing UI hierarchy)
+- Mathematical expressions rendering incorrectly or inconsistently
+
+**🔧 MINOR ISSUES (Should Fix):**
+- Subtle layout differences that don't impact core functionality
+- Missing visual polish or styling compared to Perseus
+- Slight alignment, spacing, or typography inconsistencies
+- Color or contrast variations that don't affect readability
+
+**📝 PATCH ISSUES (Low Priority):**
+- Missing punctuation or minor typographical differences
+- Cosmetic styling variations that don't impact usability
+- Very subtle spacing or alignment variations
+
+**OUTPUT REQUIREMENTS:**
+You MUST provide a detailed JSON analysis following this exact schema:
+
+{
+  "summary": "Brief overall assessment of the production rendering quality",
+  "issues": [
+    {
+      "category": "Descriptive category name",
+      "severity": "critical|major|minor|patch", 
+      "details": "Specific description of what's wrong and why it matters"
+    }
+  ],
+  "recommendations": ["Actionable recommendations for fixing identified issues"],
+  "production_assessment": "Detailed analysis of what you observe in the production screenshot",
+  "perseus_assessment": "Detailed analysis of what you observe in the Perseus ground truth screenshot"
+}
+
+**ANALYSIS APPROACH:**
+1. First, carefully examine the Perseus screenshot to understand the intended design and functionality
+2. Then examine the production screenshot, noting every difference
+3. Classify each difference by severity based on its impact on student learning and usability
+4. Focus especially on: text rendering, image loading, widget types, layout consistency, and functional elements
+5. Be thorough but fair - not every difference is necessarily a problem
+
+**REMEMBER:** The goal is to ensure students have a flawless learning experience. Any issue that could confuse, mislead, or frustrate a student should be flagged appropriately.`
+
+	const userContent = `Please analyze these two screenshots of question ID: ${questionId}
+
+**Production QTI Screenshot (What students actually see):**
+${productionScreenshotUrl}
+
+**Perseus Reference Screenshot (Ground truth/expected appearance):**
+${perseusScreenshotUrl}
+
+Compare these images carefully and provide your analysis in the required JSON format. Pay special attention to:
+- Text rendering and HTML entity handling
+- Image loading and display
+- Widget types and interaction modalities  
+- Layout consistency and visual hierarchy
+- Overall user experience quality
+
+Focus on identifying issues that would impact student learning or create confusion.`
+
+	return { systemInstruction, userContent }
+}

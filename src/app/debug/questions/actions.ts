@@ -12,7 +12,7 @@ export interface QuestionDebugData {
 	xml: string
 	structuredJson: unknown | null
 	analysisNotes: string | null
-	severity: "major" | "minor" | "patch" | null
+	severity: "critical" | "major" | "minor" | "patch" | null
 }
 
 export interface QuestionSummaryData {
@@ -20,7 +20,7 @@ export interface QuestionSummaryData {
 	exerciseId: string
 	sha: string
 	analysisNotes: string | null
-	severity: "major" | "minor" | "patch" | null
+	severity: "critical" | "major" | "minor" | "patch" | null
 }
 
 export async function getQuestionsWithXml(): Promise<QuestionDebugData[]> {
