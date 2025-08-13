@@ -487,8 +487,6 @@ export function AssessmentStepper({
 		const accuracy = finalTotalQuestions > 0 ? (correctAnswersCount / finalTotalQuestions) * 100 : 100
 		const score = accuracy / 100
 
-		let multiplier = 0
-
 		// Check existing proficiency BEFORE saving the result
 		let shouldAwardXp = true
 		const proficiencyResult = await errors.try(
@@ -513,8 +511,7 @@ export function AssessmentStepper({
 			shouldAwardXp
 		)
 
-		multiplier = xpResult.multiplier
-
+		// Capture penalty info for the summary view
 		if (xpResult.penaltyApplied) {
 			const avgSecondsPerQuestion =
 				durationInSeconds && finalTotalQuestions > 0 ? durationInSeconds / finalTotalQuestions : undefined
@@ -530,6 +527,7 @@ export function AssessmentStepper({
 			setXpPenaltyInfo(undefined)
 		}
 
+		// Mastered units policy
 		const masteredUnits = (() => {
 			if (contentType === "Exercise") {
 				return accuracy >= 80 ? 1 : 0
@@ -549,7 +547,7 @@ export function AssessmentStepper({
 			correctQuestions: correctAnswersCount,
 			accuracy: accuracy,
 			xp: xpResult.finalXp,
-			multiplier: multiplier,
+			multiplier: xpResult.multiplier,
 			attempt: attemptNumber,
 			startedAt: assessmentStartTimeRef.current?.toISOString(),
 			lessonType: contentType.toLowerCase(),
@@ -591,17 +589,16 @@ export function AssessmentStepper({
 			throw errors.wrap(saveResult.error, "save assessment result")
 		}
 
+		// Awarding XP toasts, await quiz breakdown before finishing
 		if (xpResult.finalXp > 0 && shouldAwardXp) {
 			if (contentType === "Quiz") {
 				const toastId = toast.loading("Calculating XP…")
-				;(async () => {
-					const breakdownResult = await errors.try(
-						getBankedXpBreakdownForQuiz(onerosterResourceSourcedId, onerosterUserSourcedId)
-					)
-					if (breakdownResult.error) {
-						toast.success(`+${xpResult.finalXp} XP earned for this assessment`, { id: toastId })
-						return
-					}
+				const breakdownResult = await errors.try(
+					getBankedXpBreakdownForQuiz(onerosterResourceSourcedId, onerosterUserSourcedId)
+				)
+				if (breakdownResult.error) {
+					toast.success(`+${xpResult.finalXp} XP earned for this assessment`, { id: toastId })
+				} else {
 					const { articleXp, videoXp } = breakdownResult.data
 					toast.success(`+${xpResult.finalXp} XP earned for this assessment`, {
 						id: toastId,
@@ -613,7 +610,7 @@ export function AssessmentStepper({
 							</span>
 						)
 					})
-				})()
+				}
 			} else {
 				toast.success(`+${xpResult.finalXp} XP earned for this assessment`)
 			}
