@@ -71,6 +71,8 @@ export function Content({
 	const savedProgressRef = React.useRef<{ percentComplete: number } | null>(null)
 	// Once completed (>= 95%), allow free seeking regardless of lock state
 	const [hasCompletedVideo, setHasCompletedVideo] = React.useState<boolean>(false)
+	// Show a custom initial play overlay instead of YouTube's default
+	const [showInitialPlayOverlay, setShowInitialPlayOverlay] = React.useState<boolean>(true)
 
 	// Local UI state for read-only time display
 	const [elapsedSeconds, setElapsedSeconds] = React.useState<number>(0)
@@ -476,12 +478,23 @@ export function Content({
 		}
 	}
 
+	function handleInitialPlayClick() {
+		const player = playerRef.current
+		if (player && typeof player.playVideo === "function") {
+			setShowInitialPlayOverlay(false)
+			player.playVideo()
+		}
+	}
+
 	function onPlayerStateChange(event: { target: YouTubePlayer; data: number }) {
 		const playerState = event.data
 		const player = event.target
 
 		// Playing state
 		if (playerState === 1) {
+			if (showInitialPlayOverlay) {
+				setShowInitialPlayOverlay(false)
+			}
 			// Handle resume functionality - seek to saved position on first play
 			if (!hasResumedRef.current && savedProgressRef.current && savedProgressRef.current.percentComplete > 0) {
 				const duration = player.getDuration()
@@ -556,6 +569,20 @@ export function Content({
 					{/* Video Player - YouTube component with skip disabled */}
 					<div className="py-6">
 						<div className="aspect-video bg-black rounded-lg overflow-hidden relative">
+							{showInitialPlayOverlay && (
+								<button
+									type="button"
+									onClick={handleInitialPlayClick}
+									aria-label="Play video"
+									className="absolute inset-0 z-10 flex items-center justify-center bg-black/20 focus:outline-none"
+								>
+									<span className="inline-flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 transition-colors shadow-lg w-20 h-20 sm:w-24 sm:h-24">
+										<svg viewBox="0 0 24 24" className="w-10 h-10 sm:w-12 sm:h-12 fill-white" aria-hidden="true">
+											<path d="M8 5v14l11-7z" />
+										</svg>
+									</span>
+								</button>
+							)}
 							<YouTube
 								videoId={video.youtubeId}
 								title={video.title}
