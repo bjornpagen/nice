@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { oneroster, qti } from "@/lib/clients"
+import { XP_PROFICIENCY_THRESHOLD } from "@/lib/constants/progress"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 // ADDED: Import the new utility functions
 import { filterInteractiveAttemptResults, findLatestInteractiveAttempt } from "@/lib/utils/assessment-results"
@@ -257,7 +258,7 @@ export async function checkExistingProficiency(
 		throw errors.new("proficiency check: score must be a number")
 	}
 
-	const isProficient = latestResult.score >= 0.8
+	const isProficient = latestResult.score >= XP_PROFICIENCY_THRESHOLD
 
 	logger.info("proficiency check complete", {
 		onerosterUserSourcedId,

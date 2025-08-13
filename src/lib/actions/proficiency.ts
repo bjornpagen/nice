@@ -5,6 +5,7 @@ import * as logger from "@superbuilders/slog"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { oneroster, qti } from "@/lib/clients"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
+import { calculateProficiencyScore } from "@/lib/proficiency/core"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 
 interface ExercisePerformance {
@@ -229,91 +230,34 @@ export async function updateProficiencyFromAssessment(
 	// Step 5: Calculate proficiency scores with mastery upgrade logic
 	const updatePromises: Promise<unknown>[] = []
 	for (const [exerciseId, performance] of performanceMap.entries()) {
-		const percentageCorrect = performance.correctCount / performance.totalCount
-		const isUnitTest = lessonType === "unittest" || lessonType === "coursechallenge"
+		const percentageCorrect = performance.totalCount > 0 ? performance.correctCount / performance.totalCount : 0
 
-		// Calculate proficiency score for this exercise
-		let proficiencyScore = percentageCorrect // Store the EXACT percentage, not discrete levels
-
-		// Special case: Unit test mastery upgrade
-		// If student was already at 100% (1.0) and gets unit test question correct → Mastered (1.1)
-		if ((lessonType === "unittest" || lessonType === "coursechallenge") && percentageCorrect === 1.0) {
-			const currentScore = currentProficiencyMap.get(exerciseId)
-			if (currentScore && currentScore >= 1.0) {
-				proficiencyScore = 1.1 // Mastered level
-				logger.info("upgrading skill to mastered", {
-					exerciseId,
-					previousScore: currentScore,
-					newScore: proficiencyScore,
-					reason: "perfect skill maintained on unit test"
-				})
-			}
-		}
-
-		// ADDED: Special case - Unit test softer penalty for wrong answers
-		// Only apply penalty if they got 0% correct (typically 1 question wrong)
-		// This handles both single-question (common) and multi-question (rare) unit tests:
-		// - Single question: 0/1 = 0% → Apply penalty
-		// - Multiple questions: Only if ALL wrong (0/2, 0/3, etc) → Apply penalty
-		// - Partial credit (1/2, 2/3): Normal percentage calculation applies
-		if ((lessonType === "unittest" || lessonType === "coursechallenge") && percentageCorrect === 0) {
-			const currentScore = currentProficiencyMap.get(exerciseId)
-			if (currentScore !== undefined && currentScore > 0) {
-				// Apply softer penalty based on current proficiency level
-				if (currentScore >= 1.0) {
-					// Was proficient (100%) → Drop to familiar (70%)
-					proficiencyScore = 0.7
-					logger.info("applying softer unit test penalty", {
-						exerciseId,
-						previousScore: currentScore,
-						newScore: proficiencyScore,
-						reason: "proficient to familiar on unit test miss"
-					})
-				} else if (currentScore >= 0.7) {
-					// Was familiar (70-99%) → Drop to attempted (50%)
-					proficiencyScore = 0.5
-					logger.info("applying softer unit test penalty", {
-						exerciseId,
-						previousScore: currentScore,
-						newScore: proficiencyScore,
-						reason: "familiar to attempted on unit test miss"
-					})
-				} else {
-					// Was attempted or lower → Keep their current score (no further penalty)
-					proficiencyScore = currentScore
-					logger.info("maintaining current score on unit test miss", {
-						exerciseId,
-						previousScore: currentScore,
-						newScore: proficiencyScore,
-						reason: "already at attempted level or below"
-					})
-				}
-			}
-		}
+		// REFACTORED: Use the centralized proficiency calculation service
+		const proficiencyScore = calculateProficiencyScore({
+			percentageCorrect,
+			lessonType,
+			currentScore: currentProficiencyMap.get(exerciseId)
+		})
 
 		logger.info("calculated exercise proficiency", {
 			exerciseId,
 			score: proficiencyScore,
 			performance,
 			currentScore: currentProficiencyMap.get(exerciseId),
-			isUnitTest
+			lessonType
 		})
 
 		// Only save if there's a meaningful update
-		// We save if:
-		// 1. Score is greater than 0 (any positive progress)
-		// 2. Unit test with penalty to apply (softer penalty logic)
-		// 3. Score is 0 but user had previous progress (downgrade)
-		// 4. Score is 0 and this is from a quiz/test (new failure to record)
-		if (
+		const shouldSaveResult =
 			proficiencyScore > 0 ||
-			((lessonType === "unittest" || lessonType === "coursechallenge") &&
-				percentageCorrect === 0 &&
+			(percentageCorrect === 0 &&
+				(lessonType === "unittest" || lessonType === "coursechallenge") &&
 				currentProficiencyMap.has(exerciseId)) ||
 			(proficiencyScore === 0 && currentProficiencyMap.has(exerciseId)) ||
 			(proficiencyScore === 0 &&
 				(lessonType === "quiz" || lessonType === "unittest" || lessonType === "coursechallenge"))
-		) {
+
+		if (shouldSaveResult) {
 			updatePromises.push(
 				saveAssessmentResult({
 					onerosterResourceSourcedId: exerciseId,
