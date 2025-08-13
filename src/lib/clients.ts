@@ -1,7 +1,6 @@
 import { env } from "@/env"
 import * as caliperInternal from "./caliper"
 import * as onerosterInternal from "./oneroster"
-import * as powerpathInternal from "./powerpath"
 import * as qtiInternal from "./qti"
 
 /**
@@ -30,17 +29,7 @@ export const oneroster = new onerosterInternal.Client({
 	clientSecret: env.TIMEBACK_CLIENT_SECRET
 })
 
-/**
- * A singleton instance of the PowerPathApiClient.
- * This client is configured once with environment variables and should be used
- * for all PowerPath API interactions.
- */
-export const powerpath = new powerpathInternal.Client({
-	serverUrl: env.TIMEBACK_POWERPATH_SERVER_URL,
-	tokenUrl: env.TIMEBACK_TOKEN_URL,
-	clientId: env.TIMEBACK_CLIENT_ID,
-	clientSecret: env.TIMEBACK_CLIENT_SECRET
-})
+// PowerPath client removed as part of migration
 
 /**
  * A singleton instance of the QtiApiClient.

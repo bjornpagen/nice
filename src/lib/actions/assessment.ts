@@ -3,7 +3,7 @@
 import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { oneroster, powerpath, qti } from "@/lib/clients"
+import { oneroster, qti } from "@/lib/clients"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 
 /**
@@ -19,7 +19,7 @@ import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
  */
 
 /**
- * Processes a question response using the QTI API and optionally logs to PowerPath.
+ * Processes a question response using the QTI API.
  * This server action wraps the API calls that should never be called from client components.
  *
  * @param qtiItemId - The QTI assessment item ID (e.g., nice_question123)
@@ -37,7 +37,7 @@ export async function processQuestionResponse(
 	onerosterComponentResourceSourcedId?: string,
 	isInteractiveAssessment?: boolean,
 	assessmentAttemptNumber?: number,
-	isLastQuestion?: boolean
+	_isLastQuestion?: boolean
 ) {
 	logger.debug("processing question response", {
 		qtiItemId,
@@ -110,69 +110,7 @@ export async function processQuestionResponse(
 		isCorrect = qtiResult.data.score > 0
 	}
 
-	// CRITICAL: Only log to PowerPath on the FIRST attempt (assessmentAttemptNumber === 0)
-	// This matches Khan Academy's behavior where only first attempts count for proficiency
-	if (
-		isInteractiveAssessment &&
-		onerosterUserSourcedId &&
-		onerosterComponentResourceSourcedId &&
-		assessmentAttemptNumber === 0
-	) {
-		logger.info("logging first attempt response to powerpath", {
-			qtiItemId,
-			isCorrect,
-			assessmentAttemptNumber
-		})
-
-		// Convert response to string or string array for PowerPath
-		let powerpathResponse: string | string[]
-		if (typeof selectedResponse === "object" && !Array.isArray(selectedResponse)) {
-			// For multi-input questions, send as array of values
-			powerpathResponse = Object.values(selectedResponse).map(String)
-		} else if (Array.isArray(selectedResponse)) {
-			powerpathResponse = selectedResponse.map(String)
-		} else {
-			powerpathResponse = String(selectedResponse)
-		}
-
-		const upsertResult = await errors.try(
-			powerpath.updateStudentQuestionResponse({
-				student: onerosterUserSourcedId,
-				lesson: onerosterComponentResourceSourcedId,
-				question: qtiItemId,
-				response: powerpathResponse
-			})
-		)
-		if (upsertResult.error) {
-			logger.error("failed to log question response to powerpath", {
-				error: upsertResult.error,
-				qtiItemId,
-				onerosterUserSourcedId
-			})
-		}
-	} else if (assessmentAttemptNumber && assessmentAttemptNumber > 0) {
-		logger.debug("skipping powerpath logging for retry attempt", {
-			qtiItemId,
-			assessmentAttemptNumber,
-			isCorrect
-		})
-	}
-
-	// If this was the last question in an interactive assessment, finalize on the server now.
-	// Await to avoid race conditions with page re-entry and server-side auto rollover.
-	if (isInteractiveAssessment && onerosterUserSourcedId && onerosterComponentResourceSourcedId && isLastQuestion) {
-		const finalizeResult = await errors.try(
-			finalizeAssessment(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
-		)
-		if (finalizeResult.error) {
-			logger.error("failed to finalize assessment in processQuestionResponse", {
-				error: finalizeResult.error,
-				qtiItemId,
-				onerosterComponentResourceSourcedId
-			})
-			// Do not throw: finalization failure should not block the user's response flow.
-		}
-	}
+	// External per-question logging and finalize removed
 
 	// For fill-in-the-blank questions, we don't have a single score/feedback
 	// Return a simplified response
@@ -191,38 +129,7 @@ export async function processQuestionResponse(
  * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
  * @returns The new attempt information
  */
-export async function createNewAssessmentAttempt(
-	onerosterUserSourcedId: string,
-	onerosterComponentResourceSourcedId: string
-) {
-	logger.info("creating new assessment attempt", { onerosterUserSourcedId, onerosterComponentResourceSourcedId })
-
-	const result = await errors.try(
-		powerpath.createNewAttempt({
-			student: onerosterUserSourcedId,
-			lesson: onerosterComponentResourceSourcedId
-		})
-	)
-
-	if (result.error) {
-		logger.error("failed to create new assessment attempt", {
-			onerosterUserSourcedId,
-			onerosterComponentResourceSourcedId,
-			error: result.error
-		})
-		throw errors.wrap(result.error, "create assessment attempt")
-	}
-
-	logger.info("successfully created new assessment attempt", {
-		onerosterUserSourcedId,
-		onerosterComponentResourceSourcedId,
-		attempt: result.data
-	})
-
-	// No cookie marker usage anymore
-
-	return result.data
-}
+// createNewAssessmentAttempt removed
 
 /**
  * Checks the current assessment progress and creates a new attempt if the assessment
@@ -232,63 +139,7 @@ export async function createNewAssessmentAttempt(
  * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
  * @returns The current attempt number to use
  */
-export async function checkAndCreateNewAttemptIfNeeded(
-	onerosterUserSourcedId: string,
-	onerosterComponentResourceSourcedId: string
-): Promise<number> {
-	logger.info("checking if new assessment attempt is needed", {
-		onerosterUserSourcedId,
-		onerosterComponentResourceSourcedId
-	})
-
-	// Get the current assessment progress
-	const progressResult = await errors.try(
-		powerpath.getAssessmentProgress(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
-	)
-	if (progressResult.error) {
-		logger.error("failed to check assessment progress", {
-			error: progressResult.error,
-			onerosterComponentResourceSourcedId
-		})
-		// If we can't check, assume it's the first attempt
-		return 1
-	}
-
-	const { finalized, attempt } = progressResult.data
-	const currentAttempt = attempt || 1
-
-	// If the assessment is already finalized, we need to create a new attempt
-	if (finalized) {
-		logger.info("assessment is finalized, creating new attempt", {
-			onerosterComponentResourceSourcedId,
-			currentAttempt,
-			finalized
-		})
-
-		const newAttemptResult = await errors.try(
-			createNewAssessmentAttempt(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
-		)
-		if (newAttemptResult.error) {
-			logger.error("failed to create new attempt", { error: newAttemptResult.error })
-			// Return the current attempt on error to avoid blocking the user
-			return currentAttempt
-		}
-
-		const newAttemptData = newAttemptResult.data
-		const newAttemptNumber = newAttemptData.attempt.attempt
-		if (typeof newAttemptNumber === "number") {
-			logger.info("new attempt created successfully", {
-				onerosterComponentResourceSourcedId,
-				oldAttempt: currentAttempt,
-				newAttempt: newAttemptNumber
-			})
-			return newAttemptNumber
-		}
-	}
-
-	logger.info("using existing attempt", { onerosterComponentResourceSourcedId, attemptNumber: currentAttempt })
-	return currentAttempt
-}
+// checkAndCreateNewAttemptIfNeeded removed
 
 /**
  * Finalizes an assessment in PowerPath to ensure all responses are graded
@@ -297,33 +148,7 @@ export async function checkAndCreateNewAttemptIfNeeded(
  * @param onerosterUserSourcedId - The user's OneRoster sourcedId
  * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
  */
-export async function finalizeAssessment(onerosterUserSourcedId: string, onerosterComponentResourceSourcedId: string) {
-	logger.info("finalizing assessment responses", { onerosterUserSourcedId, onerosterComponentResourceSourcedId })
-
-	const result = await errors.try(
-		powerpath.finalStudentAssessmentResponse({
-			student: onerosterUserSourcedId,
-			lesson: onerosterComponentResourceSourcedId
-		})
-	)
-
-	if (result.error) {
-		logger.error("failed to finalize assessment in powerpath", {
-			onerosterUserSourcedId,
-			onerosterComponentResourceSourcedId,
-			error: result.error
-		})
-		throw errors.wrap(result.error, "finalize assessment")
-	}
-
-	logger.info("successfully finalized assessment", {
-		onerosterUserSourcedId,
-		onerosterComponentResourceSourcedId,
-		finalized: result.data.finalized
-	})
-
-	return result.data
-}
+// finalizeAssessment removed
 
 /**
  * Processes a skipped question by logging it as incorrect to PowerPath.
@@ -335,51 +160,36 @@ export async function finalizeAssessment(onerosterUserSourcedId: string, onerost
  * @param onerosterComponentResourceSourcedId - The OneRoster componentResource sourcedId
  * @param attemptNumber - The current attempt number
  */
-export async function processSkippedQuestion(
-	qtiItemId: string,
+// processSkippedQuestion removed
+
+/**
+ * Computes the next attempt number for a user on an assessment resource using OneRoster.
+ * Attempt number is defined as 1 + count of existing AssessmentResults for the line item.
+ */
+export async function getNextAttemptNumber(
 	onerosterUserSourcedId: string,
-	onerosterComponentResourceSourcedId: string,
-	assessmentAttemptNumber: number
-) {
-	logger.info("logging skipped question as incorrect", {
-		qtiItemId,
+	onerosterResourceSourcedId: string
+): Promise<number> {
+	logger.info("computing next attempt number from oneroster", {
 		onerosterUserSourcedId,
-		onerosterComponentResourceSourcedId,
-		assessmentAttemptNumber
+		onerosterResourceSourcedId
 	})
 
-	// Only log to PowerPath on the FIRST attempt (assessmentAttemptNumber === 0)
-	// This matches our existing logic for regular responses
-	if (assessmentAttemptNumber === 0) {
-		logger.info("logging first attempt skip to powerpath", {
-			qtiItemId,
-			assessmentAttemptNumber
+	const lineItemId = getAssessmentLineItemId(onerosterResourceSourcedId)
+	const filter = `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${lineItemId}'`
+	const resultsResult = await errors.try(oneroster.getAllResults({ filter }))
+	if (resultsResult.error) {
+		logger.error("failed to fetch results for attempt derivation", {
+			error: resultsResult.error,
+			lineItemId
 		})
-
-		// Send a special "SKIPPED" response that PowerPath will score as incorrect
-		const result = await errors.try(
-			powerpath.updateStudentQuestionResponse({
-				student: onerosterUserSourcedId,
-				lesson: onerosterComponentResourceSourcedId,
-				question: qtiItemId,
-				response: "SKIPPED" // Conventional value to indicate a skip
-			})
-		)
-
-		if (result.error) {
-			logger.error("failed to log skipped question to powerpath", {
-				error: result.error,
-				qtiItemId,
-				onerosterUserSourcedId
-			})
-			// Don't throw - this is a best-effort operation
-		}
-	} else {
-		logger.debug("skipping powerpath logging for retry skip", {
-			qtiItemId,
-			assessmentAttemptNumber
-		})
+		// Default to first attempt if results cannot be fetched
+		return 1
 	}
+	const count = Array.isArray(resultsResult.data) ? resultsResult.data.length : 0
+	const nextAttempt = count + 1
+	logger.info("derived next attempt number", { lineItemId, existingResults: count, nextAttempt })
+	return nextAttempt
 }
 
 /**

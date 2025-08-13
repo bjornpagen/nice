@@ -17,6 +17,9 @@ ignore_patterns:
   - "**/__snapshots__/**"
   - "docs/**"
   - "**/*.test.ts"
+  - "src/lib/widgets/**"
+  - "src/lib/qti-generation/**"
+  - "src/lib/qti-validation/**"
 priority_rules:
   - score: 99
     pattern: "^rules/"

@@ -22,12 +22,10 @@ import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
 import {
-	checkAndCreateNewAttemptIfNeeded,
 	checkExistingProficiency,
-	createNewAssessmentAttempt,
 	flagQuestionAsReported,
-	processQuestionResponse,
-	processSkippedQuestion
+	getNextAttemptNumber,
+	processQuestionResponse
 } from "@/lib/actions/assessment"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { getBankedXpBreakdownForQuiz } from "@/lib/actions/xp"
@@ -218,8 +216,7 @@ export function AssessmentStepper({
 	assessmentTitle,
 	assessmentPath,
 	unitData,
-	expectedXp, // Will be used when caliper action is updated
-	onRetake
+	expectedXp // Will be used when caliper action is updated
 }: AssessmentStepperProps) {
 	const { user } = useUser()
 	const router = useRouter()
@@ -287,7 +284,7 @@ export function AssessmentStepper({
 	const isNavigatingRef = React.useRef(false)
 	const skipTimeoutRef = React.useRef<number | null>(null)
 
-	// Interactive assessments (PowerPath attempts/logging) now include Exercises as well
+	// Interactive assessments include Exercises as well
 	const isInteractiveAssessment = contentType === "Quiz" || contentType === "Test" || contentType === "Exercise"
 	const MAX_ATTEMPTS = 3
 	const hasExhaustedAttempts = attemptCount >= MAX_ATTEMPTS && !isAnswerCorrect
@@ -364,7 +361,7 @@ export function AssessmentStepper({
 		}
 	}, [questions.length])
 
-	// ADDED: Check for and create new attempt when component mounts or when assessment changes
+	// ADDED: Derive attempt number from OneRoster results when component mounts or when assessment changes
 	React.useEffect(() => {
 		if (!user?.publicMetadata?.sourceId || !onerosterComponentResourceSourcedId) {
 			return
@@ -375,18 +372,15 @@ export function AssessmentStepper({
 			return
 		}
 
-		// Check if we need to create a new attempt and get the current attempt number
+		// Fetch the next attempt number derived from existing results
 		const initializeAttempt = async () => {
-			const currentAttemptNumber = await checkAndCreateNewAttemptIfNeeded(
-				onerosterUserSourcedId,
-				onerosterComponentResourceSourcedId
-			)
+			const currentAttemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
 			setAttemptNumber(currentAttemptNumber)
 			setIsAttemptReady(true)
 		}
 
 		initializeAttempt()
-	}, [onerosterComponentResourceSourcedId, user?.publicMetadata?.sourceId])
+	}, [onerosterComponentResourceSourcedId, user?.publicMetadata?.sourceId, onerosterResourceSourcedId])
 
 	// Cleanup any pending timers on unmount
 	React.useEffect(() => {
@@ -728,51 +722,9 @@ export function AssessmentStepper({
 		router
 	])
 
-	// MODIFIED: handleReset is now async and calls the new action
+	// MODIFIED: handleReset just resets local state; attempts are derived from results after completion
 	const handleReset = async () => {
-		// Create a new PowerPath attempt for all interactive assessments (Exercise/Quiz/Test/Challenge)
-		if (!user?.publicMetadata?.sourceId) {
-			toast.error("Could not start a new attempt. User session is invalid.")
-			return
-		}
-
-		// Proper type checking instead of assertion
-		if (typeof user.publicMetadata.sourceId !== "string") {
-			toast.error("Invalid user session data.")
-			return
-		}
-
-		const onerosterUserSourcedId = user.publicMetadata.sourceId
-
-		// Step 1: Create a new attempt via the server action.
-		const attemptPromise = createNewAssessmentAttempt(onerosterUserSourcedId, onerosterComponentResourceSourcedId)
-		toast.promise(attemptPromise, {
-			loading: "Starting a new attempt...",
-			success: "New attempt started. Good luck!",
-			error: "Failed to start a new attempt. Please try again."
-		})
-
-		const result = await errors.try(attemptPromise)
-		if (result.error) {
-			// If the API call fails, we do NOT reset the state. The user can try again.
-			return
-		}
-
-		// MODIFIED: Capture the new attempt number from the API response.
-		const newAttemptNumber = result.data.attempt.attempt
-		if (typeof newAttemptNumber !== "number") {
-			toast.error("Could not retrieve new attempt number from the server.")
-			return
-		}
-		setAttemptNumber(newAttemptNumber) // Update state with the new attempt number
-
-		// Notify parent to reset to start screen and trigger a route-level refresh/remount
-		if (onRetake) {
-			onRetake(newAttemptNumber)
-			return
-		}
-
-		// Fallback: locally reset state to first question and end summary,
+		// Locally reset state to first question and end summary,
 		// then force a route refresh to fetch a new question set
 		setCurrentQuestionIndex(0)
 		setSelectedResponses({})
@@ -1050,21 +1002,7 @@ export function AssessmentStepper({
 		if (isInteractiveAssessment && !isAttemptReady) {
 			return
 		}
-		// For ALL assessments, treat skip as incorrect
-		// Log this as an incorrect response to PowerPath
-		if (user?.publicMetadata?.sourceId && onerosterComponentResourceSourcedId && isInteractiveAssessment) {
-			const onerosterUserSourcedId = user.publicMetadata.sourceId
-			if (typeof onerosterUserSourcedId === "string") {
-				processSkippedQuestion(
-					currentQuestion.id,
-					onerosterUserSourcedId,
-					onerosterComponentResourceSourcedId,
-					attemptNumber - 1 // Pass assessment attempt number (0-indexed) instead of question attempt count
-				).catch(() => {
-					// Error is logged inside processSkippedQuestion, no need to log again
-				})
-			}
-		}
+		// For ALL assessments, treat skip as incorrect (no external logging)
 
 		// NEW: Add skipped result to session state
 		setSessionResults((prev) => [...prev, { qtiItemId: currentQuestion.id, isCorrect: false }])
