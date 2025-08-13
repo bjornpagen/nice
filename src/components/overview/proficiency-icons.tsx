@@ -198,14 +198,14 @@ export function ProficiencyIconLegend({
 	return (
 		<div className={cn("flex items-center", className)}>
 			<ProficiencyIcon variant="mastered" size={size} label={label} side={side}>
-				<h2 className="text-sm font-medium">Mastered (100 points)</h2>
+				<h2 className="text-sm font-medium">Mastered</h2>
 				<p className="text-xs text-gray-500">
 					Get a <strong>Proficient</strong> skill correct on the unit test.
 				</p>
 			</ProficiencyIcon>
 
 			<ProficiencyIcon variant="proficient" size={size} label={label} side={side}>
-				<h2 className="text-sm font-medium">Proficient (80 points)</h2>
+				<h2 className="text-sm font-medium">Proficient</h2>
 				<p className="text-xs text-gray-500">
 					Answer 100% of the questions correct when practicing a skill or get a <strong>Familiar</strong> skill correct
 					during a quiz or unit test.
@@ -213,7 +213,7 @@ export function ProficiencyIconLegend({
 			</ProficiencyIcon>
 
 			<ProficiencyIcon variant="familiar" size={size} label={label} side={side}>
-				<h2 className="text-sm font-medium">Familiar (50 points)</h2>
+				<h2 className="text-sm font-medium">Familiar</h2>
 				<p className="text-xs text-gray-500">
 					Get 70% or more correct when practicing a skill. Or, correctly answer a question related to a skill on a quiz
 					or unit test.
@@ -221,7 +221,7 @@ export function ProficiencyIconLegend({
 			</ProficiencyIcon>
 
 			<ProficiencyIcon variant="attempted" size={size} label={label} side={side}>
-				<h2 className="text-sm font-medium">Attempted (0 points)</h2>
+				<h2 className="text-sm font-medium">Attempted</h2>
 				<p className="text-xs text-gray-500">
 					If you get less than 70% correct when practicing a skill or if you get questions related to this skill
 					incorrect on a quiz or unit test you’ll be here.
@@ -229,7 +229,7 @@ export function ProficiencyIconLegend({
 			</ProficiencyIcon>
 
 			<ProficiencyIcon variant="not-started" size={size} label={label} side={side}>
-				<h2 className="text-sm font-medium">Not Started (0 points)</h2>
+				<h2 className="text-sm font-medium">Not Started</h2>
 				<p className="text-xs text-gray-500">
 					This is where you’ll start. Watch videos and practice skills if you’re new to the material or jump to a quiz
 					or unit test if you feel more confident.
