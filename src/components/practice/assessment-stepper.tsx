@@ -29,7 +29,7 @@ import {
 } from "@/lib/actions/assessment"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { getBankedXpBreakdownForQuiz } from "@/lib/actions/xp"
-import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
+import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { cn } from "@/lib/utils"
@@ -252,8 +252,9 @@ export function AssessmentStepper({
 	// Admin-only: practice header lock toggle (far right)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
-	const parsedMetadata = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
-	const canUnlockAll = parsedMetadata.success && parsedMetadata.data.roles.some((r) => r.role !== "student")
+	const parsedMetadata = errors.trySync(() => parseUserPublicMetadata(user?.publicMetadata))
+	const userSourceId = parsedMetadata.error ? undefined : parsedMetadata.data.sourceId
+	const canUnlockAll = !parsedMetadata.error && parsedMetadata.data.roles.some((r) => r.role !== "student")
 
 	const handleToggleLockAll = () => {
 		if (!canUnlockAll || !storageKey) return
@@ -363,24 +364,23 @@ export function AssessmentStepper({
 
 	// ADDED: Derive attempt number from OneRoster results when component mounts or when assessment changes
 	React.useEffect(() => {
-		if (!user?.publicMetadata?.sourceId || !onerosterComponentResourceSourcedId) {
+		if (!userSourceId || !onerosterResourceSourcedId) {
 			return
 		}
 
-		const onerosterUserSourcedId = user.publicMetadata.sourceId
-		if (typeof onerosterUserSourcedId !== "string") {
+		if (typeof userSourceId !== "string") {
 			return
 		}
 
 		// Fetch the next attempt number derived from existing results
 		const initializeAttempt = async () => {
-			const currentAttemptNumber = await getNextAttemptNumber(onerosterUserSourcedId, onerosterResourceSourcedId)
+			const currentAttemptNumber = await getNextAttemptNumber(userSourceId, onerosterResourceSourcedId)
 			setAttemptNumber(currentAttemptNumber)
 			setIsAttemptReady(true)
 		}
 
 		initializeAttempt()
-	}, [onerosterComponentResourceSourcedId, user?.publicMetadata?.sourceId, onerosterResourceSourcedId])
+	}, [userSourceId, onerosterResourceSourcedId])
 
 	// Cleanup any pending timers on unmount
 	React.useEffect(() => {
@@ -392,13 +392,13 @@ export function AssessmentStepper({
 		}
 	}, [])
 
-	// If unauthenticated or missing component id, allow UI but disable server logging
+	// If unauthenticated or missing resource id, allow UI but disable server logging
 	React.useEffect(() => {
-		const hasAuthIds = Boolean(user?.publicMetadata?.sourceId && onerosterComponentResourceSourcedId)
+		const hasAuthIds = Boolean(userSourceId && onerosterResourceSourcedId)
 		if (!hasAuthIds) {
 			setIsAttemptReady(true)
 		}
-	}, [user?.publicMetadata?.sourceId, onerosterComponentResourceSourcedId])
+	}, [userSourceId, onerosterResourceSourcedId])
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
@@ -469,13 +469,13 @@ export function AssessmentStepper({
 			hasSentCompletionEventRef.current ||
 			finalizationInFlightRef.current ||
 			!onerosterResourceSourcedId ||
-			!user?.publicMetadata?.sourceId
+			!userSourceId
 		) {
 			return
 		}
 
 		// Proper type check for onerosterUserSourcedId
-		const onerosterUserSourcedId = user.publicMetadata.sourceId
+		const onerosterUserSourcedId = userSourceId
 		if (typeof onerosterUserSourcedId !== "string") {
 			return
 		}
@@ -597,7 +597,7 @@ export function AssessmentStepper({
 					durationInSeconds: assessmentStartTimeRef.current
 						? Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
 						: undefined,
-					userEmail: user.primaryEmailAddress?.emailAddress,
+					userEmail: user?.primaryEmailAddress?.emailAddress,
 					shouldAwardXp
 				})
 			)
@@ -703,19 +703,20 @@ export function AssessmentStepper({
 		showSummary,
 		onerosterComponentResourceSourcedId,
 		onerosterResourceSourcedId,
-		user,
+		userSourceId,
+		user?.primaryEmailAddress?.emailAddress,
 		correctAnswersCount,
 		questions.length,
 		isInteractiveAssessment,
 		unitData,
 		assessmentTitle,
 		assessmentPath,
-		attemptNumber, // ADDED: Add attemptNumber to dependency array
+		attemptNumber,
 		expectedXp,
-		sessionResults, // ADDED: Add sessionResults to dependency array
-		onerosterCourseSourcedId, // Add onerosterCourseSourcedId to dependency array
-		reportedQuestionIds.size, // Add reportedQuestionIds.size to dependency array
-		contentType, // Add contentType to dependency array for masteredUnits logic
+		sessionResults,
+		onerosterCourseSourcedId,
+		reportedQuestionIds.size,
+		contentType,
 		setProgressForResource,
 		beginProgressUpdate,
 		endProgressUpdate,
@@ -872,7 +873,7 @@ export function AssessmentStepper({
 		setShowFeedback(false)
 
 		// Extract user source ID if available (for authenticated users)
-		const onerosterUserSourcedId = user?.publicMetadata?.sourceId
+		const onerosterUserSourcedId = userSourceId
 		const isAuthenticated = typeof onerosterUserSourcedId === "string"
 
 		// Determine response format based on the question type
