@@ -15,6 +15,8 @@ import type {
 } from "@/lib/caliper"
 import { caliper, oneroster } from "@/lib/clients"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
+// ADDED: Import the new utility function
+import { findLatestInteractiveAttempt } from "@/lib/utils/assessment-results"
 import { MASTERY_THRESHOLD } from "@/lib/xp"
 
 const SENSOR_ID = env.NEXT_PUBLIC_APP_DOMAIN
@@ -127,9 +129,10 @@ export async function sendCaliperActivityCompletedEvent(
 		}
 	} else {
 		// Fallback path: honor pre-calculated XP and perform only the proficiency guard here
+		const strictLineItemId = getAssessmentLineItemId(assessmentLineItemId)
 		const currentResultsResult = await errors.try(
 			oneroster.getAllResults({
-				filter: `student.sourcedId='${userSourcedId}' AND assessmentLineItem.sourcedId='${getAssessmentLineItemId(assessmentLineItemId)}'`
+				filter: `student.sourcedId='${userSourcedId}' AND assessmentLineItem.sourcedId='${strictLineItemId}'`
 			})
 		)
 
@@ -141,26 +144,15 @@ export async function sendCaliperActivityCompletedEvent(
 			})
 			throw errors.wrap(currentResultsResult.error, "proficiency check required for XP calculation")
 		}
-		// Only consider results that strictly match our new attempt-based ID pattern
-		const strictLineItemId = getAssessmentLineItemId(assessmentLineItemId)
-		const baseIdPrefix = `nice_${userSourcedId}_${strictLineItemId}_attempt_`
-		const currentResults = currentResultsResult.data.filter((r) => {
-			if (typeof r.sourcedId !== "string") return false
-			if (!r.sourcedId.startsWith(baseIdPrefix)) return false
-			const suffix = r.sourcedId.slice(baseIdPrefix.length)
-			return /^\d+$/.test(suffix)
-		})
+
+		// REMOVED: The duplicated filter and sort logic is gone.
+
+		// CHANGED: Use the new utility to find the latest valid attempt directly.
+		const latestResult = findLatestInteractiveAttempt(currentResultsResult.data, userSourcedId, strictLineItemId)
+
 		let currentProficiency = 0 // Default to 0 if no previous attempts
-
-		if (currentResults.length > 0) {
-			// Get the most recent result to determine current proficiency
-			const latestResult = currentResults.sort(
-				(a, b) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
-			)[0]
-
-			if (latestResult && typeof latestResult.score === "number") {
-				currentProficiency = latestResult.score
-			}
+		if (latestResult && typeof latestResult.score === "number") {
+			currentProficiency = latestResult.score
 		}
 
 		if (currentProficiency >= MASTERY_THRESHOLD) {

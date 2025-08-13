@@ -5,6 +5,8 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { oneroster, qti } from "@/lib/clients"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
+// ADDED: Import the new utility functions
+import { filterInteractiveAttemptResults, findLatestInteractiveAttempt } from "@/lib/utils/assessment-results"
 
 /**
  * IMPORTANT NOTE ABOUT POWERPATH TERMINOLOGY:
@@ -186,18 +188,14 @@ export async function getNextAttemptNumber(
 		// Fail fast per no-fallbacks policy
 		throw errors.wrap(resultsResult.error, "attempt number derivation")
 	}
-	// Only consider results that strictly match our new attempt-based ID pattern
-	// Pattern: nice_${user}_${lineItem}_attempt_${n}
-	const baseIdPrefix = `nice_${onerosterUserSourcedId}_${lineItemId}_attempt_`
-	const isStrictAttemptId = (id: unknown): boolean => {
-		if (typeof id !== "string") return false
-		if (!id.startsWith(baseIdPrefix)) return false
-		const suffix = id.slice(baseIdPrefix.length)
-		return /^\d+$/.test(suffix)
-	}
-	const count = Array.isArray(resultsResult.data)
-		? resultsResult.data.filter((r) => isStrictAttemptId(r.sourcedId)).length
-		: 0
+	// REMOVED: isStrictAttemptId function is now centralized.
+
+	// CHANGED: Use the new centralized utility to filter results.
+	const validAttempts = Array.isArray(resultsResult.data)
+		? filterInteractiveAttemptResults(resultsResult.data, onerosterUserSourcedId, lineItemId)
+		: []
+
+	const count = validAttempts.length
 	const nextAttempt = count + 1
 	logger.info("derived next attempt number", { lineItemId, existingResults: count, nextAttempt })
 	return nextAttempt
@@ -220,9 +218,11 @@ export async function checkExistingProficiency(
 		onerosterAssessmentSourcedId
 	})
 
+	const strictLineItemId = getAssessmentLineItemId(onerosterAssessmentSourcedId)
+
 	const resultsResult = await errors.try(
 		oneroster.getAllResults({
-			filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${getAssessmentLineItemId(onerosterAssessmentSourcedId)}'`
+			filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${strictLineItemId}'`
 		})
 	)
 
@@ -236,31 +236,15 @@ export async function checkExistingProficiency(
 		throw errors.wrap(resultsResult.error, "proficiency check")
 	}
 
-	// Only consider results written by our system (sourcedId starting with "nice_")
-	// Only consider results that strictly match our new attempt-based ID pattern
-	const strictLineItemId = getAssessmentLineItemId(onerosterAssessmentSourcedId)
-	const baseIdPrefix = `nice_${onerosterUserSourcedId}_${strictLineItemId}_attempt_`
-	const results = resultsResult.data.filter((r) => {
-		if (typeof r.sourcedId !== "string") return false
-		if (!r.sourcedId.startsWith(baseIdPrefix)) return false
-		const suffix = r.sourcedId.slice(baseIdPrefix.length)
-		return /^\d+$/.test(suffix)
-	})
-	if (results.length === 0) {
+	// CHANGED: Use the new utility to find the latest valid attempt directly.
+	const latestResult = findLatestInteractiveAttempt(resultsResult.data, onerosterUserSourcedId, strictLineItemId)
+
+	if (!latestResult) {
 		logger.debug("no existing results found", {
 			onerosterUserSourcedId,
 			onerosterAssessmentSourcedId
 		})
 		return false
-	}
-
-	// Get the most recent result
-	const latestResult = results.sort(
-		(a, b) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
-	)[0]
-
-	if (!latestResult) {
-		throw errors.new("proficiency check: sorted results array is empty")
 	}
 
 	if (typeof latestResult.score !== "number") {

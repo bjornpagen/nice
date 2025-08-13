@@ -13,6 +13,8 @@ import { getAllEventsForUser } from "@/lib/data/fetchers/caliper"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { Activity } from "@/lib/types/domain"
 import { getResourceIdFromLineItem } from "@/lib/utils/assessment-line-items"
+// ADDED: Import the new utility functions
+import { isInteractiveAttemptResult, isPassiveContentResult } from "@/lib/utils/assessment-results"
 
 // Original types and functions for course/unit progress
 export type AssessmentProgress = {
@@ -73,25 +75,22 @@ export async function getUserUnitProgress(
 			}
 
 			// Process results to build the progress map by selecting the newest result per resource
-			// Only consider results with new '_ali' format line items
 			const latestByResource = new Map<string, (typeof resultsResponse.data)[number]>()
 			for (const result of resultsResponse.data) {
-				if (!result.assessmentLineItem.sourcedId.endsWith("_ali")) {
-					continue
-				}
-				// Strictly accept only results matching our attempt-based ID pattern for interactive resources,
-				// and the base pattern for non-interactive (e.g., articles/videos) that don't use attempts.
 				const lineItemId = result.assessmentLineItem.sourcedId
-				const baseAttemptPrefix = `nice_${userId}_${lineItemId}_attempt_`
-				const baseNonAttemptId = `nice_${userId}_${lineItemId}`
-				const id = result.sourcedId
-				const isStrictAttemptId =
-					typeof id === "string" && id.startsWith(baseAttemptPrefix) && /^\d+$/.test(id.slice(baseAttemptPrefix.length))
-				const isStrictBaseId = typeof id === "string" && id === baseNonAttemptId
-				if (!isStrictAttemptId && !isStrictBaseId) {
+				if (!lineItemId.endsWith("_ali")) {
 					continue
 				}
-				const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
+
+				// CHANGED: Use the new centralized utilities to validate the result ID
+				const isInteractive = isInteractiveAttemptResult(result, userId, lineItemId)
+				const isPassive = isPassiveContentResult(result, userId, lineItemId)
+
+				if (!isInteractive && !isPassive) {
+					continue
+				}
+
+				const resourceId = getResourceIdFromLineItem(lineItemId)
 				const prev = latestByResource.get(resourceId)
 				const currentTime = new Date(result.scoreDate || 0).getTime()
 				const prevTime = prev ? new Date(prev.scoreDate || 0).getTime() : Number.NEGATIVE_INFINITY
