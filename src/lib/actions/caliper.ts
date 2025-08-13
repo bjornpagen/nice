@@ -141,7 +141,15 @@ export async function sendCaliperActivityCompletedEvent(
 			})
 			throw errors.wrap(currentResultsResult.error, "proficiency check required for XP calculation")
 		}
-		const currentResults = currentResultsResult.data
+		// Only consider results that strictly match our new attempt-based ID pattern
+		const strictLineItemId = getAssessmentLineItemId(assessmentLineItemId)
+		const baseIdPrefix = `nice_${userSourcedId}_${strictLineItemId}_attempt_`
+		const currentResults = currentResultsResult.data.filter((r) => {
+			if (typeof r.sourcedId !== "string") return false
+			if (!r.sourcedId.startsWith(baseIdPrefix)) return false
+			const suffix = r.sourcedId.slice(baseIdPrefix.length)
+			return /^\d+$/.test(suffix)
+		})
 		let currentProficiency = 0 // Default to 0 if no previous attempts
 
 		if (currentResults.length > 0) {

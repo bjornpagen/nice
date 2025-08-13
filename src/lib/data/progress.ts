@@ -79,6 +79,18 @@ export async function getUserUnitProgress(
 				if (!result.assessmentLineItem.sourcedId.endsWith("_ali")) {
 					continue
 				}
+				// Strictly accept only results matching our attempt-based ID pattern for interactive resources,
+				// and the base pattern for non-interactive (e.g., articles/videos) that don't use attempts.
+				const lineItemId = result.assessmentLineItem.sourcedId
+				const baseAttemptPrefix = `nice_${userId}_${lineItemId}_attempt_`
+				const baseNonAttemptId = `nice_${userId}_${lineItemId}`
+				const id = result.sourcedId
+				const isStrictAttemptId =
+					typeof id === "string" && id.startsWith(baseAttemptPrefix) && /^\d+$/.test(id.slice(baseAttemptPrefix.length))
+				const isStrictBaseId = typeof id === "string" && id === baseNonAttemptId
+				if (!isStrictAttemptId && !isStrictBaseId) {
+					continue
+				}
 				const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
 				const prev = latestByResource.get(resourceId)
 				const currentTime = new Date(result.scoreDate || 0).getTime()

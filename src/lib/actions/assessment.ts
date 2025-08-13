@@ -186,9 +186,17 @@ export async function getNextAttemptNumber(
 		// Fail fast per no-fallbacks policy
 		throw errors.wrap(resultsResult.error, "attempt number derivation")
 	}
-	// Only consider results written by our system (sourcedId starting with "nice_")
+	// Only consider results that strictly match our new attempt-based ID pattern
+	// Pattern: nice_${user}_${lineItem}_attempt_${n}
+	const baseIdPrefix = `nice_${onerosterUserSourcedId}_${lineItemId}_attempt_`
+	const isStrictAttemptId = (id: unknown): boolean => {
+		if (typeof id !== "string") return false
+		if (!id.startsWith(baseIdPrefix)) return false
+		const suffix = id.slice(baseIdPrefix.length)
+		return /^\d+$/.test(suffix)
+	}
 	const count = Array.isArray(resultsResult.data)
-		? resultsResult.data.filter((r) => typeof r.sourcedId === "string" && r.sourcedId.startsWith("nice_")).length
+		? resultsResult.data.filter((r) => isStrictAttemptId(r.sourcedId)).length
 		: 0
 	const nextAttempt = count + 1
 	logger.info("derived next attempt number", { lineItemId, existingResults: count, nextAttempt })
@@ -229,7 +237,15 @@ export async function checkExistingProficiency(
 	}
 
 	// Only consider results written by our system (sourcedId starting with "nice_")
-	const results = resultsResult.data.filter((r) => typeof r.sourcedId === "string" && r.sourcedId.startsWith("nice_"))
+	// Only consider results that strictly match our new attempt-based ID pattern
+	const strictLineItemId = getAssessmentLineItemId(onerosterAssessmentSourcedId)
+	const baseIdPrefix = `nice_${onerosterUserSourcedId}_${strictLineItemId}_attempt_`
+	const results = resultsResult.data.filter((r) => {
+		if (typeof r.sourcedId !== "string") return false
+		if (!r.sourcedId.startsWith(baseIdPrefix)) return false
+		const suffix = r.sourcedId.slice(baseIdPrefix.length)
+		return /^\d+$/.test(suffix)
+	})
 	if (results.length === 0) {
 		logger.debug("no existing results found", {
 			onerosterUserSourcedId,

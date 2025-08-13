@@ -154,8 +154,16 @@ export async function updateProficiencyFromAssessment(
 				return null
 			}
 
+			// Strictly consider only new attempt-based IDs for interactive assessments
+			const strictLineItemId = getAssessmentLineItemId(onerosterResourceSourcedId)
+			const baseIdPrefix = `nice_${onerosterUserSourcedId}_${strictLineItemId}_attempt_`
+			const results = resultsResult.data.filter((r) => {
+				if (typeof r.sourcedId !== "string") return false
+				if (!r.sourcedId.startsWith(baseIdPrefix)) return false
+				const suffix = r.sourcedId.slice(baseIdPrefix.length)
+				return /^\d+$/.test(suffix)
+			})
 			// Get the most recent result
-			const results = resultsResult.data
 			if (results.length > 0) {
 				const latestResult = results.sort(
 					(a, b) => new Date(b.scoreDate || 0).getTime() - new Date(a.scoreDate || 0).getTime()
