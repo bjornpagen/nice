@@ -176,15 +176,15 @@ export async function getNextAttemptNumber(
 	})
 
 	const lineItemId = getAssessmentLineItemId(onerosterResourceSourcedId)
-	const filter = `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${lineItemId}'`
+	const filter = `status='active' AND student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${lineItemId}'`
 	const resultsResult = await errors.try(oneroster.getAllResults({ filter }))
 	if (resultsResult.error) {
 		logger.error("failed to fetch results for attempt derivation", {
 			error: resultsResult.error,
 			lineItemId
 		})
-		// Default to first attempt if results cannot be fetched
-		return 1
+		// Fail fast per no-fallbacks policy
+		throw errors.wrap(resultsResult.error, "attempt number derivation")
 	}
 	const count = Array.isArray(resultsResult.data) ? resultsResult.data.length : 0
 	const nextAttempt = count + 1

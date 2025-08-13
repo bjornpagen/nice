@@ -216,7 +216,8 @@ export function AssessmentStepper({
 	assessmentTitle,
 	assessmentPath,
 	unitData,
-	expectedXp // Will be used when caliper action is updated
+	expectedXp, // Will be used when caliper action is updated
+	onRetake
 }: AssessmentStepperProps) {
 	const { user } = useUser()
 	const router = useRouter()
@@ -252,9 +253,17 @@ export function AssessmentStepper({
 	// Admin-only: practice header lock toggle (far right)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
-	const parsedMetadata = errors.trySync(() => parseUserPublicMetadata(user?.publicMetadata))
-	const userSourceId = parsedMetadata.error ? undefined : parsedMetadata.data.sourceId
-	const canUnlockAll = !parsedMetadata.error && parsedMetadata.data.roles.some((r) => r.role !== "student")
+	// Parse Clerk metadata using errors.trySync (no client logging)
+	let userSourceId: string | undefined
+	let canUnlockAll = false
+	const parsedMetaResult = errors.trySync(() => parseUserPublicMetadata(user?.publicMetadata))
+	if (parsedMetaResult.error) {
+		userSourceId = undefined
+		canUnlockAll = false
+	} else {
+		userSourceId = parsedMetaResult.data.sourceId
+		canUnlockAll = parsedMetaResult.data.roles.some((r) => r.role !== "student")
+	}
 
 	const handleToggleLockAll = () => {
 		if (!canUnlockAll || !storageKey) return
@@ -374,8 +383,13 @@ export function AssessmentStepper({
 
 		// Fetch the next attempt number derived from existing results
 		const initializeAttempt = async () => {
-			const currentAttemptNumber = await getNextAttemptNumber(userSourceId, onerosterResourceSourcedId)
-			setAttemptNumber(currentAttemptNumber)
+			const attemptResult = await errors.try(getNextAttemptNumber(userSourceId, onerosterResourceSourcedId))
+			if (attemptResult.error) {
+				setIsAttemptReady(false)
+				toast.error("Could not initialize assessment. Please reload and try again.")
+				return
+			}
+			setAttemptNumber(attemptResult.data)
 			setIsAttemptReady(true)
 		}
 
@@ -723,10 +737,18 @@ export function AssessmentStepper({
 		router
 	])
 
-	// MODIFIED: handleReset just resets local state; attempts are derived from results after completion
+	// Retake: ensure finalization completed, honor parent onRetake for explicit reset/remount
 	const handleReset = async () => {
-		// Locally reset state to first question and end summary,
-		// then force a route refresh to fetch a new question set
+		if (!isFinalizationComplete) {
+			toast.info("Finishing up your result... please try again in a moment.")
+			return
+		}
+		if (onRetake) {
+			// Use the next attempt number as a hint to parent for UX
+			onRetake(attemptNumber + 1)
+			return
+		}
+		// Fallback: local reset then refresh
 		setCurrentQuestionIndex(0)
 		setSelectedResponses({})
 		setExpectedResponses([])
@@ -741,9 +763,6 @@ export function AssessmentStepper({
 		hasSentCompletionEventRef.current = false
 		assessmentStartTimeRef.current = new Date()
 		router.refresh()
-		return
-
-		// Step 2 (no longer needed when refreshing): previously we reset local state here.
 	}
 
 	if (questions.length === 0) {
