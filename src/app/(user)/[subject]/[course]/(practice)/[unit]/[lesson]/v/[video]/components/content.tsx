@@ -447,7 +447,10 @@ export function Content({
 										// Use course-wide lock state to toggle media controls
 										controls: allUnlocked ? 1 : 0,
 										disablekb: allUnlocked ? 0 : 1,
-										autoplay: 0
+										autoplay: 0,
+										// Always enable closed captions
+										cc_load_policy: 1,
+										cc_lang_pref: "en"
 									}
 								}}
 							/>
