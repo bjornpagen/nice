@@ -3,11 +3,13 @@
 import { auth } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
+import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { oneroster, qti } from "@/lib/clients"
 import { XP_PROFICIENCY_THRESHOLD } from "@/lib/constants/progress"
+import type { Unit } from "@/lib/types/domain"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
-// ADDED: Import the new utility functions
 import { filterInteractiveAttemptResults, findLatestInteractiveAttempt } from "@/lib/utils/assessment-results"
+import { assertPercentageInteger } from "@/lib/utils/score"
 
 /**
  * IMPORTANT NOTE ABOUT POWERPATH TERMINOLOGY:
@@ -39,8 +41,7 @@ export async function processQuestionResponse(
 	onerosterUserSourcedId?: string,
 	onerosterComponentResourceSourcedId?: string,
 	isInteractiveAssessment?: boolean,
-	assessmentAttemptNumber?: number,
-	_isLastQuestion?: boolean
+	assessmentAttemptNumber?: number // REMOVED: _isLastQuestion
 ) {
 	logger.debug("processing question response", {
 		qtiItemId,
@@ -269,6 +270,98 @@ export async function checkExistingProficiency(
 	})
 
 	return isProficient
+}
+
+/**
+ * Orchestrates the finalization of an assessment. It calculates the score, saves
+ * the result, awards XP, and updates proficiency all in one atomic server action.
+ *
+ * @param options - The context and raw session data for the assessment.
+ * @returns A summary payload for the client's SummaryView.
+ */
+export async function finalizeAssessment(options: {
+	onerosterResourceSourcedId: string
+	onerosterComponentResourceSourcedId: string
+	onerosterCourseSourcedId: string
+	onerosterUserSourcedId: string
+	sessionResults: Array<{ qtiItemId: string; isCorrect: boolean | null; isReported?: boolean }>
+	attemptNumber: number
+	durationInSeconds?: number
+	expectedXp: number
+	assessmentTitle: string
+	assessmentPath: string
+	unitData?: Unit
+	userEmail?: string
+	contentType: "Exercise" | "Quiz" | "Test" | "CourseChallenge"
+}) {
+	logger.info("finalizing assessment", {
+		userSourcedId: options.onerosterUserSourcedId,
+		resourceSourcedId: options.onerosterResourceSourcedId,
+		componentResourceSourcedId: options.onerosterComponentResourceSourcedId
+	})
+
+	// 1. Calculate final score authoritatively on the server.
+	const validResults = options.sessionResults.filter((r) => !r.isReported)
+	const correctAnswers = validResults.filter((r) => r.isCorrect).length
+	const totalQuestions = validResults.length
+	const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 100
+
+	// 2. Call the existing saveAssessmentResult, which orchestrates XP, proficiency, and Caliper events.
+	const saveResult = await errors.try(
+		saveAssessmentResult({
+			...options,
+			score: assertPercentageInteger(score, "assessment score"),
+			correctAnswers,
+			totalQuestions,
+			isInteractiveAssessment: true // This is an interactive stepper
+		})
+	)
+
+	if (saveResult.error) {
+		logger.error("failed to save final assessment result", {
+			error: saveResult.error,
+			resourceSourcedId: options.onerosterResourceSourcedId
+		})
+		throw errors.wrap(saveResult.error, "failed to save final assessment result")
+	}
+
+	// 3. Return a clean summary object for the client's SummaryView.
+	const xpInfo = (() => {
+		if (!saveResult.data || typeof saveResult.data !== "object" || !("xp" in saveResult.data)) {
+			return undefined
+		}
+		const xp = saveResult.data.xp
+		if (
+			xp &&
+			typeof xp === "object" &&
+			"finalXp" in xp &&
+			"penaltyApplied" in xp &&
+			"reason" in xp &&
+			typeof xp.finalXp === "number" &&
+			typeof xp.penaltyApplied === "boolean" &&
+			typeof xp.reason === "string"
+		) {
+			return xp
+		}
+		return undefined
+	})()
+
+	const avgSecondsPerQuestion =
+		options.durationInSeconds && totalQuestions > 0 ? options.durationInSeconds / totalQuestions : undefined
+
+	return {
+		score: score,
+		correctAnswersCount: correctAnswers,
+		totalQuestions: totalQuestions,
+		xpPenaltyInfo:
+			xpInfo?.penaltyApplied === true
+				? {
+						penaltyXp: xpInfo.finalXp,
+						reason: xpInfo.reason,
+						avgSecondsPerQuestion
+					}
+				: undefined
+	}
 }
 
 /**

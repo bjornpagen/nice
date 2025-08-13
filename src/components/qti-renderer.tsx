@@ -62,6 +62,11 @@ export function QTIRenderer({
 				return
 			}
 
+			// Ignore messages not originating from this specific iframe instance
+			if (event.source !== iframeRef.current?.contentWindow) {
+				return
+			}
+
 			// Call the generic message handler if provided
 			if (onMessage) {
 				onMessage(event)

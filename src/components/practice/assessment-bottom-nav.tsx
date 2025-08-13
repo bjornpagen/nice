@@ -24,6 +24,7 @@ interface AssessmentBottomNavProps {
 	contentType: AssessmentType
 	onContinue: () => void
 	isEnabled: boolean
+	isBusy?: boolean
 	buttonText?: "Check" | "Continue"
 	isStartScreen?: boolean
 	currentQuestion?: number
@@ -35,7 +36,6 @@ interface AssessmentBottomNavProps {
 	onReset?: () => void
 	hasAnswered?: boolean
 	className?: string
-	onCorrectAnswer?: () => void
 	attemptCount?: number
 	maxAttempts?: number
 	nextItem?: { text: string; path: string; type?: string } | null
@@ -59,12 +59,12 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 			onReset,
 			hasAnswered = false,
 			className,
-			onCorrectAnswer,
 			attemptCount = 0,
 			maxAttempts = 3,
 			nextItem,
 			onReportIssue,
-			nextEnabled = true
+			nextEnabled = true,
+			isBusy = false
 		},
 		ref
 	) => {
@@ -73,12 +73,7 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 			currentQuestion && totalQuestions && currentQuestion > 0 && currentQuestion <= totalQuestions
 		)
 
-		// Call onCorrectAnswer callback when showing correct feedback
-		React.useEffect(() => {
-			if (showFeedback && isCorrect && onCorrectAnswer) {
-				onCorrectAnswer()
-			}
-		}, [showFeedback, isCorrect, onCorrectAnswer])
+		// Removed auto-callback to avoid double-confetti; parent handles correct answer effects.
 
 		return (
 			<div className={cn("bg-white border-t border-gray-200 shadow-lg", className)}>
@@ -110,6 +105,7 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 							showFeedback={showFeedback}
 							isCorrect={isCorrect}
 							isEnabled={isEnabled}
+							isBusy={isBusy}
 							buttonText={buttonText}
 							currentQuestion={currentQuestion}
 							totalQuestions={totalQuestions}
@@ -282,6 +278,7 @@ function RightSection({
 	showFeedback,
 	isCorrect,
 	isEnabled,
+	isBusy,
 	buttonText,
 	currentQuestion,
 	totalQuestions,
@@ -301,6 +298,7 @@ function RightSection({
 	showFeedback?: boolean
 	isCorrect?: boolean
 	isEnabled?: boolean
+	isBusy?: boolean
 	buttonText?: "Check" | "Continue"
 	currentQuestion?: number
 	totalQuestions?: number
@@ -487,7 +485,12 @@ function RightSection({
 						ref={ref}
 						variant="default"
 						onClick={onContinue}
-						className="bg-blue-600 text-white rounded-sm px-4 font-medium hover:cursor-pointer hover:bg-blue-600"
+						className={cn(
+							"bg-blue-600 text-white rounded-sm px-4 font-medium",
+							"disabled:opacity-60 disabled:cursor-not-allowed",
+							!isBusy && "hover:cursor-pointer hover:bg-blue-600"
+						)}
+						disabled={Boolean(isBusy)}
 					>
 						{(() => {
 							if (isCorrect) {
