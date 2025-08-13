@@ -1,5 +1,3 @@
-"use server"
-
 import type { AssessmentResult } from "@/lib/oneroster"
 
 /**
