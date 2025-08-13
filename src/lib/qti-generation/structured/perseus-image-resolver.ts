@@ -1,7 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 
-const SUPPORTED_EXTENSIONS = ["svg", "png", "jpeg", "jpg"] as const
+const SUPPORTED_EXTENSIONS = ["svg", "png", "jpeg", "jpg", "gif"] as const
 type ImageType = (typeof SUPPORTED_EXTENSIONS)[number]
 
 export interface ImageContext {

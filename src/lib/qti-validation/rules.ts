@@ -18,8 +18,8 @@ type ValidationContext = {
 const REGEX = {
 	PERSEUS_ARTIFACT: /\[\[☃\s*[\s\S]*?\]\]/g,
 	TRUNCATED_TAG: /<\/(?:_|\s*>|\.\.\.)/,
-	IMAGE_URL: /(?<attribute>src|href)\s*=\s*["'](?<url>https?:\/\/[^"']+\.(?:svg|jpe?g|png))["']/gi,
-	SUPPORTED_IMAGE_URL: /(?<attribute>src|href)\s*=\s*["'](?<url>https?:\/\/[^"']+\.(?:jpe?g|png))["']/gi,
+	IMAGE_URL: /(?<attribute>src|href)\s*=\s*["'](?<url>https?:\/\/[^"']+\.(?:svg|jpe?g|png|gif))["']/gi,
+	SUPPORTED_IMAGE_URL: /(?<attribute>src|href)\s*=\s*["'](?<url>https?:\/\/[^"']+\.(?:jpe?g|png|gif))["']/gi,
 	// Simple LaTeX detection: any backslash followed by letters (commands) or LaTeX-like constructs
 	LATEX_LIKE: /\\(?:[a-zA-Z]+|[(){}[\]])/
 } as const
@@ -532,11 +532,11 @@ export async function validateImageUrls(xml: string, _context: ValidationContext
 				// URL has an extension - try other extensions
 				baseUrl = url.substring(0, lastDotIndex)
 				const originalExt = url.substring(lastDotIndex + 1).toLowerCase()
-				alternativeExts = ["svg", "jpg", "jpeg", "png"].filter((ext) => ext !== originalExt)
+				alternativeExts = ["svg", "jpg", "jpeg", "png", "gif"].filter((ext) => ext !== originalExt)
 			} else {
 				// URL has no extension - try all supported extensions
 				baseUrl = url
-				alternativeExts = ["svg", "jpg", "jpeg", "png"]
+				alternativeExts = ["svg", "jpg", "jpeg", "png", "gif"]
 			}
 
 			let workingUrl: string | null = null

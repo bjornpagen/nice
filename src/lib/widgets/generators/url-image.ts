@@ -10,10 +10,10 @@ export const UrlImageWidgetPropsSchema = z
 		url: z
 			.string()
 			.regex(
-				/^https:\/\/.+\.(?:svg|png|jpe?g)$/,
-				"url must start with https:// and end with .svg, .png, .jpg, or .jpeg"
+				/^https:\/\/.+\.(?:svg|png|jpe?g|gif)$/,
+				"url must start with https:// and end with .svg, .png, .jpg, .jpeg, or .gif"
 			)
-			.describe("The direct HTTPS URL to the image resource (must end with .svg, .png, .jpg, or .jpeg)."),
+			.describe("The direct HTTPS URL to the image resource (must end with .svg, .png, .jpg, .jpeg, or .gif)."),
 		alt: z
 			.string()
 			.min(1)
