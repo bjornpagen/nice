@@ -1,13 +1,14 @@
-import { currentUser } from "@clerk/nextjs/server"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { notFound } from "next/navigation"
-import { getAllComponentResources, getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
-import { getAssessmentTest } from "@/lib/data/fetchers/qti"
-import { prepareInteractiveAssessment } from "@/lib/interactive-assessments"
-import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
+import {
+	fetchAndResolveQuestions,
+	findAndValidateResource,
+	findComponentResourceWithContext,
+	prepareUserQuestionSet
+} from "@/lib/data/fetchers/interactive-helpers"
+import { getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
-import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
 import { fetchLessonLayoutData } from "./lesson"
@@ -72,139 +73,46 @@ export async function fetchExercisePageData(params: {
 	lesson: string
 	exercise: string
 }): Promise<ExercisePageData> {
-	// dynamic opt-in is handled at the page level
-
-	logger.info("fetchExercisePageData called", { params })
 	// Defensive check: middleware should have normalized URLs
 	assertNoEncodedColons(params.exercise, "fetchExercisePageData exercise parameter")
-	// Pass only the params needed by fetchLessonLayoutData, not the exercise param
-	const layoutDataPromise = fetchLessonLayoutData({
-		subject: params.subject,
-		course: params.course,
-		unit: params.unit,
-		lesson: params.lesson
-	})
-	// CHANGE: Fetch "interactive" type and filter by activityType "Exercise"
-	const resourcePromise = errors.try(getResourcesBySlugAndType(params.exercise, "interactive", "Exercise"))
+	logger.info("fetchExercisePageData called", { params })
 
-	const [layoutData, resourceResult] = await Promise.all([layoutDataPromise, resourcePromise])
+	const layoutData = await fetchLessonLayoutData(params)
+	const resource = await findAndValidateResource(params.exercise, "Exercise")
 
-	if (resourceResult.error) {
-		logger.error("failed to fetch exercise resource by slug", { error: resourceResult.error, slug: params.exercise })
-		throw errors.wrap(resourceResult.error, "failed to fetch exercise resource by slug")
-	}
-	const resource = resourceResult.data[0]
-
-	if (!resource) {
-		notFound()
-	}
-
-	// Validate resource metadata with Zod. THIS IS THE CRITICAL PATTERN.
-	const resourceMetadataResult = ResourceMetadataSchema.safeParse(resource.metadata)
-	if (!resourceMetadataResult.success) {
-		logger.error("invalid exercise resource metadata", {
-			resourceSourcedId: resource.sourcedId,
-			error: resourceMetadataResult.error
-		})
-		throw errors.wrap(resourceMetadataResult.error, "invalid exercise resource metadata")
-	}
-
-	// Check for "Exercise" activityType
-	if (resourceMetadataResult.data.khanActivityType !== "Exercise") {
-		logger.error("invalid activityType for exercise page", {
-			resourceSourcedId: resource.sourcedId,
-			expected: "Exercise",
-			actualActivityType: resourceMetadataResult.data.khanActivityType
-		})
-		throw errors.new("invalid activity type")
-	}
-
-	// Validate that the exercise slug from the URL matches the resource's actual khanSlug.
-	if (params.exercise !== resourceMetadataResult.data.khanSlug) {
+	// Validate that the exercise slug from the URL matches the resource's actual khanSlug
+	const resourceMetadata = resource.metadata
+	if (params.exercise !== resourceMetadata.khanSlug) {
 		logger.warn("mismatched exercise slug in URL", {
 			requestedSlug: params.exercise,
-			actualSlug: resourceMetadataResult.data.khanSlug,
+			actualSlug: resourceMetadata.khanSlug,
 			resourceId: resource.sourcedId
 		})
 		notFound()
 	}
 
-	// Find the ComponentResource that links this exercise resource to its parent lesson
-	const allComponentResourcesResult = await errors.try(getAllComponentResources())
-	if (allComponentResourcesResult.error) {
-		logger.error("failed to fetch component resources to find exercise lesson context", {
-			error: allComponentResourcesResult.error
-		})
-		throw errors.wrap(allComponentResourcesResult.error, "fetch component resources for exercise context")
-	}
-
-	const componentResource = allComponentResourcesResult.data.find(
-		(cr) => cr.resource.sourcedId === resource.sourcedId && cr.courseComponent.sourcedId === layoutData.lessonData.id
-	)
-
-	if (!componentResource) {
-		logger.error("could not find componentResource linking exercise to lesson", {
-			resourceSourcedId: resource.sourcedId,
-			lessonSourcedId: layoutData.lessonData.id
-		})
-		notFound()
-	}
-
-	// Fetch the assessment test XML to get selection and ordering rules
-	const assessmentTestResult = await errors.try(getAssessmentTest(resource.sourcedId))
-	if (assessmentTestResult.error) {
-		logger.error("failed to fetch assessment test XML for exercise", {
-			testSourcedId: resource.sourcedId,
-			error: assessmentTestResult.error
-		})
-		throw errors.wrap(assessmentTestResult.error, "fetch assessment test for exercise")
-	}
-
-	// Resolve questions by parsing XML and fetching items
-	const resolvedQuestionsResult = await errors.try(resolveAllQuestionsForTestFromXml(assessmentTestResult.data))
-	if (resolvedQuestionsResult.error) {
-		logger.error("failed to resolve questions from qti xml for exercise", {
-			testSourcedId: resource.sourcedId,
-			error: resolvedQuestionsResult.error
-		})
-		throw errors.wrap(resolvedQuestionsResult.error, "resolve questions from qti xml for exercise")
-	}
-
-	// Align exercises with quizzes/tests: deterministic selection using user + attempt
-	const userForExercise = await currentUser()
-	if (!userForExercise) {
-		logger.error("user authentication required for deterministic selection", {})
-		throw errors.new("user authentication required")
-	}
-	const userMetaForExercise = parseUserPublicMetadata(userForExercise.publicMetadata)
-	if (!userMetaForExercise.sourceId) {
-		logger.error("user source id missing for deterministic selection", {})
-		throw errors.new("user source id missing")
-	}
-
-	// Unified interactive preparation with deterministic rotation for exercises
-	const preparedExercise = await prepareInteractiveAssessment({
-		userSourceId: userMetaForExercise.sourceId,
+	const componentResource = await findComponentResourceWithContext(resource.sourcedId, layoutData.lessonData.id)
+	const { assessmentTest, resolvedQuestions } = await fetchAndResolveQuestions(resource.sourcedId)
+	const questions = await prepareUserQuestionSet({
 		resourceSourcedId: resource.sourcedId,
 		componentResourceSourcedId: componentResource.sourcedId,
-		assessmentTest: assessmentTestResult.data,
-		resolvedQuestions: resolvedQuestionsResult.data,
+		assessmentTest,
+		resolvedQuestions,
 		rotationMode: "deterministic"
 	})
-	const questions = preparedExercise.questions
 
 	return {
 		exercise: {
 			id: resource.sourcedId,
 			componentResourceSourcedId: componentResource.sourcedId,
-			onerosterCourseSourcedId: layoutData.courseData.id, // Add course ID
+			onerosterCourseSourcedId: layoutData.courseData.id,
 			title: resource.title,
-			path: `/${params.subject}/${params.course}/${params.unit}/${params.lesson}/e/${resourceMetadataResult.data.khanSlug}`,
+			path: `/${params.subject}/${params.course}/${params.unit}/${params.lesson}/e/${resourceMetadata.khanSlug}`,
 			type: "Exercise" as const,
-			expectedXp: resourceMetadataResult.data.xp
+			expectedXp: resourceMetadata.xp
 		},
 		questions,
-		layoutData // Include layout data in the response
+		layoutData
 	}
 }
 
