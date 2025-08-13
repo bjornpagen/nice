@@ -30,6 +30,7 @@ import {
 	processSkippedQuestion
 } from "@/lib/actions/assessment"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
+import { getBankedXpBreakdownForQuiz } from "@/lib/actions/xp"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
@@ -611,11 +612,35 @@ export function AssessmentStepper({
 				throw errors.wrap(saveResult.error, "save assessment result")
 			}
 
-			// User feedback toast for awarded XP (assessment portion only)
+			// User feedback toast for awarded XP
 			if (xpResult.finalXp > 0 && shouldAwardXp) {
-				toast.success(`+${xpResult.finalXp} XP`, {
-					description: <span className="text-black">Earned for this assessment</span>
-				})
+				// For quizzes, include banked XP breakdown in the description
+				if (contentType === "Quiz") {
+					const toastId = toast.loading("Calculating XP…")
+					// Fire and forget: replace loading toast with final success once breakdown is ready
+					;(async () => {
+						const breakdownResult = await errors.try(
+							getBankedXpBreakdownForQuiz(onerosterResourceSourcedId, onerosterUserSourcedId)
+						)
+						if (breakdownResult.error) {
+							toast.success(`+${xpResult.finalXp} XP earned for this assessment`, { id: toastId })
+							return
+						}
+						const { articleXp, videoXp } = breakdownResult.data
+						toast.success(`+${xpResult.finalXp} XP earned for this assessment`, {
+							id: toastId,
+							description: (
+								<span className="text-black">
+									Banked XP Awarded:
+									<br />+ {videoXp} xp from videos
+									<br />+ {articleXp} xp from articles
+								</span>
+							)
+						})
+					})()
+				} else {
+					toast.success(`+${xpResult.finalXp} XP earned for this assessment`)
+				}
 			} else if (!shouldAwardXp) {
 				// No XP if already proficient on this assessment
 				toast("No XP awarded", {

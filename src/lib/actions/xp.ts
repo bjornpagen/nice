@@ -252,3 +252,168 @@ export async function awardBankedXpForAssessment(
 
 	return { bankedXp: totalBankedXp, awardedResourceIds }
 }
+
+/**
+ * Computes a breakdown of banked XP for a quiz without performing any writes.
+ * Returns separate totals for videos and articles based on the same eligibility
+ * window used by awardBankedXpForAssessment.
+ */
+export async function getBankedXpBreakdownForQuiz(
+	quizResourceId: string,
+	userSourcedId: string
+): Promise<{ articleXp: number; videoXp: number }> {
+	logger.info("computing banked xp breakdown for quiz", { quizResourceId, userSourcedId })
+
+	let userId: string
+	if (userSourcedId.includes("/")) {
+		const parsed = userSourcedId.split("/").pop()
+		if (!parsed) {
+			logger.error("CRITICAL: Failed to parse user ID from sourced ID", {
+				userSourcedId,
+				expectedFormat: "https://api.../users/{id}"
+			})
+			throw errors.new("invalid user sourced ID format")
+		}
+		userId = parsed
+	} else {
+		userId = userSourcedId
+	}
+
+	// 1. Locate quiz component resource to derive unit and sort order context
+	const quizCrResult = await errors.try(
+		oneroster.getAllComponentResources({ filter: `resource.sourcedId='${quizResourceId}' AND status='active'` })
+	)
+	if (quizCrResult.error) {
+		throw errors.wrap(quizCrResult.error, "quiz component resource fetch")
+	}
+	const quizComponentResource = quizCrResult.data[0]
+	if (!quizComponentResource) {
+		logger.warn("could not find component resource for quiz", { quizResourceId })
+		return { articleXp: 0, videoXp: 0 }
+	}
+	const parentUnitId = quizComponentResource.courseComponent.sourcedId
+	const quizSortOrder = quizComponentResource.sortOrder
+
+	// 2. Get all component resources for the unit to find the previous quiz boundary
+	const unitCrResult = await errors.try(
+		oneroster.getAllComponentResources({ filter: `courseComponent.sourcedId='${parentUnitId}' AND status='active'` })
+	)
+	if (unitCrResult.error) {
+		throw errors.wrap(unitCrResult.error, "unit component resources fetch")
+	}
+
+	// Fetch resources metadata for quiz detection
+	const unitResourceIds = unitCrResult.data.map((cr) => cr.resource.sourcedId)
+	const unitResourcesResult = await errors.try(
+		oneroster.getAllResources({ filter: `sourcedId@'${unitResourceIds.join(",")}' AND status='active'` })
+	)
+	if (unitResourcesResult.error) {
+		throw errors.wrap(unitResourcesResult.error, "unit resources fetch for quiz detection")
+	}
+
+	const resourceMap = new Map<string, Resource>()
+	for (const resource of unitResourcesResult.data) {
+		resourceMap.set(resource.sourcedId, resource)
+	}
+
+	let previousQuizSortOrder = -1
+	for (const cr of unitCrResult.data) {
+		const resource = resourceMap.get(cr.resource.sourcedId)
+		const isQuizResource =
+			resource?.metadata?.khanLessonType === "quiz" || resource?.metadata?.khanActivityType === "Quiz"
+		if (
+			resource &&
+			isQuizResource &&
+			resource.sourcedId !== quizResourceId &&
+			cr.sortOrder < quizSortOrder &&
+			cr.sortOrder > previousQuizSortOrder
+		) {
+			previousQuizSortOrder = cr.sortOrder
+		}
+	}
+
+	// 3. Identify lessons between previous quiz and current quiz by sort order
+	const unitComponentsResult = await errors.try(
+		oneroster.getCourseComponents({
+			filter: `parent.sourcedId='${parentUnitId}' AND status='active'`,
+			orderBy: "asc",
+			sort: "sortOrder"
+		})
+	)
+	if (unitComponentsResult.error) {
+		throw errors.wrap(unitComponentsResult.error, "unit components fetch")
+	}
+
+	const lessons = unitComponentsResult.data.filter((component) => {
+		return component.sortOrder > previousQuizSortOrder && component.sortOrder < quizSortOrder
+	})
+
+	if (lessons.length === 0) {
+		return { articleXp: 0, videoXp: 0 }
+	}
+
+	// 4. Gather passive resources from those lessons and separate by type
+	const lessonComponentSourcedIds = lessons.map((l) => l.sourcedId)
+	const lessonCrResult = await errors.try(
+		oneroster.getAllComponentResources({
+			filter: `courseComponent.sourcedId@'${lessonComponentSourcedIds.join(",")}' AND status='active'`
+		})
+	)
+	if (lessonCrResult.error) {
+		throw errors.wrap(lessonCrResult.error, "lesson component resources fetch")
+	}
+
+	const resourceIds = lessonCrResult.data.map((cr) => cr.resource.sourcedId)
+	if (resourceIds.length === 0) {
+		return { articleXp: 0, videoXp: 0 }
+	}
+
+	const resourcesResult = await errors.try(
+		oneroster.getAllResources({ filter: `sourcedId@'${resourceIds.join(",")}' AND status='active'` })
+	)
+	if (resourcesResult.error) {
+		throw errors.wrap(resourcesResult.error, "lesson resources fetch for breakdown")
+	}
+
+	const articleResources: Array<{ sourcedId: string; expectedXp: number }> = []
+	const videoResources: Array<{ sourcedId: string; expectedXp: number }> = []
+
+	for (const resource of resourcesResult.data) {
+		const metadata = resource.metadata
+		const expectedXp = typeof metadata?.xp === "number" ? metadata.xp : 0
+		if (expectedXp <= 0) continue
+
+		const isInteractive = metadata?.type === "interactive"
+		const kind = metadata && typeof metadata.khanActivityType === "string" ? metadata.khanActivityType : undefined
+
+		if (isInteractive && kind === "Article") {
+			articleResources.push({ sourcedId: resource.sourcedId, expectedXp })
+		} else if (isInteractive && kind === "Video") {
+			videoResources.push({ sourcedId: resource.sourcedId, expectedXp })
+		}
+	}
+
+	if (articleResources.length === 0 && videoResources.length === 0) {
+		logger.info("no eligible passive resources found for banked xp breakdown", {
+			discoveredResourceCount: resourcesResult.data.length
+		})
+		return { articleXp: 0, videoXp: 0 }
+	}
+
+	// 5. Calculate banked XP separately for articles and videos
+	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`
+	let articleXp = 0
+	let videoXp = 0
+
+	if (articleResources.length > 0) {
+		const articleResult = await calculateBankedXpForResources(actorId, articleResources)
+		articleXp = articleResult.bankedXp
+	}
+	if (videoResources.length > 0) {
+		const videoResult = await calculateBankedXpForResources(actorId, videoResources)
+		videoXp = videoResult.bankedXp
+	}
+
+	logger.info("computed banked xp breakdown", { quizResourceId, articleXp, videoXp })
+	return { articleXp, videoXp }
+}
