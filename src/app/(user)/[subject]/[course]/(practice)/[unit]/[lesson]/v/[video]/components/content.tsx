@@ -59,9 +59,18 @@ export function Content({
 	const hasSentFinalEventRef = React.useRef<boolean>(false)
 	const hasRefreshedForCompletionRef = React.useRef<boolean>(false)
 
+	// Seek control: prevent skipping ahead when locked
+	const furthestAllowedTimeRef = React.useRef<number>(0)
+	const skipSeekGuardRef = React.useRef<boolean>(false)
+	const hasInitializedFurthestFromSavedRef = React.useRef<boolean>(false)
+	const lastObservedTimeRef = React.useRef<number>(0)
+	const refreshSentinelKeyRef = React.useRef<string>("")
+
 	// Refs for resume functionality
 	const hasResumedRef = React.useRef<boolean>(false)
 	const savedProgressRef = React.useRef<{ percentComplete: number } | null>(null)
+	// Once completed (>= 95%), allow free seeking regardless of lock state
+	const [hasCompletedVideo, setHasCompletedVideo] = React.useState<boolean>(false)
 
 	// Local UI state for read-only time display
 	const [elapsedSeconds, setElapsedSeconds] = React.useState<number>(0)
@@ -92,6 +101,7 @@ export function Content({
 	// Unified system: use course lock context to drive video control state
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
+	const allowFreeSeeking = allUnlocked || hasCompletedVideo
 	const parsedMetadata = ClerkUserPublicMetadataSchema.safeParse(user?.publicMetadata)
 	const canToggleControls = parsedMetadata.success && parsedMetadata.data.roles.some((r) => r.role !== "student")
 	const handleToggleLockAll = () => {
@@ -174,9 +184,17 @@ export function Content({
 			// Mark video as completed locally to enable Continue
 			setCurrentResourceCompleted(true)
 			hasSentFinalEventRef.current = true
-			if (!hasRefreshedForCompletionRef.current) {
-				hasRefreshedForCompletionRef.current = true
-				router.refresh()
+			setHasCompletedVideo(true)
+			// Refresh once per video across remounts
+			const key = refreshSentinelKeyRef.current || `video_refresh_done_${video.id}`
+			refreshSentinelKeyRef.current = key
+			if (typeof window !== "undefined") {
+				const alreadyRefreshed = window.localStorage.getItem(key) === "1"
+				if (!alreadyRefreshed && !hasRefreshedForCompletionRef.current) {
+					hasRefreshedForCompletionRef.current = true
+					window.localStorage.setItem(key, "1")
+					router.refresh()
+				}
 			}
 		}
 	}
@@ -204,6 +222,7 @@ export function Content({
 					if (result.data.percentComplete >= VIDEO_COMPLETION_THRESHOLD_PERCENT) {
 						// Already completed previously; unlock Continue immediately
 						setCurrentResourceCompleted(true)
+						setHasCompletedVideo(true)
 					} else if (result.data.percentComplete > 0) {
 						// Note: Loaded saved video progress, will resume from this position
 						savedProgressRef.current = result.data
@@ -235,9 +254,31 @@ export function Content({
 						}
 						const clampedTime = snappedDuration > 0 ? Math.min(t, snappedDuration) : t
 						setElapsedSeconds(clampedTime)
+
+						// Update furthest allowed time during natural playback progression
+						if (
+							typeof player.getPlayerState === "function" &&
+							player.getPlayerState() === 1 &&
+							!skipSeekGuardRef.current
+						) {
+							furthestAllowedTimeRef.current = Math.max(furthestAllowedTimeRef.current, clampedTime)
+						}
+
+						// When locked and not completed, prevent seeking beyond the furthest watched point; rewinds are allowed
+						if (!allowFreeSeeking && snappedDuration > 0) {
+							const allowed = Math.min(furthestAllowedTimeRef.current, snappedDuration)
+							if (clampedTime > allowed + 0.5 && !skipSeekGuardRef.current) {
+								skipSeekGuardRef.current = true
+								player.seekTo(allowed, true)
+								setTimeout(() => {
+									skipSeekGuardRef.current = false
+								}, 250)
+							}
+						}
 						// Mark as complete locally as soon as threshold is hit (shared constant)
 						if (snappedDuration > 0 && clampedTime / snappedDuration >= VIDEO_COMPLETION_THRESHOLD_RATIO) {
 							setCurrentResourceCompleted(true)
+							setHasCompletedVideo(true)
 						}
 					}
 				}
@@ -245,7 +286,55 @@ export function Content({
 		}, 1000)
 
 		return () => clearInterval(intervalId)
-	}, [setCurrentResourceCompleted])
+	}, [setCurrentResourceCompleted, allowFreeSeeking])
+
+	// Enforce no-seek-ahead when locked; allow rewinds. Runs frequently for responsiveness.
+	React.useEffect(() => {
+		const intervalId = setInterval(() => {
+			const player = playerRef.current
+			if (!player || typeof player.getDuration !== "function" || typeof player.getCurrentTime !== "function") {
+				return
+			}
+
+			// If unlocked or completed, do not restrict seeking
+			if (allowFreeSeeking) {
+				lastObservedTimeRef.current = player.getCurrentTime()
+				return
+			}
+
+			const duration = player.getDuration()
+			if (duration <= 0) return
+
+			const now = player.getCurrentTime()
+			// Do nothing if video has ended
+			if (typeof player.getPlayerState === "function" && player.getPlayerState() === 0) {
+				return
+			}
+			const allowed = Math.min(furthestAllowedTimeRef.current, duration)
+			const margin = 1.0 // seconds margin near boundaries to avoid end-of-video jitter
+
+			// Natural progression while playing increases the allowed boundary
+			if (typeof player.getPlayerState === "function" && player.getPlayerState() === 1 && !skipSeekGuardRef.current) {
+				// Stop expanding when essentially at the end
+				if (now < duration - margin) {
+					furthestAllowedTimeRef.current = Math.max(furthestAllowedTimeRef.current, now)
+				}
+			}
+
+			// If user jumped ahead beyond allowed, snap back; rewinds are allowed
+			if (now > allowed + margin && !skipSeekGuardRef.current) {
+				skipSeekGuardRef.current = true
+				player.seekTo(allowed, true)
+				setTimeout(() => {
+					skipSeekGuardRef.current = false
+				}, 250)
+			} else {
+				lastObservedTimeRef.current = now
+			}
+		}, 250)
+
+		return () => clearInterval(intervalId)
+	}, [allowFreeSeeking])
 
 	// Track progress periodically for OneRoster (separate from UI timer)
 	React.useEffect(() => {
@@ -282,9 +371,17 @@ export function Content({
 					const percentComplete = currentTime / duration
 					if (percentComplete >= VIDEO_COMPLETION_THRESHOLD_RATIO) {
 						setCurrentResourceCompleted(true)
-						if (!hasRefreshedForCompletionRef.current) {
-							hasRefreshedForCompletionRef.current = true
-							router.refresh()
+						setHasCompletedVideo(true)
+						// Refresh once per video across remounts
+						const key = refreshSentinelKeyRef.current || `video_refresh_done_${video.id}`
+						refreshSentinelKeyRef.current = key
+						if (typeof window !== "undefined") {
+							const alreadyRefreshed = window.localStorage.getItem(key) === "1"
+							if (!alreadyRefreshed && !hasRefreshedForCompletionRef.current) {
+								hasRefreshedForCompletionRef.current = true
+								window.localStorage.setItem(key, "1")
+								router.refresh()
+							}
 						}
 					}
 				}
@@ -357,6 +454,25 @@ export function Content({
 		const d = event.target.getDuration()
 		if (d > 0) {
 			setDurationSeconds(d)
+			// Initialize furthest allowed time from saved progress if available
+			if (savedProgressRef.current && !hasInitializedFurthestFromSavedRef.current) {
+				const resumeTime = (savedProgressRef.current.percentComplete / 100) * d
+				furthestAllowedTimeRef.current = Math.max(furthestAllowedTimeRef.current, resumeTime)
+				hasInitializedFurthestFromSavedRef.current = true
+			}
+
+			// If saved progress is already available at ready time, seek immediately to resume point
+			if (!hasResumedRef.current && savedProgressRef.current && savedProgressRef.current.percentComplete > 0) {
+				const resumeTime = (savedProgressRef.current.percentComplete / 100) * d
+				furthestAllowedTimeRef.current = Math.max(furthestAllowedTimeRef.current, resumeTime)
+				skipSeekGuardRef.current = true
+				event.target.seekTo(resumeTime, true)
+				setElapsedSeconds(resumeTime)
+				hasResumedRef.current = true
+				setTimeout(() => {
+					skipSeekGuardRef.current = false
+				}, 250)
+			}
 		}
 	}
 
@@ -371,9 +487,15 @@ export function Content({
 				const duration = player.getDuration()
 				if (duration > 0) {
 					const resumeTime = (savedProgressRef.current.percentComplete / 100) * duration
-					// Note: Resuming video from saved position
+					// Update allowed boundary and perform guarded seek to avoid snap-back
+					furthestAllowedTimeRef.current = Math.max(furthestAllowedTimeRef.current, resumeTime)
+					skipSeekGuardRef.current = true
 					player.seekTo(resumeTime, true)
+					setElapsedSeconds(resumeTime)
 					hasResumedRef.current = true
+					setTimeout(() => {
+						skipSeekGuardRef.current = false
+					}, 250)
 				}
 			}
 
@@ -444,9 +566,9 @@ export function Content({
 									width: "100%",
 									height: "100%",
 									playerVars: {
-										// Use course-wide lock state to toggle media controls
-										controls: allUnlocked ? 1 : 0,
-										disablekb: allUnlocked ? 0 : 1,
+										// Show progress bar always; keyboard disabled unless fully unlocked or completed
+										controls: 1,
+										disablekb: allowFreeSeeking ? 0 : 1,
 										autoplay: 0,
 										// Always enable closed captions
 										cc_load_policy: 1,
