@@ -4,6 +4,11 @@ import { inngest } from "@/inngest/client"
 import { clearAllAssessmentItemData } from "@/inngest/functions/clear-all-assessment-item-data"
 import { clearCourseXmlData } from "@/inngest/functions/clear-course-xml-data"
 import { helloWorld } from "@/inngest/functions/hello"
+import { orchestrateHardcodedHistoryItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-item-migration"
+import { orchestrateHardcodedHistoryOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-oneroster-ingestion"
+import { orchestrateHardcodedHistoryQtiGenerateUndifferentiated } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-qti-generate-undifferentiated"
+import { orchestrateHardcodedHistoryQtiUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-qti-upload"
+import { orchestrateHardcodedHistoryStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-history-stimulus-migration"
 // ✅ ADDED: Modular hardcoded QTI pipeline orchestrators
 import { orchestrateHardcodedMathDifferentiatedItemGeneration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-differentiated-item-generation" // 🛑 RENAMED
 // ✅ RENAMED & ADDED: Import all hardcoded migration functions
@@ -72,6 +77,12 @@ export const { GET, POST, PUT } = serve({
 		orchestrateHardcodedScienceOnerosterIngestion,
 		orchestrateHardcodedScienceQtiGenerateUndifferentiated,
 		orchestrateHardcodedScienceQtiUpload,
+		// History orchestrators
+		orchestrateHardcodedHistoryItemMigration,
+		orchestrateHardcodedHistoryStimulusMigration,
+		orchestrateHardcodedHistoryOnerosterIngestion,
+		orchestrateHardcodedHistoryQtiGenerateUndifferentiated,
+		orchestrateHardcodedHistoryQtiUpload,
 		// ❌ REMOVED: Obsolete undifferentiated math qti generation
 		// orchestrateHardcodedMathQtiGenerateUndifferentiated,
 		// ✅ REMOVED: Old differentiated ingest is no longer registered.

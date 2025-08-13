@@ -352,6 +352,23 @@ const events = {
 		data: z.object({})
 	},
 
+	// ✅ ADDED: New, explicitly namespaced events for the HISTORY course pipeline
+	"migration/hardcoded.history.items.perseus-to-qti": {
+		data: z.object({})
+	},
+	"migration/hardcoded.history.stimuli.perseus-to-qti": {
+		data: z.object({})
+	},
+	"migration/hardcoded.history.oneroster.ingest": {
+		data: z.object({})
+	},
+	"migration/hardcoded.history.qti.generate-undifferentiated": {
+		data: z.object({})
+	},
+	"migration/hardcoded.history.qti.upload": {
+		data: z.object({})
+	},
+
 	// ✅ RENAMED: Split monolithic generation into two granular, namespaced events
 	"migration/hardcoded.math.differentiated-items.generate": {
 		data: z.object({})
