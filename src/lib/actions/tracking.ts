@@ -11,6 +11,7 @@ import { oneroster } from "@/lib/clients"
 import { VIDEO_COMPLETION_THRESHOLD_PERCENT } from "@/lib/constants/progress"
 import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
+import { assertPercentageInteger, coercePercentageInteger } from "@/lib/utils/score"
 // ADDED: Import the new XP service.
 import { awardXpForAssessment } from "@/lib/xp/service"
 
@@ -129,7 +130,7 @@ export async function updateVideoProgress(
 	const isCompleted = percentComplete >= VIDEO_COMPLETION_THRESHOLD_PERCENT
 
 	// The score is a percentage (0-100) based on current playback position.
-	const newScore = isCompleted ? 100 : percentComplete
+	const newScore = isCompleted ? 100 : coercePercentageInteger(percentComplete, "video progress")
 
 	// Log whether this is marking the video as complete
 	if (isCompleted) {
@@ -352,7 +353,8 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 	}
 
 	// Step 4: Save the assessment result with metadata
-	const finalScore = assessmentScore
+	// Enforce valid 0..100 integer score at the write boundary
+	const finalScore = assertPercentageInteger(assessmentScore, "assessment score")
 	// Build base metadata either from provided metadata (legacy paths like banked XP)
 	// or from server-side computed values. If server-calculated XP exists, override
 	// the XP-related fields to ensure authoritative values.

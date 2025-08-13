@@ -7,6 +7,7 @@ import { oneroster, qti } from "@/lib/clients"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { calculateProficiencyScore } from "@/lib/proficiency/core"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
+import { assertPercentageInteger } from "@/lib/utils/score"
 
 interface ExercisePerformance {
 	exerciseId: string
@@ -262,7 +263,7 @@ export async function updateProficiencyFromAssessment(
 			updatePromises.push(
 				saveAssessmentResult({
 					onerosterResourceSourcedId: exerciseId,
-					score: proficiencyScore,
+					score: assertPercentageInteger(proficiencyScore, "proficiency score"),
 					correctAnswers: performance.correctCount,
 					totalQuestions: performance.totalCount,
 					onerosterUserSourcedId,
