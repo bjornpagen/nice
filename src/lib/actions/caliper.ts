@@ -152,7 +152,7 @@ export async function sendCaliperActivityCompletedEvent(
 
 		let currentProficiency = 0 // Default to 0 if no previous attempts
 		if (latestResult && typeof latestResult.score === "number") {
-			currentProficiency = latestResult.score
+			currentProficiency = latestResult.score <= 1.1 ? latestResult.score * 100 : latestResult.score
 		}
 
 		if (currentProficiency >= MASTERY_THRESHOLD) {
@@ -218,7 +218,7 @@ export async function sendCaliperActivityCompletedEvent(
 	if (
 		isQuiz &&
 		assessmentXp > 0 &&
-		performance.correctQuestions / performance.totalQuestions >= MASTERY_THRESHOLD &&
+		(performance.correctQuestions / performance.totalQuestions) * 100 >= MASTERY_THRESHOLD &&
 		context.activity?.id &&
 		context.course?.id
 	) {

@@ -162,7 +162,7 @@ function LessonExercise({
 					)}
 					{progress.score !== undefined && (
 						<p className="text-gray-600 text-xs mb-2">
-							{progress.proficiency && getProficiencyText(progress.proficiency)} • {Math.round(progress.score * 100)}%
+							{progress.proficiency && getProficiencyText(progress.proficiency)} • {Math.round(progress.score)}%
 						</p>
 					)}
 					<Button

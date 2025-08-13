@@ -78,7 +78,7 @@ function MaterialItem({
 		if (progress?.completed && progress?.proficiency && progress.score !== undefined) {
 			return (
 				<span className="text-xs text-gray-600">
-					{getProficiencyText(progress.proficiency)} • {Math.round(progress.score * 100)}%
+					{getProficiencyText(progress.proficiency)} • {Math.round(progress.score)}%
 				</span>
 			)
 		}

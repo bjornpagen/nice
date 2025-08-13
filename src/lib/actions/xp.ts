@@ -218,7 +218,7 @@ export async function awardBankedXpForAssessment(
 			const saveResult = await errors.try(
 				saveAssessmentResult(
 					resourceId,
-					1.0, // Perfect score for banked XP
+					100, // Perfect score for banked XP
 					1, // correctAnswers: 1 (banked XP = completed)
 					1, // totalQuestions: 1 (banked XP = completed)
 					userId,

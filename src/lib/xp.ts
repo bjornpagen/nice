@@ -2,7 +2,7 @@ import * as logger from "@superbuilders/slog"
 
 // Constants defining the XP award thresholds and multipliers.
 export const BONUS_MULTIPLIER = 1.25 // 25% bonus for perfect scores
-export const MASTERY_THRESHOLD = 0.8 // 80% accuracy for full XP
+export const MASTERY_THRESHOLD = 80 // 80% accuracy for full XP
 // Deprecated: fixed penalty has been replaced by dynamic per-assessment penalty
 export const PENALTY_XP = -5 // legacy fallback (unused in new logic)
 export const MIN_SECONDS_PER_QUESTION = 5 // Minimum reasonable time per question

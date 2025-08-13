@@ -20,7 +20,7 @@ export function UnitTestSection({
 }) {
 	const isLocked = resourceLockStatus[test.id] === true
 	const hasTaken = Boolean(progress && (progress.completed || typeof progress.score === "number"))
-	const percentage = typeof progress?.score === "number" ? Math.round(progress.score * 100) : undefined
+	const percentage = typeof progress?.score === "number" ? Math.round(progress.score) : undefined
 
 	if (isLocked) {
 		return (

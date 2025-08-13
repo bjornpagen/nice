@@ -257,7 +257,8 @@ export async function checkExistingProficiency(
 		throw errors.new("proficiency check: score must be a number")
 	}
 
-	const isProficient = latestResult.score >= 0.8
+	const normalizedScore = latestResult.score <= 1.1 ? latestResult.score * 100 : latestResult.score
+	const isProficient = normalizedScore >= 80
 
 	logger.info("proficiency check complete", {
 		onerosterUserSourcedId,

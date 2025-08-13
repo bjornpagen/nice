@@ -485,7 +485,7 @@ export function AssessmentStepper({
 
 		const finalTotalQuestions = questions.length - reportedQuestionIds.size
 		const accuracy = finalTotalQuestions > 0 ? (correctAnswersCount / finalTotalQuestions) * 100 : 100
-		const score = accuracy / 100
+		const score = accuracy
 
 		// Check existing proficiency BEFORE saving the result
 		let shouldAwardXp = true
@@ -896,8 +896,8 @@ export function AssessmentStepper({
 				completed: true,
 				score,
 				proficiency: (() => {
-					if (score >= 1.0) return "proficient" as const
-					if (score >= 0.7) return "familiar" as const
+					if (score >= 100) return "proficient" as const
+					if (score >= 70) return "familiar" as const
 					return "attempted" as const
 				})()
 			})
@@ -907,8 +907,8 @@ export function AssessmentStepper({
 					completed: true,
 					score,
 					proficiency: (() => {
-						if (score >= 1.0) return "proficient" as const
-						if (score >= 0.7) return "familiar" as const
+						if (score >= 100) return "proficient" as const
+						if (score >= 70) return "familiar" as const
 						return "attempted" as const
 					})()
 				})

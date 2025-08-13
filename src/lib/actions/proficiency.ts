@@ -170,7 +170,8 @@ export async function updateProficiencyFromAssessment(
 				)[0]
 
 				if (latestResult && typeof latestResult.score === "number") {
-					return { onerosterResourceSourcedId, currentScore: latestResult.score }
+					const normalized = latestResult.score <= 1.1 ? latestResult.score * 100 : latestResult.score
+					return { onerosterResourceSourcedId, currentScore: normalized }
 				}
 			}
 
@@ -233,14 +234,14 @@ export async function updateProficiencyFromAssessment(
 		const isUnitTest = lessonType === "unittest" || lessonType === "coursechallenge"
 
 		// Calculate proficiency score for this exercise
-		let proficiencyScore = percentageCorrect // Store the EXACT percentage, not discrete levels
+		let proficiencyScore = percentageCorrect * 100 // Store the EXACT percentage (0-100), not discrete levels
 
 		// Special case: Unit test mastery upgrade
 		// If student was already at 100% (1.0) and gets unit test question correct → Mastered (1.1)
 		if ((lessonType === "unittest" || lessonType === "coursechallenge") && percentageCorrect === 1.0) {
 			const currentScore = currentProficiencyMap.get(exerciseId)
-			if (currentScore && currentScore >= 1.0) {
-				proficiencyScore = 1.1 // Mastered level
+			if (currentScore && currentScore >= 100) {
+				proficiencyScore = 110 // Mastered level sentinel
 				logger.info("upgrading skill to mastered", {
 					exerciseId,
 					previousScore: currentScore,
@@ -260,18 +261,18 @@ export async function updateProficiencyFromAssessment(
 			const currentScore = currentProficiencyMap.get(exerciseId)
 			if (currentScore !== undefined && currentScore > 0) {
 				// Apply softer penalty based on current proficiency level
-				if (currentScore >= 1.0) {
+				if (currentScore >= 100) {
 					// Was proficient (100%) → Drop to familiar (70%)
-					proficiencyScore = 0.7
+					proficiencyScore = 70
 					logger.info("applying softer unit test penalty", {
 						exerciseId,
 						previousScore: currentScore,
 						newScore: proficiencyScore,
 						reason: "proficient to familiar on unit test miss"
 					})
-				} else if (currentScore >= 0.7) {
+				} else if (currentScore >= 70) {
 					// Was familiar (70-99%) → Drop to attempted (50%)
-					proficiencyScore = 0.5
+					proficiencyScore = 50
 					logger.info("applying softer unit test penalty", {
 						exerciseId,
 						previousScore: currentScore,
