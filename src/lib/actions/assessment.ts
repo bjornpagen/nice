@@ -186,7 +186,10 @@ export async function getNextAttemptNumber(
 		// Fail fast per no-fallbacks policy
 		throw errors.wrap(resultsResult.error, "attempt number derivation")
 	}
-	const count = Array.isArray(resultsResult.data) ? resultsResult.data.length : 0
+	// Only consider results written by our system (sourcedId starting with "nice_")
+	const count = Array.isArray(resultsResult.data)
+		? resultsResult.data.filter((r) => typeof r.sourcedId === "string" && r.sourcedId.startsWith("nice_")).length
+		: 0
 	const nextAttempt = count + 1
 	logger.info("derived next attempt number", { lineItemId, existingResults: count, nextAttempt })
 	return nextAttempt
@@ -225,7 +228,8 @@ export async function checkExistingProficiency(
 		throw errors.wrap(resultsResult.error, "proficiency check")
 	}
 
-	const results = resultsResult.data
+	// Only consider results written by our system (sourcedId starting with "nice_")
+	const results = resultsResult.data.filter((r) => typeof r.sourcedId === "string" && r.sourcedId.startsWith("nice_"))
 	if (results.length === 0) {
 		logger.debug("no existing results found", {
 			onerosterUserSourcedId,
