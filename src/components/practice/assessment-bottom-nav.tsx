@@ -40,6 +40,7 @@ interface AssessmentBottomNavProps {
 	maxAttempts?: number
 	nextItem?: { text: string; path: string; type?: string } | null
 	onReportIssue?: () => void
+	nextEnabled?: boolean
 }
 
 export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, AssessmentBottomNavProps>(
@@ -62,7 +63,8 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 			attemptCount = 0,
 			maxAttempts = 3,
 			nextItem,
-			onReportIssue
+			onReportIssue,
+			nextEnabled = true
 		},
 		ref
 	) => {
@@ -118,6 +120,7 @@ export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, Assessmen
 							attemptCount={attemptCount}
 							maxAttempts={maxAttempts}
 							nextItem={nextItem}
+							nextEnabled={nextEnabled}
 						/>
 					</div>
 				</div>
@@ -288,7 +291,8 @@ function RightSection({
 	onReset,
 	attemptCount,
 	maxAttempts,
-	nextItem
+	nextItem,
+	nextEnabled
 }: {
 	ref?: React.Ref<HTMLButtonElement>
 	isStartScreen?: boolean
@@ -307,6 +311,7 @@ function RightSection({
 	attemptCount?: number
 	maxAttempts?: number
 	nextItem?: { text: string; path: string; type?: string } | null
+	nextEnabled?: boolean
 }) {
 	const handleSkipClick = () => {
 		if (onSkip) {
@@ -350,10 +355,18 @@ function RightSection({
 
 		const getButtonContent = () => {
 			if (nextItem?.path && nextItem.type) {
-				return <Link href={nextItem.path}>Up next: {getTypeLabel(nextItem.type)}</Link>
+				return nextEnabled ? (
+					<Link href={nextItem.path}>Up next: {getTypeLabel(nextItem.type)}</Link>
+				) : (
+					<span className="opacity-60 cursor-not-allowed">Up next: {getTypeLabel(nextItem.type)}</span>
+				)
 			}
 			if (nextItem?.path && nextItem.text) {
-				return <Link href={nextItem.path}>{nextItem.text}</Link>
+				return nextEnabled ? (
+					<Link href={nextItem.path}>{nextItem.text}</Link>
+				) : (
+					<span className="opacity-60 cursor-not-allowed">{nextItem.text}</span>
+				)
 			}
 			return <span>Error: Missing navigation data</span>
 		}
@@ -367,8 +380,14 @@ function RightSection({
 				<Button
 					ref={ref}
 					variant="default"
-					onClick={onContinue}
-					className="bg-blue-600 text-white hover:cursor-pointer hover:bg-blue-600 hover:text-white"
+					onClick={nextEnabled ? onContinue : undefined}
+					className={cn(
+						"bg-blue-600 text-white disabled:opacity-60 disabled:cursor-not-allowed",
+						nextEnabled
+							? "hover:cursor-pointer hover:bg-blue-600 hover:text-white"
+							: "cursor-not-allowed pointer-events-none"
+					)}
+					disabled={!nextEnabled}
 					asChild
 				>
 					{getButtonContent()}

@@ -50,6 +50,7 @@ function SummaryView({
 	onComplete,
 	handleReset,
 	nextItem,
+	isNextEnabled,
 	penaltyXp,
 	xpReason,
 	avgSecondsPerQuestion
@@ -66,6 +67,7 @@ function SummaryView({
 	onComplete?: () => void
 	handleReset: () => void
 	nextItem: { text: string; path: string } | null
+	isNextEnabled?: boolean
 	penaltyXp?: number
 	xpReason?: string
 	avgSecondsPerQuestion?: number
@@ -183,6 +185,7 @@ function SummaryView({
 					handleReset()
 				}}
 				nextItem={nextItem}
+				nextEnabled={isNextEnabled}
 			/>
 		</div>
 	)
@@ -245,6 +248,8 @@ export function AssessmentStepper({
 
 	const [nextItem, setNextItem] = React.useState<{ text: string; path: string; type?: string } | null>(null)
 	const [debugClickCount, setDebugClickCount] = React.useState(0)
+	// Track when all finalization operations are fully completed
+	const [isFinalizationComplete, setIsFinalizationComplete] = React.useState(false)
 
 	// Admin-only: practice header lock toggle (far right)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
@@ -402,6 +407,10 @@ export function AssessmentStepper({
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
+		// Also reset finalization completion state until save/events/progress complete
+		if (showSummary) {
+			setIsFinalizationComplete(false)
+		}
 		if (showSummary && unitData) {
 			// Create a flattened, ordered list of all navigable content items in the unit.
 			// This includes items within lessons (articles, videos, exercises) and
@@ -612,6 +621,11 @@ export function AssessmentStepper({
 				toast("No XP awarded", {
 					description: <span className="text-black">Already proficient on this assessment</span>
 				})
+			} else if (xpResult.finalXp === 0 && shouldAwardXp && !xpResult.penaltyApplied) {
+				// No XP due to not meeting mastery threshold (80%)
+				toast("No XP awarded", {
+					description: <span className="text-black">Below 80% accuracy threshold</span>
+				})
 			}
 
 			// Return whether XP should be awarded
@@ -661,6 +675,8 @@ export function AssessmentStepper({
 			endProgressUpdate(onerosterResourceSourcedId)
 			// Ensure server-side lock state reflects completion for subsequent navigation
 			router.refresh()
+			// Enable navigation to next content only after everything is finalized
+			setIsFinalizationComplete(true)
 		}
 
 		executeFinalization()
@@ -835,6 +851,7 @@ export function AssessmentStepper({
 				onComplete={onComplete}
 				handleReset={handleReset}
 				nextItem={nextItem}
+				isNextEnabled={isFinalizationComplete}
 				penaltyXp={xpPenaltyInfo?.penaltyXp}
 				xpReason={xpPenaltyInfo?.reason}
 				avgSecondsPerQuestion={xpPenaltyInfo?.avgSecondsPerQuestion}
