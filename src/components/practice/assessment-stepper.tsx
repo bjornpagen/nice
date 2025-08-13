@@ -21,19 +21,13 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Textarea } from "@/components/ui/textarea"
-import {
-	checkExistingProficiency,
-	flagQuestionAsReported,
-	getNextAttemptNumber,
-	processQuestionResponse
-} from "@/lib/actions/assessment"
+import { flagQuestionAsReported, getNextAttemptNumber, processQuestionResponse } from "@/lib/actions/assessment"
 import { saveAssessmentResult } from "@/lib/actions/tracking"
-import { getBankedXpBreakdownForQuiz } from "@/lib/actions/xp"
 import { parseUserPublicMetadata } from "@/lib/metadata/clerk"
 import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { cn } from "@/lib/utils"
-import { calculateAssessmentXp } from "@/lib/xp"
+import { getBankedXpBreakdownForQuiz } from "@/lib/xp/bank"
 
 // Summary View Component
 function SummaryView({
@@ -487,76 +481,11 @@ export function AssessmentStepper({
 		const accuracy = finalTotalQuestions > 0 ? (correctAnswersCount / finalTotalQuestions) * 100 : 100
 		const score = accuracy / 100
 
-		// Check existing proficiency BEFORE saving the result
-		let shouldAwardXp = true
-		const proficiencyResult = await errors.try(
-			checkExistingProficiency(onerosterUserSourcedId, onerosterResourceSourcedId)
-		)
-		if (proficiencyResult.error) {
-			throw errors.wrap(proficiencyResult.error, "pre-save proficiency check")
-		}
-		shouldAwardXp = !proficiencyResult.data
+		// Note: XP farming prevention is now handled server-side
 
 		let durationInSeconds: number | undefined
 		if (assessmentStartTimeRef.current) {
 			durationInSeconds = Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
-		}
-
-		const xpResult = calculateAssessmentXp(
-			expectedXp,
-			accuracy,
-			attemptNumber,
-			finalTotalQuestions,
-			durationInSeconds,
-			shouldAwardXp
-		)
-
-		// Capture penalty info for the summary view
-		if (xpResult.penaltyApplied) {
-			const avgSecondsPerQuestion =
-				durationInSeconds && finalTotalQuestions > 0 ? durationInSeconds / finalTotalQuestions : undefined
-			setXpPenaltyInfo({
-				penaltyXp: xpResult.finalXp,
-				reason: xpResult.reason,
-				avgSecondsPerQuestion
-			})
-			toast.error(`${xpResult.finalXp} XP`, {
-				description: xpResult.reason
-			})
-		} else {
-			setXpPenaltyInfo(undefined)
-		}
-
-		// Mastered units policy
-		const masteredUnits = (() => {
-			if (contentType === "Exercise") {
-				return accuracy >= 80 ? 1 : 0
-			}
-			if (contentType === "Quiz") {
-				return accuracy >= 80 ? 1 : 0
-			}
-			if (contentType === "Test") {
-				return accuracy >= 90 ? 1 : 0
-			}
-			return 0
-		})()
-
-		const metadata = {
-			masteredUnits,
-			totalQuestions: finalTotalQuestions,
-			correctQuestions: correctAnswersCount,
-			accuracy: accuracy,
-			xp: xpResult.finalXp,
-			multiplier: xpResult.multiplier,
-			attempt: attemptNumber,
-			startedAt: assessmentStartTimeRef.current?.toISOString(),
-			lessonType: contentType.toLowerCase(),
-			completedAt: new Date().toISOString(),
-			courseSourcedId: onerosterCourseSourcedId,
-			penaltyApplied: xpResult.penaltyApplied,
-			xpReason: xpResult.reason,
-			avgSecondsPerQuestion:
-				durationInSeconds && finalTotalQuestions > 0 ? durationInSeconds / finalTotalQuestions : undefined
 		}
 
 		const saveResult = await errors.try(
@@ -567,7 +496,6 @@ export function AssessmentStepper({
 				totalQuestions: finalTotalQuestions,
 				onerosterUserSourcedId,
 				onerosterCourseSourcedId,
-				metadata,
 				contentType,
 				isInteractiveAssessment,
 				onerosterComponentResourceSourcedId,
@@ -580,8 +508,7 @@ export function AssessmentStepper({
 				durationInSeconds: assessmentStartTimeRef.current
 					? Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
 					: undefined,
-				userEmail: user?.primaryEmailAddress?.emailAddress,
-				shouldAwardXp
+				userEmail: user?.primaryEmailAddress?.emailAddress
 			})
 		)
 
@@ -589,18 +516,51 @@ export function AssessmentStepper({
 			throw errors.wrap(saveResult.error, "save assessment result")
 		}
 
+		const responseData = saveResult.data
+		const xp = responseData && typeof responseData === "object" && "xp" in responseData ? responseData.xp : undefined
+
+		// Type guard for XP data
+		const isValidXp = (
+			xp: unknown
+		): xp is { finalXp: number; multiplier: number; penaltyApplied: boolean; reason: string } => {
+			return (
+				xp !== null &&
+				typeof xp === "object" &&
+				"finalXp" in xp &&
+				"multiplier" in xp &&
+				"penaltyApplied" in xp &&
+				"reason" in xp
+			)
+		}
+
+		// Capture penalty info for the summary view
+		if (isValidXp(xp) && xp.penaltyApplied) {
+			const avgSecondsPerQuestion =
+				durationInSeconds && finalTotalQuestions > 0 ? durationInSeconds / finalTotalQuestions : undefined
+			setXpPenaltyInfo({
+				penaltyXp: xp.finalXp,
+				reason: xp.reason,
+				avgSecondsPerQuestion
+			})
+			toast.error(`${xp.finalXp} XP`, {
+				description: xp.reason
+			})
+		} else {
+			setXpPenaltyInfo(undefined)
+		}
+
 		// Awarding XP toasts, await quiz breakdown before finishing
-		if (xpResult.finalXp > 0 && shouldAwardXp) {
+		if (isValidXp(xp) && xp.finalXp > 0) {
 			if (contentType === "Quiz") {
 				const toastId = toast.loading("Calculating XP…")
 				const breakdownResult = await errors.try(
 					getBankedXpBreakdownForQuiz(onerosterResourceSourcedId, onerosterUserSourcedId)
 				)
 				if (breakdownResult.error) {
-					toast.success(`+${xpResult.finalXp} XP earned for this assessment`, { id: toastId })
+					toast.success(`+${xp.finalXp} XP earned for this assessment`, { id: toastId })
 				} else {
 					const { articleXp, videoXp } = breakdownResult.data
-					toast.success(`+${xpResult.finalXp} XP earned for this assessment`, {
+					toast.success(`+${xp.finalXp} XP earned for this assessment`, {
 						id: toastId,
 						description: (
 							<span className="text-black">
@@ -612,13 +572,13 @@ export function AssessmentStepper({
 					})
 				}
 			} else {
-				toast.success(`+${xpResult.finalXp} XP earned for this assessment`)
+				toast.success(`+${xp.finalXp} XP earned for this assessment`)
 			}
-		} else if (!shouldAwardXp) {
+		} else if (isValidXp(xp) && xp.reason === "XP farming prevention: user already proficient") {
 			toast("No XP awarded", {
 				description: <span className="text-black">Already proficient on this assessment</span>
 			})
-		} else if (xpResult.finalXp === 0 && shouldAwardXp && !xpResult.penaltyApplied) {
+		} else if (isValidXp(xp) && xp.finalXp === 0 && !xp.penaltyApplied) {
 			toast("No XP awarded", {
 				description: <span className="text-black">Below 80% accuracy threshold</span>
 			})

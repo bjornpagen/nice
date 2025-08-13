@@ -11,6 +11,8 @@ import { oneroster } from "@/lib/clients"
 import { VIDEO_COMPLETION_THRESHOLD_PERCENT } from "@/lib/constants/progress"
 import { getAllCoursesBySlug } from "@/lib/data/fetchers/oneroster"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
+// ADDED: Import the new XP service.
+import { awardXpForAssessment } from "@/lib/xp/service"
 
 /**
  * Tracks that a user has viewed an article by creating a "completed"
@@ -227,9 +229,8 @@ export async function updateVideoProgress(
 	})
 }
 
-// Add new interface above the function
+// Interface for the single options object
 interface AssessmentCompletionOptions {
-	// Core assessment data (existing)
 	onerosterResourceSourcedId: string
 	score: number
 	correctAnswers: number
@@ -244,17 +245,11 @@ interface AssessmentCompletionOptions {
 		xp: number
 		multiplier: number
 	}
-
-	// Assessment type and context (new)
-	contentType?: "Exercise" | "Quiz" | "Test"
+	contentType?: "Exercise" | "Quiz" | "Test" | "CourseChallenge" // Added CourseChallenge
 	isInteractiveAssessment?: boolean
 	onerosterComponentResourceSourcedId?: string
-
-	// Proficiency analysis data (new)
 	sessionResults?: Array<{ qtiItemId: string; isCorrect: boolean | null; isReported?: boolean }>
 	attemptNumber?: number
-
-	// Caliper event data (new)
 	assessmentTitle?: string
 	assessmentPath?: string
 	unitData?: {
@@ -264,71 +259,18 @@ interface AssessmentCompletionOptions {
 	expectedXp?: number
 	durationInSeconds?: number
 	userEmail?: string
-	shouldAwardXp?: boolean
+	startedAt?: string
 }
 
+// REMOVED: Redundant overload signatures. We will use a single options object.
 /**
- * Saves an assessment result directly to the OneRoster gradebook.
- * This is called when a user completes an assessment (exercise, quiz, or test).
- * Now includes server-side orchestration of Caliper events and proficiency updates.
+ * Saves an assessment result and orchestrates XP and proficiency updates.
  */
-export async function saveAssessmentResult(options: AssessmentCompletionOptions): Promise<unknown>
-export async function saveAssessmentResult(
-	onerosterResourceSourcedId: string,
-	score: number,
-	correctAnswers: number,
-	totalQuestions: number,
-	onerosterUserSourcedId: string,
-	onerosterCourseSourcedId: string,
-	metadata?: {
-		masteredUnits: number
-		totalQuestions: number
-		correctQuestions: number
-		accuracy: number
-		xp: number
-		multiplier: number
-	}
-): Promise<unknown>
-export async function saveAssessmentResult(
-	optionsOrResourceId: AssessmentCompletionOptions | string,
-	score?: number,
-	correctAnswers?: number,
-	totalQuestions?: number,
-	onerosterUserSourcedId?: string,
-	onerosterCourseSourcedId?: string,
-	metadata?: {
-		masteredUnits: number
-		totalQuestions: number
-		correctQuestions: number
-		accuracy: number
-		xp: number
-		multiplier: number
-	}
-) {
+export async function saveAssessmentResult(options: AssessmentCompletionOptions): Promise<unknown> {
 	const { userId: clerkUserId } = await auth()
 	if (!clerkUserId) throw errors.new("user not authenticated")
 
-	// Handle both function overloads
-	let finalOptions: AssessmentCompletionOptions
-	if (typeof optionsOrResourceId === "string") {
-		// Legacy API - convert to new options object
-		if (!score || !correctAnswers || !totalQuestions || !onerosterUserSourcedId || !onerosterCourseSourcedId) {
-			throw errors.new("missing required parameters for legacy API")
-		}
-		finalOptions = {
-			onerosterResourceSourcedId: optionsOrResourceId,
-			score,
-			correctAnswers,
-			totalQuestions,
-			onerosterUserSourcedId,
-			onerosterCourseSourcedId,
-			metadata
-		}
-	} else {
-		// New API - use options object directly
-		finalOptions = optionsOrResourceId
-	}
-
+	// Destructure all options for clarity
 	const {
 		onerosterResourceSourcedId: resourceId,
 		score: assessmentScore,
@@ -348,36 +290,113 @@ export async function saveAssessmentResult(
 		expectedXp,
 		durationInSeconds,
 		userEmail,
-		shouldAwardXp
-	} = finalOptions
+		startedAt
+	} = options
 
-	logger.info("saving assessment result", {
-		clerkUserId,
-		onerosterUserSourcedId: userId,
-		onerosterResourceSourcedId: resourceId,
-		score: assessmentScore,
-		correctAnswers: assessmentCorrectAnswers,
-		totalQuestions: assessmentTotalQuestions,
-		metadata: assessmentMetadata,
-		contentType,
-		isInteractiveAssessment
-	})
+	logger.info("saving assessment result", { clerkUserId, ...options })
 
-	// The line item sourcedId is the resource sourcedId + '_ali'
+	// Step 1: Calculate server-side accuracy and masteredUnits
+	const accuracyPercent =
+		assessmentTotalQuestions > 0 ? Math.round((assessmentCorrectAnswers / assessmentTotalQuestions) * 100) : 100
+	const masteredUnits = (() => {
+		if (contentType === "Test") return accuracyPercent >= 90 ? 1 : 0
+		if (contentType === "Exercise" || contentType === "Quiz") return accuracyPercent >= 80 ? 1 : 0
+		return 0
+	})()
+
+	// Initialize XP tracking variables
+	let finalXp = 0
+	let xp: { finalXp: number; multiplier: number; penaltyApplied: boolean; reason: string } | null = null
+
+	// Step 2: Save the raw assessment result to OneRoster
 	const onerosterLineItemSourcedId = getAssessmentLineItemId(resourceId)
-
-	// The result sourcedId follows our pattern. For interactive assessments, persist
-	// an immutable history by including the attempt number in the result id so
-	// future attempts can be derived from count of existing results.
 	const baseResultSourcedId = `nice_${userId}_${onerosterLineItemSourcedId}`
 	const onerosterResultSourcedId =
 		isInteractiveAssessment && attemptNumber && attemptNumber > 0
 			? `${baseResultSourcedId}_attempt_${attemptNumber}`
 			: baseResultSourcedId
+	// Step 3: Calculate XP first if we have the required data
+	if (unitData && assessmentPath && assessmentTitle && userEmail && expectedXp !== undefined && attemptNumber) {
+		logger.info("calculating xp for assessment", { resourceId })
 
-	// Unified scoring: remove exercise-only mastery preservation (1.1).
-	// Use the raw score across all assessment types for consistency.
+		// 3a. Use the new XP Service to calculate final XP
+		const xpResult = await errors.try(
+			awardXpForAssessment({
+				userSourcedId: userId,
+				assessmentResourceId: resourceId,
+				componentResourceId: onerosterComponentResourceSourcedId ?? resourceId,
+				courseSourcedId: courseId,
+				baseXp: expectedXp,
+				correctQuestions: assessmentCorrectAnswers,
+				totalQuestions: assessmentTotalQuestions,
+				attemptNumber: attemptNumber,
+				durationInSeconds,
+				isQuiz: contentType === "Quiz"
+			})
+		)
+
+		if (xpResult.error) {
+			logger.error("failed to award xp", { error: xpResult.error, resourceId })
+			// Continue execution - XP failure should not block other processes
+		} else {
+			finalXp = xpResult.data.finalXp
+			xp = {
+				finalXp: xpResult.data.finalXp,
+				multiplier: xpResult.data.multiplier,
+				penaltyApplied: xpResult.data.penaltyApplied,
+				reason: xpResult.data.reason
+			}
+		}
+	}
+
+	// Step 4: Save the assessment result with metadata
 	const finalScore = assessmentScore
+	// Build base metadata either from provided metadata (legacy paths like banked XP)
+	// or from server-side computed values. If server-calculated XP exists, override
+	// the XP-related fields to ensure authoritative values.
+	const baseMetadata = assessmentMetadata
+		? {
+				masteredUnits: assessmentMetadata.masteredUnits,
+				totalQuestions: assessmentMetadata.totalQuestions,
+				correctQuestions: assessmentMetadata.correctQuestions,
+				accuracy: assessmentMetadata.accuracy,
+				xp: assessmentMetadata.xp,
+				multiplier: assessmentMetadata.multiplier,
+				attempt: attemptNumber,
+				startedAt: startedAt,
+				completedAt: new Date().toISOString(),
+				lessonType: contentType?.toLowerCase(),
+				courseSourcedId: courseId,
+				durationInSeconds
+			}
+		: {
+				masteredUnits,
+				totalQuestions: assessmentTotalQuestions,
+				correctQuestions: assessmentCorrectAnswers,
+				accuracy: accuracyPercent,
+				xp: finalXp,
+				multiplier: xp?.multiplier ?? 0,
+				attempt: attemptNumber,
+				startedAt: startedAt,
+				completedAt: new Date().toISOString(),
+				lessonType: contentType?.toLowerCase(),
+				courseSourcedId: courseId,
+				durationInSeconds,
+				// Provide defaults for penalty fields when no XP calc performed
+				penaltyApplied: xp?.penaltyApplied ?? false,
+				xpReason: xp?.reason ?? ""
+			}
+
+	// If XP was calculated on the server, ensure XP-related fields reflect that
+	const finalMetadata = xp
+		? {
+				...baseMetadata,
+				xp: xp.finalXp,
+				multiplier: xp.multiplier,
+				penaltyApplied: xp.penaltyApplied,
+				xpReason: xp.reason
+			}
+		: baseMetadata
 
 	const resultPayload = {
 		result: {
@@ -385,143 +404,105 @@ export async function saveAssessmentResult(
 			student: { sourcedId: userId, type: "user" as const },
 			scoreStatus: "fully graded" as const,
 			scoreDate: new Date().toISOString(),
-			score: finalScore, // Use finalScore instead of assessmentScore
+			score: finalScore,
 			comment:
 				attemptNumber && attemptNumber > 1
 					? `${assessmentCorrectAnswers}/${assessmentTotalQuestions} correct on attempt ${attemptNumber}`
 					: `${assessmentCorrectAnswers}/${assessmentTotalQuestions} correct on first attempt`,
-			...(assessmentMetadata && { metadata: assessmentMetadata })
+			metadata: finalMetadata
 		}
 	}
 
-	if (assessmentMetadata) {
-		logger.debug("assessment result payload includes metadata", {
-			onerosterResourceSourcedId: resourceId,
-			metadata: assessmentMetadata,
-			payloadHasMetadata: !!resultPayload.result.metadata
-		})
-	}
-
-	// Use putResult for idempotency
 	const result = await errors.try(oneroster.putResult(onerosterResultSourcedId, resultPayload))
 	if (result.error) {
-		logger.error("failed to save assessment result", {
-			clerkUserId,
-			onerosterResourceSourcedId: resourceId,
-			error: result.error
-		})
+		logger.error("failed to save assessment result", { clerkUserId, resourceId, error: result.error })
 		throw errors.wrap(result.error, "assessment result save")
 	}
 
-	// Invalidate the user progress cache for this course.
+	// Step 5: Invalidate Cache
 	const cacheKey = cacheUtils.userProgressByCourse(userId, courseId)
 	await invalidateCache(cacheKey)
 	logger.info("invalidated user progress cache", { cacheKey })
 
 	logger.info("successfully saved assessment result", {
 		clerkUserId,
-		onerosterResourceSourcedId: resourceId,
+		resourceId,
 		onerosterResultSourcedId,
 		score: assessmentScore
 	})
 
-	// Step 2: Send Caliper events if data is provided
-	if (unitData && assessmentPath && assessmentTitle && userEmail && expectedXp !== undefined) {
-		logger.info("sending caliper events from server", {
-			onerosterResourceSourcedId: resourceId,
-			assessmentTitle,
-			hasUnitData: !!unitData
-		})
+	// Step 6: Send Caliper events when we have sufficient context
+	if (unitData && assessmentPath && assessmentTitle && userEmail) {
+		logger.info("sending caliper events", { resourceId })
 
-		// Extract subject and course from unit path: "/{subject}/{course}/{unit}"
+		// 6a. Build Caliper context and send events with final XP value
 		const pathParts = unitData.path.split("/")
-		if (pathParts.length >= 3) {
-			const subject = pathParts[1]
-			const course = pathParts[2]
+		const subject = pathParts[1]
+		const course = pathParts[2]
+		const subjectMapping: Record<string, "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"> = {
+			science: "Science",
+			math: "Math",
+			reading: "Reading",
+			language: "Language",
+			"social-studies": "Social Studies"
+		}
+		const mappedSubject = subject ? subjectMapping[subject] : undefined
 
-			// Map subject to valid enum values
-			const subjectMapping: Record<string, "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"> = {
-				science: "Science",
-				math: "Math",
-				reading: "Reading",
-				language: "Language",
-				"social-studies": "Social Studies"
+		if (mappedSubject && course) {
+			const actor = {
+				id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`,
+				type: "TimebackUser" as const,
+				email: userEmail
+			}
+			const context = {
+				id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}${assessmentPath}`,
+				type: "TimebackActivityContext" as const,
+				subject: mappedSubject,
+				app: { name: "Nice Academy" },
+				course: {
+					name: course,
+					id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/courses/${courseId}`
+				},
+				activity: { name: assessmentTitle, id: resourceId },
+				process: false
+			}
+			const performance = {
+				totalQuestions: assessmentTotalQuestions,
+				correctQuestions: assessmentCorrectAnswers,
+				masteredUnits
 			}
 
-			const mappedSubject = subject ? subjectMapping[subject] : undefined
-			if (mappedSubject && course) {
-				const actor = {
-					id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`,
-					type: "TimebackUser" as const,
-					email: userEmail
-				}
+			// Determine final XP for the Caliper metric: prefer server XP, else provided metadata, else expectedXp or 0
+			const finalXpForCaliper = xp?.finalXp ?? assessmentMetadata?.xp ?? expectedXp ?? 0
 
-				const context = {
-					id: `${process.env.NEXT_PUBLIC_APP_DOMAIN}${assessmentPath}`,
-					type: "TimebackActivityContext" as const,
-					subject: mappedSubject,
-					app: { name: "Nice Academy" },
-					course: {
-						name: course,
-						id: `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/courses/${courseId}`
-					},
-					activity: {
-						name: assessmentTitle,
-						id: resourceId
-					},
-					process: false
-				}
+			// Call the simplified Caliper function (guarded)
+			const caliperResult = await errors.try(
+				sendCaliperActivityCompletedEvent(actor, context, performance, finalXpForCaliper)
+			)
+			if (caliperResult.error) {
+				logger.error("failed to send caliper activity event", { error: caliperResult.error, resourceId })
+			}
 
-				const performance = {
-					xpEarned: assessmentMetadata?.xp ?? expectedXp ?? 0,
-					totalQuestions: assessmentTotalQuestions,
-					correctQuestions: assessmentCorrectAnswers,
-					durationInSeconds,
-					masteredUnits: assessmentMetadata?.masteredUnits
-				}
-
-				// Send activity completed event
-				const caliperResult = await errors.try(
-					sendCaliperActivityCompletedEvent(actor, context, performance, shouldAwardXp)
-				)
-				if (caliperResult.error) {
-					logger.error("failed to send caliper activity event", {
-						error: caliperResult.error,
-						onerosterResourceSourcedId: resourceId
-					})
-					// Continue execution - Caliper failure should not block assessment save
-				}
-
-				// Send time spent event if duration is available
-				if (durationInSeconds && durationInSeconds >= 1) {
-					const timeSpentResult = await errors.try(sendCaliperTimeSpentEvent(actor, context, durationInSeconds))
-					if (timeSpentResult.error) {
-						logger.error("failed to send caliper time spent event", {
-							error: timeSpentResult.error,
-							onerosterResourceSourcedId: resourceId
-						})
-						// Continue execution - time spent failure should not block assessment save
-					}
+			if (durationInSeconds && durationInSeconds >= 1) {
+				const timeSpentResult = await errors.try(sendCaliperTimeSpentEvent(actor, context, durationInSeconds))
+				if (timeSpentResult.error) {
+					logger.error("failed to send caliper time spent event", { error: timeSpentResult.error, resourceId })
 				}
 			}
 		}
 	}
 
-	// Step 3: Update proficiency for interactive assessments (quizzes and unit tests)
-	if (isInteractiveAssessment && onerosterComponentResourceSourcedId && sessionResults) {
+	// Step 4: Update proficiency for interactive assessments
+	if (isInteractiveAssessment && onerosterComponentResourceSourcedId && sessionResults && attemptNumber) {
 		logger.info("starting proficiency analysis from server", {
 			onerosterComponentResourceSourcedId,
-			sessionResultCount: sessionResults.length,
-			attemptNumber
+			sessionResultCount: sessionResults.length
 		})
-
-		// Finalization is performed at the end of the last question response.
-		// Proceed directly to proficiency update.
 		const proficiencyResult = await errors.try(
 			updateProficiencyFromAssessment(
 				userId,
 				onerosterComponentResourceSourcedId,
-				attemptNumber || 1,
+				attemptNumber,
 				sessionResults,
 				courseId
 			)
@@ -532,15 +513,13 @@ export async function saveAssessmentResult(
 				onerosterComponentResourceSourcedId
 			})
 			// Continue execution - proficiency failure should not block assessment save
-		} else {
-			logger.info("successfully updated proficiency from server", {
-				exercisesUpdated: proficiencyResult.data.exercisesUpdated,
-				onerosterComponentResourceSourcedId
-			})
 		}
 	}
 
-	return result.data
+	return {
+		onerosterResultSourcedId,
+		xp: xp ?? { finalXp: 0, multiplier: 0, penaltyApplied: false, reason: "" }
+	}
 }
 
 /**

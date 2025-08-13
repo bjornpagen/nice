@@ -216,14 +216,14 @@ export async function awardBankedXpForAssessment(
 		const resource = allResources.find((r) => r.sourcedId === resourceId)
 		if (resource) {
 			const saveResult = await errors.try(
-				saveAssessmentResult(
-					resourceId,
-					1.0, // Perfect score for banked XP
-					1, // correctAnswers: 1 (banked XP = completed)
-					1, // totalQuestions: 1 (banked XP = completed)
-					userId,
+				saveAssessmentResult({
+					onerosterResourceSourcedId: resourceId,
+					score: 1.0, // Perfect score for banked XP
+					correctAnswers: 1, // banked XP = completed
+					totalQuestions: 1, // banked XP = completed
+					onerosterUserSourcedId: userId,
 					onerosterCourseSourcedId,
-					{
+					metadata: {
 						masteredUnits: 0, // Banked XP (articles/videos) never count as mastered units
 						totalQuestions: 1,
 						correctQuestions: 1,
@@ -231,7 +231,7 @@ export async function awardBankedXpForAssessment(
 						xp: resource.expectedXp,
 						multiplier: 1.0 // No multiplier for banked XP
 					}
-				)
+				})
 			)
 			if (saveResult.error) {
 				logger.error("failed to save banked xp assessment result", {

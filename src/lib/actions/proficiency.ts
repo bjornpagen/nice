@@ -315,14 +315,14 @@ export async function updateProficiencyFromAssessment(
 				(lessonType === "quiz" || lessonType === "unittest" || lessonType === "coursechallenge"))
 		) {
 			updatePromises.push(
-				saveAssessmentResult(
-					exerciseId,
-					proficiencyScore,
-					performance.correctCount,
-					performance.totalCount,
+				saveAssessmentResult({
+					onerosterResourceSourcedId: exerciseId,
+					score: proficiencyScore,
+					correctAnswers: performance.correctCount,
+					totalQuestions: performance.totalCount,
 					onerosterUserSourcedId,
 					onerosterCourseSourcedId
-				)
+				})
 			)
 		}
 	}
