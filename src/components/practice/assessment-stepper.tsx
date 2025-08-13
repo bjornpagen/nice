@@ -249,6 +249,7 @@ export function AssessmentStepper({
 	const [debugClickCount, setDebugClickCount] = React.useState(0)
 	// Track when all finalization operations are fully completed
 	const [isFinalizationComplete, setIsFinalizationComplete] = React.useState(false)
+	const [isFinalizing, setIsFinalizing] = React.useState(false)
 
 	// Admin-only: practice header lock toggle (far right)
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
@@ -286,8 +287,7 @@ export function AssessmentStepper({
 	const wrongAudioRef = React.useRef<HTMLAudioElement | null>(null)
 	const currentQuestion = questions[currentQuestionIndex]
 	const assessmentStartTimeRef = React.useRef<Date | null>(null)
-	const hasSentCompletionEventRef = React.useRef(false) // Track whether completion event has been sent
-	const finalizationInFlightRef = React.useRef(false)
+	// Removed old summary-time finalization flags
 	const { setProgressForResource, beginProgressUpdate, endProgressUpdate } = useLessonProgress()
 
 	// Navigation race-condition guards
@@ -416,10 +416,6 @@ export function AssessmentStepper({
 
 	React.useEffect(() => {
 		// When the summary screen is shown, determine the next piece of content.
-		// Also reset finalization completion state until save/events/progress complete
-		if (showSummary) {
-			setIsFinalizationComplete(false)
-		}
 		if (showSummary && unitData) {
 			// Create a flattened, ordered list of all navigable content items in the unit.
 			// This includes items within lessons (articles, videos, exercises) and
@@ -475,272 +471,167 @@ export function AssessmentStepper({
 		}
 	}, [showSummary, onerosterResourceSourcedId, unitData])
 
-	// MODIFIED: This useEffect now passes the attemptNumber to the server action.
-	React.useEffect(() => {
-		// Guard clause to prevent repeated event sending
-		if (
-			!showSummary ||
-			hasSentCompletionEventRef.current ||
-			finalizationInFlightRef.current ||
-			!onerosterResourceSourcedId ||
-			!userSourceId
-		) {
-			return
+	// Inline finalization: performed when navigating past the last question
+	const finalizeAndAnalyze = async () => {
+		// If IDs are missing (unauthenticated or misconfigured), skip blocking save
+		if (!onerosterResourceSourcedId || !userSourceId) {
+			return { score: 1, ok: true as const }
 		}
 
-		// Proper type check for onerosterUserSourcedId
 		const onerosterUserSourcedId = userSourceId
 		if (typeof onerosterUserSourcedId !== "string") {
-			return
+			return { score: 1, ok: true as const }
 		}
+
 		const finalTotalQuestions = questions.length - reportedQuestionIds.size
 		const accuracy = finalTotalQuestions > 0 ? (correctAnswersCount / finalTotalQuestions) * 100 : 100
 		const score = accuracy / 100
 
-		// Calculate XP and multiplier based on attempt and performance
 		let multiplier = 0
 
-		const finalizeAndAnalyze = async () => {
-			// Check existing proficiency BEFORE saving the result
-			let shouldAwardXp = true
+		// Check existing proficiency BEFORE saving the result
+		let shouldAwardXp = true
+		const proficiencyResult = await errors.try(
+			checkExistingProficiency(onerosterUserSourcedId, onerosterResourceSourcedId)
+		)
+		if (proficiencyResult.error) {
+			throw errors.wrap(proficiencyResult.error, "pre-save proficiency check")
+		}
+		shouldAwardXp = !proficiencyResult.data
 
-			// Check proficiency for ALL assessments to prevent XP farming race condition
-			const proficiencyResult = await errors.try(
-				checkExistingProficiency(onerosterUserSourcedId, onerosterResourceSourcedId)
-			)
-			if (proficiencyResult.error) {
-				// NO FALLBACK - if we can't check proficiency, we throw
-				throw errors.wrap(proficiencyResult.error, "pre-save proficiency check")
-			}
-
-			shouldAwardXp = !proficiencyResult.data
-
-			// Calculate XP using centralized function
-			let durationInSeconds: number | undefined
-			if (assessmentStartTimeRef.current) {
-				durationInSeconds = Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
-			}
-
-			const xpResult = calculateAssessmentXp(
-				expectedXp,
-				accuracy,
-				attemptNumber,
-				finalTotalQuestions,
-				durationInSeconds,
-				shouldAwardXp
-			)
-
-			multiplier = xpResult.multiplier
-
-			// Capture penalty info for the summary view
-			if (xpResult.penaltyApplied) {
-				const avgSecondsPerQuestion =
-					durationInSeconds && finalTotalQuestions > 0 ? durationInSeconds / finalTotalQuestions : undefined
-				setXpPenaltyInfo({
-					penaltyXp: xpResult.finalXp,
-					reason: xpResult.reason,
-					avgSecondsPerQuestion
-				})
-				// User feedback toast for penalties
-				toast.error(`${xpResult.finalXp} XP`, {
-					description: xpResult.reason
-				})
-			} else {
-				setXpPenaltyInfo(undefined)
-			}
-
-			// NOTE: Cannot use logger in client components - XP calculation details
-			// are logged in the centralized calculateAssessmentXp function
-
-			// Create metadata object
-			// Mastered units policy (align with XP thresholds):
-			// - Exercise: >= 80% accuracy
-			// - Quiz: >= 80% accuracy
-			// - Test (includes Course Challenge): >= 90% accuracy
-			const masteredUnits = (() => {
-				if (contentType === "Exercise") {
-					return accuracy >= 80 ? 1 : 0
-				}
-				if (contentType === "Quiz") {
-					return accuracy >= 80 ? 1 : 0
-				}
-				if (contentType === "Test") {
-					return accuracy >= 90 ? 1 : 0
-				}
-				return 0
-			})()
-
-			const metadata = {
-				masteredUnits,
-				totalQuestions: finalTotalQuestions,
-				correctQuestions: correctAnswersCount,
-				accuracy: accuracy,
-				xp: xpResult.finalXp, // CALCULATED XP (after multiplier applied)
-				multiplier: multiplier,
-				attempt: attemptNumber,
-				startedAt: assessmentStartTimeRef.current?.toISOString(),
-				lessonType: contentType.toLowerCase(),
-				completedAt: new Date().toISOString(),
-				courseSourcedId: onerosterCourseSourcedId,
-				// Anti-gamification markers
-				penaltyApplied: xpResult.penaltyApplied,
-				xpReason: xpResult.reason,
-				avgSecondsPerQuestion:
-					durationInSeconds && finalTotalQuestions > 0 ? durationInSeconds / finalTotalQuestions : undefined
-			}
-
-			// NOW save the assessment result with metadata
-			const saveResult = await errors.try(
-				saveAssessmentResult({
-					onerosterResourceSourcedId,
-					score,
-					correctAnswers: correctAnswersCount,
-					totalQuestions: finalTotalQuestions,
-					onerosterUserSourcedId,
-					onerosterCourseSourcedId,
-					metadata,
-					contentType,
-					isInteractiveAssessment,
-					onerosterComponentResourceSourcedId,
-					sessionResults,
-					attemptNumber,
-					assessmentTitle,
-					assessmentPath,
-					unitData,
-					expectedXp,
-					durationInSeconds: assessmentStartTimeRef.current
-						? Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
-						: undefined,
-					userEmail: user?.primaryEmailAddress?.emailAddress,
-					shouldAwardXp
-				})
-			)
-
-			if (saveResult.error) {
-				throw errors.wrap(saveResult.error, "save assessment result")
-			}
-
-			// User feedback toast for awarded XP
-			if (xpResult.finalXp > 0 && shouldAwardXp) {
-				// For quizzes, include banked XP breakdown in the description
-				if (contentType === "Quiz") {
-					const toastId = toast.loading("Calculating XP…")
-					// Fire and forget: replace loading toast with final success once breakdown is ready
-					;(async () => {
-						const breakdownResult = await errors.try(
-							getBankedXpBreakdownForQuiz(onerosterResourceSourcedId, onerosterUserSourcedId)
-						)
-						if (breakdownResult.error) {
-							toast.success(`+${xpResult.finalXp} XP earned for this assessment`, { id: toastId })
-							return
-						}
-						const { articleXp, videoXp } = breakdownResult.data
-						toast.success(`+${xpResult.finalXp} XP earned for this assessment`, {
-							id: toastId,
-							description: (
-								<span className="text-black">
-									Banked XP Awarded:
-									<br />+ {videoXp} xp from videos
-									<br />+ {articleXp} xp from articles
-								</span>
-							)
-						})
-					})()
-				} else {
-					toast.success(`+${xpResult.finalXp} XP earned for this assessment`)
-				}
-			} else if (!shouldAwardXp) {
-				// No XP if already proficient on this assessment
-				toast("No XP awarded", {
-					description: <span className="text-black">Already proficient on this assessment</span>
-				})
-			} else if (xpResult.finalXp === 0 && shouldAwardXp && !xpResult.penaltyApplied) {
-				// No XP due to not meeting mastery threshold (80%)
-				toast("No XP awarded", {
-					description: <span className="text-black">Below 80% accuracy threshold</span>
-				})
-			}
-
-			// Return whether XP should be awarded
-			return shouldAwardXp
+		let durationInSeconds: number | undefined
+		if (assessmentStartTimeRef.current) {
+			durationInSeconds = Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
 		}
 
-		// Execute finalization with proper async flow
-		const executeFinalization = async () => {
-			finalizationInFlightRef.current = true
-			// Set sent flag immediately to prevent parallel executions on dependency changes
-			hasSentCompletionEventRef.current = true
-			beginProgressUpdate(onerosterResourceSourcedId)
-			const result = await errors.try(finalizeAndAnalyze())
-			if (result.error) {
-				// Allow retry on next effect run if something failed
-				hasSentCompletionEventRef.current = false
-				finalizationInFlightRef.current = false
-				endProgressUpdate(onerosterResourceSourcedId)
-				return
-			}
-			// update local sidebar progress overlay instead of full refresh
-			setProgressForResource(onerosterResourceSourcedId, {
-				completed: true,
-				score,
-				proficiency: (() => {
-					if (score >= 1.0) return "proficient" as const
-					if (score >= 0.7) return "familiar" as const
-					return "attempted" as const
-				})()
+		const xpResult = calculateAssessmentXp(
+			expectedXp,
+			accuracy,
+			attemptNumber,
+			finalTotalQuestions,
+			durationInSeconds,
+			shouldAwardXp
+		)
+
+		multiplier = xpResult.multiplier
+
+		if (xpResult.penaltyApplied) {
+			const avgSecondsPerQuestion =
+				durationInSeconds && finalTotalQuestions > 0 ? durationInSeconds / finalTotalQuestions : undefined
+			setXpPenaltyInfo({
+				penaltyXp: xpResult.finalXp,
+				reason: xpResult.reason,
+				avgSecondsPerQuestion
 			})
-			// Also update by slug id for the injected sidebar resource row when viewing the current page
-			const currentSlug = (assessmentPath || "").split("/").pop()
-			if (currentSlug) {
-				setProgressForResource(currentSlug, {
-					completed: true,
-					score,
-					proficiency: (() => {
-						if (score >= 1.0) return "proficient" as const
-						if (score >= 0.7) return "familiar" as const
-						return "attempted" as const
-					})()
-				})
+			toast.error(`${xpResult.finalXp} XP`, {
+				description: xpResult.reason
+			})
+		} else {
+			setXpPenaltyInfo(undefined)
+		}
+
+		const masteredUnits = (() => {
+			if (contentType === "Exercise") {
+				return accuracy >= 80 ? 1 : 0
 			}
-			finalizationInFlightRef.current = false
-			endProgressUpdate(onerosterResourceSourcedId)
-			// Ensure server-side lock state reflects completion for subsequent navigation
-			router.refresh()
-			// Enable navigation to next content only after everything is finalized
-			setIsFinalizationComplete(true)
+			if (contentType === "Quiz") {
+				return accuracy >= 80 ? 1 : 0
+			}
+			if (contentType === "Test") {
+				return accuracy >= 90 ? 1 : 0
+			}
+			return 0
+		})()
+
+		const metadata = {
+			masteredUnits,
+			totalQuestions: finalTotalQuestions,
+			correctQuestions: correctAnswersCount,
+			accuracy: accuracy,
+			xp: xpResult.finalXp,
+			multiplier: multiplier,
+			attempt: attemptNumber,
+			startedAt: assessmentStartTimeRef.current?.toISOString(),
+			lessonType: contentType.toLowerCase(),
+			completedAt: new Date().toISOString(),
+			courseSourcedId: onerosterCourseSourcedId,
+			penaltyApplied: xpResult.penaltyApplied,
+			xpReason: xpResult.reason,
+			avgSecondsPerQuestion:
+				durationInSeconds && finalTotalQuestions > 0 ? durationInSeconds / finalTotalQuestions : undefined
 		}
 
-		executeFinalization()
-	}, [
-		showSummary,
-		onerosterComponentResourceSourcedId,
-		onerosterResourceSourcedId,
-		userSourceId,
-		user?.primaryEmailAddress?.emailAddress,
-		correctAnswersCount,
-		questions.length,
-		isInteractiveAssessment,
-		unitData,
-		assessmentTitle,
-		assessmentPath,
-		attemptNumber,
-		expectedXp,
-		sessionResults,
-		onerosterCourseSourcedId,
-		reportedQuestionIds.size,
-		contentType,
-		setProgressForResource,
-		beginProgressUpdate,
-		endProgressUpdate,
-		router
-	])
+		const saveResult = await errors.try(
+			saveAssessmentResult({
+				onerosterResourceSourcedId,
+				score,
+				correctAnswers: correctAnswersCount,
+				totalQuestions: finalTotalQuestions,
+				onerosterUserSourcedId,
+				onerosterCourseSourcedId,
+				metadata,
+				contentType,
+				isInteractiveAssessment,
+				onerosterComponentResourceSourcedId,
+				sessionResults,
+				attemptNumber,
+				assessmentTitle,
+				assessmentPath,
+				unitData,
+				expectedXp,
+				durationInSeconds: assessmentStartTimeRef.current
+					? Math.round((Date.now() - assessmentStartTimeRef.current.getTime()) / 1000)
+					: undefined,
+				userEmail: user?.primaryEmailAddress?.emailAddress,
+				shouldAwardXp
+			})
+		)
 
-	// Retake: ensure finalization completed, honor parent onRetake for explicit reset/remount
+		if (saveResult.error) {
+			throw errors.wrap(saveResult.error, "save assessment result")
+		}
+
+		if (xpResult.finalXp > 0 && shouldAwardXp) {
+			if (contentType === "Quiz") {
+				const toastId = toast.loading("Calculating XP…")
+				;(async () => {
+					const breakdownResult = await errors.try(
+						getBankedXpBreakdownForQuiz(onerosterResourceSourcedId, onerosterUserSourcedId)
+					)
+					if (breakdownResult.error) {
+						toast.success(`+${xpResult.finalXp} XP earned for this assessment`, { id: toastId })
+						return
+					}
+					const { articleXp, videoXp } = breakdownResult.data
+					toast.success(`+${xpResult.finalXp} XP earned for this assessment`, {
+						id: toastId,
+						description: (
+							<span className="text-black">
+								Banked XP Awarded:
+								<br />+ {videoXp} xp from videos
+								<br />+ {articleXp} xp from articles
+							</span>
+						)
+					})
+				})()
+			} else {
+				toast.success(`+${xpResult.finalXp} XP earned for this assessment`)
+			}
+		} else if (!shouldAwardXp) {
+			toast("No XP awarded", {
+				description: <span className="text-black">Already proficient on this assessment</span>
+			})
+		} else if (xpResult.finalXp === 0 && shouldAwardXp && !xpResult.penaltyApplied) {
+			toast("No XP awarded", {
+				description: <span className="text-black">Below 80% accuracy threshold</span>
+			})
+		}
+
+		return { score, ok: true as const }
+	}
+
+	// Retake: honor parent onRetake for explicit reset/remount
 	const handleReset = async () => {
-		if (!isFinalizationComplete) {
-			toast.info("Finishing up your result... please try again in a moment.")
-			return
-		}
 		if (onRetake) {
 			// Use the next attempt number as a hint to parent for UX
 			onRetake(attemptNumber + 1)
@@ -758,7 +649,6 @@ export function AssessmentStepper({
 		setShowSummary(false)
 		setSessionResults([])
 		setReportedQuestionIds(new Set())
-		hasSentCompletionEventRef.current = false
 		assessmentStartTimeRef.current = new Date()
 		router.refresh()
 	}
@@ -977,36 +867,74 @@ export function AssessmentStepper({
 		}
 	}
 
-	const goToNext = () => {
+	const goToNext = async () => {
 		// Clear any pending skip auto-advance
 		if (skipTimeoutRef.current !== null) {
 			clearTimeout(skipTimeoutRef.current)
 			skipTimeoutRef.current = null
 		}
 
-		if (isNavigatingRef.current) {
+		if (isNavigatingRef.current || isFinalizing) {
 			return
 		}
 		isNavigatingRef.current = true
 
-		setCurrentQuestionIndex((prevIndex) => {
-			const nextIndex = prevIndex + 1
-			const isLast = nextIndex >= questions.length
-			if (isLast) {
-				setShowSummary(true)
-				// Keep index unchanged at end
-				return prevIndex
+		const nextIndex = currentQuestionIndex + 1
+		const isLast = nextIndex >= questions.length
+		if (isLast) {
+			// Block on saving the assessment result before showing summary
+			setIsFinalizing(true)
+			beginProgressUpdate(onerosterResourceSourcedId)
+			const result = await errors.try(finalizeAndAnalyze())
+			if (result.error) {
+				setIsFinalizing(false)
+				endProgressUpdate(onerosterResourceSourcedId)
+				isNavigatingRef.current = false
+				toast.error("Could not save result. Please retry.")
+				return
 			}
+			// Update local sidebar progress overlay instead of full refresh
+			const score = result.data.score
+			setProgressForResource(onerosterResourceSourcedId, {
+				completed: true,
+				score,
+				proficiency: (() => {
+					if (score >= 1.0) return "proficient" as const
+					if (score >= 0.7) return "familiar" as const
+					return "attempted" as const
+				})()
+			})
+			const currentSlug = (assessmentPath || "").split("/").pop()
+			if (currentSlug) {
+				setProgressForResource(currentSlug, {
+					completed: true,
+					score,
+					proficiency: (() => {
+						if (score >= 1.0) return "proficient" as const
+						if (score >= 0.7) return "familiar" as const
+						return "attempted" as const
+					})()
+				})
+			}
+			endProgressUpdate(onerosterResourceSourcedId)
+			router.refresh()
+			setIsFinalizationComplete(true)
+			setIsFinalizing(false)
+			setShowSummary(true)
+			isNavigatingRef.current = false
+			return
+		}
 
-			// Reset per-question state atomically with the index change
+		// Not last: advance to next question and reset per-question state
+		setCurrentQuestionIndex((prevIndex) => {
+			const next = prevIndex + 1
 			setSelectedResponses({})
 			setExpectedResponses([])
 			setShowFeedback(false)
 			setIsAnswerCorrect(false)
 			setIsAnswerChecked(false)
 			setAttemptCount(0)
-
-			return nextIndex
+			return next
 		})
 
 		// Release navigation lock on next frame
@@ -1032,7 +960,9 @@ export function AssessmentStepper({
 		setShowFeedback(true)
 
 		// Move to next question after showing feedback
-		skipTimeoutRef.current = window.setTimeout(goToNext, 1500)
+		skipTimeoutRef.current = window.setTimeout(() => {
+			void goToNext()
+		}, 1500)
 	}
 
 	// OPEN REPORT POPOVER
@@ -1097,10 +1027,10 @@ export function AssessmentStepper({
 	// Determine button text and action
 	const getButtonConfig = () => {
 		if (isAnswerCorrect) {
-			return { text: "Continue", action: goToNext }
+			return { text: "Continue", action: () => void goToNext() }
 		}
 		if (hasExhaustedAttempts) {
-			return { text: "Next question", action: goToNext }
+			return { text: "Next question", action: () => void goToNext() }
 		}
 		if (isAnswerChecked && !isAnswerCorrect) {
 			return { text: "Try again", action: handleTryAgain }
@@ -1115,6 +1045,7 @@ export function AssessmentStepper({
 		expectedResponses.length > 0 &&
 		expectedResponses.every((id) => selectedResponses[id] !== "" && selectedResponses[id] !== undefined) &&
 		!isSubmitting &&
+		!isFinalizing &&
 		isAttemptReady
 
 	return (
