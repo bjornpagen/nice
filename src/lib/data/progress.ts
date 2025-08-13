@@ -52,10 +52,8 @@ export async function getUserUnitProgress(
 			 * 0-70% = attempted
 			 * 70-99.999% = familiar
 			 * 100% = proficient
-			 * 110% (1.1) = mastered (Khan Academy mastery upgrade)
 			 */
 			const calculateProficiency = (score: number): "attempted" | "familiar" | "proficient" | "mastered" => {
-				if (score >= 1.1) return "mastered"
 				if (score >= 1.0) return "proficient"
 				if (score >= 0.7) return "familiar"
 				return "attempted"
@@ -74,35 +72,37 @@ export async function getUserUnitProgress(
 				throw errors.wrap(resultsResponse.error, "fetch user progress")
 			}
 
-			// Process results to build the progress map
-			// Only process results with new '_ali' format line items
+			// Process results to build the progress map by selecting the newest result per resource
+			// Only consider results with new '_ali' format line items
+			const latestByResource = new Map<string, (typeof resultsResponse.data)[number]>()
 			for (const result of resultsResponse.data) {
-				// Skip results from old assessment line items (without '_ali' suffix)
 				if (!result.assessmentLineItem.sourcedId.endsWith("_ali")) {
 					continue
 				}
+				const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
+				const prev = latestByResource.get(resourceId)
+				const currentTime = new Date(result.scoreDate || 0).getTime()
+				const prevTime = prev ? new Date(prev.scoreDate || 0).getTime() : Number.NEGATIVE_INFINITY
+				if (!prev || currentTime > prevTime) {
+					latestByResource.set(resourceId, result)
+				}
+			}
 
-				// MODIFIED: Check if score is a valid number before using it.
-				if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
-					const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
+			for (const [resourceId, latest] of latestByResource.entries()) {
+				if (latest.scoreStatus === "fully graded" && typeof latest.score === "number") {
 					progressMap.set(resourceId, {
 						completed: true,
-						score: result.score,
-						proficiency: calculateProficiency(result.score)
+						score: latest.score,
+						proficiency: calculateProficiency(latest.score)
 					})
-					// MODIFIED: Handle partially graded items that have a score.
-				} else if (result.scoreStatus === "partially graded" && typeof result.score === "number") {
-					const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
+				} else if (latest.scoreStatus === "partially graded" && typeof latest.score === "number") {
 					progressMap.set(resourceId, {
 						completed: false,
-						score: result.score
+						score: latest.score
 					})
-					// MODIFIED: Handle completed items that have no score (like article views).
-				} else if (result.scoreStatus === "fully graded") {
-					const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
+				} else if (latest.scoreStatus === "fully graded") {
 					progressMap.set(resourceId, {
 						completed: true
-						// No score or proficiency is set.
 					})
 				}
 			}

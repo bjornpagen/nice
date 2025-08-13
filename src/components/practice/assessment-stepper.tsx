@@ -684,7 +684,6 @@ export function AssessmentStepper({
 				completed: true,
 				score,
 				proficiency: (() => {
-					if (score >= 1.1) return "mastered" as const
 					if (score >= 1.0) return "proficient" as const
 					if (score >= 0.7) return "familiar" as const
 					return "attempted" as const
@@ -697,7 +696,6 @@ export function AssessmentStepper({
 					completed: true,
 					score,
 					proficiency: (() => {
-						if (score >= 1.1) return "mastered" as const
 						if (score >= 1.0) return "proficient" as const
 						if (score >= 0.7) return "familiar" as const
 						return "attempted" as const
