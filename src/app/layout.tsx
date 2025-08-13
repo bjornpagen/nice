@@ -39,7 +39,7 @@ export default function RootLayout({
 						</UserSyncProvider>
 					</ClerkProvider>
 				</React.Suspense>
-				<Toaster />
+				<Toaster position="top-right" />
 			</body>
 		</html>
 	)
