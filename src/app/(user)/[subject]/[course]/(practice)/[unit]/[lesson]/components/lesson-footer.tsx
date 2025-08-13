@@ -1,5 +1,7 @@
 "use client"
 
+import { useUser } from "@clerk/nextjs"
+import * as errors from "@superbuilders/errors"
 import { BookCheck, ChevronRight, FileText, PenTool, Play, TestTube } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -7,7 +9,9 @@ import * as React from "react"
 import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { trackArticleView } from "@/lib/actions/tracking"
 import type { AssessmentProgress } from "@/lib/data/progress"
+import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type {
 	CourseResourceMaterial,
 	CourseUnitMaterial,
@@ -25,6 +29,7 @@ interface LessonFooterProps {
 export function LessonFooter({ coursePromise, progressPromise }: LessonFooterProps) {
 	const rawPathname = usePathname()
 	const pathname = normalizeString(rawPathname)
+	const { user } = useUser()
 	// Assert on the normalized path to ensure correctness before use.
 	assertNoEncodedColons(pathname, "lesson-footer pathname")
 	const course = React.use(coursePromise)
@@ -32,6 +37,16 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 
 	// Get lock status from course-wide context instead of props
 	const { resourceLockStatus } = useCourseLockStatus()
+
+	// delay gating for article completion button
+	const mountTimeRef = React.useRef<number>(Date.now())
+	const [now, setNow] = React.useState<number>(() => Date.now())
+	React.useEffect(() => {
+		const id = setInterval(() => setNow(Date.now()), 250)
+		return () => clearInterval(id)
+	}, [])
+
+	// reset dwell timer whenever navigating to a new, incomplete article
 
 	if (!course) {
 		return null
@@ -140,10 +155,13 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 	}
 
 	// Compute UI state from server progress only. Video completion comes from OneRoster via updateVideoProgress.
-	// Articles do not currently produce server-side completion; allow navigation regardless.
+	// Articles use an explicit completion button with a minimal dwell requirement.
 	const isArticle = currentResourceType === "Article"
 	const isServerCompleted = currentResourceId ? Boolean(progressMap.get(currentResourceId)?.completed) : false
-	const showDisabled = isArticle ? false : !isServerCompleted
+	const articleDelayActive = isArticle && !isServerCompleted && now - mountTimeRef.current < 10000
+	const countdownSeconds = articleDelayActive ? Math.ceil((10000 - (now - mountTimeRef.current)) / 1000) : 0
+
+	const showDisabled = isArticle ? articleDelayActive : !isServerCompleted
 	let disabledReason = ""
 	if (!isServerCompleted && !isArticle) {
 		if (currentResourceType === "Video") {
@@ -154,10 +172,54 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 	} else if (nextLockedByServer) {
 		disabledReason = "Complete the previous activity to unlock next"
 	}
+	if (isArticle && articleDelayActive) {
+		disabledReason = "Please read for 10 seconds to continue"
+	}
 
-	const primaryButtonLabel = isArticle ? (isServerCompleted ? "Continue" : "Done Reading") : "Continue"
-	const shouldNavigate = isArticle ? true : !showDisabled
-	const handlePrimaryClick = () => {}
+	let primaryButtonLabel = "Continue"
+	if (isArticle) {
+		if (isServerCompleted) {
+			primaryButtonLabel = "Continue"
+		} else if (countdownSeconds > 0) {
+			primaryButtonLabel = `Done Reading (${countdownSeconds}s)`
+		} else {
+			primaryButtonLabel = "Done Reading"
+		}
+	}
+	const shouldNavigate = isArticle ? !showDisabled : !isServerCompleted
+	const handlePrimaryClick = () => {
+		if (!isArticle) return
+		if (!currentResourceId) return
+
+		// derive subject/course from path
+		const parts = pathname.split("/").filter(Boolean)
+		const subjectSlug = parts[0]
+		const courseSlug = parts[1]
+		if (!subjectSlug || !courseSlug) return
+
+		// validate user metadata for OneRoster sourced id
+		let onerosterUserSourcedId: string | undefined
+		if (user?.publicMetadata) {
+			const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+			if (parsed.success) {
+				onerosterUserSourcedId = parsed.data.sourceId
+			}
+		}
+		if (typeof onerosterUserSourcedId !== "string") return
+
+		void (async () => {
+			const result = await errors.try(
+				trackArticleView(onerosterUserSourcedId, currentResourceId, {
+					subjectSlug,
+					courseSlug
+				})
+			)
+			if (result.error) {
+				// non-blocking; allow navigation regardless
+				return
+			}
+		})()
+	}
 
 	return (
 		<div className="bg-white border-t border-gray-200 shadow-lg">
@@ -176,27 +238,19 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 
 					<div className="flex items-center gap-3">
 						<div className="flex flex-col items-end">
-							{!isArticle && showDisabled ? (
+							{showDisabled ? (
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<span className="inline-flex">
 											<Button
-												asChild={shouldNavigate}
 												className="bg-blue-600 hover:bg-blue-700 text-white"
 												disabled
 												onClick={handlePrimaryClick}
 											>
-												{shouldNavigate ? (
-													<Link href={nextItem.path}>
-														{primaryButtonLabel}
-														<ChevronRight className="w-4 h-4 ml-1" />
-													</Link>
-												) : (
-													<span className="flex items-center">
-														{primaryButtonLabel}
-														<ChevronRight className="w-4 h-4 ml-1" />
-													</span>
-												)}
+												<span className="flex items-center">
+													{primaryButtonLabel}
+													<ChevronRight className="w-4 h-4 ml-1" />
+												</span>
 											</Button>
 										</span>
 									</TooltipTrigger>

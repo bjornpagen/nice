@@ -5,11 +5,9 @@ import * as errors from "@superbuilders/errors"
 import { Lock, Unlock } from "lucide-react"
 import * as React from "react"
 import { useCourseLockStatus } from "@/app/(user)/[subject]/[course]/components/course-lock-status-provider"
-import { useLessonProgress } from "@/components/practice/lesson-progress-context"
 import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
-import { trackArticleView } from "@/lib/actions/tracking"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { ArticlePageData } from "@/lib/types/page"
 
@@ -24,8 +22,6 @@ export function Content({
 	const params = React.use(paramsPromise)
 	const { user } = useUser()
 	const startTimeRef = React.useRef<Date | null>(null)
-	const { setCurrentResourceCompleted, setProgressForResource, beginProgressUpdate, endProgressUpdate } =
-		useLessonProgress()
 	const { resourceLockStatus, setResourceLockStatus, initialResourceLockStatus, storageKey } = useCourseLockStatus()
 	const allUnlocked = Object.values(resourceLockStatus).every((isLocked) => !isLocked)
 	const isLocked = resourceLockStatus[article.id] === true
@@ -69,29 +65,6 @@ export function Content({
 		}
 
 		if (onerosterUserSourcedId && article.id) {
-			// Track article view on mount and refresh route so server-fetched progress updates immediately
-			void (async () => {
-				beginProgressUpdate(article.id)
-				const result = await errors.try(
-					trackArticleView(onerosterUserSourcedId, article.id, {
-						subjectSlug: params.subject,
-						courseSlug: params.course
-					})
-				)
-				if (!result.error) {
-					// update local overlay for immediate sidebar state (by OneRoster id)
-					setProgressForResource(article.id, { completed: true })
-					// also update by slug id for the injected sidebar row on current page
-					try {
-						const currentSlug = params.article
-						if (currentSlug) {
-							setProgressForResource(currentSlug, { completed: true })
-						}
-					} catch {}
-				}
-				endProgressUpdate(article.id)
-			})()
-
 			// Map subject string to the enum value
 			const subjectMapping: Record<string, "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"> = {
 				science: "Science",
@@ -135,8 +108,6 @@ export function Content({
 							process: false
 						}
 						void sendCaliperTimeSpentEvent(actorForCleanup, contextForCleanup, durationInSeconds)
-						// Mark article as completed locally to enable Continue
-						setCurrentResourceCompleted(true)
 					}
 				}
 			}
@@ -150,10 +121,6 @@ export function Content({
 		params.unit,
 		params.lesson,
 		params.article,
-		setCurrentResourceCompleted,
-		setProgressForResource,
-		beginProgressUpdate,
-		endProgressUpdate,
 		isLocked
 	])
 
