@@ -56,8 +56,8 @@ export async function getUserUnitProgress(
 			 * 100% = proficient
 			 */
 			const calculateProficiency = (score: number): "attempted" | "familiar" | "proficient" | "mastered" => {
-				if (score >= 1.0) return "proficient"
-				if (score >= 0.7) return "familiar"
+				if (score >= 100) return "proficient"
+				if (score >= 70) return "familiar"
 				return "attempted"
 			}
 
@@ -101,15 +101,17 @@ export async function getUserUnitProgress(
 
 			for (const [resourceId, latest] of latestByResource.entries()) {
 				if (latest.scoreStatus === "fully graded" && typeof latest.score === "number") {
+					const normalizedScore = latest.score <= 1.1 ? latest.score * 100 : latest.score
 					progressMap.set(resourceId, {
 						completed: true,
-						score: latest.score,
-						proficiency: calculateProficiency(latest.score)
+						score: normalizedScore,
+						proficiency: calculateProficiency(normalizedScore)
 					})
 				} else if (latest.scoreStatus === "partially graded" && typeof latest.score === "number") {
+					const normalizedScore = latest.score <= 1.1 ? latest.score * 100 : latest.score
 					progressMap.set(resourceId, {
 						completed: false,
-						score: latest.score
+						score: normalizedScore
 					})
 				} else if (latest.scoreStatus === "fully graded") {
 					progressMap.set(resourceId, {
@@ -147,8 +149,8 @@ export interface ProgressPageData {
 }
 
 function getProficiencyText(score: number): "Proficient" | "Familiar" | "Attempted" {
-	if (score >= 0.8) return "Proficient"
-	if (score >= 0.5) return "Familiar"
+	if (score >= 80) return "Proficient"
+	if (score >= 50) return "Familiar"
 	return "Attempted"
 }
 

@@ -171,7 +171,8 @@ export async function updateProficiencyFromAssessment(
 				)[0]
 
 				if (latestResult && typeof latestResult.score === "number") {
-					return { onerosterResourceSourcedId, currentScore: latestResult.score }
+					const normalized = latestResult.score <= 1.1 ? latestResult.score * 100 : latestResult.score
+					return { onerosterResourceSourcedId, currentScore: normalized }
 				}
 			}
 

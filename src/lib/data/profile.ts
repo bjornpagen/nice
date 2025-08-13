@@ -229,8 +229,9 @@ async function fetchUnitProficiencies(
 
 		if (result.scoreStatus === "fully graded" && typeof result.score === "number") {
 			const resourceId = getResourceIdFromLineItem(result.assessmentLineItem.sourcedId)
+			const normalizedScore = result.score <= 1.1 ? result.score * 100 : result.score
 			resultsMap.set(resourceId, {
-				score: result.score,
+				score: normalizedScore,
 				isFullyGraded: true
 			})
 		}
@@ -297,7 +298,7 @@ async function fetchUnitProficiencies(
 
 		for (const contentId of assessableContentIds) {
 			const result = resultsMap.get(contentId)
-			if (result?.isFullyGraded && result.score >= 1.0) {
+			if (result?.isFullyGraded && result.score >= 100) {
 				proficientCount++
 				logger.debug("Found proficient result", {
 					contentId,

@@ -469,17 +469,17 @@ export function AssessmentStepper({
 	const finalizeAndAnalyze = async () => {
 		// If IDs are missing (unauthenticated or misconfigured), skip blocking save
 		if (!onerosterResourceSourcedId || !userSourceId) {
-			return { score: 1, ok: true as const }
+			return { score: 100, ok: true as const }
 		}
 
 		const onerosterUserSourcedId = userSourceId
 		if (typeof onerosterUserSourcedId !== "string") {
-			return { score: 1, ok: true as const }
+			return { score: 100, ok: true as const }
 		}
 
 		const finalTotalQuestions = questions.length - reportedQuestionIds.size
 		const accuracy = finalTotalQuestions > 0 ? (correctAnswersCount / finalTotalQuestions) * 100 : 100
-		const score = accuracy / 100
+		const score = accuracy
 
 		// Note: XP farming prevention is now handled server-side
 
@@ -856,8 +856,8 @@ export function AssessmentStepper({
 				completed: true,
 				score,
 				proficiency: (() => {
-					if (score >= 1.0) return "proficient" as const
-					if (score >= 0.7) return "familiar" as const
+					if (score >= 100) return "proficient" as const
+					if (score >= 70) return "familiar" as const
 					return "attempted" as const
 				})()
 			})
@@ -867,8 +867,8 @@ export function AssessmentStepper({
 					completed: true,
 					score,
 					proficiency: (() => {
-						if (score >= 1.0) return "proficient" as const
-						if (score >= 0.7) return "familiar" as const
+						if (score >= 100) return "proficient" as const
+						if (score >= 70) return "familiar" as const
 						return "attempted" as const
 					})()
 				})

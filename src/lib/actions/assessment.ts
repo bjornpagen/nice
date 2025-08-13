@@ -258,12 +258,13 @@ export async function checkExistingProficiency(
 		throw errors.new("proficiency check: score must be a number")
 	}
 
-	const isProficient = latestResult.score >= XP_PROFICIENCY_THRESHOLD
+	const normalizedScore = latestResult.score <= 1.1 ? latestResult.score * 100 : latestResult.score
+	const isProficient = normalizedScore >= XP_PROFICIENCY_THRESHOLD
 
 	logger.info("proficiency check complete", {
 		onerosterUserSourcedId,
 		onerosterAssessmentSourcedId,
-		currentScore: latestResult.score,
+		currentScore: normalizedScore,
 		isProficient
 	})
 

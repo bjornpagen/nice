@@ -37,7 +37,7 @@ export function aggregateUnitProficiencies(
 		let proficientCount = 0
 		for (const contentId of assessableContentIds) {
 			const progress = progressMap.get(contentId)
-			if (progress?.completed && progress?.score && progress.score >= 1.0) {
+			if (progress?.completed && progress?.score && progress.score >= 100) {
 				proficientCount++
 			}
 		}

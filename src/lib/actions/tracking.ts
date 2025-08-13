@@ -42,7 +42,7 @@ export async function trackArticleView(
 			student: { sourcedId: onerosterUserSourcedId, type: "user" as const },
 			scoreStatus: "fully graded" as const,
 			scoreDate: new Date().toISOString(),
-			score: 1.0 // Use 1.0 to represent "completed"
+			score: 100 // Use 100 to represent "completed"
 		}
 	}
 
@@ -128,8 +128,8 @@ export async function updateVideoProgress(
 	// Define the completion threshold (shared constant)
 	const isCompleted = percentComplete >= VIDEO_COMPLETION_THRESHOLD_PERCENT
 
-	// The score is a float from 0.0 to 1.0 based on current playback position.
-	const newScore = isCompleted ? 1.0 : Number.parseFloat((percentComplete / 100).toFixed(2))
+	// The score is a percentage (0-100) based on current playback position.
+	const newScore = isCompleted ? 100 : percentComplete
 
 	// Log whether this is marking the video as complete
 	if (isCompleted) {
@@ -152,7 +152,7 @@ export async function updateVideoProgress(
 	const existingResult = await errors.try(oneroster.getResult(onerosterResultSourcedId))
 	if (existingResult.error) {
 		// To preserve monotonicity, avoid sending a potentially lower score if we can't compare
-		if (newScore < 1.0) {
+		if (newScore < 100) {
 			logger.warn("skipping video progress update due to unknown existing score", {
 				onerosterResultSourcedId,
 				proposedScore: newScore,
@@ -162,8 +162,10 @@ export async function updateVideoProgress(
 		}
 		logger.debug("no existing video result, proceeding with completion", { onerosterResultSourcedId })
 	} else {
-		const existingScore = typeof existingResult.data?.score === "number" ? existingResult.data.score : undefined
-		const existingIsCompleted = existingScore !== undefined && existingScore >= VIDEO_COMPLETION_THRESHOLD_PERCENT / 100
+		const rawExistingScore = typeof existingResult.data?.score === "number" ? existingResult.data.score : undefined
+		const existingScore =
+			rawExistingScore !== undefined ? (rawExistingScore <= 1.1 ? rawExistingScore * 100 : rawExistingScore) : undefined
+		const existingIsCompleted = existingScore !== undefined && existingScore >= VIDEO_COMPLETION_THRESHOLD_PERCENT
 		if (existingScore !== undefined && existingScore >= newScore) {
 			finalScore = existingScore
 		}
@@ -562,8 +564,9 @@ export async function getVideoProgress(
 		return null
 	}
 
-	// Convert score (0.0-1.0) back to percentage (0-100)
-	const percentComplete = Math.round(assessmentResult.score * 100)
+	// Score may be 0.0-1.0 from legacy or 0-100 new. Normalize to percentage (0-100).
+	const rawScore = assessmentResult.score
+	const percentComplete = Math.round(rawScore <= 1.1 ? rawScore * 100 : rawScore)
 
 	logger.debug("video progress retrieved", {
 		onerosterUserSourcedId,

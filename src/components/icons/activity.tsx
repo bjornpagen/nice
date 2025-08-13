@@ -35,7 +35,7 @@ export function ActivityIcon({
 	color?: string
 	className?: string
 	completed?: boolean
-	progress?: number // Progress from 0 to 1 (0% to 100%)
+	progress?: number // Progress percentage from 0 to 100
 	isLocked?: boolean // Add isLocked prop
 }): React.ReactNode {
 	const config = activityIconVariants[variant]
@@ -78,8 +78,8 @@ export function ActivityIcon({
 
 	// Calculate if we should show partial progress
 	const hasProgress = progress !== undefined && progress > 0
-	const isFullyComplete = completed && (!hasProgress || progress >= 1)
-	const progressPercentage = hasProgress ? Math.min(Math.max(progress * 100, 0), 100) : 0
+	const isFullyComplete = completed && (!hasProgress || progress >= 100)
+	const progressPercentage = hasProgress ? Math.min(Math.max(progress, 0), 100) : 0
 
 	return (
 		<div className="relative inline-block">

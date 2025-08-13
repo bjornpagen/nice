@@ -1,6 +1,6 @@
 // Constants defining the XP award thresholds and multipliers.
 export const BONUS_MULTIPLIER = 1.25 // 25% bonus for perfect scores
-export const MASTERY_THRESHOLD = 0.8 // 80% accuracy for full XP
+export const MASTERY_THRESHOLD = 80 // 80% accuracy for full XP
 export const MIN_SECONDS_PER_QUESTION = 5 // Minimum reasonable time per question
 
 /**
@@ -62,7 +62,7 @@ export function calculateAssessmentXp(
 		if (accuracy === 100) {
 			multiplier = BONUS_MULTIPLIER
 			reason = "First attempt: 100% accuracy bonus"
-		} else if (accuracy >= MASTERY_THRESHOLD * 100) {
+		} else if (accuracy >= MASTERY_THRESHOLD) {
 			multiplier = 1.0
 			reason = "First attempt: mastery achieved"
 		} else {
@@ -73,7 +73,7 @@ export function calculateAssessmentXp(
 		if (accuracy === 100) {
 			multiplier = 1.0
 			reason = `Attempt ${attemptNumber}: 100% accuracy`
-		} else if (accuracy >= MASTERY_THRESHOLD * 100) {
+		} else if (accuracy >= MASTERY_THRESHOLD) {
 			multiplier = 0.5
 			reason = `Attempt ${attemptNumber}: mastery achieved (reduced XP)`
 		} else {
