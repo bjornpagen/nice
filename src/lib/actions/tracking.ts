@@ -375,23 +375,9 @@ export async function saveAssessmentResult(
 			? `${baseResultSourcedId}_attempt_${attemptNumber}`
 			: baseResultSourcedId
 
-	// Mastery preservation logic for individual exercises
-	let finalScore = assessmentScore // Start with the raw score
-
-	if (assessmentScore === 1.0 && contentType === "Exercise") {
-		// Check current score for this exercise to preserve mastery
-		const currentResultResult = await errors.try(oneroster.getResult(onerosterResultSourcedId))
-
-		if (!currentResultResult.error && currentResultResult.data?.score === 1.1) {
-			finalScore = 1.1 // Preserve mastery
-			logger.info("preserving mastery score", {
-				exerciseId: resourceId,
-				previousScore: 1.1,
-				newAttemptScore: assessmentScore,
-				preservedScore: finalScore
-			})
-		}
-	}
+	// Unified scoring: remove exercise-only mastery preservation (1.1).
+	// Use the raw score across all assessment types for consistency.
+	const finalScore = assessmentScore
 
 	const resultPayload = {
 		result: {
