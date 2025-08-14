@@ -346,6 +346,17 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 	}
 	const quizQuestionCountMap = new Map<string, number>(quizCountsResult.data.map((r) => [r.id, r.count]))
 
+	// Build helper sets to ensure every exercise gets an ALI exactly once
+	const quizAssessmentIds = new Set(allQuizAssessments.map((a) => a.id))
+	const exerciseIdsAttachedToQuizzes = new Set<string>()
+	for (const [assessmentId, exerciseIds] of exercisesByAssessmentId.entries()) {
+		if (quizAssessmentIds.has(assessmentId)) {
+			for (const exerciseId of exerciseIds) {
+				exerciseIdsAttachedToQuizzes.add(exerciseId)
+			}
+		}
+	}
+
 	// 3. Transform the data into the OneRoster structure.
 	logger.debug("transforming database entities to oneroster objects", { courseId })
 
@@ -631,6 +642,25 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								}
 							})
 						}
+
+						// --- NEW: Ensure exercises always have an ALI, even when not attached to a quiz ---
+						if (content.type === "Exercise" && !exerciseIdsAttachedToQuizzes.has(content.id)) {
+							onerosterPayload.assessmentLineItems.push({
+								sourcedId: `${contentSourcedId}_ali`,
+								status: "active",
+								title: content.title,
+								componentResource: {
+									sourcedId: `nice_${lesson.id}_${content.id}`
+								},
+								course: {
+									sourcedId: `nice_${course.id}`
+								},
+								metadata: {
+									lessonType: "exercise",
+									courseSourcedId: `nice_${course.id}`
+								}
+							})
+						}
 					}
 
 					onerosterPayload.componentResources.push({
@@ -715,6 +745,8 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 				resource: { sourcedId: assessmentSourcedId, type: "resource" },
 				sortOrder: assessment.ordering
 			})
+
+			// Note: Unit-level assessments are Quiz or UnitTest; exercises are represented as lesson content.
 		}
 	}
 
