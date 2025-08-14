@@ -83,6 +83,7 @@ export async function getQuestionDetails(
 
 	const row = result.data[0]
 	if (!row || row.xml === null) {
+		logger.error("question not found or has no xml", { questionId })
 		throw errors.new("question not found or has no xml")
 	}
 

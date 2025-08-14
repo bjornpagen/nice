@@ -187,6 +187,7 @@ export class CaliperApiClient {
 		this.#tokenPromise = null
 
 		if (tokenResult.error) {
+			logger.error("token generation failed", { error: tokenResult.error })
 			throw tokenResult.error
 		}
 		this.#accessToken = tokenResult.data
@@ -325,6 +326,7 @@ export class CaliperApiClient {
 				return retryValidation.data
 			}
 
+			logger.error("caliper api error", { status: response.status, endpoint })
 			throw errors.new(`caliper api error: status ${response.status} on ${endpoint}`)
 		}
 

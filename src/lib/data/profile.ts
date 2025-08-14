@@ -699,6 +699,7 @@ export async function fetchProfileCoursesData(): Promise<ProfileCoursesPageData>
 	// Cannot use "use cache" here because currentUser() accesses dynamic headers
 	const user = await currentUser()
 	if (!user) {
+		logger.error("user not authenticated")
 		throw errors.new("user not authenticated")
 	}
 

@@ -52,6 +52,7 @@ export async function awardBankedXpForExercise(params: {
 		oneroster.getAllComponentResources({ filter: `resource.sourcedId='${exerciseResourceId}' AND status='active'` })
 	)
 	if (exerciseCrResult.error) {
+		logger.error("exercise component resource fetch failed", { error: exerciseCrResult.error, exerciseResourceId })
 		throw errors.wrap(exerciseCrResult.error, "exercise component resource fetch")
 	}
 	const exerciseComponentResource = exerciseCrResult.data[0]
@@ -65,6 +66,10 @@ export async function awardBankedXpForExercise(params: {
 		oneroster.getCourseComponents({ filter: `sourcedId='${lessonComponentId}' AND status='active'` })
 	)
 	if (lessonComponentResult.error) {
+		logger.error("lesson component fetch for unit resolution failed", {
+			error: lessonComponentResult.error,
+			lessonComponentId
+		})
 		throw errors.wrap(lessonComponentResult.error, "lesson component fetch for unit resolution")
 	}
 	const lessonComponent = lessonComponentResult.data[0]
@@ -85,6 +90,7 @@ export async function awardBankedXpForExercise(params: {
 		})
 	)
 	if (unitLessonsResult.error) {
+		logger.error("unit lessons fetch failed", { error: unitLessonsResult.error })
 		throw errors.wrap(unitLessonsResult.error, "unit lessons fetch")
 	}
 
@@ -104,6 +110,7 @@ export async function awardBankedXpForExercise(params: {
 			})
 		)
 		if (lessonCrResult.error) {
+			logger.error("lesson component resources fetch failed", { error: lessonCrResult.error, lessonIds })
 			throw errors.wrap(lessonCrResult.error, "lesson component resources fetch")
 		}
 		componentResources = lessonCrResult.data.map((cr) => ({
@@ -119,6 +126,7 @@ export async function awardBankedXpForExercise(params: {
 			oneroster.getAllComponentResources({ filter: `courseComponent.sourcedId='${parentUnitId}' AND status='active'` })
 		)
 		if (unitCrResult.error) {
+			logger.error("unit-level component resources fetch failed", { error: unitCrResult.error, parentUnitId })
 			throw errors.wrap(unitCrResult.error, "unit-level component resources fetch")
 		}
 		componentResources = unitCrResult.data.map((cr) => ({
@@ -137,6 +145,10 @@ export async function awardBankedXpForExercise(params: {
 		oneroster.getAllResources({ filter: `sourcedId@'${allResourceIds.join(",")}' AND status='active'` })
 	)
 	if (allResourcesResult.error) {
+		logger.error("unit resources fetch for exercise detection failed", {
+			error: allResourcesResult.error,
+			allResourceIds
+		})
 		throw errors.wrap(allResourcesResult.error, "unit resources fetch for exercise detection")
 	}
 	const resourceMap = new Map<string, Resource>()
@@ -308,6 +320,7 @@ export async function getBankedXpBreakdownForQuiz(
 		oneroster.getAllComponentResources({ filter: `resource.sourcedId='${quizResourceId}' AND status='active'` })
 	)
 	if (quizCrResult.error) {
+		logger.error("quiz component resource fetch failed", { error: quizCrResult.error, quizResourceId })
 		throw errors.wrap(quizCrResult.error, "quiz component resource fetch")
 	}
 	const quizComponentResource = quizCrResult.data[0]
@@ -323,6 +336,7 @@ export async function getBankedXpBreakdownForQuiz(
 		oneroster.getAllComponentResources({ filter: `courseComponent.sourcedId='${parentUnitId}' AND status='active'` })
 	)
 	if (unitCrResult.error) {
+		logger.error("unit component resources fetch failed", { error: unitCrResult.error, parentUnitId })
 		throw errors.wrap(unitCrResult.error, "unit component resources fetch")
 	}
 
@@ -332,6 +346,10 @@ export async function getBankedXpBreakdownForQuiz(
 		oneroster.getAllResources({ filter: `sourcedId@'${unitResourceIds.join(",")}' AND status='active'` })
 	)
 	if (unitResourcesResult.error) {
+		logger.error("unit resources fetch for quiz detection failed", {
+			error: unitResourcesResult.error,
+			unitResourceIds
+		})
 		throw errors.wrap(unitResourcesResult.error, "unit resources fetch for quiz detection")
 	}
 
@@ -365,6 +383,7 @@ export async function getBankedXpBreakdownForQuiz(
 		})
 	)
 	if (unitComponentsResult.error) {
+		logger.error("unit components fetch failed", { error: unitComponentsResult.error, parentUnitId })
 		throw errors.wrap(unitComponentsResult.error, "unit components fetch")
 	}
 
@@ -384,6 +403,7 @@ export async function getBankedXpBreakdownForQuiz(
 		})
 	)
 	if (lessonCrResult.error) {
+		logger.error("lesson component resources fetch failed", { error: lessonCrResult.error, lessonComponentSourcedIds })
 		throw errors.wrap(lessonCrResult.error, "lesson component resources fetch")
 	}
 
@@ -396,6 +416,7 @@ export async function getBankedXpBreakdownForQuiz(
 		oneroster.getAllResources({ filter: `sourcedId@'${resourceIds.join(",")}' AND status='active'` })
 	)
 	if (resourcesResult.error) {
+		logger.error("lesson resources fetch for breakdown failed", { error: resourcesResult.error, resourceIds })
 		throw errors.wrap(resourcesResult.error, "lesson resources fetch for breakdown")
 	}
 

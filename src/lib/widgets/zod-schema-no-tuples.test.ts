@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type { z } from "zod"
 import { typedSchemas } from "@/lib/widgets/generators"
 
@@ -94,6 +95,7 @@ describe("Zod Schema Tuple Ban", () => {
 			const hasTuples = containsTuple(zodSchema)
 
 			if (hasTuples) {
+				logger.error("Widget schema contains tuple types which are not compatible with OpenAI's API", { widgetType })
 				throw errors.new(
 					`Widget schema '${widgetType}' contains tuple types which are not compatible with OpenAI's API. ` +
 						"Replace tuples with arrays and add runtime validation. " +

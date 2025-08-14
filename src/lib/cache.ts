@@ -86,6 +86,7 @@ export async function redisCache<T>(
 		keysBeingFetched.delete(key)
 
 		if (callbackResult.error) {
+			logger.error("callback failed in cache", { error: callbackResult.error, key })
 			throw callbackResult.error
 		}
 

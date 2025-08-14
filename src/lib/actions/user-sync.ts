@@ -32,6 +32,7 @@ export async function syncUserWithOneRoster(): Promise<SyncUserResponse> {
 	// Get the authenticated user
 	const user = await currentUser()
 	if (!user) {
+		logger.error("user not authenticated")
 		throw errors.new("user not authenticated")
 	}
 

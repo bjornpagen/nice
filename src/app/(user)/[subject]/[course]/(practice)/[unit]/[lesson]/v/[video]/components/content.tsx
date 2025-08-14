@@ -313,6 +313,7 @@ export function Content({
 			if (sourceId && user) {
 				const userEmail = user.primaryEmailAddress?.emailAddress
 				if (!userEmail) {
+					logger.error("video tracking: user email required for caliper event", { sourceId })
 					throw errors.new("video tracking: user email required for caliper event")
 				}
 

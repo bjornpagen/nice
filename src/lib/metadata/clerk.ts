@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 
 /**
@@ -66,6 +67,7 @@ export type ClerkUserPublicMetadata = z.infer<typeof ClerkUserPublicMetadataSche
 export function parseUserPublicMetadata(metadata: unknown): ClerkUserPublicMetadata {
 	const result = ClerkUserPublicMetadataSchema.safeParse(metadata)
 	if (!result.success) {
+		logger.error("invalid user metadata", { error: result.error })
 		throw errors.wrap(result.error, "invalid user metadata")
 	}
 	return result.data

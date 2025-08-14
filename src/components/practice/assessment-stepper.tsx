@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import confetti from "canvas-confetti"
 import { Lock, Unlock } from "lucide-react"
 import Image from "next/image"
@@ -687,11 +688,13 @@ export function AssessmentStepper({
 		}
 
 		if (!result.data) {
+			logger.error("question response: missing result data")
 			throw errors.new("question response: missing result data")
 		}
 
 		const isCorrect = result.data.isCorrect
 		if (typeof isCorrect !== "boolean") {
+			logger.error("question response: invalid correctness indicator", { isCorrect })
 			throw errors.new("question response: invalid correctness indicator")
 		}
 
@@ -780,16 +783,16 @@ export function AssessmentStepper({
 				totalQuestions: finalSummaryData.totalQuestions,
 				xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
 					? {
-							penaltyXp:
-								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
-									? finalSummaryData.xpPenaltyInfo.penaltyXp
-									: 0,
-							reason:
-								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
-									? finalSummaryData.xpPenaltyInfo.reason
-									: "Unknown penalty reason",
-							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
-						}
+						penaltyXp:
+							typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+								? finalSummaryData.xpPenaltyInfo.penaltyXp
+								: 0,
+						reason:
+							typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+								? finalSummaryData.xpPenaltyInfo.reason
+								: "Unknown penalty reason",
+						avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+					}
 					: undefined
 			})
 

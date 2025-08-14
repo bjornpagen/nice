@@ -65,7 +65,7 @@ export function CourseLockStatusProvider({
 export function useCourseLockStatus() {
 	const context = React.useContext(CourseLockStatusContext)
 	if (!context) {
-		logger.error("useCourseLockStatus hook used outside provider", {})
+		logger.error("useCourseLockStatus hook used outside provider")
 		throw errors.new("useCourseLockStatus must be used within a CourseLockStatusProvider")
 	}
 	return context

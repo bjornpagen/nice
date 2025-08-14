@@ -177,5 +177,6 @@ export async function paraphraseQtiStimulus(sourceQtiXml: string): Promise<strin
 	}
 
 	// This should never be reached due to the throw in the error handling above
+	logger.error("unexpected end of retry loop")
 	throw errors.new("unexpected end of retry loop")
 }

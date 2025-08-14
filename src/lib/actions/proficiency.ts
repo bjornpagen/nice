@@ -57,6 +57,7 @@ export async function updateProficiencyFromAssessment(
 		throw errors.wrap(componentResourceResult.error, "fetch component resource")
 	}
 	if (!componentResourceResult.data) {
+		logger.error("component resource data is null", { componentResourceId: onerosterComponentResourceSourcedId })
 		throw errors.new("component resource data is null")
 	}
 	const resourceSourcedId = componentResourceResult.data.resource.sourcedId
@@ -70,6 +71,7 @@ export async function updateProficiencyFromAssessment(
 		throw errors.wrap(resourceResult.error, "fetch resource")
 	}
 	if (!resourceResult.data) {
+		logger.error("resource data is null", { resourceSourcedId })
 		throw errors.new("resource data is null")
 	}
 

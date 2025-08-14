@@ -342,6 +342,7 @@ export async function fetchCoursePageData(
 						pathSegment = "test"
 						break
 					default:
+						logger.error("unknown assessment type", { assessmentType })
 						throw errors.new(`unknown assessment type: ${assessmentType}`)
 				}
 

@@ -158,7 +158,7 @@ export async function prepareUserQuestionSet(options: {
 }): Promise<Question[]> {
 	const user = await currentUser()
 	if (!user) {
-		logger.error("user authentication required for interactive assessment", {})
+		logger.error("user authentication required for interactive assessment")
 		throw errors.new("user authentication required")
 	}
 	const userMeta = parseUserPublicMetadata(user.publicMetadata)

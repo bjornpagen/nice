@@ -179,9 +179,11 @@ async function main() {
 							if (lessonChild.type === "Video" && !videosMap.has(lessonChild.id)) {
 								// Validate required fields for videos
 								if (!lessonChild.youtubeId) {
+									logger.error("video missing youtubeId", { videoId: lessonChild.id })
 									throw errors.new("video missing youtubeId")
 								}
 								if (lessonChild.duration == null) {
+									logger.error("video missing duration", { videoId: lessonChild.id })
 									throw errors.new("video missing duration")
 								}
 
@@ -196,6 +198,7 @@ async function main() {
 								})
 							} else if (lessonChild.type === "Article" && !articlesMap.has(lessonChild.id)) {
 								if (!lessonChild.translatedPerseusContent) {
+									logger.error("article missing perseus content", { articleId: lessonChild.id })
 									throw errors.new("article missing perseus content")
 								}
 
@@ -279,9 +282,11 @@ async function main() {
 				if (!questionsMap.has(question.id)) {
 					// Validate required fields for questions
 					if (!question.sha) {
+						logger.error("question missing sha", { questionId: question.id })
 						throw errors.new("question missing sha")
 					}
 					if (!question.parsedData) {
+						logger.error("question missing parsedData", { questionId: question.id })
 						throw errors.new("question missing parsedData")
 					}
 

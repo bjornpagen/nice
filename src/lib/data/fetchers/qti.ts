@@ -35,6 +35,7 @@ export async function getAssessmentItems(identifiers: string[]): Promise<Assessm
 	return identifiers.map((id) => {
 		const item = map.get(id)
 		if (!item) {
+			logger.error("qti assessment item not found", { id })
 			throw errors.new(`qti assessment item not found: ${id}`)
 		}
 		return item

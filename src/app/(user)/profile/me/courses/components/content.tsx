@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { useRouter } from "next/navigation"
 import * as React from "react"
 import { toast } from "sonner"
@@ -56,6 +57,7 @@ function CourseGridRow({ courses }: { courses: ProfileCourse[] }) {
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 			{courses.map((course, idx) => {
 				if (!course.units) {
+					logger.error("course units: missing required data", { courseId: course.id })
 					throw errors.new("course units: missing required data")
 				}
 				return (

@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { redirect } from "next/navigation"
 import { connection } from "next/server"
 import { findResourcePath } from "@/lib/data/resource-redirect"
@@ -13,6 +14,7 @@ export default async function ArticleRedirectPage({ params }: { params: Promise<
 	const path = await findResourcePath(normalizedSlug, "article")
 
 	if (!path) {
+		logger.error("Article not found", { slug: normalizedSlug })
 		throw errors.new("Article not found")
 	}
 

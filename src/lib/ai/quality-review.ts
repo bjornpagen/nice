@@ -159,6 +159,9 @@ async function reviewSingleQti(xml: string, sourceContext: QtiSourceContext): Pr
 
 	const parsed = response.choices[0]?.message.parsed
 	if (!parsed) {
+		logger.error("ai quality review: no parsed content returned from openai", {
+			responseChoices: response.choices.length
+		})
 		throw errors.new("ai quality review: no parsed content returned from openai")
 	}
 

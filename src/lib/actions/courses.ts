@@ -15,6 +15,7 @@ const ONEROSTER_ORG_ID = "f251f08b-61de-4ffa-8ff3-3e56e1d75a60"
 
 // DEPRECATED: This action was ambiguous and could lead to destructive behavior.
 export async function saveUserCourses(_: string[]) {
+	logger.error("saveUserCourses deprecated use setUserEnrollmentsByCourseId or enrollUserInCoursesByCourseId")
 	throw errors.new("saveUserCourses deprecated use setUserEnrollmentsByCourseId or enrollUserInCoursesByCourseId")
 }
 
@@ -23,6 +24,7 @@ type UpdateEnrollmentsResult = { success: true; changed: boolean; message?: stri
 async function getUserAndSourceId(): Promise<{ userId: string; sourceId: string | null }> {
 	const user = await currentUser()
 	if (!user) {
+		logger.error("user not authenticated")
 		throw errors.new("user not authenticated")
 	}
 	if (!user.publicMetadata) {
@@ -140,6 +142,7 @@ export async function enrollUserInCoursesByCourseId(courseIds: string[]): Promis
 		for (const err of addErrors) {
 			logger.error("failed to append enrollment", { error: err.reason })
 		}
+		logger.error("append enrollments failed", { errorCount: addErrors.length })
 		throw errors.new("append enrollments failed")
 	}
 
@@ -238,6 +241,7 @@ export async function setUserEnrollmentsByCourseId(selectedCourseIds: string[]):
 		for (const err of addErrors) {
 			logger.error("failed to add enrollment during replace", { error: err.reason })
 		}
+		logger.error("one or more enrollment additions failed", { errorCount: addErrors.length })
 		throw errors.new("one or more enrollment additions failed")
 	}
 
@@ -252,6 +256,7 @@ export async function setUserEnrollmentsByCourseId(selectedCourseIds: string[]):
 		for (const err of delErrors) {
 			logger.error("failed to delete enrollment during replace", { error: err.reason })
 		}
+		logger.error("one or more enrollment deletions failed", { errorCount: delErrors.length })
 		throw errors.new("one or more enrollment deletions failed")
 	}
 

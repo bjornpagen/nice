@@ -5,6 +5,7 @@ import * as React from "react"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { Course } from "@/lib/types/domain"
 import { getOrderedCourseResources } from "@/lib/utils"
+import { XP_PROFICIENCY_THRESHOLD } from "@/lib/constants/progress"
 
 export function useResourceLockStatus(
 	coursePromise: Promise<{ course: Course }>,
@@ -38,7 +39,8 @@ export function useResourceLockStatus(
 			resource.type === "UnitTest" ||
 			resource.type === "CourseChallenge"
 		) {
-			currentCompleted = typeof progress?.score === "number" && progress.score >= 80
+			currentCompleted =
+				typeof progress?.score === "number" && progress.score >= XP_PROFICIENCY_THRESHOLD
 		} else {
 			// Non-assessment items (Video, Article) rely on completed flag
 			currentCompleted = progress?.completed === true

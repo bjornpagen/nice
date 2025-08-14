@@ -18,12 +18,14 @@ export async function updateUserProfile(data: z.infer<typeof updateProfileSchema
 	// Get the authenticated user
 	const { userId } = await auth()
 	if (!userId) {
+		logger.error("User not authenticated")
 		throw errors.new("User not authenticated")
 	}
 
 	// Validate the input data
 	const validationResult = updateProfileSchema.safeParse(data)
 	if (!validationResult.success) {
+		logger.error("Input validation failed for profile update", { error: validationResult.error })
 		throw errors.wrap(validationResult.error, "Input validation failed for profile update")
 	}
 
