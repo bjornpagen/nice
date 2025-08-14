@@ -1,6 +1,7 @@
 import * as errors from "@superbuilders/errors"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { XP_PROFICIENCY_THRESHOLD } from "@/lib/constants/progress"
 import type { AssessmentProgress } from "@/lib/data/progress"
 import type { Course, LessonChild, Unit, UnitChild } from "@/lib/types/domain"
 
@@ -159,7 +160,7 @@ export function buildResourceLockStatus(
 		const progress = progressMap.get(r.id)
 		// Assessments (Exercise, Quiz, UnitTest, CourseChallenge) require >= 80% score to unlock next
 		if (r.type === "Exercise" || r.type === "Quiz" || r.type === "UnitTest" || r.type === "CourseChallenge") {
-			currentComplete = typeof progress?.score === "number" && progress.score >= 80
+			currentComplete = typeof progress?.score === "number" && progress.score >= XP_PROFICIENCY_THRESHOLD
 		} else {
 			// Non-assessment items (Video, Article) rely on completed flag
 			currentComplete = progress?.completed === true

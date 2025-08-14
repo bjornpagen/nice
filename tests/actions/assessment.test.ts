@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { finalizeAssessment } from "@/lib/actions/assessment"
 import type { Unit } from "@/lib/types/domain"
 
@@ -413,7 +414,10 @@ describe("XP Rewarding Logic - Special Cases", () => {
 
 		expect(bankSpy).toHaveBeenCalled()
 		const payload = analyticsSpy.mock.calls[0]?.[0]
-		if (!payload) throw errors.new("analytics payload missing")
+		if (!payload) {
+			logger.error("analytics payload missing in test")
+			throw errors.new("analytics payload missing")
+		}
 		// Attempt 2, 100% => base = expectedXp * 1.0, plus banked 20
 		expect(payload.finalXp).toBe(defaultOptions.expectedXp * 1.0 + 20)
 	})
@@ -518,7 +522,10 @@ describe("Side Effects and Error Propagation", () => {
 		mockCheckExistingProficiency.mockImplementation((_u, _a) => Promise.resolve(false))
 		await finalizeAssessment({ ...defaultOptions, expectedXp: 99 })
 		const payload = analyticsSpy.mock.calls[0]?.[0]
-		if (!payload) throw errors.new("analytics payload missing")
+		if (!payload) {
+			logger.error("analytics payload missing in test")
+			throw errors.new("analytics payload missing")
+		}
 		// 99 * 1.25 = 123.75 => rounds to 124
 		expect(payload.finalXp).toBe(124)
 	})
@@ -566,7 +573,10 @@ describe("Side Effects and Error Propagation", () => {
 		mockCheckExistingProficiency.mockImplementation((_u, _a) => Promise.resolve(false))
 		await finalizeAssessment({ ...defaultOptions })
 		const saved = gradebookSpy.mock.calls[0]?.[0]
-		if (!saved) throw errors.new("gradebook payload missing")
+		if (!saved) {
+			logger.error("gradebook payload missing in test")
+			throw errors.new("gradebook payload missing")
+		}
 		expect(saved.metadata?.attempt).toBe(defaultOptions.attemptNumber)
 		expect(saved.metadata?.durationInSeconds).toBe(defaultOptions.durationInSeconds)
 		expect(saved.metadata?.lessonType).toBe("exercise")
@@ -597,7 +607,10 @@ describe("Input Handling and Edge Cases", () => {
 
 		// 1/10 correct => 10% accuracy, first attempt => 0 XP, no penalty
 		const payload = analyticsSpy.mock.calls[0]?.[0]
-		if (!payload) throw errors.new("analytics payload missing")
+		if (!payload) {
+			logger.error("analytics payload missing in test")
+			throw errors.new("analytics payload missing")
+		}
 		expect(payload.finalXp).toBe(0)
 		const metadata = gradebookSpy.mock.calls[0]?.[0]?.metadata
 		expect(metadata?.xpReason).toBe("First attempt: below mastery threshold")
@@ -636,7 +649,10 @@ describe("Input Handling and Edge Cases", () => {
 
 		// No questions => base accuracy used for XP core in service is 0 (no mastery)
 		const payload = analyticsSpy.mock.calls[0]?.[0]
-		if (!payload) throw errors.new("analytics payload missing")
+		if (!payload) {
+			logger.error("analytics payload missing in test")
+			throw errors.new("analytics payload missing")
+		}
 		expect(payload.finalXp).toBe(0)
 	})
 	test("Retrials of the same question MUST NOT increase totalQuestions", async () => {
@@ -656,7 +672,10 @@ describe("Input Handling and Edge Cases", () => {
 		})
 
 		const saved = gradebookSpy.mock.calls[0]?.[0]
-		if (!saved) throw errors.new("gradebook payload missing")
+		if (!saved) {
+			logger.error("gradebook payload missing in test")
+			throw errors.new("gradebook payload missing")
+		}
 
 		// q1 (first=false -> incorrect), q2 (first=true -> correct), q3 (reported -> exclude), q4 (first=true -> correct)
 		expect(saved.metadata?.totalQuestions).toBe(3)
@@ -695,6 +714,7 @@ describe("Banked XP Sum Consistency", () => {
 		const expectedBaseXpWithBonus = defaultOptions.expectedXp * 1.25
 		const fx = analyticsSpy.mock.calls[0]?.[0]?.finalXp
 		if (typeof fx !== "number") {
+			logger.error("final xp missing in analytics payload")
 			throw errors.new("final xp missing in analytics payload")
 		}
 		const finalXp = fx
