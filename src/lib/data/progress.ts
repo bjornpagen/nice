@@ -190,7 +190,7 @@ function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[
 				const totalQuestions = totalQuestionsItem?.value ?? 0
 				const correctQuestions = correctQuestionsItem?.value ?? 0
 				const xpEarned = xpEarnedItem?.value ?? 0 // Get XP value
-				const score = totalQuestions > 0 ? correctQuestions / totalQuestions : 0
+				const score = totalQuestions > 0 ? (correctQuestions / totalQuestions) * 100 : 0
 
 				// Add to total XP (only count positive XP, not penalties)
 				if (xpEarned > 0) {

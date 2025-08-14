@@ -334,7 +334,7 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 				totalQuestions: assessmentTotalQuestions,
 				attemptNumber: attemptNumber,
 				durationInSeconds,
-				isQuiz: contentType === "Quiz"
+				isExercise: contentType === "Exercise"
 			})
 		)
 

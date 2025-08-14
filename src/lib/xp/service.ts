@@ -4,7 +4,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { checkExistingProficiency } from "@/lib/actions/assessment"
 import { updateStreak } from "@/lib/actions/streak"
-import { awardBankedXpForAssessment } from "@/lib/xp/bank"
+import { awardBankedXpForExercise } from "@/lib/xp/bank"
 import { calculateAssessmentXp, type XpCalculationResult } from "@/lib/xp/core"
 
 interface AwardXpOptions {
@@ -17,7 +17,7 @@ interface AwardXpOptions {
 	totalQuestions: number
 	attemptNumber: number
 	durationInSeconds?: number
-	isQuiz: boolean
+	isExercise: boolean
 }
 
 /**
@@ -37,7 +37,7 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 		correctQuestions: options.correctQuestions,
 		totalQuestions: options.totalQuestions,
 		attemptNumber: options.attemptNumber,
-		isQuiz: options.isQuiz
+		isExercise: options.isExercise
 	})
 
 	// 1. Prevent XP farming by checking for existing proficiency.
@@ -79,11 +79,11 @@ export async function awardXpForAssessment(options: AwardXpOptions): Promise<XpC
 	let finalXp = assessmentXpResult.finalXp
 	let bankedXp = 0
 
-	// 3. Process XP Bank for quizzes if the user achieved mastery.
-	if (options.isQuiz && assessmentXpResult.finalXp > 0 && accuracy >= 80) {
+	// 3. Process XP Bank for exercises if the user achieved mastery.
+	if (options.isExercise && assessmentXpResult.finalXp > 0 && accuracy >= 80) {
 		const xpBankResult = await errors.try(
-			awardBankedXpForAssessment({
-				quizResourceSourcedId: options.assessmentResourceId,
+			awardBankedXpForExercise({
+				exerciseResourceSourcedId: options.assessmentResourceId,
 				onerosterUserSourcedId: options.userSourcedId,
 				onerosterCourseSourcedId: options.courseSourcedId
 			})

@@ -12,23 +12,25 @@ import { generateResultSourcedId } from "@/lib/utils/assessment-identifiers"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 
 /**
- * Calculates banked XP for a quiz. This is a hybrid function:
- * - For ARTICLES: Uses the new time-spent model by calling the Caliper fetcher.
- * - For VIDEOS: Uses the original completion-based model by checking OneRoster results.
- * Also saves the banked XP to individual assessmentResults for each video/article.
+ * Calculates banked XP for an exercise boundary. Mirrors quiz-based banking but
+ * uses the nearest previous Exercise in the same unit as the window start.
+ *
+ * Window: all passive resources (interactive Articles/Videos with positive xp)
+ * whose component sortOrder is strictly between the previous Exercise and the
+ * current Exercise within the same unit.
  */
-export async function awardBankedXpForAssessment(params: {
-	quizResourceSourcedId: string
+export async function awardBankedXpForExercise(params: {
+	exerciseResourceSourcedId: string
 	onerosterUserSourcedId: string
 	onerosterCourseSourcedId: string
 }): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
-	logger.info("calculating banked xp for quiz", {
-		quizResourceSourcedId: params.quizResourceSourcedId,
+	logger.info("calculating banked xp for exercise", {
+		exerciseResourceSourcedId: params.exerciseResourceSourcedId,
 		userSourcedId: params.onerosterUserSourcedId
 	})
 
 	// Normalize possible compound IDs and URI user ids
-	const quizResourceId = extractResourceIdFromCompoundId(params.quizResourceSourcedId)
+	const exerciseResourceId = extractResourceIdFromCompoundId(params.exerciseResourceSourcedId)
 
 	let userId: string
 	if (params.onerosterUserSourcedId.includes("/")) {
@@ -45,183 +47,197 @@ export async function awardBankedXpForAssessment(params: {
 		userId = params.onerosterUserSourcedId
 	}
 
-	// 1. Find the quiz's parent unit and position
-	const quizCrResult = await errors.try(
-		oneroster.getAllComponentResources({ filter: `resource.sourcedId='${quizResourceId}' AND status='active'` })
+	// 1. Find the exercise's component resource to get unit and position
+	const exerciseCrResult = await errors.try(
+		oneroster.getAllComponentResources({ filter: `resource.sourcedId='${exerciseResourceId}' AND status='active'` })
 	)
-	if (quizCrResult.error) {
-		throw errors.wrap(quizCrResult.error, "quiz component resource fetch")
+	if (exerciseCrResult.error) {
+		throw errors.wrap(exerciseCrResult.error, "exercise component resource fetch")
 	}
-	const quizComponentResource = quizCrResult.data[0]
-	if (!quizComponentResource) {
-		logger.warn("could not find component resource for quiz", { quizResourceId })
+	const exerciseComponentResource = exerciseCrResult.data[0]
+	if (!exerciseComponentResource) {
+		logger.warn("could not find component resource for exercise", { exerciseResourceId })
 		return { bankedXp: 0, awardedResourceIds: [] }
 	}
-	const parentUnitId = quizComponentResource.courseComponent.sourcedId
-	const quizSortOrder = quizComponentResource.sortOrder
-
-	// 2. Find the sort order of the previous quiz in the same unit
-	const unitCrResult = await errors.try(
-		oneroster.getAllComponentResources({ filter: `courseComponent.sourcedId='${parentUnitId}' AND status='active'` })
+	// Determine the unit id from the exercise's courseComponent (lesson) → parent unit
+	const lessonComponentId = exerciseComponentResource.courseComponent.sourcedId
+	const lessonComponentResult = await errors.try(
+		oneroster.getCourseComponents({ filter: `sourcedId='${lessonComponentId}' AND status='active'` })
 	)
-	if (unitCrResult.error) {
-		throw errors.wrap(unitCrResult.error, "unit component resources fetch")
+	if (lessonComponentResult.error) {
+		throw errors.wrap(lessonComponentResult.error, "lesson component fetch for unit resolution")
+	}
+	const lessonComponent = lessonComponentResult.data[0]
+	const parentUnitId = lessonComponent?.parent?.sourcedId
+	const exerciseSortOrder = exerciseComponentResource.sortOrder
+
+	if (!parentUnitId) {
+		logger.warn("unable to resolve parent unit for exercise", { lessonComponentId })
+		return { bankedXp: 0, awardedResourceIds: [] }
 	}
 
-	// Get resource metadata for proper quiz detection (like the original implementation)
-	const unitResourceIds = unitCrResult.data.map((cr) => cr.resource.sourcedId)
-	const unitResourcesResult = await errors.try(
-		oneroster.getAllResources({ filter: `sourcedId@'${unitResourceIds.join(",")}' AND status='active'` })
-	)
-	if (unitResourcesResult.error) {
-		throw errors.wrap(unitResourcesResult.error, "unit resources fetch for quiz detection")
-	}
-
-	// Create a map of resourceId -> resource for efficient lookup
-	const resourceMap = new Map<string, Resource>()
-	for (const resource of unitResourcesResult.data) {
-		resourceMap.set(resource.sourcedId, resource)
-	}
-
-	// Find the previous quiz using interactive metadata-based detection
-	let previousQuizSortOrder = -1
-	let detectedQuizzes = 0
-	for (const cr of unitCrResult.data) {
-		const resource = resourceMap.get(cr.resource.sourcedId)
-		// Quizzes are emitted as QTI resources with khanLessonType "quiz" (and khanActivityType "Quiz")
-		const isQuizResource =
-			resource?.metadata?.khanLessonType === "quiz" || resource?.metadata?.khanActivityType === "Quiz"
-
-		if (
-			resource &&
-			isQuizResource &&
-			resource.sourcedId !== quizResourceId &&
-			cr.sortOrder < quizSortOrder &&
-			cr.sortOrder > previousQuizSortOrder
-		) {
-			previousQuizSortOrder = cr.sortOrder
-			detectedQuizzes++
-			logger.debug("found previous quiz", {
-				resourceId: resource.sourcedId,
-				sortOrder: cr.sortOrder
-			})
-		}
-	}
-
-	logger.info("found quiz boundaries", {
-		currentQuizSortOrder: quizSortOrder,
-		previousQuizSortOrder,
-		quizResourceId,
-		detectedQuizzes
-	})
-
-	// 3. Find lessons between the previous quiz (or unit start) and the current quiz
-	const unitComponentsResult = await errors.try(
+	// 2. List all lessons in the unit (for recursive CR lookup)
+	const unitLessonsResult = await errors.try(
 		oneroster.getCourseComponents({
 			filter: `parent.sourcedId='${parentUnitId}' AND status='active'`,
 			orderBy: "asc",
 			sort: "sortOrder"
 		})
 	)
-	if (unitComponentsResult.error) {
-		throw errors.wrap(unitComponentsResult.error, "unit components fetch")
+	if (unitLessonsResult.error) {
+		throw errors.wrap(unitLessonsResult.error, "unit lessons fetch")
 	}
 
-	// Exclude assessment components positioned as lessons based on heuristic of sort order window only.
-	const lessons = unitComponentsResult.data.filter((component) => {
-		return component.sortOrder > previousQuizSortOrder && component.sortOrder < quizSortOrder
-	})
+	const lessonIds = unitLessonsResult.data.map((c) => c.sourcedId)
+	const lessonSortOrderMap = new Map<string, number>()
+	for (const c of unitLessonsResult.data) {
+		lessonSortOrderMap.set(c.sourcedId, c.sortOrder)
+	}
 
-	logger.info("found lessons between quizzes", {
-		parentUnitId,
-		previousQuizSortOrder,
-		currentQuizSortOrder: quizSortOrder,
-		eligibleLessonCount: lessons.length,
-		eligibleLessonIds: lessons.map((l) => l.sourcedId)
-	})
+	// 3. Fetch ALL component resources under the unit's lessons (primary path)
+	type ComponentResourceView = { resourceId: string; sortOrder: number; lessonId: string }
+	let componentResources: Array<ComponentResourceView> = []
+	if (lessonIds.length > 0) {
+		const lessonCrResult = await errors.try(
+			oneroster.getAllComponentResources({
+				filter: `courseComponent.sourcedId@'${lessonIds.join(",")}' AND status='active'`
+			})
+		)
+		if (lessonCrResult.error) {
+			throw errors.wrap(lessonCrResult.error, "lesson component resources fetch")
+		}
+		componentResources = lessonCrResult.data.map((cr) => ({
+			resourceId: cr.resource.sourcedId,
+			sortOrder: cr.sortOrder,
+			lessonId: cr.courseComponent.sourcedId
+		}))
+	}
 
-	if (lessons.length === 0) {
+	// 3b. Fallback: include unit-level component resources if no lessons or empty
+	if (componentResources.length === 0) {
+		const unitCrResult = await errors.try(
+			oneroster.getAllComponentResources({ filter: `courseComponent.sourcedId='${parentUnitId}' AND status='active'` })
+		)
+		if (unitCrResult.error) {
+			throw errors.wrap(unitCrResult.error, "unit-level component resources fetch")
+		}
+		componentResources = unitCrResult.data.map((cr) => ({
+			resourceId: cr.resource.sourcedId,
+			sortOrder: cr.sortOrder,
+			lessonId: cr.courseComponent.sourcedId
+		}))
+	}
+
+	// 4. Fetch resource metadata for detection and filtering
+	const allResourceIds = componentResources.map((cr) => cr.resourceId)
+	if (allResourceIds.length === 0) {
 		return { bankedXp: 0, awardedResourceIds: [] }
 	}
-
-	// 4. Get all passive resources and separate them by type
-	const lessonComponentSourcedIds = lessons.map((l) => l.sourcedId)
-	const lessonCrResult = await errors.try(
-		oneroster.getAllComponentResources({
-			filter: `courseComponent.sourcedId@'${lessonComponentSourcedIds.join(",")}' AND status='active'`
-		})
+	const allResourcesResult = await errors.try(
+		oneroster.getAllResources({ filter: `sourcedId@'${allResourceIds.join(",")}' AND status='active'` })
 	)
-	if (lessonCrResult.error) {
-		throw errors.wrap(lessonCrResult.error, "lesson component resources fetch")
+	if (allResourcesResult.error) {
+		throw errors.wrap(allResourcesResult.error, "unit resources fetch for exercise detection")
+	}
+	const resourceMap = new Map<string, Resource>()
+	for (const resource of allResourcesResult.data) {
+		resourceMap.set(resource.sourcedId, resource)
 	}
 
-	const resourceIds = lessonCrResult.data.map((cr) => cr.resource.sourcedId)
-	if (resourceIds.length === 0) {
-		return { bankedXp: 0, awardedResourceIds: [] }
-	}
-	const resourcesResult = await errors.try(
-		oneroster.getAllResources({ filter: `sourcedId@'${resourceIds.join(",")}' AND status='active'` })
-	)
-	if (resourcesResult.error) {
-		throw errors.wrap(resourcesResult.error, "lesson resources fetch")
+	// 5. Compute previous exercise boundary using tuple ordering: (lessonSortOrder, contentSortOrder)
+	const currentLessonSortOrder = lessonSortOrderMap.get(lessonComponentId) ?? 0
+	let previousExerciseTuple: { lessonSortOrder: number; contentSortOrder: number } | null = null
+	for (const cr of componentResources) {
+		const resource = resourceMap.get(cr.resourceId)
+		const lessonSortOrder = lessonSortOrderMap.get(cr.lessonId) ?? 0
+		const isExerciseResource =
+			resource?.metadata?.khanActivityType === "Exercise" || resource?.metadata?.khanLessonType === "exercise"
+		if (!resource || !isExerciseResource) continue
+		if (cr.resourceId === exerciseResourceId) continue
+
+		const isBeforeCurrent =
+			lessonSortOrder < currentLessonSortOrder ||
+			(lessonSortOrder === currentLessonSortOrder && cr.sortOrder < exerciseSortOrder)
+		if (!isBeforeCurrent) continue
+
+		if (!previousExerciseTuple) {
+			previousExerciseTuple = { lessonSortOrder, contentSortOrder: cr.sortOrder }
+			continue
+		}
+		const isAfterPrevious =
+			lessonSortOrder > previousExerciseTuple.lessonSortOrder ||
+			(lessonSortOrder === previousExerciseTuple.lessonSortOrder &&
+				cr.sortOrder > previousExerciseTuple.contentSortOrder)
+		if (isAfterPrevious) previousExerciseTuple = { lessonSortOrder, contentSortOrder: cr.sortOrder }
 	}
 
-	const articleResources: Array<{ sourcedId: string; expectedXp: number; type: "article" }> = []
-	const videoResources: Array<{ sourcedId: string; expectedXp: number; type: "video" }> = []
+	logger.info("found exercise boundaries", {
+		currentExerciseSortOrder: exerciseSortOrder,
+		currentLessonSortOrder,
+		previousExerciseSortOrder: previousExerciseTuple?.contentSortOrder ?? -1,
+		previousLessonSortOrder: previousExerciseTuple?.lessonSortOrder ?? -1,
+		exerciseResourceId
+	})
 
-	for (const resource of resourcesResult.data) {
+	// 6. Identify passive resources strictly between previous and current exercise using tuple ordering
+	const candidateResourceIds: string[] = []
+	for (const cr of componentResources) {
+		const lessonSortOrder = lessonSortOrderMap.get(cr.lessonId) ?? 0
+		const isAfterPrevious = previousExerciseTuple
+			? lessonSortOrder > previousExerciseTuple.lessonSortOrder ||
+				(lessonSortOrder === previousExerciseTuple.lessonSortOrder &&
+					cr.sortOrder > previousExerciseTuple.contentSortOrder)
+			: true
+		const isBeforeCurrent =
+			lessonSortOrder < currentLessonSortOrder ||
+			(lessonSortOrder === currentLessonSortOrder && cr.sortOrder < exerciseSortOrder)
+		if (!(isAfterPrevious && isBeforeCurrent)) continue
+
+		const resource = resourceMap.get(cr.resourceId)
+		if (!resource) continue
 		const metadata = resource.metadata
 		const expectedXp = typeof metadata?.xp === "number" ? metadata.xp : 0
 		if (expectedXp <= 0) continue
-
-		// Recognize interactive resources and classify by khanActivityType
 		const isInteractive = metadata?.type === "interactive"
 		const kind = metadata && typeof metadata.khanActivityType === "string" ? metadata.khanActivityType : undefined
-
-		if (isInteractive && kind === "Article") {
-			articleResources.push({ sourcedId: resource.sourcedId, expectedXp, type: "article" })
-		} else if (isInteractive && kind === "Video") {
-			videoResources.push({ sourcedId: resource.sourcedId, expectedXp, type: "video" })
+		if (isInteractive && (kind === "Article" || kind === "Video")) {
+			candidateResourceIds.push(resource.sourcedId)
 		}
 	}
 
-	if (articleResources.length === 0 && videoResources.length === 0) {
-		// Fail-loud visibility when nothing qualifies
-		logger.info("no eligible passive resources found for banked xp", {
-			discoveredResourceCount: resourcesResult.data.length,
-			kinds: resourcesResult.data.map((r) => r.metadata?.khanActivityType || r.metadata?.activityType),
-			hasInteractive: resourcesResult.data.some((r) => r.metadata?.type === "interactive")
-		})
+	logger.info("candidate passive resources in window", {
+		candidateCount: candidateResourceIds.length
+	})
+
+	if (candidateResourceIds.length === 0) {
 		return { bankedXp: 0, awardedResourceIds: [] }
 	}
 
-	// 5. Calculate XP for passive content (articles and videos) using time-spent for BOTH types
+	// 7. Build passive resources list with expected XP
+	const passiveResources: Array<{ sourcedId: string; expectedXp: number }> = []
+	for (const id of candidateResourceIds) {
+		const res = resourceMap.get(id)
+		if (!res) continue
+		const expectedXp = typeof res.metadata?.xp === "number" ? res.metadata.xp : 0
+		passiveResources.push({ sourcedId: id, expectedXp })
+	}
+
+	// 8. Calculate XP using time-spent policy
 	let totalBankedXp = 0
 	const awardedResourceIds: string[] = []
-
-	const passiveResources: Array<{ sourcedId: string; expectedXp: number }> = [
-		...articleResources.map((r) => ({ sourcedId: r.sourcedId, expectedXp: r.expectedXp })),
-		...videoResources.map((r) => ({ sourcedId: r.sourcedId, expectedXp: r.expectedXp }))
-	]
-
-	if (passiveResources.length > 0) {
-		const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`
-		const bankResult = await calculateBankedXpForResources(actorId, passiveResources)
-		totalBankedXp += bankResult.bankedXp
-		awardedResourceIds.push(...bankResult.awardedResourceIds)
-	}
+	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`
+	const bankResult = await calculateBankedXpForResources(actorId, passiveResources)
+	totalBankedXp += bankResult.bankedXp
+	awardedResourceIds.push(...bankResult.awardedResourceIds)
 
 	logger.info("calculated total banked xp", {
 		totalBankedXp,
-		awardedResourceCount: awardedResourceIds.length,
-		articleCount: articleResources.length,
-		videoCount: videoResources.length
+		awardedResourceCount: awardedResourceIds.length
 	})
 
-	// 6. Save banked XP to individual assessmentResults for each video/article
-	const allResources = [...articleResources, ...videoResources]
+	// 9. Save banked XP to individual assessmentResults for each awarded resource
 	for (const resourceId of awardedResourceIds) {
-		const resource = allResources.find((r) => r.sourcedId === resourceId)
+		const resource = resourceMap.get(resourceId)
 		if (resource) {
 			const resultSourcedId = generateResultSourcedId(userId, resourceId, false)
 			const lineItemId = getAssessmentLineItemId(resourceId)
@@ -230,7 +246,7 @@ export async function awardBankedXpForAssessment(params: {
 				totalQuestions: 1,
 				correctQuestions: 1,
 				accuracy: 100,
-				xp: resource.expectedXp,
+				xp: typeof resource.metadata?.xp === "number" ? resource.metadata.xp : 0,
 				multiplier: 1.0,
 				completedAt: new Date().toISOString(),
 				courseSourcedId: params.onerosterCourseSourcedId,
@@ -244,24 +260,16 @@ export async function awardBankedXpForAssessment(params: {
 					lineItemSourcedId: lineItemId,
 					userSourcedId: userId,
 					score: 100,
-					comment: "Banked XP awarded upon quiz completion.",
+					comment: "Banked XP awarded upon exercise completion.",
 					metadata,
 					correlationId: randomUUID()
 				})
 			)
 			if (saveResult.error) {
-				logger.error("failed to save banked xp assessment result", {
-					resourceId,
-					expectedXp: resource.expectedXp,
-					error: saveResult.error
-				})
+				logger.error("failed to save banked xp assessment result", { resourceId, error: saveResult.error })
 				// Continue with other resources even if one fails
 			} else {
-				logger.info("saved banked xp assessment result", {
-					resourceId,
-					expectedXp: resource.expectedXp,
-					type: resource.type
-				})
+				logger.info("saved banked xp assessment result", { resourceId })
 			}
 		}
 	}

@@ -38,7 +38,7 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 		totalQuestions: totalQuestions,
 		attemptNumber: attemptNumber,
 		durationInSeconds: command.durationInSeconds,
-		isQuiz: command.contentType === "Quiz"
+		isExercise: command.contentType === "Exercise"
 	})
 
 	// 2. Prepare and save the primary result to the gradebook (MUST SUCCEED)
