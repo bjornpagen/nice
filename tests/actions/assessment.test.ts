@@ -639,6 +639,30 @@ describe("Input Handling and Edge Cases", () => {
 		if (!payload) throw errors.new("analytics payload missing")
 		expect(payload.finalXp).toBe(0)
 	})
+	test("Retrials of the same question MUST NOT increase totalQuestions", async () => {
+		mockCheckExistingProficiency.mockImplementation((_u, _a) => Promise.resolve(false))
+
+		await finalizeAssessment({
+			...defaultOptions,
+			// Multiple entries for same qtiItemId; only the last non-reported attempt should count
+			sessionResults: [
+				{ qtiItemId: "q1", isCorrect: false, isReported: false },
+				{ qtiItemId: "q1", isCorrect: true, isReported: false },
+				{ qtiItemId: "q2", isCorrect: true, isReported: false },
+				{ qtiItemId: "q3", isCorrect: false, isReported: false },
+				{ qtiItemId: "q3", isCorrect: false, isReported: true },
+				{ qtiItemId: "q4", isCorrect: true, isReported: false }
+			]
+		})
+
+		const saved = gradebookSpy.mock.calls[0]?.[0]
+		if (!saved) throw errors.new("gradebook payload missing")
+
+		// q1 (last=true), q2 (true), q3 (reported -> exclude), q4 (true) => 3/3, 100%
+		expect(saved.metadata?.totalQuestions).toBe(3)
+		expect(saved.metadata?.correctQuestions).toBe(3)
+		expect(saved.metadata?.accuracy).toBe(100)
+	})
 })
 
 describe("Banked XP Sum Consistency", () => {

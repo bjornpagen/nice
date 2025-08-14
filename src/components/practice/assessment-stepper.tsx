@@ -246,7 +246,9 @@ export function AssessmentStepper({
 		xpPenaltyInfo?: { penaltyXp: number; reason: string; avgSecondsPerQuestion?: number }
 	} | null>(null)
 
-	const [nextItem, setNextItem] = React.useState<{ id?: string; text: string; path: string; type?: string } | null>(null)
+	const [nextItem, setNextItem] = React.useState<{ id?: string; text: string; path: string; type?: string } | null>(
+		null
+	)
 	const [debugClickCount, setDebugClickCount] = React.useState(0)
 	// Track when all finalization operations are fully completed
 	const [isFinalizationComplete, setIsFinalizationComplete] = React.useState(false)

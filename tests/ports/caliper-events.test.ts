@@ -1,5 +1,6 @@
 import { describe, expect, spyOn, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 
 // Import after mocks
 const analytics = await import("@/lib/ports/analytics")
@@ -35,12 +36,16 @@ describe("Caliper Analytics Port - ActivityCompleted events", () => {
 				correlationId: "corr-1"
 			})
 		)
-		if (res1.error) throw res1.error
+		if (res1.error) {
+			logger.error("activity completed event failed", { error: res1.error })
+			throw res1.error
+		}
 
 		expect(mockCaliperSend).toHaveBeenCalled()
 		const envelopeUnknown = mockCaliperSend.mock.calls[0]?.[0]
 		const envelopeResult = caliper.CaliperEnvelopeSchema.safeParse(envelopeUnknown)
 		if (!envelopeResult.success) {
+			logger.error("invalid envelope shape", { error: envelopeResult.error })
 			throw errors.new("invalid envelope shape")
 		}
 		const envelope = envelopeResult.data
@@ -168,14 +173,19 @@ describe("Caliper Analytics Port - ActivityCompleted events", () => {
 				correlationId: "corr-5"
 			})
 		)
-		if (res2.error) throw res2.error
+		if (res2.error) {
+			logger.error("activity completed event failed", { error: res2.error })
+			throw res2.error
+		}
 		const envUnknown = mockCaliperSend.mock.calls[0]?.[0]
 		const envResult = caliper.CaliperEnvelopeSchema.safeParse(envUnknown)
 		if (!envResult.success) {
+			logger.error("invalid envelope shape", { error: envResult.error })
 			throw errors.new("invalid envelope shape")
 		}
 		const preservedIdUnknown = envResult.data?.data?.[0]?.object?.activity?.id
 		if (typeof preservedIdUnknown !== "string") {
+			logger.error("missing activity id", { preservedIdUnknown })
 			throw errors.new("missing activity id")
 		}
 		expect(preservedIdUnknown.endsWith("/ims/oneroster/rostering/v1p2/resources/nice_bar")).toBe(true)
@@ -222,10 +232,14 @@ describe("Caliper Analytics Port - TimeSpent events", () => {
 				correlationId: "corr-6"
 			})
 		)
-		if (res3.error) throw res3.error
+		if (res3.error) {
+			logger.error("time spent event failed", { error: res3.error })
+			throw res3.error
+		}
 		const envUnknown2 = mockCaliperSend.mock.calls[0]?.[0]
 		const env2Result = caliper.CaliperEnvelopeSchema.safeParse(envUnknown2)
 		if (!env2Result.success) {
+			logger.error("invalid envelope shape", { error: env2Result.error })
 			throw errors.new("invalid envelope shape")
 		}
 		const envelope = env2Result.data
@@ -264,7 +278,10 @@ describe("Caliper Analytics Port - TimeSpent events", () => {
 				correlationId: "corr-7"
 			})
 		)
-		if (res4.error) throw res4.error
+		if (res4.error) {
+			logger.error("time spent event failed", { error: res4.error })
+			throw res4.error
+		}
 		expect(mockCaliperSend).toHaveBeenCalled()
 	})
 

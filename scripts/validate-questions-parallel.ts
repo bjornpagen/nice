@@ -100,6 +100,7 @@ async function main(): Promise<void> {
 	const validationResults: PromiseSettledResult<ValidationResult>[] = batched.map((res, i) => {
 		const q = validQuestions[i]
 		if (!q) {
+			logger.error("missing question data at index", { index: i })
 			throw errors.new(`missing question data at index ${i}`)
 		}
 		if (!res.success) {

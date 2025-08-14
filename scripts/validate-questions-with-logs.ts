@@ -86,6 +86,7 @@ async function main(): Promise<void> {
 	)
 	if (questionsResult.error) {
 		spinner.error({ text: "failed to load questions from database" })
+		logger.error("database query failed", { error: questionsResult.error })
 		throw errors.wrap(questionsResult.error, "database query")
 	}
 
@@ -194,6 +195,7 @@ async function main(): Promise<void> {
 		const writeResult = errors.trySync(() => writeFileSync(outputFile, JSON.stringify(failures, null, 2)))
 		if (writeResult.error) {
 			spinner.error({ text: "failed to write failures file" })
+			logger.error("write failures file failed", { error: writeResult.error })
 			throw errors.wrap(writeResult.error, "write failures file")
 		}
 	}

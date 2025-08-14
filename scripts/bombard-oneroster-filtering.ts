@@ -804,7 +804,10 @@ class BombardClient {
 		this.#tokenPromise = this.#getAccessToken()
 		const tokenResult = await errors.try(this.#tokenPromise)
 		this.#tokenPromise = null
-		if (tokenResult.error) throw tokenResult.error
+		if (tokenResult.error) {
+			logger.error("token acquisition failed", { error: tokenResult.error })
+			throw tokenResult.error
+		}
 		this.#accessToken = tokenResult.data
 	}
 

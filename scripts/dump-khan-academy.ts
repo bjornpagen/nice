@@ -77,8 +77,10 @@ async function retryOperation<T>(
 				error: lastError
 			})
 			if (!lastError) {
+				logger.error("operation failed without error details", { context })
 				throw errors.new(`${context}: operation failed without error details`)
 			}
+			logger.error("operation failed after retries", { context, maxRetries, error: lastError })
 			throw errors.wrap(lastError, `${context}: failed after ${maxRetries} retries`)
 		}
 
@@ -178,6 +180,7 @@ async function fetchQuestionsForExercise(
 
 				// When fetching by itemId, we should always get an item, not an error
 				if (!assessmentItem.item) {
+					logger.error("unexpected null item from assessment item", { exerciseId, itemId: item.id })
 					throw errors.new(`unexpected null item for exerciseId ${exerciseId}, itemId ${item.id}`)
 				}
 
@@ -591,6 +594,7 @@ async function main() {
 					continue // Skip to the next course
 				}
 				// Re-throw any other errors
+				logger.error("course fetching failed", { error: courseResult.error })
 				throw courseResult.error
 			}
 			const courseInfo = courseResult.data
@@ -723,6 +727,7 @@ async function main() {
 					continue // Skip to the next path
 				}
 				// Re-throw any other errors
+				logger.error("course fetching failed", { error: courseResult.error })
 				throw courseResult.error
 			}
 			const courseInfo = courseResult.data

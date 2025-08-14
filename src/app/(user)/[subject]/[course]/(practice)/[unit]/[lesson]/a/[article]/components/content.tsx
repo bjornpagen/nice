@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { Lock, Unlock } from "lucide-react"
 import { useRouter } from "next/navigation"
 import * as React from "react"
@@ -64,6 +65,7 @@ export function Content({
 		if (user) {
 			const parsed = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
 			if (!parsed.success) {
+				logger.error("clerk user metadata validation failed", { error: parsed.error })
 				throw parsed.error
 			}
 			onerosterUserSourcedId = parsed.data.sourceId

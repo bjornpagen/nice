@@ -17,6 +17,7 @@ async function main(): Promise<void> {
 
 	const schema = responseFormat.json_schema?.schema
 	if (!schema) {
+		logger.error("missing json schema from response format", {})
 		throw errors.new("missing json schema from response format")
 	}
 

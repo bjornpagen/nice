@@ -275,11 +275,49 @@ export async function finalizeAssessment(options: {
 	})
 
 	const { userId: clerkUserId } = await auth()
-	if (!clerkUserId) throw errors.new("user not authenticated")
+	if (!clerkUserId) {
+		logger.error("finalize assessment: user not authenticated", { correlationId })
+		throw errors.new("user not authenticated")
+	}
 
-	const validResults = options.sessionResults.filter((r) => !r.isReported)
-	const correctAnswers = validResults.filter((r) => r.isCorrect).length
-	const totalQuestions = validResults.length
+	// Normalize session results:
+	// - Exclude any question where a report was filed at any point
+	// - For remaining questions, use the last attempt per qtiItemId (retries should not increase total)
+	const normalizeSessionResults = (
+		session: Array<{ qtiItemId: string; isCorrect: boolean | null; isReported?: boolean }>
+	) => {
+		// Track per-question state while preserving last-attempt semantics
+		const perQuestion: Map<
+			string,
+			{ last: { qtiItemId: string; isCorrect: boolean | null; isReported?: boolean }; hasReport: boolean }
+		> = new Map()
+
+		for (const entry of session) {
+			const existing = perQuestion.get(entry.qtiItemId)
+			const hasReport = Boolean(existing?.hasReport || entry.isReported)
+			// Always update last to reflect latest attempt
+			perQuestion.set(entry.qtiItemId, {
+				last: entry,
+				hasReport
+			})
+		}
+
+		// Collect only questions without any report, taking their last attempt
+		const normalized: Array<{ qtiItemId: string; isCorrect: boolean; isReported?: boolean }> = []
+		for (const { last, hasReport } of perQuestion.values()) {
+			if (hasReport) continue
+			// Only non-null isCorrect are kept in normalized results
+			if (typeof last.isCorrect === "boolean") {
+				normalized.push({ qtiItemId: last.qtiItemId, isCorrect: last.isCorrect })
+			}
+		}
+		return normalized
+	}
+
+	const normalizedResults = normalizeSessionResults(options.sessionResults)
+
+	const correctAnswers = normalizedResults.filter((r) => r.isCorrect).length
+	const totalQuestions = normalizedResults.length
 	const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 100
 
 	// Extract subject and course slugs from assessment path
@@ -307,6 +345,8 @@ export async function finalizeAssessment(options: {
 
 	const command: SaveAssessmentResultCommand = {
 		...options,
+		// Persist normalized session results to ensure downstream consumers use consistent data
+		sessionResults: normalizedResults,
 		score: assertPercentageInteger(score, "assessment score"),
 		correctAnswers,
 		totalQuestions,
@@ -378,6 +418,7 @@ export async function finalizeAssessment(options: {
 export async function flagQuestionAsReported(questionId: string, report: string): Promise<{ success: boolean }> {
 	const { userId: clerkUserId } = await auth()
 	if (!clerkUserId) {
+		logger.error("flag question: user not authenticated", { questionId })
 		throw errors.new("user not authenticated")
 	}
 

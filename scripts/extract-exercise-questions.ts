@@ -264,6 +264,7 @@ export class ComprehensiveQuestionExtractor {
 				const assessmentItem = res.data.assessmentItem
 
 				if (!assessmentItem.item) {
+					logger.error("unexpected null item from assessment item", { exerciseId, itemId })
 					throw errors.new(`unexpected null item for exerciseId ${exerciseId}, itemId ${itemId}`)
 				}
 
