@@ -45,6 +45,10 @@ export function Content({
 	const isPlayingRef = React.useRef<boolean>(false)
 	const hasSentFinalEventRef = React.useRef<boolean>(false)
 	const hasRefreshedForCompletionRef = React.useRef<boolean>(false)
+	// Per-video session state: enable full controls once ≥95% complete
+	const [arePlayerControlsEnabled, setArePlayerControlsEnabled] = React.useState<boolean>(false)
+	// Gate one-time immediate completion update + refresh
+	const hasTriggeredCompletionSideEffectsRef = React.useRef<boolean>(false)
 
 	// Refs for resume functionality
 	const hasResumedRef = React.useRef<boolean>(false)
@@ -192,8 +196,9 @@ export function Content({
 
 				if (result.data) {
 					if (result.data.percentComplete >= VIDEO_COMPLETION_THRESHOLD_PERCENT) {
-						// Already completed previously; unlock Continue immediately
+						// Already completed previously; unlock Continue immediately and enable controls
 						setCurrentResourceCompleted(true)
+						setArePlayerControlsEnabled(true)
 					} else if (result.data.percentComplete > 0) {
 						// Note: Loaded saved video progress, will resume from this position
 						savedProgressRef.current = result.data
@@ -228,6 +233,40 @@ export function Content({
 						// Mark as complete locally as soon as threshold is hit (shared constant)
 						if (snappedDuration > 0 && clampedTime / snappedDuration >= VIDEO_COMPLETION_THRESHOLD_RATIO) {
 							setCurrentResourceCompleted(true)
+							// Unlock controls in-session without re-initializing the player
+							setArePlayerControlsEnabled(true)
+							// Trigger a one-time immediate server update and refresh so Continue unlocks promptly
+							if (!hasTriggeredCompletionSideEffectsRef.current) {
+								hasTriggeredCompletionSideEffectsRef.current = true
+								let onerosterUserSourcedId: string | undefined
+								if (user?.publicMetadata) {
+									const metadataValidation = ClerkUserPublicMetadataSchema.safeParse(user.publicMetadata)
+									if (metadataValidation.success) {
+										onerosterUserSourcedId = metadataValidation.data.sourceId
+									}
+								}
+								if (onerosterUserSourcedId) {
+									async function markCompleteNow() {
+										const userIdForProgress = typeof onerosterUserSourcedId === "string" ? onerosterUserSourcedId : undefined
+										if (!userIdForProgress) {
+											return
+										}
+										const result = await errors.try(
+											updateVideoProgress(userIdForProgress, video.id, clampedTime, snappedDuration, {
+												subjectSlug: params.subject,
+												courseSlug: params.course
+											})
+										)
+										if (result.error) {
+											logger.error("failed to mark video complete", { error: result.error })
+										} else if (!hasRefreshedForCompletionRef.current) {
+											hasRefreshedForCompletionRef.current = true
+											router.refresh()
+										}
+									}
+									void markCompleteNow()
+								}
+							}
 						}
 					}
 				}
@@ -235,7 +274,7 @@ export function Content({
 		}, 1000)
 
 		return () => clearInterval(intervalId)
-	}, [setCurrentResourceCompleted])
+	}, [setCurrentResourceCompleted, user?.publicMetadata, params.subject, params.course, video.id, router.refresh])
 
 	// Track progress periodically for OneRoster (separate from UI timer)
 	React.useEffect(() => {
@@ -268,21 +307,17 @@ export function Content({
 						courseSlug: params.course
 					})
 
-					// If completion threshold reached, unlock locally and refresh once (shared constant)
+					// If completion threshold reached, mark complete locally only. Do not refresh mid-play.
 					const percentComplete = currentTime / duration
 					if (percentComplete >= VIDEO_COMPLETION_THRESHOLD_RATIO) {
 						setCurrentResourceCompleted(true)
-						if (!hasRefreshedForCompletionRef.current) {
-							hasRefreshedForCompletionRef.current = true
-							router.refresh()
-						}
 					}
 				}
 			}
 		}, 3000) // Sync progress every 3 seconds
 
 		return () => clearInterval(intervalId)
-	}, [user, video.id, params.subject, params.course, router, setCurrentResourceCompleted])
+	}, [user, video.id, params.subject, params.course, setCurrentResourceCompleted])
 
 	// Cleanup: send cumulative event when component unmounts
 	React.useEffect(() => {
@@ -313,7 +348,7 @@ export function Content({
 			if (sourceId && user) {
 				const userEmail = user.primaryEmailAddress?.emailAddress
 				if (!userEmail) {
-					logger.error("video tracking: user email required for caliper event", { sourceId })
+					logger.error("video tracking user email required", { userId: user.id })
 					throw errors.new("video tracking: user email required for caliper event")
 				}
 
@@ -342,6 +377,30 @@ export function Content({
 			}
 		}
 	}, [user, video.title, video.id, params.subject, params.course, params.unit, params.lesson, params.video])
+
+	// Keyboard gating while locked: prevent seek keys until unlocked or course-wide unlock
+	React.useEffect(() => {
+		const isLocked = !(allUnlocked || arePlayerControlsEnabled)
+		if (!isLocked) return
+		const blockedKeys = new Set([
+			"ArrowLeft",
+			"ArrowRight",
+			"Home",
+			"End",
+			"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+			"j", "J", "l", "L", ".", ","
+		])
+		const onKeyDown = (e: KeyboardEvent) => {
+			if (blockedKeys.has(e.key)) {
+				e.preventDefault()
+				e.stopPropagation()
+			}
+		}
+		window.addEventListener("keydown", onKeyDown, { capture: true })
+		return () => {
+			window.removeEventListener("keydown", onKeyDown, true)
+		}
+	}, [allUnlocked, arePlayerControlsEnabled])
 
 	function onPlayerReady(event: { target: YouTubePlayer }) {
 		playerRef.current = event.target
@@ -460,9 +519,9 @@ export function Content({
 									width: "100%",
 									height: "100%",
 									playerVars: {
-										// Use course-wide lock state to toggle media controls
-										controls: allUnlocked ? 1 : 0,
-										disablekb: allUnlocked ? 0 : 1,
+										// Keep static to avoid iframe re-initialization mid-play. Gating is done via overlay and key handling.
+										controls: 1,
+										disablekb: 0,
 										autoplay: 0,
 										// Always enable closed captions
 										cc_load_policy: 1,
@@ -470,6 +529,14 @@ export function Content({
 									}
 								}}
 							/>
+							{/* Interaction overlay: blocks control bar until unlocked without interrupting playback */}
+							{!allUnlocked && !arePlayerControlsEnabled && (
+								<div
+									className="absolute inset-x-0 bottom-0 h-24 z-[5] pointer-events-auto"
+									aria-hidden="true"
+									style={{ background: "transparent" }}
+								/>
+							)}
 						</div>
 						{/* Read-only time display (non-interactive) */}
 						<div className="mt-3 flex justify-center">
