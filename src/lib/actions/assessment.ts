@@ -280,35 +280,44 @@ export async function finalizeAssessment(options: {
 		throw errors.new("user not authenticated")
 	}
 
-	// Normalize session results:
+	// Normalize session results for scoring:
 	// - Exclude any question where a report was filed at any point
-	// - For remaining questions, use the last attempt per qtiItemId (retries should not increase total)
+	// - Score ONLY the first attempt with a boolean correctness value per qtiItemId
+	//   (subsequent retries do not convert an initially-wrong answer into correct)
 	const normalizeSessionResults = (
 		session: Array<{ qtiItemId: string; isCorrect: boolean | null; isReported?: boolean }>
 	) => {
-		// Track per-question state while preserving last-attempt semantics
+		// Track per-question state capturing first-attempt semantics and report flags
 		const perQuestion: Map<
 			string,
-			{ last: { qtiItemId: string; isCorrect: boolean | null; isReported?: boolean }; hasReport: boolean }
+			{
+				firstBooleanAttempt?: { qtiItemId: string; isCorrect: boolean; isReported?: boolean }
+				hasReport: boolean
+			}
 		> = new Map()
 
 		for (const entry of session) {
 			const existing = perQuestion.get(entry.qtiItemId)
 			const hasReport = Boolean(existing?.hasReport || entry.isReported)
-			// Always update last to reflect latest attempt
+
+			// Capture the first attempt that has a definitive boolean correctness
+			let firstBooleanAttempt = existing?.firstBooleanAttempt
+			if (!firstBooleanAttempt && typeof entry.isCorrect === "boolean") {
+				firstBooleanAttempt = { qtiItemId: entry.qtiItemId, isCorrect: entry.isCorrect, isReported: entry.isReported }
+			}
+
 			perQuestion.set(entry.qtiItemId, {
-				last: entry,
+				firstBooleanAttempt,
 				hasReport
 			})
 		}
 
-		// Collect only questions without any report, taking their last attempt
+		// Collect only questions without any report, taking their first boolean attempt
 		const normalized: Array<{ qtiItemId: string; isCorrect: boolean; isReported?: boolean }> = []
-		for (const { last, hasReport } of perQuestion.values()) {
+		for (const { firstBooleanAttempt, hasReport } of perQuestion.values()) {
 			if (hasReport) continue
-			// Only non-null isCorrect are kept in normalized results
-			if (typeof last.isCorrect === "boolean") {
-				normalized.push({ qtiItemId: last.qtiItemId, isCorrect: last.isCorrect })
+			if (firstBooleanAttempt) {
+				normalized.push({ qtiItemId: firstBooleanAttempt.qtiItemId, isCorrect: firstBooleanAttempt.isCorrect })
 			}
 		}
 		return normalized

@@ -644,7 +644,7 @@ describe("Input Handling and Edge Cases", () => {
 
 		await finalizeAssessment({
 			...defaultOptions,
-			// Multiple entries for same qtiItemId; only the last non-reported attempt should count
+			// Multiple entries for same qtiItemId; only the FIRST attempt counts toward correctness
 			sessionResults: [
 				{ qtiItemId: "q1", isCorrect: false, isReported: false },
 				{ qtiItemId: "q1", isCorrect: true, isReported: false },
@@ -658,10 +658,10 @@ describe("Input Handling and Edge Cases", () => {
 		const saved = gradebookSpy.mock.calls[0]?.[0]
 		if (!saved) throw errors.new("gradebook payload missing")
 
-		// q1 (last=true), q2 (true), q3 (reported -> exclude), q4 (true) => 3/3, 100%
+		// q1 (first=false -> incorrect), q2 (first=true -> correct), q3 (reported -> exclude), q4 (first=true -> correct)
 		expect(saved.metadata?.totalQuestions).toBe(3)
-		expect(saved.metadata?.correctQuestions).toBe(3)
-		expect(saved.metadata?.accuracy).toBe(100)
+		expect(saved.metadata?.correctQuestions).toBe(2)
+		expect(saved.metadata?.accuracy).toBe(67)
 	})
 })
 
