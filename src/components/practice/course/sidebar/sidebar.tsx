@@ -1,6 +1,7 @@
 "use client"
 
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound, usePathname } from "next/navigation"
@@ -53,6 +54,7 @@ export function Sidebar({
 
 	const materials = getCourseMaterials(course)
 	if (materials.length === 0) {
+		logger.error("course sidebar no content found", { courseTitle: course.title })
 		throw errors.new(`course sidebar: no content found for course: ${course.title}`)
 	}
 
@@ -73,11 +75,13 @@ export function Sidebar({
 	const cursor = findCursorIndex()
 
 	if (cursor === -1) {
+		logger.error("course sidebar material not found", { pathname })
 		throw errors.new(`course sidebar: material not found: ${pathname}`)
 	}
 
 	const material = materials[cursor]
 	if (material == null) {
+		logger.error("course sidebar material not found", { pathname })
 		throw errors.new(`course sidebar: material not found: ${pathname}`)
 	}
 
