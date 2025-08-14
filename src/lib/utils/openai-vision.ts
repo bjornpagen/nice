@@ -34,7 +34,7 @@ export async function analyzeScreenshotWithVision(
 ): Promise<VisualQAResponse> {
 	const completionResult = await errors.try(
 		openai.chat.completions.parse({
-			model: "gpt-4.1-mini",
+			model: "o3-mini",
 			messages: [
 				{
 					role: "system",

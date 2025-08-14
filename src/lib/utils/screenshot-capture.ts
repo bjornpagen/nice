@@ -41,6 +41,14 @@ export async function captureProductionQTIScreenshot(questionId: string): Promis
 		throw errors.wrap(navigationResult.error, "failed to navigate to production qti embed")
 	}
 
+	// Set zoom level to 0.8 (80%) for better screenshot clarity
+	const zoomResult = await errors.try(page.evaluate("document.body.style.zoom='0.8'"))
+	if (zoomResult.error) {
+		await page.close()
+		sessionPool.releaseSession(sessionId)
+		throw errors.wrap(zoomResult.error, "failed to set page zoom level")
+	}
+
 	// Wait 10 seconds for complete rendering as specified in PRD
 	const timeoutResult = await errors.try(page.waitForTimeout(10000))
 	if (timeoutResult.error) {
@@ -133,6 +141,14 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 		await page.close()
 		sessionPool.releaseSession(sessionId)
 		throw errors.wrap(fillResult.error, "failed to fill perseus textarea")
+	}
+
+	// Set zoom level to 0.8 (80%) for consistent screenshot scaling with production
+	const zoomResult = await errors.try(page.evaluate("document.body.style.zoom='0.8'"))
+	if (zoomResult.error) {
+		await page.close()
+		sessionPool.releaseSession(sessionId)
+		throw errors.wrap(zoomResult.error, "failed to set page zoom level")
 	}
 
 	// Wait for Perseus to finish rendering by waiting for content to appear

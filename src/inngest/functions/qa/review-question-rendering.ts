@@ -234,7 +234,7 @@ export const reviewQuestionRendering = inngest.createFunction(
 				questionId: question.id,
 				analysisNotes: analysis.summary,
 				severity: analysis.maxSeverity,
-				model: "gpt-4o",
+				model: "o3-mini",
 				raw: analysis.rawResponse,
 				productionScreenshotUrl: screenshotUrls.productionUrl,
 				perseusScreenshotUrl: screenshotUrls.perseusUrl,
