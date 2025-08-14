@@ -39,6 +39,26 @@ export default function RootLayout({
 						</UserSyncProvider>
 					</ClerkProvider>
 				</React.Suspense>
+				<footer className="mt-8 border-t bg-white">
+					<div className="max-w-7xl mx-auto px-4 py-4">
+						<p className="text-xs text-gray-600">
+							This site includes content from Khan Academy licensed under{" "}
+							<a
+								href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-blue-600 hover:underline"
+							>
+								CC BY-NC-SA 4.0
+							</a>
+							. See{" "}
+							<a href="/attributions" className="text-blue-600 hover:underline">
+								Attributions
+							</a>{" "}
+							for details. Not affiliated with or endorsed by Khan Academy.
+						</p>
+					</div>
+				</footer>
 				<Toaster position="top-right" />
 			</body>
 		</html>
