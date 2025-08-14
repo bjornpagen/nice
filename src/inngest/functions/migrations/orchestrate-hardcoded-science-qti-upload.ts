@@ -2,7 +2,7 @@ import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
 
-const HARDCODED_SCIENCE_COURSE_IDS = [
+export const HARDCODED_SCIENCE_COURSE_IDS = [
 	"x0c5bb03129646fd6", // ms-biology
 	"x1baed5db7c1bb50b", // ms-physics
 	"x87d03b443efbea0a", // middle-school-earth-and-space-science

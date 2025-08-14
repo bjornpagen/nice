@@ -404,6 +404,9 @@ const events = {
 		data: z.object({
 			courseIds: z.array(z.string().min(1)).min(1)
 		})
+	},
+	"qa/questions.review-hardcoded-science": {
+		data: z.object({})
 	}
 }
 

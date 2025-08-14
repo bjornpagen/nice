@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
 import { z } from "zod"
@@ -34,7 +35,7 @@ export async function analyzeScreenshotWithVision(
 ): Promise<VisualQAResponse> {
 	const completionResult = await errors.try(
 		openai.chat.completions.parse({
-			model: "o3-mini",
+			model: "gpt-5",
 			messages: [
 				{
 					role: "system",
@@ -57,12 +58,12 @@ export async function analyzeScreenshotWithVision(
 				}
 			],
 			response_format: zodResponseFormat(VisualQAResponseSchema, "visual_qa_analysis"),
-			max_tokens: 1500,
-			temperature: 0.1
+			max_tokens: 1500
 		})
 	)
 
 	if (completionResult.error) {
+		logger.error("openai vision api request failed", { error: completionResult.error, imageUrl })
 		throw errors.wrap(completionResult.error, "openai vision api request failed")
 	}
 
@@ -70,16 +71,19 @@ export async function analyzeScreenshotWithVision(
 	const message = completion.choices[0]?.message
 
 	if (!message) {
+		logger.error("no message in openai response", { imageUrl })
 		throw errors.new("no message in openai response")
 	}
 
 	// Handle refusals
 	if (message.refusal) {
+		logger.error("openai refused request", { refusal: message.refusal, imageUrl })
 		throw errors.new(`openai refused request: ${message.refusal}`)
 	}
 
 	// Get parsed response
 	if (!message.parsed) {
+		logger.error("no parsed response from openai", { imageUrl, message })
 		throw errors.new("no parsed response from openai")
 	}
 

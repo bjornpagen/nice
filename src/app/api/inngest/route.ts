@@ -19,6 +19,7 @@ import { orchestrateHardcodedMathStimulusGeneration } from "@/inngest/functions/
 import { orchestrateHardcodedMathStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-stimulus-migration"
 import { orchestrateHardcodedScienceItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-item-migration"
 import { orchestrateHardcodedScienceOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-oneroster-ingestion"
+import { orchestrateHardcodedScienceQAReview } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qa-review"
 import { orchestrateHardcodedScienceQtiGenerateUndifferentiated } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-generate-undifferentiated"
 import { orchestrateHardcodedScienceQtiUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-qti-upload"
 import { orchestrateHardcodedScienceStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-science-stimulus-migration"
@@ -81,6 +82,7 @@ export const { GET, POST, PUT } = serve({
 		orchestrateHardcodedScienceOnerosterIngestion,
 		orchestrateHardcodedScienceQtiGenerateUndifferentiated,
 		orchestrateHardcodedScienceQtiUpload,
+		orchestrateHardcodedScienceQAReview,
 		// History orchestrators
 		orchestrateHardcodedHistoryItemMigration,
 		orchestrateHardcodedHistoryStimulusMigration,
