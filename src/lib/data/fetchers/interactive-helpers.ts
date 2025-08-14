@@ -155,7 +155,6 @@ export async function prepareUserQuestionSet(options: {
 	componentResourceSourcedId: string
 	assessmentTest: AssessmentTest
 	resolvedQuestions: TestQuestionsResponse["questions"]
-	rotationMode: "deterministic" | "random"
 }): Promise<Question[]> {
 	const user = await currentUser()
 	if (!user) {
@@ -173,8 +172,7 @@ export async function prepareUserQuestionSet(options: {
 		resourceSourcedId: options.resourceSourcedId,
 		componentResourceSourcedId: options.componentResourceSourcedId,
 		assessmentTest: options.assessmentTest,
-		resolvedQuestions: options.resolvedQuestions,
-		rotationMode: options.rotationMode
+		resolvedQuestions: options.resolvedQuestions
 	})
 
 	return preparedAssessment.questions

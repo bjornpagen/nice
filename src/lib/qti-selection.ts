@@ -3,53 +3,7 @@ import * as logger from "@superbuilders/slog"
 import type { AssessmentTest, TestQuestionsResponse } from "@/lib/qti"
 import type { Question } from "@/lib/types/domain"
 
-function shuffleArray<T>(array: T[]): T[] {
-	const shuffled = [...array]
-	for (let i = shuffled.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1))
-		const elementI = shuffled[i]
-		const elementJ = shuffled[j]
-		if (elementI !== undefined && elementJ !== undefined) {
-			shuffled[i] = elementJ
-			shuffled[j] = elementI
-		}
-	}
-	return shuffled
-}
-
-/**
- * Determines the rotation mode by analyzing the QTI XML structure.
- * - Random mode: Single section with high select count (grab bag)
- * - Deterministic mode: Multiple sections with select="1" (per problem type)
- */
-export function determineRotationModeFromQtiXml(assessmentTest: AssessmentTest): "random" | "deterministic" {
-	const xml = assessmentTest.rawXml
-	const sectionRegex = /<qti-assessment-section[^>]*>([\s\S]*?)<\/qti-assessment-section>/g
-	const sections = [...xml.matchAll(sectionRegex)]
-
-	if (sections.length === 0) {
-		logger.error("invalid qti: no sections found", {
-			testIdentifier: assessmentTest.identifier,
-			xmlLength: xml.length
-		})
-		throw errors.new("qti assessment: no sections found")
-	}
-
-	if (sections.length === 1) {
-		// Single section - check if it's a grab bag (high select count)
-		const sectionContent = sections[0]?.[1] ?? ""
-		const selectionMatch = sectionContent.match(/<qti-selection[^>]*select="(?<selectCount>\d+)"/)
-		const selectCount = selectionMatch?.groups?.selectCount ? Number.parseInt(selectionMatch.groups.selectCount, 10) : 0
-
-		// If select count is greater than 1, it's a grab bag (random)
-		if (selectCount > 1) {
-			return "random"
-		}
-	}
-
-	// Multiple sections or single section with select="1" indicates deterministic rotation
-	return "deterministic"
-}
+// random shuffle is removed; all ordering is deterministic
 
 /**
  * Parses a QTI assessment test's XML to apply selection and ordering rules.
@@ -135,12 +89,9 @@ export function applyQtiSelectionAndOrdering(
 				throw errors.new("qti section missing identifier")
 			}
 			const sectionId = sectionIdMatch[1]
-			if (options?.baseSeed) {
-				const seed = `${options.baseSeed}:${assessmentTest.identifier}:${sectionId}`
-				itemRefs = deterministicallyOrder(itemRefs, seed)
-			} else {
-				itemRefs = shuffleArray(itemRefs)
-			}
+			const seedBase = options?.baseSeed ?? assessmentTest.identifier
+			const seed = `${seedBase}:${assessmentTest.identifier}:${sectionId}`
+			itemRefs = deterministicallyOrder(itemRefs, seed)
 		}
 
 		const selectionMatch = sectionContent.match(/<qti-selection[^>]*select="(?<selectCount>\d+)"/)
@@ -155,23 +106,19 @@ export function applyQtiSelectionAndOrdering(
 					itemRefsBeforeSelection: itemRefs.length,
 					itemRefsAfterSelection: Math.min(selectCount, itemRefs.length)
 				})
-				if (options?.baseSeed !== undefined && options?.attemptNumber !== undefined && itemRefs.length > 0) {
-					const n = itemRefs.length
-					const k = Math.min(selectCount, n)
-					const attemptIndex = options.attemptNumber >= 0 ? options.attemptNumber : 0
-					const offset = (attemptIndex * k) % n
-					const window: string[] = []
-					for (let i = 0; i < k; i++) {
-						const idx = (offset + i) % n
-						const ref = itemRefs[idx]
-						if (ref !== undefined) {
-							window.push(ref)
-						}
+				const n = itemRefs.length
+				const k = Math.min(selectCount, n)
+				const attemptIndex = options?.attemptNumber ?? 0
+				const offset = n > 0 ? (attemptIndex * k) % n : 0
+				const window: string[] = []
+				for (let i = 0; i < k; i++) {
+					const idx = (offset + i) % n
+					const ref = itemRefs[idx]
+					if (ref !== undefined) {
+						window.push(ref)
 					}
-					itemRefs = window
-				} else {
-					itemRefs = itemRefs.slice(0, selectCount)
 				}
+				itemRefs = window
 			} else {
 				logger.warn("invalid non-numeric select attribute in QTI test", {
 					testIdentifier: assessmentTest.identifier,

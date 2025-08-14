@@ -9,7 +9,7 @@ import {
 } from "@/lib/data/fetchers/interactive-helpers"
 import { getResourcesBySlugAndType } from "@/lib/data/fetchers/oneroster"
 import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
-import { determineRotationModeFromQtiXml } from "@/lib/qti-selection"
+// rotation mode removed; selection is now always deterministic via unified helper
 import type { ArticlePageData, ExercisePageData, VideoPageData } from "@/lib/types/page"
 import { assertNoEncodedColons } from "@/lib/utils"
 import { fetchLessonLayoutData } from "./lesson"
@@ -94,13 +94,11 @@ export async function fetchExercisePageData(params: {
 
 	const componentResource = await findComponentResourceWithContext(resource.sourcedId, layoutData.lessonData.id)
 	const { assessmentTest, resolvedQuestions } = await fetchAndResolveQuestions(resource.sourcedId)
-	const rotationMode = determineRotationModeFromQtiXml(assessmentTest)
 	const questions = await prepareUserQuestionSet({
 		resourceSourcedId: resource.sourcedId,
 		componentResourceSourcedId: componentResource.sourcedId,
 		assessmentTest,
-		resolvedQuestions,
-		rotationMode
+		resolvedQuestions
 	})
 
 	return {

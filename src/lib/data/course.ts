@@ -474,10 +474,9 @@ export async function fetchCoursePageData(
 						})
 						throw errors.new("exercise questions missing from fetch results")
 					}
-					// Calculate totalQuestions based on what the user will actually see
-					// Exercises now show max 5 random questions, so we need to adjust both values
+					// Calculate totalQuestions based on standardized deterministic bucketing (K=4 for exercises)
 					const questionBankSize = questionCount
-					const totalQuestions = Math.min(5, questionBankSize)
+					const totalQuestions = Math.min(4, questionBankSize)
 					const questionsToPass = totalQuestions > 0 ? totalQuestions - 1 : 0
 
 					exercises.push({
