@@ -43,6 +43,16 @@ export function createWidgetContentPrompt(
 
 **Vision Capability**: You may be provided with raster images (PNG, JPG) as multimodal input. Use your vision to analyze these images. For SVG images, their raw XML content will be provided directly in the text prompt.
 
+**⚠️ CRITICAL: GRAMMATICAL ERROR CORRECTION ⚠️**
+WE MUST correct any grammatical errors found in the source Perseus content. This includes:
+- Spelling mistakes in words and proper nouns
+- Incorrect punctuation, capitalization, and sentence structure
+- Subject-verb disagreement and other grammatical issues
+- Awkward phrasing that impacts clarity
+- Missing or incorrect articles (a, an, the)
+
+The goal is to produce clean, professional educational content that maintains the original meaning while fixing any language errors present in the source material.
+
 You must generate a JSON object where:
 - Each key is a widget slot name from the mapping.
 - Each value is a fully-formed widget object of the specified type.

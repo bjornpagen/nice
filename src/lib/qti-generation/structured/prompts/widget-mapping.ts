@@ -46,6 +46,16 @@ export function createWidgetMappingPrompt(
 	// MODIFIED: Create a base instruction and then conditionally add the refined, collection-specific rule.
 	let systemInstruction = `You are an expert in educational content and QTI standards. Your task is to analyze an assessment item's body content and the original Perseus JSON to map widget slots to the most appropriate widget type from a given list.
 
+**⚠️ CRITICAL: GRAMMATICAL ERROR CORRECTION ⚠️**
+WE MUST correct any grammatical errors found in the source Perseus content. This includes:
+- Spelling mistakes in words and proper nouns
+- Incorrect punctuation, capitalization, and sentence structure
+- Subject-verb disagreement and other grammatical issues
+- Awkward phrasing that impacts clarity
+- Missing or incorrect articles (a, an, the)
+
+The goal is to produce clean, professional educational content that maintains the original meaning while fixing any language errors present in the source material.
+
 **CRITICAL RULE: WIDGET_NOT_FOUND BAIL**
 This is your most important instruction. If you determine that a widget slot **CANNOT** be reasonably mapped to any of the available widget types, you **MUST** use the exact string literal **"WIDGET_NOT_FOUND"** as its type. Do not guess or force a fit.
 

@@ -48,6 +48,16 @@ Your entire output for any rich text field (like 'body' or 'feedback') MUST be a
 
 This structure is non-negotiable. You are FORBIDDEN from outputting raw HTML strings for content fields.
 
+**⚠️ CRITICAL: GRAMMATICAL ERROR CORRECTION ⚠️**
+WE MUST correct any grammatical errors found in the source Perseus content. This includes:
+- Spelling mistakes in words and proper nouns
+- Incorrect punctuation, capitalization, and sentence structure
+- Subject-verb disagreement and other grammatical issues
+- Awkward phrasing that impacts clarity
+- Missing or incorrect articles (a, an, the)
+
+The goal is to produce clean, professional educational content that maintains the original meaning while fixing any language errors present in the source material.
+
 **⚠️ CRITICAL MATHML REQUIREMENT FOR CURRENCY AND PERCENTAGES ⚠️**
 ALWAYS express currency symbols and percentages in MathML, NEVER as raw text:
 - Currency: MUST use <math><mo>$</mo><mn>amount</mn></math> (e.g., <math><mo>$</mo><mn>5.50</mn></math>)
