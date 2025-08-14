@@ -1,15 +1,13 @@
 "use server"
 
-import { randomUUID } from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { extractResourceIdFromCompoundId } from "@/lib/caliper/utils"
+import { saveAssessmentResult } from "@/lib/actions/tracking"
 import { oneroster } from "@/lib/clients"
 import { calculateBankedXpForResources } from "@/lib/data/fetchers/caliper"
 import type { Resource } from "@/lib/oneroster"
-import * as gradebook from "@/lib/ports/gradebook"
-import { generateResultSourcedId } from "@/lib/utils/assessment-identifiers"
-import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
+// Keep for assessmentResult saving in bank write
+// Note: no local usage; banked results are saved by resource id
 
 /**
  * Calculates banked XP for a quiz. This is a hybrid function:
@@ -17,32 +15,26 @@ import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
  * - For VIDEOS: Uses the original completion-based model by checking OneRoster results.
  * Also saves the banked XP to individual assessmentResults for each video/article.
  */
-export async function awardBankedXpForAssessment(params: {
-	quizResourceSourcedId: string
-	onerosterUserSourcedId: string
+export async function awardBankedXpForAssessment(
+	quizResourceId: string,
+	userSourcedId: string,
 	onerosterCourseSourcedId: string
-}): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
-	logger.info("calculating banked xp for quiz", {
-		quizResourceSourcedId: params.quizResourceSourcedId,
-		userSourcedId: params.onerosterUserSourcedId
-	})
-
-	// Normalize possible compound IDs and URI user ids
-	const quizResourceId = extractResourceIdFromCompoundId(params.quizResourceSourcedId)
+): Promise<{ bankedXp: number; awardedResourceIds: string[] }> {
+	logger.info("calculating banked xp for quiz", { quizResourceId, userSourcedId })
 
 	let userId: string
-	if (params.onerosterUserSourcedId.includes("/")) {
-		const parsed = params.onerosterUserSourcedId.split("/").pop()
+	if (userSourcedId.includes("/")) {
+		const parsed = userSourcedId.split("/").pop()
 		if (!parsed) {
 			logger.error("CRITICAL: Failed to parse user ID from sourced ID", {
-				userSourcedId: params.onerosterUserSourcedId,
+				userSourcedId,
 				expectedFormat: "https://api.../users/{id}"
 			})
 			throw errors.new("invalid user sourced ID format")
 		}
 		userId = parsed
 	} else {
-		userId = params.onerosterUserSourcedId
+		userId = userSourcedId
 	}
 
 	// 1. Find the quiz's parent unit and position
@@ -223,30 +215,22 @@ export async function awardBankedXpForAssessment(params: {
 	for (const resourceId of awardedResourceIds) {
 		const resource = allResources.find((r) => r.sourcedId === resourceId)
 		if (resource) {
-			const resultSourcedId = generateResultSourcedId(userId, resourceId, false)
-			const lineItemId = getAssessmentLineItemId(resourceId)
-			const metadata = {
-				masteredUnits: 0,
-				totalQuestions: 1,
-				correctQuestions: 1,
-				accuracy: 100,
-				xp: resource.expectedXp,
-				multiplier: 1.0,
-				completedAt: new Date().toISOString(),
-				courseSourcedId: params.onerosterCourseSourcedId,
-				penaltyApplied: false,
-				xpReason: "Banked XP"
-			}
-
 			const saveResult = await errors.try(
-				gradebook.saveResult({
-					resultSourcedId,
-					lineItemSourcedId: lineItemId,
-					userSourcedId: userId,
-					score: 100,
-					comment: "Banked XP awarded upon quiz completion.",
-					metadata,
-					correlationId: randomUUID()
+				saveAssessmentResult({
+					onerosterResourceSourcedId: resourceId,
+					score: 100, // Perfect score for banked XP
+					correctAnswers: 1, // banked XP = completed
+					totalQuestions: 1, // banked XP = completed
+					onerosterUserSourcedId: userId,
+					onerosterCourseSourcedId,
+					metadata: {
+						masteredUnits: 0, // Banked XP (articles/videos) never count as mastered units
+						totalQuestions: 1,
+						correctQuestions: 1,
+						accuracy: 100,
+						xp: resource.expectedXp,
+						multiplier: 1.0 // No multiplier for banked XP
+					}
 				})
 			)
 			if (saveResult.error) {

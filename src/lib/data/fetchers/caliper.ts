@@ -264,9 +264,7 @@ export async function calculateBankedXpForResources(
 			const requiredMinutes = Math.ceil(resource.expectedXp * COMPLETION_THRESHOLD_RATIO)
 
 			const meetsThreshold = minutesSpent >= requiredMinutes && resource.expectedXp > 0
-			const rawAwardedXp = meetsThreshold ? resource.expectedXp : 0
-			// Defensive cap: never award more than the resource's expected XP
-			const awardedXp = Math.min(rawAwardedXp, resource.expectedXp)
+			const awardedXp = meetsThreshold ? resource.expectedXp : 0
 
 			if (awardedXp > 0) {
 				totalBankedXp += awardedXp

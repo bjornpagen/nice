@@ -46,7 +46,6 @@ export async function findAndValidateResource(
 		logger.error("failed to fetch resource by slug", { error: resourceResult.error, slug, activityType })
 		throw errors.wrap(resourceResult.error, "fetch resource by slug")
 	}
-
 	const resource = resourceResult.data[0]
 	if (!resource) {
 		notFound()
@@ -273,29 +272,19 @@ export async function findCourseChallenge(params: { test: string; course: string
 
 	logger.info("searching for resource with slug", { slug: params.test })
 
-	// Legacy behavior: accept interactive or qti test resources by slug
-	const matching = allResourcesResult.data
-		.filter((res) => allRelevantResourceIds.has(res.sourcedId))
-		.filter((res) => {
-			const meta = ResourceMetadataSchema.safeParse(res.metadata)
-			if (!meta.success) return false
-			if (meta.data.khanSlug !== params.test) return false
-			if (meta.data.type === "interactive") return true
-			if (meta.data.type === "qti" && meta.data.subType === "qti-test") return true
+	const testResource = allResourcesResult.data.find((res) => {
+		if (!allRelevantResourceIds.has(res.sourcedId)) {
 			return false
-		})
+		}
+		const metadataResult = ResourceMetadataSchema.safeParse(res.metadata)
+		return metadataResult.success && metadataResult.data.khanSlug === params.test
+	})
 
-	if (matching.length === 0) {
+	if (!testResource) {
 		logger.error("could not find a matching course challenge resource for slug", {
 			slug: params.test,
 			onerosterCourseSourcedId
 		})
-		notFound()
-	}
-
-	const testResource = matching[0]
-	if (!testResource) {
-		logger.error("no matching resources remain after filtering", { slug: params.test, onerosterCourseSourcedId })
 		notFound()
 	}
 

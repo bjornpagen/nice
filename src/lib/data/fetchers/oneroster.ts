@@ -35,7 +35,7 @@ import { createPrefixFilter } from "@/lib/filter"
 
 // Prefix filters for leveraging btree indexes
 const NICE_PREFIX_FILTER = createPrefixFilter("nice_")
-function hasMetaKeys(x: unknown): x is { type?: unknown; subType?: unknown; khanActivityType?: unknown; xp?: unknown } {
+function hasMetaKeys(x: unknown): x is { type?: unknown; subType?: unknown; khanActivityType?: unknown } {
 	return typeof x === "object" && x !== null
 }
 
@@ -265,17 +265,19 @@ export async function getResourcesBySlugAndType(
 			khanActivityType === "UnitTest" ||
 			khanActivityType === "CourseChallenge"
 		) {
-			// Legacy: accept either interactive (older) or qti (reverted) forms
+			// Accept either interactive (older) or qti (reverted) forms
 			filtered = filtered.filter((r) => {
 				const meta = r.metadata
 				if (!hasMetaKeys(meta)) return false
 				const typeVal = typeof meta.type === "string" ? meta.type : undefined
 				const subTypeVal = typeof meta.subType === "string" ? meta.subType : undefined
 				const activityVal = typeof meta.khanActivityType === "string" ? meta.khanActivityType : undefined
+
 				if (typeVal === "interactive") {
 					return activityVal === khanActivityType
 				}
 				if (typeVal === "qti") {
+					// All assessment tests and exercises use qti-test
 					const subtypeOk = subTypeVal === "qti-test"
 					const activityOk = !activityVal || activityVal === khanActivityType
 					return subtypeOk && activityOk
