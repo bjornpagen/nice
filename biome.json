@@ -9,7 +9,8 @@
 		"./gritql/no-implicit-select-all.grit",
 		"./gritql/no-relative-imports.grit",
 		"./gritql/no-manual-memoization.grit",
-		"./gritql/no-iife.grit"
+		"./gritql/no-iife.grit",
+		"./gritql/require-logger-before-throw.grit"
 	],
 	"vcs": {
 		"enabled": false,
