@@ -432,7 +432,7 @@ export async function generateStructuredQtiItem(
 	const widgetSlotNames = assessmentShell.widgets
 	logger.debug("shot 2: mapping slots to widgets", { count: widgetSlotNames.length })
 
-	const widgetMappingResult = await (async () => {
+	const performWidgetMapping = async () => {
 		if (widgetSlotNames.length === 0) {
 			logger.info("no widget slots found, skipping ai widget mapping call")
 			// Return a successful result with empty data, mimicking the `errors.try` output
@@ -450,7 +450,9 @@ export async function generateStructuredQtiItem(
 			return { data: emptyMapping, error: mappingResult.error }
 		}
 		return { data: mappingResult.data, error: null }
-	})()
+	}
+
+	const widgetMappingResult = await performWidgetMapping()
 
 	if (widgetMappingResult.error) {
 		logger.error("shot 2 failed: widget mapping pass failed", { error: widgetMappingResult.error })

@@ -36,13 +36,14 @@ export function Sidebar({
 	const course = React.use(coursePromise)
 	const baseProgressMap = React.use(progressPromise)
 	const { progressOverrides } = useLessonProgress()
-	const progressMap = (() => {
+	const mergeProgressMaps = () => {
 		const merged = new Map(baseProgressMap)
 		for (const [key, value] of progressOverrides.entries()) {
 			merged.set(key, value)
 		}
 		return merged
-	})()
+	}
+	const progressMap = mergeProgressMaps()
 
 	// Get lock status from course-wide context instead of props
 	const { resourceLockStatus } = useCourseLockStatus()
@@ -55,7 +56,7 @@ export function Sidebar({
 		throw errors.new(`course sidebar: no content found for course: ${course.title}`)
 	}
 
-	const cursor = (() => {
+	const findCursorIndex = () => {
 		if (course == null) {
 			return -1
 		}
@@ -68,7 +69,8 @@ export function Sidebar({
 			// For unit-level resources (Quiz, UnitTest, CourseChallenge), use exact path match
 			return material.path === pathname
 		})
-	})()
+	}
+	const cursor = findCursorIndex()
 
 	if (cursor === -1) {
 		throw errors.new(`course sidebar: material not found: ${pathname}`)

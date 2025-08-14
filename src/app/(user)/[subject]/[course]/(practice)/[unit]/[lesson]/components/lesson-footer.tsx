@@ -207,7 +207,7 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 		}
 		if (typeof onerosterUserSourcedId !== "string") return
 
-		void (async () => {
+		const trackNavigationAsync = async () => {
 			const result = await errors.try(
 				trackArticleView(onerosterUserSourcedId, currentResourceId, {
 					subjectSlug,
@@ -218,7 +218,8 @@ export function LessonFooter({ coursePromise, progressPromise }: LessonFooterPro
 				// non-blocking; allow navigation regardless
 				return
 			}
-		})()
+		}
+		void trackNavigationAsync()
 	}
 
 	return (

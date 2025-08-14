@@ -11,6 +11,7 @@ import { QTIRenderer } from "@/components/qti-renderer"
 import { Button } from "@/components/ui/button"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { trackArticleView } from "@/lib/actions/tracking"
+import { CALIPER_SUBJECT_MAPPING, type CaliperSubject, isSubjectSlug } from "@/lib/constants/subjects"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { ArticlePageData } from "@/lib/types/page"
 
@@ -71,7 +72,7 @@ export function Content({
 
 		if (onerosterUserSourcedId && article.id) {
 			// Track article view on mount and refresh route so server-fetched progress updates immediately
-			void (async () => {
+			const trackArticleAsync = async () => {
 				beginProgressUpdate(article.id)
 				const result = await errors.try(
 					trackArticleView(onerosterUserSourcedId, article.id, {
@@ -95,19 +96,12 @@ export function Content({
 				// Ensure server-side lock state is refreshed after recording completion
 				router.refresh()
 				endProgressUpdate(article.id)
-			})()
-			// Map subject string to the enum value
-			const subjectMapping: Record<string, "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"> = {
-				science: "Science",
-				math: "Math",
-				reading: "Reading",
-				language: "Language",
-				"social-studies": "Social Studies"
 			}
-			const mappedSubject = subjectMapping[params.subject]
-			if (!mappedSubject) {
-				// CRITICAL: Subject is unmapped. This indicates a configuration or routing error.
-				throw errors.new("article tracking: unmapped subject")
+			void trackArticleAsync()
+			// Resolve subject via centralized mapping with strong typing
+			let mappedSubject: CaliperSubject = "None"
+			if (isSubjectSlug(params.subject)) {
+				mappedSubject = CALIPER_SUBJECT_MAPPING[params.subject]
 			}
 
 			// Cleanup function to send time spent event when component unmounts

@@ -18,7 +18,7 @@
 		"dev:inngest": "inngest-cli dev --queue-workers 2000 --poll-interval 2",
 		"preview": "next build && next start",
 		"start": "next start",
-		"typecheck": "tsc --noEmit && bun run check:write",
+		"typecheck": "tsc --noEmit",
 		"prepare": "husky"
 	},
 	"dependencies": {

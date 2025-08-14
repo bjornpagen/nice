@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { SUBJECT_SLUGS } from "@/lib/constants/subjects"
 import type { Unit } from "@/lib/types/domain"
 
 export const SaveAssessmentResultCommandSchema = z.object({
@@ -23,7 +24,7 @@ export const SaveAssessmentResultCommandSchema = z.object({
 	correctAnswers: z.number().int(),
 	totalQuestions: z.number().int(),
 	isInteractiveAssessment: z.boolean(),
-	subjectSlug: z.string(),
+	subjectSlug: z.enum(SUBJECT_SLUGS),
 	courseSlug: z.string(),
 	userPublicMetadata: z.unknown().optional()
 })

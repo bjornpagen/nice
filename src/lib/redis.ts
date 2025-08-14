@@ -52,12 +52,13 @@ if (env.NODE_ENV === "production") {
 		// If a client exists from a previous run, close it and clear globals
 		const clientToQuit = globalThis.redisClient
 		if (clientToQuit) {
-			;(async () => {
+			const quitRedisClient = async () => {
 				const quitResult = await errors.try(clientToQuit.quit())
 				if (quitResult.error) {
 					logger.error("failed to quit redis on disable", { error: quitResult.error })
 				}
-			})()
+			}
+			void quitRedisClient()
 		}
 		globalThis.redisClient = undefined
 		globalThis.redisConnectionPromise = undefined
@@ -85,9 +86,9 @@ if (redis && !connectionPromise) {
 	redis.on("ready", () => logger.info("redis client ready"))
 	redis.on("end", () => logger.warn("redis client connection ended"))
 
-	// Create connection promise
-	connectionPromise = (async () => {
-		const connectResult = await errors.try(redis.connect())
+	// Create connection promise with explicit parameter to avoid undefined narrowing issues
+	const createRedisConnection = async (client: ReturnType<typeof createClient>) => {
+		const connectResult = await errors.try(client.connect())
 		if (connectResult.error) {
 			logger.error("failed to connect to redis", { error: connectResult.error })
 			// In development, we can continue without Redis
@@ -97,7 +98,8 @@ if (redis && !connectionPromise) {
 				logger.error("redis connection required in production", { error: connectResult.error })
 			}
 		}
-	})()
+	}
+	connectionPromise = createRedisConnection(redis)
 
 	// Store in global for development hot reloads
 	if (env.NODE_ENV === "development") {

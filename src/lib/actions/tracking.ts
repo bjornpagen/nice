@@ -301,11 +301,12 @@ export async function saveAssessmentResult(options: AssessmentCompletionOptions)
 	// Step 1: Calculate server-side accuracy and masteredUnits
 	const accuracyPercent =
 		assessmentTotalQuestions > 0 ? Math.round((assessmentCorrectAnswers / assessmentTotalQuestions) * 100) : 100
-	const masteredUnits = (() => {
+	const calculateMasteredUnits = () => {
 		if (contentType === "Test") return accuracyPercent >= 90 ? 1 : 0
 		if (contentType === "Exercise" || contentType === "Quiz") return accuracyPercent >= 80 ? 1 : 0
 		return 0
-	})()
+	}
+	const masteredUnits = calculateMasteredUnits()
 
 	// Initialize XP tracking variables
 	let finalXp = 0

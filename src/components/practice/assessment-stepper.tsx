@@ -32,6 +32,31 @@ import type { Question, Unit } from "@/lib/types/domain"
 import type { LessonLayoutData } from "@/lib/types/page"
 import { cn } from "@/lib/utils"
 
+// Shared helper: render XP penalty alert
+function renderPenaltyAlert(penaltyXp: number, contentType: string, xpReason?: string, avgSecondsPerQuestion?: number) {
+	const isDark = contentType === "Exercise" || contentType === "Quiz" || contentType === "Test"
+	return (
+		<Alert
+			className={cn(
+				"backdrop-blur-sm",
+				isDark
+					? "border-white/15 bg-white/5 text-white [&_[data-slot=alert-description]]:text-white/80"
+					: "border-red-200 bg-red-50 text-red-900 [&_[data-slot=alert-description]]:text-red-900"
+			)}
+		>
+			<AlertTitle className={cn(isDark ? "text-white" : "text-red-900")}>XP penalty applied</AlertTitle>
+			<AlertDescription>
+				<p>
+					{xpReason || "insincere effort detected"}. Deducted
+					<span className="font-semibold"> {Math.abs(penaltyXp)} XP</span>
+					{typeof avgSecondsPerQuestion === "number" && <> (~{avgSecondsPerQuestion.toFixed(1)}s per question)</>}.
+				</p>
+				<p>Slow down and aim for accuracy to earn XP.</p>
+			</AlertDescription>
+		</Alert>
+	)
+}
+
 // Summary View Component
 function SummaryView({
 	title,
@@ -98,32 +123,7 @@ function SummaryView({
 					)}
 					{typeof penaltyXp === "number" && penaltyXp < 0 && (
 						<div className="mt-6 w-full max-w-xl mx-auto">
-							{(() => {
-								const isDark = contentType === "Exercise" || contentType === "Quiz" || contentType === "Test"
-								return (
-									<Alert
-										className={cn(
-											"backdrop-blur-sm",
-											isDark
-												? "border-white/15 bg-white/5 text-white [&_[data-slot=alert-description]]:text-white/80"
-												: "border-red-200 bg-red-50 text-red-900 [&_[data-slot=alert-description]]:text-red-900"
-										)}
-									>
-										<AlertTitle className={cn(isDark ? "text-white" : "text-red-900")}>XP penalty applied</AlertTitle>
-										<AlertDescription>
-											<p>
-												{xpReason || "insincere effort detected"}. Deducted
-												<span className="font-semibold"> {Math.abs(penaltyXp)} XP</span>
-												{typeof avgSecondsPerQuestion === "number" && (
-													<> (~{avgSecondsPerQuestion.toFixed(1)}s per question)</>
-												)}
-												.
-											</p>
-											<p>Slow down and aim for accuracy to earn XP.</p>
-										</AlertDescription>
-									</Alert>
-								)
-							})()}
+							{renderPenaltyAlert(penaltyXp, contentType, xpReason, avgSecondsPerQuestion)}
 						</div>
 					)}
 					<div className="mt-8">
@@ -218,6 +218,7 @@ export function AssessmentStepper({
 }: AssessmentStepperProps) {
 	const { user } = useUser()
 	const router = useRouter()
+
 	const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0)
 	const [selectedResponses, setSelectedResponses] = React.useState<Record<string, unknown>>({})
 	const [expectedResponses, setExpectedResponses] = React.useState<string[]>([])
@@ -787,25 +788,24 @@ export function AssessmentStepper({
 
 			// Update local sidebar progress overlay
 			const score = finalSummaryData.score
+			const calculateProficiency = () => {
+				if (score >= 100) return "proficient" as const
+				if (score >= 70) return "familiar" as const
+				return "attempted" as const
+			}
+			const proficiencyLevel = calculateProficiency()
+
 			setProgressForResource(onerosterResourceSourcedId, {
 				completed: true,
 				score,
-				proficiency: (() => {
-					if (score >= 100) return "proficient" as const
-					if (score >= 70) return "familiar" as const
-					return "attempted" as const
-				})()
+				proficiency: proficiencyLevel
 			})
 			const currentSlug = (assessmentPath || "").split("/").pop()
 			if (currentSlug) {
 				setProgressForResource(currentSlug, {
 					completed: true,
 					score,
-					proficiency: (() => {
-						if (score >= 100) return "proficient" as const
-						if (score >= 70) return "familiar" as const
-						return "attempted" as const
-					})()
+					proficiency: proficiencyLevel
 				})
 			}
 

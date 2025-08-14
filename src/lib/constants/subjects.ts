@@ -1,10 +1,21 @@
-export const CALIPER_SUBJECT_MAPPING: Record<
-	string,
-	"Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"
-> = {
+// Centralized subject definitions for strong typing and single-source-of-truth mapping
+export type CaliperSubject = "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"
+
+export const SUBJECT_SLUGS = ["science", "math", "reading", "language", "social-studies", "humanities"] as const
+
+export type SubjectSlug = (typeof SUBJECT_SLUGS)[number]
+
+// Runtime membership test without type assertions
+const SUBJECT_SLUG_SET: ReadonlySet<string> = new Set(SUBJECT_SLUGS)
+export function isSubjectSlug(value: string): value is SubjectSlug {
+	return SUBJECT_SLUG_SET.has(value)
+}
+
+export const CALIPER_SUBJECT_MAPPING: Record<SubjectSlug, CaliperSubject> = {
 	science: "Science",
 	math: "Math",
 	reading: "Reading",
 	language: "Language",
-	"social-studies": "Social Studies"
+	"social-studies": "Social Studies",
+	humanities: "Social Studies"
 } as const

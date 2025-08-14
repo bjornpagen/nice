@@ -66,13 +66,14 @@ export function Content({ questionsPromise }: ContentProps) {
 	}
 
 	// filter questions based on widget filter
-	const filteredQuestions = (() => {
+	const getFilteredQuestions = () => {
 		if (!localQuestions) return []
 		if (widgetFilter === "all") return localQuestions
 		if (widgetFilter === "with") return localQuestions.filter(hasWidgets)
 		if (widgetFilter === "without") return localQuestions.filter(hasEmptyWidgets)
 		return localQuestions
-	})()
+	}
+	const filteredQuestions = getFilteredQuestions()
 
 	// adjust currentIndex when filtering changes
 	React.useEffect(() => {

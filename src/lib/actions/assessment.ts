@@ -7,6 +7,7 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { oneroster, qti } from "@/lib/clients"
 import { XP_PROFICIENCY_THRESHOLD } from "@/lib/constants/progress"
+import { isSubjectSlug } from "@/lib/constants/subjects"
 import type { SaveAssessmentResultCommand } from "@/lib/dtos/assessment"
 import * as assessment from "@/lib/services/assessment"
 import * as attempt from "@/lib/services/attempt"
@@ -288,7 +289,16 @@ export async function finalizeAssessment(options: {
 		logger.error("invalid assessment path structure", { assessmentPath: options.assessmentPath, correlationId })
 		throw errors.new("assessment path invalid")
 	}
-	const subjectSlug = pathParts[1]
+	const subjectSlugRaw = pathParts[1]
+	if (!isSubjectSlug(subjectSlugRaw)) {
+		logger.error("invalid subject slug in assessment path", {
+			subjectSlug: subjectSlugRaw,
+			assessmentPath: options.assessmentPath,
+			correlationId
+		})
+		throw errors.new("subject slug invalid")
+	}
+	const subjectSlug = subjectSlugRaw
 	const courseSlug = pathParts[2]
 
 	// Build the command DTO for the service layer
@@ -304,6 +314,7 @@ export async function finalizeAssessment(options: {
 		isInteractiveAssessment: true,
 		clerkUserId,
 		correlationId,
+		// zod schema now validates subjectSlug against SUBJECT_SLUGS; pass through
 		subjectSlug,
 		courseSlug,
 		userPublicMetadata: user.publicMetadata
@@ -321,7 +332,7 @@ export async function finalizeAssessment(options: {
 	}
 
 	// 3. Return a clean summary object for the client's SummaryView.
-	const xpInfo = (() => {
+	const extractXpInfo = () => {
 		if (!saveResult.data || typeof saveResult.data !== "object" || !("xp" in saveResult.data)) {
 			return undefined
 		}
@@ -339,7 +350,8 @@ export async function finalizeAssessment(options: {
 			return xp
 		}
 		return undefined
-	})()
+	}
+	const xpInfo = extractXpInfo()
 
 	const avgSecondsPerQuestion =
 		options.durationInSeconds && totalQuestions > 0 ? options.durationInSeconds / totalQuestions : undefined
@@ -373,29 +385,29 @@ export async function flagQuestionAsReported(questionId: string, report: string)
 
 	logger.info("flagging question as reported", { clerkUserId, questionId, report })
 
-	const flagResult = await errors.try(
-		(async () => {
-			const existingItem = await qti.getAssessmentItem(questionId)
+	const flagQuestionOperation = async () => {
+		const existingItem = await qti.getAssessmentItem(questionId)
 
-			const updatedMetadata = {
-				...existingItem.metadata,
-				status: "reported",
-				report: report.trim(),
-				lastReported: new Date().toISOString(),
-				reportedBy: clerkUserId
-			}
+		const updatedMetadata = {
+			...existingItem.metadata,
+			status: "reported",
+			report: report.trim(),
+			lastReported: new Date().toISOString(),
+			reportedBy: clerkUserId
+		}
 
-			logger.info("updating question metadata", { questionId, updatedMetadata })
+		logger.info("updating question metadata", { questionId, updatedMetadata })
 
-			const updatePayload = {
-				identifier: existingItem.identifier,
-				xml: existingItem.rawXml,
-				metadata: updatedMetadata
-			}
+		const updatePayload = {
+			identifier: existingItem.identifier,
+			xml: existingItem.rawXml,
+			metadata: updatedMetadata
+		}
 
-			await qti.updateAssessmentItem(updatePayload)
-		})()
-	)
+		await qti.updateAssessmentItem(updatePayload)
+	}
+
+	const flagResult = await errors.try(flagQuestionOperation())
 
 	if (flagResult.error) {
 		logger.error("failed to flag question in qti api", { clerkUserId, questionId, error: flagResult.error })

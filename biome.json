@@ -8,7 +8,8 @@
 		"./gritql/no-try.grit",
 		"./gritql/no-implicit-select-all.grit",
 		"./gritql/no-relative-imports.grit",
-		"./gritql/no-manual-memoization.grit"
+		"./gritql/no-manual-memoization.grit",
+		"./gritql/no-iife.grit"
 	],
 	"vcs": {
 		"enabled": false,

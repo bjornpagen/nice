@@ -43,6 +43,37 @@ interface AssessmentBottomNavProps {
 	nextEnabled?: boolean
 }
 
+const renderContinueButton = (
+    isCorrect: boolean | undefined,
+    hasExhaustedAttempts: boolean | undefined,
+    currentQuestion: number | undefined,
+    totalQuestions: number | undefined,
+    onContinue: () => void,
+    isBusy: boolean | undefined,
+    ref?: React.Ref<HTMLButtonElement>
+) => {
+	const isCompleteOrExhausted = Boolean(isCorrect) || Boolean(hasExhaustedAttempts)
+	const isLastQuestion =
+		typeof currentQuestion === "number" && typeof totalQuestions === "number" && currentQuestion === totalQuestions
+	const buttonText = isCompleteOrExhausted ? (isLastQuestion ? "Show summary" : "Next question") : "Try again"
+
+	return (
+		<Button
+			ref={ref}
+			variant="default"
+			onClick={onContinue}
+			className={cn(
+				"bg-blue-600 text-white rounded-sm px-4 font-medium",
+				"disabled:opacity-60 disabled:cursor-not-allowed",
+				!isBusy && "hover:cursor-pointer hover:bg-blue-600"
+			)}
+			disabled={Boolean(isBusy)}
+		>
+			{buttonText}
+		</Button>
+	)
+}
+
 export const AssessmentBottomNav = React.forwardRef<HTMLButtonElement, AssessmentBottomNavProps>(
 	(
 		{
@@ -408,35 +439,29 @@ function RightSection({
 							<div className="absolute -bottom-[9px] right-6 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-gray-200" />
 							<div className="flex items-center justify-between">
 								<div className="flex items-center gap-3">
-									{(() => {
-										if (isCorrect) {
-											return (
-												<>
-													<div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-														<CheckCircle className="w-6 h-6 text-white" />
-													</div>
-													<div>
-														<div className="font-bold text-green-900">Great work!</div>
-														<div className="text-sm text-green-700">You got it. Onward!</div>
-													</div>
-												</>
-											)
-										}
-										if (hasExhaustedAttempts) {
-											return (
-												<div>
-													<div className="font-bold text-orange-900">Out of attempts</div>
-													<div className="text-sm text-orange-700">Let's move on to the next question.</div>
-												</div>
-											)
-										}
-										return (
-											<div>
-												<div className="font-bold text-red-900">Not quite!</div>
-												<div className="text-sm text-red-700">Give it another try!</div>
+									{isCorrect && (
+										<>
+											<div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+												<CheckCircle className="w-6 h-6 text-white" />
 											</div>
-										)
-									})()}
+											<div>
+												<div className="font-bold text-green-900">Great work!</div>
+												<div className="text-sm text-green-700">You got it. Onward!</div>
+											</div>
+										</>
+									)}
+									{!isCorrect && hasExhaustedAttempts && (
+										<div>
+											<div className="font-bold text-orange-900">Out of attempts</div>
+											<div className="text-sm text-orange-700">Let's move on to the next question.</div>
+										</div>
+									)}
+									{!isCorrect && !hasExhaustedAttempts && (
+										<div>
+											<div className="font-bold text-red-900">Not quite!</div>
+											<div className="text-sm text-red-700">Give it another try!</div>
+										</div>
+									)}
 								</div>
 								{!isCorrect && !hasExhaustedAttempts && (
 									<button
@@ -481,27 +506,15 @@ function RightSection({
 							</AlertDialog>
 						</Button>
 					)}
-					<Button
-						ref={ref}
-						variant="default"
-						onClick={onContinue}
-						className={cn(
-							"bg-blue-600 text-white rounded-sm px-4 font-medium",
-							"disabled:opacity-60 disabled:cursor-not-allowed",
-							!isBusy && "hover:cursor-pointer hover:bg-blue-600"
-						)}
-						disabled={Boolean(isBusy)}
-					>
-						{(() => {
-							if (isCorrect) {
-								return currentQuestion === totalQuestions ? "Show summary" : "Next question"
-							}
-							if (hasExhaustedAttempts) {
-								return currentQuestion === totalQuestions ? "Show summary" : "Next question"
-							}
-							return "Try again"
-						})()}
-					</Button>
+					{renderContinueButton(
+						isCorrect,
+						hasExhaustedAttempts,
+						currentQuestion,
+						totalQuestions,
+						onContinue,
+						isBusy,
+						ref
+					)}
 				</div>
 			</div>
 		)

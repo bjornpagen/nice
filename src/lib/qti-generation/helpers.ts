@@ -115,12 +115,13 @@ export function tryApproximatePiProduct(rawExpr: string, piApprox = 3.14): strin
 
 	// Normalize number to a compact string while preserving significant digits
 	// Avoid scientific notation for typical classroom values
-	const asString = (() => {
+	const normalizeNumberString = () => {
 		const maybeFixed = acc.toFixed(10) // limit noise
 		// trim trailing zeros
 		const trimmed = maybeFixed.replace(/\.0+$/, "").replace(/(\.\d*?)0+$/, "$1")
 		return trimmed
-	})()
+	}
+	const asString = normalizeNumberString()
 
 	// Add a guard: must be a finite number
 	if (!Number.isFinite(Number(asString))) return null

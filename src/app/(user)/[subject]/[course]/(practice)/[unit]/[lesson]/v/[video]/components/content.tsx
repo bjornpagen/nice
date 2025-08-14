@@ -12,27 +12,13 @@ import { Button } from "@/components/ui/button"
 import { sendCaliperTimeSpentEvent } from "@/lib/actions/caliper"
 import { getVideoProgress, updateVideoProgress } from "@/lib/actions/tracking"
 import { VIDEO_COMPLETION_THRESHOLD_PERCENT, VIDEO_COMPLETION_THRESHOLD_RATIO } from "@/lib/constants/progress"
+import { CALIPER_SUBJECT_MAPPING, type CaliperSubject, isSubjectSlug } from "@/lib/constants/subjects"
 import { ClerkUserPublicMetadataSchema } from "@/lib/metadata/clerk"
 import type { VideoPageData } from "@/lib/types/page"
 
-// Helper function to map URL subjects to Caliper enum values
-function mapSubjectToCaliperSubject(
-	subject: string
-): "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None" {
-	switch (subject.toLowerCase()) {
-		case "science":
-			return "Science"
-		case "math":
-			return "Math"
-		case "reading":
-			return "Reading"
-		case "language":
-			return "Language"
-		case "social-studies":
-			return "Social Studies"
-		default:
-			return "None"
-	}
+// Helper function to map URL subjects to Caliper enum values using centralized mapping
+function mapSubjectToCaliperSubject(subject: string): CaliperSubject {
+	return isSubjectSlug(subject) ? CALIPER_SUBJECT_MAPPING[subject] : "None"
 }
 
 export function Content({

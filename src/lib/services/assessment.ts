@@ -53,11 +53,12 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 
 	// Build metadata for the result using legacy rules
 	const accuracyPercent = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 100
-	const masteredUnits = (() => {
+	const calculateMasteredUnits = () => {
 		if (command.contentType === "Test") return accuracyPercent >= 90 ? 1 : 0
 		if (command.contentType === "Exercise" || command.contentType === "Quiz") return accuracyPercent >= 80 ? 1 : 0
 		return 0
-	})()
+	}
+	const masteredUnits = calculateMasteredUnits()
 
 	const metadata = {
 		masteredUnits,
