@@ -4,6 +4,7 @@ import { and, eq, inArray, sql } from "drizzle-orm"
 import { db } from "@/db"
 import * as schema from "@/db/schemas"
 import { env } from "@/env"
+import { getCourseMapping, isHardcodedCourse } from "@/lib/constants/course-mapping"
 import { getAssessmentTest } from "@/lib/data/fetchers/qti"
 import { resolveAllQuestionsForTestFromXml } from "@/lib/qti-resolution"
 import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
@@ -19,6 +20,23 @@ function normalizeKhanSlug(slug: string): string {
 
 // --- ONE ROSTER TYPE DEFINITIONS ---
 // These interfaces define the structure of the final JSON payload.
+
+// Valid grade level strings
+type GradeLevel = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12"
+
+// Helper function to check if a string is a valid grade level
+function isValidGradeLevel(grade: string): grade is GradeLevel {
+	const validGrades: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+	return validGrades.includes(grade)
+}
+
+// Helper function to validate and convert strings to GradeLevel
+function validateGradeLevel(grade: string): GradeLevel {
+	if (isValidGradeLevel(grade)) {
+		return grade
+	}
+	throw errors.new(`invalid grade level: ${grade}`)
+}
 
 // Helper function to add "Nice Academy - " prefix to course titles for OneRoster
 function addNiceAcademyPrefix(title: string): string {
@@ -64,6 +82,7 @@ interface OneRosterCourse {
 	status: "active"
 	title: string
 	subjects: string[]
+	grades: GradeLevel[]
 	courseCode?: string
 	org: OneRosterGUIDRef
 	academicSession: OneRosterGUIDRef
@@ -381,12 +400,18 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 		throw errors.new("subject mapping: subject title not found for slug")
 	}
 
+	// Determine grades for this course
+	const courseGrades: GradeLevel[] = isHardcodedCourse(course.id)
+		? getCourseMapping(course.id).map(validateGradeLevel)
+		: []
+
 	const onerosterPayload: OneRosterPayload = {
 		course: {
 			sourcedId: `nice_${course.id}`,
 			status: "active",
 			title: addNiceAcademyPrefix(course.title),
 			subjects: mapToOneRosterSubjects(subjectTitle),
+			grades: courseGrades,
 			courseCode: course.slug,
 			org: { sourcedId: ORG_SOURCED_ID, type: "district" },
 			academicSession: { sourcedId: ACADEMIC_SESSION_SOURCED_ID, type: "term" },
