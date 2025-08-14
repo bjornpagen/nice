@@ -50,7 +50,7 @@ export const reviewQuestionRendering = inngest.createFunction(
 		id: "review-question-rendering",
 		name: "Review Question Rendering Quality",
 		concurrency: {
-			limit: 100
+			limit: 3
 		}
 	},
 	{
