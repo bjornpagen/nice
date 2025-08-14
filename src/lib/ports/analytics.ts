@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { env } from "@/env"
-import type { TimebackActivityContext, TimebackUser } from "@/lib/caliper"
+// import types intentionally replaced by Nice-specific types below
 import { CaliperEnvelopeSchema } from "@/lib/caliper"
 import { extractResourceIdFromCompoundId, normalizeCaliperId } from "@/lib/caliper/utils"
 import { caliper } from "@/lib/clients"
@@ -10,10 +10,42 @@ import { caliper } from "@/lib/clients"
 const SENSOR_ID = env.NEXT_PUBLIC_APP_DOMAIN
 const CALIPER_CONTEXT_URL = "http://purl.imsglobal.org/ctx/caliper/v1p2" as const
 
+// SHOUTY CONSTANTS – App-specific invariants for Nice (exported individually)
+export const NICE_APP_NAME = "Nice Academy" as const
+export const NICE_SENSOR_DOMAIN = env.NEXT_PUBLIC_APP_DOMAIN
+export const NICE_ONEROSTER_BASE = env.TIMEBACK_ONEROSTER_SERVER_URL
+export const NICE_CALIPER_CONTEXT_URL = CALIPER_CONTEXT_URL
+export const NICE_PROFILE = "TimebackProfile" as const
+
+// Exhaustive API surface types for this port – ban bad states via types
+export type NiceCaliperActor = {
+	id: string // must be full OneRoster user URL; validated at runtime
+	type: "TimebackUser"
+	email: string
+	name?: string
+	role?: "student" | "teacher" | "admin" | "guide"
+}
+
+export type NiceCaliperContext = {
+	id: string // must be app URL; validated at runtime
+	type: "TimebackActivityContext"
+	subject: "Science" | "Math" | "Reading" | "Language" | "Social Studies" | "None"
+	app: { name: string; id?: string }
+	course?: { id: string; name: string }
+	activity?: { id?: string; name: string }
+	process?: boolean
+}
+
+type CompletedEventPerformance = {
+	totalQuestions: number
+	correctQuestions: number
+	masteredUnits: number
+}
+
 export async function sendActivityCompletedEvent(options: {
-	actor: TimebackUser
-	context: TimebackActivityContext
-	performance: { totalQuestions: number; correctQuestions: number; masteredUnits: number }
+	actor: NiceCaliperActor
+	context: NiceCaliperContext
+	performance: CompletedEventPerformance
 	finalXp: number
 	durationInSeconds?: number
 	correlationId: string
@@ -26,6 +58,34 @@ export async function sendActivityCompletedEvent(options: {
 		finalXp: options.finalXp,
 		correlationId: options.correlationId
 	})
+
+	// Enforce Nice-specific invariants
+	if (options.context.app?.name !== NICE_APP_NAME) {
+		logger.error("invalid caliper app name", {
+			appName: options.context.app?.name,
+			correlationId: options.correlationId
+		})
+		throw errors.new("caliper app name invalid")
+	}
+	if (!options.context.id.startsWith(NICE_SENSOR_DOMAIN)) {
+		logger.error("invalid caliper context id domain", { id: options.context.id, correlationId: options.correlationId })
+		throw errors.new("caliper context id domain invalid")
+	}
+	const userPrefix = `${NICE_ONEROSTER_BASE}/ims/oneroster/rostering/v1p2/users/`
+	if (!options.actor.id.startsWith(userPrefix)) {
+		logger.error("invalid caliper actor id domain", { actorId: options.actor.id, correlationId: options.correlationId })
+		throw errors.new("caliper actor id domain invalid")
+	}
+	if (options.context.course?.id) {
+		const coursePrefix = `${NICE_ONEROSTER_BASE}/ims/oneroster/rostering/v1p2/courses/`
+		if (!options.context.course.id.startsWith(coursePrefix)) {
+			logger.error("invalid caliper course id domain", {
+				courseId: options.context.course.id,
+				correlationId: options.correlationId
+			})
+			throw errors.new("caliper course id domain invalid")
+		}
+	}
 
 	// Activity ID validation and normalization
 	if (!options.context.activity?.id) {
@@ -105,11 +165,38 @@ export async function sendActivityCompletedEvent(options: {
 }
 
 export async function sendTimeSpentEvent(options: {
-	actor: TimebackUser
-	context: TimebackActivityContext
+	actor: NiceCaliperActor
+	context: NiceCaliperContext
 	durationInSeconds: number
 	correlationId: string
 }): Promise<void> {
+	// Enforce Nice-specific invariants
+	if (options.context.app?.name !== NICE_APP_NAME) {
+		logger.error("invalid caliper app name", {
+			appName: options.context.app?.name,
+			correlationId: options.correlationId
+		})
+		throw errors.new("caliper app name invalid")
+	}
+	if (!options.context.id.startsWith(NICE_SENSOR_DOMAIN)) {
+		logger.error("invalid caliper context id domain", { id: options.context.id, correlationId: options.correlationId })
+		throw errors.new("caliper context id domain invalid")
+	}
+	const userPrefix = `${NICE_ONEROSTER_BASE}/ims/oneroster/rostering/v1p2/users/`
+	if (!options.actor.id.startsWith(userPrefix)) {
+		logger.error("invalid caliper actor id domain", { actorId: options.actor.id, correlationId: options.correlationId })
+		throw errors.new("caliper actor id domain invalid")
+	}
+	if (options.context.course?.id) {
+		const coursePrefix = `${NICE_ONEROSTER_BASE}/ims/oneroster/rostering/v1p2/courses/`
+		if (!options.context.course.id.startsWith(coursePrefix)) {
+			logger.error("invalid caliper course id domain", {
+				courseId: options.context.course.id,
+				correlationId: options.correlationId
+			})
+			throw errors.new("caliper course id domain invalid")
+		}
+	}
 	// Normalize activity id if present to maintain legacy payloads
 	if (options.context.activity?.id) {
 		const normalizedResourceId = extractResourceIdFromCompoundId(options.context.activity.id)

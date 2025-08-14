@@ -8,8 +8,7 @@ const mockGetAllResults = mock(() => {})
 const mockPutResult = mock(() => {})
 const mockGetResult = mock(() => {})
 const mockSaveResult = mock(() => {})
-const mockSendActivityCompletedEvent = mock(() => {})
-const mockSendTimeSpentEvent = mock(() => {})
+// Local spies are created below via spyOn; keep placeholders for type
 const mockUpdateFromAssessment = mock(() => {})
 const mockUpdateStreak = mock(() => {})
 const mockCheckExistingProficiency = mock((_userSourcedId: string, _assessmentSourcedId: string) =>
@@ -37,10 +36,7 @@ mock.module("@/lib/ports/gradebook", () => ({
 	saveResult: mockSaveResult
 }))
 
-mock.module("@/lib/ports/analytics", () => ({
-	sendActivityCompletedEvent: mockSendActivityCompletedEvent,
-	sendTimeSpentEvent: mockSendTimeSpentEvent
-}))
+// NOTE: Do not mock analytics module globally to avoid polluting other test files
 
 mock.module("@/lib/services/proficiency", () => ({
 	updateFromAssessment: mockUpdateFromAssessment
@@ -77,10 +73,14 @@ mockAuth.mockImplementation(() => Promise.resolve({ userId: "mock_clerk_user_id"
 const analytics = await import("@/lib/ports/analytics")
 const gradebook = await import("@/lib/ports/gradebook")
 const xpBank = await import("@/lib/xp/bank")
+const clients = await import("@/lib/clients")
 
 const analyticsSpy = spyOn(analytics, "sendActivityCompletedEvent")
+const timeSpentSpy = spyOn(analytics, "sendTimeSpentEvent")
 const gradebookSpy = spyOn(gradebook, "saveResult")
 const bankSpy = spyOn(xpBank, "awardBankedXpForExercise")
+// Prevent outbound Caliper HTTP calls from this test file
+const caliperSendSpy = spyOn(clients.caliper, "sendCaliperEvents").mockImplementation((_e) => Promise.resolve())
 
 // Create a proper Unit object for testing
 const mockUnit: Unit = {
@@ -117,12 +117,13 @@ afterEach(() => {
 	bankSpy.mockClear()
 	mockGetAllResults.mockClear()
 	mockCheckExistingProficiency.mockClear()
-	mockSendTimeSpentEvent.mockClear()
+	timeSpentSpy.mockClear()
 	mockUpdateStreak.mockClear()
 	mockAuth.mockClear()
 	// Reset bank implementation to default to avoid spillover between tests
 	mockAwardBankedXpForExercise.mockReset()
 	mockAwardBankedXpForExercise.mockImplementation((_params) => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] }))
+	caliperSendSpy.mockClear()
 })
 
 describe("XP Rewarding Logic - Mastery and Retries", () => {
@@ -554,11 +555,11 @@ describe("Side Effects and Error Propagation", () => {
 	test("Time spent event gating", async () => {
 		mockCheckExistingProficiency.mockImplementation((_u, _a) => Promise.resolve(false))
 		await finalizeAssessment({ ...defaultOptions, durationInSeconds: 10 })
-		expect(mockSendTimeSpentEvent).toHaveBeenCalled()
+		expect(timeSpentSpy).toHaveBeenCalled()
 
-		mockSendTimeSpentEvent.mockClear()
+		timeSpentSpy.mockClear()
 		await finalizeAssessment({ ...defaultOptions, durationInSeconds: 0 })
-		expect(mockSendTimeSpentEvent).not.toHaveBeenCalled()
+		expect(timeSpentSpy).not.toHaveBeenCalled()
 	})
 
 	test("Gradebook metadata fields presence", async () => {
@@ -601,7 +602,7 @@ describe("Input Handling and Edge Cases", () => {
 		const metadata = gradebookSpy.mock.calls[0]?.[0]?.metadata
 		expect(metadata?.xpReason).toBe("First attempt: below mastery threshold")
 		// time spent event should be sent since duration >= 1
-		expect(mockSendTimeSpentEvent).toHaveBeenCalled()
+		expect(timeSpentSpy).toHaveBeenCalled()
 	})
 	test("Should exclude reported questions from score calculation", async () => {
 		mockCheckExistingProficiency.mockImplementation((_userSourcedId, _assessmentSourcedId) => Promise.resolve(false))
