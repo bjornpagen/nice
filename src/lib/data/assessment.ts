@@ -8,7 +8,10 @@ import {
 	prepareUserQuestionSet
 } from "@/lib/data/fetchers/interactive-helpers"
 // import type { AssessmentTest, TestQuestionsResponse } from "@/lib/qti"
-import { applyQtiSelectionAndOrdering as applyQtiSelectionAndOrderingCommon } from "@/lib/qti-selection"
+import {
+	applyQtiSelectionAndOrdering as applyQtiSelectionAndOrderingCommon,
+	determineRotationModeFromQtiXml
+} from "@/lib/qti-selection"
 // NOTE: selection util now returns domain Question; direct type import not required here
 // import type { Question } from "@/lib/types/domain"
 import type {
@@ -40,12 +43,13 @@ export async function fetchQuizPageData(params: {
 	const resource = await findAndValidateResource(params.quiz, "Quiz")
 	const componentResource = await findComponentResourceWithContext(resource.sourcedId, layoutData.unitData.id)
 	const { assessmentTest, resolvedQuestions } = await fetchAndResolveQuestions(resource.sourcedId)
+	const rotationMode = determineRotationModeFromQtiXml(assessmentTest)
 	const questions = await prepareUserQuestionSet({
 		resourceSourcedId: resource.sourcedId,
 		componentResourceSourcedId: componentResource.sourcedId,
 		assessmentTest,
 		resolvedQuestions,
-		rotationMode: "deterministic"
+		rotationMode
 	})
 
 	const resourceMetadata = resource.metadata
@@ -82,12 +86,13 @@ export async function fetchUnitTestPageData(params: {
 	const resource = await findAndValidateResource(params.test, "UnitTest")
 	const componentResource = await findComponentResourceWithContext(resource.sourcedId, layoutData.unitData.id)
 	const { assessmentTest, resolvedQuestions } = await fetchAndResolveQuestions(resource.sourcedId)
+	const rotationMode = determineRotationModeFromQtiXml(assessmentTest)
 	const questions = await prepareUserQuestionSet({
 		resourceSourcedId: resource.sourcedId,
 		componentResourceSourcedId: componentResource.sourcedId,
 		assessmentTest,
 		resolvedQuestions,
-		rotationMode: "random"
+		rotationMode
 	})
 
 	const resourceMetadata = resource.metadata
@@ -117,12 +122,13 @@ export async function fetchCourseChallengePage_TestData(params: {
 
 	const { resource, componentResource } = await findCourseChallenge(params)
 	const { assessmentTest, resolvedQuestions } = await fetchAndResolveQuestions(resource.sourcedId)
+	const rotationMode = determineRotationModeFromQtiXml(assessmentTest)
 	const questions = await prepareUserQuestionSet({
 		resourceSourcedId: resource.sourcedId,
 		componentResourceSourcedId: componentResource.sourcedId,
 		assessmentTest,
 		resolvedQuestions,
-		rotationMode: "random"
+		rotationMode
 	})
 
 	// Course Challenges require fetching some top-level course data.

@@ -307,6 +307,9 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 
 						return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${id}" title="${safeTitle}">
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
     <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
         <qti-assessment-section identifier="SECTION_COURSE_GRAB_BAG" title="Course Challenge" visible="false">
             <qti-selection select="30" with-replacement="false"/>
@@ -327,6 +330,9 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 
 						return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${id}" title="${safeTitle}">
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
     <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
         <qti-assessment-section identifier="SECTION_UNITTEST_GRAB_BAG" title="Unit Test" visible="false">
             <qti-selection select="12" with-replacement="false"/>
@@ -346,30 +352,58 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 						questionsByProblemType.get(q.problemType)?.push(q)
 					}
 
-					const sectionsXml = Array.from(questionsByProblemType.entries())
-						.map(([problemType, problemTypeQuestions]) => {
-							const encodedProblemType = encodeProblemType(problemType)
-							const safeExerciseTitle = escapeXmlAttribute(problemTypeQuestions[0]?.exerciseTitle ?? "Exercise Section")
-							const exerciseId = problemTypeQuestions[0]?.exerciseId
-							const itemRefsXml = problemTypeQuestions
-								.map(
-									(itemId, itemIndex) =>
-										`<qti-assessment-item-ref identifier="nice_${itemId.id}" href="/assessment-items/nice_${itemId.id}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+					// ✅ ADDED: Determine selection strategy based on number of problem types (sections)
+					let selectionStrategy = ""
+					// Quiz or Exercise: Less than 4 sections or 8 for Quizzes, fallback to "random grab bag"
+					if (
+						(assessmentType === "Quiz" && questionsByProblemType.size < 8) ||
+						(assessmentType === "Exercise" && questionsByProblemType.size < 4)
+					) {
+						selectionStrategy = `
+        <qti-assessment-section identifier="SECTION_${id}_GRAB_BAG" title="${safeTitle}" visible="false">
+            <qti-selection select="${Math.min(questions.length, assessmentType === "Quiz" ? 8 : 4)}" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>`
+						// All items reference in a single "grab bag" section
+						selectionStrategy += questions
+							.map(
+								(q, idx) =>
+									`<qti-assessment-item-ref identifier="nice_${q.id}" href="/assessment-items/nice_${q.id}" sequence="${idx + 1}"></qti-assessment-item-ref>`
+							)
+							.join("\n                ")
+						selectionStrategy += `
+        </qti-assessment-section>`
+					} else {
+						// Deterministic rotation (original logic)
+						selectionStrategy = Array.from(questionsByProblemType.entries())
+							.map(([problemType, problemTypeQuestions]) => {
+								const encodedProblemType = encodeProblemType(problemType)
+								const safeExerciseTitle = escapeXmlAttribute(
+									problemTypeQuestions[0]?.exerciseTitle ?? "Exercise Section"
 								)
-								.join("\n                ")
+								const exerciseId = problemTypeQuestions[0]?.exerciseId
+								const itemRefsXml = problemTypeQuestions
+									.map(
+										(itemId, itemIndex) =>
+											`<qti-assessment-item-ref identifier="nice_${itemId.id}" href="/assessment-items/nice_${itemId.id}" sequence="${itemIndex + 1}"></qti-assessment-item-ref>`
+									)
+									.join("\n                ")
 
-							return `        <qti-assessment-section identifier="SECTION_${exerciseId}_${encodedProblemType}" title="${safeExerciseTitle}" visible="false">
+								return `        <qti-assessment-section identifier="SECTION_${exerciseId}_${encodedProblemType}" title="${safeExerciseTitle}" visible="false">
             <qti-selection select="1" with-replacement="false"/>
             <qti-ordering shuffle="true"/>
             ${itemRefsXml}
         </qti-assessment-section>`
-						})
-						.join("\n")
+							})
+							.join("\n")
+					}
 
 					return `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd" identifier="nice_${id}" title="${safeTitle}">
+    <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float">
+        <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
     <qti-test-part identifier="PART_1" navigation-mode="nonlinear" submission-mode="individual">
-${sectionsXml}
+${selectionStrategy}
     </qti-test-part>
 </qti-assessment-test>`
 				}
@@ -409,30 +443,49 @@ ${sectionsXml}
 
 					const safeTitle = escapeXmlAttribute(exercise.title)
 
-					const sectionsXml = Array.from(questionsByProblemType.entries())
-						.map(([problemType, problemTypeQuestions]) => {
-							const encodedProblemType = encodeProblemType(problemType)
-							const itemRefsXml = problemTypeQuestions
-								.map(
-									(itemId, index) =>
-										`<qti-assessment-item-ref identifier="nice_${itemId.id}" href="/assessment-items/nice_${itemId.id}" sequence="${index + 1}"></qti-assessment-item-ref>`
-								)
-								.join("\n                ")
-							const selectCountForExercise = 1
-							return `        <qti-assessment-section identifier="SECTION_${exercise.id}_${encodedProblemType}" title="${safeTitle}" visible="true">
+					// ✅ ADDED: Determine selection strategy for exercises
+					let selectionStrategy = ""
+					if (questionsByProblemType.size < 4) {
+						// Random grab bag for exercises with less than 4 sections
+						selectionStrategy = `
+        <qti-assessment-section identifier="SECTION_${exercise.id}_GRAB_BAG" title="${safeTitle}" visible="false">
+            <qti-selection select="${Math.min(questionsForExercise.length, 4)}" with-replacement="false"/>
+            <qti-ordering shuffle="true"/>`
+						selectionStrategy += questionsForExercise
+							.map(
+								(q, idx) =>
+									`<qti-assessment-item-ref identifier="nice_${q.id}" href="/assessment-items/nice_${q.id}" sequence="${idx + 1}"></qti-assessment-item-ref>`
+							)
+							.join("\n                ")
+						selectionStrategy += `
+        </qti-assessment-section>`
+					} else {
+						// Deterministic rotation (original logic)
+						selectionStrategy = Array.from(questionsByProblemType.entries())
+							.map(([problemType, problemTypeQuestions]) => {
+								const encodedProblemType = encodeProblemType(problemType)
+								const itemRefsXml = problemTypeQuestions
+									.map(
+										(itemId, index) =>
+											`<qti-assessment-item-ref identifier="nice_${itemId.id}" href="/assessment-items/nice_${itemId.id}" sequence="${index + 1}"></qti-assessment-item-ref>`
+									)
+									.join("\n                ")
+								const selectCountForExercise = 1
+								return `        <qti-assessment-section identifier="SECTION_${exercise.id}_${encodedProblemType}" title="${safeTitle}" visible="true">
             <qti-selection select="${selectCountForExercise}" with-replacement="false"/>
             <qti-ordering shuffle="true"/>
             ${itemRefsXml}
         </qti-assessment-section>`
-						})
-						.join("\n")
+							})
+							.join("\n")
+					}
 
 					return `<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <qti-assessment-test xmlns=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqtiasi_v3p0 https://purl.imsglobal.org/spec/qti/v3p0/schema/xsd/imsqti_asiv3p0_v1p0.xsd\" identifier=\"nice_${exercise.id}\" title=\"${safeTitle}\">
-    <qti-test-part identifier=\"PART_1\" navigation-mode=\"nonlinear\" submission-mode=\"individual\">
-${sectionsXml}
-    </qti-test-part>
-</qti-assessment-test>`
+    <qti-outcome-declaration identifier=\"SCORE\" cardinality=\"single\" base-type=\"float\">
+        <qti-default-value><qti-value>0.0</qti-value></qti-default-value>
+    </qti-outcome-declaration>
+    <qti-test-part identifier=\"PART_1\" navigation-mode=\"nonlinear\" submission-mode=\"individual\">\n${selectionStrategy}\n    </qti-test-part>\n</qti-assessment-test>`
 				})
 
 				const courseDir = path.join(process.cwd(), "data", course.slug, "qti")

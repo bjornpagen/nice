@@ -18,6 +18,40 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 /**
+ * Determines the rotation mode by analyzing the QTI XML structure.
+ * - Random mode: Single section with high select count (grab bag)
+ * - Deterministic mode: Multiple sections with select="1" (per problem type)
+ */
+export function determineRotationModeFromQtiXml(assessmentTest: AssessmentTest): "random" | "deterministic" {
+	const xml = assessmentTest.rawXml
+	const sectionRegex = /<qti-assessment-section[^>]*>([\s\S]*?)<\/qti-assessment-section>/g
+	const sections = [...xml.matchAll(sectionRegex)]
+
+	if (sections.length === 0) {
+		logger.error("invalid qti: no sections found", {
+			testIdentifier: assessmentTest.identifier,
+			xmlLength: xml.length
+		})
+		throw errors.new("qti assessment: no sections found")
+	}
+
+	if (sections.length === 1) {
+		// Single section - check if it's a grab bag (high select count)
+		const sectionContent = sections[0]?.[1] ?? ""
+		const selectionMatch = sectionContent.match(/<qti-selection[^>]*select="(?<selectCount>\d+)"/)
+		const selectCount = selectionMatch?.groups?.selectCount ? Number.parseInt(selectionMatch.groups.selectCount, 10) : 0
+
+		// If select count is greater than 1, it's a grab bag (random)
+		if (selectCount > 1) {
+			return "random"
+		}
+	}
+
+	// Multiple sections or single section with select="1" indicates deterministic rotation
+	return "deterministic"
+}
+
+/**
  * Parses a QTI assessment test's XML to apply selection and ordering rules.
  * Honors qti-ordering (shuffle) and qti-selection (select count) per section.
  * Provides deterministic non-repetition across attempts when baseSeed+attempt are provided.
