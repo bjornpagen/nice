@@ -155,7 +155,15 @@ export function buildResourceLockStatus(
 	}
 	let previousComplete = true
 	for (const r of ordered) {
-		const currentComplete = progressMap.get(r.id)?.completed === true
+		let currentComplete: boolean
+		const progress = progressMap.get(r.id)
+		// Assessments (Exercise, Quiz, UnitTest, CourseChallenge) require >= 80% score to unlock next
+		if (r.type === "Exercise" || r.type === "Quiz" || r.type === "UnitTest" || r.type === "CourseChallenge") {
+			currentComplete = typeof progress?.score === "number" && progress.score >= 80
+		} else {
+			// Non-assessment items (Video, Article) rely on completed flag
+			currentComplete = progress?.completed === true
+		}
 		// Locked only when the previous resource is incomplete AND the current one itself is not completed
 		lock[r.id] = !previousComplete && !currentComplete
 		previousComplete = currentComplete

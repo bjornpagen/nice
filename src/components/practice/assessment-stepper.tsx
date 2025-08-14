@@ -246,7 +246,7 @@ export function AssessmentStepper({
 		xpPenaltyInfo?: { penaltyXp: number; reason: string; avgSecondsPerQuestion?: number }
 	} | null>(null)
 
-	const [nextItem, setNextItem] = React.useState<{ text: string; path: string; type?: string } | null>(null)
+	const [nextItem, setNextItem] = React.useState<{ id?: string; text: string; path: string; type?: string } | null>(null)
 	const [debugClickCount, setDebugClickCount] = React.useState(0)
 	// Track when all finalization operations are fully completed
 	const [isFinalizationComplete, setIsFinalizationComplete] = React.useState(false)
@@ -447,7 +447,7 @@ export function AssessmentStepper({
 			// Find the index of the current assessment within this flattened list.
 			const currentIndex = allUnitItems.findIndex((item) => item.id === onerosterResourceSourcedId)
 
-			let foundNext: { text: string; path: string; type?: string } | null = null
+			let foundNext: { id?: string; text: string; path: string; type?: string } | null = null
 
 			// If the current item is found and is not the last item in the entire unit...
 			if (currentIndex !== -1 && currentIndex < allUnitItems.length - 1) {
@@ -455,6 +455,7 @@ export function AssessmentStepper({
 				const nextContent = allUnitItems[currentIndex + 1]
 				if (nextContent) {
 					foundNext = {
+						id: nextContent.id,
 						text: `Up next: ${nextContent.type}`,
 						path: nextContent.path,
 						type: nextContent.type
@@ -565,6 +566,10 @@ export function AssessmentStepper({
 
 		const { title, subtitle, titleClass, bgClass, showCharacters } = getMessage()
 
+		// Determine if next navigation should be enabled based on lock status (80% rule handled server-side)
+		const nextIsUnlocked = nextItem?.id ? resourceLockStatus[nextItem.id] !== true : true
+		const isNextEnabled = isFinalizationComplete && nextIsUnlocked
+
 		return (
 			<SummaryView
 				title={title}
@@ -579,7 +584,7 @@ export function AssessmentStepper({
 				onComplete={onComplete}
 				handleReset={handleReset}
 				nextItem={nextItem}
-				isNextEnabled={isFinalizationComplete}
+				isNextEnabled={isNextEnabled}
 				penaltyXp={summaryData.xpPenaltyInfo?.penaltyXp}
 				xpReason={summaryData.xpPenaltyInfo?.reason}
 				avgSecondsPerQuestion={summaryData.xpPenaltyInfo?.avgSecondsPerQuestion}
