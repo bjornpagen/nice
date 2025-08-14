@@ -103,6 +103,7 @@ export function applyQtiSelectionAndOrdering(
 					testIdentifier: assessmentTest.identifier,
 					sectionIndex
 				})
+
 				throw errors.new("qti section missing identifier")
 			}
 			const sectionId = sectionIdMatch[1]
