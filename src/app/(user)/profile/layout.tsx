@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { Banner } from "@/components/banner"
 import { Footer } from "@/components/footer"
@@ -36,10 +37,9 @@ function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
 	// This ensures that the system does not proceed with invalid user context.
 	const publicMetadataResult = errors.trySync(() => parseUserPublicMetadata(user.publicMetadata))
 	if (publicMetadataResult.error) {
-		// CRITICAL: Invalid user public metadata. Since this is a client component,
-		// we cannot use logger, so we throw the error to be caught by error boundary.
-		// Re-throw the error to indicate a critical failure.
-		// A higher-level error boundary should catch this for the user.
+		// CRITICAL: Invalid user public metadata. Log error before throwing
+		// to provide observability before re-throwing for error boundary.
+		logger.error("clerk user metadata validation failed", { error: publicMetadataResult.error })
 		throw errors.wrap(publicMetadataResult.error, "clerk user metadata validation")
 	}
 

@@ -1,6 +1,7 @@
 "use client"
 
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import * as React from "react"
 import { env } from "@/env"
 
@@ -41,11 +42,13 @@ export function QTIRenderer({
 	const urlResult = errors.trySync(() => new URL(baseUrl))
 	if (urlResult.error) {
 		// CRITICAL: URL parsing failed - system must stop, not continue with fallbacks
+		logger.error("qti base url parsing failed", { error: urlResult.error, baseUrl })
 		throw errors.wrap(urlResult.error, "qti base url parsing failed")
 	}
 	// CRITICAL: Ensure `urlResult.data` is not null/undefined as it's the result of a successful parse.
 	// If it somehow were, it indicates an invariant violation.
 	if (!urlResult.data) {
+		logger.error("qti base url missing parsed URL data", { baseUrl })
 		throw errors.new("qti base url: missing parsed URL data")
 	}
 	const expectedOrigin = urlResult.data.origin

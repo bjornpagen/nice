@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { Lock, Unlock } from "lucide-react"
 import { useRouter } from "next/navigation"
 import * as React from "react"
@@ -135,6 +136,7 @@ export function Content({
 		if (sourceId && user) {
 			const userEmail = user.primaryEmailAddress?.emailAddress
 			if (!userEmail) {
+				logger.error("video tracking user email required", { userId: user.id })
 				throw errors.new("video tracking: user email required for caliper event")
 			}
 

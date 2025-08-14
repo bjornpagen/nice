@@ -1,6 +1,7 @@
 "use client"
 
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import * as React from "react"
 
 interface CourseLockStatusContextType {
@@ -64,6 +65,7 @@ export function CourseLockStatusProvider({
 export function useCourseLockStatus() {
 	const context = React.useContext(CourseLockStatusContext)
 	if (!context) {
+		logger.error("useCourseLockStatus hook used outside provider", {})
 		throw errors.new("useCourseLockStatus must be used within a CourseLockStatusProvider")
 	}
 	return context
