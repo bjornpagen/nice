@@ -13,7 +13,13 @@ import type { Question } from "@/lib/types/domain"
 export function applyQtiSelectionAndOrdering(
 	assessmentTest: AssessmentTest,
 	allQuestions: TestQuestionsResponse["questions"],
-	options?: { baseSeed?: string; attemptNumber?: number }
+	options?: {
+		baseSeed?: string
+		attemptNumber?: number
+		// For stateless cross-assessment de-duplication and selection diversity
+		userSourceId?: string
+		resourceSourcedId?: string
+	}
 ): Question[] {
 	const xml = assessmentTest.rawXml
 	const allQuestionsMap = new Map(allQuestions.map((q) => [q.question.identifier, q]))
@@ -60,6 +66,17 @@ export function applyQtiSelectionAndOrdering(
 			.map((x) => x.v)
 	}
 
+	function gcd(a: number, b: number): number {
+		let x = Math.abs(a)
+		let y = Math.abs(b)
+		while (y !== 0) {
+			const t = y
+			y = x % y
+			x = t
+		}
+		return x
+	}
+
 	for (let sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
 		const sectionMatch = sections[sectionIndex]
 		const sectionContent = sectionMatch?.[1] ?? ""
@@ -94,6 +111,9 @@ export function applyQtiSelectionAndOrdering(
 			itemRefs = deterministicallyOrder(itemRefs, seed)
 		}
 
+		// Note: Do NOT reorder by partition here. Partition preference is applied
+		// during selection to preserve author order when shuffle="false".
+
 		const selectionMatch = sectionContent.match(/<qti-selection[^>]*select="(?<selectCount>\d+)"/)
 		const selectCountStr = selectionMatch?.groups?.selectCount
 		if (selectCountStr) {
@@ -109,16 +129,82 @@ export function applyQtiSelectionAndOrdering(
 				const n = itemRefs.length
 				const k = Math.min(selectCount, n)
 				const attemptIndex = options?.attemptNumber ?? 0
-				const offset = n > 0 ? (attemptIndex * k) % n : 0
-				const window: string[] = []
-				for (let i = 0; i < k; i++) {
-					const idx = (offset + i) % n
-					const ref = itemRefs[idx]
-					if (ref !== undefined) {
-						window.push(ref)
+				if (n > 0 && k > 0) {
+					const userIdForPartition = options?.userSourceId
+					const resourceId = options?.resourceSourcedId ?? assessmentTest.identifier
+					const T = 3
+					// Determine preferred starting bucket based on resource id
+					const startBucket = userIdForPartition ? fnv1aHash(resourceId) % T : 0
+
+					// Build candidate index sequence
+					const sectionIdMatch = sectionContent.match(/identifier="([^"]+)"/)
+					const sectionId = sectionIdMatch?.[1] ?? `${sectionIndex}`
+					const seedBase = options?.baseSeed ?? assessmentTest.identifier
+					let indices: number[] = []
+
+					const orderingMatchLocal = sectionContent.match(/<qti-ordering[^>]*shuffle="true"/)
+					if (orderingMatchLocal) {
+						// Shuffle allowed: use stride sequence for better spread
+						let step = 1
+						if (n > 1) {
+							step = 1 + (fnv1aHash(`${seedBase}:${assessmentTest.identifier}:${sectionId}:step`) % (n - 1))
+							let guard = 0
+							while (gcd(step, n) !== 1 && guard < n) {
+								step = (step % (n - 1)) + 1
+								guard++
+							}
+						}
+						const perAssessmentOffset = fnv1aHash(`${resourceId}:offset`) % n
+						const offset = (attemptIndex * k + perAssessmentOffset) % n
+						indices = Array.from({ length: n }, (_, i) => (offset + i * step) % n)
+						logger.debug("applyQtiSelectionAndOrdering: stride candidate sequence", {
+							testIdentifier: assessmentTest.identifier,
+							sectionIndex,
+							n,
+							k,
+							step,
+							offset
+						})
+					} else {
+						// No shuffle: preserve author order modulo rotation
+						const perAssessmentOffset = fnv1aHash(`${resourceId}:offset`) % n
+						const offset = (attemptIndex * k + perAssessmentOffset) % n
+						indices = Array.from({ length: n }, (_, i) => (offset + i) % n)
+						logger.debug("applyQtiSelectionAndOrdering: sequential candidate sequence", {
+							testIdentifier: assessmentTest.identifier,
+							sectionIndex,
+							n,
+							k,
+							offset
+						})
 					}
+
+					// Partition preference: select items from preferred bucket first,
+					// then spill over deterministically to remaining buckets.
+					const selection: string[] = []
+					if (userIdForPartition) {
+						for (let pass = 0; pass < T && selection.length < k; pass++) {
+							const bucket = (startBucket + pass) % T
+							for (const idx of indices) {
+								if (selection.length >= k) break
+								const id = itemRefs[idx]
+								if (id === undefined) continue
+								const b = fnv1aHash(`${userIdForPartition}:${id}`) % T
+								if (b === bucket) {
+									selection.push(id)
+								}
+							}
+						}
+					} else {
+						// No partition context: just take first k in candidate order
+						for (const idx of indices) {
+							if (selection.length >= k) break
+							const id = itemRefs[idx]
+							if (id !== undefined) selection.push(id)
+						}
+					}
+					itemRefs = selection
 				}
-				itemRefs = window
 			} else {
 				logger.warn("invalid non-numeric select attribute in QTI test", {
 					testIdentifier: assessmentTest.identifier,

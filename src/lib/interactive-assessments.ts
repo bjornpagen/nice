@@ -24,7 +24,9 @@ export async function prepareInteractiveAssessment(options: PrepareOptions): Pro
 	// 3) Always select deterministically based on QTI structure
 	const questions = applyQtiSelectionAndOrdering(assessmentTest, resolvedQuestions, {
 		baseSeed: `${userSourceId}:${resourceSourcedId}`,
-		attemptNumber
+		attemptNumber,
+		userSourceId,
+		resourceSourcedId
 	})
 
 	return { questions, attemptNumber }
