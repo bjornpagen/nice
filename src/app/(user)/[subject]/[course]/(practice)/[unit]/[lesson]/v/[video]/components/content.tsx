@@ -163,7 +163,7 @@ export function Content({
 				process: false
 			}
 
-			// Send cumulative time event
+			// Send cumulative time event for video
 			void sendCaliperTimeSpentEvent(actor, context, Math.floor(finalWatchTime))
 			// Mark video as completed locally to enable Continue
 			setCurrentResourceCompleted(true)
