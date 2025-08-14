@@ -21,7 +21,7 @@ class BrowserbaseSessionPool {
 	private readonly maxSessions: number
 	private readonly sessionTimeout: number
 	private lastSessionCreateTime = 0
-	private readonly minCreateInterval: number = 5000 // minimum 5 seconds between session creates (max 12/minute, well under 25/minute limit)
+	private readonly minCreateInterval: number = 3000 // minimum 3 seconds between session creates (max 20/minute, under 25/minute limit)
 	private rateLimitedUntil = 0
 
 	constructor(maxSessions = 10, sessionTimeoutMinutes = 30) {
@@ -236,7 +236,7 @@ class BrowserbaseSessionPool {
 						browser: availableSession.browser
 					})
 				}
-			}, 2000) // Check every 2 seconds (less aggressive)
+			}, 1000) // Check every 1 second for higher responsiveness with 100 sessions
 
 			// Use longer timeout if we're rate limited
 			const now = Date.now()
@@ -338,7 +338,7 @@ class BrowserbaseSessionPool {
 
 // Global session pool instance
 export const sessionPool = new BrowserbaseSessionPool(
-	3, // max 3 concurrent sessions to match function concurrency and stay well under rate limits
+	100, // max 100 concurrent sessions to match function concurrency
 	30 // 30 minute timeout
 )
 
