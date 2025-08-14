@@ -55,7 +55,7 @@ function createTableCellSchema() {
 				responseIdentifier: z
 					.string()
 					.describe("The QTI response identifier for this inline choice (dropdown) interaction."),
-				shuffle: z.boolean().default(false).describe("If true, the dropdown choices will be shuffled."),
+				shuffle: z.boolean().describe("If true, the dropdown choices will be shuffled."),
 				choices: z
 					.array(
 						z
