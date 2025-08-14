@@ -201,7 +201,6 @@ export async function checkExistingProficiency(
 			filter: `student.sourcedId='${onerosterUserSourcedId}' AND assessmentLineItem.sourcedId='${strictLineItemId}'`
 		})
 	)
-
 	if (resultsResult.error) {
 		logger.error("failed to check existing proficiency", {
 			onerosterUserSourcedId,
@@ -322,7 +321,6 @@ export async function finalizeAssessment(options: {
 
 	// 2. Call the new assessment service orchestrator
 	const saveResult = await errors.try(assessment.saveResult(command))
-
 	if (saveResult.error) {
 		logger.error("failed to save final assessment result", {
 			error: saveResult.error,
@@ -408,7 +406,6 @@ export async function flagQuestionAsReported(questionId: string, report: string)
 	}
 
 	const flagResult = await errors.try(flagQuestionOperation())
-
 	if (flagResult.error) {
 		logger.error("failed to flag question in qti api", { clerkUserId, questionId, error: flagResult.error })
 		throw errors.wrap(flagResult.error, "flagging question in qti api")

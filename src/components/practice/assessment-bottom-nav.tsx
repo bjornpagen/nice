@@ -44,13 +44,13 @@ interface AssessmentBottomNavProps {
 }
 
 const renderContinueButton = (
-    isCorrect: boolean | undefined,
-    hasExhaustedAttempts: boolean | undefined,
-    currentQuestion: number | undefined,
-    totalQuestions: number | undefined,
-    onContinue: () => void,
-    isBusy: boolean | undefined,
-    ref?: React.Ref<HTMLButtonElement>
+	isCorrect: boolean | undefined,
+	hasExhaustedAttempts: boolean | undefined,
+	currentQuestion: number | undefined,
+	totalQuestions: number | undefined,
+	onContinue: () => void,
+	isBusy: boolean | undefined,
+	ref?: React.Ref<HTMLButtonElement>
 ) => {
 	const isCompleteOrExhausted = Boolean(isCorrect) || Boolean(hasExhaustedAttempts)
 	const isLastQuestion =
