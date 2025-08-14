@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
+import * as errors from "@superbuilders/errors"
 import { finalizeAssessment } from "@/lib/actions/assessment"
 import type { Unit } from "@/lib/types/domain"
 
@@ -392,5 +393,44 @@ describe("Input Handling and Edge Cases", () => {
 		expect(metadata?.totalQuestions).toBe(0)
 		expect(metadata?.correctQuestions).toBe(0)
 		expect(metadata?.accuracy).toBe(100) // Defaults to 100 when total is 0
+	})
+})
+
+describe("Banked XP Sum Consistency", () => {
+	test("Sum of article and video banked XP equals derived banked XP", async () => {
+		mockCheckExistingProficiency.mockImplementation((_userSourcedId, _assessmentSourcedId) => Promise.resolve(false))
+
+		// Define per-type banked XP for this scenario
+		const articleXp = 70
+		const videoXp = 30
+		const totalBanked = articleXp + videoXp
+
+		// Mock the bank to return the combined banked XP with a mixed set of resources
+		mockAwardBankedXpForExercise.mockImplementation((_params) =>
+			Promise.resolve({ bankedXp: totalBanked, awardedResourceIds: ["video1", "article1", "video2", "article2"] })
+		)
+
+		await finalizeAssessment({
+			...defaultOptions,
+			contentType: "Exercise",
+			sessionResults: [
+				{ qtiItemId: "q1", isCorrect: true, isReported: false },
+				{ qtiItemId: "q2", isCorrect: true, isReported: false },
+				{ qtiItemId: "q3", isCorrect: true, isReported: false },
+				{ qtiItemId: "q4", isCorrect: true, isReported: false },
+				{ qtiItemId: "q5", isCorrect: true, isReported: false }
+			]
+		})
+
+		// For first attempt with 100% accuracy on an Exercise, base multiplier is 1.25
+		const expectedBaseXpWithBonus = defaultOptions.expectedXp * 1.25
+		const fx = analyticsSpy.mock.calls[0]?.[0]?.finalXp
+		if (typeof fx !== "number") {
+			throw errors.new("final xp missing in analytics payload")
+		}
+		const finalXp = fx
+		const derivedBanked = finalXp - expectedBaseXpWithBonus
+
+		expect(derivedBanked).toBe(articleXp + videoXp)
 	})
 })
