@@ -58,7 +58,6 @@ export async function analyzeScreenshotWithVision(
 				}
 			],
 			response_format: zodResponseFormat(VisualQAResponseSchema, "visual_qa_analysis"),
-			max_tokens: 1500
 		})
 	)
 
