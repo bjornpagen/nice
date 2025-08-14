@@ -17,7 +17,8 @@ function ProfileLayoutContent({ children }: { children: React.ReactNode }) {
 	React.useEffect(() => {
 		// Only trigger reload if user is loaded, exists, and metadata is explicitly missing or invalid.
 		// If `parseUserPublicMetadata` throws, it means it's invalid.
-		if (isLoaded && user && errors.trySync(() => parseUserPublicMetadata(user.publicMetadata)).error) {
+		const metadataResult = user ? errors.trySync(() => parseUserPublicMetadata(user.publicMetadata)) : { error: null }
+		if (isLoaded && user && metadataResult.error) {
 			const interval = setInterval(() => {
 				window.location.reload()
 			}, 2000)

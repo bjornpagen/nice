@@ -1,5 +1,6 @@
 "use client"
 
+import * as errors from "@superbuilders/errors"
 import { Lock } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -21,12 +22,12 @@ export function UnitTab({
 
 	// A unit is considered locked if its first actionable resource (by ordering) is locked
 	let isLocked = false
-	try {
-		const firstResourceId = getFirstResourceIdForUnit(unit)
-		isLocked = resourceLockStatus[firstResourceId] === true
-	} catch {
+	const result = errors.trySync(() => getFirstResourceIdForUnit(unit))
+	if (result.error) {
 		// No actionable resources → treat as unlocked for rendering but do not navigate
 		isLocked = false
+	} else {
+		isLocked = resourceLockStatus[result.data] === true
 	}
 
 	// Render a locked, non-interactive state

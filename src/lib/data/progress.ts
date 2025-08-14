@@ -156,13 +156,12 @@ function getProficiencyText(score: number): "Proficient" | "Familiar" | "Attempt
 
 // Helper function to extract relative URL from Caliper event object ID
 function extractRelativeUrl(objectId: string): string {
-	try {
-		const url = new URL(objectId)
-		return url.pathname // Returns just the path part (e.g., "/subject/course/unit/lesson/v/video")
-	} catch {
+	const result = errors.trySync(() => new URL(objectId))
+	if (result.error) {
 		// If objectId is not a valid URL, return it as-is (fallback)
 		return objectId
 	}
+	return result.data.pathname // Returns just the path part (e.g., "/subject/course/unit/lesson/v/video")
 }
 
 function transformEventsToActivities(events: z.infer<typeof CaliperEventSchema>[]): ProgressPageData {

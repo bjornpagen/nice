@@ -300,7 +300,11 @@ async function main() {
 	const dataDir = path.join(process.cwd(), "data")
 
 	// Step 2: Ensure data directory exists.
-	await errors.try(fs.mkdir(dataDir, { recursive: true }))
+	const mkdirResult = await errors.try(fs.mkdir(dataDir, { recursive: true }))
+	if (mkdirResult.error) {
+		logger.error("failed to create data directory", { error: mkdirResult.error })
+		throw errors.wrap(mkdirResult.error, "create data directory")
+	}
 
 	// Check existing files for resumability
 	const existingFiles = await errors.try(fs.readdir(dataDir))
@@ -658,7 +662,11 @@ async function main() {
 			skippedExisting: skippedCount,
 			existingFiles: existingCourses.size
 		}
-		await errors.try(fs.writeFile(summaryPath, JSON.stringify(summary, null, 2)))
+		const writeSummaryResult = await errors.try(fs.writeFile(summaryPath, JSON.stringify(summary, null, 2)))
+		if (writeSummaryResult.error) {
+			logger.error("failed to write summary file", { error: writeSummaryResult.error })
+			throw errors.wrap(writeSummaryResult.error, "write summary file")
+		}
 		logger.info("saved download summary", { path: summaryPath })
 	} else {
 		// --- ORIGINAL CONCURRENT LOGIC (WITH ARGUMENTS) ---
@@ -823,7 +831,11 @@ async function main() {
 			skippedExisting: skippedCount,
 			existingFiles: existingCourses.size
 		}
-		await errors.try(fs.writeFile(summaryPath, JSON.stringify(summary, null, 2)))
+		const writeSummaryResult2 = await errors.try(fs.writeFile(summaryPath, JSON.stringify(summary, null, 2)))
+		if (writeSummaryResult2.error) {
+			logger.error("failed to write summary file", { error: writeSummaryResult2.error })
+			throw errors.wrap(writeSummaryResult2.error, "write summary file")
+		}
 		logger.info("saved download summary", { path: summaryPath })
 	}
 

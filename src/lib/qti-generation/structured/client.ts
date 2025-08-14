@@ -442,7 +442,14 @@ export async function generateStructuredQtiItem(
 		// Only make the AI call if there are widgets to map
 		// Convert structured body to string representation for widget mapping prompt
 		const bodyString = assessmentShell.body ? JSON.stringify(assessmentShell.body) : ""
-		return errors.try(mapSlotsToWidgets(logger, perseusJsonString, bodyString, widgetSlotNames, widgetCollectionName))
+		const mappingResult = await errors.try(
+			mapSlotsToWidgets(logger, perseusJsonString, bodyString, widgetSlotNames, widgetCollectionName)
+		)
+		if (mappingResult.error) {
+			const emptyMapping: Record<string, keyof typeof allWidgetSchemas> = {}
+			return { data: emptyMapping, error: mappingResult.error }
+		}
+		return { data: mappingResult.data, error: null }
 	})()
 
 	if (widgetMappingResult.error) {

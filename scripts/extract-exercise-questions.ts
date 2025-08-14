@@ -361,7 +361,11 @@ async function main() {
 		}))
 	}
 
-	await errors.try(Bun.write(outputPath, JSON.stringify(outputData, null, 2)))
+	const writeResult = await errors.try(Bun.write(outputPath, JSON.stringify(outputData, null, 2)))
+	if (writeResult.error) {
+		logger.error("failed to write output file", { error: writeResult.error })
+		throw errors.wrap(writeResult.error, "write output file")
+	}
 	logger.info("saved extraction results", { outputPath })
 }
 
