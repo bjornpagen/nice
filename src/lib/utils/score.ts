@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 
 /**
  * Validates that a value is a percentage integer in the inclusive range 0..100.
@@ -8,14 +9,17 @@ import * as errors from "@superbuilders/errors"
  */
 export function assertPercentageInteger(value: unknown, context?: string): number {
 	if (typeof value !== "number" || !Number.isFinite(value)) {
+		logger.error("percentage must be a finite number", { value, context, valueType: typeof value })
 		throw errors.new(`${context || "percentage"}: must be a finite number`)
 	}
 
 	if (!Number.isInteger(value)) {
+		logger.error("percentage must be an integer", { value, context })
 		throw errors.new(`${context || "percentage"}: must be an integer`)
 	}
 
 	if (value < 0 || value > 100) {
+		logger.error("percentage out of range", { value, context })
 		throw errors.new(`${context || "percentage"}: must be between 0 and 100 inclusive`)
 	}
 
@@ -28,6 +32,7 @@ export function assertPercentageInteger(value: unknown, context?: string): numbe
  */
 export function coercePercentageInteger(value: unknown, context?: string): number {
 	if (typeof value !== "number" || !Number.isFinite(value)) {
+		logger.error("coerce percentage must be a finite number", { value, context, valueType: typeof value })
 		throw errors.new(`${context || "percentage"}: must be a finite number`)
 	}
 	const rounded = Math.round(value)

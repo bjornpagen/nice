@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import type { Widget } from "@/lib/widgets/generators"
 import {
 	generateAbsoluteValueNumberLine,
@@ -165,6 +166,7 @@ export function generateWidget(widget: Widget): string {
 		case "urlImage":
 			return generateUrlImage(widget)
 		default:
+			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
 	}
 }

@@ -1,5 +1,7 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
+import { MATHML_INNER_PATTERN } from "@/lib/utils/mathml"
 import { typedSchemas } from "@/lib/widgets/generators"
 
 // LEVEL 3: PRIMITIVES
@@ -14,7 +16,10 @@ const _TextContentSchema = z
 const _MathContentSchema = z
 	.object({
 		type: z.literal("math").describe("Identifies this as mathematical content"),
-		mathml: z.string().describe("MathML markup for mathematical expressions, without the outer math element")
+		mathml: z
+			.string()
+			.regex(MATHML_INNER_PATTERN, "invalid mathml snippet; must be inner MathML without outer <math> wrapper")
+			.describe("Inner MathML markup (no outer <math> element)")
 	})
 	.strict()
 	.describe("Mathematical content represented in MathML format")
@@ -42,7 +47,10 @@ function createInlineContentItemSchema() {
 			z
 				.object({
 					type: z.literal("math").describe("Identifies this as mathematical content"),
-					mathml: z.string().describe("MathML markup for mathematical expressions, without the outer math element")
+					mathml: z
+						.string()
+						.regex(MATHML_INNER_PATTERN, "invalid mathml snippet; must be inner MathML without outer <math> wrapper")
+						.describe("Inner MathML markup (no outer <math> element)")
 				})
 				.strict()
 				.describe("Mathematical content represented in MathML format"),
@@ -109,6 +117,11 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			widgetShape[slotName] = schema
 		} else {
 			// Safeguard against invalid widget types.
+			logger.error("unknown widget type in mapping", {
+				slotName,
+				widgetType,
+				availableTypes: Object.keys(typedSchemas)
+			})
 			throw errors.new(`unknown widget type specified in mapping: ${widgetType}`)
 		}
 	}

@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 
 /**
@@ -9,6 +10,7 @@ import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
 const AttemptPolicy = {
 	validate: (attempt: number) => {
 		if (!Number.isInteger(attempt) || attempt < 1) {
+			logger.error("invalid attempt number", { attempt, isInteger: Number.isInteger(attempt) })
 			throw errors.new("attempt number must be a positive integer")
 		}
 	}
@@ -32,6 +34,12 @@ export function generateResultSourcedId(
 
 	if (isInteractive) {
 		if (typeof attemptNumber !== "number") {
+			logger.error("attempt number required for interactive assessments", {
+				userSourcedId,
+				lineItemId,
+				attemptNumber,
+				attemptType: typeof attemptNumber
+			})
 			throw errors.new("attempt number required for interactive assessments")
 		}
 		AttemptPolicy.validate(attemptNumber)

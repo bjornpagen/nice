@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { sessionPool } from "@/lib/utils/browserbase-session-pool"
 
 /**
@@ -8,6 +9,10 @@ export async function captureProductionQTIScreenshot(questionId: string): Promis
 	// Acquire a session from the pool
 	const sessionResult = await errors.try(sessionPool.acquireSession())
 	if (sessionResult.error) {
+		logger.error("failed to acquire browserbase session for production screenshot", {
+			questionId,
+			error: sessionResult.error
+		})
 		throw errors.wrap(sessionResult.error, "failed to acquire browserbase session")
 	}
 
@@ -16,18 +21,25 @@ export async function captureProductionQTIScreenshot(questionId: string): Promis
 	const contexts = browser.contexts()
 	if (contexts.length === 0) {
 		sessionPool.releaseSession(sessionId)
+		logger.error("no browser contexts available for production screenshot", { questionId, sessionId })
 		throw errors.new("no browser contexts available")
 	}
 
 	const context = contexts[0]
 	if (!context) {
 		sessionPool.releaseSession(sessionId)
+		logger.error("context is undefined despite length check for production screenshot", { questionId, sessionId })
 		throw errors.new("context is undefined despite length check")
 	}
 
 	const pageResult = await errors.try(context.newPage())
 	if (pageResult.error) {
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to create new page for production screenshot", {
+			questionId,
+			sessionId,
+			error: pageResult.error
+		})
 		throw errors.wrap(pageResult.error, "failed to create new page")
 	}
 
@@ -38,6 +50,12 @@ export async function captureProductionQTIScreenshot(questionId: string): Promis
 	if (navigationResult.error) {
 		await page.close()
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to navigate to production qti embed", {
+			questionId,
+			sessionId,
+			productionUrl,
+			error: navigationResult.error
+		})
 		throw errors.wrap(navigationResult.error, "failed to navigate to production qti embed")
 	}
 
@@ -46,6 +64,11 @@ export async function captureProductionQTIScreenshot(questionId: string): Promis
 	if (zoomResult.error) {
 		await page.close()
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to set page zoom level for production screenshot", {
+			questionId,
+			sessionId,
+			error: zoomResult.error
+		})
 		throw errors.wrap(zoomResult.error, "failed to set page zoom level")
 	}
 
@@ -54,6 +77,11 @@ export async function captureProductionQTIScreenshot(questionId: string): Promis
 	if (timeoutResult.error) {
 		await page.close()
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to wait for complete rendering in production screenshot", {
+			questionId,
+			sessionId,
+			error: timeoutResult.error
+		})
 		throw errors.wrap(timeoutResult.error, "failed to wait for complete rendering")
 	}
 
@@ -64,11 +92,17 @@ export async function captureProductionQTIScreenshot(questionId: string): Promis
 	sessionPool.releaseSession(sessionId)
 
 	if (screenshotResult.error) {
+		logger.error("failed to capture production screenshot", { questionId, sessionId, error: screenshotResult.error })
 		throw errors.wrap(screenshotResult.error, "failed to capture production screenshot")
 	}
 
 	const data = screenshotResult.data
 	if (!Buffer.isBuffer(data)) {
+		logger.error("screenshot capture returned non-buffer data for production", {
+			questionId,
+			sessionId,
+			dataType: typeof data
+		})
 		throw errors.new("screenshot capture returned non-buffer data")
 	}
 
@@ -82,6 +116,10 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 	// Acquire a session from the pool
 	const sessionResult = await errors.try(sessionPool.acquireSession())
 	if (sessionResult.error) {
+		logger.error("failed to acquire browserbase session for perseus screenshot", {
+			questionId: _questionId,
+			error: sessionResult.error
+		})
 		throw errors.wrap(sessionResult.error, "failed to acquire browserbase session")
 	}
 
@@ -90,18 +128,28 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 	const contexts = browser.contexts()
 	if (contexts.length === 0) {
 		sessionPool.releaseSession(sessionId)
+		logger.error("no browser contexts available for perseus screenshot", { questionId: _questionId, sessionId })
 		throw errors.new("no browser contexts available")
 	}
 
 	const context = contexts[0]
 	if (!context) {
 		sessionPool.releaseSession(sessionId)
+		logger.error("context is undefined despite length check for perseus screenshot", {
+			questionId: _questionId,
+			sessionId
+		})
 		throw errors.new("context is undefined despite length check")
 	}
 
 	const pageResult = await errors.try(context.newPage())
 	if (pageResult.error) {
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to create new page for perseus screenshot", {
+			questionId: _questionId,
+			sessionId,
+			error: pageResult.error
+		})
 		throw errors.wrap(pageResult.error, "failed to create new page")
 	}
 
@@ -112,6 +160,12 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 	if (navigationResult.error) {
 		await page.close()
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to navigate to perseus", {
+			questionId: _questionId,
+			sessionId,
+			perseusUrl,
+			error: navigationResult.error
+		})
 		throw errors.wrap(navigationResult.error, "failed to navigate to perseus")
 	}
 
@@ -123,6 +177,7 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 	if (waitResult.error) {
 		await page.close()
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to find perseus textarea", { questionId: _questionId, sessionId, error: waitResult.error })
 		throw errors.wrap(waitResult.error, "failed to find perseus textarea")
 	}
 
@@ -131,6 +186,7 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 	if (clearResult.error) {
 		await page.close()
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to clear perseus textarea", { questionId: _questionId, sessionId, error: clearResult.error })
 		throw errors.wrap(clearResult.error, "failed to clear perseus textarea")
 	}
 
@@ -140,6 +196,7 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 	if (fillResult.error) {
 		await page.close()
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to fill perseus textarea", { questionId: _questionId, sessionId, error: fillResult.error })
 		throw errors.wrap(fillResult.error, "failed to fill perseus textarea")
 	}
 
@@ -148,6 +205,11 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 	if (zoomResult.error) {
 		await page.close()
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to set page zoom level for perseus screenshot", {
+			questionId: _questionId,
+			sessionId,
+			error: zoomResult.error
+		})
 		throw errors.wrap(zoomResult.error, "failed to set page zoom level")
 	}
 
@@ -157,6 +219,11 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 	if (renderWaitResult.error) {
 		await page.close()
 		sessionPool.releaseSession(sessionId)
+		logger.error("failed to wait for perseus rendering", {
+			questionId: _questionId,
+			sessionId,
+			error: renderWaitResult.error
+		})
 		throw errors.wrap(renderWaitResult.error, "failed to wait for perseus rendering")
 	}
 
@@ -167,11 +234,21 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 	sessionPool.releaseSession(sessionId)
 
 	if (screenshotResult.error) {
+		logger.error("failed to capture perseus screenshot", {
+			questionId: _questionId,
+			sessionId,
+			error: screenshotResult.error
+		})
 		throw errors.wrap(screenshotResult.error, "failed to capture perseus screenshot")
 	}
 
 	const data = screenshotResult.data
 	if (!Buffer.isBuffer(data)) {
+		logger.error("screenshot capture returned non-buffer data for perseus", {
+			questionId: _questionId,
+			sessionId,
+			dataType: typeof data
+		})
 		throw errors.new("screenshot capture returned non-buffer data")
 	}
 

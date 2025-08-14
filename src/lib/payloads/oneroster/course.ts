@@ -35,6 +35,7 @@ function validateGradeLevel(grade: string): GradeLevel {
 	if (isValidGradeLevel(grade)) {
 		return grade
 	}
+	logger.error("invalid grade level provided", { grade })
 	throw errors.new(`invalid grade level: ${grade}`)
 }
 
@@ -213,6 +214,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 	}
 	const course = courseResult.data[0]
 	if (!course) {
+		logger.error("course not found", { courseId })
 		throw errors.new(`course not found for id: ${courseId}`)
 	}
 

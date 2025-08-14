@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { allExamples } from "@/lib/qti-generation/examples"
 import { AssessmentItemShellSchema } from "@/lib/qti-generation/schemas"
 import type { ImageContext } from "@/lib/qti-generation/structured/perseus-image-resolver"
@@ -16,6 +17,7 @@ function createShellFromExample(item: (typeof allExamples)[0]) {
 	if (!result.success) {
 		// If an example shell fails validation, something is wrong with our example data
 		// Log the issue and throw an error instead of using type assertion
+		logger.error("example shell validation failed", { shell, error: result.error })
 		throw errors.new(`Example shell validation failed: ${result.error.message}`)
 	}
 	return result.data

@@ -1,51 +1,76 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import { MATHML_INNER_PATTERN } from "@/lib/utils/mathml"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines the content and styling for a single cell in the grid.
 const BoxGridCellSchema = z
 	.object({
-		content: z.union([z.string(), z.number()]).describe("The text or numerical content to display inside the cell."),
+		content: z
+			.discriminatedUnion("type", [
+				z
+					.object({
+						type: z.literal("text").describe("Identifies this as plain text content"),
+						content: z.string().describe("The actual text content to display")
+					})
+					.strict()
+					.describe("Plain text content that will be rendered as-is"),
+				z
+					.object({
+						type: z.literal("math").describe("Identifies this as mathematical content"),
+						mathml: z
+							.string()
+							.regex(MATHML_INNER_PATTERN, "invalid mathml snippet; must be inner MathML without outer <math> wrapper")
+							.describe("Inner MathML markup (no outer <math> element)")
+					})
+					.strict()
+					.describe("Mathematical content represented in MathML format")
+			])
+			.describe("Inline content for the cell: either plain text or MathML"),
 		backgroundColor: z
 			.string()
-			.nullable()
-			.describe("An optional CSS color to use as the cell's background fill for highlighting.")
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color (e.g., 'lightblue', 'transparent')"
+			)
+			.describe(
+				"CSS color for the cell background (e.g., '#FFE5B4' for peach, 'lightblue', 'rgba(255,0,0,0.3)' for translucent red). Empty string '' means no background color."
+			)
 	})
 	.strict()
 
 // The main Zod schema for the boxGrid function.
 export const BoxGridPropsSchema = z
 	.object({
-		type: z.literal("boxGrid"),
+		type: z
+			.literal("boxGrid")
+			.describe("Identifies this as a box grid widget for displaying tabular data with optional cell highlighting."),
 		width: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 300)
-			.describe("The total width of the output SVG container in pixels."),
+			.positive()
+			.describe(
+				"Total width of the grid in pixels including borders (e.g., 400, 500, 600). Must accommodate all columns with their content."
+			),
 		height: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 300)
-			.describe("The total height of the output SVG container in pixels."),
+			.positive()
+			.describe(
+				"Total height of the grid in pixels including borders (e.g., 300, 400, 200). Must accommodate all rows."
+			),
 		data: z
 			.array(z.array(BoxGridCellSchema))
 			.describe(
-				"A 2D array of cell objects representing the grid. The outer array holds the rows, and each inner array holds the cells for that row."
+				"2D array where data[row][col] represents the cell content. First row often contains headers. All rows should have the same number of columns for proper alignment."
 			),
-		showGridLines: z.boolean().describe("If true, draws border lines around each cell."),
-		cellPadding: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 5)
-			.describe("The internal padding within each cell for the text content."),
-		fontSize: z
-			.number()
-			.nullable()
-			.transform((val) => val ?? 16)
-			.describe("The font size for the text inside the cells.")
+		showGridLines: z
+			.boolean()
+			.describe(
+				"Whether to show borders between cells. True creates a traditional table look. False creates a borderless layout, useful for highlighting patterns."
+			)
 	})
 	.strict()
 	.describe(
-		"Generates a versatile SVG grid of cells containing data. This widget is ideal for displaying tabular data in a purely visual, non-semantic format, such as showing a grid of numbers for probability or data analysis problems. It supports cell-specific background colors for highlighting key values."
+		"Creates a grid/table structure for displaying data, patterns, or mathematical arrays. Supports individual cell highlighting for emphasis. Useful for multiplication tables, data organization, and pattern recognition."
 	)
 
 export type BoxGridProps = z.infer<typeof BoxGridPropsSchema>
@@ -55,7 +80,7 @@ export type BoxGridProps = z.infer<typeof BoxGridPropsSchema>
  * displaying data and having a custom background color for highlighting.
  */
 export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (props) => {
-	const { width, height, data, showGridLines, fontSize } = props
+	const { width, height, data, showGridLines } = props
 
 	const numRows = data.length
 	if (numRows === 0) return `<svg width="${width}" height="${height}" />`
@@ -68,7 +93,7 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">`
 	svg += `<style>
         .cell-text {
-            font-size: ${fontSize}px;
+            font-size: 14px;
             text-anchor: middle;
             dominant-baseline: middle;
         }
@@ -84,14 +109,22 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 			const y = r * cellHeight
 
 			// Draw background rectangle for highlighting, if specified
-			if (cell.backgroundColor) {
+			if (cell.backgroundColor && cell.backgroundColor !== "") {
 				svg += `<rect x="${x}" y="${y}" width="${cellWidth}" height="${cellHeight}" fill="${cell.backgroundColor}" />`
 			}
 
-			// Draw the text content
+			// Draw the text content (render text directly; for math, render a simple text fallback by stripping tags)
 			const textX = x + cellWidth / 2
 			const textY = y + cellHeight / 2
-			svg += `<text x="${textX}" y="${textY}" class="cell-text">${cell.content}</text>`
+			const label = (() => {
+				if (cell.content.type === "text") return cell.content.content
+				// math content: strip markup for a plain-text fallback
+				return cell.content.mathml
+					.replace(/<[^>]+>/g, " ")
+					.replace(/\s+/g, " ")
+					.trim()
+			})()
+			svg += `<text x="${textX}" y="${textY}" class="cell-text">${label}</text>`
 		}
 	}
 

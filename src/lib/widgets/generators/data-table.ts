@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { renderInlineContent } from "@/lib/qti-generation/content-renderer"
+import { MATHML_INNER_PATTERN } from "@/lib/utils/mathml"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 
@@ -18,7 +19,10 @@ function createInlineContentSchema() {
 				z
 					.object({
 						type: z.literal("math").describe("Identifies this as mathematical content"),
-						mathml: z.string().describe("MathML markup for mathematical expressions, without the outer math element")
+						mathml: z
+							.string()
+							.regex(MATHML_INNER_PATTERN, "invalid mathml snippet; must be inner MathML without outer <math> wrapper")
+							.describe("Inner MathML markup (no outer <math> element)")
 					})
 					.strict()
 					.describe("Mathematical content represented in MathML format")
@@ -29,29 +33,32 @@ function createInlineContentSchema() {
 
 // Factory function to create table cell schema - avoids $ref in OpenAI JSON schema
 function createTableCellSchema() {
-	return z.discriminatedUnion("kind", [
+	return z.discriminatedUnion("type", [
 		z
 			.object({
-				kind: z.literal("inline"),
+				type: z.literal("inline"),
 				content: createInlineContentSchema()
 			})
 			.strict(),
 		z
 			.object({
-				kind: z.literal("number"),
+				type: z.literal("number"),
 				value: z.number()
 			})
 			.strict(),
 		z
 			.object({
-				kind: z.literal("input"),
+				type: z.literal("input"),
 				responseIdentifier: z.string().describe("The QTI response identifier for this input field."),
-				expectedLength: z.number().nullable().describe("The expected character length for the input field.")
+				expectedLength: z
+					.number()
+					.nullable()
+					.describe("Expected character length for the input. Determines input field width. Null for default width.")
 			})
 			.strict(),
 		z
 			.object({
-				kind: z.literal("dropdown"),
+				type: z.literal("dropdown"),
 				responseIdentifier: z
 					.string()
 					.describe("The QTI response identifier for this inline choice (dropdown) interaction."),
@@ -77,20 +84,21 @@ function createTableCellSchema() {
 // The main Zod schema for the dataTable function
 export const DataTablePropsSchema = z
 	.object({
-		type: z.literal("dataTable"),
+		type: z.literal("dataTable").describe("Identifies this as a data table widget for structured tabular display."),
 		title: z
 			.string()
 			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional caption for the table."),
+			.describe(
+				"Optional table caption/title displayed above the table (e.g., 'Monthly Sales Data', 'Conversion Factors'). Null means no title."
+			),
 		columns: z
 			.array(
 				z
 					.object({
 						key: z.string().describe("A unique identifier for this column."),
-						label: createInlineContentSchema()
-							.nullable()
-							.describe("The display label for the column header as structured inline content."),
+						label: createInlineContentSchema().describe(
+							"Column header content. Can mix text and math (e.g., [{type:'text',content:'Area '},{type:'math',mathml:'<mi>x</mi><mo>+</mo><mn>5</mn>'}]). Empty array displays blank header."
+						),
 						isNumeric: z.boolean().describe("If true, content in this column will be right-aligned for readability.")
 					})
 					.strict()
@@ -105,15 +113,18 @@ export const DataTablePropsSchema = z
 		rowHeaderKey: z
 			.string()
 			.nullable()
-			.describe("The 'key' of the column that should be treated as the row header (<th>)."),
+			.describe(
+				"Optional column key that identifies row headers. That column's cells will be styled as headers (bold, shaded). Null means no row headers."
+			),
 		footer: z
 			.array(createTableCellSchema())
-			.nullable()
-			.describe("An optional array of footer cells, in the same order as columns.")
+			.describe(
+				"Footer row cells displayed at bottom with distinct styling. Array length must match columns length. Empty array means no footer."
+			)
 	})
 	.strict()
 	.describe(
-		"Generates a versatile and accessible HTML <table>, serving as the single generator for all tabular data displays. It is capable of creating simple data lists, frequency tables, and complex two-way tables for displaying categorical data. The widget supports an optional header, footer (for totals), and row-level headers for maximum semantic correctness. Cells can contain plain text, numbers, MathML, or interactive input fields, making it suitable for both static display and interactive questions."
+		"Creates accessible HTML tables with mixed content types, optional row headers, and footer rows. Supports inline text/math in cells and interactive input fields. Perfect for data display, comparison tables, and exercises requiring tabular input."
 	)
 
 export type DataTableProps = z.infer<typeof DataTablePropsSchema>
@@ -124,7 +135,7 @@ export type TableCell = z.infer<ReturnType<typeof createTableCellSchema>>
  */
 const renderCellContent = (c: TableCell | undefined): string => {
 	if (c === undefined || c === null) return ""
-	switch (c.kind) {
+	switch (c.type) {
 		case "inline":
 			return renderInlineContent(c.content, new Map())
 		case "number":

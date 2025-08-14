@@ -67,6 +67,7 @@ class BrowserbaseSessionPool {
 			})
 		)
 		if (sessionResult.error) {
+			logger.error("failed to create browserbase session", { error: sessionResult.error })
 			throw errors.wrap(sessionResult.error, "failed to create browserbase session")
 		}
 
@@ -88,6 +89,7 @@ class BrowserbaseSessionPool {
 
 		const sessionJsonResult = await errors.try(response.json())
 		if (sessionJsonResult.error) {
+			logger.error("failed to parse session response", { error: sessionJsonResult.error })
 			throw errors.wrap(sessionJsonResult.error, "failed to parse session response")
 		}
 
@@ -107,11 +109,13 @@ class BrowserbaseSessionPool {
 					rateLimitedUntil: new Date(this.rateLimitedUntil).toISOString()
 				})
 			}
+			logger.error("browserbase session error", { sessionData })
 			throw errors.new(`browserbase session error: ${JSON.stringify(sessionData)}`)
 		}
 
 		// Browserbase API response structure check
 		if (!sessionData.id) {
+			logger.error("browserbase session response missing id field", { sessionData })
 			throw errors.new(`browserbase session response missing id field: ${JSON.stringify(sessionData)}`)
 		}
 
@@ -179,6 +183,7 @@ class BrowserbaseSessionPool {
 			if (browserResult.error) {
 				// Clean up the session if we can't connect
 				this.sessions.delete(newSession.sessionId)
+				logger.error("failed to connect to browser", { sessionId: newSession.sessionId, error: browserResult.error })
 				throw errors.wrap(browserResult.error, "failed to connect to browser")
 			}
 

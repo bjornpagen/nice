@@ -1,5 +1,7 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrInvalidRange = errors.new("min must be less than max")
@@ -21,6 +23,10 @@ export const AbsoluteValueNumberLinePropsSchema = z
 		value: z.number().describe("The number whose absolute value is being illustrated."),
 		highlightColor: z
 			.string()
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
 			.describe("the css color for the distance highlight and point; explicit to ensure consistent styling"),
 		showDistanceLabel: z.boolean().describe("If true, shows a text label indicating the distance from zero.")
 	})
@@ -42,6 +48,7 @@ export const generateAbsoluteValueNumberLine: WidgetGenerator<typeof AbsoluteVal
 	const chartWidth = width - padding.left - padding.right
 
 	if (min >= max) {
+		logger.error("invalid range for absolute value number line", { min, max })
 		throw errors.wrap(ErrInvalidRange, `min (${min}) must be less than max (${max})`)
 	}
 

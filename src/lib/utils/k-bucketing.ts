@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 
 export type KBucketingQuestion = {
 	/** Stable unique identifier for the question (e.g., khan id) */
@@ -38,10 +39,12 @@ export function buildDeterministicKBuckets(
 	kTarget: number
 ): KBucketingResult {
 	if (kTarget <= 0) {
+		logger.error("k-bucketing invalid target", { kTarget })
 		throw errors.new("k-bucketing: invalid target")
 	}
 	const total = questions.length
 	if (total === 0) {
+		logger.error("k-bucketing no questions provided", { total, seed })
 		throw errors.new("k-bucketing: no questions")
 	}
 
@@ -114,6 +117,7 @@ export function buildDeterministicKBuckets(
 	for (let i = 0; i < buckets.length; i++) {
 		const b = buckets[i]
 		if (!b || b.length === 0) {
+			logger.error("k-bucketing empty bucket produced", { bucketIndex: i, totalBuckets: buckets.length, seed })
 			throw errors.new("k-bucketing: empty bucket produced")
 		}
 	}

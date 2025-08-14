@@ -327,6 +327,7 @@ export function compile(itemData: AssessmentItemInput): string {
 
 	for (const [key, type] of Object.entries(widgetMapping)) {
 		if (!isValidWidgetType(type)) {
+			logger.error("invalid widget type in mapping", { key, type, availableTypes: Object.keys(typedSchemas) })
 			throw errors.new(`Invalid widget type "${type}" for slot "${key}" provided in mapping.`)
 		}
 		// Now TypeScript knows type is a valid keyof typeof typedSchemas

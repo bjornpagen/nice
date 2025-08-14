@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
@@ -157,6 +158,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 	const pBforCentroid = points[1]
 	const pCforCentroid = points[2]
 	if (!pAforCentroid || !pBforCentroid || !pCforCentroid) {
+		logger.error("triangle diagram insufficient points", { pointCount: points.length })
 		throw errors.new("triangle requires at least 3 points")
 	}
 	const centroidXForAngles = (pAforCentroid.x + pBforCentroid.x + pCforCentroid.x) / 3
@@ -202,6 +204,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		for (const angle of angles) {
 			// Validate vertex count
 			if (angle.vertices.length !== 3) {
+				logger.error("invalid angle vertex count", { angle, vertexCount: angle.vertices.length })
 				throw errors.wrap(ErrInvalidAngleVertexCount, `expected 3 vertices, got ${angle.vertices.length}`)
 			}
 
@@ -350,6 +353,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		const pB = points[1]
 		const pC = points[2]
 		if (!pA || !pB || !pC) {
+			logger.error("triangle diagram insufficient points for sides", { pointCount: points.length })
 			throw errors.new("triangle requires at least 3 points")
 		}
 		const centroidX = (pA.x + pB.x + pC.x) / 3
@@ -358,6 +362,7 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 		for (const side of sides) {
 			// Validate vertex count
 			if (side.vertices.length !== 2) {
+				logger.error("invalid side vertex count", { side, vertexCount: side.vertices.length })
 				throw errors.wrap(ErrInvalidSideVertexCount, `expected 2 vertices, got ${side.vertices.length}`)
 			}
 

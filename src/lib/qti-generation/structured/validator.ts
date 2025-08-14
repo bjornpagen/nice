@@ -72,6 +72,10 @@ export function validateAndSanitizeHtmlFields(item: AssessmentItemInput, logger:
 				// Runtime validation for minimum number of choices
 				if (interaction.type === "choiceInteraction" || interaction.type === "orderInteraction") {
 					if (interaction.choices.length < 2) {
+						logger.error("interaction has insufficient choices", {
+							interactionType: interaction.type,
+							choiceCount: interaction.choices.length
+						})
 						throw errors.new(
 							`${interaction.type} must have at least 2 choices, but only ${interaction.choices.length} found`
 						)

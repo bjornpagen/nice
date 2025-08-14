@@ -48,6 +48,7 @@ export async function findAssessmentRedirectPath(params: AssessmentRedirectParam
 	}
 	const course = coursesResult.data[0]
 	if (!course) {
+		logger.error("course not found for redirect", { courseSlug: params.course })
 		throw errors.new("course not found for redirect")
 	}
 	const courseSourcedId = course.sourcedId
@@ -79,6 +80,7 @@ export async function findAssessmentRedirectPath(params: AssessmentRedirectParam
 	const unit = unitResult.data[0]
 	if (!unit) {
 		// This will be caught by the page and result in a 404
+		logger.error("unit not found for redirect", { unitSlug: params.unit, courseSourcedId })
 		throw errors.new("unit not found for redirect")
 	}
 	const unitSourcedId = unit.sourcedId

@@ -1,5 +1,5 @@
 import * as errors from "@superbuilders/errors"
-import type * as logger from "@superbuilders/slog"
+import * as logger from "@superbuilders/slog"
 import OpenAI from "openai"
 import { zodResponseFormat } from "openai/helpers/zod"
 import { z } from "zod"
@@ -43,6 +43,7 @@ function createWidgetCollectionSchema(widgetMapping: Record<string, keyof typeof
 		const schema = allWidgetSchemas[widgetType]
 		if (!schema) {
 			// This check ensures we don't proceed with an invalid type from the mapping.
+			logger.error("unknown widget type in structured client mapping", { slotName, widgetType })
 			throw errors.new(`unknown widget type in mapping: ${widgetType}`)
 		}
 		shape[slotName] = schema

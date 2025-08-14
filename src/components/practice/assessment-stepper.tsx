@@ -783,16 +783,16 @@ export function AssessmentStepper({
 				totalQuestions: finalSummaryData.totalQuestions,
 				xpPenaltyInfo: finalSummaryData.xpPenaltyInfo
 					? {
-						penaltyXp:
-							typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
-								? finalSummaryData.xpPenaltyInfo.penaltyXp
-								: 0,
-						reason:
-							typeof finalSummaryData.xpPenaltyInfo.reason === "string"
-								? finalSummaryData.xpPenaltyInfo.reason
-								: "Unknown penalty reason",
-						avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
-					}
+							penaltyXp:
+								typeof finalSummaryData.xpPenaltyInfo.penaltyXp === "number"
+									? finalSummaryData.xpPenaltyInfo.penaltyXp
+									: 0,
+							reason:
+								typeof finalSummaryData.xpPenaltyInfo.reason === "string"
+									? finalSummaryData.xpPenaltyInfo.reason
+									: "Unknown penalty reason",
+							avgSecondsPerQuestion: finalSummaryData.xpPenaltyInfo.avgSecondsPerQuestion
+						}
 					: undefined
 			})
 

@@ -542,18 +542,23 @@ export class Client {
 
 			// NEW: Throw specific, exported errors based on status code
 			if (response.status === 404) {
+				logger.error("qti api not found", { endpoint, status: response.status })
 				throw errors.wrap(ErrQtiNotFound, `qti api error: status 404 on ${endpoint}`)
 			}
 			if (response.status === 422) {
+				logger.error("qti api unprocessable", { endpoint, status: response.status, errorBody })
 				throw errors.wrap(ErrQtiUnprocessable, `qti api error: status 422 on ${endpoint}: ${errorBody}`)
 			}
 			if (response.status === 500) {
+				logger.error("qti api internal server error", { endpoint, status: response.status, errorBody })
 				throw errors.wrap(ErrQtiInternalServerError, `qti api error: status 500 on ${endpoint}: ${errorBody}`)
 			}
 			if (response.status === 409) {
+				logger.error("qti api conflict", { endpoint, status: response.status })
 				throw errors.wrap(ErrQtiConflict, `qti api error: status 409 on ${endpoint}`)
 			}
 
+			logger.error("qti api error", { endpoint, status: response.status })
 			throw errors.new(`qti api error: status ${response.status} on ${endpoint}`)
 		}
 
@@ -702,6 +707,7 @@ export class Client {
 	async getStimulus(identifier: string): Promise<Stimulus> {
 		logger.info("qti client: getting stimulus", { identifier })
 		if (!identifier) {
+			logger.error("identifier is required for getStimulus", { identifier })
 			throw errors.new("qti client: identifier is required for getStimulus")
 		}
 		return this.#request(`/stimuli/${identifier}`, { method: "GET" }, StimulusSchema)
@@ -735,6 +741,7 @@ export class Client {
 	async deleteStimulus(identifier: string): Promise<void> {
 		logger.info("qti client: deleting stimulus", { identifier })
 		if (!identifier) {
+			logger.error("identifier is required for deleteStimulus", { identifier })
 			throw errors.new("qti client: identifier is required for deleteStimulus")
 		}
 		await this.#request(`/stimuli/${identifier}`, { method: "DELETE" }, z.null())
@@ -782,6 +789,7 @@ export class Client {
 	async getAssessmentItem(identifier: string): Promise<AssessmentItem> {
 		logger.info("qti client: getting assessment item", { identifier })
 		if (!identifier) {
+			logger.error("identifier is required for getAssessmentItem", { identifier })
 			throw errors.new("qti client: identifier is required for getAssessmentItem")
 		}
 		return this.#request(`/assessment-items/${identifier}`, { method: "GET" }, AssessmentItemSchema)
@@ -813,6 +821,7 @@ export class Client {
 	async deleteAssessmentItem(identifier: string): Promise<void> {
 		logger.info("qti client: deleting assessment item", { identifier })
 		if (!identifier) {
+			logger.error("identifier is required for deleteAssessmentItem", { identifier })
 			throw errors.new("qti client: identifier is required for deleteAssessmentItem")
 		}
 		// The helper will return `null` on 204, which we can ignore.
@@ -872,6 +881,7 @@ export class Client {
 	async getAssessmentTest(identifier: string): Promise<AssessmentTest> {
 		logger.info("qti client: getting assessment test", { identifier })
 		if (!identifier) {
+			logger.error("identifier is required for getAssessmentTest", { identifier })
 			throw errors.new("qti client: identifier is required for getAssessmentTest")
 		}
 		return this.#request(`/assessment-tests/${identifier}`, { method: "GET" }, AssessmentTestSchema)
@@ -909,6 +919,7 @@ export class Client {
 	async deleteAssessmentTest(identifier: string): Promise<void> {
 		logger.info("qti client: deleting assessment test", { identifier })
 		if (!identifier) {
+			logger.error("identifier is required for deleteAssessmentTest", { identifier })
 			throw errors.new("qti client: identifier is required for deleteAssessmentTest")
 		}
 		await this.#request(`/assessment-tests/${identifier}`, { method: "DELETE" }, z.null())
@@ -948,6 +959,7 @@ export class Client {
 		logger.info("qti client: processing response", { identifier })
 		const validation = ProcessResponseInputSchema.safeParse(input)
 		if (!validation.success) {
+			logger.error("processResponse input validation failed", { identifier, input, error: validation.error })
 			throw errors.wrap(validation.error, "processResponse input validation")
 		}
 

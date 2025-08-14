@@ -243,6 +243,11 @@ export function checkNoInvalidXmlChars(fragment: string, logger: logger.Logger):
 			.slice(0, 5)
 			.map((c) => `U+${c.codePoint.toString(16).toUpperCase()}@${c.index}`)
 			.join(", ")
+		logger.error("invalid xml characters found in content", {
+			invalidCount: invalidCodePoints.length,
+			details,
+			contentLength: fragment.length
+		})
 		throw errors.new(
 			`invalid xml characters found in content: ${invalidCodePoints.length} occurrence(s), e.g., ${details}`
 		)

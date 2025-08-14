@@ -240,6 +240,7 @@ export async function sendTimeSpentEvent(options: {
 	if (!validationResult.success) {
 		// Log but throw to match strict validation path of legacy sender
 		// The caller may choose to ignore this failure as best-effort
+		logger.error("invalid caliper envelope structure", { error: validationResult.error })
 		throw errors.new("invalid caliper envelope structure")
 	}
 

@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { escapeXmlAttribute } from "@/lib/xml-utils"
 import { renderBlockContent, renderInlineContent } from "./content-renderer"
 import type { AnyInteraction } from "./schemas"
@@ -69,6 +70,7 @@ export function compileInteraction(interaction: AnyInteraction, slots: Map<strin
 		default: {
 			// This should never happen if all interaction types are handled
 			// We can't access properties on 'never', so we throw a generic error
+			logger.error("unhandled interaction type in switch statement", { interaction })
 			throw errors.new("Unhandled interaction type in switch statement")
 		}
 	}

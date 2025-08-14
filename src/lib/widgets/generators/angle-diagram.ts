@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Error constants
@@ -75,7 +76,13 @@ const AngleArc = z
 				"exactly three point ids defining the angle: [point on first ray, vertex point, point on second ray]. the middle id is the vertex."
 			),
 		label: z.string().describe("angle label text; empty string to hide"),
-		color: z.string().describe("css color for the angle arc and label"),
+		color: z
+			.string()
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
+			.describe("css color for the angle arc and label"),
 		radius: z.number().describe("arc radius in pixels from the vertex")
 	})
 	.strict()
@@ -85,7 +92,13 @@ const AngleRight = z
 		type: z.literal("right").describe("right angle visualization with square"),
 		vertices: z.tuple([z.string(), z.string(), z.string()]).describe("exactly three point ids; middle is the vertex"),
 		label: z.string().describe("label for the right angle; empty string to hide"),
-		color: z.string().describe("css color for the right-angle square and label")
+		color: z
+			.string()
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
+			.describe("css color for the right-angle square and label")
 	})
 	.strict()
 

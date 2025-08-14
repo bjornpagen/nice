@@ -1,25 +1,34 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines a line segment, such as a radius or a diameter.
 const SegmentSchema = z
 	.object({
-		type: z.enum(["radius", "diameter"]).describe("The type of line segment to draw."),
+		type: z
+			.enum(["radius", "diameter"])
+			.describe(
+				"Type of line segment. 'radius' draws from center to edge. 'diameter' draws across the full circle through center."
+			),
 		label: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional text label for the segment."),
+			.describe(
+				"Text label for the segment (e.g., 'r', 'd', '5 cm', 'radius = 3'). Empty string shows no label. Positioned along the segment."
+			),
 		color: z
 			.string()
-			.nullable()
-			.transform((val) => val ?? "#4A4A4A")
-			.describe("The color of the line segment. Defaults to '#4A4A4A' if null."),
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
+			.describe(
+				"CSS color for the segment line (e.g., '#333333' for dark gray, 'red', 'rgba(0,0,255,0.8)'). Should contrast with circle fill."
+			),
 		angle: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 0)
-			.describe("The angle of the segment in degrees (0 is horizontal to the right). Defaults to 0 if null.")
+			.describe(
+				"Angle in degrees for radius placement or diameter orientation. 0° is rightward, 90° is upward, 180° is leftward, 270° is downward."
+			)
 	})
 	.strict()
 	.describe("Defines a line segment (a radius or diameter) to be drawn on the diagram.")
@@ -27,23 +36,35 @@ const SegmentSchema = z
 // Defines a sector (a pie slice) of the circle.
 const SectorSchema = z
 	.object({
-		startAngle: z.number().describe("The starting angle of the sector in degrees."),
-		endAngle: z.number().describe("The ending angle of the sector in degrees."),
+		startAngle: z
+			.number()
+			.describe(
+				"Starting angle in degrees for the sector arc. 0° is rightward (3 o'clock), angles increase counter-clockwise (e.g., 0, 45, 90, 180)."
+			),
+		endAngle: z
+			.number()
+			.describe(
+				"Ending angle in degrees for the sector arc. Must be greater than startAngle. Full circle is 0 to 360 (e.g., 90, 180, 270, 360)."
+			),
 		fillColor: z
 			.string()
-			.nullable()
-			.transform((val) => val ?? "rgba(100, 181, 246, 0.5)")
-			.describe("The fill color for the sector. Defaults to a semi-transparent blue if null."),
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
+			.describe(
+				"CSS fill color for the sector/wedge (e.g., '#FFE5B4' for peach, 'lightblue', 'rgba(255,0,0,0.3)' for translucent red). Creates pie-slice effect."
+			),
 		label: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional label for the sector."),
+			.describe(
+				"Text label for the sector (e.g., '90°', '1/4', '25%', 'A'). Empty string shows no label. Positioned inside the sector near the arc."
+			),
 		showRightAngleMarker: z
 			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true and the sector is 90 degrees, shows a right angle marker. Defaults to false if null.")
+			.describe(
+				"Whether to show a small square marker if this sector forms a 90° angle. Only meaningful when endAngle - startAngle = 90."
+			)
 	})
 	.strict()
 	.describe("Defines a sector (a pie slice) to fill a portion of the diagram.")
@@ -51,18 +72,30 @@ const SectorSchema = z
 // Defines an arc (a portion of the circle's circumference).
 const ArcSchema = z
 	.object({
-		startAngle: z.number().describe("The starting angle of the arc in degrees."),
-		endAngle: z.number().describe("The ending angle of the arc in degrees."),
+		startAngle: z
+			.number()
+			.describe(
+				"Starting angle in degrees for the arc. 0° is rightward, increases counter-clockwise (e.g., 0, 30, 45, 90)."
+			),
+		endAngle: z
+			.number()
+			.describe(
+				"Ending angle in degrees for the arc. Must be greater than startAngle (e.g., 90, 180, 270, 360). Arc is drawn counter-clockwise."
+			),
 		strokeColor: z
 			.string()
-			.nullable()
-			.transform((val) => val ?? "#D32F2F")
-			.describe("The color of the arc. Defaults to a shade of red if null."),
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
+			.describe(
+				"CSS color for the arc line (e.g., '#FF6B6B' for red, 'blue', 'green'). Should be visible against background and sectors."
+			),
 		label: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("An optional label for the arc.")
+			.describe(
+				"Text label for the arc length or angle (e.g., '90°', 'πr', 's = 5'). Empty string shows no label. Positioned along the arc."
+			)
 	})
 	.strict()
 	.describe("Defines an arc to be highlighted on the circumference of the diagram.")
@@ -70,73 +103,97 @@ const ArcSchema = z
 // The main Zod schema for the circleDiagram function
 export const CircleDiagramPropsSchema = z
 	.object({
-		type: z.literal("circleDiagram").describe("The unique identifier for this widget type."),
-		// New Shape Properties
+		type: z
+			.literal("circleDiagram")
+			.describe("Identifies this as a circle diagram widget for geometric circle visualizations."),
 		shape: z
 			.enum(["circle", "semicircle", "quarter-circle"])
-			.nullable()
-			.transform((val) => val ?? "circle")
 			.describe(
-				'Defines the fundamental boundary of the diagram. Use "semicircle" or "quarter-circle" to draw only that portion of a circle. Defaults to "circle" if null.'
+				"The base shape. 'circle' is full 360°, 'semicircle' is 180° half-circle, 'quarter-circle' is 90° quadrant. Determines visible portion."
 			),
 		rotation: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 0)
 			.describe(
-				"Rotates the entire shape in degrees. For semicircle, 0 degrees is the bottom half. For quarter-circle, 0 degrees is the bottom-right quadrant. Defaults to 0 if null."
+				"Overall rotation of the shape in degrees. 0 means no rotation. For semicircle: 0 = flat side down, 90 = flat side left. Positive rotates counter-clockwise."
 			),
-		// SVG Container Properties
 		width: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 250)
-			.describe("The total width of the output SVG container in pixels. Defaults to 250 if null."),
+			.positive()
+			.describe(
+				"Total width of the SVG in pixels (e.g., 300, 400, 250). Must accommodate the circle plus any labels. For non-circles, includes the full bounding box."
+			),
 		height: z
 			.number()
-			.nullable()
-			.transform((val) => val ?? 250)
-			.describe("The total height of the output SVG container in pixels. Defaults to 250 if null."),
-		// Base Circle Properties
-		radius: z.number().positive().describe("The radius of the main (outer) circle."),
+			.positive()
+			.describe(
+				"Total height of the SVG in pixels (e.g., 300, 400, 250). Should typically equal width for circles to maintain aspect ratio."
+			),
+		radius: z
+			.number()
+			.positive()
+			.describe(
+				"Outer radius of the circle in pixels (e.g., 100, 120, 80). This is the main circle size. For annulus, this is the outer edge."
+			),
 		fillColor: z
 			.string()
-			.nullable()
-			.transform((val) => val ?? "none")
-			.describe("The fill color of the main shape. Defaults to 'none' if null."),
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
+			.describe(
+				"CSS fill color for the main circle area (e.g., '#E8F4FD' for light blue, 'white', 'transparent', 'rgba(255,255,0,0.2)'). Use 'transparent' for outline only."
+			),
 		strokeColor: z
 			.string()
-			.nullable()
-			.transform((val) => val ?? "black")
-			.describe("The stroke color of the main shape's boundary. Defaults to 'black' if null."),
-		// Concentric Circle Properties (only for shape="circle")
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
+			.describe(
+				"CSS color for the circle's border/outline (e.g., 'black', '#333333', 'darkblue'). Set to 'transparent' or match fillColor for no visible border."
+			),
 		innerRadius: z
 			.number()
 			.positive()
 			.nullable()
-			.describe('If provided with shape="circle", draws a concentric inner circle, creating an annulus.'),
+			.describe(
+				"Inner radius for annulus (ring) shape in pixels (e.g., 50, 60, 40). Must be less than radius. Creates a donut when annulusFillColor is set. Use null for no inner circle."
+			),
 		annulusFillColor: z
 			.string()
 			.nullable()
-			.describe('If provided with an innerRadius and shape="circle", shades the region between the two circles.'),
-		// Elements to draw on the diagram
-		segments: z.array(SegmentSchema).nullable().describe("An array of radius or diameter lines to draw."),
-		sectors: z.array(SectorSchema).nullable().describe("An array of sectors (pie slices) to draw."),
-		arcs: z.array(ArcSchema).nullable().describe("An array of arcs to highlight on the circumference."),
+			.describe(
+				"CSS fill color for the annulus/ring area between innerRadius and radius (e.g., '#FFE5B4', 'lightgray'). Use null for no annulus visualization."
+			),
+		segments: z
+			.array(SegmentSchema)
+			.describe(
+				"Line segments (radii or diameters) to draw. Empty array means no segments. Use for showing radius/diameter measurements or dividing the circle."
+			),
+		sectors: z
+			.array(SectorSchema)
+			.describe(
+				"Filled wedge sections (pie slices) of the circle. Empty array means no sectors. Useful for fractions, angles, and pie charts."
+			),
+		arcs: z
+			.array(ArcSchema)
+			.describe(
+				"Curved arc segments along the circle's circumference. Empty array means no arcs. Use for showing arc length, angles, or partial perimeters."
+			),
 		showCenterDot: z
 			.boolean()
-			.nullable()
-			.transform((val) => val ?? false)
-			.describe("If true, a dot is drawn at the circle's center. Defaults to false if null."),
+			.describe(
+				"Whether to display a small dot at the circle's center point. Helps identify the center for geometric constructions."
+			),
 		areaLabel: z
 			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" ? null : val))
-			.describe("A text label to place in the center of the circle, often for area.")
+			.describe(
+				"Label for the total area, displayed inside the circle (e.g., 'A = πr²', 'Area = 78.5 cm²', '314 sq units'). Empty string shows no area label."
+			)
 	})
 	.strict()
 	.describe(
-		"Generates a versatile SVG diagram of a circle, semicircle, or quarter-circle and its components. It is ideal for geometry problems involving radius, diameter, arcs, sectors, and area."
+		"Creates geometric circle diagrams with optional sectors, segments, and arcs. Supports full circles, semicircles, and quarter-circles. Essential for geometry lessons on circumference, area, angles, and fractions. Can create pie charts, angle measurements, and annulus (ring) shapes."
 	)
 
 export type CircleDiagramProps = z.infer<typeof CircleDiagramPropsSchema>
@@ -186,7 +243,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	}
 
 	// Draw sectors first, so the main shape's stroke is drawn on top.
-	if (sectors) {
+	if (sectors.length > 0) {
 		for (const sector of sectors) {
 			const start = pointOnCircle(sector.startAngle, r)
 			const end = pointOnCircle(sector.endAngle, r)
@@ -239,14 +296,14 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	}
 
 	// Arcs are drawn on top of the main shape.
-	if (arcs) {
+	if (arcs.length > 0) {
 		for (const arc of arcs) {
 			const start = pointOnCircle(arc.startAngle, r)
 			const end = pointOnCircle(arc.endAngle, r)
 			const largeArcFlag = Math.abs(arc.endAngle - arc.startAngle) > 180 ? 1 : 0
 			const pathData = `M ${start.x},${start.y} A ${r},${r} 0 ${largeArcFlag} 1 ${end.x},${end.y}`
 			svg += `<path d="${pathData}" fill="none" stroke="${arc.strokeColor}" stroke-width="3"/>`
-			if (arc.label) {
+			if (arc.label && arc.label !== "") {
 				const midAngle = (arc.startAngle + arc.endAngle) / 2
 				const labelPos = pointOnCircle(midAngle, r + PADDING)
 				const finalX = clamp(labelPos.x, PADDING, width - PADDING)
@@ -257,7 +314,7 @@ export const generateCircleDiagram: WidgetGenerator<typeof CircleDiagramPropsSch
 	}
 
 	// Segments (radii/diameters) are drawn on top of the main shape.
-	if (segments) {
+	if (segments.length > 0) {
 		for (const seg of segments) {
 			const lineStart = pointOnCircle(
 				seg.type === "diameter" ? seg.angle + 180 : seg.angle,

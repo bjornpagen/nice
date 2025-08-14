@@ -40,6 +40,7 @@ const DISABLE_REDIS = true
 if (env.NODE_ENV === "production") {
 	if (!env.REDIS_URL) {
 		// In production, Redis is required for proper caching
+		logger.error("redis url not configured in production", { nodeEnv: env.NODE_ENV })
 		throw errors.new("redis: REDIS_URL is not set in production")
 	}
 	redis = createClient({

@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { sanitizeXmlAttributeValue } from "@/lib/xml-utils"
 import type { BlockContent, InlineContent } from "./schemas"
 
@@ -26,6 +27,10 @@ export function renderInlineContent(inlineItems: InlineContent | null | undefine
 				case "inlineSlot": {
 					const content = slots.get(item.slotId)
 					if (content === undefined) {
+						logger.error("content for inline slot not found", {
+							slotId: item.slotId,
+							availableSlots: Array.from(slots.keys())
+						})
 						throw errors.new(`Compiler Error: Content for inline slot '${item.slotId}' not found.`)
 					}
 					return content // Render directly, no wrapper
@@ -45,6 +50,10 @@ export function renderBlockContent(blockItems: BlockContent | null | undefined, 
 				case "blockSlot": {
 					const content = slots.get(item.slotId)
 					if (content === undefined) {
+						logger.error("content for block slot not found", {
+							slotId: item.slotId,
+							availableSlots: Array.from(slots.keys())
+						})
 						throw errors.new(`Compiler Error: Content for block slot '${item.slotId}' not found.`)
 					}
 					return `<div>${content}</div>` // ALWAYS wrap block slots in a div

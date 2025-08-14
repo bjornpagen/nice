@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 // Defines the properties for a rectangular prism solid
@@ -138,6 +139,10 @@ export const ThreeDIntersectionDiagramPropsSchema = z
 					),
 				intersectionColor: z
 					.string()
+					.regex(
+						CSS_COLOR_PATTERN,
+						"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+					)
 					.describe("The fill color for the cross-section area where the plane cuts the solid. Use CSS color format."),
 				showHiddenEdges: z
 					.boolean()

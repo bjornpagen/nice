@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { XP_PROFICIENCY_THRESHOLD } from "@/lib/constants/progress"
@@ -56,6 +57,7 @@ export function upperCase(str: string): string {
  */
 export function assertNoEncodedColons(value: string, context: string): void {
 	if (value.includes("%3A") || value.includes("%3a")) {
+		logger.error("encoded colon detected", { value, context })
 		throw errors.new(`encoded colon detected in ${context}: ${value}. Middleware should have normalized this.`)
 	}
 }
@@ -138,6 +140,7 @@ export function getFirstResourceIdForUnit(unit: Unit): string {
 	}
 
 	// If we reach here, the unit has no actionable resources
+	logger.error("unit has no actionable resources", { unitId: unit.id, unitTitle: unit.title })
 	throw errors.new(`unit has no actionable resources: ${unit.id}`)
 }
 

@@ -1,5 +1,6 @@
 import * as errors from "@superbuilders/errors"
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or axis range")
 
@@ -38,13 +39,13 @@ export const createPlotPointSchema = () =>
 				.describe('An optional text label to display near the point (e.g., "A", "(m, n)").'),
 			color: z
 				.string()
-				.nullable()
-				.transform((val) => val ?? "#4285F4")
+				.regex(
+					CSS_COLOR_PATTERN,
+					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				)
 				.describe("The color of the point, as a CSS color string."),
 			style: z
 				.enum(["open", "closed"])
-				.nullable()
-				.transform((val) => val ?? "closed")
 				.describe("Visual style for the point marker.")
 		})
 		.strict()
@@ -107,13 +108,13 @@ export const createLineSchema = () =>
 			equation: createLineEquationSchema().describe("The mathematical definition of the line."),
 			color: z
 				.string()
-				.nullable()
-				.transform((val) => val ?? "#EA4335")
+				.regex(
+					CSS_COLOR_PATTERN,
+					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				)
 				.describe('The color of the line, as a CSS color string (e.g., "red", "#FF0000").'),
 			style: z
 				.enum(["solid", "dashed"])
-				.nullable()
-				.transform((val) => val ?? "solid")
 				.describe("The style of the line.")
 		})
 		.strict()
@@ -138,15 +139,19 @@ export const createPolygonSchema = () =>
 				),
 			fillColor: z
 				.string()
-				.nullable()
-				.transform((val) => val ?? "rgba(66, 133, 244, 0.3)")
+				.regex(
+					CSS_COLOR_PATTERN,
+					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				)
 				.describe(
 					"The fill color of the polygon, as a CSS color string (e.g., with alpha for transparency). Only applies if isClosed is true."
 				),
 			strokeColor: z
 				.string()
-				.nullable()
-				.transform((val) => val ?? "rgba(66, 133, 244, 1)")
+				.regex(
+					CSS_COLOR_PATTERN,
+					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				)
 				.describe("The border color of the polygon."),
 			label: z
 				.string()
@@ -174,13 +179,13 @@ export const createDistanceSchema = () =>
 				.describe("An optional label for the hypotenuse (the distance line)."),
 			color: z
 				.string()
-				.nullable()
-				.transform((val) => val ?? "gray")
+				.regex(
+					CSS_COLOR_PATTERN,
+					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				)
 				.describe("The color of the distance lines."),
 			style: z
 				.enum(["solid", "dashed"])
-				.nullable()
-				.transform((val) => val ?? "dashed")
 				.describe("The style of the distance lines.")
 		})
 		.strict()
@@ -198,13 +203,13 @@ export const createPolylineSchema = () =>
 				.describe("An array of {x, y} points to connect in order."),
 			color: z
 				.string()
-				.nullable()
-				.transform((val) => val ?? "black")
+				.regex(
+					CSS_COLOR_PATTERN,
+					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				)
 				.describe("The color of the polyline."),
 			style: z
 				.enum(["solid", "dashed"])
-				.nullable()
-				.transform((val) => val ?? "solid")
 				.describe("The style of the polyline.")
 		})
 		.strict()

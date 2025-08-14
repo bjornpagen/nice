@@ -60,6 +60,7 @@ export async function updateFromAssessment(
 		throw errors.wrap(componentResourceResult.error, "fetch component resource")
 	}
 	if (!componentResourceResult.data) {
+		logger.error("component resource data is null", { onerosterComponentResourceSourcedId, correlationId })
 		throw errors.new("component resource data is null")
 	}
 	const resourceSourcedId = componentResourceResult.data.resource.sourcedId
@@ -74,6 +75,7 @@ export async function updateFromAssessment(
 		throw errors.wrap(resourceResult.error, "fetch resource")
 	}
 	if (!resourceResult.data) {
+		logger.error("resource data is null", { resourceSourcedId, correlationId })
 		throw errors.new("resource data is null")
 	}
 

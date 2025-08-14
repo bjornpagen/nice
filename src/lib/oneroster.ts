@@ -413,6 +413,7 @@ export class Client {
 		this.#tokenPromise = null
 
 		if (tokenResult.error) {
+			logger.error("failed to get access token", { error: tokenResult.error })
 			throw tokenResult.error
 		}
 		this.#accessToken = tokenResult.data
@@ -650,15 +651,18 @@ export class Client {
 
 			// ✅ USE THE CUSTOM ERROR TYPE
 			if (response.status === 404) {
+				logger.error("oneroster api not found", { endpoint, status: response.status })
 				throw errors.wrap(ErrOneRosterNotFound, `oneroster api error: status 404 on ${endpoint}`)
 			}
 			// Handle 422 errors that indicate "not found"
 			if (response.status === 422 && text.toLowerCase().includes("not found")) {
+				logger.error("oneroster api not found via 422", { endpoint, status: response.status, text })
 				throw errors.wrap(
 					ErrOneRosterNotFoundAs422,
 					`oneroster api error: status 422 on ${endpoint} - resource not found`
 				)
 			}
+			logger.error("oneroster api error", { endpoint, status: response.status, text })
 			throw errors.wrap(ErrOneRosterAPI, `status ${response.status} on ${endpoint}: ${text}`)
 		}
 
@@ -740,6 +744,7 @@ export class Client {
 		// Note: The input for update is the same shape as create.
 		const validationResult = CreateResourceInputSchema.safeParse(resource)
 		if (!validationResult.success) {
+			logger.error("invalid input for updateResource", { sourcedId, error: validationResult.error })
 			throw errors.wrap(validationResult.error, "invalid input for updateResource")
 		}
 
@@ -758,6 +763,7 @@ export class Client {
 		logger.info("oneroster: deleting resource", { sourcedId })
 
 		if (!sourcedId) {
+			logger.error("sourcedId cannot be empty for deleteResource", { sourcedId })
 			throw errors.new("sourcedId cannot be empty")
 		}
 
@@ -789,6 +795,7 @@ export class Client {
 	async updateCourse(sourcedId: string, course: z.infer<typeof CourseWriteSchema>): Promise<unknown> {
 		const validationResult = CourseWriteSchema.safeParse(course)
 		if (!validationResult.success) {
+			logger.error("invalid input for updateCourse", { sourcedId, error: validationResult.error })
 			throw errors.wrap(validationResult.error, "invalid input for updateCourse")
 		}
 
@@ -819,6 +826,7 @@ export class Client {
 	): Promise<unknown> {
 		const validationResult = CourseComponentWriteSchema.safeParse(courseComponent)
 		if (!validationResult.success) {
+			logger.error("invalid input for updateCourseComponent", { sourcedId, error: validationResult.error })
 			throw errors.wrap(validationResult.error, "invalid input for updateCourseComponent")
 		}
 
@@ -869,6 +877,7 @@ export class Client {
 	): Promise<unknown> {
 		const validationResult = ComponentResourceWriteSchema.safeParse(componentResource)
 		if (!validationResult.success) {
+			logger.error("invalid input for updateComponentResource", { sourcedId, error: validationResult.error })
 			throw errors.wrap(validationResult.error, "invalid input for updateComponentResource")
 		}
 
@@ -1053,6 +1062,7 @@ export class Client {
 		logger.info("oneroster: fetching all classes for school", { schoolSourcedId, ...options })
 
 		if (!schoolSourcedId) {
+			logger.error("schoolSourcedId cannot be empty for getClassesForSchool", { schoolSourcedId })
 			throw errors.new("schoolSourcedId cannot be empty")
 		}
 
@@ -1128,6 +1138,7 @@ export class Client {
 		logger.info("oneroster: fetching user by email", { email })
 
 		if (!email) {
+			logger.error("email cannot be empty for getUserByEmail", { email })
 			throw errors.new("email cannot be empty")
 		}
 
@@ -1189,6 +1200,7 @@ export class Client {
 		logger.info("oneroster: fetching resources for course", { courseSourcedId, ...options })
 
 		if (!courseSourcedId) {
+			logger.error("courseSourcedId cannot be empty for getResourcesForCourse", { courseSourcedId })
 			throw errors.new("courseSourcedId cannot be empty")
 		}
 
@@ -1318,6 +1330,7 @@ export class Client {
 		logger.info("oneroster: fetching course components for course", { courseSourcedId, ...options })
 
 		if (!courseSourcedId) {
+			logger.error("courseSourcedId cannot be empty for getCourseComponentsForCourse", { courseSourcedId })
 			throw errors.new("courseSourcedId cannot be empty")
 		}
 
@@ -1427,6 +1440,7 @@ export class Client {
 	async deleteEnrollment(enrollmentSourcedId: string): Promise<void> {
 		logger.info("oneroster: deleting enrollment", { enrollmentSourcedId })
 		if (!enrollmentSourcedId) {
+			logger.error("enrollmentSourcedId cannot be empty for deleteEnrollment", { enrollmentSourcedId })
 			throw errors.new("enrollmentSourcedId cannot be empty")
 		}
 		await this.#request(
@@ -1440,6 +1454,7 @@ export class Client {
 		logger.info("oneroster: deleting course component", { sourcedId })
 
 		if (!sourcedId) {
+			logger.error("sourcedId cannot be empty for deleteCourseComponent", { sourcedId })
 			throw errors.new("sourcedId cannot be empty")
 		}
 
@@ -1456,6 +1471,7 @@ export class Client {
 		logger.info("oneroster: deleting course", { sourcedId })
 
 		if (!sourcedId) {
+			logger.error("sourcedId cannot be empty for deleteCourse", { sourcedId })
 			throw errors.new("sourcedId cannot be empty")
 		}
 
@@ -1468,6 +1484,7 @@ export class Client {
 		logger.info("oneroster: deleting class", { sourcedId })
 
 		if (!sourcedId) {
+			logger.error("sourcedId cannot be empty for deleteClass", { sourcedId })
 			throw errors.new("sourcedId cannot be empty")
 		}
 
@@ -1480,6 +1497,7 @@ export class Client {
 		logger.info("oneroster: deleting component resource", { sourcedId })
 
 		if (!sourcedId) {
+			logger.error("sourcedId cannot be empty for deleteComponentResource", { sourcedId })
 			throw errors.new("sourcedId cannot be empty")
 		}
 
@@ -1496,6 +1514,7 @@ export class Client {
 		logger.info("oneroster: deleting user", { sourcedId })
 
 		if (!sourcedId) {
+			logger.error("sourcedId cannot be empty for deleteUser", { sourcedId })
 			throw errors.new("sourcedId cannot be empty")
 		}
 
@@ -1601,6 +1620,7 @@ export class Client {
 		logger.info("oneroster: deleting assessment line item", { sourcedId })
 
 		if (!sourcedId) {
+			logger.error("sourcedId cannot be empty for deleteAssessmentLineItem", { sourcedId })
 			throw errors.new("sourcedId cannot be empty")
 		}
 
@@ -1653,6 +1673,7 @@ export class Client {
 	): Promise<AssessmentResult> {
 		const validation = CreateResultInputSchema.safeParse(payload)
 		if (!validation.success) {
+			logger.error("putResult input validation failed", { sourcedId, payload, error: validation.error })
 			throw errors.wrap(validation.error, "putResult input validation")
 		}
 
@@ -1667,6 +1688,7 @@ export class Client {
 		)
 
 		if (!response?.assessmentResult) {
+			logger.error("invalid response from putResult", { sourcedId, response })
 			throw errors.new("invalid response from putResult")
 		}
 
@@ -1729,6 +1751,7 @@ export class Client {
 		logger.info("oneroster: deleting assessment result", { sourcedId })
 
 		if (!sourcedId) {
+			logger.error("sourcedId cannot be empty for deleteAssessmentResult", { sourcedId })
 			throw errors.new("sourcedId cannot be empty")
 		}
 

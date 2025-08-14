@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { qti } from "@/lib/clients"
 import { compile } from "./compiler"
 import { allExamples } from "./examples"
@@ -40,6 +41,7 @@ describe("QTI Compiler API Validation", () => {
 				.map((f) => `${f.identifier}: ${f.validationResult.validationErrors.join(", ")}`)
 				.join("\n")
 
+			logger.error("qti validation failed for examples", { failureCount: failures.length, failureMessages })
 			throw errors.new(`Validation failed for ${failures.length} example(s):\n${failureMessages}`)
 		}
 

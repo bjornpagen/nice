@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { put } from "@vercel/blob"
 import { env } from "@/env"
 
@@ -24,6 +25,7 @@ export async function uploadScreenshot(
 	)
 
 	if (uploadResult.error) {
+		logger.error("blob upload failed", { screenshotType, questionId, error: uploadResult.error })
 		throw errors.wrap(uploadResult.error, `blob upload failed for ${screenshotType} screenshot`)
 	}
 
@@ -51,12 +53,14 @@ export async function uploadScreenshots(
 	// Check if production upload succeeded
 	const productionResult = uploadResults[0]
 	if (productionResult.status === "rejected") {
+		logger.error("production screenshot upload failed", { questionId, reason: productionResult.reason })
 		throw errors.new(`production screenshot upload failed: ${productionResult.reason}`)
 	}
 
 	// Check if perseus upload succeeded
 	const perseusResult = uploadResults[1]
 	if (perseusResult.status === "rejected") {
+		logger.error("perseus screenshot upload failed", { questionId, reason: perseusResult.reason })
 		throw errors.new(`perseus screenshot upload failed: ${perseusResult.reason}`)
 	}
 

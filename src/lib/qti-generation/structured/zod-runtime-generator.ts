@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 
 /**
@@ -29,6 +30,7 @@ export function generateZodSchemaFromObject(
 			const existingSchema = visited.get(obj)
 			if (!existingSchema) {
 				// CRITICAL: Map corruption - has() returned true but get() returned undefined
+				logger.error("zod schema generation map corruption detected", { objType: typeof obj })
 				throw errors.new("zod schema generation: schema map corruption detected")
 			}
 			return existingSchema
@@ -37,6 +39,7 @@ export function generateZodSchemaFromObject(
 		// Check if we're currently processing this object (circular reference)
 		if (processing.has(obj)) {
 			// CRITICAL: Circular reference detected - cannot generate schema
+			logger.error("zod schema generation circular reference detected", { objType: typeof obj })
 			throw errors.new("zod schema generation: circular reference detected")
 		}
 
@@ -144,6 +147,7 @@ export function generateZodSchemaFromObject(
 
 		default:
 			// CRITICAL: Unsupported type - FAIL FAST
+			logger.error("zod schema generation unsupported type", { objType: typeof obj, obj })
 			throw errors.new(`zod schema generation: unsupported type '${typeof obj}'`)
 	}
 }

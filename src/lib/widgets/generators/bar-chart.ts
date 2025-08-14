@@ -1,5 +1,7 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data")
@@ -51,7 +53,13 @@ export const BarChartPropsSchema = z
 			.describe(
 				"Array of bars to display. Each bar represents one category. Order determines left-to-right positioning."
 			),
-		barColor: z.string().describe("CSS color for normal bars (e.g., '#4472C4', 'steelblue', 'rgba(68,114,196,0.8)').")
+		barColor: z
+			.string()
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
+			.describe("CSS color for normal bars (e.g., '#4472C4', 'steelblue', 'rgba(68,114,196,0.8)').")
 	})
 	.strict()
 	.describe(
@@ -72,6 +80,11 @@ export const generateBarChart: WidgetGenerator<typeof BarChartPropsSchema> = (da
 	const chartHeight = height - margin.top - margin.bottom
 
 	if (chartHeight <= 0 || chartWidth <= 0 || chartData.length === 0) {
+		logger.error("invalid chart dimensions or data for bar chart", {
+			chartWidth,
+			chartHeight,
+			dataLength: chartData.length
+		})
 		throw errors.wrap(
 			ErrInvalidDimensions,
 			`chart dimensions must be positive and data must not be empty. width: ${chartWidth}, height: ${chartHeight}, data length: ${chartData.length}`

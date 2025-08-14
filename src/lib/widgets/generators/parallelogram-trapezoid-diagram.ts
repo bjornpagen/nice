@@ -174,8 +174,8 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 					label: labels?.height ?? String(h)
 				}
 			],
-			shadedRegions: null,
-			regionLabels: null,
+			shadedRegions: [],
+			regionLabels: [],
 			rightAngleMarkers: [
 				{
 					cornerVertexIndex: 4,
@@ -234,8 +234,8 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 					label: labels?.height ?? String(h)
 				}
 			],
-			shadedRegions: null,
-			regionLabels: null,
+			shadedRegions: [],
+			regionLabels: [],
 			rightAngleMarkers: [
 				{
 					cornerVertexIndex: 4,

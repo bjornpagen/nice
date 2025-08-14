@@ -256,6 +256,11 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 				}
 				// Runtime validation for minimum number of choices
 				if (interaction.choices.length < 2) {
+					logger.error("interaction has insufficient choices", {
+						interactionKey: key,
+						interactionType: interaction.type,
+						choiceCount: interaction.choices.length
+					})
 					throw errors.new(
 						`${interaction.type} must have at least 2 choices, but only ${interaction.choices.length} found in interaction[${key}]`
 					)

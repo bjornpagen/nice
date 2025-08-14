@@ -995,6 +995,7 @@ export class KhanAcademyClient {
 
 		const result = await retryWithBackoff(operation, { retries: 3, initialDelay: 1000 })
 		if (result.error || !result.data) {
+			logger.error("getLearnMenuTopics failed", { error: result.error, hasData: !!result.data })
 			throw result.error || errors.new("khan-api: unexpected null result from getLearnMenuTopics")
 		}
 		return result.data
@@ -1025,16 +1026,31 @@ export class KhanAcademyClient {
 			)
 
 			if (fetchResult.error) {
+				logger.error("khan-api network request failed for getOrCreatePracticeTask", {
+					url,
+					exerciseId,
+					error: fetchResult.error
+				})
 				throw errors.wrap(fetchResult.error, "khan-api: network request failed")
 			}
 
 			const response = fetchResult.data
 			if (!response.ok) {
+				logger.error("khan-api request failed with status for getOrCreatePracticeTask", {
+					url,
+					exerciseId,
+					status: response.status
+				})
 				throw errors.new(`khan-api: request failed with status ${response.status}`)
 			}
 
 			const jsonResult = await errors.try(response.json())
 			if (jsonResult.error) {
+				logger.error("khan-api failed to parse json response for getOrCreatePracticeTask", {
+					url,
+					exerciseId,
+					error: jsonResult.error
+				})
 				throw errors.wrap(jsonResult.error, "khan-api: failed to parse json response")
 			}
 			const rawJson = jsonResult.data
@@ -1045,6 +1061,7 @@ export class KhanAcademyClient {
 		}
 		const result = await retryWithBackoff(operation, { retries: 3, initialDelay: 1000 })
 		if (result.error || !result.data) {
+			logger.error("getOrCreatePracticeTask failed", { error: result.error, hasData: !!result.data })
 			throw result.error || errors.new("khan-api: unexpected null result from getOrCreatePracticeTask")
 		}
 		return result.data
@@ -1093,6 +1110,7 @@ export class KhanAcademyClient {
 		}
 		const result = await retryWithBackoff(operation, { retries: 3, initialDelay: 1000 })
 		if (result.error || !result.data) {
+			logger.error("getAssessmentItem failed", { error: result.error, hasData: !!result.data })
 			throw result.error || errors.new("khan-api: unexpected null result from getAssessmentItem")
 		}
 		return result.data
@@ -1152,6 +1170,7 @@ export class KhanAcademyClient {
 		}
 		const result = await retryWithBackoff(operation, { retries: 3, initialDelay: 1000 })
 		if (result.error || !result.data) {
+			logger.error("getContentForPath failed", { error: result.error, hasData: !!result.data })
 			throw result.error || errors.new("khan-api: unexpected null result from getContentForPath")
 		}
 		return result.data
@@ -1215,6 +1234,7 @@ export class KhanAcademyClient {
 
 		const result = await retryWithBackoff(operation, { retries: 3, initialDelay: 1000 })
 		if (result.error || !result.data) {
+			logger.error("getContentForLearnableContent failed", { error: result.error, hasData: !!result.data })
 			throw result.error || errors.new("khan-api: unexpected null result from getContentForLearnableContent")
 		}
 		return result.data
