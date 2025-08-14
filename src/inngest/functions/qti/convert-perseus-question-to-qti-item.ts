@@ -76,6 +76,7 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			if (errors.is(structuredItemResult.error, ErrUnsupportedInteraction)) {
 				// This item is fundamentally un-convertible. Fail the job permanently,
 				// chaining the original error for full context in observability tools.
+				logger.error("item is fundamentally un-convertible", { error: structuredItemResult.error, questionId })
 				throw new NonRetriableError(structuredItemResult.error.message, {
 					cause: structuredItemResult.error
 				})
@@ -84,12 +85,14 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			// ADDED: Check for the new WIDGET_NOT_FOUND bail condition.
 			// This is a specific, non-retriable failure case.
 			if (errors.is(structuredItemResult.error, ErrWidgetNotFound)) {
+				logger.error("widget not found - non-retriable failure", { error: structuredItemResult.error, questionId })
 				throw new NonRetriableError(structuredItemResult.error.message, {
 					cause: structuredItemResult.error
 				})
 			}
 
 			// For all other errors, maintain the existing retryable behavior.
+			logger.error("structured item generation failed", { error: structuredItemResult.error, questionId })
 			throw errors.wrap(structuredItemResult.error, "structured item generation")
 		}
 		const assessmentItemInput = structuredItemResult.data
@@ -126,11 +129,13 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 			// Check if compilation failed due to unsupported interaction
 			if (errors.is(compileResult.error, ErrUnsupportedInteraction)) {
 				// This item contains unsupported interactions. Fail permanently.
+				logger.error("compilation failed due to unsupported interaction", { error: compileResult.error, questionId })
 				throw new NonRetriableError(compileResult.error.message, {
 					cause: compileResult.error
 				})
 			}
 
+			logger.error("qti compilation failed - general error", { error: compileResult.error, questionId })
 			throw errors.wrap(compileResult.error, "qti compilation")
 		}
 		const xml = compileResult.data

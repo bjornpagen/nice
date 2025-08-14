@@ -26,6 +26,7 @@ export const clearCourseXmlData = inngest.createFunction(
 			throw errors.wrap(courseResult.error, "course query")
 		}
 		if (!courseResult.data) {
+			logger.error("course not found", { courseId })
 			throw errors.new(`course not found: ${courseId}`)
 		}
 

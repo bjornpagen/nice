@@ -71,6 +71,7 @@ export const ingestResources = inngest.createFunction(
 		})
 
 		if (failedCount > 0) {
+			logger.error("failed to ingest or update resources", { failedCount, totalCount: results.length })
 			throw errors.new(`failed to ingest or update ${failedCount} resources`)
 		}
 

@@ -14,13 +14,11 @@ import {
 	type InlineContent
 } from "@/lib/qti-generation/schemas"
 import { buildImageContext, type ImageContext } from "@/lib/qti-generation/structured/perseus-image-resolver"
+import { createInteractionContentPrompt } from "@/lib/qti-generation/structured/prompts/interactions"
 // ✅ UPDATE: Import from the new, co-located prompts file.
-import {
-	createAssessmentShellPrompt,
-	createInteractionContentPrompt,
-	createWidgetContentPrompt,
-	createWidgetMappingPrompt
-} from "@/lib/qti-generation/structured/prompts"
+import { createAssessmentShellPrompt } from "@/lib/qti-generation/structured/prompts/shell"
+import { createWidgetMappingPrompt } from "@/lib/qti-generation/structured/prompts/widget-mapping"
+import { createWidgetContentPrompt } from "@/lib/qti-generation/structured/prompts/widgets"
 import type { WidgetCollectionName } from "@/lib/widget-collections"
 import { allWidgetSchemas, type WidgetInput } from "@/lib/widgets/generators"
 

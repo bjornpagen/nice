@@ -65,6 +65,7 @@ export const orchestrateHardcodedMathStimulusGeneration = inngest.createFunction
 
 				const assessmentStimuli = allArticles.map((a) => {
 					if (!a.xml) {
+						logger.error("unreachable: article should have xml after validation", { articleId: a.id })
 						throw errors.new("unreachable: article should have xml after validation")
 					}
 					const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice_${a.id}`, a.title)

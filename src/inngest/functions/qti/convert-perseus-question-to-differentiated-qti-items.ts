@@ -109,6 +109,7 @@ export async function generateDifferentiatedItems(
 	for (let i = 0; i < differentiatedItems.length; i++) {
 		const item = differentiatedItems[i]
 		if (!item) {
+			logger.error("missing differentiated item at index", { index: i, questionId })
 			throw errors.new(`missing differentiated item at index ${i}`)
 		}
 

@@ -70,6 +70,7 @@ export const ingestComponentResources = inngest.createFunction(
 		})
 
 		if (failedCount > 0) {
+			logger.error("failed to ingest component resources", { failedCount, totalCount: results.length })
 			throw errors.new(`failed to ingest ${failedCount} component resources`)
 		}
 

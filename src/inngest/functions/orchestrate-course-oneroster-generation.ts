@@ -21,6 +21,7 @@ export const orchestrateCourseOnerosterGeneration = inngest.createFunction(
 		})
 
 		if (!generationResult.success || !generationResult.outputDirectory) {
+			logger.error("failed to generate oneroster payload", { courseId, success: generationResult.success })
 			throw errors.new("failed to generate oneroster payload")
 		}
 		logger.info("successfully generated oneroster payload", { courseId, outputDir: generationResult.outputDirectory })

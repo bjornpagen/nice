@@ -1,10 +1,11 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { and, eq, isNotNull } from "drizzle-orm"
 import { NonRetriableError } from "inngest"
 import { db } from "@/db"
 import { niceQuestionRenderReviews, niceQuestions } from "@/db/schemas"
 import { inngest } from "@/inngest/client"
-import { createVisualQAPrompt } from "@/lib/qti-generation/structured/prompts"
+import { createVisualQAPrompt } from "@/lib/qti-generation/structured/prompts/visual-qa"
 import { uploadScreenshot } from "@/lib/utils/blob-storage"
 import { analyzeScreenshotWithVision, type VisualQAResponse } from "@/lib/utils/openai-vision"
 import { captureProductionQTIScreenshot } from "@/lib/utils/screenshot-capture"
@@ -40,6 +41,7 @@ function deserializeBuffer(bufferLike: ScreenshotBuffer | { type: string; data: 
 		return Buffer.from(bufferLike.data)
 	}
 
+	logger.error("invalid buffer format received from inngest step", { bufferLike })
 	throw errors.new("invalid buffer format received from inngest step")
 }
 

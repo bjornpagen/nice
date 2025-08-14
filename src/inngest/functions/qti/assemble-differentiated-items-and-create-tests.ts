@@ -469,17 +469,21 @@ ${sectionsXml}
 						return idMatch && idMatch[1] === qtiId
 					})
 					if (!item) {
+						logger.error("qti item not found", { qtiId })
 						throw errors.new(`qti item ${qtiId} not found`)
 					}
 					if (!("metadata" in item) || !item.metadata || typeof item.metadata !== "object") {
+						logger.error("qti item missing metadata", { qtiId })
 						throw errors.new(`qti item ${qtiId} missing metadata`)
 					}
 					const metadata = item.metadata
 					if (!("khanId" in metadata)) {
+						logger.error("qti item metadata is missing khanId", { qtiId })
 						throw errors.new("qti item metadata is missing khanId")
 					}
 					const originalQuestion = allQuestionsForTests.find((q) => q.id === metadata.khanId)
 					if (!originalQuestion) {
+						logger.error("original question not found", { khanId: metadata.khanId })
 						throw errors.new(`original question ${metadata.khanId} not found`)
 					}
 					return { id: qtiId, problemType: originalQuestion.problemType }

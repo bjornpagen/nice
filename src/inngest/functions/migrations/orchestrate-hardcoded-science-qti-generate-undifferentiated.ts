@@ -145,6 +145,7 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 
 				const itemsUnvalidated: AssessmentItem[] = allQuestions.map((q) => {
 					if (!q.xml) {
+						logger.error("question is missing XML", { questionId: q.id })
 						throw errors.new(`question ${q.id} is missing XML`)
 					}
 					const finalXml = replaceRootAttributes(q.xml, "qti-assessment-item", `nice_${q.id}`, q.exerciseTitle)
@@ -244,6 +245,7 @@ export const orchestrateHardcodedScienceQtiGenerateUndifferentiated = inngest.cr
 
 				const stimuli = allArticles.map((a) => {
 					if (!a.xml) {
+						logger.error("article is missing XML", { articleId: a.id })
 						throw errors.new(`article ${a.id} is missing XML`)
 					}
 					const finalXml = replaceRootAttributes(a.xml, "qti-assessment-stimulus", `nice_${a.id}`, a.title)
@@ -404,6 +406,7 @@ ${selectionStrategy}
 					const allQuestionsForTest = filteredIds.map((id) => {
 						const question = allQuestions.find((q) => q.id === id)
 						if (!question) {
+							logger.error("question not found when building test", { questionId: id })
 							throw errors.new(`question ${id} not found when building test`)
 						}
 						return {

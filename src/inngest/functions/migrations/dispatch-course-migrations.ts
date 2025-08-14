@@ -84,6 +84,9 @@ export async function dispatchMigrationsForCourses(
 		// CRITICAL: Ensure widgetCollection is provided when itemEventName is set.
 		// If itemEventName is set, widgetCollection must also be set due to the updated event schema.
 		if (!options.widgetCollection) {
+			logger.error("widgetCollection is required when itemEventName is 'qti/item.migrate'", {
+				itemEventName: options.itemEventName
+			})
 			throw errors.new("widgetCollection is required when itemEventName is 'qti/item.migrate'")
 		}
 		const eventName = options.itemEventName // Capture to ensure TypeScript knows it's defined

@@ -24,6 +24,7 @@ export const orchestrateCourseUploadToQti = inngest.createFunction(
 			columns: { slug: true }
 		})
 		if (!courseResult) {
+			logger.error("Course not found in database", { courseId })
 			throw errors.new(`Course not found in database: ${courseId}`)
 		}
 		const courseDir = path.join(process.cwd(), "data", courseResult.slug, "qti")

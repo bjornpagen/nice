@@ -31,6 +31,7 @@ export const orchestrateCourseUploadToOneroster = inngest.createFunction(
 			columns: { slug: true }
 		})
 		if (!courseResult) {
+			logger.error("course not found in database", { courseId })
 			throw errors.new(`course not found in database: ${courseId}`)
 		}
 
