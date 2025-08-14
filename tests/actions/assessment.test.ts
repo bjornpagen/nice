@@ -723,3 +723,78 @@ describe("Banked XP Sum Consistency", () => {
 		expect(derivedBanked).toBe(articleXp + videoXp)
 	})
 })
+
+describe("End-to-end banking across lesson → exercise → quiz → exercise remastery", () => {
+	test("Deduped behavior: banked XP is not awarded again on remastery after quiz downgrade", async () => {
+		// Ensure user is treated as NOT already proficient throughout (so XP can be awarded both exercise attempts)
+		mockCheckExistingProficiency.mockImplementation((_u, _a) => Promise.resolve(false))
+
+		// Simulate a lesson with a video and an article completed prior to the exercise
+		// We return a fixed banked XP bundle representing those two resources
+		const videoXp = 30
+		const articleXp = 20
+		const totalBanked = videoXp + articleXp
+		mockAwardBankedXpForExercise.mockReset()
+		const firstCall = { bankedXp: totalBanked, awardedResourceIds: ["video1", "article1"] }
+		const secondCall = { bankedXp: 0, awardedResourceIds: [] }
+		let callIndex = 0
+		mockAwardBankedXpForExercise.mockImplementation((_params) => {
+			const ret = callIndex === 0 ? firstCall : secondCall
+			callIndex++
+			return Promise.resolve(ret)
+		})
+
+		// 1) First attempt on the Exercise: 100% accuracy → multiplier 1.25, plus banked XP from video+article
+		await finalizeAssessment({ ...defaultOptions })
+		const firstPayload = analyticsSpy.mock.calls[analyticsSpy.mock.calls.length - 1]?.[0]
+		if (!firstPayload) {
+			logger.error("analytics payload missing after first exercise in e2e test")
+			throw errors.new("analytics payload missing")
+		}
+		// Base 100 * 1.25 + 50 banked
+		expect(firstPayload.finalXp).toBe(defaultOptions.expectedXp * 1.25 + totalBanked)
+		// Bank was invoked once so far
+		expect(bankSpy).toHaveBeenCalledTimes(1)
+
+		// 2) Take a Quiz which (via proficiency analysis) could reduce exercise proficiency below 80%
+		// We don't rely on real proficiency analysis here; we keep the proficiency check mocked to false later.
+		await finalizeAssessment({
+			...defaultOptions,
+			contentType: "Quiz",
+			assessmentTitle: "Unit Quiz",
+			// Mixed correctness; XP rules for quiz don't bank, and proficiency update is mocked
+			sessionResults: [
+				{ qtiItemId: "q1", isCorrect: false, isReported: false },
+				{ qtiItemId: "q2", isCorrect: false, isReported: false },
+				{ qtiItemId: "q3", isCorrect: true, isReported: false }
+			],
+			attemptNumber: 1
+		})
+		// Bank must still be called only once so far (quiz does not bank)
+		expect(bankSpy).toHaveBeenCalledTimes(1)
+
+		// 3) Retake the Exercise after quiz; user remasters with >80 on attempt 2
+		await finalizeAssessment({
+			...defaultOptions,
+			attemptNumber: 2,
+			sessionResults: [
+				{ qtiItemId: "q1", isCorrect: true, isReported: false },
+				{ qtiItemId: "q2", isCorrect: true, isReported: false },
+				{ qtiItemId: "q3", isCorrect: true, isReported: false },
+				{ qtiItemId: "q4", isCorrect: true, isReported: false },
+				{ qtiItemId: "q5", isCorrect: true, isReported: false }
+			]
+		})
+
+		const secondPayload = analyticsSpy.mock.calls[analyticsSpy.mock.calls.length - 1]?.[0]
+		if (!secondPayload) {
+			logger.error("analytics payload missing after second exercise in e2e test")
+			throw errors.new("analytics payload missing")
+		}
+
+		// Attempt 2: base = 100 * 1.0, and with dedupe banked XP should NOT be added again
+		expect(secondPayload.finalXp).toBe(defaultOptions.expectedXp * 1.0)
+		// Bank should have been invoked twice total (remastery calls bank, but it returns 0)
+		expect(bankSpy).toHaveBeenCalledTimes(2)
+	})
+})

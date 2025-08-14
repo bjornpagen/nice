@@ -4,6 +4,7 @@ import { randomUUID } from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { extractResourceIdFromCompoundId } from "@/lib/caliper/utils"
+import { z } from "zod"
 import { oneroster } from "@/lib/clients"
 import { calculateBankedXpForResources } from "@/lib/data/fetchers/caliper"
 import type { Resource } from "@/lib/oneroster"
@@ -234,11 +235,58 @@ export async function awardBankedXpForExercise(params: {
 		passiveResources.push({ sourcedId: id, expectedXp })
 	}
 
+	// 7b. Dedupe: exclude resources already banked for this user
+	if (passiveResources.length === 0) {
+		return { bankedXp: 0, awardedResourceIds: [] }
+	}
+
+	logger.info("checking existing results for bank dedupe", {
+		candidateCount: passiveResources.length
+	})
+
+	const eligibilityChecks = await Promise.all(
+		passiveResources.map(async (resource) => {
+			const resultSourcedId = generateResultSourcedId(userId, resource.sourcedId, false)
+			const existingResult = await errors.try(oneroster.getResult(resultSourcedId))
+			if (existingResult.error) {
+				logger.error("bank dedupe: failed to read existing result", {
+					userId,
+					resourceId: resource.sourcedId,
+					resultSourcedId,
+					error: existingResult.error
+				})
+				throw errors.wrap(existingResult.error, "bank dedupe: read existing result")
+			}
+
+			// Narrow metadata shape using Zod to avoid unsafe casts
+			const BankedMetaSchema = z
+				.object({ xp: z.number().optional(), xpReason: z.string().optional() })
+				.passthrough()
+			const parsed = BankedMetaSchema.safeParse(existingResult.data?.metadata)
+			const xpValue = parsed.success && typeof parsed.data.xp === "number" ? parsed.data.xp : 0
+			const xpReason = parsed.success && typeof parsed.data.xpReason === "string" ? parsed.data.xpReason : ""
+			const alreadyBanked = xpValue > 0 || xpReason === "Banked XP"
+
+			return { resource, alreadyBanked }
+		})
+	)
+
+	const eligibleResources = eligibilityChecks.filter((e) => !e.alreadyBanked).map((e) => e.resource)
+
+	logger.info("bank dedupe complete", {
+		eligibleCount: eligibleResources.length,
+		filteredCount: passiveResources.length - eligibleResources.length
+	})
+
+	if (eligibleResources.length === 0) {
+		return { bankedXp: 0, awardedResourceIds: [] }
+	}
+
 	// 8. Calculate XP using time-spent policy
 	let totalBankedXp = 0
 	const awardedResourceIds: string[] = []
 	const actorId = `https://api.alpha-1edtech.com/ims/oneroster/rostering/v1p2/users/${userId}`
-	const bankResult = await calculateBankedXpForResources(actorId, passiveResources)
+	const bankResult = await calculateBankedXpForResources(actorId, eligibleResources)
 	totalBankedXp += bankResult.bankedXp
 	awardedResourceIds.push(...bankResult.awardedResourceIds)
 
