@@ -164,8 +164,8 @@ export async function updateVideoProgress(
 		logger.debug("no existing video result, proceeding with completion", { onerosterResultSourcedId })
 	} else {
 		const rawExistingScore = typeof existingResult.data?.score === "number" ? existingResult.data.score : undefined
-		const existingScore =
-			rawExistingScore !== undefined ? (rawExistingScore <= 1.1 ? rawExistingScore * 100 : rawExistingScore) : undefined
+		// Post-migration: scores are stored as 0..100 integers; no legacy float normalization
+		const existingScore = rawExistingScore
 		const existingIsCompleted = existingScore !== undefined && existingScore >= VIDEO_COMPLETION_THRESHOLD_PERCENT
 		if (existingScore !== undefined && existingScore >= newScore) {
 			finalScore = existingScore
@@ -271,7 +271,10 @@ interface AssessmentCompletionOptions {
  */
 export async function saveAssessmentResult(options: AssessmentCompletionOptions): Promise<unknown> {
 	const { userId: clerkUserId } = await auth()
-	if (!clerkUserId) throw errors.new("user not authenticated")
+	if (!clerkUserId) {
+		logger.error("user not authenticated")
+		throw errors.new("user not authenticated")
+	}
 
 	// Destructure all options for clarity
 	const {
@@ -567,9 +570,9 @@ export async function getVideoProgress(
 		return null
 	}
 
-	// Score may be 0.0-1.0 from legacy or 0-100 new. Normalize to percentage (0-100).
+	// Post-migration: scores are stored as 0..100 integers
 	const rawScore = assessmentResult.score
-	const percentComplete = Math.round(rawScore <= 1.1 ? rawScore * 100 : rawScore)
+	const percentComplete = Math.round(rawScore)
 
 	logger.debug("video progress retrieved", {
 		onerosterUserSourcedId,

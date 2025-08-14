@@ -101,14 +101,14 @@ export async function getUserUnitProgress(
 
 			for (const [resourceId, latest] of latestByResource.entries()) {
 				if (latest.scoreStatus === "fully graded" && typeof latest.score === "number") {
-					const normalizedScore = latest.score <= 1.1 ? latest.score * 100 : latest.score
+					const normalizedScore = Math.round(latest.score)
 					progressMap.set(resourceId, {
 						completed: true,
 						score: normalizedScore,
 						proficiency: calculateProficiency(normalizedScore)
 					})
 				} else if (latest.scoreStatus === "partially graded" && typeof latest.score === "number") {
-					const normalizedScore = latest.score <= 1.1 ? latest.score * 100 : latest.score
+					const normalizedScore = Math.round(latest.score)
 					progressMap.set(resourceId, {
 						completed: false,
 						score: normalizedScore
@@ -280,6 +280,7 @@ export async function fetchProgressPageData(): Promise<ProgressPageData> {
 	// dynamic opt-in is handled at the page level
 	const user = await currentUser()
 	if (!user) {
+		logger.error("user not authenticated")
 		throw errors.new("user not authenticated")
 	}
 
