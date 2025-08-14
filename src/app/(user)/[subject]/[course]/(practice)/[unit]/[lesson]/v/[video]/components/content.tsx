@@ -247,7 +247,8 @@ export function Content({
 								}
 								if (onerosterUserSourcedId) {
 									async function markCompleteNow() {
-										const userIdForProgress = typeof onerosterUserSourcedId === "string" ? onerosterUserSourcedId : undefined
+										const userIdForProgress =
+											typeof onerosterUserSourcedId === "string" ? onerosterUserSourcedId : undefined
 										if (!userIdForProgress) {
 											return
 										}
@@ -387,8 +388,22 @@ export function Content({
 			"ArrowRight",
 			"Home",
 			"End",
-			"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-			"j", "J", "l", "L", ".", ","
+			"0",
+			"1",
+			"2",
+			"3",
+			"4",
+			"5",
+			"6",
+			"7",
+			"8",
+			"9",
+			"j",
+			"J",
+			"l",
+			"L",
+			".",
+			","
 		])
 		const onKeyDown = (e: KeyboardEvent) => {
 			if (blockedKeys.has(e.key)) {

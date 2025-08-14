@@ -44,9 +44,7 @@ export const createPlotPointSchema = () =>
 					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
 				)
 				.describe("The color of the point, as a CSS color string."),
-			style: z
-				.enum(["open", "closed"])
-				.describe("Visual style for the point marker.")
+			style: z.enum(["open", "closed"]).describe("Visual style for the point marker.")
 		})
 		.strict()
 
@@ -113,9 +111,7 @@ export const createLineSchema = () =>
 					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
 				)
 				.describe('The color of the line, as a CSS color string (e.g., "red", "#FF0000").'),
-			style: z
-				.enum(["solid", "dashed"])
-				.describe("The style of the line.")
+			style: z.enum(["solid", "dashed"]).describe("The style of the line.")
 		})
 		.strict()
 
@@ -184,9 +180,7 @@ export const createDistanceSchema = () =>
 					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
 				)
 				.describe("The color of the distance lines."),
-			style: z
-				.enum(["solid", "dashed"])
-				.describe("The style of the distance lines.")
+			style: z.enum(["solid", "dashed"]).describe("The style of the distance lines.")
 		})
 		.strict()
 
@@ -208,9 +202,7 @@ export const createPolylineSchema = () =>
 					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
 				)
 				.describe("The color of the polyline."),
-			style: z
-				.enum(["solid", "dashed"])
-				.describe("The style of the polyline.")
+			style: z.enum(["solid", "dashed"]).describe("The style of the polyline.")
 		})
 		.strict()
 

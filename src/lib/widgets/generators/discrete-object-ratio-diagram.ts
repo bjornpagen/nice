@@ -4,33 +4,58 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // Defines a type of object to be rendered
 const ObjectTypeSchema = z
 	.object({
-		count: z.number().int().describe("Number of objects of this type to display. Must be non-negative integer (e.g., 5, 12, 0). Zero means this type is absent."),
-		emoji: z.string().describe("The emoji character representing this object type (e.g., '🍎' for apple, '🍊' for orange, '🐶' for dog). Should be a single emoji for clarity.")
+		count: z
+			.number()
+			.int()
+			.describe(
+				"Number of objects of this type to display. Must be non-negative integer (e.g., 5, 12, 0). Zero means this type is absent."
+			),
+		emoji: z
+			.string()
+			.describe(
+				"The emoji character representing this object type (e.g., '🍎' for apple, '🍊' for orange, '🐶' for dog). Should be a single emoji for clarity."
+			)
 	})
 	.strict()
 
 // The main Zod schema for the discreteObjectRatioDiagram function
 export const DiscreteObjectRatioDiagramPropsSchema = z
 	.object({
-		type: z.literal("discreteObjectRatioDiagram").describe("Identifies this as a discrete object ratio diagram for visualizing ratios with countable objects."),
+		type: z
+			.literal("discreteObjectRatioDiagram")
+			.describe("Identifies this as a discrete object ratio diagram for visualizing ratios with countable objects."),
 		width: z
 			.number()
 			.positive()
-			.describe("Total width of the diagram in pixels (e.g., 400, 500, 600). Must accommodate all objects with reasonable spacing."),
+			.describe(
+				"Total width of the diagram in pixels (e.g., 400, 500, 600). Must accommodate all objects with reasonable spacing."
+			),
 		height: z
 			.number()
 			.positive()
-			.describe("Total height of the diagram in pixels (e.g., 300, 400, 250). Adjust based on total object count and layout."),
-		objects: z.array(ObjectTypeSchema).describe("Array of object types with their counts. Each type uses a different emoji. Order affects color assignment and grouping. Can be empty array for blank diagram."),
+			.describe(
+				"Total height of the diagram in pixels (e.g., 300, 400, 250). Adjust based on total object count and layout."
+			),
+		objects: z
+			.array(ObjectTypeSchema)
+			.describe(
+				"Array of object types with their counts. Each type uses a different emoji. Order affects color assignment and grouping. Can be empty array for blank diagram."
+			),
 		layout: z
 			.enum(["grid", "cluster"])
-			.describe("Visual arrangement of objects. 'grid' spaces all objects evenly in rows. 'cluster' groups objects by type, ideal for showing distinct ratios."),
+			.describe(
+				"Visual arrangement of objects. 'grid' spaces all objects evenly in rows. 'cluster' groups objects by type, ideal for showing distinct ratios."
+			),
 		title: z
 			.string()
-			.describe("Title displayed above the diagram (e.g., 'Fruit Basket Contents', 'Pet Types in Class', ''). Empty string means no title. Keep concise.")
+			.describe(
+				"Title displayed above the diagram (e.g., 'Fruit Basket Contents', 'Pet Types in Class', ''). Empty string means no title. Keep concise."
+			)
 	})
 	.strict()
-	.describe("Creates visual representations of ratios using discrete countable objects (emojis). Perfect for elementary ratio concepts, part-to-part and part-to-whole relationships. The 'cluster' layout clearly shows groupings while 'grid' emphasizes the total collection.")
+	.describe(
+		"Creates visual representations of ratios using discrete countable objects (emojis). Perfect for elementary ratio concepts, part-to-part and part-to-whole relationships. The 'cluster' layout clearly shows groupings while 'grid' emphasizes the total collection."
+	)
 
 export type DiscreteObjectRatioDiagramProps = z.infer<typeof DiscreteObjectRatioDiagramPropsSchema>
 

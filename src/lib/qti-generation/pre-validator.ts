@@ -332,38 +332,32 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 				// Best-effort detection for dataTable widget with input cells
 				// We avoid importing widget types here; rely on duck-typing by field presence
 				if (typeof widget === "object" && widget !== null && "type" in widget && widget.type === "dataTable") {
+					// Helper: extract responseIdentifier from a cell using the standard "type" discriminant
+					const extractResponseId = (cell: unknown): string | null => {
+						if (typeof cell !== "object" || cell === null) return null
+						const obj = cell as Record<string, unknown>
+						const discrim = typeof obj.type === "string" ? (obj.type as string) : null
+						if (discrim !== "input" && discrim !== "dropdown") return null
+						const rid = obj.responseIdentifier
+						return typeof rid === "string" ? rid : null
+					}
+
 					const data = typeof widget === "object" && widget !== null && "data" in widget ? widget.data : undefined
 					if (Array.isArray(data)) {
 						for (const row of data) {
-							if (Array.isArray(row)) {
-								for (const cell of row) {
-									const c = typeof cell === "object" && cell !== null ? cell : {}
-									if (
-										c &&
-										"kind" in c &&
-										(c.kind === "input" || c.kind === "dropdown") &&
-										"responseIdentifier" in c &&
-										typeof c.responseIdentifier === "string"
-									) {
-										widgetEmbeddedResponseIds.add(c.responseIdentifier)
-									}
-								}
+							if (!Array.isArray(row)) continue
+							for (const cell of row) {
+								const rid = extractResponseId(cell)
+								if (rid) widgetEmbeddedResponseIds.add(rid)
 							}
 						}
 					}
+
 					const footer = typeof widget === "object" && widget !== null && "footer" in widget ? widget.footer : undefined
 					if (Array.isArray(footer)) {
 						for (const cell of footer) {
-							const c = typeof cell === "object" && cell !== null ? cell : {}
-							if (
-								c &&
-								"kind" in c &&
-								(c.kind === "input" || c.kind === "dropdown") &&
-								"responseIdentifier" in c &&
-								typeof c.responseIdentifier === "string"
-							) {
-								widgetEmbeddedResponseIds.add(c.responseIdentifier)
-							}
+							const rid = extractResponseId(cell)
+							if (rid) widgetEmbeddedResponseIds.add(rid)
 						}
 					}
 				}

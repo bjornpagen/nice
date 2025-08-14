@@ -57,7 +57,7 @@ export async function analyzeScreenshotWithVision(
 					]
 				}
 			],
-			response_format: zodResponseFormat(VisualQAResponseSchema, "visual_qa_analysis"),
+			response_format: zodResponseFormat(VisualQAResponseSchema, "visual_qa_analysis")
 		})
 	)
 

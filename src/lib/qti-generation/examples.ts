@@ -925,14 +925,14 @@ export const twoWayFrequencyTable: AssessmentItemInput = {
 			rowHeaderKey: "condition",
 			data: [
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Cold lasted longer than 7 days" }] },
-					{ kind: "input", responseIdentifier: "RESP_A", expectedLength: 3 },
-					{ kind: "input", responseIdentifier: "RESP_B", expectedLength: 3 }
+					{ type: "inline", content: [{ type: "text", content: "Cold lasted longer than 7 days" }] },
+					{ type: "input", responseIdentifier: "RESP_A", expectedLength: 3 },
+					{ type: "input", responseIdentifier: "RESP_B", expectedLength: 3 }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Cold did not last longer than 7 days" }] },
-					{ kind: "input", responseIdentifier: "RESP_C", expectedLength: 3 },
-					{ kind: "input", responseIdentifier: "RESP_D", expectedLength: 3 }
+					{ type: "inline", content: [{ type: "text", content: "Cold did not last longer than 7 days" }] },
+					{ type: "input", responseIdentifier: "RESP_C", expectedLength: 3 },
+					{ type: "input", responseIdentifier: "RESP_D", expectedLength: 3 }
 				]
 			],
 			footer: null
@@ -1523,20 +1523,20 @@ export const harukaExamScore: AssessmentItemInput = {
 			rowHeaderKey: null,
 			data: [
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Astronomy" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>72</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Astronomy" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>72</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Biology" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>85</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Biology" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>85</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Physics" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>92</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Physics" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>92</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Chemistry" }] },
-					{ kind: "inline", content: [{ type: "text", content: "?" }] }
+					{ type: "inline", content: [{ type: "text", content: "Chemistry" }] },
+					{ type: "inline", content: [{ type: "text", content: "?" }] }
 				]
 			],
 			footer: null
@@ -1626,34 +1626,34 @@ export const libertyvilleBusinessCycle: AssessmentItemInput = {
 			rowHeaderKey: null,
 			data: [
 				[
-					{ kind: "inline", content: [{ type: "text", content: "2014" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>0</mn><mo>%</mo>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>7</mn><mo>%</mo>" }] }
+					{ type: "inline", content: [{ type: "text", content: "2014" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>0</mn><mo>%</mo>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>7</mn><mo>%</mo>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "2015" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1</mn><mo>%</mo>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>8</mn><mo>%</mo>" }] }
+					{ type: "inline", content: [{ type: "text", content: "2015" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1</mn><mo>%</mo>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>8</mn><mo>%</mo>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "2016" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>2</mn><mo>%</mo>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>10</mn><mo>%</mo>" }] }
+					{ type: "inline", content: [{ type: "text", content: "2016" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>2</mn><mo>%</mo>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>10</mn><mo>%</mo>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "2017" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>2</mn><mo>%</mo>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>6</mn><mo>%</mo>" }] }
+					{ type: "inline", content: [{ type: "text", content: "2017" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>2</mn><mo>%</mo>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>6</mn><mo>%</mo>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "2018" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>4</mn><mo>%</mo>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>5</mn><mo>%</mo>" }] }
+					{ type: "inline", content: [{ type: "text", content: "2018" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>4</mn><mo>%</mo>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>5</mn><mo>%</mo>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "2019" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>1</mn><mo>%</mo>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>6</mn><mo>%</mo>" }] }
+					{ type: "inline", content: [{ type: "text", content: "2019" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>1</mn><mo>%</mo>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>6</mn><mo>%</mo>" }] }
 				]
 			],
 			footer: null
@@ -1969,22 +1969,22 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 			rowHeaderKey: "x",
 			data: [
 				[
-					{ kind: "inline", content: [{ type: "math", mathml: "<mi>x</mi>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>9</mn>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>8</mn>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>6</mn>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>3</mn>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>2</mn>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1</mn>" }] }
+					{ type: "inline", content: [{ type: "math", mathml: "<mi>x</mi>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>9</mn>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>8</mn>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>6</mn>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>3</mn>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>2</mn>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "math", mathml: "<mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>30</mn>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>29</mn>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>36</mn>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>20</mn>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>35</mn>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>47</mn>" }] }
+					{ type: "inline", content: [{ type: "math", mathml: "<mi>h</mi><mo>(</mo><mi>x</mi><mo>)</mo>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>30</mn>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>29</mn>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>36</mn>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>20</mn>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>35</mn>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>47</mn>" }] }
 				]
 			],
 			footer: null
@@ -2217,21 +2217,21 @@ export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput =
 			rowHeaderKey: "experiment",
 			data: [
 				[
-					{ kind: "inline", content: [{ type: "text", content: "A" }] },
-					{ kind: "inline", content: [{ type: "text", content: "NH4Cl" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>6.0</mn><mtext> grams</mtext>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>3.6</mn><mo>°</mo><mi>C</mi>" }] }
+					{ type: "inline", content: [{ type: "text", content: "A" }] },
+					{ type: "inline", content: [{ type: "text", content: "NH4Cl" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>6.0</mn><mtext> grams</mtext>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>3.6</mn><mo>°</mo><mi>C</mi>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "B" }] },
-					{ kind: "inline", content: [{ type: "text", content: "MgSO4" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>5.0</mn><mtext> grams</mtext>" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>1.0</mn><mo>°</mo><mi>C</mi>" }] }
+					{ type: "inline", content: [{ type: "text", content: "B" }] },
+					{ type: "inline", content: [{ type: "text", content: "MgSO4" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>5.0</mn><mtext> grams</mtext>" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>1.0</mn><mo>°</mo><mi>C</mi>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "C" }] },
+					{ type: "inline", content: [{ type: "text", content: "C" }] },
 					{
-						kind: "dropdown",
+						type: "dropdown",
 						responseIdentifier: "RESP_REACT_C",
 						shuffle: true,
 						choices: [
@@ -2241,7 +2241,7 @@ export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput =
 						]
 					},
 					{
-						kind: "dropdown",
+						type: "dropdown",
 						responseIdentifier: "RESP_AMT_C",
 						shuffle: true,
 						choices: [
@@ -2250,12 +2250,12 @@ export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput =
 							{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
 						]
 					},
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>0.5</mn><mo>°</mo><mi>C</mi>" }] }
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>0.5</mn><mo>°</mo><mi>C</mi>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "D" }] },
+					{ type: "inline", content: [{ type: "text", content: "D" }] },
 					{
-						kind: "dropdown",
+						type: "dropdown",
 						responseIdentifier: "RESP_REACT_D",
 						shuffle: true,
 						choices: [
@@ -2265,7 +2265,7 @@ export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput =
 						]
 					},
 					{
-						kind: "dropdown",
+						type: "dropdown",
 						responseIdentifier: "RESP_AMT_D",
 						shuffle: true,
 						choices: [
@@ -2274,12 +2274,12 @@ export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput =
 							{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
 						]
 					},
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1.8</mn><mo>°</mo><mi>C</mi>" }] }
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>1.8</mn><mo>°</mo><mi>C</mi>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "E" }] },
+					{ type: "inline", content: [{ type: "text", content: "E" }] },
 					{
-						kind: "dropdown",
+						type: "dropdown",
 						responseIdentifier: "RESP_REACT_E",
 						shuffle: true,
 						choices: [
@@ -2289,7 +2289,7 @@ export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput =
 						]
 					},
 					{
-						kind: "dropdown",
+						type: "dropdown",
 						responseIdentifier: "RESP_AMT_E",
 						shuffle: true,
 						choices: [
@@ -2298,7 +2298,7 @@ export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput =
 							{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
 						]
 					},
-					{ kind: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }] }
+					{ type: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }] }
 				]
 			],
 			footer: null
@@ -2364,9 +2364,9 @@ export const attractRepelCompletionTable: AssessmentItemInput = {
 			rowHeaderKey: null,
 			data: [
 				[
-					{ kind: "inline", content: [{ type: "text", content: "two charged objects, both with positive charge" }] },
+					{ type: "inline", content: [{ type: "text", content: "two charged objects, both with positive charge" }] },
 					{
-						kind: "dropdown",
+						type: "dropdown",
 						responseIdentifier: "RESP_R1",
 						shuffle: false,
 						choices: [
@@ -2377,7 +2377,7 @@ export const attractRepelCompletionTable: AssessmentItemInput = {
 				],
 				[
 					{
-						kind: "inline",
+						type: "inline",
 						content: [
 							{
 								type: "text",
@@ -2386,7 +2386,7 @@ export const attractRepelCompletionTable: AssessmentItemInput = {
 						]
 					},
 					{
-						kind: "dropdown",
+						type: "dropdown",
 						responseIdentifier: "RESP_R2",
 						shuffle: false,
 						choices: [
@@ -2397,13 +2397,13 @@ export const attractRepelCompletionTable: AssessmentItemInput = {
 				],
 				[
 					{
-						kind: "inline",
+						type: "inline",
 						content: [
 							{ type: "text", content: "two magnets, with the north pole of one facing the south pole of the other" }
 						]
 					},
 					{
-						kind: "dropdown",
+						type: "dropdown",
 						responseIdentifier: "RESP_R3",
 						shuffle: false,
 						choices: [
@@ -2414,11 +2414,11 @@ export const attractRepelCompletionTable: AssessmentItemInput = {
 				],
 				[
 					{
-						kind: "inline",
+						type: "inline",
 						content: [{ type: "text", content: "two magnets, with their south poles facing each other" }]
 					},
 					{
-						kind: "dropdown",
+						type: "dropdown",
 						responseIdentifier: "RESP_R4",
 						shuffle: false,
 						choices: [
@@ -2473,20 +2473,20 @@ export const shapeBinBarChart: AssessmentItemInput = {
 			rowHeaderKey: null,
 			data: [
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Triangles" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>8</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Triangles" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>8</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Circles" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>5</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Circles" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>5</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Rectangles" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>3</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Rectangles" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>3</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Squares" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>9</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Squares" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>9</mn>" }] }
 				]
 			],
 			footer: null
@@ -3173,16 +3173,16 @@ export const threeDataTablesMultipleChoice: AssessmentItemInput = {
 			rowHeaderKey: null,
 			data: [
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Apples" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>12</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Apples" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>12</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Bananas" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>8</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Bananas" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>8</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Cherries" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>4</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Cherries" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>4</mn>" }] }
 				]
 			],
 			footer: null
@@ -3197,16 +3197,16 @@ export const threeDataTablesMultipleChoice: AssessmentItemInput = {
 			rowHeaderKey: null,
 			data: [
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Springfield" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>72</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Springfield" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>72</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Riverton" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>65</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Riverton" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>65</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Lakeside" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>80</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Lakeside" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>80</mn>" }] }
 				]
 			],
 			footer: null
@@ -3221,16 +3221,16 @@ export const threeDataTablesMultipleChoice: AssessmentItemInput = {
 			rowHeaderKey: null,
 			data: [
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Math" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>45</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Math" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>45</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "Science" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>30</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "Science" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>30</mn>" }] }
 				],
 				[
-					{ kind: "inline", content: [{ type: "text", content: "History" }] },
-					{ kind: "inline", content: [{ type: "math", mathml: "<mn>15</mn>" }] }
+					{ type: "inline", content: [{ type: "text", content: "History" }] },
+					{ type: "inline", content: [{ type: "math", mathml: "<mn>15</mn>" }] }
 				]
 			],
 			footer: null
