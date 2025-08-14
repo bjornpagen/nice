@@ -37,6 +37,7 @@ import { orchestrateCourseOnerosterGeneration } from "@/inngest/functions/orches
 // Removed: orchestrateCourseXmlGeneration (generic course QTI generation)
 import { orchestrateCourseUploadToOneroster } from "@/inngest/functions/orchestrate-course-upload-to-oneroster"
 import { orchestrateCourseUploadToQti } from "@/inngest/functions/orchestrate-course-upload-to-qti"
+import { orchestrateCourseVisualQAReview } from "@/inngest/functions/qa/orchestrate-course-visual-qa-review"
 // Import Visual QA workers
 import { orchestrateVisualQAReview } from "@/inngest/functions/qa/orchestrate-visual-qa-review"
 import { reviewQuestionRendering } from "@/inngest/functions/qa/review-question-rendering"
@@ -119,6 +120,7 @@ export const { GET, POST, PUT } = serve({
 		assembleDifferentiatedItemsAndCreateTests,
 		// Visual QA Functions
 		orchestrateVisualQAReview,
+		orchestrateCourseVisualQAReview,
 		reviewQuestionRendering
 	]
 })

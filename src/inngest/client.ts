@@ -399,6 +399,11 @@ const events = {
 	},
 	"qa/questions.review-all-rendering": {
 		data: z.object({})
+	},
+	"qa/questions.review-by-courses": {
+		data: z.object({
+			courseIds: z.array(z.string().min(1)).min(1)
+		})
 	}
 }
 

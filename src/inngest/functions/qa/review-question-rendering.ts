@@ -46,13 +46,13 @@ function deserializeBuffer(bufferLike: ScreenshotBuffer | { type: string; data: 
 export const reviewQuestionRendering = inngest.createFunction(
 	{
 		id: "review-question-rendering",
-		name: "Review Question Rendering Quality"
+		name: "Review Question Rendering Quality",
+		concurrency: {
+			limit: 3
+		}
 	},
 	{
-		event: "qa/question.review-rendering",
-		concurrency: {
-			limit: 100
-		}
+		event: "qa/question.review-rendering"
 	},
 	async ({ event, step, logger }) => {
 		const { questionId } = event.data

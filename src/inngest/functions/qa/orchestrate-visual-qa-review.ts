@@ -7,7 +7,10 @@ import { inngest } from "@/inngest/client"
 export const orchestrateVisualQAReview = inngest.createFunction(
 	{
 		id: "orchestrate-visual-qa-review",
-		name: "Orchestrate Visual QA Review for All Questions"
+		name: "Orchestrate Visual QA Review for All Questions",
+		concurrency: {
+			limit: 1
+		}
 	},
 	{
 		event: "qa/questions.review-all-rendering"
