@@ -2,9 +2,6 @@ import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
 import { sessionPool } from "@/lib/utils/browserbase-session-pool"
 
-// Fixed viewport used for screenshots to control window size explicitly
-const SCREENSHOT_VIEWPORT = { width: 820, height: 1180 }
-
 /**
  * Captures a screenshot of the production QTI embed using session pool
  */
@@ -48,20 +45,6 @@ export async function captureProductionQTIScreenshot(questionId: string): Promis
 
 	const page = pageResult.data
 	const productionUrl = `https://alpha-powerpath-ui-production.up.railway.app/qti-embed/nice_${questionId}`
-
-	// Set explicit viewport size before navigation to control window dimensions
-	const viewportResult = await errors.try(page.setViewportSize(SCREENSHOT_VIEWPORT))
-	if (viewportResult.error) {
-		await page.close()
-		sessionPool.releaseSession(sessionId)
-		logger.error("failed to set viewport for production screenshot", {
-			questionId,
-			sessionId,
-			viewport: SCREENSHOT_VIEWPORT,
-			error: viewportResult.error
-		})
-		throw errors.wrap(viewportResult.error, "failed to set viewport")
-	}
 
 	const navigationResult = await errors.try(page.goto(productionUrl, { waitUntil: "networkidle" }))
 	if (navigationResult.error) {
@@ -172,20 +155,6 @@ export async function capturePerseusScreenshot(_questionId: string, parsedData: 
 
 	const page = pageResult.data
 	const perseusUrl = "https://khan.github.io/perseus/?path=/story/renderers-server-item-renderer--interactive"
-
-	// Set explicit viewport size before navigation to control window dimensions
-	const viewportResult = await errors.try(page.setViewportSize(SCREENSHOT_VIEWPORT))
-	if (viewportResult.error) {
-		await page.close()
-		sessionPool.releaseSession(sessionId)
-		logger.error("failed to set viewport for perseus screenshot", {
-			questionId: _questionId,
-			sessionId,
-			viewport: SCREENSHOT_VIEWPORT,
-			error: viewportResult.error
-		})
-		throw errors.wrap(viewportResult.error, "failed to set viewport")
-	}
 
 	const navigationResult = await errors.try(page.goto(perseusUrl, { waitUntil: "networkidle" }))
 	if (navigationResult.error) {
