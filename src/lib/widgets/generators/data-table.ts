@@ -88,7 +88,16 @@ export const DataTablePropsSchema = z
 		title: z
 			.string()
 			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.transform((val) => {
+				if (val === "null" || val === "NULL" || val === "") return null
+				const s = typeof val === "string" ? val.trim() : val
+				if (typeof s === "string") {
+					const looksLikeObject = /^\{[\s\S]*\}$/.test(s)
+					const looksLikeArray = /^\[[\s\S]*\]$/.test(s)
+					if (looksLikeObject || looksLikeArray) return null
+				}
+				return val
+			})
 			.describe(
 				"Optional table caption/title displayed above the table (e.g., 'Monthly Sales Data', 'Conversion Factors', null). Null means no title."
 			),

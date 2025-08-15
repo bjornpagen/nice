@@ -12,6 +12,7 @@ import {
 	generateStructuredQtiItem
 } from "@/lib/qti-generation/structured/client"
 import { validateAndSanitizeHtmlFields } from "@/lib/qti-generation/structured/validator"
+import { ErrQuestionBlacklisted, isQuestionIdBlacklisted } from "@/lib/qti-generation/question-blacklist"
 
 // A global key to ensure all OpenAI functions share the same concurrency limit.
 const OPENAI_CONCURRENCY_KEY = "openai-api-global-concurrency"
@@ -34,6 +35,12 @@ export const convertPerseusQuestionToQtiItem = inngest.createFunction(
 		const { questionId, widgetCollection } = event.data
 		// ✅ Enhanced logging at every step, using the provided logger.
 		logger.info("starting perseus to qti conversion", { questionId, widgetCollection })
+
+		// Blacklist check: immediately and permanently fail for blacklisted question IDs
+		if (isQuestionIdBlacklisted(questionId)) {
+			logger.error("question id is blacklisted for migration", { questionId })
+			throw new NonRetriableError(ErrQuestionBlacklisted.message, { cause: ErrQuestionBlacklisted })
+		}
 
 		// Step 1: Fetch Perseus data.
 		logger.debug("fetching perseus data from db", { questionId })
