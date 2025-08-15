@@ -1,5 +1,5 @@
-import { test, expect } from "bun:test"
-import { generateConceptualGraph, ConceptualGraphPropsSchema } from "@/lib/widgets/generators"
+import { expect, test } from "bun:test"
+import { ConceptualGraphPropsSchema, generateConceptualGraph } from "@/lib/widgets/generators"
 
 test("conceptual graph - frog population size", () => {
 	const input = {
@@ -32,10 +32,10 @@ test("conceptual graph - frog population size", () => {
 
 	// Validate the input
 	const parsed = ConceptualGraphPropsSchema.parse(input)
-	
+
 	// Generate the SVG
 	const svg = generateConceptualGraph(parsed)
-	
+
 	// Snapshot test the generated SVG
 	expect(svg).toMatchSnapshot()
 })

@@ -72,6 +72,30 @@ Use "WIDGET_NOT_FOUND" if:
 4.  **Reference Resources Preference (periodic table, formula sheets)**: When the assessment body or Perseus JSON clearly indicates a standard reference resource (e.g., "periodic table", "periodic table of the elements"), and this collection includes a specific widget type for it (e.g., \`periodicTable\`), you **MUST** map the corresponding slot to that specific widget type rather than a generic \`urlImage\`. This ensures consistent rendering and behavior for reference materials.`
 	}
 
+	// Conditionally add widget selection rules when urlImage is available in the collection
+	const hasUrlImage = [...collection.widgetTypeKeys].includes("urlImage")
+	if (hasUrlImage) {
+		systemInstruction += `
+
+**WIDGET SELECTION RULES (urlImage as a fallback)**
+- **CRITICAL HIERARCHY**: When mapping image-based content:
+  1. FIRST: Try to find a semantically specific widget that matches the content
+  2. SECOND: If no specific widget fits, use \`urlImage\` as a fallback
+  3. LAST: Only use \`WIDGET_NOT_FOUND\` if the content cannot be represented by any widget including \`urlImage\`
+- Prefer semantically specific widgets over \`urlImage\` whenever the content clearly matches a more specific type in the available list.
+- Use \`urlImage\` as a fallback when the visual content doesn't match any specific widget type but can still be displayed as a static image.
+- Examples of when to PREFER specific widgets:
+  - Graphs/plots: choose graph/plot widgets (e.g., \`lineGraph\`, \`conceptualGraph\`, \`scatterPlot\`, \`barChart\`, etc.) rather than \`urlImage\`.
+  - Tables: choose \`dataTable\` rather than \`urlImage\`.
+  - Set comparisons: choose \`vennDiagram\` rather than \`urlImage\`.
+  - Reference resources: choose specific resource widgets (e.g., \`periodicTable\`) rather than \`urlImage\`.
+  - Emoji-only assets: choose \`emojiImage\` rather than \`urlImage\`.
+- Examples of when \`urlImage\` is appropriate as a fallback:
+  - A plain photograph or illustration (e.g., a whale, a cat, a lab apparatus) where no more specific widget exists in this collection.
+  - Any visual content that doesn't fit a specific widget but can be displayed as a static image.
+- **IMPORTANT**: Only use \`WIDGET_NOT_FOUND\` if the content truly cannot be represented by any widget type, including \`urlImage\`. Since \`urlImage\` can display most visual content, \`WIDGET_NOT_FOUND\` should be rare when \`urlImage\` is available.`
+	}
+
 	systemInstruction += `
 
 **CRITICAL RULE**: You MUST choose a widget type from the list (or "WIDGET_NOT_FOUND") for every slot. Do not refuse or omit any slot.

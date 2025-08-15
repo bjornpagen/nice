@@ -19,10 +19,7 @@ import {
 	CompositeShapeDiagramPropsSchema,
 	generateCompositeShapeDiagram
 } from "@/lib/widgets/generators/composite-shape-diagram"
-import {
-	ConceptualGraphPropsSchema,
-	generateConceptualGraph
-} from "@/lib/widgets/generators/conceptual-graph"
+import { ConceptualGraphPropsSchema, generateConceptualGraph } from "@/lib/widgets/generators/conceptual-graph"
 import {
 	CoordinatePlaneComprehensivePropsSchema,
 	generateCoordinatePlaneComprehensive

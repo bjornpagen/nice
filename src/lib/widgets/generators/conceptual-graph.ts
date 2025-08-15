@@ -18,14 +18,8 @@ export const ConceptualGraphPropsSchema = z
 		height: z.number().positive().describe("Total height of the SVG in pixels (e.g., 400, 500)."),
 		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Time')."),
 		yAxisLabel: z.string().describe("The label for the vertical axis (e.g., 'Frog population size')."),
-		curvePoints: z
-			.array(PointSchema)
-			.min(2)
-			.describe("An array of {x, y} points that define the curve to be drawn."),
-		curveColor: z
-			.string()
-			.regex(CSS_COLOR_PATTERN, "invalid css color")
-			.describe("The color of the plotted curve."),
+		curvePoints: z.array(PointSchema).min(2).describe("An array of {x, y} points that define the curve to be drawn."),
+		curveColor: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("The color of the plotted curve."),
 		highlightPoints: z
 			.array(HighlightPointSchema)
 			.describe("An array of specific, labeled points to highlight on the graph."),
@@ -90,13 +84,13 @@ export const generateConceptualGraph: WidgetGenerator<typeof ConceptualGraphProp
 	svg += `<polyline points="${pointsStr}" fill="none" stroke="${curveColor}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`
 
 	// Highlight Points
-	highlightPoints.forEach((p) => {
+	for (const p of highlightPoints) {
 		const cx = toSvgX(p.x)
 		const cy = toSvgY(p.y)
 		svg += `<circle cx="${cx}" cy="${cy}" r="${highlightPointRadius}" fill="${highlightPointColor}"/>`
 		svg += `<text x="${cx - highlightPointRadius - 5}" y="${cy}" text-anchor="end" dominant-baseline="middle" font-weight="bold">${p.label}</text>`
-	})
+	}
 
-	svg += `</svg>`
+	svg += "</svg>"
 	return svg
 }

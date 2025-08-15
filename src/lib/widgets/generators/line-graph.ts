@@ -19,17 +19,14 @@ const SeriesSchema = z
 			),
 		color: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex format only (#RGB, #RRGGBB, or #RRGGBBAA)"
-			)
-			.describe("The color for the line and points of this series in hex format (e.g., '#000', '#3377dd', '#ff000080')."),
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex format only (#RGB, #RRGGBB, or #RRGGBBAA)")
+			.describe(
+				"The color for the line and points of this series in hex format (e.g., '#000', '#3377dd', '#ff000080')."
+			),
 		style: z
 			.enum(["solid", "dashed", "dotted"])
 			.describe("The visual style of the line. 'solid' is a continuous line, 'dashed' and 'dotted' are broken lines."),
-		showPoints: z
-			.boolean()
-			.describe("If true, circular markers will be drawn at each data point along the line.")
+		showPoints: z.boolean().describe("If true, circular markers will be drawn at each data point along the line.")
 	})
 	.strict()
 
@@ -50,7 +47,9 @@ export const LineGraphPropsSchema = z
 					.nullable()
 					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 					.describe("The label for the horizontal axis (e.g., 'Month')."),
-				categories: z.array(z.string()).describe("An array of labels for the x-axis categories (e.g., ['Jan', 'Feb', 'Mar']).")
+				categories: z
+					.array(z.string())
+					.describe("An array of labels for the x-axis categories (e.g., ['Jan', 'Feb', 'Mar']).")
 			})
 			.strict(),
 		yAxis: z
@@ -137,31 +136,35 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	}
 
 	// X-axis Ticks and Labels
-	xAxis.categories.forEach((cat, i) => {
+	for (let i = 0; i < xAxis.categories.length; i++) {
+		const cat = xAxis.categories[i]
 		const x = toSvgX(i)
 		svg += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black"/>`
 		svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${cat}</text>`
-	})
+	}
 
 	// Data Series Lines and Points
-	series.forEach((s) => {
+	for (const s of series) {
 		const pointsStr = s.values.map((v, i) => `${toSvgX(i)},${toSvgY(v)}`).join(" ")
 		let dasharray = ""
 		if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
 		if (s.style === "dotted") dasharray = 'stroke-dasharray="2 6"'
 		svg += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="2.5" ${dasharray}/>`
 		if (s.showPoints) {
-			s.values.forEach((v, i) => {
-				svg += `<circle cx="${toSvgX(i)}" cy="${toSvgY(v)}" r="4" fill="${s.color}"/>`
-			})
+			for (let i = 0; i < s.values.length; i++) {
+				const v = s.values[i]
+				if (v !== undefined) {
+					svg += `<circle cx="${toSvgX(i)}" cy="${toSvgY(v)}" r="4" fill="${s.color}"/>`
+				}
+			}
 		}
-	})
+	}
 
 	// Legend
 	if (showLegend) {
 		let currentX = margin.left
 		const legendY = height - legendHeight / 2 - 10
-		series.forEach((s) => {
+		for (const s of series) {
 			let dasharray = ""
 			if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
 			if (s.style === "dotted") dasharray = 'stroke-dasharray="2 6"'
@@ -172,7 +175,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			currentX += 40
 			svg += `<text x="${currentX}" y="${legendY + 4}">${s.name}</text>`
 			currentX += s.name.length * 8 + 20 // Estimate text width
-		})
+		}
 	}
 
 	svg += "</svg>"
