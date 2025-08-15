@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 import {
@@ -190,6 +191,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 
 		// Validate that side length is at least as long as height for a valid parallelogram
 		if (sideLength < h) {
+			logger.error("invalid parallelogram dimensions", { sideLength, height: h })
 			throw errors.new("side length must be greater than or equal to height for a valid parallelogram")
 		}
 
@@ -296,6 +298,7 @@ export const generateParallelogramTrapezoidDiagram: WidgetGenerator<typeof Paral
 		const scaledLeft = leftSideLength * scale
 
 		if (scaledLeft < scaledH) {
+			logger.error("invalid trapezoid dimensions", { leftSideLength: scaledLeft, height: scaledH })
 			throw errors.new("left side length cannot be less than height")
 		}
 

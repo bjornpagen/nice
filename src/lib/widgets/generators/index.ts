@@ -221,7 +221,6 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.pictograph,
 	typedSchemas.polyhedronDiagram,
 	typedSchemas.probabilitySpinner,
-	// typedSchemas.polyhedronNetDiagram, // Removed because it's a discriminated union itself
 	typedSchemas.pythagoreanProofDiagram,
 	typedSchemas.ratioBoxDiagram,
 	typedSchemas.rectangularFrameDiagram,
@@ -436,8 +435,7 @@ export function generateWidget(widget: Widget): string {
 		case "polyhedronDiagram":
 			return generatePolyhedronDiagram(widget)
 		case "polyhedronNetDiagram":
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			return generatePolyhedronNetDiagram(widget as any)
+			return generatePolyhedronNetDiagram(widget)
 		case "probabilitySpinner":
 			return generateProbabilitySpinner(widget)
 		case "pythagoreanProofDiagram":

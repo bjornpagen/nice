@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
@@ -133,10 +134,18 @@ export const generateRectangularFrameDiagram: WidgetGenerator<typeof Rectangular
 	} = data
 
 	if (width <= 0 || height <= 0) {
+		logger.error("invalid frame dimensions", { width, height })
 		throw errors.wrap(ErrInvalidDimensions, `width: ${width}, height: ${height}`)
 	}
 
 	if (thickness <= 0 || thickness >= Math.min(outerLength, outerWidth, outerHeight)) {
+		logger.error("invalid frame thickness", {
+			thickness,
+			outerLength,
+			outerWidth,
+			outerHeight,
+			minDimension: Math.min(outerLength, outerWidth, outerHeight)
+		})
 		throw errors.wrap(
 			ErrInvalidDimensions,
 			`thickness: ${thickness} must be positive and less than all outer dimensions`

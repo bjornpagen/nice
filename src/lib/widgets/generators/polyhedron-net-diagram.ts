@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
@@ -248,7 +249,7 @@ export type PolyhedronNetDiagramProps = z.infer<typeof PolyhedronNetDiagramProps
  * essential for questions about surface area and the relationship between 2D and 3D geometry.
  */
 export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetDiagramPropsSchema> = (data) => {
-	const { type, width, height, polyhedronType, base, showLabels } = data
+	const { width, height, polyhedronType, base, showLabels } = data
 	const lateralHeight = "lateralHeight" in data ? data.lateralHeight : undefined
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
@@ -277,6 +278,7 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 	switch (polyhedronType) {
 		case "cube": {
 			if (base.type !== "square") {
+				logger.error("invalid base shape for cube", { baseType: base.type, expected: "square" })
 				throw errors.wrap(ErrInvalidBaseShape, `cube must have a square base, but received type '${base.type}'`)
 			}
 			const side = base.side
@@ -314,12 +316,14 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		}
 		case "rectangularPrism": {
 			if (base.type !== "rectangle") {
+				logger.error("invalid base shape for rectangular prism", { baseType: base.type, expected: "rectangle" })
 				throw errors.wrap(
 					ErrInvalidBaseShape,
 					`rectangularPrism must have a rectangle base, but received type '${base.type}'`
 				)
 			}
 			if (lateralHeight == null) {
+				logger.error("missing lateral height for rectangular prism", { polyhedronType })
 				throw errors.wrap(ErrInvalidBaseShape, "lateralHeight is required for rectangularPrism")
 			}
 			const length = base.length
@@ -359,12 +363,14 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		}
 		case "triangularPrism": {
 			if (base.type !== "triangle") {
+				logger.error("invalid base shape for triangular prism", { baseType: base.type, expected: "triangle" })
 				throw errors.wrap(
 					ErrInvalidBaseShape,
 					`triangularPrism must have a triangle base, but received type '${base.type}'`
 				)
 			}
 			if (lateralHeight == null) {
+				logger.error("missing lateral height for triangular prism", { polyhedronType })
 				throw errors.wrap(ErrInvalidBaseShape, "lateralHeight is required for triangularPrism")
 			}
 			const base_len = base.base
@@ -413,12 +419,14 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		}
 		case "squarePyramid": {
 			if (base.type !== "square") {
+				logger.error("invalid base shape for square pyramid", { baseType: base.type, expected: "square" })
 				throw errors.wrap(
 					ErrInvalidBaseShape,
 					`squarePyramid must have a square base, but received type '${base.type}'`
 				)
 			}
 			if (lateralHeight == null) {
+				logger.error("missing lateral height for square pyramid", { polyhedronType })
 				throw errors.wrap(ErrInvalidBaseShape, "lateralHeight is required for squarePyramid")
 			}
 			const side = base.side
@@ -466,12 +474,14 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		}
 		case "triangularPyramid": {
 			if (base.type !== "triangle") {
+				logger.error("invalid base shape for triangular pyramid", { baseType: base.type, expected: "triangle" })
 				throw errors.wrap(
 					ErrInvalidBaseShape,
 					`triangularPyramid must have a triangle base, but received type '${base.type}'`
 				)
 			}
 			if (lateralHeight == null) {
+				logger.error("missing lateral height for triangular pyramid", { polyhedronType })
 				throw errors.wrap(ErrInvalidBaseShape, "lateralHeight is required for triangularPyramid")
 			}
 			const base_len = base.base
@@ -539,12 +549,14 @@ export const generatePolyhedronNetDiagram: WidgetGenerator<typeof PolyhedronNetD
 		}
 		case "pentagonalPyramid": {
 			if (base.type !== "pentagon") {
+				logger.error("invalid base shape for pentagonal pyramid", { baseType: base.type, expected: "pentagon" })
 				throw errors.wrap(
 					ErrInvalidBaseShape,
 					`pentagonalPyramid must have a pentagon base, but received type '${base.type}'`
 				)
 			}
 			if (lateralHeight == null) {
+				logger.error("missing lateral height for pentagonal pyramid", { polyhedronType })
 				throw errors.wrap(ErrInvalidBaseShape, "lateralHeight is required for pentagonalPyramid")
 			}
 			const side = base.side

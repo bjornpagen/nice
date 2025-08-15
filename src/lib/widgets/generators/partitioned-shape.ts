@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
@@ -207,6 +208,12 @@ const generatePartitionView = (props: PartitionModeProps): string => {
 	// Validate rectangle geometry
 	for (const shape of shapes) {
 		if (shape.type === "rectangle" && shape.rows * shape.columns !== shape.totalParts) {
+			logger.error("invalid rectangle partition geometry", {
+				rows: shape.rows,
+				columns: shape.columns,
+				expectedTotalParts: shape.rows * shape.columns,
+				actualTotalParts: shape.totalParts
+			})
 			throw errors.wrap(
 				ErrInvalidPartitionGeometry,
 				`rectangle with rows=${shape.rows}, columns=${shape.columns} must have totalParts=${shape.rows * shape.columns}, got ${shape.totalParts}`
