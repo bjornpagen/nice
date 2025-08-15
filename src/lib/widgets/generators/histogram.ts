@@ -101,7 +101,7 @@ export type HistogramProps = z.infer<typeof HistogramPropsSchema>
  */
 export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (data) => {
 	const { width, height, title, xAxis, yAxis, bins } = data
-	const margin = { top: 40, right: 20, bottom: 70, left: 50 }
+	const margin = { top: 40, right: 20, bottom: 100, left: 50 }
 	const chartWidth = width - margin.left - margin.right
 	const chartHeight = height - margin.top - margin.bottom
 
@@ -112,10 +112,12 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 	const maxFreq = yAxis.max
 	const scaleY = chartHeight / maxFreq
 	const binWidth = chartWidth / bins.length
+	const averageCharWidthPx = 7
+	const rotationDegrees = -45
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg +=
-		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
+		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; } .x-tick { font-size: 11px; }</style>"
 
 	if (title !== null) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
 
@@ -144,19 +146,35 @@ export const generateHistogram: WidgetGenerator<typeof HistogramPropsSchema> = (
 		const x = margin.left + i * binWidth
 		const y = height - margin.bottom - barHeight
 		svg += `<rect x="${x}" y="${y}" width="${binWidth}" height="${barHeight}" fill="#6495ED" stroke="#333333"/>`
-		// Label bins at the tick marks between them
-		if (i < bins.length && b.label) {
-			svg += `<text x="${x + binWidth}" y="${height - margin.bottom + 15}" fill="#333333" text-anchor="middle">${b.label.split("-")[1] ?? b.label}</text>`
-		}
 	})
-	// Add first label for the start of the axis
-	const firstBinLabel = bins[0]?.label
+
+	// Compute boundary tick labels: start of first bin, then end of each bin
+	const tickLabels: Array<{ x: number; text: string }> = []
+	const firstBinLabel = bins[0]?.label ?? null
 	if (firstBinLabel) {
-		const firstLabel = firstBinLabel.split("-")[0]
-		if (firstLabel) {
-			svg += `<text x="${margin.left}" y="${height - margin.bottom + 15}" fill="#333333" text-anchor="middle">${firstLabel}</text>`
-		}
+		const startCandidate = firstBinLabel.split("-")[0]
+		const startText = (startCandidate && startCandidate !== "") ? startCandidate : firstBinLabel
+		tickLabels.push({ x: margin.left, text: startText })
 	}
+	bins.forEach((b, i) => {
+		if (!b.label) return
+		const endCandidate = b.label.split("-")[1]
+		const endText = (endCandidate && endCandidate !== "") ? endCandidate : b.label
+		tickLabels.push({ x: margin.left + (i + 1) * binWidth, text: endText })
+	})
+
+	// Determine skip step to avoid crowding
+	const maxLabelLength = tickLabels.reduce((max, t) => Math.max(max, t.text.length), 0)
+	const estimatedRotatedLabelSpanPx = maxLabelLength * averageCharWidthPx * 0.707
+	const step = Math.max(1, Math.ceil(estimatedRotatedLabelSpanPx / binWidth))
+
+	// Render rotated x-axis labels
+	tickLabels.forEach((tick, i) => {
+		if (i % step !== 0) return
+		const labelX = tick.x
+		const labelY = height - margin.bottom + 28
+		svg += `<text class="x-tick" x="${labelX}" y="${labelY}" fill="#333333" text-anchor="end" transform="rotate(${rotationDegrees}, ${labelX}, ${labelY})">${tick.text}</text>`
+	})
 
 	svg += "</svg>"
 	return svg

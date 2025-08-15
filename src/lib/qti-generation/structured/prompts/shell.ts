@@ -179,6 +179,30 @@ CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, 
   }
   \`\`\`
 
+  Negative example (DO NOT OUTPUT) — table required but rendered as sentences with inline dropdowns (cellular respiration):
+  \`\`\`json
+  {
+    "identifier": "example-cellular-respiration-sentences-negative",
+    "title": "Cellular respiration rows as sentences (negative)",
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Complete the table to describe the reactants and products for each stage of cellular respiration." }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Stage | Substance | Reactant or product" }] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "glycolysis | glucose | " }, { "type": "inlineSlot", "slotId": "dropdown_1" } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "citric acid cycle | " }, { "type": "inlineSlot", "slotId": "dropdown_2" }, { "type": "text", "content": " | product" } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "electron transport chain | " }, { "type": "inlineSlot", "slotId": "dropdown_3" }, { "type": "text", "content": " | reactant" } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "electron transport chain | water | " }, { "type": "inlineSlot", "slotId": "dropdown_4" } ] }
+    ],
+    "widgets": [],
+    "interactions": ["dropdown_1", "dropdown_2", "dropdown_3", "dropdown_4"],
+    "responseDeclarations": [
+      { "identifier": "dropdown_1", "cardinality": "single", "baseType": "string", "correct": "reactant" },
+      { "identifier": "dropdown_2", "cardinality": "single", "baseType": "string", "correct": "carbon dioxide" },
+      { "identifier": "dropdown_3", "cardinality": "single", "baseType": "string", "correct": "oxygen" },
+      { "identifier": "dropdown_4", "cardinality": "single", "baseType": "string", "correct": "product" }
+    ]
+  }
+  \`\`\`
+
   CORRECT (remove attribution paragraph from 'body'):
   WRONG (caption/alt-like description left in 'body' after image):
   \`\`\`json
@@ -733,6 +757,26 @@ ${perseusJson}
       { "identifier": "dropdown_7", "cardinality": "single", "baseType": "string", "correct": "shape of container" },
       { "identifier": "dropdown_8", "cardinality": "single", "baseType": "string", "correct": "not fixed" },
       { "identifier": "dropdown_9", "cardinality": "single", "baseType": "string", "correct": "yes" }
+    ]
+  }
+  \`\`\`
+
+  Positive example — cellular respiration table widget with embedded dropdowns:
+  \`\`\`json
+  {
+    "identifier": "example-cellular-respiration-table-positive",
+    "title": "Cellular respiration table (positive)",
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Complete the table to describe the reactants and products for each stage of cellular respiration." }] },
+      { "type": "blockSlot", "slotId": "respiration_table" }
+    ],
+    "widgets": ["respiration_table"],
+    "interactions": [],
+    "responseDeclarations": [
+      { "identifier": "dropdown_1", "cardinality": "single", "baseType": "string", "correct": "reactant" },
+      { "identifier": "dropdown_2", "cardinality": "single", "baseType": "string", "correct": "carbon dioxide" },
+      { "identifier": "dropdown_3", "cardinality": "single", "baseType": "string", "correct": "oxygen" },
+      { "identifier": "dropdown_4", "cardinality": "single", "baseType": "string", "correct": "product" }
     ]
   }
   \`\`\`
