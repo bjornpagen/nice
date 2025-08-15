@@ -24,6 +24,14 @@ const config = {
 			{
 				protocol: "https",
 				hostname: "ext.same-assets.com"
+			},
+			{
+				protocol: "https",
+				hostname: "qfrdh3przruvxqbvw.public.blob.vercel-storage.com"
+			},
+			{
+				protocol: "https",
+				hostname: "**.public.blob.vercel-storage.com"
 			}
 		]
 	}

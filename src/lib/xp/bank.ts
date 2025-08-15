@@ -3,8 +3,8 @@
 import { randomUUID } from "node:crypto"
 import * as errors from "@superbuilders/errors"
 import * as logger from "@superbuilders/slog"
-import { extractResourceIdFromCompoundId } from "@/lib/caliper/utils"
 import { z } from "zod"
+import { extractResourceIdFromCompoundId } from "@/lib/caliper/utils"
 import { oneroster } from "@/lib/clients"
 import { calculateBankedXpForResources } from "@/lib/data/fetchers/caliper"
 import type { Resource } from "@/lib/oneroster"
@@ -259,9 +259,7 @@ export async function awardBankedXpForExercise(params: {
 			}
 
 			// Narrow metadata shape using Zod to avoid unsafe casts
-			const BankedMetaSchema = z
-				.object({ xp: z.number().optional(), xpReason: z.string().optional() })
-				.passthrough()
+			const BankedMetaSchema = z.object({ xp: z.number().optional(), xpReason: z.string().optional() }).passthrough()
 			const parsed = BankedMetaSchema.safeParse(existingResult.data?.metadata)
 			const xpValue = parsed.success && typeof parsed.data.xp === "number" ? parsed.data.xp : 0
 			const xpReason = parsed.success && typeof parsed.data.xpReason === "string" ? parsed.data.xpReason : ""
