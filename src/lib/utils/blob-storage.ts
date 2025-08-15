@@ -13,17 +13,25 @@ async function sleep(ms: number): Promise<void> {
  */
 async function waitForBlobAvailability(
 	url: string,
-	params: { questionId: string; screenshotType: "production" | "perseus"; maxWaitMs?: number; intervalMs?: number }
+	params: {
+		questionId: string
+		screenshotType: "production" | "perseus"
+		maxWaitMs?: number
+		initialDelayMs?: number
+	}
 ): Promise<void> {
 	const { questionId, screenshotType } = params
-	const maxWaitMs = params.maxWaitMs ?? 2500
-	const intervalMs = params.intervalMs ?? 250
+	const maxWaitMs = params.maxWaitMs ?? 10000
+	let nextDelayMs = params.initialDelayMs ?? 300
 	const start = Date.now()
 	let attempt = 0
 
 	logger.debug("verifying blob availability", { questionId, screenshotType })
 
 	while (Date.now() - start < maxWaitMs) {
+		// Backoff before probing to give the CDN time to propagate
+		await sleep(nextDelayMs)
+
 		attempt += 1
 		// Use a probe query param to avoid any stale negative cache entries
 		const probeUrl = `${url}${url.includes("?") ? "&" : "?"}__probe=${Date.now()}`
@@ -44,8 +52,20 @@ async function waitForBlobAvailability(
 			return
 		}
 
-		logger.debug("blob not yet available", { questionId, screenshotType, attempt, status: response.status })
-		await sleep(intervalMs)
+		const elapsedMs = Date.now() - start
+		logger.debug("blob not yet available", {
+			questionId,
+			screenshotType,
+			attempt,
+			status: response.status,
+			elapsedMs,
+			nextDelayMs
+		})
+
+		// Exponential backoff with jitter, cap per-interval delay to 2000ms
+		const base = Math.min(nextDelayMs * 2, 2000)
+		const jitter = 0.8 + Math.random() * 0.4 // 0.8x - 1.2x
+		nextDelayMs = Math.floor(base * jitter)
 	}
 
 	logger.error("blob did not become available in time", { questionId, screenshotType, maxWaitMs })
@@ -80,9 +100,7 @@ export async function uploadScreenshot(
 
 	// Ensure the public URL is actually readable before returning
 	const url = uploadResult.data.url
-	const availabilityResult = await errors.try(
-		waitForBlobAvailability(url, { questionId, screenshotType })
-	)
+	const availabilityResult = await errors.try(waitForBlobAvailability(url, { questionId, screenshotType }))
 	if (availabilityResult.error) {
 		logger.error("blob availability check failed", { questionId, screenshotType, error: availabilityResult.error })
 		throw errors.wrap(availabilityResult.error, "blob availability check")
