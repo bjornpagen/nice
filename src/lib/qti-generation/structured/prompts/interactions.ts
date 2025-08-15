@@ -260,6 +260,11 @@ The interaction prompt MUST reflect the number of correct answers declared in th
   - Use plural grammar (e.g., "Which of the following are true?", "Which statements are correct?", "Which samples depict …?").
 - Ensure subject–verb agreement and noun plurality match the selection mode. Do not produce a singular prompt when multiple answers are correct.
 
+Source of truth and required behavior:
+- ALWAYS update or rewrite the prompt to match the declared cardinality and the correct answers.
+- NEVER change the response declarations (cardinality or list of correct identifiers) to match an existing prompt.
+- The answer key and cardinality are authoritative; the prompt text must be brought into alignment with them.
+
 Negative example (DO NOT OUTPUT) – singular prompt with multi-correct declaration:
 \`\`\`json
 {
