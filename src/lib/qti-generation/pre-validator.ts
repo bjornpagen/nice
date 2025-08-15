@@ -202,10 +202,10 @@ function validateBlockContent(items: BlockContent, _context: string, logger: log
 	}
 }
 
-export function validateAssessmentItemInput(item: AssessmentItemInput, slog: logger.Logger): void {
+export function validateAssessmentItemInput(item: AssessmentItemInput, logger: logger.Logger): void {
 	// Require at least one response declaration to avoid generating empty response-processing blocks
 	if (!item.responseDeclarations || item.responseDeclarations.length === 0) {
-		slog.error("no response declarations present", {
+		logger.error("no response declarations present", {
 			identifier: item.identifier,
 			title: item.title
 		})
@@ -214,37 +214,37 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, slog: log
 
 	if (item.body !== null) {
 		if (!Array.isArray(item.body)) {
-			slog.error("item body is not an array", { identifier: item.identifier })
+			logger.error("item body is not an array", { identifier: item.identifier })
 			throw errors.new("item.body must be null or an array of block items")
 		}
-		validateBlockContent(item.body, "item.body", slog)
+		validateBlockContent(item.body, "item.body", logger)
 	}
 	if (!Array.isArray(item.feedback?.correct)) {
-		slog.error("feedback.correct is not an array", { identifier: item.identifier })
+		logger.error("feedback.correct is not an array", { identifier: item.identifier })
 		throw errors.new("item.feedback.correct must be an array of block items")
 	}
 	if (!Array.isArray(item.feedback?.incorrect)) {
-		slog.error("feedback.incorrect is not an array", { identifier: item.identifier })
+		logger.error("feedback.incorrect is not an array", { identifier: item.identifier })
 		throw errors.new("item.feedback.incorrect must be an array of block items")
 	}
-	validateBlockContent(item.feedback.correct, "item.feedback.correct", slog)
-	validateBlockContent(item.feedback.incorrect, "item.feedback.incorrect", slog)
+	validateBlockContent(item.feedback.correct, "item.feedback.correct", logger)
+	validateBlockContent(item.feedback.incorrect, "item.feedback.incorrect", logger)
 
 	if (item.interactions) {
 		for (const [key, interaction] of Object.entries(item.interactions)) {
 			switch (interaction.type) {
 				case "inlineChoiceInteraction": {
 					for (const choice of interaction.choices) {
-						validateInlineContent(choice.content, `interaction[${key}].choice[${choice.identifier}]`, slog)
+						validateInlineContent(choice.content, `interaction[${key}].choice[${choice.identifier}]`, logger)
 					}
 					break
 				}
 				case "choiceInteraction": {
 					if (interaction.prompt && interaction.prompt.length > 0) {
-						validateInlineContent(interaction.prompt, `interaction[${key}].prompt`, slog)
+						validateInlineContent(interaction.prompt, `interaction[${key}].prompt`, logger)
 					}
 					if (interaction.choices.length < 2) {
-						slog.error("interaction has insufficient choices", {
+						logger.error("interaction has insufficient choices", {
 							interactionKey: key,
 							interactionType: interaction.type,
 							choiceCount: interaction.choices.length
@@ -254,18 +254,18 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, slog: log
 						)
 					}
 					for (const choice of interaction.choices) {
-						validateBlockContent(choice.content, `interaction[${key}].choice[${choice.identifier}]`, slog)
+						validateBlockContent(choice.content, `interaction[${key}].choice[${choice.identifier}]`, logger)
 						if (choice.feedback) {
 							validateInlineContent(
 								choice.feedback,
 								`interaction[${key}].choice[${choice.identifier}].feedback`,
-								slog
+								logger
 							)
 						}
 					}
 					const decl = item.responseDeclarations.find((d) => d.identifier === interaction.responseIdentifier)
 					if (!decl) {
-						slog.error("response declaration without matching interaction found during cardinality check", {
+						logger.error("response declaration without matching interaction found during cardinality check", {
 							interactionKey: key,
 							responseIdentifier: interaction.responseIdentifier
 						})
@@ -276,7 +276,7 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, slog: log
 					if (decl.cardinality === "single") {
 						const maxChoices = interaction.maxChoices
 						if (typeof maxChoices === "number" && maxChoices > 1) {
-							slog.error("cardinality mismatch: single with max-choices > 1", {
+							logger.error("cardinality mismatch: single with max-choices > 1", {
 								interactionKey: key,
 								responseIdentifier: interaction.responseIdentifier,
 								maxChoices
@@ -287,7 +287,7 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, slog: log
 					if (decl.cardinality === "multiple") {
 						const maxChoices = interaction.maxChoices
 						if (typeof maxChoices === "number" && maxChoices <= 1) {
-							slog.error("cardinality mismatch: multiple with max-choices <= 1", {
+							logger.error("cardinality mismatch: multiple with max-choices <= 1", {
 								interactionKey: key,
 								responseIdentifier: interaction.responseIdentifier,
 								maxChoices
@@ -299,10 +299,10 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, slog: log
 				}
 				case "orderInteraction": {
 					if (interaction.prompt && interaction.prompt.length > 0) {
-						validateInlineContent(interaction.prompt, `interaction[${key}].prompt`, slog)
+						validateInlineContent(interaction.prompt, `interaction[${key}].prompt`, logger)
 					}
 					if (interaction.choices.length < 2) {
-						slog.error("interaction has insufficient choices", {
+						logger.error("interaction has insufficient choices", {
 							interactionKey: key,
 							interactionType: interaction.type,
 							choiceCount: interaction.choices.length
@@ -312,12 +312,12 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, slog: log
 						)
 					}
 					for (const choice of interaction.choices) {
-						validateBlockContent(choice.content, `interaction[${key}].choice[${choice.identifier}]`, slog)
+						validateBlockContent(choice.content, `interaction[${key}].choice[${choice.identifier}]`, logger)
 						if (choice.feedback) {
 							validateInlineContent(
 								choice.feedback,
 								`interaction[${key}].choice[${choice.identifier}].feedback`,
-								slog
+								logger
 							)
 						}
 					}
@@ -384,7 +384,7 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, slog: log
 
 		for (const decl of item.responseDeclarations) {
 			if (!interactionResponseIds.has(decl.identifier) && !widgetEmbeddedResponseIds.has(decl.identifier)) {
-				slog.error("response declaration without matching interaction", { responseIdentifier: decl.identifier })
+				logger.error("response declaration without matching interaction", { responseIdentifier: decl.identifier })
 				throw errors.new(
 					`response declaration '${decl.identifier}' has no matching interaction or embedded widget input`
 				)
