@@ -164,7 +164,7 @@ export const linearModelEquationPrediction: AssessmentItemInput = {
 				{ x: 7.25, y: 16, label: null },
 				{ x: 8.5, y: 18, label: null }
 			],
-			lines: [{ type: "bestFit", method: "linear", label: null, style: null }]
+			lines: [{ type: "bestFit", method: "linear", label: null, style: { color: "#333333", strokeWidth: 2, dash: false } }]
 		}
 	},
 	feedback: {
@@ -654,8 +654,8 @@ export const inequalityNumberLine: AssessmentItemInput = {
 			tickInterval: 1,
 			ranges: [
 				{
-					start: { value: 0, type: "open" },
-					end: null,
+					start: { type: "bounded", at: { value: 0, type: "open" } },
+					end: { type: "unbounded" },
 					color: "#4285F4"
 				}
 			]
@@ -782,18 +782,18 @@ export const verticalNumberLineComparison: AssessmentItemInput = {
 			max: 2,
 			majorTickInterval: 2,
 			minorTicksPerInterval: 1,
-			specialTickLabels: null,
+			specialTickLabels: [],
 			points: [
 				{
 					value: -1.4,
 					label: "-1.4",
-					color: "purple",
+					color: "#800080",
 					labelPosition: "left"
 				},
 				{
 					value: -6.4,
 					label: "-6.4",
-					color: "maroon",
+					color: "#800000",
 					labelPosition: "left"
 				}
 			]
@@ -905,8 +905,8 @@ export const twoWayFrequencyTable: AssessmentItemInput = {
 			type: "vennDiagram",
 			width: 350,
 			height: 262,
-			circleA: { label: "Cold Medicine", count: 27, color: null },
-			circleB: { label: "Cold longer than 7 days", count: 20, color: null },
+			circleA: { label: "Cold Medicine", count: 27, color: "#1E90FF99" },
+			circleB: { label: "Cold longer than 7 days", count: 20, color: "#FF6B6B99" },
 			intersectionCount: 23,
 			outsideCount: 30
 		},
@@ -914,7 +914,7 @@ export const twoWayFrequencyTable: AssessmentItemInput = {
 			type: "dataTable",
 			title: null,
 			columns: [
-				{ key: "condition", label: null, isNumeric: false },
+				{ key: "condition", label: [], isNumeric: false },
 				{ key: "received", label: [{ type: "text", content: "Received cold medicine" }], isNumeric: false },
 				{
 					key: "notReceived",
@@ -935,7 +935,7 @@ export const twoWayFrequencyTable: AssessmentItemInput = {
 					{ type: "input", responseIdentifier: "RESP_D", expectedLength: 3 }
 				]
 			],
-			footer: null
+			footer: []
 		}
 	},
 	body: [
@@ -1000,8 +1000,8 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			mode: "partition",
 			width: 180,
 			height: 88,
-			layout: null,
-			overlays: null,
+			layout: "horizontal",
+			overlays: [],
 			shapes: [
 				{
 					type: "rectangle",
@@ -1010,7 +1010,7 @@ export const equivalentFractionImages: AssessmentItemInput = {
 					hatchedCells: [],
 					rows: 1,
 					columns: 6,
-					shadeColor: null,
+					shadeColor: "#4285F480",
 					shadeOpacity: 0.5
 				}
 			]
@@ -1020,8 +1020,8 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			mode: "partition",
 			width: 180,
 			height: 88,
-			layout: null,
-			overlays: null,
+			layout: "horizontal",
+			overlays: [],
 			shapes: [
 				{
 					type: "rectangle",
@@ -1030,7 +1030,7 @@ export const equivalentFractionImages: AssessmentItemInput = {
 					hatchedCells: [],
 					rows: 2,
 					columns: 4,
-					shadeColor: null,
+					shadeColor: "#4285F480",
 					shadeOpacity: 0.5
 				}
 			]
@@ -1040,8 +1040,8 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			mode: "partition",
 			width: 180,
 			height: 88,
-			layout: null,
-			overlays: null,
+			layout: "horizontal",
+			overlays: [],
 			shapes: [
 				{
 					type: "rectangle",
@@ -1050,7 +1050,7 @@ export const equivalentFractionImages: AssessmentItemInput = {
 					hatchedCells: [],
 					rows: 2,
 					columns: 2,
-					shadeColor: null,
+					shadeColor: "#4285F480",
 					shadeOpacity: 0.5
 				}
 			]
@@ -1060,8 +1060,8 @@ export const equivalentFractionImages: AssessmentItemInput = {
 			mode: "partition",
 			width: 180,
 			height: 88,
-			layout: null,
-			overlays: null,
+			layout: "horizontal",
+			overlays: [],
 			shapes: [
 				{
 					type: "rectangle",
@@ -1070,7 +1070,7 @@ export const equivalentFractionImages: AssessmentItemInput = {
 					hatchedCells: [],
 					rows: 2,
 					columns: 2,
-					shadeColor: null,
+					shadeColor: "#4285F480",
 					shadeOpacity: 0.5
 				}
 			]
@@ -1225,16 +1225,16 @@ export const calculateShadedArea: AssessmentItemInput = {
 			width: 320,
 			height: 103,
 			layout: "horizontal",
-			overlays: null,
+			overlays: [],
 			shapes: [
 				{
 					type: "circle",
 					totalParts: 4,
 					shadedCells: [0],
 					hatchedCells: [],
-					rows: null,
-					columns: null,
-					shadeColor: null,
+					rows: 1,
+					columns: 1,
+					shadeColor: "#4285F480",
 					shadeOpacity: 0.5
 				},
 				{
@@ -1242,9 +1242,9 @@ export const calculateShadedArea: AssessmentItemInput = {
 					totalParts: 4,
 					shadedCells: [0],
 					hatchedCells: [],
-					rows: null,
-					columns: null,
-					shadeColor: null,
+					rows: 1,
+					columns: 1,
+					shadeColor: "#4285F480",
 					shadeOpacity: 0.5
 				},
 				{
@@ -1252,9 +1252,19 @@ export const calculateShadedArea: AssessmentItemInput = {
 					totalParts: 4,
 					shadedCells: [0],
 					hatchedCells: [],
-					rows: null,
-					columns: null,
-					shadeColor: null,
+					rows: 1,
+					columns: 1,
+					shadeColor: "#4285F480",
+					shadeOpacity: 0.5
+				},
+				{
+					type: "circle",
+					totalParts: 4,
+					shadedCells: [0],
+					hatchedCells: [],
+					rows: 1,
+					columns: 1,
+					shadeColor: "#4285F480",
 					shadeOpacity: 0.5
 				}
 			]
@@ -1539,7 +1549,7 @@ export const harukaExamScore: AssessmentItemInput = {
 					{ type: "inline", content: [{ type: "text", content: "?" }] }
 				]
 			],
-			footer: null
+			footer: []
 		}
 	},
 	body: [
@@ -1656,7 +1666,7 @@ export const libertyvilleBusinessCycle: AssessmentItemInput = {
 					{ type: "inline", content: [{ type: "math", mathml: "<mn>6</mn><mo>%</mo>" }] }
 				]
 			],
-			footer: null
+			footer: []
 		}
 	},
 	body: [
@@ -1958,13 +1968,13 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 			type: "dataTable",
 			title: null,
 			columns: [
-				{ key: "x", label: null, isNumeric: false },
-				{ key: "minus9", label: null, isNumeric: true },
-				{ key: "minus8", label: null, isNumeric: true },
-				{ key: "minus6", label: null, isNumeric: true },
-				{ key: "minus3", label: null, isNumeric: true },
-				{ key: "minus2", label: null, isNumeric: true },
-				{ key: "minus1", label: null, isNumeric: true }
+				{ key: "x", label: [], isNumeric: false },
+				{ key: "minus9", label: [], isNumeric: true },
+				{ key: "minus8", label: [], isNumeric: true },
+				{ key: "minus6", label: [], isNumeric: true },
+				{ key: "minus3", label: [], isNumeric: true },
+				{ key: "minus2", label: [], isNumeric: true },
+				{ key: "minus1", label: [], isNumeric: true }
 			],
 			rowHeaderKey: "x",
 			data: [
@@ -1987,7 +1997,7 @@ export const estimateDerivativeFromTable: AssessmentItemInput = {
 					{ type: "inline", content: [{ type: "math", mathml: "<mo>-</mo><mn>47</mn>" }] }
 				]
 			],
-			footer: null
+			footer: []
 		}
 	},
 	body: [
@@ -2301,7 +2311,7 @@ export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput =
 					{ type: "inline", content: [{ type: "math", mathml: "<mo>+</mo><mn>3.2</mn><mo>°</mo><mi>C</mi>" }] }
 				]
 			],
-			footer: null
+			footer: []
 		}
 	},
 	body: [
@@ -2315,9 +2325,97 @@ export const reactantAmountsTemperatureTableWithDropdowns: AssessmentItemInput =
 				}
 			]
 		},
-		{ type: "blockSlot", slotId: "react_temp_table" }
+		{ type: "blockSlot", slotId: "react_temp_table" },
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Row C: Reactant " },
+				{ type: "inlineSlot", slotId: "react_c" },
+				{ type: "text", content: ", Amount " },
+				{ type: "inlineSlot", slotId: "amt_c" }
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Row D: Reactant " },
+				{ type: "inlineSlot", slotId: "react_d" },
+				{ type: "text", content: ", Amount " },
+				{ type: "inlineSlot", slotId: "amt_d" }
+			]
+		},
+		{
+			type: "paragraph",
+			content: [
+				{ type: "text", content: "Row E: Reactant " },
+				{ type: "inlineSlot", slotId: "react_e" },
+				{ type: "text", content: ", Amount " },
+				{ type: "inlineSlot", slotId: "amt_e" }
+			]
+		}
 	],
-	interactions: {},
+	interactions: {
+		react_c: {
+			type: "inlineChoiceInteraction",
+			responseIdentifier: "RESP_REACT_C",
+			shuffle: true,
+			choices: [
+				{ identifier: "NH4CL", content: [{ type: "text", content: "NH4Cl" }] },
+				{ identifier: "MGSO4", content: [{ type: "text", content: "MgSO4" }] },
+				{ identifier: "CACL2", content: [{ type: "text", content: "CaCl2" }] }
+			]
+		},
+		amt_c: {
+			type: "inlineChoiceInteraction",
+			responseIdentifier: "RESP_AMT_C",
+			shuffle: true,
+			choices: [
+				{ identifier: "AMT_2_5", content: [{ type: "math", mathml: "<mn>2.5</mn>" }] },
+				{ identifier: "AMT_3_0", content: [{ type: "math", mathml: "<mn>3.0</mn>" }] },
+				{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
+			]
+		},
+		react_d: {
+			type: "inlineChoiceInteraction",
+			responseIdentifier: "RESP_REACT_D",
+			shuffle: true,
+			choices: [
+				{ identifier: "NH4CL", content: [{ type: "text", content: "NH4Cl" }] },
+				{ identifier: "MGSO4", content: [{ type: "text", content: "MgSO4" }] },
+				{ identifier: "CACL2", content: [{ type: "text", content: "CaCl2" }] }
+			]
+		},
+		amt_d: {
+			type: "inlineChoiceInteraction",
+			responseIdentifier: "RESP_AMT_D",
+			shuffle: true,
+			choices: [
+				{ identifier: "AMT_2_5", content: [{ type: "math", mathml: "<mn>2.5</mn>" }] },
+				{ identifier: "AMT_3_0", content: [{ type: "math", mathml: "<mn>3.0</mn>" }] },
+				{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
+			]
+		},
+		react_e: {
+			type: "inlineChoiceInteraction",
+			responseIdentifier: "RESP_REACT_E",
+			shuffle: true,
+			choices: [
+				{ identifier: "NH4CL", content: [{ type: "text", content: "NH4Cl" }] },
+				{ identifier: "MGSO4", content: [{ type: "text", content: "MgSO4" }] },
+				{ identifier: "CACL2", content: [{ type: "text", content: "CaCl2" }] }
+			]
+		},
+		amt_e: {
+			type: "inlineChoiceInteraction",
+			responseIdentifier: "RESP_AMT_E",
+			shuffle: true,
+			choices: [
+				{ identifier: "AMT_2_5", content: [{ type: "math", mathml: "<mn>2.5</mn>" }] },
+				{ identifier: "AMT_3_0", content: [{ type: "math", mathml: "<mn>3.0</mn>" }] },
+				{ identifier: "AMT_8_0", content: [{ type: "math", mathml: "<mn>8.0</mn>" }] }
+			]
+		}
+	},
 	feedback: {
 		correct: [
 			{
@@ -2428,7 +2526,7 @@ export const attractRepelCompletionTable: AssessmentItemInput = {
 					}
 				]
 			],
-			footer: null
+			footer: []
 		}
 	},
 	body: [
@@ -2489,7 +2587,7 @@ export const shapeBinBarChart: AssessmentItemInput = {
 					{ type: "inline", content: [{ type: "math", mathml: "<mn>9</mn>" }] }
 				]
 			],
-			footer: null
+			footer: []
 		},
 		chart_a: {
 			type: "barChart",
@@ -2881,7 +2979,7 @@ export const dollHeightLinePlot: AssessmentItemInput = {
 				{ value: 23, count: 3 },
 				{ value: 24, count: 2 }
 			],
-			dotColor: null,
+			dotColor: "#333333",
 			dotRadius: 6
 		}
 	},
@@ -2946,7 +3044,7 @@ export const timeOnNumberLine: AssessmentItemInput = {
 			type: "numberLine",
 			width: 700,
 			height: 100,
-			orientation: null,
+			orientation: "horizontal",
 			min: 0,
 			max: 60,
 			majorTickInterval: 15,
@@ -3185,7 +3283,7 @@ export const threeDataTablesMultipleChoice: AssessmentItemInput = {
 					{ type: "inline", content: [{ type: "math", mathml: "<mn>4</mn>" }] }
 				]
 			],
-			footer: null
+			footer: []
 		},
 		table_q2: {
 			type: "dataTable",
@@ -3209,7 +3307,7 @@ export const threeDataTablesMultipleChoice: AssessmentItemInput = {
 					{ type: "inline", content: [{ type: "math", mathml: "<mn>80</mn>" }] }
 				]
 			],
-			footer: null
+			footer: []
 		},
 		table_q3: {
 			type: "dataTable",
@@ -3233,7 +3331,7 @@ export const threeDataTablesMultipleChoice: AssessmentItemInput = {
 					{ type: "inline", content: [{ type: "math", mathml: "<mn>15</mn>" }] }
 				]
 			],
-			footer: null
+			footer: []
 		}
 	},
 	body: [
@@ -3511,3 +3609,4 @@ export const allExamples: AssessmentItemInput[] = [
 	reactantAmountsTemperatureTableWithDropdowns,
 	attractRepelCompletionTable
 ]
+

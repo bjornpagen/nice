@@ -13,25 +13,25 @@ function createBoundarySchema() {
 }
 
 function createStartSchema() {
-  return z.discriminatedUnion('kind', [ 
+  return z.discriminatedUnion('type', [ 
     z.object({ 
-      kind: z.literal('bounded').describe("The range has a defined starting point."), 
+      type: z.literal('bounded').describe("The range has a defined starting point."), 
       at: createBoundarySchema().describe("The starting boundary with its value and open/closed type.") 
     }).strict(), 
     z.object({ 
-      kind: z.literal('unbounded').describe("The range extends infinitely to the left (negative infinity).") 
+      type: z.literal('unbounded').describe("The range extends infinitely to the left (negative infinity).") 
     }).strict() 
   ])
 }
 
 function createEndSchema() {
-  return z.discriminatedUnion('kind', [ 
+  return z.discriminatedUnion('type', [ 
     z.object({ 
-      kind: z.literal('bounded').describe("The range has a defined ending point."), 
+      type: z.literal('bounded').describe("The range has a defined ending point."), 
       at: createBoundarySchema().describe("The ending boundary with its value and open/closed type.") 
     }).strict(), 
     z.object({ 
-      kind: z.literal('unbounded').describe("The range extends infinitely to the right (positive infinity).") 
+      type: z.literal('unbounded').describe("The range extends infinitely to the right (positive infinity).") 
     }).strict() 
   ])
 }
@@ -101,28 +101,28 @@ export const generateInequalityNumberLine: WidgetGenerator<typeof InequalityNumb
 	}
 
 	for (const r of ranges) {
-		const startPos = r.start.kind === 'bounded' ? toSvgX(r.start.at.value) : padding.horizontal
-		const endPos = r.end.kind === 'bounded' ? toSvgX(r.end.at.value) : width - padding.horizontal
+		const startPos = r.start.type === 'bounded' ? toSvgX(r.start.at.value) : padding.horizontal
+		const endPos = r.end.type === 'bounded' ? toSvgX(r.end.at.value) : width - padding.horizontal
 		const colorId = r.color.replace(/[^a-zA-Z0-9]/g, "")
 
 		// Add markers for unbounded cases
 		let markerStart = ""
 		let markerEnd = ""
-		if (r.start.kind === 'unbounded') {
+		if (r.start.type === 'unbounded') {
 			markerStart = `marker-start="url(#arrow-${colorId})"`
 		}
-		if (r.end.kind === 'unbounded') {
+		if (r.end.type === 'unbounded') {
 			markerEnd = `marker-end="url(#arrow-${colorId})"`
 		}
 
 		svg += `<line x1="${startPos}" y1="${yPos}" x2="${endPos}" y2="${yPos}" stroke="${r.color}" stroke-width="5" stroke-linecap="butt" ${markerStart} ${markerEnd}/>`
 
 		// Boundary circles
-		if (r.start.kind === 'bounded') {
+		if (r.start.type === 'bounded') {
 			const fill = r.start.at.type === "closed" ? r.color : "#FAFAFA"
 			svg += `<circle cx="${startPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
 		}
-		if (r.end.kind === 'bounded') {
+		if (r.end.type === 'bounded') {
 			const fill = r.end.at.type === "closed" ? r.color : "white"
 			svg += `<circle cx="${endPos}" cy="${yPos}" r="5" fill="${fill}" stroke="${r.color}" stroke-width="1.5"/>`
 		}
