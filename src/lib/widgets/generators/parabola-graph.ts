@@ -13,7 +13,7 @@ function createAxisOptionsSchema() {
 			max: z.number(),
 			tickInterval: z.number().positive(),
 			showGridLines: z.boolean(),
-			showTickLabels: z.boolean().default(true).describe("Whether to show tick labels on the axis.")
+			showTickLabels: z.boolean().describe("Whether to show tick labels on the axis.")
 		})
 		.strict()
 }
