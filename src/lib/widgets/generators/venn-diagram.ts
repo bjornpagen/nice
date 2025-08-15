@@ -21,10 +21,7 @@ function createCircleSchema() {
 				),
 			color: z
 				.string()
-				.regex(
-						CSS_COLOR_PATTERN,
-						"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-					)
+				.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 				.describe(
 					"Hex-only fill color for this circle (e.g., '#FF6B6B', '#1E90FF', '#000000', '#00000080' for 50% alpha). Use translucency to show overlap."
 				)

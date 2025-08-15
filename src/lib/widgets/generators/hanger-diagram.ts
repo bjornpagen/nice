@@ -3,23 +3,62 @@ import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 function createWeightSchema() {
-  return z.object({ 
-    label: z.union([z.string(), z.number()]).nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("The value or variable displayed on this weight (e.g., 5, 'x', 12, 'y', '2x', 3.5, null). Can be numeric values or algebraic expressions. Null shows no label."), 
-    shape: z.enum(['square','circle','pentagon','hexagon','triangle']).describe("Geometric shape for this weight. Different shapes can represent different variables or value types in equations."), 
-    color: z.string().regex(
-      CSS_COLOR_PATTERN,
-      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-    ).describe("Hex-only fill color for this weight (e.g., '#4472C4', '#1E90FF', '#FF000080' for 50% alpha). Use distinct colors for different variable types.") 
-  }).strict()
+	return z
+		.object({
+			label: z
+				.union([z.string(), z.number()])
+				.nullable()
+				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+				.describe(
+					"The value or variable displayed on this weight (e.g., 5, 'x', 12, 'y', '2x', 3.5, null). Can be numeric values or algebraic expressions. Null shows no label."
+				),
+			shape: z
+				.enum(["square", "circle", "pentagon", "hexagon", "triangle"])
+				.describe(
+					"Geometric shape for this weight. Different shapes can represent different variables or value types in equations."
+				),
+			color: z
+				.string()
+				.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
+				.describe(
+					"Hex-only fill color for this weight (e.g., '#4472C4', '#1E90FF', '#FF000080' for 50% alpha). Use distinct colors for different variable types."
+				)
+		})
+		.strict()
 }
 
-export const HangerDiagramPropsSchema = z.object({
-  type: z.literal('hangerDiagram').describe("Identifies this as a hanger diagram (balance scale) for visualizing algebraic equations."),
-  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 500, 600, 400). Must accommodate both sides of the balance and labels."),
-  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 300, 400, 250). Includes the hanger, beam, and hanging weights."),
-  leftSide: z.array(createWeightSchema()).describe("Weights hanging on the left side of the balance. Can be empty array for 0 = right side. Order determines left-to-right positioning."),
-  rightSide: z.array(createWeightSchema()).describe("Weights hanging on the right side of the balance. Can be empty array for left side = 0. Order determines left-to-right positioning."),
-}).strict().describe("Creates a balance scale visualization for algebraic equations where each side represents one side of the equation. Weights can show constants or variables with different shapes and colors. Perfect for teaching equation solving, algebraic thinking, and the balance method. The horizontal beam shows the equation is balanced (equal).")
+export const HangerDiagramPropsSchema = z
+	.object({
+		type: z
+			.literal("hangerDiagram")
+			.describe("Identifies this as a hanger diagram (balance scale) for visualizing algebraic equations."),
+		width: z
+			.number()
+			.positive()
+			.describe(
+				"Total width of the diagram in pixels (e.g., 500, 600, 400). Must accommodate both sides of the balance and labels."
+			),
+		height: z
+			.number()
+			.positive()
+			.describe(
+				"Total height of the diagram in pixels (e.g., 300, 400, 250). Includes the hanger, beam, and hanging weights."
+			),
+		leftSide: z
+			.array(createWeightSchema())
+			.describe(
+				"Weights hanging on the left side of the balance. Can be empty array for 0 = right side. Order determines left-to-right positioning."
+			),
+		rightSide: z
+			.array(createWeightSchema())
+			.describe(
+				"Weights hanging on the right side of the balance. Can be empty array for left side = 0. Order determines left-to-right positioning."
+			)
+	})
+	.strict()
+	.describe(
+		"Creates a balance scale visualization for algebraic equations where each side represents one side of the equation. Weights can show constants or variables with different shapes and colors. Perfect for teaching equation solving, algebraic thinking, and the balance method. The horizontal beam shows the equation is balanced (equal)."
+	)
 
 export type HangerDiagramProps = z.infer<typeof HangerDiagramPropsSchema>
 
@@ -94,7 +133,10 @@ export const generateHangerDiagram: WidgetGenerator<typeof HangerDiagramPropsSch
 				shapeSvg = `<rect x="${x - size / 2}" y="${y}" width="${size}" height="${size}" fill="${weight.color}" stroke="#333333"/>`
 				break
 		}
-		const textSvg = weight.label !== null ? `<text x="${x}" y="${y + size / 2 + 4}" fill="#333333" text-anchor="middle" font-weight="bold">${weight.label}</text>` : ""
+		const textSvg =
+			weight.label !== null
+				? `<text x="${x}" y="${y + size / 2 + 4}" fill="#333333" text-anchor="middle" font-weight="bold">${weight.label}</text>`
+				: ""
 		return shapeSvg + textSvg
 	}
 

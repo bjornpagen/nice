@@ -4,58 +4,183 @@ import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-const Point = z.object({ 
-	id: z.string().describe("Unique identifier for this vertex (e.g., 'A', 'B', 'C', 'P', 'M'). Used to reference in sides, angles, etc. Must be unique."), 
-	x: z.number().describe("X-coordinate of the point in diagram space (e.g., 100, 250, 50). Can be negative. Diagram auto-centers all content."), 
-	y: z.number().describe("Y-coordinate of the point in diagram space (e.g., 50, 200, 150). Positive y is downward. Diagram auto-centers all content."), 
-	label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Text label displayed near the point (e.g., 'A', 'P', 'M₁', null). Null means no label. Typically single letter or letter with subscript.") 
-}).strict()
+const Point = z
+	.object({
+		id: z
+			.string()
+			.describe(
+				"Unique identifier for this vertex (e.g., 'A', 'B', 'C', 'P', 'M'). Used to reference in sides, angles, etc. Must be unique."
+			),
+		x: z
+			.number()
+			.describe(
+				"X-coordinate of the point in diagram space (e.g., 100, 250, 50). Can be negative. Diagram auto-centers all content."
+			),
+		y: z
+			.number()
+			.describe(
+				"Y-coordinate of the point in diagram space (e.g., 50, 200, 150). Positive y is downward. Diagram auto-centers all content."
+			),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe(
+				"Text label displayed near the point (e.g., 'A', 'P', 'M₁', null). Null means no label. Typically single letter or letter with subscript."
+			)
+	})
+	.strict()
 
-const Side = z.object({ 
-	vertex1: z.string().describe("First point ID defining this side's endpoint (e.g., 'A' in side AB). Order matters for labeling position."), 
-	vertex2: z.string().describe("Second point ID defining this side's endpoint (e.g., 'B' in side AB). Order matters for labeling position."), 
-	label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Length label for this side (e.g., '5', '3.2 cm', 'a', '√2', null). Null means no label. Positioned at midpoint of side."), 
-	tickMarks: z.number().int().min(0).describe("Number of tick marks showing congruence (0 = no marks, 1 = single mark, 2 = double marks, etc.). Same count indicates congruent sides.") 
-}).strict()
+const Side = z
+	.object({
+		vertex1: z
+			.string()
+			.describe(
+				"First point ID defining this side's endpoint (e.g., 'A' in side AB). Order matters for labeling position."
+			),
+		vertex2: z
+			.string()
+			.describe(
+				"Second point ID defining this side's endpoint (e.g., 'B' in side AB). Order matters for labeling position."
+			),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe(
+				"Length label for this side (e.g., '5', '3.2 cm', 'a', '√2', null). Null means no label. Positioned at midpoint of side."
+			),
+		tickMarks: z
+			.number()
+			.int()
+			.min(0)
+			.describe(
+				"Number of tick marks showing congruence (0 = no marks, 1 = single mark, 2 = double marks, etc.). Same count indicates congruent sides."
+			)
+	})
+	.strict()
 
-const Angle = z.object({ 
-	pointOnFirstRay: z.string().describe("Point ID on the first ray of the angle (e.g., 'A' in angle ABC). Forms one side of the angle with the vertex."), 
-	vertex: z.string().describe("Point ID at the vertex of the angle (e.g., 'B' in angle ABC). The angle is measured at this point."), 
-	pointOnSecondRay: z.string().describe("Point ID on the second ray of the angle (e.g., 'C' in angle ABC). Forms the other side of the angle with the vertex."), 
-	label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Angle measurement or name (e.g., '45°', '90°', 'θ', '∠ABC', 'x', null). Null shows arc without label."), 
-	color: z.string().regex(
-		CSS_COLOR_PATTERN,
-		"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-	).describe("CSS color for the angle arc (e.g., '#FF6B6B' for red, 'blue', 'green'). Different colors distinguish multiple angles."), 
-	radius: z.number().describe("Radius of the angle arc in pixels (e.g., 25, 30, 20). Larger radii for outer angles when multiple angles share a vertex."), 
-	isRightAngle: z.boolean().describe("If true, shows a square corner instead of arc to indicate 90°. Overrides arc display."), 
-	showArc: z.boolean().describe("Whether to display the angle arc/square. False shows only the label without visual marker.") 
-}).strict()
+const Angle = z
+	.object({
+		pointOnFirstRay: z
+			.string()
+			.describe(
+				"Point ID on the first ray of the angle (e.g., 'A' in angle ABC). Forms one side of the angle with the vertex."
+			),
+		vertex: z
+			.string()
+			.describe("Point ID at the vertex of the angle (e.g., 'B' in angle ABC). The angle is measured at this point."),
+		pointOnSecondRay: z
+			.string()
+			.describe(
+				"Point ID on the second ray of the angle (e.g., 'C' in angle ABC). Forms the other side of the angle with the vertex."
+			),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe(
+				"Angle measurement or name (e.g., '45°', '90°', 'θ', '∠ABC', 'x', null). Null shows arc without label."
+			),
+		color: z
+			.string()
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
+			.describe(
+				"CSS color for the angle arc (e.g., '#FF6B6B' for red, 'blue', 'green'). Different colors distinguish multiple angles."
+			),
+		radius: z
+			.number()
+			.describe(
+				"Radius of the angle arc in pixels (e.g., 25, 30, 20). Larger radii for outer angles when multiple angles share a vertex."
+			),
+		isRightAngle: z
+			.boolean()
+			.describe("If true, shows a square corner instead of arc to indicate 90°. Overrides arc display."),
+		showArc: z
+			.boolean()
+			.describe("Whether to display the angle arc/square. False shows only the label without visual marker.")
+	})
+	.strict()
 
-const InternalLine = z.object({ 
-	from: z.string().describe("Starting point ID for the line segment. Must match a point.id in points array (e.g., 'A', 'M')."), 
-	to: z.string().describe("Ending point ID for the line segment. Must match a point.id in points array (e.g., 'D', 'P')."), 
-	style: z.enum(['solid','dashed','dotted']).describe("Visual style of the line. 'solid' for main elements, 'dashed' for auxiliary lines, 'dotted' for reference lines.") 
-}).strict()
+const InternalLine = z
+	.object({
+		from: z
+			.string()
+			.describe("Starting point ID for the line segment. Must match a point.id in points array (e.g., 'A', 'M')."),
+		to: z
+			.string()
+			.describe("Ending point ID for the line segment. Must match a point.id in points array (e.g., 'D', 'P')."),
+		style: z
+			.enum(["solid", "dashed", "dotted"])
+			.describe(
+				"Visual style of the line. 'solid' for main elements, 'dashed' for auxiliary lines, 'dotted' for reference lines."
+			)
+	})
+	.strict()
 
-const ShadedRegion = z.object({ 
-	vertices: z.array(z.string()).describe("Ordered point IDs defining the region to shade. Connect in sequence to form closed polygon (e.g., ['A','B','M'] for triangle ABM). Min 3 points."), 
-	color: z.string().regex(
-		CSS_COLOR_PATTERN,
-		"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-	).describe("CSS fill color with transparency (e.g., 'rgba(255,0,0,0.2)' for light red, 'rgba(0,128,255,0.3)' for light blue). Use alpha < 0.5 for transparency.") 
-}).strict()
+const ShadedRegion = z
+	.object({
+		vertices: z
+			.array(z.string())
+			.describe(
+				"Ordered point IDs defining the region to shade. Connect in sequence to form closed polygon (e.g., ['A','B','M'] for triangle ABM). Min 3 points."
+			),
+		color: z
+			.string()
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
+			.describe(
+				"CSS fill color with transparency (e.g., 'rgba(255,0,0,0.2)' for light red, 'rgba(0,128,255,0.3)' for light blue). Use alpha < 0.5 for transparency."
+			)
+	})
+	.strict()
 
-export const TriangleDiagramPropsSchema = z.object({
-	type: z.literal('triangleDiagram').describe("Identifies this as a triangle diagram widget for geometric constructions and proofs."),
-	width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 400, 500, 350). Must accommodate the triangle and all labels."),
-	height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 350, 400, 300). Should fit the triangle with comfortable padding."),
-	points: z.array(Point).describe("All vertices used in the diagram. Must include at least 3 points to form the main triangle. Can include additional points for constructions."),
-	sides: z.array(Side).describe("Side annotations with labels and congruence marks. Empty array means no side labels. Order doesn't affect display."),
-	angles: z.array(Angle).describe("Angle annotations with arcs, labels, and optional right-angle markers. Empty array means no angle marks."),
-	internalLines: z.array(InternalLine).describe("Additional line segments like altitudes, medians, or angle bisectors. Empty array means no internal lines."),
-	shadedRegions: z.array(ShadedRegion).describe("Regions to fill with translucent color. Empty array means no shading. Useful for highlighting areas or showing equal regions."),
-}).strict().describe("Creates triangle diagrams with comprehensive geometric annotations including side lengths, angles, tick marks for congruence, internal lines (altitudes, medians), and shaded regions. Perfect for geometric proofs, constructions, and teaching triangle properties. Supports multiple triangles and complex constructions through flexible point system.")
+export const TriangleDiagramPropsSchema = z
+	.object({
+		type: z
+			.literal("triangleDiagram")
+			.describe("Identifies this as a triangle diagram widget for geometric constructions and proofs."),
+		width: z
+			.number()
+			.positive()
+			.describe(
+				"Total width of the diagram in pixels (e.g., 400, 500, 350). Must accommodate the triangle and all labels."
+			),
+		height: z
+			.number()
+			.positive()
+			.describe(
+				"Total height of the diagram in pixels (e.g., 350, 400, 300). Should fit the triangle with comfortable padding."
+			),
+		points: z
+			.array(Point)
+			.describe(
+				"All vertices used in the diagram. Must include at least 3 points to form the main triangle. Can include additional points for constructions."
+			),
+		sides: z
+			.array(Side)
+			.describe(
+				"Side annotations with labels and congruence marks. Empty array means no side labels. Order doesn't affect display."
+			),
+		angles: z
+			.array(Angle)
+			.describe(
+				"Angle annotations with arcs, labels, and optional right-angle markers. Empty array means no angle marks."
+			),
+		internalLines: z
+			.array(InternalLine)
+			.describe(
+				"Additional line segments like altitudes, medians, or angle bisectors. Empty array means no internal lines."
+			),
+		shadedRegions: z
+			.array(ShadedRegion)
+			.describe(
+				"Regions to fill with translucent color. Empty array means no shading. Useful for highlighting areas or showing equal regions."
+			)
+	})
+	.strict()
+	.describe(
+		"Creates triangle diagrams with comprehensive geometric annotations including side lengths, angles, tick marks for congruence, internal lines (altitudes, medians), and shaded regions. Perfect for geometric proofs, constructions, and teaching triangle properties. Supports multiple triangles and complex constructions through flexible point system."
+	)
 
 export type TriangleDiagramProps = z.infer<typeof TriangleDiagramPropsSchema>
 
@@ -81,9 +206,14 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 	const pointMap = new Map(points.map((p) => [p.id, p]))
 
 	// Compute centroid of the main triangle (first 3 points) to infer outward direction
-	const pAforCentroid = points[0]!
-	const pBforCentroid = points[1]!
-	const pCforCentroid = points[2]!
+	// Safe to access without checks since we validated points.length >= 3 above
+	const pAforCentroid = points[0]
+	const pBforCentroid = points[1]
+	const pCforCentroid = points[2]
+	if (!pAforCentroid || !pBforCentroid || !pCforCentroid) {
+		logger.error("triangle diagram missing required points", { points: points.slice(0, 3) })
+		throw errors.new("triangle diagram: first 3 points are required")
+	}
 	const centroidXForAngles = (pAforCentroid.x + pBforCentroid.x + pCforCentroid.x) / 3
 	const centroidYForAngles = (pAforCentroid.y + pBforCentroid.y + pCforCentroid.y) / 3
 
@@ -253,9 +383,14 @@ export const generateTriangleDiagram: WidgetGenerator<typeof TriangleDiagramProp
 
 	// Layer 5: Sides (Labels and Ticks)
 	// Compute centroid of the main triangle (first 3 points) to determine outward direction
-	const pA = points[0]!
-	const pB = points[1]!
-	const pC = points[2]!
+	// Safe to access without checks since we validated points.length >= 3 above
+	const pA = points[0]
+	const pB = points[1]
+	const pC = points[2]
+	if (!pA || !pB || !pC) {
+		logger.error("triangle diagram missing required points for sides", { points: points.slice(0, 3) })
+		throw errors.new("triangle diagram: first 3 points are required for sides")
+	}
 	const centroidX = (pA.x + pB.x + pC.x) / 3
 	const centroidY = (pA.y + pB.y + pC.y) / 3
 

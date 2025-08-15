@@ -6,6 +6,7 @@
  * All tags are prefixed with `qti-` as per the standard, based on the
  * "Question & Test Interoperability (QTI) 3.0 Best Practices and Implementation Guide".
  */
+
 export const VALID_QTI_TAGS: Readonly<string[]> = [
 	// Core Assessment Structure
 	"qti-assessment-item",

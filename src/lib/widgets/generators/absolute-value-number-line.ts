@@ -23,10 +23,7 @@ export const AbsoluteValueNumberLinePropsSchema = z
 		value: z.number().describe("The number whose absolute value is being illustrated."),
 		highlightColor: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe("the css color for the distance highlight and point; explicit to ensure consistent styling"),
 		showDistanceLabel: z.boolean().describe("If true, shows a text label indicating the distance from zero.")
 	})

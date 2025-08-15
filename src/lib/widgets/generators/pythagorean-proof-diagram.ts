@@ -3,24 +3,64 @@ import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 function createSideSquareSchema() {
-  return z.object({ 
-    area: z.number().describe("The area of this square in square units (e.g., 9, 16, 25, 12.5). Will be displayed inside the square. For Pythagorean theorem: a² + b² = c²."), 
-    sideLabel: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Label for the triangle side this square is attached to (e.g., 'a', 'b', 'c', '3', '4', null). Null means no side label. Typically lowercase letters."),
-    color: z.string().regex(
-      CSS_COLOR_PATTERN,
-      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
-    ).describe("Hex-only color for this square (e.g., '#FFE082', '#1E90FF', '#FFC864CC' for ~80% alpha). Should contrast with text and background.")
-  }).strict()
+	return z
+		.object({
+			area: z
+				.number()
+				.describe(
+					"The area of this square in square units (e.g., 9, 16, 25, 12.5). Will be displayed inside the square. For Pythagorean theorem: a² + b² = c²."
+				),
+			sideLabel: z
+				.string()
+				.nullable()
+				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+				.describe(
+					"Label for the triangle side this square is attached to (e.g., 'a', 'b', 'c', '3', '4', null). Null means no side label. Typically lowercase letters."
+				),
+			color: z
+				.string()
+				.regex(
+					CSS_COLOR_PATTERN,
+					"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+				)
+				.describe(
+					"Hex-only color for this square (e.g., '#FFE082', '#1E90FF', '#FFC864CC' for ~80% alpha). Should contrast with text and background."
+				)
+		})
+		.strict()
 }
 
-export const PythagoreanProofDiagramPropsSchema = z.object({
-  type: z.literal('pythagoreanProofDiagram').describe("Identifies this as a Pythagorean proof diagram showing the classic visual demonstration."),
-  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 400, 500, 600). Must accommodate all three squares and labels."),
-  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 400, 500, 600). Should be similar to width for proper proportions."),
-  squareA: createSideSquareSchema().describe("The square on the first leg of the right triangle. Its area represents a² in the theorem."),
-  squareB: createSideSquareSchema().describe("The square on the second leg of the right triangle. Its area represents b² in the theorem."),
-  squareC: createSideSquareSchema().describe("The square on the hypotenuse of the right triangle. Its area represents c². Should equal squareA.area + squareB.area."),
-}).strict().describe("Creates the classic visual proof of the Pythagorean theorem showing a right triangle with squares constructed on each side. The areas of the squares demonstrate that a² + b² = c². Essential for geometry education and visual understanding of the theorem.")
+export const PythagoreanProofDiagramPropsSchema = z
+	.object({
+		type: z
+			.literal("pythagoreanProofDiagram")
+			.describe("Identifies this as a Pythagorean proof diagram showing the classic visual demonstration."),
+		width: z
+			.number()
+			.positive()
+			.describe(
+				"Total width of the diagram in pixels (e.g., 400, 500, 600). Must accommodate all three squares and labels."
+			),
+		height: z
+			.number()
+			.positive()
+			.describe(
+				"Total height of the diagram in pixels (e.g., 400, 500, 600). Should be similar to width for proper proportions."
+			),
+		squareA: createSideSquareSchema().describe(
+			"The square on the first leg of the right triangle. Its area represents a² in the theorem."
+		),
+		squareB: createSideSquareSchema().describe(
+			"The square on the second leg of the right triangle. Its area represents b² in the theorem."
+		),
+		squareC: createSideSquareSchema().describe(
+			"The square on the hypotenuse of the right triangle. Its area represents c². Should equal squareA.area + squareB.area."
+		)
+	})
+	.strict()
+	.describe(
+		"Creates the classic visual proof of the Pythagorean theorem showing a right triangle with squares constructed on each side. The areas of the squares demonstrate that a² + b² = c². Essential for geometry education and visual understanding of the theorem."
+	)
 
 export type PythagoreanProofDiagramProps = z.infer<typeof PythagoreanProofDiagramPropsSchema>
 

@@ -1,22 +1,68 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrMismatchedTickCounts = errors.new("top and bottom lines must have the same number of ticks")
 
-export const DoubleNumberLinePropsSchema = z.object({
-  type: z.literal('doubleNumberLine').describe("Identifies this as a double number line widget for showing proportional relationships."),
-  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 600, 700, 500). Must accommodate both labels and all tick values."),
-  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 200, 250, 180). Includes space for both lines, labels, and vertical spacing."),
-  topLine: z.object({ 
-    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Label for this number line shown on the left side (e.g., 'Cups of Flour', 'Cost ($)', 'Miles', 'Time (minutes)', null). Keep concise to fit. Null shows no label."), 
-    ticks: z.array(z.union([z.string(), z.number()])).describe("Tick mark values from left to right. Can be numbers (e.g., [0, 2, 4, 6]) or strings (e.g., ['0', '1/2', '1', '3/2']). Must have same count as other line for alignment.") 
-  }).strict().describe("Configuration for the upper number line. Represents one quantity in the proportional relationship."),
-  bottomLine: z.object({ 
-    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Label for this number line shown on the left side (e.g., 'Cups of Flour', 'Cost ($)', 'Miles', 'Time (minutes)', null). Keep concise to fit. Null shows no label."), 
-    ticks: z.array(z.union([z.string(), z.number()])).describe("Tick mark values from left to right. Can be numbers (e.g., [0, 2, 4, 6]) or strings (e.g., ['0', '1/2', '1', '3/2']). Must have same count as other line for alignment.") 
-  }).strict().describe("Configuration for the lower number line. Represents the related quantity. Tick positions align vertically with top line."),
-}).strict().describe("Creates parallel number lines showing proportional relationships between two quantities. Vertical lines connect corresponding values. Essential for ratio reasoning, unit rates, and proportional thinking. Both lines must have the same number of ticks for proper alignment.")
+export const DoubleNumberLinePropsSchema = z
+	.object({
+		type: z
+			.literal("doubleNumberLine")
+			.describe("Identifies this as a double number line widget for showing proportional relationships."),
+		width: z
+			.number()
+			.positive()
+			.describe(
+				"Total width of the diagram in pixels (e.g., 600, 700, 500). Must accommodate both labels and all tick values."
+			),
+		height: z
+			.number()
+			.positive()
+			.describe(
+				"Total height of the diagram in pixels (e.g., 200, 250, 180). Includes space for both lines, labels, and vertical spacing."
+			),
+		topLine: z
+			.object({
+				label: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+					.describe(
+						"Label for this number line shown on the left side (e.g., 'Cups of Flour', 'Cost ($)', 'Miles', 'Time (minutes)', null). Keep concise to fit. Null shows no label."
+					),
+				ticks: z
+					.array(z.union([z.string(), z.number()]))
+					.describe(
+						"Tick mark values from left to right. Can be numbers (e.g., [0, 2, 4, 6]) or strings (e.g., ['0', '1/2', '1', '3/2']). Must have same count as other line for alignment."
+					)
+			})
+			.strict()
+			.describe("Configuration for the upper number line. Represents one quantity in the proportional relationship."),
+		bottomLine: z
+			.object({
+				label: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+					.describe(
+						"Label for this number line shown on the left side (e.g., 'Cups of Flour', 'Cost ($)', 'Miles', 'Time (minutes)', null). Keep concise to fit. Null shows no label."
+					),
+				ticks: z
+					.array(z.union([z.string(), z.number()]))
+					.describe(
+						"Tick mark values from left to right. Can be numbers (e.g., [0, 2, 4, 6]) or strings (e.g., ['0', '1/2', '1', '3/2']). Must have same count as other line for alignment."
+					)
+			})
+			.strict()
+			.describe(
+				"Configuration for the lower number line. Represents the related quantity. Tick positions align vertically with top line."
+			)
+	})
+	.strict()
+	.describe(
+		"Creates parallel number lines showing proportional relationships between two quantities. Vertical lines connect corresponding values. Essential for ratio reasoning, unit rates, and proportional thinking. Both lines must have the same number of ticks for proper alignment."
+	)
 
 export type DoubleNumberLineProps = z.infer<typeof DoubleNumberLinePropsSchema>
 
@@ -48,6 +94,10 @@ export const generateDoubleNumberLine: WidgetGenerator<typeof DoubleNumberLinePr
 	const bottomY = verticalCenter + LINE_SEPARATION / 2
 
 	if (topLine.ticks.length !== bottomLine.ticks.length) {
+		logger.error("mismatched tick counts between top and bottom lines", {
+			topTickCount: topLine.ticks.length,
+			bottomTickCount: bottomLine.ticks.length
+		})
 		throw errors.wrap(
 			ErrMismatchedTickCounts,
 			`top line has ${topLine.ticks.length} ticks, bottom line has ${bottomLine.ticks.length} ticks`

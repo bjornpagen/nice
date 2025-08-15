@@ -995,6 +995,7 @@ export class Client {
 		// Validate the transformed request
 		const apiValidation = ProcessResponseApiRequestSchema.safeParse(apiRequest)
 		if (!apiValidation.success) {
+			logger.error("processResponse api request validation failed", { error: apiValidation.error, identifier })
 			throw errors.wrap(apiValidation.error, "processResponse api request validation")
 		}
 
@@ -1022,6 +1023,11 @@ export class Client {
 		logger.info("qti client: validating xml", { schema: input.schema, entityId: input.entityId })
 		const validation = ValidateXmlInputSchema.safeParse(input)
 		if (!validation.success) {
+			logger.error("validateXml input validation failed", {
+				error: validation.error,
+				schema: input.schema,
+				entityId: input.entityId
+			})
 			throw errors.wrap(validation.error, "validateXml input validation")
 		}
 

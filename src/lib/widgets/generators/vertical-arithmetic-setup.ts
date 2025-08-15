@@ -4,11 +4,33 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // The main Zod schema for the verticalArithmeticSetup function
 export const VerticalArithmeticSetupPropsSchema = z
 	.object({
-		type: z.literal("verticalArithmeticSetup").describe("Identifies this as a vertical arithmetic setup widget for displaying math problems in traditional column format."),
-		title: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Optional instruction or problem context displayed above the arithmetic (e.g., 'Calculate:', 'Find the product:', 'Solve:', null). Null means no title."),
-		operand1: z.string().describe("The top number in the calculation, as a string to preserve formatting (e.g., '345', '12.5', '1,234', '7'). Appears above the line."),
-		operand2: z.string().describe("The bottom number in the calculation, as a string to preserve formatting (e.g., '67', '0.25', '89', '456'). Appears below operand1."),
-		operator: z.enum(["×", "+", "−"]).describe("The arithmetic operation symbol. '×' for multiplication, '+' for addition, '−' for subtraction. Appears to the left of operand2.")
+		type: z
+			.literal("verticalArithmeticSetup")
+			.describe(
+				"Identifies this as a vertical arithmetic setup widget for displaying math problems in traditional column format."
+			),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe(
+				"Optional instruction or problem context displayed above the arithmetic (e.g., 'Calculate:', 'Find the product:', 'Solve:', null). Null means no title."
+			),
+		operand1: z
+			.string()
+			.describe(
+				"The top number in the calculation, as a string to preserve formatting (e.g., '345', '12.5', '1,234', '7'). Appears above the line."
+			),
+		operand2: z
+			.string()
+			.describe(
+				"The bottom number in the calculation, as a string to preserve formatting (e.g., '67', '0.25', '89', '456'). Appears below operand1."
+			),
+		operator: z
+			.enum(["×", "+", "−"])
+			.describe(
+				"The arithmetic operation symbol. '×' for multiplication, '+' for addition, '−' for subtraction. Appears to the left of operand2."
+			)
 	})
 	.strict()
 	.describe(

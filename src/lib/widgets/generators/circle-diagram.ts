@@ -19,10 +19,7 @@ const SegmentSchema = z
 			),
 		color: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe(
 				"CSS color for the segment line (e.g., '#333333' for dark gray, 'red', 'rgba(0,0,255,0.8)'). Should contrast with circle fill."
 			),
@@ -50,10 +47,7 @@ const SectorSchema = z
 			),
 		fillColor: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe(
 				"Hex-only fill color for the sector/wedge (e.g., '#FFE5B4', '#1E90FF', '#FF00004D' for ~30% alpha). Creates pie-slice effect."
 			),
@@ -88,10 +82,7 @@ const ArcSchema = z
 			),
 		strokeColor: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe(
 				"Hex-only color for the arc line (e.g., '#FF6B6B', '#1E90FF', '#008000'). Should be visible against background and sectors."
 			),
@@ -142,19 +133,13 @@ export const CircleDiagramPropsSchema = z
 			),
 		fillColor: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe(
 				"Hex-only fill color for the main circle area (e.g., '#E8F4FD', 'white', 'transparent', '#FFFF004D' for ~30% alpha). Use 'transparent' for outline only."
 			),
 		strokeColor: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe(
 				"Hex-only color for the circle's border/outline (e.g., '#000000', '#333333', '#00008B'). Set to 'transparent' or match fillColor for no visible border."
 			),

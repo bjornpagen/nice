@@ -1,5 +1,5 @@
 import * as errors from "@superbuilders/errors"
-import type * as logger from "@superbuilders/slog"
+import * as logger from "@superbuilders/slog"
 import { qti } from "@/lib/clients"
 import { ErrQtiNotFound } from "@/lib/qti"
 import { QTI_INTERACTION_TAGS } from "@/lib/qti-generation/valid-tags"
@@ -125,55 +125,70 @@ function validateXmlAngleBrackets(xml: string, logger: logger.Logger): string | 
 }
 
 export function validateRootElement(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	const rootTagRegex = new RegExp(
 		`^<\\?xml[^>]*\\?>\\s*<${context.rootTag}[^>]*>[\\s\\S]*<\\/${context.rootTag}>\\s*$`,
 		"s"
 	)
 	if (!rootTagRegex.test(xml.trim())) {
+		logger.error("invalid xml root", { rootTag: context.rootTag, xmlLength: xml.length })
 		throw errors.new(`invalid xml root: expected a complete document with a single <${context.rootTag}> root element.`)
 	}
 }
 
 export function validateTitleAttribute(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// Extract the root element opening tag
 	const rootTagMatch = xml.match(new RegExp(`<${context.rootTag}([^>]*)>`, "s"))
 	if (!rootTagMatch) {
+		logger.error("invalid xml: missing opening tag", { rootTag: context.rootTag, xmlLength: xml.length })
 		throw errors.new(`invalid xml: could not find ${context.rootTag} opening tag`)
 	}
 
 	const attributes = rootTagMatch[1]
 	if (!attributes) {
+		logger.error("invalid xml: missing attributes", { rootTag: context.rootTag })
 		throw errors.new(`invalid xml: missing attributes in <${context.rootTag}> element`)
 	}
 
 	// Check if title attribute exists
 	const titleMatch = attributes.match(/\btitle\s*=\s*["']([^"']*?)["']/)
 	if (!titleMatch) {
+		logger.error("invalid xml: missing title attribute", { rootTag: context.rootTag, attributes })
 		throw errors.new(`invalid xml: missing required 'title' attribute in <${context.rootTag}> element`)
 	}
 
 	// Check if title is empty
 	const titleValue = titleMatch[1]
 	if (!titleValue || !titleValue.trim()) {
+		logger.error("invalid xml: empty title attribute", { rootTag: context.rootTag, titleValue })
 		throw errors.new(`invalid xml: 'title' attribute in <${context.rootTag}> element cannot be empty`)
 	}
 
-	context.logger.debug("validated title attribute", { title: titleValue.trim() })
+	logger.debug("validated title attribute", { title: titleValue.trim() })
 }
 
-export function validateTruncatedTags(xml: string, _context: ValidationContext): void {
+export function validateTruncatedTags(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	const match = xml.match(REGEX.TRUNCATED_TAG)
 	if (match) {
-		const context = xml.substring(Math.max(0, (match.index ?? 0) - 50), (match.index ?? 0) + 50)
+		const xmlContext = xml.substring(Math.max(0, (match.index ?? 0) - 50), (match.index ?? 0) + 50)
+		logger.error("invalid xml closing tag: truncated or malformed", {
+			matchedTag: match[0],
+			context: xmlContext,
+			index: match.index
+		})
 		throw errors.new(
-			`invalid xml closing tag: detected a truncated or malformed closing tag '${match[0]}'. Context: "...${context}..."`
+			`invalid xml closing tag: detected a truncated or malformed closing tag '${match[0]}'. Context: "...${xmlContext}..."`
 		)
 	}
 }
 
-export function validatePerseusArtifacts(xml: string, _context: ValidationContext): void {
+export function validatePerseusArtifacts(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	const match = xml.match(REGEX.PERSEUS_ARTIFACT)
 	if (match) {
+		logger.error("invalid xml content: Perseus artifact detected", { artifact: match[0], position: match.index })
 		throw errors.new(
 			`invalid xml content: Perseus artifact '[[☃ ...]]' is not allowed in QTI XML and must be removed or converted. Found: ${match[0]}`
 		)
@@ -185,7 +200,8 @@ export function validatePerseusArtifacts(xml: string, _context: ValidationContex
  * It does this by stripping out all valid interaction blocks and then checking if any
  * <qti-prompt> tags remain. If they do, they were in an invalid location.
  */
-export function validatePromptPlacement(xml: string, _context: ValidationContext): void {
+export function validatePromptPlacement(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// Create a regex that matches any valid interaction tag and its entire content.
 	const interactionTagsPattern = QTI_INTERACTION_TAGS.join("|")
 	const interactionBlockRegex = new RegExp(`<(${interactionTagsPattern})[\\s\\S]*?<\\/\\1>`, "g")
@@ -196,6 +212,7 @@ export function validatePromptPlacement(xml: string, _context: ValidationContext
 	const promptMatch = xmlWithoutInteractions.match(/<qti-prompt/)
 	if (promptMatch) {
 		if (promptMatch.index === undefined) {
+			logger.error("regex engine failure: prompt match found but index is undefined")
 			throw errors.new("regex engine failure: prompt match found but index is undefined")
 		}
 		const contextIndex = promptMatch.index
@@ -205,10 +222,15 @@ export function validatePromptPlacement(xml: string, _context: ValidationContext
 		const hasInteractionTag = new RegExp(`<(?:${interactionTagsPattern})`).test(xml)
 
 		if (hasInteractionTag) {
+			logger.error("invalid qti-prompt placement: must be child of interaction", {
+				contextSnippet: context,
+				contextIndex
+			})
 			throw errors.new(
 				`invalid qti-prompt placement: <qti-prompt> must be a direct child of an interaction element (e.g., qti-choice-interaction), not qti-item-body. Move the <qti-prompt> inside the interaction tag. Context: "...${context}..."`
 			)
 		}
+		logger.error("invalid qti-prompt placement: no interaction element", { contextSnippet: context, contextIndex })
 		throw errors.new(
 			`invalid qti-prompt placement: <qti-prompt> is not allowed without an interaction element. Convert the <qti-prompt> to a <p> tag instead. Context: "...${context}..."`
 		)
@@ -219,7 +241,8 @@ export function validatePromptPlacement(xml: string, _context: ValidationContext
  * Validates that min-choices and max-choices attributes are ALWAYS present on interactions that support them.
  * These attributes are required for safety and explicit behavior definition.
  */
-export function validateInteractionAttributes(xml: string, _context: ValidationContext): void {
+export function validateInteractionAttributes(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// Define which interaction types require min-choices and max-choices attributes
 	const INTERACTIONS_REQUIRING_CHOICES = new Set([
 		"qti-choice-interaction",
@@ -257,6 +280,7 @@ export function validateInteractionAttributes(xml: string, _context: ValidationC
 		if (INTERACTIONS_REQUIRING_CHOICES.has(tagName)) {
 			// If attributes is undefined, it means the tag has no attributes at all
 			if (!attributes) {
+				logger.error("invalid interaction attributes: no attributes", { tagName })
 				throw errors.new(
 					`invalid interaction attributes: <${tagName}> has no attributes. Both min-choices and max-choices attributes are required.`
 				)
@@ -271,16 +295,19 @@ export function validateInteractionAttributes(xml: string, _context: ValidationC
 
 			// Both attributes MUST be present
 			if (!hasMinChoices && !hasMaxChoices) {
+				logger.error("invalid interaction attributes: missing both required attributes", { tagName, attributes })
 				throw errors.new(
 					`invalid interaction attributes: Both min-choices and max-choices attributes are required on <${tagName}>. Neither attribute was found. Found: <${tagName}${attributes}>`
 				)
 			}
 			if (!hasMinChoices) {
+				logger.error("invalid interaction attributes: missing min-choices", { tagName, attributes })
 				throw errors.new(
 					`invalid interaction attributes: min-choices attribute is required on <${tagName}>. Found: <${tagName}${attributes}>`
 				)
 			}
 			if (!hasMaxChoices) {
+				logger.error("invalid interaction attributes: missing max-choices", { tagName, attributes })
 				throw errors.new(
 					`invalid interaction attributes: max-choices attribute is required on <${tagName}>. Found: <${tagName}${attributes}>`
 				)
@@ -295,7 +322,8 @@ export function validateInteractionAttributes(xml: string, _context: ValidationC
  * Validates that qti-text-entry-interaction elements are properly wrapped in block-level elements.
  * These interactions cannot be direct children of qti-item-body.
  */
-export function validateTextEntryInteractionPlacement(xml: string, _context: ValidationContext): void {
+export function validateTextEntryInteractionPlacement(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// First, let's check if there are any text-entry-interactions at all
 	if (!xml.includes("qti-text-entry-interaction")) {
 		return
@@ -365,18 +393,20 @@ export function validateTextEntryInteractionPlacement(xml: string, _context: Val
 		const position = itemBodyContent.indexOf(matchedText)
 		const contextStart = Math.max(0, position - 100)
 		const contextEnd = Math.min(itemBodyContent.length, position + 100)
-		const context = itemBodyContent.substring(contextStart, contextEnd).replace(/\s+/g, " ")
-
+		const errorContext = itemBodyContent.substring(contextStart, contextEnd).replace(/\s+/g, " ")
+		logger.error("invalid qti-text-entry-interaction placement", { matchedText, position, errorContext })
 		throw errors.new(
-			`invalid qti-text-entry-interaction placement: qti-text-entry-interaction must be wrapped in a block-level element (e.g., <p>, <div>, <li>). It cannot be a direct child of qti-item-body. Context: "...${context}..."`
+			`invalid qti-text-entry-interaction placement: qti-text-entry-interaction must be wrapped in a block-level element (e.g., <p>, <div>, <li>). It cannot be a direct child of qti-item-body. Context: "...${errorContext}..."`
 		)
 	}
 }
 
 export function validateHtmlEntities(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// Check for unescaped angle brackets which are the most critical issue
-	const angleValidationError = validateXmlAngleBrackets(xml, context.logger)
+	const angleValidationError = validateXmlAngleBrackets(xml, logger)
 	if (angleValidationError) {
+		logger.error("xml angle bracket validation failed", { error: angleValidationError })
 		throw errors.new(angleValidationError)
 	}
 }
@@ -388,15 +418,13 @@ export function validateHtmlEntities(xml: string, context: ValidationContext): v
  * and for expressions enclosed in dollar signs (e.g., `$x^2$`).
  */
 export function validateNoLatex(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// Check #1: Look for command-like LaTeX (e.g., \frac, \sqrt)
 	const latexCommandMatch = xml.match(REGEX.LATEX_LIKE)
 	if (latexCommandMatch) {
 		const contextIndex = latexCommandMatch.index ?? 0
 		const errorContext = xml.substring(Math.max(0, contextIndex - 50), Math.min(xml.length, contextIndex + 100))
-		context.logger.error("found latex command-like content", {
-			match: latexCommandMatch[0],
-			context: errorContext
-		})
+		logger.error("found latex command-like content", { match: latexCommandMatch[0], context: errorContext })
 		throw errors.new(
 			`invalid content: LaTeX command-like content is not allowed in QTI. Use MathML instead. Found: "${latexCommandMatch[0]}". Context: "...${errorContext}..."`
 		)
@@ -464,7 +492,7 @@ export function validateNoLatex(xml: string, context: ValidationContext): void {
 				if (originalMatch) {
 					const contextIndex = originalMatch.index ?? 0
 					const errorContext = xml.substring(Math.max(0, contextIndex - 50), Math.min(xml.length, contextIndex + 100))
-					context.logger.error("found dollar-sign delimited latex content", {
+					logger.error("found dollar-sign delimited latex content", {
 						match: match[0],
 						content: content,
 						context: errorContext
@@ -479,10 +507,11 @@ export function validateNoLatex(xml: string, context: ValidationContext): void {
 		match = dollarPairRegex.exec(processedXml)
 	}
 
-	context.logger.debug("validated no latex content")
+	logger.debug("validated no latex content")
 }
 
-export async function validateImageUrls(xml: string, _context: ValidationContext): Promise<void> {
+export async function validateImageUrls(xml: string, context: ValidationContext): Promise<void> {
+	const { logger } = context
 	const uniqueUrls = [...new Set(Array.from(xml.matchAll(REGEX.IMAGE_URL), (m) => m.groups?.url ?? ""))]
 	if (uniqueUrls.length === 0) {
 		return
@@ -576,6 +605,7 @@ export async function validateImageUrls(xml: string, _context: ValidationContext
 			})
 			.join("; ")
 		const message = `invalid image urls: Found ${invalidUrls.length} inaccessible image URLs. They must be corrected or removed. Details: ${errorDetails}`
+		logger.error("invalid image urls found", { count: invalidUrls.length, invalidUrls })
 		throw errors.new(message)
 	}
 }
@@ -589,10 +619,12 @@ async function upsertItem(identifier: string, xml: string): Promise<void> {
 		if (errors.is(updateResult.error, ErrQtiNotFound)) {
 			const createResult = await errors.try(qti.createAssessmentItem({ xml }))
 			if (createResult.error) {
+				logger.error("qti create after update 404 failed", { error: createResult.error, identifier })
 				throw errors.wrap(createResult.error, "qti create after update 404")
 			}
 			return
 		}
+		logger.error("qti update failed", { error: updateResult.error, identifier })
 		throw updateResult.error
 	}
 }
@@ -605,16 +637,19 @@ async function upsertStimulus(identifier: string, title: string, content: string
 		if (errors.is(updateResult.error, ErrQtiNotFound)) {
 			const createResult = await errors.try(qti.createStimulus(payload))
 			if (createResult.error) {
+				logger.error("qti create stimulus after update 404 failed", { error: createResult.error, identifier })
 				throw errors.wrap(createResult.error, "qti create after update 404")
 			}
 			return
 		}
+		logger.error("qti update stimulus failed", { error: updateResult.error, identifier })
 		throw updateResult.error
 	}
 }
 
 // Private helper for validating assessment items via the API.
 async function upsertAndCleanupItem(identifier: string, xml: string, context: ValidationContext): Promise<void> {
+	const { logger } = context
 	const safeTitle = escapeXmlAttribute(context.title)
 
 	const finalXml = xml.replace(/<qti-assessment-item([^>]*?)>/, (_match, group1) => {
@@ -636,7 +671,7 @@ async function upsertAndCleanupItem(identifier: string, xml: string, context: Va
 	})
 
 	// Debug log the exact XML being sent to the API
-	context.logger.debug("final assessment item xml being sent to qti api", {
+	logger.debug("final assessment item xml being sent to qti api", {
 		identifier,
 		title: context.title,
 		xmlLength: finalXml.length,
@@ -648,32 +683,36 @@ async function upsertAndCleanupItem(identifier: string, xml: string, context: Va
 
 	const upsertResult = await errors.try(upsertItem(identifier, finalXml))
 	if (upsertResult.error) {
+		logger.error("qti api validation failed for item", { error: upsertResult.error, identifier })
 		throw errors.wrap(upsertResult.error, "qti api validation failed for item")
 	}
 
 	const deleteResult = await errors.try(qti.deleteAssessmentItem(identifier))
 	if (deleteResult.error) {
 		// Log and continue. A failure to delete a temporary item should not fail the validation.
-		context.logger.error("failed to delete temporary validation item", { identifier, error: deleteResult.error })
+		logger.error("failed to delete temporary validation item", { identifier, error: deleteResult.error })
 	}
 }
 
 // Private helper for validating stimuli via the API.
 async function upsertAndCleanupStimulus(identifier: string, xml: string, context: ValidationContext): Promise<void> {
+	const { logger } = context
 	// For stimuli, title must not be empty
 	if (!context.title) {
+		logger.error("stimulus validation: title is required", { title: context.title })
 		throw errors.new("stimulus validation: title is required for stimuli")
 	}
 
 	// Extract the content from the qti-stimulus-body element
 	const contentResult = errors.trySync(() => extractQtiStimulusBodyContent(xml))
 	if (contentResult.error) {
+		logger.error("failed to extract qti-stimulus-body content for validation", { error: contentResult.error })
 		throw errors.wrap(contentResult.error, "failed to extract qti-stimulus-body content for validation")
 	}
 	const content = contentResult.data
 
 	// Debug log what we're sending to the API
-	context.logger.debug("extracted stimulus content for qti api", {
+	logger.debug("extracted stimulus content for qti api", {
 		identifier,
 		title: context.title,
 		originalXmlLength: xml.length,
@@ -684,12 +723,13 @@ async function upsertAndCleanupStimulus(identifier: string, xml: string, context
 	// The QTI API's content field expects only the inner HTML from qti-stimulus-body
 	const upsertResult = await errors.try(upsertStimulus(identifier, context.title, content))
 	if (upsertResult.error) {
+		logger.error("qti api validation failed for stimulus", { error: upsertResult.error, identifier })
 		throw errors.wrap(upsertResult.error, "qti api validation failed for stimulus")
 	}
 
 	const deleteResult = await errors.try(qti.deleteStimulus(identifier))
 	if (deleteResult.error) {
-		context.logger.error("failed to delete temporary validation stimulus", { identifier, error: deleteResult.error })
+		logger.error("failed to delete temporary validation stimulus", { identifier, error: deleteResult.error })
 	}
 }
 
@@ -698,6 +738,7 @@ async function upsertAndCleanupStimulus(identifier: string, xml: string, context
  * This serves as the ultimate "ground truth" validation pass.
  */
 export async function validateWithQtiApi(xml: string, context: ValidationContext): Promise<void> {
+	const { logger } = context
 	const tempIdentifier = `nice-tmp_${context.id}`
 
 	if (context.rootTag === "qti-assessment-item") {
@@ -705,6 +746,7 @@ export async function validateWithQtiApi(xml: string, context: ValidationContext
 	} else if (context.rootTag === "qti-assessment-stimulus") {
 		await upsertAndCleanupStimulus(tempIdentifier, xml, context)
 	} else {
+		logger.error("unsupported root tag for api validation", { rootTag: context.rootTag })
 		throw errors.new(`unsupported root tag for api validation: ${context.rootTag}`)
 	}
 }
@@ -714,6 +756,7 @@ export async function validateWithQtiApi(xml: string, context: ValidationContext
  * This ensures that stimulus items remain purely informational without interactions.
  */
 export function validateStimulusBodyContent(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// Only apply this validation to stimulus items
 	if (context.rootTag !== "qti-assessment-stimulus") {
 		return
@@ -754,6 +797,7 @@ export function validateStimulusBodyContent(xml: string, context: ValidationCont
 		const isInteraction = QTI_INTERACTION_TAGS.some((tag) => tag === tagName)
 
 		if (isInteraction) {
+			logger.error("invalid qti-stimulus-body content: interaction element found", { tagName, errorContext })
 			throw errors.new(
 				`invalid qti-stimulus-body content: QTI interaction elements are not allowed inside <qti-stimulus-body>. Found: <${tagName}>. Stimulus items must contain only HTML content for informational purposes. Context: "...${errorContext}..."`
 			)
@@ -761,17 +805,19 @@ export function validateStimulusBodyContent(xml: string, context: ValidationCont
 
 		// Special case for qti-prompt to provide more helpful guidance
 		if (tagName === "qti-prompt") {
+			logger.error("invalid qti-stimulus-body content: qti-prompt found", { tagName, errorContext })
 			throw errors.new(
 				`invalid qti-stimulus-body content: <qti-prompt> is not allowed inside <qti-stimulus-body>. Use standard HTML elements like <p> or <h2> instead for headings or text. Context: "...${errorContext}..."`
 			)
 		}
 
+		logger.error("invalid qti-stimulus-body content: qti element found", { tagName, errorContext })
 		throw errors.new(
 			`invalid qti-stimulus-body content: QTI elements are not allowed inside <qti-stimulus-body>. Found: <${tagName}>. Stimulus body must contain only standard HTML elements. Context: "...${errorContext}..."`
 		)
 	}
 
-	context.logger.debug("validated stimulus body contains only HTML", {
+	logger.debug("validated stimulus body contains only HTML", {
 		bodyLength: bodyContent.length
 	})
 }
@@ -809,13 +855,13 @@ export function validateNoSvgInStimulusBody(xml: string, context: ValidationCont
 		const contextStart = Math.max(0, position - 100)
 		const contextEnd = Math.min(bodyContent.length, position + 100)
 		const errorContext = bodyContent.substring(contextStart, contextEnd).replace(/\s+/g, " ")
-
+		logger.error("invalid qti-stimulus-body content: svg element found", { position, errorContext })
 		throw errors.new(
 			`invalid qti-stimulus-body content: SVG elements are not allowed inside <qti-stimulus-body>. The QTI API does not support SVG content in stimulus items. Consider using a PNG or JPG image instead. Context: "...${errorContext}..."`
 		)
 	}
 
-	context.logger.debug("validated no svg in stimulus body")
+	logger.debug("validated no svg in stimulus body")
 }
 
 /**
@@ -833,6 +879,7 @@ export const ErrContentUnsolvable = errors.new("qti content is not self-containe
  * For example, if the answer is 0.5, it should also accept .5
  */
 export function validateDecimalAnswerFormats(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// Find all text-entry interactions with numeric/decimal correct responses
 	// This regex matches qti-response-declaration elements and captures:
 	// - id: the identifier attribute value
@@ -889,7 +936,7 @@ export function validateDecimalAnswerFormats(xml: string, context: ValidationCon
 
 				if (valueCount === 1) {
 					// Only one format is accepted - this is problematic for decimal answers
-					context.logger.error("decimal answer only accepts one format", {
+					logger.error("decimal answer only accepts one format", {
 						responseId,
 						correctValue,
 						baseType
@@ -913,7 +960,7 @@ export function validateDecimalAnswerFormats(xml: string, context: ValidationCon
 				const valueCount = (valuesContent.match(/<qti-value>/g) || []).length
 
 				if (valueCount === 1) {
-					context.logger.error("decimal answer only accepts one format", {
+					logger.error("decimal answer only accepts one format", {
 						responseId,
 						correctValue,
 						baseType
@@ -928,7 +975,7 @@ export function validateDecimalAnswerFormats(xml: string, context: ValidationCon
 		match = responseDeclarationRegex.exec(xml)
 	}
 
-	context.logger.debug("validated decimal answer formats")
+	logger.debug("validated decimal answer formats")
 }
 
 /**
@@ -941,6 +988,7 @@ export function validateDecimalAnswerFormats(xml: string, context: ValidationCon
  *   <mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow>
  */
 export function validateNoMfencedElements(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// Check for any <mfenced> elements
 	const mfencedRegex = /<mfenced(?:\s+[^>]*)?>/i
 	const mfencedMatch = xml.match(mfencedRegex)
@@ -966,7 +1014,7 @@ export function validateNoMfencedElements(xml: string, context: ValidationContex
 			replacementExample = `<mrow><mo>${openDelim}</mo><!-- content with <mo>${firstSeparator}</mo> as separators --><mo>${closeDelim}</mo></mrow>`
 		}
 
-		context.logger.error("found deprecated mfenced element", {
+		logger.error("found deprecated mfenced element", {
 			match: mfencedMatch[0],
 			context: errorContext,
 			openDelimiter: openDelim,
@@ -979,7 +1027,7 @@ export function validateNoMfencedElements(xml: string, context: ValidationContex
 		)
 	}
 
-	context.logger.debug("validated no mfenced elements")
+	logger.debug("validated no mfenced elements")
 }
 
 /**
@@ -991,6 +1039,7 @@ export function validateNoMfencedElements(xml: string, context: ValidationContex
  * - Invalid tag structures
  */
 export function validateSvgDataUris(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// Find all img tags with SVG data URIs
 	// This regex captures both URL-encoded and base64-encoded SVG data
 	// Uses alternation to handle both double and single quoted attributes
@@ -1021,7 +1070,7 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 				return Buffer.from(svgData, "base64").toString("utf-8")
 			})
 			if (base64Result.error) {
-				context.logger.error("failed to decode base64 svg data uri", { error: base64Result.error })
+				logger.error("failed to decode base64 svg data uri", { error: base64Result.error })
 				throw errors.new(
 					"invalid svg data uri: Failed to decode base64 SVG content in img tag. The data URI may be malformed."
 				)
@@ -1031,7 +1080,7 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 			// Handle URL-encoded SVG
 			const svgDataResult = errors.trySync(() => decodeURIComponent(svgData))
 			if (svgDataResult.error) {
-				context.logger.error("failed to decode svg data uri", { error: svgDataResult.error })
+				logger.error("failed to decode svg data uri", { error: svgDataResult.error })
 				throw errors.new(
 					"invalid svg data uri: Failed to decode SVG content in img tag. The data URI may be malformed or improperly encoded."
 				)
@@ -1063,6 +1112,7 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 				const contextStart = Math.max(0, originalPosition - 50)
 				const contextEnd = Math.min(decodedSvg.length, originalPosition + 50)
 				const errorContext = decodedSvg.substring(contextStart, contextEnd).replace(/\s+/g, " ")
+				logger.error("malformed svg: invalid closing tag with space", { tagName, errorContext })
 				throw errors.new(
 					`malformed svg: Invalid closing tag '</ ${tagName}>' - remove the space to make it '</${tagName}>'. Context: "...${errorContext}..."`
 				)
@@ -1112,6 +1162,7 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 						const inAttribute = (beforeTag.match(/"/g) || []).length % 2 === 1
 
 						if (!inAttribute) {
+							logger.error("malformed svg: extra closing tag", { tagName, errorContext })
 							throw errors.new(
 								`malformed svg: Extra closing tag '</${tagName}>' with no matching opening tag. Context: "...${errorContext}..."`
 							)
@@ -1126,11 +1177,17 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 							const errorContext = decodedSvg.substring(contextStart, contextEnd).replace(/\s+/g, " ")
 
 							if (!expectedTag) {
+								logger.error("malformed svg: closing tag with empty stack", { tagName, errorContext })
 								throw errors.new(
 									`malformed svg: Closing tag '</${tagName}>' found but tag stack is empty. Context: "...${errorContext}..."`
 								)
 							}
 
+							logger.error("malformed svg: mismatched closing tag", {
+								tagName,
+								expectedTag: expectedTag.name,
+								errorContext
+							})
 							throw errors.new(
 								`malformed svg: Mismatched closing tag '</${tagName}>' - expected '</${expectedTag.name}>' (opened at position ${expectedTag.position}). Context: "...${errorContext}..."`
 							)
@@ -1181,11 +1238,13 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 					})
 					.join("; ")
 
+				logger.error("malformed svg: unclosed tags found", { unclosedInfo })
 				throw errors.new(`malformed svg: Unclosed tag(s) found: ${unclosedInfo}`)
 			}
 
 			// 5. Additional validation: Check for common SVG structure issues
 			if (!decodedSvg.includes("<svg")) {
+				logger.error("malformed svg: no svg root element found")
 				throw errors.new("malformed svg: No <svg> root element found. SVG documents must have an <svg> root element.")
 			}
 
@@ -1193,6 +1252,7 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 			const rootElementCount = (decodedSvg.match(/<svg[^>]*>/gi) || []).length
 			const rootCloseCount = (decodedSvg.match(/<\/svg>/gi) || []).length
 			if (rootElementCount > 1 && rootElementCount > rootCloseCount) {
+				logger.error("malformed svg: multiple svg root elements found", { rootElementCount, rootCloseCount })
 				throw errors.new(
 					"malformed svg: Multiple <svg> root elements found. SVG documents must have exactly one root element."
 				)
@@ -1202,7 +1262,7 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 		})
 
 		if (parseResult.error) {
-			context.logger.error("svg validation failed", {
+			logger.error("svg validation failed", {
 				error: parseResult.error,
 				svgLength: decodedSvg.length,
 				svgPreview: decodedSvg.substring(0, 200),
@@ -1214,7 +1274,7 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
 		match = imgSvgRegex.exec(xml)
 	}
 
-	context.logger.debug("validated svg data uris")
+	logger.debug("validated svg data uris")
 }
 
 /**
@@ -1232,6 +1292,7 @@ export function validateSvgDataUris(xml: string, context: ValidationContext): vo
  * - Chemical equations: "H2 + O2 = H2O"
  */
 export function validateEquationAnswerReversibility(xml: string, context: ValidationContext): void {
+	const { logger } = context
 	// Find all text-entry interactions with equation answers (containing equals sign)
 	const responseDeclarationRegex =
 		/<qti-response-declaration(?=\s)(?=(?:[^>]*)identifier\s*=\s*["'](?<id>[^"']+)["'])(?=(?:[^>]*)base-type\s*=\s*["'](?<baseType>string)["'])[^>]*>(?<content>[\s\S]*?)<\/qti-response-declaration>/gi
@@ -1345,7 +1406,7 @@ export function validateEquationAnswerReversibility(xml: string, context: Valida
 			})
 
 			if (!hasReversed) {
-				context.logger.error("equation answer not reversible", {
+				logger.error("equation answer not reversible", {
 					responseId,
 					equation,
 					reversedEquation,
@@ -1360,5 +1421,5 @@ export function validateEquationAnswerReversibility(xml: string, context: Valida
 		match = responseDeclarationRegex.exec(xml)
 	}
 
-	context.logger.debug("validated equation answer reversibility")
+	logger.debug("validated equation answer reversibility")
 }

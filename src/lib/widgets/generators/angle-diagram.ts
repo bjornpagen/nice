@@ -1,4 +1,3 @@
-import * as errors from "@superbuilders/errors"
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
@@ -69,16 +68,29 @@ const Point = z
 const AngleArc = z
 	.object({
 		type: z.literal("arc").describe("arc angle visualization"),
-		pointOnFirstRay: z.string().describe("point id on the first ray of the angle (e.g., 'A' in angle ABC). forms one side of the angle with the vertex."),
-		vertex: z.string().describe("point id at the vertex of the angle (e.g., 'B' in angle ABC). the angle is measured at this point."),
-		pointOnSecondRay: z.string().describe("point id on the second ray of the angle (e.g., 'C' in angle ABC). forms the other side of the angle with the vertex."),
-		label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("angle label text (e.g., '45°', 'θ', null). null shows arc without label. Plaintext only; no markdown or HTML."),
+		pointOnFirstRay: z
+			.string()
+			.describe(
+				"point id on the first ray of the angle (e.g., 'A' in angle ABC). forms one side of the angle with the vertex."
+			),
+		vertex: z
+			.string()
+			.describe("point id at the vertex of the angle (e.g., 'B' in angle ABC). the angle is measured at this point."),
+		pointOnSecondRay: z
+			.string()
+			.describe(
+				"point id on the second ray of the angle (e.g., 'C' in angle ABC). forms the other side of the angle with the vertex."
+			),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe(
+				"angle label text (e.g., '45°', 'θ', null). null shows arc without label. Plaintext only; no markdown or HTML."
+			),
 		color: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe("css color for the angle arc and label"),
 		radius: z.number().positive().describe("arc radius in pixels from the vertex")
 	})
@@ -87,16 +99,29 @@ const AngleArc = z
 const AngleRight = z
 	.object({
 		type: z.literal("right").describe("right angle visualization with square"),
-		pointOnFirstRay: z.string().describe("point id on the first ray of the angle (e.g., 'A' in angle ABC). forms one side of the angle with the vertex."),
-		vertex: z.string().describe("point id at the vertex of the angle (e.g., 'B' in angle ABC). the angle is measured at this point."),
-		pointOnSecondRay: z.string().describe("point id on the second ray of the angle (e.g., 'C' in angle ABC). forms the other side of the angle with the vertex."),
-		label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("label for the right angle (e.g., '90°', null). null shows square without label. Plaintext only; no markdown or HTML."),
+		pointOnFirstRay: z
+			.string()
+			.describe(
+				"point id on the first ray of the angle (e.g., 'A' in angle ABC). forms one side of the angle with the vertex."
+			),
+		vertex: z
+			.string()
+			.describe("point id at the vertex of the angle (e.g., 'B' in angle ABC). the angle is measured at this point."),
+		pointOnSecondRay: z
+			.string()
+			.describe(
+				"point id on the second ray of the angle (e.g., 'C' in angle ABC). forms the other side of the angle with the vertex."
+			),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe(
+				"label for the right angle (e.g., '90°', null). null shows square without label. Plaintext only; no markdown or HTML."
+			),
 		color: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe("css color for the right-angle square and label")
 	})
 	.strict()

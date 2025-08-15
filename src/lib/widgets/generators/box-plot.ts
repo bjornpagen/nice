@@ -91,19 +91,13 @@ export const BoxPlotPropsSchema = z
 		summary: BoxPlotSummarySchema.describe("The five-number summary used to draw the plot."),
 		boxColor: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe(
 				"CSS color for the box fill showing the interquartile range (e.g., '#E8F4FD' for light blue, 'lightgray', 'rgba(150,150,150,0.3)'). Should be subtle to show median line clearly."
 			),
 		medianColor: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe(
 				"CSS color for the median line inside the box (e.g., '#FF6B6B' for red, 'black', 'darkblue'). Should contrast strongly with boxColor for emphasis."
 			)

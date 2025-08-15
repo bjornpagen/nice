@@ -29,10 +29,7 @@ const BoxGridCellSchema = z
 			.describe("Inline content for the cell: either plain text or MathML"),
 		backgroundColor: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.nullable()
 			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 			.describe(
@@ -78,6 +75,18 @@ export const BoxGridPropsSchema = z
 export type BoxGridProps = z.infer<typeof BoxGridPropsSchema>
 
 /**
+ * Helper function to get the label text from cell content
+ */
+function getCellLabel(content: { type: "text"; content: string } | { type: "math"; mathml: string }): string {
+	if (content.type === "text") return content.content
+	// math content: strip markup for a plain-text fallback
+	return content.mathml
+		.replace(/<[^>]+>/g, " ")
+		.replace(/\s+/g, " ")
+		.trim()
+}
+
+/**
  * Generates an SVG diagram of a grid of cells, with each cell capable of
  * displaying data and having a custom background color for highlighting.
  */
@@ -118,14 +127,7 @@ export const generateBoxGrid: WidgetGenerator<typeof BoxGridPropsSchema> = (prop
 			// Draw the text content (render text directly; for math, render a simple text fallback by stripping tags)
 			const textX = x + cellWidth / 2
 			const textY = y + cellHeight / 2
-			const label = (() => {
-				if (cell.content.type === "text") return cell.content.content
-				// math content: strip markup for a plain-text fallback
-				return cell.content.mathml
-					.replace(/<[^>]+>/g, " ")
-					.replace(/\s+/g, " ")
-					.trim()
-			})()
+			const label = getCellLabel(cell.content)
 			svg += `<text x="${textX}" y="${textY}" class="cell-text">${label}</text>`
 		}
 	}

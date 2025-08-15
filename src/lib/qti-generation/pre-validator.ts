@@ -331,36 +331,38 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 			for (const widget of Object.values(item.widgets)) {
 				// Best-effort detection for dataTable widget with input cells
 				// We avoid importing widget types here; rely on duck-typing by field presence
-				if (typeof widget === "object" && widget !== null && "type" in widget) {
-					const w: any = widget
-					if (w.type === "dataTable") {
-						// Helper: extract responseIdentifier from a cell using the standard "type" discriminant
-						const extractResponseId = (cell: unknown): string | null => {
-							if (typeof cell !== "object" || cell === null) return null
-							const obj: any = cell
-							const discrim = typeof obj.type === "string" ? obj.type : null
-							if (discrim !== "input" && discrim !== "dropdown") return null
-							const rid = obj.responseIdentifier
-							return typeof rid === "string" ? rid : null
-						}
+				if (
+					typeof widget === "object" &&
+					widget !== null &&
+					"type" in widget &&
+					typeof widget.type === "string" &&
+					widget.type === "dataTable"
+				) {
+					// Helper: extract responseIdentifier from a cell using the standard "type" discriminant
+					const extractResponseId = (cell: unknown): string | null => {
+						if (typeof cell !== "object" || cell === null) return null
+						if (!("type" in cell) || typeof cell.type !== "string") return null
+						if (cell.type !== "input" && cell.type !== "dropdown") return null
+						if (!("responseIdentifier" in cell) || typeof cell.responseIdentifier !== "string") return null
+						return cell.responseIdentifier
+					}
 
-						const data = typeof widget === "object" && widget !== null && "data" in widget ? w.data : undefined
-						if (Array.isArray(data)) {
-							for (const row of data) {
-								if (!Array.isArray(row)) continue
-								for (const cell of row) {
-									const rid = extractResponseId(cell)
-									if (rid) widgetEmbeddedResponseIds.add(rid)
-								}
-							}
-						}
-
-						const footer = typeof widget === "object" && widget !== null && "footer" in widget ? w.footer : undefined
-						if (Array.isArray(footer)) {
-							for (const cell of footer) {
+					const data = "data" in widget ? widget.data : undefined
+					if (Array.isArray(data)) {
+						for (const row of data) {
+							if (!Array.isArray(row)) continue
+							for (const cell of row) {
 								const rid = extractResponseId(cell)
 								if (rid) widgetEmbeddedResponseIds.add(rid)
 							}
+						}
+					}
+
+					const footer = "footer" in widget ? widget.footer : undefined
+					if (Array.isArray(footer)) {
+						for (const cell of footer) {
+							const rid = extractResponseId(cell)
+							if (rid) widgetEmbeddedResponseIds.add(rid)
 						}
 					}
 				}
@@ -370,7 +372,9 @@ export function validateAssessmentItemInput(item: AssessmentItemInput, logger: l
 		for (const decl of item.responseDeclarations) {
 			if (!interactionResponseIds.has(decl.identifier) && !widgetEmbeddedResponseIds.has(decl.identifier)) {
 				logger.error("response declaration without matching interaction", { responseIdentifier: decl.identifier })
-				throw errors.new(`response declaration '${decl.identifier}' has no matching interaction or embedded widget input`)
+				throw errors.new(
+					`response declaration '${decl.identifier}' has no matching interaction or embedded widget input`
+				)
 			}
 		}
 	}

@@ -1090,16 +1090,19 @@ export class KhanAcademyClient {
 			)
 
 			if (fetchResult.error) {
+				logger.error("khan-api: network request failed", { error: fetchResult.error })
 				throw errors.wrap(fetchResult.error, "khan-api: network request failed")
 			}
 
 			const response = fetchResult.data
 			if (!response.ok) {
+				logger.error("khan-api: request failed", { status: response.status, statusText: response.statusText })
 				throw errors.new(`khan-api: request failed with status ${response.status}`)
 			}
 
 			const jsonResult = await errors.try(response.json())
 			if (jsonResult.error) {
+				logger.error("khan-api: failed to parse json response", { error: jsonResult.error })
 				throw errors.wrap(jsonResult.error, "khan-api: failed to parse json response")
 			}
 			const rawJson = jsonResult.data

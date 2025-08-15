@@ -9,7 +9,13 @@ export const ErrInvalidDimensions = errors.new("invalid chart dimensions or data
 // Defines the data and state for a single bar in the chart
 const BarDataSchema = z
 	.object({
-		label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("The category name displayed below this bar on the x-axis (e.g., 'January', 'Apples', null). Null shows no label."),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe(
+				"The category name displayed below this bar on the x-axis (e.g., 'January', 'Apples', null). Null shows no label."
+			),
 		value: z.number().describe("The numerical value determining the bar's height. Can be positive or negative."),
 		state: z
 			.enum(["normal", "unknown"])
@@ -22,7 +28,11 @@ const BarDataSchema = z
 // Define Y-axis schema separately
 const YAxisSchema = z
 	.object({
-		label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("The title for the vertical axis (e.g., 'Sales ($)', 'Count', null). Null shows no label."),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe("The title for the vertical axis (e.g., 'Sales ($)', 'Count', null). Null shows no label."),
 		min: z.number().describe("The minimum value shown on the y-axis. Must be less than max."),
 		max: z.number().describe("The maximum value shown on the y-axis. Must be greater than min."),
 		tickInterval: z.number().describe("The spacing between tick marks on the y-axis. Should evenly divide (max - min).")
@@ -43,12 +53,20 @@ export const BarChartPropsSchema = z
 			.number()
 			.positive()
 			.describe("Total height of the chart in pixels including title and axis labels (e.g., 350)."),
-		title: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("The main title displayed above the chart (e.g., 'Monthly Sales', 'Student Scores', null). Null means no title."),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe(
+				"The main title displayed above the chart (e.g., 'Monthly Sales', 'Student Scores', null). Null means no title."
+			),
 		xAxisLabel: z
 			.string()
 			.nullable()
 			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The label for the horizontal axis (e.g., 'Months', 'Products', null). Null if categories are self-explanatory."),
+			.describe(
+				"The label for the horizontal axis (e.g., 'Months', 'Products', null). Null if categories are self-explanatory."
+			),
 		yAxis: YAxisSchema.describe("Configuration for the vertical axis including scale, labels, and tick marks."),
 		data: z
 			.array(BarDataSchema)
@@ -57,10 +75,7 @@ export const BarChartPropsSchema = z
 			),
 		barColor: z
 			.string()
-			.regex(
-				CSS_COLOR_PATTERN,
-				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-			)
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
 			.describe("Hex-only color for normal bars (e.g., '#4472C4', '#1E90FF', '#00000080' for 50% alpha).")
 	})
 	.strict()

@@ -1,4 +1,5 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 
@@ -295,6 +296,7 @@ export function generateCoordinatePlaneBase(
 	const chartHeight = height - pad.top - pad.bottom
 
 	if (chartWidth <= 0 || chartHeight <= 0 || xAxis.min >= xAxis.max || yAxis.min >= yAxis.max) {
+		logger.error("invalid chart dimensions or axis range", { width, height, chartWidth, chartHeight, xAxis, yAxis })
 		throw errors.wrap(
 			ErrInvalidDimensions,
 			`width: ${width}, height: ${height}, xAxis range: ${xAxis.min}-${xAxis.max}, yAxis range: ${yAxis.min}-${yAxis.max}`

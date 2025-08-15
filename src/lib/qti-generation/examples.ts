@@ -164,7 +164,9 @@ export const linearModelEquationPrediction: AssessmentItemInput = {
 				{ x: 7.25, y: 16, label: null },
 				{ x: 8.5, y: 18, label: null }
 			],
-			lines: [{ type: "bestFit", method: "linear", label: null, style: { color: "#333333", strokeWidth: 2, dash: false } }]
+			lines: [
+				{ type: "bestFit", method: "linear", label: null, style: { color: "#333333", strokeWidth: 2, dash: false } }
+			]
 		}
 	},
 	feedback: {
@@ -3609,4 +3611,3 @@ export const allExamples: AssessmentItemInput[] = [
 	reactantAmountsTemperatureTableWithDropdowns,
 	attractRepelCompletionTable
 ]
-

@@ -1,74 +1,126 @@
 import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
 import { z } from "zod"
-import { generatePeriodicTable, PeriodicTableWidgetPropsSchema } from "@/lib/widgets/generators/periodic-table"
 // Import all individual schemas and generators
-import { generateThreeDIntersectionDiagram, ThreeDIntersectionDiagramPropsSchema } from "./3d-intersection-diagram"
-import { AbsoluteValueNumberLinePropsSchema, generateAbsoluteValueNumberLine } from "./absolute-value-number-line"
-import { AngleDiagramPropsSchema, generateAngleDiagram } from "./angle-diagram"
-import { BarChartPropsSchema, generateBarChart } from "./bar-chart"
-import { BoxGridPropsSchema, generateBoxGrid } from "./box-grid"
-import { BoxPlotPropsSchema, generateBoxPlot } from "./box-plot"
-import { CircleDiagramPropsSchema, generateCircleDiagram } from "./circle-diagram"
-import { CompositeShapeDiagramPropsSchema, generateCompositeShapeDiagram } from "./composite-shape-diagram"
+import {
+	generateThreeDIntersectionDiagram,
+	ThreeDIntersectionDiagramPropsSchema
+} from "@/lib/widgets/generators/3d-intersection-diagram"
+import {
+	AbsoluteValueNumberLinePropsSchema,
+	generateAbsoluteValueNumberLine
+} from "@/lib/widgets/generators/absolute-value-number-line"
+import { AngleDiagramPropsSchema, generateAngleDiagram } from "@/lib/widgets/generators/angle-diagram"
+import { BarChartPropsSchema, generateBarChart } from "@/lib/widgets/generators/bar-chart"
+import { BoxGridPropsSchema, generateBoxGrid } from "@/lib/widgets/generators/box-grid"
+import { BoxPlotPropsSchema, generateBoxPlot } from "@/lib/widgets/generators/box-plot"
+import { CircleDiagramPropsSchema, generateCircleDiagram } from "@/lib/widgets/generators/circle-diagram"
+import {
+	CompositeShapeDiagramPropsSchema,
+	generateCompositeShapeDiagram
+} from "@/lib/widgets/generators/composite-shape-diagram"
 import {
 	CoordinatePlaneComprehensivePropsSchema,
 	generateCoordinatePlaneComprehensive
-} from "./coordinate-plane-comprehensive"
-import { DataTablePropsSchema, generateDataTable } from "./data-table"
+} from "@/lib/widgets/generators/coordinate-plane-comprehensive"
+import { DataTablePropsSchema, generateDataTable } from "@/lib/widgets/generators/data-table"
 import {
 	DiscreteObjectRatioDiagramPropsSchema,
 	generateDiscreteObjectRatioDiagram
-} from "./discrete-object-ratio-diagram"
-import { DistanceFormulaGraphPropsSchema, generateDistanceFormulaGraph } from "./distance-formula-graph"
-import { DotPlotPropsSchema, generateDotPlot } from "./dot-plot"
-import { DoubleNumberLinePropsSchema, generateDoubleNumberLine } from "./double-number-line"
-import { EmojiImagePropsSchema, generateEmojiImage } from "./emoji-image"
-import { FigureComparisonDiagramPropsSchema, generateFigureComparisonDiagram } from "./figure-comparison-diagram"
-import { FractionNumberLinePropsSchema, generateFractionNumberLine } from "./fraction-number-line"
-import { FunctionPlotGraphPropsSchema, generateFunctionPlotGraph } from "./function-plot-graph"
-import { GeometricSolidDiagramPropsSchema, generateGeometricSolidDiagram } from "./geometric-solid-diagram"
-import { generateHangerDiagram, HangerDiagramPropsSchema } from "./hanger-diagram"
-import { generateHistogram, HistogramPropsSchema } from "./histogram"
-import { generateInequalityNumberLine, InequalityNumberLinePropsSchema } from "./inequality-number-line"
-import { generateLineEquationGraph, LineEquationGraphPropsSchema } from "./line-equation-graph"
-import { generateNumberLine, NumberLinePropsSchema } from "./number-line"
-import { generateNumberLineForOpposites, NumberLineForOppositesPropsSchema } from "./number-line-for-opposites"
-import { generateNumberLineWithAction, NumberLineWithActionPropsSchema } from "./number-line-with-action"
+} from "@/lib/widgets/generators/discrete-object-ratio-diagram"
+import {
+	DistanceFormulaGraphPropsSchema,
+	generateDistanceFormulaGraph
+} from "@/lib/widgets/generators/distance-formula-graph"
+import { DotPlotPropsSchema, generateDotPlot } from "@/lib/widgets/generators/dot-plot"
+import { DoubleNumberLinePropsSchema, generateDoubleNumberLine } from "@/lib/widgets/generators/double-number-line"
+import { EmojiImagePropsSchema, generateEmojiImage } from "@/lib/widgets/generators/emoji-image"
+import {
+	FigureComparisonDiagramPropsSchema,
+	generateFigureComparisonDiagram
+} from "@/lib/widgets/generators/figure-comparison-diagram"
+import {
+	FractionNumberLinePropsSchema,
+	generateFractionNumberLine
+} from "@/lib/widgets/generators/fraction-number-line"
+import { FunctionPlotGraphPropsSchema, generateFunctionPlotGraph } from "@/lib/widgets/generators/function-plot-graph"
+import {
+	GeometricSolidDiagramPropsSchema,
+	generateGeometricSolidDiagram
+} from "@/lib/widgets/generators/geometric-solid-diagram"
+import { generateHangerDiagram, HangerDiagramPropsSchema } from "@/lib/widgets/generators/hanger-diagram"
+import { generateHistogram, HistogramPropsSchema } from "@/lib/widgets/generators/histogram"
+import {
+	generateInequalityNumberLine,
+	InequalityNumberLinePropsSchema
+} from "@/lib/widgets/generators/inequality-number-line"
+import { generateLineEquationGraph, LineEquationGraphPropsSchema } from "@/lib/widgets/generators/line-equation-graph"
+import { generateNumberLine, NumberLinePropsSchema } from "@/lib/widgets/generators/number-line"
+import {
+	generateNumberLineForOpposites,
+	NumberLineForOppositesPropsSchema
+} from "@/lib/widgets/generators/number-line-for-opposites"
+import {
+	generateNumberLineWithAction,
+	NumberLineWithActionPropsSchema
+} from "@/lib/widgets/generators/number-line-with-action"
 import {
 	generateNumberLineWithFractionGroups,
 	NumberLineWithFractionGroupsPropsSchema
-} from "./number-line-with-fraction-groups"
-import { generateNumberSetDiagram, NumberSetDiagramPropsSchema } from "./number-set-diagram"
+} from "@/lib/widgets/generators/number-line-with-fraction-groups"
+import { generateNumberSetDiagram, NumberSetDiagramPropsSchema } from "@/lib/widgets/generators/number-set-diagram"
 import {
 	generateParallelogramTrapezoidDiagram,
 	ParallelogramTrapezoidDiagramPropsSchema
-} from "./parallelogram-trapezoid-diagram"
-import { generatePartitionedShape, PartitionedShapePropsSchema } from "./partitioned-shape"
+} from "@/lib/widgets/generators/parallelogram-trapezoid-diagram"
+import { generatePartitionedShape, PartitionedShapePropsSchema } from "@/lib/widgets/generators/partitioned-shape"
 import {
 	generatePentagonIntersectionDiagram,
 	PentagonIntersectionDiagramPropsSchema
-} from "./pentagon-intersection-diagram"
-import { generatePictograph, PictographPropsSchema } from "./pictograph"
-import { generatePointPlotGraph, PointPlotGraphPropsSchema } from "./point-plot-graph"
-import { generatePolygonGraph, PolygonGraphPropsSchema } from "./polygon-graph"
-import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "./polyhedron-diagram"
-import { generatePolyhedronNetDiagram, PolyhedronNetDiagramPropsSchema } from "./polyhedron-net-diagram"
-import { generateProbabilitySpinner, ProbabilitySpinnerPropsSchema } from "./probability-spinner"
-import { generatePythagoreanProofDiagram, PythagoreanProofDiagramPropsSchema } from "./pythagorean-proof-diagram"
-import { generateRatioBoxDiagram, RatioBoxDiagramPropsSchema } from "./ratio-box-diagram"
-import { generateRectangularFrameDiagram, RectangularFrameDiagramPropsSchema } from "./rectangular-frame-diagram"
-import { generateScaleCopiesSlider, ScaleCopiesSliderPropsSchema } from "./scale-copies-slider"
-import { generateScatterPlot, ScatterPlotPropsSchema } from "./scatter-plot"
-import { generateShapeTransformationGraph, ShapeTransformationGraphPropsSchema } from "./shape-transformation-graph"
-import { generateStackedItemsDiagram, StackedItemsDiagramPropsSchema } from "./stacked-items-diagram"
-import { generateTapeDiagram, TapeDiagramPropsSchema } from "./tape-diagram"
-import { generateTransformationDiagram, TransformationDiagramPropsSchema } from "./transformation-diagram"
-import { generateTreeDiagram, TreeDiagramPropsSchema } from "./tree-diagram"
-import { generateTriangleDiagram, TriangleDiagramPropsSchema } from "./triangle-diagram"
-import { generateUnitBlockDiagram, UnitBlockDiagramPropsSchema } from "./unit-block-diagram"
-import { generateUrlImage, UrlImageWidgetPropsSchema } from "./url-image"
-import { generateVennDiagram, VennDiagramPropsSchema } from "./venn-diagram"
-import { generateVerticalArithmeticSetup, VerticalArithmeticSetupPropsSchema } from "./vertical-arithmetic-setup"
+} from "@/lib/widgets/generators/pentagon-intersection-diagram"
+import { generatePeriodicTable, PeriodicTableWidgetPropsSchema } from "@/lib/widgets/generators/periodic-table"
+import { generatePictograph, PictographPropsSchema } from "@/lib/widgets/generators/pictograph"
+import { generatePointPlotGraph, PointPlotGraphPropsSchema } from "@/lib/widgets/generators/point-plot-graph"
+import { generatePolygonGraph, PolygonGraphPropsSchema } from "@/lib/widgets/generators/polygon-graph"
+import { generatePolyhedronDiagram, PolyhedronDiagramPropsSchema } from "@/lib/widgets/generators/polyhedron-diagram"
+import {
+	generatePolyhedronNetDiagram,
+	PolyhedronNetDiagramPropsSchema
+} from "@/lib/widgets/generators/polyhedron-net-diagram"
+import { generateProbabilitySpinner, ProbabilitySpinnerPropsSchema } from "@/lib/widgets/generators/probability-spinner"
+import {
+	generatePythagoreanProofDiagram,
+	PythagoreanProofDiagramPropsSchema
+} from "@/lib/widgets/generators/pythagorean-proof-diagram"
+import { generateRatioBoxDiagram, RatioBoxDiagramPropsSchema } from "@/lib/widgets/generators/ratio-box-diagram"
+import {
+	generateRectangularFrameDiagram,
+	RectangularFrameDiagramPropsSchema
+} from "@/lib/widgets/generators/rectangular-frame-diagram"
+import { generateScaleCopiesSlider, ScaleCopiesSliderPropsSchema } from "@/lib/widgets/generators/scale-copies-slider"
+import { generateScatterPlot, ScatterPlotPropsSchema } from "@/lib/widgets/generators/scatter-plot"
+import {
+	generateShapeTransformationGraph,
+	ShapeTransformationGraphPropsSchema
+} from "@/lib/widgets/generators/shape-transformation-graph"
+import {
+	generateStackedItemsDiagram,
+	StackedItemsDiagramPropsSchema
+} from "@/lib/widgets/generators/stacked-items-diagram"
+import { generateTapeDiagram, TapeDiagramPropsSchema } from "@/lib/widgets/generators/tape-diagram"
+import {
+	generateTransformationDiagram,
+	TransformationDiagramPropsSchema
+} from "@/lib/widgets/generators/transformation-diagram"
+import { generateTreeDiagram, TreeDiagramPropsSchema } from "@/lib/widgets/generators/tree-diagram"
+import { generateTriangleDiagram, TriangleDiagramPropsSchema } from "@/lib/widgets/generators/triangle-diagram"
+import { generateUnitBlockDiagram, UnitBlockDiagramPropsSchema } from "@/lib/widgets/generators/unit-block-diagram"
+import { generateUrlImage, UrlImageWidgetPropsSchema } from "@/lib/widgets/generators/url-image"
+import { generateVennDiagram, VennDiagramPropsSchema } from "@/lib/widgets/generators/venn-diagram"
+import {
+	generateVerticalArithmeticSetup,
+	VerticalArithmeticSetupPropsSchema
+} from "@/lib/widgets/generators/vertical-arithmetic-setup"
 
 // This object now contains every widget schema from every collection.
 // It serves as a master lookup for dynamic schema generation and compilation.
@@ -384,7 +436,8 @@ export function generateWidget(widget: Widget): string {
 		case "polyhedronDiagram":
 			return generatePolyhedronDiagram(widget)
 		case "polyhedronNetDiagram":
-			return generatePolyhedronNetDiagram(widget as any) // Type assertion needed due to discriminated union
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			return generatePolyhedronNetDiagram(widget as any)
 		case "probabilitySpinner":
 			return generateProbabilitySpinner(widget)
 		case "pythagoreanProofDiagram":
@@ -420,6 +473,7 @@ export function generateWidget(widget: Widget): string {
 		case "verticalArithmeticSetup":
 			return generateVerticalArithmeticSetup(widget)
 		default:
+			logger.error("unknown widget type", { widget })
 			throw errors.new(`Unknown widget type: ${JSON.stringify(widget)}`)
 	}
 }

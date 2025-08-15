@@ -5,27 +5,69 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 // Defines a group of identical sectors on the spinner
 const ProbabilitySpinnerSectorGroupSchema = z
 	.object({
-		count: z.number().int().positive().describe("Number of equal sectors in this group (e.g., 3, 5, 1). All sectors in a group share the same color and emoji. Must be positive integer."),
-		emoji: z.string().nullable().transform((val) => (val === "null" || val === "NULL" ? null : val)).describe("Emoji to display in each sector of this group (e.g., '⭐', '🎯', '❌', null). Null means no emoji, just colored sector. Single emoji recommended."),
-		color: z.string().regex(
-			CSS_COLOR_PATTERN,
-			"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-		).describe("Hex-only color for all sectors in this group (e.g., '#FF6B6B', '#1E90FF', '#000000', '#00000080' for 50% alpha). Each group should have distinct color.")
+		count: z
+			.number()
+			.int()
+			.positive()
+			.describe(
+				"Number of equal sectors in this group (e.g., 3, 5, 1). All sectors in a group share the same color and emoji. Must be positive integer."
+			),
+		emoji: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" ? null : val))
+			.describe(
+				"Emoji to display in each sector of this group (e.g., '⭐', '🎯', '❌', null). Null means no emoji, just colored sector. Single emoji recommended."
+			),
+		color: z
+			.string()
+			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
+			.describe(
+				"Hex-only color for all sectors in this group (e.g., '#FF6B6B', '#1E90FF', '#000000', '#00000080' for 50% alpha). Each group should have distinct color."
+			)
 	})
 	.strict()
 
 // The main Zod schema for the probabilitySpinner function
 export const ProbabilitySpinnerPropsSchema = z
 	.object({
-		type: z.literal("probabilitySpinner").describe("Identifies this as a probability spinner widget for demonstrating random events and likelihood."),
-		width: z.number().positive().describe("Total width of the spinner diagram in pixels (e.g., 400, 500, 350). Must accommodate the circle and pointer with padding."),
-		height: z.number().positive().describe("Total height of the spinner diagram in pixels (e.g., 400, 500, 350). Should include space for title if present. Often equal to width."),
-		groups: z.array(ProbabilitySpinnerSectorGroupSchema).describe("Array of sector groups defining the spinner. Total sectors = sum of all counts. Order affects color assignment. Empty array creates blank spinner."),
-		pointerAngle: z.number().describe("Angle in degrees where the arrow points (0 = right, 90 = up, 180 = left, 270 = down). Can be any value; wraps around 360. Determines 'current' sector."),
-		title: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Title displayed above the spinner (e.g., 'Spin the Wheel!', 'Color Spinner', null). Null means no title. Keep concise for space. Plaintext only; no markdown or HTML.")
+		type: z
+			.literal("probabilitySpinner")
+			.describe("Identifies this as a probability spinner widget for demonstrating random events and likelihood."),
+		width: z
+			.number()
+			.positive()
+			.describe(
+				"Total width of the spinner diagram in pixels (e.g., 400, 500, 350). Must accommodate the circle and pointer with padding."
+			),
+		height: z
+			.number()
+			.positive()
+			.describe(
+				"Total height of the spinner diagram in pixels (e.g., 400, 500, 350). Should include space for title if present. Often equal to width."
+			),
+		groups: z
+			.array(ProbabilitySpinnerSectorGroupSchema)
+			.describe(
+				"Array of sector groups defining the spinner. Total sectors = sum of all counts. Order affects color assignment. Empty array creates blank spinner."
+			),
+		pointerAngle: z
+			.number()
+			.describe(
+				"Angle in degrees where the arrow points (0 = right, 90 = up, 180 = left, 270 = down). Can be any value; wraps around 360. Determines 'current' sector."
+			),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe(
+				"Title displayed above the spinner (e.g., 'Spin the Wheel!', 'Color Spinner', null). Null means no title. Keep concise for space. Plaintext only; no markdown or HTML."
+			)
 	})
 	.strict()
-	.describe("Creates a circular spinner divided into colored sectors for probability experiments. Each sector group can have multiple equal sectors with the same appearance. Perfect for teaching probability, likelihood, and random events. The pointer indicates the 'selected' outcome.")
+	.describe(
+		"Creates a circular spinner divided into colored sectors for probability experiments. Each sector group can have multiple equal sectors with the same appearance. Perfect for teaching probability, likelihood, and random events. The pointer indicates the 'selected' outcome."
+	)
 
 export type ProbabilitySpinnerProps = z.infer<typeof ProbabilitySpinnerPropsSchema>
 

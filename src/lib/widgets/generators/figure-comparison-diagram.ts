@@ -2,39 +2,128 @@ import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-const Point = z.object({ 
-  x: z.number().describe("Horizontal coordinate relative to figure's local origin. Can be negative. Figure will be auto-positioned within the layout (e.g., -30, 0, 50, 25.5)."), 
-  y: z.number().describe("Vertical coordinate relative to figure's local origin. Can be negative. Positive y is downward (e.g., -20, 0, 40, 15.5).") 
-}).strict()
+const Point = z
+	.object({
+		x: z
+			.number()
+			.describe(
+				"Horizontal coordinate relative to figure's local origin. Can be negative. Figure will be auto-positioned within the layout (e.g., -30, 0, 50, 25.5)."
+			),
+		y: z
+			.number()
+			.describe(
+				"Vertical coordinate relative to figure's local origin. Can be negative. Positive y is downward (e.g., -20, 0, 40, 15.5)."
+			)
+	})
+	.strict()
 
-const Figure = z.object({
-  vertices: z.array(Point).describe("Ordered array of vertices defining the polygon. Connect in order, closing back to first. Minimum 3 vertices for a valid polygon (e.g., triangle, square, pentagon)."),
-  fillColor: z.string().regex(
-    CSS_COLOR_PATTERN,
-    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
-  ).describe("Hex-only fill color for the polygon interior (e.g., '#E8F4FD', 'transparent' for outline only, '#FFC8004D' for ~30% alpha)."),
-  strokeColor: z.string().regex(
-    CSS_COLOR_PATTERN,
-    "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
-  ).describe("Hex-only color for the polygon's border (e.g., '#000000', '#333333', '#00008B'). Set to 'transparent' to hide the outline."),
-  strokeWidth: z.number().min(0).describe("Width of the polygon's border in pixels (e.g., 2 for standard, 3 for bold, 1 for thin). Use 0 for no visible border."),
-  sideLabels: z.array(z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))).describe("Labels for each edge of the polygon. Array length should match vertex count. First label is for edge from vertex[0] to vertex[1]. Null for no label on that edge."),
-  sideLabelOffset: z.number().describe("Distance in pixels from edge to place side labels. Positive places outside, negative inside (e.g., 15, -10, 20). Applies to all side labels."),
-  figureLabel: z.object({ 
-    text: z.string().describe("Main label for the entire figure (e.g., 'Figure A', 'Original', 'Square', '64 cm²'). Can include math notation or symbols."), 
-    position: z.enum(['top','bottom','left','right','center']).describe("Where to place the label relative to the figure. 'center' places inside the polygon, others place outside."), 
-    offset: z.number().describe("Additional spacing in pixels from the figure's edge or center (e.g., 10, 20, 5). For 'center', this has no effect.") 
-  }).strict().describe("Configuration for the figure's main identifying label."),
-}).strict()
+const Figure = z
+	.object({
+		vertices: z
+			.array(Point)
+			.describe(
+				"Ordered array of vertices defining the polygon. Connect in order, closing back to first. Minimum 3 vertices for a valid polygon (e.g., triangle, square, pentagon)."
+			),
+		fillColor: z
+			.string()
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
+			.describe(
+				"Hex-only fill color for the polygon interior (e.g., '#E8F4FD', 'transparent' for outline only, '#FFC8004D' for ~30% alpha)."
+			),
+		strokeColor: z
+			.string()
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA), rgb/rgba(), hsl/hsla(), or a common named color"
+			)
+			.describe(
+				"Hex-only color for the polygon's border (e.g., '#000000', '#333333', '#00008B'). Set to 'transparent' to hide the outline."
+			),
+		strokeWidth: z
+			.number()
+			.min(0)
+			.describe(
+				"Width of the polygon's border in pixels (e.g., 2 for standard, 3 for bold, 1 for thin). Use 0 for no visible border."
+			),
+		sideLabels: z
+			.array(
+				z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			)
+			.describe(
+				"Labels for each edge of the polygon. Array length should match vertex count. First label is for edge from vertex[0] to vertex[1]. Null for no label on that edge."
+			),
+		sideLabelOffset: z
+			.number()
+			.describe(
+				"Distance in pixels from edge to place side labels. Positive places outside, negative inside (e.g., 15, -10, 20). Applies to all side labels."
+			),
+		figureLabel: z
+			.object({
+				text: z
+					.string()
+					.describe(
+						"Main label for the entire figure (e.g., 'Figure A', 'Original', 'Square', '64 cm²'). Can include math notation or symbols."
+					),
+				position: z
+					.enum(["top", "bottom", "left", "right", "center"])
+					.describe(
+						"Where to place the label relative to the figure. 'center' places inside the polygon, others place outside."
+					),
+				offset: z
+					.number()
+					.describe(
+						"Additional spacing in pixels from the figure's edge or center (e.g., 10, 20, 5). For 'center', this has no effect."
+					)
+			})
+			.strict()
+			.describe("Configuration for the figure's main identifying label.")
+	})
+	.strict()
 
-export const FigureComparisonDiagramPropsSchema = z.object({
-  type: z.literal('figureComparisonDiagram').describe("Identifies this as a figure comparison diagram for displaying multiple polygons side by side."),
-  width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 600, 800, 500). Must accommodate all figures with spacing and labels."),
-  height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 400, 300, 500). Must accommodate all figures with spacing and labels."),
-  figures: z.array(Figure).describe("Array of polygonal figures to display. Can show different shapes or same shape with different properties. Order determines left-to-right or top-to-bottom placement."),
-  layout: z.enum(['horizontal','vertical']).describe("Arrangement direction. 'horizontal' places figures left to right. 'vertical' stacks figures top to bottom. Choose based on figure count and aspect ratios."),
-  spacing: z.number().min(0).describe("Gap between figures in pixels (e.g., 50, 80, 30). Provides visual separation. Larger spacing prevents label overlap."),
-}).strict().describe("Creates a comparison view of multiple polygonal figures with comprehensive labeling options. Perfect for showing transformations, comparing shapes, demonstrating congruence/similarity, or analyzing different polygons. Each figure can have different styling and complete edge/vertex labeling.")
+export const FigureComparisonDiagramPropsSchema = z
+	.object({
+		type: z
+			.literal("figureComparisonDiagram")
+			.describe("Identifies this as a figure comparison diagram for displaying multiple polygons side by side."),
+		width: z
+			.number()
+			.positive()
+			.describe(
+				"Total width of the diagram in pixels (e.g., 600, 800, 500). Must accommodate all figures with spacing and labels."
+			),
+		height: z
+			.number()
+			.positive()
+			.describe(
+				"Total height of the diagram in pixels (e.g., 400, 300, 500). Must accommodate all figures with spacing and labels."
+			),
+		figures: z
+			.array(Figure)
+			.describe(
+				"Array of polygonal figures to display. Can show different shapes or same shape with different properties. Order determines left-to-right or top-to-bottom placement."
+			),
+		layout: z
+			.enum(["horizontal", "vertical"])
+			.describe(
+				"Arrangement direction. 'horizontal' places figures left to right. 'vertical' stacks figures top to bottom. Choose based on figure count and aspect ratios."
+			),
+		spacing: z
+			.number()
+			.min(0)
+			.describe(
+				"Gap between figures in pixels (e.g., 50, 80, 30). Provides visual separation. Larger spacing prevents label overlap."
+			)
+	})
+	.strict()
+	.describe(
+		"Creates a comparison view of multiple polygonal figures with comprehensive labeling options. Perfect for showing transformations, comparing shapes, demonstrating congruence/similarity, or analyzing different polygons. Each figure can have different styling and complete edge/vertex labeling."
+	)
 
 export type FigureComparisonDiagramProps = z.infer<typeof FigureComparisonDiagramPropsSchema>
 

@@ -3,30 +3,65 @@ import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
 function createStyleSchema() {
-  return z.object({ 
-    label: z.string().nullable().transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)).describe("Display name for this number set (e.g., 'Whole Numbers', 'Integers', 'Rational', 'ℚ', null). Can use symbols or full names. Null shows no label."), 
-    color: z.string().regex(
-      CSS_COLOR_PATTERN,
-      "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)"
-    ).describe("Hex-only fill color for this set's region (e.g., '#E8F4FD', '#1E90FF', '#FFC86480' for 50% alpha). Use translucency via 8-digit hex for nested visibility.") 
-  }).strict()
+	return z
+		.object({
+			label: z
+				.string()
+				.nullable()
+				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+				.describe(
+					"Display name for this number set (e.g., 'Whole Numbers', 'Integers', 'Rational', 'ℚ', null). Can use symbols or full names. Null shows no label."
+				),
+			color: z
+				.string()
+				.regex(CSS_COLOR_PATTERN, "invalid css color; use hex (#RGB, #RRGGBB, #RRGGBBAA)")
+				.describe(
+					"Hex-only fill color for this set's region (e.g., '#E8F4FD', '#1E90FF', '#FFC86480' for 50% alpha). Use translucency via 8-digit hex for nested visibility."
+				)
+		})
+		.strict()
 }
 
 // The main Zod schema for the numberSetDiagram function
 export const NumberSetDiagramPropsSchema = z
 	.object({
 		type: z.literal("numberSetDiagram"),
-		width: z.number().positive().describe("Total width of the diagram in pixels (e.g., 500, 600, 450). Must accommodate all nested sets and labels."),
-		height: z.number().positive().describe("Total height of the diagram in pixels (e.g., 400, 350, 450). Should provide good proportions for the nested ovals."),
-		sets: z.object({ 
-		    whole: createStyleSchema().describe("Style for whole numbers (0, 1, 2, ...). The innermost set in the hierarchy."), 
-		    integer: createStyleSchema().describe("Style for integers (..., -2, -1, 0, 1, 2, ...). Contains whole numbers and their negatives."), 
-		    rational: createStyleSchema().describe("Style for rational numbers (fractions/decimals). Contains integers and all fractions. Shown as containing whole ⊂ integer."), 
-		    irrational: createStyleSchema().describe("Style for irrational numbers (π, √2, e, ...). Separate from rationals, together they form the reals.") 
-		  }).strict().describe("Styling for each number set in the hierarchy. The diagram shows whole ⊂ integer ⊂ rational, with irrational separate.")
+		width: z
+			.number()
+			.positive()
+			.describe(
+				"Total width of the diagram in pixels (e.g., 500, 600, 450). Must accommodate all nested sets and labels."
+			),
+		height: z
+			.number()
+			.positive()
+			.describe(
+				"Total height of the diagram in pixels (e.g., 400, 350, 450). Should provide good proportions for the nested ovals."
+			),
+		sets: z
+			.object({
+				whole: createStyleSchema().describe(
+					"Style for whole numbers (0, 1, 2, ...). The innermost set in the hierarchy."
+				),
+				integer: createStyleSchema().describe(
+					"Style for integers (..., -2, -1, 0, 1, 2, ...). Contains whole numbers and their negatives."
+				),
+				rational: createStyleSchema().describe(
+					"Style for rational numbers (fractions/decimals). Contains integers and all fractions. Shown as containing whole ⊂ integer."
+				),
+				irrational: createStyleSchema().describe(
+					"Style for irrational numbers (π, √2, e, ...). Separate from rationals, together they form the reals."
+				)
+			})
+			.strict()
+			.describe(
+				"Styling for each number set in the hierarchy. The diagram shows whole ⊂ integer ⊂ rational, with irrational separate."
+			)
 	})
 	.strict()
-	.describe("Creates an Euler diagram showing the hierarchical relationship between number sets. Whole numbers nest inside integers, which nest inside rationals. Irrationals are shown separately. Together, rationals and irrationals form the real numbers. Essential for teaching number system classification and set relationships.")
+	.describe(
+		"Creates an Euler diagram showing the hierarchical relationship between number sets. Whole numbers nest inside integers, which nest inside rationals. Irrationals are shown separately. Together, rationals and irrationals form the real numbers. Essential for teaching number system classification and set relationships."
+	)
 
 export type NumberSetDiagramProps = z.infer<typeof NumberSetDiagramPropsSchema>
 
