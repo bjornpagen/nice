@@ -2,27 +2,29 @@ import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-const AxisOptionsSchema = z
-	.object({
-		label: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)),
-		min: z.number(),
-		max: z.number(),
-		tickInterval: z.number().positive(),
-		showGridLines: z.boolean(),
-		showTickLabels: z.boolean().default(true).describe("Whether to show tick labels on the axis.")
-	})
-	.strict()
+function createAxisOptionsSchema() {
+	return z
+		.object({
+			label: z
+				.string()
+				.nullable()
+				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)),
+			min: z.number(),
+			max: z.number(),
+			tickInterval: z.number().positive(),
+			showGridLines: z.boolean(),
+			showTickLabels: z.boolean().default(true).describe("Whether to show tick labels on the axis.")
+		})
+		.strict()
+}
 
 export const ParabolaGraphPropsSchema = z
 	.object({
 		type: z.literal("parabolaGraph"),
 		width: z.number().positive().describe("Total width of the SVG in pixels."),
 		height: z.number().positive().describe("Total height of the SVG in pixels."),
-		xAxis: AxisOptionsSchema,
-		yAxis: AxisOptionsSchema,
+		xAxis: createAxisOptionsSchema(),
+		yAxis: createAxisOptionsSchema(),
 		parabola: z
 			.object({
 				points: z

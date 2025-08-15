@@ -6,44 +6,52 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 
 export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
 
-// Defines a single data series to be plotted on the graph.
-const SeriesSchema = z
-	.object({
-		name: z
-			.string()
-			.describe("The name of this data series, which will appear in the legend (e.g., 'Bullhead City', 'Sedona')."),
-		values: z
-			.array(z.number())
-			.describe(
-				"An array of numerical values for this series. The order must correspond to the `xAxis.categories` array."
-			),
-		color: z
-			.string()
-			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex format only (#RGB, #RRGGBB, or #RRGGBBAA)")
-			.describe(
-				"The color for the line and points of this series in hex format only (e.g., '#000', '#3377dd', '#ff000080')."
-			),
-		style: z
-			.enum(["solid", "dashed", "dotted"])
-			.describe("The visual style of the line. 'solid' is a continuous line, 'dashed' and 'dotted' are broken lines."),
-		pointShape: z.enum(["circle", "square"]).describe("The shape of the marker for each data point."),
-		yAxis: z.enum(["left", "right"]).describe("Specifies which Y-axis this series should be plotted against.")
-	})
-	.strict()
+// Factory helpers to avoid schema reuse and $ref generation
+function createSeriesSchema() {
+	return z
+		.object({
+			name: z
+				.string()
+				.describe(
+					"The name of this data series, which will appear in the legend (e.g., 'Bullhead City', 'Sedona')."
+				),
+			values: z
+				.array(z.number())
+				.describe(
+					"An array of numerical values for this series. The order must correspond to the `xAxis.categories` array."
+				),
+			color: z
+				.string()
+				.regex(CSS_COLOR_PATTERN, "invalid css color; use hex format only (#RGB, #RRGGBB, or #RRGGBBAA)")
+				.describe(
+					"The color for the line and points of this series in hex format only (e.g., '#000', '#3377dd', '#ff000080')."
+				),
+			style: z
+				.enum(["solid", "dashed", "dotted"])
+				.describe(
+					"The visual style of the line. 'solid' is a continuous line, 'dashed' and 'dotted' are broken lines."
+				),
+			pointShape: z.enum(["circle", "square"]).describe("The shape of the marker for each data point."),
+			yAxis: z.enum(["left", "right"]).describe("Specifies which Y-axis this series should be plotted against.")
+		})
+		.strict()
+}
 
-const YAxisSchema = z
-	.object({
-		label: z
-			.string()
-			.nullable()
-			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
-			.describe("The label for the vertical axis (e.g., 'Average temperature (°C)')."),
-		min: z.number().describe("The minimum value for the y-axis scale."),
-		max: z.number().describe("The maximum value for the y-axis scale."),
-		tickInterval: z.number().positive().describe("The numeric interval between labeled tick marks on the y-axis."),
-		showGridLines: z.boolean().describe("If true, displays horizontal grid lines for the y-axis.")
-	})
-	.strict()
+function createYAxisSchema() {
+	return z
+		.object({
+			label: z
+				.string()
+				.nullable()
+				.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+				.describe("The label for the vertical axis (e.g., 'Average temperature (°C)')."),
+			min: z.number().describe("The minimum value for the y-axis scale."),
+			max: z.number().describe("The maximum value for the y-axis scale."),
+			tickInterval: z.number().positive().describe("The numeric interval between labeled tick marks on the y-axis."),
+			showGridLines: z.boolean().describe("If true, displays horizontal grid lines for the y-axis.")
+		})
+		.strict()
+}
 
 export const LineGraphPropsSchema = z
 	.object({
@@ -67,11 +75,11 @@ export const LineGraphPropsSchema = z
 					.describe("An array of labels for the x-axis categories (e.g., ['Jan', 'Feb', 'Mar']).")
 			})
 			.strict(),
-		yAxis: YAxisSchema,
-		yAxisRight: YAxisSchema.nullable()
-			.transform((val) => val ?? null)
+		yAxis: createYAxisSchema(),
+		yAxisRight: z
+			.union([createYAxisSchema(), z.null()])
 			.describe("Configuration for an optional second Y-axis on the right side. Null for a single-axis graph."),
-		series: z.array(SeriesSchema).describe("An array of data series to plot on the graph."),
+		series: z.array(createSeriesSchema()).describe("An array of data series to plot on the graph."),
 		showLegend: z.boolean().describe("If true, a legend is displayed to identify each data series.")
 	})
 	.strict()

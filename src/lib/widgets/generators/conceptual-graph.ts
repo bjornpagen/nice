@@ -2,14 +2,19 @@ import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-const PointSchema = z.object({
-	x: z.number().describe("The x-coordinate of the point in an arbitrary data space."),
-	y: z.number().describe("The y-coordinate of the point in an arbitrary data space.")
-})
+// Factory functions to avoid schema instance reuse which causes $ref in JSON Schema
+function createPointSchema() {
+	return z.object({
+		x: z.number().describe("The x-coordinate of the point in an arbitrary data space."),
+		y: z.number().describe("The y-coordinate of the point in an arbitrary data space.")
+	})
+}
 
-const HighlightPointSchema = PointSchema.extend({
-	label: z.string().describe("The text label to display next to this point (e.g., 'A', 'B', 'C').")
-})
+function createHighlightPointSchema() {
+	return createPointSchema().extend({
+		label: z.string().describe("The text label to display next to this point (e.g., 'A', 'B', 'C').")
+	})
+}
 
 export const ConceptualGraphPropsSchema = z
 	.object({
@@ -18,10 +23,10 @@ export const ConceptualGraphPropsSchema = z
 		height: z.number().positive().describe("Total height of the SVG in pixels (e.g., 400, 500)."),
 		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Time')."),
 		yAxisLabel: z.string().describe("The label for the vertical axis (e.g., 'Frog population size')."),
-		curvePoints: z.array(PointSchema).min(2).describe("An array of {x, y} points that define the curve to be drawn."),
+		curvePoints: z.array(createPointSchema()).min(2).describe("An array of {x, y} points that define the curve to be drawn."),
 		curveColor: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("The color of the plotted curve."),
 		highlightPoints: z
-			.array(HighlightPointSchema)
+			.array(createHighlightPointSchema())
 			.describe("An array of specific, labeled points to highlight on the graph."),
 		highlightPointColor: z
 			.string()

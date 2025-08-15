@@ -4,13 +4,16 @@ import type { Widget } from "@/lib/widgets/generators"
 import {
 	generateAbsoluteValueNumberLine,
 	generateAngleDiagram,
+	generateAreaGraph,
 	generateBarChart,
 	generateBoxGrid,
 	generateBoxPlot,
 	generateCircleDiagram,
 	generateCompositeShapeDiagram,
+	generateConceptualGraph,
 	generateCoordinatePlane,
 	generateDataTable,
+	generateDivergentBarChart,
 	generateDiscreteObjectRatioDiagram,
 	generateDistanceFormulaGraph,
 	generateDotPlot,
@@ -22,13 +25,17 @@ import {
 	generateGeometricSolidDiagram,
 	generateHangerDiagram,
 	generateHistogram,
+	generateHorizontalBarChart,
 	generateInequalityNumberLine,
+	generateKeelingCurve,
 	generateLineEquationGraph,
+	generateLineGraph,
 	generateNumberLine,
 	generateNumberLineForOpposites,
 	generateNumberLineWithAction,
 	generateNumberLineWithFractionGroups,
 	generateNumberSetDiagram,
+	generateParabolaGraph,
 	generateParallelogramTrapezoidDiagram,
 	generatePartitionedShape,
 	generatePentagonIntersectionDiagram,
@@ -38,6 +45,8 @@ import {
 	generatePolygonGraph,
 	generatePolyhedronDiagram,
 	generatePolyhedronNetDiagram,
+	generatePopulationBarChart,
+	generatePopulationChangeEventGraph,
 	generateProbabilitySpinner,
 	generatePythagoreanProofDiagram,
 	generateRatioBoxDiagram,
@@ -59,12 +68,16 @@ import {
 
 export function generateWidget(widget: Widget): string {
 	switch (widget.type) {
+		case "areaGraph":
+			return generateAreaGraph(widget)
 		case "threeDIntersectionDiagram":
 			return generateThreeDIntersectionDiagram(widget)
 		case "absoluteValueNumberLine":
 			return generateAbsoluteValueNumberLine(widget)
 		case "angleDiagram":
 			return generateAngleDiagram(widget)
+		case "conceptualGraph":
+			return generateConceptualGraph(widget)
 		case "barChart":
 			return generateBarChart(widget)
 		case "boxGrid":
@@ -77,12 +90,20 @@ export function generateWidget(widget: Widget): string {
 			return generateCompositeShapeDiagram(widget)
 		case "coordinatePlane":
 			return generateCoordinatePlane(widget)
+		case "divergentBarChart":
+			return generateDivergentBarChart(widget)
 		case "distanceFormulaGraph":
 			return generateDistanceFormulaGraph(widget)
+		case "horizontalBarChart":
+			return generateHorizontalBarChart(widget)
 		case "functionPlotGraph":
 			return generateFunctionPlotGraph(widget)
+		case "keelingCurve":
+			return generateKeelingCurve(widget)
 		case "lineEquationGraph":
 			return generateLineEquationGraph(widget)
+		case "lineGraph":
+			return generateLineGraph(widget)
 		case "pointPlotGraph":
 			return generatePointPlotGraph(widget)
 		case "polygonGraph":
@@ -97,6 +118,12 @@ export function generateWidget(widget: Widget): string {
 			return generateDotPlot(widget)
 		case "doubleNumberLine":
 			return generateDoubleNumberLine(widget)
+		case "parabolaGraph":
+			return generateParabolaGraph(widget)
+		case "populationBarChart":
+			return generatePopulationBarChart(widget)
+		case "populationChangeEventGraph":
+			return generatePopulationChangeEventGraph(widget)
 		case "geometricSolidDiagram":
 			return generateGeometricSolidDiagram(widget)
 		case "hangerDiagram":

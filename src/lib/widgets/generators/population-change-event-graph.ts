@@ -2,16 +2,24 @@ import { z } from "zod"
 import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
 import type { WidgetGenerator } from "@/lib/widgets/types"
 
-const PointSchema = z.object({
-	x: z.number().describe("The x-coordinate of the point in an arbitrary data space."),
-	y: z.number().describe("The y-coordinate of the point in an arbitrary data space.")
-})
+// Factory helpers to avoid schema reuse and $ref generation
+function createPointSchema() {
+	return z.object({
+		x: z.number().describe("The x-coordinate of the point in an arbitrary data space."),
+		y: z.number().describe("The y-coordinate of the point in an arbitrary data space.")
+	})
+}
 
-const SegmentSchema = z.object({
-	points: z.array(PointSchema).describe("An array of {x, y} points that define this segment of the curve."),
-	color: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("The color of this line segment."),
-	label: z.string().describe("The text label for this segment to be displayed in the legend.")
-})
+function createSegmentSchema() {
+	return z.object({
+		points: z.array(createPointSchema()).describe("An array of {x, y} points that define this segment of the curve."),
+		color: z
+			.string()
+			.regex(CSS_COLOR_PATTERN, "invalid css color")
+			.describe("The color of this line segment."),
+		label: z.string().describe("The text label for this segment to be displayed in the legend.")
+	})
+}
 
 export const PopulationChangeEventGraphPropsSchema = z
 	.object({
@@ -36,8 +44,8 @@ export const PopulationChangeEventGraphPropsSchema = z
 			.describe(
 				"The maximum value for the y-axis. CRITICAL: Keep this consistent across all related graphs for meaningful comparison. Choose a value that accommodates all data points with some padding."
 			),
-		beforeSegment: SegmentSchema.describe("The data and style for the 'before' period, drawn as a solid line."),
-		afterSegment: SegmentSchema.describe("The data and style for the 'after' period, drawn as a dashed line."),
+		beforeSegment: createSegmentSchema().describe("The data and style for the 'before' period, drawn as a solid line."),
+		afterSegment: createSegmentSchema().describe("The data and style for the 'after' period, drawn as a dashed line."),
 		showLegend: z.boolean().describe("If true, a legend is displayed to identify the line segments.")
 	})
 	.strict()
