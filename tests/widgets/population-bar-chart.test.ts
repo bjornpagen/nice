@@ -43,3 +43,26 @@ test("population bar chart - elk population 1990-2005", () => {
 	const svg = generatePopulationBarChart(parsed)
 	expect(svg).toMatchSnapshot()
 })
+
+// Verifies that an empty xAxisVisibleLabels renders all labels
+test("population bar chart - all x labels when visible list empty", () => {
+	const input = {
+		type: "populationBarChart",
+		width: 600,
+		height: 360,
+		xAxisLabel: "Year",
+		yAxis: { label: "Number of elk", min: 0, max: 1400, tickInterval: 200 },
+		xAxisVisibleLabels: [],
+		data: [
+			{ label: "1990", value: 160 },
+			{ label: "1991", value: 350 },
+			{ label: "1992", value: 650 }
+		],
+		barColor: "#208388",
+		gridColor: "#CCCCCC"
+	} satisfies PopulationBarChartInput
+
+	const parsed = PopulationBarChartPropsSchema.parse(input)
+	const svg = generatePopulationBarChart(parsed)
+	expect(svg).toMatchSnapshot()
+})
