@@ -3,6 +3,55 @@ import * as logger from "@superbuilders/slog"
 import { put } from "@vercel/blob"
 import { env } from "@/env"
 
+async function sleep(ms: number): Promise<void> {
+	return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+/**
+ * Waits for a newly uploaded public Blob URL to become globally readable.
+ * Uses bounded polling with HEAD requests to avoid downloading the body.
+ */
+async function waitForBlobAvailability(
+	url: string,
+	params: { questionId: string; screenshotType: "production" | "perseus"; maxWaitMs?: number; intervalMs?: number }
+): Promise<void> {
+	const { questionId, screenshotType } = params
+	const maxWaitMs = params.maxWaitMs ?? 2500
+	const intervalMs = params.intervalMs ?? 250
+	const start = Date.now()
+	let attempt = 0
+
+	logger.debug("verifying blob availability", { questionId, screenshotType })
+
+	while (Date.now() - start < maxWaitMs) {
+		attempt += 1
+		// Use a probe query param to avoid any stale negative cache entries
+		const probeUrl = `${url}${url.includes("?") ? "&" : "?"}__probe=${Date.now()}`
+		const headResult = await errors.try(
+			fetch(probeUrl, {
+				method: "HEAD",
+				headers: { "Cache-Control": "no-cache" }
+			})
+		)
+		if (headResult.error) {
+			logger.error("blob availability probe failed", { questionId, screenshotType, error: headResult.error })
+			throw errors.wrap(headResult.error, "blob availability probe")
+		}
+
+		const response = headResult.data
+		if (response.ok) {
+			logger.debug("blob is available", { questionId, screenshotType, attempt, status: response.status })
+			return
+		}
+
+		logger.debug("blob not yet available", { questionId, screenshotType, attempt, status: response.status })
+		await sleep(intervalMs)
+	}
+
+	logger.error("blob did not become available in time", { questionId, screenshotType, maxWaitMs })
+	throw errors.new("blob not readable after delay")
+}
+
 /**
  * Uploads a screenshot buffer to Vercel Blob with upsert behavior.
  * Uses override: true to replace existing files with the same path.
@@ -29,7 +78,17 @@ export async function uploadScreenshot(
 		throw errors.wrap(uploadResult.error, `blob upload failed for ${screenshotType} screenshot`)
 	}
 
-	return uploadResult.data.url
+	// Ensure the public URL is actually readable before returning
+	const url = uploadResult.data.url
+	const availabilityResult = await errors.try(
+		waitForBlobAvailability(url, { questionId, screenshotType })
+	)
+	if (availabilityResult.error) {
+		logger.error("blob availability check failed", { questionId, screenshotType, error: availabilityResult.error })
+		throw errors.wrap(availabilityResult.error, "blob availability check")
+	}
+
+	return url
 }
 
 /**
