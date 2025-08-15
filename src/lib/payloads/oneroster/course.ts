@@ -615,7 +615,6 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 								xp: videoData?.duration ? Math.ceil(videoData.duration / 60) : 0
 							}
 						} else if (lc.contentType === "Exercise") {
-							// REVERT: Emit QTI test resources for Exercises
 							const exerciseQuestionCount = exerciseQuestionCountMap.get(content.id)
 							if (exerciseQuestionCount === undefined) {
 								logger.error("qti xp: missing question count for exercise", { exerciseId: content.id })
@@ -623,17 +622,11 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 							}
 							metadata = {
 								...metadata,
-								type: "qti",
-								subType: "qti-test",
-								version: "3.0",
-								language: "en-US",
-								url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${content.id}`,
-								questionType: "custom",
-								// Ensure external markers are explicitly cleared
-								launchUrl: null,
-								toolProvider: null,
-								// Keep Nice-controlled hints for our app (optional)
+								type: "interactive",
+								toolProvider: "Nice Academy",
 								khanActivityType: "Exercise",
+								launchUrl: `${appDomain}${metadata.path}/e/${content.slug}`,
+								url: `${appDomain}${metadata.path}/e/${content.slug}`,
 								xp: Math.ceil(exerciseQuestionCount * 0.5)
 							}
 						}
@@ -719,7 +712,7 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					assessmentXp = Math.ceil(quizCount * 0.5)
 				}
 
-				// REVERT: Emit QTI test resources for Assessments (Quiz/UnitTest)
+				// Determine lesson type for metadata tagging
 				let khanLessonType: "quiz" | "unittest" | "coursechallenge" | undefined
 				if (assessment.type === "Quiz") {
 					khanLessonType = "quiz"
@@ -741,15 +734,17 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					roles: ["primary"],
 					importance: "primary",
 					metadata: {
-						type: "qti",
-						subType: "qti-test",
-						version: "3.0",
-						language: "en-US",
-						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
-						questionType: "custom",
-						// Ensure external markers are explicitly cleared
-						launchUrl: null,
-						toolProvider: null,
+						type: "interactive",
+						toolProvider: "Nice Academy",
+						// Launch URL routes to redirect pages which resolve canonical paths
+						launchUrl:
+							assessment.type === "Quiz"
+								? `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/quiz/${normalizeKhanSlug(assessment.slug)}`
+								: `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/test/${normalizeKhanSlug(assessment.slug)}`,
+						url:
+							assessment.type === "Quiz"
+								? `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/quiz/${normalizeKhanSlug(assessment.slug)}`
+								: `${appDomain}/${subjectSlug}/${course.slug}/${unit.slug}/test/${normalizeKhanSlug(assessment.slug)}`,
 						// Keep Nice-controlled hints for our app (optional)
 						khanActivityType: assessment.type,
 						khanLessonType,
@@ -836,15 +831,10 @@ export async function generateCoursePayload(courseId: string): Promise<OneRoster
 					roles: ["primary"],
 					importance: "primary",
 					metadata: {
-						type: "qti",
-						subType: "qti-test",
-						version: "3.0",
-						language: "en-US",
-						url: `${env.TIMEBACK_QTI_SERVER_URL}/assessment-tests/nice_${assessment.id}`,
-						questionType: "custom",
-						// Ensure external markers are explicitly cleared
-						launchUrl: null,
-						toolProvider: null,
+						type: "interactive",
+						toolProvider: "Nice Academy",
+						launchUrl: `${appDomain}/${subjectSlug}/${course.slug}/test/${normalizeKhanSlug(assessment.slug)}`,
+						url: `${appDomain}/${subjectSlug}/${course.slug}/test/${normalizeKhanSlug(assessment.slug)}`,
 						// Keep Nice-controlled hints for our app (optional)
 						khanActivityType: assessment.type,
 						khanLessonType,
