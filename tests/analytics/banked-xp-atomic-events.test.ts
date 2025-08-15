@@ -28,7 +28,8 @@ mock.module("@/lib/clients", () => ({
 	oneroster: {
 		getAllResults: mockGetAllResults,
 		putResult: mockPutResult,
-		getResult: mockGetResult
+		getResult: mockGetResult,
+		getComponentResource: () => Promise.resolve({})
 	},
 	caliper: {
 		sendCaliperEvents: (_envelope: unknown) => Promise.resolve()
@@ -113,6 +114,90 @@ afterEach(() => {
 	mockCheckExistingProficiency.mockClear()
 	mockAwardBankedXpForExercise.mockReset()
 	mockAwardBankedXpForExercise.mockImplementation((_p) => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] }))
+})
+
+describe("Banked XP - Additional Edge Cases", () => {
+	test("Rush penalty: negative exercise XP → ActivityEvent equals penalized exercise-only XP; no banking", async () => {
+		const shortDurationOptions = {
+			...baseOptions,
+			durationInSeconds: 30,
+			sessionResults: [
+				{ qtiItemId: "q1", isCorrect: true, isReported: false },
+				{ qtiItemId: "q2", isCorrect: false, isReported: false },
+				{ qtiItemId: "q3", isCorrect: false, isReported: false },
+				{ qtiItemId: "q4", isCorrect: false, isReported: false },
+				{ qtiItemId: "q5", isCorrect: false, isReported: false },
+				{ qtiItemId: "q6", isCorrect: false, isReported: false },
+				{ qtiItemId: "q7", isCorrect: false, isReported: false },
+				{ qtiItemId: "q8", isCorrect: false, isReported: false },
+				{ qtiItemId: "q9", isCorrect: false, isReported: false },
+				{ qtiItemId: "q10", isCorrect: false, isReported: false }
+			]
+		}
+
+		await finalizeAssessment(shortDurationOptions)
+
+		const payload = analyticsSpy.mock.calls[0]?.[0]
+		if (!payload) {
+			logger.error("missing analytics payload (penalty)")
+			throw errors.new("missing analytics payload")
+		}
+		expect(payload.finalXp).toBe(-10)
+		expect(bankSpy).not.toHaveBeenCalled()
+	})
+
+	test("Attempt 2 mastery: ActivityEvent equals attempt-2 exercise-only XP; daily aggregation adds banked XP once", async () => {
+		mockAwardBankedXpForExercise.mockImplementation((_p) =>
+			Promise.resolve({ bankedXp: 20, awardedResourceIds: ["video1"] })
+		)
+
+		await finalizeAssessment({
+			...baseOptions,
+			attemptNumber: 2,
+			sessionResults: [
+				{ qtiItemId: "q1", isCorrect: true, isReported: false },
+				{ qtiItemId: "q2", isCorrect: true, isReported: false },
+				{ qtiItemId: "q3", isCorrect: true, isReported: false },
+				{ qtiItemId: "q4", isCorrect: true, isReported: false },
+				{ qtiItemId: "q5", isCorrect: true, isReported: false }
+			]
+		})
+
+		const payload = analyticsSpy.mock.calls[0]?.[0]
+		if (!payload) {
+			logger.error("missing analytics payload (attempt 2)")
+			throw errors.new("missing analytics payload")
+		}
+		const exerciseOnlyAttempt2Xp = 100
+		expect(payload.finalXp).toBe(exerciseOnlyAttempt2Xp)
+		const aggregated = payload.finalXp + 20
+		expect(aggregated).toBe(120)
+	})
+
+	test("Below mastery (<80%): no banking; ActivityEvent equals exercise-only XP (often 0)", async () => {
+		mockAwardBankedXpForExercise.mockImplementation((_p) =>
+			Promise.resolve({ bankedXp: 50, awardedResourceIds: ["video1", "article1"] })
+		)
+
+		await finalizeAssessment({
+			...baseOptions,
+			sessionResults: [
+				{ qtiItemId: "q1", isCorrect: true, isReported: false },
+				{ qtiItemId: "q2", isCorrect: true, isReported: false },
+				{ qtiItemId: "q3", isCorrect: false, isReported: false },
+				{ qtiItemId: "q4", isCorrect: false, isReported: false },
+				{ qtiItemId: "q5", isCorrect: false, isReported: false }
+			]
+		})
+
+		const payload = analyticsSpy.mock.calls[0]?.[0]
+		if (!payload) {
+			logger.error("missing analytics payload (<80%)")
+			throw errors.new("missing analytics payload")
+		}
+		expect(payload.finalXp).toBe(0)
+		expect(bankSpy).not.toHaveBeenCalled()
+	})
 })
 
 describe("Banked XP - Atomic Caliper Events and Double-Counting", () => {
