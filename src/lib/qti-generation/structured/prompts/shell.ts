@@ -142,12 +142,26 @@ CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, 
      - NO OTHER LOCATION
 - **HARD STOP. NO EXCEPTIONS.** Answers are FORBIDDEN in body, widgets, or interactions. They are ONLY allowed in the designated feedback fields above.
 
-  **CRITICAL: ATTRIBUTION/CREDIT HANDLING — BANNED IN 'BODY'**
-  Attribution, credit, and licensing strings (e.g., creator names, "Image credit:", source sites, licenses like "CC0 1.0", "CC BY-SA", Wikimedia/Unsplash references) MUST NOT appear anywhere in the 'body'. Provide attribution in the widget's 'attribution' property instead.
-  - Do NOT place attribution/credit/license strings in 'body' paragraphs, prompts, or feedback.
-  - Do NOT include attribution in widget captions. Captions should ONLY describe the image content.
-  - If the Perseus content includes attribution/credit text adjacent to an image, STRIP IT from the 'body'. The pipeline will store attribution in the widget's 'attribution' field later.
+  **CRITICAL: ALT/CAPTION/ATTRIBUTION HANDLING — BANNED IN 'BODY'**
+  Any descriptive or source text associated with images MUST NOT appear in the 'body'. This includes:
+  - Alt text (what the image shows)
+  - Captions (descriptive figure text)
+  - Attribution/credit/licensing strings (creator names, "Image credit:", source sites, licenses like "CC0 1.0", "CC BY-SA", Wikimedia/Unsplash references)
+
+  Rules:
+  - Do NOT place alt/caption/attribution strings in 'body' paragraphs, prompts, or feedback.
+  - Do NOT write figure captions or credits in the 'body'.
+  - If Perseus includes any of these texts adjacent to an image, STRIP THEM from 'body'.
   - Examples of banned phrases in body: "Image credit:", "Photo by", "by <creator>", "Wikimedia", "CC0", "CC BY", "licensed under".
+
+  ZERO TOLERANCE (automatic rejection if violated):
+  - BANNED sentence starters: "Image:", "Figure:", "Caption:", "Photo:", "Diagram:", "Map:", "Illustration:".
+  - BANNED descriptive intros: "The image shows", "This figure shows", "A photograph of", "Cartoon showing", "An illustration of", "A map of".
+  - BANNED credit lines anywhere: lines containing words like "credit", "source", "licensed", "by <name>", "Wikimedia", "Unsplash", "CC0", "CC BY".
+
+  Allowed minimal references in 'body' (keep neutral and non-descriptive):
+  - "Examine the image below." / "Refer to the diagram below." / "Use the map below to answer."
+  - Do NOT describe the content of the image. Do NOT include creator or licensing info.
 
   WRONG (attribution left in 'body' as a trailing paragraph):
   \`\`\`json
@@ -163,7 +177,32 @@ CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, 
   }
   \`\`\`
 
-  CORRECT (remove attribution paragraph from 'body'; attribution will be captured later in the widget data):
+  CORRECT (remove attribution paragraph from 'body'):
+  WRONG (caption/alt-like description left in 'body' after image):
+  \`\`\`json
+  {
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Examine the image and answer the question below." }] },
+      { "type": "blockSlot", "slotId": "image_1" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Cartoon showing Columbia stirring a bowl labeled \"Citizenship\" with a spoon labeled \"Equal Rights.\" Figures representing many nations are in the bowl; a caricature of an Irishman jumps up, yelling and waving a knife and a green flag." }] },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Which change most directly contributed to the development depicted?" }] },
+      { "type": "blockSlot", "slotId": "choice_interaction" }
+    ]
+  }
+  \`\`\`
+
+  CORRECT (remove caption/alt-like paragraph; do not include image descriptions in 'body'):
+  \`\`\`json
+  {
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Examine the image and answer the question below." }] },
+      { "type": "blockSlot", "slotId": "image_1" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Which change most directly contributed to the development depicted?" }] },
+      { "type": "blockSlot", "slotId": "choice_interaction" }
+    ]
+  }
+  \`\`\`
+
   \`\`\`json
   {
     "body": [
