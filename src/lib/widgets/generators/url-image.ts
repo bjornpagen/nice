@@ -42,10 +42,27 @@ export const UrlImageWidgetPropsSchema = z
 	)
 
 export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema> = (props) => {
-	const { url, alt, width, height, caption } = props
+	const { url, alt, width, height, caption, attribution } = props
 	// Note: attribution is intentionally not destructured or rendered
 	// The attribution field exists in the schema to encourage LLMs to separate
 	// attribution/source info from the caption, but we don't display it
+
+	const stripWrappingDelimiters = (input: string): string => {
+		let text = input.trim()
+		for (;;) {
+			let changed = false
+			if (text.startsWith("*") && text.endsWith("*") && text.length >= 2) {
+				text = text.slice(1, -1).trim()
+				changed = true
+			}
+			if (text.startsWith("[") && text.endsWith("]") && text.length >= 2) {
+				text = text.slice(1, -1).trim()
+				changed = true
+			}
+			if (!changed) break
+		}
+		return text
+	}
 
 	// Validate URL at compile time
 	const urlValidationResult = errors.trySync((): void => {
@@ -66,8 +83,15 @@ export const generateUrlImage: WidgetGenerator<typeof UrlImageWidgetPropsSchema>
 	const escapeXmlText = (text: string): string =>
 		sanitizeXmlAttributeValue(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 
-	const imgTag = `<img src="${escapeXmlAttribute(url)}" alt="${escapeXmlAttribute(alt)}" style="${escapeXmlAttribute(imgStyles)}" />`
-	const captionTag = caption ? `<div style="${escapeXmlAttribute(captionStyles)}">${escapeXmlText(caption)}</div>` : ""
+	const normalizedAlt = stripWrappingDelimiters(alt)
+	const normalizedCaption = caption ? stripWrappingDelimiters(caption) : null
+	// Normalize attribution even though we don't render it yet to avoid leaking artifacts if usage changes
+	const _normalizedAttribution = attribution ? stripWrappingDelimiters(attribution) : null
+
+	const imgTag = `<img src="${escapeXmlAttribute(url)}" alt="${escapeXmlAttribute(normalizedAlt)}" style="${escapeXmlAttribute(imgStyles)}" />`
+	const captionTag = normalizedCaption
+		? `<div style="${escapeXmlAttribute(captionStyles)}">${escapeXmlText(normalizedCaption)}</div>`
+		: ""
 
 	return `<div style="${containerStyles}">${imgTag}${captionTag}</div>`
 }
