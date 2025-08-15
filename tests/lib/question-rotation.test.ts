@@ -4,19 +4,17 @@ import { applyQtiSelectionAndOrdering } from "@/lib/qti-selection"
 
 function buildQtiXml(options: { sectionId: string; itemIds: string[]; shuffle: boolean; selectCount: number }): string {
 	const { sectionId, itemIds, shuffle, selectCount } = options
-	const itemsXml = itemIds
-		.map((id) => `<qti-assessment-item-ref identifier="${id}"/>`)
-		.join("")
+	const itemsXml = itemIds.map((id) => `<qti-assessment-item-ref identifier="${id}"/>`).join("")
 	return (
 		`<qti-assessment-test identifier="test">` +
-		`<qti-test-part>` +
+		"<qti-test-part>" +
 		`<qti-assessment-section identifier="${sectionId}">` +
 		`<qti-ordering shuffle="${shuffle ? "true" : "false"}"/>` +
 		`<qti-selection select="${selectCount}"/>` +
 		itemsXml +
-		`</qti-assessment-section>` +
-		`</qti-test-part>` +
-		`</qti-assessment-test>`
+		"</qti-assessment-section>" +
+		"</qti-test-part>" +
+		"</qti-assessment-test>"
 	)
 }
 
@@ -172,7 +170,7 @@ describe("Question rotation across assessment types", () => {
 		const seen = new Set<string>()
 		for (let attempt = 1; attempt <= attemptsNeeded; attempt++) {
 			const qs = applyQtiSelectionAndOrdering(testObj, resolved, {
-				baseSeed: `u1:r1`,
+				baseSeed: "u1:r1",
 				attemptNumber: attempt,
 				resourceSourcedId: "r1"
 			})
@@ -202,13 +200,13 @@ describe("Question rotation across assessment types", () => {
 		const testObj = buildAssessmentTest(xml, "determinism_stride")
 		const resolved = buildResolvedQuestions(ids)
 		const a1 = applyQtiSelectionAndOrdering(testObj, resolved, {
-			baseSeed: `uX:rX`,
+			baseSeed: "uX:rX",
 			attemptNumber: 2,
 			userSourceId: "uX",
 			resourceSourcedId: "rX"
 		})
 		const a2 = applyQtiSelectionAndOrdering(testObj, resolved, {
-			baseSeed: `uX:rX`,
+			baseSeed: "uX:rX",
 			attemptNumber: 2,
 			userSourceId: "uX",
 			resourceSourcedId: "rX"
@@ -222,19 +220,19 @@ describe("Question rotation across assessment types", () => {
 		const testObj = buildAssessmentTest(xml, "diff_users")
 		const resolved = buildResolvedQuestions(ids)
 		const forUserA = applyQtiSelectionAndOrdering(testObj, resolved, {
-			baseSeed: `userA:res1`,
+			baseSeed: "userA:res1",
 			attemptNumber: 1,
 			userSourceId: "userA",
 			resourceSourcedId: "res1"
 		})
 		const forUserB = applyQtiSelectionAndOrdering(testObj, resolved, {
-			baseSeed: `userB:res1`,
+			baseSeed: "userB:res1",
 			attemptNumber: 1,
 			userSourceId: "userB",
 			resourceSourcedId: "res1"
 		})
 		const forResource2 = applyQtiSelectionAndOrdering(testObj, resolved, {
-			baseSeed: `userA:res2`,
+			baseSeed: "userA:res2",
 			attemptNumber: 1,
 			userSourceId: "userA",
 			resourceSourcedId: "res2"
@@ -248,26 +246,26 @@ describe("Question rotation across assessment types", () => {
 		const b = Array.from({ length: 6 }, (_, i) => `b${i + 1}`)
 		const xml =
 			`<qti-assessment-test identifier="multi">` +
-			`<qti-test-part>` +
+			"<qti-test-part>" +
 			`<qti-assessment-section identifier="A">` +
 			`<qti-ordering shuffle="false"/>` +
 			`<qti-selection select="2"/>` +
 			a.map((id) => `<qti-assessment-item-ref identifier="${id}"/>`).join("") +
-			`</qti-assessment-section>` +
+			"</qti-assessment-section>" +
 			`<qti-assessment-section identifier="B">` +
 			`<qti-ordering shuffle="true"/>` +
 			`<qti-selection select="2"/>` +
 			b.map((id) => `<qti-assessment-item-ref identifier="${id}"/>`).join("") +
-			`</qti-assessment-section>` +
-			`</qti-test-part>` +
-			`</qti-assessment-test>`
+			"</qti-assessment-section>" +
+			"</qti-test-part>" +
+			"</qti-assessment-test>"
 		const testObj = buildAssessmentTest(xml, "multi_sections")
 		const resolved = buildResolvedQuestions([...a, ...b])
 		const attemptsNeeded = rotationWindowCount(12, 4)
 		const seen = new Set<string>()
 		for (let attempt = 1; attempt <= attemptsNeeded; attempt++) {
 			const qs = applyQtiSelectionAndOrdering(testObj, resolved, {
-				baseSeed: `seed`,
+				baseSeed: "seed",
 				attemptNumber: attempt,
 				resourceSourcedId: "seed"
 			})
@@ -284,17 +282,17 @@ describe("Question rotation across assessment types", () => {
 		const ids = Array.from({ length: 7 }, (_, i) => `q${i + 1}`)
 		const xml =
 			`<qti-assessment-test identifier="noselect">` +
-			`<qti-test-part>` +
+			"<qti-test-part>" +
 			`<qti-assessment-section identifier="S">` +
 			`<qti-ordering shuffle="true"/>` +
 			ids.map((id) => `<qti-assessment-item-ref identifier="${id}"/>`).join("") +
-			`</qti-assessment-section>` +
-			`</qti-test-part>` +
-			`</qti-assessment-test>`
+			"</qti-assessment-section>" +
+			"</qti-test-part>" +
+			"</qti-assessment-test>"
 		const testObj = buildAssessmentTest(xml, "noselect_test")
 		const resolved = buildResolvedQuestions(ids)
-		const a1 = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: `u:r`, attemptNumber: 1 })
-		const a2 = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: `u:r`, attemptNumber: 3 })
+		const a1 = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: "u:r", attemptNumber: 1 })
+		const a2 = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: "u:r", attemptNumber: 3 })
 		expect(a1.map((q) => q.id)).toEqual(a2.map((q) => q.id))
 		expect(a1.length).toBe(ids.length)
 	})
@@ -304,10 +302,10 @@ describe("Question rotation across assessment types", () => {
 		const xml = buildQtiXml({ sectionId: "S", itemIds: ids, shuffle: false, selectCount: 10 })
 		const testObj = buildAssessmentTest(xml, "k_ge_n")
 		const resolved = buildResolvedQuestions(ids)
-		const first = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: `seed`, attemptNumber: 1 })
+		const first = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: "seed", attemptNumber: 1 })
 		const attemptsNeeded = rotationWindowCount(ids.length, Math.min(10, ids.length))
 		const wrapped = applyQtiSelectionAndOrdering(testObj, resolved, {
-			baseSeed: `seed`,
+			baseSeed: "seed",
 			attemptNumber: attemptsNeeded + 1
 		})
 		expect(first.map((q) => q.id).sort()).toEqual(ids.slice().sort())
@@ -320,8 +318,8 @@ describe("Question rotation across assessment types", () => {
 			const xml = buildQtiXml({ sectionId: "S", itemIds: ids, shuffle, selectCount: 4 })
 			const testObj = buildAssessmentTest(xml, `wrap_${shuffle ? "t" : "f"}`)
 			const resolved = buildResolvedQuestions(ids)
-			const first = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: `u:r`, attemptNumber: 1 })
-			const wrapped = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: `u:r`, attemptNumber: 3 + 1 })
+			const first = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: "u:r", attemptNumber: 1 })
+			const wrapped = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: "u:r", attemptNumber: 3 + 1 })
 			expect(wrapped.map((q) => q.id)).toEqual(first.map((q) => q.id))
 		}
 	})
@@ -330,17 +328,17 @@ describe("Question rotation across assessment types", () => {
 		const ids = ["q1", "q2", "q3"]
 		const xml =
 			`<qti-assessment-test identifier="bad_ref">` +
-			`<qti-test-part>` +
+			"<qti-test-part>" +
 			`<qti-assessment-section identifier="S">` +
 			`<qti-selection select="2"/>` +
 			`<qti-assessment-item-ref identifier="q1"/>` +
 			`<qti-assessment-item-ref identifier="qX"/>` +
-			`</qti-assessment-section>` +
-			`</qti-test-part>` +
-			`</qti-assessment-test>`
+			"</qti-assessment-section>" +
+			"</qti-test-part>" +
+			"</qti-assessment-test>"
 		const testObj = buildAssessmentTest(xml, "bad_ref")
 		const resolved = buildResolvedQuestions(ids)
-		expect(() => applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: `seed`, attemptNumber: 1 })).toThrow()
+		expect(() => applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: "seed", attemptNumber: 1 })).toThrow()
 	})
 
 	test("Zero sections: returns all items in provided order", () => {
@@ -348,11 +346,9 @@ describe("Question rotation across assessment types", () => {
 		const xml = `<qti-assessment-test identifier="no_sections"></qti-assessment-test>`
 		const testObj = buildAssessmentTest(xml, "no_sections")
 		const resolved = buildResolvedQuestions(ids)
-		const a1 = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: `seed`, attemptNumber: 1 })
-		const a2 = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: `seed`, attemptNumber: 2 })
+		const a1 = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: "seed", attemptNumber: 1 })
+		const a2 = applyQtiSelectionAndOrdering(testObj, resolved, { baseSeed: "seed", attemptNumber: 2 })
 		expect(a1.map((q) => q.id)).toEqual(ids)
 		expect(a2.map((q) => q.id)).toEqual(ids)
 	})
 })
-
-

@@ -55,6 +55,7 @@ import {
 	InequalityNumberLinePropsSchema
 } from "@/lib/widgets/generators/inequality-number-line"
 import { generateLineEquationGraph, LineEquationGraphPropsSchema } from "@/lib/widgets/generators/line-equation-graph"
+import { generateLineGraph, LineGraphPropsSchema } from "@/lib/widgets/generators/line-graph"
 import { generateNumberLine, NumberLinePropsSchema } from "@/lib/widgets/generators/number-line"
 import {
 	generateNumberLineForOpposites,
@@ -151,6 +152,7 @@ export const allWidgetSchemas = {
 	hangerDiagram: HangerDiagramPropsSchema,
 	histogram: HistogramPropsSchema,
 	inequalityNumberLine: InequalityNumberLinePropsSchema,
+	lineGraph: LineGraphPropsSchema,
 	numberLine: NumberLinePropsSchema,
 	numberLineForOpposites: NumberLineForOppositesPropsSchema,
 	numberLineWithAction: NumberLineWithActionPropsSchema,
@@ -212,6 +214,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.hangerDiagram,
 	typedSchemas.histogram,
 	typedSchemas.inequalityNumberLine,
+	typedSchemas.lineGraph,
 	typedSchemas.numberLine,
 	typedSchemas.numberLineForOpposites,
 	typedSchemas.numberLineWithAction,
@@ -272,6 +275,7 @@ export {
 	HistogramPropsSchema,
 	InequalityNumberLinePropsSchema,
 	LineEquationGraphPropsSchema,
+	LineGraphPropsSchema,
 	NumberLinePropsSchema,
 	NumberLineForOppositesPropsSchema,
 	NumberLineWithActionPropsSchema,
@@ -332,6 +336,7 @@ export {
 	generateHangerDiagram,
 	generateHistogram,
 	generateInequalityNumberLine,
+	generateLineGraph,
 	generateNumberLine,
 	generateNumberLineForOpposites,
 	generateNumberLineWithAction,
@@ -410,6 +415,8 @@ export function generateWidget(widget: Widget): string {
 			return generateInequalityNumberLine(widget)
 		case "lineEquationGraph":
 			return generateLineEquationGraph(widget)
+		case "lineGraph":
+			return generateLineGraph(widget)
 		case "numberLine":
 			return generateNumberLine(widget)
 		case "numberLineForOpposites":

@@ -1,0 +1,180 @@
+import * as errors from "@superbuilders/errors"
+import * as logger from "@superbuilders/slog"
+import { z } from "zod"
+import { CSS_COLOR_PATTERN } from "@/lib/utils/css-color"
+import type { WidgetGenerator } from "@/lib/widgets/types"
+
+export const ErrMismatchedDataLength = errors.new("series data must have the same length as x-axis categories")
+
+// Defines a single data series to be plotted on the graph.
+const SeriesSchema = z
+	.object({
+		name: z
+			.string()
+			.describe("The name of this data series, which will appear in the legend (e.g., 'Bullhead City', 'Sedona')."),
+		values: z
+			.array(z.number())
+			.describe(
+				"An array of numerical values for this series. The order must correspond to the `xAxis.categories` array."
+			),
+		color: z
+			.string()
+			.regex(
+				CSS_COLOR_PATTERN,
+				"invalid css color; use hex format only (#RGB, #RRGGBB, or #RRGGBBAA)"
+			)
+			.describe("The color for the line and points of this series in hex format (e.g., '#000', '#3377dd', '#ff000080')."),
+		style: z
+			.enum(["solid", "dashed", "dotted"])
+			.describe("The visual style of the line. 'solid' is a continuous line, 'dashed' and 'dotted' are broken lines."),
+		showPoints: z
+			.boolean()
+			.describe("If true, circular markers will be drawn at each data point along the line.")
+	})
+	.strict()
+
+export const LineGraphPropsSchema = z
+	.object({
+		type: z.literal("lineGraph"),
+		width: z.number().positive().describe("Total width of the SVG in pixels (e.g., 500, 600)."),
+		height: z.number().positive().describe("Total height of the SVG in pixels (e.g., 400, 350)."),
+		title: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+			.describe("The main title displayed above the graph. Null for no title."),
+		xAxis: z
+			.object({
+				label: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+					.describe("The label for the horizontal axis (e.g., 'Month')."),
+				categories: z.array(z.string()).describe("An array of labels for the x-axis categories (e.g., ['Jan', 'Feb', 'Mar']).")
+			})
+			.strict(),
+		yAxis: z
+			.object({
+				label: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+					.describe("The label for the vertical axis (e.g., 'Average temperature (°C)')."),
+				min: z.number().describe("The minimum value for the y-axis scale."),
+				max: z.number().describe("The maximum value for the y-axis scale."),
+				tickInterval: z.number().positive().describe("The numeric interval between labeled tick marks on the y-axis."),
+				showGridLines: z.boolean().describe("If true, displays horizontal grid lines for the y-axis.")
+			})
+			.strict(),
+		series: z.array(SeriesSchema).describe("An array of data series to plot on the graph."),
+		showLegend: z.boolean().describe("If true, a legend is displayed to identify each data series.")
+	})
+	.strict()
+	.describe(
+		"Creates a multi-series line graph for comparing trends across categorical data. Supports multiple lines with distinct styles, data point markers, and a legend."
+	)
+
+export type LineGraphProps = z.infer<typeof LineGraphPropsSchema>
+
+export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (props) => {
+	const { width, height, title, xAxis, yAxis, series, showLegend } = props
+
+	// Validate that all series have the same number of data points as there are categories.
+	for (const s of series) {
+		if (s.values.length !== xAxis.categories.length) {
+			logger.error("mismatched data length in line graph", {
+				seriesName: s.name,
+				valuesCount: s.values.length,
+				categoriesCount: xAxis.categories.length
+			})
+			throw errors.wrap(
+				ErrMismatchedDataLength,
+				`Series "${s.name}" has ${s.values.length} values, but xAxis has ${xAxis.categories.length} categories.`
+			)
+		}
+	}
+
+	const legendHeight = showLegend ? 40 : 0
+	const margin = { top: 40, right: 20, bottom: 50 + legendHeight, left: 60 }
+	const chartWidth = width - margin.left - margin.right
+	const chartHeight = height - margin.top - margin.bottom
+
+	if (chartHeight <= 0 || chartWidth <= 0) {
+		return `<svg width="${width}" height="${height}"></svg>`
+	}
+
+	// Y-axis scaling
+	const scaleY = chartHeight / (yAxis.max - yAxis.min)
+	const toSvgY = (val: number) => height - margin.bottom - (val - yAxis.min) * scaleY
+
+	// X-axis scaling
+	const categoryWidth = chartWidth / xAxis.categories.length
+	const toSvgX = (index: number) => margin.left + index * categoryWidth + categoryWidth / 2
+
+	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
+	svg +=
+		"<style>.axis-label { font-size: 14px; font-weight: bold; text-anchor: middle; } .title { font-size: 16px; font-weight: bold; text-anchor: middle; }</style>"
+
+	if (title) svg += `<text x="${width / 2}" y="${margin.top / 2}" class="title">${title}</text>`
+
+	// Axes and Labels
+	svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="black"/>` // Y-axis
+	svg += `<line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="black"/>` // X-axis
+
+	if (xAxis.label)
+		svg += `<text x="${margin.left + chartWidth / 2}" y="${height - margin.bottom + 40}" class="axis-label">${xAxis.label}</text>`
+	if (yAxis.label)
+		svg += `<text x="${margin.left - 45}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 45}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
+
+	// Y-axis Ticks and Grid Lines
+	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
+		const y = toSvgY(t)
+		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black"/>`
+		svg += `<text x="${margin.left - 10}" y="${y + 4}" text-anchor="end">${t}</text>`
+		if (yAxis.showGridLines) {
+			svg += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
+		}
+	}
+
+	// X-axis Ticks and Labels
+	xAxis.categories.forEach((cat, i) => {
+		const x = toSvgX(i)
+		svg += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black"/>`
+		svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${cat}</text>`
+	})
+
+	// Data Series Lines and Points
+	series.forEach((s) => {
+		const pointsStr = s.values.map((v, i) => `${toSvgX(i)},${toSvgY(v)}`).join(" ")
+		let dasharray = ""
+		if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
+		if (s.style === "dotted") dasharray = 'stroke-dasharray="2 6"'
+		svg += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="2.5" ${dasharray}/>`
+		if (s.showPoints) {
+			s.values.forEach((v, i) => {
+				svg += `<circle cx="${toSvgX(i)}" cy="${toSvgY(v)}" r="4" fill="${s.color}"/>`
+			})
+		}
+	})
+
+	// Legend
+	if (showLegend) {
+		let currentX = margin.left
+		const legendY = height - legendHeight / 2 - 10
+		series.forEach((s) => {
+			let dasharray = ""
+			if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
+			if (s.style === "dotted") dasharray = 'stroke-dasharray="2 6"'
+			svg += `<line x1="${currentX}" y1="${legendY}" x2="${currentX + 30}" y2="${legendY}" stroke="${s.color}" stroke-width="2.5" ${dasharray}/>`
+			if (s.showPoints) {
+				svg += `<circle cx="${currentX + 15}" cy="${legendY}" r="4" fill="${s.color}"/>`
+			}
+			currentX += 40
+			svg += `<text x="${currentX}" y="${legendY + 4}">${s.name}</text>`
+			currentX += s.name.length * 8 + 20 // Estimate text width
+		})
+	}
+
+	svg += "</svg>"
+	return svg
+}
