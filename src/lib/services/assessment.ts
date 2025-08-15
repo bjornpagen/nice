@@ -61,12 +61,22 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 	}
 	const masteredUnits = calculateMasteredUnits()
 
+	// Atomic: for Exercises, store exercise-only XP in the result metadata.
+	// Other content types (Quiz/Test) do not bank, so total is the same as exercise XP.
+	const exerciseOnlyXp = calculateAssessmentXp(
+		command.expectedXp,
+		accuracyPercent,
+		attemptNumber,
+		totalQuestions,
+		command.durationInSeconds
+	).finalXp
+
 	const metadata = {
 		masteredUnits,
 		totalQuestions: totalQuestions,
 		correctQuestions: correctAnswers,
 		accuracy: accuracyPercent,
-		xp: xpResult.finalXp,
+		xp: command.contentType === "Exercise" ? exerciseOnlyXp : xpResult.finalXp,
 		multiplier: xpResult.multiplier,
 		penaltyApplied: xpResult.penaltyApplied,
 		xpReason: xpResult.reason,
