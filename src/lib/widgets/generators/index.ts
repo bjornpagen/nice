@@ -90,6 +90,10 @@ import {
 	PolyhedronNetDiagramPropsSchema
 } from "@/lib/widgets/generators/polyhedron-net-diagram"
 import {
+	generatePopulationBarChart,
+	PopulationBarChartPropsSchema
+} from "@/lib/widgets/generators/population-bar-chart"
+import {
 	generatePopulationChangeEventGraph,
 	PopulationChangeEventGraphPropsSchema
 } from "@/lib/widgets/generators/population-change-event-graph"
@@ -152,6 +156,7 @@ export const allWidgetSchemas = {
 	discreteObjectRatioDiagram: DiscreteObjectRatioDiagramPropsSchema,
 	dotPlot: DotPlotPropsSchema,
 	doubleNumberLine: DoubleNumberLinePropsSchema,
+	populationBarChart: PopulationBarChartPropsSchema,
 	emojiImage: EmojiImagePropsSchema,
 	figureComparisonDiagram: FigureComparisonDiagramPropsSchema,
 	fractionNumberLine: FractionNumberLinePropsSchema,
@@ -216,6 +221,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.discreteObjectRatioDiagram,
 	typedSchemas.dotPlot,
 	typedSchemas.doubleNumberLine,
+	typedSchemas.populationBarChart,
 	typedSchemas.emojiImage,
 	typedSchemas.figureComparisonDiagram,
 	typedSchemas.fractionNumberLine,
@@ -276,6 +282,7 @@ export {
 	DistanceFormulaGraphPropsSchema,
 	DotPlotPropsSchema,
 	DoubleNumberLinePropsSchema,
+	PopulationBarChartPropsSchema,
 	EmojiImagePropsSchema,
 	FigureComparisonDiagramPropsSchema,
 	FractionNumberLinePropsSchema,
@@ -342,6 +349,7 @@ export {
 	generateDiscreteObjectRatioDiagram,
 	generateDotPlot,
 	generateDoubleNumberLine,
+	generatePopulationBarChart,
 	generateEmojiImage,
 	generateFigureComparisonDiagram,
 	generateFractionNumberLine,
@@ -412,6 +420,8 @@ export function generateWidget(widget: Widget): string {
 			return generateDotPlot(widget)
 		case "doubleNumberLine":
 			return generateDoubleNumberLine(widget)
+		case "populationBarChart":
+			return generatePopulationBarChart(widget)
 		case "emojiImage":
 			return generateEmojiImage(widget)
 		case "figureComparisonDiagram":
