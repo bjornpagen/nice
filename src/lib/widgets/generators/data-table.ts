@@ -2,7 +2,7 @@ import { z } from "zod"
 import { renderInlineContent } from "@/lib/qti-generation/content-renderer"
 import { MATHML_INNER_PATTERN } from "@/lib/utils/mathml"
 import type { WidgetGenerator } from "@/lib/widgets/types"
-import { escapeXmlAttribute } from "@/lib/xml-utils"
+import { escapeXmlAttribute, sanitizeXmlAttributeValue } from "@/lib/xml-utils"
 
 // Factory function to create inline content schema - avoids $ref in OpenAI JSON schema
 function createInlineContentSchema() {
@@ -176,7 +176,14 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 	let xml = `<table style="border-collapse: collapse; width: 100%; border: 1px solid black;">`
 
 	if (title) {
-		xml += `<caption style="padding: 8px; font-size: 1.2em; font-weight: bold; caption-side: top;">${title}</caption>`
+		const escapeXmlText = (text: string): string =>
+			sanitizeXmlAttributeValue(text)
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+		xml += `<caption style="padding: 8px; font-size: 1.2em; font-weight: bold; caption-side: top;">${escapeXmlText(
+			title
+		)}</caption>`
 	}
 
 	// THEAD
