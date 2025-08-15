@@ -42,6 +42,7 @@ function Screenshot({ src, alt }: { src: string; alt: string }) {
 				style={{ cursor: "zoom-in", padding: 0, border: 0, background: "none" }}
 			>
 				<Image
+					unoptimized
 					src={src}
 					alt={alt}
 					width={1400}
@@ -77,6 +78,7 @@ function Screenshot({ src, alt }: { src: string; alt: string }) {
 						}}
 					>
 						<Image
+							unoptimized
 							src={src}
 							alt={alt}
 							width={2400}
