@@ -34,6 +34,7 @@ import {
 	DistanceFormulaGraphPropsSchema,
 	generateDistanceFormulaGraph
 } from "@/lib/widgets/generators/distance-formula-graph"
+import { DivergentBarChartPropsSchema, generateDivergentBarChart } from "@/lib/widgets/generators/divergent-bar-chart"
 import { DotPlotPropsSchema, generateDotPlot } from "@/lib/widgets/generators/dot-plot"
 import { DoubleNumberLinePropsSchema, generateDoubleNumberLine } from "@/lib/widgets/generators/double-number-line"
 import { EmojiImagePropsSchema, generateEmojiImage } from "@/lib/widgets/generators/emoji-image"
@@ -148,6 +149,7 @@ export const allWidgetSchemas = {
 	conceptualGraph: ConceptualGraphPropsSchema,
 	coordinatePlane: CoordinatePlaneComprehensivePropsSchema,
 	distanceFormulaGraph: DistanceFormulaGraphPropsSchema,
+	divergentBarChart: DivergentBarChartPropsSchema,
 	functionPlotGraph: FunctionPlotGraphPropsSchema,
 	lineEquationGraph: LineEquationGraphPropsSchema,
 	pointPlotGraph: PointPlotGraphPropsSchema,
@@ -214,6 +216,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.conceptualGraph,
 	typedSchemas.coordinatePlane,
 	typedSchemas.distanceFormulaGraph,
+	typedSchemas.divergentBarChart,
 	typedSchemas.functionPlotGraph,
 	typedSchemas.lineEquationGraph,
 	typedSchemas.pointPlotGraph,
@@ -284,6 +287,7 @@ export {
 	DataTablePropsSchema,
 	DiscreteObjectRatioDiagramPropsSchema,
 	DistanceFormulaGraphPropsSchema,
+	DivergentBarChartPropsSchema,
 	DotPlotPropsSchema,
 	DoubleNumberLinePropsSchema,
 	PopulationBarChartPropsSchema,
@@ -344,6 +348,7 @@ export {
 	generateConceptualGraph,
 	generateCoordinatePlaneComprehensive as generateCoordinatePlane,
 	generateDistanceFormulaGraph,
+	generateDivergentBarChart,
 	generateFunctionPlotGraph,
 	generateLineEquationGraph,
 	generatePointPlotGraph,
@@ -423,6 +428,8 @@ export function generateWidget(widget: Widget): string {
 			return generateDiscreteObjectRatioDiagram(widget)
 		case "distanceFormulaGraph":
 			return generateDistanceFormulaGraph(widget)
+		case "divergentBarChart":
+			return generateDivergentBarChart(widget)
 		case "dotPlot":
 			return generateDotPlot(widget)
 		case "doubleNumberLine":

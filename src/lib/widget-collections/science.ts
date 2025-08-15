@@ -1,6 +1,7 @@
 import {
 	AreaGraphPropsSchema,
 	ConceptualGraphPropsSchema,
+	DivergentBarChartPropsSchema,
 	LineGraphPropsSchema,
 	PopulationBarChartPropsSchema,
 	PopulationChangeEventGraphPropsSchema
@@ -15,7 +16,8 @@ export const scienceCollection = {
 		conceptualGraph: ConceptualGraphPropsSchema,
 		populationChangeEventGraph: PopulationChangeEventGraphPropsSchema,
 		populationBarChart: PopulationBarChartPropsSchema,
-		areaGraph: AreaGraphPropsSchema
+		areaGraph: AreaGraphPropsSchema,
+		divergentBarChart: DivergentBarChartPropsSchema
 	},
 	widgetTypeKeys: [
 		...simpleVisualCollection.widgetTypeKeys,
@@ -23,6 +25,7 @@ export const scienceCollection = {
 		"conceptualGraph",
 		"populationChangeEventGraph",
 		"populationBarChart",
-		"areaGraph"
+		"areaGraph",
+		"divergentBarChart"
 	] as const
 } as const
