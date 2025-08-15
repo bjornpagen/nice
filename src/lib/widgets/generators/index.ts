@@ -81,6 +81,7 @@ import {
 	NumberLineWithFractionGroupsPropsSchema
 } from "@/lib/widgets/generators/number-line-with-fraction-groups"
 import { generateNumberSetDiagram, NumberSetDiagramPropsSchema } from "@/lib/widgets/generators/number-set-diagram"
+import { generateParabolaGraph, ParabolaGraphPropsSchema } from "@/lib/widgets/generators/parabola-graph"
 import {
 	generateParallelogramTrapezoidDiagram,
 	ParallelogramTrapezoidDiagramPropsSchema
@@ -184,6 +185,7 @@ export const allWidgetSchemas = {
 	numberLineWithAction: NumberLineWithActionPropsSchema,
 	numberLineWithFractionGroups: NumberLineWithFractionGroupsPropsSchema,
 	numberSetDiagram: NumberSetDiagramPropsSchema,
+	parabolaGraph: ParabolaGraphPropsSchema,
 	partitionedShape: PartitionedShapePropsSchema,
 	pentagonIntersectionDiagram: PentagonIntersectionDiagramPropsSchema,
 	pictograph: PictographPropsSchema,
@@ -253,6 +255,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.numberLineWithAction,
 	typedSchemas.numberLineWithFractionGroups,
 	typedSchemas.numberSetDiagram,
+	typedSchemas.parabolaGraph,
 	typedSchemas.pentagonIntersectionDiagram,
 	typedSchemas.pictograph,
 	typedSchemas.polyhedronDiagram,
@@ -320,6 +323,7 @@ export {
 	NumberLineWithActionPropsSchema,
 	NumberLineWithFractionGroupsPropsSchema,
 	NumberSetDiagramPropsSchema,
+	ParabolaGraphPropsSchema,
 	ParallelogramTrapezoidDiagramPropsSchema,
 	PartitionedShapePropsSchema,
 	PentagonIntersectionDiagramPropsSchema,
@@ -389,6 +393,7 @@ export {
 	generateNumberLineWithAction,
 	generateNumberLineWithFractionGroups,
 	generateNumberSetDiagram,
+	generateParabolaGraph,
 	generatePartitionedShape,
 	generatePentagonIntersectionDiagram,
 	generatePictograph,
@@ -486,6 +491,8 @@ export function generateWidget(widget: Widget): string {
 			return generateNumberLineWithFractionGroups(widget)
 		case "numberSetDiagram":
 			return generateNumberSetDiagram(widget)
+		case "parabolaGraph":
+			return generateParabolaGraph(widget)
 		case "parallelogramTrapezoidDiagram":
 			return generateParallelogramTrapezoidDiagram(widget)
 		case "partitionedShape":

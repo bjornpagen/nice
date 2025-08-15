@@ -6,6 +6,7 @@ import {
 	HorizontalBarChartPropsSchema,
 	KeelingCurvePropsSchema,
 	LineGraphPropsSchema,
+	ParabolaGraphPropsSchema,
 	PopulationBarChartPropsSchema,
 	PopulationChangeEventGraphPropsSchema
 } from "@/lib/widgets/generators"
@@ -23,7 +24,8 @@ export const scienceCollection = {
 		divergentBarChart: DivergentBarChartPropsSchema,
 		keelingCurve: KeelingCurvePropsSchema,
 		horizontalBarChart: HorizontalBarChartPropsSchema,
-		histogram: HistogramPropsSchema
+		histogram: HistogramPropsSchema,
+		parabolaGraph: ParabolaGraphPropsSchema
 	},
 	widgetTypeKeys: [
 		...simpleVisualCollection.widgetTypeKeys,
@@ -35,6 +37,7 @@ export const scienceCollection = {
 		"divergentBarChart",
 		"keelingCurve",
 		"horizontalBarChart",
-		"histogram"
+		"histogram",
+		"parabolaGraph"
 	] as const
 } as const
