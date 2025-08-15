@@ -57,6 +57,10 @@ import {
 	generateInequalityNumberLine,
 	InequalityNumberLinePropsSchema
 } from "@/lib/widgets/generators/inequality-number-line"
+import {
+	generateKeelingCurve,
+	KeelingCurvePropsSchema
+} from "@/lib/widgets/generators/keeling-curve"
 import { generateLineEquationGraph, LineEquationGraphPropsSchema } from "@/lib/widgets/generators/line-equation-graph"
 import { generateLineGraph, LineGraphPropsSchema } from "@/lib/widgets/generators/line-graph"
 import { generateNumberLine, NumberLinePropsSchema } from "@/lib/widgets/generators/number-line"
@@ -168,6 +172,7 @@ export const allWidgetSchemas = {
 	hangerDiagram: HangerDiagramPropsSchema,
 	histogram: HistogramPropsSchema,
 	inequalityNumberLine: InequalityNumberLinePropsSchema,
+	keelingCurve: KeelingCurvePropsSchema,
 	lineGraph: LineGraphPropsSchema,
 	numberLine: NumberLinePropsSchema,
 	numberLineForOpposites: NumberLineForOppositesPropsSchema,
@@ -235,6 +240,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.hangerDiagram,
 	typedSchemas.histogram,
 	typedSchemas.inequalityNumberLine,
+	typedSchemas.keelingCurve,
 	typedSchemas.lineGraph,
 	typedSchemas.numberLine,
 	typedSchemas.numberLineForOpposites,
@@ -299,6 +305,7 @@ export {
 	HangerDiagramPropsSchema,
 	HistogramPropsSchema,
 	InequalityNumberLinePropsSchema,
+	KeelingCurvePropsSchema,
 	LineEquationGraphPropsSchema,
 	LineGraphPropsSchema,
 	NumberLinePropsSchema,
@@ -367,6 +374,7 @@ export {
 	generateHangerDiagram,
 	generateHistogram,
 	generateInequalityNumberLine,
+	generateKeelingCurve,
 	generateLineGraph,
 	generateNumberLine,
 	generateNumberLineForOpposites,
@@ -452,6 +460,8 @@ export function generateWidget(widget: Widget): string {
 			return generateHistogram(widget)
 		case "inequalityNumberLine":
 			return generateInequalityNumberLine(widget)
+		case "keelingCurve":
+			return generateKeelingCurve(widget)
 		case "lineEquationGraph":
 			return generateLineEquationGraph(widget)
 		case "lineGraph":
