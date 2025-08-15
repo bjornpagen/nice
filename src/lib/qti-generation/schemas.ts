@@ -4,34 +4,6 @@ import { z } from "zod"
 import { MATHML_INNER_PATTERN } from "@/lib/utils/mathml"
 import { typedSchemas } from "@/lib/widgets/generators"
 
-// LEVEL 3: PRIMITIVES
-const _TextContentSchema = z
-	.object({
-		type: z.literal("text").describe("Identifies this as plain text content"),
-		content: z.string().describe("The actual text content to display")
-	})
-	.strict()
-	.describe("Plain text content that will be rendered as-is")
-
-const _MathContentSchema = z
-	.object({
-		type: z.literal("math").describe("Identifies this as mathematical content"),
-		mathml: z
-			.string()
-			.regex(MATHML_INNER_PATTERN, "invalid mathml snippet; must be inner MathML without outer <math> wrapper")
-			.describe("Inner MathML markup (no outer <math> element)")
-	})
-	.strict()
-	.describe("Mathematical content represented in MathML format")
-
-const _InlineSlotSchema = z
-	.object({
-		type: z.literal("inlineSlot").describe("Identifies this as an inline placeholder for widgets or interactions"),
-		slotId: z.string().describe("Unique identifier that matches a widget or interaction key")
-	})
-	.strict()
-	.describe("Placeholder for inline content that will be filled with a widget or interaction")
-
 // LEVEL 2: INLINE CONTENT (for paragraphs, prompts, etc.)
 // Factory functions to create fresh schema instances (avoids $ref in JSON Schema)
 function createInlineContentItemSchema() {
@@ -188,7 +160,9 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 		.object({
 			type: z.literal("orderInteraction").describe("Identifies this as an ordering/sequencing interaction."),
 			responseIdentifier: z.string().describe("Links this interaction to its response declaration for scoring."),
-			prompt: createInlineContentSchema().describe("Instructions asking the user to arrange items in correct order."),
+			prompt: createInlineContentSchema().describe(
+				"Explicit instructions for arranging items that MUST: (1) name the sort property (e.g., density, size, value), (2) state the sort direction using unambiguous phrases like 'least to greatest' or 'greatest to least', and (3) include the axis consistent with orientation — use '(left to right)' when orientation is horizontal and '(top to bottom)' when orientation is vertical."
+			),
 			choices: z
 				.array(
 					z
@@ -205,10 +179,16 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 			shuffle: z
 				.literal(true)
 				.describe("Whether to randomize initial order. Always true to ensure varied starting points."),
-			orientation: z.enum(["horizontal", "vertical"]).describe("Visual layout direction for the orderable items.")
+			orientation: z
+				.enum(["horizontal", "vertical"]) 
+				.describe(
+					"Visual layout direction for the orderable items. The prompt's axis wording MUST match orientation: horizontal → '(left to right)', vertical → '(top to bottom)'."
+				)
 		})
 		.strict()
-		.describe("An interaction where users arrange items in a specific sequence or order.")
+		.describe(
+			"An interaction where users arrange items in a specific sequence or order. Prompts must never be vague (e.g., 'Arrange the items in correct order'). They must specify the sort property, the direction (ascending/descending using 'least to greatest'/'greatest to least'), and the axis matching orientation."
+		)
 
 	const UnsupportedInteractionSchema = z
 		.object({

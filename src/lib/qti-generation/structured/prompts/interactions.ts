@@ -248,6 +248,51 @@ CORRECT: \`prompt: [{ "type": "text", "content": "What is the value of " }, { "t
 
 **General Rule for Prompts:** Prompt fields MUST be arrays of inline content objects. No raw strings or HTML allowed.
 
+**⚠️ CRITICAL: ORDER INTERACTION PROMPT CLARITY (NO VAGUE INSTRUCTIONS)**
+
+For any \`orderInteraction\`, the prompt MUST be explicit about:
+- **Sort property** (what to sort by: e.g., density, size, value, alphabetical order)
+- **Direction** using unambiguous phrasing (e.g., "least to greatest", "greatest to least", "smallest to largest")
+- **Axis** corresponding to \`orientation\`:
+  - \`orientation: "horizontal"\` → include "(left to right)"
+  - \`orientation: "vertical"\` → include "(top to bottom)"
+
+Do NOT use vague instructions like "Arrange the items in correct order" without property, direction, and axis.
+
+Negative example (DO NOT OUTPUT):
+\`\`\`
+{
+  "order_interaction": {
+    "type": "orderInteraction",
+    "responseIdentifier": "RESPONSE",
+    "orientation": "horizontal",
+    "prompt": [
+      { "type": "text", "content": "Arrange the items in correct order." }
+    ],
+    "choices": [ /* ... */ ],
+    "shuffle": true
+  }
+}
+\`\`\`
+
+Positive example (MANDATORY PATTERN):
+\`\`\`
+{
+  "order_interaction": {
+    "type": "orderInteraction",
+    "responseIdentifier": "RESPONSE",
+    "orientation": "horizontal",
+    "prompt": [
+      { "type": "text", "content": "Drag and drop the items below to sort them in order from least to most dense (left to right)." }
+    ],
+    "choices": [ /* ... */ ],
+    "shuffle": true
+  }
+}
+\`\`\`
+
+Additional acceptable direction phrases: "greatest to least", "most to least", "smallest to largest", "largest to smallest". Always include the axis phrase that matches \`orientation\`.
+
 **Choice Content - DEPENDS ON INTERACTION TYPE:**
 
 **For Standard Choice Interactions (choiceInteraction, orderInteraction):**
