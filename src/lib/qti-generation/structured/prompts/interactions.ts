@@ -41,7 +41,7 @@ We FULLY support the following QTI interaction types:
 **UNSUPPORTED INTERACTION HANDLING**
 Some Perseus widgets require complex, dynamic user input that we do not support. You MUST identify these and flag them.
 
-- **Unsupported Perseus Types**: \`interactive-graph\`, \`plotter\`, \`grapher\`, \`matcher\`, \`number-line\` (the interactive version, not a static image).
+- **Unsupported Perseus Types**: \`interactive-graph\`, \`plotter\`, \`grapher\`, \`matcher\`, \`number-line\` (the interactive version, not a static image), \`label-image\` (drag-and-label on image interactions).
 - **Your Task**: Look at the original Perseus JSON. If an interaction slot in the shell corresponds to a Perseus widget with one of these unsupported types, you MUST generate a specific JSON object for that slot:
 \`\`\`json
 {
@@ -571,6 +571,50 @@ Here's a real Perseus question that uses an unsupported plotter widget for creat
 \`\`\`
 
 This plotter widget requires interactive histogram creation which is not supported. You MUST flag it as unsupported rather than trying to convert it to a text entry or choice interaction.
+
+**Real Example of Unsupported Interaction - Label Image Widget**
+
+Complex image labeling tasks (dragging labels/markers onto an image) are not supported. These must be labeled as "no interaction found" by emitting an \`unsupportedInteraction\` with \`perseusType: "label-image"\`.
+
+**Perseus JSON (showing unsupported widget):**
+\`\`\`json
+{
+  "question": {
+    "content": "A boy holds a ball at shoulder level before throwing it.\\n\\n**For each location, select whether the potential energy stored in the ball-Earth system is more, less, or the same as when the ball was held at the boy’s shoulder.**\\n\\n[[☃ label-image 1]]",
+    "widgets": {
+      "label-image 1": {
+        "type": "label-image",
+        "graded": true,
+        "options": {
+          "choices": ["more", "less", "the same"],
+          "markers": [
+            { "x": 22.2, "y": 54.4, "label": "…", "answers": ["the same"] },
+            { "x": 34.6, "y": 67.6, "label": "…", "answers": ["less"] },
+            { "x": 73.5, "y": 46.1, "label": "…", "answers": ["more"] },
+            { "x": 94.4, "y": 64.3, "label": "…", "answers": ["less"] }
+          ],
+          "imageUrl": "https://cdn.kastatic.org/ka-content-images/46a41d325c6d2213c8408b7ff80689d18d338152.svg",
+          "imageWidth": 500,
+          "imageHeight": 297
+        }
+      }
+    }
+  }
+}
+\`\`\`
+
+**Required Output for this Unsupported Widget:**
+\`\`\`json
+{
+  "labeling_interaction": {
+    "type": "unsupportedInteraction",
+    "perseusType": "label-image",
+    "responseIdentifier": "RESPONSE"
+  }
+}
+\`\`\`
+
+Label-image requires dragging/placing labels on an image, which is not supported by our QTI interaction set. You MUST flag it as unsupported rather than attempting to convert it to choice or text entry.
 
 ⚠️ FINAL WARNING: Your output will be AUTOMATICALLY REJECTED if it contains:
 - ANY LaTeX commands (backslash followed by letters)
