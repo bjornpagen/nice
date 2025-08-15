@@ -327,10 +327,10 @@ const events = {
 	"migration/hardcoded.math.oneroster.ingest": {
 		data: z.object({})
 	},
-	// ❌ REMOVED: Obsolete undifferentiated math generation event
-	// "migration/hardcoded.math.qti.generate-undifferentiated": {
-	// 	data: z.object({})
-	// },
+	// ✅ ADDED: Math undifferentiated QTI generation event
+	"migration/hardcoded.math.qti.generate-undifferentiated": {
+		data: z.object({})
+	},
 	"migration/hardcoded.math.qti.upload": {
 		data: z.object({})
 	},

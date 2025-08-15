@@ -16,6 +16,7 @@ import { orchestrateHardcodedMathDifferentiatedItemGeneration } from "@/inngest/
 import { orchestrateHardcodedMathItemMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-item-migration"
 import { orchestrateHardcodedMathOnerosterIngestion } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-oneroster-ingestion"
 import { orchestrateHardcodedMathQAReview } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-qa-review"
+import { orchestrateHardcodedMathQtiGenerateUndifferentiated } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-qti-generate-undifferentiated"
 import { orchestrateHardcodedMathQtiUpload } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-qti-upload"
 import { orchestrateHardcodedMathStimulusGeneration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-stimulus-generation" // 🛑 RENAMED
 import { orchestrateHardcodedMathStimulusMigration } from "@/inngest/functions/migrations/orchestrate-hardcoded-math-stimulus-migration"
@@ -78,6 +79,7 @@ export const { GET, POST, PUT } = serve({
 		orchestrateHardcodedMathOnerosterIngestion,
 		orchestrateHardcodedMathDifferentiatedItemGeneration, // 🛑 RENAMED
 		orchestrateHardcodedMathStimulusGeneration, // 🛑 RENAMED
+		orchestrateHardcodedMathQtiGenerateUndifferentiated,
 		orchestrateHardcodedMathQtiUpload,
 		orchestrateHardcodedScienceItemMigration,
 		orchestrateHardcodedScienceStimulusMigration,
