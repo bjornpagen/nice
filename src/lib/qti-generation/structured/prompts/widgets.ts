@@ -39,6 +39,80 @@ export function createWidgetContentPrompt(
 		}
 		return lines.join("\n")
 	}
+
+	// Detect whether the current mapping includes any dataTable widgets and prepare
+	// a conditional section enforcing MathML for chemical formulas/equations.
+	const hasDataTable = Object.values(widgetMapping).some((t) => t === "dataTable")
+	const chemicalMathmlSection = hasDataTable
+		? `
+**CRITICAL (DATA TABLE WIDGETS): CHEMICAL FORMULAS AND EQUATIONS MUST BE MATHML — NEVER PLAIN TEXT**
+
+- In data tables, ANY chemical formula or reaction MUST be expressed using proper MathML, not raw text.
+- Use subscripts and superscripts with MathML: <msub> for subscripts (e.g., H2 as <msub><mi>H</mi><mn>2</mn></msub>), <msup> for charges (e.g., Ca2+ as <msup><mi>Ca</mi><mrow><mn>2</mn><mo>+</mo></mrow></msup>).
+- For reactions, use operators as MathML tokens: arrow as <mo>→</mo>, plus as <mo>+</mo>.
+- Phase/medium labels like (aq), (s), (l), (g) should be wrapped in <mtext> inside parentheses.
+- This applies to ALL places inside a data table: column headers, inline cell content, and dropdown choices.
+
+Negative example (DO NOT OUTPUT) — chemical formulas as plain text in a data table:
+\`\`\`json
+{
+  "react_temp_table": {
+    "type": "dataTable",
+    "columns": [
+      { "key": "experiment", "label": [{ "type": "text", "content": "Experiment" }], "isNumeric": false },
+      { "key": "reactant",  "label": [{ "type": "text", "content": "Reactant" }],   "isNumeric": false }
+    ],
+    "data": [
+      [
+        { "type": "inline", "content": [{ "type": "text", "content": "A" }] },
+        { "type": "inline", "content": [{ "type": "text", "content": "NH4Cl" }] }
+      ],
+      [
+        { "type": "inline", "content": [{ "type": "text", "content": "B" }] },
+        { "type": "inline", "content": [{ "type": "text", "content": "MgSO4" }] }
+      ]
+    ],
+    "rowHeaderKey": "experiment"
+  }
+}
+\`\`\`
+
+Positive example — chemical formulas correctly expressed in MathML in a data table:
+\`\`\`json
+{
+  "react_temp_table": {
+    "type": "dataTable",
+    "columns": [
+      { "key": "experiment", "label": [{ "type": "text", "content": "Experiment" }], "isNumeric": false },
+      { "key": "reactant",  "label": [{ "type": "text", "content": "Reactant" }],   "isNumeric": false }
+    ],
+    "data": [
+      [
+        { "type": "inline", "content": [{ "type": "text", "content": "A" }] },
+        { "type": "inline", "content": [
+          { "type": "math", "mathml": "<mi>N</mi><msub><mi>H</mi><mn>4</mn></msub><mi>Cl</mi>" }
+        ] }
+      ],
+      [
+        { "type": "inline", "content": [{ "type": "text", "content": "B" }] },
+        { "type": "inline", "content": [
+          { "type": "math", "mathml": "<mi>Mg</mi><mi>S</mi><msub><mi>O</mi><mn>4</mn></msub>" }
+        ] }
+      ],
+      [
+        { "type": "inline", "content": [{ "type": "text", "content": "C" }] },
+        { "type": "inline", "content": [
+          { "type": "math", "mathml": "<mi>Ca</mi><msub><mi>Cl</mi><mn>2</mn></msub>" }
+        ] }
+      ]
+    ],
+    "rowHeaderKey": "experiment"
+  }
+}
+\`\`\`
+`
+		: ""
+
 	const systemInstruction = `You are an expert in educational content conversion with vision capabilities, focused on generating widget content for QTI assessments. Your task is to generate ONLY the widget content objects based on the original Perseus JSON, an assessment shell, a mapping that specifies the exact widget type for each slot, and accompanying visual context.
 
 **Vision Capability**: You may be provided with raster images (PNG, JPG) as multimodal input. Use your vision to analyze these images. For SVG images, their raw XML content will be provided directly in the text prompt.
@@ -68,32 +142,32 @@ The following are CATEGORICALLY FORBIDDEN in ANY part of your output:
 2. **NO LATEX DOLLAR SIGNS** - The $ character for LaTeX is BANNED:
    - NO math delimiters: $x$, $$y$$
    - NEVER use HTML for currency symbols. Currency and percent MUST be MathML, NOT HTML, NOT raw text.
-   - For currency, ALWAYS use MathML: \`<mo>$</mo><mn>amount</mn>\`. For percent: \`<mn>number</mn><mo>%</mo>\`.
+   - For currency, ALWAYS use MathML: '<mo>$</mo><mn>amount</mn>'. For percent: '<mn>number</mn><mo>%</mo>'.
 
 3. **NO DEPRECATED MATHML** - NEVER use:
    - <mfenced> elements (use <mrow> with <mo> delimiters instead)
 
-4. **NO CDATA SECTIONS** - Never use \`<![CDATA[ ... ]]>\`. All content must be properly XML-encoded within elements.
+4. **NO CDATA SECTIONS** - Never use '<![CDATA[ ... ]]>'. All content must be properly XML-encoded within elements.
 
 5. **NO INVALID XML CHARACTERS** - Do not include control characters or non-characters:
    - Disallowed: U+0000–U+001F (except TAB U+0009, LF U+000A, CR U+000D), U+FFFE, U+FFFF, and unpaired surrogates.
 
 **Currency: Comprehensive Examples**
 
-SCAN ALL text content in widgets (labels, captions, content) for "$" - these MUST be converted to MathML.
+SCAN ALL text content in widgets (labels, captions, content) for '$' - these MUST be converted to MathML.
 
 **Single values:**
-- ❌ WRONG: "Price: $5.50"
-  ✅ CORRECT: [{ "type": "text", "content": "Price: " }, { "type": "math", "mathml": "<mo>$</mo><mn>5.50</mn>" }]
+- ❌ WRONG: 'Price: $5.50'
+  ✅ CORRECT: [{ 'type': 'text', 'content': 'Price: ' }, { 'type': 'math', 'mathml': '<mo>$</mo><mn>5.50</mn>' }]
 
 // intentionally omit percent examples in widget prompts
 
 **Complex examples:**
-- ❌ WRONG: "$10–$20"
-  ✅ CORRECT: [{ "type": "math", "mathml": "<mo>$</mo><mn>10</mn>" }, { "type": "text", "content": "–" }, { "type": "math", "mathml": "<mo>$</mo><mn>20</mn>" }]
+- ❌ WRONG: '$10–$20'
+  ✅ CORRECT: [{ 'type': 'math', 'mathml': '<mo>$</mo><mn>10</mn>' }, { 'type': 'text', 'content': '–' }, { 'type': 'math', 'mathml': '<mo>$</mo><mn>20</mn>' }]
 
-- ❌ WRONG: "Cost: -$5"
-  ✅ CORRECT: [{ "type": "text", "content": "Cost: " }, { "type": "math", "mathml": "<mo>-</mo><mo>$</mo><mn>5</mn>" }]
+- ❌ WRONG: 'Cost: -$5'
+  ✅ CORRECT: [{ 'type': 'text', 'content': 'Cost: ' }, { 'type': 'math', 'mathml': '<mo>-</mo><mo>$</mo><mn>5</mn>' }]
 
 **Pattern checklist:**
 - /\$(?=\s*\d)/ - dollar before number
@@ -107,7 +181,7 @@ SCAN ALL text content in widgets (labels, captions, content) for "$" - these MUS
   - When a label field could reveal the answer, set it to null
 
 6. **NO ANSWER LEAKAGE IN WIDGETS** - CRITICAL: Widgets MUST NEVER reveal the correct answer:
-   - NEVER label diagrams with the answer (e.g., angle labeled "EAF" when asking for angle name)
+   - NEVER label diagrams with the answer (e.g., angle labeled 'EAF' when asking for angle name)
    - NEVER highlight or mark the correct value in visualizations
    - NEVER include text, labels, or visual indicators that give away the answer
    - The widget should present the problem visually WITHOUT showing the solution
