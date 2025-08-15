@@ -20,6 +20,10 @@ import {
 	generateCompositeShapeDiagram
 } from "@/lib/widgets/generators/composite-shape-diagram"
 import {
+	ConceptualGraphPropsSchema,
+	generateConceptualGraph
+} from "@/lib/widgets/generators/conceptual-graph"
+import {
 	CoordinatePlaneComprehensivePropsSchema,
 	generateCoordinatePlaneComprehensive
 } from "@/lib/widgets/generators/coordinate-plane-comprehensive"
@@ -134,6 +138,7 @@ export const allWidgetSchemas = {
 	boxPlot: BoxPlotPropsSchema,
 	circleDiagram: CircleDiagramPropsSchema,
 	compositeShapeDiagram: CompositeShapeDiagramPropsSchema,
+	conceptualGraph: ConceptualGraphPropsSchema,
 	coordinatePlane: CoordinatePlaneComprehensivePropsSchema,
 	distanceFormulaGraph: DistanceFormulaGraphPropsSchema,
 	functionPlotGraph: FunctionPlotGraphPropsSchema,
@@ -196,6 +201,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.boxPlot,
 	typedSchemas.circleDiagram,
 	typedSchemas.compositeShapeDiagram,
+	typedSchemas.conceptualGraph,
 	typedSchemas.coordinatePlane,
 	typedSchemas.distanceFormulaGraph,
 	typedSchemas.functionPlotGraph,
@@ -260,6 +266,7 @@ export {
 	BoxPlotPropsSchema,
 	CircleDiagramPropsSchema,
 	CompositeShapeDiagramPropsSchema,
+	ConceptualGraphPropsSchema,
 	CoordinatePlaneComprehensivePropsSchema,
 	DataTablePropsSchema,
 	DiscreteObjectRatioDiagramPropsSchema,
@@ -318,6 +325,7 @@ export {
 	generateBoxPlot,
 	generateCircleDiagram,
 	generateCompositeShapeDiagram,
+	generateConceptualGraph,
 	generateCoordinatePlaneComprehensive as generateCoordinatePlane,
 	generateDistanceFormulaGraph,
 	generateFunctionPlotGraph,
@@ -385,6 +393,8 @@ export function generateWidget(widget: Widget): string {
 			return generateCircleDiagram(widget)
 		case "compositeShapeDiagram":
 			return generateCompositeShapeDiagram(widget)
+		case "conceptualGraph":
+			return generateConceptualGraph(widget)
 		case "coordinatePlane":
 			return generateCoordinatePlaneComprehensive(widget)
 		case "dataTable":

@@ -1,11 +1,12 @@
-import { LineGraphPropsSchema } from "@/lib/widgets/generators"
-import { mathCoreCollection } from "./math-core"
+import { ConceptualGraphPropsSchema, LineGraphPropsSchema } from "@/lib/widgets/generators"
+import { simpleVisualCollection } from "./simple-visual"
 
 export const scienceCollection = {
 	name: "science",
 	schemas: {
-		...mathCoreCollection.schemas,
-		lineGraph: LineGraphPropsSchema
+		...simpleVisualCollection.schemas,
+		lineGraph: LineGraphPropsSchema,
+		conceptualGraph: ConceptualGraphPropsSchema
 	},
-	widgetTypeKeys: [...mathCoreCollection.widgetTypeKeys, "lineGraph"] as const
+	widgetTypeKeys: [...simpleVisualCollection.widgetTypeKeys, "lineGraph", "conceptualGraph"] as const
 } as const
