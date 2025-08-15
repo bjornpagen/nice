@@ -301,6 +301,13 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 		const union = a.size + b.size - intersection
 		return union === 0 ? 0 : intersection / union
 	}
+	const lengthRatioOk = (aTokens: string[], bTokens: string[]): boolean => {
+		const aLen = aTokens.length
+		const bLen = bTokens.length
+		if (aLen === 0 || bLen === 0) return false
+		const ratio = Math.min(aLen, bLen) / Math.max(aLen, bLen)
+		return ratio >= 0.75
+	}
 	const normalizeMath = (mathml: string): string => {
 		// prefer <mo> text; otherwise strip tags
 		const moMatches = Array.from(mathml.matchAll(/<mo[^>]*>([\s\S]*?)<\/mo>/g)).map((m) => m[1] ?? "")
@@ -365,9 +372,10 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 				toDelete.add(i)
 				continue
 			}
-			// fuzzy single-paragraph match using token Jaccard
-			const sim = jaccardSimilarity(tokenizeForFuzzy(pStr), promptTokens)
-			if (sim >= 0.82) {
+			// fuzzy single-paragraph match using token Jaccard with length guard
+			const paraTokens = tokenizeForFuzzy(pStr)
+			const sim = jaccardSimilarity(paraTokens, promptTokens)
+			if (sim >= 0.82 && lengthRatioOk(paraTokens, promptTokens)) {
 				toDelete.add(i)
 			}
 		}
@@ -387,7 +395,7 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 					break
 				}
 				const sim = jaccardSimilarity(accTokens, promptTokens)
-				if (sim >= 0.86) {
+				if (sim >= 0.86 && lengthRatioOk(accTokens, promptTokens)) {
 					for (let k = i; k <= j; k++) toDelete.add(k)
 					i = j
 					break
