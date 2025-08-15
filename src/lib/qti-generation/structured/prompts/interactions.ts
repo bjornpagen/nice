@@ -248,6 +248,115 @@ CORRECT: \`prompt: [{ "type": "text", "content": "What is the value of " }, { "t
 
 **General Rule for Prompts:** Prompt fields MUST be arrays of inline content objects. No raw strings or HTML allowed.
 
+**CRITICAL: PROMPT–CARDINALITY AGREEMENT (MANDATORY)**
+
+The interaction prompt MUST reflect the number of correct answers declared in the response declarations.
+
+- If cardinality is "single" (exactly one correct choice):
+  - Use singular grammar and instructions such as "Select one answer." or "Choose the best answer."
+  - Do NOT include "Select all that apply."
+- If cardinality is "multiple" (two or more correct choices):
+  - Explicitly include "Select all that apply." in the prompt.
+  - Use plural grammar (e.g., "Which of the following are true?", "Which statements are correct?", "Which samples depict …?").
+- Ensure subject–verb agreement and noun plurality match the selection mode. Do not produce a singular prompt when multiple answers are correct.
+
+Negative example (DO NOT OUTPUT) – singular prompt with multi-correct declaration:
+\`\`\`json
+{
+  "body": [
+    { "type": "blockSlot", "slotId": "choice_interaction" }
+  ],
+  "interactions": {
+    "choice_interaction": {
+      "type": "choiceInteraction",
+      "prompt": [
+        { "type": "text", "content": "Which of the following samples depicts a pure substance?" }
+      ],
+      "choices": [
+        { "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "A" }] }], "identifier": "A" },
+        { "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "B" }] }], "identifier": "B" },
+        { "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "C" }] }], "identifier": "C" },
+        { "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "D" }] }], "identifier": "D" }
+      ]
+    }
+  },
+  "responseDeclarations": [
+    {
+      "identifier": "choice_interaction",
+      "cardinality": "multiple",
+      "baseType": "identifier",
+      "correct": ["B", "C"]
+    }
+  ]
+}
+\`\`\`
+
+Corrected version – explicitly signal multi-select and use plural grammar:
+\`\`\`json
+{
+  "body": [
+    { "type": "blockSlot", "slotId": "choice_interaction" }
+  ],
+  "interactions": {
+    "choice_interaction": {
+      "type": "choiceInteraction",
+      "prompt": [
+        { "type": "text", "content": "Which of the following samples depict pure substances? Select all that apply." }
+      ],
+      "choices": [
+        { "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "A" }] }], "identifier": "A" },
+        { "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "B" }] }], "identifier": "B" },
+        { "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "C" }] }], "identifier": "C" },
+        { "content": [{ "type": "paragraph", "content": [{ "type": "text", "content": "D" }] }], "identifier": "D" }
+      ]
+    }
+  },
+  "responseDeclarations": [
+    {
+      "identifier": "choice_interaction",
+      "cardinality": "multiple",
+      "baseType": "identifier",
+      "correct": ["B", "C"]
+    }
+  ]
+}
+\`\`\`
+
+Additional negative example (DO NOT OUTPUT) – Secondary Succession:
+\`\`\`json
+{
+  "body": [
+    {"type":"blockSlot","slotId":"choice_interaction"}
+  ],
+  "title":"Identify examples of secondary succession",
+  "widgets":{},
+  "feedback":{
+    "correct":[{"type":"paragraph","content":[{"type":"text","content":"Correct! Secondary succession occurs after a disturbance in an area that previously supported life and where soil remains."}]}],
+    "incorrect":[{"type":"paragraph","content":[{"type":"text","content":"Not quite. Secondary succession happens in habitats that were previously occupied and then disturbed (for example, after a storm or clear-cutting), with soil still present. Primary succession begins on newly formed surfaces without soil, such as bare rock or fresh sand dunes."}]}]
+  },
+  "identifier":"secondary-succession-multiple-select",
+  "interactions":{
+    "choice_interaction":{
+      "type":"choiceInteraction",
+      "prompt":[{"type":"text","content":"Which of the following is an example of secondary succession?"}],
+      "choices":[
+        {"content":[{"type":"paragraph","content":[{"type":"text","content":"Storm waves damage a coral reef, and soft corals grow back."}]}],"feedback":null,"identifier":"A"},
+        {"content":[{"type":"paragraph","content":[{"type":"text","content":"A forest is clear-cut for timber, and shrubs and trees grow back."}]}],"feedback":null,"identifier":"B"},
+        {"content":[{"type":"paragraph","content":[{"type":"text","content":"A glacier melts, leaving behind bare rocks on which mosses begin to grow."}]}],"feedback":null,"identifier":"C"},
+        {"content":[{"type":"paragraph","content":[{"type":"text","content":"Sand dunes gradually build up, and grasses start to grow."}]}],"feedback":null,"identifier":"D"}
+      ],
+      "shuffle":true,
+      "maxChoices":4,
+      "minChoices":1,
+      "responseIdentifier":"choice_interaction"
+    }
+  },
+  "responseDeclarations":[
+    {"correct":["A","B"],"baseType":"identifier","identifier":"choice_interaction","cardinality":"multiple"}
+  ]
+}
+\`\`\`
+
 **⚠️ CRITICAL: ORDER INTERACTION PROMPT CLARITY (NO VAGUE INSTRUCTIONS)**
 
 For any \`orderInteraction\`, the prompt MUST be explicit about:
