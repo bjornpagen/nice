@@ -1,3 +1,5 @@
+import * as fs from "node:fs/promises"
+import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
@@ -7,128 +9,74 @@ export const ingestClass = inngest.createFunction(
 	{
 		id: "ingest-class",
 		name: "Ingest OneRoster Class"
-		// No concurrency limit - unlimited parallel processing!
 	},
-	{ event: "oneroster/class.ingest" },
+	{ event: "oneroster/class.ingest.one" },
 	async ({ event, step, logger }) => {
-		// Immediate log to confirm function is executing
-		logger.info("ingest-class function invoked", {
-			eventKeys: Object.keys(event),
-			dataKeys: event.data ? Object.keys(event.data) : [],
-			hasClass: !!event.data?.class
+		const { courseSlug } = event.data
+		logger.info("starting single class ingestion", { courseSlug })
+
+		const classData = await step.run("read-class-file", async () => {
+			const filePath = path.join(process.cwd(), "data", courseSlug, "oneroster", "class.json")
+			const contentResult = await errors.try(fs.readFile(filePath, "utf-8"))
+			if (contentResult.error) {
+				logger.error("failed to read class file", { file: filePath, error: contentResult.error })
+				throw errors.wrap(contentResult.error, "file read")
+			}
+			const parseResult = errors.trySync(() => JSON.parse(contentResult.data))
+			if (parseResult.error) {
+				logger.error("failed to parse class file", { file: filePath, error: parseResult.error })
+				throw errors.wrap(parseResult.error, "json parse")
+			}
+			return parseResult.data
 		})
 
-		// Extract class data - check if it's nested under data.class or directly in data
-		const classData = event.data?.class || event.data
-
-		if (!classData || !classData.sourcedId) {
-			logger.error("invalid event data structure", {
-				event,
-				classData,
-				hasSourcedId: !!classData?.sourcedId
-			})
-			throw errors.new("invalid event data: missing class data or sourcedId")
-		}
-
-		// CRITICAL: Validate status field exists - NO FALLBACKS
-		if (!classData.status) {
-			logger.error("CRITICAL: Class status missing", {
-				sourcedId: classData.sourcedId,
-				classData
-			})
-			throw errors.new("class status: required field missing")
+		const { sourcedId } = classData
+		if (!sourcedId) {
+			logger.error("invalid class data structure: missing sourcedId", { courseSlug })
+			throw errors.new("invalid class data: missing sourcedId")
 		}
 
 		logger.info("starting class ingestion", {
-			sourcedId: classData.sourcedId,
+			sourcedId,
 			status: classData.status,
-			title: classData.title,
-			classType: classData.classType,
-			courseSourcedId: classData.course?.sourcedId,
-			schoolSourcedId: classData.school?.sourcedId || classData.org?.sourcedId,
-			termsCount: classData.terms?.length || 0
+			title: classData.title
 		})
 
-		const stepResult = await step.run(`ingest-class-${classData.sourcedId}`, async () => {
-			// Clean the class data to remove any Inngest metadata
-			// Only pass school OR org, not both - prefer school if it exists
+		const stepResult = await step.run(`ingest-class-${sourcedId}`, async () => {
+			// Clean the data just in case, ensuring only valid fields are sent.
 			const cleanClassData = {
 				sourcedId: classData.sourcedId,
 				status: classData.status,
 				title: classData.title,
 				classType: classData.classType,
 				course: classData.course,
-				school: classData.school || classData.org, // Use school if available, otherwise org
+				school: classData.school || classData.org,
 				terms: classData.terms
 			}
 
-			logger.debug("upserting class", { classData: cleanClassData })
-
-			// Use PUT for upsert behavior
-			const result = await errors.try(oneroster.updateClass(classData.sourcedId, cleanClassData))
+			const result = await errors.try(oneroster.updateClass(sourcedId, cleanClassData))
 			if (result.error) {
-				// Check if it's a 404 error OR a 422 "not found" error - if so, create instead
 				if (errors.is(result.error, ErrOneRosterNotFound) || errors.is(result.error, ErrOneRosterNotFoundAs422)) {
-					logger.info("class not found, creating new", { sourcedId: classData.sourcedId })
 					const createResult = await errors.try(oneroster.createClass(cleanClassData))
 					if (createResult.error) {
-						logger.error("failed to create class", {
-							sourcedId: classData.sourcedId,
-							error: createResult.error,
-							classData: cleanClassData
-						})
+						logger.error("failed to create class", { sourcedId, error: createResult.error })
 						throw createResult.error
 					}
-					logger.info("successfully created class", { sourcedId: classData.sourcedId })
 				} else {
-					// Other error - re-throw
-					logger.error("failed to upsert class via API", {
-						sourcedId: classData.sourcedId,
-						error: result.error,
-						classData: cleanClassData
-					})
+					logger.error("failed to upsert class via API", { sourcedId, error: result.error })
 					throw result.error
 				}
-			} else {
-				logger.info("class API call successful", {
-					sourcedId: classData.sourcedId,
-					apiResponse: result.data
-				})
 			}
 
-			// Verify the class was created/updated by fetching it
-			logger.debug("verifying class", { sourcedId: classData.sourcedId })
-			const verificationResult = await errors.try(oneroster.getClass(classData.sourcedId))
+			const verificationResult = await errors.try(oneroster.getClass(sourcedId))
 			if (verificationResult.error) {
-				logger.error("failed to verify class", {
-					sourcedId: classData.sourcedId,
-					error: verificationResult.error
-				})
+				logger.error("failed to verify class after upsert", { sourcedId, error: verificationResult.error })
 				throw verificationResult.error
 			}
 
-			const verifiedClass = verificationResult.data
-			if (!verifiedClass) {
-				logger.error("class verification failed - class not found after creation", {
-					sourcedId: classData.sourcedId
-				})
-				throw errors.new(`class verification failed for sourcedId: ${classData.sourcedId}`)
-			}
-
-			logger.info("class successfully created/updated and verified", {
-				sourcedId: classData.sourcedId,
-				verifiedTitle: verifiedClass.title,
-				verifiedStatus: verifiedClass.status,
-				verifiedClassType: verifiedClass.classType
-			})
-
-			return { success: true, status: "upserted", class: verifiedClass }
+			return { success: true, status: "upserted", class: verificationResult.data }
 		})
 
-		logger.info("class ingestion completed", {
-			sourcedId: classData.sourcedId,
-			result: stepResult
-		})
-		return { status: "success", sourcedId: classData.sourcedId, stepResult }
+		return { status: "success", sourcedId, stepResult }
 	}
 )

@@ -1,3 +1,5 @@
+import * as fs from "node:fs/promises"
+import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
@@ -7,38 +9,50 @@ export const ingestCourse = inngest.createFunction(
 	{
 		id: "ingest-course",
 		name: "Ingest OneRoster Course"
-		// No concurrency limit - unlimited parallel processing!
 	},
-	{ event: "oneroster/course.upsert" },
+	{ event: "oneroster/course.ingest.one" },
 	async ({ event, step, logger }) => {
-		const { course } = event.data
-		logger.info("ingesting course", { sourcedId: course.sourcedId, title: course.title })
+		const { courseSlug } = event.data
+		logger.info("starting single course ingestion", { courseSlug })
 
-		await step.run(`ingest-course-${course.sourcedId}`, async () => {
-			logger.debug("upserting course", { sourcedId: course.sourcedId })
+		const course = await step.run("read-course-file", async () => {
+			const filePath = path.join(process.cwd(), "data", courseSlug, "oneroster", "course.json")
+			const contentResult = await errors.try(fs.readFile(filePath, "utf-8"))
+			if (contentResult.error) {
+				logger.error("failed to read course file", { file: filePath, error: contentResult.error })
+				throw errors.wrap(contentResult.error, "file read")
+			}
+			const parseResult = errors.trySync(() => JSON.parse(contentResult.data))
+			if (parseResult.error) {
+				logger.error("failed to parse course file", { file: filePath, error: parseResult.error })
+				throw errors.wrap(parseResult.error, "json parse")
+			}
+			return parseResult.data
+		})
 
-			// Use PUT for upsert behavior
-			const result = await errors.try(oneroster.updateCourse(course.sourcedId, course))
+		const { sourcedId } = course
+		logger.info("ingesting course", { sourcedId, title: course.title })
+
+		await step.run(`ingest-course-${sourcedId}`, async () => {
+			const result = await errors.try(oneroster.updateCourse(sourcedId, course))
 			if (result.error) {
-				// Check if it's a 404 error - if so, create instead
 				if (errors.is(result.error, ErrOneRosterNotFound)) {
-					logger.info("course not found, creating new", { sourcedId: course.sourcedId })
+					logger.info("course not found, creating new", { sourcedId })
 					const createResult = await errors.try(oneroster.createCourse(course))
 					if (createResult.error) {
-						logger.error("failed to create course", { sourcedId: course.sourcedId, error: createResult.error })
+						logger.error("failed to create course", { sourcedId, error: createResult.error })
 						throw createResult.error
 					}
-					logger.info("successfully created course", { sourcedId: course.sourcedId })
+					logger.info("successfully created course", { sourcedId })
 					return { success: true, status: "created" }
 				}
-				// Other error - re-throw
-				logger.error("failed to upsert course", { sourcedId: course.sourcedId, error: result.error })
+				logger.error("failed to upsert course", { sourcedId, error: result.error })
 				throw result.error
 			}
-			logger.info("successfully upserted course", { sourcedId: course.sourcedId })
+			logger.info("successfully upserted course", { sourcedId })
 			return { success: true, status: "upserted" }
 		})
 
-		return { status: "success", sourcedId: course.sourcedId }
+		return { status: "success", sourcedId }
 	}
 )

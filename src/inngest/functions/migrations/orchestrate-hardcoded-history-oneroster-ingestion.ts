@@ -12,16 +12,6 @@ const HARDCODED_HISTORY_COURSE_IDS = [
 	"x3e2fc37246974751" // ap-college-us-government-and-politics
 ]
 
-const BATCH_SIZE = 3
-
-function chunkArray<T>(items: T[], chunkSize: number): T[][] {
-	const chunks: T[][] = []
-	for (let i = 0; i < items.length; i += chunkSize) {
-		chunks.push(items.slice(i, i + chunkSize))
-	}
-	return chunks
-}
-
 export const orchestrateHardcodedHistoryOnerosterIngestion = inngest.createFunction(
 	{
 		id: "orchestrate-hardcoded-history-oneroster-ingestion",
@@ -33,43 +23,33 @@ export const orchestrateHardcodedHistoryOnerosterIngestion = inngest.createFunct
 			courseCount: HARDCODED_HISTORY_COURSE_IDS.length
 		})
 
-		// Step 1: Generate OneRoster payloads in batches to limit concurrency
-		logger.info("fanning out oneroster payload generation jobs", { batchSize: BATCH_SIZE })
-		const generationBatches = chunkArray(HARDCODED_HISTORY_COURSE_IDS, BATCH_SIZE)
-		for (const [batchIndex, batch] of generationBatches.entries()) {
-			logger.info("starting generation batch", { batchIndex, count: batch.length })
-			const generationPromises = batch.map((courseId) =>
-				step.invoke(`generate-oneroster-payload-for-${courseId}`, {
-					function: orchestrateCourseOnerosterGeneration,
-					data: { courseId }
-				})
-			)
-			const generationResults = await errors.try(Promise.all(generationPromises))
-			if (generationResults.error) {
-				logger.error("oneroster payload generation batch failed", { error: generationResults.error, batchIndex })
-				throw errors.wrap(generationResults.error, "oneroster payload generation fan-out")
-			}
-			logger.info("completed generation batch", { batchIndex })
+		// Step 1: Generate OneRoster payloads for all courses in parallel
+		logger.info("fanning out oneroster payload generation jobs")
+		const generationPromises = HARDCODED_HISTORY_COURSE_IDS.map((courseId) =>
+			step.invoke(`generate-oneroster-payload-for-${courseId}`, {
+				function: orchestrateCourseOnerosterGeneration,
+				data: { courseId }
+			})
+		)
+		const generationResults = await errors.try(Promise.all(generationPromises))
+		if (generationResults.error) {
+			logger.error("one or more oneroster payload generation steps failed", { error: generationResults.error })
+			throw errors.wrap(generationResults.error, "oneroster payload generation fan-out")
 		}
 		logger.info("successfully completed all oneroster payload generation jobs")
 
-		// Step 2: Upload OneRoster payloads in batches to limit concurrency
-		logger.info("fanning out oneroster upload jobs", { batchSize: BATCH_SIZE })
-		const uploadBatches = chunkArray(HARDCODED_HISTORY_COURSE_IDS, BATCH_SIZE)
-		for (const [batchIndex, batch] of uploadBatches.entries()) {
-			logger.info("starting upload batch", { batchIndex, count: batch.length })
-			const uploadPromises = batch.map((courseId) =>
-				step.invoke(`upload-oneroster-payload-for-${courseId}`, {
-					function: orchestrateCourseUploadToOneroster,
-					data: { courseId }
-				})
-			)
-			const uploadResults = await errors.try(Promise.all(uploadPromises))
-			if (uploadResults.error) {
-				logger.error("oneroster upload batch failed", { error: uploadResults.error, batchIndex })
-				throw errors.wrap(uploadResults.error, "oneroster upload fan-out")
-			}
-			logger.info("completed upload batch", { batchIndex })
+		// Step 2: Upload OneRoster payloads for all courses in parallel
+		logger.info("fanning out oneroster upload jobs")
+		const uploadPromises = HARDCODED_HISTORY_COURSE_IDS.map((courseId) =>
+			step.invoke(`upload-oneroster-payload-for-${courseId}`, {
+				function: orchestrateCourseUploadToOneroster,
+				data: { courseId }
+			})
+		)
+		const uploadResults = await errors.try(Promise.all(uploadPromises))
+		if (uploadResults.error) {
+			logger.error("one or more oneroster upload steps failed", { error: uploadResults.error })
+			throw errors.wrap(uploadResults.error, "oneroster upload fan-out")
 		}
 		logger.info("successfully completed all oneroster upload jobs")
 

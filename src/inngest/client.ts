@@ -170,46 +170,36 @@ const events = {
 			courseId: z.string().min(1)
 		})
 	},
-	// ✅ ADDED: New event to trigger the upload of generated OneRoster files.
 	"oneroster/course.upload": {
 		data: z.object({
 			courseId: z.string().min(1)
 		})
 	},
-	"oneroster/resources.ingest": {
+	// ✅ ADD: New per-entity ingestion events for the fan-out model.
+	"oneroster/resource.ingest.one": {
 		data: z.object({
-			// Define a schema for the resource objects based on the OpenAPI spec
-			resources: z.array(
-				z.object({
-					sourcedId: z.string(),
-					status: z.string(),
-					title: z.string(),
-					format: z.string().optional(), // ✅ CORRECTED: Made optional to match payload reality
-					vendorResourceId: z.string(),
-					vendorId: z.string().nullable(),
-					applicationId: z.string().nullable(),
-					roles: z.array(z.string()).optional(),
-					importance: z.string().optional(),
-					metadata: ResourceMetadataSchema.optional()
-				})
-			)
+			courseSlug: z.string().min(1),
+			sourcedId: z.string().min(1)
 		})
 	},
-	"oneroster/course.upsert": {
+	"oneroster/component-resource.ingest.one": {
 		data: z.object({
-			// Define a schema for the course object
-			course: z.object({
-				sourcedId: z.string(),
-				status: z.string(),
-				title: z.string(),
-				courseCode: z.string().optional().nullable(),
-				org: OrgRefSchema,
-				academicSession: AcademicSessionRefSchema,
-				subjects: z.array(z.string()).optional().nullable(),
-				metadata: z.record(z.string(), z.any()).optional()
-			})
+			courseSlug: z.string().min(1),
+			sourcedId: z.string().min(1)
 		})
 	},
+	"oneroster/course.ingest.one": {
+		data: z.object({
+			courseSlug: z.string().min(1)
+		})
+	},
+	"oneroster/class.ingest.one": {
+		data: z.object({
+			courseSlug: z.string().min(1)
+		})
+	},
+	// ❌ REMOVED: Batch event 'oneroster/resources.ingest' is deleted.
+	// ❌ REMOVED: Data-heavy event 'oneroster/course.upsert' is deleted.
 	"oneroster/course-components.ingest": {
 		data: z.object({
 			// Define a schema for course components
@@ -226,20 +216,7 @@ const events = {
 			)
 		})
 	},
-	"oneroster/component-resources.ingest": {
-		data: z.object({
-			componentResources: z.array(
-				z.object({
-					sourcedId: z.string(),
-					status: z.string(),
-					title: z.string(),
-					courseComponent: ComponentRefSchema,
-					resource: ResourceRefSchema,
-					sortOrder: z.number()
-				})
-			)
-		})
-	},
+	// ❌ REMOVED: Batch event 'oneroster/component-resources.ingest' is deleted.
 	"oneroster/line-items.create": {
 		data: z.object({
 			componentResources: z.array(
@@ -280,21 +257,7 @@ const events = {
 			)
 		})
 	},
-	"oneroster/class.ingest": {
-		data: z.object({
-			class: z.object({
-				sourcedId: z.string(),
-				status: z.string(),
-				title: z.string(),
-				classType: z.enum(["homeroom", "scheduled"]),
-				course: CourseRefSchema,
-				// The API spec uses 'org' for the school reference in the POST body
-				school: OrgRefSchema.optional(), // Make optional as it's passed as 'org'
-				org: OrgRefSchema.optional(), // 'org' is used for the school
-				terms: z.array(AcademicSessionRefSchema)
-			})
-		})
-	},
+	// ❌ REMOVED: Data-heavy event 'oneroster/class.ingest' is deleted.
 	// ❌ REMOVED: This event is now obsolete and replaced by the two events below.
 	// "migration/hardcoded.perseus-to-qti": {
 	// 	data: z.object({}) // No data needed

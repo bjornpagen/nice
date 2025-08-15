@@ -30,10 +30,10 @@ import { orchestrateHardcodedScienceStimulusMigration } from "@/inngest/function
 import { generatePayloadForCourse as generateOnerosterPayloadForCourse } from "@/inngest/functions/oneroster/generate-payload-for-course"
 import { ingestAssessmentLineItems } from "@/inngest/functions/oneroster/ingest-assessment-line-items"
 import { ingestClass } from "@/inngest/functions/oneroster/ingest-class"
-import { ingestComponentResources } from "@/inngest/functions/oneroster/ingest-component-resources"
+import { ingestComponentResourceOne } from "@/inngest/functions/oneroster/ingest-component-resource-one"
 import { ingestCourse } from "@/inngest/functions/oneroster/ingest-course"
 import { ingestCourseComponents } from "@/inngest/functions/oneroster/ingest-course-components"
-import { ingestResources } from "@/inngest/functions/oneroster/ingest-resources"
+import { ingestResourceOne } from "@/inngest/functions/oneroster/ingest-resource-one"
 // ✅ ADD: Import the new batch orchestration function
 // Removed generic batch and course ingestion orchestrators
 // Import orchestrators
@@ -102,10 +102,10 @@ export const { GET, POST, PUT } = serve({
 		// OneRoster Functions
 		generateOnerosterPayloadForCourse,
 		ingestClass,
-		ingestComponentResources,
+		ingestComponentResourceOne,
 		ingestCourse,
 		ingestCourseComponents,
-		ingestResources,
+		ingestResourceOne,
 		ingestAssessmentLineItems,
 		// QTI Functions
 		clearAllAssessmentItemData,
