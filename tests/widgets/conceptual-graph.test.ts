@@ -1,9 +1,12 @@
 import { expect, test } from "bun:test"
+import type { z } from "zod"
 import { ConceptualGraphPropsSchema, generateConceptualGraph } from "@/lib/widgets/generators"
+
+type ConceptualGraphInput = z.input<typeof ConceptualGraphPropsSchema>
 
 test("conceptual graph - frog population size", () => {
 	const input = {
-		type: "conceptualGraph" as const,
+		type: "conceptualGraph",
 		width: 400,
 		height: 400,
 		xAxisLabel: "Time",
@@ -28,7 +31,7 @@ test("conceptual graph - frog population size", () => {
 		],
 		highlightPointColor: "#000000", // Changed from "black" to hex format
 		highlightPointRadius: 6
-	}
+	} satisfies ConceptualGraphInput
 
 	// Validate the input
 	const parsed = ConceptualGraphPropsSchema.parse(input)

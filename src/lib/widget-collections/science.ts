@@ -1,4 +1,8 @@
-import { ConceptualGraphPropsSchema, LineGraphPropsSchema } from "@/lib/widgets/generators"
+import {
+	ConceptualGraphPropsSchema,
+	LineGraphPropsSchema,
+	PopulationChangeEventGraphPropsSchema
+} from "@/lib/widgets/generators"
 import { simpleVisualCollection } from "./simple-visual"
 
 export const scienceCollection = {
@@ -6,7 +10,13 @@ export const scienceCollection = {
 	schemas: {
 		...simpleVisualCollection.schemas,
 		lineGraph: LineGraphPropsSchema,
-		conceptualGraph: ConceptualGraphPropsSchema
+		conceptualGraph: ConceptualGraphPropsSchema,
+		populationChangeEventGraph: PopulationChangeEventGraphPropsSchema
 	},
-	widgetTypeKeys: [...simpleVisualCollection.widgetTypeKeys, "lineGraph", "conceptualGraph"] as const
+	widgetTypeKeys: [
+		...simpleVisualCollection.widgetTypeKeys,
+		"lineGraph",
+		"conceptualGraph",
+		"populationChangeEventGraph"
+	] as const
 } as const

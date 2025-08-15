@@ -89,6 +89,10 @@ import {
 	generatePolyhedronNetDiagram,
 	PolyhedronNetDiagramPropsSchema
 } from "@/lib/widgets/generators/polyhedron-net-diagram"
+import {
+	generatePopulationChangeEventGraph,
+	PopulationChangeEventGraphPropsSchema
+} from "@/lib/widgets/generators/population-change-event-graph"
 import { generateProbabilitySpinner, ProbabilitySpinnerPropsSchema } from "@/lib/widgets/generators/probability-spinner"
 import {
 	generatePythagoreanProofDiagram,
@@ -141,6 +145,7 @@ export const allWidgetSchemas = {
 	functionPlotGraph: FunctionPlotGraphPropsSchema,
 	lineEquationGraph: LineEquationGraphPropsSchema,
 	pointPlotGraph: PointPlotGraphPropsSchema,
+	populationChangeEventGraph: PopulationChangeEventGraphPropsSchema,
 	polygonGraph: PolygonGraphPropsSchema,
 	shapeTransformationGraph: ShapeTransformationGraphPropsSchema,
 	dataTable: DataTablePropsSchema,
@@ -204,6 +209,7 @@ const widgetSchemasWithoutSpecialUnions = [
 	typedSchemas.functionPlotGraph,
 	typedSchemas.lineEquationGraph,
 	typedSchemas.pointPlotGraph,
+	typedSchemas.populationChangeEventGraph,
 	typedSchemas.polygonGraph,
 	typedSchemas.shapeTransformationGraph,
 	typedSchemas.dataTable,
@@ -290,6 +296,7 @@ export {
 	PentagonIntersectionDiagramPropsSchema,
 	PictographPropsSchema,
 	PointPlotGraphPropsSchema,
+	PopulationChangeEventGraphPropsSchema,
 	PolygonGraphPropsSchema,
 	PolyhedronDiagramPropsSchema,
 	PolyhedronNetDiagramPropsSchema,
@@ -328,6 +335,7 @@ export {
 	generateFunctionPlotGraph,
 	generateLineEquationGraph,
 	generatePointPlotGraph,
+	generatePopulationChangeEventGraph,
 	generatePolygonGraph,
 	generateShapeTransformationGraph,
 	generateDataTable,
@@ -444,6 +452,8 @@ export function generateWidget(widget: Widget): string {
 			return generatePictograph(widget)
 		case "pointPlotGraph":
 			return generatePointPlotGraph(widget)
+		case "populationChangeEventGraph":
+			return generatePopulationChangeEventGraph(widget)
 		case "polygonGraph":
 			return generatePolygonGraph(widget)
 		case "polyhedronDiagram":
