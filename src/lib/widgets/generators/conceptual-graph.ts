@@ -23,7 +23,10 @@ export const ConceptualGraphPropsSchema = z
 		height: z.number().positive().describe("Total height of the SVG in pixels (e.g., 400, 500)."),
 		xAxisLabel: z.string().describe("The label for the horizontal axis (e.g., 'Time')."),
 		yAxisLabel: z.string().describe("The label for the vertical axis (e.g., 'Frog population size')."),
-		curvePoints: z.array(createPointSchema()).min(2).describe("An array of {x, y} points that define the curve to be drawn."),
+		curvePoints: z
+			.array(createPointSchema())
+			.min(2)
+			.describe("An array of {x, y} points that define the curve to be drawn."),
 		curveColor: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("The color of the plotted curve."),
 		highlightPoints: z
 			.array(createHighlightPointSchema())

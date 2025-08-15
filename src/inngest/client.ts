@@ -1,7 +1,6 @@
 import * as logger from "@superbuilders/slog"
 import { EventSchemas, type GetEvents, Inngest } from "inngest"
 import { z } from "zod"
-import { ResourceMetadataSchema } from "@/lib/metadata/oneroster"
 import { WidgetCollectionNameSchema } from "@/lib/widget-collections" // MODIFIED: Import the central Zod enum schema
 
 // Helper schema for the XML-based item input

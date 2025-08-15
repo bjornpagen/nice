@@ -12,9 +12,7 @@ function createSeriesSchema() {
 		.object({
 			name: z
 				.string()
-				.describe(
-					"The name of this data series, which will appear in the legend (e.g., 'Bullhead City', 'Sedona')."
-				),
+				.describe("The name of this data series, which will appear in the legend (e.g., 'Bullhead City', 'Sedona')."),
 			values: z
 				.array(z.number())
 				.describe(

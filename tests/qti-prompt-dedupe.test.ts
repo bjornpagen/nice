@@ -26,9 +26,21 @@ test("dedupes paraphrased prompt - modern-day country of Anatolia", () => {
 				maxChoices: 1,
 				prompt: [{ type: "text", content: "Select the modern-day country where Anatolia is located." }],
 				choices: [
-					{ identifier: "A", content: [{ type: "paragraph", content: [{ type: "text", content: "Egypt" }] }], feedback: null },
-					{ identifier: "B", content: [{ type: "paragraph", content: [{ type: "text", content: "Turkey" }] }], feedback: null },
-					{ identifier: "C", content: [{ type: "paragraph", content: [{ type: "text", content: "Poland" }] }], feedback: null }
+					{
+						identifier: "A",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "Egypt" }] }],
+						feedback: null
+					},
+					{
+						identifier: "B",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "Turkey" }] }],
+						feedback: null
+					},
+					{
+						identifier: "C",
+						content: [{ type: "paragraph", content: [{ type: "text", content: "Poland" }] }],
+						feedback: null
+					}
 				]
 			}
 		},
@@ -64,14 +76,21 @@ test("dedupes paraphrased prompt - american decline excerpt", () => {
 					}
 				]
 			},
-			{ type: "paragraph", content: [{ type: "text", content: "Source: Noam Chomsky, historian, “Who Rules the World?”, 2016." }] },
-			{ type: "paragraph", content: [{ type: "text", content: "Vocabulary: piteous — heartbreaking; pitiful; laments — cries; wails." }] },
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Source: Noam Chomsky, historian, “Who Rules the World?”, 2016." }]
+			},
+			{
+				type: "paragraph",
+				content: [{ type: "text", content: "Vocabulary: piteous — heartbreaking; pitiful; laments — cries; wails." }]
+			},
 			{
 				type: "paragraph",
 				content: [
 					{
 						type: "text",
-						content: "Which of the following most likely contributed to the rise in belief of the “American decline” referred to in the excerpt?"
+						content:
+							"Which of the following most likely contributed to the rise in belief of the “American decline” referred to in the excerpt?"
 					}
 				]
 			},
@@ -95,7 +114,15 @@ test("dedupes paraphrased prompt - american decline excerpt", () => {
 					{
 						identifier: "A",
 						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "The Great Recession of 2008, a global financial crisis that affected the U.S. economy." }] }
+							{
+								type: "paragraph",
+								content: [
+									{
+										type: "text",
+										content: "The Great Recession of 2008, a global financial crisis that affected the U.S. economy."
+									}
+								]
+							}
 						],
 						feedback: null
 					},
@@ -118,14 +145,32 @@ test("dedupes paraphrased prompt - american decline excerpt", () => {
 					{
 						identifier: "C",
 						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "The September 11 attacks, which involved coordinated strikes on the World Trade Center and the Pentagon." }] }
+							{
+								type: "paragraph",
+								content: [
+									{
+										type: "text",
+										content:
+											"The September 11 attacks, which involved coordinated strikes on the World Trade Center and the Pentagon."
+									}
+								]
+							}
 						],
 						feedback: null
 					},
 					{
 						identifier: "D",
 						content: [
-							{ type: "paragraph", content: [{ type: "text", content: "The election of Barack Obama, the first Black man to serve as president of the United States." }] }
+							{
+								type: "paragraph",
+								content: [
+									{
+										type: "text",
+										content:
+											"The election of Barack Obama, the first Black man to serve as president of the United States."
+									}
+								]
+							}
 						],
 						feedback: null
 					}
@@ -202,7 +247,11 @@ test("dedupes paraphrased prompt - affordable care act provisions", () => {
 							{
 								type: "paragraph",
 								content: [
-									{ type: "text", content: "The law made it illegal for health insurance companies to charge \"unaffordable\" rates for individual insurance, which was defined as more than " },
+									{
+										type: "text",
+										content:
+											'The law made it illegal for health insurance companies to charge "unaffordable" rates for individual insurance, which was defined as more than '
+									},
 									{ type: "math", mathml: "<mn>10</mn><mo>%</mo>" },
 									{ type: "text", content: " of an individual's take-home pay." }
 								]
@@ -237,7 +286,11 @@ test("dedupes paraphrased prompt - affordable care act provisions", () => {
 					content: [
 						{ type: "text", content: "Not quite. The law did not impose a price cap defined as more than " },
 						{ type: "math", mathml: "<mn>10</mn><mo>%</mo>" },
-						{ type: "text", content: " of take-home pay, and it did not create a nationalized health system. The federal government did not take over management of hospitals or all health insurance." }
+						{
+							type: "text",
+							content:
+								" of take-home pay, and it did not create a nationalized health system. The federal government did not take over management of hospitals or all health insurance."
+						}
 					]
 				}
 			]
@@ -250,5 +303,3 @@ test("dedupes paraphrased prompt - affordable care act provisions", () => {
 	// Body variant should be removed
 	expect(xml).not.toContain("Which of the following were among the provisions of the Affordable Care Act?")
 })
-
-

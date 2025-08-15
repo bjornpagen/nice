@@ -225,10 +225,10 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 			.replace(/\u200d/g, "")
 			.replace(/\uFEFF/g, "")
 			// Normalize quotes by stripping straight, smart, and backtick variants
-			.replace(/[\'"‘’“”`´]/g, " ")
+			.replace(/['"‘’“”`´]/g, " ")
 			// Remove common punctuation including parentheses and dashes
-			.replace(/[.,;:!?()\[\]{}]/g, " ")
-			.replace(/[\-–—]/g, " ")
+			.replace(/[.,;:!?()[\]{}]/g, " ")
+			.replace(/[-–—]/g, " ")
 	const toComparable = (s: string): string => collapseWhitespace(stripPunct(decodeEntities(s.toLowerCase())))
 
 	// Tokenization helpers for fuzzy matching

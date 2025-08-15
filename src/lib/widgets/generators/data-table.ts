@@ -120,8 +120,10 @@ export const DataTablePropsSchema = z
 			),
 		footer: z
 			.array(createTableCellSchema())
+			.nullable()
+			.transform((val) => (val && val.length === 0 ? null : val))
 			.describe(
-				"Footer row cells displayed at bottom with distinct styling. Array length must match columns length. Empty array means no footer."
+				"Footer row cells displayed at bottom with distinct styling. Array length must match columns length. Null means no footer."
 			)
 	})
 	.strict()

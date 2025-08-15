@@ -13,10 +13,7 @@ function createPointSchema() {
 function createSegmentSchema() {
 	return z.object({
 		points: z.array(createPointSchema()).describe("An array of {x, y} points that define this segment of the curve."),
-		color: z
-			.string()
-			.regex(CSS_COLOR_PATTERN, "invalid css color")
-			.describe("The color of this line segment."),
+		color: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("The color of this line segment."),
 		label: z.string().describe("The text label for this segment to be displayed in the legend.")
 	})
 }

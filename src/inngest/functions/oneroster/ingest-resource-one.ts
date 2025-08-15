@@ -3,8 +3,8 @@ import * as path from "node:path"
 import * as errors from "@superbuilders/errors"
 import { inngest } from "@/inngest/client"
 import { oneroster } from "@/lib/clients"
-import { ErrOneRosterNotFound } from "@/lib/oneroster"
 import type { Resource } from "@/lib/oneroster"
+import { ErrOneRosterNotFound } from "@/lib/oneroster"
 
 export const ingestResourceOne = inngest.createFunction(
 	{
