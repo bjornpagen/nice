@@ -250,62 +250,77 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 		return collapseWhitespace(out)
 	}
 
-	// collect prompts from interactions that support it
-	const promptStrings: string[] = []
-	const interactionIds = new Set<string>(Object.keys(item.interactions))
-	for (const interaction of Object.values(item.interactions)) {
+	// collect prompts from interactions that support it, keyed by interaction id
+	const interactionIdToPrompt: Record<string, string> = {}
+	for (const [id, interaction] of Object.entries(item.interactions)) {
 		if (interaction.type === "choiceInteraction" || interaction.type === "orderInteraction") {
 			if (interaction.prompt && interaction.prompt.length > 0) {
-				promptStrings.push(normalizeInline(interaction.prompt))
+				interactionIdToPrompt[id] = normalizeInline(interaction.prompt)
 			}
 		}
 	}
-	if (promptStrings.length === 0) return
+	const supportedInteractionIds = new Set<string>(Object.keys(interactionIdToPrompt))
+	if (supportedInteractionIds.size === 0) return
 
-	// only consider paragraphs before the first blockSlot that targets any interaction
-	const firstSlotIndex = item.body.findIndex((b) => b.type === "blockSlot" && interactionIds.has(b.slotId))
-	const cutoff = firstSlotIndex === -1 ? item.body.length : firstSlotIndex
+	// Pre-bind non-null body reference for type narrowing within nested helpers
+	const body = item.body
 
-	const paragraphNorms: string[] = item.body.map((b) => (b.type === "paragraph" ? normalizeInline(b.content) : ""))
+	// Precompute normalized strings for all paragraph blocks
+	const paragraphNorms: string[] = body.map((b) => (b.type === "paragraph" ? normalizeInline(b.content) : ""))
 
-	// mark indices to delete
-	const toDelete = new Set<number>()
+	// Identify all indices in the body which are interaction blockSlots we care about
+	const slotIndices: Array<{ index: number; interactionId: string }> = []
+	for (let i = 0; i < body.length; i++) {
+		const block = body[i]
+		if (block?.type === "blockSlot" && supportedInteractionIds.has(block.slotId)) {
+			slotIndices.push({ index: i, interactionId: block.slotId })
+		}
+	}
 
-	// strategy A: exact paragraph equality with prompt
-	for (let i = 0; i < cutoff; i++) {
-		if (item.body[i]?.type !== "paragraph") continue
-		const pStr = paragraphNorms[i]
-		for (const ps of promptStrings) {
-			if (pStr !== "" && pStr === ps) {
+	if (slotIndices.length === 0) return
+
+	// Helper to try to remove paragraphs in [start, end) that match the given prompt
+	const markMatchingParagraphs = (start: number, end: number, prompt: string, toDelete: Set<number>): void => {
+		// strategy A: single paragraph equals prompt
+		for (let i = start; i < end; i++) {
+			if (body[i]?.type !== "paragraph") continue
+			const pStr = paragraphNorms[i]
+			if (pStr !== "" && pStr === prompt) {
 				toDelete.add(i)
-				break
 			}
 		}
-	}
-
-	// strategy B: join adjacent paragraphs to match prompt (handles prompt = p1 + p2 + ...)
-	for (let i = 0; i < cutoff; i++) {
-		if (item.body[i]?.type !== "paragraph") continue
-		if (toDelete.has(i)) continue
-		let acc = paragraphNorms[i]
-		for (let j = i + 1; j < cutoff; j++) {
-			if (item.body[j]?.type !== "paragraph") break
-			acc = collapseWhitespace(`${acc} ${paragraphNorms[j]}`)
-			for (const ps of promptStrings) {
-				if (acc === ps) {
+		// strategy B: concatenation of adjacent paragraphs equals prompt
+		for (let i = start; i < end; i++) {
+			if (body[i]?.type !== "paragraph") continue
+			if (toDelete.has(i)) continue
+			let acc = paragraphNorms[i]
+			for (let j = i + 1; j < end; j++) {
+				if (body[j]?.type !== "paragraph") break
+				acc = collapseWhitespace(`${acc} ${paragraphNorms[j]}`)
+				if (acc === prompt) {
 					for (let k = i; k <= j; k++) toDelete.add(k)
 					i = j // advance outer loop
 					break
 				}
 			}
-			if (toDelete.has(i)) break
 		}
+	}
+
+	// For each interaction slot, look back to the preceding region and remove duplicated prompt text
+	const toDelete = new Set<number>()
+	let regionStart = 0
+	for (const { index: slotIdx, interactionId } of slotIndices) {
+		const prompt = interactionIdToPrompt[interactionId]
+		if (prompt) {
+			markMatchingParagraphs(regionStart, slotIdx, prompt, toDelete)
+		}
+		regionStart = slotIdx + 1
 	}
 
 	if (toDelete.size === 0) return
 
-	const originalLength = item.body.length
-	item.body = item.body.filter((_, idx) => !toDelete.has(idx))
+	const originalLength = body.length
+	item.body = body.filter((_, idx) => !toDelete.has(idx))
 	const removedCount = originalLength - item.body.length
 	if (removedCount > 0) {
 		logger.debug("deduplicated prompt text from body", { count: removedCount })
