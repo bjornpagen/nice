@@ -10,6 +10,7 @@ import * as proficiency from "@/lib/services/proficiency"
 import * as streak from "@/lib/services/streak"
 import { generateResultSourcedId } from "@/lib/utils/assessment-identifiers"
 import { getAssessmentLineItemId } from "@/lib/utils/assessment-line-items"
+import { calculateAssessmentXp } from "@/lib/xp/core"
 import * as xp from "@/lib/xp/service"
 
 export async function saveResult(command: SaveAssessmentResultCommand): Promise<unknown> {
@@ -152,7 +153,7 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 				process: false
 			}
 
-			// Send analytics events (activity completed + optional time spent) to match legacy behavior
+			// Send analytics events (activity completed + optional time spent)
 			sideEffectPromises.push(
 				analytics.sendActivityCompletedEvent({
 					actor,
@@ -162,7 +163,14 @@ export async function saveResult(command: SaveAssessmentResultCommand): Promise<
 						correctQuestions: correctAnswers,
 						masteredUnits
 					},
-					finalXp: xpResult.finalXp,
+					// Atomic: exercise-only XP (exclude banked XP)
+					finalXp: calculateAssessmentXp(
+						command.expectedXp,
+						accuracyPercent,
+						attemptNumber,
+						totalQuestions,
+						command.durationInSeconds
+					).finalXp,
 					durationInSeconds: command.durationInSeconds,
 					correlationId
 				})
