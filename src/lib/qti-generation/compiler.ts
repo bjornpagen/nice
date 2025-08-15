@@ -224,6 +224,8 @@ function dedupePromptTextFromBody(item: AssessmentItem): void {
 			.replace(/\u200c/g, "")
 			.replace(/\u200d/g, "")
 			.replace(/\uFEFF/g, "")
+			// Normalize quotes by stripping straight, smart, and backtick variants
+			.replace(/[\'"‘’“”`´]/g, " ")
 			.replace(/[.,;:!?]/g, " ")
 	const toComparable = (s: string): string => collapseWhitespace(stripPunct(decodeEntities(s.toLowerCase())))
 	const normalizeMath = (mathml: string): string => {

@@ -4,7 +4,10 @@ import type { WidgetGenerator } from "@/lib/widgets/types"
 
 const AxisOptionsSchema = z
 	.object({
-		label: z.string().nullable().transform((val) => val === "null" || val === "NULL" || val === "" ? null : val),
+		label: z
+			.string()
+			.nullable()
+			.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val)),
 		min: z.number(),
 		max: z.number(),
 		tickInterval: z.number().positive(),
@@ -22,11 +25,13 @@ export const ParabolaGraphPropsSchema = z
 		yAxis: AxisOptionsSchema,
 		parabola: z
 			.object({
-				points: z.object({
-					p1: z.object({ x: z.number(), y: z.number() }),
-					p2: z.object({ x: z.number(), y: z.number() }),
-					p3: z.object({ x: z.number(), y: z.number() })
-				}).describe("Three points that define the parabola."),
+				points: z
+					.object({
+						p1: z.object({ x: z.number(), y: z.number() }),
+						p2: z.object({ x: z.number(), y: z.number() }),
+						p3: z.object({ x: z.number(), y: z.number() })
+					})
+					.describe("Three points that define the parabola."),
 				color: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("The color of the parabola curve."),
 				style: z.enum(["solid", "dashed"]).describe("The line style of the parabola curve.")
 			})
@@ -51,24 +56,27 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 
 	// Calculate parabola coefficients from three points
 	const { p1, p2, p3 } = parabola.points
-	
-	const x1 = p1.x, y1 = p1.y
-	const x2 = p2.x, y2 = p2.y
-	const x3 = p3.x, y3 = p3.y
-	
+
+	const x1 = p1.x
+	const y1 = p1.y
+	const x2 = p2.x
+	const y2 = p2.y
+	const x3 = p3.x
+	const y3 = p3.y
+
 	// Check for collinearity or identical x-coordinates which would prevent forming a parabola.
 	const denomCheck = (x1 - x2) * (x1 - x3) * (x2 - x3)
-	
+
 	if (Math.abs(denomCheck) < 1e-10) {
 		// Points are collinear or too close, can't form a parabola
 		return `<svg width="${width}" height="${height}"></svg>`
 	}
-	
+
 	// FIX: Replaced complex Cramer's rule with a more direct and numerically stable calculation for the parabola's coefficients (y = ax^2 + bx + c).
 	// This ensures accurate rendering by minimizing floating-point errors.
-	const a = y1 / ((x1 - x2) * (x1 - x3)) + y2 / ((x2 - x1) * (x2 - x3)) + y3 / ((x3 - x1) * (x3 - x2));
-	const b = (y1 - y2) / (x1 - x2) - a * (x1 + x2);
-	const c = y1 - a * x1 * x1 - b * x1;
+	const a = y1 / ((x1 - x2) * (x1 - x3)) + y2 / ((x2 - x1) * (x2 - x3)) + y3 / ((x3 - x1) * (x3 - x2))
+	const b = (y1 - y2) / (x1 - x2) - a * (x1 + x2)
+	const c = y1 - a * x1 * x1 - b * x1
 
 	let svg = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" font-size="12">`
 	svg += "<style>.axis-label { font-size: 14px; text-anchor: middle; }</style>"
@@ -116,6 +124,6 @@ export const generateParabolaGraph: WidgetGenerator<typeof ParabolaGraphPropsSch
 	const dash = parabola.style === "dashed" ? ' stroke-dasharray="8 6"' : ""
 	svg += `<polyline points="${pointsStr.trim()}" fill="none" stroke="${parabola.color}" stroke-width="2.5" ${dash}/>`
 
-	svg += `</svg>`
+	svg += "</svg>"
 	return svg
 }

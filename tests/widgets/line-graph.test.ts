@@ -69,9 +69,7 @@ test("line graph - collared lemmings and stoats (dual y-axis)", () => {
 		title: null,
 		xAxis: {
 			label: "Year",
-			categories: [
-				"1988", "", "1990", "", "1992", "", "1994", "", "1996", "", "1998", "", "2000", "", "2002"
-			]
+			categories: ["1988", "", "1990", "", "1992", "", "1994", "", "1996", "", "1998", "", "2000", "", "2002"]
 		},
 		yAxis: {
 			label: "Number of collared lemmings",

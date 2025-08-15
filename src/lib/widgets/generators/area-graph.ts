@@ -19,19 +19,33 @@ export const AreaGraphPropsSchema = z
 			.describe("The main title displayed above the graph. null for no title."),
 		xAxis: z
 			.object({
-				label: z.string().nullable().transform((val) => val === "null" || val === "NULL" || val === "" ? null : val).describe("The label for the horizontal axis (e.g., 'Year')."),
+				label: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+					.describe("The label for the horizontal axis (e.g., 'Year')."),
 				min: z.number().describe("The minimum value for the x-axis scale."),
 				max: z.number().describe("The maximum value for the x-axis scale."),
-				tickValues: z.array(z.number()).describe("An array of specific numerical values to be marked as ticks on the x-axis.")
+				tickValues: z
+					.array(z.number())
+					.describe("An array of specific numerical values to be marked as ticks on the x-axis.")
 			})
 			.strict(),
 		yAxis: z
 			.object({
-				label: z.string().nullable().transform((val) => val === "null" || val === "NULL" || val === "" ? null : val).describe("The label for the vertical axis (e.g., 'Percent of total')."),
+				label: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+					.describe("The label for the vertical axis (e.g., 'Percent of total')."),
 				min: z.number().describe("The minimum value for the y-axis scale."),
 				max: z.number().describe("The maximum value for the y-axis scale."),
 				tickInterval: z.number().positive().describe("The numeric interval between labeled tick marks on the y-axis."),
-				tickFormat: z.string().nullable().transform((val) => val === "null" || val === "NULL" || val === "" ? null : val).describe("A suffix to add to y-axis tick labels (e.g., '%'). Null for no suffix."),
+				tickFormat: z
+					.string()
+					.nullable()
+					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
+					.describe("A suffix to add to y-axis tick labels (e.g., '%'). Null for no suffix."),
 				showGridLines: z.boolean().describe("If true, displays horizontal grid lines for the y-axis.")
 			})
 			.strict(),
@@ -53,10 +67,13 @@ export const AreaGraphPropsSchema = z
 			.strict(),
 		boundaryLine: z
 			.object({
-				color: z.string().regex(CSS_COLOR_PATTERN, "invalid css color").describe("The color of the line separating the areas."),
-							strokeWidth: z.number().positive().describe("The thickness of the line separating the areas.")
-		})
-		.strict()
+				color: z
+					.string()
+					.regex(CSS_COLOR_PATTERN, "invalid css color")
+					.describe("The color of the line separating the areas."),
+				strokeWidth: z.number().positive().describe("The thickness of the line separating the areas.")
+			})
+			.strict()
 	})
 	.strict()
 	.describe(
@@ -76,16 +93,16 @@ export type AreaGraphProps = z.infer<typeof AreaGraphPropsSchema>
  */
 const renderWrappedText = (text: string, x: number, y: number, className: string, lineHeight = "1.2em"): string => {
 	let lines: string[] = []
-	
+
 	// For titles with year ranges in parentheses, split before the parenthesis
 	const titlePattern = /^(.+)\s+(\(\d{4}–\d{4}\))$/
 	const titleMatch = text.match(titlePattern)
-	if (titleMatch && titleMatch[1] && titleMatch[2]) {
+	if (titleMatch?.[1] && titleMatch[2]) {
 		lines = [titleMatch[1].trim(), titleMatch[2].trim()]
 	} else {
 		// For area labels, split multi-word labels
-		const words = text.split(' ')
-		if (words.length === 2 && words.join(' ').length > 10) {
+		const words = text.split(" ")
+		if (words.length === 2 && words.join(" ").length > 10) {
 			// Split two-word labels like "Fossil fuels"
 			lines = words
 		} else {
@@ -93,7 +110,7 @@ const renderWrappedText = (text: string, x: number, y: number, className: string
 			lines = [text]
 		}
 	}
-	
+
 	let tspans = ""
 	lines.forEach((line, index) => {
 		const dy = index === 0 ? "0" : lineHeight
@@ -134,11 +151,11 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 		svg += `<text x="${margin.left - 55}" y="${margin.top + chartHeight / 2}" class="axis-label" transform="rotate(-90, ${margin.left - 55}, ${margin.top + chartHeight / 2})">${yAxis.label}</text>`
 
 	// Ticks
-	xAxis.tickValues.forEach((val) => {
+	for (const val of xAxis.tickValues) {
 		const x = toSvgX(val)
 		svg += `<line x1="${x}" y1="${height - margin.bottom}" x2="${x}" y2="${height - margin.bottom + 5}" stroke="black" stroke-width="2"/>`
 		svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${val}</text>`
-	})
+	}
 	for (let t = yAxis.min; t <= yAxis.max; t += yAxis.tickInterval) {
 		const y = toSvgY(t)
 		svg += `<line x1="${margin.left - 5}" y1="${y}" x2="${margin.left}" y2="${y}" stroke="black" stroke-width="2"/>`
@@ -161,6 +178,6 @@ export const generateAreaGraph: WidgetGenerator<typeof AreaGraphPropsSchema> = (
 	svg += renderWrappedText(bottomArea.label, toSvgX(1975), toSvgY(40), "area-label")
 	svg += renderWrappedText(topArea.label, toSvgX(1850), toSvgY(70), "area-label")
 
-	svg += `</svg>`
+	svg += "</svg>"
 	return svg
 }

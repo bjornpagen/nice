@@ -180,7 +180,7 @@ export function createDynamicAssessmentItemSchema(widgetMapping: Record<string, 
 				.literal(true)
 				.describe("Whether to randomize initial order. Always true to ensure varied starting points."),
 			orientation: z
-				.enum(["horizontal", "vertical"]) 
+				.enum(["horizontal", "vertical"])
 				.describe(
 					"Visual layout direction for the orderable items. The prompt's axis wording MUST match orientation: horizontal → '(left to right)', vertical → '(top to bottom)'."
 				)

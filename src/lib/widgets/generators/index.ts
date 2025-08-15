@@ -61,10 +61,7 @@ import {
 	generateInequalityNumberLine,
 	InequalityNumberLinePropsSchema
 } from "@/lib/widgets/generators/inequality-number-line"
-import {
-	generateKeelingCurve,
-	KeelingCurvePropsSchema
-} from "@/lib/widgets/generators/keeling-curve"
+import { generateKeelingCurve, KeelingCurvePropsSchema } from "@/lib/widgets/generators/keeling-curve"
 import { generateLineEquationGraph, LineEquationGraphPropsSchema } from "@/lib/widgets/generators/line-equation-graph"
 import { generateLineGraph, LineGraphPropsSchema } from "@/lib/widgets/generators/line-graph"
 import { generateNumberLine, NumberLinePropsSchema } from "@/lib/widgets/generators/number-line"

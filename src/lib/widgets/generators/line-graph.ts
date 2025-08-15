@@ -20,13 +20,13 @@ const SeriesSchema = z
 		color: z
 			.string()
 			.regex(CSS_COLOR_PATTERN, "invalid css color; use hex format only (#RGB, #RRGGBB, or #RRGGBBAA)")
-			.describe("The color for the line and points of this series in hex format only (e.g., '#000', '#3377dd', '#ff000080')."),
+			.describe(
+				"The color for the line and points of this series in hex format only (e.g., '#000', '#3377dd', '#ff000080')."
+			),
 		style: z
 			.enum(["solid", "dashed", "dotted"])
 			.describe("The visual style of the line. 'solid' is a continuous line, 'dashed' and 'dotted' are broken lines."),
-		pointShape: z
-			.enum(["circle", "square"])
-			.describe("The shape of the marker for each data point."),
+		pointShape: z.enum(["circle", "square"]).describe("The shape of the marker for each data point."),
 		yAxis: z.enum(["left", "right"]).describe("Specifies which Y-axis this series should be plotted against.")
 	})
 	.strict()
@@ -62,7 +62,9 @@ export const LineGraphPropsSchema = z
 					.nullable()
 					.transform((val) => (val === "null" || val === "NULL" || val === "" ? null : val))
 					.describe("The label for the horizontal axis (e.g., 'Month')."),
-				categories: z.array(z.string()).describe("An array of labels for the x-axis categories (e.g., ['Jan', 'Feb', 'Mar']).")
+				categories: z
+					.array(z.string())
+					.describe("An array of labels for the x-axis categories (e.g., ['Jan', 'Feb', 'Mar']).")
 			})
 			.strict(),
 		yAxis: YAxisSchema,
@@ -108,7 +110,8 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 	const scaleYLeft = chartHeight / (yAxis.max - yAxis.min)
 	const toSvgYLeft = (val: number) => height - margin.bottom - (val - yAxis.min) * scaleYLeft
 	const toSvgYRight = yAxisRight
-		? (val: number) => height - margin.bottom - ((val - yAxisRight.min) / (yAxisRight.max - yAxisRight.min)) * chartHeight
+		? (val: number) =>
+				height - margin.bottom - ((val - yAxisRight.min) / (yAxisRight.max - yAxisRight.min)) * chartHeight
 		: () => 0
 
 	// X-axis scaling
@@ -134,7 +137,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			svg += `<line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="#ccc" stroke-dasharray="2"/>`
 		}
 	}
-	svg += `</g>`
+	svg += "</g>"
 
 	// Right Y-axis
 	if (yAxisRight) {
@@ -148,7 +151,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			svg += `<line x1="${rightAxisX}" y1="${y}" x2="${rightAxisX + 5}" y2="${y}" stroke="black"/>`
 			svg += `<text x="${rightAxisX + 10}" y="${y + 4}" text-anchor="start">${t}</text>`
 		}
-		svg += `</g>`
+		svg += "</g>"
 	}
 
 	// X-axis
@@ -163,10 +166,10 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			svg += `<text x="${x}" y="${height - margin.bottom + 20}" text-anchor="middle">${cat}</text>`
 		}
 	})
-	svg += `</g>`
+	svg += "</g>"
 
 	// Data Series
-	series.forEach((s) => {
+	for (const s of series) {
 		const toSvgY = s.yAxis === "right" ? toSvgYRight : toSvgYLeft
 		const pointsStr = s.values.map((v, i) => `${toSvgX(i)},${toSvgY(v)}`).join(" ")
 
@@ -175,7 +178,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 		if (s.style === "dotted") dasharray = 'stroke-dasharray="2 6"'
 		svg += `<polyline points="${pointsStr}" fill="none" stroke="${s.color}" stroke-width="2.5" ${dasharray}/>`
 
-		s.values.forEach((v, i) => {
+		for (const [i, v] of s.values.entries()) {
 			const cx = toSvgX(i)
 			const cy = toSvgY(v)
 			if (s.pointShape === "circle") {
@@ -183,14 +186,14 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			} else if (s.pointShape === "square") {
 				svg += `<rect x="${cx - 4}" y="${cy - 4}" width="8" height="8" fill="${s.color}"/>`
 			}
-		})
-	})
+		}
+	}
 
 	// Legend
 	if (showLegend) {
 		let currentX = margin.left
 		const legendY = height - legendHeight / 2 - 10
-		series.forEach((s) => {
+		for (const s of series) {
 			let dasharray = ""
 			if (s.style === "dashed") dasharray = 'stroke-dasharray="8 4"'
 			svg += `<line x1="${currentX}" y1="${legendY}" x2="${currentX + 30}" y2="${legendY}" stroke="${s.color}" stroke-width="2.5" ${dasharray}/>`
@@ -202,7 +205,7 @@ export const generateLineGraph: WidgetGenerator<typeof LineGraphPropsSchema> = (
 			currentX += 40
 			svg += `<text x="${currentX}" y="${legendY + 4}">${s.name}</text>`
 			currentX += s.name.length * 8 + 20
-		})
+		}
 	}
 
 	svg += "</svg>"

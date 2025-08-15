@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import type { z } from "zod"
-import { generateAreaGraph, AreaGraphPropsSchema } from "@/lib/widgets/generators"
+import { AreaGraphPropsSchema, generateAreaGraph } from "@/lib/widgets/generators"
 
 type AreaGraphInput = z.input<typeof AreaGraphPropsSchema>
 
@@ -44,7 +44,7 @@ test("area graph - U.S. energy consumption by source", () => {
 			label: "Non-fossil fuels",
 			color: "#90EE90"
 		},
-				boundaryLine: {
+		boundaryLine: {
 			color: "#000000",
 			strokeWidth: 3
 		}

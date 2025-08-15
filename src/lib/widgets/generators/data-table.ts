@@ -177,10 +177,7 @@ export const generateDataTable: WidgetGenerator<typeof DataTablePropsSchema> = (
 
 	if (title) {
 		const escapeXmlText = (text: string): string =>
-			sanitizeXmlAttributeValue(text)
-				.replace(/&/g, "&amp;")
-				.replace(/</g, "&lt;")
-				.replace(/>/g, "&gt;")
+			sanitizeXmlAttributeValue(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 		xml += `<caption style="padding: 8px; font-size: 1.2em; font-weight: bold; caption-side: top;">${escapeXmlText(
 			title
 		)}</caption>`
