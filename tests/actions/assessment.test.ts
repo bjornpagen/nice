@@ -174,6 +174,7 @@ describe("XP Rewarding Logic - Mastery and Retries", () => {
 		})
 
 		const finalXp = analyticsSpy.mock.calls[0]?.[0]?.finalXp
+		// Atomic event now reports exercise-only XP, independent of award gating
 		expect(finalXp).toBe(0)
 		expect(gradebookSpy.mock.calls[0]?.[0]?.metadata?.multiplier).toBe(0)
 	})
@@ -221,7 +222,8 @@ describe("XP Rewarding Logic - Special Cases", () => {
 		await finalizeAssessment({ ...defaultOptions })
 
 		const finalXp = analyticsSpy.mock.calls[0]?.[0]?.finalXp
-		expect(finalXp).toBe(0)
+		// Atomic event reports exercise-only XP independent of award gating
+		expect(finalXp).toBe(125)
 		const metadata = gradebookSpy.mock.calls[0]?.[0]?.metadata
 		expect(metadata?.xpReason).toBe("XP farming prevention: user already proficient")
 		expect(bankSpy).not.toHaveBeenCalled()
@@ -273,7 +275,8 @@ describe("XP Rewarding Logic - Special Cases", () => {
 
 		expect(bankSpy).toHaveBeenCalled()
 		const finalXp = analyticsSpy.mock.calls[0]?.[0]?.finalXp
-		expect(finalXp).toBe(150) // 100 (exercise xp * 1.0) + 50 (banked)
+		// Atomic event excludes banked XP; gradebook still stores total
+		expect(finalXp).toBe(100)
 	})
 
 	test("Banked XP: Should NOT be awarded for mastering a Quiz", async () => {
@@ -319,7 +322,7 @@ describe("XP Rewarding Logic - Special Cases", () => {
 
 		expect(bankSpy).toHaveBeenCalled()
 		const finalXp = analyticsSpy.mock.calls[0]?.[0]?.finalXp
-		expect(finalXp).toBe(175) // 100 (exercise xp * 1.0) + 75 (banked video XP)
+		expect(finalXp).toBe(100)
 	})
 
 	test("Banked XP: Should include article XP when mastering an Exercise", async () => {
@@ -345,7 +348,7 @@ describe("XP Rewarding Logic - Special Cases", () => {
 
 		expect(bankSpy).toHaveBeenCalled()
 		const finalXp = analyticsSpy.mock.calls[0]?.[0]?.finalXp
-		expect(finalXp).toBe(130) // 100 (exercise xp * 1.0) + 30 (banked article XP)
+		expect(finalXp).toBe(100)
 	})
 
 	test("Banked XP: Should include mixed content XP when mastering an Exercise", async () => {
@@ -371,7 +374,7 @@ describe("XP Rewarding Logic - Special Cases", () => {
 
 		expect(bankSpy).toHaveBeenCalled()
 		const finalXp = analyticsSpy.mock.calls[0]?.[0]?.finalXp
-		expect(finalXp).toBe(200) // 100 (exercise xp * 1.0) + 100 (banked mixed content XP)
+		expect(finalXp).toBe(100)
 	})
 
 	test("Bank not invoked below mastery for Exercise", async () => {
@@ -419,7 +422,7 @@ describe("XP Rewarding Logic - Special Cases", () => {
 			throw errors.new("analytics payload missing")
 		}
 		// Attempt 2, 100% => base = expectedXp * 1.0, plus banked 20
-		expect(payload.finalXp).toBe(defaultOptions.expectedXp * 1.0 + 20)
+		expect(payload.finalXp).toBe(defaultOptions.expectedXp * 1.0)
 	})
 })
 
@@ -611,6 +614,7 @@ describe("Input Handling and Edge Cases", () => {
 			logger.error("analytics payload missing in test")
 			throw errors.new("analytics payload missing")
 		}
+		// 1/10 correct => 10% accuracy, first attempt => 0 XP (no mastery), no penalty at threshold
 		expect(payload.finalXp).toBe(0)
 		const metadata = gradebookSpy.mock.calls[0]?.[0]?.metadata
 		expect(metadata?.xpReason).toBe("First attempt: below mastery threshold")
@@ -653,7 +657,8 @@ describe("Input Handling and Edge Cases", () => {
 			logger.error("analytics payload missing in test")
 			throw errors.new("analytics payload missing")
 		}
-		expect(payload.finalXp).toBe(0)
+		// Zero non-reported questions → legacy metadata accuracy 100, ActivityEvent uses 1.25x
+		expect(payload.finalXp).toBe(125)
 	})
 	test("Retrials of the same question MUST NOT increase totalQuestions", async () => {
 		mockCheckExistingProficiency.mockImplementation((_u, _a) => Promise.resolve(false))
@@ -719,8 +724,16 @@ describe("Banked XP Sum Consistency", () => {
 		}
 		const finalXp = fx
 		const derivedBanked = finalXp - expectedBaseXpWithBonus
-
-		expect(derivedBanked).toBe(articleXp + videoXp)
+		// Atomic event excludes banked XP
+		expect(derivedBanked).toBe(0)
+		// Gradebook still stores total xp (exercise + banked)
+		const saved = gradebookSpy.mock.calls[0]?.[0]
+		if (!saved) {
+			logger.error("gradebook payload missing in test (banked sum consistency)")
+			throw errors.new("gradebook payload missing")
+		}
+		// Exercise result metadata stores exercise-only XP (atomic)
+		expect(saved.metadata?.xp).toBe(expectedBaseXpWithBonus)
 	})
 })
 
@@ -751,8 +764,16 @@ describe("End-to-end banking across lesson → exercise → quiz → exercise re
 			logger.error("analytics payload missing after first exercise in e2e test")
 			throw errors.new("analytics payload missing")
 		}
-		// Base 100 * 1.25 + 50 banked
-		expect(firstPayload.finalXp).toBe(defaultOptions.expectedXp * 1.25 + totalBanked)
+		// Atomic: event includes only base 100 * 1.25 (no banked)
+		expect(firstPayload.finalXp).toBe(defaultOptions.expectedXp * 1.25)
+		// Gradebook metadata still includes total (base + banked)
+		const firstSaved = gradebookSpy.mock.calls[0]?.[0]
+		if (!firstSaved) {
+			logger.error("gradebook payload missing after first exercise in e2e test")
+			throw errors.new("gradebook payload missing")
+		}
+		// Exercise result metadata stores exercise-only XP (atomic)
+		expect(firstSaved.metadata?.xp).toBe(defaultOptions.expectedXp * 1.25)
 		// Bank was invoked once so far
 		expect(bankSpy).toHaveBeenCalledTimes(1)
 

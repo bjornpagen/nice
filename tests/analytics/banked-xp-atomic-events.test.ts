@@ -137,7 +137,7 @@ describe("Banked XP - Additional Edge Cases", () => {
 
 		await finalizeAssessment(shortDurationOptions)
 
-		const payload = analyticsSpy.mock.calls[0]?.[0]
+		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
 		if (!payload) {
 			logger.error("missing analytics payload (penalty)")
 			throw errors.new("missing analytics payload")
@@ -163,7 +163,7 @@ describe("Banked XP - Additional Edge Cases", () => {
 			]
 		})
 
-		const payload = analyticsSpy.mock.calls[0]?.[0]
+		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
 		if (!payload) {
 			logger.error("missing analytics payload (attempt 2)")
 			throw errors.new("missing analytics payload")
@@ -190,7 +190,7 @@ describe("Banked XP - Additional Edge Cases", () => {
 			]
 		})
 
-		const payload = analyticsSpy.mock.calls[0]?.[0]
+		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
 		if (!payload) {
 			logger.error("missing analytics payload (<80%)")
 			throw errors.new("missing analytics payload")
@@ -209,7 +209,7 @@ describe("Banked XP - Atomic Caliper Events and Double-Counting", () => {
 
 		await finalizeAssessment({ ...baseOptions })
 
-		const payload = analyticsSpy.mock.calls[0]?.[0]
+		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
 		if (!payload) {
 			logger.error("missing analytics payload")
 			throw errors.new("missing analytics payload")
@@ -228,7 +228,7 @@ describe("Banked XP - Atomic Caliper Events and Double-Counting", () => {
 		)
 
 		await finalizeAssessment({ ...baseOptions })
-		const payload = analyticsSpy.mock.calls[0]?.[0]
+		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
 		if (!payload) {
 			logger.error("missing analytics payload")
 			throw errors.new("missing analytics payload")
@@ -248,7 +248,7 @@ describe("Banked XP - Atomic Caliper Events and Double-Counting", () => {
 		mockAwardBankedXpForExercise.mockImplementation((_p) => Promise.resolve({ bankedXp: 0, awardedResourceIds: [] }))
 
 		await finalizeAssessment({ ...baseOptions })
-		const payload = analyticsSpy.mock.calls[0]?.[0]
+		const payload = analyticsSpy.mock.calls.at(-1)?.[0]
 		if (!payload) {
 			logger.error("missing analytics payload")
 			throw errors.new("missing analytics payload")
