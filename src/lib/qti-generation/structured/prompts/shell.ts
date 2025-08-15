@@ -166,6 +166,8 @@ CRITICAL: Never embed images or SVGs directly. The body must contain ONLY text, 
   WRONG (attribution left in 'body' as a trailing paragraph):
   \`\`\`json
   {
+    "identifier": "example-ke-dup-negative",
+    "title": "KE table duplicated inputs (negative)",
     "body": [
       { "type": "paragraph", "content": [{ "type": "text", "content": "Consider the following passage." }] },
       { "type": "paragraph", "content": [{ "type": "text", "content": "Skeletal muscle is a type of tissue that helps move the bones of the skeleton. Skeletal muscles produce movement by contracting (shortening) in response to signals from the nervous system. These muscles require a large supply of energy in order to maintain their function. Each skeletal muscle is made up of specialized cells called myocytes." }] },
@@ -531,26 +533,44 @@ ${perseusJson}
       { "type": "paragraph", "content": [{ "type": "text", "content": "Speed: " }, { "type": "inlineSlot", "slotId": "dropdown_12" }] }
     ],
     "widgets": ["ke_quantities_table"],
-    "interactions": ["dropdown_8", "dropdown_10", "dropdown_11", "dropdown_12"]
+    "interactions": ["dropdown_8", "dropdown_10", "dropdown_11", "dropdown_12"],
+    "feedback": { "correct": [], "incorrect": [] },
+    "responseDeclarations": [
+      { "identifier": "dropdown_8",  "cardinality": "single", "baseType": "string", "correct": "yes" },
+      { "identifier": "dropdown_10", "cardinality": "single", "baseType": "string", "correct": "no" },
+      { "identifier": "dropdown_11", "cardinality": "single", "baseType": "string", "correct": "no" },
+      { "identifier": "dropdown_12", "cardinality": "single", "baseType": "string", "correct": "yes" }
+    ]
   }
   \`\`\`
 
   Positive example 1 — table owns inputs; do not duplicate below:
   \`\`\`json
   {
+    "identifier": "example-ke-dup-positive",
+    "title": "KE table owns inputs (positive)",
     "body": [
       { "type": "paragraph", "content": [{ "type": "text", "content": "A moving object's kinetic energy is determined by two factors." }] },
       { "type": "paragraph", "content": [{ "type": "text", "content": "Select whether each quantity determines an object's kinetic energy." }] },
       { "type": "blockSlot", "slotId": "ke_quantities_table" }
     ],
     "widgets": ["ke_quantities_table"],
-    "interactions": []
+    "interactions": [],
+    "feedback": { "correct": [], "incorrect": [] },
+    "responseDeclarations": [
+      { "identifier": "dropdown_8",  "cardinality": "single", "baseType": "string", "correct": "yes" },
+      { "identifier": "dropdown_10", "cardinality": "single", "baseType": "string", "correct": "no" },
+      { "identifier": "dropdown_11", "cardinality": "single", "baseType": "string", "correct": "no" },
+      { "identifier": "dropdown_12", "cardinality": "single", "baseType": "string", "correct": "yes" }
+    ]
   }
   \`\`\`
 
   Negative example 2 (DO NOT OUTPUT) — duplicated inputs (table + inline slots):
   \`\`\`json
   {
+    "identifier": "example-temp-dup-negative",
+    "title": "Temperature table duplicated inputs (negative)",
     "body": [
       { "type": "paragraph", "content": [{ "type": "text", "content": "Several students tested how the temperature changed when dissolving different solids in the same amount of water. The substances they tested were NH4Cl, MgSO4, and CaCl2." }] },
       { "type": "paragraph", "content": [{ "type": "text", "content": "Only one student kept track of everyone’s data. Unfortunately, their lab notebook got wet, and some of the labels were damaged." }] },
@@ -560,13 +580,24 @@ ${perseusJson}
       { "type": "paragraph", "content": [{ "type": "text", "content": "Experiment C: Reactant " }, { "type": "inlineSlot", "slotId": "react_c" }, { "type": "text", "content": ", Amount " }, { "type": "inlineSlot", "slotId": "amt_c" }] }
     ],
     "widgets": ["image_1", "react_temp_table"],
-    "interactions": ["react_c", "amt_c", "react_d", "amt_d", "react_e", "amt_e"]
+    "interactions": ["react_c", "amt_c", "react_d", "amt_d", "react_e", "amt_e"],
+    "feedback": { "correct": [], "incorrect": [] },
+    "responseDeclarations": [
+      { "identifier": "react_c", "cardinality": "single", "baseType": "identifier", "correct": "MGSO4" },
+      { "identifier": "amt_c",   "cardinality": "single", "baseType": "identifier", "correct": "AMT_2_5" },
+      { "identifier": "react_d", "cardinality": "single", "baseType": "identifier", "correct": "NH4CL" },
+      { "identifier": "amt_d",   "cardinality": "single", "baseType": "identifier", "correct": "AMT_3_0" },
+      { "identifier": "react_e", "cardinality": "single", "baseType": "identifier", "correct": "CACL2" },
+      { "identifier": "amt_e",   "cardinality": "single", "baseType": "identifier", "correct": "AMT_8_0" }
+    ]
   }
   \`\`\`
 
   Positive example 2 — table owns inputs; do not duplicate below:
   \`\`\`json
   {
+    "identifier": "example-temp-dup-positive",
+    "title": "Temperature table owns inputs (positive)",
     "body": [
       { "type": "paragraph", "content": [{ "type": "text", "content": "Several students tested how the temperature changed when dissolving different solids in the same amount of water." }] },
       { "type": "blockSlot", "slotId": "image_1" },
@@ -574,7 +605,135 @@ ${perseusJson}
       { "type": "blockSlot", "slotId": "react_temp_table" }
     ],
     "widgets": ["image_1", "react_temp_table"],
-    "interactions": []
+    "interactions": [],
+    "feedback": { "correct": [], "incorrect": [] },
+    "responseDeclarations": [
+      { "identifier": "RESP_REACT_C", "cardinality": "single", "baseType": "identifier", "correct": "MGSO4" },
+      { "identifier": "RESP_AMT_C",   "cardinality": "single", "baseType": "identifier", "correct": "AMT_2_5" },
+      { "identifier": "RESP_REACT_D", "cardinality": "single", "baseType": "identifier", "correct": "NH4CL" },
+      { "identifier": "RESP_AMT_D",   "cardinality": "single", "baseType": "identifier", "correct": "AMT_3_0" },
+      { "identifier": "RESP_REACT_E", "cardinality": "single", "baseType": "identifier", "correct": "CACL2" },
+      { "identifier": "RESP_AMT_E",   "cardinality": "single", "baseType": "identifier", "correct": "AMT_8_0" }
+    ]
+  }
+  \`\`\`
+
+  **BANNED: PSEUDO-TABLES IN BODY**
+  - NEVER simulate tables by stacking paragraphs with delimiter characters (e.g., "Substance | Density ...").
+  - ALWAYS replace such lists with a dedicated table widget slot in the body and include its slotId in the widgets array.
+
+  Negative example (DO NOT OUTPUT) — pseudo-table paragraphs in body:
+  \`\`\`json
+  {
+    "identifier": "example-pseudo-table-negative",
+    "title": "Pseudo-table in body (negative)",
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "A chemistry teacher fills a jar with liquid ethanol under a fume hood. She places three substances into the jar to see whether they will sink or float. The densities of the substances are listed below." }] },
+      { "type": "paragraph", "content": [
+        { "type": "text", "content": "Substance | Density " },
+        { "type": "math", "mathml": "<mo>(</mo><mtext>g/</mtext><msup><mtext>cm</mtext><mn>3</mn></msup><mo>)</mo>" }
+      ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Ethanol | " }, { "type": "math", "mathml": "<mn>0.79</mn>" } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Aluminum | " }, { "type": "math", "mathml": "<mn>2.7</mn>" } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Cork | " }, { "type": "math", "mathml": "<mn>0.24</mn>" } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Rosewood | " }, { "type": "math", "mathml": "<mn>0.83</mn>" } ] },
+      { "type": "blockSlot", "slotId": "image_1" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Complete the statements." }] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Aluminum " }, { "type": "inlineSlot", "slotId": "dropdown_1" }, { "type": "text", "content": " in ethanol." } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Cork " }, { "type": "inlineSlot", "slotId": "dropdown_2" }, { "type": "text", "content": " in ethanol." } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Rosewood " }, { "type": "inlineSlot", "slotId": "dropdown_3" }, { "type": "text", "content": " in ethanol." } ] }
+    ],
+    "widgets": ["image_1"],
+    "interactions": ["dropdown_1", "dropdown_2", "dropdown_3"],
+    "feedback": { "correct": [], "incorrect": [] },
+    "responseDeclarations": [
+      { "identifier": "dropdown_1", "cardinality": "single", "baseType": "string", "correct": "sinks" },
+      { "identifier": "dropdown_2", "cardinality": "single", "baseType": "string", "correct": "floats" },
+      { "identifier": "dropdown_3", "cardinality": "single", "baseType": "string", "correct": "sinks" }
+    ]
+  }
+  \`\`\`
+
+  Positive example — replace pseudo-table with a table widget slot:
+  \`\`\`json
+  {
+    "identifier": "example-pseudo-table-positive",
+    "title": "Replace pseudo-table with widget (positive)",
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "A chemistry teacher fills a jar with liquid ethanol under a fume hood. She places three substances into the jar to see whether they will sink or float. The densities of the substances are listed below." }] },
+      { "type": "blockSlot", "slotId": "density_table" },
+      { "type": "blockSlot", "slotId": "image_1" },
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Complete the statements." }] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Aluminum " }, { "type": "inlineSlot", "slotId": "dropdown_1" }, { "type": "text", "content": " in ethanol." } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Cork " }, { "type": "inlineSlot", "slotId": "dropdown_2" }, { "type": "text", "content": " in ethanol." } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Rosewood " }, { "type": "inlineSlot", "slotId": "dropdown_3" }, { "type": "text", "content": " in ethanol." } ] }
+    ],
+    "widgets": ["density_table", "image_1"],
+    "interactions": ["dropdown_1", "dropdown_2", "dropdown_3"],
+    "feedback": { "correct": [], "incorrect": [] },
+    "responseDeclarations": [
+      { "identifier": "dropdown_1", "cardinality": "single", "baseType": "string", "correct": "sinks" },
+      { "identifier": "dropdown_2", "cardinality": "single", "baseType": "string", "correct": "floats" },
+      { "identifier": "dropdown_3", "cardinality": "single", "baseType": "string", "correct": "sinks" }
+    ]
+  }
+  \`\`\`
+
+  **BANNED: SENTENCE-STACKED ROWS — USE TABLE WIDGET FOR ROW-WISE PROPERTIES**
+  - When content lists multiple rows with the same columns (e.g., State | Shape | Volume | Compressible), model it as a table widget.
+  - Do NOT render each row as a paragraph with multiple inline slots.
+
+  Negative example (DO NOT OUTPUT) — states of matter rendered as sentences with inline slots:
+  \`\`\`json
+  {
+    "identifier": "example-states-sentences-negative",
+    "title": "States of matter sentences (negative)",
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Complete each row to describe the differences among solids, liquids, and gases." }] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Solid — Shape: " }, { "type": "inlineSlot", "slotId": "dropdown_1" }, { "type": "text", "content": "; Volume: " }, { "type": "inlineSlot", "slotId": "dropdown_2" }, { "type": "text", "content": "; Compressible: " }, { "type": "inlineSlot", "slotId": "dropdown_3" }, { "type": "text", "content": "." } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Liquid — Shape: " }, { "type": "inlineSlot", "slotId": "dropdown_4" }, { "type": "text", "content": "; Volume: " }, { "type": "inlineSlot", "slotId": "dropdown_5" }, { "type": "text", "content": "; Compressible: " }, { "type": "inlineSlot", "slotId": "dropdown_6" }, { "type": "text", "content": "." } ] },
+      { "type": "paragraph", "content": [ { "type": "text", "content": "Gas — Shape: " }, { "type": "inlineSlot", "slotId": "dropdown_7" }, { "type": "text", "content": "; Volume: " }, { "type": "inlineSlot", "slotId": "dropdown_8" }, { "type": "text", "content": "; Compressible: " }, { "type": "inlineSlot", "slotId": "dropdown_9" }, { "type": "text", "content": "." } ] }
+    ],
+    "widgets": [],
+    "interactions": ["dropdown_1","dropdown_2","dropdown_3","dropdown_4","dropdown_5","dropdown_6","dropdown_7","dropdown_8","dropdown_9"],
+    "feedback": { "correct": [], "incorrect": [] },
+    "responseDeclarations": [
+      { "identifier": "dropdown_1", "cardinality": "single", "baseType": "string", "correct": "fixed" },
+      { "identifier": "dropdown_2", "cardinality": "single", "baseType": "string", "correct": "fixed" },
+      { "identifier": "dropdown_3", "cardinality": "single", "baseType": "string", "correct": "no" },
+      { "identifier": "dropdown_4", "cardinality": "single", "baseType": "string", "correct": "shape of container" },
+      { "identifier": "dropdown_5", "cardinality": "single", "baseType": "string", "correct": "fixed" },
+      { "identifier": "dropdown_6", "cardinality": "single", "baseType": "string", "correct": "no" },
+      { "identifier": "dropdown_7", "cardinality": "single", "baseType": "string", "correct": "shape of container" },
+      { "identifier": "dropdown_8", "cardinality": "single", "baseType": "string", "correct": "not fixed" },
+      { "identifier": "dropdown_9", "cardinality": "single", "baseType": "string", "correct": "yes" }
+    ]
+  }
+  \`\`\`
+
+  Positive example — model as a table widget with embedded dropdowns:
+  \`\`\`json
+  {
+    "identifier": "example-states-table-positive",
+    "title": "States of matter table (positive)",
+    "body": [
+      { "type": "paragraph", "content": [{ "type": "text", "content": "Complete each row to describe the differences among solids, liquids, and gases." }] },
+      { "type": "blockSlot", "slotId": "states_table" }
+    ],
+    "widgets": ["states_table"],
+    "interactions": [],
+    "feedback": { "correct": [], "incorrect": [] },
+    "responseDeclarations": [
+      { "identifier": "dropdown_1", "cardinality": "single", "baseType": "string", "correct": "fixed" },
+      { "identifier": "dropdown_2", "cardinality": "single", "baseType": "string", "correct": "fixed" },
+      { "identifier": "dropdown_3", "cardinality": "single", "baseType": "string", "correct": "no" },
+      { "identifier": "dropdown_4", "cardinality": "single", "baseType": "string", "correct": "shape of container" },
+      { "identifier": "dropdown_5", "cardinality": "single", "baseType": "string", "correct": "fixed" },
+      { "identifier": "dropdown_6", "cardinality": "single", "baseType": "string", "correct": "no" },
+      { "identifier": "dropdown_7", "cardinality": "single", "baseType": "string", "correct": "shape of container" },
+      { "identifier": "dropdown_8", "cardinality": "single", "baseType": "string", "correct": "not fixed" },
+      { "identifier": "dropdown_9", "cardinality": "single", "baseType": "string", "correct": "yes" }
+    ]
   }
   \`\`\`
 - **Response Declarations**:
